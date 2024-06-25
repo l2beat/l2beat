@@ -7,8 +7,8 @@ export interface DataAvailabilityConfig {
 export type DataAvailabilityMode =
   | 'State diffs'
   | 'State diffs (compressed)'
-  | 'Transactions data'
-  | 'Transactions data (compressed)'
+  | 'Transaction data'
+  | 'Transaction data (compressed)'
 
 export type DataAvailabilityLayer =
   | 'Ethereum (calldata)'

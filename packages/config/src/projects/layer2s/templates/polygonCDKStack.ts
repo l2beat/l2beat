@@ -302,12 +302,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data',
+            mode: 'Transaction data',
           })
         : addSentimentToDataAvailability({
             layers: ['Ethereum (calldata)'],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data',
+            mode: 'Transaction data',
           }),
     riskView: makeBridgeCompatible({
       stateValidation: {
