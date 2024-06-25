@@ -156,7 +156,12 @@ describe('metaUtils', () => {
       }
 
       const selfAddress = EthereumAddress.from('0x1234')
-      const result = getTargetsMeta(selfAddress, handlerResults, fields)
+      const result = getTargetsMeta(
+        selfAddress,
+        { type: 'immutable' },
+        handlerResults,
+        fields,
+      )
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
