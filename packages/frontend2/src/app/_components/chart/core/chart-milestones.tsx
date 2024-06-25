@@ -1,10 +1,52 @@
 import { type Milestone } from '@l2beat/config'
-import { useMemo, useRef } from 'react'
+import { useCallback, useMemo, useRef } from 'react'
 import { useChartContext } from './chart-context'
+import { useEventListener } from '~/hooks/use-event-listener'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { useChartHoverContext } from './chart-hover-context'
+import { getHoveredColumn } from '../utils/get-hovered-column'
 
 export function ChartMilestones() {
   const ref = useRef<HTMLDivElement>(null)
   const chartContext = useChartContext()
+  const chartHoverContext = useChartHoverContext()
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'mobile'
+
+  const onCanvasMoveEvent = useCallback(
+    (event: MouseEvent | Touch) => {
+      const { rect, columns, valuesStyle, getY } = chartContext
+      if (!rect || !columns || !valuesStyle || !getY) return
+      const hoveredColumn = getHoveredColumn({
+        event,
+        rect,
+        columns,
+        valuesStyle,
+        getY,
+        isMobile,
+      })
+      if (!hoveredColumn) return
+
+      chartHoverContext.setData(hoveredColumn.column.data)
+      chartHoverContext.setPosition({
+        left: hoveredColumn.left,
+        bottom: hoveredColumn.yValues,
+      })
+      chartHoverContext.setMilestone(hoveredColumn.column?.milestone)
+    },
+    [chartContext, chartHoverContext, isMobile],
+  )
+
+  useEventListener('mousemove', onCanvasMoveEvent, ref)
+  useEventListener(
+    'touchmove',
+    (e) => {
+      const touch = e.touches[0]
+      if (!touch) return
+      onCanvasMoveEvent(touch)
+    },
+    ref,
+  )
 
   if (!chartContext.rect) return null
 
