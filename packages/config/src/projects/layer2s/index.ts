@@ -121,7 +121,6 @@ import { zkswap2 } from './zkswap2'
 import { zksyncera } from './zksyncera'
 import { zksynclite } from './zksynclite'
 import { zora } from './zora'
-import { gravity } from '../bridges/gravity'
 export * from './common'
 export * from './types'
 
