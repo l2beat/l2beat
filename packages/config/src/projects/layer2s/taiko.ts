@@ -81,7 +81,7 @@ export const taiko: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'Transaction data',
   }),
   display: {
     name: 'Taiko',
