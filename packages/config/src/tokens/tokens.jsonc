@@ -716,6 +716,10 @@
       "address": "0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206"
     },
     {
+      "symbol": "NEXT",
+      "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a"
+    },
+    {
       "symbol": "NFT",
       "address": "0xEF40B859D21e4d566a3d713e756197c021BffaAa",
       "coingeckoId": "apenft"

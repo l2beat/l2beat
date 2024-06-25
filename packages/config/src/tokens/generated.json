@@ -872,6 +872,21 @@
       "supply": "zero"
     },
     {
+      "id": "next-connext",
+      "name": "Connext",
+      "coingeckoId": "connext",
+      "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a",
+      "symbol": "NEXT",
+      "decimals": 18,
+      "deploymentTimestamp": 1680625643,
+      "coingeckoListingTimestamp": 1693872000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31293/large/photo_2024-06-03_12-14-59.png?1717638614",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "people-constitutiondao",
       "name": "ConstitutionDAO",
       "coingeckoId": "constitutiondao",
