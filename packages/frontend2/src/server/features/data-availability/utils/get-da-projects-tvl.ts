@@ -17,21 +17,31 @@ const getCachedDaProjectsTvl = cache(async (projectIds: ProjectId[]) => {
   const byProject = groupBy(values, 'projectId')
 
   const aggregated = Object.entries(byProject).map(([projectId, values]) => {
-    const canonical = values.reduce((acc, value) => acc + value.canonical, 0n)
-    const external = values.reduce((acc, value) => acc + value.external, 0n)
-    const native = values.reduce((acc, value) => acc + value.native, 0n)
+    const { canonical, external, native } = values.reduce(
+      (acc, value) => {
+        acc.canonical += value.canonical
+        acc.external += value.external
+        acc.native += value.native
 
-    const tvl = Number(canonical + external + native)
+        return acc
+      },
+      { canonical: 0n, external: 0n, native: 0n },
+    )
+
+    const tvl = canonical + external + native
 
     return {
       projectId: ProjectId(projectId),
-      tvl,
+      tvl: Number(tvl),
     }
   })
 
   return aggregated
 })
 
+/**
+ * @helper
+ */
 export function pickTvlForProjects(
   aggregate: Awaited<ReturnType<typeof getCachedDaProjectsTvl>>,
 ) {

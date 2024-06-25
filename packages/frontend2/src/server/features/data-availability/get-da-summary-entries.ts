@@ -9,18 +9,10 @@ import {
 import { getDaRisks } from './utils/get-da-risks'
 
 export async function getDaSummaryEntries() {
-  const uniqueProjectsInUse = [
-    ...new Set(
-      daLayers
-        .map((daLayer) => daLayer.bridges.map((bridge) => bridge.usedIn))
-        .flat(2),
-    ),
-  ]
-
   const economicSecurity = await getDaEconomicSecurity()
 
+  const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
-
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
   return daLayers.flatMap((daLayer) =>
@@ -50,3 +42,13 @@ export async function getDaSummaryEntries() {
 export type DaSummaryEntry = Awaited<
   ReturnType<typeof getDaSummaryEntries>
 >[number]
+
+function getUniqueProjectsInUse() {
+  return [
+    ...new Set(
+      daLayers
+        .map((daLayer) => daLayer.bridges.map((bridge) => bridge.usedIn))
+        .flat(2),
+    ),
+  ]
+}
