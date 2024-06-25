@@ -1,10 +1,10 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo, useRef } from 'react'
 import { useChartContext } from './chart-context'
-import { useEventListener } from '~/hooks/use-event-listener'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { useChartHoverContext } from './chart-hover-context'
 import { getHoveredColumn } from '../utils/get-hovered-column'
+import { useEventListener } from '~/hooks/use-event-listener'
 
 export function ChartMilestones() {
   const ref = useRef<HTMLDivElement>(null)
@@ -48,23 +48,20 @@ export function ChartMilestones() {
     ref,
   )
 
-  if (!chartContext.rect) return null
-
   return (
-    <div
-      ref={ref}
-      className="absolute bottom-0 z-40 w-full group-data-[interactivity-disabled]/chart:hidden"
-    >
-      {chartContext.columns.map(
-        (c, i) =>
-          c.milestone && (
-            <ChartMilestone
-              key={i}
-              x={i / (chartContext.columns.length - 1)}
-              milestone={c.milestone}
-            />
-          ),
-      )}
+    <div ref={ref} className="absolute bottom-0 z-40 w-full">
+      {!chartContext.loading
+        ? chartContext.columns.map(
+            (c, i) =>
+              c.milestone && (
+                <ChartMilestone
+                  key={i}
+                  x={i / (chartContext.columns.length - 1)}
+                  milestone={c.milestone}
+                />
+              ),
+          )
+        : null}
     </div>
   )
 }

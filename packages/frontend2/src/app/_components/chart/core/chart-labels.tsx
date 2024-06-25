@@ -25,11 +25,14 @@ export function ChartLabels({
 }
 
 function ChartLabel({ children }: { children?: ReactNode }) {
+  const { loading } = useChartContext()
   return (
     <div className="relative">
-      <span className="absolute bottom-0 left-0 pb-0.5 text-gray-500 text-sm text-opacity-50 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none dark:text-white dark:text-opacity-50 group-data-[interactivity-disabled]/chart:opacity-0">
-        {children}
-      </span>
+      {!loading ? (
+        <span className="absolute bottom-0 left-0 pb-0.5 text-gray-500 text-sm text-opacity-50 dark:text-white dark:text-opacity-50">
+          {children}
+        </span>
+      ) : null}
       <hr className="border-gray-850/30 dark:border-white/30" />
     </div>
   )

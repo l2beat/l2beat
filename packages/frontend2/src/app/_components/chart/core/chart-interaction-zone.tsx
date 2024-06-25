@@ -73,10 +73,5 @@ export function ChartInteractionZone() {
     ref,
   )
 
-  return (
-    <div
-      ref={ref}
-      className="-inset-x-4 -bottom-4 absolute top-0 z-40 group-data-[interactivity-disabled]/chart:hidden"
-    />
-  )
+  return <div ref={ref} className="-inset-x-4 -bottom-4 absolute top-0 z-40" />
 }
