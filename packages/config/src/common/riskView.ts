@@ -269,6 +269,12 @@ export const UNDER_REVIEW_RISK_VIEW: ScalingProjectRiskView =
 
 // SEQUENCER COLUMN
 
+function getSequencerDelaySentiment(delay?: number): Sentiment {
+  const sentiment =
+    delay !== undefined ? (delay <= 86400 ? 'good' : 'warning') : 'neutral'
+  return sentiment
+}
+
 export function SEQUENCER_SELF_SEQUENCE(
   delay?: number,
 ): ScalingProjectRiskViewEntry {
@@ -281,7 +287,7 @@ export function SEQUENCER_SELF_SEQUENCE(
   return {
     value: 'Self sequence',
     description: `In the event of a sequencer failure, users can force transactions to be included in the project's chain by sending them to L1.${delayString}`,
-    sentiment: 'good',
+    sentiment: getSequencerDelaySentiment(delay),
   }
 }
 
@@ -304,7 +310,7 @@ export function SEQUENCER_FORCE_VIA_L1(
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds.`,
-    sentiment: 'good',
+    sentiment: getSequencerDelaySentiment(delay),
   }
 }
 
@@ -315,7 +321,7 @@ export function SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL(
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a trade or a withdrawal transaction by submitting a request through L1. If the sequencer censors or is down for ${delayString}, users can use the exit hatch to withdraw their funds. Users are required to find a counterparty for the trade by out of system means.`,
-    sentiment: 'good',
+    sentiment: getSequencerDelaySentiment(delay),
   }
 }
 
@@ -334,7 +340,7 @@ export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
   return {
     value: 'Force via L1',
     description: `Users can force the sequencer to include a withdrawal transaction by submitting a request through L1 with a ${forcedWithdrawalFeeString} fee. If the sequencer is down for more than ${delayString}, users can use the exit hatch to withdraw their funds. The sequencer can censor individual deposits, but in such case after ${maxAgeDepositUntilWithdrawableString} users can get their funds back.`,
-    sentiment: 'good',
+    sentiment: getSequencerDelaySentiment(delay),
   }
 }
 
