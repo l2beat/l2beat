@@ -149,7 +149,7 @@ function Header({
           minted tokens, converted to {unit.toUpperCase()}
         </p>
       </div>
-      <div className="flex flex-row items-baseline gap-2 transition-opacity duration-200 group-data-[interactivity-disabled]/chart:pointer-events-none md:flex-col md:items-end md:gap-1 group-data-[interactivity-disabled]/chart:opacity-0">
+      <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
         {loading ? (
           <>
             <Skeleton className="w-[124px] h-9" />
