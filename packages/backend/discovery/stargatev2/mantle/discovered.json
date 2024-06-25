@@ -3,7 +3,7 @@
   "chain": "mantle",
   "blockNumber": 65329557,
   "configHash": "0xc64f0c7d05713cc872e2a5262959e8eda63ce1eb9cb5c467e2cc3ec3cb89ef48",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -57,6 +57,9 @@
     {
       "name": "StargatePool",
       "address": "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -64,9 +67,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837014,
       "values": {
         "approvalRequired": true,
@@ -101,6 +101,9 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -108,9 +111,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837036,
       "values": {
         "approvalRequired": true,
@@ -147,6 +147,9 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0xB715B85682B731dB9D5063187C450095c91C57FC",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -154,9 +157,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837046,
       "values": {
         "approvalRequired": true,
@@ -193,6 +193,9 @@
     {
       "name": "StargatePool",
       "address": "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -200,9 +203,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837026,
       "values": {
         "approvalRequired": true,
@@ -236,8 +236,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
   ],
   "abis": {
     "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": [

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825372,
   "configHash": "0xec73bf7b47e1c44e88f45136b1cdd18abc4541fb1f612fcbcab34490c60deff7",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "Committee",
@@ -69,13 +69,6 @@
     {
       "name": "StarkExchange",
       "address": "0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getValidiumVaultRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xc392DD8edAd534266cbf2817ee01dC68193DE23d",
@@ -94,6 +87,13 @@
           "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889"
         ]
       },
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getValidiumVaultRoot"
+      ],
       "implementations": [
         "0xc392DD8edAd534266cbf2817ee01dC68193DE23d",
         "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -145,16 +145,16 @@
       "name": "GovernanceMultisig",
       "address": "0xCCa5De1e10c05c50C51ac551D9182cd31aca1889",
       "template": "GnosisSafe",
-      "descriptions": [
-        "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
-      ],
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
+      "descriptions": [
+        "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
+      ],
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683214307,
       "values": {
@@ -176,21 +176,51 @@
     }
   ],
   "eoas": [
-    "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
-    "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648",
-    "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
-    "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36",
-    "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
-    "0x478615F37FcCB0DF69C191a8674233f6899D092e",
-    "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-    "0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35",
-    "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4",
-    "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178",
-    "0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5",
-    "0x94aa58E38ac22518Cf0E267cd062Ed7E78eA958E",
-    "0xe0fE5b38C52A83308bEC9242d768441025DBB4D8",
-    "0xf872Cf881873029B8955b582c29b66347f3f1326",
-    "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9"
+    {
+      "address": "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59"
+    },
+    {
+      "address": "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648"
+    },
+    {
+      "address": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA"
+    },
+    {
+      "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36"
+    },
+    {
+      "address": "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3"
+    },
+    {
+      "address": "0x478615F37FcCB0DF69C191a8674233f6899D092e"
+    },
+    {
+      "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E"
+    },
+    {
+      "address": "0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35"
+    },
+    {
+      "address": "0x6A8EA587133c1aA4b3bA0417b6d8AE38E61fd1E4"
+    },
+    {
+      "address": "0x70EEAA8b7CbF7124e349e94EaDE6188DDd2d6178"
+    },
+    {
+      "address": "0x8A6c80Aab6497E2DB35817817b593b79D78f6ae5"
+    },
+    {
+      "address": "0x94aa58E38ac22518Cf0E267cd062Ed7E78eA958E"
+    },
+    {
+      "address": "0xe0fE5b38C52A83308bEC9242d768441025DBB4D8"
+    },
+    {
+      "address": "0xf872Cf881873029B8955b582c29b66347f3f1326"
+    },
+    {
+      "address": "0xFBD7599fe0C3735b94c369aDF0F0045D8D4f6cB9"
+    }
   ],
   "abis": {
     "0x28780349A33eEE56bb92241bAAB8095449e24306": [

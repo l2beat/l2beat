@@ -3,11 +3,14 @@
   "chain": "metis",
   "blockNumber": 17386539,
   "configHash": "0x03bfc54a4e2ae6a05a108e8ab2267d96d0404d2c89eb1d6c4a3e907bc2bd00da",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "StargatePool",
       "address": "0x36ed193dc7160D3858EC250e69D12B03Ca087D08",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -15,9 +18,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837010,
       "values": {
         "approvalRequired": true,
@@ -52,6 +52,9 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -59,9 +62,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837024,
       "values": {
         "approvalRequired": true,
@@ -142,6 +142,9 @@
     {
       "name": "StargatePool",
       "address": "0xD9050e7043102a0391F81462a3916326F86331F0",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -149,9 +152,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837016,
       "values": {
         "approvalRequired": true,
@@ -185,8 +185,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
   ],
   "abis": {
     "0x36ed193dc7160D3858EC250e69D12B03Ca087D08": [

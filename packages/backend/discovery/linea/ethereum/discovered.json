@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20059600,
   "configHash": "0x914e7bb1f1ef535a617569b498719e4412dee0e0bbee7d24f7b7f76066dae93b",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -68,12 +68,12 @@
     {
       "name": "USDCBridge",
       "address": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
-      "ignoreInWatchMode": ["balance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x0eC393209674090368C592A591B25811e490BF36",
         "admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5"
       },
+      "ignoreInWatchMode": ["balance"],
       "implementations": ["0x0eC393209674090368C592A591B25811e490BF36"],
       "sinceTimestamp": 1691086271,
       "values": {
@@ -90,13 +90,13 @@
       "name": "AdminMultisig",
       "address": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
         "threshold": "4 of 8 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689149759,
       "values": {
@@ -150,6 +150,11 @@
     {
       "name": "zkEVM",
       "address": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562",
+        "admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
+      },
       "ignoreInWatchMode": [
         "currentPeriodAmountInWei",
         "currentL2StoredL1MessageNumber",
@@ -157,11 +162,6 @@
         "currentFinalizedShnarf",
         "currentFinalizedState"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562",
-        "admin": "0xF5058616517C068C7b8c7EbC69FF636Ade9066d6"
-      },
       "implementations": ["0x53fC68bFfC03D17804e5A901DE42d1eeF2e64562"],
       "sinceTimestamp": 1689159923,
       "values": {
@@ -349,6 +349,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xd19d4B5d358258f05D7B411E21A1460D11B0876F"]
+      },
       "sinceTimestamp": 1689158711,
       "values": {
         "owner": "0xd6B95c960779c72B8C6752119849318E5d550574"
@@ -356,21 +359,51 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x1111111111111111111111111111111111111111",
-    "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9",
-    "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE",
-    "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9",
-    "0x36a0b60162d7F407d74bd1def01410D20437F87B",
-    "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8",
-    "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB",
-    "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4",
-    "0x5822D8457c00FB82203918ED92907b935B9D40AE",
-    "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64",
-    "0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A",
-    "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e",
-    "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1",
-    "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x1111111111111111111111111111111111111111"
+    },
+    {
+      "address": "0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9"
+    },
+    {
+      "address": "0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE"
+    },
+    {
+      "address": "0x353012dc4a9A6cF55c941bADC267f82004A8ceB9"
+    },
+    {
+      "address": "0x36a0b60162d7F407d74bd1def01410D20437F87B"
+    },
+    {
+      "address": "0x453B3A4b4d64B4E6f472A306c3D4Fc318C34bbA8"
+    },
+    {
+      "address": "0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB"
+    },
+    {
+      "address": "0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4"
+    },
+    {
+      "address": "0x5822D8457c00FB82203918ED92907b935B9D40AE"
+    },
+    {
+      "address": "0x9228624C3185FCBcf24c1c9dB76D8Bef5f5DAd64"
+    },
+    {
+      "address": "0xA2Ee6Fce4ACB62D95448729cDb781e3BEb62504A"
+    },
+    {
+      "address": "0xa9268341831eFa4937537bc3e9EB36DbecE83C7e"
+    },
+    {
+      "address": "0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1"
+    },
+    {
+      "address": "0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"
+    }
   ],
   "abis": {
     "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319": [

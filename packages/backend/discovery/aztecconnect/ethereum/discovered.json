@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19816414,
   "configHash": "0x79ab0e953135f51ef67edee8308d7def1f7b57f24e77fe39d6d60da30592bd08",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "DefiBridgeProxy",
@@ -30,6 +30,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"]
+      },
       "sinceTimestamp": 1654638154,
       "values": {
         "owner": "0x0000000000000000000000000000000000000000"
@@ -38,6 +41,11 @@
     {
       "name": "RollupProcessorV3",
       "address": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728",
+        "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
+      },
       "ignoreInWatchMode": [
         "getDataSize",
         "getDefiInteractionHashesLength",
@@ -48,11 +56,6 @@
         "prevDefiInteractionsHash",
         "rollupStateHash"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728",
-        "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
-      },
       "implementations": ["0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"],
       "sinceTimestamp": 1654638194,
       "values": {
@@ -148,9 +151,15 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7",
-    "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
+    },
+    {
+      "address": "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
+    }
   ],
   "abis": {
     "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728": [

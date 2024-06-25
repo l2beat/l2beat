@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 3199002,
   "configHash": "0x75c2fa51df31eecd33d30c6b299d4629c21a2efa676b9220204b421996518ad8",
-  "version": 3,
+  "version": 8,
   "contracts": [
     {
       "name": "MPTValidator01",
@@ -28,6 +28,14 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
       "sinceTimestamp": 1689350920,
       "values": {
         "chainAddressSizeMap": {
@@ -640,12 +648,14 @@
     {
       "name": "LayerZero Multisig",
       "address": "0x5e306343ecf32B605d88c1e44f3879699ab5144D",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x179548Da4C1709b947a965bbBBba76Cb68003ef4",
         "modules": [],
         "threshold": "2 of 5 (40%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x179548Da4C1709b947a965bbBBba76Cb68003ef4"],
       "sinceTimestamp": 1691909044,
       "values": {
@@ -718,6 +728,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1689350872,
       "values": {
         "BLOCK_VERSION": 65535,
@@ -803,11 +814,24 @@
     }
   ],
   "eoas": [
-    "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
-    "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-    "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-    "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
-    "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+    },
+    {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+    },
+    {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    },
+    {
+      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
+    },
+    {
+      "address": "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
+    }
   ],
   "abis": {
     "0x179548Da4C1709b947a965bbBBba76Cb68003ef4": [

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18939731,
   "configHash": "0xe7964a56f8c2d7cf3e173d8b4c64a2af9ebe4e63b994caf821eb3a5fb8ef5af9",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "BlockVerifier",
@@ -20,10 +20,10 @@
     {
       "name": "LoopringOwner",
       "address": "0x2028834B2c0A36A918c10937EeA71BE4f932da52",
-      "ignoreInWatchMode": ["transactionCount"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1684401563,
       "values": {
         "getOwners": [
@@ -81,10 +81,10 @@
     {
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
-      "ignoreInWatchMode": ["transactionCount"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
       "values": {
         "getOwners": [
@@ -117,6 +117,9 @@
     {
       "name": "ExchangeV3",
       "address": "0xe63602a9B3DFE983187525AC985Fec4F57B24eD5",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -125,9 +128,6 @@
         "getNumAvailableForcedSlots",
         "state"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1681991219,
       "values": {
         "allowOnchainTransferFrom": false,
@@ -208,16 +208,36 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
-    "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
-    "0x84A00D39C3c95e839202E19F892F17743d6370a0",
-    "0xB7093FC2d926ADdE48122B70991fe68374879adf",
-    "0xC715b8501039d3514787dC55BC09f89c293351e9",
-    "0xd8C695DfAab475f55327Ce269096923EFECa2e0F",
-    "0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C",
-    "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
-    "0xf5020ADf433645c451A4809eac0d6F680709f11B"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+    },
+    {
+      "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8"
+    },
+    {
+      "address": "0x84A00D39C3c95e839202E19F892F17743d6370a0"
+    },
+    {
+      "address": "0xB7093FC2d926ADdE48122B70991fe68374879adf"
+    },
+    {
+      "address": "0xC715b8501039d3514787dC55BC09f89c293351e9"
+    },
+    {
+      "address": "0xd8C695DfAab475f55327Ce269096923EFECa2e0F"
+    },
+    {
+      "address": "0xE9A37E8DDDbf4Bb3f5d6aCE6D01a137e484Db77C"
+    },
+    {
+      "address": "0xeD530f3b8675B0a576DaAe64C004676c65368DfD"
+    },
+    {
+      "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B"
+    }
   ],
   "abis": {
     "0x1c602313cDDC68C5789aCb7df0C92a93B0E04C9e": [
