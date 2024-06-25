@@ -5010,6 +5010,21 @@
       "supply": "totalSupply"
     },
     {
+      "id": "optimism:usdc.e-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "bridged-usd-coin-optimism",
+      "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1636665399,
+      "coingeckoListingTimestamp": 1693958400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31580/large/USDC-icon.png?1696530397",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:usde-usde",
       "name": "USDe",
       "coingeckoId": "ethena-usde",

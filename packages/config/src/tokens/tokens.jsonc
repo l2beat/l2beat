@@ -1622,6 +1622,12 @@
   ],
   "optimism": [
     {
+      "symbol": "USDC.e",
+      "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "wBTC",
       "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
       "source": "canonical",
