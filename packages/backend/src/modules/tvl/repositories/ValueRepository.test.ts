@@ -80,32 +80,62 @@ describeDatabase(ValueRepository.name, (knex, kysely) => {
       saved('a', timestamp, 'data_src', 1, 2, 3),
     )
 
-    describe('getLatestForProjects', async () => {
-      it('returns latest value for projectId x data source combination', async () => {
-        await repository.addOrUpdateMany([
-          saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
-          saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
-          saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
-          saved('Project-A', UnixTime.ZERO, 'sourceC', 1, 2, 3), // Should be discarded
+    describe(
+      ValueRepository.prototype.getLatestValuesForProjects.name,
+      async () => {
+        it('returns latest value for projectId x data source combination', async () => {
+          await repository.addOrUpdateMany([
+            saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+            saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+            saved(
+              'Project-A',
+              UnixTime.ZERO.add(1, 'days'),
+              'sourceC',
+              1,
+              2,
+              3,
+            ),
+            saved('Project-A', UnixTime.ZERO, 'sourceC', 1, 2, 3), // Should be discarded
 
-          saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
-          saved('Project-B', UnixTime.ZERO, 'sourceA', 1, 2, 3), // Should be discarded
-        ])
+            saved(
+              'Project-B',
+              UnixTime.ZERO.add(1, 'days'),
+              'sourceA',
+              1,
+              2,
+              3,
+            ),
+            saved('Project-B', UnixTime.ZERO, 'sourceA', 1, 2, 3), // Should be discarded
+          ])
 
-        const latestForProjects = await repository.getLatestValuesForProjects([
-          ProjectId('Project-A'),
-          ProjectId('Project-B'),
-        ])
+          const latestForProjects = await repository.getLatestValuesForProjects(
+            [ProjectId('Project-A'), ProjectId('Project-B')],
+          )
 
-        expect(latestForProjects.length).toEqual(4)
-        expect(latestForProjects).toEqualUnsorted([
-          saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
-          saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
-          saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
-          saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
-        ])
-      })
-    })
+          expect(latestForProjects.length).toEqual(4)
+          expect(latestForProjects).toEqualUnsorted([
+            saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+            saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+            saved(
+              'Project-A',
+              UnixTime.ZERO.add(1, 'days'),
+              'sourceC',
+              1,
+              2,
+              3,
+            ),
+            saved(
+              'Project-B',
+              UnixTime.ZERO.add(1, 'days'),
+              'sourceA',
+              1,
+              2,
+              3,
+            ),
+          ])
+        })
+      },
+    )
   }
 })
 
