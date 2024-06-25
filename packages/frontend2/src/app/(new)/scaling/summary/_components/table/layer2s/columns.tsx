@@ -43,11 +43,11 @@ export const columns = [
       tooltip: 'Risks associated with this project.',
     },
   }),
-  columnHelper.accessor('type', {
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return <TypeCell provider={value.provider}>{value.category}</TypeCell>
-    },
+  columnHelper.accessor('category', {
+    header: 'Type',
+    cell: (ctx) => (
+      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+    ),
     meta: {
       tooltip: (
         <div>

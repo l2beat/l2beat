@@ -30,7 +30,7 @@ export const columns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
-  columnHelper.accessor('type.category', {
+  columnHelper.accessor('category', {
     header: 'Type',
     cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
     meta: {
@@ -51,7 +51,7 @@ export const columns = [
       ),
     },
   }),
-  columnHelper.accessor('type.provider', {
+  columnHelper.accessor('provider', {
     header: 'Technology',
     cell: (ctx) => {
       const value = ctx.getValue()

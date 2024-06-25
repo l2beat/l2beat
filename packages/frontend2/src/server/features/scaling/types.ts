@@ -15,7 +15,8 @@ export interface ScalingSummaryLayer2sEntry {
   slug: string
   // TODO: Is it the best way?
   href: string
-  type: ProjectType
+  category: ScalingProjectCategory
+  provider: Layer2Provider | undefined
   warning: string | undefined
   redWarning: string | undefined
   isVerified: boolean
@@ -37,7 +38,8 @@ export interface ScalingSummaryLayer3sEntry {
   slug: string
   // TODO: Is it the best way?
   href: string
-  type: ProjectType
+  category: ScalingProjectCategory
+  provider: Layer3Provider | undefined
   hostChainName: string
   warning: string | undefined
   redWarning: string | undefined
@@ -50,11 +52,6 @@ export interface ScalingSummaryLayer3sEntry {
   tvlData: L3TvlData | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never
-}
-
-interface ProjectType {
-  category: ScalingProjectCategory
-  provider: Layer2Provider | Layer3Provider | undefined
 }
 
 interface L2TvlData {
