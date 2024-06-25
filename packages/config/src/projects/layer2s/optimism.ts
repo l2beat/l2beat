@@ -268,7 +268,7 @@ export const optimism: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'Transaction data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
