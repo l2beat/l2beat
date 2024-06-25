@@ -4,6 +4,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
+const baseDiscovery = new ProjectDiscovery('zklinknova', 'base')
 const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 
 const optimismUpgradability = {
@@ -13,6 +14,11 @@ const optimismUpgradability = {
 
 const arbitrumUpgradability = {
   upgradableBy: ['ArbitrumOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const baseUpgradability = {
+  upgradableBy: ['BaseOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -327,8 +333,25 @@ export const zklinknova: Layer3 = {
         }),
         arbitrumDiscovery.getContractDetails('ArbitrumL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and Arbitrum's L2CrossDomainMessenger.",
+            "High level interface between the local zkLink contract and Arbitrum's L2 cross domain messenger contract.",
           ...arbitrumUpgradability,
+        }),
+      ],
+      base: [
+        baseDiscovery.getContractDetails('L1ERC20Bridge', {
+          description:
+            'Main entry point for depositing ERC20 tokens from Base Mainnet to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
+          ...baseUpgradability,
+        }),
+        baseDiscovery.getContractDetails('zkLink', {
+          description:
+            "Main messaging contract on Base Mainnet and ETH escrow. Outgoing messages (like deposits) are sent through the BaseL2Gateway which ultimately makes use of Base Mainnet's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
+          ...baseUpgradability,
+        }),
+        baseDiscovery.getContractDetails('BaseL2Gateway', {
+          description:
+            "High level interface between the local zkLink contract and Base's L2CrossDomainMessenger.",
+          ...baseUpgradability,
         }),
       ],
     },
