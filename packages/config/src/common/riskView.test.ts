@@ -81,4 +81,11 @@ describe(sumRisk.name, () => {
     expect(sumRisk(goodRisk, badRisk, callback)).toEqual(badRisk)
     expect(sumRisk(neutralRisk, warnRisk, callback)).toEqual(warnRisk)
   })
+
+  it('picks worse risk if both are bad', () => {
+    const risk1 = createFakeRisk('bad', 40)
+    const risk2 = createFakeRisk('bad', 2)
+
+    expect(sumRisk(risk1, risk2, () => createFakeRisk('bad', 0))).toEqual(risk2)
+  })
 })

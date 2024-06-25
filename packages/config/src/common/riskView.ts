@@ -605,7 +605,11 @@ export function sumRisk(
   b: ScalingProjectRiskViewEntry,
   formattingFunction: (delay: number) => ScalingProjectRiskViewEntry,
 ): ScalingProjectRiskViewEntry {
-  if (a.sentiment === b.sentiment) {
+  if (
+    a.sentiment !== 'bad' &&
+    b.sentiment !== 'bad' &&
+    a.sentiment === b.sentiment
+  ) {
     assert(
       a.definingMetric !== undefined && b.definingMetric !== undefined,
       'Cannot sum good risks without delaySeconds',
