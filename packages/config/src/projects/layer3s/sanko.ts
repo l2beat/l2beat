@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { RISK_VIEW, makeBridgeCompatible } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
@@ -37,6 +38,24 @@ export const sanko: Layer3 = orbitStackL3({
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
+  stackedRiskView: makeBridgeCompatible({
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: (() => {
+      const { membersCount, requiredSignatures } = discovery.getContractValue<{
+        membersCount: number
+        requiredSignatures: number
+      }>('SequencerInbox', 'dacKeyset')
+      return RISK_VIEW.DATA_EXTERNAL_DAC({
+        membersCount,
+        requiredSignatures,
+      })
+    })(),
+    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 86400), // SequencerInbox.maxTimeVariation.delaySeconds
+    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(172800), // sanko l3 delay + arbitrum l2 delay (48h)
+    proposerFailure: RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(1209600), // 14d (2x orbitstack self propose delay)
+    validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('arbitrum')),
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+  }),
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       includeInTotal: false,
