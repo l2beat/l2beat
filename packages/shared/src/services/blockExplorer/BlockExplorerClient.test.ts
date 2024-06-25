@@ -33,7 +33,6 @@ describe(BlockExplorerClient.name, () => {
 
       expect(httpClient.fetch).toHaveBeenOnlyCalledWith(
         `${API_URL}?module=block&action=getblocknobytime&timestamp=3141592653&closest=before&apikey=key`,
-        expect.anything(),
       )
       expect(blockNumber).toEqual(result)
     })
@@ -71,7 +70,6 @@ describe(BlockExplorerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -79,7 +77,6 @@ describe(BlockExplorerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
 
       expect(blockNumber).toEqual(result)
@@ -117,7 +114,6 @@ describe(BlockExplorerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -125,7 +121,6 @@ describe(BlockExplorerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
     })
 
@@ -156,7 +151,6 @@ describe(BlockExplorerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -164,7 +158,6 @@ describe(BlockExplorerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
     })
 
@@ -194,7 +187,6 @@ describe(BlockExplorerClient.name, () => {
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
         1,
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp.toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
 
       expect(httpClient.fetch).toHaveBeenNthCalledWith(
@@ -202,7 +194,6 @@ describe(BlockExplorerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=${timestamp
           .add(-10, 'minutes')
           .toNumber()}&closest=before&apikey=key`,
-        expect.anything(),
       )
     })
 
