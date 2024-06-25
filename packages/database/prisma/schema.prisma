@@ -22,7 +22,7 @@ model CurrentPrice {
 
 model Stake {
   id             String @id @db.VarChar(255)
-  totalStake     BigInt  
+  totalStake     BigInt
   thresholdStake BigInt
 
   @@schema("public")
