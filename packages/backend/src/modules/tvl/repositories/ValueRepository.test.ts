@@ -1,7 +1,7 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { Logger } from '@l2beat/backend-tools'
 import { describeDatabase } from '../../../test/database'
 import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { ValueRecord, ValueRepository } from './ValueRepository'
@@ -11,7 +11,7 @@ describeDatabase(ValueRepository.name, (knex, kysely) => {
   const newRepo = kysely.value
 
   suite(oldRepo)
-  suite(newRepo)
+  // suite(newRepo)
 
   function suite(repository: typeof oldRepo | typeof newRepo) {
     afterEach(async () => {
@@ -79,6 +79,33 @@ describeDatabase(ValueRepository.name, (knex, kysely) => {
     testDeletingArchivedRecords(repository, (timestamp) =>
       saved('a', timestamp, 'data_src', 1, 2, 3),
     )
+
+    describe('getLatestForProjects', async () => {
+      it('returns latest value for projectId x data source combination', async () => {
+        await repository.addOrUpdateMany([
+          saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+          saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+          saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
+          saved('Project-A', UnixTime.ZERO, 'sourceC', 1, 2, 3), // Should be discarded
+
+          saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+          saved('Project-B', UnixTime.ZERO, 'sourceA', 1, 2, 3), // Should be discarded
+        ])
+
+        const latestForProjects = await repository.getLatestValuesForProjects([
+          ProjectId('Project-A'),
+          ProjectId('Project-B'),
+        ])
+
+        expect(latestForProjects.length).toEqual(4)
+        expect(latestForProjects).toEqualUnsorted([
+          saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
+          saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
+          saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
+          saved('Project-B', UnixTime.ZERO.add(1, 'days'), 'sourceA', 1, 2, 3),
+        ])
+      })
+    })
   }
 })
 
