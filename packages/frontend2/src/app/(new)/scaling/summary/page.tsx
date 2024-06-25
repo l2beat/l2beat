@@ -28,6 +28,7 @@ import { SummaryArchivedTable } from './_components/table/archived.tsx/summary-a
 import { ScalingLegend } from './_components/table/layer2s/legend'
 import { OtherSites } from '~/app/_components/other-sites'
 import { About } from '~/app/_components/about'
+import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 
 export default async function Page() {
   const tvl = await getTvl()
@@ -55,21 +56,25 @@ export default async function Page() {
               <ActiveIcon />
               <span className="md:hidden">Layer2s</span>
               <span className="hidden md:inline">Layer 2 projects</span>
+              <TabCountBadge>{layer2sProjects.length}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="layer3s" className="gap-1.5">
               <Layer3sIcon />
               <span className="md:hidden">Layer 3s</span>
               <span className="hidden md:inline">Layer 3 projects</span>
+              <TabCountBadge>{layer3sProjects.length}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="upcoming" className="gap-1.5">
               <UpcomingIcon />
               <span className="md:hidden">Upcoming</span>
               <span className="hidden md:inline">Upcoming projects</span>
+              <TabCountBadge>{upcomingProjects.length}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="archived" className="gap-1.5">
               <ArchivedIcon />
               <span className="md:hidden">Archived</span>
               <span className="hidden md:inline">Archived projects</span>
+              <TabCountBadge>{archivedProjects.length}</TabCountBadge>
             </TabsTrigger>
           </TabsList>
         </OverflowWrapper>
