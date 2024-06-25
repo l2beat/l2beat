@@ -20,14 +20,17 @@ export class BlockExplorerClient {
   private readonly rateLimiter = new RateLimiter({
     callsPerMinute: 60,
   })
-  private readonly timestampIndexingInterval
+  // If you ask for a timestamp
+  // and there were no blocks for <timestamp - binTimeWidth, timestamp>
+  // API will return the error
+  private readonly binTimeWidth
 
   constructor(
     private readonly httpClient: HttpClient,
     private readonly options: EtherscanOptions | BlockscoutOptions,
   ) {
     this.call = this.rateLimiter.wrap(this.call.bind(this))
-    this.timestampIndexingInterval = options.type === 'Etherscan' ? 10 : 1
+    this.binTimeWidth = options.type === 'Etherscan' ? 10 : 1
   }
 
   static create(
@@ -63,7 +66,7 @@ export class BlockExplorerClient {
           throw new Error(errorObject.message)
         }
 
-        current = current.add(-this.timestampIndexingInterval, 'minutes')
+        current = current.add(-this.binTimeWidth, 'minutes')
       }
       counter++
     }
