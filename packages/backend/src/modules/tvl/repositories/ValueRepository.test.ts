@@ -11,7 +11,7 @@ describeDatabase(ValueRepository.name, (knex, kysely) => {
   const newRepo = kysely.value
 
   suite(oldRepo)
-  // suite(newRepo)
+  suite(newRepo)
 
   function suite(repository: typeof oldRepo | typeof newRepo) {
     afterEach(async () => {
