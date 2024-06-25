@@ -414,7 +414,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           mode: 'Transaction data (compressed)',
         }),
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
-    riskView,
+    riskView: templateVars.stackedRiskView ?? getStackedRisks(),
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: unionBy(

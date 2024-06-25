@@ -737,7 +737,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           : templateVars.display.warning,
     },
     stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
-    riskView,
+    riskView: templateVars.stackedRiskView ?? getStackedRisks(),
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
