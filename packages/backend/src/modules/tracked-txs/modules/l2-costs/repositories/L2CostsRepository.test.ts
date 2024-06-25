@@ -5,7 +5,7 @@ import { describe } from 'mocha'
 
 import { describeDatabase } from '../../../../../test/database'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { createTrackedTxId } from '../../../utils/createTrackedTxConfigId'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (database) => {
@@ -20,7 +20,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     {
       timestamp: START,
       txHash: '0x1',
-      trackedTxId: TrackedTxId.random(),
+      trackedTxId: createTrackedTxId.random(),
       gasUsed: 100,
       gasPrice: 1n,
       calldataLength: 100,
@@ -31,7 +31,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     {
       timestamp: START.add(-1, 'hours'),
       txHash: '0x2',
-      trackedTxId: TrackedTxId.random(),
+      trackedTxId: createTrackedTxId.random(),
       gasUsed: 200,
       gasPrice: 2n,
       calldataLength: 200,
@@ -42,7 +42,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
     {
       timestamp: START.add(-2, 'hours'),
       txHash: '0x3',
-      trackedTxId: TrackedTxId.random(),
+      trackedTxId: createTrackedTxId.random(),
       gasUsed: 150,
       gasPrice: 2n,
       calldataLength: 400,
@@ -144,7 +144,7 @@ describeDatabase(L2CostsRepository.name, (database) => {
   describe(L2CostsRepository.prototype.deleteFromById.name, () => {
     it('should delete rows inserted after certain timestamp for given configuration id', async () => {
       await repository.deleteAll()
-      const trackedTxId = TrackedTxId.random()
+      const trackedTxId = createTrackedTxId.random()
 
       const records: L2CostsRecord[] = [
         {
