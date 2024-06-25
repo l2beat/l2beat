@@ -74,13 +74,13 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     }
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
-    const allSyncTo = configurations
+    const allSyncTo = configurationsToSync
       .map((config) => config.maxHeight)
       .filter((c) => !!c) as number[]
     const syncTo = new UnixTime(Math.min(unixTo.toNumber(), ...allSyncTo))
 
     const txs = await this.$.trackedTxsClient.getData(
-      configurations,
+      configurationsToSync,
       unixFrom,
       syncTo,
     )
