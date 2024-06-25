@@ -1,0 +1,54 @@
+Generated with discovered.json: 0x6840d7e9bcbf379754d9a0ab97a44739b640ae84
+
+# Diff at Tue, 25 Jun 2024 14:01:07 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- current block number: 225587668
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Initial discovery
+
+```diff
++   Status: CREATED
+    contract  (0x0000000000000000000000000000000000000064)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EmptyVerifier (0x273D59aed2d793167c162E64b9162154B07583C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x48698A17D193bFc882395AC06a1DEdbb222F2917)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ArbitrumL2Gateway (0x7bd79DEd935B542fb22c74305a4d2A293C18483a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafeL2 (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L1ERC20Bridge (0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract zkLink (0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A)
+    +++ description: None
+```

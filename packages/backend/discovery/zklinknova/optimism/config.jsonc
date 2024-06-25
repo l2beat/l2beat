@@ -14,19 +14,11 @@
     "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": "OptimismProxyAdmin"
   },
   "overrides": {
-    "0x4200000000000000000000000000000000000007": {
-      "ignoreDiscovery": true
-    },
     "zkLink": {
-      "ignoreMethods": [
-        "l2LogsRootHash",
-        "l2LogsRootHashes",
-        "proxiableUUID",
-        "priorityOpSyncStatus"
-      ]
+      "extends": "zklinknova/secondaryZkLink"
     },
     "OptimismL2Gateway": {
-      "ignoreMethods": ["proxiableUUID"]
+      "extends": "zklinknova/secondaryGateway"
     }
   }
 }
