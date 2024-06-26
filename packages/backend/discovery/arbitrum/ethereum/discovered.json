@@ -1,8 +1,8 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 20124808,
-  "configHash": "0x03d0a8e1d19941c687a83da05a9e3bd1c68ea158b91c6dfc724c9769ca833113",
+  "blockNumber": 20174994,
+  "configHash": "0x271e69c3c2485790b1ac2a45d8fef55c88c773616c28274c599592186dc6dab3",
   "version": 8,
   "contracts": [
     {
@@ -121,7 +121,7 @@
       "implementations": ["0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 631596,
+        "batchCount": 631649,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -142,7 +142,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1585008,
+        "totalDelayedMessagesRead": 1585121,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -348,12 +348,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 14917,
+        "firstUnresolvedNode": 14918,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 14916,
-        "latestNodeCreated": 15069,
+        "latestConfirmed": 14917,
+        "latestNodeCreated": 15070,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -529,11 +529,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1585020,
+        "delayedMessageCount": 1585131,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 631596,
-        "sequencerReportedSubMessageCount": 203644264
+        "sequencerMessageCount": 631649,
+        "sequencerReportedSubMessageCount": 203661030
       },
       "derivedName": "Bridge"
     },
