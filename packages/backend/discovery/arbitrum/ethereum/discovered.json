@@ -121,7 +121,7 @@
       "implementations": ["0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7"],
       "sinceTimestamp": 1661457944,
       "values": {
-        "batchCount": 623378,
+        "batchCount": 631596,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -142,7 +142,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1569603,
+        "totalDelayedMessagesRead": 1585008,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -348,12 +348,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 14750,
+        "firstUnresolvedNode": 14917,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 14749,
-        "latestNodeCreated": 14903,
+        "latestConfirmed": 14916,
+        "latestNodeCreated": 15069,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -417,6 +417,18 @@
         "rollup": "0xC12BA48c781F6e392B49Db2E25Cd0c28cD77531A"
       },
       "derivedName": "OldOutbox"
+    },
+    {
+      "name": "LPTL1Escrow",
+      "address": "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1644777090,
+      "values": {
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000"
+      },
+      "derivedName": "L1Escrow"
     },
     {
       "name": "L1GatewayRouter",
@@ -517,11 +529,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1569618,
+        "delayedMessageCount": 1585020,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 623378,
-        "sequencerReportedSubMessageCount": 201235961
+        "sequencerMessageCount": 631596,
+        "sequencerReportedSubMessageCount": 203644264
       },
       "derivedName": "Bridge"
     },
@@ -2320,6 +2332,21 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A": [
+      "constructor()",
+      "event Approve(address indexed _token, address indexed _spender, uint256 _value)",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function approve(address _token, address _spender, uint256 _value)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revokeRole(bytes32 role, address account)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
     ],
     "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef": [
       "constructor(address _logic, address admin_, bytes _data) payable",

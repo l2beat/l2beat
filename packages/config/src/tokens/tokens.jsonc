@@ -1273,6 +1273,22 @@
   ],
   "arbitrum": [
     {
+      "symbol": "MOR",
+      "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
+      "symbol": "USD+",
+      "address": "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "source": "native",

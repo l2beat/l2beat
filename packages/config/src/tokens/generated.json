@@ -7019,6 +7019,25 @@
       }
     },
     {
+      "id": "arbitrum:mor-mor",
+      "name": "MOR",
+      "coingeckoId": "morpheusai",
+      "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "symbol": "MOR",
+      "decimals": 18,
+      "deploymentTimestamp": 1714748963,
+      "coingeckoListingTimestamp": 1716163200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37969/large/MOR200X200.png?1716327119",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "id": "arbitrum:moz-mozaic-token",
       "name": "Mozaic Token",
       "coingeckoId": "mozaic",
@@ -7255,6 +7274,21 @@
       "chainId": 42161,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "id": "arbitrum:usd+-usd+",
+      "name": "USD+",
+      "coingeckoId": "usd",
+      "address": "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
+      "symbol": "USD+",
+      "decimals": 6,
+      "deploymentTimestamp": 1676984624,
+      "coingeckoListingTimestamp": 1653436800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/25757/large/USD__logo.png?1696524843",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "id": "arbitrum:usde-usde",
