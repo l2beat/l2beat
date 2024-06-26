@@ -1,4 +1,29 @@
-Generated with discovered.json: 0xf2d38310f89573f888cf5d42a0c2f2613e36a3f8
+Generated with discovered.json: 0x22aad3dafc7ce11eca57477abe4c6e103e53e41c
+
+# Diff at Fri, 21 Jun 2024 06:59:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@1ba6434de248c46d9e6b140264866a3072082af4 block: 20016116
+- current block number: 20138458
+
+## Description
+
+New proposal: Withdraw fees from Vault 6, upgrade other unverified contracts to new unverified contracts.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        53
++        54
+    }
+```
+
+Generated with discovered.json: 0x9e9cf8137ae4685c73b20e751b457741f4598a42
 
 # Diff at Tue, 04 Jun 2024 04:37:25 GMT:
 

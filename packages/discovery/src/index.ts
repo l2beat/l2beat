@@ -7,6 +7,7 @@ export type {
   InversionConfig,
   SingleDiscoveryModuleConfig,
 } from './config/types'
+export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
@@ -29,12 +30,9 @@ export {
   discoveryDiffToMarkdown,
 } from './discovery/output/diffToMarkdown'
 export { toDiscoveryOutput } from './discovery/output/toDiscoveryOutput'
-export { DiscoveryProvider } from './discovery/provider/DiscoveryProvider'
 export { MulticallClient } from './discovery/provider/multicall/MulticallClient'
 export { getMulticall3Config } from './discovery/provider/multicall/MulticallConfig'
 export type { MulticallConfig } from './discovery/provider/multicall/types'
-export type { DiscoveryCache } from './discovery/provider/ProviderWithCache'
-export { ProviderWithCache } from './discovery/provider/ProviderWithCache'
 export { RateLimitedProvider } from './discovery/provider/RateLimitedProvider'
 export { ProxyDetector } from './discovery/proxies/ProxyDetector'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
@@ -42,6 +40,7 @@ export { SourceCodeService } from './discovery/source/SourceCodeService'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
 export type { HashedChunks, HashedFileContent } from './flatten/utils'
+export { type DiscoveryCache } from './discovery/provider/ReorgAwareCache'
 export {
   buildSimilarityHashmap,
   estimateSimilarity,
@@ -59,3 +58,5 @@ export {
 } from './utils/EtherscanLikeClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
+export { AllProviders } from './discovery/provider/AllProviders'
+export type { IProvider } from './discovery/provider/IProvider'

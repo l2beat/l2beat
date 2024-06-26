@@ -7,14 +7,14 @@ export class BridgeEscrowRepository {
   upsert(bridgeEscrow: BridgeEscrow) {
     const row = toRow(bridgeEscrow)
 
-    return this.db.insertInto('BridgeEscrow').values(row).execute()
+    return this.db.insertInto('public.BridgeEscrow').values(row).execute()
   }
 
   upsertMany(bridgeEscrows: BridgeEscrow[]) {
     const rows = bridgeEscrows.map(toRow)
 
     return this.db
-      .insertInto('BridgeEscrow')
+      .insertInto('public.BridgeEscrow')
       .values(rows)
       .onConflict((conflict) =>
         conflict.columns(['networkId', 'address']).doUpdateSet({

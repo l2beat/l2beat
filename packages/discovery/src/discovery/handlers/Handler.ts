@@ -3,11 +3,7 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import {
-  MulticallRequest,
-  MulticallResponse,
-} from '../provider/multicall/types'
+import { IProvider } from '../provider/IProvider'
 
 export interface HandlerResult {
   field: string
@@ -17,29 +13,13 @@ export interface HandlerResult {
   ignoreRelative?: boolean
 }
 
-interface BaseHandler {
+export interface Handler {
   field: string
   dependencies: string[]
   logger?: DiscoveryLogger
   execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult>
 }
-
-export interface ClassicHandler extends BaseHandler {
-  multicallable?: false
-}
-
-export interface MulticallableHandler extends BaseHandler {
-  multicallable: true
-  encode(
-    address: EthereumAddress,
-    previousResults: Record<string, HandlerResult | undefined>,
-  ): MulticallRequest[]
-  decode: (result: MulticallResponse[]) => HandlerResult
-}
-
-export type Handler = MulticallableHandler | ClassicHandler

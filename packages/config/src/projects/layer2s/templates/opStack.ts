@@ -83,7 +83,7 @@ export interface OpStackConfigCommon {
   nonTemplatePermissions?: ScalingProjectPermission[]
   nonTemplateNativePermissions?: ScalingProjectPermission[]
   nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: ScalingProjectContract[]
+  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
@@ -485,7 +485,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           })
         : addSentimentToDataAvailability({
             layers: [
@@ -494,7 +494,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                 : 'Ethereum (calldata)',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           }),
     riskView: makeBridgeCompatible({
       stateValidation: {
@@ -699,7 +699,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           })
         : addSentimentToDataAvailability({
             layers: [
@@ -708,7 +708,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
                 : 'Ethereum (calldata)',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           }),
     config: {
       associatedTokens: templateVars.associatedTokens,

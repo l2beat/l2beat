@@ -15,7 +15,7 @@ export const sygma: Bridge = {
     slug: 'sygma',
     category: 'Hybrid',
     description:
-      'Sygma is a an interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
+      'Sygma is an interoperability protocol enabling asset transfers, non-fungible tokens, and cross-chain execution. With Sygma, developers can extend their applications across Ethereum mainnet, Base, Cronos, Polygon, Gnosis, Polkadot, Kusama, and other Substrate-based chains with active work on Bitcoin and Cosmos SDK interoperability.',
     detailedDescription: `Sygma in its current version is an interoperability protocol relying, from the Ethereum's point-of-view, on a \
     single EOA address' signature. This address is meant to represent MPC validators. There are plans in the future to extend the protocol and \
     add zk verifiers for block header oracle verification and optimistic routes that can be tailored to users' needs, however at the moment these capabilities are not deployed.`,
@@ -114,6 +114,7 @@ export const sygma: Bridge = {
         address: EthereumAddress('0xC832588193cd5ED2185daDA4A531e0B26eC5B830'), // sygma erc-20 bridge handler address used to hold liquidity
         sinceTimestamp: new UnixTime(1685659954),
         tokens: ['PHA'],
+        chain: 'ethereum',
       },
     ],
   },

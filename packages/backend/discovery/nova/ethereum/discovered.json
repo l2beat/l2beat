@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19916529,
   "configHash": "0xe27dc5e636140b87e6b0c4623dfc6041a1c19e57b81e140940037e119f711cf4",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -690,6 +690,9 @@
       "name": "RollupProxy",
       "address": "0xFb209827c58283535b744575e11953DCC4bEAD88",
       "template": "orbitstack/RollupProxy",
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
       "ignoreInWatchMode": [
         "firstUnresolvedNode",
         "latestConfirmed",

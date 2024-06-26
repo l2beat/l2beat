@@ -1,9 +1,9 @@
 {
   "name": "hyphen",
   "chain": "ethereum",
-  "blockNumber": 19062459,
-  "configHash": "0xceae3f176ee050a81e83b5966d84dc1e44319721550138500452a3a76f398600",
-  "version": 5,
+  "blockNumber": 20138492,
+  "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
+  "version": 7,
   "contracts": [
     {
       "name": "ProxyAdmin",
@@ -79,7 +79,6 @@
       "sinceTimestamp": 1647128942,
       "values": {
         "BASE_DIVISOR": "1000000000000000000",
-        "getFeeAccumulatedOnNft": [],
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
       }

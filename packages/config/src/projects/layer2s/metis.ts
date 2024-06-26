@@ -92,6 +92,7 @@ export const metis: Layer2 = {
         address: EthereumAddress('0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b'),
         sinceTimestamp: new UnixTime(1637077208),
         tokens: '*',
+        chain: 'ethereum',
       },
     ],
     transactionApi: {
@@ -104,7 +105,7 @@ export const metis: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['MEMO'],
     bridge: { type: 'None' },
-    mode: 'Transactions data',
+    mode: 'Transaction data',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -169,7 +170,7 @@ export const metis: Layer2 = {
     operator: {
       name: 'The system has a decentralized sequencer set',
       description:
-        'As of April 2024 Metis uses a permissioned sequencer pool running a Tendermint consensus. Once consensus is reached on a block, an MPC address is used to submit a block hash to Ethereum. The infrastracture to manage the MPC is offchain and not trustless because Ethereum does not verify the validity of MPC address.',
+        'As of April 2024 Metis uses a permissioned sequencer pool running a Tendermint consensus. Once consensus is reached on a block, an MPC address is used to submit a block hash to Ethereum. The infrastructure to manage the MPC is offchain and not trustless because Ethereum does not verify the validity of MPC address.',
       risks: [FRONTRUNNING_RISK],
       references: [
         {

@@ -1,12 +1,11 @@
-import { assert } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -29,7 +28,7 @@ export const DynamicArrayHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class DynamicArrayHandler implements ClassicHandler {
+export class DynamicArrayHandler implements Handler {
   readonly dependencies: string[]
 
   constructor(
@@ -41,9 +40,8 @@ export class DynamicArrayHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading dynamic array storage'])
@@ -52,21 +50,10 @@ export class DynamicArrayHandler implements ClassicHandler {
     const elementStorages: Bytes[] = []
     try {
       const lengthSlot = resolved.slot
-      const lengthStorage = await provider.getStorage(
-        address,
-        lengthSlot,
-        blockNumber,
-      )
-      const length = bytes32ToContractValue(lengthStorage, 'number')
-
-      assert(typeof length === 'number')
+      const length = await provider.getStorageAsBigint(address, lengthSlot)
       for (let index = 0n; index < length; index++) {
         const elementSlot = computeDynamicSlot(lengthSlot, index)
-        const elementStorage = await provider.getStorage(
-          address,
-          elementSlot,
-          blockNumber,
-        )
+        const elementStorage = await provider.getStorage(address, elementSlot)
         elementStorages.push(elementStorage)
       }
     } catch (e) {

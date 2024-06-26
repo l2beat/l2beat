@@ -181,6 +181,7 @@ export function makeConfig(
         .readAllChains()
         .filter((chain) => flags.isEnabled('updateMonitor', chain))
         .map((chain) => getChainDiscoveryConfig(env, chain)),
+      enableCache: env.optionalBoolean(['DISCOVERY_CACHE_ENABLED']),
     },
     implementationChangeReporterEnabled: flags.isEnabled(
       'implementationChangeReporter',

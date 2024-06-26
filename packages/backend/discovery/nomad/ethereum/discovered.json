@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531994,
   "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",

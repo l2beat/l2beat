@@ -83,7 +83,7 @@ export const linea: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://linea.build/'],
-      apps: ['https://bridge.linea.build/', 'https://linea.build/apps'],
+      apps: ['https://bridge.linea.build/'],
       documentation: ['https://docs.linea.build/'],
       explorers: [
         'https://lineascan.build/',
@@ -268,7 +268,7 @@ export const linea: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'Transaction data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {

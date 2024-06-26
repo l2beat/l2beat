@@ -9,7 +9,6 @@ import {
   ScalingProjectEscrow,
   ScalingProjectTransactionApi,
   chains,
-  getCanonicalTokenBySymbol,
   tokenList,
 } from '@l2beat/config'
 import {
@@ -19,6 +18,7 @@ import {
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
+
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
@@ -46,7 +46,7 @@ export interface ProjectEscrow {
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   tokens: Token[]
-  chain?: string
+  chain: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
   bridge?: {
@@ -63,22 +63,7 @@ export function layer2ToProject(layer2: Layer2): Project {
     type: 'layer2',
     isUpcoming: layer2.isUpcoming,
     isArchived: layer2.isArchived,
-    escrows: layer2.config.escrows.map((escrow) => ({
-      address: escrow.address,
-      sinceTimestamp: escrow.sinceTimestamp,
-      tokens:
-        escrow.tokens === '*'
-          ? tokenList.filter(
-              (t) =>
-                t.type === 'CBV' &&
-                t.chainId === ChainId.ETHEREUM &&
-                !escrow.excludedTokens?.includes(t.symbol),
-            )
-          : escrow.tokens.map(getCanonicalTokenBySymbol),
-      includeInTotal: escrow.includeInTotal,
-      source: escrow.source,
-      bridge: escrow.bridge,
-    })),
+    escrows: layer2.config.escrows.map(toProjectEscrow),
     transactionApi: layer2.config.transactionApi,
     trackedTxsConfig: toBackendTrackedTxsConfig(
       layer2.id,
@@ -98,22 +83,7 @@ export function bridgeToProject(bridge: Bridge): Project {
     projectId: bridge.id,
     slug: bridge.display.slug,
     type: 'bridge',
-    escrows: bridge.config.escrows.map((escrow) => ({
-      address: escrow.address,
-      sinceTimestamp: escrow.sinceTimestamp,
-      tokens:
-        escrow.tokens === '*'
-          ? tokenList.filter(
-              (t) =>
-                t.type === 'CBV' &&
-                t.chainId === ChainId.ETHEREUM &&
-                !escrow.excludedTokens?.includes(t.symbol),
-            )
-          : escrow.tokens.map(getCanonicalTokenBySymbol),
-      includeInTotal: escrow.includeInTotal,
-      source: escrow.source,
-      bridge: escrow.bridge,
-    })),
+    escrows: bridge.config.escrows.map(toProjectEscrow),
     associatedTokens: bridge.config.associatedTokens,
   }
 }
@@ -195,43 +165,44 @@ export function layer3ToProject(layer3: Layer3): Project {
     slug: layer3.display.slug,
     type: 'layer3',
     isUpcoming: layer3.isUpcoming,
-    escrows: layer3.config.escrows.map((escrow) => {
-      const chain = escrow.chain
-      assert(chain, ` ${layer3.id}: chain is required for L3 escrow`)
-      const chainId = chainConverter.toChainId(chain)
-
-      const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
-
-      return {
-        address: escrow.address,
-        sinceTimestamp: escrow.sinceTimestamp,
-        tokens:
-          escrow.tokens === '*'
-            ? tokensOnChain.filter(
-                (t) => !escrow.excludedTokens?.includes(t.symbol),
-              )
-            : mapL3Tokens(escrow.tokens, tokensOnChain, layer3, chain),
-        chain,
-        includeInTotal: escrow.includeInTotal,
-        source: escrow.source,
-        bridge: escrow.bridge,
-      }
-    }),
+    escrows: layer3.config.escrows.map(toProjectEscrow),
     associatedTokens: layer3.config.associatedTokens,
   }
 }
 
-function mapL3Tokens(
-  tokens: string[],
+function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
+  const chainId = chainConverter.toChainId(escrow.chain)
+
+  const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
+
+  return {
+    address: escrow.address,
+    sinceTimestamp: escrow.sinceTimestamp,
+    tokens:
+      escrow.tokens === '*'
+        ? tokensOnChain.filter(
+            (t) => !escrow.excludedTokens?.includes(t.symbol),
+          )
+        : mapTokens(escrow, tokensOnChain),
+    chain: escrow.chain,
+    includeInTotal: escrow.includeInTotal,
+    source: escrow.source,
+    bridge: escrow.bridge,
+  }
+}
+
+function mapTokens(
+  escrow: ScalingProjectEscrow,
   tokensOnChain: Token[],
-  layer3: Layer3,
-  chain: string,
 ): Token[] {
-  return tokens.map((tokenSymbol) => {
+  assert(escrow.tokens !== '*')
+  return escrow.tokens.map((tokenSymbol) => {
     const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
     assert(
       token,
-      `${layer3.id}: token with symbol ${tokenSymbol} not found on ${chain}`,
+      `Token with symbol ${tokenSymbol} not found on ${
+        escrow.chain
+      } @ ${escrow.address.toString()}`,
     )
     return token
   })

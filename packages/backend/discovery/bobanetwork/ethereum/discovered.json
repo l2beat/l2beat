@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19960612,
   "configHash": "0x150fd11b72d9b276dab0b43c60f2417401823f672a2bf8c70ec190bd26acdfb7",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "SystemConfig",
       "address": "0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB",
+      "descriptions": [
+        "It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
       "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",

@@ -5,8 +5,10 @@ import {
   Layer3,
   ScalingProjectContract,
   ScalingProjectEscrow,
+  bridges,
   isSingleAddress,
   layer2s,
+  layer3s,
 } from '@l2beat/config'
 import {
   assert,
@@ -47,19 +49,29 @@ export function getContractSection(
     )
   })
 
-  const nativeContracts = project.contracts?.nativeAddresses?.map(
-    (contract) => {
-      const isUnverified = isContractUnverified(contract, verificationStatus)
-      const implementationChangeForProject =
-        implementationChange?.projects[project.id.toString()]
-      return makeTechnologyContract(
-        contract,
-        project,
-        isUnverified,
-        verificationStatus,
-        implementationChangeForProject,
-      )
-    },
+  const nativeContracts = Object.fromEntries(
+    Object.entries(project.contracts?.nativeAddresses ?? {}).map(
+      ([chainName, contracts]) => {
+        return [
+          slugToDisplayName(chainName),
+          contracts.map((contract) => {
+            const isUnverified = isContractUnverified(
+              contract,
+              verificationStatus,
+            )
+            const implementationChangeForProject =
+              implementationChange?.projects[project.id.toString()]
+            return makeTechnologyContract(
+              contract,
+              project,
+              isUnverified,
+              verificationStatus,
+              implementationChangeForProject,
+            )
+          }),
+        ]
+      },
+    ),
   )
 
   const escrows = project.config.escrows
@@ -110,9 +122,8 @@ export function getContractSection(
   return {
     id: 'contracts',
     chainName,
-    nativeChainName: project.display.name,
     title: 'Smart contracts',
-    nativeContracts: nativeContracts ?? [],
+    nativeContracts: nativeContracts,
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
@@ -504,4 +515,21 @@ function areAllAddressesUnverified(
   return addresses.every((address) => {
     return verificationStatus[address.toString()] === false
   })
+}
+
+function slugToDisplayName(slug: string): string {
+  const isL2 = layer2s.find((l2) => l2.id === slug)
+  if (isL2 !== undefined) {
+    return isL2.display.name
+  }
+  const isL3 = layer3s.find((l3) => l3.id === slug)
+  if (isL3 !== undefined) {
+    return isL3.display.name
+  }
+  const isBridge = bridges.find((bridge) => bridge.id === slug)
+  if (isBridge !== undefined) {
+    return isBridge.display.name
+  }
+
+  assert(false, 'Unknown chain slug')
 }

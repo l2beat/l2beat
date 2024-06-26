@@ -1,9 +1,9 @@
 {
   "name": "orbit",
   "chain": "ethereum",
-  "blockNumber": 19475340,
+  "blockNumber": 20132375,
   "configHash": "0x2eec4bf11f15af3314b396b1fca83a67a70e09cd7b429a0be66f522678b530db",
-  "version": 5,
+  "version": 7,
   "contracts": [
     {
       "name": "",
@@ -11,10 +11,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc",
+        "implementation": "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9",
         "admin": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70"
       },
-      "implementations": ["0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"],
+      "implementations": ["0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"],
       "sinceTimestamp": 1708655927
     },
     {

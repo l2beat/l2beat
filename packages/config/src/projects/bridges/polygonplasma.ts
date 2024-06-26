@@ -42,6 +42,7 @@ export const polygonplasma: Bridge = {
         address: EthereumAddress('0x401F6c983eA34274ec46f84D70b31C151321188b'),
         sinceTimestamp: new UnixTime(1590850640),
         tokens: ['MATIC', 'DAI'],
+        chain: 'ethereum',
       },
     ],
   },

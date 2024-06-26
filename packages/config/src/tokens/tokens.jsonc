@@ -1,6 +1,42 @@
 {
   "ethereum": [
     {
+      "symbol": "TRESTLE",
+      "address": "0xde8cd13b812bcd82218754a740b27e76ec1e86ad"
+    },
+    {
+      "symbol": "wTIA",
+      "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
+    },
+    {
+      "symbol": "PARAM",
+      "address": "0x69a1e699f562d7af66fc6cc473d99f4430c3acd2"
+    },
+    {
+      "symbol": "MYT",
+      "address": "0x5fde99e121f3ac02e7d6acb081db1f89c1e93c17"
+    },
+    {
+      "symbol": "PEAS",
+      "address": "0x02f92800f57bcd74066f5709f1daa1a4302df875"
+    },
+    {
+      "symbol": "pxETH",
+      "address": "0x04c154b66cb340f3ae24111cc767e0184ed00cc6"
+    },
+    {
+      "symbol": "MAVIA",
+      "address": "0x24fcfc492c1393274b6bcd568ac9e225bec93584"
+    },
+    {
+      "symbol": "rsETH",
+      "address": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7"
+    },
+    {
+      "symbol": "TBANK",
+      "address": "0x95ccffae3eb8767d4a941ec43280961dde89f4de"
+    },
+    {
       "symbol": "10SET",
       "address": "0x7FF4169a6B5122b664c51c95727d87750eC07c84",
       "coingeckoId": "tenset"
@@ -1074,6 +1110,14 @@
       "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
     },
     {
+      "symbol": "uniETH",
+      "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4"
+    },
+    {
+      "symbol": "mswETH",
+      "address": "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678"
+    },
+    {
       "symbol": "UOS",
       "address": "0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c"
     },
@@ -1225,11 +1269,49 @@
   ],
   "arbitrum": [
     {
+      "symbol": "ZRO",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0xFF970A61A04b1cA14834A43f5dE4533eBDDB5CC8",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xFd086bC7CD5C481DCC9C85ebE478A1C0b69FCbb9",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "FRAX",
       "address": "0x17FC002b466eEc40DaE837Fc4bE5c67993ddBd6F",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1238,8 +1320,8 @@
     {
       "symbol": "FXS",
       "address": "0x9d2F299715D94d8A7E6F5eaa8E654E8c74a988A7",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1248,8 +1330,8 @@
     {
       "symbol": "FPI",
       "address": "0x1B01514A2B3CdEf16fD3c680a818A0Ab97Da8a09",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1258,8 +1340,8 @@
     {
       "symbol": "FPIS",
       "address": "0x3405E88af759992937b84E58F2Fe691EF0EeA320",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1268,8 +1350,8 @@
     {
       "symbol": "frxETH",
       "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1278,8 +1360,8 @@
     {
       "symbol": "sfrxETH",
       "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1288,8 +1370,8 @@
     {
       "symbol": "sFRAX",
       "address": "0xe3b3FE7bcA19cA77Ad877A5Bebab186bEcfAD906",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1298,14 +1380,14 @@
     {
       "symbol": "ARB",
       "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "BIFI",
       "address": "0x99C409E5f62E4bd2AC142f17caFb6810B8F0BAAE",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Multichain",
         "slug": "multichain"
@@ -1315,14 +1397,14 @@
     {
       "symbol": "BOOP",
       "address": "0x13A7DeDb7169a17bE92B0E3C7C2315B46f4772B3",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "BTC.b",
       "address": "0x2297aEbD383787A160DD0d9F71508148769342E3",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -1331,21 +1413,21 @@
     {
       "symbol": "DMT",
       "address": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "EQU",
       "address": "0x87AAfFdF26c6885f6010219208D5B161ec7609c0",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
@@ -1355,26 +1437,26 @@
       "symbol": "GMX",
       "address": "0xfc5A1A6EB076a2C7aD06eD22C90d7E710E35ad0a",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "GNS",
       "address": "0x18c11FD286C5EC11c3b683Caa813B77f5163A122",
-      "type": "NMV",
-      "formula": "totalSupply"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "HDN",
       "address": "0x3404149e9EE6f17Fb41DB1Ce593ee48FBDcD9506",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "JOE",
       "address": "0x371c7ec6d8039ff7933a2aa28eb827ffe1f52f07",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -1383,20 +1465,20 @@
     {
       "symbol": "JONES",
       "address": "0x10393c20975cf177a3513071bc110f7962cd67da",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "LODE",
       "address": "0xf19547f9ed24aa66b03c3a552d181ae334fbb8db",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "MOLTEN",
       "address": "0x66E535e8D2ebf13F49F3D49e5c50395a97C137b1",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -1405,21 +1487,21 @@
     {
       "symbol": "MOZ",
       "address": "0x20547341E58fB558637FA15379C92e11F7b7F710",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "MXC",
       "address": "0xaeDF7656fBB47c5B97dD529aC1D0e807E051f2dd",
-      "type": "NMV",
-      "formula": "circulatingSupply",
+      "source": "native",
+      "supply": "circulatingSupply",
       "coingeckoId": "mxc"
     },
     {
       "symbol": "RDNT",
       "address": "0x3082CC23568eA640225c2467653dB90e9250AaA0",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -1428,8 +1510,8 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1439,8 +1521,8 @@
     {
       "symbol": "SDEX",
       "address": "0xabD587f2607542723b17f14d00d99b987C29b074",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
@@ -1449,14 +1531,14 @@
     {
       "symbol": "SPARTA",
       "address": "0x11F98c7E42A367DaB4f200d2fdc460fb445CE9a8",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "STG",
       "address": "0x6694340fc020c5E6B96567843da2df01b2CE1eb6",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
@@ -1465,23 +1547,23 @@
     {
       "symbol": "UMAMI",
       "address": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "USDC",
       "address": "0xaf88d065e77c8cC2239327C5EDb3A432268e5831",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1491,8 +1573,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1501,20 +1583,20 @@
     {
       "symbol": "XAI",
       "address": "0x4cb9a7ae498cedcbb5eae9f25736ae7d428c9d66",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "GRAIL",
       "address": "0x3d9907F9a368ad0a51Be60f7Da3b97cf940982D8",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "GRT",
       "address": "0x9623063377AD1B27544C965cCd7342f7EA7e88C7",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "The Graph Custom Gateway"
       }
@@ -1522,45 +1604,71 @@
     {
       "symbol": "VELA",
       "address": "0x088cd8f5eF3652623c22D48b1605DCfE860Cd704",
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
-      "symbol": "weETH",
-      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "stargate"
-      }
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "WINR",
       "address": "0xD77B108d4f6cefaa0Cae9506A934e825BEccA46E",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     }
   ],
   "optimism": [
     {
+      "symbol": "wBTC",
+      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "ZRO",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
+      "symbol": "DAI",
+      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x94b008aA00579c1307B0EF2c499aD98a8ce58e58",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
       "symbol": "FRAX",
       "address": "0x2E3D870790dC77A83DD1d18184Acc7439A53f475",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1569,8 +1677,8 @@
     {
       "symbol": "FXS",
       "address": "0x67CCEA5bb16181E7b4109c9c2143c24a1c2205Be",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1580,8 +1688,8 @@
     {
       "symbol": "FPI",
       "address": "0xC5d43A94e26fCa47A9b21CF547ae4AA0268670E1",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1591,8 +1699,8 @@
     {
       "symbol": "FPIS",
       "address": "0x8368Dca5CE2a4Db530c0F6e535d90B6826428Dee",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1602,8 +1710,8 @@
     {
       "symbol": "frxETH",
       "address": "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1612,8 +1720,8 @@
     {
       "symbol": "sfrxETH",
       "address": "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1622,8 +1730,8 @@
     {
       "symbol": "sFRAX",
       "address": "0x2Dd1B4D4548aCCeA497050619965f91f78b3b532",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -1632,26 +1740,26 @@
     {
       "symbol": "EXA",
       "address": "0x1e925de1c68ef83bd98ee3e130ef14a50309c01b",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "KWENTA",
       "address": "0x920Cf626a271321C151D027030D5d08aF699456b",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "OP",
       "address": "0x4200000000000000000000000000000000000042",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1661,8 +1769,8 @@
     {
       "symbol": "STG",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
@@ -1672,16 +1780,16 @@
       "symbol": "USDC",
       "address": "0x0b2C639c533813f4Aa9D7837CAf62653d097Ff85",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1691,8 +1799,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1701,33 +1809,33 @@
     {
       "symbol": "VELO",
       "address": "0x9560e827aF36c94D2Ac33a39bCE1Fe78631088Db",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "EXTRA",
       "address": "0x2dAD3a13ef0C6366220f989157009e501e7938F8",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "PIKA",
       "address": "0x9A601C5bb360811d96A23689066af316a30c3027",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "KITE",
       "address": "0xf467C7d5a4A9C4687fFc7986aC6aD5A4c81E1404",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "alUSD",
       "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
@@ -1736,8 +1844,8 @@
     {
       "symbol": "tBTC",
       "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
@@ -1746,8 +1854,8 @@
     {
       "symbol": "USX",
       "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "cBridge (Celer)",
         "slug": "cbridge"
@@ -1756,8 +1864,8 @@
     {
       "symbol": "TAROT",
       "address": "0x1F514A61bcde34F94Bc39731235690ab9da737F7",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
@@ -1766,29 +1874,39 @@
   ],
   "base": [
     {
+      "symbol": "ZRO",
+      "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "symbol": "AERO",
       "address": "0x940181a94a35a4569e4529a3cdfb74e38fd98631",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "BRETT",
       "address": "0x532f27101965dd16442E59d40670FaF5eBB142E4",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "DEGEN",
       "address": "0x4ed4e862860bed51a9570b96d89af5e1b0efefed",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
@@ -1797,20 +1915,20 @@
     {
       "symbol": "FRIEND",
       "address": "0x0bd4887f7d41b35cd75dff9ffee2856106f86670",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "MOCHI",
       "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "rsETH",
       "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -1820,8 +1938,8 @@
     {
       "symbol": "SDEX",
       "address": "0xFd4330b0312fdEEC6d4225075b82E00493FF2e3f",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
@@ -1830,40 +1948,40 @@
     {
       "symbol": "SEAM",
       "address": "0x1c7a460413dd4e964f96d8dfc56e7223ce88cd85",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "TOSHI",
       "address": "0xAC1Bd2486aAf3B5C0fc3Fd868558b082a531B2B4",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "TYBG",
       "address": "0x0d97f261b1e88845184f678e2d1e7a98d9fd38de",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "USDC",
       "address": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
       "symbol": "weETH",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-      "type": "EBV",
+      "source": "external",
       "coingeckoId": "wrapped-eeth",
-      "formula": "totalSupply",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1876,8 +1994,8 @@
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1887,8 +2005,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -1900,8 +2018,8 @@
       "symbol": "USDC",
       "address": "0x6879287835A86F50f784313dBEd5E5cCC5bb8481",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -1911,8 +2029,8 @@
     {
       "symbol": "rswETH",
       "address": "0xC419959850d49166C2d5250Ee89ff9910679D8c8",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -1922,8 +2040,8 @@
     {
       "symbol": "weETH",
       "address": "0x7B35b4c05a90Ea5f311AeC815BE4148b446a68a2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -1933,8 +2051,8 @@
     {
       "symbol": "wBTC",
       "address": "0x9b80ab732a6F1030326Af0014f106E12C4Db18EC",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -1944,8 +2062,8 @@
     {
       "symbol": "wstETH",
       "address": "0xdf77b286eDa539CCb6326e9eDB86aa69D83108a5",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -1956,8 +2074,8 @@
       "symbol": "USDT",
       "address": "0x954bE1803546150bfd887c9ff70fd221F2F505d3",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -1967,33 +2085,43 @@
   ],
   "mantapacific": [
     {
+      "symbol": "USDC",
+      "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
+      "source": "canonical",
+      "category": "stablecoin",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xf417F5A458eC102B90352F697D6e2Ac3A3d2851f",
+      "source": "canonical",
+      "category": "stablecoin",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wBTC",
+      "address": "0x305E88d809c9DC03179554BFbf85Ac05Ce8F18d6",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
       "symbol": "MANTA",
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
-      "type": "NMV",
-      "formula": "circulatingSupply"
-    },
-    {
-      "symbol": "mBTC",
-      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
-      "type": "EBV",
-      "formula": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "mETH",
       "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
       "category": "ether",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2003,8 +2131,8 @@
       "symbol": "mUSD",
       "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2013,8 +2141,8 @@
     {
       "symbol": "STONE",
       "address": "0xEc901DA9c68E90798BbBb74c11406A32A70652C3",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2025,8 +2153,8 @@
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2036,8 +2164,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2046,8 +2174,8 @@
     {
       "symbol": "TIA",
       "address": "0x6Fae4D9935E2fcb11fC79a64e917fb2BF14DaFaa",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Hyperlane Nexus"
       },
@@ -2056,9 +2184,41 @@
   ],
   "mantle": [
     {
-      "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "symbol": "MNT",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wMNT",
+      "address": "0x78c1b0C915c4FAA5FffA6CAbf0219DA63d7f4cb8",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC",
+      "address": "0x09Bc4E0D864854c6aFB6eB9A9cdF58aC190D0dF9",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x201EBa5CC46D216Ce6DC03F6a759e8E766e956aE",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
@@ -2066,8 +2226,8 @@
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2077,8 +2237,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2087,17 +2247,38 @@
   ],
   "linea": [
     {
+      "symbol": "wBTC",
+      "address": "0x3aAB2285ddcDdaD8edf438C1bAB47e1a9D05a9b4",
+      "coingeckoId": "wrapped-bitcoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0x176211869cA2b568f2A7D4EE941E073a821EE1ff",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xA219439258ca9da29E9Cc4cE5596924745e12B93",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
       "coingeckoId": "renzo-restaked-eth",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
@@ -2106,8 +2287,8 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2117,8 +2298,8 @@
     {
       "symbol": "STONE",
       "address": "0x93F4d0ab6a8B4271f4a28Db399b5E30612D21116",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2127,54 +2308,54 @@
     {
       "symbol": "LINDA", // LayerZero bridged but Linea native with OFT adapter (locking escrow)
       "address": "0x82cC61354d78b846016b559e3cCD766fa7E793D5",
-      "type": "NMV",
-      "formula": "totalSupply" // no circulating on coingecko and almost totalsupply is close to circ
+      "source": "native",
+      "supply": "totalSupply" // no circulating on coingecko and almost totalsupply is close to circ
     },
     {
       "symbol": "LUBE",
       "address": "0x1be3735dd0c0eb229fb11094b6c277192349ebbf",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "MENDI",
       "address": "0x43e8809ea748eff3204ee01f08872f063e44065f",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "LYNX",
       "address": "0x1a51b19CE03dbE0Cb44C1528E34a7EDD7771E9Af",
-      "type": "NMV",
-      "formula": "circulatingSupply",
+      "source": "native",
+      "supply": "circulatingSupply",
       "coingeckoId": "lynex"
     },
     {
       "symbol": "FOXY",
       "address": "0x5fbdf89403270a1846f5ae7d113a989f850d1566",
-      "type": "NMV",
-      "formula": "circulatingSupply",
+      "source": "native",
+      "supply": "circulatingSupply",
       "coingeckoId": "foxy"
     },
     {
       "symbol": "ZERO",
       "address": "0x78354f8DcCB269a615A7e0a24f9B0718FDC3C7A7",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "NILE",
       "address": "0xAAAac83751090C6ea42379626435f805DDF54DC8",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2184,8 +2365,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2194,9 +2375,9 @@
     {
       "symbol": "weETH",
       "address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
-      "type": "EBV",
+      "source": "external",
       "coingeckoId": "wrapped-eeth",
-      "formula": "totalSupply",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2207,16 +2388,16 @@
     {
       "symbol": "ZKF",
       "address": "0x1cd3e2a23c45a690a18ed93fd1412543f464158f",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "kinto": [
     {
       "symbol": "weETH",
       "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2226,8 +2407,8 @@
     {
       "symbol": "wstETH",
       "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2237,8 +2418,8 @@
     {
       "symbol": "DAI",
       "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2248,8 +2429,8 @@
     {
       "symbol": "ENA",
       "address": "0xE040001C257237839a69E9683349C173297876F0",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2259,8 +2440,8 @@
     {
       "symbol": "ETHFI",
       "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2271,8 +2452,8 @@
       "symbol": "sDAI",
       "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2282,8 +2463,8 @@
     {
       "symbol": "sUSDe",
       "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2295,8 +2476,8 @@
     {
       "symbol": "WEMIX.e",
       "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Wemix on Kroma"
       },
@@ -2308,8 +2489,8 @@
       "symbol": "USDC",
       "address": "0xC06Ed0eB5c0e25fa71B37A3F33CFa62C7d9dD542",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2319,8 +2500,8 @@
     {
       "symbol": "WETH",
       "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2332,8 +2513,8 @@
     {
       "symbol": "bWOOL",
       "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2341,16 +2522,16 @@
     },
     {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
       "coingeckoId": "renzo-restaked-eth",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
@@ -2359,8 +2540,8 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2371,8 +2552,8 @@
       "symbol": "USDB",
       "address": "0x4300000000000000000000000000000000000003",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Blast"
       },
@@ -2383,8 +2564,8 @@
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2394,8 +2575,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2404,16 +2585,16 @@
     {
       "symbol": "PAC",
       "address": "0x5ffd9ebd27f2fcab044c0f0a26a45cb62fa29c06",
-      "type": "NMV",
-      "formula": "circulatingSupply",
+      "source": "native",
+      "supply": "circulatingSupply",
       "coingeckoId": "pacmoon"
     },
     {
       "symbol": "weETH",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-      "type": "EBV",
+      "source": "external",
       "coingeckoId": "wrapped-eeth",
-      "formula": "totalSupply",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2422,8 +2603,8 @@
     {
       "symbol": "JUICE",
       "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "mode": [
@@ -2431,8 +2612,8 @@
       "symbol": "ezETH",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Connext",
         "slug": "connext"
@@ -2441,8 +2622,8 @@
     {
       "symbol": "rsETH",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2453,8 +2634,8 @@
       "symbol": "STONE",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
       "coingeckoId": "stakestone-ether",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
@@ -2464,8 +2645,8 @@
       "symbol": "M-BTC",
       "address": "0x59889b7021243dB5B1e065385F918316cD90D46c",
       "coingeckoId": "merlin-s-seal-btc",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Free Bridge"
       }
@@ -2473,16 +2654,16 @@
     {
       "symbol": "MODE",
       "address": "0xDfc7C877a950e49D2610114102175A06C2e3167a",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2492,8 +2673,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2502,8 +2683,8 @@
     {
       "symbol": "weETH.mode",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "wrapped-eeth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2511,12 +2692,57 @@
       }
     }
   ],
+  "metis": [
+    {
+      "symbol": "Metis",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "WETH",
+      "address": "0x420000000000000000000000000000000000000A",
+      "coingeckoId": "ethereum",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xbB06DCA3AE6887fAbF931640f67cab3e3a16F4dC",
+      "coingeckoId": "tether",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "stablecoin"
+    }
+  ],
   "scroll": [
+    {
+      "symbol": "USDC",
+      "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "usd-coin"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0xf55BEC9cafDbE8730f096Aa55dad6D22d44099Df",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero",
+      "coingeckoId": "tether"
+    },
+    {
+      "symbol": "ETH",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
     {
       "symbol": "rsETH",
       "address": "0x65421ba909200b81640d98B979d07487C9781B66",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2528,8 +2754,8 @@
       "coingeckoId": "ethena-usde",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2539,8 +2765,8 @@
       "symbol": "sUSDe",
       "coingeckoId": "ethena-staked-usde",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
@@ -2549,8 +2775,8 @@
     {
       "symbol": "STONE",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "coingeckoId": "stakestone-ether",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2560,24 +2786,51 @@
   ],
   "zksync2": [
     {
+      "symbol": "wBTC",
+      "address": "0xBBeB516fb02a01611cBBE0453Fe3c580D7281011",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0x4B9eb6c0b6ea15176BBF62841C6B2A8a398cb656",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDC.e",
+      "address": "0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "USDT",
+      "address": "0x493257fD37EDB34451f62EDf8D2a0C418852bA4C",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "ETH",
-      "type": "CBV",
-      "formula": "totalSupply", // formula does not matter here
+      "source": "canonical",
+      "supply": "zero",
       "category": "ether"
     },
     {
       "symbol": "USDC",
       "address": "0x1d17CBcF0D6D143135aE902365D2E5e2A16538D4",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply"
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "symbol": "FRAX",
       "address": "0xb4C1544cb4163f4C2ECa1aE9Ce999F63892d912A",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2587,8 +2840,8 @@
     {
       "symbol": "FXS",
       "address": "0x19BC97D3C223fC8a0fF0541D260f4f438d5FaF99",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2598,8 +2851,8 @@
     {
       "symbol": "FPI",
       "address": "0xD405617DB7473b0A3158356Be7bC9EbEc6D88b85",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2609,8 +2862,8 @@
     {
       "symbol": "FPIS",
       "address": "0x36711BA13B461f1998EC9f9B36A410799560f206",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2620,8 +2873,8 @@
     {
       "symbol": "frxETH",
       "address": "0xB54aAE4A0743aeEc1d584F2b2abC1EBDC12f1b0F",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2631,14 +2884,14 @@
     {
       "symbol": "HOLD",
       "address": "0xed4040fd47629e7c8fbb7da76bb50b3e7695f0f2",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "sfrxETH",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2648,27 +2901,27 @@
     {
       "symbol": "MEOW",
       "address": "0x79db8c67d0c33203da4efb58f7d325e1e0d4d692",
-      "type": "NMV",
-      "formula": "circulatingSupply",
+      "source": "native",
+      "supply": "circulatingSupply",
       "coingeckoId": "zeek-coin"
     },
     {
       "symbol": "ZORRO",
       "address": "0x244c238325fc1bdf6eded726ee1b47d55895d944",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "ZF",
       "address": "0x31C2c031fDc9d33e974f327Ab0d9883Eae06cA4A",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "ZK",
       "address": "0x5A7d6b2F92C77FAD6CCaBd7EE0624E64907Eaf3E",
-      "type": "NMV",
-      "formula": "circulatingSupply"
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "bobanetwork": [
@@ -2676,8 +2929,8 @@
       "symbol": "FRAX",
       "address": "0x7562F525106F5d54E891e005867Bf489B5988CD9",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2690,8 +2943,8 @@
       "symbol": "FRAX",
       "address": "0xFf8544feD5379D9ffa8D47a74cE6b91e632AC44D",
       "category": "stablecoin",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2701,8 +2954,8 @@
     {
       "symbol": "FXS",
       "address": "0x6b856a14CeA1d7dCfaF80fA6936c0b75972cCacE",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2712,8 +2965,8 @@
     {
       "symbol": "FPI",
       "address": "0x7E5845b1bFc9e6620893e48346bdB8541995a8D9",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2723,8 +2976,8 @@
     {
       "symbol": "FPIS",
       "address": "0xdE7df9036801676aF0cB73661d93a098c0085fba",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2734,8 +2987,8 @@
     {
       "symbol": "frxETH",
       "address": "0xCf7eceE185f19e2E970a301eE37F93536ed66179",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2745,8 +2998,8 @@
     {
       "symbol": "sfrxETH",
       "address": "0x7c2aF1Fb79D0b1c67d4eb802d44C673D0A1D2C04",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2756,8 +3009,8 @@
     {
       "symbol": "sFRAX",
       "address": "0x2C37fb628b35dfdFD515d41B0cAAe11B542773C3",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Frax Ferry",
         "slug": "fraxferry"
@@ -2770,8 +3023,8 @@
       "symbol": "USDC",
       "address": "0x3B860c0b53f2e8bd5264AA7c3451d41263C933F2",
       "category": "stablecoin",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Socket",
         "slug": "socket"
@@ -2783,18 +3036,19 @@
     {
       "symbol": "BTCT",
       "address": "0xFb8dBdc644eb54dAe0D7A9757f1e6444a07F8067",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "TRON Foundation"
+        "bridge": "TRON Foundation",
+        "warning": "There is no formal bridge nor a way to withdraw this token. Funds are held by a simple Multisig on TRON and minted by a multisig on zkLink Nova."
       },
       "coingeckoId": "bitcoin-trc20"
     },
     {
       "symbol": "SolvBTC.m",
       "address": "0xbEAf16cFD8eFe0FC97C2a07E349B9411F5dC272C",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Free Bridge"
       },
@@ -2803,8 +3057,8 @@
     {
       "symbol": "M-BTC",
       "address": "0x85D431A3a56FDf2d2970635fF627f386b4ae49CC",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Free Bridge"
       },
@@ -2815,8 +3069,8 @@
     {
       "symbol": "USTB",
       "address": "0x83fedbc0b85c6e29b589aa6bdefb1cc581935ecd",
-      "type": "EBV",
-      "formula": "totalSupply",
+      "source": "external",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2826,8 +3080,8 @@
     {
       "symbol": "PEARL",
       "address": "0xce1581d7b4ba40176f0e219b2cac30088ad50c7a",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2837,8 +3091,8 @@
     {
       "symbol": "arcUSD",
       "address": "0xaec9e50e3397f9ddc635c6c429c8c7eca418a143",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
@@ -2848,8 +3102,8 @@
     {
       "symbol": "MORE",
       "address": "0x25ea98ac87A38142561eA70143fd44c4772A16b6",
-      "type": "NMV",
-      "formula": "totalSupply",
+      "source": "native",
+      "supply": "totalSupply",
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"

@@ -3,7 +3,7 @@ import { expect, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { ContractSource, IProvider } from '../../provider/IProvider'
 import { LayerZeroMultisigHandler } from './LayerZeroMultisigHandler'
 
 // data from https://etherscan.io/tx/0x1b83d19d45aa517f56403a2fa5e4472668d612f0f65b524cc84cbf2071006b31
@@ -47,12 +47,13 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const contractAddress = EthereumAddress.random()
 
-    const provider = mockObject<DiscoveryProvider>({
-      getConstructorArgs: async () => SAMPLE_CONSTRUCROR_ARGS,
+    const provider = mockObject<IProvider>({
+      getSource: async () =>
+        ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
       getLogs: async () => [],
     })
 
-    const response = await handler.execute(provider, contractAddress, 0)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'layerZeroMultisig',
@@ -96,8 +97,9 @@ describe(LayerZeroMultisigHandler.name, () => {
       ]) as providers.Log
     }
 
-    const provider = mockObject<DiscoveryProvider>({
-      getConstructorArgs: async () => SAMPLE_CONSTRUCROR_ARGS,
+    const provider = mockObject<IProvider>({
+      getSource: async () =>
+        ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
       getLogs: async (_addr: EthereumAddress, topics: string[]) => {
         if (topics[0] === abi.getEventTopic('UpdateSigner')) {
           return [
@@ -111,7 +113,7 @@ describe(LayerZeroMultisigHandler.name, () => {
       },
     })
 
-    const response = await handler.execute(provider, contractAddress, 1000)
+    const response = await handler.execute(provider, contractAddress)
 
     expect(response).toEqual({
       field: 'layerZeroMultisig',

@@ -26,7 +26,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
           'Fraud proof system is fully deployed but is not yet permissionless as it requires Validators to be whitelisted.',
         redWarning: undefined,
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transactions data (compressed)',
+        dataAvailabilityMode: 'Transaction data (compressed)',
         provider: 'Arbitrum',
         stage: {
           stage: 'Stage 1',
@@ -253,7 +253,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
           'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
         redWarning: undefined,
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transactions data',
+        dataAvailabilityMode: 'Transaction data',
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
@@ -699,7 +699,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         warning: 'The circuit of the program being proven is not public.',
         redWarning: undefined,
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'Transactions data',
+        dataAvailabilityMode: 'Transaction data',
         provider: undefined,
         stage: {
           stage: 'Stage 0',
@@ -878,7 +878,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
           'Fraud proof system is currently under development. Users need to trust block Proposer to submit correct L1 state roots.',
         redWarning: undefined,
         category: 'Optimistic Rollup',
-        dataAvailabilityMode: 'Transactions data',
+        dataAvailabilityMode: 'Transaction data',
         provider: 'OP Stack',
         stage: {
           stage: 'Stage 0',
@@ -1050,7 +1050,7 @@ const meta: Meta<typeof ScalingLivenessView> = {
         warning: 'The forced transaction mechanism is currently disabled.',
         redWarning: undefined,
         category: 'ZK Rollup',
-        dataAvailabilityMode: 'Transactions data',
+        dataAvailabilityMode: 'Transaction data',
         provider: 'Polygon',
         stage: {
           stage: 'Stage 0',

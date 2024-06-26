@@ -5,20 +5,16 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 
 export async function detectEip2535proxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const facets = await getCallResult<EthereumAddress[]>(
-    provider,
+  const facets = await provider.callMethod<EthereumAddress[]>(
     address,
     'function facetAddresses() external view returns (address[] memory facetAd)',
     [],
-    blockNumber,
   )
 
   if (facets === undefined) {

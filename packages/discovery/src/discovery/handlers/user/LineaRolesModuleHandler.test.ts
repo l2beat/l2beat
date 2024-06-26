@@ -4,15 +4,13 @@ import { expect, mockFn, mockObject } from 'earl'
 import { type providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import type { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import type { IProvider } from '../../provider/IProvider'
 import {
   LineaRolesModuleHandler,
   type ScopeConfig,
 } from './LineaRolesModuleHandler'
 
 describe(LineaRolesModuleHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   const abi = new utils.Interface([
     'event AllowTarget(uint16 role, address targetAddress, uint8 options)',
     'event RevokeTarget(uint16 role, address targetAddress)',
@@ -27,6 +25,24 @@ describe(LineaRolesModuleHandler.name, () => {
     'event AssignRoles(address module, uint16[] roles, bool[] memberOf)',
     'event SetDefaultRole(address module, uint16 defaultRole)',
   ])
+
+  const callMethodStub = async <T>(
+    _address: EthereumAddress,
+    abi: string | utils.FunctionFragment,
+  ) => {
+    const coder = new utils.Interface([abi])
+    const functionName = Object.values(coder.functions)[0]?.name
+    assert(functionName !== undefined)
+    // This is a hack to get around the problem with detecting EIP2535 proxies
+    try {
+      return coder.decodeFunctionResult(
+        functionName,
+        coder.encodeFunctionData(functionName, [0]),
+      ) as T
+    } catch {
+      return undefined
+    }
+  }
 
   function AllowTarget(
     role: number,
@@ -272,8 +288,8 @@ describe(LineaRolesModuleHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
-      async getLogs(providedAddress, topics, fromBlock, toBlock) {
+    const provider = mockObject<IProvider>({
+      async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
           [
@@ -291,8 +307,6 @@ describe(LineaRolesModuleHandler.name, () => {
             abi.getEventTopic('SetDefaultRole'),
           ],
         ])
-        expect(fromBlock).toEqual(0)
-        expect(toBlock).toEqual(BLOCK_NUMBER)
         return []
       },
     })
@@ -303,7 +317,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -330,8 +344,8 @@ describe(LineaRolesModuleHandler.name, () => {
     const FunctionSigA = getFunctionSelector(FunctionA)
     const FunctionSigB = getFunctionSelector(FunctionB)
 
-    const provider = mockObject<DiscoveryProvider>({
-      async getLogs(providedAddress, topics, fromBlock, toBlock) {
+    const provider = mockObject<IProvider>({
+      async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
           [
@@ -349,8 +363,6 @@ describe(LineaRolesModuleHandler.name, () => {
             abi.getEventTopic('SetDefaultRole'),
           ],
         ])
-        expect(fromBlock).toEqual(0)
-        expect(toBlock).toEqual(BLOCK_NUMBER)
         return [
           SetDefaultRole(MODULE_A, 2),
           SetDefaultRole(MODULE_B, 3),
@@ -626,9 +638,10 @@ describe(LineaRolesModuleHandler.name, () => {
           ),
         ]
       },
-      getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
+      getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+      callMethod: callMethodStub,
       call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-      getMetadata: mockFn().resolvesTo({
+      getSource: mockFn().resolvesTo({
         name: 'name',
         isVerified: true,
         abi: [FunctionA, FunctionB],
@@ -642,7 +655,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -829,7 +842,7 @@ describe(LineaRolesModuleHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return []
       },
@@ -844,7 +857,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {

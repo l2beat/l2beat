@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531641,
   "configHash": "0x446f481375f24a1ebdb62c00d34185db930f81f5886f322ea3526361b22ab3b1",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "CpuConstraintPoly",

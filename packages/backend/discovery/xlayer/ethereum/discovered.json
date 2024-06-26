@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19882097,
   "configHash": "0x5c2e13725be665937c712e81a269b21125759be2198f03a5b419fed3924fecc0",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "XLayerValidiumDAC",

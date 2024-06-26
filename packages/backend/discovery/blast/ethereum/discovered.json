@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976249,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "DSRYieldProvider",

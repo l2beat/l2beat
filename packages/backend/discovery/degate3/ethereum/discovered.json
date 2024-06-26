@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18939732,
   "configHash": "0x59b272da0d65b6f780237f55503b40da0033b0c88e28c75b7a041282560cb8e3",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "TimeLock1",

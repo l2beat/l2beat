@@ -43,6 +43,7 @@ export const nomad: Bridge = {
         address: EthereumAddress('0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3'),
         sinceTimestamp: new UnixTime(1641899423),
         tokens: '*',
+        chain: 'ethereum',
       },
     ],
   },

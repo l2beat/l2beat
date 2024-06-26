@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532310,
   "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "Multisig 1",

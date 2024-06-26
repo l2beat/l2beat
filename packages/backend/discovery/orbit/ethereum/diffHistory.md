@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xcd1aec7eb23c899ea01cf23db79ba241094a10c3
+Generated with discovered.json: 0x7d9c7efe70d89f42c067b8ffba21cc86d50c1aee
+
+# Diff at Thu, 20 Jun 2024 10:35:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@aec998c0b1729b92e258e393212527022a7342b5 block: 19475340
+- current block number: 20132375
+
+## Description
+
+The implementation of an unverified proxy is changed to a new unverified implementation. This address has the role PolicyAdmin in the ETH Vault and can set fees and pause / unpause.
+
+## Watched changes
+
+```diff
+    contract  (0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"
++        "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"
+      implementations.0:
+-        "0x2BeBced27D2c7ECE9C6cEa9daFD2711aDdc8a1Bc"
++        "0xb4D37E8f6e970344c1cc99F65D8D1Afd5F7590D9"
+    }
+```
+
+Generated with discovered.json: 0x0eea6c81a69f735161ed485b33e25b8b32f9fb13
 
 # Diff at Wed, 20 Mar 2024 10:33:43 GMT:
 

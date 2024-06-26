@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  AllProviders,
   ConfigReader,
   DiscoveryConfig,
   DiscoveryEngine,
-  DiscoveryProvider,
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { isError } from 'lodash'
 import { Gauge, Histogram } from 'prom-client'
 
@@ -24,20 +24,14 @@ const RETRY_DELAY_MS = 20_000
 
 export class DiscoveryRunner {
   constructor(
-    private readonly discoveryProvider: DiscoveryProvider,
+    private readonly allProviders: AllProviders,
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
     readonly chain: string,
   ) {}
 
   async getBlockNumber(): Promise<number> {
-    return await this.discoveryProvider.getBlockNumber()
-  }
-
-  async getBlockNumberAt(timestamp: UnixTime): Promise<number> {
-    return await this.discoveryProvider.getBlockNumberAt(
-      new UnixTime(timestamp.toNumber()),
-    )
+    return await this.allProviders.getLatestBlockNumber(this.chain)
   }
 
   async run(
@@ -66,7 +60,8 @@ export class DiscoveryRunner {
   ): Promise<DiscoveryOutput> {
     const histogramDone = syncHistogram.startTimer()
 
-    const result = await this.discoveryEngine.discover(config, blockNumber)
+    const provider = this.allProviders.get(config.chain, blockNumber)
+    const result = await this.discoveryEngine.discover(provider, config)
 
     histogramDone({ project: config.name })
     latestBlock.set({ project: config.name }, blockNumber)

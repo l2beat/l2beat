@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19724145,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -200,6 +200,9 @@
     {
       "name": "Sentinel",
       "address": "0xF140024969F6c76494a78518D9a99c8776B55f70",
+      "descriptions": [
+        "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state."
+      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",

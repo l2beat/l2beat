@@ -1,9 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
+  AllProviders,
   ConfigReader,
   DiscoveryConfig,
   DiscoveryEngine,
-  DiscoveryProvider,
+  IProvider,
 } from '@l2beat/discovery'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -13,6 +14,8 @@ import { DiscoveryRunner } from './DiscoveryRunner'
 const ADDRESS = EthereumAddress.random()
 
 describe(DiscoveryRunner.name, () => {
+  const MOCK_PROVIDER = mockObject<IProvider>({})
+
   describe(DiscoveryRunner.prototype.run.name, () => {
     it('injects initial addresses', async () => {
       const engine = mockObject<DiscoveryEngine>({ discover: async () => [] })
@@ -22,7 +25,9 @@ describe(DiscoveryRunner.name, () => {
         }),
       })
       const runner = new DiscoveryRunner(
-        mockObject<DiscoveryProvider>({}),
+        mockObject<AllProviders>({
+          get: () => MOCK_PROVIDER,
+        }),
         engine,
         configReader,
         'ethereum',
@@ -35,11 +40,11 @@ describe(DiscoveryRunner.name, () => {
 
       expect(engine.discover).toHaveBeenNthCalledWith(
         1,
+        MOCK_PROVIDER,
         new DiscoveryConfig({
           ...getMockConfig().raw,
           initialAddresses: [ADDRESS],
         }),
-        1,
       )
     })
 
@@ -54,7 +59,9 @@ describe(DiscoveryRunner.name, () => {
         }),
       })
       const runner = new DiscoveryRunner(
-        mockObject<DiscoveryProvider>({}),
+        mockObject<AllProviders>({
+          get: () => MOCK_PROVIDER,
+        }),
         engine,
         configReader,
         'ethereum',
@@ -76,7 +83,9 @@ describe(DiscoveryRunner.name, () => {
             .resolvesToOnce([]),
         })
         const runner = new DiscoveryRunner(
-          mockObject<DiscoveryProvider>({}),
+          mockObject<AllProviders>({
+            get: () => MOCK_PROVIDER,
+          }),
           engine,
           mockObject<ConfigReader>({}),
           'ethereum',
@@ -100,7 +109,9 @@ describe(DiscoveryRunner.name, () => {
             .resolvesToOnce([]),
         })
         const runner = new DiscoveryRunner(
-          mockObject<DiscoveryProvider>({}),
+          mockObject<AllProviders>({
+            get: () => MOCK_PROVIDER,
+          }),
           engine,
           mockObject<ConfigReader>({}),
           'ethereum',

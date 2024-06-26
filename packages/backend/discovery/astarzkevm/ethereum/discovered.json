@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19882099,
   "configHash": "0xf2b3d10827c63ab3d798f45bfb9f8ad5fffc5af1f77d50b964917975d3627e7c",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "AstarVerifier",

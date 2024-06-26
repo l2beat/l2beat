@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16767881,
   "configHash": "0xb33bb13da4f7489364453f4b54700cdb74c636e6841d42f3d517f17c181225ad",
-  "version": 5,
+  "version": 6,
   "contracts": [
     {
       "name": "UpgradeGatekeeper",
