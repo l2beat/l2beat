@@ -2,7 +2,7 @@ import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const galxegravity: Layer2 = upcomingL2({
-  id: 'gravity',
+  id: 'galxegravity',
   display: {
     name: 'Gravity',
     slug: 'galxegravity',
