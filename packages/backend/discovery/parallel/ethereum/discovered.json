@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20174601,
   "configHash": "0xecc09c7695f35bc5d4930a34e4de04999b8af912a998a116291ccfb77dbe7fbd",
-  "version": 7,
+  "version": 8,
   "contracts": [
     {
       "name": "Inbox",
