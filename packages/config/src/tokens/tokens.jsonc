@@ -1851,17 +1851,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "alUSD",
-      "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
-      "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Connext",
-        "slug": "connext"
-      }
-    },
-    {
       "symbol": "tBTC",
       "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
       "source": "external",
@@ -1869,16 +1858,6 @@
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
-      }
-    },
-    {
-      "symbol": "USX",
-      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "cBridge (Celer)",
-        "slug": "cbridge"
       }
     },
     {

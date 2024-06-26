@@ -4591,25 +4591,6 @@
       "supply": "zero"
     },
     {
-      "id": "optimism:alusd-alchemix-usd",
-      "name": "Alchemix USD",
-      "coingeckoId": "alchemix-usd",
-      "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
-      "symbol": "alUSD",
-      "decimals": 18,
-      "deploymentTimestamp": 1653955245,
-      "coingeckoListingTimestamp": 1616112000,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835",
-      "chainId": 10,
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Connext",
-        "slug": "connext"
-      }
-    },
-    {
       "id": "optimism:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
@@ -4623,25 +4604,6 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
-    },
-    {
-      "id": "optimism:usx-dforce-usd",
-      "name": "dForce USD",
-      "coingeckoId": "token-dforce-usd",
-      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "symbol": "USX",
-      "decimals": 18,
-      "deploymentTimestamp": 1637931555,
-      "coingeckoListingTimestamp": 1627516800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/17422/large/usx_32.png?1696516969",
-      "chainId": 10,
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "cBridge (Celer)",
-        "slug": "cbridge"
-      }
     },
     {
       "id": "optimism:eth-ether",
