@@ -135,4 +135,10 @@ export const chains: ChainConfig[] = [
     etherscanUrl:
       'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
   },
+  {
+    name: 'mantapacific',
+    chainId: 169,
+    multicall: getMulticall3Config(332890),
+    etherscanUrl: 'https://pacific-explorer.manta.network/api',
+  },
 ]

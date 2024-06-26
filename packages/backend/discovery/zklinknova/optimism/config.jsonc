@@ -14,9 +14,6 @@
     "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4": "OptimismProxyAdmin"
   },
   "overrides": {
-    "zkLink": {
-      "extends": "zklinknova/secondaryZkLink"
-    },
     "OptimismL2Gateway": {
       "extends": "zklinknova/secondaryGateway"
     }

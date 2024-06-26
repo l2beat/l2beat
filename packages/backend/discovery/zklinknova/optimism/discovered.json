@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "optimism",
   "blockNumber": 121854234,
-  "configHash": "0xddfd4dc25d09e42067c36cae0250bcd316d581b7045492e37d5616376fb396d2",
+  "configHash": "0x39863fe3d5f3ffcc384f9baf79b4fdf2abf61a8a16a85d59dc966799be4f3f8b",
   "version": 7,
   "contracts": [
     {
@@ -39,6 +39,7 @@
     {
       "name": "zkLink",
       "address": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
+      "template": "zklinknova/secondaryZkLink",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E",
@@ -130,7 +131,6 @@
     "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
     "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
     "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-    "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
     "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
     "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
     "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
