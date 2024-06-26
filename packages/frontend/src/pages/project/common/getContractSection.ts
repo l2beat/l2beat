@@ -123,7 +123,7 @@ export function getContractSection(
     id: 'contracts',
     chainName,
     title: 'Smart contracts',
-    nativeContracts: nativeContracts,
+    nativeContracts,
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
@@ -518,6 +518,9 @@ function areAllAddressesUnverified(
 }
 
 function slugToDisplayName(slug: string): string {
+  if (slug === 'ethereum') {
+    return 'Ethereum'
+  }
   const isL2 = layer2s.find((l2) => l2.id === slug)
   if (isL2 !== undefined) {
     return isL2.display.name
