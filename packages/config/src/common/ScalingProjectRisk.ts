@@ -35,4 +35,5 @@ export interface ScalingProjectRiskViewEntry
     references: string[]
   }[]
   otherReferences?: string[]
+  definingMetric?: number
 }
