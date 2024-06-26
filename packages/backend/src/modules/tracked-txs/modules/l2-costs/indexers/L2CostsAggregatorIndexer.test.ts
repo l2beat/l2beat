@@ -88,7 +88,7 @@ const MOCK_PROJECTS: Project[] = [
   }),
 ]
 
-describe.only(L2CostsAggregatorIndexer.name, () => {
+describe(L2CostsAggregatorIndexer.name, () => {
   describe(L2CostsAggregatorIndexer.prototype.update.name, () => {
     it('updates correctly', async () => {
       // 2023-05-01 00:01:00
