@@ -48,6 +48,7 @@ export function diffDiscovery(
       'descriptions',
       'roles',
       'permissions',
+      'assignedPermissions',
       'categories',
       'types',
       'severity',

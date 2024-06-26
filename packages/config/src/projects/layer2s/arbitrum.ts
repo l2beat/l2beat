@@ -171,6 +171,12 @@ export const arbitrum: Layer2 = {
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
+      discovery.getEscrowDetails({
+        // LPT L1 Escrow
+        address: EthereumAddress('0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A'),
+        tokens: ['ETH'],
+        description: 'LPT Vault for custom Livepeer Token Gateway.',
+      }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data
@@ -309,7 +315,7 @@ export const arbitrum: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'Transaction data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -336,7 +342,7 @@ export const arbitrum: Layer2 = {
       ],
     },
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
+      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
       sentiment: 'bad',
       description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
         l2TimelockDelay,

@@ -174,7 +174,10 @@ export class ProjectDiscovery {
 
   isEOA(address: EthereumAddress): boolean {
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
-    return eoas.includes(address)
+    return (
+      eoas.find((x) => x.address.toString() === address.toString()) !==
+      undefined
+    )
   }
 
   getInversion(): InvertedAddresses {

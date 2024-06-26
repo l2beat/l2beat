@@ -30,10 +30,6 @@ export function parseBlockscoutResponse(value: string): BlockscoutResponse {
   }
 }
 
-export const BlockscoutGetBlockNoByTime = z.object({
-  blockNumber: z.coerce.number(),
-})
-
 export type BlockscoutNextPageParams = z.infer<typeof BlockscoutNextPageParams>
 
 export const BlockscoutNextPageParams = z.object({

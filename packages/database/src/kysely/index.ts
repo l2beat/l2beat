@@ -1,4 +1,8 @@
-import { Kysely, PostgresDialect } from 'kysely'
+import {
+  Kysely,
+  Transaction as KyselyTransaction,
+  PostgresDialect,
+} from 'kysely'
 import { Pool, PoolConfig } from 'pg'
 import { DB } from './generated/types'
 
@@ -11,3 +15,5 @@ export class PostgresDatabase extends Kysely<DB> {
     })
   }
 }
+
+export type Transaction = KyselyTransaction<DB>

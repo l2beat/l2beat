@@ -8,7 +8,7 @@ export class ExternalBridgeRepository {
     const row = toRow(externalBridge)
 
     return this.db
-      .insertInto('ExternalBridge')
+      .insertInto('public.ExternalBridge')
       .values(row)
       .onConflict((conflict) => conflict.doNothing())
       .execute()

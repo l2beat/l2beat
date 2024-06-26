@@ -2,8 +2,8 @@
   "name": "lzomnichain",
   "chain": "polygonzkevm",
   "blockNumber": 12848751,
-  "configHash": "0x3eb47c0529a669f2532e22188327287ff2a1bb33f6bb9d15638eb1dde5e8d28b",
-  "version": 4,
+  "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
+  "version": 8,
   "contracts": [
     {
       "name": "",
@@ -55,12 +55,14 @@
     {
       "name": "LayerZeroMultisig_pzkevm",
       "address": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
         "threshold": "2 of 4 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1712271299,
       "values": {
@@ -73,6 +75,7 @@
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
         ],
         "getThreshold": 2,
+        "nonce": 35,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -94,6 +97,7 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1679974014,
       "values": {
         "BLOCK_VERSION": 65535,
@@ -146,6 +150,14 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": [
+        "chainAddressSizeMap",
+        "defaultAppConfig",
+        "defaultAdapterParams",
+        "inboundProofLibrary",
+        "supportedOutboundProof",
+        "ulnLookup"
+      ],
       "sinceTimestamp": 1679974014,
       "values": {
         "chainAddressSizeMap": {
@@ -1331,12 +1343,27 @@
     }
   ],
   "eoas": [
-    "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
-    "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-    "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
-    "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
-    "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-    "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+    },
+    {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+    },
+    {
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
+    },
+    {
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
+    },
+    {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    },
+    {
+      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
+    }
   ],
   "abis": {
     "0x3c2269811836af69497E5F486A85D7316753cf62": [

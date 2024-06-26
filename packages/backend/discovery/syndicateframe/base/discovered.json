@@ -3,18 +3,18 @@
   "chain": "base",
   "blockNumber": 15661223,
   "configHash": "0xf98611165f5abbbf65d8da4632824d2cc0fcc293c72b7d86c7db088cb1fbd810",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x0ED44be59Ea62a9960CB97f8aC54088304D05791",
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x06DDDA853506cECa671a06136f955f7f042FD667"
       },
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0x06DDDA853506cECa671a06136f955f7f042FD667"],
       "sinceTimestamp": 1707369335,
       "values": {
@@ -36,17 +36,17 @@
     {
       "name": "L2OutputOracle",
       "address": "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6042DE5a64709d8d4bBb227891AD886ECff49c6d",
+        "admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
+      },
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x6042DE5a64709d8d4bBb227891AD886ECff49c6d",
-        "admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
-      },
       "implementations": ["0x6042DE5a64709d8d4bBb227891AD886ECff49c6d"],
       "sinceTimestamp": 1707369315,
       "values": {
@@ -69,12 +69,12 @@
     {
       "name": "OptimismPortal",
       "address": "0x52fA397D799f1CE416a2089B964Aa293c347994F",
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2",
         "admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
       },
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0x44Ce95273E69246fe258b02a68E3a6FfCA66fdf2"],
       "sinceTimestamp": 1707369307,
       "values": {
@@ -106,12 +106,12 @@
     {
       "name": "SystemConfig",
       "address": "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4",
-      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A",
         "admin": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"
       },
+      "ignoreInWatchMode": ["scalar"],
       "implementations": ["0x5581A42BAF9bd77e1c56aFB2c74dEF20dfe26f9A"],
       "sinceTimestamp": 1707369321,
       "values": {
@@ -147,6 +147,12 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
+          "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
+        ]
+      },
       "sinceTimestamp": 1707369295,
       "values": {
         "addressManager": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
@@ -174,12 +180,24 @@
     }
   ],
   "eoas": [
-    "0x000000000000000000000000000000000000dEaD",
-    "0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5",
-    "0x97395dd253E2d096A0CaA62a574895c3C2F2b2e0",
-    "0xADE1F8C181934052fD1958F06B63Ef0D875803C5",
-    "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-    "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c"
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x63d02F40A14c54283D5Dc3451d3Ed4DC134833e5"
+    },
+    {
+      "address": "0x97395dd253E2d096A0CaA62a574895c3C2F2b2e0"
+    },
+    {
+      "address": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5"
+    },
+    {
+      "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4"
+    },
+    {
+      "address": "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c"
+    }
   ],
   "abis": {
     "0x06DDDA853506cECa671a06136f955f7f042FD667": [

@@ -1,9 +1,9 @@
 {
   "name": "polygon-plasma",
   "chain": "ethereum",
-  "blockNumber": 20074008,
+  "blockNumber": 20175250,
   "configHash": "0x4d61691a42ad106313ec274f92462885c512ac1e1e893cc7f99ea5866028ea0f",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -30,13 +30,13 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
-      "ignoreInWatchMode": ["counter"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
-        "counter": 2921396,
+        "counter": 2926907,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -138,6 +138,12 @@
     {
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+      "upgradeability": {
+        "type": "Polygon Extension proxy",
+        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "implementation": "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
+        "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
+      },
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -151,12 +157,6 @@
         "signerUpdateLimit",
         "totalHeimdallFee"
       ],
-      "upgradeability": {
-        "type": "Polygon Extension proxy",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-        "implementation": "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
-        "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
-      },
       "implementations": [
         "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
         "0xef49Ea6996073752b6840CDA34773FFA78F78166"
@@ -168,13 +168,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 63737,
+        "currentEpoch": 64442,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3667273775969498321200984057",
+        "currentValidatorSetTotalStake": "3692894501219136824247951901",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 63737,
+        "epoch": 64442,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -187,7 +187,7 @@
         "minDeposit": "1000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 173,
+        "NFTCounter": 174,
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -204,14 +204,14 @@
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "9990939209428901681108",
+        "totalHeimdallFee": "10101939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "104583549104802024285393594",
-        "totalStaked": "10818056051541609241833718",
+        "totalRewardsLiquidated": "106141721357693703667700203",
+        "totalStaked": "10828057051541609241833718",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3667273775969498321200984057",
+          "amount": "3692894501219136824247951901",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -272,23 +272,23 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-      "ignoreInWatchMode": [
-        "_nextHeaderBlock",
-        "currentHeaderBlock",
-        "getLastChildBlock"
-      ],
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "currentHeaderBlock",
+        "getLastChildBlock"
+      ],
       "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 637370000,
+        "_nextHeaderBlock": 644420000,
         "CHAINID": 137,
-        "currentHeaderBlock": 637360000,
-        "getLastChildBlock": 58058661,
+        "currentHeaderBlock": 644410000,
+        "getLastChildBlock": 58624933,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -302,10 +302,10 @@
     {
       "name": "MaticWETH",
       "address": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
-      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1590840981,
       "values": {
         "decimals": 18,
@@ -432,18 +432,19 @@
     {
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-      "ignoreInWatchMode": ["nonce"],
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "5 of 9 (56%)"
       },
-      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
+      "ignoreInWatchMode": ["nonce"],
+      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1593593561,
       "values": {
-        "domainSeparator": "0x3bc292918071cc597c13d3994268d3c83097b8388d750481c8cbce67a284ed5c",
-        "getModules": [],
+        "domainSeparator": "0x1fedebc30994a7dba640edeed88b9bdc774c9f02b3797c8a6d3a2f17399477f4",
+        "getChainId": 1,
         "getOwners": [
           "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
           "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
@@ -456,30 +457,61 @@
           "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
         ],
         "getThreshold": 5,
-        "NAME": "Gnosis Safe",
-        "nonce": 199,
-        "VERSION": "1.1.1"
+        "nonce": 203,
+        "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
-    "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
-    "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
-    "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
-    "0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
-    "0x62a8029CDAf8576e337b86187B82474EFcE712d8",
-    "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
-    "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
-    "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
-    "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF",
-    "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
-    "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
-    "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-    "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
-    "0xf748a187303940856A367D57Dc45D1ac4A597305"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
+    },
+    {
+      "address": "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
+    },
+    {
+      "address": "0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
+    },
+    {
+      "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
+    },
+    {
+      "address": "0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+    },
+    {
+      "address": "0x62a8029CDAf8576e337b86187B82474EFcE712d8"
+    },
+    {
+      "address": "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
+    },
+    {
+      "address": "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
+    },
+    {
+      "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
+    },
+    {
+      "address": "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
+    },
+    {
+      "address": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    },
+    {
+      "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
+    },
+    {
+      "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+    },
+    {
+      "address": "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
+    },
+    {
+      "address": "0xf748a187303940856A367D57Dc45D1ac4A597305"
+    }
   ],
   "abis": {
     "0x0672777617CAA1E778083a4f74eBC997262C9EdD": [
@@ -578,51 +610,6 @@
       "event PredicateAdded(address indexed predicate, address indexed from)",
       "event PredicateRemoved(address indexed predicate, address indexed from)",
       "event ContractMapUpdated(bytes32 indexed key, address indexed previousContract, address indexed newContract)"
-    ],
-    "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F": [
-      "constructor()",
-      "event AddedOwner(address owner)",
-      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
-      "event ChangedMasterCopy(address masterCopy)",
-      "event ChangedThreshold(uint256 threshold)",
-      "event DisabledModule(address module)",
-      "event EnabledModule(address module)",
-      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
-      "event ExecutionFromModuleFailure(address indexed module)",
-      "event ExecutionFromModuleSuccess(address indexed module)",
-      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
-      "event RemovedOwner(address owner)",
-      "event SignMsg(bytes32 indexed msgHash)",
-      "function NAME() view returns (string)",
-      "function VERSION() view returns (string)",
-      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
-      "function approveHash(bytes32 hashToApprove)",
-      "function approvedHashes(address, bytes32) view returns (uint256)",
-      "function changeMasterCopy(address _masterCopy)",
-      "function changeThreshold(uint256 _threshold)",
-      "function disableModule(address prevModule, address module)",
-      "function domainSeparator() view returns (bytes32)",
-      "function enableModule(address module)",
-      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
-      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) returns (bool success)",
-      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
-      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
-      "function getMessageHash(bytes message) view returns (bytes32)",
-      "function getModules() view returns (address[])",
-      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
-      "function getOwners() view returns (address[])",
-      "function getThreshold() view returns (uint256)",
-      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
-      "function isOwner(address owner) view returns (bool)",
-      "function isValidSignature(bytes _data, bytes _signature) returns (bytes4)",
-      "function nonce() view returns (uint256)",
-      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
-      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
-      "function setFallbackHandler(address handler)",
-      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
-      "function signMessage(bytes _data)",
-      "function signedMessages(bytes32) view returns (uint256)",
-      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0x401F6c983eA34274ec46f84D70b31C151321188b": [
       "function updateImplementation(address _newProxyTo)",
@@ -1028,6 +1015,55 @@
       "function scheduleBatch(address[] targets, uint256[] values, bytes[] datas, bytes32 predecessor, bytes32 salt, uint256 delay)",
       "function supportsInterface(bytes4 interfaceId) view returns (bool)",
       "function updateDelay(uint256 newDelay)"
+    ],
+    "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552": [
+      "constructor()",
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool success)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
     "0xDdaC6D3A2a787b1F4bf26AB6FAF519ae3F1a94cf": [
       "constructor()",

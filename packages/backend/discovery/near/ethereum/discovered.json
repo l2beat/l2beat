@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531990,
   "configHash": "0xd38ab6535bef2823166e2161419db849ad4c92dfc605738466766980f35f3aed",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "NearProver",
@@ -39,13 +39,13 @@
       "name": "BridgeAdminMultisig",
       "address": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1640737843,
       "values": {
@@ -67,10 +67,10 @@
     {
       "name": "NearBridge",
       "address": "0x3FEFc5A4B1c02f21cBc8D3613643ba0635b9a873",
-      "ignoreInWatchMode": ["bridgeState", "lastValidAt"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["bridgeState", "lastValidAt"],
       "sinceTimestamp": 1664198555,
       "values": {
         "admin": "0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1",
@@ -107,11 +107,21 @@
     }
   ],
   "eoas": [
-    "0x1180c536465413eE05b206b3a99d4C6a9934D2b7",
-    "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6",
-    "0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d",
-    "0xed9cB50304991951Cbee747900484E9a041DA464",
-    "0xF58096A602C960c841Bd83A29DE21c808a9c1ac9"
+    {
+      "address": "0x1180c536465413eE05b206b3a99d4C6a9934D2b7"
+    },
+    {
+      "address": "0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6"
+    },
+    {
+      "address": "0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d"
+    },
+    {
+      "address": "0xed9cB50304991951Cbee747900484E9a041DA464"
+    },
+    {
+      "address": "0xF58096A602C960c841Bd83A29DE21c808a9c1ac9"
+    }
   ],
   "abis": {
     "0x051AD3F020274910065Dcb421629cd2e6E5b46c4": [
