@@ -1,10 +1,10 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
+import { ContractSource } from '../../utils/IEtherscanClient'
 import { IProvider } from '../provider/IProvider'
 import { deduplicateAbi } from './deduplicateAbi'
 import { getLegacyDerivedName } from './getDerivedName'
-import { ContractSource, processSources } from './processSources'
 import { skipIgnoredFunctions } from './skipIgnoredFunctions'
 
 export interface PerContractSource {
@@ -48,7 +48,7 @@ export class SourceCodeService {
       sources.push({
         name: item.name,
         address: address,
-        source: processSources(address, item),
+        source: item,
       })
     }
 

@@ -52,10 +52,7 @@ export {
   type InvertedAddresses,
   type Role,
 } from './inversion/runInversion'
-export {
-  EtherscanLikeClient,
-  tryParseEtherscanResponse,
-} from './utils/EtherscanLikeClient'
+export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
 export { AllProviders } from './discovery/provider/AllProviders'
