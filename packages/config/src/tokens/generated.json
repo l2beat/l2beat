@@ -7276,21 +7276,6 @@
       "supply": "zero"
     },
     {
-      "id": "arbitrum:usd+-usd+",
-      "name": "USD+",
-      "coingeckoId": "usd",
-      "address": "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
-      "symbol": "USD+",
-      "decimals": 6,
-      "deploymentTimestamp": 1676984624,
-      "coingeckoListingTimestamp": 1653436800,
-      "category": "other",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/25757/large/USD__logo.png?1696524843",
-      "chainId": 42161,
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "id": "arbitrum:usde-usde",
       "name": "USDe",
       "coingeckoId": "ethena-usde",

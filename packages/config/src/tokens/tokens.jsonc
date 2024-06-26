@@ -1283,12 +1283,6 @@
       }
     },
     {
-      "symbol": "USD+",
-      "address": "0xe80772Eaf6e2E18B651F160Bc9158b2A5caFCA65",
-      "source": "native",
-      "supply": "totalSupply"
-    },
-    {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "source": "native",
