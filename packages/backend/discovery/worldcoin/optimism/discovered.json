@@ -3,17 +3,19 @@
   "chain": "optimism",
   "blockNumber": 120698212,
   "configHash": "0x5def1b5565f1247f6622afd0605cb640f85241299993c9ecd062fa3ca528931e",
-  "version": 4,
+  "version": 8,
   "contracts": [
     {
       "name": "GnosisSafe",
       "address": "0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689934515,
       "values": {
@@ -28,12 +30,14 @@
     {
       "name": "GnosisSafe",
       "address": "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689934259,
       "values": {
@@ -94,12 +98,14 @@
     {
       "name": "GnosisSafe",
       "address": "0x59a0f98345f54bAB245A043488ECE7FCecD7B596",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689792029,
       "values": {
@@ -122,12 +128,14 @@
     {
       "name": "GnosisSafe",
       "address": "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689791251,
       "values": {
@@ -163,12 +171,14 @@
     {
       "name": "GnosisSafeL2",
       "address": "0x7f26A7572E8B877654eeDcBc4E573657619FA3CE",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "modules": [],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1689845985,
       "values": {
@@ -190,6 +200,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "descriptions": [
+        "A contract that manages the root history of the Semaphore identity merkle tree on Optimism."
+      ],
       "sinceTimestamp": 1695411619,
       "values": {
         "getTreeDepth": 30,
@@ -203,12 +216,14 @@
     {
       "name": "GnosisSafe",
       "address": "0xb67ac19693fB89880Ca5873f6a890E865b259c26",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689934447,
       "values": {
@@ -226,12 +241,14 @@
     {
       "name": "GnosisSafe",
       "address": "0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 6 (33%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689791675,
       "values": {
@@ -253,10 +270,10 @@
     {
       "name": "WLD token",
       "address": "0xdC6fF44d5d932Cbd77B52E5612Ba0529DC6226F1",
-      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1689774709,
       "values": {
         "bridge": "0x4200000000000000000000000000000000000010",
@@ -276,10 +293,10 @@
     {
       "name": "WLDGrant",
       "address": "0xe11CEfF5034278dC62318e74aF6efBA57D54f3be",
-      "ignoreInWatchMode": ["getCurrentId"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1710076379,
       "values": {
         "calculateId": [],
@@ -290,12 +307,14 @@
     {
       "name": "GnosisSafe",
       "address": "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689934359,
       "values": {
@@ -310,12 +329,14 @@
     {
       "name": "GnosisSafe",
       "address": "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1689934137,
       "values": {
@@ -329,21 +350,51 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x163f8C2467924be0ae7B5347228CABF260318753",
-    "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7",
-    "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be",
-    "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188",
-    "0x57c72EB3f74e3A1c95656253214A018818818ec3",
-    "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04",
-    "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421",
-    "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde",
-    "0x79b998ded1f4503CE3A0A76993c72a65449f4590",
-    "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
-    "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
-    "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F",
-    "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
-    "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x163f8C2467924be0ae7B5347228CABF260318753"
+    },
+    {
+      "address": "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
+    },
+    {
+      "address": "0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"
+    },
+    {
+      "address": "0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"
+    },
+    {
+      "address": "0x57c72EB3f74e3A1c95656253214A018818818ec3"
+    },
+    {
+      "address": "0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"
+    },
+    {
+      "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
+    },
+    {
+      "address": "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"
+    },
+    {
+      "address": "0x79b998ded1f4503CE3A0A76993c72a65449f4590"
+    },
+    {
+      "address": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+    },
+    {
+      "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    },
+    {
+      "address": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F"
+    },
+    {
+      "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011"
+    },
+    {
+      "address": "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
+    }
   ],
   "abis": {
     "0x0897316DFE7141DB1E182551c3e8077cf5dd9695": [

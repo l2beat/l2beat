@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20174601,
   "configHash": "0xecc09c7695f35bc5d4930a34e4de04999b8af912a998a116291ccfb77dbe7fbd",
-  "version": 7,
+  "version": 8,
   "contracts": [
     {
       "name": "Inbox",
@@ -105,13 +105,13 @@
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
       "values": {
@@ -149,16 +149,16 @@
     {
       "name": "Bridge",
       "address": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
         "admin": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
       },
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704125939,
       "values": {
@@ -199,6 +199,12 @@
       "name": "RollupProxy",
       "address": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
       "template": "orbitstack/RollupProxy",
+      "upgradeability": {
+        "type": "Arbitrum proxy",
+        "admin": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+        "adminImplementation": "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+        "userImplementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+      },
       "descriptions": [
         "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
       ],
@@ -207,12 +213,6 @@
         "latestConfirmed",
         "latestNodeCreated"
       ],
-      "upgradeability": {
-        "type": "Arbitrum proxy",
-        "admin": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
-        "adminImplementation": "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
-        "userImplementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
-      },
       "implementations": [
         "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
         "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
@@ -262,6 +262,12 @@
       "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
+          "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"
+        ]
       },
       "sinceTimestamp": 1704125939,
       "values": {
@@ -356,12 +362,12 @@
     {
       "name": "SequencerInbox",
       "address": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
         "admin": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
       },
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "implementations": ["0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5"],
       "sinceTimestamp": 1704125939,
       "values": {
@@ -425,6 +431,9 @@
         "implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "admin": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d"
       },
+      "assignedPermissions": {
+        "admin": ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+      },
       "implementations": ["0x6c21303F5986180B1394d2C89f3e883890E2867b"],
       "sinceTimestamp": 1704125939,
       "values": {
@@ -453,23 +462,57 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x2bc118eC75c4154DC164Ee663E09F5F83232b1DC",
-    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-    "0x41db2C19bCaEe5e47aF56B0994D330c8a029F2d2",
-    "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-    "0x533Ebf8893c5bB7DDe47938507e239789E299a5f",
-    "0x56D33424edb428744597Ec02571f14B50a33b7de",
-    "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4",
-    "0x70Bace2e1cc06E7A96D5d23681A66a9eA6938436",
-    "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
-    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-    "0xb0A6d4ddE9f8B8f0763b34834589BF38607c7778",
-    "0xe3bb30f7742eC97Be5D60789A2b1273e462C0287",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x2bc118eC75c4154DC164Ee663E09F5F83232b1DC"
+    },
+    {
+      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    },
+    {
+      "address": "0x41db2C19bCaEe5e47aF56B0994D330c8a029F2d2"
+    },
+    {
+      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    },
+    {
+      "address": "0x533Ebf8893c5bB7DDe47938507e239789E299a5f"
+    },
+    {
+      "address": "0x56D33424edb428744597Ec02571f14B50a33b7de"
+    },
+    {
+      "address": "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"
+    },
+    {
+      "address": "0x70Bace2e1cc06E7A96D5d23681A66a9eA6938436"
+    },
+    {
+      "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    },
+    {
+      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    },
+    {
+      "address": "0xb0A6d4ddE9f8B8f0763b34834589BF38607c7778"
+    },
+    {
+      "address": "0xe3bb30f7742eC97Be5D60789A2b1273e462C0287"
+    },
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    },
+    {
+      "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    },
+    {
+      "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    }
   ],
   "abis": {
     "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A": [

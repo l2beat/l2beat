@@ -3,11 +3,14 @@
   "chain": "base",
   "blockNumber": 15999031,
   "configHash": "0xc0a7d7c47e2dbe233b490f384061748fd864b11466ecb85dfa1b0c26f30b66d7",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
       "address": "0x27a16dc786820B16E5c9028b75B99F6f604b5d26",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -15,9 +18,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837017,
       "values": {
         "approvalRequired": true,
@@ -94,6 +94,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0xdc181Bd607330aeeBEF6ea62e03e5e1Fb4B6F7C7",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -101,9 +104,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837009,
       "values": {
         "approvalRequired": true,
@@ -137,8 +137,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
   ],
   "abis": {
     "0x27a16dc786820B16E5c9028b75B99F6f604b5d26": [

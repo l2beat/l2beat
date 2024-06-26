@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927699,
   "configHash": "0xb054397b11aa00d2891531ffcd51382503645937e8dd928600b01bd5835322b9",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -23,12 +23,12 @@
     {
       "name": "SystemConfig",
       "address": "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
-      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC",
         "admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"
       },
+      "ignoreInWatchMode": ["scalar"],
       "implementations": ["0x81CCFC10CB55B58449A3FEE870D63C4D61941DaC"],
       "sinceTimestamp": 1700021675,
       "values": {
@@ -61,17 +61,17 @@
     {
       "name": "L2OutputOracle",
       "address": "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xad206309916Fe08A27221133dde05a8F30f75e29",
+        "admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"
+      },
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xad206309916Fe08A27221133dde05a8F30f75e29",
-        "admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"
-      },
       "implementations": ["0xad206309916Fe08A27221133dde05a8F30f75e29"],
       "sinceTimestamp": 1700021675,
       "values": {
@@ -97,6 +97,12 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
+          "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
+        ]
+      },
       "sinceTimestamp": 1700021675,
       "values": {
         "addressManager": "0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB",
@@ -108,13 +114,13 @@
       "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
       "values": {
@@ -138,13 +144,13 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x5456f02c08e9A018E42C39b351328E5AA864174A",
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"
       },
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0x93f5d9CD5BE592F1DC602E0CF4A38148b880cd13"],
       "sinceTimestamp": 1700021675,
       "values": {
@@ -203,12 +209,12 @@
     {
       "name": "OptimismPortal",
       "address": "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8",
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e",
         "admin": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"
       },
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0x4Ec5C80Fa12d04DB3A208DD0Fa5C01178FF5a16e"],
       "sinceTimestamp": 1700021675,
       "values": {
@@ -230,13 +236,13 @@
       "name": "ChallengerMultisig",
       "address": "0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1699922135,
       "values": {
@@ -270,24 +276,60 @@
     }
   ],
   "eoas": [
-    "0x000000000000000000000000000000000000dEaD",
-    "0x03e820562ffd2e0390787caD706EaF1FF98C2608",
-    "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e",
-    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-    "0x4200000000000000000000000000000000000007",
-    "0x4200000000000000000000000000000000000010",
-    "0x4200000000000000000000000000000000000014",
-    "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-    "0x52E84149daE06CB5C4E92029140Da4faD86CE968",
-    "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50",
-    "0x824CACbBeA0377801f72d736CFd5C869dd89b931",
-    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-    "0xB71B58FfE538628557433dbBfA08d45ee5a69B44",
-    "0xdb5CF90A8f97C372d5AEC650a5668d4E4bECFC10",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-    "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-    "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x03e820562ffd2e0390787caD706EaF1FF98C2608"
+    },
+    {
+      "address": "0x14e4E97bDc195d399Ad8E7FC14451C279FE04c8e"
+    },
+    {
+      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000007"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000010"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000014"
+    },
+    {
+      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    },
+    {
+      "address": "0x52E84149daE06CB5C4E92029140Da4faD86CE968"
+    },
+    {
+      "address": "0x5f7f7f6DB967F0ef10BdA0678964DBA185d16c50"
+    },
+    {
+      "address": "0x824CACbBeA0377801f72d736CFd5C869dd89b931"
+    },
+    {
+      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    },
+    {
+      "address": "0xB71B58FfE538628557433dbBfA08d45ee5a69B44"
+    },
+    {
+      "address": "0xdb5CF90A8f97C372d5AEC650a5668d4E4bECFC10"
+    },
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    },
+    {
+      "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    },
+    {
+      "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+    }
   ],
   "abis": {
     "0x08Dea366F26C25a08C8D1C3568ad07d1e587136d": [

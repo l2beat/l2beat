@@ -3,20 +3,20 @@
   "chain": "ethereum",
   "blockNumber": 17065004,
   "configHash": "0x523883645f84f25ed4efcd89b3a2a5cb9454f294cf39b250d65a6d05f6f1793d",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "Gravity",
       "address": "0xa4108aA1Ec4967F8b52220a4f7e94A8201F2D906",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "state_gravityId",
         "state_lastEventNonce",
         "state_lastValsetCheckpoint",
         "state_lastValsetNonce"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1639416372,
       "values": {
         "state_gravityId": "0x677261766974792d6272696467652d6d61696e6e657400000000000000000000",

@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 5124561,
   "configHash": "0xb518fa3786fc0cee82738c9a8889c9d5275704fe7a50710cc695c1e0b1907a91",
-  "version": 4,
+  "version": 8,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -19,7 +19,10 @@
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
-        "oAppVersion": [1, 2],
+        "oAppVersion": {
+          "senderVersion": 1,
+          "receiverVersion": 2
+        },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -45,6 +48,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -52,26 +58,26 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837011,
       "values": {
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
-        "getAddressConfig": [
-          "0x6E3d884C96d640526F273C61dfcF08915eBd7e2B",
-          "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
-          "0xf5F74d2508e97A3a7CCA2ccb75c8325D66b46152",
-          "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
-          "0x138EB30f73BC423c6455C53df6D89CB01d9eBc63",
-          "0x0000000000000000000000000000000000000000"
-        ],
+        "getAddressConfig": {
+          "feeLib": "0x6E3d884C96d640526F273C61dfcF08915eBd7e2B",
+          "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
+          "treasurer": "0xf5F74d2508e97A3a7CCA2ccb75c8325D66b46152",
+          "tokenMessaging": "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
+          "creditMessaging": "0x138EB30f73BC423c6455C53df6D89CB01d9eBc63",
+          "lzToken": "0x0000000000000000000000000000000000000000"
+        },
         "getTransferGasLimit": 2300,
         "localEid": 30183,
         "lpToken": "0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
-        "oftVersion": ["0x02e49c2c", 0],
+        "oftVersion": {
+          "interfaceId": "0x02e49c2c",
+          "version": 0
+        },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
         "plannerFee": "219212033372463469",
         "poolBalance": "1751318687000000000000",
@@ -85,8 +91,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
   ],
   "abis": {
     "0x5f688F563Dc16590e570f97b542FA87931AF2feD": [

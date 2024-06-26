@@ -3,11 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19531401,
   "configHash": "0x4af8375cccf9b10109218a189531c737b3fd7e2a9b929dcae68abc66eedb1c54",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "USDC_POOL",
       "address": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "a",
         "accRewardPerShareP",
@@ -22,9 +25,6 @@
         "totalLpAmount",
         "vUsdBalance"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1669206935,
       "values": {
         "a": 20,
@@ -92,6 +92,9 @@
     {
       "name": "USDT_POOL",
       "address": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "a",
         "accRewardPerShareP",
@@ -106,9 +109,6 @@
         "totalLpAmount",
         "vUsdBalance"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1662596190,
       "values": {
         "a": 20,
@@ -178,6 +178,9 @@
     {
       "name": "DAI_POOL",
       "address": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "a",
         "accRewardPerShareP",
@@ -192,9 +195,6 @@
         "totalLpAmount",
         "vUsdBalance"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1669207319,
       "values": {
         "a": 20,
@@ -230,9 +230,15 @@
     }
   ],
   "eoas": [
-    "0x01a494079DCB715f622340301463cE50cd69A4D0",
-    "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074",
-    "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+    {
+      "address": "0x01a494079DCB715f622340301463cE50cd69A4D0"
+    },
+    {
+      "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"
+    },
+    {
+      "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
+    }
   ],
   "abis": {
     "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C": [
