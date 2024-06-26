@@ -21,9 +21,9 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { PERFORMED_BY } from '../other'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { PERFORMED_BY } from '../other'
 
 const discovery = new ProjectDiscovery('linea')
 
