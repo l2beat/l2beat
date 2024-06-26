@@ -12,7 +12,7 @@ chains=(
 #  "celo" #
   "linea"
   "base"
-#  "polygonzkevm" # problems with getLogs (in lzomnichain)
+  "polygonzkevm"
 #  "gnosis" #
 #  "zksync2" #
 #  "sepolia" #
