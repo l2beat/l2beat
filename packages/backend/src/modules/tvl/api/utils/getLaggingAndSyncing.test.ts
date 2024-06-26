@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { ValueRecord } from '../../repositories/ValueRepository'
 import { getLaggingAndSyncing } from './getLaggingAndSyncing'
-import { ApiProject } from './types'
 
 const projectId = ProjectId('project')
 
@@ -13,16 +13,17 @@ describe(getLaggingAndSyncing.name, () => {
       '100': [mockValue('A', 100), mockValue('B', 100), mockValue('C', 100)],
     }
 
-    const project = mockProject(['A', 'B', 'C'])
+    const configurations = mockConfigurations(['A', 'B', 'C'])
 
-    const result = getLaggingAndSyncing(
+    const result = getLaggingAndSyncing<ValueRecord>(
+      configurations,
       valuesByTimestamp,
+      (t: ValueRecord) => t.dataSource,
       targetTimestamp,
-      project,
     )
 
     expect(result.lagging).toBeEmpty()
-    expect(result.syncing).toBeEmpty()
+    expect(result.excluded).toBeEmpty()
   })
 
   it('data source syncing', () => {
@@ -35,16 +36,17 @@ describe(getLaggingAndSyncing.name, () => {
       // No entry for "B", will be considered syncing
     }
 
-    const project = mockProject(['A', 'B'])
+    const configurations = mockConfigurations(['A', 'B'])
 
     const result = getLaggingAndSyncing(
+      configurations,
       valuesByTimestamp,
+      (t: ValueRecord) => t.dataSource,
       targetTimestamp,
-      project,
     )
 
     expect(result.lagging).toBeEmpty()
-    expect(result.syncing).toEqual([`${projectId}-A`, `${projectId}-B`])
+    expect(result.excluded).toEqual([`A`, `B`])
   })
 
   it('data source lagging', () => {
@@ -60,22 +62,23 @@ describe(getLaggingAndSyncing.name, () => {
       [timestamp]: [mockValue('A', timestamp)],
     }
 
-    const project = mockProject(['A'])
+    const configurations = mockConfigurations(['A'])
 
     const result = getLaggingAndSyncing(
+      configurations,
       valuesByTimestamp,
+      (t: ValueRecord) => t.dataSource,
       targetTimestamp,
-      project,
     )
 
     expect(result.lagging).toEqual([
       {
-        source: `${projectId}-A`,
+        id: `A`,
         latestTimestamp: new UnixTime(timestamp),
         latestValue: mockValue('A', timestamp),
       },
     ])
-    expect(result.syncing).toBeEmpty()
+    expect(result.excluded).toBeEmpty()
   })
 })
 
@@ -93,12 +96,11 @@ function mockValue(source: string, timestamp: number) {
   }
 }
 
-function mockProject(sources: string[]): ApiProject {
-  return {
-    id: projectId,
+function mockConfigurations(
+  sources: string[],
+): { id: string; minTimestamp: UnixTime }[] {
+  return sources.map((s) => ({
+    id: s,
     minTimestamp: UnixTime.ZERO,
-    type: 'layer2', // does not matter here
-    slug: 'slug', // does not matter here
-    sources: new Map(sources.map((s) => [s, { minTimestamp: UnixTime.ZERO }])),
-  }
+  }))
 }

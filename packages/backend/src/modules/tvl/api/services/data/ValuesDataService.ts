@@ -45,14 +45,20 @@ export class ValuesDataService {
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const { lagging, syncing } = getLaggingAndSyncing(
+      const { lagging, excluded } = getLaggingAndSyncing<ValueRecord>(
+        Array.from(project.sources.entries()).map(([source, v]) => ({
+          id: source,
+          minTimestamp: v.minTimestamp,
+        })),
         valuesByTimestamp,
+        (value: ValueRecord) => value.dataSource,
         targetTimestamp,
-        project,
       )
 
-      lagging.forEach((l) => result.lagging.set(l.source, { ...l }))
-      syncing.forEach((s) => result.syncing.add(s))
+      lagging.forEach((l) =>
+        result.lagging.set(`${project.id}-${l.id}`, { ...l }),
+      )
+      excluded.forEach((s) => result.syncing.add(s))
 
       const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
