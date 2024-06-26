@@ -7,7 +7,7 @@ export interface DiscoveryOutput {
   chain: string
   blockNumber: number
   contracts: ContractParameters[]
-  eoas: { address: EthereumAddress }[]
+  eoas: EoaParameters[]
   abis: Record<string, string[]>
   configHash: Hash256
   version: number
@@ -18,6 +18,11 @@ export interface DiscoveryCustomType {
   arg?: Record<string, string | number> | null
   description?: string | null
   severity?: string | null
+}
+
+export interface EoaParameters {
+  address: EthereumAddress
+  roles?: string[]
 }
 
 export interface ContractParameters {
@@ -33,6 +38,7 @@ export interface ContractParameters {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
+  roles?: string[]
 }
 
 export type ContractValue =

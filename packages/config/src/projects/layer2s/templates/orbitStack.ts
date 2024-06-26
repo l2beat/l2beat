@@ -109,10 +109,32 @@ export function orbitStackCommon(
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
 
-  const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates({
-    'validators.0': 'Validators/Proposers',
-    'batchPosters.0': 'Sequencers',
-  })
+  const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates()
+
+  const validators: ScalingProjectPermission = {
+    name: 'Validators/Proposers',
+    accounts: templateVars.discovery.getPermissionsByRole('Validator'),
+    description:
+      'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    chain: templateVars.discovery.chain,
+  }
+  if (validators.accounts.length === 0) {
+    throw new Error(
+      `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
+    )
+  }
+
+  const sequencers: ScalingProjectPermission = {
+    name: 'Sequencers',
+    accounts: templateVars.discovery.getPermissionsByRole('Sequencer'),
+    description: 'Central actors allowed to submit transaction batches to L1.',
+    chain: templateVars.discovery.chain,
+  }
+  if (sequencers.accounts.length === 0) {
+    throw new Error(
+      `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
+    )
+  }
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
@@ -257,6 +279,8 @@ export function orbitStackCommon(
         DEFAULT_OTHER_CONSIDERATIONS,
     },
     permissions: [
+      sequencers,
+      validators,
       ...resolvedTemplates.permissions,
       ...(templateVars.nonTemplatePermissions ?? []),
     ],

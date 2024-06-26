@@ -1,8 +1,8 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "blockNumber": 220726400,
-  "configHash": "0x84bbaca05ade1563538f5f275c52425d7dacbb76847b21b68ee7cae73e8c8a95",
+  "blockNumber": 225981315,
+  "configHash": "0x77f9c3066da9e329e54ac7351860f5fe405aeef7a154e4ccc822fc8d92e00016",
   "version": 8,
   "contracts": [
     {
@@ -27,11 +27,11 @@
           "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
         ],
         "allowedOutboxList": ["0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
-        "delayedMessageCount": 10761,
+        "delayedMessageCount": 14370,
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 10402,
-        "sequencerReportedSubMessageCount": 16963752
+        "sequencerMessageCount": 13931,
+        "sequencerReportedSubMessageCount": 21200790
       },
       "derivedName": "Bridge"
     },
@@ -154,12 +154,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1924,
+        "firstUnresolvedNode": 1954,
         "inbox": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
         "isERC20Enabled": false,
         "lastStakeBlock": 19278432,
-        "latestConfirmed": 1923,
-        "latestNodeCreated": 1934,
+        "latestConfirmed": 1953,
+        "latestNodeCreated": 1964,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
@@ -280,7 +280,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1708543048,
       "values": {
-        "batchCount": 10402,
+        "batchCount": 13931,
         "batchPosters": ["0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"],
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
         "dacKeyset": {
@@ -300,7 +300,7 @@
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 10760
+        "totalDelayedMessagesRead": 14369
       },
       "derivedName": "SequencerInbox"
     },
@@ -374,7 +374,8 @@
       "address": "0x0000000000000000000000000000000000000000"
     },
     {
-      "address": "0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"
+      "address": "0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03",
+      "roles": ["Sequencer"]
     },
     {
       "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
@@ -389,7 +390,8 @@
       "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
     },
     {
-      "address": "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00"
+      "address": "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00",
+      "roles": ["Validator"]
     },
     {
       "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
