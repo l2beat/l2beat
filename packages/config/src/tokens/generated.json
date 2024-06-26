@@ -4625,25 +4625,6 @@
       "supply": "zero"
     },
     {
-      "id": "optimism:usx-dforce-usd",
-      "name": "dForce USD",
-      "coingeckoId": "token-dforce-usd",
-      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "symbol": "USX",
-      "decimals": 18,
-      "deploymentTimestamp": 1637931555,
-      "coingeckoListingTimestamp": 1627516800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/17422/large/usx_32.png?1696516969",
-      "chainId": 10,
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "cBridge (Celer)",
-        "slug": "cbridge"
-      }
-    },
-    {
       "id": "optimism:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",

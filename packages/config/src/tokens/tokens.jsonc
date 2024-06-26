@@ -1872,16 +1872,6 @@
       }
     },
     {
-      "symbol": "USX",
-      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "cBridge (Celer)",
-        "slug": "cbridge"
-      }
-    },
-    {
       "symbol": "TAROT",
       "address": "0x1F514A61bcde34F94Bc39731235690ab9da737F7",
       "source": "native",
