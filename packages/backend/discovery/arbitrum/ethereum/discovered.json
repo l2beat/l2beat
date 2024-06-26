@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 20124808,
-  "configHash": "0x03d0a8e1d19941c687a83da05a9e3bd1c68ea158b91c6dfc724c9769ca833113",
+  "configHash": "0x8487d06f32e2e5d878dc9fbc634393b10fbaf91144130014d287cf7d76294fb3",
   "version": 8,
   "contracts": [
     {
@@ -284,6 +284,7 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3"
       },
+      "roles": ["Validator"],
       "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
       "sinceTimestamp": 1662368855,
       "values": {
@@ -445,6 +446,7 @@
         "implementation": "0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF",
         "admin": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766"
       },
+      "roles": ["Validator"],
       "implementations": ["0x11e5Ea5Ba5c4394a11e88e2cf474E09bfD583bbF"],
       "sinceTimestamp": 1659013011,
       "values": {
@@ -485,6 +487,7 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6"
       },
+      "roles": ["Validator"],
       "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
       "sinceTimestamp": 1661964258,
       "values": {
@@ -533,6 +536,7 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x0ea6999172c1B4563695F76A52de73c848587b17"
       },
+      "roles": ["Validator"],
       "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
       "sinceTimestamp": 1661962059,
       "values": {
@@ -636,6 +640,7 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0x509E3CDc218d163DB9A03678107b72e00163b061"
       },
+      "roles": ["Validator"],
       "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
       "sinceTimestamp": 1665084515,
       "values": {
@@ -1679,6 +1684,7 @@
         "implementation": "0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021",
         "admin": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c"
       },
+      "roles": ["Validator"],
       "implementations": ["0x5Bc5FB83950bBbF156E433c5c098bFe533Db4021"],
       "sinceTimestamp": 1664352371,
       "values": {
@@ -1697,10 +1703,12 @@
       "address": "0x07D4692291B9E30E326fd31706f686f83f331B82"
     },
     {
-      "address": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D"
+      "address": "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
+      "roles": ["Sequencer"]
     },
     {
-      "address": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4"
+      "address": "0x0fF813f6BD577c3D1cDbE435baC0621BE6aE34B4",
+      "roles": ["Validator"]
     },
     {
       "address": "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5"
@@ -1727,19 +1735,22 @@
       "address": "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C"
     },
     {
-      "address": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c"
+      "address": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
+      "roles": ["Validator"]
     },
     {
       "address": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677"
     },
     {
-      "address": "0x610Aa279989F440820e14248BD3879B148717974"
+      "address": "0x610Aa279989F440820e14248BD3879B148717974",
+      "roles": ["Validator"]
     },
     {
       "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7"
     },
     {
-      "address": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104"
+      "address": "0x6Fb914de4653eC5592B7c15F4d9466Cbd03F2104",
+      "roles": ["Validator"]
     },
     {
       "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
@@ -1754,7 +1765,8 @@
       "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
     },
     {
-      "address": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF"
+      "address": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
+      "roles": ["Validator"]
     },
     {
       "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
@@ -1763,13 +1775,15 @@
       "address": "0xB3b60932E598fe946169EC209A197184Bad760B7"
     },
     {
-      "address": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d"
+      "address": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
+      "roles": ["Validator"]
     },
     {
       "address": "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
     },
     {
-      "address": "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc"
+      "address": "0xC1b634853Cb333D3aD8663715b08f41A3Aec47cc",
+      "roles": ["Sequencer"]
     },
     {
       "address": "0xcd6BeDC12de2bF49afDE86cc91031d207318F207"
@@ -1778,7 +1792,8 @@
       "address": "0xd3132d052C9045D7cB0236586C9E2276e654343D"
     },
     {
-      "address": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E"
+      "address": "0xdDf2F71Ab206C0138A8eceEb54386567D5abF01E",
+      "roles": ["Validator"]
     },
     {
       "address": "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
@@ -1790,7 +1805,8 @@
       "address": "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
     },
     {
-      "address": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5"
+      "address": "0xF8D3E1cF58386c92B27710C6a0D8A54c76BC6ab5",
+      "roles": ["Validator"]
     },
     {
       "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
