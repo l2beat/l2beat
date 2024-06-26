@@ -8,16 +8,18 @@ import {
 import { expect } from 'earl'
 
 import { UpdateConfiguration } from '../../../tools/uif/multi/types'
+
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
+  TrackedTxId,
   TrackedTxSharpSubmissionConfig,
-} from '../types/TrackedTxsConfig'
+  createTrackedTxId,
+} from '@l2beat/shared'
 import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
-import { TrackedTxId, createTrackedTxId } from './createTrackedTxConfigId'
 import { transformFunctionCallsQueryResult } from './transformFunctionCallsQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()

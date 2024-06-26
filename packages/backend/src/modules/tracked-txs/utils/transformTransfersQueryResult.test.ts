@@ -7,12 +7,13 @@ import {
 import { expect } from 'earl'
 
 import { UpdateConfiguration } from '../../../tools/uif/multi/types'
+
 import {
   TrackedTxConfigEntry,
+  TrackedTxId,
   TrackedTxTransferConfig,
-} from '../types/TrackedTxsConfig'
+} from '@l2beat/shared'
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
-import { TrackedTxId } from './createTrackedTxConfigId'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
 const ADDRESS_1 = EthereumAddress.random()

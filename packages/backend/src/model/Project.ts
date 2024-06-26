@@ -23,8 +23,8 @@ import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   TrackedTxConfigEntry,
-} from '../modules/tracked-txs/types/TrackedTxsConfig'
-import { createTrackedTxId } from '../modules/tracked-txs/utils/createTrackedTxConfigId'
+  createTrackedTxId,
+} from '@l2beat/shared'
 import { ChainConverter } from '../tools/ChainConverter'
 
 export interface Project {

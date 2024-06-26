@@ -5,7 +5,7 @@ import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxTransferConfig,
-} from '../modules/tracked-txs/types/TrackedTxsConfig'
+} from '@l2beat/shared'
 import { layer2ToProject } from './Project'
 
 describe('Backend project config', () => {

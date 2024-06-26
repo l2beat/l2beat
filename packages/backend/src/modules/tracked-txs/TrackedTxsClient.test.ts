@@ -5,12 +5,13 @@ import { expect, mockFn, mockObject } from 'earl'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { UpdateConfiguration } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
+
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
-} from './types/TrackedTxsConfig'
+} from '@l2beat/shared'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,

@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   EthereumAddress,
   TrackedTxsConfigType,
@@ -21,7 +22,6 @@ import { L2CostsUpdater } from './modules/l2-costs/L2CostsUpdater'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { LivenessUpdater } from './modules/liveness/LivenessUpdater'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
-import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { TrackedTxResult } from './types/model'
 

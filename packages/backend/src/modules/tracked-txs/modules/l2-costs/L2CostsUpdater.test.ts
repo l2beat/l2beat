@@ -1,10 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
+import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
-import { TrackedTxConfigEntry } from '../../types/TrackedTxsConfig'
 import { TrackedTxResult } from '../../types/model'
-import { createTrackedTxId } from '../../utils/createTrackedTxConfigId'
 import { L2CostsUpdater } from './L2CostsUpdater'
 import {
   L2CostsRecord,

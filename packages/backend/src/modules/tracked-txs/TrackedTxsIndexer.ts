@@ -1,3 +1,4 @@
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   TrackedTxsConfigType,
   UnixTime,
@@ -21,7 +22,6 @@ import {
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
-import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
 export type TrackedTxsIndexerUpdaters = Record<
