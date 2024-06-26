@@ -17,7 +17,7 @@ import { shouldSkip } from './shouldSkip'
 // causing a difference in discovery output
 
 // Last change: add implementations to the output
-export const DISCOVERY_LOGIC_VERSION = 7
+export const DISCOVERY_LOGIC_VERSION = 8
 export class DiscoveryEngine {
   constructor(
     private readonly addressAnalyzer: AddressAnalyzer,
@@ -133,9 +133,9 @@ export class DiscoveryEngine {
       (a): a is AnalyzedContract => a.type === 'Contract',
     )
     const inverted = invertMeta(analyzedContracts.map((c) => c.targetsMeta))
-    analyzedContracts.forEach((a) => {
+    Object.values(resolved).forEach((a) => {
       a.combinedMeta = mergeContractMeta(
-        a.selfMeta,
+        a.type === 'Contract' ? a.selfMeta : undefined,
         inverted[a.address.toString()],
       )
     })

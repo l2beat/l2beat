@@ -1,6 +1,5 @@
 import { assert, ProjectId } from '@l2beat/shared-pure'
 
-import { RISK_VIEW, makeBridgeCompatible } from '../../common'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
@@ -31,24 +30,6 @@ export const degen: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  stackedRiskView: makeBridgeCompatible({
-    stateValidation: RISK_VIEW.STATE_NONE,
-    dataAvailability: (() => {
-      const { membersCount, requiredSignatures } = discovery.getContractValue<{
-        membersCount: number
-        requiredSignatures: number
-      }>('SequencerInbox', 'dacKeyset')
-      return RISK_VIEW.DATA_EXTERNAL_DAC({
-        membersCount,
-        requiredSignatures,
-      })
-    })(),
-    exitWindow: RISK_VIEW.EXIT_WINDOW(0, 86400), // SequencerInbox.maxTimeVariation.delaySeconds
-    sequencerFailure: RISK_VIEW.SEQUENCER_SELF_SEQUENCE(129600), // degen l3 delay + base l2 delay
-    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-    validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('base')),
-    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-  }),
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://rpc.degen.tips',

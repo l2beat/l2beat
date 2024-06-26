@@ -18,6 +18,7 @@ export const CallHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
   pickFields: z.optional(z.array(z.string())),
   expectRevert: z.optional(z.boolean()),
+  address: z.optional(z.string()),
 })
 
 export class CallHandler implements Handler {
@@ -36,6 +37,10 @@ export class CallHandler implements Handler {
         this.dependencies.push(dependency)
       }
     }
+    const addressDependency = getReferencedName(this.definition.address)
+    if (addressDependency) {
+      this.dependencies.push(addressDependency)
+    }
     const arity = definition.args.length
     this.fragment = getFunctionFragment(
       definition.method ?? field,
@@ -50,7 +55,7 @@ export class CallHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    address: EthereumAddress,
+    currentContractAddress: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
@@ -62,7 +67,7 @@ export class CallHandler implements Handler {
     ])
     const callResult = await callMethod(
       provider,
-      address,
+      resolved.address ?? currentContractAddress,
       this.fragment,
       resolved.args,
       this.definition.pickFields,
@@ -90,11 +95,15 @@ function resolveDependencies(
 ): {
   method: string | undefined
   args: ContractValue[]
+  address: EthereumAddress | undefined
 } {
   const args = definition.args.map((x) => resolveReference(x, previousResults))
+  const address = resolveReference(definition.address, previousResults)
   return {
     method: definition.method,
     args,
+    address:
+      address !== undefined ? EthereumAddress(address.toString()) : undefined,
   }
 }
 

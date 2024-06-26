@@ -307,12 +307,17 @@ export const ContractCreatorAndCreationTxHash = z.object({
   contractCreator: z.union([
     stringAs(EthereumAddress),
     z.literal('GENESIS').transform(() => EthereumAddress.ZERO),
+    z.literal('genesis').transform(() => EthereumAddress.ZERO),
   ]),
   txHash: z.union([
     stringAs(Hash256),
     z
       .string()
       .startsWith('GENESIS_')
+      .transform(() => Hash256.ZERO),
+    z
+      .string()
+      .startsWith('genesis_')
       .transform(() => Hash256.ZERO),
   ]),
 })

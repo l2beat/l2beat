@@ -40,9 +40,14 @@ export function processAnalysis(
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
           template: x.extendedTemplate?.template,
-          ...(x.combinedMeta ?? {}),
-          ignoreInWatchMode: x.ignoreInWatchMode,
           upgradeability: x.upgradeability,
+          descriptions: x.combinedMeta?.descriptions,
+          roles: x.combinedMeta?.roles,
+          categories: x.combinedMeta?.categories,
+          types: x.combinedMeta?.types,
+          severity: x.combinedMeta?.severity,
+          assignedPermissions: x.combinedMeta?.permissions,
+          ignoreInWatchMode: x.ignoreInWatchMode,
           implementations:
             Object.keys(x.implementations).length === 0
               ? undefined
@@ -62,8 +67,8 @@ export function processAnalysis(
       ),
     eoas: results
       .filter((x) => x.type === 'EOA')
-      .map((x) => x.address)
-      .sort((a, b) => a.localeCompare(b.toString())),
+      .sort((a, b) => a.address.localeCompare(b.address.toString()))
+      .map((x) => ({ address: x.address, ...(x.combinedMeta ?? {}) })),
     abis,
   }
 }

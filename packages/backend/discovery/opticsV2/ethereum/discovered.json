@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532028,
   "configHash": "0xd6335c5406db7a8838e31ff78c6edbbfc4df448e47a48c802e2545aa4064004b",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
@@ -17,13 +17,13 @@
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
-      "ignoreInWatchMode": ["committedRoot"],
       "upgradeability": {
         "type": "Optics Beacon proxy",
         "upgradeBeacon": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
         "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
         "implementation": "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
       },
+      "ignoreInWatchMode": ["committedRoot"],
       "implementations": ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"],
       "sinceTimestamp": 1637962173,
       "values": {
@@ -45,13 +45,13 @@
       "name": "RecoveryManager",
       "address": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637291734,
       "values": {
@@ -152,13 +152,13 @@
     {
       "name": "HomeBeaconProxy",
       "address": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
-      "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"],
       "upgradeability": {
         "type": "Optics Beacon proxy",
         "upgradeBeacon": "0x101a39eA1143cb252fc8093847399046fc35Db89",
         "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
         "implementation": "0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
       },
+      "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"],
       "implementations": ["0xfc6E146384b5c65f372d5b20537F3e8727aD3723"],
       "sinceTimestamp": 1637961283,
       "values": {
@@ -220,17 +220,39 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0",
-    "0x63c079444e07D82d33399DE7D56d6E48740494c7",
-    "0x703643995262c92ab013E3CCA810BdcB9239d45a",
-    "0x7519Db53B63d72721470319A5F4462D587Bb3008",
-    "0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552",
-    "0xa725898D6F73C512f803B564A89DFbd96cF298EC",
-    "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e",
-    "0xd85DC9A21378EF738A248236E970c2e0be89C9c2",
-    "0xeE2b1e23e71052860C14f69E84AAF78478606D63",
-    "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
+    },
+    {
+      "address": "0x63c079444e07D82d33399DE7D56d6E48740494c7"
+    },
+    {
+      "address": "0x703643995262c92ab013E3CCA810BdcB9239d45a"
+    },
+    {
+      "address": "0x7519Db53B63d72721470319A5F4462D587Bb3008"
+    },
+    {
+      "address": "0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552"
+    },
+    {
+      "address": "0xa725898D6F73C512f803B564A89DFbd96cF298EC"
+    },
+    {
+      "address": "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"
+    },
+    {
+      "address": "0xd85DC9A21378EF738A248236E970c2e0be89C9c2"
+    },
+    {
+      "address": "0xeE2b1e23e71052860C14f69E84AAF78478606D63"
+    },
+    {
+      "address": "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
+    }
   ],
   "abis": {
     "0x101a39eA1143cb252fc8093847399046fc35Db89": [

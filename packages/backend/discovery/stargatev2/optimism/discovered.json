@@ -3,11 +3,14 @@
   "chain": "optimism",
   "blockNumber": 121594324,
   "configHash": "0x9ac92b5366c1020988935c7832fca42559018edd2bdc62f02c7ed212dc145aaa",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "StargatePoolMigratable",
       "address": "0x19cFCE47eD54a88614648DC3f19A5980097007dD",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -15,9 +18,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837025,
       "values": {
         "approvalRequired": true,
@@ -54,6 +54,9 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -61,9 +64,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837017,
       "values": {
         "approvalRequired": true,
@@ -100,6 +100,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -107,9 +110,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837009,
       "values": {
         "approvalRequired": true,
@@ -183,8 +183,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
   ],
   "abis": {
     "0x19cFCE47eD54a88614648DC3f19A5980097007dD": [

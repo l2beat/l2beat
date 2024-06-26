@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825363,
   "configHash": "0x19ddeca30a70f486e371b6ec9d33ee69634c48c8e3064a3a5de8bfe1bb713263",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "GpsFactRegistryAdapter",
@@ -22,13 +22,6 @@
     {
       "name": "StarkExchange",
       "address": "0x7A7f9c8fe871cd50f6Ce935d7c7caD2e89987f9d",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getValidiumVaultRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
@@ -44,6 +37,13 @@
         },
         "proxyGovernance": ["0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A"]
       },
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getValidiumVaultRoot"
+      ],
       "implementations": [
         "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -131,11 +131,21 @@
     }
   ],
   "eoas": [
-    "0x107691bD4F590270B9793c807cB912DD278e8cB5",
-    "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-    "0x7e1BBDbE450e9f5988AE3d10a99911A20C138063",
-    "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A",
-    "0xE00A7D799A60495ce50f188348498E500C9016ea"
+    {
+      "address": "0x107691bD4F590270B9793c807cB912DD278e8cB5"
+    },
+    {
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    },
+    {
+      "address": "0x7e1BBDbE450e9f5988AE3d10a99911A20C138063"
+    },
+    {
+      "address": "0xc7C731AF62Cd43eB158ad3Ac0fC5d2dd32648C7A"
+    },
+    {
+      "address": "0xE00A7D799A60495ce50f188348498E500C9016ea"
+    }
   ],
   "abis": {
     "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825385,
   "configHash": "0xeb144afd373363daf78a82904d2479db0a01d112bec1aa14c3a7c6d3f57970f1",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "Committee",
@@ -56,14 +56,6 @@
     {
       "name": "StarkExchange",
       "address": "0xB62BcD40A24985f560b5a9745d478791d8F1945C",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getRollupVaultRoot",
-        "getValidiumVaultRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
@@ -79,6 +71,14 @@
         },
         "proxyGovernance": ["0x6b7763b749073e892c83E674c1EC4799D6f339Ef"]
       },
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getRollupVaultRoot",
+        "getValidiumVaultRoot"
+      ],
       "implementations": [
         "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
         "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
@@ -132,11 +132,21 @@
     }
   ],
   "eoas": [
-    "0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a",
-    "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-    "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
-    "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
-    "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0"
+    {
+      "address": "0x2e1c08E457F0E0F462Ef99eC9271dc5BfAd88b2a"
+    },
+    {
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    },
+    {
+      "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef"
+    },
+    {
+      "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5"
+    },
+    {
+      "address": "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0"
+    }
   ],
   "abis": {
     "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [

@@ -872,6 +872,21 @@
       "supply": "zero"
     },
     {
+      "id": "next-connext",
+      "name": "Connext",
+      "coingeckoId": "connext",
+      "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a",
+      "symbol": "NEXT",
+      "decimals": 18,
+      "deploymentTimestamp": 1680625643,
+      "coingeckoListingTimestamp": 1693872000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31293/large/photo_2024-06-03_12-14-59.png?1717638614",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "people-constitutiondao",
       "name": "ConstitutionDAO",
       "coingeckoId": "constitutiondao",
@@ -5010,6 +5025,21 @@
       "supply": "totalSupply"
     },
     {
+      "id": "optimism:usdc.e-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "bridged-usd-coin-optimism",
+      "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1636665399,
+      "coingeckoListingTimestamp": 1693958400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31580/large/USDC-icon.png?1696530397",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:usde-usde",
       "name": "USDe",
       "coingeckoId": "ethena-usde",
@@ -6986,6 +7016,25 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "omnichain"
+      }
+    },
+    {
+      "id": "arbitrum:mor-mor",
+      "name": "MOR",
+      "coingeckoId": "morpheusai",
+      "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "symbol": "MOR",
+      "decimals": 18,
+      "deploymentTimestamp": 1714748963,
+      "coingeckoListingTimestamp": 1716163200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37969/large/MOR200X200.png?1716327119",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
       }
     },
     {

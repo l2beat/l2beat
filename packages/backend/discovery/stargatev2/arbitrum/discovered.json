@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 223440408,
   "configHash": "0x2dedeb686ae7973502d6a4c436d14370f30589fa594b644de6706b9310331a28",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -48,6 +48,9 @@
     {
       "name": "StargatePoolNative",
       "address": "0xA45B5130f36CDcA45667738e2a258AB09f4A5f7F",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -55,9 +58,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837008,
       "values": {
         "approvalRequired": true,
@@ -92,6 +92,9 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0xcE8CcA271Ebc0533920C83d39F417ED6A0abB7D0",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -99,9 +102,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837018,
       "values": {
         "approvalRequired": true,
@@ -138,6 +138,9 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xe8CDF27AcD73a434D661C84887215F7598e7d0d3",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -145,9 +148,6 @@
         "tvl",
         "getTransferGasLimit"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837016,
       "values": {
         "approvalRequired": true,
@@ -183,8 +183,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
+    }
   ],
   "abis": {
     "0x19cFCE47eD54a88614648DC3f19A5980097007dD": [
