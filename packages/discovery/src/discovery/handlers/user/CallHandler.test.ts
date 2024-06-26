@@ -38,6 +38,23 @@ describe(CallHandler.name, () => {
 
       expect(handler.dependencies).toEqual(['foo', 'bar'])
     })
+
+    it('detects dependencies in inAddress', () => {
+      const handler = new CallHandler(
+        'someName',
+        {
+          type: 'call',
+          method:
+            'function foo(uint a, uint b, uint c, uint d) view returns (uint)',
+          args: [1, 2, 3, 4],
+          address: '{{ quax }}',
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+
+      expect(handler.dependencies).toEqual(['quax'])
+    })
   })
 
   describe('getMethod', () => {
@@ -215,6 +232,40 @@ describe(CallHandler.name, () => {
       })
     })
 
+    it('calls the method with the provided parameters and address', async () => {
+      const inAddress = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
+          expect(passedAddress).toEqual(inAddress)
+          expect(data).toEqual([1, 2])
+
+          return 3 as T
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        {
+          type: 'call',
+          method,
+          args: [1, 2],
+          address: inAddress.toString(),
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {})
+      expect(result).toEqual({
+        field: 'add',
+        value: 3,
+        ignoreRelative: undefined,
+      })
+    })
+
     it('calls the method with the resolved parameters', async () => {
       const provider = mockObject<IProvider>({
         async callMethod<T>(
@@ -238,6 +289,45 @@ describe(CallHandler.name, () => {
       const result = await handler.execute(provider, address, {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
+      })
+      expect(result).toEqual({
+        field: 'add',
+        value: 3,
+        ignoreRelative: undefined,
+      })
+    })
+
+    it('calls the method with the provided parameters and address as dependency', async () => {
+      const inAddress = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          data: unknown[],
+        ) {
+          expect(passedAddress).toEqual(inAddress)
+          expect(data).toEqual([1, 2])
+
+          return 3 as T
+        },
+      })
+
+      const handler = new CallHandler(
+        'add',
+        {
+          type: 'call',
+          method,
+          args: [1, 2],
+          address: '{{ someDependentAddress }}',
+        },
+        [],
+        DiscoveryLogger.SILENT,
+      )
+      const result = await handler.execute(provider, address, {
+        someDependentAddress: {
+          field: 'someDependentAddress',
+          value: inAddress.toString(),
+        },
       })
       expect(result).toEqual({
         field: 'add',
