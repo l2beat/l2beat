@@ -10,7 +10,6 @@ export const arcology: Layer2 = upcomingL2({
       'Powered by its parallel execution engine with STM (Software Transactional Memory) based concurrency control, Arcology Network is the first Rollup to process transactions fully in parallel. With EVM equivalence and horizontal scaling, it’s perfect for developers building high-performance, resource-intensive decentralized apps.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    provider: 'Arcology',
     links: {
       websites: ['https://arcology.network/'],
       apps: [],
