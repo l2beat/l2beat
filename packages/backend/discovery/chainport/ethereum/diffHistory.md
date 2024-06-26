@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb8c06d6916518287da115de7a043ff208ec8a78a
+
+# Diff at Wed, 26 Jun 2024 10:22:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb9200e010745e10244c0b3851b3acf21fe41f31 block: 20138458
+- current block number: 20175233
+
+## Description
+
+Proposal from last update is executed, upgrading the Vault6 contract to a new unverified implementation.
+
+## Watched changes
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
++        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
+      implementations.0:
+-        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
++        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
+    }
+```
+
 Generated with discovered.json: 0xf976fdfd826637b5822d6ad01aaca6c3ef60d265
 
 # Diff at Fri, 21 Jun 2024 06:59:57 GMT:

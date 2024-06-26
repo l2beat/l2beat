@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xcd101652e1dda14fb088ebec2e1b77b643e099b5
+
+# Diff at Wed, 26 Jun 2024 10:20:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb9200e010745e10244c0b3851b3acf21fe41f31 block: 121593875
+- current block number: 121899221
+
+## Description
+
+Ignored.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 121593875 (main branch discovery), not current.
+
+```diff
+    contract BaseFeeVault (0x4200000000000000000000000000000000000019) {
+    +++ description: None
+      values.totalProcessed:
+-        "1928902844154653024561"
+    }
+```
+
+```diff
+    contract L1FeeVault (0x420000000000000000000000000000000000001A) {
+    +++ description: None
+      values.totalProcessed:
+-        "11679962820116169091101"
+    }
+```
+
 Generated with discovered.json: 0xc5eed77bd737b6f96961ef8ac1380b3dcfc065b1
 
 # Diff at Tue, 11 Jun 2024 10:11:02 GMT:
