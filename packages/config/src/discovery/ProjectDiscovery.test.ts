@@ -13,7 +13,7 @@ import {
 } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
-describe(ProjectDiscovery.name, () => {
+describe.only(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
   const configReader = mockObject<ConfigReader>({
     readConfig: (projectName: string, chain: string) =>
@@ -283,6 +283,29 @@ describe(ProjectDiscovery.name, () => {
     const contract = discovery.getContract(contractStub.address.toString())
 
     expect(JSON.stringify(contract)).toEqual(JSON.stringify(contractStub))
+  })
+
+  describe(ProjectDiscovery.prototype.getPermissionsByRole.name, () => {
+    it('should find contracts and eoas by role', () => {
+      const discovery = new ProjectDiscovery(
+        'ExampleProject',
+        'ethereum',
+        configReader,
+      )
+      const sequencers = discovery.getPermissionsByRole('Sequencer')
+      expect(sequencers).toEqual([
+        {
+          address: contractStub.address,
+          type: 'Contract',
+        },
+        {
+          address: EthereumAddress(
+            '0x000000000000000000000000000000000000Bb22',
+          ),
+          type: 'EOA',
+        },
+      ])
+    })
   })
 })
 
