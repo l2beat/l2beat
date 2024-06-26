@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 218960264,
   "configHash": "0xb6770d92de735e844697c0544c0deb9d7384fe272641b1b974a1ce3de7168fc9",
-  "version": 4,
+  "version": 8,
   "contracts": [
     {
       "name": "MxcL1Contract?",
@@ -75,8 +75,12 @@
     }
   ],
   "eoas": [
-    "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-    "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
+    {
+      "address": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+    },
+    {
+      "address": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
+    }
   ],
   "abis": {
     "0x26b946C69F411AE27692BbCD05A398BDDB07F7AA": [

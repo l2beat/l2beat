@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20074008,
   "configHash": "0x4d61691a42ad106313ec274f92462885c512ac1e1e893cc7f99ea5866028ea0f",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -30,10 +30,10 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
-      "ignoreInWatchMode": ["counter"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
         "counter": 2921396,
@@ -138,6 +138,12 @@
     {
       "name": "StakeManager",
       "address": "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+      "upgradeability": {
+        "type": "Polygon Extension proxy",
+        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "implementation": "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
+        "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
+      },
       "ignoreInWatchMode": [
         "currentEpoch",
         "currentValidatorSetTotalStake",
@@ -151,12 +157,6 @@
         "signerUpdateLimit",
         "totalHeimdallFee"
       ],
-      "upgradeability": {
-        "type": "Polygon Extension proxy",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-        "implementation": "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
-        "extension": "0xef49Ea6996073752b6840CDA34773FFA78F78166"
-      },
       "implementations": [
         "0xbA9Ac3C9983a3e967f0f387c75cCbD38Ad484963",
         "0xef49Ea6996073752b6840CDA34773FFA78F78166"
@@ -272,16 +272,16 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-      "ignoreInWatchMode": [
-        "_nextHeaderBlock",
-        "currentHeaderBlock",
-        "getLastChildBlock"
-      ],
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
       },
+      "ignoreInWatchMode": [
+        "_nextHeaderBlock",
+        "currentHeaderBlock",
+        "getLastChildBlock"
+      ],
       "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
@@ -302,10 +302,10 @@
     {
       "name": "MaticWETH",
       "address": "0xa45b966996374E9e65ab991C6FE4Bfce3a56DDe8",
-      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1590840981,
       "values": {
         "decimals": 18,
@@ -432,13 +432,13 @@
     {
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "modules": [],
         "threshold": "5 of 9 (56%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1593593561,
       "values": {
@@ -464,22 +464,54 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03",
-    "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529",
-    "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
-    "0x39415255619783A2E71fcF7d8f708A951d92e1b6",
-    "0x427cEB53c3532835CcfdBbE4c533286e15d3576E",
-    "0x62a8029CDAf8576e337b86187B82474EFcE712d8",
-    "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25",
-    "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a",
-    "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602",
-    "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF",
-    "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
-    "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc",
-    "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-    "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a",
-    "0xf748a187303940856A367D57Dc45D1ac4A597305"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
+    },
+    {
+      "address": "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
+    },
+    {
+      "address": "0x21A5418009C5d70db1552e7206Ed884F9Adb903A"
+    },
+    {
+      "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
+    },
+    {
+      "address": "0x427cEB53c3532835CcfdBbE4c533286e15d3576E"
+    },
+    {
+      "address": "0x62a8029CDAf8576e337b86187B82474EFcE712d8"
+    },
+    {
+      "address": "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
+    },
+    {
+      "address": "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
+    },
+    {
+      "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
+    },
+    {
+      "address": "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
+    },
+    {
+      "address": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
+    },
+    {
+      "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
+    },
+    {
+      "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+    },
+    {
+      "address": "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
+    },
+    {
+      "address": "0xf748a187303940856A367D57Dc45D1ac4A597305"
+    }
   ],
   "abis": {
     "0x0672777617CAA1E778083a4f74eBC997262C9EdD": [

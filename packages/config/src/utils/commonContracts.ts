@@ -229,8 +229,7 @@ function getPermissionContainingAddress(
 }
 
 function getProjectAddresses(project: DiscoveryOutput) {
-  const addresses: EthereumAddress[] = []
-  addresses.push(...project.eoas)
+  const addresses: EthereumAddress[] = project.eoas.map((e) => e.address)
   addresses.push(...project.contracts.flatMap((c) => c.implementations ?? []))
   addresses.push(...project.contracts.map((c) => c.address))
   addresses.push(

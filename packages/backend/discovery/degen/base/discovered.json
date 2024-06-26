@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 15661159,
   "configHash": "0x4d7aa9b347660ffbb6c5d35cf522be0d7379e61faffa5df93404d4c097e98239",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "Inbox",
@@ -77,12 +77,13 @@
       "name": "SequencerInbox",
       "address": "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
       "template": "orbitstack/SequencerInbox",
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5ad3e9141D0EAd2132afFF0CD74487964cE9135A",
         "admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
       },
+      "descriptions": ["State batches / commitments get posted here."],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "implementations": ["0x5ad3e9141D0EAd2132afFF0CD74487964cE9135A"],
       "sinceTimestamp": 1710087441,
       "values": {
@@ -148,13 +149,13 @@
       "name": "RollupOwnerMultisig",
       "address": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1708624405,
       "values": {
@@ -205,6 +206,9 @@
         "implementation": "0x3C4DF76De31816443C207E49F9fE48737C8F2746",
         "admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
       },
+      "assignedPermissions": {
+        "admin": ["0xD34F3a11F10DB069173b32d84F02eDA578709143"]
+      },
       "implementations": ["0x3C4DF76De31816443C207E49F9fE48737C8F2746"],
       "sinceTimestamp": 1710087441,
       "values": {
@@ -253,17 +257,20 @@
       "name": "RollupProxy",
       "address": "0xD34F3a11F10DB069173b32d84F02eDA578709143",
       "template": "orbitstack/RollupProxy",
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
       "upgradeability": {
         "type": "Arbitrum proxy",
         "admin": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028",
         "adminImplementation": "0x3A59b13eB3F661DE35a1e203Bd12b3B4123976cf",
         "userImplementation": "0xB7202d306936B79Ba29907b391faA87D3BEec33A"
       },
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
       "implementations": [
         "0x3A59b13eB3F661DE35a1e203Bd12b3B4123976cf",
         "0xB7202d306936B79Ba29907b391faA87D3BEec33A"
@@ -335,16 +342,16 @@
     {
       "name": "Bridge",
       "address": "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xc00336Cdf86AE7AD58D8773B0114082C190D28D5",
         "admin": "0xFB48D385Fa3da33762B350e1d705b9E46054E677"
       },
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "implementations": ["0xc00336Cdf86AE7AD58D8773B0114082C190D28D5"],
       "sinceTimestamp": 1710087441,
       "values": {
@@ -369,6 +376,12 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
+          "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+        ]
+      },
       "sinceTimestamp": 1710087441,
       "values": {
         "owner": "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
@@ -376,17 +389,39 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca",
-    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-    "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-    "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c",
-    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-    "0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205",
-    "0xA3883Ee393B03B6711962843b6844C9027A3Cc8f",
-    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-    "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x1BCdC0eCc1e4A31E5dB0542f81895d8319A757Ca"
+    },
+    {
+      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    },
+    {
+      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    },
+    {
+      "address": "0x690f4e2f19717A06E1C146B2dCE68c2d23e36f4c"
+    },
+    {
+      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    },
+    {
+      "address": "0xa3582189403F67a9CDB1CE0Ac066c954FFd3f205"
+    },
+    {
+      "address": "0xA3883Ee393B03B6711962843b6844C9027A3Cc8f"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    },
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    },
+    {
+      "address": "0xf70da97812CB96acDF810712Aa562db8dfA3dbEF"
+    }
   ],
   "abis": {
     "0x20fA6358f89Ed16d48F6588a8f500887354Ff56c": [

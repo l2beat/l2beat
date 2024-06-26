@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockscoutClient, EtherscanClient } from '@l2beat/shared'
+import { BlockExplorerClient } from '@l2beat/shared'
 import {
   AmountConfigEntry,
   EscrowEntry,
@@ -86,28 +86,33 @@ function createChainModule(
   }
   logger = logger.tag(chain)
 
-  const blockNumberProviderConfig =
-    chainConfig.config.blockTimestampClientConfig
-  const blockTimestampClient = blockNumberProviderConfig
-    ? blockNumberProviderConfig.type === 'etherscan'
-      ? peripherals.getClient(EtherscanClient, {
-          apiKey: blockNumberProviderConfig.etherscanApiKey,
-          url: blockNumberProviderConfig.etherscanApiUrl,
-          chainId: chainConfig.config.chainId,
-        })
-      : peripherals.getClient(BlockscoutClient, {
-          url: blockNumberProviderConfig.blockscoutApiUrl,
-          chainId: chainConfig.config.chainId,
-        })
-    : undefined
-
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,
     callsPerMinute: chainConfig.config.providerCallsPerMinute,
   })
 
+  const options =
+    chainConfig.config.blockExplorerConfig === undefined
+      ? undefined
+      : chainConfig.config.blockExplorerConfig.type === 'etherscan'
+        ? {
+            type: 'Etherscan' as const,
+            apiKey: chainConfig.config.blockExplorerConfig.etherscanApiKey,
+            url: chainConfig.config.blockExplorerConfig.etherscanApiUrl,
+            maximumCallsForBlockTimestamp: 3,
+          }
+        : {
+            type: 'Blockscout' as const,
+            url: chainConfig.config.blockExplorerConfig.blockscoutApiUrl,
+            maximumCallsForBlockTimestamp: 10,
+          }
+
+  const blockExplorerClient = options
+    ? peripherals.getClient(BlockExplorerClient, options)
+    : undefined
+
   const blockTimestampProvider = new BlockTimestampProvider({
-    blockTimestampClient,
+    blockExplorerClient,
     rpcClient,
     logger,
   })

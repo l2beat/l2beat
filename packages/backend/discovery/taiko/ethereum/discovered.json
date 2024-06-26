@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20063194,
   "configHash": "0xa84e78187a82cd64cb1eed2be4f1ea39926ae20c90426528f8d6e8ac34ca360c",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -16,15 +16,15 @@
     {
       "name": "TaikoL1Contract",
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-      "descriptions": [
-        "This contract provides functionalities for proposing, proving, and verifying blocks."
-      ],
-      "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xB9E1E58bcF33B79CcfF99c298963546a6c334388",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "descriptions": [
+        "This contract provides functionalities for proposing, proving, and verifying blocks."
+      ],
+      "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"],
       "implementations": ["0xB9E1E58bcF33B79CcfF99c298963546a6c334388"],
       "sinceTimestamp": 1714550627,
       "values": {
@@ -131,12 +131,12 @@
     {
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-      "ignoreInWatchMode": ["clock"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "ignoreInWatchMode": ["clock"],
       "implementations": ["0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"],
       "sinceTimestamp": 1714033799,
       "values": {
@@ -239,14 +239,14 @@
     {
       "name": "GuardianMinorityProver",
       "address": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
-      "descriptions": [
-        "Verifier contract for blocks proven by Guardian minority."
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "descriptions": [
+        "Verifier contract for blocks proven by Guardian minority."
+      ],
       "implementations": ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"],
       "sinceTimestamp": 1714550627,
       "values": {
@@ -300,14 +300,14 @@
     {
       "name": "ProverSetProxy",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
-      "descriptions": [
-        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "descriptions": [
+        "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
+      ],
       "implementations": ["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"],
       "sinceTimestamp": 1716217559,
       "values": {
@@ -384,13 +384,29 @@
       "name": "TaikoAdmin",
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 4 (75%)"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+          "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
+          "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+          "0x579f40D0BE111b823962043702cabe6Aaa290780",
+          "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
+          "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+          "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
+          "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
+          "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+          "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+          "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+          "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC"
+        ]
+      },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1714192631,
       "values": {
@@ -445,13 +461,13 @@
     {
       "name": "SgxVerifier",
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
-      "descriptions": ["Verifier contract for SGX proven blocks."],
-      "ignoreInWatchMode": ["instances", "nextInstanceId"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "descriptions": ["Verifier contract for SGX proven blocks."],
+      "ignoreInWatchMode": ["instances", "nextInstanceId"],
       "implementations": ["0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"],
       "sinceTimestamp": 1714550627,
       "values": {
@@ -505,12 +521,12 @@
     {
       "name": "TaikoBridge",
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
-      "ignoreInWatchMode": ["nextMessageId"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "ignoreInWatchMode": ["nextMessageId"],
       "implementations": ["0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"],
       "sinceTimestamp": 1714550603,
       "values": {
@@ -533,12 +549,12 @@
     {
       "name": "GuardianProver",
       "address": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
-      "descriptions": ["Verifier contract for Guardian proven blocks."],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
+      "descriptions": ["Verifier contract for Guardian proven blocks."],
       "implementations": ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"],
       "sinceTimestamp": 1714550627,
       "values": {
@@ -591,33 +607,87 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
-    "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
-    "0x085Bf649bef6b9e97C73822724eD33553C20a1CA",
-    "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D",
-    "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200",
-    "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6",
-    "0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34",
-    "0x3777c454aF69C87df961E92dA99fCF96EdB30683",
-    "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
-    "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3",
-    "0x4A9d339c94D1D3b685e3923907A98c73b8168AFF",
-    "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268",
-    "0x584240b6296210BdF93E2221aBD69BDb312Dc8af",
-    "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68",
-    "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87",
-    "0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3",
-    "0x7Cdd1c128Cd72dd252f569eeD942735330937F91",
-    "0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9",
-    "0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7",
-    "0xC384B679c028787166b9B3725aC14A60da205861",
-    "0xC57230B9A1BD4f882c40C9f549a27034474e5962",
-    "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51",
-    "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf",
-    "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
-    "0xf02099f42d499028Ca52a5205d4E21001f5E3525",
-    "0xF445C0b580454E21a8b836318D83782d35986666"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0"
+    },
+    {
+      "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33"
+    },
+    {
+      "address": "0x085Bf649bef6b9e97C73822724eD33553C20a1CA"
+    },
+    {
+      "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
+    },
+    {
+      "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200"
+    },
+    {
+      "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
+    },
+    {
+      "address": "0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34"
+    },
+    {
+      "address": "0x3777c454aF69C87df961E92dA99fCF96EdB30683"
+    },
+    {
+      "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
+    },
+    {
+      "address": "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3"
+    },
+    {
+      "address": "0x4A9d339c94D1D3b685e3923907A98c73b8168AFF"
+    },
+    {
+      "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268"
+    },
+    {
+      "address": "0x584240b6296210BdF93E2221aBD69BDb312Dc8af"
+    },
+    {
+      "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
+    },
+    {
+      "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
+    },
+    {
+      "address": "0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3"
+    },
+    {
+      "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+    },
+    {
+      "address": "0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"
+    },
+    {
+      "address": "0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"
+    },
+    {
+      "address": "0xC384B679c028787166b9B3725aC14A60da205861"
+    },
+    {
+      "address": "0xC57230B9A1BD4f882c40C9f549a27034474e5962"
+    },
+    {
+      "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
+    },
+    {
+      "address": "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
+    },
+    {
+      "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
+    },
+    {
+      "address": "0xf02099f42d499028Ca52a5205d4E21001f5E3525"
+    },
+    {
+      "address": "0xF445C0b580454E21a8b836318D83782d35986666"
+    }
   ],
   "abis": {
     "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169": [
