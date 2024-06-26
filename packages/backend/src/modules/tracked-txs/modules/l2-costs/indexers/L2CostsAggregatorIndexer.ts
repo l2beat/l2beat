@@ -1,12 +1,11 @@
 import { assert, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
+import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { TrackedTxCostsConfig } from '../../../types/TrackedTxsConfig'
-import { TrackedTxId } from '../../../utils/createTrackedTxConfigId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,

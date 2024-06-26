@@ -2,15 +2,10 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
-import {
-  TrackedTxsConfigRecord,
-  TrackedTxsConfigsRepository,
-} from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../../../types/TrackedTxsConfig'
 import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
@@ -261,20 +256,15 @@ function mockProjectConfig(
       mockObject<Project>({
         projectId,
         isArchived: false,
-        trackedTxsConfig: {
-          entries: [
-            mockObject<TrackedTxConfigEntry>({
-              uses: [
-                {
-                  type: 'liveness',
-                  subtype: 'batchSubmissions',
-                  id: TrackedTxId.random(),
-                },
-              ],
-              untilTimestampExclusive: UnixTime.now(),
-            }),
-          ],
-        },
+        trackedTxsConfig: [
+          mockObject<TrackedTxConfigEntry>({
+            type: 'liveness',
+            subtype: 'batchSubmissions',
+            id: createTrackedTxId.random(),
+            untilTimestampExclusive: UnixTime.now(),
+          }),
+        ],
+
         livenessConfig: undefined,
       }),
     )

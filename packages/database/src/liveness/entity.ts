@@ -48,7 +48,7 @@ export function toRecord(row: Selectable<LivenessRow>): Liveness {
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    trackedTxId: row.tracked_tx_id,
   }
 }
 

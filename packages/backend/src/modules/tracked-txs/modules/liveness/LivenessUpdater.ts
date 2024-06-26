@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
+import { TrackedTxId } from '@l2beat/shared'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { TrackedTxResult } from '../../types/model'
-import { TrackedTxId } from '../../utils/createTrackedTxConfigId'
 import {
   LivenessRecord,
   LivenessRepository,

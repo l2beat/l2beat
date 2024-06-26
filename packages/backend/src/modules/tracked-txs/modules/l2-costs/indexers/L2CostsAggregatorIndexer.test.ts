@@ -7,9 +7,9 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { TrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { TrackedTxId } from '../../../utils/createTrackedTxConfigId'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,

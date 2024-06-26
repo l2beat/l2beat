@@ -1,3 +1,4 @@
+import { TrackedTxId } from '@l2beat/shared'
 import {
   EthereumAddress,
   ProjectId,
@@ -7,7 +8,6 @@ import {
   branded,
 } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { TrackedTxId } from '../utils/createTrackedTxConfigId'
 
 export type TrackedTxResult =
   | TrackedTxTransferResult

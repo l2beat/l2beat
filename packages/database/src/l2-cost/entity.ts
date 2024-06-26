@@ -19,7 +19,7 @@ export function toRecord(row: Selectable<L2CostRow>): L2Cost {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    trackedTxId: row.tracked_tx_id,
     gasUsed: row.gas_used,
     gasPrice: BigInt(row.gas_price),
     calldataLength: row.calldata_length,
