@@ -1,7 +1,7 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { PoolConfig } from 'pg'
 
-import { Database, createRepositories } from '@l2beat/database'
+import { Database, createRepositories } from '..'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {
   const database = getTestDatabase()
