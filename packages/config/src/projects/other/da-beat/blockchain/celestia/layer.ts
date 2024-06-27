@@ -25,7 +25,8 @@ export const celestia: DaLayer = {
     description: 'Celestia is a modular data availability network.',
   },
   bridges: [noBridge, blobstream],
-  usedIn: [ // can we fetch these from the layer2s and layer3s?
+  usedIn: [
+    // can we fetch these from the layer2s and layer3s?
     mantapacific.id,
     karak.id,
     aevo.id,
