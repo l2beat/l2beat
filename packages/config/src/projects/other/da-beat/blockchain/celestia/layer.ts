@@ -10,7 +10,7 @@ import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer, DaLayerKind } from '../../types/DaLayer'
-import { blobStream } from './bridges/blob-stream'
+import { blobstream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
 /**
@@ -24,7 +24,7 @@ export const celestia: DaLayer = {
     slug: 'celestia',
     description: 'Celestia is a modular data availability network.',
   },
-  bridges: [noBridge, blobStream],
+  bridges: [noBridge, blobstream],
   usedIn: [ // can we fetch these from the layer2s and layer3s?
     mantapacific.id,
     karak.id,
@@ -37,8 +37,8 @@ export const celestia: DaLayer = {
     stack.id,
   ],
   pruningWindow: 86400 * 30, // 30 days in seconds
-  consensusFinality: 1000,
-  unbondingPeriod: 1814400, // 21 days - techni
+  consensusFinality: 1, // 1 second for tendermint
+  unbondingPeriod: 1814400, // 21 days
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
