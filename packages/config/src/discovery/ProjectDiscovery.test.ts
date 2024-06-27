@@ -13,7 +13,7 @@ import {
 } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
-describe.only(ProjectDiscovery.name, () => {
+describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
   const configReader = mockObject<ConfigReader>({
     readConfig: (projectName: string, chain: string) =>
