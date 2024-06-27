@@ -11,6 +11,7 @@ export const contractStub: ContractParameters = {
     isFinal: false,
     facets: {},
   },
+  roles: ['Sequencer'],
   values: {
     authority: '0x22405c1782913fb676bc74Ef54a60727B0e1026F',
     CHILD_BLOCK_INTERVAL: 1000,
@@ -68,7 +69,16 @@ export const discoveredJsonStub: DiscoveryOutput = {
       },
     },
   ],
-  eoas: [],
+  eoas: [
+    {
+      address: EthereumAddress.from('0xaa11'),
+      roles: ['Validator'],
+    },
+    {
+      address: EthereumAddress.from('0xbb22'),
+      roles: ['Sequencer'],
+    },
+  ],
   abis: {},
   configHash: Hash256.random(),
   version: 123,

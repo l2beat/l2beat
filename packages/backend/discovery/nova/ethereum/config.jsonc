@@ -60,6 +60,9 @@
           }
         },
         "batchPosters": {
+          "target": {
+            "role": "Sequencer"
+          },
           "handler": {
             "type": "arbitrumActors",
             "actorType": "batchPoster"

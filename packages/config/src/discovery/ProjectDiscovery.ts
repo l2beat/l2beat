@@ -1,6 +1,7 @@
 import {
   ConfigReader,
   InvertedAddresses,
+  StackRole,
   calculateInversion,
 } from '@l2beat/discovery'
 import type {
@@ -658,6 +659,17 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     return contracts.filter((contract) => contract.name === name)
+  }
+
+  getPermissionsByRole(role: StackRole): ScalingProjectPermissionedAccount[] {
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+
+    return [...contracts, ...eoas]
+      .filter((x) => x.roles?.includes(role))
+      .map((x) => this.formatPermissionedAccount(x.address))
   }
 }
 

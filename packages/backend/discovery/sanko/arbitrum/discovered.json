@@ -1,8 +1,8 @@
 {
   "name": "sanko",
   "chain": "arbitrum",
-  "blockNumber": 220737963,
-  "configHash": "0xdd9bb837e819f84b14a6a1c4123e804d873f5c6fa611773cc0d17677ed8d2140",
+  "blockNumber": 225981699,
+  "configHash": "0x44c46c0d0e25c4a00384a9d9ec612bec3db065a800120644c5619e7a26b413b7",
   "version": 8,
   "contracts": [
     {
@@ -58,7 +58,7 @@
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1712958598,
       "values": {
-        "batchCount": 946,
+        "batchCount": 1415,
         "batchPosters": ["0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"],
         "bridge": "0x2f285781B8d58678a3483de52D618198E4d27532",
         "dacKeyset": {
@@ -78,7 +78,7 @@
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 4065
+        "totalDelayedMessagesRead": 7540
       },
       "derivedName": "SequencerInbox"
     },
@@ -104,12 +104,12 @@
           "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
         ],
         "allowedOutboxList": ["0x575d32f7ff0C72921645e302cb14d2757E300786"],
-        "delayedMessageCount": 4070,
+        "delayedMessageCount": 7543,
         "nativeToken": "0x8B0E6f19Ee57089F7649A455D89D7bC6314D04e8",
         "rollup": "0x9A59EdF7080fdA05396373a85DdBf2cEBDB81Cd4",
         "sequencerInbox": "0x24B68936C13A414cd91437aE7AA730321B9ff159",
-        "sequencerMessageCount": 946,
-        "sequencerReportedSubMessageCount": 219653
+        "sequencerMessageCount": 1415,
+        "sequencerReportedSubMessageCount": 489660
       },
       "derivedName": "ERC20Bridge"
     },
@@ -302,12 +302,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 593,
+        "firstUnresolvedNode": 654,
         "inbox": "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19642604,
-        "latestConfirmed": 592,
-        "latestNodeCreated": 618,
+        "latestConfirmed": 653,
+        "latestNodeCreated": 678,
         "loserStakeEscrow": "0xe8216687Ef40C65F64D6dcd335b0aaab4A1Bc400",
         "minimumAssertionPeriod": 75,
         "outbox": "0x575d32f7ff0C72921645e302cb14d2757E300786",
@@ -418,7 +418,8 @@
       "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
     },
     {
-      "address": "0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a"
+      "address": "0x2f4dDaD3aB0AC4225fd8023EE07d04e2A758017a",
+      "roles": ["Sequencer"]
     },
     {
       "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
@@ -430,7 +431,8 @@
       "address": "0x505421b85ae7F906e8807bf59ee3Da62e894CDC3"
     },
     {
-      "address": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe"
+      "address": "0x795aA8E945b571c57b12E7b5B77De10A88a1FADe",
+      "roles": ["Validator"]
     },
     {
       "address": "0xAf574BbE2139e39F560C4db1A118E1245aC0983d"
