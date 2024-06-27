@@ -172,8 +172,6 @@ export const TransactionListEntry = z.object({
   cumulativeGasUsed: z.string(),
   gasUsed: z.string(),
   confirmations: z.string(),
-  methodId: z.string(),
-  functionName: z.string(),
 })
 
 export const OneTransactionListResult = z.array(TransactionListEntry).length(1)
