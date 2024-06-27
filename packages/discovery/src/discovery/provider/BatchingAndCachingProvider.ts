@@ -7,9 +7,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BigNumber, providers } from 'ethers'
+import { ContractSource } from '../../utils/IEtherscanClient'
 import { isRevert } from '../utils/isRevert'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
+import { ContractDeployment, RawProviders } from './IProvider'
 import { LowLevelProvider } from './LowLevelProvider'
 import { CacheEntry, ReorgAwareCache } from './ReorgAwareCache'
 import { ProviderStats, getZeroStats } from './Stats'

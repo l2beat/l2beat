@@ -2,10 +2,10 @@ import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { InstalledClock, install } from '@sinonjs/fake-timers'
-import { EtherscanLikeClient } from './EtherscanLikeClient'
+import { EtherscanClient } from './EtherscanClient'
 import { HttpClient } from './HttpClient'
 
-describe(EtherscanLikeClient.name, () => {
+describe(EtherscanClient.name, () => {
   let time: InstalledClock
 
   beforeEach(() => {
@@ -40,12 +40,7 @@ describe(EtherscanLikeClient.name, () => {
         ok: true,
       }),
     })
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -71,12 +66,7 @@ describe(EtherscanLikeClient.name, () => {
       }),
     })
 
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -108,12 +98,7 @@ describe(EtherscanLikeClient.name, () => {
         }),
     })
 
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -147,12 +132,7 @@ describe(EtherscanLikeClient.name, () => {
         }),
     })
 
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -185,12 +165,7 @@ describe(EtherscanLikeClient.name, () => {
         }),
     })
 
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -224,12 +199,7 @@ describe(EtherscanLikeClient.name, () => {
         }),
     })
 
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()
@@ -275,12 +245,7 @@ describe(EtherscanLikeClient.name, () => {
         }),
     })
 
-    const client = new EtherscanLikeClient(
-      httpClient,
-      URL,
-      API_KEY,
-      MIN_TIMESTAMP,
-    )
+    const client = new EtherscanClient(httpClient, URL, API_KEY, MIN_TIMESTAMP)
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await time.runAllAsync()

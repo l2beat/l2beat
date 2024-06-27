@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { MulticallConfig } from '../discovery/provider/multicall/types'
-import { EtherscanUnsupportedMethods } from '../utils/EtherscanLikeClient'
+import { ExplorerConfig } from '../utils/IEtherscanClient'
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
@@ -35,9 +35,7 @@ export interface DiscoveryChainConfig {
   eventRpcUrl?: string
   reorgSafeDepth?: number
   multicall: MulticallConfig
-  etherscanApiKey: string
-  etherscanUrl: string
-  etherscanUnsupported?: EtherscanUnsupportedMethods
+  explorer: ExplorerConfig
 }
 
 export interface InversionConfig {
