@@ -98,9 +98,6 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build
-        run: yarn build:dependencies
-
       - name: Test
         run: yarn test --reporter min
 
