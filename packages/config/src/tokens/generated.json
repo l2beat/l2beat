@@ -7625,6 +7625,21 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "blast:blast-blast",
+      "name": "Blast",
+      "coingeckoId": "blast",
+      "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
+      "symbol": "BLAST",
+      "decimals": 18,
+      "deploymentTimestamp": 1718056429,
+      "coingeckoListingTimestamp": 1719446400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35494/large/Blast.jpg?1719385662",
+      "chainId": 81457,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "blast:bwool-bwool",
       "name": "bWOOL",
       "coingeckoId": "wolf-game-wool",
