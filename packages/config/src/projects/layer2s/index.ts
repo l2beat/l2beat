@@ -35,6 +35,7 @@ import { frame } from './frame'
 import { fraxtal } from './fraxtal'
 import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
+import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
@@ -165,6 +166,7 @@ export const layer2s: Layer2[] = [
   fuel,
   fuelv1,
   gluon,
+  galxegravity,
   grvt,
   hermez,
   hychain,
