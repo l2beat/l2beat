@@ -5,7 +5,6 @@ import { BridgesEntry } from '../../../pages/bridges/types'
 import { OverflowWrapper } from '../../OverflowWrapper'
 import { RichSelect } from '../../RichSelect'
 import { FiltersWrapper, generateSlugList } from './FiltersWrapper'
-import { IncludeLayer2sCheckbox } from './checkboxes/IncludeLayer2sCheckbox'
 
 interface Props {
   items: BridgesEntry[]
@@ -28,7 +27,6 @@ export function BridgesFilters({ items }: Props) {
   return (
     <OverflowWrapper>
       <FiltersWrapper>
-        <IncludeLayer2sCheckbox items={items} />
         <RichSelect label="Validated By" id="validatedBy-select">
           {validatedBy.map((vb) => (
             <RichSelect.Item
