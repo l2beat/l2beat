@@ -1,7 +1,7 @@
 /**
  * In order to add a new badge, you need to:
  * - add it to the const badges object below, specifying the type and display properties
- * - add images to the respective folder in frontend2 (TBD)
+ * - add images to the respective folder in frontend2 (packages/frontend2/public/images/badges)
  *
  * In order to add a new badge type, you need to:
  * - add it to the BadgeType object below & that's it
@@ -18,10 +18,31 @@ export type BadgeType = (typeof BadgeType)[keyof typeof BadgeType]
 
 export const badges = {
   // RaaS
+  AltLayer: {
+    display: {
+      name: 'AltLayer',
+      description: 'Lorem AltLayer dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
   Conduit: {
     display: {
       name: 'Conduit',
       description: 'Lorem Conduit dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
+  Gelato: {
+    display: {
+      name: 'Gelato',
+      description: 'Lorem Gelato dolor sit amet...',
+    },
+    type: BadgeType.RaaS,
+  },
+  Karnot: {
+    display: {
+      name: 'Karnot',
+      description: 'Lorem Karnot dolor sit amet...',
     },
     type: BadgeType.RaaS,
   },
@@ -47,6 +68,13 @@ export const badges = {
     type: BadgeType.RaaS,
   },
   // DA
+  Avail: {
+    display: {
+      name: 'Avail',
+      description: 'Lorem Avail dolor sit amet...',
+    },
+    type: BadgeType.DA,
+  },
   Celestia: {
     display: {
       name: 'Celestia',
@@ -75,6 +103,10 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
+  /*
+  
+  TODO: uncomment after adding the images
+
   // VM
   EVM: {
     display: {
@@ -125,7 +157,7 @@ export const badges = {
       description: 'Lorem L3 Host Chain dolor sit amet...',
     },
     type: BadgeType.Other,
-  },
+  },*/
 } as const satisfies Record<
   string,
   {

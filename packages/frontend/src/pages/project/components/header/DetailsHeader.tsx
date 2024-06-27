@@ -1,4 +1,4 @@
-import { WarningWithSentiment } from '@l2beat/config'
+import { BadgeId, WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 import { HorizontalSeparator } from '../../../../components/HorizontalSeparator'
 import { WarningBar } from '../../../../components/WarningBar'
@@ -15,6 +15,7 @@ import { RiskValues } from '../../../../utils/risks/types'
 import { getUnderReviewText } from '../../common/getUnderReviewText'
 import { ProjectLink } from '../../types'
 import { ArchivedBar } from './ArchivedBar'
+import { ProjectBadge } from './ProjectBadge'
 import { ProjectHeader } from './ProjectHeader'
 import { UnderReviewBar } from './UnderReviewBar'
 import { UpcomingBar } from './UpcomingBar'
@@ -36,6 +37,7 @@ export interface HeaderProps {
   isRiskRosetteUnderReview?: boolean
   isUnderReview?: boolean
   isImplementationUnderReview?: boolean
+  badges?: BadgeId[]
 }
 
 export interface FullSummaryStats {
@@ -53,15 +55,13 @@ export function DetailsHeader(props: HeaderProps) {
       })
     : undefined
   const isL2orL3 = props.type === 'layer2' || props.type === 'layer3'
+
   return (
     <>
       <header className="flex flex-row justify-end gap-3 bg-gray-100 pt-6 md:gap-0 dark:bg-zinc-900 md:bg-transparent md:dark:bg-transparent">
         <div className="flex w-full flex-wrap divide-y divide-gray-200 md:gap-4 md:divide-y-0 dark:divide-gray-850">
           <div className="mb-4 flex w-full flex-col gap-2 px-4 md:mb-0 md:px-0">
             <ProjectHeader title={props.title} icon={props.icon} />
-            {props.description && (
-              <div className="mt-4 text-base">{props.description}</div>
-            )}
             {props.isArchived && <ArchivedBar />}
             {props.isUpcoming && <UpcomingBar />}
             {(props.isUnderReview || props.isImplementationUnderReview) && (
@@ -130,6 +130,34 @@ export function DetailsHeader(props: HeaderProps) {
           </div>
         )}
       </header>
+      <HorizontalSeparator className="hidden md:mt-6 md:block" />
+      <div
+        className={cn(
+          'mt-6 flex flex-col gap-4 px-4 md:px-0',
+          (props.description?.length ?? 0) < 260 && 'lg:flex-row lg:gap-8',
+        )}
+      >
+        {props.badges && (
+          <div className="flex shrink-0 flex-col gap-3 lg:min-w-[288px]">
+            <h2 className="font-medium text-gray-600 text-xs uppercase">
+              Badges
+            </h2>
+            <div className="flex flex-wrap gap-1">
+              {props.badges.map((id) => (
+                <ProjectBadge id={id} />
+              ))}
+            </div>
+          </div>
+        )}
+        {props.description && (
+          <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
+            <h2 className="font-medium text-gray-600 text-xs uppercase">
+              About
+            </h2>
+            <p>{props.description}</p>
+          </div>
+        )}
+      </div>
       <HorizontalSeparator className="hidden md:mt-6 md:block" />
     </>
   )
