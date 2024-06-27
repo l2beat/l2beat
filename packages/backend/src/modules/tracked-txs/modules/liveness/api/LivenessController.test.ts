@@ -1,11 +1,11 @@
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
 import { Clock } from '../../../../../tools/Clock'
-import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
@@ -21,53 +21,53 @@ describe(LivenessController.name, () => {
     const CLOCK = getMockClock()
 
     // TODO: unskip it
-    it.skip('correctly finds anomalies', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
+    // it.skip('correctly finds anomalies', async () => {
+    //   const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
 
-      RECORDS.push(
-        ...range(500).map(
-          (_, i) =>
-            ({
-              projectId: ProjectId('project1'),
-              timestamp: START.add(-i, 'hours'),
-              subtype: 'batchSubmissions',
-            }) as const,
-        ),
-      )
-      RECORDS.push({
-        projectId: ProjectId('project1'),
-        timestamp: START.add(-1000, 'hours'),
-        subtype: 'batchSubmissions',
-      })
+    //   RECORDS.push(
+    //     ...range(500).map(
+    //       (_, i) =>
+    //         ({
+    //           projectId: ProjectId('project1'),
+    //           timestamp: START.add(-i, 'hours'),
+    //           subtype: 'batchSubmissions',
+    //         }) as const,
+    //     ),
+    //   )
+    //   RECORDS.push({
+    //     projectId: ProjectId('project1'),
+    //     timestamp: START.add(-1000, 'hours'),
+    //     subtype: 'batchSubmissions',
+    //   })
 
-      const livenessController = new LivenessController(
-        getMockLivenessRepository(RECORDS),
-        mockObject<TrackedTxsConfigsRepository>({
-          getByProjectIdAndType: mockFn().resolvesTo([
-            mockObject<TrackedTxsConfigRecord>({
-              untilTimestampExclusive: undefined,
-              lastSyncedTimestamp: undefined,
-            }),
-          ]),
-        }),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
-        mockProjectConfig(RECORDS),
-        CLOCK,
-      )
+    //   const livenessController = new LivenessController(
+    //     getMockLivenessRepository(RECORDS),
+    //     mockObject<TrackedTxsConfigsRepository>({
+    //       getByProjectIdAndType: mockFn().resolvesTo([
+    //         mockObject<TrackedTxsConfigRecord>({
+    //           untilTimestampExclusive: undefined,
+    //           lastSyncedTimestamp: undefined,
+    //         }),
+    //       ]),
+    //     }),
+    //     getMockIndexerStateRepository(CLOCK.getLastHour()),
+    //     mockProjectConfig(RECORDS),
+    //     CLOCK,
+    //   )
 
-      const result = await livenessController.getLiveness()
-      if (result.type === 'success') {
-        const project1Anomalies = result.data.projects.project1?.anomalies
+    //   const result = await livenessController.getLiveness()
+    //   if (result.type === 'success') {
+    //     const project1Anomalies = result.data.projects.project1?.anomalies
 
-        expect(project1Anomalies).toEqual([
-          {
-            timestamp: RECORDS.at(-2)!.timestamp,
-            durationInSeconds: 501 * 3600,
-            type: 'batchSubmissions',
-          },
-        ])
-      }
-    })
+    //     expect(project1Anomalies).toEqual([
+    //       {
+    //         timestamp: RECORDS.at(-2)!.timestamp,
+    //         durationInSeconds: 501 * 3600,
+    //         type: 'batchSubmissions',
+    //       },
+    //     ])
+    //   }
+    // })
 
     it('returns empty array if no anomalies', async () => {
       const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = []
@@ -82,21 +82,28 @@ describe(LivenessController.name, () => {
             }) as const,
         ),
       )
-      const livenessController = new LivenessController(
-        getMockLivenessRepository(RECORDS),
-        mockObject<TrackedTxsConfigsRepository>({
-          getByProjectIdAndType: mockFn().resolvesTo([
-            mockObject<TrackedTxsConfigRecord>({
-              untilTimestampExclusive: undefined,
-              lastSyncedTimestamp: UnixTime.now(),
-              subtype: 'batchSubmissions',
-            }),
-          ]),
+      const projects = mockProjectConfig(RECORDS)
+      const livenessController = new LivenessController({
+        clock: CLOCK,
+        indexerService: mockObject<IndexerService>({
+          getIndexerState: mockFn().resolvesTo({
+            id: 1,
+            indexerId: 'tracked_txs_indexer',
+            safeHeight: CLOCK.getLastHour(),
+          }),
+          getSavedConfigurations: mockFn().resolvesTo(
+            projects.flatMap((p) =>
+              p.trackedTxsConfig?.map((t) => ({
+                id: t.id,
+                currentHeight: UnixTime.now().toNumber(),
+                maxHeight: null,
+              })),
+            ),
+          ),
         }),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
-        mockProjectConfig(RECORDS),
-        CLOCK,
-      )
+        livenessRepository: getMockLivenessRepository(RECORDS),
+        projects: projects,
+      })
 
       const result = await livenessController.getLiveness()
       if (result.type === 'success') {
@@ -106,13 +113,19 @@ describe(LivenessController.name, () => {
     })
 
     it('returns empty object if no data', async () => {
-      const livenessController = new LivenessController(
-        getMockLivenessRepository([]),
-        mockObject<TrackedTxsConfigsRepository>(),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
-        [],
-        CLOCK,
-      )
+      const livenessController = new LivenessController({
+        clock: CLOCK,
+        indexerService: mockObject<IndexerService>({
+          getIndexerState: mockFn().resolvesTo({
+            id: 1,
+            indexerId: 'tracked_txs_indexer',
+            safeHeight: CLOCK.getLastHour(),
+          }),
+          getSavedConfigurations: mockFn().resolvesTo([]),
+        }),
+        projects: [],
+        livenessRepository: getMockLivenessRepository([]),
+      })
 
       const result = await livenessController.getLiveness()
       if (result.type === 'success') {
@@ -161,24 +174,35 @@ describe(LivenessController.name, () => {
       )
       const syncedUntil = UnixTime.now()
 
-      const livenessController = new LivenessController(
-        getMockLivenessRepository(RECORDS),
-        mockObject<TrackedTxsConfigsRepository>({
-          getByProjectIdAndType: mockFn()
-            .given(ProjectId('project1'), 'liveness')
-            .resolvesToOnce([
-              mockObject<TrackedTxsConfigRecord>({
-                untilTimestampExclusive: undefined,
-                lastSyncedTimestamp: syncedUntil,
-                subtype: 'batchSubmissions',
-              }),
-            ])
-            .resolvesTo([]),
+      const projects = mockProjectConfig(RECORDS)
+
+      const livenessController = new LivenessController({
+        clock: getMockClock(),
+        indexerService: mockObject<IndexerService>({
+          getIndexerState: mockFn().resolvesTo({
+            id: 1,
+            indexerId: 'tracked_txs_indexer',
+            safeHeight: CLOCK.getLastHour(),
+          }),
+          getSavedConfigurations: mockFn().resolvesTo(
+            projects
+              .flatMap((p) =>
+                p.trackedTxsConfig?.map((t) => {
+                  if (t.projectId === ProjectId('project1')) {
+                    return {
+                      id: t.id,
+                      currentHeight: syncedUntil.toNumber(),
+                      maxHeight: null,
+                    }
+                  }
+                }),
+              )
+              .filter(notUndefined),
+          ),
         }),
-        getMockIndexerStateRepository(CLOCK.getLastHour()),
-        mockProjectConfig(RECORDS),
-        getMockClock(),
-      )
+        livenessRepository: getMockLivenessRepository(RECORDS),
+        projects,
+      })
 
       const project1Records = RECORDS.filter(
         (r) => r.projectId === ProjectId('project1'),
@@ -218,18 +242,6 @@ function getMockClock() {
   })
 }
 
-function getMockIndexerStateRepository(data: UnixTime) {
-  return mockObject<IndexerStateRepository>({
-    findIndexerState: async () => {
-      return {
-        id: 1,
-        indexerId: 'liveness_indexer',
-        safeHeight: data.toNumber(),
-      }
-    },
-  })
-}
-
 function getMockLivenessRepository(
   records: LivenessRecordWithProjectIdAndSubtype[],
 ) {
@@ -262,6 +274,7 @@ function mockProjectConfig(
             subtype: 'batchSubmissions',
             id: createTrackedTxId.random(),
             untilTimestampExclusive: UnixTime.now(),
+            projectId,
           }),
         ],
 
