@@ -21,7 +21,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { PERFORMED_BY } from '../other'
+import { PERFORMED_BY } from '../other/zk-catalog'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
