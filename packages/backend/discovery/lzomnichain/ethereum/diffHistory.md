@@ -1,28 +1,4 @@
-Generated with discovered.json: 0x96203890d5a6cea3669d50a450e1d2386412e42f
-
-# Diff at Thu, 27 Jun 2024 08:58:19 GMT:
-
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@fa87256215827e86de3c150df238331f18654881 block: 19574671
-- current block number: 20181976
-
-## Description
-
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
-    +++ description: None
-      values:
--        {"feeEnabled":false,"nativeBP":0,"owner":"0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92","uln":"0x4D73AdB72bC3DD368966edD0f0b2148401A178E2","zroEnabled":false,"zroFee":0}
-      errors:
-+        {"feeEnabled":"Execution reverted","nativeBP":"Execution reverted","owner":"Execution reverted","uln":"Execution reverted","zroEnabled":"Execution reverted","zroFee":"Execution reverted"}
-    }
-```
-
-Generated with discovered.json: 0x717e2eb67ade034aa0dbb04d9ce398dc281e107e
+Generated with discovered.json: 0x8e73ae3812f6353e15075b9f5309c6adf07e27a6
 
 # Diff at Wed, 03 Apr 2024 10:34:18 GMT:
 
