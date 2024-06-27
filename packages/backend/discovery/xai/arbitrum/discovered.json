@@ -1,8 +1,8 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 224114463,
-  "configHash": "0xa7caf7dd35429b17066adafac238d7e9b3f20b723033f9c95adb6817565d4dab",
+  "blockNumber": 225981844,
+  "configHash": "0x3fee7bf5bcf369adef21f7b4a76b445a92772bd9b06b6beee9c5ec2ae2e06111",
   "version": 8,
   "contracts": [
     {
@@ -339,12 +339,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 31234,
+        "delayedMessageCount": 35700,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 20361,
-        "sequencerReportedSubMessageCount": 10899060
+        "sequencerMessageCount": 24085,
+        "sequencerReportedSubMessageCount": 12228828
       },
       "derivedName": "ERC20Bridge"
     },
@@ -394,7 +394,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 20361,
+        "batchCount": 24085,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
@@ -414,7 +414,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 31233
+        "totalDelayedMessagesRead": 35699
       },
       "derivedName": "SequencerInbox"
     },
@@ -548,12 +548,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 3770,
+        "firstUnresolvedNode": 3899,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 3769,
-        "latestNodeCreated": 3922,
+        "latestConfirmed": 3898,
+        "latestNodeCreated": 4051,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -614,7 +614,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 227,
+        "getPoolsCount": 229,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "stakingEnabled": true,
@@ -690,13 +690,13 @@
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 4662,
+        "challengeCounter": 4791,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6519,
+        "getKycWalletCount": 6542,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 1000,
@@ -731,7 +731,8 @@
       "address": "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc"
     },
     {
-      "address": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8"
+      "address": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
+      "roles": ["Validator"]
     },
     {
       "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4"
@@ -743,7 +744,8 @@
       "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
     },
     {
-      "address": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9"
+      "address": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
+      "roles": ["Sequencer"]
     },
     {
       "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6"

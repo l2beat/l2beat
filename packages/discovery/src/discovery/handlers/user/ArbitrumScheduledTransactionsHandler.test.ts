@@ -31,6 +31,8 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       solidityVersion: '1.0.0',
       source: 'source_of_' + address.toString(),
       constructorArguments: '',
+      files: {},
+      remappings: [],
     })
     handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
     const provider = mockObject<IProvider>({
