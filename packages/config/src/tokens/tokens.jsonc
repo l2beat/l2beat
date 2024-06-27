@@ -2604,7 +2604,13 @@
       "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
       "source": "native",
       "supply": "circulatingSupply"
-    }
+    },
+    {
+      "symbol": "BLAST",
+      "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
+      "source": "native",
+      "supply": "circulatingSupply",
+  }
   ],
   "mode": [
     {
