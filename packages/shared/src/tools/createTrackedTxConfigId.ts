@@ -36,5 +36,5 @@ export function createTrackedTxId(
 
 createTrackedTxId.random = function random(): TrackedTxId {
   const letter = () => '0123456789abcdef'[Math.floor(Math.random() * 16)]
-  return Array.from({ length: 8 }).map(letter).join('')
+  return Array.from({ length: 12 }).map(letter).join('')
 }

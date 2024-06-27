@@ -3,24 +3,24 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
+import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../../../../test/database'
-import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (knex, kysely) => {
   const oldRepo = new L2CostsRepository(knex, Logger.SILENT)
-  const oldConfigRepo = new TrackedTxsConfigsRepository(knex, Logger.SILENT)
+  const oldConfigRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
   const newRepo = kysely.l2Cost
-  const newConfigRepo = kysely.trackedTxConfig
+  const newConfigRepo = kysely.indexerConfiguration
 
   // Extracted since we have single describe and two running contexts
   // in tandem with database constraints and data integrity
   // it results in failed constraints and errors - simple race conditions
-  const txIdA = TrackedTxId.random()
-  const txIdB = TrackedTxId.random()
-  const txIdC = TrackedTxId.random()
-  const txIdD = TrackedTxId.random()
+  const txIdA = createTrackedTxId.random()
+  const txIdB = createTrackedTxId.random()
+  const txIdC = createTrackedTxId.random()
+  const txIdD = createTrackedTxId.random()
 
   suite(oldRepo, oldConfigRepo)
   suite(newRepo, newConfigRepo)
@@ -69,13 +69,14 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
     beforeEach(async function () {
       this.timeout(10000)
       await configRepository.deleteAll()
-      await configRepository.addMany(
+      await configRepository.addOrUpdateMany(
         DATA.map((d, i) => ({
+          indexerId: 'indexer',
           id: d.trackedTxId,
-          projectId: ProjectId(`project-${i % 2 ? 1 : 2}`),
-          type: 'liveness',
-          sinceTimestampInclusive: START,
-          debugInfo: '',
+          minHeight: START.toNumber(),
+          maxHeight: null,
+          currentHeight: null,
+          properties: JSON.stringify({ projectId: `project-${i}` }),
         })),
       )
       await repository.deleteAll()
@@ -203,13 +204,14 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           },
         ]
 
-        await configRepository.addMany([
+        await configRepository.addOrUpdateMany([
           {
             id: txIdD,
-            projectId: ProjectId('project'),
-            type: 'liveness',
-            sinceTimestampInclusive: START,
-            debugInfo: '',
+            indexerId: 'indexer',
+            minHeight: START.toNumber(),
+            properties: '',
+            currentHeight: null,
+            maxHeight: null,
           },
         ])
         await repository.addMany(records)
