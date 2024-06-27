@@ -14,7 +14,7 @@ export function ProjectBadge({ id }: { id: BadgeId }) {
       <TooltipTrigger>
         <img
           src={`/images/badges/${id}.png`}
-          alt={id}
+          alt={`${meta.display.name} badge`}
           className="h-[4.5rem] w-auto"
         />
       </TooltipTrigger>
