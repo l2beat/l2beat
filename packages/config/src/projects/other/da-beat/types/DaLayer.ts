@@ -24,10 +24,10 @@ export type BlockchainDaLayer = CommonDaLayer & {
   bridges: (OnChainDaBridge | NoDaBridge)[]
 
   /**
-   * The duration of the data storage.
+   * The period within which full nodes must store and distribute data.
    * @unit seconds
    */
-  storageDuration: number
+  pruningWindow: number
 
   /**
    * Consensus finality time.
@@ -36,7 +36,7 @@ export type BlockchainDaLayer = CommonDaLayer & {
   consensusFinality: number
 
   /**
-   * Duration of time for unbonding in seconds
+   * Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period.
    * @unit seconds
    */
   unbondingPeriod: number

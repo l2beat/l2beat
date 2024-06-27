@@ -22,10 +22,10 @@ export const celestia: DaLayer = {
   display: {
     name: 'Celestia',
     slug: 'celestia',
-    description: 'Celestia lorem ipsum',
+    description: 'Celestia is a modular data availability network.',
   },
   bridges: [noBridge, blobStream],
-  usedIn: [
+  usedIn: [ // can we fetch these from the layer2s and layer3s?
     mantapacific.id,
     karak.id,
     aevo.id,
@@ -36,9 +36,9 @@ export const celestia: DaLayer = {
     hypr.id,
     stack.id,
   ],
-  storageDuration: 1000,
+  pruningWindow: 86400 * 30, // 30 days in seconds
   consensusFinality: 1000,
-  unbondingPeriod: 1814400, // 21 days
+  unbondingPeriod: 1814400, // 21 days - techni
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
