@@ -16,6 +16,9 @@ export const columns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell index={ctx.row.index} />,
+    meta: {
+      headClassName: 'w-0',
+    },
   }),
   columnHelper.display({
     id: 'logo',
@@ -28,7 +31,10 @@ export const columns = [
         alt={`${ctx.row.original.name} logo`}
       />
     ),
-    meta: { cellClassName: '!pr-0' },
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: '!pr-0',
+    },
   }),
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,

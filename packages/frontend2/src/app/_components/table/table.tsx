@@ -82,10 +82,13 @@ const TableHead = React.forwardRef<
 >(({ className, children, tooltip, ...props }, ref) => (
   <th
     ref={ref}
-    className="h-10 py-2 first:pl-2 pr-3 last:pr-2 text-left align-bottom uppercase font-medium text-muted-foreground"
+    className={cn(
+      'h-10 py-2 first:pl-2 pr-3 last:pr-2 text-left align-bottom uppercase font-medium text-muted-foreground',
+      className,
+    )}
     {...props}
   >
-    <div className={cn('flex items-center gap-1.5', className)}>
+    <div className="flex items-center gap-1.5">
       {children}
       {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
     </div>
