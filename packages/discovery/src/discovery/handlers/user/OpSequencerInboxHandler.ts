@@ -46,8 +46,8 @@ export class OpStackSequencerInboxHandler implements Handler {
 
     const last10Txs = await provider.raw(
       `optimism_sequencer_100.${sequencerAddress}.${provider.blockNumber}`,
-      ({ etherscanLikeClient }) =>
-        etherscanLikeClient.getLast10OutgoingTxs(
+      ({ etherscanClient }) =>
+        etherscanClient.getLast10OutgoingTxs(
           sequencerAddress,
           provider.blockNumber,
         ),

@@ -21,6 +21,13 @@ export function toDiscoveryOutput(
   }
 }
 
+export function setToArray<T>(set?: Set<T>): T[] | undefined {
+  if (set === undefined) {
+    return undefined
+  }
+  return Array.from(set)
+}
+
 export function processAnalysis(
   results: Analysis[],
 ): Omit<
@@ -42,7 +49,7 @@ export function processAnalysis(
           template: x.extendedTemplate?.template,
           upgradeability: x.upgradeability,
           descriptions: x.combinedMeta?.descriptions,
-          roles: x.combinedMeta?.roles,
+          roles: setToArray(x.combinedMeta?.roles),
           categories: x.combinedMeta?.categories,
           types: x.combinedMeta?.types,
           severity: x.combinedMeta?.severity,
@@ -68,7 +75,15 @@ export function processAnalysis(
     eoas: results
       .filter((x) => x.type === 'EOA')
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x) => ({ address: x.address, ...(x.combinedMeta ?? {}) })),
+      .map((x) => ({
+        address: x.address,
+        descriptions: x.combinedMeta?.descriptions,
+        roles: setToArray(x.combinedMeta?.roles),
+        categories: x.combinedMeta?.categories,
+        types: x.combinedMeta?.types,
+        severity: x.combinedMeta?.severity,
+        assignedPermissions: x.combinedMeta?.permissions,
+      })),
     abis,
   }
 }

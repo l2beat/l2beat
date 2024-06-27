@@ -42,6 +42,9 @@
       }
     },
     "validators": {
+      "target": {
+        "role": "Validator"
+      },
       "handler": {
         "type": "arbitrumActors",
         "actorType": "validator"

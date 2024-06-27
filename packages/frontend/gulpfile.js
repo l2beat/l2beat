@@ -66,7 +66,7 @@ function serve() {
   const apiUrl = {
     ci: 'https://api.l2beat.com',
     production: 'https://api.l2beat.com',
-    staging: 'https://api-staging.eltwobeat.com',
+    staging: 'https://staging.l2beat.com',
     local: 'http://localhost:3000',
   }[deploymentEnvironment]
   if (!apiUrl) {
