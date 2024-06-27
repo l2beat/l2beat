@@ -112,35 +112,6 @@ export class ValueRepository extends BaseRepository {
   }
 
   // #endregion
-
-  // #region DA-BEAT - not used but added to keep repos in sync
-  async getLatestValuesForProjects(
-    projectIds: ProjectId[],
-  ): Promise<ValueRecord[]> {
-    const knex = await this.knex()
-
-    const rows = await knex
-      .with('latest_values', (cb) =>
-        cb
-          .select(
-            '*',
-            knex.raw(
-              'ROW_NUMBER() OVER (PARTITION BY project_id, data_source ORDER BY timestamp DESC) as combination_number',
-            ),
-          )
-          .whereIn(
-            'project_id',
-            projectIds.map((id) => id.toString()),
-          )
-          .from('values'),
-      )
-      .select('*')
-      .from('latest_values')
-      .andWhere('combination_number', '=', 1)
-
-    return rows.map(toRecord)
-  }
-  // #endregion
 }
 
 function toRecord(row: ValueRow): ValueRecord {
