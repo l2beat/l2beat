@@ -45,6 +45,7 @@ interface LogExecutionItem {
 }
 
 const REVERT_MARKER_VALUE = '{execution reverted}'
+const UNDEFINED_MARKER_VALUE = '{undefined value}'
 
 export class BatchingAndCachingProvider {
   public stats: ProviderStats = getZeroStats()
@@ -477,12 +478,20 @@ export class BatchingAndCachingProvider {
     const cached = entry.read()
     if (cached !== undefined) {
       this.stats.getDeploymentCount++
-      const parsed = parseCacheEntry(cached)
-      parsed.timestamp = new UnixTime(parsed.timestamp)
-      return parsed
+      if (cached === UNDEFINED_MARKER_VALUE) {
+        return undefined
+      } else {
+        const parsed = parseCacheEntry(cached)
+        parsed.timestamp = new UnixTime(parsed.timestamp)
+        return parsed
+      }
     }
     const deployment = await this.provider.getDeployment(address)
-    entry.write(JSON.stringify(deployment))
+    if (deployment !== undefined) {
+      entry.write(JSON.stringify(deployment))
+    } else {
+      entry.write(UNDEFINED_MARKER_VALUE)
+    }
     return deployment
   }
 }
