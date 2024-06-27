@@ -65,7 +65,8 @@ export function ProjectNameCell({ project, showIsL3, type }: ProjectCellProps) {
           </Tooltip>
         </span>
       )}
-      {(project.showProjectUnderReview || project.hasImplementationChanged) && (
+      {(!!project.showProjectUnderReview ||
+        !!project.hasImplementationChanged) && (
         <span className="pl-1.5">
           <Tooltip>
             <TooltipTrigger>

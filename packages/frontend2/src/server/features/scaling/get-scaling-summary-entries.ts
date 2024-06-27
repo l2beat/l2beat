@@ -16,6 +16,7 @@ import {
   type ScalingSummaryLayer3sEntry,
 } from './types'
 import { assert } from '@l2beat/shared-pure'
+import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export async function getScalingSummaryEntries(tvl: TvlResponse) {
   const orderedLayer2s = orderByTvl(LAYER_2S, tvl.projects)
@@ -50,7 +51,7 @@ function getLayer2s(
       warning: layer2.display.warning,
       redWarning: layer2.display.redWarning,
       isVerified: true,
-      showProjectUnderReview: false,
+      showProjectUnderReview: isAnySectionUnderReview(layer2),
       hasImplementationChanged: false,
       isUpcoming: !!layer2.isUpcoming,
       isArchived: !!layer2.isArchived,
@@ -106,7 +107,7 @@ function getLayer3s(
       warning: layer3.display.warning,
       redWarning: layer3.display.redWarning,
       isVerified: true,
-      showProjectUnderReview: false,
+      showProjectUnderReview: isAnySectionUnderReview(layer3),
       hasImplementationChanged: false,
       isUpcoming: !!layer3.isUpcoming,
       isArchived: !!layer3.isArchived,

@@ -10,11 +10,20 @@ import {
 } from './table'
 import { SortingArrows } from './sorting/sorting-arrows'
 
-interface Props<T extends { href?: string }> {
+interface BasicEntry {
+  href?: string
+  slug: string
+  isVerified: boolean
+  redWarning: string | undefined
+  showProjectUnderReview: boolean
+  hasImplementationChanged: boolean
+}
+
+interface Props<T extends BasicEntry> {
   table: TanstackTable<T>
 }
 
-export function BasicTable<T extends { href?: string }>({ table }: Props<T>) {
+export function BasicTable<T extends BasicEntry>({ table }: Props<T>) {
   return (
     <Table>
       <TableHeader>
@@ -50,22 +59,25 @@ export function BasicTable<T extends { href?: string }>({ table }: Props<T>) {
         ))}
       </TableHeader>
       <TableBody>
-        {table.getRowModel().rows.map((row) => (
-          <TableRow key={row.id}>
-            {row.getVisibleCells().map((cell) => {
-              const { meta } = cell.column.columnDef
-              return (
-                <TableCell
-                  key={cell.id}
-                  href={getHref(row.original.href, meta?.hash)}
-                  className={meta?.cellClassName}
-                >
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </TableCell>
-              )
-            })}
-          </TableRow>
-        ))}
+        {table.getRowModel().rows.map((row) => {
+          const rowType = getRowType(row.original)
+          return (
+            <TableRow key={row.id} className={getRowTypeClassNames(rowType)}>
+              {row.getVisibleCells().map((cell) => {
+                const { meta } = cell.column.columnDef
+                return (
+                  <TableCell
+                    key={cell.id}
+                    href={getHref(row.original.href, meta?.hash)}
+                    className={meta?.cellClassName}
+                  >
+                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                  </TableCell>
+                )
+              })}
+            </TableRow>
+          )
+        })}
       </TableBody>
     </Table>
   )
@@ -81,4 +93,32 @@ function getHref(href: string | undefined, hash: string | undefined) {
   }
 
   return `${href}#${hash}`
+}
+
+type RowType = ReturnType<typeof getRowType>
+function getRowType(entry: BasicEntry) {
+  if (entry.slug === 'ethereum') {
+    return 'ethereum'
+  }
+  if (entry.isVerified === false || entry.redWarning) {
+    return 'unverified'
+  }
+  if (entry.showProjectUnderReview) {
+    return 'under-review'
+  }
+  if (entry.hasImplementationChanged) {
+    return 'implementation-changed'
+  }
+}
+
+export function getRowTypeClassNames(rowType: RowType) {
+  switch (rowType) {
+    case 'ethereum':
+      return 'bg-blue-400 hover:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
+    case 'unverified':
+      return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
+    case 'under-review':
+    case 'implementation-changed':
+      return 'bg-yellow-200/10 hover:!bg-yellow-200/20'
+  }
 }
