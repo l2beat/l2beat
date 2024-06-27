@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { BadgeId, badges } from '@l2beat/config'
+import { BadgeId, badges } from '@l2beat/config/build/src/projects/badges'
 import {
   Tooltip,
   TooltipContent,
