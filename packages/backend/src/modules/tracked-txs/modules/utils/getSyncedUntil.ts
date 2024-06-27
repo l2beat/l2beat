@@ -15,12 +15,12 @@ export function getSyncedUntil(
 
   const [configsWithoutUntil, configsWithUntil] = partition(
     configurations,
-    (c) => c.maxHeight === undefined,
+    (c) => c.maxHeight === null,
   )
 
   const configsToUse =
     configsWithoutUntil.length !== 0 &&
-    configsWithoutUntil.some((c) => c.currentHeight !== undefined)
+    configsWithoutUntil.some((c) => c.currentHeight !== null)
       ? configsWithoutUntil
       : configsWithUntil
 
