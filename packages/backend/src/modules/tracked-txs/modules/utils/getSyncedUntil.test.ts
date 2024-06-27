@@ -21,8 +21,8 @@ describe(getSyncedUntil.name, () => {
   it('returns undefined if no lastSyncedTimestamp', () => {
     const result = getSyncedUntil([
       mockObject<Configuration>({
-        currentHeight: undefined,
-        maxHeight: undefined,
+        currentHeight: null,
+        maxHeight: null,
       }),
     ])
 
@@ -32,16 +32,16 @@ describe(getSyncedUntil.name, () => {
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
     const result = getSyncedUntil([
       mockObject<Configuration>({
-        currentHeight: undefined,
-        maxHeight: undefined,
+        currentHeight: null,
+        maxHeight: null,
       }),
       mockObject<Configuration>({
         currentHeight: FROM.toNumber(),
-        maxHeight: undefined,
+        maxHeight: null,
       }),
       mockObject<Configuration>({
         currentHeight: FROM.add(2, 'hours').toNumber(),
-        maxHeight: undefined,
+        maxHeight: null,
       }),
     ])
 
@@ -51,8 +51,8 @@ describe(getSyncedUntil.name, () => {
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
     const result = getSyncedUntil([
       mockObject<Configuration>({
-        currentHeight: undefined,
-        maxHeight: undefined,
+        currentHeight: null,
+        maxHeight: null,
       }),
       mockObject<Configuration>({
         currentHeight: FROM.add(1, 'hours').toNumber(),

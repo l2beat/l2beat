@@ -22,7 +22,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
   const txIdC = createTrackedTxId.random()
 
   suite(oldRepo, oldConfigRepo)
-  //   suite(newRepo, newConfigRepo)
+  suite(newRepo, newConfigRepo)
 
   function suite(
     repository: typeof oldRepo | typeof newRepo,
