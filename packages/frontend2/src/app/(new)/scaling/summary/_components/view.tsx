@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import {
   Tabs,
@@ -10,7 +10,6 @@ import {
 import { ScalingLegend } from './table/layer2s/legend'
 import { TvlChart } from '~/app/_components/chart/tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { SummaryArchivedTable } from './table/archived.tsx/summary-archived.table'
 import { SummaryLayer2sTable } from './table/layer2s/summary-layer2s-table'
@@ -31,8 +30,6 @@ interface Props {
 }
 
 export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
-  const [excludeAssociatedTokens, setExcludeAssociatedTokens] = useState(false)
-
   const layer2sProjects = layer2s.filter(
     (item) => !item.isArchived && !item.isUpcoming,
   )
@@ -48,14 +45,6 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     <>
       <TvlChart data={layer2sTvl} milestones={milestones} />
       <HorizontalSeparator className="my-4 md:my-6" />
-      <div className="flex items-center space-x-2 mb-2">
-        <Checkbox
-          id="exclude-associated-tokens"
-          onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
-        >
-          Exclude associated tokens
-        </Checkbox>
-      </div>
       <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>
