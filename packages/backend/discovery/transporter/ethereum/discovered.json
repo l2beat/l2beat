@@ -1,7 +1,7 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20175102,
+  "blockNumber": 20181951,
   "configHash": "0x9876bf47381031dc8e1c8a1eb83d127e60c806e5801b6ca01c74a8d5a2c8665e",
   "version": 8,
   "contracts": [
@@ -615,7 +615,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 2084867,
+        "getLatestPriceEpochAndRound": 2160898,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "gnosis",
@@ -981,8 +981,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1911,
-        "getLatestPriceEpochAndRound": 2082819,
+        "getExpectedNextSequenceNumber": 1926,
+        "getLatestPriceEpochAndRound": 2165251,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -1219,8 +1219,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 836,
-        "getLatestPriceEpochAndRound": 2087937,
+        "getExpectedNextSequenceNumber": 860,
+        "getLatestPriceEpochAndRound": 2163459,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "wemix",
@@ -1378,10 +1378,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1868,
-        "getNopFeesJuels": "492682977529942981",
+        "getExpectedNextSequenceNumber": 1896,
+        "getNopFeesJuels": "1503699807272737305",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "2144966814654528653",
+        "linkAvailableForPayment": "1167352107890277875",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1509,8 +1509,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 5,
-        "getLatestPriceEpochAndRound": 518913,
+        "getExpectedNextSequenceNumber": 6,
+        "getLatestPriceEpochAndRound": 597250,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "4411394078118774322",
@@ -1644,10 +1644,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1488,
-        "getNopFeesJuels": "647777422750604390",
+        "getExpectedNextSequenceNumber": 1506,
+        "getNopFeesJuels": "1655200010631412565",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4376294361933389163",
+        "linkAvailableForPayment": "3368871774052580988",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1930,10 +1930,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 4,
-        "getNopFeesJuels": 5,
+        "getExpectedNextSequenceNumber": 5,
+        "getNopFeesJuels": "42645125745792842",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4841891263135095739",
+        "linkAvailableForPayment": "4799246137389302902",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2044,8 +2044,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1324,
-        "getLatestPriceEpochAndRound": 2084098,
+        "getExpectedNextSequenceNumber": 1353,
+        "getLatestPriceEpochAndRound": 2165251,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "optimism",
@@ -2520,7 +2520,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 4,
-        "getLatestPriceEpochAndRound": 1956355,
+        "getLatestPriceEpochAndRound": 2034691,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "mode",
@@ -2899,7 +2899,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 2086913,
+        "getLatestPriceEpochAndRound": 2162691,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "celo",
@@ -2971,10 +2971,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 915,
-        "getNopFeesJuels": "539604911777240153",
+        "getExpectedNextSequenceNumber": 934,
+        "getNopFeesJuels": "1263906470018648823",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7563882067411193777",
+        "linkAvailableForPayment": "6839580509169785107",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3041,8 +3041,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1607,
-        "getLatestPriceEpochAndRound": 2083329,
+        "getExpectedNextSequenceNumber": 1633,
+        "getLatestPriceEpochAndRound": 2166017,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "bnb",
@@ -3243,8 +3243,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2578,
-        "getLatestPriceEpochAndRound": 2084609,
+        "getExpectedNextSequenceNumber": 2608,
+        "getLatestPriceEpochAndRound": 2165763,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "base",
@@ -3317,10 +3317,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1759,
-        "getNopFeesJuels": "791426722669813983",
+        "getExpectedNextSequenceNumber": 1785,
+        "getNopFeesJuels": "2176604130453020441",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3250667220894852377",
+        "linkAvailableForPayment": "2092889111141840417",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3403,10 +3403,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2826,
-        "getNopFeesJuels": "896812625338131975",
+        "getExpectedNextSequenceNumber": 2865,
+        "getNopFeesJuels": "2360881597356747301",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "2843985402113491765",
+        "linkAvailableForPayment": "1624549837926467283",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3555,8 +3555,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1937,
-        "getLatestPriceEpochAndRound": 2085634,
+        "getExpectedNextSequenceNumber": 1967,
+        "getLatestPriceEpochAndRound": 2169090,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "arbitrum",
@@ -4344,10 +4344,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1309,
-        "getNopFeesJuels": "542491089298335806",
+        "getExpectedNextSequenceNumber": 1325,
+        "getNopFeesJuels": "1174521175698673705",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "9550899552405596839",
+        "linkAvailableForPayment": "8918869466005258940",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -4603,8 +4603,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 735,
-        "getLatestPriceEpochAndRound": 2087169,
+        "getExpectedNextSequenceNumber": 745,
+        "getLatestPriceEpochAndRound": 2162691,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "polygon",
@@ -4922,10 +4922,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 4382,
-        "getNopFeesJuels": "1008216583356507381",
+        "getExpectedNextSequenceNumber": 4448,
+        "getNopFeesJuels": "3432782558673911800",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3498721588659964589",
+        "linkAvailableForPayment": "1205781760920205760",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
