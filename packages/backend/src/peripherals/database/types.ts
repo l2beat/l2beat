@@ -172,6 +172,13 @@ declare module 'knex/types/tables' {
     timestamp: Date
   }
 
+  export interface AnomaliesRow {
+    timestamp: Date
+    project_id: string
+    subtype: string
+    duration: number
+  }
+
   interface Tables {
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow

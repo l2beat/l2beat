@@ -9,7 +9,7 @@ import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { getLivenessTrackedTxsConfig } from '../../utils/getLivenessTrackedTxsConfig'
+import { getProjectsToSync } from '../../utils/getProjectsToSync'
 import {
   AggregatedLivenessRange,
   AggregatedLivenessRecord,
@@ -81,12 +81,12 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       updatedLivenessRecords,
     )
 
-    return await Promise.resolve(parentSafeHeight)
+    return parentSafeHeight
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
     // no need to remove data
-    // safeHeight will be updated to this vale
+    // safeHeight will be updated to this value
     return await Promise.resolve(targetHeight)
   }
 
@@ -94,11 +94,11 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     syncTo: UnixTime,
   ): Promise<AggregatedLivenessRecord[]> {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
-    const projectsToSync = this.getProjectsToSync()
+    const projectsToSync = getProjectsToSync(this.$.projects)
 
     for (const project of projectsToSync) {
       const livenessRecords =
-        await this.$.livenessRepository.getWithSubtypeByProjectIdsWithinTimeRange(
+        await this.$.livenessRepository.getWithSubtypeByProjectIdsUpTo(
           project.projectId,
           syncTo,
         )
@@ -273,21 +273,5 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     }
 
     return [batchSubmissions, stateUpdates, proofSubmissions]
-  }
-
-  getProjectsToSync(): Project[] {
-    return this.$.projects.filter((p) => {
-      if (p.isArchived || !p.trackedTxsConfig) {
-        return false
-      }
-
-      const livenessConfig = getLivenessTrackedTxsConfig(p.trackedTxsConfig)
-
-      if (livenessConfig.entries?.length === 0) {
-        return false
-      }
-
-      return true
-    })
   }
 }

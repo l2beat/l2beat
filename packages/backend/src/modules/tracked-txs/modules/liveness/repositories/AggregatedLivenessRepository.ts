@@ -16,8 +16,6 @@ export interface AggregatedLivenessRecord {
   min: number
   avg: number
   max: number
-  rollingCount?: number
-  rollingSum?: number
   timestamp: UnixTime
 }
 
