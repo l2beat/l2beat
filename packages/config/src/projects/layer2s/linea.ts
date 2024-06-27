@@ -1,4 +1,5 @@
 import {
+  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -20,6 +21,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { PERFORMED_BY } from '../other/zk-catalog'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -268,7 +270,7 @@ export const linea: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data (compressed)',
+    mode: 'Transaction data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -460,6 +462,60 @@ export const linea: Layer2 = {
       }),
     ],
     risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(timelockDelayString)],
+  },
+  stateValidation: {
+    description:
+      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
+    categories: [
+      {
+        title: 'Prover Architecture',
+        description: 'The source code of the prover is currently not public.',
+      },
+      {
+        title: 'ZK Circuits',
+        description: 'The source code of the circuits is currently not public.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the proof system is implemented incorrectly.',
+          },
+          {
+            category: 'Funds can be stolen if',
+            text: 'the prover is able to generate false proofs.',
+          },
+        ],
+      },
+      {
+        title: 'Verification Keys Generation',
+        description:
+          'Given that the circuit is not public, the generation of the verification keys is not public either.',
+      },
+    ],
+    proofVerification: {
+      aggregation: false,
+      requiredTools: [],
+      verifiers: [
+        {
+          name: 'LineaVerifier',
+          description:
+            'Since the circuit is not public, we are not able to verify any claim about the proof system.',
+          verified: 'failed',
+          performedBy: PERFORMED_BY.l2beat,
+          contractAddress: EthereumAddress(
+            '0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main circuit',
+              proofSystem: '?',
+              mainArithmetization: '?',
+              mainPCS: '?',
+            },
+          ],
+        },
+      ],
+    },
   },
   milestones: [
     {

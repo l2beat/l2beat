@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { EtherscanClient } from '@l2beat/shared'
+import { BlockExplorerClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect } from 'earl'
@@ -11,9 +11,11 @@ describe('checkVerifiedContracts:tasks', () => {
     it('correctly verifies contracts not included in previouslyVerified', async () => {
       let etherscanCalls = 0
       const EthereumClientMock = {
-        getContractSource: async (address: EthereumAddress) => {
+        call: async (_: string, __: string, params: Record<string, string>) => {
           etherscanCalls++
-          return { SourceCode: address[2] === '1' ? 'function(){}' : '' }
+          return [
+            { SourceCode: params['address'][2] === '1' ? 'function(){}' : '' },
+          ]
         },
       }
 
@@ -33,7 +35,7 @@ describe('checkVerifiedContracts:tasks', () => {
         {
           '0x5555555555555555555555555555555555555555': 'https://example.com',
         },
-        EthereumClientMock as unknown as EtherscanClient,
+        EthereumClientMock as unknown as BlockExplorerClient,
         2,
         Logger.SILENT,
       )
@@ -53,7 +55,7 @@ describe('checkVerifiedContracts:tasks', () => {
       const clock = install()
 
       const EthereumClientMock = {
-        getContractSource: async (_: EthereumAddress) => {
+        call: async (_: EthereumAddress) => {
           throw new Error('An error occurred')
         },
       }
@@ -67,7 +69,7 @@ describe('checkVerifiedContracts:tasks', () => {
         ].map(EthereumAddress),
         new Set(),
         {},
-        EthereumClientMock as unknown as EtherscanClient,
+        EthereumClientMock as unknown as BlockExplorerClient,
         2,
         Logger.SILENT,
       )

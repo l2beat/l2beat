@@ -1,9 +1,9 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 20138623,
+  "blockNumber": 20175047,
   "configHash": "0x16191b23bc2fd2c211c38056379ae494cd2554d70c69b3879520fe562dc99d7d",
-  "version": 7,
+  "version": 8,
   "contracts": [
     {
       "name": "WETH Vault Kinto",
@@ -22,10 +22,10 @@
     {
       "name": "PolygonL1Switchboard",
       "address": "0x053407DFA30267f6332f3c94a9e9F704A55e62CD",
-      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700128991,
       "values": {
         "capacitor__": "0x994a46a0C07330A30F55C13Bd31Ffe464bA5e26E",
@@ -41,18 +41,18 @@
         "SEND_MESSAGE_EVENT_SIG": "0x8c5261668696ce22758910d05bab8f186d6eb247ceac2af2e82c7dc17669b036",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 3518164511491500,
-        "verificationOverheadFees": 2560885600000
+        "switchboardFees": 650666736310500,
+        "verificationOverheadFees": 256718592000
       },
       "derivedName": "PolygonL1Switchboard"
     },
     {
       "name": "OptimismSwitchboard2",
       "address": "0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA",
-      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700136851,
       "values": {
         "capacitor__": "0x5E162Be0d9898F35B02D3bF774b45E4C48af1a70",
@@ -66,8 +66,8 @@
         "remoteNativeSwitchboard": "0x9Cf7443685827419B0067fb2471C24969EAA716C",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 3518164511491500,
-        "verificationOverheadFees": 3061068348000
+        "switchboardFees": 650666736310500,
+        "verificationOverheadFees": 3178706024000
       },
       "derivedName": "OptimismSwitchboard"
     },
@@ -102,10 +102,10 @@
     {
       "name": "OptimismSwitchboard",
       "address": "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
-      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700136875,
       "values": {
         "capacitor__": "0xBA2CaBf4754745C822c2BDdE65aF836CF92E4354",
@@ -119,7 +119,7 @@
         "remoteNativeSwitchboard": "0x1D6811553Aff8231aDd04A84F300b89E15D99EA4",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 3518164511491500,
+        "switchboardFees": 650666736310500,
         "verificationOverheadFees": 52013104000
       },
       "derivedName": "OptimismSwitchboard"
@@ -142,13 +142,13 @@
       "name": "LyraMultisig",
       "address": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1614150116,
       "values": {
@@ -160,7 +160,7 @@
           "0x4cEa25e9c999E69F45765539783D149024f99F12"
         ],
         "getThreshold": 2,
-        "nonce": 352,
+        "nonce": 353,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -312,16 +312,16 @@
     {
       "name": "Socket",
       "address": "0x943AC2775928318653e91d350574436A1b9b16f9",
-      "ignoreInWatchMode": ["globalMessageCount"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["globalMessageCount"],
       "sinceTimestamp": 1700126147,
       "values": {
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0",
-        "globalMessageCount": 3891,
+        "globalMessageCount": 4036,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -395,7 +395,8 @@
           "0x716c339F41eAcfE2dc4775052411394A2Ed04743",
           "0xDBa83C0C654DB1cd914FA2710bA743e925B53086",
           "0x8843557Fd6005d617A735731BF1bAb0461af55E4",
-          "0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00"
+          "0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00",
+          "0xA7384185a6428e6B0D33199256fE67b6fA5D8e40"
         ],
         "transmitManager__": "0xeD037aFBffC65a94E9CC592947E851FB2f730341",
         "version": "0x484f1c5889188a0a81068ce8c49d8f7c3b3f1b0c1723b50ebd656a8d4f99e356"
@@ -461,13 +462,13 @@
       "name": "LooksRareMultisig",
       "address": "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641797772,
       "values": {
@@ -540,10 +541,10 @@
     {
       "name": "ArbitrumL1Switchboard",
       "address": "0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe",
-      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["switchboardFees", "verificationOverheadFees"],
       "sinceTimestamp": 1700129015,
       "values": {
         "bridge__": "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
@@ -558,7 +559,7 @@
         "remoteNativeSwitchboard": "0xaB2F8c1588ACA57bC2909512B645a860C65770d3",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9",
-        "switchboardFees": 1147676658960000,
+        "switchboardFees": 650666736700500,
         "verificationOverheadFees": 6500000000000
       },
       "derivedName": "ArbitrumL1Switchboard"
@@ -623,13 +624,13 @@
       "name": "KintoMultisig",
       "address": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 6 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678700303,
       "values": {
@@ -644,7 +645,7 @@
           "0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
         "getThreshold": 3,
-        "nonce": 133,
+        "nonce": 134,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -678,24 +679,60 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
-    "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
-    "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58",
-    "0x4cEa25e9c999E69F45765539783D149024f99F12",
-    "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
-    "0x5ECfd6968593159e5b4f06832857943409122849",
-    "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-    "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52",
-    "0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259",
-    "0x94561e98DD5E55271f91A103e4979aa6C493745E",
-    "0x9eab2223d84060E212354BfA620BF687b6E9Ae20",
-    "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
-    "0xb69F2341F008f673F757B49104c165C8022CD0df",
-    "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65",
-    "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
-    "0xc31C4549356d46c37021393EeEb6f704B38061eC",
-    "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8"
+    },
+    {
+      "address": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF"
+    },
+    {
+      "address": "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58"
+    },
+    {
+      "address": "0x4cEa25e9c999E69F45765539783D149024f99F12"
+    },
+    {
+      "address": "0x5D973Ea995d14799E528B14472346bfDE21eAe2e"
+    },
+    {
+      "address": "0x5ECfd6968593159e5b4f06832857943409122849"
+    },
+    {
+      "address": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
+    },
+    {
+      "address": "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52"
+    },
+    {
+      "address": "0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259"
+    },
+    {
+      "address": "0x94561e98DD5E55271f91A103e4979aa6C493745E"
+    },
+    {
+      "address": "0x9eab2223d84060E212354BfA620BF687b6E9Ae20"
+    },
+    {
+      "address": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+    },
+    {
+      "address": "0xb69F2341F008f673F757B49104c165C8022CD0df"
+    },
+    {
+      "address": "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65"
+    },
+    {
+      "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B"
+    },
+    {
+      "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC"
+    },
+    {
+      "address": "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369"
+    }
   ],
   "abis": {
     "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": [

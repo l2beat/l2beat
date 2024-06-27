@@ -154,6 +154,9 @@ function VerifierCard({
           <VerifiedCell
             verified={verifier.verified}
             askForVerificationLink={askForVerificationLink}
+            performedBy={
+              verifier.verified !== 'no' ? verifier.performedBy : undefined
+            }
           />
         </DetailsItem>
         <DetailsItem title="Last used" className="lg:pl-10">

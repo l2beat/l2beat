@@ -137,7 +137,7 @@ export interface ChainTvlConfig {
     readonly providerUrl: string
     readonly providerCallsPerMinute: number
     readonly minBlockTimestamp: UnixTime
-    readonly blockNumberProviderConfig:
+    readonly blockExplorerConfig:
       | EtherscanChainConfig
       | BlockscoutChainConfig
       | undefined

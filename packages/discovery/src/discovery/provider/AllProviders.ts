@@ -1,8 +1,8 @@
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig } from '../../config/types'
-import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
 import { HttpClient } from '../../utils/HttpClient'
+import { getExplorerClient } from '../../utils/IEtherscanClient'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import { HighLevelProvider } from './HighLevelProvider'
 import { IProvider, RawProviders } from './IProvider'
@@ -41,19 +41,15 @@ export class AllProviders {
               config.eventRpcUrl,
               config.chainId,
             )
-      const etherscanLikeClient = EtherscanLikeClient.createForDiscovery(
-        httpClient,
-        config.etherscanUrl,
-        config.etherscanApiKey,
-        config.etherscanUnsupported,
-      )
+
+      const etherscanClient = getExplorerClient(httpClient, config.explorer)
 
       this.config.set(config.name, {
         config,
         providers: {
           baseProvider,
           eventProvider,
-          etherscanLikeClient,
+          etherscanClient,
         },
       })
     }
@@ -77,7 +73,7 @@ export class AllProviders {
       new LowLevelProvider(
         config.providers.baseProvider,
         config.providers.eventProvider,
-        config.providers.etherscanLikeClient,
+        config.providers.etherscanClient,
       )
     this.lowLevelProviders.set(chain, lowLevelProvider)
 

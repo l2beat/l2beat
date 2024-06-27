@@ -872,6 +872,21 @@
       "supply": "zero"
     },
     {
+      "id": "next-connext",
+      "name": "Connext",
+      "coingeckoId": "connext",
+      "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a",
+      "symbol": "NEXT",
+      "decimals": 18,
+      "deploymentTimestamp": 1680625643,
+      "coingeckoListingTimestamp": 1693872000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31293/large/photo_2024-06-03_12-14-59.png?1717638614",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "people-constitutiondao",
       "name": "ConstitutionDAO",
       "coingeckoId": "constitutiondao",
@@ -2471,6 +2486,21 @@
       "coingeckoListingTimestamp": 1696982400,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/31719/large/usdm.png?1696530540",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "msweth-msweth",
+      "name": "mswETH",
+      "coingeckoId": "eigenpie-sweth",
+      "address": "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678",
+      "symbol": "mswETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1706523719,
+      "coingeckoListingTimestamp": 1713484800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37167/large/mswETH.png?1713507053",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -4141,6 +4171,21 @@
       "supply": "zero"
     },
     {
+      "id": "unieth-universal-eth",
+      "name": "Universal ETH",
+      "coingeckoId": "universal-eth",
+      "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4",
+      "symbol": "uniETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1664425175,
+      "coingeckoListingTimestamp": 1700092800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28477/large/uniETH_200.png?1696527471",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -4546,25 +4591,6 @@
       "supply": "zero"
     },
     {
-      "id": "optimism:alusd-alchemix-usd",
-      "name": "Alchemix USD",
-      "coingeckoId": "alchemix-usd",
-      "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
-      "symbol": "alUSD",
-      "decimals": 18,
-      "deploymentTimestamp": 1653955245,
-      "coingeckoListingTimestamp": 1616112000,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/14114/large/Alchemix_USD.png?1696513835",
-      "chainId": 10,
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Connext",
-        "slug": "connext"
-      }
-    },
-    {
       "id": "optimism:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
@@ -4578,25 +4604,6 @@
       "chainId": 10,
       "source": "canonical",
       "supply": "zero"
-    },
-    {
-      "id": "optimism:usx-dforce-usd",
-      "name": "dForce USD",
-      "coingeckoId": "token-dforce-usd",
-      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "symbol": "USX",
-      "decimals": 18,
-      "deploymentTimestamp": 1637931555,
-      "coingeckoListingTimestamp": 1627516800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/17422/large/usx_32.png?1696516969",
-      "chainId": 10,
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "cBridge (Celer)",
-        "slug": "cbridge"
-      }
     },
     {
       "id": "optimism:eth-ether",
@@ -4978,6 +4985,21 @@
       "chainId": 10,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "id": "optimism:usdc.e-usd-coin",
+      "name": "USD Coin",
+      "coingeckoId": "bridged-usd-coin-optimism",
+      "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+      "symbol": "USDC.e",
+      "decimals": 6,
+      "deploymentTimestamp": 1636665399,
+      "coingeckoListingTimestamp": 1693958400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31580/large/USDC-icon.png?1696530397",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "optimism:usde-usde",
@@ -6959,6 +6981,25 @@
       }
     },
     {
+      "id": "arbitrum:mor-mor",
+      "name": "MOR",
+      "coingeckoId": "morpheusai",
+      "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "symbol": "MOR",
+      "decimals": 18,
+      "deploymentTimestamp": 1714748963,
+      "coingeckoListingTimestamp": 1716163200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37969/large/MOR200X200.png?1716327119",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "id": "arbitrum:moz-mozaic-token",
       "name": "Mozaic Token",
       "coingeckoId": "mozaic",
@@ -7580,6 +7621,21 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/37375/large/image.png?1714884543",
       "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "id": "blast:blast-blast",
+      "name": "Blast",
+      "coingeckoId": "blast",
+      "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
+      "symbol": "BLAST",
+      "decimals": 18,
+      "deploymentTimestamp": 1718056429,
+      "coingeckoListingTimestamp": 1719446400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35494/large/Blast.jpg?1719385662",
+      "chainId": 81457,
       "source": "native",
       "supply": "circulatingSupply"
     },

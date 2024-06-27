@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20061811,
   "configHash": "0xe49d3b0cd6b5050b2f2e9a1b0b7488acbc7fa50c887152525fc359af317d3c66",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "Governance",
@@ -52,6 +52,15 @@
     {
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "upgradeability": {
+        "type": "EIP2535 diamond proxy",
+        "facets": [
+          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+        ]
+      },
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -64,15 +73,6 @@
         "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
-      "upgradeability": {
-        "type": "EIP2535 diamond proxy",
-        "facets": [
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
-        ]
-      },
       "implementations": [
         "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
         "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -263,16 +263,16 @@
       "name": "Matter Labs Multisig",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "template": "GnosisSafe",
-      "descriptions": [
-        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
-      ],
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 8 (50%)"
       },
+      "descriptions": [
+        "Can instantly upgrade all contracts and roles in the zksync Era contracts"
+      ],
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1666872275,
       "values": {
@@ -379,6 +379,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x303a465B659cBB0ab36eE643eA362c509EEb5213"]
+      },
       "sinceTimestamp": 1717520627,
       "values": {
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
@@ -435,19 +438,45 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x0000000000000000000000000000000000000001",
-    "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
-    "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF",
-    "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
-    "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-    "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
-    "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df",
-    "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
-    "0x71d84c3404a6ae258E6471d4934B96a2033F9438",
-    "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
-    "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
-    "0xe79af29d618141Ffef951B240b250d47030D56d7"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000001"
+    },
+    {
+      "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
+    },
+    {
+      "address": "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF"
+    },
+    {
+      "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
+    },
+    {
+      "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
+    },
+    {
+      "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
+    },
+    {
+      "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
+    },
+    {
+      "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+    },
+    {
+      "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
+    },
+    {
+      "address": "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f"
+    },
+    {
+      "address": "0x9dF8bc0918F357c766A5697E031fF5237c05747A"
+    },
+    {
+      "address": "0xe79af29d618141Ffef951B240b250d47030D56d7"
+    }
   ],
   "abis": {
     "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61": [

@@ -5,6 +5,15 @@ import { expect } from 'earl'
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
+const emptyOutputMeta = {
+  descriptions: undefined,
+  roles: undefined,
+  assignedPermissions: undefined,
+  categories: undefined,
+  types: undefined,
+  severity: undefined,
+}
+
 describe(processAnalysis.name, () => {
   const base = {
     type: 'Contract' as const,
@@ -93,7 +102,11 @@ describe(processAnalysis.name, () => {
 
     expect(result).toEqual({
       contracts: [],
-      eoas: [ADDRESS_A, ADDRESS_B, ADDRESS_C],
+      eoas: [
+        { ...emptyOutputMeta, address: ADDRESS_A },
+        { ...emptyOutputMeta, address: ADDRESS_B },
+        { ...emptyOutputMeta, address: ADDRESS_C },
+      ],
       abis: {},
     })
   })
@@ -156,7 +169,7 @@ describe(processAnalysis.name, () => {
           values: CONTRACT_C.values,
         },
       ],
-      eoas: [ADDRESS_D],
+      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
       abis: CONTRACT_C.abis,
     })
   })
@@ -199,7 +212,7 @@ describe(processAnalysis.name, () => {
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
       ],
-      eoas: [ADDRESS_D],
+      eoas: [{ ...emptyOutputMeta, address: ADDRESS_D }],
       abis: {
         ...CONTRACT_A.abis,
         ...CONTRACT_B.abis,

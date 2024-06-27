@@ -7,14 +7,23 @@ export interface ProofVerification {
   requiredTools: RequiredTool[]
 }
 
-export interface OnchainVerifier {
+export type OnchainVerifier = {
   name: string
   description: string
   contractAddress: EthereumAddress
   chainId: ChainId
-  verified: 'yes' | 'no' | 'failed'
   subVerifiers: SubVerifier[]
-}
+} & (
+  | {
+      verified: 'yes' | 'failed'
+      /** Details of entity that performed verification */
+      performedBy: {
+        name: string
+        link: string
+      }
+    }
+  | { verified: 'no' }
+)
 
 export interface RequiredTool {
   name: string

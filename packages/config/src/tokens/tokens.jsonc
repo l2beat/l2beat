@@ -716,6 +716,10 @@
       "address": "0xB62132e35a6c13ee1EE0f84dC5d40bad8d815206"
     },
     {
+      "symbol": "NEXT",
+      "address": "0xFE67A4450907459c3e1FFf623aA927dD4e28c67a"
+    },
+    {
       "symbol": "NFT",
       "address": "0xEF40B859D21e4d566a3d713e756197c021BffaAa",
       "coingeckoId": "apenft"
@@ -1110,6 +1114,14 @@
       "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984"
     },
     {
+      "symbol": "uniETH",
+      "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4"
+    },
+    {
+      "symbol": "mswETH",
+      "address": "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678"
+    },
+    {
       "symbol": "UOS",
       "address": "0xD13c7342e1ef687C5ad21b27c2b65D772cAb5C8c"
     },
@@ -1260,6 +1272,16 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "MOR",
+      "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
+      "source": "native",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
     {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
@@ -1614,6 +1636,12 @@
   ],
   "optimism": [
     {
+      "symbol": "USDC.e",
+      "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "wBTC",
       "address": "0x68f180fcCe6836688e9084f035309E29Bf0A2095",
       "source": "canonical",
@@ -1823,17 +1851,6 @@
       "supply": "circulatingSupply"
     },
     {
-      "symbol": "alUSD",
-      "address": "0xCB8FA9a76b8e203D8C3797bF438d8FB81Ea3326A",
-      "category": "stablecoin",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Connext",
-        "slug": "connext"
-      }
-    },
-    {
       "symbol": "tBTC",
       "address": "0x6c84a8f1c29108F47a79964b5Fe888D4f4D0dE40",
       "source": "external",
@@ -1841,16 +1858,6 @@
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
-      }
-    },
-    {
-      "symbol": "USX",
-      "address": "0xbfD291DA8A403DAAF7e5E9DC1ec0aCEaCd4848B9",
-      "source": "native",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "cBridge (Celer)",
-        "slug": "cbridge"
       }
     },
     {
@@ -2595,6 +2602,12 @@
     {
       "symbol": "JUICE",
       "address": "0x818a92bc81aad0053d72ba753fb5bc3d0c5c0923",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "BLAST",
+      "address": "0xb1a5700fA2358173Fe465e6eA4Ff52E36e88E2ad",
       "source": "native",
       "supply": "circulatingSupply"
     }

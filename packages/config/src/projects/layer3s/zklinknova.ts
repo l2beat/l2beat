@@ -81,7 +81,6 @@ export const zklinknova: Layer3 = underReviewL3({
       address: EthereumAddress('0x5fD9F73286b7E8683Bab45019C94553b93e015Cf'),
       sinceTimestamp: new UnixTime(1709278799),
       tokens: ['ETH'],
-      source: 'external',
       bridge: {
         name: 'zkLink Nova Bridge from Ethereum',
       },
@@ -92,7 +91,6 @@ export const zklinknova: Layer3 = underReviewL3({
       address: EthereumAddress('0xAd16eDCF7DEB7e90096A259c81269d811544B6B6'),
       sinceTimestamp: new UnixTime(1709295323),
       tokens: '*',
-      source: 'external',
       bridge: {
         name: 'zkLink Nova Bridge from Ethereum',
       },
@@ -119,13 +117,17 @@ export const zklinknova: Layer3 = underReviewL3({
         name: 'zkLink Nova Bridge from Mantapacific',
       },
     },
-    // {
-    //   chain: 'mantle',
-    //   includeInTotal: false,
-    //   address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
-    //   sinceTimestamp: new UnixTime(1709279309),
-    //   tokens: ['MNT'],
-    // },
+    {
+      chain: 'mantle',
+      includeInTotal: false,
+      address: EthereumAddress('0xD784d7128B46B60Ca7d8BdC17dCEC94917455657'),
+      sinceTimestamp: new UnixTime(1709279309),
+      tokens: ['MNT'],
+      source: 'external',
+      bridge: {
+        name: 'zkLink Nova Bridge from Mantle',
+      },
+    },
     {
       chain: 'mantle',
       includeInTotal: false,

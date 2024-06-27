@@ -3,14 +3,23 @@ import {
   Bytes,
   EthereumAddress,
   Hash256,
+  Retries,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
-import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
+import { z } from 'zod'
+import { IEtherscanClient } from '../../utils/IEtherscanClient'
+import { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
+import { ContractDeployment, RawProviders } from './IProvider'
 import { ProviderStats, getZeroStats } from './Stats'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
+
+const shouldRetry = Retries.exponentialBackOff({
+  stepMs: 500, // 0.5, 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s
+  maxAttempts: 10,
+  maxDistanceMs: Infinity,
+  notifyAfterAttempts: Infinity,
+})
 
 export class LowLevelProvider {
   public stats: ProviderStats = getZeroStats()
@@ -18,14 +27,14 @@ export class LowLevelProvider {
   constructor(
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
-    private readonly etherscanLikeClient: EtherscanLikeClient,
+    private readonly etherscanClient: IEtherscanClient,
   ) {}
 
   getRawProviders(): RawProviders {
     return {
       baseProvider: this.provider,
       eventProvider: this.eventProvider,
-      etherscanLikeClient: this.etherscanLikeClient,
+      etherscanClient: this.etherscanClient,
     }
   }
 
@@ -35,11 +44,13 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     this.stats.callCount++
-    const result = await this.provider.call(
-      { to: address.toString(), data: data.toString() },
-      blockNumber,
-    )
-    return Bytes.fromHex(result)
+    return await rpcWithRetries(async () => {
+      const result = await this.provider.call(
+        { to: address.toString(), data: data.toString() },
+        blockNumber,
+      )
+      return Bytes.fromHex(result)
+    })
   }
 
   async getStorage(
@@ -48,12 +59,14 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     this.stats.getStorageCount++
-    const result = await this.provider.getStorageAt(
-      address.toString(),
-      slot instanceof Bytes ? slot.toString() : slot,
-      blockNumber,
-    )
-    return Bytes.fromHex(result)
+    return await rpcWithRetries(async () => {
+      const result = await this.provider.getStorageAt(
+        address.toString(),
+        slot instanceof Bytes ? slot.toString() : slot,
+        blockNumber,
+      )
+      return Bytes.fromHex(result)
+    })
   }
 
   async getLogs(
@@ -63,11 +76,13 @@ export class LowLevelProvider {
     toBlock: number,
   ) {
     this.stats.getLogsCount++
-    return await this.eventProvider.getLogs({
-      address: address.toString(),
-      fromBlock,
-      toBlock,
-      topics,
+    return await rpcWithRetries(async () => {
+      return await this.eventProvider.getLogs({
+        address: address.toString(),
+        fromBlock,
+        toBlock,
+        topics,
+      })
     })
   }
 
@@ -75,18 +90,22 @@ export class LowLevelProvider {
     transactionHash: Hash256,
   ): Promise<providers.TransactionResponse> {
     this.stats.getTransactionCount++
-    return await this.provider.getTransaction(transactionHash.toString())
+    return await rpcWithRetries(async () => {
+      return await this.provider.getTransaction(transactionHash.toString())
+    })
   }
 
   async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
     this.stats.getDebugTraceCount++
-    const response = await this.provider.send('debug_traceTransaction', [
-      transactionHash.toString(),
-      { tracer: 'callTracer' },
-    ])
-    return DebugTransactionCallResponse.parse(response)
+    return await rpcWithRetries(async () => {
+      const response = await this.provider.send('debug_traceTransaction', [
+        transactionHash.toString(),
+        { tracer: 'callTracer' },
+      ])
+      return DebugTransactionCallResponse.parse(response)
+    })
   }
 
   async getBytecode(
@@ -94,23 +113,18 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     this.stats.getBytecodeCount++
-    const result = await this.provider.getCode(address.toString(), blockNumber)
-    return Bytes.fromHex(result)
+    return await rpcWithRetries(async () => {
+      const result = await this.provider.getCode(
+        address.toString(),
+        blockNumber,
+      )
+      return Bytes.fromHex(result)
+    })
   }
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
     this.stats.getSourceCount++
-    const result = await this.etherscanLikeClient.getContractSource(address)
-    const isVerified = result.ABI !== 'Contract source code not verified'
-
-    return {
-      name: result.ContractName.trim(),
-      isVerified,
-      abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
-      source: result.SourceCode,
-      solidityVersion: result.CompilerVersion,
-      constructorArguments: result.ConstructorArguments,
-    }
+    return await this.etherscanClient.getContractSource(address)
   }
 
   async getDeployment(
@@ -118,7 +132,7 @@ export class LowLevelProvider {
   ): Promise<ContractDeployment | undefined> {
     this.stats.getDeploymentCount++
     const transactionHash =
-      await this.etherscanLikeClient.getContractDeploymentTx(address)
+      await this.etherscanClient.getContractDeploymentTx(address)
     if (transactionHash === undefined) {
       // getContractDeploymentTx API is not available
       return undefined
@@ -151,11 +165,44 @@ export class LowLevelProvider {
 
   async getBlock(blockNumber: number): Promise<providers.Block> {
     this.stats.getBlockCount++
-    return await this.provider.getBlock(blockNumber)
+    return await rpcWithRetries(async () => {
+      return await this.provider.getBlock(blockNumber)
+    })
   }
 
   async getBlockNumber(): Promise<number> {
     this.stats.getBlockNumberCount++
-    return await this.provider.getBlockNumber()
+    return await rpcWithRetries(async () => {
+      return await this.provider.getBlockNumber()
+    })
   }
 }
+
+export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
+  let attempts = 0
+  while (true) {
+    try {
+      return await fn()
+    } catch (e) {
+      attempts++
+      if (!isHttpErrorResponse(e)) {
+        throw e
+      }
+      const result = shouldRetry(attempts, e)
+      if (result.shouldStop) {
+        throw e
+      }
+      console.log('awaiting')
+      await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
+    }
+  }
+}
+
+function isHttpErrorResponse(e: unknown): boolean {
+  const parsed = ethersError.safeParse(e)
+  return parsed.success && parsed.data.status >= 400
+}
+
+const ethersError = z.object({
+  status: z.number(),
+})

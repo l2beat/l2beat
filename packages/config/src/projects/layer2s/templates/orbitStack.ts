@@ -21,6 +21,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
+  pickWorseRisk,
+  sumRisk,
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
@@ -107,10 +109,32 @@ export function orbitStackCommon(
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
 
-  const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates({
-    'validators.0': 'Validators/Proposers',
-    'batchPosters.0': 'Sequencers',
-  })
+  const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates()
+
+  const validators: ScalingProjectPermission = {
+    name: 'Validators/Proposers',
+    accounts: templateVars.discovery.getPermissionsByRole('Validator'),
+    description:
+      'They can submit new state roots and challenge state roots. Some of the operators perform their duties through special purpose smart contracts.',
+    chain: templateVars.discovery.chain,
+  }
+  if (validators.accounts.length === 0) {
+    throw new Error(
+      `No validators found for ${templateVars.discovery.projectName}. Assign 'Validator' role to at least one account.`,
+    )
+  }
+
+  const sequencers: ScalingProjectPermission = {
+    name: 'Sequencers',
+    accounts: templateVars.discovery.getPermissionsByRole('Sequencer'),
+    description: 'Central actors allowed to submit transaction batches to L1.',
+    chain: templateVars.discovery.chain,
+  }
+  if (sequencers.accounts.length === 0) {
+    throw new Error(
+      `No sequencers found for ${templateVars.discovery.projectName}. Assign 'Sequencer' role to at least one account.`,
+    )
+  }
 
   return {
     id: ProjectId(templateVars.discovery.projectName),
@@ -255,6 +279,8 @@ export function orbitStackCommon(
         DEFAULT_OTHER_CONSIDERATIONS,
     },
     permissions: [
+      sequencers,
+      validators,
       ...resolvedTemplates.permissions,
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
@@ -297,6 +323,83 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
+  const riskView = makeBridgeCompatible({
+    stateValidation:
+      templateVars.nonTemplateRiskView?.stateValidation ??
+      RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
+    dataAvailability:
+      templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
+        ? (() => {
+            const DAC = templateVars.discovery.getContractValue<{
+              membersCount: number
+              requiredSignatures: number
+            }>('SequencerInbox', 'dacKeyset')
+            const { membersCount, requiredSignatures } = DAC
+            return RISK_VIEW.DATA_EXTERNAL_DAC({
+              membersCount,
+              requiredSignatures,
+            })
+          })()
+        : RISK_VIEW.DATA_ON_CHAIN_L3,
+    exitWindow:
+      templateVars.nonTemplateRiskView?.exitWindow ??
+      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
+    sequencerFailure:
+      templateVars.nonTemplateRiskView?.sequencerFailure ??
+      RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+    proposerFailure:
+      templateVars.nonTemplateRiskView?.proposerFailure ??
+      RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
+    validatedBy:
+      templateVars.nonTemplateRiskView?.validatedBy ??
+      RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
+    destinationToken:
+      templateVars.nonTemplateRiskView?.destinationToken ??
+      RISK_VIEW.NATIVE_AND_CANONICAL(),
+  })
+
+  const getStackedRisks = () => {
+    assert(
+      templateVars.hostChain !== 'Multiple',
+      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
+    )
+    const layer2s = require('..').layer2s as Layer2[]
+
+    const baseChainRiskView = layer2s.find(
+      (l2) => l2.id === templateVars.hostChain,
+    )?.riskView
+    assert(
+      baseChainRiskView,
+      `Could not find base chain ${templateVars.hostChain} in layer2s`,
+    )
+    return makeBridgeCompatible({
+      stateValidation: pickWorseRisk(
+        riskView.stateValidation,
+        baseChainRiskView.stateValidation,
+      ),
+      dataAvailability: pickWorseRisk(
+        riskView.dataAvailability,
+        baseChainRiskView.dataAvailability,
+      ),
+      exitWindow: pickWorseRisk(
+        riskView.exitWindow,
+        baseChainRiskView.exitWindow,
+      ),
+      sequencerFailure: sumRisk(
+        riskView.sequencerFailure,
+        baseChainRiskView.sequencerFailure,
+        RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+      ),
+      proposerFailure: sumRisk(
+        riskView.proposerFailure,
+        baseChainRiskView.proposerFailure,
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+      ),
+      validatedBy: riskView.validatedBy,
+      destinationToken: riskView.destinationToken,
+    })
+  }
+
   return {
     type: 'layer3',
     ...orbitStackCommon(
@@ -322,7 +425,7 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
           return addSentimentToDataAvailability({
             layers: ['DAC'],
             bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           })
         })()
       : addSentimentToDataAvailability({
@@ -332,43 +435,10 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
               : 'Ethereum (calldata)',
           ],
           bridge: { type: 'Enshrined' },
-          mode: 'Transactions data (compressed)',
+          mode: 'Transaction data (compressed)',
         }),
-    stackedRiskView: templateVars.stackedRiskView,
-    riskView: makeBridgeCompatible({
-      stateValidation:
-        templateVars.nonTemplateRiskView?.stateValidation ??
-        RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
-      dataAvailability:
-        templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
-          ? (() => {
-              const DAC = templateVars.discovery.getContractValue<{
-                membersCount: number
-                requiredSignatures: number
-              }>('SequencerInbox', 'dacKeyset')
-              const { membersCount, requiredSignatures } = DAC
-              return RISK_VIEW.DATA_EXTERNAL_DAC({
-                membersCount,
-                requiredSignatures,
-              })
-            })()
-          : RISK_VIEW.DATA_ON_CHAIN_L3,
-      exitWindow:
-        templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
-      sequencerFailure:
-        templateVars.nonTemplateRiskView?.sequencerFailure ??
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
-      proposerFailure:
-        templateVars.nonTemplateRiskView?.proposerFailure ??
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
-      validatedBy:
-        templateVars.nonTemplateRiskView?.validatedBy ??
-        RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
-      destinationToken:
-        templateVars.nonTemplateRiskView?.destinationToken ??
-        RISK_VIEW.NATIVE_AND_CANONICAL(),
-    }),
+    stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
+    riskView,
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: unionBy(
@@ -510,7 +580,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           return addSentimentToDataAvailability({
             layers: ['DAC'],
             bridge: { type: 'DAC Members', membersCount, requiredSignatures },
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           })
         })()
       : addSentimentToDataAvailability({
@@ -520,7 +590,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
               : 'Ethereum (calldata)',
           ],
           bridge: { type: 'Enshrined' },
-          mode: 'Transactions data (compressed)',
+          mode: 'Transaction data (compressed)',
         }),
     riskView: makeBridgeCompatible({
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {

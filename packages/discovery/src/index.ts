@@ -12,7 +12,13 @@ export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
+export {
+  RawDiscoveryConfig,
+  StackCategory,
+  StackRole,
+  Permission,
+  ContractFieldSeverity,
+} from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
 export {
@@ -52,10 +58,7 @@ export {
   type InvertedAddresses,
   type Role,
 } from './inversion/runInversion'
-export {
-  EtherscanLikeClient,
-  tryParseEtherscanResponse,
-} from './utils/EtherscanLikeClient'
+export { EtherscanClient } from './utils/EtherscanClient'
 export { getErrorMessage } from './utils/getErrorMessage'
 export { HttpClient } from './utils/HttpClient'
 export { AllProviders } from './discovery/provider/AllProviders'
