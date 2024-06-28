@@ -80,9 +80,9 @@ export class LivenessRepository extends BaseRepository {
           return [c.id, properties.subtype]
         }
       })
-      .filter(notUndefined) as [string, string][]
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
 
-    const configsMap = new Map<string, string>(projectConfigs)
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
     const livenessRows = await knex('liveness')
       .select('timestamp', 'tracked_tx_id')
       .whereIn('tracked_tx_id', Array.from(configsMap.keys()))
@@ -151,13 +151,40 @@ export class LivenessRepository extends BaseRepository {
     since: UnixTime,
   ): Promise<LivenessTransactionsRecordWithSubtype[]> {
     const knex = await this.knex()
-    const rows = await knex('liveness as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select('l.timestamp', 'c.subtype', 'l.tx_hash', 'c.project_id')
-      .where('c.project_id', projectId.toString())
-      .andWhere('l.timestamp', '>=', since.toDate())
-      .distinct('l.timestamp')
-      .orderBy('l.timestamp', 'desc')
+
+    const configRows = await knex('indexer_configurations')
+    const projectConfigs = configRows
+      .map((c) => {
+        const properties = JSON.parse(c.properties)
+
+        if (
+          properties.projectId === projectId.toString() &&
+          properties.type === 'liveness'
+        ) {
+          return [c.id, properties.subtype]
+        }
+      })
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
+
+    const livenessRows = await knex('liveness')
+      .select('timestamp', 'tracked_tx_id', 'tx_hash')
+      .whereIn('tracked_tx_id', Array.from(configsMap.keys()))
+      .andWhere('timestamp', '>=', since.toDate())
+      .distinct('timestamp')
+      .orderBy('timestamp', 'desc')
+
+    const rows = livenessRows.map((row) => {
+      const subtype = configsMap.get(row.tracked_tx_id)
+      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      return {
+        timestamp: row.timestamp,
+        subtype,
+        project_id: projectId,
+        tx_hash: row.tx_hash,
+      }
+    })
 
     return rows.map(toTransactionRecordWithTimestamp)
   }
@@ -182,9 +209,9 @@ export class LivenessRepository extends BaseRepository {
           return [c.id, properties.subtype]
         }
       })
-      .filter(notUndefined) as [string, string][]
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
 
-    const configsMap = new Map<string, string>(projectConfigs)
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
 
     const livenessRows = await knex('liveness')
       .select('timestamp', 'tracked_tx_id')
