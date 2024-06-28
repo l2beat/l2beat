@@ -21,12 +21,12 @@ export class AmountsDataService {
   }
 
   async getAmounts(
-    amountConfigs: (AmountConfigEntry & { configId: string })[],
+    configurations: (AmountConfigEntry & { configId: string })[],
     minTimestamp: UnixTime,
     targetTimestamp: UnixTime,
   ) {
     const amounts = await this.$.amountRepository.getByConfigIdsInRange(
-      amountConfigs.map((c) => c.configId),
+      configurations.map((c) => c.configId),
       minTimestamp,
       targetTimestamp,
     )
@@ -34,9 +34,9 @@ export class AmountsDataService {
     const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
     const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
-      amountConfigs.map((a) => ({
-        id: a.configId,
-        minTimestamp: a.sinceTimestamp,
+      configurations.map((c) => ({
+        id: c.configId,
+        minTimestamp: c.sinceTimestamp,
       })),
       amountsByTimestamp,
       (value: AmountRecord) => value.configId,
@@ -51,7 +51,7 @@ export class AmountsDataService {
         (a) => !excluded.find((e) => e === a.configId),
       )
 
-      const missing = amountConfigs
+      const missing = configurations
         .map((a) => a.configId)
         .filter((a) => !amounts.map((f) => f.configId).includes(a))
 
