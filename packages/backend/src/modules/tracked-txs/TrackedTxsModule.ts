@@ -26,7 +26,6 @@ import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2Costs
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -73,10 +72,6 @@ export function createTrackedTxsModule(
     liveness: livenessModule?.updater,
     l2costs: l2costsModule?.updater,
   }
-
-  const trackedTxsConfigsRepository = peripherals.getRepository(
-    TrackedTxsConfigsRepository,
-  )
 
   const trackedTxsIndexer = new TrackedTxsIndexer({
     logger,
@@ -156,7 +151,11 @@ export function createTrackedTxsModule(
       ...subModules.flatMap((m) => m?.routers ?? []),
       createTrackedTxsStatusRouter({
         clock,
-        trackedTxsConfigsRepository,
+        indexerConfigurationRepository: peripherals.getRepository(
+          IndexerConfigurationRepository,
+        ),
+        l2CostsRepository: peripherals.getRepository(L2CostsRepository),
+        livenessRepository: peripherals.getRepository(LivenessRepository),
       }),
     ],
     indexer: trackedTxsIndexer,

@@ -1,12 +1,15 @@
 import React, { Fragment } from 'react'
 
+import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { IndexerConfigurationRecord } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { TableData, TableHead } from '../../../status/Components'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
 import { DASHBOARD_COLORS } from '../../../update-monitor/api/view/constants'
-import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepository'
 
-type TrackedTxsTableRow = TrackedTxsConfigRecord & {
+type TrackedTxsTableRow = Omit<IndexerConfigurationRecord, 'properties'> & {
+  properties: TrackedTxConfigEntry
+} & {
   active: boolean
   healthy: boolean
   unused: boolean
@@ -21,10 +24,10 @@ export function TrackedTxsStatusPage({
   const data = Object.entries(
     [...rawData].reduce(
       (acc, curr) => {
-        if (acc[curr.projectId]) {
-          acc[curr.projectId].push(curr)
+        if (acc[curr.properties.projectId]) {
+          acc[curr.properties.projectId].push(curr)
         } else {
-          acc[curr.projectId] = [curr]
+          acc[curr.properties.projectId] = [curr]
         }
         return acc
       },
@@ -82,16 +85,19 @@ function Table({ data }: { data: TrackedTxsTableRow[] }) {
             }}
             key={config.id}
           >
-            <TableData value={config.type} />
+            <TableData value={config.properties.type} />
             <TableData value={config.id} />
             <TableData
-              value={config.lastSyncedTimestamp?.toDate().toUTCString()}
+              value={
+                config.currentHeight &&
+                new Date(config.currentHeight).toUTCString()
+              }
             />
+            <TableData value={new Date(config.minHeight).toUTCString()} />
             <TableData
-              value={config.sinceTimestampInclusive?.toDate().toUTCString()}
-            />
-            <TableData
-              value={config.untilTimestampExclusive?.toDate().toUTCString()}
+              value={
+                config.maxHeight && new Date(config.maxHeight).toUTCString()
+              }
             />
           </tr>
         ))}

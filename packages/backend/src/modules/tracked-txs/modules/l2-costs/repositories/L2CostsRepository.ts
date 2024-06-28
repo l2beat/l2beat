@@ -108,6 +108,16 @@ export class L2CostsRepository extends BaseRepository {
       .where('timestamp', '<=', toInclusive.toDate())
       .delete()
   }
+
+  // #region Status page
+
+  async getUsedConfigsIds(): Promise<string[]> {
+    const knex = await this.knex()
+    const rows = await knex('l2_costs').distinct('tracked_tx_id')
+    return rows.map((row) => row.tracked_tx_id)
+  }
+
+  // #endregion
 }
 
 function toRow(record: L2CostsRecord): L2CostsRow {

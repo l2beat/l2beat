@@ -242,6 +242,16 @@ export class LivenessRepository extends BaseRepository {
       .where('timestamp', '<=', toInclusive.toDate())
       .delete()
   }
+
+  // #region Status page
+
+  async getUsedConfigsIds(): Promise<string[]> {
+    const knex = await this.knex()
+    const rows = await knex('liveness').distinct('tracked_tx_id')
+    return rows.map((row) => row.tracked_tx_id)
+  }
+
+  // #endregion
 }
 
 function toRecord(row: LivenessRow): LivenessRecord {
