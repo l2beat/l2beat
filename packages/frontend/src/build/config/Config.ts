@@ -41,6 +41,7 @@ export interface ConfigFeatures {
   zkCatalog: boolean
   tvl: boolean
   layer3sTvl: boolean
+  badges: boolean;
 }
 
 export interface ConfigBackend {

@@ -4,9 +4,10 @@ import { type BadgeId } from '@l2beat/config'
 import { OverflowWrapper } from '../../../../components/OverflowWrapper'
 import { cn } from '../../../../utils/cn'
 import { ProjectBadge } from './ProjectBadge'
+import { usePageBuildContext } from '../../../../build/pageBuildContext'
 
 export function ProjectAboutSection({
-  badges: _,
+  badges: projectBadges,
   className,
   description,
   type = 'desktop',
@@ -16,15 +17,13 @@ export function ProjectAboutSection({
   description: string | undefined
   type?: 'mobile' | 'desktop'
 }) {
-  // TODO: ONLY FOR TESTING PURPOSES, REMOVE LATER
-  const badges: BadgeId[] = [
-    'AltLayer',
-    'Avail',
-    'Caldera',
-    'Celestia',
-    'Conduit',
-    'EigenDA',
-  ]
+  const {
+    config: {
+      features: { badges: badgesEnabled },
+    },
+  } = usePageBuildContext()
+  const badges: BadgeId[] = (badgesEnabled && projectBadges) || []
+
   return (
     <div
       className={cn(
@@ -34,7 +33,7 @@ export function ProjectAboutSection({
         className,
       )}
     >
-      {badges && (
+      {badgesEnabled && badges && (
         <div className="flex shrink-0 flex-col gap-3 lg:min-w-[288px]">
           <h2 className="font-medium text-gray-600 text-xs uppercase">
             Badges
