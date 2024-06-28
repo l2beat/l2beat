@@ -304,7 +304,7 @@ model IndexerState {
 }
 
 model L2Cost {
-  trackedTxId     String   @map("tracked_tx_id") @db.VarChar(12)
+  configurationId String   @map("configuration_id") @db.VarChar(12)
   txHash          String   @unique(map: "l2_costs_tx_hash_unique") @map("tx_hash") @db.VarChar(255)
   timestamp       DateTime @map("timestamp") @db.Timestamp(6)
   gasUsed         Int      @map("gas_used")
@@ -314,7 +314,7 @@ model L2Cost {
   blobGasUsed     Int?     @map("blob_gas_used")
   blobGasPrice    BigInt?  @map("blob_gas_price")
 
-  @@index([trackedTxId], map: "l2_costs_tracked_tx_id_index")
+  @@index([configurationId], map: "l2_costs_configuration_id_index")
   @@map("l2_costs")
   @@schema("public")
 }
@@ -328,12 +328,12 @@ model L2CostPrice {
 }
 
 model Liveness {
-  timestamp   DateTime @map("timestamp") @db.Timestamp(6)
-  blockNumber Int      @map("block_number")
-  txHash      String   @map("tx_hash") @db.VarChar(255)
-  trackedTxId String   @map("tracked_tx_id") @db.VarChar(12)
+  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
+  blockNumber     Int      @map("block_number")
+  txHash          String   @map("tx_hash") @db.VarChar(255)
+  configurationId String   @map("configuration_id") @db.VarChar(12)
 
-  @@id(trackedTxId, map: "liveness_tracked_tx_id_index")
+  @@id(configurationId, map: "liveness_configuration_id_index")
   @@map("liveness")
   @@schema("public")
 }

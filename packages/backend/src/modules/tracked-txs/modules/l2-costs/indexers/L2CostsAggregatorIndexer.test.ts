@@ -461,7 +461,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
 }
 
 function tx(
-  trackedTxId: TrackedTxId,
+  configurationId: TrackedTxId,
   data?: Partial<AggregatedL2CostsRecord>,
 ): L2CostsRecordWithProjectId {
   return {
@@ -473,7 +473,7 @@ function tx(
     calldataGasUsed: 450980,
     blobGasPrice: null,
     blobGasUsed: null,
-    trackedTxId,
+    configurationId,
     txHash: Hash256.random().toString(),
     ...data,
   }
@@ -491,7 +491,7 @@ function txWithBlob(
     calldataGasUsed: 450980,
     blobGasUsed: 131072,
     blobGasPrice: 1n,
-    trackedTxId: 'wdada',
+    configurationId: 'wdada',
     txHash: Hash256.random().toString(),
     ...data,
   }

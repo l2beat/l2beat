@@ -40,7 +40,7 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     return transactions.map((tx) => ({
       timestamp: tx.blockTimestamp,
       txHash: tx.hash,
-      trackedTxId: tx.id,
+      configurationId: tx.id,
       gasUsed: tx.receiptGasUsed,
       gasPrice: tx.gasPrice,
       calldataLength: tx.dataLength,

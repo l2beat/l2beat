@@ -34,7 +34,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START,
         txHash: '0x1',
-        trackedTxId: txIdA,
+        configurationId: txIdA,
         gasUsed: 100,
         gasPrice: 1n,
         calldataLength: 100,
@@ -45,7 +45,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START.add(-1, 'hours'),
         txHash: '0x2',
-        trackedTxId: txIdB,
+        configurationId: txIdB,
         gasUsed: 200,
         gasPrice: 2n,
         calldataLength: 200,
@@ -56,7 +56,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START.add(-2, 'hours'),
         txHash: '0x3',
-        trackedTxId: txIdC,
+        configurationId: txIdC,
         gasUsed: 150,
         gasPrice: 2n,
         calldataLength: 400,
@@ -72,7 +72,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       await configRepository.addOrUpdateMany(
         DATA.map((d, i) => ({
           indexerId: 'indexer',
-          id: d.trackedTxId,
+          id: d.configurationId,
           minHeight: START.toNumber(),
           maxHeight: null,
           currentHeight: null,
@@ -94,7 +94,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START,
             txHash: '0x4',
-            trackedTxId: DATA[0].trackedTxId,
+            configurationId: DATA[0].configurationId,
             gasUsed: 100,
             gasPrice: 1n,
             calldataLength: 100,
@@ -172,7 +172,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(-1, 'hours'),
             txHash: '0x4',
-            trackedTxId: txIdD,
+            configurationId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -183,7 +183,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(1, 'hours'),
             txHash: '0x45',
-            trackedTxId: txIdD,
+            configurationId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -194,7 +194,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(2, 'hours'),
             txHash: '0x5',
-            trackedTxId: txIdD,
+            configurationId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,

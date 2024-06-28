@@ -6,7 +6,7 @@ import { L2Cost as L2CostRow } from '../kysely/generated/types'
 export interface L2Cost {
   timestamp: UnixTime
   txHash: string
-  trackedTxId: TrackedTxId
+  configurationId: TrackedTxId
   gasUsed: number
   gasPrice: bigint
   calldataLength: number
@@ -19,7 +19,7 @@ export function toRecord(row: Selectable<L2CostRow>): L2Cost {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     txHash: row.tx_hash,
-    trackedTxId: row.tracked_tx_id,
+    configurationId: row.configuration_id,
     gasUsed: row.gas_used,
     gasPrice: BigInt(row.gas_price),
     calldataLength: row.calldata_length,
@@ -33,7 +33,7 @@ export function toRow(record: L2Cost): Insertable<L2CostRow> {
   return {
     timestamp: record.timestamp.toDate(),
     tx_hash: record.txHash,
-    tracked_tx_id: record.trackedTxId.toString(),
+    configuration_id: record.configurationId.toString(),
     gas_used: record.gasUsed,
     gas_price: record.gasPrice.toString(),
     calldata_length: record.calldataLength,

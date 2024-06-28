@@ -122,8 +122,10 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         }]: ETH price not found: ${timestamp.toNumber()}`,
       )
 
-      const multiplier = multipliers.find((c) => c.id === record.trackedTxId)
-      assert(multiplier, `Multiplier not found for ${record.trackedTxId}`)
+      const multiplier = multipliers.find(
+        (c) => c.id === record.configurationId,
+      )
+      assert(multiplier, `Multiplier not found for ${record.configurationId}`)
 
       const calculations = this.calculate(
         record,

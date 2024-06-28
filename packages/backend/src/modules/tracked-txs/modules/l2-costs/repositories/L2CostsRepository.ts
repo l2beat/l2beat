@@ -13,7 +13,7 @@ import { Database } from '../../../../../peripherals/database/Database'
 export interface L2CostsRecord {
   timestamp: UnixTime
   txHash: string
-  trackedTxId: TrackedTxId
+  configurationId: TrackedTxId
   gasUsed: number
   gasPrice: bigint
   calldataLength: number
@@ -66,12 +66,12 @@ export class L2CostsRepository extends BaseRepository {
 
     const configRows = await knex('indexer_configurations').whereIn(
       'id',
-      l2costsRows.map((r) => r.tracked_tx_id),
+      l2costsRows.map((r) => r.configuration_id),
     )
 
     const resultRows = l2costsRows.map((l2costsRow) => {
       const config = configRows.find(
-        (configRow) => configRow.id === l2costsRow.tracked_tx_id,
+        (configRow) => configRow.id === l2costsRow.configuration_id,
       )
       assert(config?.id, `Cannot found config with id: ${config?.id}`)
       return {
@@ -90,7 +90,7 @@ export class L2CostsRepository extends BaseRepository {
   ) {
     const knex = await this.knex(trx)
     return knex('l2_costs')
-      .where('tracked_tx_id', id)
+      .where('configuration_id', id)
       .andWhere('timestamp', '>=', deleteFromInclusive.toDate())
       .delete()
   }
@@ -107,7 +107,7 @@ export class L2CostsRepository extends BaseRepository {
   ) {
     const knex = await this.knex()
     return knex('l2_costs')
-      .where('tracked_tx_id', configId)
+      .where('configuration_id', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
       .delete()
@@ -117,8 +117,8 @@ export class L2CostsRepository extends BaseRepository {
 
   async getUsedConfigsIds(): Promise<string[]> {
     const knex = await this.knex()
-    const rows = await knex('l2_costs').distinct('tracked_tx_id')
-    return rows.map((row) => row.tracked_tx_id)
+    const rows = await knex('l2_costs').distinct('configuration_id')
+    return rows.map((row) => row.configuration_id)
   }
 
   // #endregion
@@ -128,7 +128,7 @@ function toRow(record: L2CostsRecord): L2CostsRow {
   return {
     timestamp: record.timestamp.toDate(),
     tx_hash: record.txHash,
-    tracked_tx_id: record.trackedTxId.toString(),
+    configuration_id: record.configurationId.toString(),
     gas_used: record.gasUsed,
     gas_price: record.gasPrice.toString(),
     calldata_gas_used: record.calldataGasUsed,
@@ -142,7 +142,7 @@ function toRecord(row: L2CostsRow): L2CostsRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     txHash: row.tx_hash,
-    trackedTxId: row.tracked_tx_id,
+    configurationId: row.configuration_id,
     gasUsed: row.gas_used,
     gasPrice: BigInt(row.gas_price),
     calldataGasUsed: row.calldata_gas_used,

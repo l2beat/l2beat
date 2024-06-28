@@ -52,14 +52,14 @@ export class L2CostRepository {
       .where(
         'id',
         'in',
-        l2costsRows.map((r) => r.tracked_tx_id),
+        l2costsRows.map((r) => r.configuration_id),
       )
       .select(['id', 'properties'])
       .execute()
 
     const resultRows = l2costsRows.map((l2costsRow) => {
       const config = configRows.find(
-        (configRow) => configRow.id === l2costsRow.tracked_tx_id,
+        (configRow) => configRow.id === l2costsRow.configuration_id,
       )
       assert(config?.id, `Cannot found config with id: ${config?.id}`)
       return {
@@ -81,7 +81,7 @@ export class L2CostRepository {
       .deleteFrom('public.l2_costs')
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', '=', id),
+          eb('configuration_id', '=', id),
           eb('timestamp', '>=', deleteFromInclusive.toDate()),
         ]),
       )
@@ -97,7 +97,7 @@ export class L2CostRepository {
       .deleteFrom('public.l2_costs')
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', '=', configId),
+          eb('configuration_id', '=', configId),
           eb('timestamp', '>=', fromInclusive.toDate()),
           eb('timestamp', '<=', toInclusive.toDate()),
         ]),
@@ -110,10 +110,10 @@ export class L2CostRepository {
   async getUsedConfigsIds(): Promise<string[]> {
     const rows = await this.db
       .selectFrom('public.l2_costs')
-      .select(['tracked_tx_id'])
-      .distinctOn('tracked_tx_id')
+      .select(['configuration_id'])
+      .distinctOn('configuration_id')
       .execute()
-    return rows.map((row) => row.tracked_tx_id)
+    return rows.map((row) => row.configuration_id)
   }
 
   // #endregion

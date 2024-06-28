@@ -41,7 +41,7 @@ export class LivenessUpdater implements TxUpdaterInterface {
     return transactions.map((t) => ({
       timestamp: t.blockTimestamp,
       blockNumber: t.blockNumber,
-      trackedTxId: t.id,
+      configurationId: t.id,
       txHash: t.hash,
     }))
   }

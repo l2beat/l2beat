@@ -28,6 +28,9 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
+  await knex('l2_costs').delete()
+  await knex('liveness').delete()
+
   await knex.schema.createTable('tracked_txs_configs', function (table) {
     table.string('id', 8).notNullable().primary()
     table.string('project_id').notNullable()
@@ -41,12 +44,12 @@ export async function down(knex: Knex) {
 
   await knex.schema.alterTable('l2_costs', function (table) {
     table.dropColumn('configuration_id')
-    table.string('tracked_tx_id', 8).notNullable()
+    table.string('tracked_tx_id', 8).notNullable().index()
   })
 
   await knex.schema.alterTable('liveness', function (table) {
     table.dropColumn('configuration_id')
-    table.string('tracked_tx_id', 8).notNullable()
+    table.string('tracked_tx_id', 8).notNullable().index()
   })
 
   await addForeign(

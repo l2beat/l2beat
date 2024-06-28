@@ -48,15 +48,15 @@ export class LivenessRepository {
 
     const livenessRows = await this.db
       .selectFrom('public.liveness')
-      .select(['timestamp', 'tracked_tx_id'])
-      .where('tracked_tx_id', 'in', Array.from(configsMap.keys()))
+      .select(['timestamp', 'configuration_id'])
+      .where('configuration_id', 'in', Array.from(configsMap.keys()))
       .distinctOn('timestamp')
       .orderBy('timestamp', 'desc')
       .execute()
 
     const rows = livenessRows.map((row) => {
-      const subtype = configsMap.get(row.tracked_tx_id)
-      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
       return {
         timestamp: row.timestamp,
         subtype,
@@ -106,10 +106,10 @@ export class LivenessRepository {
 
     const rows = await this.db
       .selectFrom('public.liveness')
-      .select(['timestamp', 'block_number', 'tx_hash', 'tracked_tx_id'])
+      .select(['timestamp', 'block_number', 'tx_hash', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', 'in', Array.from(configsMap.keys())),
+          eb('configuration_id', 'in', Array.from(configsMap.keys())),
           eb('timestamp', '>=', from.toDate()),
           eb('timestamp', '<', to.toDate()),
         ]),
@@ -146,10 +146,10 @@ export class LivenessRepository {
 
     const livenessRows = await this.db
       .selectFrom('public.liveness')
-      .select(['timestamp', 'tx_hash', 'tracked_tx_id'])
+      .select(['timestamp', 'tx_hash', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', 'in', Array.from(configsMap.keys())),
+          eb('configuration_id', 'in', Array.from(configsMap.keys())),
           eb('timestamp', '>=', since.toDate()),
         ]),
       )
@@ -158,8 +158,8 @@ export class LivenessRepository {
       .execute()
 
     const rows = livenessRows.map((row) => {
-      const subtype = configsMap.get(row.tracked_tx_id)
-      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
       return {
         timestamp: row.timestamp,
         subtype,
@@ -199,10 +199,10 @@ export class LivenessRepository {
 
     const livenessRows = await this.db
       .selectFrom('public.liveness')
-      .select(['timestamp', 'tracked_tx_id'])
+      .select(['timestamp', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', 'in', Array.from(configsMap.keys())),
+          eb('configuration_id', 'in', Array.from(configsMap.keys())),
           eb('timestamp', '>=', since.toDate()),
         ]),
       )
@@ -211,8 +211,8 @@ export class LivenessRepository {
       .execute()
 
     const rows = livenessRows.map((row) => {
-      const subtype = configsMap.get(row.tracked_tx_id)
-      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
       return {
         timestamp: row.timestamp,
         subtype,
@@ -246,7 +246,7 @@ export class LivenessRepository {
       .deleteFrom('public.liveness')
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', '=', id.toString()),
+          eb('configuration_id', '=', id.toString()),
           eb('timestamp', '>=', deleteFromInclusive.toDate()),
         ]),
       )

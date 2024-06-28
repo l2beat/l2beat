@@ -34,32 +34,32 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
         timestamp: START.add(-1, 'hours'),
         blockNumber: 12345,
         txHash: '0x1234567890abcdef',
-        trackedTxId: txIdA,
+        configurationId: txIdA,
       },
       {
         timestamp: START.add(-2, 'hours'),
         blockNumber: 12340,
         txHash: '0x1234567890abcdef',
-        trackedTxId: txIdA,
+        configurationId: txIdA,
       },
       {
         timestamp: START.add(-2, 'hours'),
         blockNumber: 12346,
         txHash: '0xabcdef1234567890',
-        trackedTxId: txIdB,
+        configurationId: txIdB,
       },
       {
         timestamp: START.add(-3, 'hours'),
         blockNumber: 12347,
         txHash: '0x12345678901abcdef',
-        trackedTxId: txIdC,
+        configurationId: txIdC,
       },
     ]
 
     const CONFIGS = [
       {
         indexerId: 'indexer',
-        id: DATA[0].trackedTxId,
+        id: DATA[0].configurationId,
         minHeight: START.toNumber(),
         maxHeight: null,
         currentHeight: null,
@@ -71,7 +71,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
       },
       {
         indexerId: 'indexer',
-        id: DATA[2].trackedTxId,
+        id: DATA[2].configurationId,
         minHeight: START.toNumber(),
         maxHeight: null,
         currentHeight: null,
@@ -83,7 +83,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
       },
       {
         indexerId: 'indexer',
-        id: DATA[3].trackedTxId,
+        id: DATA[3].configurationId,
         minHeight: START.toNumber(),
         maxHeight: null,
         currentHeight: null,
@@ -111,13 +111,13 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             timestamp: START.add(-5, 'hours'),
             blockNumber: 12349,
             txHash: '0x1234567890abcdef1',
-            trackedTxId: txIdA,
+            configurationId: txIdA,
           },
           {
             timestamp: START.add(-6, 'hours'),
             blockNumber: 12350,
             txHash: '0xabcdef1234567892',
-            trackedTxId: txIdA,
+            configurationId: txIdA,
           },
         ]
         await repository.addMany(newRows)
@@ -142,7 +142,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             timestamp: START.add(-i, 'hours'),
             blockNumber: i,
             txHash: `0xabcdef1234567892${i}`,
-            trackedTxId: txIdA,
+            configurationId: txIdA,
           })
         }
         await expect(repository.addMany(records)).not.toBeRejected()
@@ -180,25 +180,25 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             timestamp: START,
             blockNumber: 12345,
             txHash: '0x1234567890abcdef',
-            trackedTxId: txIdA,
+            configurationId: txIdA,
           },
           {
             timestamp: START.add(1, 'hours'),
             blockNumber: 12345,
             txHash: '0x1234567890abcdef',
-            trackedTxId: txIdA,
+            configurationId: txIdA,
           },
           {
             timestamp: START.add(2, 'hours'),
             blockNumber: 12346,
             txHash: '0xabcdef1234567890',
-            trackedTxId: txIdA,
+            configurationId: txIdA,
           },
           {
             timestamp: START.add(2, 'hours'),
             blockNumber: 12346,
             txHash: '0xabcdef1234567890',
-            trackedTxId: txIdB,
+            configurationId: txIdB,
           },
         ]
         await repository.addMany(records)
@@ -287,7 +287,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
           await repository.addMany(
             NEW_DATA.map((e) => ({
               ...e,
-              trackedTxId: txIdC,
+              configurationId: txIdC,
             })),
           )
           const result = await repository.getWithSubtypeDistinctTimestamp(
@@ -335,7 +335,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
           await repository.addMany(
             NEW_DATA.map((e) => ({
               ...e,
-              trackedTxId: txIdC,
+              configurationId: txIdC,
             })),
           )
 

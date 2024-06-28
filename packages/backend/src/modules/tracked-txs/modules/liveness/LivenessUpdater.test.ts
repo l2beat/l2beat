@@ -41,13 +41,13 @@ describe(LivenessUpdater.name, () => {
             txHash: transactions[0].hash,
             blockNumber: transactions[0].blockNumber,
             timestamp: transactions[0].blockTimestamp,
-            trackedTxId: transactions[0].id,
+            configurationId: transactions[0].id,
           },
           {
             txHash: transactions[1].hash,
             blockNumber: transactions[1].blockNumber,
             timestamp: transactions[1].blockTimestamp,
-            trackedTxId: transactions[1].id,
+            configurationId: transactions[1].id,
           },
         ],
         TRX,
@@ -86,13 +86,13 @@ describe(LivenessUpdater.name, () => {
           txHash: transactions[0].hash,
           blockNumber: transactions[0].blockNumber,
           timestamp: transactions[0].blockTimestamp,
-          trackedTxId: transactions[0].id,
+          configurationId: transactions[0].id,
         },
         {
           txHash: transactions[1].hash,
           blockNumber: transactions[1].blockNumber,
           timestamp: transactions[1].blockTimestamp,
-          trackedTxId: transactions[1].id,
+          configurationId: transactions[1].id,
         },
       ]
 

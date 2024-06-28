@@ -19,7 +19,7 @@ export interface LivenessRecord {
   timestamp: UnixTime
   blockNumber: number
   txHash: string
-  trackedTxId: TrackedTxId
+  configurationId: TrackedTxId
 }
 
 export interface LivenessRecordWithProjectIdAndSubtype {
@@ -84,14 +84,14 @@ export class LivenessRepository extends BaseRepository {
 
     const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
     const livenessRows = await knex('liveness')
-      .select('timestamp', 'tracked_tx_id')
-      .whereIn('tracked_tx_id', Array.from(configsMap.keys()))
+      .select('timestamp', 'configuration_id')
+      .whereIn('configuration_id', Array.from(configsMap.keys()))
       .distinct('timestamp')
       .orderBy('timestamp', 'desc')
 
     const rows = livenessRows.map((row) => {
-      const subtype = configsMap.get(row.tracked_tx_id)
-      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
       return {
         timestamp: row.timestamp,
         subtype,
@@ -137,8 +137,8 @@ export class LivenessRepository extends BaseRepository {
     const configsMap = new Map<string, string>(projectConfigs)
 
     const rows = await knex('liveness')
-      .select('timestamp', 'block_number', 'tx_hash', 'tracked_tx_id')
-      .whereIn('tracked_tx_id', Array.from(configsMap.keys()))
+      .select('timestamp', 'block_number', 'tx_hash', 'configuration_id')
+      .whereIn('configuration_id', Array.from(configsMap.keys()))
       .andWhere('timestamp', '>=', from.toDate())
       .andWhere('timestamp', '<', to.toDate())
       .orderBy('timestamp', 'asc')
@@ -169,15 +169,15 @@ export class LivenessRepository extends BaseRepository {
     const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
 
     const livenessRows = await knex('liveness')
-      .select('timestamp', 'tracked_tx_id', 'tx_hash')
-      .whereIn('tracked_tx_id', Array.from(configsMap.keys()))
+      .select('timestamp', 'configuration_id', 'tx_hash')
+      .whereIn('configuration_id', Array.from(configsMap.keys()))
       .andWhere('timestamp', '>=', since.toDate())
       .distinct('timestamp')
       .orderBy('timestamp', 'desc')
 
     const rows = livenessRows.map((row) => {
-      const subtype = configsMap.get(row.tracked_tx_id)
-      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
       return {
         timestamp: row.timestamp,
         subtype,
@@ -214,15 +214,15 @@ export class LivenessRepository extends BaseRepository {
     const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
 
     const livenessRows = await knex('liveness')
-      .select('timestamp', 'tracked_tx_id')
-      .whereIn('tracked_tx_id', Array.from(configsMap.keys()))
+      .select('timestamp', 'configuration_id')
+      .whereIn('configuration_id', Array.from(configsMap.keys()))
       .andWhere('timestamp', '>=', since.toDate())
       .distinct('timestamp')
       .orderBy('timestamp', 'desc')
 
     const rows = livenessRows.map((row) => {
-      const subtype = configsMap.get(row.tracked_tx_id)
-      assert(subtype, `Cannot find subtype for ${row.tracked_tx_id}`)
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
       return {
         timestamp: row.timestamp,
         subtype,
@@ -247,7 +247,7 @@ export class LivenessRepository extends BaseRepository {
   ) {
     const knex = await this.knex(trx)
     return knex('liveness')
-      .where('tracked_tx_id', id)
+      .where('configuration_id', id)
       .andWhere('timestamp', '>=', deleteFromInclusive.toDate())
       .delete()
   }
@@ -264,7 +264,7 @@ export class LivenessRepository extends BaseRepository {
   ) {
     const knex = await this.knex()
     return knex('liveness')
-      .where('tracked_tx_id', configId)
+      .where('configuration_id', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
       .delete()
@@ -274,8 +274,8 @@ export class LivenessRepository extends BaseRepository {
 
   async getUsedConfigsIds(): Promise<string[]> {
     const knex = await this.knex()
-    const rows = await knex('liveness').distinct('tracked_tx_id')
-    return rows.map((row) => row.tracked_tx_id)
+    const rows = await knex('liveness').distinct('configuration_id')
+    return rows.map((row) => row.configuration_id)
   }
 
   // #endregion
@@ -286,7 +286,7 @@ function toRecord(row: LivenessRow): LivenessRecord {
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    trackedTxId: row.tracked_tx_id,
+    configurationId: row.configuration_id,
   }
 }
 
@@ -313,6 +313,6 @@ function toRow(record: LivenessRecord): LivenessRow {
     timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
     tx_hash: record.txHash,
-    tracked_tx_id: record.trackedTxId.toString(),
+    configuration_id: record.configurationId.toString(),
   }
 }
