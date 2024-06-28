@@ -8,6 +8,7 @@ const baseDiscovery = new ProjectDiscovery('zklinknova', 'base')
 const mantapacificDiscovery = new ProjectDiscovery('zklinknova', 'mantapacific')
 const mantleDiscovery = new ProjectDiscovery('zklinknova', 'mantle')
 const scrollDiscovery = new ProjectDiscovery('zklinknova', 'scroll')
+const blastDiscovery = new ProjectDiscovery('zklinknova', 'blast')
 // const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 
 const optimismUpgradability = {
@@ -37,6 +38,11 @@ const mantleUpgradability = {
 
 const scrollUpgradability = {
   upgradableBy: ['ScrollOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const blastUpgradability = {
+  upgradableBy: ['BlastOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -340,7 +346,7 @@ export const zklinknova: Layer3 = {
         }),
         optimismDiscovery.getContractDetails('OptimismL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and OP's L2CrossDomainMessenger.",
+            "High level interface between the local zkLink contract and OP's message service.",
           ...optimismUpgradability,
         }),
       ],
@@ -357,7 +363,7 @@ export const zklinknova: Layer3 = {
         }),
         arbitrumDiscovery.getContractDetails('ArbitrumL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and Arbitrum's L2 cross domain messenger contract.",
+            "High level interface between the local zkLink contract and Arbitrum's message service.",
           ...arbitrumUpgradability,
         }),
       ],
@@ -374,7 +380,7 @@ export const zklinknova: Layer3 = {
         }),
         baseDiscovery.getContractDetails('BaseL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and Base's L2CrossDomainMessenger.",
+            "High level interface between the local zkLink contract and Base's message service.",
           ...baseUpgradability,
         }),
       ],
@@ -391,7 +397,7 @@ export const zklinknova: Layer3 = {
         }),
         mantapacificDiscovery.getContractDetails('MantaPacificL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and Manta Pacific's L2CrossDomainMessenger.", // TODO: check name of messenger contract
+            "High level interface between the local zkLink contract and Manta Pacific's message service.",
           ...mantapacificUpgradability,
         }),
       ],
@@ -408,7 +414,7 @@ export const zklinknova: Layer3 = {
         }),
         mantleDiscovery.getContractDetails('MantleL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and Mantle's L2CrossDomainMessenger.",
+            "High level interface between the local zkLink contract and Mantle's message service.",
           ...mantleUpgradability,
         }),
       ],
@@ -425,8 +431,25 @@ export const zklinknova: Layer3 = {
         }),
         scrollDiscovery.getContractDetails('ScrollL2Gateway', {
           description:
-            "High level interface between the local zkLink contract and Scroll's L2CrossDomainMessenger.",
+            "High level interface between the local zkLink contract and Scroll's message service.",
           ...scrollUpgradability,
+        }),
+      ],
+      blast: [
+        blastDiscovery.getContractDetails('L1ERC20Bridge', {
+          description:
+            'Main entry point for depositing ERC20 tokens from Blast to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
+          ...blastUpgradability,
+        }),
+        blastDiscovery.getContractDetails('zkLink', {
+          description:
+            "Main messaging contract on Blast and ETH escrow. Outgoing messages (like deposits) are sent through the BlastL2Gateway which ultimately makes use of Blast's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
+          ...blastUpgradability,
+        }),
+        blastDiscovery.getContractDetails('BlastL2Gateway', {
+          description:
+            "High level interface between the local zkLink contract and Blast's message service.",
+          ...blastUpgradability,
         }),
       ],
     },
