@@ -8,7 +8,13 @@ Generated with discovered.json: 0xcdd7c3d34bd4f5e17546710d4116c89f578c8d24
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+ChallengeManager.sol: added function to make challengeManager aware of the new OneStepProver contracts after updating to 4844.
+
+OneStepProverHostIo.sol: added support for reading preimage from blobs.
+
+SequencerInbox.sol: Added support for blobs posting (addSequencerL2BatchFromBlobs), and a for a batch poster manager that has the ability to change the batch poster addresses.
+
+It is not posting data to blobs yet.
 
 ## Watched changes
 
