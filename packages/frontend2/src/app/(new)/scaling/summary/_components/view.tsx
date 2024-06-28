@@ -50,22 +50,22 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
           <TabsList>
             <TabsTrigger value="layer2s" className="gap-1.5">
               <span className="md:hidden">Layer2s</span>
-              <span className="hidden md:inline">Layer 2 projects</span>
+              <span className="max-md:hidden">Layer 2 projects</span>
               <TabCountBadge>{layer2sProjects.length}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="layer3s" className="gap-1.5">
               <span className="md:hidden">Layer 3s</span>
-              <span className="hidden md:inline">Layer 3 projects</span>
+              <span className="max-md:hidden">Layer 3 projects</span>
               <TabCountBadge>{layer3sProjects.length}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="upcoming" className="gap-1.5">
               <span className="md:hidden">Upcoming</span>
-              <span className="hidden md:inline">Upcoming projects</span>
+              <span className="max-md:hidden">Upcoming projects</span>
               <TabCountBadge>{upcomingProjects.length}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="archived" className="gap-1.5">
               <span className="md:hidden">Archived</span>
-              <span className="hidden md:inline">Archived projects</span>
+              <span className="max-md:hidden">Archived projects</span>
               <TabCountBadge>{archivedProjects.length}</TabCountBadge>
             </TabsTrigger>
           </TabsList>
