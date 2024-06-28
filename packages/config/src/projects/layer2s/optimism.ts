@@ -484,22 +484,24 @@ export const optimism: Layer2 = {
       'Address collecting sequencer, base and L1 fees from L2.',
     ),
   ],
-  nativePermissions: [
-    l2Discovery.contractAsPermissioned(
-      l2Discovery.getContract('L2ProxyAdmin'),
-      'Admin of L2CrossDomainMessenger, GasPriceOracle, L2StandardBridge, SequencerFeeVault, OptimismMintableERC20Factory, L1BlockNumber, L2ERC721Bridge, L1Block, L1ToL2MessagePasser, OptimismMintableERC721Factory, BaseFeeVault, L1FeeVault, SchemaRegistry and EAS contracts.',
-    ),
-    {
-      name: 'L2ProxyAdminOwner',
-      description:
-        'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned as the (aliased) L1 ProxyAdminOwner, meaning that upgrades has to be done through the L1 -> L2 bridge.',
-      accounts: [l2Discovery.getPermissionedAccount('L2ProxyAdmin', 'owner')],
-    },
-    ...l2Discovery.getMultisigPermission(
-      'MintManagerOwner',
-      'Owner of the MintManager. It can change the OP token owner to a different MintManager and therefore change the inflation policy.',
-    ),
-  ],
+  nativePermissions: {
+    optimism: [
+      l2Discovery.contractAsPermissioned(
+        l2Discovery.getContract('L2ProxyAdmin'),
+        'Admin of L2CrossDomainMessenger, GasPriceOracle, L2StandardBridge, SequencerFeeVault, OptimismMintableERC20Factory, L1BlockNumber, L2ERC721Bridge, L1Block, L1ToL2MessagePasser, OptimismMintableERC721Factory, BaseFeeVault, L1FeeVault, SchemaRegistry and EAS contracts.',
+      ),
+      {
+        name: 'L2ProxyAdminOwner',
+        description:
+          'Owner of the L2ProxyAdmin. It can update the L2 bridge implementation potentially gaining access to all funds, and change any L2 system component. Assigned as the (aliased) L1 ProxyAdminOwner, meaning that upgrades has to be done through the L1 -> L2 bridge.',
+        accounts: [l2Discovery.getPermissionedAccount('L2ProxyAdmin', 'owner')],
+      },
+      ...l2Discovery.getMultisigPermission(
+        'MintManagerOwner',
+        'Owner of the MintManager. It can change the OP token owner to a different MintManager and therefore change the inflation policy.',
+      ),
+    ],
+  },
   contracts: {
     addresses: [
       discovery.getContractDetails('OptimismPortal', {

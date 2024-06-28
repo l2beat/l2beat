@@ -83,7 +83,7 @@ export interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: ScalingProjectPermission[]
+  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]

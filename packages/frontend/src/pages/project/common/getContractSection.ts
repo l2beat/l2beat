@@ -517,7 +517,7 @@ function areAllAddressesUnverified(
   })
 }
 
-function slugToDisplayName(slug: string): string {
+export function slugToDisplayName(slug: string): string {
   if (slug === 'ethereum') {
     return 'Ethereum'
   }
