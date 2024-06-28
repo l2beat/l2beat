@@ -14,29 +14,22 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await dropForeign(knex, 'l2_costs', 'tracked_tx_id')
-  await dropForeign(knex, 'liveness', 'tracked_tx_id')
-
   await knex.schema.alterTable('l2_costs', function (table) {
-    table.string('tracked_tx_id', 12).notNullable().alter()
+    table.dropColumn('tracked_tx_id')
+    table.string('configuration_id', 12).notNullable()
   })
 
   await knex.schema.alterTable('liveness', function (table) {
-    table.string('tracked_tx_id', 12).notNullable().alter()
+    table.dropColumn('tracked_tx_id')
+    table.string('configuration_id', 12).notNullable()
   })
 
-  await knex.schema.alterTable('tracked_txs_configs', function (table) {
-    table.dropPrimary()
-  })
   await knex.schema.dropTable('tracked_txs_configs')
 }
 
 export async function down(knex: Knex) {
-  await addForeign(knex, 'l2_costs', 'tracked_tx_id', 'tracked_txs_configs')
-  await addForeign(knex, 'liveness', 'tracked_tx_id', 'tracked_txs_configs')
-
   await knex.schema.createTable('tracked_txs_configs', function (table) {
-    table.string('id').notNullable().primary()
+    table.string('id', 8).notNullable().primary()
     table.string('project_id').notNullable()
     table.string('type').notNullable()
     table.string('subtype')
@@ -47,22 +40,29 @@ export async function down(knex: Knex) {
   })
 
   await knex.schema.alterTable('l2_costs', function (table) {
-    table.string('tracked_tx_id', 8).notNullable().alter()
+    table.dropColumn('configuration_id')
+    table.string('tracked_tx_id', 8).notNullable()
   })
 
   await knex.schema.alterTable('liveness', function (table) {
-    table.string('tracked_tx_id', 8).notNullable().alter()
+    table.dropColumn('configuration_id')
+    table.string('tracked_tx_id', 8).notNullable()
   })
 
-  const rowsToFix = await knex('tracked_txs_configs').whereRaw(
-    'until_timestamp_exclusive < last_synced_timestamp',
+  await addForeign(
+    knex,
+    'liveness',
+    'tracked_tx_id',
+    'tracked_txs_configs',
+    'id',
   )
-
-  for (const row of rowsToFix) {
-    await knex('tracked_txs_configs')
-      .where('id', row.id)
-      .update({ last_synced_timestamp: row.until_timestamp_exclusive })
-  }
+  await addForeign(
+    knex,
+    'l2_costs',
+    'tracked_tx_id',
+    'tracked_txs_configs',
+    'id',
+  )
 }
 
 async function addForeign(
@@ -70,7 +70,7 @@ async function addForeign(
   tableName: string,
   columnName: string,
   foreignTable: string,
-  foreignKey = 'id',
+  foreignKey: string,
 ) {
   await knex.schema.alterTable(tableName, (table) => {
     table
@@ -79,11 +79,5 @@ async function addForeign(
       .inTable(foreignTable)
       .onDelete('CASCADE')
       .onUpdate('CASCADE')
-  })
-}
-
-async function dropForeign(knex: Knex, tableName: string, columnName: string) {
-  await knex.schema.alterTable(tableName, (table) => {
-    table.dropForeign([columnName])
   })
 }
