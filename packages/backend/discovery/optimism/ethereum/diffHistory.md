@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x786e28ccf88eb1bd88b25e8315ff6d8a7cd53296
+
+# Diff at Fri, 28 Jun 2024 07:31:54 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@555efdd96fadc389c2c70beacf820125fbb25a7d block: 20175040
+- current block number: 20188703
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x229047fed2591dbec1eF1118d64F7aF3dB9EB290) {
+    +++ description: None
+      values.owner:
+-        "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "0x847B5c174615B1B7fDF770882256e2D3E95b9D92"
+    }
+```
+
 Generated with discovered.json: 0x19ad81c5f5a060678a0f05245c18f2d580870d4a
 
 # Diff at Tue, 11 Jun 2024 15:10:44 GMT:
