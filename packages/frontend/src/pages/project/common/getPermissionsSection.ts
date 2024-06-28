@@ -15,6 +15,7 @@ import {
   UsedInProject,
 } from '../components/sections/common/ContractEntry'
 import { ProjectDetailsPermissionsSection } from '../components/sections/types'
+import { slugToDisplayName } from './getContractSection'
 import { getUsedInProjects } from './getUsedInProjects'
 
 export function getPermissionsSection(
@@ -30,7 +31,7 @@ export function getPermissionsSection(
     manuallyVerifiedContracts,
     isUnderReview: project.isUnderReview,
     permissions: [],
-    nativePermissions: [],
+    nativePermissions: {},
   }
 
   if (
@@ -49,8 +50,15 @@ export function getPermissionsSection(
       permissions: (project.permissions ?? []).flatMap((p) =>
         toTechnologyContract(project, p),
       ),
-      nativePermissions: (project.nativePermissions ?? []).flatMap((p) =>
-        toTechnologyContract(project, p),
+      nativePermissions: Object.fromEntries(
+        Object.entries(project.nativePermissions ?? {}).map(
+          ([slug, permissions]) => {
+            return [
+              slugToDisplayName(slug),
+              permissions.flatMap((p) => toTechnologyContract(project, p)),
+            ]
+          },
+        ),
       ),
     }
   )

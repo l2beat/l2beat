@@ -398,7 +398,7 @@ export const scroll: Layer2 = {
       {
         title: 'Prover Architecture',
         description:
-          'The prover code can be found [here](https://github.com/scroll-tech/scroll-prover).',
+          'The prover code can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/prover).',
       },
       {
         title: 'ZK Circuits',

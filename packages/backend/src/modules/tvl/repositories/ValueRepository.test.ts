@@ -1,7 +1,7 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { Logger } from '@l2beat/backend-tools'
 import { describeDatabase } from '../../../test/database'
 import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
 import { ValueRecord, ValueRepository } from './ValueRepository'
