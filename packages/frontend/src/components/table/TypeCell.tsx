@@ -10,9 +10,9 @@ import {
   PolygonIcon,
   StarkWareIcon,
   StarknetIcon,
+  TaikoIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
-  TaikoIcon,
 } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
