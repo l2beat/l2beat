@@ -22,7 +22,7 @@ export function SummaryUpcomingTable({ items }: Props) {
     initialState: {
       sorting: [
         {
-          id: 'index',
+          id: '#',
           desc: false,
         },
       ],
