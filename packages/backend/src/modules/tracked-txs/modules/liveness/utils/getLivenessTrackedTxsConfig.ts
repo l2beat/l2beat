@@ -3,7 +3,7 @@ import {
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { TrackedTxsConfig } from '../../types/TrackedTxsConfig'
+import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 
 export type LivenessTrackedTxsConfig = {
   entries: LivenessTrackedTxsConfigEntry[]

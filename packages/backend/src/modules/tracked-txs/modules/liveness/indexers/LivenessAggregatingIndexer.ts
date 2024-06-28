@@ -9,7 +9,6 @@ import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { getProjectsToSync } from '../../utils/getProjectsToSync'
 import {
   AggregatedLivenessRange,
   AggregatedLivenessRecord,
@@ -19,17 +18,15 @@ import {
   LivenessRecordWithSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
+import { Interval, calculateIntervals } from '../utils/calculateIntervals'
+import { getProjectsToSync } from '../utils/getProjectsToSync'
+import { groupByType } from '../utils/groupByType'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   livenessRepository: LivenessRepository
   aggregatedLivenessRepository: AggregatedLivenessRepository
   projects: Project[]
-}
-
-type Interval = {
-  record: LivenessRecordWithSubtype
-  duration: number
 }
 
 type Stats = {
@@ -104,7 +101,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         )
 
       if (livenessRecords.length === 0) {
-        this.logger.warn('No records found for project', {
+        this.logger.debug('No records found for project', {
           projectId: project.projectId,
         })
         continue
@@ -116,7 +113,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
       })
 
       const [batchSubmissions, stateUpdates, proofSubmissions] =
-        this.groupByType(livenessRecords)
+        groupByType(livenessRecords)
 
       aggregatedRecords.push(
         ...this.getAggregatedRecords(
@@ -157,7 +154,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     syncTo: UnixTime,
     ranges: AggregatedLivenessRange[],
   ): AggregatedLivenessRecord[] {
-    const intervals = this.calculateIntervals(livenessRecords)
+    const intervals = calculateIntervals(livenessRecords)
 
     const aggregatedRecords: AggregatedLivenessRecord[] = []
 
@@ -231,47 +228,5 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     )
 
     return result
-  }
-
-  calculateIntervals(records: LivenessRecordWithSubtype[]): Interval[] {
-    const intervals: Interval[] = []
-    for (let i = 0; i < records.length - 1; i++) {
-      intervals.push({
-        record: records[i],
-        duration:
-          records[i].timestamp.toNumber() - records[i + 1].timestamp.toNumber(),
-      })
-    }
-    return intervals
-  }
-
-  groupByType(
-    records: LivenessRecordWithSubtype[],
-  ): [
-    LivenessRecordWithSubtype[],
-    LivenessRecordWithSubtype[],
-    LivenessRecordWithSubtype[],
-  ] {
-    const batchSubmissions: LivenessRecordWithSubtype[] = []
-    const stateUpdates: LivenessRecordWithSubtype[] = []
-    const proofSubmissions: LivenessRecordWithSubtype[] = []
-
-    for (const record of records) {
-      switch (record.subtype) {
-        case 'batchSubmissions':
-          batchSubmissions.push(record)
-          break
-        case 'stateUpdates':
-          stateUpdates.push(record)
-          break
-        case 'proofSubmissions':
-          proofSubmissions.push(record)
-          break
-        default:
-          assertUnreachable(record.subtype)
-      }
-    }
-
-    return [batchSubmissions, stateUpdates, proofSubmissions]
   }
 }

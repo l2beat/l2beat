@@ -24,8 +24,10 @@ import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/Agg
 import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2CostsPricesRepository'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
+import { AnomaliesIndexer } from './modules/liveness/indexers/AnomaliesIndexer'
 import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
 import { AggregatedLivenessRepository } from './modules/liveness/repositories/AggregatedLivenessRepository'
+import { AnomaliesRepository } from './modules/liveness/repositories/AnomaliesRepository'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
 
@@ -142,6 +144,16 @@ export function createTrackedTxsModule(
     logger,
   })
 
+  const anomaliesIndexer = new AnomaliesIndexer({
+    livenessRepository: peripherals.getRepository(LivenessRepository),
+    anomaliesRepository: peripherals.getRepository(AnomaliesRepository),
+    projects: config.projects,
+    parents: [trackedTxsIndexer],
+    indexerService,
+    minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
+    logger,
+  })
+
   const start = async () => {
     logger = logger.for('TrackedTxsModule')
     logger.info('Starting...')
@@ -154,6 +166,7 @@ export function createTrackedTxsModule(
     await l2CostPricesIndexer?.start()
     await l2CostsAggregatorIndexer?.start()
     await livenessAggregatingIndexer.start()
+    await anomaliesIndexer.start()
   }
 
   return {

@@ -1,4 +1,4 @@
-import { Project } from '../../../../model/Project'
+import { Project } from '../../../../../model/Project'
 import { getLivenessTrackedTxsConfig } from './getLivenessTrackedTxsConfig'
 
 export function getProjectsToSync(projects: Project[]): Project[] {
