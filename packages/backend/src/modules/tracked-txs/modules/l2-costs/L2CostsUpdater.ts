@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
+import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { TrackedTxResult } from '../../types/model'
-import { TrackedTxId } from '../../utils/createTrackedTxConfigId'
 import {
   L2CostsRecord,
   L2CostsRepository,
