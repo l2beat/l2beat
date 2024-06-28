@@ -30,7 +30,8 @@
         "gnosis",
         "sepolia",
         "scroll",
-        "mantapacific"
+        "mantapacific",
+        "mantle"
       ]
     },
     "initialAddresses": {
