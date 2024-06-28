@@ -9,11 +9,11 @@ import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
+import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { FinalityIndexer } from './FinalityIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { LoopringFinalityAnalyzer } from './analyzers/LoopringFinalityAnalyzer'
@@ -45,12 +45,14 @@ export function createFinalityModule(
     return
   }
 
-  const finalityController = new FinalityController(
-    peripherals.getRepository(LivenessRepository),
-    peripherals.getRepository(FinalityRepository),
-    peripherals.getRepository(TrackedTxsConfigsRepository),
-    config.finality.configurations,
-  )
+  const finalityController = new FinalityController({
+    finalityRepository: peripherals.getRepository(FinalityRepository),
+    indexerConfigurationRepository: peripherals.getRepository(
+      IndexerConfigurationRepository,
+    ),
+    livenessRepository: peripherals.getRepository(LivenessRepository),
+    projects: config.finality.configurations,
+  })
   const finalityRouter = createFinalityRouter(finalityController)
 
   const ethereumClient = peripherals.getClient(RpcClient, {

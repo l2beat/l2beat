@@ -1,27 +1,28 @@
 import { assert } from '@l2beat/backend-tools'
-import { FinalityApiResponse } from '@l2beat/shared-pure'
+import { FinalityApiResponse, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
-
 import { FinalityProjectConfig } from '../../../config/features/finality'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
+export interface FinalityControllerDeps {
+  livenessRepository: LivenessRepository
+  finalityRepository: FinalityRepository
+  indexerConfigurationRepository: IndexerConfigurationRepository
+  projects: FinalityProjectConfig[]
+}
+
 export class FinalityController {
-  constructor(
-    private readonly livenessRepository: LivenessRepository,
-    private readonly finalityRepository: FinalityRepository,
-    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
-    private readonly projects: FinalityProjectConfig[],
-  ) {}
+  constructor(private readonly $: FinalityControllerDeps) {}
 
   async getFinality(): Promise<FinalityApiResponse> {
     const projects: FinalityApiResponse['projects'] = {}
 
     const [OPStackProjects, otherProjects] = partition(
-      this.projects,
+      this.$.projects,
       (p) => p.type === 'OPStack',
     )
     const OPStackFinality = await this.getOPStackFinality(OPStackProjects)
@@ -38,7 +39,7 @@ export class FinalityController {
   ): Promise<FinalityApiResponse['projects']> {
     const projectIds = projects.map((p) => p.projectId)
     const records =
-      await this.finalityRepository.getLatestGroupedByProjectId(projectIds)
+      await this.$.finalityRepository.getLatestGroupedByProjectId(projectIds)
 
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),
@@ -107,17 +108,33 @@ export class FinalityController {
     projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const result: FinalityApiResponse['projects'] = {}
+    const configurations = (
+      await this.$.indexerConfigurationRepository.getSavedConfigurations(
+        'tracked_txs_indexer',
+      )
+    ).map((c) => ({
+      ...c,
+      properties: JSON.parse(c.properties),
+    }))
+
     await Promise.all(
       projects.map(async (project) => {
-        const syncedUntil =
-          await this.trackedTxsConfigsRepository.findLatestSyncedTimestampByProjectIdAndSubtype(
-            project.projectId,
-            'batchSubmissions',
-          )
+        const syncedUntil = new UnixTime(
+          Math.max(
+            ...configurations
+              .filter(
+                (c) =>
+                  c.properties.projectId === project.projectId &&
+                  c.properties.subtype === 'batchSubmissions',
+              )
+              .map((c) => c.currentHeight)
+              .filter((h): h is number => h !== null),
+          ),
+        )
 
         if (!syncedUntil) return
 
-        const records = await this.livenessRepository.getByProjectIdAndType(
+        const records = await this.$.livenessRepository.getByProjectIdAndType(
           project.projectId,
           'batchSubmissions',
           syncedUntil.add(-1, 'days'),
