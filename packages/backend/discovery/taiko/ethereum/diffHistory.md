@@ -8,7 +8,7 @@ Generated with discovered.json: 0x1a9d9e0714596a68f80cbf3b326f615b15bcfa66
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Update to bridge implementation, main changes include a new calculation of messageCalldataCost, used to calculate minimal gas limit required for sending bridge messages. Also removed SafeCastUpgradeable library.
 
 ## Watched changes
 
