@@ -22,7 +22,7 @@ model CurrentPrice {
 
 model Stake {
   id             String @id @db.VarChar(255)
-  totalStake     BigInt  
+  totalStake     BigInt
   thresholdStake BigInt
 
   @@schema("public")
@@ -304,16 +304,15 @@ model IndexerState {
 }
 
 model L2Cost {
-  trackedTxId       String           @map("tracked_tx_id") @db.VarChar(8)
-  txHash            String           @unique(map: "l2_costs_tx_hash_unique") @map("tx_hash") @db.VarChar(255)
-  timestamp         DateTime         @map("timestamp") @db.Timestamp(6)
-  gasUsed           Int              @map("gas_used")
-  gasPrice          BigInt           @map("gas_price")
-  calldataGasUsed   Int              @map("calldata_gas_used")
-  calldataLength    Int              @map("calldata_length")
-  blobGasUsed       Int?             @map("blob_gas_used")
-  blobGasPrice      BigInt?          @map("blob_gas_price")
-  trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
+  trackedTxId     String   @map("tracked_tx_id") @db.VarChar(12)
+  txHash          String   @unique(map: "l2_costs_tx_hash_unique") @map("tx_hash") @db.VarChar(255)
+  timestamp       DateTime @map("timestamp") @db.Timestamp(6)
+  gasUsed         Int      @map("gas_used")
+  gasPrice        BigInt   @map("gas_price")
+  calldataGasUsed Int      @map("calldata_gas_used")
+  calldataLength  Int      @map("calldata_length")
+  blobGasUsed     Int?     @map("blob_gas_used")
+  blobGasPrice    BigInt?  @map("blob_gas_price")
 
   @@index([trackedTxId], map: "l2_costs_tracked_tx_id_index")
   @@map("l2_costs")
@@ -329,11 +328,10 @@ model L2CostPrice {
 }
 
 model Liveness {
-  timestamp         DateTime         @map("timestamp") @db.Timestamp(6)
-  blockNumber       Int              @map("block_number")
-  txHash            String           @map("tx_hash") @db.VarChar(255)
-  trackedTxId       String           @map("tracked_tx_id") @db.VarChar(8)
-  trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
+  timestamp   DateTime @map("timestamp") @db.Timestamp(6)
+  blockNumber Int      @map("block_number")
+  txHash      String   @map("tx_hash") @db.VarChar(255)
+  trackedTxId String   @map("tracked_tx_id") @db.VarChar(12)
 
   @@id(trackedTxId, map: "liveness_tracked_tx_id_index")
   @@map("liveness")
@@ -358,22 +356,6 @@ model SequenceProcessor {
   syncedOnce    Boolean  @default(false) @map("synced_once")
 
   @@map("sequence_processor")
-  @@schema("public")
-}
-
-model TrackedTxsConfig {
-  id                      String     @id @map("id") @db.VarChar(255)
-  projectId               String     @map("project_id") @db.VarChar(255)
-  type                    String     @map("type") @db.VarChar(255)
-  subtype                 String?    @map("subtype") @db.VarChar(255)
-  debugInfo               String     @map("debug_info") @db.VarChar(255)
-  sinceTimestampInclusive DateTime?  @map("since_timestamp_inclusive") @db.Timestamp(6)
-  untilTimestampExclusive DateTime?  @map("until_timestamp_exclusive") @db.Timestamp(6)
-  lastSyncedTimestamp     DateTime?  @map("last_synced_timestamp") @db.Timestamp(6)
-  l2Costs                 L2Cost[]
-  liveness                Liveness[]
-
-  @@map("tracked_txs_configs")
   @@schema("public")
 }
 
