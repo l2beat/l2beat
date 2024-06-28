@@ -10,12 +10,12 @@ import {
 export function ProjectBadge({ id }: { id: BadgeId }) {
   const meta = badges[id]
   return (
-    <Tooltip>
+    <Tooltip className="flex-shrink-0">
       <TooltipTrigger>
         <img
           src={`/images/badges/${id}.png`}
           alt={`${meta.display.name} badge`}
-          className="h-[4.5rem] w-auto"
+          className="h-16 w-auto lg:h-[4.5rem]"
         />
       </TooltipTrigger>
       <TooltipContent>{meta.display.name}</TooltipContent>

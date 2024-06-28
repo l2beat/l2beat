@@ -15,7 +15,7 @@ import { RiskValues } from '../../../../utils/risks/types'
 import { getUnderReviewText } from '../../common/getUnderReviewText'
 import { ProjectLink } from '../../types'
 import { ArchivedBar } from './ArchivedBar'
-import { ProjectBadge } from './ProjectBadge'
+import { ProjectAboutSection } from './ProjectAboutSection'
 import { ProjectHeader } from './ProjectHeader'
 import { UnderReviewBar } from './UnderReviewBar'
 import { UpcomingBar } from './UpcomingBar'
@@ -89,8 +89,12 @@ export function DetailsHeader(props: HeaderProps) {
                 className="w-full items-center justify-center p-2.5 text-xs md:text-base"
               />
             )}
+            <ProjectAboutSection
+              className="mt-2 px-0 md:hidden"
+              description={props.description}
+              badges={props.badges}
+            />
           </div>
-
           <div className="my-2 hidden w-full md:block">
             <DesktopProjectLinks projectLinks={props.links} />
           </div>
@@ -130,33 +134,12 @@ export function DetailsHeader(props: HeaderProps) {
           </div>
         )}
       </header>
-      <HorizontalSeparator className="hidden md:mt-6 md:block" />
-      <div
-        className={cn(
-          'mt-6 flex flex-col gap-4 px-4 md:px-0',
-          (props.description?.length ?? 0) < 260 && 'lg:flex-row lg:gap-8',
-        )}
-      >
-        {props.badges && (
-          <div className="flex shrink-0 flex-col gap-3 lg:min-w-[288px]">
-            <h2 className="font-medium text-gray-600 text-xs uppercase">
-              Badges
-            </h2>
-            <div className="flex flex-wrap gap-1">
-              {props.badges.map((id) => (
-                <ProjectBadge id={id} />
-              ))}
-            </div>
-          </div>
-        )}
-        {props.description && (
-          <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
-            <h2 className="font-medium text-gray-600 text-xs uppercase">
-              About
-            </h2>
-            <p>{props.description}</p>
-          </div>
-        )}
+      <div className="hidden md:block">
+        <HorizontalSeparator className="hidden md:mt-6 md:block" />
+        <ProjectAboutSection
+          description={props.description}
+          badges={props.badges}
+        />
       </div>
       <HorizontalSeparator className="hidden md:mt-6 md:block" />
     </>
