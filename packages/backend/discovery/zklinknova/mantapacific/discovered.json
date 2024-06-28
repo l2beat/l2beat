@@ -1,12 +1,12 @@
 {
   "name": "zklinknova",
   "chain": "mantapacific",
-  "blockNumber": 2533581,
-  "configHash": "0xfc08f67278b67bef3ae3a13479024469f621138caab3c22fc94924d9de652f9c",
+  "blockNumber": 2533926,
+  "configHash": "0x454c2823fa29e2c1d471ca60fffcf8c069dddab07f90a9e35a74cc754653e583",
   "version": 8,
   "contracts": [
     {
-      "name": "ProxyAdmin",
+      "name": "MantaProxyAdmin",
       "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
       "upgradeability": {
         "type": "immutable"
@@ -14,7 +14,8 @@
       "values": {
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L1ERC20Bridge",
@@ -33,7 +34,7 @@
       "derivedName": "L1ERC20Bridge"
     },
     {
-      "name": "",
+      "name": "MantaOwner",
       "address": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
       "unverified": true,
       "upgradeability": {
@@ -42,7 +43,8 @@
         "modules": [],
         "threshold": "6 of 8 (75%)"
       },
-      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"]
+      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "derivedName": ""
     },
     {
       "name": "zkLink",

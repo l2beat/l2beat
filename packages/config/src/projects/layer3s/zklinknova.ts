@@ -6,6 +6,7 @@ const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
 const baseDiscovery = new ProjectDiscovery('zklinknova', 'base')
 const mantapacificDiscovery = new ProjectDiscovery('zklinknova', 'mantapacific')
+const mantleDiscovery = new ProjectDiscovery('zklinknova', 'mantle')
 // const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 
 const optimismUpgradability = {
@@ -25,6 +26,11 @@ const baseUpgradability = {
 
 const mantapacificUpgradability = {
   upgradableBy: ['MantaPacificOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const mantleUpgradability = {
+  upgradableBy: ['MantleOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -381,6 +387,23 @@ export const zklinknova: Layer3 = {
           description:
             "High level interface between the local zkLink contract and Manta Pacific's L2CrossDomainMessenger.", // TODO: check name of messenger contract
           ...mantapacificUpgradability,
+        }),
+      ],
+      mantle: [
+        mantleDiscovery.getContractDetails('L1ERC20Bridge', {
+          description:
+            'Main entry point for depositing ERC20 tokens from Mantle to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
+          ...mantleUpgradability,
+        }),
+        mantleDiscovery.getContractDetails('zkLink', {
+          description:
+            "Main messaging contract on Mantle and ETH escrow. Outgoing messages (like deposits) are sent through the MantleL2Gateway which ultimately makes use of Mantle's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
+          ...mantleUpgradability,
+        }),
+        mantleDiscovery.getContractDetails('MantleL2Gateway', {
+          description:
+            "High level interface between the local zkLink contract and Mantle's L2CrossDomainMessenger.",
+          ...mantleUpgradability,
         }),
       ],
     },

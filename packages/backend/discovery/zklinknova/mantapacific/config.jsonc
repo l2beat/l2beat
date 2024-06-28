@@ -9,9 +9,9 @@
   "names": {
     "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657": "zkLink",
     "0x44a65dc12865A1e5249b45b4868f32b0E37168FF": "L1ERC20Bridge",
-    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "MantaL2Gateway"
-    // "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C": "MantaOwner",
-    // "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE": "MantaProxyAdmin"
+    "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": "MantaL2Gateway",
+    "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3": "MantaOwner",
+    "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": "MantaProxyAdmin"
   },
   "overrides": {
     "MantaL2Gateway": {

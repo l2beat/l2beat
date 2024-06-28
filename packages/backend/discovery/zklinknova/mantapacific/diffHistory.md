@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xc4015bcfee5b2e8e2cd9056690c28c5c9aaa4f6f
+Generated with discovered.json: 0xe1247df10c57f84909d49b5cebf07274ed9153c9
 
-# Diff at Fri, 28 Jun 2024 07:29:47 GMT:
+# Diff at Fri, 28 Jun 2024 08:27:12 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 2533581
+- current block number: 2533926
 
 ## Description
 
@@ -13,7 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05)
+    contract MantaProxyAdmin (0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05)
     +++ description: None
 ```
 
@@ -25,7 +25,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3)
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3)
     +++ description: None
 ```
 
