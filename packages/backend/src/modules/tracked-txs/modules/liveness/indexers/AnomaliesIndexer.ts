@@ -161,40 +161,35 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       interval.record.timestamp.lte(to.add(-1 * this.SYNC_RANGE, 'days')),
     )
 
-    try {
-      const { means, stdDevs } = this.calculate30DayRollingStats(
-        intervals,
-        0,
-        lastIndex,
-        to,
+    const { means, stdDevs } = this.calculate30DayRollingStats(
+      intervals,
+      0,
+      lastIndex,
+      to,
+    )
+
+    const currentRange = intervals.slice(0, lastIndex)
+    currentRange.forEach((interval) => {
+      const mean = means.get(
+        interval.record.timestamp.toStartOf('minute').toNumber(),
+      )
+      const stdDev = stdDevs.get(
+        interval.record.timestamp.toStartOf('minute').toNumber(),
       )
 
-      const currentRange = intervals.slice(0, lastIndex)
-      currentRange.forEach((interval) => {
-        const mean = means.get(
-          interval.record.timestamp.toStartOf('minute').toNumber(),
-        )
-        const stdDev = stdDevs.get(
-          interval.record.timestamp.toStartOf('minute').toNumber(),
-        )
+      assert(mean !== undefined, 'Mean should not be undefined')
+      assert(stdDev !== undefined, 'StdDev should not be undefined')
 
-        assert(mean !== undefined, 'mean should not be undefined')
-        assert(stdDev !== undefined, 'stdDev should not be undefined')
-
-        const z = (interval.duration - mean) / stdDev
-        if (z >= 15 && interval.duration > mean) {
-          anomalies.push({
-            projectId,
-            timestamp: interval.record.timestamp,
-            subtype: interval.record.subtype,
-            duration: interval.duration,
-          })
-        }
-      })
-    } catch (error) {
-      console.log(error)
-      throw error
-    }
+      const z = (interval.duration - mean) / stdDev
+      if (z >= 15 && interval.duration > mean) {
+        anomalies.push({
+          projectId,
+          timestamp: interval.record.timestamp,
+          subtype: interval.record.subtype,
+          duration: interval.duration,
+        })
+      }
+    })
 
     return anomalies
   }
