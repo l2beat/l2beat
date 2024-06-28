@@ -8,7 +8,7 @@ Generated with discovered.json: 0x268e9d81df826e17ce564771b939ff2e2b3b323f
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Nonce of foundation multisig increased, after executing transaction to change the owner of the SystemConfig contract.
 
 ## Watched changes
 

@@ -8,7 +8,7 @@ Generated with discovered.json: 0x786e28ccf88eb1bd88b25e8315ff6d8a7cd53296
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Changed SystemConfig owner from FoundationMultisig_2 (5/7) to FoundationMultisig_1 (5/7).
 
 ## Watched changes
 
