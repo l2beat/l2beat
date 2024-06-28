@@ -21,6 +21,7 @@ import { type DaRiskEntry } from '~/server/features/data-availability/get-da-ris
 import { columns } from './columns'
 import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
+import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 
 interface Props {
   items: DaRiskEntry[]
@@ -54,21 +55,24 @@ export function DaRiskTable({ items }: Props) {
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
-                  sorting={
-                    header.column.getCanSort()
-                      ? {
-                          direction: header.column.getIsSorted(),
-                          nextDirection: header.column.getNextSortingOrder(),
-                        }
-                      : undefined
-                  }
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                    <SortingArrows
+                      direction={header.column.getIsSorted()}
+                      nextDirection={header.column.getNextSortingOrder()}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
                       )}
+                    </SortingArrows>
+                  ) : (
+                    flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )
+                  )}
                 </TableHead>
               ))}
             </TableHeaderRow>

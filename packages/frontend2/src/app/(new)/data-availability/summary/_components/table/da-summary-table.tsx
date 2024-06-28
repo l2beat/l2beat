@@ -21,6 +21,7 @@ import {
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { columns } from './columns'
+import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 
 interface Props {
   items: DaSummaryEntry[]
@@ -58,21 +59,24 @@ export function DaSummaryTable({ items }: Props) {
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
-                  sorting={
-                    header.column.getCanSort()
-                      ? {
-                          direction: header.column.getIsSorted(),
-                          nextDirection: header.column.getNextSortingOrder(),
-                        }
-                      : undefined
-                  }
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                    <SortingArrows
+                      direction={header.column.getIsSorted()}
+                      nextDirection={header.column.getNextSortingOrder()}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
                       )}
+                    </SortingArrows>
+                  ) : (
+                    flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )
+                  )}
                 </TableHead>
               ))}
             </TableHeaderRow>
