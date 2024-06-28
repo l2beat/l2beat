@@ -12,6 +12,7 @@
     "format:fix": "prisma format && biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
     "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
