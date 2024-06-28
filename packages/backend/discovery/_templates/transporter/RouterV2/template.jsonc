@@ -25,5 +25,5 @@
     }
   },
   "ignoreMethods": ["getOffRamps"],
-  "ignoreRelatives": ["getWrappedNative"]
+  "ignoreRelatives": ["getWrappedNative", "owner"]
 }

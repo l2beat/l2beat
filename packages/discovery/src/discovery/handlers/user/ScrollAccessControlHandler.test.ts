@@ -4,12 +4,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { providers, utils } from 'ethers'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
+import { IProvider } from '../../provider/IProvider'
 import { ScrollAccessControlHandler } from './ScrollAccessControlHandler'
 
 describe(ScrollAccessControlHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   const abi = new utils.Interface([
     'event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)',
     'event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)',
@@ -17,6 +15,24 @@ describe(ScrollAccessControlHandler.name, () => {
     'event GrantAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)',
     'event RevokeAccess(bytes32 indexed role, address indexed target, bytes4[] selectors)',
   ])
+
+  const callMethodStub = async <T>(
+    _address: EthereumAddress,
+    abi: string | utils.FunctionFragment,
+  ) => {
+    const coder = new utils.Interface([abi])
+    const functionName = Object.values(coder.functions)[0]?.name
+    assert(functionName !== undefined)
+    // This is a hack to get around the problem with detecting EIP2535 proxies
+    try {
+      return coder.decodeFunctionResult(
+        functionName,
+        coder.encodeFunctionData(functionName, [0]),
+      ) as T
+    } catch {
+      return undefined
+    }
+  }
 
   function getFunctionSelector(functionDecl: string) {
     const iface = new utils.Interface([functionDecl])
@@ -75,8 +91,8 @@ describe(ScrollAccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
-      async getLogs(providedAddress, topics, fromBlock, toBlock) {
+    const provider = mockObject<IProvider>({
+      async getLogs(providedAddress, topics) {
         expect(providedAddress).toEqual(address)
         expect(topics).toEqual([
           [
@@ -87,8 +103,6 @@ describe(ScrollAccessControlHandler.name, () => {
             abi.getEventTopic('RevokeAccess'),
           ],
         ])
-        expect(fromBlock).toEqual(0)
-        expect(toBlock).toEqual(BLOCK_NUMBER)
         return []
       },
     })
@@ -101,7 +115,7 @@ describe(ScrollAccessControlHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -138,7 +152,7 @@ describe(ScrollAccessControlHandler.name, () => {
     const FunctionSigB = getFunctionSelector(FunctionB)
 
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return [
           RoleGranted(WARRIOR_ROLE, Alice),
@@ -174,8 +188,10 @@ describe(ScrollAccessControlHandler.name, () => {
         ]
       },
       getStorage: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
+      getStorageAsAddress: mockFn().resolvesTo(EthereumAddress.ZERO),
+      callMethod: callMethodStub,
       call: mockFn().resolvesTo(Bytes.fromHex('0'.repeat(88))),
-      getMetadata: mockFn().resolvesTo({
+      getSource: mockFn().resolvesTo({
         name: 'name',
         isVerified: true,
         abi: [FunctionA, FunctionB],
@@ -195,7 +211,7 @@ describe(ScrollAccessControlHandler.name, () => {
       ],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {
@@ -238,7 +254,7 @@ describe(ScrollAccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = EthereumAddress.random()
-    const provider = mockObject<DiscoveryProvider>({
+    const provider = mockObject<IProvider>({
       async getLogs() {
         return []
       },
@@ -253,7 +269,7 @@ describe(ScrollAccessControlHandler.name, () => {
       [],
       DiscoveryLogger.SILENT,
     )
-    const value = await handler.execute(provider, address, BLOCK_NUMBER)
+    const value = await handler.execute(provider, address)
     expect(value).toEqual({
       field: 'someName',
       value: {

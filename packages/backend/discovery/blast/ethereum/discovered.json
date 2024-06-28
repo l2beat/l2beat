@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976249,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -26,12 +26,12 @@
     {
       "name": "OptimismPortal",
       "address": "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391",
         "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
       },
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0xA280aEBF81c917DbD2aA1b39f979dfECEc9e4391"],
       "sinceTimestamp": 1708812875,
       "values": {
@@ -58,6 +58,14 @@
       "address": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+          "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+          "0x98078db053902644191f93988341E31289E1C8FE",
+          "0xa230285d5683C74935aD14c446e137c8c8828438"
+        ]
       },
       "sinceTimestamp": 1708812851,
       "values": {
@@ -112,13 +120,13 @@
       "name": "BlastMultisig",
       "address": "0x4f72ee94B8ba3Be7F886565d3583A7F636c58B05",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1708813211,
       "values": {
@@ -140,12 +148,12 @@
     {
       "name": "SystemConfig",
       "address": "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
-      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xA150f19B681a06E1a0B7E03934299a9bf9238cb7",
         "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
       },
+      "ignoreInWatchMode": ["scalar"],
       "implementations": ["0xA150f19B681a06E1a0B7E03934299a9bf9238cb7"],
       "sinceTimestamp": 1708812899,
       "values": {
@@ -193,13 +201,13 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x84efcFCE2dEe08072d5D57BF232D379b6E92A836"
       },
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0x84efcFCE2dEe08072d5D57BF232D379b6E92A836"],
       "sinceTimestamp": 1708812983,
       "values": {
@@ -222,17 +230,17 @@
     {
       "name": "LaunchBridge",
       "address": "0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x0bD88b59D580549285f0A207Db5F06bf24a8e561",
+        "admin": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C"
+      },
       "ignoreInWatchMode": [
         "totalETHBalance",
         "totalETHShares",
         "totalUSDBalanceNoUpdate",
         "totalUSDShares"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0bD88b59D580549285f0A207Db5F06bf24a8e561",
-        "admin": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C"
-      },
       "implementations": ["0x0bD88b59D580549285f0A207Db5F06bf24a8e561"],
       "sinceTimestamp": 1700359187,
       "values": {
@@ -260,13 +268,13 @@
       "name": "BridgeOwner",
       "address": "0x67CA7Ca75b69711cfd48B44eC3F64E469BaF608C",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1700012495,
       "values": {
@@ -324,17 +332,17 @@
     {
       "name": "L2OutputOracle",
       "address": "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF",
+        "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
+      },
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF",
-        "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
-      },
       "implementations": ["0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF"],
       "sinceTimestamp": 1708812887,
       "values": {
@@ -362,12 +370,12 @@
     {
       "name": "ETHYieldManager",
       "address": "0x98078db053902644191f93988341E31289E1C8FE",
-      "ignoreInWatchMode": ["getLockedBalance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xf2F6148327B3020610FCa26E094D9A5cc4689525",
         "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
       },
+      "ignoreInWatchMode": ["getLockedBalance"],
       "implementations": ["0xf2F6148327B3020610FCa26E094D9A5cc4689525"],
       "sinceTimestamp": 1708812935,
       "values": {
@@ -391,12 +399,12 @@
     {
       "name": "USDYieldManager",
       "address": "0xa230285d5683C74935aD14c446e137c8c8828438",
-      "ignoreInWatchMode": ["getLockedBalance"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xE1cB7358311eCc408e1EFC47ceDc6740A8F68013",
         "admin": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883"
       },
+      "ignoreInWatchMode": ["getLockedBalance"],
       "implementations": ["0xE1cB7358311eCc408e1EFC47ceDc6740A8F68013"],
       "sinceTimestamp": 1708812947,
       "values": {
@@ -479,28 +487,72 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x000000000000000000000000000000000000dEaD",
-    "0x082b616Ec99167B2FEdee053F07db6795D4dA821",
-    "0x164768144C688BF2bDa28E4072B2b30Ab705d568",
-    "0x1f97306039530ADB4173C3786e86fab5e6b90F41",
-    "0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d",
-    "0x415c8893D514F9BC5211d36eEDA4183226b84AA7",
-    "0x4200000000000000000000000000000000000007",
-    "0x4200000000000000000000000000000000000010",
-    "0x4200000000000000000000000000000000000014",
-    "0x4300000000000000000000000000000000000005",
-    "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF",
-    "0x480Ea8bA8De8d05A30F4f4CBedE1e28E05aE1B2C",
-    "0x49d495DE356259458120bfd7bCB463CFb6D6c6BA",
-    "0x6520ad883d3D76f0120443c72AD7463cab2439a4",
-    "0x6a356C0EAA560f00127Adf5108FfAf503b9f1e11",
-    "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E",
-    "0xAb5972612e8CEe66f246feaCB8D500DF3C6cfADA",
-    "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8",
-    "0xF0218c491421B5830cbf96804CD9680b56ef70BD",
-    "0xf97eC9b92Efda3afe52945B4e9adE0394C9E705d",
-    "0xFf00000000000000000000000000000000081457"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x082b616Ec99167B2FEdee053F07db6795D4dA821"
+    },
+    {
+      "address": "0x164768144C688BF2bDa28E4072B2b30Ab705d568"
+    },
+    {
+      "address": "0x1f97306039530ADB4173C3786e86fab5e6b90F41"
+    },
+    {
+      "address": "0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d"
+    },
+    {
+      "address": "0x415c8893D514F9BC5211d36eEDA4183226b84AA7"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000007"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000010"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000014"
+    },
+    {
+      "address": "0x4300000000000000000000000000000000000005"
+    },
+    {
+      "address": "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF"
+    },
+    {
+      "address": "0x480Ea8bA8De8d05A30F4f4CBedE1e28E05aE1B2C"
+    },
+    {
+      "address": "0x49d495DE356259458120bfd7bCB463CFb6D6c6BA"
+    },
+    {
+      "address": "0x6520ad883d3D76f0120443c72AD7463cab2439a4"
+    },
+    {
+      "address": "0x6a356C0EAA560f00127Adf5108FfAf503b9f1e11"
+    },
+    {
+      "address": "0x9eDFc192fC4d29b8f2b18f484211161b6Fc8063E"
+    },
+    {
+      "address": "0xAb5972612e8CEe66f246feaCB8D500DF3C6cfADA"
+    },
+    {
+      "address": "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8"
+    },
+    {
+      "address": "0xF0218c491421B5830cbf96804CD9680b56ef70BD"
+    },
+    {
+      "address": "0xf97eC9b92Efda3afe52945B4e9adE0394C9E705d"
+    },
+    {
+      "address": "0xFf00000000000000000000000000000000081457"
+    }
   ],
   "abis": {
     "0x0733F618118bF420b6b604c969498ecf143681a8": [

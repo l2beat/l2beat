@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17129653,
   "configHash": "0x156856f12762aafeeafb55abf0e9517240b29a5845960b2d1f77825a44889230",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "TransactionManager",
@@ -42,8 +42,12 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x155B15a7e9Ff0e34cEaF2439589D5C661ADC9493"
+    }
   ],
   "abis": {
     "0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09": [

@@ -2,6 +2,7 @@ import { bugless } from './bugless'
 import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
+import { dodochain } from './dodochain'
 import { l3x } from './l3x'
 import { molten } from './molten'
 import { muster } from './muster'
@@ -24,6 +25,7 @@ export const layer3s: Layer3[] = [
   degen,
   dcamonster,
   deri,
+  dodochain,
   rari,
   zklinknova,
   teva,

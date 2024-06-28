@@ -10,7 +10,7 @@ export class TokenRepository {
     const rows = tokens.map(toRow)
 
     return this.db
-      .insertInto('Token')
+      .insertInto('public.Token')
       .values(rows)
       .onConflict((conflict) =>
         conflict.columns(['networkId', 'address']).doUpdateSet({
@@ -18,16 +18,16 @@ export class TokenRepository {
           address: (excluded) => excluded.ref('excluded.address'),
         }),
       )
-      .returning('Token.id')
+      .returning('public.Token.id')
       .execute()
   }
 
   async findManyByChain(chainId: number) {
     const rows = await this.db
-      .selectFrom('Token')
+      .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
-      .where('Network.chainId', '=', chainId)
+      .where('public.Network.chainId', '=', chainId)
       .execute()
 
     return rows.map(toRecord)
@@ -37,7 +37,7 @@ export class TokenRepository {
     constraints: { address: string; networkId: string }[],
   ) {
     const rows = await this.db
-      .selectFrom('Token')
+      .selectFrom('public.Token')
       .select(selectToken)
       .where((eb) =>
         eb.or(
@@ -60,16 +60,18 @@ export class TokenRepository {
     contractName: string
   }) {
     const rows = await this.db
-      .selectFrom('Token')
+      .selectFrom('public.Token')
       .select(selectToken)
       .innerJoin(...joinDeployment)
       .innerJoin(...joinTokenMeta)
       .innerJoin(...joinNetwork)
       .where((eb) =>
         eb.and([
-          eb.or(constraints.to.map((to) => eb('Deployment.to', 'ilike', to))),
-          eb('TokenMeta.contractName', '=', constraints.contractName),
-          eb('Network.id', '=', constraints.networkId),
+          eb.or(
+            constraints.to.map((to) => eb('public.Deployment.to', 'ilike', to)),
+          ),
+          eb('public.TokenMeta.contractName', '=', constraints.contractName),
+          eb('public.Network.id', '=', constraints.networkId),
         ]),
       )
       .execute()
@@ -79,13 +81,13 @@ export class TokenRepository {
 
   async findByNetworkData(constraints: { network: string; address: string }) {
     const row = await this.db
-      .selectFrom('Token')
+      .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
       .where((eb) =>
         eb.and([
-          eb('Network.name', '=', constraints.network),
-          eb('Token.address', 'ilike', constraints.address),
+          eb('public.Network.name', '=', constraints.network),
+          eb('public.Token.address', 'ilike', constraints.address),
         ]),
       )
       .limit(1)
@@ -96,9 +98,9 @@ export class TokenRepository {
 
   async findById(id: Token['id']) {
     const row = await this.db
-      .selectFrom('Token')
+      .selectFrom('public.Token')
       .select(selectToken)
-      .where('Token.id', '=', id)
+      .where('public.Token.id', '=', id)
       .limit(1)
       .executeTakeFirst()
 
@@ -107,9 +109,9 @@ export class TokenRepository {
 
   async findManyByIds(ids: Token['id'][]) {
     const rows = await this.db
-      .selectFrom('Token')
+      .selectFrom('public.Token')
       .select(selectToken)
-      .where('Token.id', 'in', ids)
+      .where('public.Token.id', 'in', ids)
       .execute()
 
     return rows.map(toRecord)

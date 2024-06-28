@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { getReferencedName, resolveReference } from '../reference'
 import { EXEC_REVERT_MSG, callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
@@ -18,9 +18,10 @@ export const CallHandlerDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
   pickFields: z.optional(z.array(z.string())),
   expectRevert: z.optional(z.boolean()),
+  address: z.optional(z.string()),
 })
 
-export class CallHandler implements ClassicHandler {
+export class CallHandler implements Handler {
   readonly dependencies: string[] = []
   readonly fragment: utils.FunctionFragment
 
@@ -36,6 +37,10 @@ export class CallHandler implements ClassicHandler {
         this.dependencies.push(dependency)
       }
     }
+    const addressDependency = getReferencedName(this.definition.address)
+    if (addressDependency) {
+      this.dependencies.push(addressDependency)
+    }
     const arity = definition.args.length
     this.fragment = getFunctionFragment(
       definition.method ?? field,
@@ -49,9 +54,8 @@ export class CallHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
-    address: EthereumAddress,
-    blockNumber: number,
+    provider: IProvider,
+    currentContractAddress: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     const resolved = resolveDependencies(this.definition, previousResults)
@@ -63,10 +67,9 @@ export class CallHandler implements ClassicHandler {
     ])
     const callResult = await callMethod(
       provider,
-      address,
+      resolved.address ?? currentContractAddress,
       this.fragment,
       resolved.args,
-      blockNumber,
       this.definition.pickFields,
     )
 
@@ -92,11 +95,15 @@ function resolveDependencies(
 ): {
   method: string | undefined
   args: ContractValue[]
+  address: EthereumAddress | undefined
 } {
   const args = definition.args.map((x) => resolveReference(x, previousResults))
+  const address = resolveReference(definition.address, previousResults)
   return {
     method: definition.method,
     args,
+    address:
+      address !== undefined ? EthereumAddress(address.toString()) : undefined,
   }
 }
 

@@ -52,11 +52,13 @@ export const gluon: Layer2 = {
         address: EthereumAddress('0x75ACe7a086eA0FB1a79e43Cc6331Ad053d8C67cB'),
         sinceTimestamp: new UnixTime(1573694037),
         tokens: ['ETH', 'DAI'],
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),
         sinceTimestamp: new UnixTime(1612360715),
         tokens: ['DAI', 'USDT'],
+        chain: 'ethereum',
       },
     ],
   },

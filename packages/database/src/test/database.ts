@@ -1,0 +1,41 @@
+import { getEnv } from '@l2beat/backend-tools'
+import { PoolConfig } from 'pg'
+
+import { Database, createRepositories } from '..'
+
+export function describeDatabase(name: string, suite: (db: Database) => void) {
+  const database = getTestDatabase()
+
+  describe(name, function () {
+    before(async function () {
+      if (!database) {
+        this.skip()
+      }
+    })
+
+    if (database) {
+      suite(database)
+    } else {
+      it.skip(`Database tests skipped`)
+    }
+  })
+}
+
+export function getTestDatabase(opts?: Partial<PoolConfig>) {
+  const env = getEnv()
+  const connection = env.optionalString('TEST_DB_URL')
+  if (!connection) {
+    if (process.env.CI !== undefined) {
+      throw new Error('TEST_DB_URL is required in CI')
+    }
+    return
+  }
+
+  const database = createRepositories({
+    connectionString: connection,
+    application_name: 'Backend/Test',
+    ...opts,
+  })
+
+  return database
+}

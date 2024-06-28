@@ -1,53 +1,41 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
 
 export async function getZkSpaceProxy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const detection = await detectEip1967Proxy(provider, address, blockNumber)
+  const detection = await detectEip1967Proxy(provider, address)
   if (!detection || detection.upgradeability.type !== 'EIP1967 proxy') {
     return undefined
   }
 
-  const zkSea = await getCallResult<string>(
-    provider,
+  const zkSea = await provider.callMethod<EthereumAddress>(
     address,
     'function zkSeaAddress() view returns (address)',
     [],
-    blockNumber,
   )
 
-  const zkSyncCommitBlock = await getCallResult<string>(
-    provider,
+  const zkSyncCommitBlock = await provider.callMethod<EthereumAddress>(
     address,
     'function zkSyncCommitBlockAddress() view returns (address)',
     [],
-    blockNumber,
   )
 
-  const zkSyncExit = await getCallResult<string>(
-    provider,
+  const zkSyncExit = await provider.callMethod<EthereumAddress>(
     address,
     'function zkSyncExitAddress() view returns (address)',
     [],
-    blockNumber,
   )
 
   const additional = [zkSea, zkSyncCommitBlock, zkSyncExit]
-
   if (additional.some((a) => a === undefined)) {
     throw new Error('zkSpace proxy: missing additional addresses')
   }
-
-  const implementations = (additional as string[]).map((a) =>
-    EthereumAddress(a),
-  )
+  const implementations = additional as EthereumAddress[]
 
   return {
     implementations: [...detection.implementations, ...implementations],

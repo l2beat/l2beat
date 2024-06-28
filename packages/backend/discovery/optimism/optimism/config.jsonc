@@ -32,9 +32,17 @@
     "0x4200000000000000000000000000000000000015": "L1Block",
     "0x4200000000000000000000000000000000000016": "L2ToL1MessagePasser",
     "0x4200000000000000000000000000000000000018": "L2ProxyAdmin",
-    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge"
+    "0x5a7749f83b81B301cAb5f48EB8516B986DAef23D": "OldQuixoticNFTBridge",
+    "0x4200000000000000000000000000000000000019": "BaseFeeVault",
+    "0x420000000000000000000000000000000000001A": "L1FeeVault"
   },
   "overrides": {
+    "L1FeeVault": {
+      "ignoreMethods": ["totalProcessed"]
+    },
+    "BaseFeeVault": {
+      "ignoreMethods": ["totalProcessed"]
+    },
     "SequencerFeeVault": {
       "ignoreMethods": ["totalProcessed"]
     },
@@ -43,7 +51,8 @@
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
     },
     "OPToken": {
-      "ignoreMethods": ["getPastTotalSupply"]
+      "ignoreMethods": ["getPastTotalSupply"],
+      "ignoreInWatchMode": ["totalSupply"]
     },
     "L2CrossDomainMessenger": {
       "ignoreMethods": ["xDomainMessageSender"],

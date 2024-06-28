@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20111587,
   "configHash": "0x770aaffe5e9556bdf46f44dd737bff5966142ba045f29d2f86665aae9e730695",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "SuperchainConfig",
@@ -29,6 +29,13 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
+          "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
+          "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
+        ]
+      },
       "sinceTimestamp": 1713346967,
       "values": {
         "addressManager": "0x624808dc4A34B79B90C3c085942D2100F09A0376",
@@ -40,13 +47,13 @@
       "name": "LambdaOwnerMultisig",
       "address": "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1713346931,
       "values": {
@@ -63,6 +70,11 @@
       "name": "L2OutputOracle",
       "address": "0x2297eB8DC91f532C91c57b3fb33C06b782e9594A",
       "template": "opstack/L2OutputOracle",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x850DFdB4035db757e49eCF997ef051290959167A",
+        "admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"
+      },
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
       ],
@@ -72,11 +84,6 @@
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x850DFdB4035db757e49eCF997ef051290959167A",
-        "admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"
-      },
       "implementations": ["0x850DFdB4035db757e49eCF997ef051290959167A"],
       "sinceTimestamp": 1713347207,
       "values": {
@@ -132,15 +139,15 @@
       "name": "OptimismPortal",
       "address": "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054",
       "template": "opstack/OptimismPortal",
-      "descriptions": [
-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
-      ],
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x5865A0BCf08dd24A0691Dc746F181EDc6821bea9",
         "admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"
       },
+      "descriptions": [
+        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+      ],
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0x5865A0BCf08dd24A0691Dc746F181EDc6821bea9"],
       "sinceTimestamp": 1713347123,
       "values": {
@@ -166,16 +173,16 @@
       "name": "L1CrossDomainMessenger",
       "address": "0x78B5818884929d7A930edADD03a0fCD9Dd068EB7",
       "template": "opstack/L1CrossDomainMessenger",
-      "descriptions": [
-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
-      ],
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x624808dc4A34B79B90C3c085942D2100F09A0376",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0x26B5810033fd2380c87F9E22CC20101778b5F584"
       },
+      "descriptions": [
+        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0x26B5810033fd2380c87F9E22CC20101778b5F584"],
       "sinceTimestamp": 1713347159,
       "values": {
@@ -222,15 +229,15 @@
       "name": "SystemConfig",
       "address": "0xae809d42f861A6381b0DFCf7216556e95362a7a8",
       "template": "opstack/SystemConfig",
-      "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
-      ],
-      "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x781dAB53cC9d9870a96A84f4AE3130c084a2fAfD",
         "admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"
       },
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "implementations": ["0x781dAB53cC9d9870a96A84f4AE3130c084a2fAfD"],
       "sinceTimestamp": 1713347135,
       "values": {
@@ -299,16 +306,40 @@
     }
   ],
   "eoas": [
-    "0x000000000000000000000000000000000000dEaD",
-    "0x4200000000000000000000000000000000000007",
-    "0x4200000000000000000000000000000000000010",
-    "0x4200000000000000000000000000000000000014",
-    "0x4C61Be5626D1Fb101324f0F41542Da30C0aDa4D4",
-    "0x864A02Ca4a40616f8995709D1B26CDe588709043",
-    "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
-    "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
-    "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
-    "0xfF00000000000000000000000000000000056026"
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000007"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000010"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000014"
+    },
+    {
+      "address": "0x4C61Be5626D1Fb101324f0F41542Da30C0aDa4D4"
+    },
+    {
+      "address": "0x864A02Ca4a40616f8995709D1B26CDe588709043",
+      "roles": ["Challenger"]
+    },
+    {
+      "address": "0xC16EAEDaB78E033B555c9eF3C326c07B49F21907",
+      "roles": ["Proposer"]
+    },
+    {
+      "address": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
+      "roles": ["Guardian"]
+    },
+    {
+      "address": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",
+      "roles": ["Sequencer"]
+    },
+    {
+      "address": "0xfF00000000000000000000000000000000056026"
+    }
   ],
   "abis": {
     "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c": [

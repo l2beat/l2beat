@@ -43,6 +43,7 @@ export const edgeless: Layer2 = underReviewL2({
       address: EthereumAddress('0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b'),
       sinceTimestamp: new UnixTime(1711057199),
       tokens: '*',
+      chain: 'ethereum',
     },
   ],
 })

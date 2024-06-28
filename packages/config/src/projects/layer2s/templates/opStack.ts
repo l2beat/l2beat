@@ -30,11 +30,14 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
+  pickWorseRisk,
+  sumRisk,
 } from '../../../common'
 import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
+import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING, StageConfig } from '../common'
 import { getStage } from '../common/stages/getStage'
@@ -81,9 +84,9 @@ export interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: ScalingProjectPermission[]
+  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
   nonTemplateContracts?: ScalingProjectContract[]
-  nonTemplateNativeContracts?: ScalingProjectContract[]
+  nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
@@ -96,6 +99,7 @@ export interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
+  badges?: BadgeId[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -322,6 +326,7 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
+    badges: templateVars.badges,
   }
 }
 
@@ -485,7 +490,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           })
         : addSentimentToDataAvailability({
             layers: [
@@ -494,7 +499,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                 : 'Ethereum (calldata)',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           }),
     riskView: makeBridgeCompatible({
       stateValidation: {
@@ -627,6 +632,100 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     upgradeDelay: 'No delay',
   }
 
+  const riskView = makeBridgeCompatible({
+    stateValidation: RISK_VIEW.STATE_NONE,
+    dataAvailability: {
+      ...riskViewDA(daProvider),
+      sources: [
+        {
+          contract: portal.name,
+          references: [],
+        },
+      ],
+    },
+    exitWindow: {
+      ...RISK_VIEW.EXIT_WINDOW(
+        0,
+        templateVars.discovery.getContractValue<number>(
+          'L2OutputOracle',
+          'FINALIZATION_PERIOD_SECONDS',
+        ),
+      ),
+      sources: [
+        {
+          contract: portal.name,
+          references: [],
+        },
+      ],
+    },
+    sequencerFailure: {
+      ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
+        // the value is inside the node config, but we have no reference to it
+        // so we assume it to be the same value as in other op stack chains
+        HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
+      ),
+      sources: [
+        {
+          contract: portal.name,
+          references: [],
+        },
+      ],
+    },
+    proposerFailure: {
+      ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+      sources: [
+        {
+          contract: l2OutputOracle.name,
+          references: [],
+        },
+      ],
+    },
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
+    validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
+  })
+
+  const getStackedRisks = () => {
+    assert(
+      templateVars.hostChain !== 'Multiple',
+      'Unable to automatically stack risks for multiple chains, please override stackedRiskView in the template.',
+    )
+    const layer2s = require('..').layer2s as Layer2[]
+
+    const baseChainRiskView = layer2s.find(
+      (l2) => l2.id === templateVars.hostChain,
+    )?.riskView
+    assert(
+      baseChainRiskView,
+      `Could not find base chain ${templateVars.hostChain} in layer2s`,
+    )
+    return makeBridgeCompatible({
+      stateValidation: pickWorseRisk(
+        riskView.stateValidation,
+        baseChainRiskView.stateValidation,
+      ),
+      dataAvailability: pickWorseRisk(
+        riskView.dataAvailability,
+        baseChainRiskView.dataAvailability,
+      ),
+      exitWindow: pickWorseRisk(
+        riskView.exitWindow,
+        baseChainRiskView.exitWindow,
+      ),
+      sequencerFailure: sumRisk(
+        riskView.sequencerFailure,
+        baseChainRiskView.sequencerFailure,
+        RISK_VIEW.SEQUENCER_SELF_SEQUENCE,
+      ),
+      proposerFailure: sumRisk(
+        riskView.proposerFailure,
+        baseChainRiskView.proposerFailure,
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED,
+      ),
+      validatedBy: riskView.validatedBy,
+      destinationToken: riskView.destinationToken,
+    })
+  }
+
   return {
     type: 'layer3',
     ...opStackCommon(templateVars),
@@ -640,58 +739,8 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
           ? 'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.'
           : templateVars.display.warning,
     },
-    stackedRiskView: templateVars.stackedRiskView,
-    riskView: makeBridgeCompatible({
-      stateValidation: RISK_VIEW.STATE_NONE,
-      dataAvailability: {
-        ...riskViewDA(daProvider),
-        sources: [
-          {
-            contract: portal.name,
-            references: [],
-          },
-        ],
-      },
-      exitWindow: {
-        ...RISK_VIEW.EXIT_WINDOW(
-          0,
-          templateVars.discovery.getContractValue<number>(
-            'L2OutputOracle',
-            'FINALIZATION_PERIOD_SECONDS',
-          ),
-        ),
-        sources: [
-          {
-            contract: portal.name,
-            references: [],
-          },
-        ],
-      },
-      sequencerFailure: {
-        ...RISK_VIEW.SEQUENCER_SELF_SEQUENCE(
-          // the value is inside the node config, but we have no reference to it
-          // so we assume it to be the same value as in other op stack chains
-          HARDCODED.OPTIMISM.SEQUENCING_WINDOW_SECONDS,
-        ),
-        sources: [
-          {
-            contract: portal.name,
-            references: [],
-          },
-        ],
-      },
-      proposerFailure: {
-        ...RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
-        sources: [
-          {
-            contract: l2OutputOracle.name,
-            references: [],
-          },
-        ],
-      },
-      destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
-      validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
-    }),
+    stackedRiskView: templateVars.stackedRiskView ?? getStackedRisks(),
+    riskView,
     dataAvailability:
       daProvider !== undefined
         ? addSentimentToDataAvailability({
@@ -699,7 +748,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
               ? [daProvider.name, daProvider.fallback]
               : [daProvider.name],
             bridge: daProvider.bridge,
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           })
         : addSentimentToDataAvailability({
             layers: [
@@ -708,7 +757,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
                 : 'Ethereum (calldata)',
             ],
             bridge: { type: 'Enshrined' },
-            mode: 'Transactions data (compressed)',
+            mode: 'Transaction data (compressed)',
           }),
     config: {
       associatedTokens: templateVars.associatedTokens,

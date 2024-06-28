@@ -1,4 +1,53 @@
-Generated with discovered.json: 0x45f73f51155821fa6bf58861d0360141da0e91da
+Generated with discovered.json: 0xd28981bbb340b8d7f4a0a3cc529555b09df580e4
+
+# Diff at Mon, 24 Jun 2024 08:19:51 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@b54e27671cccd831f2f6414fffe3bd374840c6b7 block: 19976230
+- current block number: 20160306
+
+## Description
+
+The Bridger (Gateway) contract is upgraded to support new assets (USDM) and deposit by PERMIT2 (`depositPermit2()` function). USDM is now also a supported finalAsset (outcoming asset) for swapping through the Bridger.
+
+The Socket escrow for USDM is not yet used and will be added as soon as it has TVL.
+
+
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x270f25127D7C48c956459e113aa81615CC30AeE2"
++        "0xEEe82E92bA40A694409B4BDa3D7426188c61163e"
+      implementations.0:
+-        "0x270f25127D7C48c956459e113aa81615CC30AeE2"
++        "0xEEe82E92bA40A694409B4BDa3D7426188c61163e"
+      values.l2Vault:
+-        "0x26181Dfc530d96523350e895180b09BAf3d816a0"
+      values.PERMIT2:
++        "0x000000000022D473030F116dDEE9F6B43aC78BA3"
+      values.USDC:
++        "0x0000000000000000000000000000000000000000"
+      values.USDM:
++        "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C"
+      values.usdmCurvePool:
++        "0x0000000000000000000000000000000000000000"
+      values.wUSDM:
++        "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@19976230 => .flat}/Bridger/Bridger.sol  | 439 +++++++++++++++++----
+ 1 file changed, 359 insertions(+), 80 deletions(-)
+```
+
+Generated with discovered.json: 0x8ab0d2106a1286e919f74644647a18bfdb886090
 
 # Diff at Wed, 29 May 2024 14:51:45 GMT:
 

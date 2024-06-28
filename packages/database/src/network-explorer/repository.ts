@@ -7,6 +7,6 @@ export class NetworkExplorerRepository {
   insertMany(explorers: NetworkExplorer[]) {
     const rows = explorers.map(toRow)
 
-    return this.db.insertInto('NetworkExplorer').values(rows).execute()
+    return this.db.insertInto('public.NetworkExplorer').values(rows).execute()
   }
 }

@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 import { toTopics } from '../utils/toTopics'
@@ -29,7 +29,7 @@ export const ArrayFromOneEventHandlerDefinition = z.strictObject({
   topics: z.optional(z.array(z.union([z.string(), z.null()]))),
 })
 
-export class ArrayFromOneEventHandler implements ClassicHandler {
+export class ArrayFromOneEventHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly fragment: utils.EventFragment
   private readonly abi: utils.Interface
@@ -72,13 +72,12 @@ export class ArrayFromOneEventHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Querying ', this.fragment.name])
     const topics = toTopics(this.abi, this.fragment, this.definition.topics)
-    const logs = await provider.getLogs(address, topics, 0, blockNumber)
+    const logs = await provider.getLogs(address, topics)
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)

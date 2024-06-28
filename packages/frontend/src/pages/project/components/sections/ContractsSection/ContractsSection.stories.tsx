@@ -12,7 +12,6 @@ const props: ContractsSectionProps = {
   id: 'contracts',
   title: 'Smart Contracts',
   chainName: 'Ethereum',
-  nativeChainName: 'Arbitrum One',
   sectionOrder: 1,
   contracts: [
     {
@@ -73,7 +72,7 @@ const props: ContractsSectionProps = {
       links: [],
     },
   ],
-  nativeContracts: [],
+  nativeContracts: {},
   escrows: [
     {
       name: 'L1Escrow',
@@ -175,6 +174,7 @@ export const NoImage: Story = {
 
 export const EmptyContract: Story = {
   args: {
+    nativeContracts: {},
     contracts: [],
     escrows: [],
     risks: [],

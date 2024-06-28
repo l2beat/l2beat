@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976289,
   "configHash": "0x8660573ec3e06fd6350670ae40ed0bd1067e4751b1b00a633cbc91f86ec05fde",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "PolygonzkEVMVerifier",
@@ -17,12 +17,12 @@
     {
       "name": "daiBridge",
       "address": "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
-      "ignoreInWatchMode": ["totalBridgedDAI"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b",
         "admin": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904"
       },
+      "ignoreInWatchMode": ["totalBridgedDAI"],
       "implementations": ["0xF684f2CB299cCDaAB483ffc1573B82f40C6b775b"],
       "sinceTimestamp": 1695199499,
       "values": {
@@ -54,12 +54,12 @@
     {
       "name": "PolygonZkEVMEtrog",
       "address": "0x519E42c24163192Dca44CD3fBDCEBF6be9130987",
-      "ignoreInWatchMode": ["lastAccInputHash"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2650a9a4fC64f63F573EF0F405064EF54BC46f71",
         "admin": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
+      "ignoreInWatchMode": ["lastAccInputHash"],
       "implementations": ["0x2650a9a4fC64f63F573EF0F405064EF54BC46f71"],
       "sinceTimestamp": 1706364971,
       "values": {
@@ -164,13 +164,13 @@
       "name": "EscrowsAdmin",
       "address": "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "5 of 10 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1694792111,
       "values": {
@@ -196,21 +196,51 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x099198353446A9E3a20672eDC1Bd461E978842c3",
-    "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800",
-    "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
-    "0x4E83124eD15b13265240B61EC9627797CCE1032E",
-    "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA",
-    "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
-    "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189",
-    "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D",
-    "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
-    "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224",
-    "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B",
-    "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a",
-    "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F",
-    "0xf56AE6520776934127AB68438d1b4652BCe07F8f"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x099198353446A9E3a20672eDC1Bd461E978842c3"
+    },
+    {
+      "address": "0x148Ee7dAF16574cD020aFa34CC658f8F3fbd2800"
+    },
+    {
+      "address": "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed"
+    },
+    {
+      "address": "0x4E83124eD15b13265240B61EC9627797CCE1032E"
+    },
+    {
+      "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA"
+    },
+    {
+      "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
+    },
+    {
+      "address": "0xBDa0B27f93B2FD3f076725b89cf02e48609bC189"
+    },
+    {
+      "address": "0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D"
+    },
+    {
+      "address": "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4"
+    },
+    {
+      "address": "0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224"
+    },
+    {
+      "address": "0xDB5D9c10FD2a92692DB51853e06058EE0436d69B"
+    },
+    {
+      "address": "0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a"
+    },
+    {
+      "address": "0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F"
+    },
+    {
+      "address": "0xf56AE6520776934127AB68438d1b4652BCe07F8f"
+    }
   ],
   "abis": {
     "0x0775e11309d75aA6b0967917fB0213C5673eDf81": [

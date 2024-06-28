@@ -4,8 +4,8 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { toContractValue } from '../utils/toContractValue'
@@ -25,7 +25,7 @@ const EVENT_FRAGMENT = toEventFragment(
 const EVENT_KEY = 'acceptedGovernor'
 const ABI = new utils.Interface([EVENT_FRAGMENT])
 
-export class StarkWareGovernanceHandler implements ClassicHandler {
+export class StarkWareGovernanceHandler implements Handler {
   readonly dependencies: string[] = []
   readonly filterBy: utils.FunctionFragment
 
@@ -48,17 +48,13 @@ export class StarkWareGovernanceHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Querying ', EVENT_FRAGMENT.name])
-    const logs = await provider.getLogs(
-      address,
-      [[ABI.getEventTopic(EVENT_FRAGMENT)]],
-      0,
-      blockNumber,
-    )
+    const logs = await provider.getLogs(address, [
+      [ABI.getEventTopic(EVENT_FRAGMENT)],
+    ])
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = ABI.parseLog(log)
@@ -68,7 +64,7 @@ export class StarkWareGovernanceHandler implements ClassicHandler {
     const unfiltered = [...values]
     const governorStatuses = await Promise.all(
       unfiltered.map((governor) =>
-        callMethod(provider, address, this.filterBy, [governor], blockNumber),
+        callMethod(provider, address, this.filterBy, [governor]),
       ),
     )
     const error = governorStatuses.find((x) => x.error)?.error

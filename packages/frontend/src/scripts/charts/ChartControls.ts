@@ -83,7 +83,7 @@ export class ChartControls {
     )
     this.configureEthereumTxsToggle(query, settings)
     this.configureTokenSelect(query, unitControls)
-    this.configureCanonicalToggle(query)
+    this.configureCanonicalToggle()
     this.configureExcludeAssociatedTokensToggle()
     this.configureProjectFilters()
     this.configureRefetchButton(query)
@@ -220,8 +220,8 @@ export class ChartControls {
     })
   }
 
-  private configureCanonicalToggle(query: Query) {
-    const { $ } = query
+  private configureCanonicalToggle() {
+    const { $ } = makeQuery()
     const canonicalToggle = $.maybe<HTMLInputElement>(
       '[data-role="chart-combined"]',
     )

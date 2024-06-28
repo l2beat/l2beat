@@ -1,3 +1,4 @@
+import { EIP1967ProxyUpgradeability } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
@@ -5,6 +6,7 @@ import { AnalyzedContract } from './AddressAnalyzer'
 import {
   ContractMeta,
   findHighestSeverity,
+  getMetaFromUpgradeability,
   getTargetsMeta,
   invertMeta,
   mergeContractMeta,
@@ -155,14 +157,29 @@ describe('metaUtils', () => {
         },
       }
 
+      const upgradeabilityAdmin = EthereumAddress(
+        '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
+      )
+      const upgradeability: EIP1967ProxyUpgradeability = {
+        type: 'EIP1967 proxy',
+        admin: upgradeabilityAdmin,
+        implementation: EthereumAddress.from('0x8888'),
+      }
+
       const selfAddress = EthereumAddress.from('0x1234')
-      const result = getTargetsMeta(selfAddress, handlerResults, fields)
+      const result = getTargetsMeta(
+        selfAddress,
+        upgradeability,
+        handlerResults,
+        fields,
+      )
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
           descriptions: ['The owner of the contract'],
           roles: new Set(['Challenger']),
           permissions: {
+            admin: new Set([selfAddress]),
             owner: new Set([selfAddress]),
           },
           categories: new Set(['Core']),
@@ -208,97 +225,125 @@ describe('metaUtils', () => {
   })
 
   describe('invertMeta', () => {
-    it('should properly invert meta', () => {})
-    const targetsMeta: AnalyzedContract['targetsMeta'][] = [
-      {
-        // for merge:
+    it('should properly invert meta', () => {
+      const targetsMeta: AnalyzedContract['targetsMeta'][] = [
+        {
+          // for merge:
+          '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+            descriptions: ['Important contract'],
+            roles: new Set(['Challenger']),
+            permissions: {
+              owner: new Set([EthereumAddress.from('0x1234')]),
+            },
+            categories: new Set(['Core']),
+            severity: 'LOW',
+            types: new Set(['CODE_CHANGE']),
+          },
+          '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+            categories: new Set(['Core', 'Gateways&Escrows']),
+            descriptions: ['The resource config of the contract'],
+            permissions: {
+              owner: new Set([EthereumAddress.from('0x1234')]),
+              admin: new Set([EthereumAddress.from('0x1234')]),
+            },
+            roles: new Set(['Challenger', 'Guardian']),
+            severity: 'HIGH',
+            types: new Set(['EXTERNAL', 'L2']),
+          },
+        },
+        {
+          // for merge:
+          '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+            descriptions: ['Very important contract'],
+            roles: undefined,
+            permissions: {
+              owner: new Set([EthereumAddress.from('0xbeef')]),
+            },
+            categories: new Set(['Core', 'Gateways&Escrows']),
+            severity: 'MEDIUM',
+            types: new Set(['EXTERNAL', 'L2']),
+          },
+          '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+            categories: new Set(['Core', 'Gateways&Escrows']),
+            descriptions: ['The resource config of the contract'],
+            permissions: {
+              owner: new Set([EthereumAddress.from('0xbeef')]),
+              admin: new Set([EthereumAddress.from('0xbeef')]),
+            },
+            roles: new Set(['Challenger', 'Guardian']),
+            severity: 'HIGH',
+            types: new Set(['EXTERNAL', 'L2']),
+          },
+        },
+      ]
+
+      const result = invertMeta(targetsMeta)
+
+      expect(result).toEqual({
+        // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-          descriptions: ['Important contract'],
+          descriptions: ['Important contract', 'Very important contract'],
           roles: new Set(['Challenger']),
           permissions: {
-            owner: new Set([EthereumAddress.from('0x1234')]),
+            owner: new Set([
+              EthereumAddress.from('0x1234'),
+              EthereumAddress.from('0xbeef'),
+            ]),
           },
-          categories: new Set(['Core']),
-          severity: 'LOW',
-          types: new Set(['CODE_CHANGE']),
+          categories: new Set(['Core', 'Gateways&Escrows']),
+          types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
+          severity: 'MEDIUM',
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
-          categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: ['The resource config of the contract'],
+          roles: new Set(['Challenger', 'Guardian']),
           permissions: {
             owner: new Set([EthereumAddress.from('0x1234')]),
             admin: new Set([EthereumAddress.from('0x1234')]),
           },
-          roles: new Set(['Challenger', 'Guardian']),
-          severity: 'HIGH',
-          types: new Set(['EXTERNAL', 'L2']),
-        },
-      },
-      {
-        // for merge:
-        '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-          descriptions: ['Very important contract'],
-          roles: undefined,
-          permissions: {
-            owner: new Set([EthereumAddress.from('0xbeef')]),
-          },
           categories: new Set(['Core', 'Gateways&Escrows']),
-          severity: 'MEDIUM',
           types: new Set(['EXTERNAL', 'L2']),
+          severity: 'HIGH',
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
-          categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: ['The resource config of the contract'],
+          roles: new Set(['Challenger', 'Guardian']),
           permissions: {
             owner: new Set([EthereumAddress.from('0xbeef')]),
             admin: new Set([EthereumAddress.from('0xbeef')]),
           },
-          roles: new Set(['Challenger', 'Guardian']),
-          severity: 'HIGH',
+          categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
+          severity: 'HIGH',
         },
-      },
-    ]
+      })
+    })
+  })
 
-    const result = invertMeta(targetsMeta)
+  describe('getMetaFromUpgradeability', () => {
+    it('should properly get meta from upgradeability', () => {
+      const selfAddress = EthereumAddress.from('0x1234')
+      const admin = EthereumAddress.from('0xabcd')
+      const upgradeability: EIP1967ProxyUpgradeability = {
+        type: 'EIP1967 proxy',
+        admin,
+        implementation: EthereumAddress.from('0x5678'),
+      }
 
-    expect(result).toEqual({
-      // merged:
-      '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-        descriptions: ['Important contract', 'Very important contract'],
-        roles: new Set(['Challenger']),
-        permissions: {
-          owner: new Set([
-            EthereumAddress.from('0x1234'),
-            EthereumAddress.from('0xbeef'),
-          ]),
+      const result = getMetaFromUpgradeability(selfAddress, upgradeability)
+
+      expect(result).toEqual({
+        [admin.toString()]: {
+          categories: undefined,
+          descriptions: undefined,
+          roles: undefined,
+          severity: undefined,
+          types: undefined,
+          permissions: {
+            admin: new Set([selfAddress]),
+          },
         },
-        categories: new Set(['Core', 'Gateways&Escrows']),
-        types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
-        severity: 'MEDIUM',
-      },
-      '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
-        descriptions: ['The resource config of the contract'],
-        roles: new Set(['Challenger', 'Guardian']),
-        permissions: {
-          owner: new Set([EthereumAddress.from('0x1234')]),
-          admin: new Set([EthereumAddress.from('0x1234')]),
-        },
-        categories: new Set(['Core', 'Gateways&Escrows']),
-        types: new Set(['EXTERNAL', 'L2']),
-        severity: 'HIGH',
-      },
-      '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
-        descriptions: ['The resource config of the contract'],
-        roles: new Set(['Challenger', 'Guardian']),
-        permissions: {
-          owner: new Set([EthereumAddress.from('0xbeef')]),
-          admin: new Set([EthereumAddress.from('0xbeef')]),
-        },
-        categories: new Set(['Core', 'Gateways&Escrows']),
-        types: new Set(['EXTERNAL', 'L2']),
-        severity: 'HIGH',
-      },
+      })
     })
   })
 })

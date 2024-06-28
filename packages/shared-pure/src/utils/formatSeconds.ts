@@ -1,3 +1,4 @@
+import { assert } from '../tools'
 import { notUndefined } from './notUndefined'
 import { pluralize } from './pluralize'
 
@@ -8,6 +9,7 @@ export function formatSeconds(
   seconds: number,
   opts?: { preventRoundingUp?: boolean; fullUnit?: boolean },
 ): string {
+  assert(seconds !== undefined, 'seconds is required')
   const days = Math.floor(seconds / 86400)
   const hours = Math.floor((seconds % 86400) / 3600)
   const minutes = Math.floor(((seconds % 86400) % 3600) / 60)

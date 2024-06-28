@@ -2,7 +2,7 @@ import { ManualProxyType, ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { IProvider } from '../provider/IProvider'
 import { detectArbitrumProxy } from './auto/ArbitrumProxy'
 import { detectAxelarProxy as getAxelarProxy } from './auto/AxelarProxy'
 import { detectEip897Proxy } from './auto/Eip897Proxy'
@@ -25,9 +25,8 @@ import { getZkSyncLiteProxy } from './manual/ZkSyncLiteProxy'
 import { getImmutableProxy } from './manual/immutableProxy'
 
 export type Detector = (
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ) => Promise<ProxyDetails | undefined>
 
 const DEFAULT_AUTO_DETECTORS: Detector[] = [
@@ -44,7 +43,7 @@ const DEFAULT_AUTO_DETECTORS: Detector[] = [
   detectEip2535proxy,
 ]
 
-const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
+export const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
   'new Arbitrum proxy': getNewArbitrumProxy,
   'call implementation proxy': getCallImplementationProxy,
   'zkSync Lite proxy': getZkSyncLiteProxy,
@@ -59,21 +58,19 @@ const MANUAL_DETECTORS: Record<ManualProxyType, Detector> = {
 
 export class ProxyDetector {
   constructor(
-    private readonly provider: DiscoveryProvider,
-    private readonly logger: DiscoveryLogger,
     private readonly autoDetectors = DEFAULT_AUTO_DETECTORS,
     private readonly manualDetectors = MANUAL_DETECTORS,
   ) {}
 
   async detectProxy(
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
     logger: DiscoveryLogger,
     manualProxyType?: ManualProxyType,
   ): Promise<ProxyDetails | undefined> {
     const proxy = manualProxyType
-      ? await this.getManualProxy(address, manualProxyType, blockNumber)
-      : await this.getAutoProxy(address, blockNumber)
+      ? await this.getManualProxy(provider, address, manualProxyType)
+      : await this.getAutoProxy(provider, address)
 
     if (proxy) {
       logger.logProxyDetected(proxy.upgradeability.type)
@@ -85,25 +82,23 @@ export class ProxyDetector {
   }
 
   async getAutoProxy(
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<ProxyDetails | undefined> {
     const checks = await Promise.all(
-      this.autoDetectors.map((detect) =>
-        detect(this.provider, address, blockNumber),
-      ),
+      this.autoDetectors.map((detect) => detect(provider, address)),
     )
     return checks.find((x) => x !== undefined)
   }
 
   async getManualProxy(
+    provider: IProvider,
     address: EthereumAddress,
     manualProxyType: ManualProxyType,
-    blockNumber: number,
   ): Promise<ProxyDetails | undefined> {
     const detector = this.manualDetectors[manualProxyType]
     if (detector) {
-      return await detector(this.provider, address, blockNumber)
+      return await detector(provider, address)
     }
   }
 }

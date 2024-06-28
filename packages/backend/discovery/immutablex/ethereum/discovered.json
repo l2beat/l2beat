@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19910271,
   "configHash": "0x7cd67833717c8fc99d9a7dc20d52f5ff29aae14fef6015a58284f3bb682def22",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "Committee",
@@ -46,13 +46,6 @@
     {
       "name": "StarkExchange",
       "address": "0x5FDCCA53617f4d2b9134B29090C87D01058e27e9",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getSequenceNumber",
-        "getVaultRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
@@ -68,6 +61,13 @@
         },
         "proxyGovernance": ["0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91"]
       },
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getSequenceNumber",
+        "getVaultRoot"
+      ],
       "implementations": [
         "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
         "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
@@ -130,13 +130,13 @@
       "name": "ProxyGovernanceMultisig",
       "address": "0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1683124943,
       "values": {
@@ -155,17 +155,39 @@
     }
   ],
   "eoas": [
-    "0x0405107a60391Eb51821be373ff978115Ee58488",
-    "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1",
-    "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b",
-    "0x48AF849535DDFa560A0EB0FbDEf436688169B949",
-    "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E",
-    "0x59232aC80E6d403b6381393e52f4665ECA328558",
-    "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e",
-    "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17",
-    "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61",
-    "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
-    "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
+    {
+      "address": "0x0405107a60391Eb51821be373ff978115Ee58488"
+    },
+    {
+      "address": "0x1FfBDb8061B586A6D29fb608d025e5D8744f58d1"
+    },
+    {
+      "address": "0x24EeFFC269bB8E540F5B2C8f45750489abf8D54b"
+    },
+    {
+      "address": "0x48AF849535DDFa560A0EB0FbDEf436688169B949"
+    },
+    {
+      "address": "0x51AbdE72a4542500a7b1Cb32B18b13fbe1F9ff2E"
+    },
+    {
+      "address": "0x59232aC80E6d403b6381393e52f4665ECA328558"
+    },
+    {
+      "address": "0x9B7f7d0d23d4CAce5A3157752D0D4e4bf25E927e"
+    },
+    {
+      "address": "0xAfC4589aF46C72CBF550F2eEAE38c97AeDE15d17"
+    },
+    {
+      "address": "0xB71FC111D7BA82D5955BaDdD7717f3467184FF61"
+    },
+    {
+      "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
+    },
+    {
+      "address": "0xfF506616E8C53EE5e513b906AC00B5D76664C537"
+    }
   ],
   "abis": {
     "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [

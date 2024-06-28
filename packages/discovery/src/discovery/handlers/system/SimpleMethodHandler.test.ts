@@ -1,169 +1,74 @@
-import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { MulticallClient } from '../../provider/multicall/MulticallClient'
+import { IProvider } from '../../provider/IProvider'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 import { SimpleMethodHandler } from './SimpleMethodHandler'
 
 describe(SimpleMethodHandler.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe(SimpleMethodHandler.prototype.execute.name, () => {
     it('can correctly call balanceOf', async () => {
       const address = EthereumAddress.random()
-      const provider = mockObject<DiscoveryProvider>({
-        async call(passedAddress, data) {
+      const provider = mockObject<IProvider>({
+        async callMethod<T>(
+          passedAddress: EthereumAddress,
+          _abi: string,
+          _data: unknown[],
+        ) {
           expect(passedAddress).toEqual(address)
-          expect(data).toEqual(Bytes.fromHex('0x722713f7'))
-          return Bytes.fromHex(
-            '0x0000000000000000000000000000000000000000000000000000000000000123',
-          )
-        },
-      })
-
-      const handler = new SimpleMethodHandler(
-        'function balanceOf() view returns (uint256)',
-        DiscoveryLogger.SILENT,
-      )
-      expect(handler.field).toEqual('balanceOf')
-
-      const result = await handler.execute(provider, address, BLOCK_NUMBER)
-      expect(result).toEqual({
-        field: 'balanceOf',
-        value: 0x123,
-      })
-    })
-
-    it('handles a revert', async () => {
-      const handler = new SimpleMethodHandler(
-        'function balanceOf() view returns (uint256)',
-        DiscoveryLogger.SILENT,
-      )
-
-      const provider = mockObject<DiscoveryProvider>({
-        async call() {
-          throw new Error('Error during execution: revert')
-        },
-      })
-      const address = EthereumAddress.random()
-      const result = await handler.execute(provider, address, BLOCK_NUMBER)
-      expect(result).toEqual({
-        field: 'balanceOf',
-        error: 'Execution reverted',
-      })
-    })
-
-    it('handles any other error', async () => {
-      const handler = new SimpleMethodHandler(
-        'function balanceOf() view returns (uint256)',
-        DiscoveryLogger.SILENT,
-      )
-
-      const provider = mockObject<DiscoveryProvider>({
-        async call() {
-          throw new Error('foo bar')
-        },
-      })
-      const address = EthereumAddress.random()
-      const result = await handler.execute(provider, address, BLOCK_NUMBER)
-      expect(result).toEqual({
-        field: 'balanceOf',
-        error: 'foo bar',
-      })
-    })
-  })
-
-  describe('multicallable', () => {
-    it('can correctly call balanceOf', async () => {
-      const address = EthereumAddress.random()
-      const multicall = mockObject<MulticallClient>({
-        async multicall() {
-          return [
-            {
-              success: true,
-              data: Bytes.fromHex(
-                '0x0000000000000000000000000000000000000000000000000000000000000123',
-              ),
-            },
-          ]
+          return 291 as T
         },
       })
 
       const method = 'function balanceOf() view returns (uint256)'
       const fragment = toFunctionFragment(method)
-
       const handler = new SimpleMethodHandler(method, DiscoveryLogger.SILENT)
       expect(handler.field).toEqual('balanceOf')
-      const encoded = handler.encode(address)
-      expect(encoded).toEqual([
-        {
-          address,
-          data: Bytes.fromHex('0x722713f7'),
-        },
-      ])
-      const response = await multicall.multicall(encoded, BLOCK_NUMBER)
-      const result = handler.decode(response)
+
+      const result = await handler.execute(provider, address)
       expect(result).toEqual({
         field: 'balanceOf',
-        fragment,
         value: 0x123,
+        fragment,
       })
     })
 
-    it('handles an error', async () => {
-      const handler = new SimpleMethodHandler(
-        'function balanceOf() view returns (uint256)',
-        DiscoveryLogger.SILENT,
-      )
-      const multicall = mockObject<MulticallClient>({
-        async multicall() {
-          return [
-            {
-              success: false,
-              data: Bytes.EMPTY,
-            },
-          ]
+    it('handles a revert', async () => {
+      const method = 'function balanceOf() view returns (uint256)'
+      const fragment = toFunctionFragment(method)
+      const handler = new SimpleMethodHandler(method, DiscoveryLogger.SILENT)
+
+      const provider = mockObject<IProvider>({
+        async callMethod() {
+          throw new Error('Execution reverted')
         },
       })
       const address = EthereumAddress.random()
-      const encoded = handler.encode(address)
-      const response = await multicall.multicall(encoded, BLOCK_NUMBER)
-      const result = handler.decode(response)
+      const result = await handler.execute(provider, address)
       expect(result).toEqual({
         field: 'balanceOf',
-        error: 'Multicall failed',
+        error: 'Execution reverted',
+        fragment,
       })
     })
 
-    it('can correctly decode a tuple', async () => {
-      const response =
-        '0x0000000000000000000000000000000000000000000000000000000001312d00000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000008000000000000000000000000000000000000000000000000000000003b9aca0000000000000000000000000000000000000000000000000000000000000f424000000000000000000000000000000000ffffffffffffffffffffffffffffffff'
-      const method =
-        'function resourceConfig() view returns (tuple(uint32 maxResourceLimit, uint8 elasticityMultiplier, uint8 baseFeeMaxChangeDenominator, uint32 minimumBaseFee, uint32 systemTxMaxGas, uint128 maximumBaseFee))'
+    it('handles any other error', async () => {
+      const method = 'function balanceOf() view returns (uint256)'
       const fragment = toFunctionFragment(method)
-
       const handler = new SimpleMethodHandler(method, DiscoveryLogger.SILENT)
 
-      const decoded = handler.decode([
-        {
-          success: true,
-          data: Bytes.fromHex(response),
+      const provider = mockObject<IProvider>({
+        async callMethod() {
+          throw new Error('foo bar')
         },
-      ])
-
-      expect(decoded).toEqual({
-        field: 'resourceConfig',
+      })
+      const address = EthereumAddress.random()
+      const result = await handler.execute(provider, address)
+      expect(result).toEqual({
+        field: 'balanceOf',
+        error: 'foo bar',
         fragment,
-        value: [
-          20000000,
-          10,
-          8,
-          1000000000,
-          1000000,
-          '340282366920938463463374607431768211455',
-        ],
       })
     })
   })

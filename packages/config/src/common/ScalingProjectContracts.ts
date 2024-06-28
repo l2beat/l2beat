@@ -10,7 +10,7 @@ export interface ScalingProjectContracts {
   /** List of risks associated with the contracts */
   risks: ScalingProjectRisk[]
   /** List of the contracts on the chain itself */
-  nativeAddresses?: ScalingProjectContract[]
+  nativeAddresses?: Record<string, ScalingProjectContract[]>
   /** List of references backing up the claim */
   references?: ScalingProjectReference[]
   /** The description and research is incomplete */

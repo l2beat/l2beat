@@ -7,11 +7,12 @@
     // SOCKET SCRIPT OUTPUT FROM HERE ------------V
     // Lyra
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d",
-    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
     "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
+    "0x35d4D9bc79B0a543934b1769304B90d752691caD",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
     // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981",
@@ -20,13 +21,17 @@
     "0x43b718Aa5e678b08615CA984cbe25f690B085b32",
     "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85",
     "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd",
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e",
     "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397",
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
     "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
-    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
+    // Blast
+    "0xa83B4006c16DAeAb2718294696c0122519195137",
     // Reya
-    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7"
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7",
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6"
     // TO HERE ----------------------------------^
   ],
   // socket chainslugs: https://github.com/SocketDotTech/socket-docs/blob/fa14d4432b1e9acf1c1e011435523aad3cfffe14/src/components/Contracts/chainDetails.ts
@@ -41,14 +46,16 @@
     "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82": "KintoMultisig",
     "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF": "HookOwnerEOA",
     "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34": "socketadmin.eth EOA",
+    "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13": "LooksRareMultisig",
     // SOCKET SCRIPT OUTPUT FROM HERE ------------V
     // Lyra
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault Lyra",
-    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra",
     "0x8180EcCC825b692ef65FF099a0A387743788bf78": "weETH Vault Lyra",
+    "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra",
+    "0x35d4D9bc79B0a543934b1769304B90d752691caD": "rsETH Vault Lyra",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault Lyra",
-    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault Lyra",
+    "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
     "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Lyra",
     // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981": "USDC Vault Hook",
@@ -57,13 +64,17 @@
     "0x43b718Aa5e678b08615CA984cbe25f690B085b32": "sUSDe Vault Kinto",
     "0x5B8Ae1C9c5970e2637Cf3Af431acAAebEf7aFb85": "sDAI Vault Kinto",
     "0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd": "ENA Vault Kinto",
+    "0xdf34E61B6e7B9e348713d528fEB019d504d38c1e": "USDe Vault Kinto",
     "0xeB66259d2eBC3ed1d3a98148f6298927d8A36397": "weETH Vault Kinto",
     "0xc5d01939Af7Ce9Ffc505F0bb36eFeDde7920f2dc": "wstETH Vault Kinto",
+    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": "DAI Vault Kinto",
     "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5": "ETHFI Vault Kinto",
-    "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
+    // Blast
+    "0xa83B4006c16DAeAb2718294696c0122519195137": "LOOKS Vault Blast",
     // Reya
-    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya"
+    "0xdFf78A949E47c1e90f3Dd6dd7Fe2Fa72B42a75f7": "USDC Vault Reya",
+    "0x2344621d5aA6e784e8C6f4c54b0B29Dd9c3Ad4B6": "WBTC Vault Reya"
     // TO HERE ----------------------------------^
   },
   "overrides": {
@@ -193,11 +204,12 @@
     // SOCKET SCRIPT OUTPUT FROM HERE ------------V
     // Lyra
     "USDC Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
-    "rswETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
     "weETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "rswETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "rsETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
     "wstETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
-    "WETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
     "SNX Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WETH Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
     "WBTC Vault Lyra": { "ignoreMethods": ["token", "token__", "hook__"] },
     // Hook
     "USDC Vault Hook": { "ignoreMethods": ["token", "token__", "hook__"] },
@@ -206,13 +218,17 @@
     "sUSDe Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "sDAI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "ENA Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "USDe Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "weETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "wstETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "DAI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "ETHFI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
-    "WETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    // Blast
+    "LOOKS Vault Blast": { "ignoreMethods": ["token", "token__", "hook__"] },
     // Reya
-    "USDC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] }
+    "USDC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "WBTC Vault Reya": { "ignoreMethods": ["token", "token__", "hook__"] }
     // TO HERE ----------------------------------^
   }
 }

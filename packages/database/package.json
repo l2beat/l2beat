@@ -12,9 +12,13 @@
     "format:fix": "prisma format && biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
     "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/shared-pure": "*",
+    "@l2beat/shared": "*",
+    "@l2beat/discovery": "*",
     "kysely": "^0.27.3",
     "prisma": "^5.15.0"
   },

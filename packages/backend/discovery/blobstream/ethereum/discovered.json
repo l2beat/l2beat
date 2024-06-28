@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20085541,
   "configHash": "0xcf8eb56d57080d480c766eda217b523305fd0fa54653550aace47ce9679209ad",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "FunctionVerifier",
@@ -61,12 +61,12 @@
     {
       "name": "BlobstreamX",
       "address": "0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe",
-      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE",
         "admin": "0x0000000000000000000000000000000000000000"
       },
+      "ignoreInWatchMode": ["latestBlock", "state_proofNonce"],
       "implementations": ["0x41a87C543EBcbD93706CF5260AD057D9eCBA1caE"],
       "sinceTimestamp": 1717615307,
       "values": {
@@ -102,13 +102,13 @@
       "name": "BlobstreamXMultisig",
       "address": "0x8bF34D8df1eF0A8A7f27fC587202848E528018E6",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1717613015,
       "values": {
@@ -132,13 +132,13 @@
       "name": "SuccinctMultisig",
       "address": "0xd1999B562e74d9fbf57b4479b3fe8748BDF4e4A0",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 4 (75%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678822115,
       "values": {
@@ -167,19 +167,48 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x0449689f2ce80fE45B32092e0d878ad87F0156a9",
-    "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf",
-    "0x19abbcEC005D4D83692f7A180125bF0FBd24253D",
-    "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D",
-    "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d",
-    "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0",
-    "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
-    "0x793979789Ec179183E396e76c1e241bE0c9eE899",
-    "0x91D456f83f4a117B07866fdEdC29306f7E974e15",
-    "0xA3fC931613a4E2440a199d47B0076e8b85F33099",
-    "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65",
-    "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    {
+      "address": "0x0000000000000000000000000000000000000000",
+      "permissions": {
+        "admin": ["0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe"]
+      }
+    },
+    {
+      "address": "0x0449689f2ce80fE45B32092e0d878ad87F0156a9"
+    },
+    {
+      "address": "0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf"
+    },
+    {
+      "address": "0x19abbcEC005D4D83692f7A180125bF0FBd24253D"
+    },
+    {
+      "address": "0x3243552F3BcbcE720Db6f5ad0C1B7cd15458392D"
+    },
+    {
+      "address": "0x44eB418A966ff47f5AF6f48AEa6Afde0bf193a8d"
+    },
+    {
+      "address": "0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0"
+    },
+    {
+      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
+    },
+    {
+      "address": "0x793979789Ec179183E396e76c1e241bE0c9eE899"
+    },
+    {
+      "address": "0x91D456f83f4a117B07866fdEdC29306f7E974e15"
+    },
+    {
+      "address": "0xA3fC931613a4E2440a199d47B0076e8b85F33099"
+    },
+    {
+      "address": "0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65"
+    },
+    {
+      "address": "0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126"
+    }
   ],
   "abis": {
     "0x037E57EF3a130CD23988a4Ed530d79d6f97a0f06": [

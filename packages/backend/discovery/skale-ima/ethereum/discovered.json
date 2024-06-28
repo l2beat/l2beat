@@ -3,19 +3,19 @@
   "chain": "ethereum",
   "blockNumber": 19719123,
   "configHash": "0x0dd5bab61ec77857fe1c60af951691b7e98a6e3c42494d257ff554f15a42c5e8",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "ProxyAdminOwner",
       "address": "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1601280823,
       "values": {
@@ -77,16 +77,16 @@
     {
       "name": "CommunityPool",
       "address": "0x588801cA36558310D91234aFC2511502282b1621",
-      "ignoreInWatchMode": [
-        "minTransactionGas",
-        "multiplierDivider",
-        "multiplierNumerator"
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A",
         "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
       },
+      "ignoreInWatchMode": [
+        "minTransactionGas",
+        "multiplierDivider",
+        "multiplierNumerator"
+      ],
       "implementations": ["0xffC647d4Cef8FB8b365e6B11a0156972e9343f6A"],
       "sinceTimestamp": 1626719564,
       "values": {
@@ -142,6 +142,11 @@
     {
       "name": "MessageProxyForMainnet",
       "address": "0x8629703a9903515818C2FeB45a6f6fA5df8Da404",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
+        "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
+      },
       "ignoreInWatchMode": [
         "gasLimit",
         "headerMessageGasCost",
@@ -150,11 +155,6 @@
         "MESSAGES_LENGTH",
         "REVERT_REASON_LENGTH"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190",
-        "admin": "0xA35d3Ffc3812F6caD1Ac64FDE740a98bfb900627"
-      },
       "implementations": ["0x64e4cd4Fe42eAB98AcD15fddaC657B1537aa5190"],
       "sinceTimestamp": 1626719196,
       "values": {
@@ -230,12 +230,24 @@
     }
   ],
   "eoas": [
-    "0x315537a8004A7E598f807e8e0ce2F92e6a497E18",
-    "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245",
-    "0x60f66a4056852d0Bd6D5BF6FF5D2eBeb474cd587",
-    "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F",
-    "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e",
-    "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A"
+    {
+      "address": "0x315537a8004A7E598f807e8e0ce2F92e6a497E18"
+    },
+    {
+      "address": "0x3E8eba8D8E1BA34cB5780d541748438aA21b1245"
+    },
+    {
+      "address": "0x60f66a4056852d0Bd6D5BF6FF5D2eBeb474cd587"
+    },
+    {
+      "address": "0x86EBB3994A558C27d19E2BADF5f98b99C478F98F"
+    },
+    {
+      "address": "0xE74ad5437C6CFB0cCD6bADda1F6b57b6E542E75e"
+    },
+    {
+      "address": "0xe8c7E5C70B8a8c9C3896e59062EA3A879270AB4A"
+    }
   ],
   "abis": {
     "0x13fD1622F0E7e50A87B79cb296cbAf18362631C0": [

@@ -20,6 +20,7 @@ import type { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskV
 import type { ScalingProjectStateDerivation } from '../../../common/ScalingProjectStateDerivation'
 import type { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import type { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
+import { type BadgeId } from '../../badges'
 import type { StageConfig } from '../common/stages/types'
 import type { Layer2FinalityConfig } from './Layer2FinalityConfig'
 import type { Layer2LivenessConfig } from './Layer2LivenessConfig'
@@ -41,7 +42,7 @@ export interface Layer2 {
   config: Layer2Config
   /** Technical chain configuration */
   chainConfig?: ChainConfig
-  /** Data availability of scaling project project */
+  /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
@@ -60,11 +61,13 @@ export interface Layer2 {
   /** List of permissioned addresses on the host chain */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** List of permissioned addresses on the chain itself */
-  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
+  /** List of badges */
+  badges?: BadgeId[]
 }
 
 export interface Layer2Display extends ScalingProjectDisplay {

@@ -1,14 +1,11 @@
-import { ManualProxyType, ProxyDetails } from '@l2beat/discovery-types'
+import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
-import { Detector, ProxyDetector } from './ProxyDetector'
+import { IProvider } from '../provider/IProvider'
+import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
 
 describe(ProxyDetector.name, () => {
-  const BLOCK_NUMBER = 1234
-
   const FIRST_DETAILS: ProxyDetails = {
     upgradeability: {
       type: 'EIP1967 proxy',
@@ -30,15 +27,14 @@ describe(ProxyDetector.name, () => {
   }
 
   it('can detect no proxy', async () => {
-    const provider = mockObject<DiscoveryProvider>()
-
-    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [
+    const provider = mockObject<IProvider>()
+    const detector = new ProxyDetector([
       async () => undefined,
       async () => undefined,
     ])
     const result = await detector.detectProxy(
+      provider,
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
 
@@ -46,41 +42,30 @@ describe(ProxyDetector.name, () => {
   })
 
   it('detects the first proxy', async () => {
-    const provider = mockObject<DiscoveryProvider>()
-
-    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [
+    const provider = mockObject<IProvider>()
+    const detector = new ProxyDetector([
       async () => undefined,
       async () => FIRST_DETAILS,
       async () => undefined,
       async () => SECOND_DETAILS,
     ])
     const result = await detector.detectProxy(
+      provider,
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
     )
-
     expect(result).toEqual(FIRST_DETAILS)
   })
 
   it('detects a manual proxy', async () => {
-    const provider = mockObject<DiscoveryProvider>()
-
-    const detector = new ProxyDetector(provider, DiscoveryLogger.SILENT, [], {
+    const provider = mockObject<IProvider>()
+    const detector = new ProxyDetector([], {
+      ...MANUAL_DETECTORS,
       'call implementation proxy': async () => FIRST_DETAILS,
-      'new Arbitrum proxy': async () => SECOND_DETAILS,
-      'zkSync Lite proxy': async () => undefined,
-      'zkSpace proxy': async () => undefined,
-      'Eternal Storage proxy': async () => undefined,
-      'Polygon Extension proxy': async () => undefined,
-      'Optics Beacon proxy': async () => undefined,
-      'Axelar proxy': async () => undefined,
-      'LightLink proxy': async () => undefined,
-      immutable: async () => undefined,
-    } as Record<ManualProxyType, Detector>)
+    })
     const result = await detector.detectProxy(
+      provider,
       EthereumAddress.random(),
-      BLOCK_NUMBER,
       DiscoveryLogger.SILENT,
       'call implementation proxy',
     )

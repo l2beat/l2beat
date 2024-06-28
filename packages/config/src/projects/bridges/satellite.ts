@@ -51,6 +51,7 @@ export const satellite: Bridge = {
           'MKR',
           'UNI', //TODO: Add more tokens
         ],
+        chain: 'ethereum',
       },
     ],
   },

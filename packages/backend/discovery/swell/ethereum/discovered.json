@@ -3,19 +3,22 @@
   "chain": "ethereum",
   "blockNumber": 20016207,
   "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "SwellMultisig",
       "address": "0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 6 (67%)"
       },
+      "descriptions": [
+        "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"
+      ],
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1657096688,
       "values": {
@@ -83,13 +86,27 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x042d200e5375204F022570361f3913b245488091",
-    "0x284C633962F2386590E934c4fBD2D3EafA0944A3",
-    "0x5b27b9279251904AaF2127463eeFf91E0037F725",
-    "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59",
-    "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40",
-    "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x042d200e5375204F022570361f3913b245488091"
+    },
+    {
+      "address": "0x284C633962F2386590E934c4fBD2D3EafA0944A3"
+    },
+    {
+      "address": "0x5b27b9279251904AaF2127463eeFf91E0037F725"
+    },
+    {
+      "address": "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59"
+    },
+    {
+      "address": "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40"
+    },
+    {
+      "address": "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238"
+    }
   ],
   "abis": {
     "0x20fDF47509C5eFC0e1101e3CE443691781C17F90": [

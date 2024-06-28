@@ -51,13 +51,14 @@ export const fuelv1: Layer2 = {
         address: EthereumAddress('0x6880f6Fd960D1581C2730a451A22EED1081cfD72'),
         sinceTimestamp: new UnixTime(1612414780),
         tokens: ['ETH', 'DAI', 'USDC', 'USDT'],
+        chain: 'ethereum',
       },
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'Transaction data',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: RISK_VIEW.STATE_FP_1R,

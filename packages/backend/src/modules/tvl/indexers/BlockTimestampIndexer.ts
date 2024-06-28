@@ -7,19 +7,18 @@ import {
 } from '../../../tools/uif/ManagedChildIndexer'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
-import { BlockTimestampService } from '../services/BlockTimestampService'
+import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
-export interface BlockTimestampIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
-  blockTimestampService: BlockTimestampService
+interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
+  blockTimestampProvider: BlockTimestampProvider
   blockTimestampRepository: BlockTimestampRepository
   chain: string
   syncOptimizer: SyncOptimizer
 }
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: BlockTimestampIndexerDeps) {
+  constructor(private readonly $: Dependencies) {
     const logger = $.logger.tag($.tag)
     const name = 'block_timestamp_indexer'
     super({
@@ -43,7 +42,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
     }
 
     const blockNumber =
-      await this.$.blockTimestampService.getBlockNumberAtOrBefore(timestamp)
+      await this.$.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
     this.logger.info('Fetched block number for timestamp', {
       timestamp: timestamp.toNumber(),

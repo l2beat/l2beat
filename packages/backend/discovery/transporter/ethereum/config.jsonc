@@ -9,6 +9,25 @@
     "0xE561d5E02207fb5eB32cca20a699E0d8919a1476",
     "0x66598216D8E4d9AFE0F06d525B335b762229842f" // EtherSenderReceiver
   ],
+  "types": {
+    "ChainIdMap": {
+      "typeCaster": "Mapping",
+      "arg": {
+        "465200170687744372": "gnosis",
+        "5009297550715157269": "ethereum",
+        "3734403246176062136": "optimism",
+        "4949039107694359620": "arbitrum",
+        "4051577828743386545": "polygon",
+        "6433500567565415381": "avalanche",
+        "5142893604156789321": "wemix",
+        "3719320017875267166": "kroma",
+        "1346049177634351622": "celo",
+        "7264351850409363825": "mode",
+        "11344663589394136015": "bnb",
+        "15971525489660198786": "base"
+      }
+    }
+  },
   "names": {
     /* 
       For a mapping of onramp addresses to dest/source chains, see:

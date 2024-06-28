@@ -48,13 +48,16 @@ export function createUpdateMonitorModule(
   // TODO: get rid of that once we achieve full library separation
   const discoveryHttpClient = new DiscoveryHttpClient()
 
-  const runners = config.updateMonitor.chains.map((chainConfig) =>
+  const { chains, enableCache } = config.updateMonitor
+  const runners = chains.map((chainConfig) =>
     createDiscoveryRunner(
       discoveryHttpClient,
       configReader,
       peripherals,
       DiscoveryLogger.SILENT,
-      chainConfig,
+      chains,
+      chainConfig.name,
+      !!enableCache,
     ),
   )
 

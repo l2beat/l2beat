@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976298,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -95,12 +95,12 @@
     {
       "name": "WorldIdIdentityManager2",
       "address": "0xf7134CE138832c1456F2a91D64621eE90c2bddEa",
-      "ignoreInWatchMode": ["latestRoot"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd",
         "admin": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
       },
+      "ignoreInWatchMode": ["latestRoot"],
       "implementations": ["0x521e8FB3A32Ea44237DC8b1E506dd78accFDf8Bd"],
       "sinceTimestamp": 1688671151,
       "values": {
@@ -132,9 +132,15 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
-    "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
+    },
+    {
+      "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
+    }
   ],
   "abis": {
     "0x39CcB3b670651a14da8b3835f42924f49C2C5986": [

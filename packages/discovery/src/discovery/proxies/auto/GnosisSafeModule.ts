@@ -1,11 +1,10 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../../utils/address'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'
 
+// TODO: (sz-piotr) Is this simply equivalent to 0x66 and 0x67?
 const AVATAR_SLOT = Bytes.fromHex(
   '0x0000000000000000000000000000000000000000000000000000000000000066',
 )
@@ -13,48 +12,25 @@ const TARGET_SLOT = Bytes.fromHex(
   '0x0000000000000000000000000000000000000000000000000000000000000067',
 )
 
-interface AvatarAndTarget {
-  avatar: EthereumAddress
-  target: EthereumAddress
-}
-
-async function getAvatarAndTarget(
-  provider: DiscoveryProvider,
-  address: EthereumAddress,
-  blockNumber: number,
-): Promise<AvatarAndTarget> {
-  const [avatarBytes, targetBytes] = await Promise.all([
-    provider.getStorage(address, AVATAR_SLOT, blockNumber),
-    provider.getStorage(address, TARGET_SLOT, blockNumber),
-  ])
-  return {
-    avatar: bytes32ToAddress(avatarBytes),
-    target: bytes32ToAddress(targetBytes),
-  }
-}
-
 async function getGuard(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<EthereumAddress | undefined> {
-  return await getCallResult<EthereumAddress>(
-    provider,
+  return await provider.callMethod<EthereumAddress>(
     address,
-    'function getGuard() external view returns (address _guard)',
+    'function getGuard() external view returns (address)',
     [],
-    blockNumber,
   )
 }
 
 export async function detectGnosisSafeZodiacModule(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const [guard, { avatar, target }] = await Promise.all([
-    getGuard(provider, address, blockNumber),
-    getAvatarAndTarget(provider, address, blockNumber),
+  const [guard, avatar, target] = await Promise.all([
+    getGuard(provider, address),
+    provider.getStorageAsAddress(address, AVATAR_SLOT),
+    provider.getStorageAsAddress(address, TARGET_SLOT),
   ])
 
   if (
@@ -65,7 +41,7 @@ export async function detectGnosisSafeZodiacModule(
     return
   }
 
-  const modules = await getModules(provider, address, blockNumber)
+  const modules = await getModules(provider, address)
 
   return {
     implementations: [],

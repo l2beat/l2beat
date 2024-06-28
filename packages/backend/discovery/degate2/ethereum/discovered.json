@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 18554408,
   "configHash": "0x7befc624585842508052542a84407ecb7361a1fca4ba19c41768e2419f174743",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "LoopringIOExchangeOwner",
@@ -55,10 +55,10 @@
     {
       "name": "FeeVault",
       "address": "0x7B0d44D5b2eF3A8B168FAfdcc321FAb0D9d5d08C",
-      "ignoreInWatchMode": ["transactionCount"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["transactionCount"],
       "sinceTimestamp": 1614841682,
       "values": {
         "getOwners": [
@@ -78,6 +78,9 @@
     {
       "name": "ExchangeV3",
       "address": "0x9C8f884B15a1fcd5B4bcEb8647DC2D15165906c7",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "getBlockHeight",
         "getMerkleRoot",
@@ -86,9 +89,6 @@
         "getNumAvailableForcedSlots",
         "state"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1693304795,
       "values": {
         "allowOnchainTransferFrom": false,
@@ -182,15 +182,33 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb",
-    "0x4e3FE240B50A445fc6137a6363aC3593Af173b8a",
-    "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8",
-    "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82",
-    "0xB7093FC2d926ADdE48122B70991fe68374879adf",
-    "0xC715b8501039d3514787dC55BC09f89c293351e9",
-    "0xeD530f3b8675B0a576DaAe64C004676c65368DfD",
-    "0xf5020ADf433645c451A4809eac0d6F680709f11B"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x3Cd51A933b0803DDCcDF985A7c71C1C7357FE9Eb"
+    },
+    {
+      "address": "0x4e3FE240B50A445fc6137a6363aC3593Af173b8a"
+    },
+    {
+      "address": "0x6EF4e54E049A5FffB629063D3a9ee38ac27551C8"
+    },
+    {
+      "address": "0xacD3A62F3eED1BfE4fF0eC8240d645c1F5477F82"
+    },
+    {
+      "address": "0xB7093FC2d926ADdE48122B70991fe68374879adf"
+    },
+    {
+      "address": "0xC715b8501039d3514787dC55BC09f89c293351e9"
+    },
+    {
+      "address": "0xeD530f3b8675B0a576DaAe64C004676c65368DfD"
+    },
+    {
+      "address": "0xf5020ADf433645c451A4809eac0d6F680709f11B"
+    }
   ],
   "abis": {
     "0x2CFd271e9b4d0344Fd2Aa0cb1ffd4f6b85c0B215": [

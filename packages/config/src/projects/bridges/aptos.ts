@@ -95,6 +95,7 @@ export const aptos: Bridge = {
           'WETH',
           //'USDD'
         ],
+        chain: 'ethereum',
       },
     ],
   },

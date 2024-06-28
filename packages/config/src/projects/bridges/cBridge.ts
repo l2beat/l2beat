@@ -43,6 +43,7 @@ export const cBridge: Bridge = {
         address: EthereumAddress('0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820'),
         sinceTimestamp: new UnixTime(1638346811),
         tokens: ['ETH', 'USDC', 'WETH', 'USDT', 'MASK', 'BUSD', 'LYRA'],
+        chain: 'ethereum',
       },
       // token bridge v1
       {
@@ -60,12 +61,14 @@ export const cBridge: Bridge = {
           'FXS',
           'WXT',
         ],
+        chain: 'ethereum',
       },
       // token bridge v2
       {
         address: EthereumAddress('0x7510792A3B1969F9307F3845CE88e39578f2bAE1'),
         sinceTimestamp: new UnixTime(1651661389),
         tokens: ['WETH', 'PSTAKE'],
+        chain: 'ethereum',
       },
     ],
   },
