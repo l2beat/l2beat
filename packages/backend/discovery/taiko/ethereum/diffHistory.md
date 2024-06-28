@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x1a9d9e0714596a68f80cbf3b326f615b15bcfa66
+
+# Diff at Fri, 28 Jun 2024 10:59:39 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0e63a13c0f6c2f62229e33cb4ab4b36a93715b3d block: 20063194
+- current block number: 20189741
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
++        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
+      implementations.0:
+-        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
++        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
+      values.CALLDATA_MESSAGE_SIZE_BYTES:
+-        352
+      values.impl:
+-        "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"
++        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
+    }
+```
+
+## Source code changes
+
+```diff
+.../TaikoBridge/Bridge.sol                         | 1249 ++------------------
+ 1 file changed, 88 insertions(+), 1161 deletions(-)
+```
+
 Generated with discovered.json: 0x9ec7174f8eea99746043ca4c4f61cd3f85b9c3f0
 
 # Diff at Mon, 10 Jun 2024 18:24:02 GMT:
