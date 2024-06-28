@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 20073647,
+  "blockNumber": 20188697,
   "configHash": "0x8e8c2aa00605b772cc3810b085938c01021e7dc431130534680b148b428bdfba",
   "version": 8,
   "contracts": [
@@ -61,7 +61,7 @@
       "sinceTimestamp": 1711563671,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619822",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619875",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -150,10 +150,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3283200,
-        "latestOutputIndex": 151,
-        "nextBlockNumber": 3304800,
-        "nextOutputIndex": 152,
+        "latestBlockNumber": 3996000,
+        "latestOutputIndex": 184,
+        "nextBlockNumber": 4017600,
+        "nextOutputIndex": 185,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -184,7 +184,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20051797
+          "prevBlockNum": 20188479
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -215,7 +215,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 34,
+        "nonce": 39,
         "VERSION": "1.3.0"
       }
     },
@@ -245,7 +245,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 4,
-        "nonce": 36,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -474,7 +474,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 92,
+        "nonce": 93,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
