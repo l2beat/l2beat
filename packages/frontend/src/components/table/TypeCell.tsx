@@ -12,6 +12,7 @@ import {
   StarknetIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
+  TaikoIcon,
 } from '../icons'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
 
@@ -83,6 +84,12 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
         <TypeTooltip
           text="This project is based on Starknet's code base."
           Icon={StarknetIcon}
+        />
+      )}
+      {provider === 'Taiko' && (
+        <TypeTooltip
+          text="This project is based on Taiko's code base."
+          Icon={TaikoIcon}
         />
       )}
     </span>
