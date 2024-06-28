@@ -12,7 +12,7 @@ const columnHelper = createColumnHelper<
   ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
 >()
 
-export const columns = [
+export const scalingUpcomingColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell index={ctx.row.index} />,

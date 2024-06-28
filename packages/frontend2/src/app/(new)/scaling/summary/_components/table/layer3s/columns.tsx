@@ -9,7 +9,7 @@ import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/types
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer3sEntry>()
 
-export const columns = [
+export const summaryLayer3sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell index={ctx.row.index} />,

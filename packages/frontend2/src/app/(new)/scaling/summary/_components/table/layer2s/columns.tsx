@@ -14,7 +14,7 @@ import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
 
-export const columns = [
+export const scalingLayer2sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell index={ctx.row.index} />,
