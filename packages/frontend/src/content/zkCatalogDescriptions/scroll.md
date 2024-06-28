@@ -1,6 +1,6 @@
-Scroll utilizes the [Halo2](https://zcash.github.io/halo2/index.html) proof system but modified to use KZG commitments instead of IPA commitments. The scheme makes use of the alt_bn128’s field. The prover code can be found [here](https://github.com/scroll-tech/scroll-prover).
+Scroll utilizes the [Halo2](https://zcash.github.io/halo2/index.html) proof system but modified to use KZG commitments instead of IPA commitments. The scheme makes use of the alt_bn128’s field. The prover code can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/prover).
 
-The protocol makes use of recursive proof aggregation. Documentation for the aggregation architecture can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/aggregator). The system doesn’t implement data compression yet.
+The protocol makes use of proof aggregation. Documentation for the aggregation architecture can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/aggregator). The system doesn’t implement data compression yet.
 
 The final proof is not wrapped in a different proof system. The CRS used is the powersOfTau25_hez_final and the instructions to regenerate the verification keys can be found [here](https://github.com/scroll-tech/scroll-prover#verifier-contract).
 
