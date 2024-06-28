@@ -9,6 +9,7 @@ const mantapacificDiscovery = new ProjectDiscovery('zklinknova', 'mantapacific')
 const mantleDiscovery = new ProjectDiscovery('zklinknova', 'mantle')
 const scrollDiscovery = new ProjectDiscovery('zklinknova', 'scroll')
 const blastDiscovery = new ProjectDiscovery('zklinknova', 'blast')
+const zksync2Discovery = new ProjectDiscovery('zklinknova', 'zksync2')
 // const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 
 const optimismUpgradability = {
@@ -27,7 +28,7 @@ const baseUpgradability = {
 }
 
 const mantapacificUpgradability = {
-  upgradableBy: ['MantaPacificOwner'],
+  upgradableBy: ['MantaOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -43,6 +44,11 @@ const scrollUpgradability = {
 
 const blastUpgradability = {
   upgradableBy: ['BlastOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const zksync2Upgradability = {
+  upgradableBy: ['EraOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -450,6 +456,23 @@ export const zklinknova: Layer3 = {
           description:
             "High level interface between the local zkLink contract and Blast's message service.",
           ...blastUpgradability,
+        }),
+      ],
+      zksync2: [
+        zksync2Discovery.getContractDetails('L1ERC20Bridge', {
+          description:
+            'Main entry point for depositing ERC20 tokens from ZKsync Era to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
+          ...zksync2Upgradability,
+        }),
+        zksync2Discovery.getContractDetails('zkLink', {
+          description:
+            "Main messaging contract on ZKsync Era and ETH escrow. Outgoing messages (like deposits) are sent through the ZKsync2L2Gateway which ultimately makes use of ZKsync Era's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
+          ...zksync2Upgradability,
+        }),
+        zksync2Discovery.getContractDetails('ZKsync2L2Gateway', {
+          description:
+            "High level interface between the local zkLink contract and ZKsync Era's message service.",
+          ...zksync2Upgradability,
         }),
       ],
     },
