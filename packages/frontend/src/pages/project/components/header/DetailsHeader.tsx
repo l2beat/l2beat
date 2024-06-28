@@ -90,7 +90,8 @@ export function DetailsHeader(props: HeaderProps) {
               />
             )}
             <ProjectAboutSection
-              className="mt-2 px-0 md:hidden"
+              type="mobile"
+              className="md:hidden"
               description={props.description}
               badges={props.badges}
             />
@@ -137,6 +138,7 @@ export function DetailsHeader(props: HeaderProps) {
       <div className="hidden md:block">
         <HorizontalSeparator className="hidden md:mt-6 md:block" />
         <ProjectAboutSection
+          type="desktop"
           description={props.description}
           badges={props.badges}
         />
