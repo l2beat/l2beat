@@ -46,6 +46,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { BadgeId } from '../../badges'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
@@ -98,6 +99,7 @@ export interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
+  badges?: BadgeId[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -324,6 +326,7 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
+    badges: templateVars.badges,
   }
 }
 

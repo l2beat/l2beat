@@ -10,6 +10,7 @@ import {
 } from '../../../common'
 import { type Layer3, type Layer3Display } from '../../layer3s'
 import { type Layer2, type Layer2Display } from '../types'
+import { BadgeId } from '../../badges'
 
 export interface UnderReviewConfigCommon {
   id: string
@@ -17,6 +18,7 @@ export interface UnderReviewConfigCommon {
   escrows?: ScalingProjectEscrow[]
   chainConfig?: ChainConfig
   transactionApi?: ScalingProjectTransactionApi
+  badges?: BadgeId[]
 }
 
 export interface UnderReviewConfigL2 extends UnderReviewConfigCommon {
@@ -59,6 +61,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
+    badges: templateVars.badges,
   }
 }
 
@@ -89,5 +92,6 @@ export function underReviewL3(templateVars: UnderReviewConfigL3): Layer3 {
     technology: TECHNOLOGY.UNDER_REVIEW,
     contracts: CONTRACTS.UNDER_REVIEW,
     chainConfig: templateVars.chainConfig,
+    badges: templateVars.badges,
   }
 }
