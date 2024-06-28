@@ -199,10 +199,4 @@ export const chains: ChainConfig[] = [
       },
     },
   },
-  {
-    name: 'mantapacific',
-    chainId: 169,
-    multicall: getMulticall3Config(332890),
-    etherscanUrl: 'https://pacific-explorer.manta.network/api',
-  },
 ]
