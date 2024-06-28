@@ -8,9 +8,9 @@ import {
   TECHNOLOGY,
   UNDER_REVIEW_RISK_VIEW,
 } from '../../../common'
+import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s'
 import { type Layer2, type Layer2Display } from '../types'
-import { BadgeId } from '../../badges'
 
 export interface UnderReviewConfigCommon {
   id: string

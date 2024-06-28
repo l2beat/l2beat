@@ -34,9 +34,9 @@ import {
   makeBridgeCompatible,
 } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { BadgeId } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
-import { BadgeId } from '../../badges'
 
 export interface DAProvider {
   name: DataAvailabilityLayer

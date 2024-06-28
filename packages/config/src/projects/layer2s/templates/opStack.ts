@@ -37,6 +37,7 @@ import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
+import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING, StageConfig } from '../common'
 import { getStage } from '../common/stages/getStage'
@@ -46,7 +47,6 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
-import { BadgeId } from '../../badges'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
