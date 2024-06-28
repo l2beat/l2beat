@@ -1,7 +1,7 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 20138458,
+  "blockNumber": 20181708,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
   "version": 8,
   "contracts": [
@@ -74,10 +74,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C",
+        "implementation": "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C",
         "admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F"
       },
-      "implementations": ["0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"],
+      "implementations": ["0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"],
       "sinceTimestamp": 1626949825,
       "derivedName": ""
     },
@@ -118,7 +118,7 @@
       "values": {
         "getMembersRegistry": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
         "name": "ChainportCongress",
-        "proposalCount": 54
+        "proposalCount": 55
       },
       "derivedName": "ChainportCongress"
     }

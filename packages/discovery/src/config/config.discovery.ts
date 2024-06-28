@@ -75,13 +75,23 @@ export function getChainConfig(chain: string): DiscoveryChainConfig {
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
     ]),
     multicall: chainConfig.multicall,
-    etherscanApiKey: env.string([
-      `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
-      `${ENV_NAME}_ETHERSCAN_API_KEY`,
-      //support for legacy local configs
-      `DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`,
-    ]),
-    etherscanUrl: chainConfig.etherscanUrl,
-    etherscanUnsupported: chainConfig.etherscanUnsupported,
+    explorer:
+      chainConfig.explorer.type === 'blockscout'
+        ? {
+            type: chainConfig.explorer.type,
+            url: chainConfig.explorer.url,
+            unsupported: chainConfig.explorer.unsupported,
+          }
+        : {
+            type: chainConfig.explorer.type,
+            url: chainConfig.explorer.url,
+            apiKey: env.string([
+              `${ENV_NAME}_ETHERSCAN_API_KEY_FOR_DISCOVERY`,
+              `${ENV_NAME}_ETHERSCAN_API_KEY`,
+              //support for legacy local configs
+              `DISCOVERY_${ENV_NAME}_ETHERSCAN_API_KEY`,
+            ]),
+            unsupported: chainConfig.explorer.unsupported,
+          },
   }
 }

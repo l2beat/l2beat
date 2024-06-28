@@ -1,8 +1,8 @@
 {
   "name": "reya",
   "chain": "ethereum",
-  "blockNumber": 20024504,
-  "configHash": "0xe1d673231ca5f2c962b937026d1b9abaea422017a4cda186035dabda2ec70a48",
+  "blockNumber": 20177364,
+  "configHash": "0xceb47fefcba059ec3f9be446767c30c3b95e6f6787ac0db0a74bcad7aa52dc66",
   "version": 8,
   "contracts": [
     {
@@ -96,11 +96,11 @@
           "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ],
         "allowedOutboxList": ["0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9"],
-        "delayedMessageCount": 7897,
+        "delayedMessageCount": 8736,
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerInbox": "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
-        "sequencerMessageCount": 7398,
-        "sequencerReportedSubMessageCount": 2346159
+        "sequencerMessageCount": 8051,
+        "sequencerReportedSubMessageCount": 3171293
       },
       "derivedName": "Bridge"
     },
@@ -159,12 +159,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 1112,
+        "firstUnresolvedNode": 1372,
         "inbox": "0x672109752635177ebcb17F2C7e04575A709014BD",
         "isERC20Enabled": false,
         "lastStakeBlock": 19347657,
-        "latestConfirmed": 1111,
-        "latestNodeCreated": 1262,
+        "latestConfirmed": 1371,
+        "latestNodeCreated": 1409,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
@@ -228,7 +228,7 @@
       "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1709380607,
       "values": {
-        "batchCount": 7398,
+        "batchCount": 8051,
         "batchPosters": ["0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"],
         "bridge": "0x383c03c4EfF819E73409DbC690755a9992393814",
         "dacKeyset": {
@@ -249,7 +249,7 @@
         "rollup": "0x448Bbd134dE1B23976073aB4F2915849b2dcD73A",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 7895
+        "totalDelayedMessagesRead": 8732
       },
       "derivedName": "SequencerInbox"
     },
@@ -412,7 +412,8 @@
       "address": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34"
     },
     {
-      "address": "0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122"
+      "address": "0x6106B6480DE82E3eC2680d7c61A9D18d71Bf9122",
+      "roles": ["Validator"]
     },
     {
       "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
@@ -430,7 +431,8 @@
       "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
     },
     {
-      "address": "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a"
+      "address": "0xf5636Df6f86f31668aeAe9bB8a1C4F0ED147926a",
+      "roles": ["Sequencer"]
     },
     {
       "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5"

@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xc756f3131ca96d16bfed9654446846c762cd7a50
+
+# Diff at Wed, 26 Jun 2024 09:44:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb9200e010745e10244c0b3851b3acf21fe41f31 block: 20138623
+- current block number: 20175047
+
+## Description
+
+New plug with an attached vault for the upcoming KINTO token, not used yet.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.56:
++        "0xA7384185a6428e6B0D33199256fE67b6fA5D8e40"
+    }
+```
+
 Generated with discovered.json: 0xb7c645b5308cbf243e17e7486b4dcb2d95ccdd7f
 
 # Diff at Fri, 21 Jun 2024 07:32:57 GMT:

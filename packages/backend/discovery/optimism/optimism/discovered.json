@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 121593875,
-  "configHash": "0xd7f7ce9d127fdc33d8b5598a3a17b934faa23df38aab0efa4228abef552f4858",
+  "blockNumber": 121899221,
+  "configHash": "0x3cef7cdf62c41fc1031b255ed196846dcfa4428e3bd4402a7af2f2e9c4fa4799",
   "version": 8,
   "contracts": [
     {
@@ -63,7 +63,7 @@
       "values": {
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292637819",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638045",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -90,13 +90,13 @@
       "values": {
         "baseFee": 0,
         "baseFeeScalar": 1368,
-        "blobBaseFee": 3,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 5200849598,
+        "l1BaseFee": 3002056979,
         "version": "1.2.0"
       },
       "derivedName": "GasPriceOracle"
@@ -205,18 +205,18 @@
       "implementations": ["0x07dbe8500fc591d1852B76feE44d5a05e13097Ff"],
       "sinceTimestamp": 1636665399,
       "values": {
-        "basefee": 5200849598,
+        "basefee": 3002056979,
         "baseFeeScalar": 1368,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
-        "blobBaseFee": 3,
+        "blobBaseFee": 1,
         "blobBaseFeeScalar": 810949,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x4e766839b41a9e088e11b51df57b310d08d08ef7a28678ddc8f0f8baf3022af6",
+        "hash": "0x3689bfdebef9303055294672be98cc49917858d49ab8f808d65fa528f7f0fddb",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20124649,
-        "sequenceNumber": 5,
-        "timestamp": 1718786387,
+        "number": 20175214,
+        "sequenceNumber": 4,
+        "timestamp": 1719397079,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -283,9 +283,9 @@
       "values": {
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "totalProcessed": "1928902844154653024561",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "BaseFeeVault"
     },
     {
       "name": "L1FeeVault",
@@ -300,9 +300,9 @@
       "values": {
         "MIN_WITHDRAWAL_AMOUNT": "10000000000000000000",
         "RECIPIENT": "0xa3d596EAfaB6B13Ab18D40FaE1A962700C84ADEa",
-        "totalProcessed": "11679962820116169091101",
         "version": "1.1.0"
-      }
+      },
+      "derivedName": "L1FeeVault"
     },
     {
       "name": "SchemaRegistry",

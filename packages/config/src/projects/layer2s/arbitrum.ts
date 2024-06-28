@@ -171,6 +171,12 @@ export const arbitrum: Layer2 = {
         description:
           'wstETH Vault for custom wstETH Gateway. Fully controlled by Lido governance.',
       }),
+      discovery.getEscrowDetails({
+        // LPT L1 Escrow
+        address: EthereumAddress('0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A'),
+        tokens: ['ETH'],
+        description: 'LPT Vault for custom Livepeer Token Gateway.',
+      }),
       {
         // This bridge is inactive, but we keep it
         // in case we have to gather historic data

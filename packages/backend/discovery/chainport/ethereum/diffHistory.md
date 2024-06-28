@@ -1,3 +1,56 @@
+Generated with discovered.json: 0x8adb422a6d8da7bded1a0f54c3571a0a55d9afa7
+
+# Diff at Thu, 27 Jun 2024 08:04:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa87256215827e86de3c150df238331f18654881 block: 20175233
+- current block number: 20181708
+
+## Description
+
+Proposed and executed a proposal to unfreeze bridges, Vault6 and unverified 0xD02c8a355599FEe7e4F1d1d71f7A01c0108E353c.
+
+Vault6 implementation is unverified, currently no visibility on what was frozen.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        54
++        55
+    }
+```
+
+Generated with discovered.json: 0xb8c06d6916518287da115de7a043ff208ec8a78a
+
+# Diff at Wed, 26 Jun 2024 10:22:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb9200e010745e10244c0b3851b3acf21fe41f31 block: 20138458
+- current block number: 20175233
+
+## Description
+
+Proposal from last update is executed, upgrading the Vault6 contract to a new unverified implementation.
+
+## Watched changes
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
++        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
+      implementations.0:
+-        "0x2861F4FCADEB5Be5cA47D306D139ec97439FC35C"
++        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
+    }
+```
+
 Generated with discovered.json: 0xf976fdfd826637b5822d6ad01aaca6c3ef60d265
 
 # Diff at Fri, 21 Jun 2024 06:59:57 GMT:

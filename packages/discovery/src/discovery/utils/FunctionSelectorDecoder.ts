@@ -2,8 +2,9 @@ import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { ContractSource } from '../../utils/IEtherscanClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import { ContractSource, IProvider } from '../provider/IProvider'
+import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 
 export class FunctionSelectorDecoder {

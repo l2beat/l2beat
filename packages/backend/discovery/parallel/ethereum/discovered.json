@@ -1,8 +1,8 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 20174601,
-  "configHash": "0xecc09c7695f35bc5d4930a34e4de04999b8af912a998a116291ccfb77dbe7fbd",
+  "blockNumber": 20177357,
+  "configHash": "0xfc3051c8fccdcbb0aa711be0d38878336edc2249254205faa12230a8ca9b5ac1",
   "version": 8,
   "contracts": [
     {
@@ -227,12 +227,12 @@
         "confirmPeriodBlocks": 43200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 40320,
-        "firstUnresolvedNode": 1042,
+        "firstUnresolvedNode": 1043,
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "isERC20Enabled": false,
         "lastStakeBlock": 18914041,
-        "latestConfirmed": 1041,
-        "latestNodeCreated": 1053,
+        "latestConfirmed": 1042,
+        "latestNodeCreated": 1054,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
@@ -481,10 +481,12 @@
       "address": "0x533Ebf8893c5bB7DDe47938507e239789E299a5f"
     },
     {
-      "address": "0x56D33424edb428744597Ec02571f14B50a33b7de"
+      "address": "0x56D33424edb428744597Ec02571f14B50a33b7de",
+      "roles": ["Validator"]
     },
     {
-      "address": "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"
+      "address": "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4",
+      "roles": ["Sequencer"]
     },
     {
       "address": "0x70Bace2e1cc06E7A96D5d23681A66a9eA6938436"

@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x7c650b93b3b74635f636b7c782164479d7f37500
+
+# Diff at Wed, 26 Jun 2024 09:58:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb9200e010745e10244c0b3851b3acf21fe41f31 block: 20160808
+- current block number: 20175102
+
+## Description
+
+Two new LockReleaseTokenPool contracts are tracked. Currently both are unused.
+The tokens for the two pools (hyETH, dsETH) are currently unsupported (no data on CG), so the escrows are not added.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x0238d2C272f17CF11AEDB08CDE515d56ED25E2E4)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xcd69c117bf91Fc57d5fC237dFAbA5f17B5322733)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x0238d2C272f17CF11AEDB08CDE515d56ED25E2E4.sol | 1407 ++++++++++++++++++++
+ ...-0xcd69c117bf91Fc57d5fC237dFAbA5f17B5322733.sol | 1407 ++++++++++++++++++++
+ 2 files changed, 2814 insertions(+)
+```
+
 Generated with discovered.json: 0x0d7ab0a044f0fdba780128be25b5701c962c6167
 
 # Diff at Mon, 24 Jun 2024 10:03:37 GMT:

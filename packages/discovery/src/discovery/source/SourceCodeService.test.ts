@@ -1,39 +1,42 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ContractSource, IProvider } from '../provider/IProvider'
+import { ContractSource } from '../../utils/IEtherscanClient'
+import { IProvider } from '../provider/IProvider'
 import { SourceCodeService } from './SourceCodeService'
-import { processSources } from './processSources'
 
 describe(SourceCodeService.name, () => {
   const FOO_ADDRESS = EthereumAddress.random()
   const FOO_METADATA: ContractSource = {
     abi: [],
     name: 'Foo',
-    source: 'foo',
     isVerified: false,
     solidityVersion: '0.8.0',
     constructorArguments: '',
+    files: {},
+    remappings: [],
   }
 
   const BAR_ADDRESS = EthereumAddress.random()
   const BAR_METADATA: ContractSource = {
     abi: ['function bar()'],
     name: 'Bar',
-    source: 'bar',
     isVerified: true,
     solidityVersion: '0.8.0',
     constructorArguments: '',
+    files: {},
+    remappings: [],
   }
 
   const BAZ_ADDRESS = EthereumAddress.random()
   const BAZ_METADATA: ContractSource = {
     abi: ['function baz()'],
     name: 'Baz',
-    source: 'baz',
     isVerified: true,
     solidityVersion: '0.8.0',
     constructorArguments: '',
+    files: {},
+    remappings: [],
   }
 
   it('single, unverified contract', async () => {
@@ -54,7 +57,7 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Foo',
           address: FOO_ADDRESS,
-          source: processSources(FOO_ADDRESS, FOO_METADATA),
+          source: FOO_METADATA,
         },
       ],
     })
@@ -80,7 +83,7 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Bar',
           address: BAR_ADDRESS,
-          source: processSources(BAR_ADDRESS, BAR_METADATA),
+          source: BAR_METADATA,
         },
       ],
     })
@@ -109,12 +112,12 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Bar',
           address: BAR_ADDRESS,
-          source: processSources(BAR_ADDRESS, BAR_METADATA),
+          source: BAR_METADATA,
         },
         {
           name: 'Baz',
           address: BAZ_ADDRESS,
-          source: processSources(BAZ_ADDRESS, BAZ_METADATA),
+          source: BAZ_METADATA,
         },
       ],
     })
@@ -142,12 +145,12 @@ describe(SourceCodeService.name, () => {
         {
           name: 'Bar',
           address: BAR_ADDRESS,
-          source: processSources(BAR_ADDRESS, BAR_METADATA),
+          source: BAR_METADATA,
         },
         {
           name: 'Foo',
           address: FOO_ADDRESS,
-          source: processSources(FOO_ADDRESS, FOO_METADATA),
+          source: FOO_METADATA,
         },
       ],
     })
