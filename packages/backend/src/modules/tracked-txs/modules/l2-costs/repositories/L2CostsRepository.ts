@@ -60,6 +60,10 @@ export class L2CostsRepository extends BaseRepository {
       .select('*')
       .orderBy('timestamp', 'asc')
 
+    if (l2costsRows.length === 0) {
+      return []
+    }
+
     const configRows = await knex('indexer_configurations').whereIn(
       'id',
       l2costsRows.map((r) => r.tracked_tx_id),

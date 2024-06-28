@@ -1,8 +1,7 @@
 import { TrackedTxId } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
 import { L2Cost, toRecord, toRecordWithProjectId, toRow } from './entity'
-import { joinTrackedTxs } from './join'
 import { selectL2Cost } from './select'
 
 export class L2CostRepository {
@@ -28,7 +27,7 @@ export class L2CostRepository {
   async getWithProjectIdByTimeRange(timeRange: [UnixTime, UnixTime]) {
     const [from, to] = timeRange
 
-    const rows = await this.db
+    const l2costsRows = await this.db
       .selectFrom('public.l2_costs')
       .where((eb) =>
         eb.and([
@@ -36,16 +35,40 @@ export class L2CostRepository {
           eb('timestamp', '<=', to.toDate()),
         ]),
       )
-      .innerJoin(...joinTrackedTxs)
       .select([
         ...selectL2Cost.map((column) => `public.l2_costs.${column}` as const),
-        'public.tracked_txs_configs.project_id',
       ])
-      .distinct()
+      .distinctOn('tx_hash')
+      .orderBy('tx_hash', 'asc')
       .orderBy('timestamp', 'asc')
       .execute()
 
-    return rows.map(toRecordWithProjectId)
+    if (l2costsRows.length === 0) {
+      return []
+    }
+
+    const configRows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .where(
+        'id',
+        'in',
+        l2costsRows.map((r) => r.tracked_tx_id),
+      )
+      .select(['id', 'properties'])
+      .execute()
+
+    const resultRows = l2costsRows.map((l2costsRow) => {
+      const config = configRows.find(
+        (configRow) => configRow.id === l2costsRow.tracked_tx_id,
+      )
+      assert(config?.id, `Cannot found config with id: ${config?.id}`)
+      return {
+        ...l2costsRow,
+        project_id: JSON.parse(config.properties).projectId,
+      }
+    })
+
+    return resultRows.map(toRecordWithProjectId)
   }
 
   async deleteFromById(
@@ -64,6 +87,36 @@ export class L2CostRepository {
       )
       .execute()
   }
+
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    return await this.db
+      .deleteFrom('public.l2_costs')
+      .where((eb) =>
+        eb.and([
+          eb('tracked_tx_id', '=', configId),
+          eb('timestamp', '>=', fromInclusive.toDate()),
+          eb('timestamp', '<=', toInclusive.toDate()),
+        ]),
+      )
+      .execute()
+  }
+
+  // #region Status page
+
+  async getUsedConfigsIds(): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('public.l2_costs')
+      .select(['tracked_tx_id'])
+      .distinctOn('tracked_tx_id')
+      .execute()
+    return rows.map((row) => row.tracked_tx_id)
+  }
+
+  // #endregion
 
   deleteAll() {
     return this.db.deleteFrom('public.l2_costs').execute()
