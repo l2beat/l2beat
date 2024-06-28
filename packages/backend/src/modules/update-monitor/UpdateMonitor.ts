@@ -192,6 +192,8 @@ export class UpdateMonitor {
       .filter((c) => c.unverified)
       .map((c) => c.name)
 
+    this.logErrorsInDiscovery(discovery, this.logger)
+
     const prevSanitizedDiscovery = sanitizeDiscoveryOutput(previousDiscovery)
     const sanitizedDiscovery = sanitizeDiscoveryOutput(discovery)
 
@@ -218,6 +220,22 @@ export class UpdateMonitor {
       version: this.version,
       configHash: projectConfig.hash,
     })
+  }
+
+  private logErrorsInDiscovery(
+    discovery: DiscoveryOutput,
+    logger: Logger,
+  ): void {
+    for (const contract of discovery.contracts) {
+      if (contract.errors !== undefined) {
+        for (const [field, error] of Object.entries(contract.errors)) {
+          logger.warn(`There was an error during discovery`, {
+            field,
+            error,
+          })
+        }
+      }
+    }
   }
 
   async getPreviousDiscovery(

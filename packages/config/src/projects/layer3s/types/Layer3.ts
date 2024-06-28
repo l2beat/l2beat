@@ -53,7 +53,7 @@ export interface Layer3 {
   /** List of permissioned addresses */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** List of permissioned addresses on the chain itself */
-  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */

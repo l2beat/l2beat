@@ -34,6 +34,7 @@ import {
   makeBridgeCompatible,
 } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
+import { BadgeId } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
@@ -66,6 +67,7 @@ export interface PolygonCDKStackConfig {
   upgradesAndGovernance?: string
   stateValidation?: ScalingProjectStateValidation
   associatedTokens?: string[]
+  badges?: BadgeId[]
 }
 
 export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
@@ -591,6 +593,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
+    badges: templateVars.badges,
   }
 }
 
