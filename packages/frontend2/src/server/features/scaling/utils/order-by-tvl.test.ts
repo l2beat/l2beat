@@ -1,7 +1,8 @@
-import { ProjectId, TvlApiProject, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { orderByTvl } from '../../src/utils/orderByTvl'
+import { orderByTvl } from './order-by-tvl'
+import { type TvlProject } from '../get-tvl'
 
 describe(orderByTvl.name, () => {
   it('orders projects by their latest hourly tvl', () => {
@@ -11,7 +12,7 @@ describe(orderByTvl.name, () => {
       { id: ProjectId('third') },
     ]
 
-    const projectWithHourlyUsd = (values: number[]): TvlApiProject => ({
+    const projectWithHourlyUsd = (values: number[]): TvlProject => ({
       tokens: {
         canonical: [],
         external: [],
@@ -58,28 +59,16 @@ describe(orderByTvl.name, () => {
             'externalEth',
             'nativeEth',
           ],
-          data: values.map((usd) => [
-            new UnixTime(0),
-            usd,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-            0,
-          ]),
+          data: values.map((usd) => [0, usd, 0, 0, 0, 0, 0, 0, 0]),
         },
       },
     })
 
     const ordered = orderByTvl(projects, {
-      projects: {
-        first: projectWithHourlyUsd([1001, 1002, 1003]),
-        // second is missing so 0 tvl is implied
-        third: projectWithHourlyUsd([2000, 1500, 1000]),
-        fourth: projectWithHourlyUsd([5000, 5000, 5000]),
-      },
+      first: projectWithHourlyUsd([1001, 1002, 1003]),
+      // second is missing so 0 tvl is implied
+      third: projectWithHourlyUsd([2000, 1500, 1000]),
+      fourth: projectWithHourlyUsd([5000, 5000, 5000]),
     })
 
     expect(ordered).toEqual([

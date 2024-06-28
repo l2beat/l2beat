@@ -1,12 +1,12 @@
 import {
-  Layer2,
-  Layer2Config,
-  Layer2Display,
-  ScalingProjectContracts,
-  ScalingProjectRiskView,
-  ScalingProjectRiskViewEntry,
-  ScalingProjectTechnology,
-  StageConfig,
+  type Layer2,
+  type Layer2Config,
+  type Layer2Display,
+  type ScalingProjectContracts,
+  type ScalingProjectRiskView,
+  type ScalingProjectRiskViewEntry,
+  type ScalingProjectTechnology,
+  type StageConfig,
 } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'

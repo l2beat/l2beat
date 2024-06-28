@@ -15,24 +15,49 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from './types'
-import { assert } from '@l2beat/shared-pure'
+import {
+  type ImplementationChangeReportApiResponse,
+  type VerificationStatus,
+  assert,
+} from '@l2beat/shared-pure'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
+import { getVerificationStatus } from '../verification-status/get-verification-status'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 
 export async function getScalingSummaryEntries(tvl: TvlResponse) {
   const orderedLayer2s = orderByTvl(LAYER_2S, tvl.projects)
   const orderedLayer3s = orderByTvl(LAYER_3S, tvl.projects)
 
+  const implementationChangeReport = await getImplementationChangeReport()
+  const verificationStatus = await getVerificationStatus()
+
   return {
-    layer2s: getLayer2s(orderedLayer2s, tvl),
-    layer3s: getLayer3s(orderedLayer3s, tvl),
+    layer2s: getLayer2s({
+      projects: orderedLayer2s,
+      tvl,
+      implementationChangeReport,
+      verificationStatus,
+    }),
+    layer3s: getLayer3s({
+      projects: orderedLayer3s,
+      tvl,
+      implementationChangeReport,
+      verificationStatus,
+    }),
   }
 }
 
-function getLayer2s(
-  layer2s: Layer2[],
-  tvl: TvlResponse,
-): ScalingSummaryLayer2sEntry[] {
-  const entries = layer2s.map((layer2) => {
+interface Params<T> {
+  projects: T[]
+  tvl: TvlResponse
+  implementationChangeReport: ImplementationChangeReportApiResponse
+  verificationStatus: VerificationStatus
+}
+
+function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
+  const { projects, tvl, implementationChangeReport, verificationStatus } =
+    params
+  const entries = projects.map((layer2) => {
     const projectTvl = tvl.projects[layer2.id.toString()]
 
     const associatedTokens = layer2.config.associatedTokens ?? []
@@ -40,6 +65,10 @@ function getLayer2s(
       ? getTvlStats(projectTvl, layer2.display.name, associatedTokens)
       : undefined
     const { tvl: aggregateTvl } = getTvlWithChange(tvl.layers2s)
+
+    const isVerified = !!verificationStatus.projects[layer2.id.toString()]
+    const hasImplementationChanged =
+      !!implementationChangeReport.projects[layer2.id.toString()]
 
     const entry: ScalingSummaryLayer2sEntry = {
       name: layer2.display.name,
@@ -50,9 +79,9 @@ function getLayer2s(
       provider: layer2.display.provider,
       warning: layer2.display.warning,
       redWarning: layer2.display.redWarning,
-      isVerified: true,
+      isVerified,
       showProjectUnderReview: isAnySectionUnderReview(layer2),
-      hasImplementationChanged: false,
+      hasImplementationChanged,
       isUpcoming: !!layer2.isUpcoming,
       isArchived: !!layer2.isArchived,
       purposes: layer2.display.purposes,
@@ -77,11 +106,10 @@ function getLayer2s(
   return compact(entries)
 }
 
-function getLayer3s(
-  layer3s: Layer3[],
-  tvl: TvlResponse,
-): ScalingSummaryLayer3sEntry[] {
-  const entries = layer3s.map((layer3) => {
+function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
+  const { projects, tvl, implementationChangeReport, verificationStatus } =
+    params
+  const entries = projects.map((layer3) => {
     const projectTvl = tvl.projects[layer3.id.toString()]
     const associatedTokens = layer3.config.associatedTokens ?? []
     const stats = projectTvl
@@ -97,6 +125,10 @@ function getLayer3s(
       'Programmer Error: Can not find host chain',
     )
 
+    const isVerified = !!verificationStatus.projects[layer3.id.toString()]
+    const hasImplementationChanged =
+      !!implementationChangeReport.projects[layer3.id.toString()]
+
     const entry: ScalingSummaryLayer3sEntry = {
       name: layer3.display.name,
       shortName: layer3.display.shortName,
@@ -106,9 +138,9 @@ function getLayer3s(
       provider: layer3.display.provider,
       warning: layer3.display.warning,
       redWarning: layer3.display.redWarning,
-      isVerified: true,
+      isVerified,
       showProjectUnderReview: isAnySectionUnderReview(layer3),
-      hasImplementationChanged: false,
+      hasImplementationChanged,
       isUpcoming: !!layer3.isUpcoming,
       isArchived: !!layer3.isArchived,
       purposes: layer3.display.purposes,

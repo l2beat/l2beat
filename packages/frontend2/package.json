@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "@l2beat/backend": "*",
+    "@l2beat/discovery": "*",
     "@l2beat/config": "*",
     "@l2beat/database": "*",
     "@l2beat/shared-pure": "*",

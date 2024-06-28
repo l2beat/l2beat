@@ -88,7 +88,7 @@ async function main() {
         ? fetchVerifiersApi(config.backend, http)
         : undefined,
     ])
-    const supportedChains = getChainNames(config)
+    const supportedChains = getChainNames([...config.layer2s, ...config.layer3s, ...config.bridges])
     const verificationStatus = getVerificationStatus(supportedChains)
     const manuallyVerifiedContracts =
       getManuallyVerifiedContracts(supportedChains)
