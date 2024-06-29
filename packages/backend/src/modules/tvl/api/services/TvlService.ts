@@ -21,15 +21,15 @@ import {
   sumValuesPerSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
-import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { AmountsDataService } from './data/AmountsDataService'
 import { PricesDataService } from './data/PricesDataService'
 import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
-  dataService: DataService
   valuesDataService: ValuesDataService
   pricesDataService: PricesDataService
+  amountsDataService: AmountsDataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
   configMapping: ConfigMapping
@@ -340,23 +340,24 @@ export class TvlService {
 
   // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
   // and keep only the current values in the database.
-  private async getBreakdownMap(timestamp: UnixTime) {
-    const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(timestamp)
-    // TODO: if missing amounts then look 7D ago
+  private async getBreakdownMap(targetTimestamp: UnixTime) {
+    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
+      this.$.configMapping.amounts,
+      targetTimestamp,
+    )
 
     const prices = await this.$.pricesDataService.getLatestPrice(
       this.$.configMapping.prices,
-      timestamp,
+      targetTimestamp,
     )
 
     const pricesMap = new Map(
       prices.prices.map((x) => [x.configId, x.priceUsd]),
     )
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()
-    for (const amount of tokenAmounts) {
+    for (const amount of tokenAmounts.amounts) {
       const config = this.$.configMapping.getAmountConfig(amount.configId)
-      if (config.untilTimestamp && config.untilTimestamp.lt(timestamp)) {
+      if (config.untilTimestamp && config.untilTimestamp.lt(targetTimestamp)) {
         continue
       }
 

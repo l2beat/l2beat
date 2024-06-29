@@ -14,9 +14,9 @@ import { ApplicationModule } from '../../ApplicationModule'
 import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
 import { BreakdownService } from '../api/services/BreakdownService'
-import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
+import { AmountsDataService } from '../api/services/data/AmountsDataService'
 import { PricesDataService } from '../api/services/data/PricesDataService'
 import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
@@ -101,14 +101,6 @@ export function createTvlModule(
   )
   assert(ethPrice, 'Eth priceId not found')
 
-  const dataService = new DataService({
-    amountRepository: peripherals.getRepository(AmountRepository),
-    priceRepository: peripherals.getRepository(PriceRepository),
-    syncOptimizer,
-    ethPriceId: createPriceId(ethPrice),
-    logger,
-  })
-
   const valuesDataService = new ValuesDataService({
     valueRepository: peripherals.getRepository(ValueRepository),
     syncOptimizer,
@@ -122,13 +114,21 @@ export function createTvlModule(
     logger,
   })
 
+  const amountsDataService = new AmountsDataService({
+    amountRepository: peripherals.getRepository(AmountRepository),
+    syncOptimizer,
+    logger,
+  })
+
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
 
   const tokenService = new TokenService({
-    dataService,
+    amountsDataService,
+    pricesDataService,
     configMapping,
+    syncOptimizer,
   })
 
   const aggregatedService = new AggregatedService({
@@ -139,17 +139,17 @@ export function createTvlModule(
   })
 
   const breakdownService = new BreakdownService({
-    dataService,
     pricesDataService,
+    amountsDataService,
     syncOptimizer,
     configMapping,
     chainConverter,
   })
 
   const tvlService = new TvlService({
-    dataService,
     valuesDataService,
     pricesDataService,
+    amountsDataService,
     tokenService,
     syncOptimizer,
     configMapping,

@@ -13,12 +13,12 @@ import { ConfigMapping } from '../../utils/ConfigMapping'
 import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { CanonicalAssetBreakdown } from '../utils/types'
-import { DataService } from './DataService'
+import { AmountsDataService } from './data/AmountsDataService'
 import { PricesDataService } from './data/PricesDataService'
 
 interface Dependencies {
-  dataService: DataService
   pricesDataService: PricesDataService
+  amountsDataService: AmountsDataService
   syncOptimizer: SyncOptimizer
   chainConverter: ChainConverter
   configMapping: ConfigMapping
@@ -28,13 +28,15 @@ export class BreakdownService {
   constructor(private readonly $: Dependencies) {}
 
   async getTvlBreakdown(
-    timestamp: UnixTime,
+    targetTimestamp: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(timestamp)
+    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
+      this.$.configMapping.amounts,
+      targetTimestamp,
+    )
     const prices = await this.$.pricesDataService.getLatestPrice(
       this.$.configMapping.prices,
-      timestamp,
+      targetTimestamp,
     )
 
     const pricesMap = new Map(
@@ -48,9 +50,9 @@ export class BreakdownService {
         native: NativeAssetBreakdownData[]
       }
     > = {}
-    for (const amount of tokenAmounts) {
+    for (const amount of tokenAmounts.amounts) {
       const config = this.$.configMapping.getAmountConfig(amount.configId)
-      if (config.untilTimestamp && config.untilTimestamp.lt(timestamp)) {
+      if (config.untilTimestamp && config.untilTimestamp.lt(targetTimestamp)) {
         continue
       }
 
@@ -160,6 +162,6 @@ export class BreakdownService {
       }
     }
 
-    return { dataTimestamp: timestamp, breakdowns: result }
+    return { dataTimestamp: targetTimestamp, breakdowns: result }
   }
 }

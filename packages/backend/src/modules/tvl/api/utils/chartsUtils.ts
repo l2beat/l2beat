@@ -8,6 +8,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
+import _ from 'lodash'
 import { ValueRecord } from '../../repositories/ValueRepository'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
@@ -103,34 +104,38 @@ export function getChartData(props: {
 }
 
 export function getTokenCharts(
+  targetTimestamp: UnixTime,
   dailyStart: UnixTime,
-  lastHour: UnixTime,
-  amountsAndPrices: Dictionary<{ amount: bigint; price: number }> = {},
-  decimals: number,
   sixHourlyStart: UnixTime,
   hourlyStart: UnixTime,
+  amounts: Dictionary<Dictionary<bigint>>,
+  prices: Dictionary<number>,
+  decimals: number,
 ): TokenTvlApiCharts {
   const dailyData = getTokenChartData({
     start: dailyStart,
-    end: lastHour,
+    end: targetTimestamp,
     step: [1, 'days'],
-    amountsAndPrices,
+    amounts,
+    prices,
     decimals,
   })
 
   const sixHourlyData = getTokenChartData({
     start: sixHourlyStart,
-    end: lastHour,
+    end: targetTimestamp,
     step: [6, 'hours'],
-    amountsAndPrices,
+    amounts,
+    prices,
     decimals,
   })
 
   const hourlyData = getTokenChartData({
     start: hourlyStart,
-    end: lastHour,
+    end: targetTimestamp,
     step: [1, 'hours'],
-    amountsAndPrices,
+    amounts,
+    prices,
     decimals,
   })
 
@@ -154,7 +159,8 @@ export function getTokenChartData(props: {
   start: UnixTime
   end: UnixTime
   step: [number, 'days' | 'hours']
-  amountsAndPrices: Dictionary<{ amount: bigint; price: number }>
+  amounts: Dictionary<Dictionary<bigint>>
+  prices: Dictionary<number>
   decimals: number
 }) {
   const data: [UnixTime, number, number][] = []
@@ -163,19 +169,19 @@ export function getTokenChartData(props: {
     curr <= props.end;
     curr = curr.add(...props.step)
   ) {
-    const amountAndPrice = props.amountsAndPrices[curr.toString()]
-    assert(
-      amountAndPrice !== undefined,
-      'Value not found for timestamp ' + curr.toString(),
-    )
+    const amounts = props.amounts[curr.toString()]
+    const amount = _.values(amounts).reduce((acc, curr) => acc + curr, 0n)
+
+    const price = props.prices[curr.toString()]
+    assert(price, 'Price not found for timestamp ' + curr.toString())
     const valueUsd = calculateValue({
-      amount: amountAndPrice.amount,
-      priceUsd: amountAndPrice.price,
+      amount: amount,
+      priceUsd: price,
       decimals: props.decimals,
     })
     data.push([
       curr,
-      asNumber(amountAndPrice.amount, props.decimals),
+      asNumber(amount, props.decimals),
       asNumber(valueUsd, 2),
     ] as const)
   }

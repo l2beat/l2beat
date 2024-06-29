@@ -7,7 +7,10 @@ import {
   AmountRepository,
 } from '../../../repositories/AmountRepository'
 import { SyncOptimizer } from '../../../utils/SyncOptimizer'
-import { getLaggingAndSyncing } from '../../utils/getLaggingAndSyncing'
+import {
+  CONSIDER_EXCLUDED_AFTER_DAYS,
+  getLaggingAndSyncing,
+} from '../../utils/getLaggingAndSyncing'
 
 interface Dependencies {
   readonly amountRepository: AmountRepository
@@ -22,51 +25,149 @@ export class AmountsDataService {
 
   async getAmounts(
     configurations: (AmountConfigEntry & { configId: string })[],
-    minTimestamp: UnixTime,
     targetTimestamp: UnixTime,
   ) {
-    const amounts = await this.$.amountRepository.getByConfigIdsInRange(
+    const records = await this.$.amountRepository.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
-      minTimestamp,
+      configurations.reduce(
+        (a, b) => UnixTime.max(a, b.sinceTimestamp),
+        UnixTime.now(),
+      ),
       targetTimestamp,
     )
 
-    const amountsByTimestamp = groupBy(amounts, 'timestamp')
+    const result = {
+      amounts: {} as Dictionary<Dictionary<bigint>>,
+      lagging: new Map<
+        string,
+        { latestTimestamp: UnixTime; latestValue: AmountRecord }
+      >(),
+      excluded: new Set<string>(),
+    }
 
-    const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
-      configurations.map((c) => ({
-        id: c.configId,
-        minTimestamp: c.sinceTimestamp,
-      })),
-      amountsByTimestamp,
-      (value: AmountRecord) => value.configId,
-      targetTimestamp,
-    )
+    const amountsByConfig = groupBy(records, 'configId')
+    for (const [configId, amounts] of Object.entries(amountsByConfig)) {
+      const config = configurations.find((c) => c.configId === configId)
+      assert(config, 'Config should be defined')
 
-    const result: Dictionary<bigint> = {}
+      const amountsByTimestamp = groupBy(amounts, 'timestamp')
 
-    const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
-    for (const timestamp of timestamps) {
-      const amounts = (amountsByTimestamp[timestamp.toString()] ?? []).filter(
-        (a) => !excluded.find((e) => e === a.configId),
+      const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
+        [
+          {
+            id: configId,
+            minTimestamp: config.sinceTimestamp,
+          },
+        ],
+        amountsByTimestamp,
+        (value: AmountRecord) => value.configId,
+        targetTimestamp,
       )
 
-      const missing = configurations
-        .map((a) => a.configId)
-        .filter((a) => !amounts.map((f) => f.configId).includes(a))
+      lagging.forEach((l) => result.lagging.set(configId, { ...l }))
+      excluded.forEach((s) => result.excluded.add(s))
 
-      if (missing.length > 0) {
-        for (const m of missing) {
-          const l = lagging.find((l) => l.id === m)
-          assert(l, 'Missing lagging value')
-
-          amounts.push(l.latestValue)
-        }
+      if (excluded.includes(configId)) {
+        continue
       }
 
-      const amount = amounts.reduce((acc, curr) => acc + curr.amount, 0n)
-      result[timestamp.toString()] = amount
+      const amountsByTimestampForConfig: Dictionary<bigint> = {}
+      const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
+      for (const timestamp of timestamps) {
+        if (timestamp.lt(config.sinceTimestamp)) {
+          continue
+        }
+
+        const amount = amountsByTimestamp[timestamp.toString()]
+
+        if (amount === undefined) {
+          if (lagging.length === 1) {
+            amountsByTimestampForConfig[timestamp.toString()] =
+              lagging[0].latestValue.amount
+            continue
+          }
+
+          throw new Error('Lagging entry should be defined')
+        }
+
+        assert(amount.length === 1, 'There should be one amount')
+        amountsByTimestampForConfig[timestamp.toString()] = amount[0].amount
+      }
     }
+
+    return result
+  }
+
+  async getLatestAmount(
+    configurations: (AmountConfigEntry & { configId: string })[],
+    targetTimestamp: UnixTime,
+  ) {
+    const amounts =
+      await this.$.amountRepository.getByTimestamp(targetTimestamp)
+
+    const result = {
+      amounts,
+      lagging: new Map<
+        string,
+        { latestTimestamp: UnixTime; latestValue: AmountRecord }
+      >(),
+      excluded: new Set<string>(),
+    }
+
+    if (amounts.length === configurations.length) {
+      return result
+    }
+
+    const missing = configurations.filter(
+      (c) => !amounts.find((p) => p.configId === c.configId),
+    )
+
+    const amountsAtExcludedHeuristic =
+      await this.$.amountRepository.getByTimestamp(
+        targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+      )
+
+    const excluded = missing.filter(
+      (c) => !amountsAtExcludedHeuristic.find((p) => p.configId === c.configId),
+    )
+    excluded.forEach((e) => result.excluded.add(e.configId))
+
+    if (excluded.length + amounts.length === configurations.length) {
+      return result
+    }
+
+    const lagging = missing.filter((c) =>
+      amountsAtExcludedHeuristic.find((p) => p.configId === c.configId),
+    )
+
+    const recordsForLagging =
+      await this.$.amountRepository.getByConfigIdsInRange(
+        lagging.map((l) => l.configId),
+        lagging.reduce(
+          (a, b) => UnixTime.max(a, b.sinceTimestamp),
+          UnixTime.now(),
+        ),
+        targetTimestamp,
+      )
+
+    for (const laggingConfig of lagging) {
+      const sortedRecordsForConfig = recordsForLagging
+        .filter((r) => r.configId === laggingConfig.configId)
+        .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
+
+      const latest = sortedRecordsForConfig[sortedRecordsForConfig.length - 1]
+
+      result.lagging.set(laggingConfig.configId, {
+        latestTimestamp: latest.timestamp,
+        latestValue: latest,
+      })
+    }
+
+    assert(
+      result.amounts.length + result.excluded.size + result.lagging.size ===
+        configurations.length,
+      'There should be an equal amount of configurations',
+    )
 
     return result
   }
