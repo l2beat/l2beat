@@ -17,6 +17,7 @@ import { BreakdownService } from '../api/services/BreakdownService'
 import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
+import { PricesDataService } from '../api/services/data/PricesDataService'
 import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
@@ -114,6 +115,13 @@ export function createTvlModule(
     logger,
   })
 
+  const pricesDataService = new PricesDataService({
+    priceRepository: peripherals.getRepository(PriceRepository),
+    syncOptimizer,
+    etherPriceConfig: { ...ethPrice, configId: createPriceId(ethPrice) },
+    logger,
+  })
+
   const chainConverter = new ChainConverter(
     chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
   )
@@ -124,14 +132,15 @@ export function createTvlModule(
   })
 
   const aggregatedService = new AggregatedService({
-    dataService,
     valuesDataService,
+    pricesDataService,
     syncOptimizer,
     tokenService,
   })
 
   const breakdownService = new BreakdownService({
     dataService,
+    pricesDataService,
     syncOptimizer,
     configMapping,
     chainConverter,
@@ -140,6 +149,7 @@ export function createTvlModule(
   const tvlService = new TvlService({
     dataService,
     valuesDataService,
+    pricesDataService,
     tokenService,
     syncOptimizer,
     configMapping,

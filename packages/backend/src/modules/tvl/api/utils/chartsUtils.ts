@@ -36,7 +36,7 @@ export function getChartsData(props: {
   hourlyStart: UnixTime
   lastHour: UnixTime
   aggregate: Map<number, ValuesForSource>
-  ethPrices: Map<number, number>
+  ethPrices: Dictionary<number>
 }): TvlApiCharts {
   const dailyData = getChartData({
     start: props.dailyStart,
@@ -77,7 +77,7 @@ export function getChartData(props: {
   end: UnixTime
   step: [number, 'hours' | 'days']
   aggregatedValues: Map<number, ValuesForSource>
-  ethPrices: Map<number, number>
+  ethPrices: Dictionary<number>
   chartId: string | ProjectId
 }) {
   const values = []
@@ -94,7 +94,7 @@ export function getChartData(props: {
         ' at timestamp ' +
         curr.toString(),
     )
-    const ethPrice = props.ethPrices.get(curr.toNumber())
+    const ethPrice = props.ethPrices[curr.toNumber()]
     assert(ethPrice, 'Eth price not found for timestamp ' + curr.toString())
 
     values.push(getChartPoint(curr, ethPrice, value))
@@ -290,7 +290,7 @@ export function subtractTokenCharts(
   main: TvlApiCharts,
   token: TokenTvlApiCharts,
   tokenType: 'canonical' | 'external' | 'native',
-  ethPrices: Map<number, number>,
+  ethPrices: Dictionary<number>,
 ): TvlApiCharts {
   return {
     hourly: subtractTokenChart(main.hourly, token.hourly, tokenType, ethPrices),
@@ -308,7 +308,7 @@ export function subtractTokenChart(
   main: TvlApiChart,
   token: TokenTvlApiChart,
   tokenType: 'canonical' | 'external' | 'native',
-  ethPrices: Map<number, number>,
+  ethPrices: Dictionary<number>,
 ): TvlApiChart {
   const data = main.data.map((x) => {
     const tokenAt = token.data.find((d) => d[0].equals(x[0]))
@@ -317,8 +317,7 @@ export function subtractTokenChart(
       return x
     }
     const tokenUsdValue = tokenAt[2]
-    // TODO
-    const ethPriceAt = ethPrices.get(x[0].toNumber())
+    const ethPriceAt = ethPrices[x[0].toNumber()]
     assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`)
     const tokenEthValue = tokenUsdValue / ethPriceAt
 

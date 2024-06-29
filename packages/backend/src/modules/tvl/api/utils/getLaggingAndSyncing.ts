@@ -3,7 +3,7 @@ import { Dictionary } from 'lodash'
 
 // If there is no data before it then most likely indexer is still syncing data
 // or there is no data (zeroes)
-const CONSIDER_EXCLUDED_AFTER_DAYS = 7
+export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
 /**
  * WARNING:  In this function we assume that the values data is saved to DB without holes with hourly granularity

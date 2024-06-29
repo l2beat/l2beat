@@ -8,13 +8,13 @@ import {
   sumValuesPerSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
-import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { PricesDataService } from './data/PricesDataService'
 import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
-  dataService: DataService
   valuesDataService: ValuesDataService
+  pricesDataService: PricesDataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
 }
@@ -23,14 +23,18 @@ export class AggregatedService {
   constructor(private readonly $: Dependencies) {}
 
   async getAggregatedTvl(
-    timestamp: UnixTime,
+    targetTimestamp: UnixTime,
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.$.dataService.getEthPrices()
+    const ethPrices =
+      await this.$.pricesDataService.getEthPrices(targetTimestamp)
 
     const valuesByProjectByTimestamp =
-      await this.$.valuesDataService.getValuesForProjects(projects, timestamp)
+      await this.$.valuesDataService.getValuesForProjects(
+        projects,
+        targetTimestamp,
+      )
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
@@ -77,9 +81,9 @@ export class AggregatedService {
       dailyStart,
       sixHourlyStart,
       hourlyStart,
-      lastHour: timestamp,
+      lastHour: targetTimestamp,
       aggregate,
-      ethPrices,
+      ethPrices: ethPrices.prices,
     })
 
     if (associatedTokens.length > 0) {
@@ -89,12 +93,17 @@ export class AggregatedService {
           assert(project, 'Project not found!')
 
           const data = await this.$.tokenService.getTokenChart(
-            timestamp,
+            targetTimestamp,
             project,
             token,
           )
 
-          result = subtractTokenCharts(result, data, token.type, ethPrices)
+          result = subtractTokenCharts(
+            result,
+            data,
+            token.type,
+            ethPrices.prices,
+          )
         }),
       )
     }

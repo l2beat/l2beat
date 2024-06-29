@@ -23,11 +23,13 @@ import {
 import { ApiProject, AssociatedToken } from '../utils/types'
 import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { PricesDataService } from './data/PricesDataService'
 import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
   dataService: DataService
   valuesDataService: ValuesDataService
+  pricesDataService: PricesDataService
   syncOptimizer: SyncOptimizer
   tokenService: TokenService
   configMapping: ConfigMapping
@@ -38,13 +40,17 @@ export class TvlService {
   constructor(private readonly $: Dependencies) {}
 
   async getTvl(
-    lastHour: UnixTime,
+    targetTimestamp: UnixTime,
     projects: ApiProject[],
   ): Promise<TvlApiResponse> {
-    const ethPrices = await this.$.dataService.getEthPrices()
+    const ethPrices =
+      await this.$.pricesDataService.getEthPrices(targetTimestamp)
 
     const valuesByProjectByTimestamp =
-      await this.$.valuesDataService.getValuesForProjects(projects, lastHour)
+      await this.$.valuesDataService.getValuesForProjects(
+        projects,
+        targetTimestamp,
+      )
 
     const projectsMinTimestamp = projects
       .map((x) => x.minTimestamp)
@@ -107,10 +113,10 @@ export class TvlService {
 
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, project.minTimestamp).toEndOf('day'),
-        end: lastHour,
+        end: targetTimestamp,
         step: [1, 'days'],
         aggregatedValues: valueSums,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: project.id,
       })
 
@@ -118,19 +124,19 @@ export class TvlService {
         start: UnixTime.max(sixHourlyStart, project.minTimestamp).toEndOf(
           'six hours',
         ),
-        end: lastHour,
+        end: targetTimestamp,
         step: [6, 'hours'],
         aggregatedValues: valueSums,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: project.id,
       })
 
       const hourlyData = getChartData({
         start: UnixTime.max(hourlyStart, project.minTimestamp).toEndOf('hour'),
-        end: lastHour,
+        end: targetTimestamp,
         step: [1, 'hours'],
         aggregatedValues: valueSums,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: project.id,
       })
 
@@ -152,26 +158,26 @@ export class TvlService {
       const minTimestamp = minTimestamps[type]
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, minTimestamp).toEndOf('day'),
-        end: lastHour,
+        end: targetTimestamp,
         step: [1, 'days'],
         aggregatedValues: value,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: type,
       })
       const sixHourlyData = getChartData({
         start: UnixTime.max(sixHourlyStart, minTimestamp).toEndOf('six hours'),
-        end: lastHour,
+        end: targetTimestamp,
         step: [6, 'hours'],
         aggregatedValues: value,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: type,
       })
       const hourlyData = getChartData({
         start: UnixTime.max(hourlyStart, minTimestamp).toEndOf('hour'),
-        end: lastHour,
+        end: targetTimestamp,
         step: [1, 'hours'],
         aggregatedValues: value,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: type,
       })
 
@@ -182,7 +188,7 @@ export class TvlService {
       })
     }
 
-    const breakdownMap = await this.getBreakdownMap(lastHour)
+    const breakdownMap = await this.getBreakdownMap(targetTimestamp)
 
     const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
@@ -257,11 +263,11 @@ export class TvlService {
   }
 
   async getExcludedTvl(
-    lastHour: UnixTime,
+    targetTimestamp: UnixTime,
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiResponse> {
-    const tvl = await this.getTvl(lastHour, projects)
+    const tvl = await this.getTvl(targetTimestamp, projects)
 
     // TODO: it is slow an can be optimized via querying for all tokens in one batch
     const excluded = await Promise.all(
@@ -271,12 +277,17 @@ export class TvlService {
 
         return {
           ...x,
-          data: await this.$.tokenService.getTokenChart(lastHour, project, x),
+          data: await this.$.tokenService.getTokenChart(
+            targetTimestamp,
+            project,
+            x,
+          ),
         }
       }),
     )
 
-    const ethPrices = await this.$.dataService.getEthPrices()
+    const ethPrices =
+      await this.$.pricesDataService.getEthPrices(targetTimestamp)
 
     for (const e of excluded) {
       if (e.includeInTotal) {
@@ -284,14 +295,14 @@ export class TvlService {
           tvl.combined,
           e.data,
           e.type,
-          ethPrices,
+          ethPrices.prices,
         )
 
         tvl[e.projectType] = subtractTokenCharts(
           tvl[e.projectType],
           e.data,
           e.type,
-          ethPrices,
+          ethPrices.prices,
         )
       }
 
@@ -302,7 +313,7 @@ export class TvlService {
         project.charts,
         e.data,
         e.type,
-        ethPrices,
+        ethPrices.prices,
       )
 
       // Remove token from breakdown
@@ -334,10 +345,14 @@ export class TvlService {
       await this.$.dataService.getAmountsByConfigIdsAndTimestamp(timestamp)
     // TODO: if missing amounts then look 7D ago
 
-    const prices =
-      await this.$.dataService.getPricesByConfigIdsAndTimestamp(timestamp)
+    const prices = await this.$.pricesDataService.getLatestPrice(
+      this.$.configMapping.prices,
+      timestamp,
+    )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const pricesMap = new Map(
+      prices.prices.map((x) => [x.configId, x.priceUsd]),
+    )
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()
     for (const amount of tokenAmounts) {
       const config = this.$.configMapping.getAmountConfig(amount.configId)

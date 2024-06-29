@@ -1,4 +1,4 @@
-import { Logger, assert } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
@@ -7,11 +7,15 @@ import {
   PriceRepository,
 } from '../../../repositories/PriceRepository'
 import { SyncOptimizer } from '../../../utils/SyncOptimizer'
-import { getLaggingAndSyncing } from '../../utils/getLaggingAndSyncing'
+import {
+  CONSIDER_EXCLUDED_AFTER_DAYS,
+  getLaggingAndSyncing,
+} from '../../utils/getLaggingAndSyncing'
 
 interface Dependencies {
   readonly priceRepository: PriceRepository
   readonly syncOptimizer: SyncOptimizer
+  etherPriceConfig: PriceConfigEntry & { configId: string }
   logger: Logger
 }
 
@@ -20,48 +24,160 @@ export class PricesDataService {
     this.$.logger = $.logger.for(this)
   }
 
-  async getPrice(
+  async getPrices(
     configurations: (PriceConfigEntry & { configId: string })[],
-    minTimestamp: UnixTime,
     targetTimestamp: UnixTime,
   ) {
-    const prices = await this.$.priceRepository.getByConfigIdsInRange(
+    const records = await this.$.priceRepository.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
-      minTimestamp,
+      configurations.reduce(
+        (a, b) => UnixTime.max(a, b.sinceTimestamp),
+        UnixTime.now(),
+      ),
       targetTimestamp,
     )
 
-    const pricesByTimestamp = groupBy(prices, 'timestamp')
+    const result = {
+      prices: {} as Dictionary<Dictionary<number>>,
+      lagging: new Map<
+        string,
+        { latestTimestamp: UnixTime; latestValue: PriceRecord }
+      >(),
+      excluded: new Set<string>(),
+    }
 
-    const { lagging, excluded } = getLaggingAndSyncing<PriceRecord>(
-      configurations.map((c) => ({
-        id: c.configId,
-        minTimestamp: c.sinceTimestamp,
-      })),
-      pricesByTimestamp,
-      (value: PriceRecord) => value.configId,
-      targetTimestamp,
-    )
+    const pricesByConfig = groupBy(records, 'configId')
+    for (const [configId, prices] of Object.entries(pricesByConfig)) {
+      const config = configurations.find((c) => c.configId === configId)
+      assert(config, 'Config should be defined')
 
-    const result: Dictionary<number> = {}
+      const pricesByTimestamp = groupBy(prices, 'timestamp')
 
-    const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
-    for (const timestamp of timestamps) {
-      const price = pricesByTimestamp[timestamp.toNumber()]
+      const { lagging, excluded } = getLaggingAndSyncing<PriceRecord>(
+        [
+          {
+            id: configId,
+            minTimestamp: config.sinceTimestamp,
+          },
+        ],
+        pricesByTimestamp,
+        (value: PriceRecord) => value.configId,
+        targetTimestamp,
+      )
 
-      if (price === undefined) {
-        if (lagging.length === 1) {
-          result[timestamp.toString()] = lagging[0].latestValue.priceUsd
+      lagging.forEach((l) => result.lagging.set(configId, { ...l }))
+      excluded.forEach((s) => result.excluded.add(s))
+
+      if (excluded.includes(configId)) {
+        continue
+      }
+
+      const pricesByTimestampForConfig: Dictionary<number> = {}
+      const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
+      for (const timestamp of timestamps) {
+        if (timestamp.lt(config.sinceTimestamp)) {
           continue
         }
 
-        throw new Error('Lagging entry should be defined')
-      }
+        const price = pricesByTimestamp[timestamp.toString()]
 
-      assert(price.length === 1)
-      result[timestamp.toString()] = price[0].priceUsd
+        if (price === undefined) {
+          if (lagging.length === 1) {
+            pricesByTimestampForConfig[timestamp.toString()] =
+              lagging[0].latestValue.priceUsd
+            continue
+          }
+
+          throw new Error('Lagging entry should be defined')
+        }
+
+        assert(price.length === 1, 'There should be one price')
+        pricesByTimestampForConfig[timestamp.toString()] = price[0].priceUsd
+      }
     }
 
     return result
+  }
+
+  async getLatestPrice(
+    configurations: (PriceConfigEntry & { configId: string })[],
+    targetTimestamp: UnixTime,
+  ) {
+    const prices = await this.$.priceRepository.getByTimestamp(targetTimestamp)
+
+    const result = {
+      prices,
+      lagging: new Map<
+        string,
+        { latestTimestamp: UnixTime; latestValue: PriceRecord }
+      >(),
+      excluded: new Set<string>(),
+    }
+
+    if (prices.length === configurations.length) {
+      return result
+    }
+
+    const missing = configurations.filter(
+      (c) => !prices.find((p) => p.configId === c.configId),
+    )
+
+    const pricesAtExcludedHeuristic =
+      await this.$.priceRepository.getByTimestamp(
+        targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+      )
+
+    const excluded = missing.filter(
+      (c) => !pricesAtExcludedHeuristic.find((p) => p.configId === c.configId),
+    )
+    excluded.forEach((e) => result.excluded.add(e.configId))
+
+    if (excluded.length + prices.length === configurations.length) {
+      return result
+    }
+
+    const lagging = missing.filter((c) =>
+      pricesAtExcludedHeuristic.find((p) => p.configId === c.configId),
+    )
+
+    const recordsForLagging = await this.$.priceRepository.getByConfigIds(
+      lagging.map((l) => l.configId),
+    )
+
+    for (const laggingConfig of lagging) {
+      const sortedRecordsForConfig = recordsForLagging
+        .filter((r) => r.configId === laggingConfig.configId)
+        .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
+
+      const latest = sortedRecordsForConfig[sortedRecordsForConfig.length - 1]
+
+      result.lagging.set(laggingConfig.configId, {
+        latestTimestamp: latest.timestamp,
+        latestValue: latest,
+      })
+    }
+
+    assert(
+      result.prices.length + result.excluded.size + result.lagging.size ===
+        configurations.length,
+      'There should be an equal amount of configurations',
+    )
+
+    return result
+  }
+
+  async getEthPrices(targetTimestamp: UnixTime) {
+    const prices = await this.getPrices(
+      [this.$.etherPriceConfig],
+      targetTimestamp,
+    )
+
+    const ethPrices = prices.prices[this.$.etherPriceConfig.configId]
+    assert(ethPrices, 'Missing ETH prices')
+
+    return {
+      ...prices,
+      prices: ethPrices,
+    }
   }
 }

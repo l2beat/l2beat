@@ -14,9 +14,11 @@ import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { CanonicalAssetBreakdown } from '../utils/types'
 import { DataService } from './DataService'
+import { PricesDataService } from './data/PricesDataService'
 
 interface Dependencies {
   dataService: DataService
+  pricesDataService: PricesDataService
   syncOptimizer: SyncOptimizer
   chainConverter: ChainConverter
   configMapping: ConfigMapping
@@ -30,10 +32,14 @@ export class BreakdownService {
   ): Promise<ProjectAssetsBreakdownApiResponse> {
     const tokenAmounts =
       await this.$.dataService.getAmountsByConfigIdsAndTimestamp(timestamp)
-    const prices =
-      await this.$.dataService.getPricesByConfigIdsAndTimestamp(timestamp)
+    const prices = await this.$.pricesDataService.getLatestPrice(
+      this.$.configMapping.prices,
+      timestamp,
+    )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const pricesMap = new Map(
+      prices.prices.map((x) => [x.configId, x.priceUsd]),
+    )
     const breakdowns: Record<
       string,
       {
