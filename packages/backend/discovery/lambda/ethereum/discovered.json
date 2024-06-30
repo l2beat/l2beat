@@ -2,7 +2,7 @@
   "name": "lambda",
   "chain": "ethereum",
   "blockNumber": 20111587,
-  "configHash": "0x770aaffe5e9556bdf46f44dd737bff5966142ba045f29d2f86665aae9e730695",
+  "configHash": "0x4ef3c57af54578bfafedc968cff71e6e312dcdd37de63a1680bcc4f2c846e64e",
   "version": 8,
   "contracts": [
     {
@@ -26,6 +26,7 @@
     {
       "name": "ProxyAdmin",
       "address": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
@@ -38,7 +39,8 @@
           "0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
           "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
           "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
-        ]
+        ],
+        "owner": ["0x624808dc4A34B79B90C3c085942D2100F09A0376"]
       },
       "sinceTimestamp": 1713346967,
       "values": {
@@ -56,6 +58,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 1 (100%)"
+      },
+      "assignedPermissions": {
+        "owner": ["0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -131,6 +136,7 @@
     {
       "name": "AddressManager",
       "address": "0x624808dc4A34B79B90C3c085942D2100F09A0376",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -335,7 +341,10 @@
     },
     {
       "address": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
-      "roles": ["Guardian"]
+      "roles": ["Guardian"],
+      "assignedPermissions": {
+        "owner": ["0xae809d42f861A6381b0DFCf7216556e95362a7a8"]
+      }
     },
     {
       "address": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",

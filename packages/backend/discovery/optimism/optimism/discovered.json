@@ -256,6 +256,7 @@
     {
       "name": "L2ProxyAdmin",
       "address": "0x4200000000000000000000000000000000000018",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
@@ -420,7 +421,10 @@
       "address": "0x4D014f3c5F33Aa9Cd1Dc29ce29618d07Ae666d15"
     },
     {
-      "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b"
+      "address": "0x6B1BAE59D09fCcbdDB6C6cceb07B7279367C4E3b",
+      "assignedPermissions": {
+        "owner": ["0x4200000000000000000000000000000000000018"]
+      }
     },
     {
       "address": "0x7cB07FE039a92B3D784f284D919503A381BEC54f"
