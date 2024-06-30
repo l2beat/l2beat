@@ -82,21 +82,23 @@ export function getTargetsMeta(
   self: EthereumAddress,
   upgradeability: UpgradeabilityParameters,
   handlerResults: HandlerResult[],
-  fields: { [address: string]: DiscoveryContractField },
+  fields?: { [address: string]: DiscoveryContractField },
 ): AddressToMetaMap | undefined {
   const result = getMetaFromUpgradeability(self, upgradeability)
 
-  for (const handlerResult of handlerResults) {
-    const field = fields?.[handlerResult.field]
-    const target = field?.target
-    if (target) {
-      for (const address of getAddresses(handlerResult.value)) {
-        const meta = mergeContractMeta(
-          result[address.toString()],
-          targetConfigToMeta(self, field, target),
-        )
-        if (meta) {
-          result[address.toString()] = meta
+  if (fields !== undefined) {
+    for (const handlerResult of handlerResults) {
+      const field = fields?.[handlerResult.field]
+      const target = field?.target
+      if (target) {
+        for (const address of getAddresses(handlerResult.value)) {
+          const meta = mergeContractMeta(
+            result[address.toString()],
+            targetConfigToMeta(self, field, target),
+          )
+          if (meta) {
+            result[address.toString()] = meta
+          }
         }
       }
     }
