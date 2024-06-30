@@ -281,7 +281,12 @@
       "assignedPermissions": {
         "admin": [
           "0x07390626b8Bc2C04b1D93c7D246A0629198D7868",
-          "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d"
+          "0x383c03c4EfF819E73409DbC690755a9992393814",
+          "0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9",
+          "0x672109752635177ebcb17F2C7e04575A709014BD",
+          "0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d",
+          "0x728B406A4809118533D96bB3b5C50712C99d8Fa5",
+          "0xFd9f59554351122b231F832a0e0A1aBb0604D7fd"
         ]
       },
       "sinceTimestamp": 1709380607,

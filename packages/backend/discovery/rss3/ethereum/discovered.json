@@ -13,7 +13,12 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x1D89222C28C3ba471be822203998f27Df4727C0b",
+          "0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
+          "0x4cbab69108Aa72151EDa5A3c164eA86845f18438",
+          "0x6A12432491bbbE8d3babf75F759766774C778Db4",
           "0x80e73D6BfC73c567032304C3891a06c2d9954d09",
+          "0x938D0Bb4B584d4F6f793fCB7808cA2Eea15B69A8",
           "0xE6f24d2C32B3109B18ed33cF08eFb490b1e09C10"
         ]
       },

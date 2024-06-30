@@ -52,7 +52,11 @@
       "assignedPermissions": {
         "admin": [
           "0x0a23342520Aa8Ca963c4201801F4D3E95e731637",
-          "0x622333688CC1878C7ff4205c89bDe051798788A7"
+          "0x622333688CC1878C7ff4205c89bDe051798788A7",
+          "0x952851CecB07705A5bb483C1CE080F97e1E7491E",
+          "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3",
+          "0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB",
+          "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
         ]
       },
       "sinceTimestamp": 1703048687,

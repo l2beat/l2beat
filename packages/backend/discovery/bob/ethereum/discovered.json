@@ -41,7 +41,12 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"]
+        "admin": [
+          "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
+          "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
+          "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
+          "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
+        ]
       },
       "sinceTimestamp": 1712862035,
       "values": {
@@ -190,6 +195,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 6 (50%)"
+      },
+      "assignedPermissions": {
+        "admin": ["0x450D55a4B4136805B0e5A6BB59377c71FC4FaCBb"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],

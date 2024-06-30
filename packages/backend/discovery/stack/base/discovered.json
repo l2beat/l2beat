@@ -14,7 +14,9 @@
       "assignedPermissions": {
         "admin": [
           "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
-          "0xCC61c26901E719B73273C1484e337cBAB84369EF"
+          "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
         ]
       },
       "sinceTimestamp": 1709680173,

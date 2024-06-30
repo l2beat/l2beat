@@ -61,10 +61,17 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
+          "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
           "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
+          "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+          "0x6B916DcCa661d23794e78509723A6f4348564847",
           "0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76",
           "0x98078db053902644191f93988341E31289E1C8FE",
-          "0xa230285d5683C74935aD14c446e137c8c8828438"
+          "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6",
+          "0xa230285d5683C74935aD14c446e137c8c8828438",
+          "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
+          "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
         ]
       },
       "sinceTimestamp": 1708812851,
@@ -273,6 +280,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
+      },
+      "assignedPermissions": {
+        "admin": ["0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],

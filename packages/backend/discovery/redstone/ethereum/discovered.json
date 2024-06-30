@@ -431,9 +431,16 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x4FFB98dBC3086bA85d5E626a6EbC3D0d08533fF4",
+          "0x4b5b41c240173191425F5928bc6bdd0d439331BB",
+          "0x5f962474834Cf1981Df6232e4b6431d3d10cb71D",
           "0x8f2428F7189c0d92D1c4a5358903A8c80Ec6a69D",
           "0x8f68E849eaf8EB943536F9d1D49Ea9C9b5868b98",
-          "0xa426A052f657AEEefc298b3B5c35a470e4739d69"
+          "0x97A2dA87d3439b172e6DD027220e01c9Cb565B80",
+          "0xC7bCb0e8839a28A1cFadd1CF716de9016CdA51ae",
+          "0xa130523fD22e2a9D78F8aB232b01ff552845B4A9",
+          "0xa426A052f657AEEefc298b3B5c35a470e4739d69",
+          "0xc473ca7E02af24c129c2eEf51F2aDf0411c1Df69"
         ]
       },
       "sinceTimestamp": 1712184407,

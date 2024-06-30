@@ -211,7 +211,9 @@
       "assignedPermissions": {
         "admin": [
           "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
-          "0xA38d0c4E6319F9045F20318BA5f04CDe94208608"
+          "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
+          "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+          "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
         ]
       },
       "sinceTimestamp": 1689106787,

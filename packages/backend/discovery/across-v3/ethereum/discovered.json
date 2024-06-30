@@ -448,7 +448,7 @@
       "ignoreInWatchMode": ["getL1CallValue"],
       "sinceTimestamp": 1691158667,
       "values": {
-        "getL1CallValue": 500000000000000,
+        "getL1CallValue": 1388130360000000,
         "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "L2_GAS_LIMIT": 2000000,

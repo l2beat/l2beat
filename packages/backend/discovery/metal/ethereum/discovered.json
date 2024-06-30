@@ -115,7 +115,11 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730",
           "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426",
+          "0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956",
+          "0x50D700e97967F9115e3f999bDB263d69F6704680",
+          "0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3",
           "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"
         ]
       },
@@ -275,6 +279,9 @@
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x95703e0982140D16f8ebA6d158FccEde42f04a4C"]
       },
       "sinceTimestamp": 1685377355,
       "values": {

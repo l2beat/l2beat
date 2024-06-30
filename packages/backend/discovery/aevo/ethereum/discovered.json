@@ -41,6 +41,8 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x4082C9647c098a6493fb499EaE63b5ce3259c574",
+          "0x787A0ACaB02437c60Aafb1a29167A3609801e320",
           "0x909E51211e959339EFb14b36f5A50955a8ae3770",
           "0xF761Cc49bB127AB666899b41CDC4E62fA50cD9ca"
         ]
