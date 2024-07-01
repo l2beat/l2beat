@@ -39,7 +39,7 @@ export function ProjectAboutSection({
             Badges
           </h2>
           <OverflowWrapper
-            within="full-page-header"
+            within="details-header"
             className={cn(type === 'mobile' ? '-mx-4' : '')}
           >
             <div

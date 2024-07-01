@@ -6,7 +6,7 @@ import { ChevronLeftIcon, ChevronRightIcon } from './icons'
 interface OverflowWrapperProps {
   children: React.ReactNode
   disableScrollOnLoad?: boolean
-  within?: 'nav-tabs' | 'full-page-header'
+  within?: 'nav-tabs' | 'full-page-header' | 'details-header'
   childrenClassName?: string
   className?: string
 }
@@ -35,6 +35,8 @@ export function OverflowWrapper({
             'from-gray-100 via-gray-100 dark:from-gray-950 dark:via-gray-950',
           within === 'full-page-header' &&
             'from-pure-white via-pure-white dark:from-zinc-900 dark:via-zinc-900',
+          within === 'details-header' &&
+            'from-pure-white dark:via-zinc-900/80 via-70% dark:from-zinc-900',
         )}
         data-role="overflow-wrapper-arrow-left"
       >
@@ -57,6 +59,8 @@ export function OverflowWrapper({
             'from-gray-100 via-gray-100 dark:from-gray-950 dark:via-gray-950',
           within === 'full-page-header' &&
             'from-pure-white via-pure-white dark:from-zinc-900 dark:via-zinc-900',
+          within === 'details-header' &&
+            'from-pure-white dark:via-zinc-900/80 via-30% dark:from-zinc-900',
         )}
         data-role="overflow-wrapper-arrow-right"
       >
