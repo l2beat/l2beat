@@ -116,7 +116,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         groupByType(livenessRecords)
 
       aggregatedRecords.push(
-        ...this.getAggregatedRecords(
+        ...this.aggregatedRecords(
           project.projectId,
           'batchSubmissions',
           batchSubmissions,
@@ -125,7 +125,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         ),
       )
       aggregatedRecords.push(
-        ...this.getAggregatedRecords(
+        ...this.aggregatedRecords(
           project.projectId,
           'stateUpdates',
           stateUpdates,
@@ -134,7 +134,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         ),
       )
       aggregatedRecords.push(
-        ...this.getAggregatedRecords(
+        ...this.aggregatedRecords(
           project.projectId,
           'proofSubmissions',
           proofSubmissions,
@@ -147,7 +147,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     return aggregatedRecords
   }
 
-  getAggregatedRecords(
+  aggregatedRecords(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
     livenessRecords: LivenessRecordWithSubtype[],
