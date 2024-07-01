@@ -74,15 +74,10 @@ export class PricesDataService {
 
       const pricesByTimestampForConfig: Dictionary<number> = {}
 
-      const timestamps = this.$.syncOptimizer.getAllTimestampsForApi()
+      const timestamps = this.$.syncOptimizer
+        .getAllTimestampsForApi()
+        .filter((t) => t.gte(config.sinceTimestamp) && t.lte(targetTimestamp))
       for (const timestamp of timestamps) {
-        if (timestamp.lt(config.sinceTimestamp)) {
-          continue
-        }
-        if (timestamp.gt(targetTimestamp)) {
-          continue
-        }
-
         const price = pricesByTimestamp[timestamp.toString()]
 
         if (price === undefined) {

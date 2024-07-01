@@ -72,15 +72,10 @@ export class AmountsDataService {
       }
 
       const amountsByTimestampForConfig: Dictionary<bigint> = {}
-      const timestamps = this.$.syncOptimizer.getAllTimestampsForApi()
+      const timestamps = this.$.syncOptimizer
+        .getAllTimestampsForApi()
+        .filter((t) => t.gte(config.sinceTimestamp) && t.lte(targetTimestamp))
       for (const timestamp of timestamps) {
-        if (timestamp.lt(config.sinceTimestamp)) {
-          continue
-        }
-        if (timestamp.gt(targetTimestamp)) {
-          continue
-        }
-
         const amount = amountsByTimestamp[timestamp.toString()]
 
         if (amount === undefined) {
