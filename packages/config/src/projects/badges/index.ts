@@ -103,10 +103,7 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
-  /*
-  
-  TODO: uncomment after adding the images
-
+  // NOTE: The badges below are missing images
   // VM
   EVM: {
     display: {
@@ -157,7 +154,7 @@ export const badges = {
       description: 'Lorem L3 Host Chain dolor sit amet...',
     },
     type: BadgeType.Other,
-  },*/
+  },
 } as const satisfies Record<
   string,
   {
