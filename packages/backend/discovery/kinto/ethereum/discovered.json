@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 20190478,
-  "configHash": "0x01124a2128fa14435f6d7fc0a71bf369a9fbf145d77c44408e47abd73740eb08",
+  "configHash": "0x2b6c0fe7fef51dbd870f6f2b10c39952085378daee0bfb80e6613a8362305f0e",
   "version": 8,
   "contracts": [
     {
@@ -460,7 +460,12 @@
         "isUsingFeeToken": false,
         "keySetUpdates": 0,
         "maxDataSize": 117964,
-        "maxTimeVariation": [5760, 48, 86400, 3600],
+        "maxTimeVariation": {
+          "delayBlocks": 5760,
+          "futureBlocks": 48,
+          "delaySeconds": 86400,
+          "futureSeconds": 3600
+        },
         "reader4844": "0x434345973Ebf8249398E1EeB03A62bE418B48a05",
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
