@@ -26,7 +26,7 @@ export function RosetteCell(props: RosetteCellProps) {
         />
       </TooltipTrigger>
       <TooltipContent fitContent>
-        <RosetteTooltip values={props.values} />
+        <RosetteTooltip values={props.values} isUnderReview={isUnderReview} />
       </TooltipContent>
     </Tooltip>
   )

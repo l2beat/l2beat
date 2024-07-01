@@ -1,18 +1,18 @@
 import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
 import React from 'react'
 
-import { ArbitrumIcon } from '~/icons/providers/ArbitrumIcon'
-import { LoopringIcon } from '~/icons/providers/LoopringIcon'
-import { OVMIcon } from '~/icons/providers/OVMIcon'
-import { OptimismIcon } from '~/icons/providers/OptimismIcon'
-import { PolygonIcon } from '~/icons/providers/PolygonIcon'
-import { StarkWareIcon } from '~/icons/providers/StarkWareIcon'
-import { StarknetIcon } from '~/icons/providers/StarknetIcon'
-import { ZKStackIcon } from '~/icons/providers/ZKStackIcon'
-import { ZkSyncLiteIcon } from '~/icons/providers/ZkSyncLiteIcon'
+import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
+import { LoopringIcon } from '~/icons/providers/loopring-icon'
+import { OVMIcon } from '~/icons/providers/ovm-icon'
+import { OptimismIcon } from '~/icons/providers/optimism-icon'
+import { PolygonIcon } from '~/icons/providers/polygon-icon'
+import { StarkWareIcon } from '~/icons/providers/starkware-icon'
+import { StarknetIcon } from '~/icons/providers/starknet-icon'
+import { ZKStackIcon } from '~/icons/providers/zkstack-icon'
+import { ZkSyncLiteIcon } from '~/icons/providers/zksync-lite-icon'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
-import { TaikoIcon } from '~/icons/providers/TaikoIcon'
+import { TaikoIcon } from '~/icons/providers/taiko-icon'
 
 export interface TypeCellProps {
   children: string

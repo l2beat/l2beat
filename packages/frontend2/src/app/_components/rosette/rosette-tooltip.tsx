@@ -9,13 +9,10 @@ import { type RosetteValue } from './types'
 
 export interface RosetteTooltipProps {
   values: RosetteValue[]
+  isUnderReview: boolean
 }
 
-export function RosetteTooltip({ values }: RosetteTooltipProps) {
-  const isUnderReview = values.every(
-    (value) => value.sentiment === 'UnderReview',
-  )
-
+export function RosetteTooltip({ values, isUnderReview }: RosetteTooltipProps) {
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
