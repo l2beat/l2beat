@@ -37,4 +37,6 @@ export interface ScalingProjectDisplay {
   links: ScalingProjectLinks
   /** Where does the activity data come from? */
   activityDataSource?: 'Blockchain RPC' | 'Explorer API' | 'Closed API'
+  /** Name of the architecture image to show in the contract section if present, otherwise use slug */
+  architectureImage?: string
 }
