@@ -2,12 +2,14 @@ import React from 'react'
 
 import {
   ArbitrumIcon,
+  CartesiIcon,
   LoopringIcon,
   OVMIcon,
   OptimismIcon,
   PolygonIcon,
   StarkWareIcon,
   StarknetIcon,
+  TaikoIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
 } from './icons'
@@ -59,6 +61,16 @@ export function ScalingLegend() {
         <StarknetIcon className="-top-0.5 relative min-w-[24px]" />
         <span>&ndash;</span>
         <span>This project is based on Starknet&apos;s code base.</span>
+      </p>
+      <p className="flex gap-1">
+        <TaikoIcon className="-top-0.5 relative min-w-[24px]" />
+        <span>&ndash;</span>
+        <span>This project is based on Taiko&apos;s code base.</span>
+      </p>
+      <p className="flex gap-1">
+        <CartesiIcon className="-top-0.5 relative min-w-[24px]" />
+        <span>&ndash;</span>
+        <span>This project is based on Cartesi&apos;s code base.</span>
       </p>
     </div>
   )
