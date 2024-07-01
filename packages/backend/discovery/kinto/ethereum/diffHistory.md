@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xcdd7c3d34bd4f5e17546710d4116c89f578c8d24
+Generated with discovered.json: 0x4d1686d88edb28f5efb304b86e4b21871d1a8a6b
 
-# Diff at Fri, 28 Jun 2024 13:27:56 GMT:
+# Diff at Mon, 01 Jul 2024 10:03:56 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@0e7b6918e773793a1ad0061ea07b42646c37a13d block: 20177353
-- current block number: 20190478
+- current block number: 20210947
 
 ## Description
 
@@ -82,9 +82,6 @@ It is not posting data to blobs yet.
       implementations.0:
 -        "0x873484Ba63353C8b71210ce123B465512d408B27"
 +        "0x57411f5BA52531e8199066bC8EC650470A744883"
-      values.maxTimeVariation:
--        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
-+        [5760,48,86400,3600]
       values.batchPosterManager:
 +        "0x0000000000000000000000000000000000000000"
       values.BROTLI_MESSAGE_HEADER_FLAG:

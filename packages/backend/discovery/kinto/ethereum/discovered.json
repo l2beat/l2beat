@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 20190478,
+  "blockNumber": 20210947,
   "configHash": "0x2b6c0fe7fef51dbd870f6f2b10c39952085378daee0bfb80e6613a8362305f0e",
   "version": 8,
   "contracts": [
@@ -121,12 +121,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1638,
+        "firstUnresolvedNode": 1650,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1637,
-        "latestNodeCreated": 1664,
+        "latestConfirmed": 1649,
+        "latestNodeCreated": 1676,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -324,11 +324,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 3359,
+        "delayedMessageCount": 3376,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 2703,
-        "sequencerReportedSubMessageCount": 186144
+        "sequencerMessageCount": 2720,
+        "sequencerReportedSubMessageCount": 186585
       },
       "derivedName": "Bridge"
     },
@@ -457,7 +457,7 @@
       "implementations": ["0x57411f5BA52531e8199066bC8EC650470A744883"],
       "sinceTimestamp": 1702607855,
       "values": {
-        "batchCount": 2703,
+        "batchCount": 2720,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -480,7 +480,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3358,
+        "totalDelayedMessagesRead": 3375,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
