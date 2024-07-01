@@ -321,8 +321,7 @@
         "threshold": "6 of 13 (46%)"
       },
       "assignedPermissions": {
-        "admin": ["0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"],
-        "owner": ["0xca35F8338054739D138884685e08b39EE2217794"]
+        "admin": ["0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -681,7 +680,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xca35F8338054739D138884685e08b39EE2217794",
-      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },

@@ -1,4 +1,32 @@
-Generated with discovered.json: 0xdea5e85aa9473511b6f1352b815718851ced75f9
+Generated with discovered.json: 0x44dcb247700d419ff4f0fe12d00a6c356c1963ba
+
+# Diff at Sun, 30 Jun 2024 12:51:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@60708cb34918009c7ee36a463625bddd2353d3c5 block: 19976242
+- current block number: 20204613
+
+## Description
+
+Added ZkSync_Adapter.getL1CallValue to "ignoreMethods" because it is dependent
+on tx.gasprice and returns different results event for the same block number
+(e.g. when call is batched).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976242 (main branch discovery), not current.
+
+```diff
+    contract ZkSync_Adapter (0xE233009838CB898b50e0012a6E783FC9FeE447FB) {
+    +++ description: None
+      values.getL1CallValue:
+-        500000000000000
+    }
+```
+
+Generated with discovered.json: 0x4d7efdd31fe5b56bea03552b2c01f60249641603
 
 # Diff at Wed, 29 May 2024 14:54:44 GMT:
 

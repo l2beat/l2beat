@@ -110,7 +110,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
-      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
@@ -122,8 +121,7 @@
           "0x50D700e97967F9115e3f999bDB263d69F6704680",
           "0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3",
           "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"
-        ],
-        "owner": ["0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"]
+        ]
       },
       "sinceTimestamp": 1711563575,
       "values": {
@@ -235,9 +233,6 @@
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
-      "assignedPermissions": {
-        "owner": ["0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"]
-      },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -282,13 +277,11 @@
     {
       "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
-      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0x95703e0982140D16f8ebA6d158FccEde42f04a4C"],
-        "owner": ["0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"]
+        "admin": ["0x95703e0982140D16f8ebA6d158FccEde42f04a4C"]
       },
       "sinceTimestamp": 1685377355,
       "values": {
@@ -307,9 +300,6 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
-      },
-      "assignedPermissions": {
-        "owner": ["0x543bA4AADBAb8f9025686Bd03993043599c6fB04"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -536,7 +526,6 @@
     {
       "name": "AddressManager",
       "address": "0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37",
-      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -548,7 +537,6 @@
     {
       "name": "Lib_AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
-      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
