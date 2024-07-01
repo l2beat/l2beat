@@ -72,17 +72,21 @@ export function createTrackedTxsModule(
     liveness: livenessModule?.updater,
     l2costs: l2costsModule?.updater,
   }
+  const minTimestamp = config.trackedTxsConfig.minTimestamp.toNumber()
 
   const trackedTxsIndexer = new TrackedTxsIndexer({
     logger,
     parents: [hourlyIndexer],
     indexerService,
     trackedTxsClient,
-    configurations: runtimeConfigurations.map((config) => ({
-      properties: config,
-      minHeight: config.sinceTimestampInclusive.toNumber(),
-      maxHeight: config.untilTimestampExclusive?.toNumber() ?? null,
-      id: config.id,
+    configurations: runtimeConfigurations.map((c) => ({
+      properties: c,
+      minHeight:
+        c.sinceTimestampInclusive.toNumber() < minTimestamp
+          ? minTimestamp
+          : c.sinceTimestampInclusive.toNumber(),
+      maxHeight: c.untilTimestampExclusive?.toNumber() ?? null,
+      id: c.id,
     })),
     updaters,
     createDatabaseMiddleware: async () =>
