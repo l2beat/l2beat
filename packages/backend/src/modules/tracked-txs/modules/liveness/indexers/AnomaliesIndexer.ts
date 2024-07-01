@@ -56,7 +56,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     this.logger.info('Calculating anomalies', { unixTo })
 
-    const anomalies = await this.calculateAnomalies(unixTo)
+    const anomalies = await this.getAnomalies(unixTo)
 
     await this.$.anomaliesRepository.addOrUpdateMany(anomalies)
 
@@ -69,7 +69,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     return await Promise.resolve(targetHeight)
   }
 
-  async calculateAnomalies(to: UnixTime) {
+  async getAnomalies(to: UnixTime) {
     const anomalies: AnomaliesRecord[] = []
     const projectsToSync = getProjectsToSync(this.$.projects)
 
@@ -99,17 +99,17 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       const [batchSubmissions, stateUpdates, proofSubmissions] =
         groupByType(livenessRecords)
 
-      anomalies.push(
-        ...this.getAnomalies(
-          project.projectId,
-          'batchSubmissions',
-          batchSubmissions,
-          to,
-        ),
+      const test = this.detectAnomalies(
+        project.projectId,
+        'batchSubmissions',
+        batchSubmissions,
+        to,
       )
 
+      anomalies.push(...test)
+
       anomalies.push(
-        ...this.getAnomalies(
+        ...this.detectAnomalies(
           project.projectId,
           'stateUpdates',
           stateUpdates,
@@ -118,7 +118,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       )
 
       anomalies.push(
-        ...this.getAnomalies(
+        ...this.detectAnomalies(
           project.projectId,
           'proofSubmissions',
           proofSubmissions,
@@ -130,7 +130,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     return anomalies
   }
 
-  getAnomalies(
+  detectAnomalies(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
     livenessRecords: LivenessRecordWithSubtype[],
@@ -170,9 +170,8 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     const currentRange = intervals.slice(0, lastIndex)
     currentRange.forEach((interval) => {
-      const mean = means.get(
-        interval.record.timestamp.toStartOf('minute').toNumber(),
-      )
+      const point = interval.record.timestamp.toStartOf('minute').toNumber()
+      const mean = means.get(point)
       const stdDev = stdDevs.get(
         interval.record.timestamp.toStartOf('minute').toNumber(),
       )

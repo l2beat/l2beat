@@ -166,18 +166,18 @@ describe(LivenessAggregatingIndexer.name, () => {
         deleteAll: mockFn().resolvesTo(1),
       })
 
-      const safeHightMock = UnixTime.now().toNumber()
+      const targetHeight = UnixTime.now().toNumber()
 
       const indexer = createIndexer({
         tag: 'invalidate',
         livenessRepository: livenessRepositoryMock,
       })
 
-      const result = await indexer.invalidate(safeHightMock)
+      const result = await indexer.invalidate(targetHeight)
 
       expect(livenessRepositoryMock.deleteAll).not.toHaveBeenCalled()
 
-      expect(result).toEqual(safeHightMock)
+      expect(result).toEqual(targetHeight)
     })
   })
 
