@@ -379,6 +379,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      architectureImage: 'bedrock-superchain',
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
@@ -731,6 +732,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     ...opStackCommon(templateVars),
     hostChain: templateVars.hostChain,
     display: {
+      architectureImage: 'bedrock-superchain',
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',

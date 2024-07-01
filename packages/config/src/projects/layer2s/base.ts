@@ -18,6 +18,7 @@ export const base: Layer2 = opStackL2({
   display: {
     name: 'Base',
     slug: 'base',
+    architectureImage: 'base',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
