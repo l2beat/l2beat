@@ -1,6 +1,6 @@
+import path from 'path'
 import { AssetId, ChainId, branded } from '@l2beat/shared-pure'
 import { readFile } from 'fs/promises'
-import path from 'path'
 import { z } from 'zod'
 
 export async function getTvl() {

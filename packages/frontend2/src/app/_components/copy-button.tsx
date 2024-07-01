@@ -3,11 +3,11 @@
 import React, { useState } from 'react'
 
 import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard'
+import { useTimeout } from '~/hooks/use-timeout'
 import CopyIcon from '~/icons/copy.svg'
 import SatisfiedIcon from '~/icons/satisfied.svg'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
-import { useTimeout } from '~/hooks/use-timeout'
 
 interface Props {
   toCopy: string

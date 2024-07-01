@@ -1,16 +1,16 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { EM_DASH } from '~/app/_components/nav/consts'
-import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
-import Image from 'next/image'
+import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
+import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
 import { formatPercent } from '~/utils/get-percentage-change'
 import { TotalCell } from '../total-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
 

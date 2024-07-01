@@ -1,9 +1,9 @@
 'use client'
 
-import * as React from 'react'
 import * as CheckboxPrimitive from '@radix-ui/react-checkbox'
-import { cn } from '~/utils/cn'
+import * as React from 'react'
 import CheckIcon from '~/icons/check.svg'
+import { cn } from '~/utils/cn'
 
 const Checkbox = React.forwardRef<
   React.ElementRef<typeof CheckboxPrimitive.Root>,

@@ -1,28 +1,28 @@
 import {
   layer2s as LAYER_2S,
   layer3s as LAYER_3S,
-  type Layer3,
   type Layer2,
+  type Layer3,
 } from '@l2beat/config'
-import { getL2Risks } from '~/app/(new)/scaling/_utils/get-l2-risks'
-import { getTvlStats } from './utils/get-tvl-stats'
-import { getTvlWarnings } from './utils/get-tvl-warnings'
-import { getTvlWithChange } from './utils/get-tvl-with-change'
+import {
+  assert,
+  type ImplementationChangeReportApiResponse,
+  type VerificationStatus,
+} from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
+import { getL2Risks } from '~/app/(new)/scaling/_utils/get-l2-risks'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getVerificationStatus } from '../verification-status/get-verification-status'
 import { type TvlResponse } from './get-tvl'
-import { orderByTvl } from './utils/order-by-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from './types'
-import {
-  type ImplementationChangeReportApiResponse,
-  type VerificationStatus,
-  assert,
-} from '@l2beat/shared-pure'
+import { getTvlStats } from './utils/get-tvl-stats'
+import { getTvlWarnings } from './utils/get-tvl-warnings'
+import { getTvlWithChange } from './utils/get-tvl-with-change'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { getVerificationStatus } from '../verification-status/get-verification-status'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { orderByTvl } from './utils/order-by-tvl'
 
 export async function getScalingSummaryEntries(tvl: TvlResponse) {
   const orderedLayer2s = orderByTvl(LAYER_2S, tvl.projects)

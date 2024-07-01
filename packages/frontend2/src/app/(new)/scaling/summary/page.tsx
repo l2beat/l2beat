@@ -5,12 +5,12 @@ export const metadata = getDefaultMetadata({
     url: '/scaling/summary',
   },
 })
+import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { About } from '~/app/_components/about'
+import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
-import { OtherSites } from '~/app/_components/other-sites'
-import { About } from '~/app/_components/about'
 import { Tables } from './_components/tables'
-import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 
 export default async function Page() {
   const tvl = await getTvl()

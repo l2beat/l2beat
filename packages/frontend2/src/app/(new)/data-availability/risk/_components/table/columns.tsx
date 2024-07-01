@@ -1,8 +1,8 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
+import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
 import { DaBridgeCell } from '../../../summary/_components/table/da-bridge-cell'
-import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 

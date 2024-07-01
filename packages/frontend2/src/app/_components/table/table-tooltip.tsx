@@ -1,6 +1,6 @@
 import { TooltipTrigger } from '@radix-ui/react-tooltip'
-import { Tooltip, TooltipContent } from '../tooltip'
 import InfoIcon from '~/icons/info.svg'
+import { Tooltip, TooltipContent } from '../tooltip'
 
 interface Props {
   children: React.ReactNode

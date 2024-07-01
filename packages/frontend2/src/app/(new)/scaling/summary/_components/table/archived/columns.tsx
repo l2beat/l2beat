@@ -1,12 +1,12 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import Image from 'next/image'
+import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
+import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TotalCell } from '../total-cell'
+import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
+import { TotalCell } from '../total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
 

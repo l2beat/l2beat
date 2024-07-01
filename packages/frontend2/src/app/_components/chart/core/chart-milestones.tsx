@@ -1,10 +1,10 @@
 import { type Milestone } from '@l2beat/config'
 import { useCallback, useMemo, useRef } from 'react'
-import { useChartContext } from './chart-context'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { useChartHoverContext } from './chart-hover-context'
-import { getHoveredColumn } from '../utils/get-hovered-column'
 import { useEventListener } from '~/hooks/use-event-listener'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { getHoveredColumn } from '../utils/get-hovered-column'
+import { useChartContext } from './chart-context'
+import { useChartHoverContext } from './chart-hover-context'
 
 export function ChartMilestones() {
   const ref = useRef<HTMLDivElement>(null)

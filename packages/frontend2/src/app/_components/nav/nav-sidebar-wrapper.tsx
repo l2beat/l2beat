@@ -1,11 +1,11 @@
 'use client'
 
 import { useRef, useState } from 'react'
+import { useEventCallback } from '~/hooks/use-event-callback'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
 import { useMobileNav } from './mobile-nav-context'
 import { NavSideBarCollapseToggle } from './nav-sidebar-collapse-toggle'
-import { useEventListener } from '~/hooks/use-event-listener'
-import { useEventCallback } from '~/hooks/use-event-callback'
 
 export const NavSideBarWrapper = ({
   children,

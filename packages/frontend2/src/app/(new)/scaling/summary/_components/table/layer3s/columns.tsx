@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import Image from 'next/image'
+import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TotalCell } from '../total-cell'
+import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/types'
+import { TotalCell } from '../total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer3sEntry>()
 

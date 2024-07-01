@@ -1,10 +1,10 @@
 import { useTheme } from 'next-themes'
 import { useCallback, useEffect, useRef } from 'react'
-import { useChartContext } from './chart-context'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { getLineDashSegments } from '../utils/get-line-dash-segments'
 import { getRenderPaths } from '../utils/get-render-paths'
 import { getFillStyle, getStrokeStyle } from '../utils/get-style'
-import { useEventListener } from '~/hooks/use-event-listener'
+import { useChartContext } from './chart-context'
 
 export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)

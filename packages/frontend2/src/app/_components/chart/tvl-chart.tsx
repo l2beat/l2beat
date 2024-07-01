@@ -2,19 +2,19 @@
 
 import { type Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { Chart } from '~/app/_components/chart/core/chart'
-import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
+import { Chart } from '~/app/_components/chart/core/chart'
+import { useChartContext } from '~/app/_components/chart/core/chart-context'
+import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
+import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
+import { type TvlCharts } from '~/server/features/scaling/get-tvl'
+import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
-import { useChartContext } from '~/app/_components/chart/core/chart-context'
-import { Skeleton } from '~/app/_components/skeleton'
-import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
-import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 
 interface TvlChartPointData {
   timestamp: number

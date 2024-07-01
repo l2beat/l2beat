@@ -1,14 +1,14 @@
 import { type Stage, type StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
-import { StageBadge } from '../../badge/stage-badge'
-import { WarningBar } from '../../warning-bar'
-import { Callout } from '../../callout'
 import InfoIcon from '~/icons/info.svg'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import MissingIcon from '~/icons/missing.svg'
+import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import UnderReviewIcon from '~/icons/under-review.svg'
+import { StageBadge } from '../../badge/stage-badge'
+import { Callout } from '../../callout'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
+import { WarningBar } from '../../warning-bar'
 
 export interface StageCellProps {
   stageConfig: StageConfig

@@ -1,14 +1,14 @@
 import { type Table as TanstackTable, flexRender } from '@tanstack/react-table'
+import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
+  TableBody,
+  TableCell,
+  TableHead,
   TableHeader,
   TableHeaderRow,
-  TableHead,
-  TableBody,
   TableRow,
-  TableCell,
 } from './table'
-import { SortingArrows } from './sorting/sorting-arrows'
 
 interface BasicEntry {
   href?: string

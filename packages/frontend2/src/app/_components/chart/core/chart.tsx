@@ -4,9 +4,9 @@ import { Logo } from '../../logo'
 import { ChartHover } from './chart-hover'
 import { ChartInteractionZone } from './chart-interaction-zone'
 import { ChartLabels } from './chart-labels'
+import { ChartLoader } from './chart-loader'
 import { ChartMilestones } from './chart-milestones'
 import { ChartRenderer } from './chart-renderer'
-import { ChartLoader } from './chart-loader'
 
 interface Props {
   className?: string

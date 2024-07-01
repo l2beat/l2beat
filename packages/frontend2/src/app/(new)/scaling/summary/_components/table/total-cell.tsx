@@ -1,18 +1,18 @@
 import React from 'react'
+import { TokenBreakdown } from '~/app/_components/breakdown/token-breakdown'
 import { PercentChange } from '~/app/_components/percent-change'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
-import { TokenBreakdown } from '~/app/_components/breakdown/token-breakdown'
 import { WarningBar } from '~/app/_components/warning-bar'
-import { formatNumber } from '~/utils/format-number'
+import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import {
-  type ScalingSummaryLayer3sEntry,
   type ScalingSummaryLayer2sEntry,
+  type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
+import { formatNumber } from '~/utils/format-number'
 
 type TotalEntry = ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
 

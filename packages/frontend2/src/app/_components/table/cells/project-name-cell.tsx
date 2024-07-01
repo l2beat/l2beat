@@ -1,14 +1,14 @@
 import React from 'react'
 
-import UnverifiedIcon from '~/icons/unverified.svg'
-import UnderReviewIcon from '~/icons/under-review.svg'
-import ShieldIcon from '~/icons/shield.svg'
-import Layer3sIcon from '~/icons/layer3s.svg'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip'
+import Layer3sIcon from '~/icons/layer3s.svg'
+import ShieldIcon from '~/icons/shield.svg'
+import UnderReviewIcon from '~/icons/under-review.svg'
+import UnverifiedIcon from '~/icons/unverified.svg'
 import { type SyncStatus } from '~/types/SyncStatus'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 

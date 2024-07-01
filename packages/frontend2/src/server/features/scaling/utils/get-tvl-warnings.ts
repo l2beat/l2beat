@@ -5,9 +5,9 @@ import {
   safeGetTokenByAssetId,
 } from '@l2beat/config'
 import { type TvlApiToken } from '@l2beat/shared-pure'
-import { unifyTokensResponse } from './get-tvl-stats'
 import { formatPercent } from '~/utils/get-percentage-change'
 import { type TvlProject } from '../get-tvl'
+import { unifyTokensResponse } from './get-tvl-stats'
 
 export function getTvlWarnings(
   apiProject: TvlProject,

@@ -9,6 +9,7 @@ import {
 } from '@tanstack/react-table'
 import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
 import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
+import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 import {
   Table,
   TableBody,
@@ -21,7 +22,6 @@ import {
 import { useTable } from '~/hooks/use-table'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { columns } from './columns'
-import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 
 interface Props {
   items: DaSummaryEntry[]

@@ -1,9 +1,9 @@
 import { useCallback, useRef } from 'react'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { getHoveredColumn } from '../utils/get-hovered-column'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
-import { useEventListener } from '~/hooks/use-event-listener'
-import { getHoveredColumn } from '../utils/get-hovered-column'
 
 export function ChartInteractionZone() {
   const ref = useRef<HTMLDivElement>(null)

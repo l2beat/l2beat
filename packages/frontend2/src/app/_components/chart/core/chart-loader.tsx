@@ -1,6 +1,6 @@
 import React from 'react'
-import { useChartContext } from './chart-context'
 import { cn } from '~/utils/cn'
+import { useChartContext } from './chart-context'
 
 export function ChartLoader() {
   const { loading } = useChartContext()

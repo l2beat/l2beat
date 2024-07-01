@@ -1,9 +1,9 @@
 import { mean } from 'lodash'
 import { useEffect, useMemo, useRef } from 'react'
 import { cn } from '~/utils/cn'
+import { ChartMilestoneHover } from '../hovers/chart-milestone-hover'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
-import { ChartMilestoneHover } from '../hovers/chart-milestone-hover'
 import { POINT_CLASS_NAMES } from './styles'
 
 const HOVER_CANVAS_PADDING = 16

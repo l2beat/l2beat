@@ -7,6 +7,9 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
+import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
+import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
+import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 import {
   Table,
   TableBody,
@@ -19,9 +22,6 @@ import {
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
 import { columns } from './columns'
-import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
-import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
-import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 
 interface Props {
   items: DaRiskEntry[]

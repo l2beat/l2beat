@@ -1,16 +1,16 @@
+import { chains } from '@l2beat/config'
+import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
+import { type DiscoveryOutput } from '@l2beat/discovery-types'
 import {
-  ChainId,
   assert,
+  ChainId,
   type ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
-import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import { db } from '~/server/database'
-import { type DiscoveryOutput } from '@l2beat/discovery-types'
-import { chains } from '@l2beat/config'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { db } from '~/server/database'
 
 export function getImplementationChangeReport() {
   noStore()

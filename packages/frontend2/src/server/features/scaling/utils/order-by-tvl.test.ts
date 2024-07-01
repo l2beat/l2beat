@@ -1,8 +1,8 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { orderByTvl } from './order-by-tvl'
 import { type TvlProject } from '../get-tvl'
+import { orderByTvl } from './order-by-tvl'
 
 describe(orderByTvl.name, () => {
   it('orders projects by their latest hourly tvl', () => {

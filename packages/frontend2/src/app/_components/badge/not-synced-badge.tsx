@@ -1,9 +1,9 @@
 import React from 'react'
 
-import { Badge } from './badge'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip'
 import { formatTimestamp } from '~/utils/dates'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip'
+import { Badge } from './badge'
 
 interface NotSyncedBadgeProps {
   syncedUntil?: number

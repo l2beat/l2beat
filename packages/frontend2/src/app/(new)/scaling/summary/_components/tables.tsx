@@ -1,31 +1,31 @@
 'use client'
+import { type Milestone } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import React, { useCallback, useMemo, useState } from 'react'
+import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
+import { TvlChart } from '~/app/_components/chart/tvl-chart'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
+import { BasicTable } from '~/app/_components/table/basic-table'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '~/app/_components/tabs'
-import { TvlChart } from '~/app/_components/chart/tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
+import { useTable } from '~/hooks/use-table'
+import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
-import { type TvlCharts } from '~/server/features/scaling/get-tvl'
-import { type Milestone } from '@l2beat/config'
-import { useTable } from '~/hooks/use-table'
-import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { summaryLayer3sColumns } from './table/layer3s/columns'
-import { BasicTable } from '~/app/_components/table/basic-table'
-import { scalingLayer2sColumns } from './table/layer2s/columns'
-import { scalingUpcomingColumns } from './table/upcoming/columns'
-import { scalingArchivedColumns } from './table/archived/columns'
-import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
-import { ScalingLegend } from './table/layer2s/legend'
 import { ScalingFilters, type ScalingFiltersState } from './scaling-filters'
-import { notUndefined } from '@l2beat/shared-pure'
+import { scalingArchivedColumns } from './table/archived/columns'
+import { scalingLayer2sColumns } from './table/layer2s/columns'
+import { ScalingLegend } from './table/layer2s/legend'
+import { summaryLayer3sColumns } from './table/layer3s/columns'
+import { scalingUpcomingColumns } from './table/upcoming/columns'
 
 interface Props {
   layer2s: ScalingSummaryLayer2sEntry[]

@@ -1,9 +1,9 @@
 import { safeGetTokenByAssetId } from '@l2beat/config'
 import { type TvlApiToken } from '@l2beat/shared-pure'
 import React, { type ReactNode } from 'react'
+import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 import { Square } from '~/app/_components/square'
 import { getAssociatedTokensWarning } from './get-tvl-warnings'
-import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 
 export function getTvlBreakdown(
   name: string,

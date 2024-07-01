@@ -1,10 +1,10 @@
 import {
+  type Layer2Provider,
+  type Layer3Provider,
+  type ScalingProjectCategory,
   type ScalingProjectPurpose,
   type StageConfig,
-  type ScalingProjectCategory,
-  type Layer2Provider,
   type WarningWithSentiment,
-  type Layer3Provider,
 } from '@l2beat/config'
 import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 import { type RosetteValue } from '~/app/_components/rosette/types'

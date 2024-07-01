@@ -1,11 +1,11 @@
 import React, { type FC } from 'react'
 
+import Link from 'next/link'
 import OutLinkIcon from '~/icons/outlink.svg'
 import ShieldIcon from '~/icons/shield.svg'
-import Link from 'next/link'
 import { cn } from '~/utils/cn'
-import { Markdown } from './markdown/markdown'
 import { Callout } from './callout'
+import { Markdown } from './markdown/markdown'
 
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'

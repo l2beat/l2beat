@@ -1,9 +1,9 @@
 import React from 'react'
+import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
-import { useChartContext } from '../core/chart-context'
-import { cn } from '~/utils/cn'
 import { Skeleton } from '../../skeleton'
+import { useChartContext } from '../core/chart-context'
 
 interface Props {
   value: string
