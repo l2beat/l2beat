@@ -3,19 +3,19 @@
   "chain": "ethereum",
   "blockNumber": 20110229,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 5 (40%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1704291371,
       "values": {
@@ -108,12 +108,6 @@
     {
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-      "ignoreInWatchMode": [
-        "l1ToL2MessageNonce",
-        "stateBlockNumber",
-        "stateBlockHash",
-        "stateRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare proxy",
         "implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
@@ -124,6 +118,12 @@
           "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
         ]
       },
+      "ignoreInWatchMode": [
+        "l1ToL2MessageNonce",
+        "stateBlockNumber",
+        "stateBlockHash",
+        "stateRoot"
+      ],
       "implementations": ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"],
       "sinceTimestamp": 1689850631,
       "values": {
@@ -157,16 +157,36 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000020",
-    "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
-    "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
-    "0x59232aC80E6d403b6381393e52f4665ECA328558",
-    "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
-    "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
-    "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670",
-    "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
-    "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
-    "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
+    {
+      "address": "0x0000000000000000000000000000000000000020"
+    },
+    {
+      "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+    },
+    {
+      "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
+    },
+    {
+      "address": "0x59232aC80E6d403b6381393e52f4665ECA328558"
+    },
+    {
+      "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
+    },
+    {
+      "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
+    },
+    {
+      "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670"
+    },
+    {
+      "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+    },
+    {
+      "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6"
+    },
+    {
+      "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
+    }
   ],
   "abis": {
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [

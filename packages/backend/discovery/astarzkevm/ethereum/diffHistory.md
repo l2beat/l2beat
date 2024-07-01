@@ -1,4 +1,69 @@
-Generated with discovered.json: 0x518b77ec1a2267755301f1d6e67f9fe242b8b8ee
+Generated with discovered.json: 0x576a89bc7c43c8d0ed013d38fa0509116c6b25ed
+
+# Diff at Fri, 28 Jun 2024 07:20:22 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@49bfbec96093cd13bd953b811e1f3024e562632f block: 19882099
+- current block number: 20188651
+
+## Description
+
+Change sequencer address and URL. DAC committee members changed. Chain was offline for this update/maintenance for 40 minutes.
+
+## Watched changes
+
+```diff
+    contract AstarValidiumEtrog (0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80) {
+    +++ description: None
+      values.trustedSequencer:
+-        "0xD49CD5f9776A54fAe89B68205F6Af69586F98203"
++        "0xA09F1c88C0194Da6b0a1c564CDBEcbF3AAd649E4"
+      values.trustedSequencerURL:
+-        "https://rpc.astar-zkevm.gelato.digital"
++        "https://rpc-zkevm.astar.network"
+    }
+```
+
+```diff
+    contract AstarValidiumDAC (0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0) {
+    +++ description: None
+      values.committeeHash:
+-        "0xf3b713b9d34dd6c8f99950e7f622937def5d1044471824b807c8b9dbedf75d2f"
++        "0x9a0c18a0211f34e9126b78961894fb03edbdcb7e314a5affed3f8365315e3aff"
+      values.members.4.1:
+-        "0xF54b295a221B5d3510D03d9B16E23BA151da012A"
++        "0xC4ad70e848f36925FcbDfb252f5e258D06647320"
+      values.members.4.0:
+-        "http://cdk-validium-dac-1-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444"
++        "https://dac0-zkevm.astar.network"
+      values.members.3.1:
+-        "0xCFb77B6abb27e04cE0DB347cCCd5544f51A98CBc"
++        "0xB4d094b4216F1BEb8bAeD995092A05182fD4bEf0"
+      values.members.3.0:
+-        "http://cdk-validium-dac-2-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444"
++        "https://dac4-zkevm.astar.network"
+      values.members.2.1:
+-        "0x8FB3cb4777EE1c2C35C48aC69a650026d18aFF08"
++        "0x68B62E4C9E69cd637c61f19Fb64976D466De1d58"
+      values.members.2.0:
+-        "http://cdk-validium-dac-3-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444"
++        "https://dac2-zkevm.astar.network"
+      values.members.1.1:
+-        "0x37f0B74e0Fc72aDAAb1Fd39Ec6d779F596866aB8"
++        "0x361Ed4c21Ad3f9B28eeE1e1894854cE7E39b2dB1"
+      values.members.1.0:
+-        "http://cdk-validium-dac-4-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444"
++        "https://dac3-zkevm.astar.network"
+      values.members.0.1:
+-        "0x08EbBdFf8cB6d1336515A89641e899bc8ce91F2C"
++        "0x19DdD9d655B993D6B2e2437bfBA0378B777d7470"
+      values.members.0.0:
+-        "http://cdk-validium-dac-5-prod-6d3f0-port1.cdk-validium-deployment-6d3f0.svc.cluster.local:8444"
++        "https://dac1-zkevm.astar.network"
+    }
+```
+
+Generated with discovered.json: 0x46c4eb4a0263e10d78594ff27d659e62a41b869d
 
 # Diff at Thu, 16 May 2024 11:00:25 GMT:
 

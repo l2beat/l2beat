@@ -1,16 +1,8 @@
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
-import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
+import { IEtherscanClient } from '../../utils/IEtherscanClient'
+import { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-
-export interface ContractSource {
-  name: string
-  isVerified: boolean
-  abi: string[]
-  source: string
-  solidityVersion: string
-  constructorArguments: string
-}
 
 export interface ContractDeployment {
   deployer: EthereumAddress
@@ -22,7 +14,7 @@ export interface ContractDeployment {
 export interface RawProviders {
   baseProvider: providers.JsonRpcProvider
   eventProvider: providers.JsonRpcProvider
-  etherscanLikeClient: EtherscanLikeClient
+  etherscanClient: IEtherscanClient
 }
 
 export interface IProvider {

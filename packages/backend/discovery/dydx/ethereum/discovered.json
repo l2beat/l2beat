@@ -3,11 +3,16 @@
   "chain": "ethereum",
   "blockNumber": 19825321,
   "configHash": "0x847ede6a024e5b92079594fdc9dc23cdb1b71bfe3a16bd0235f77ffed4ab6ecb",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "MerkleDistributor",
       "address": "0x01d3348601968aB85b4bb028979006eac235a588",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xFE1d5439625a9524a80F66670733129E80E0C112",
+        "admin": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
+      },
       "ignoreInWatchMode": [
         "getCurrentEpoch",
         "getEpochParameters",
@@ -18,11 +23,6 @@
         "TRADER_SCORE_ALPHA_BASE",
         "WAITING_PERIOD"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xFE1d5439625a9524a80F66670733129E80E0C112",
-        "admin": "0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0"
-      },
       "implementations": ["0xFE1d5439625a9524a80F66670733129E80E0C112"],
       "sinceTimestamp": 1627709502,
       "values": {
@@ -378,6 +378,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x639192D54431F8c816368D3FB4107Bc168d0E871"]
+      },
       "sinceTimestamp": 1627708831,
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
@@ -387,10 +390,10 @@
     {
       "name": "WrappedEthereumDydxToken",
       "address": "0x46b2DeAe6eFf3011008EA27EA36b7c27255ddFA9",
-      "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["_nextAvailableBridgeId", "totalSupply"],
       "sinceTimestamp": 1694426279,
       "values": {
         "_nextAvailableBridgeId": 5496,
@@ -446,6 +449,11 @@
     {
       "name": "LiquidityStaking",
       "address": "0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xBE607a58206180fef691bf1B5aE9670174284388",
+        "admin": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
+      },
       "ignoreInWatchMode": [
         "decimals",
         "DISTRIBUTION_END",
@@ -470,11 +478,6 @@
         "totalSupply",
         "TOTAL_ALLOCATION"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xBE607a58206180fef691bf1B5aE9670174284388",
-        "admin": "0xAc5D8bCD13da463bea96c75f9085c4e40037F790"
-      },
       "implementations": ["0xBE607a58206180fef691bf1B5aE9670174284388"],
       "sinceTimestamp": 1627709656,
       "values": {
@@ -617,12 +620,12 @@
     {
       "name": "SafetyModule",
       "address": "0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC",
-      "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A",
         "admin": "0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C"
       },
+      "ignoreInWatchMode": ["totalSupply", "inBlackoutWindow"],
       "implementations": ["0x31D76F5Db8F40D28886Bf00F3be5F157472Bf77A"],
       "sinceTimestamp": 1627709015,
       "values": {
@@ -702,6 +705,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"]
+      },
       "sinceTimestamp": 1627708955,
       "values": {
         "owner": "0xEcaE9BF44A21d00E2350a42127A377Bf5856d84B"
@@ -714,6 +720,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x01d3348601968aB85b4bb028979006eac235a588"]
+      },
       "sinceTimestamp": 1627709450,
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
@@ -723,10 +732,10 @@
     {
       "name": "DydxGovernor",
       "address": "0x7E9B1672616FF6D6629Ef2879419aaE79A9018D2",
-      "ignoreInWatchMode": ["getProposalsCount"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["getProposalsCount"],
       "sinceTimestamp": 1626145334,
       "values": {
         "accessControl": {
@@ -888,6 +897,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"]
+      },
       "sinceTimestamp": 1627709620,
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"
@@ -897,10 +909,10 @@
     {
       "name": "TreasuryVester",
       "address": "0xb9431E19B29B952d9358025f680077C3Fd37292f",
-      "ignoreInWatchMode": ["lastUpdate"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["lastUpdate"],
       "sinceTimestamp": 1627709382,
       "values": {
         "dydx": "0x92D6C1e31e14520e676a687F0a93788B716BEff5",
@@ -939,7 +951,6 @@
     {
       "name": "StarkPerpetual",
       "address": "0xD54f502e184B6B739d7D27a6410a67dc462D69c8",
-      "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x2C0df87E073755139101b35c0A51e065291cc2d3",
@@ -956,6 +967,7 @@
           "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE"
         ]
       },
+      "ignoreInWatchMode": ["getLastBatchId", "getSequenceNumber"],
       "implementations": [
         "0x2C0df87E073755139101b35c0A51e065291cc2d3",
         "0x5d8cC5659db74EEbF19aA2Bb39973F9339012AC5",
@@ -1114,13 +1126,27 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x0000000000000000000000000000000000000001",
-    "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080",
-    "0x8129b737912e17212C8693B781928f5D0303390a",
-    "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9",
-    "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68",
-    "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000001"
+    },
+    {
+      "address": "0x47FB811bE111F2F0Df7dff81EFFe890da6D74080"
+    },
+    {
+      "address": "0x8129b737912e17212C8693B781928f5D0303390a"
+    },
+    {
+      "address": "0x823AeefF884905Aae8A5Fc37aa93938d27EbeEa9"
+    },
+    {
+      "address": "0xA7F2a5C4F294365ceCD366060DabF3831F27Ae68"
+    },
+    {
+      "address": "0xDC7eBbc857Ad2d276c387100dB67c1041dA0B2c0"
+    }
   ],
   "abis": {
     "0x01d3348601968aB85b4bb028979006eac235a588": [

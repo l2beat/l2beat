@@ -27,68 +27,11 @@
     "LivenessModule": {
       "ignoreMethods": ["getRequiredThreshold"]
     },
-    "OptimismPortal": {
-      "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
+    "0x735aDBbE72226BD52e818E7181953f42E3b0FF21": {
+      "extends": "opstack/L1StandardBridge"
     },
-    "L2OutputOracle": {
-      "ignoreMethods": [
-        "getL2OutputAfter",
-        "getL2OutputIndexAfter",
-        "getL2Output",
-        "computeL2Timestamp"
-      ],
-      "ignoreInWatchMode": [
-        "nextBlockNumber",
-        "nextOutputIndex",
-        "latestBlockNumber",
-        "latestOutputIndex"
-      ],
-      "fields": {
-        "deletedOutputs": {
-          "handler": {
-            "type": "stateFromEvent",
-            "event": "OutputsDeleted",
-            "returnParams": ["prevNextOutputIndex", "newNextOutputIndex"]
-          }
-        }
-      }
-    },
-    "ConduitMultisig": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
-    },
-    "SystemConfig": {
-      "fields": {
-        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
-        "batcherHash": {
-          "handler": {
-            "type": "call",
-            "method": "function batcherHash() view returns (address)",
-            "args": []
-          }
-        },
-        "opStackDA": {
-          "handler": {
-            "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "sequencerInbox": {
-          "handler": {
-            "type": "opStackSequencerInbox",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "gasLimit": {
-          "description": "Gas limit for blocks on L2.",
-          "severity": "LOW"
-        }
-      },
-      "ignoreInWatchMode": ["scalar"]
+    "0x2901dA832a4D0297FF0691100A8E496626cc626D": {
+      "extends": "opstack/L1ERC721Bridge"
     }
   }
 }

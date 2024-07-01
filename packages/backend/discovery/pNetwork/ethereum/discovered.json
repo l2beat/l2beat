@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19926484,
   "configHash": "0xa0ac3a5ffd7b460eb42b5cc31d11ea09532fb9ae142ca25fa017970859818606",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
@@ -20,12 +20,12 @@
     {
       "name": "pNetworkDAOVoting",
       "address": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
-      "ignoreInWatchMode": ["votesLength"],
       "upgradeability": {
         "type": "EIP897 proxy",
         "isUpgradable": true,
         "implementation": "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"
       },
+      "ignoreInWatchMode": ["votesLength"],
       "implementations": ["0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"],
       "sinceTimestamp": 1596180723,
       "values": {
@@ -224,13 +224,13 @@
       "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 4 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1672744007,
       "values": {
@@ -253,6 +253,9 @@
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
       },
       "sinceTimestamp": 1664208791,
       "values": {
@@ -308,6 +311,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
+      },
       "sinceTimestamp": 1640866403,
       "values": {
         "owner": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
@@ -334,10 +340,10 @@
     {
       "name": "MiniMeToken",
       "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1596178410,
       "values": {
         "controller": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
@@ -357,6 +363,11 @@
     {
       "name": "EthPntv2",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
+        "admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
+      },
       "ignoreInWatchMode": [
         "currentMonthWithdrawnAmount",
         "currentYearWithdrawnAmount",
@@ -365,11 +376,6 @@
         "currentMonthNumber",
         "currentYearNumber"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
-        "admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
-      },
       "implementations": ["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"],
       "sinceTimestamp": 1664208803,
       "values": {
@@ -427,19 +433,45 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x0000000000000000000000000000000000000001",
-    "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9",
-    "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
-    "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496",
-    "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262",
-    "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f",
-    "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45",
-    "0x56db816b3456EDfa6edbC65F00ba45296fE136F2",
-    "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20",
-    "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132",
-    "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97",
-    "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000001"
+    },
+    {
+      "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
+    },
+    {
+      "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b"
+    },
+    {
+      "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
+    },
+    {
+      "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262"
+    },
+    {
+      "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
+    },
+    {
+      "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45"
+    },
+    {
+      "address": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2"
+    },
+    {
+      "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20"
+    },
+    {
+      "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
+    },
+    {
+      "address": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97"
+    },
+    {
+      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
+    }
   ],
   "abis": {
     "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": [

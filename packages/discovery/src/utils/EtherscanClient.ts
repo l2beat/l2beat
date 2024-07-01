@@ -4,23 +4,28 @@ import {
   Hash256,
   Retries,
   UnixTime,
-  stringAs,
   stringAsInt,
 } from '@l2beat/shared-pure'
-import { z } from 'zod'
 
-import { EtherscanResponse, parseEtherscanResponse } from './EtherscanModels'
+import { ContractSource } from './IEtherscanClient'
+
+import { z } from 'zod'
+import {
+  ContractCreatorAndCreationTxHashResult,
+  ContractSourceResult,
+  OneTransactionListResult,
+  TwentyTransactionListResult,
+  tryParseEtherscanResponse,
+} from './EtherscanModels'
 import { HttpClient } from './HttpClient'
+import {
+  EtherscanUnsupportedMethods,
+  IEtherscanClient,
+} from './IEtherscanClient'
 import { getErrorMessage } from './getErrorMessage'
+import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 class EtherscanError extends Error {}
-
-// If a given instance of Etherscan does not support some endpoint set a
-// corresponding variable to true, otherwise do not set to anything -
-// `undefined` is treated as supported.
-export interface EtherscanUnsupportedMethods {
-  getContractCreation?: boolean
-}
 
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 2000, // 4s, 8s, 16s, 32s, 64s, 128s, 256s, 512s, 1024s, 2048s
@@ -29,7 +34,7 @@ const shouldRetry = Retries.exponentialBackOff({
   notifyAfterAttempts: Infinity,
 })
 
-export class EtherscanLikeClient {
+export class EtherscanClient implements IEtherscanClient {
   protected readonly rateLimiter = new RateLimiter({
     callsPerMinute: 150,
   })
@@ -56,8 +61,8 @@ export class EtherscanLikeClient {
     url: string,
     apiKey: string,
     unsupportedMethods: EtherscanUnsupportedMethods = {},
-  ): EtherscanLikeClient {
-    return new EtherscanLikeClient(
+  ): EtherscanClient {
+    return new EtherscanClient(
       httpClient,
       url,
       apiKey,
@@ -108,11 +113,42 @@ export class EtherscanLikeClient {
       address: address.toString(),
     })
 
-    const source = ContractSourceResult.parse(response)
+    const sourceResponse = ContractSourceResult.parse(response)
 
-    assert(source[0])
+    const result = sourceResponse[0]
+    assert(result)
+    const isVerified = result.ABI !== 'Contract source code not verified'
 
-    return source[0]
+    let files: Record<string, string> = {}
+    let remappings: string[] = []
+    const name = result.ContractName.trim()
+    const solidityVersion = result.CompilerVersion
+    const source = result.SourceCode
+
+    if (isVerified) {
+      try {
+        const decodedSource = decodeEtherscanSource(
+          name,
+          source,
+          solidityVersion,
+        )
+        files = Object.fromEntries(decodedSource.sources)
+        remappings = decodedSource.remappings
+      } catch (e) {
+        console.error(e)
+        console.log(source)
+      }
+    }
+
+    return {
+      name,
+      isVerified,
+      abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
+      solidityVersion,
+      constructorArguments: result.ConstructorArguments,
+      remappings,
+      files,
+    }
   }
 
   // Returns undefined if the method is not supported by API.
@@ -270,79 +306,53 @@ export class EtherscanLikeClient {
   }
 }
 
-export function tryParseEtherscanResponse(
-  text: string,
-): EtherscanResponse | undefined {
-  try {
-    return parseEtherscanResponse(text)
-  } catch {
-    return undefined
-  }
+const Sources = z.record(z.object({ content: z.string() }))
+const Settings = z.object({ remappings: z.array(z.string()).optional() })
+const EtherscanSource = z.object({ sources: Sources, settings: Settings })
+
+export interface DecodedSource {
+  sources: [string, string][]
+  remappings: string[]
 }
 
-export type ContractSource = z.infer<typeof ContractSource>
-export const ContractSource = z.object({
-  SourceCode: z.string(),
-  ABI: z.string(),
-  ContractName: z.string(),
-  CompilerVersion: z.string(),
-  OptimizationUsed: z.string(),
-  Runs: z.string(),
-  ConstructorArguments: z.string(),
-  EVMVersion: z.string(),
-  Library: z.string(),
-  LicenseType: z.string(),
-  Proxy: z.string(),
-  Implementation: z.string(),
-  SwarmSource: z.string(),
-})
+function decodeEtherscanSource(
+  name: string,
+  source: string,
+  solidityVersion: string,
+): DecodedSource {
+  if (!source.startsWith('{')) {
+    let extension = 'sol'
+    if (solidityVersion.startsWith('vyper')) {
+      extension = 'vy'
+    }
 
-export const ContractSourceResult = z.array(ContractSource).length(1)
+    return {
+      sources: [[`${name}.${extension}`, source]],
+      remappings: [],
+    }
+  }
 
-export type ContractCreatorAndCreationTxHash = z.infer<
-  typeof ContractCreatorAndCreationTxHash
->
-export const ContractCreatorAndCreationTxHash = z.object({
-  contractAddress: stringAs(EthereumAddress),
-  contractCreator: z.union([
-    stringAs(EthereumAddress),
-    z.literal('GENESIS').transform(() => EthereumAddress.ZERO),
-  ]),
-  txHash: z.union([
-    stringAs(Hash256),
-    z
-      .string()
-      .startsWith('GENESIS_')
-      .transform(() => Hash256.ZERO),
-  ]),
-})
+  // etherscan sometimes wraps the json in {} so you get {{...}}
+  if (source.startsWith('{{')) {
+    source = source.slice(1, -1)
+  }
 
-export const ContractCreatorAndCreationTxHashResult = z
-  .array(ContractCreatorAndCreationTxHash)
-  .length(1)
+  const parsed: unknown = JSON.parse(source)
+  let validated: Record<string, { content: string }>
+  let remappings: string[] = []
+  try {
+    const verified = EtherscanSource.parse(parsed)
+    validated = verified.sources
+    remappings = verified.settings.remappings ?? []
+  } catch {
+    validated = Sources.parse(parsed)
+  }
 
-export const TransactionListEntry = z.object({
-  blockNumber: z.string(),
-  timeStamp: z.string(),
-  hash: z.string(),
-  nonce: z.string(),
-  blockHash: z.string(),
-  transactionIndex: z.string(),
-  from: z.string(),
-  to: z.string(),
-  value: z.string(),
-  gas: z.string(),
-  gasPrice: z.string(),
-  isError: z.string(),
-  txreceipt_status: z.string(),
-  input: z.string(),
-  contractAddress: z.string(),
-  cumulativeGasUsed: z.string(),
-  gasUsed: z.string(),
-  confirmations: z.string(),
-  methodId: z.string(),
-  functionName: z.string(),
-})
-
-const OneTransactionListResult = z.array(TransactionListEntry).length(1)
-const TwentyTransactionListResult = z.array(TransactionListEntry).length(20)
+  return {
+    sources: Object.entries(validated).map(([name, { content }]) => [
+      name,
+      content,
+    ]),
+    remappings,
+  }
+}

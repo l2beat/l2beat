@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe1b6da6efcdf920a5ad656d90eb6bd6e2cf872b9
+
+# Diff at Wed, 26 Jun 2024 08:15:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1ee82e236b3e4d3c84f7f57d45b355aba70df5e7 block: 19927721
+- current block number: 20174601
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927721 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.maxTimeVariation:
+-        [5760,48,86400,3600]
++        {"delayBlocks":5760,"futureBlocks":48,"delaySeconds":86400,"futureSeconds":3600}
+    }
+```
+
 Generated with discovered.json: 0x50dc4b63edf931cc0b129c091769d15c9d631876
 
 # Diff at Wed, 22 May 2024 20:11:52 GMT:

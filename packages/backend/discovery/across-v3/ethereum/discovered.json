@@ -1,24 +1,24 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 19976242,
-  "configHash": "0xcffebba091e4ed4e857f8933a919d410f67cec3001021555f861d13088eac059",
-  "version": 6,
+  "blockNumber": 20204613,
+  "configHash": "0x7df15e92583fb295cad51c4d8842e59786e367c47cf4317583c37f3af032b93c",
+  "version": 8,
   "contracts": [
     {
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
-      "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"],
       "sinceTimestamp": 1578581061,
       "values": {
         "decimals": 18,
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "119318055685610205968488991",
+        "totalSupply": "120000713286659504167011279",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -58,15 +58,15 @@
     {
       "name": "ProposerV2",
       "address": "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
-      "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["bond", "getCurrentTime"],
       "sinceTimestamp": 1677231527,
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -107,12 +107,12 @@
     {
       "name": "Ethereum_SpokePool",
       "address": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
-      "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877",
         "admin": "0xc186fA914353c44b2E33eBE05f21846F1048bEda"
       },
+      "ignoreInWatchMode": ["numberOfDeposits", "getCurrentTime"],
       "implementations": ["0x08C21b200eD06D2e32cEC91a770C3FcA8aD5F877"],
       "sinceTimestamp": 1682355155,
       "values": {
@@ -122,11 +122,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1351583,
+        "numberOfDeposits": 1419218,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -139,14 +139,14 @@
     {
       "name": "GovernorV2",
       "address": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
-      "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["getCurrentTime", "numProposals"],
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -183,13 +183,13 @@
       "name": "EmergencyProposalExecutor",
       "address": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 4 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1597806870,
       "values": {
@@ -202,7 +202,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 628,
+        "nonce": 673,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -241,15 +241,15 @@
     {
       "name": "EmergencyProposer",
       "address": "0x91F1804aCaf87C2D34A34A70be1bb16bB85D6748",
-      "ignoreInWatchMode": ["getCurrentTime"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["getCurrentTime"],
       "sinceTimestamp": 1677231923,
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -282,13 +282,13 @@
       "name": "HubPool Multisig",
       "address": "0xB524735356985D2f267FA010D681f061DfF03715",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1636157803,
       "values": {
@@ -302,7 +302,7 @@
           "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
         ],
         "getThreshold": 3,
-        "nonce": 216,
+        "nonce": 217,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -318,10 +318,13 @@
     {
       "name": "HubPool",
       "address": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
-      "ignoreInWatchMode": ["rootBundleProposal"],
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]
+      },
+      "ignoreInWatchMode": ["rootBundleProposal"],
       "sinceTimestamp": 1653167916,
       "values": {
         "bondAmount": "450000000000000000",
@@ -383,13 +386,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x5e30134e2245b12ee5a1014d32f55cb9d08629f7ae9ba4ce172c91057216fc21",
-          "relayerRefundRoot": "0x15aa8a795120b241a99e71ddb102c8005a618f86fcb455047346933463282841",
+          "poolRebalanceRoot": "0x03c516c9e29668cac681aee4389787ee607338909028c3726520c6aecce8b4c7",
+          "relayerRefundRoot": "0x4a8d84269cee142dc89ff4999c95056fb0814937ebad89133483491ad239d0ca",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "claimedBitMap": 127,
+          "claimedBitMap": 255,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 0,
-          "challengePeriodEndTimestamp": 1716993251
+          "challengePeriodEndTimestamp": 1719751043
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -439,13 +442,11 @@
     {
       "name": "ZkSync_Adapter",
       "address": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
-      "ignoreInWatchMode": ["getL1CallValue"],
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1691158667,
       "values": {
-        "getL1CallValue": 500000000000000,
         "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "L2_GAS_LIMIT": 2000000,
@@ -513,23 +514,57 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
-    "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05",
-    "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5",
-    "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
-    "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010",
-    "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
-    "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
-    "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe",
-    "0x868CF19464e17F76D6419ACC802B122c22D2FD34",
-    "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
-    "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9",
-    "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
-    "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d",
-    "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
-    "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
-    "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+    },
+    {
+      "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05"
+    },
+    {
+      "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5"
+    },
+    {
+      "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+    },
+    {
+      "address": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010"
+    },
+    {
+      "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+    },
+    {
+      "address": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
+    },
+    {
+      "address": "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
+    },
+    {
+      "address": "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
+    },
+    {
+      "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+    },
+    {
+      "address": "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9"
+    },
+    {
+      "address": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D"
+    },
+    {
+      "address": "0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d"
+    },
+    {
+      "address": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
+    },
+    {
+      "address": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
+    },
+    {
+      "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c"
+    }
   ],
   "abis": {
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": [

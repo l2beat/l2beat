@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19432103,
   "configHash": "0x73afccc819928023fc410ec9984703b0c8e2a366353cf570e6f7369a3ce9dbd6",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "Governance",
@@ -87,6 +87,15 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
+          "0x27C229937745d697d28FC7853d1bFEA7331Edf56",
+          "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
+          "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+          "0x961369d347EF7A6896BDD39cBE2B89e3911f521f"
+        ]
+      },
       "sinceTimestamp": 1613135194,
       "values": {
         "getMaster": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037",
@@ -116,17 +125,17 @@
     {
       "name": "ZkSync",
       "address": "0x8ECa806Aecc86CE90Da803b080Ca4E3A9b8097ad",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
+        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
+      },
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "numberOfPendingWithdrawals",
         "totalBlocksCommitted",
         "totalBlocksVerified"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
-        "admin": "0x714B2D10210f2A3a7AA614F949259C87613689aB"
-      },
       "implementations": ["0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f"],
       "sinceTimestamp": 1613135194,
       "values": {
@@ -171,9 +180,15 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3",
-    "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x042147Bd43d3f59B3133eE08322B67E4e9f2fDb3"
+    },
+    {
+      "address": "0x7D1a14eeD7af8e26f24bf08BA6eD7A339AbcF037"
+    }
   ],
   "abis": {
     "0x02ecef526f806f06357659fFD14834fe82Ef4B04": [

@@ -1,15 +1,29 @@
 {
   "name": "rari",
   "chain": "arbitrum",
-  "blockNumber": 220728802,
-  "configHash": "0xb55bd83de436d939becec7db5eae441a049c6330528577171cdb6bc7685cd426",
-  "version": 5,
+  "blockNumber": 225981507,
+  "configHash": "0x0c6235d7a72cd3b16ea65699202aa7693c4d59309ab1b062abd26fc28335a00f",
+  "version": 8,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x003e70B041abb993006C03E56c8515622a02928C",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x139C5A235632EDdad741ff380112B3161d31a21C",
+          "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
+          "0x2623C144B4d167f70893f6A8968B98c89a6C5F97",
+          "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
+          "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6",
+          "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6",
+          "0x8bE956aB42274056ef4471BEb211b33e258b7324",
+          "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
+          "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
+          "0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF"
+        ]
       },
       "sinceTimestamp": 1705716145,
       "values": {
@@ -44,6 +58,9 @@
         "implementation": "0x20C6be2A0429A82a7bF113905a29d36CF6753B10",
         "admin": "0x003e70B041abb993006C03E56c8515622a02928C"
       },
+      "assignedPermissions": {
+        "admin": ["0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"]
+      },
       "implementations": ["0x20C6be2A0429A82a7bF113905a29d36CF6753B10"],
       "sinceTimestamp": 1705716145,
       "values": {
@@ -70,16 +87,16 @@
     {
       "name": "Bridge",
       "address": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x74faA20aE77FFAb036369b24066Cc5d4251900D2",
         "admin": "0x003e70B041abb993006C03E56c8515622a02928C"
       },
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "implementations": ["0x74faA20aE77FFAb036369b24066Cc5d4251900D2"],
       "sinceTimestamp": 1705716145,
       "values": {
@@ -89,11 +106,11 @@
           "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
         ],
         "allowedOutboxList": ["0x91591BB66075BCfF94AA128B003134165C3Ab83a"],
-        "delayedMessageCount": 53013,
+        "delayedMessageCount": 53531,
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerInbox": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-        "sequencerMessageCount": 3522,
-        "sequencerReportedSubMessageCount": 351728
+        "sequencerMessageCount": 3922,
+        "sequencerReportedSubMessageCount": 367433
       },
       "derivedName": "Bridge"
     },
@@ -120,17 +137,20 @@
       "name": "RollupProxy",
       "address": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
       "template": "orbitstack/RollupProxy",
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
       "upgradeability": {
         "type": "Arbitrum proxy",
         "admin": "0x139C5A235632EDdad741ff380112B3161d31a21C",
         "adminImplementation": "0xc326D023758d7D212d529D1E58D7f271CAe49fcf",
         "userImplementation": "0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"
       },
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
       "implementations": [
         "0xc326D023758d7D212d529D1E58D7f271CAe49fcf",
         "0xD92D49e8A2230E2C7a73c3ff4Df1AED09dA32a07"
@@ -145,12 +165,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 3179,
+        "firstUnresolvedNode": 3540,
         "inbox": "0x37e60F80d921dc5E7f501a7130F31f6548dBa564",
         "isERC20Enabled": false,
         "lastStakeBlock": 19045354,
-        "latestConfirmed": 3178,
-        "latestNodeCreated": 3330,
+        "latestConfirmed": 3539,
+        "latestNodeCreated": 3692,
         "loserStakeEscrow": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
         "minimumAssertionPeriod": 75,
         "outbox": "0x91591BB66075BCfF94AA128B003134165C3Ab83a",
@@ -243,13 +263,13 @@
       "name": "Caldera Multisig",
       "address": "0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
         "threshold": "3 of 4 (75%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1709766231,
       "values": {
@@ -328,16 +348,16 @@
     {
       "name": "SequencerInbox",
       "address": "0xA436f1867adD490BF1530c636f2FB090758bB6B3",
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1d182075d07744D71E37f77f1654165f6DAFad08",
         "admin": "0x003e70B041abb993006C03E56c8515622a02928C"
       },
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "implementations": ["0x1d182075d07744D71E37f77f1654165f6DAFad08"],
       "sinceTimestamp": 1705716145,
       "values": {
-        "batchCount": 3522,
+        "batchCount": 3922,
         "batchPosters": ["0x974533F82B7BADF54Fb91C15f07F3f095e35321C"],
         "bridge": "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0",
         "dacKeyset": {
@@ -357,7 +377,7 @@
         "rollup": "0x2e988Ea0873C9d712628F0bf38DAFdE754927C89",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 53012
+        "totalDelayedMessagesRead": 53530
       },
       "derivedName": "SequencerInbox"
     },
@@ -412,19 +432,47 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x02867114B27d686f3565E2060424e985a1E565f5",
-    "0x0CA4c24079a191e08F659699292e5C75274EF253",
-    "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
-    "0x356000Cec4fC967f8FC372381D983426760A0391",
-    "0x4919167EA334BE84B1604Cbc82A26A7746D5943e",
-    "0x90E43f5d772e50B01B3F9596f65AD5653467d010",
-    "0x974533F82B7BADF54Fb91C15f07F3f095e35321C",
-    "0x9a2859B2a83148b8DE25d26643B5407555D219E1",
-    "0xaCB337daF123938A337B125f680C9A78F88e21E0",
-    "0xB2a5970fB30dc34AD65c914db855766ea62f1f41",
-    "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552",
-    "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x02867114B27d686f3565E2060424e985a1E565f5"
+    },
+    {
+      "address": "0x0CA4c24079a191e08F659699292e5C75274EF253"
+    },
+    {
+      "address": "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A"
+    },
+    {
+      "address": "0x356000Cec4fC967f8FC372381D983426760A0391"
+    },
+    {
+      "address": "0x4919167EA334BE84B1604Cbc82A26A7746D5943e"
+    },
+    {
+      "address": "0x90E43f5d772e50B01B3F9596f65AD5653467d010"
+    },
+    {
+      "address": "0x974533F82B7BADF54Fb91C15f07F3f095e35321C",
+      "roles": ["Sequencer"]
+    },
+    {
+      "address": "0x9a2859B2a83148b8DE25d26643B5407555D219E1"
+    },
+    {
+      "address": "0xaCB337daF123938A337B125f680C9A78F88e21E0"
+    },
+    {
+      "address": "0xB2a5970fB30dc34AD65c914db855766ea62f1f41"
+    },
+    {
+      "address": "0xBA739a061291E9aec6422BdAD3E9D48d4f7aA552"
+    },
+    {
+      "address": "0xeCebCfC101c3a1c4dB99902cE1Df914dCAd50a65",
+      "roles": ["Validator"]
+    }
   ],
   "abis": {
     "0x003e70B041abb993006C03E56c8515622a02928C": [

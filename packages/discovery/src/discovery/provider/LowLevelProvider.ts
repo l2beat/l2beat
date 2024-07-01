@@ -8,11 +8,11 @@ import {
 } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { z } from 'zod'
-import { EtherscanLikeClient } from '../../utils/EtherscanLikeClient'
+import { IEtherscanClient } from '../../utils/IEtherscanClient'
+import { ContractSource } from '../../utils/IEtherscanClient'
 import { DebugTransactionCallResponse } from './DebugTransactionTrace'
-import { ContractDeployment, ContractSource, RawProviders } from './IProvider'
+import { ContractDeployment, RawProviders } from './IProvider'
 import { ProviderStats, getZeroStats } from './Stats'
-import { jsonToHumanReadableAbi } from './jsonToHumanReadableAbi'
 
 const shouldRetry = Retries.exponentialBackOff({
   stepMs: 500, // 0.5, 1s, 2s, 4s, 8s, 16s, 32s, 64s, 128s, 256s
@@ -27,14 +27,14 @@ export class LowLevelProvider {
   constructor(
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
-    private readonly etherscanLikeClient: EtherscanLikeClient,
+    private readonly etherscanClient: IEtherscanClient,
   ) {}
 
   getRawProviders(): RawProviders {
     return {
       baseProvider: this.provider,
       eventProvider: this.eventProvider,
-      etherscanLikeClient: this.etherscanLikeClient,
+      etherscanClient: this.etherscanClient,
     }
   }
 
@@ -124,17 +124,7 @@ export class LowLevelProvider {
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
     this.stats.getSourceCount++
-    const result = await this.etherscanLikeClient.getContractSource(address)
-    const isVerified = result.ABI !== 'Contract source code not verified'
-
-    return {
-      name: result.ContractName.trim(),
-      isVerified,
-      abi: isVerified ? jsonToHumanReadableAbi(result.ABI) : [],
-      source: result.SourceCode,
-      solidityVersion: result.CompilerVersion,
-      constructorArguments: result.ConstructorArguments,
-    }
+    return await this.etherscanClient.getContractSource(address)
   }
 
   async getDeployment(
@@ -142,7 +132,7 @@ export class LowLevelProvider {
   ): Promise<ContractDeployment | undefined> {
     this.stats.getDeploymentCount++
     const transactionHash =
-      await this.etherscanLikeClient.getContractDeploymentTx(address)
+      await this.etherscanClient.getContractDeploymentTx(address)
     if (transactionHash === undefined) {
       // getContractDeploymentTx API is not available
       return undefined
@@ -195,7 +185,7 @@ export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
       return await fn()
     } catch (e) {
       attempts++
-      if (!isHttpErrorResponse(e)) {
+      if (!isServerError(e)) {
         throw e
       }
       const result = shouldRetry(attempts, e)
@@ -208,11 +198,15 @@ export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
   }
 }
 
-function isHttpErrorResponse(e: unknown): boolean {
+function isServerError(e: unknown): boolean {
   const parsed = ethersError.safeParse(e)
-  return parsed.success && parsed.data.status >= 400
+  return (
+    parsed.success &&
+    ((parsed.data.status ?? 200) >= 400 || parsed.data.code === 'SERVER_ERROR')
+  )
 }
 
 const ethersError = z.object({
-  status: z.number(),
+  code: z.string(),
+  status: z.number().optional(),
 })

@@ -174,6 +174,7 @@ export const NoImage: Story = {
 
 export const EmptyContract: Story = {
   args: {
+    nativeContracts: {},
     contracts: [],
     escrows: [],
     risks: [],

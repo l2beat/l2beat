@@ -54,6 +54,7 @@ export interface ExtendedTemplate {
 export interface AnalyzedEOA {
   type: 'EOA'
   address: EthereumAddress
+  combinedMeta?: ContractMeta
 }
 
 export type AddressesWithTemplates = Record<string, Set<string>>
@@ -166,10 +167,15 @@ export class AddressAnalyzer {
       proxy?.implementations,
       overrides?.fields,
     )
-    const targetsMeta =
-      overrides?.fields !== undefined
-        ? getTargetsMeta(address, results, overrides.fields)
-        : undefined
+
+    const upgradeability = proxy?.upgradeability ?? { type: 'immutable' }
+
+    const targetsMeta = getTargetsMeta(
+      address,
+      upgradeability,
+      results,
+      overrides?.fields,
+    )
 
     return {
       type: 'Contract',
@@ -179,7 +185,7 @@ export class AddressAnalyzer {
       address,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
-      upgradeability: proxy?.upgradeability ?? { type: 'immutable' },
+      upgradeability,
       implementations: proxy?.implementations ?? [],
       values: values ?? {},
       errors: { ...templateErrors, ...(errors ?? {}) },

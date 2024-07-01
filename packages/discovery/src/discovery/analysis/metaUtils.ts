@@ -1,6 +1,9 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { ContractValue } from '@l2beat/discovery-types'
+import {
+  ContractValue,
+  UpgradeabilityParameters,
+} from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   ContractFieldSeverity,
@@ -77,27 +80,56 @@ export function getSelfMeta(
 
 export function getTargetsMeta(
   self: EthereumAddress,
+  upgradeability: UpgradeabilityParameters,
   handlerResults: HandlerResult[],
-  fields: { [address: string]: DiscoveryContractField },
+  fields?: { [address: string]: DiscoveryContractField },
 ): AddressToMetaMap | undefined {
-  const result: Record<string, ContractMeta> = {}
+  const result = getMetaFromUpgradeability(self, upgradeability)
 
-  for (const handlerResult of handlerResults) {
-    const field = fields?.[handlerResult.field]
-    const target = field?.target
-    if (target) {
-      for (const address of getAddresses(handlerResult.value)) {
-        const meta = mergeContractMeta(
-          result[address.toString()],
-          targetConfigToMeta(self, field, target),
-        )
-        if (meta) {
-          result[address.toString()] = meta
+  if (fields !== undefined) {
+    for (const handlerResult of handlerResults) {
+      const field = fields?.[handlerResult.field]
+      const target = field?.target
+      if (target) {
+        for (const address of getAddresses(handlerResult.value)) {
+          const meta = mergeContractMeta(
+            result[address.toString()],
+            targetConfigToMeta(self, field, target),
+          )
+          if (meta) {
+            result[address.toString()] = meta
+          }
         }
       }
     }
   }
+
   return isEmptyObject(result) ? undefined : result
+}
+
+export function getMetaFromUpgradeability(
+  self: EthereumAddress,
+  upgradeability: UpgradeabilityParameters,
+): AddressToMetaMap {
+  const result: Record<string, ContractMeta> = {}
+  // @ts-expect-error pulling 'admin' from any type of proxy
+  const upgradeabilityAdmin = upgradeability['admin'] as
+    | EthereumAddress
+    | undefined
+  if (upgradeabilityAdmin !== undefined) {
+    const permission: Permission = 'admin'
+    result[upgradeabilityAdmin.toString()] = {
+      categories: undefined,
+      descriptions: undefined,
+      roles: undefined,
+      severity: undefined,
+      types: undefined,
+      permissions: {
+        [permission]: new Set([self]),
+      },
+    }
+  }
+  return result
 }
 
 export function targetConfigToMeta(

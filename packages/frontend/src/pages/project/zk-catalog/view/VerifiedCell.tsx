@@ -64,10 +64,7 @@ export function VerifiedCell({
               Verification was not performed for this verifier.
             </TooltipContent>
           </Tooltip>
-          <Link
-            className="ml-[26px] hidden text-xs md:inline"
-            href={askForVerificationLink}
-          >
+          <Link className="ml-[26px] text-xs" href={askForVerificationLink}>
             Submit or ask for verification
           </Link>
         </span>

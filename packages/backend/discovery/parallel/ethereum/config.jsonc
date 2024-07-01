@@ -76,10 +76,16 @@
           }
         },
         "batchPosters": {
+          "target": {
+            "role": "Sequencer"
+          },
           "handler": {
             "type": "arbitrumActors",
             "actorType": "batchPoster"
           }
+        },
+        "maxTimeVariation": {
+          "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
         },
         "keySetUpdates": {
           "handler": {

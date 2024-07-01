@@ -3,13 +3,23 @@
   "chain": "base",
   "blockNumber": 15661242,
   "configHash": "0x0c0d0bcd179872a8706b012c4ecadd3454541847850f80a127ceaea39a281aea",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x25aBB510386A658c622280f488844BD3b485DC32",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
+          "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
+        ],
+        "owner": ["0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"]
       },
       "sinceTimestamp": 1709680173,
       "values": {
@@ -21,6 +31,7 @@
     {
       "name": "AddressManager",
       "address": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -32,12 +43,12 @@
     {
       "name": "SystemConfig",
       "address": "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
-      "ignoreInWatchMode": ["scalar"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x34E6305Fe21a0Ed945177dcD36D7E6084F9f1BcC",
         "admin": "0x25aBB510386A658c622280f488844BD3b485DC32"
       },
+      "ignoreInWatchMode": ["scalar"],
       "implementations": ["0x34E6305Fe21a0Ed945177dcD36D7E6084F9f1BcC"],
       "sinceTimestamp": 1709680197,
       "values": {
@@ -70,13 +81,13 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x727a91e8251A262A4ad5F2D5811c6cD862961759",
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0xb079375dDB17FaBae0F3Ed6B9950f6cD626cE2a3"
       },
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0xb079375dDB17FaBae0F3Ed6B9950f6cD626cE2a3"],
       "sinceTimestamp": 1709680209,
       "values": {
@@ -98,12 +109,12 @@
     {
       "name": "OptimismPortal",
       "address": "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1D9e8EcF1b3D0e773c2dE9f9B864d38322e5adb9",
         "admin": "0x25aBB510386A658c622280f488844BD3b485DC32"
       },
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0x1D9e8EcF1b3D0e773c2dE9f9B864d38322e5adb9"],
       "sinceTimestamp": 1709680185,
       "values": {
@@ -125,13 +136,16 @@
       "name": "StackMultisig",
       "address": "0x7dCe2FEE5e30EFf298cD3d9B92649f00EBDfc104",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "assignedPermissions": {
+        "owner": ["0x25aBB510386A658c622280f488844BD3b485DC32"]
+      },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1708624405,
       "values": {
@@ -172,17 +186,17 @@
     {
       "name": "L2OutputOracle",
       "address": "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xA39D53FCa52Efe9a034D1EC61E30151621F9b945",
+        "admin": "0x25aBB510386A658c622280f488844BD3b485DC32"
+      },
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xA39D53FCa52Efe9a034D1EC61E30151621F9b945",
-        "admin": "0x25aBB510386A658c622280f488844BD3b485DC32"
-      },
       "implementations": ["0xA39D53FCa52Efe9a034D1EC61E30151621F9b945"],
       "sinceTimestamp": 1709680191,
       "values": {
@@ -204,16 +218,36 @@
     }
   ],
   "eoas": [
-    "0x000000000000000000000000000000000000dEaD",
-    "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E",
-    "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-    "0x39f15b577F4F9eD6b819169Ac9fa0bE6eD857258",
-    "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
-    "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-    "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-    "0xeC4Db0b5a1d70167034Da00e3D7Bc5B2CA05Fc77",
-    "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-    "0xf64605AEe9402BC964f37Fd5d355F7420099bb6E"
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x28750b59d304e6ce7d3866eF9a0DbFBCfaE56A6E"
+    },
+    {
+      "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+    },
+    {
+      "address": "0x39f15b577F4F9eD6b819169Ac9fa0bE6eD857258"
+    },
+    {
+      "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+    },
+    {
+      "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+    },
+    {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    },
+    {
+      "address": "0xeC4Db0b5a1d70167034Da00e3D7Bc5B2CA05Fc77"
+    },
+    {
+      "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    },
+    {
+      "address": "0xf64605AEe9402BC964f37Fd5d355F7420099bb6E"
+    }
   ],
   "abis": {
     "0x1D9e8EcF1b3D0e773c2dE9f9B864d38322e5adb9": [

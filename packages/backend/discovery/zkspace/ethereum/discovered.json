@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19019529,
   "configHash": "0x5a6adcb84f69f3427bb3009dbeca4565d6d8f3f0b71acce213a8c26f17995b0a",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "VerifierExit",
@@ -23,15 +23,6 @@
     {
       "name": "ZkSync",
       "address": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
-      "ignoreInWatchMode": [
-        "firstPendingWithdrawalIndex",
-        "firstPriorityRequestId",
-        "totalBlocksChecked",
-        "totalBlocksCommitted",
-        "totalBlocksVerified",
-        "totalCommittedPriorityRequests",
-        "totalOpenPriorityRequests"
-      ],
       "upgradeability": {
         "type": "zkSpace proxy",
         "admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -42,6 +33,15 @@
           "0x6A4E7dd4c546Ca2DD84b48803040732fC30206D7"
         ]
       },
+      "ignoreInWatchMode": [
+        "firstPendingWithdrawalIndex",
+        "firstPriorityRequestId",
+        "totalBlocksChecked",
+        "totalBlocksCommitted",
+        "totalBlocksVerified",
+        "totalCommittedPriorityRequests",
+        "totalOpenPriorityRequests"
+      ],
       "implementations": [
         "0x467a2B91f231D930F5eeB6B982C7666E81DA8626",
         "0x899A605a3B7A11eA5D928958b77014e763c53426",
@@ -129,6 +129,16 @@
       "address": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
+          "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
+          "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+          "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+          "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+          "0xc632347cc96A4400653E3514eA148630455295b5"
+        ]
       },
       "sinceTimestamp": 1639569183,
       "values": {
@@ -222,9 +232,15 @@
     }
   ],
   "eoas": [
-    "0x5bd9404260D2B0D55081E599e4e085BE080141E2",
-    "0x961B513dfD3e363c238E0f98219eE02552A847BD",
-    "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be"
+    {
+      "address": "0x5bd9404260D2B0D55081E599e4e085BE080141E2"
+    },
+    {
+      "address": "0x961B513dfD3e363c238E0f98219eE02552A847BD"
+    },
+    {
+      "address": "0xfCAE399eA757DDf0a4020198C59BF2270c2B05Be"
+    }
   ],
   "abis": {
     "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81": [
