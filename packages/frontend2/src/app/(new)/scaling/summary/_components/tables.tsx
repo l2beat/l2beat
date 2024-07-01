@@ -1,11 +1,8 @@
 'use client'
-import { type Milestone } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import React, { useCallback, useMemo, useState } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
-import { TvlChart } from '~/app/_components/chart/tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import {
@@ -15,7 +12,6 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
-import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
@@ -30,8 +26,6 @@ import { scalingUpcomingColumns } from './table/upcoming/columns'
 interface Props {
   layer2s: ScalingSummaryLayer2sEntry[]
   layer3s: ScalingSummaryLayer3sEntry[]
-  layer2sTvl: TvlCharts
-  milestones: Milestone[]
 }
 
 const DEFAULT_SCALING_FILTERS = {
@@ -42,7 +36,7 @@ const DEFAULT_SCALING_FILTERS = {
   purpose: undefined,
 }
 
-export function Tables({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
+export function Tables({ layer2s, layer3s }: Props) {
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
     DEFAULT_SCALING_FILTERS,
   )
@@ -165,72 +159,68 @@ export function Tables({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
   })
 
   return (
-    <>
-      <TvlChart data={layer2sTvl} milestones={milestones} />
-      <HorizontalSeparator className="my-4 md:my-6" />
-      <div className="space-y-2">
-        <ScalingFilters
-          items={[
-            ...layer2sProjects,
-            ...layer3sProjects,
-            ...archivedProjects,
-            ...upcomingProjects,
-          ]}
-          state={scalingFilters}
-          setState={setScalingFilters}
-        />
-        <Tabs defaultValue="layer2s" className="w-full">
-          <OverflowWrapper>
-            <TabsList>
-              <TabsTrigger value="layer2s" className="gap-1.5">
-                <span className="md:hidden">Layer2s</span>
-                <span className="max-md:hidden">Layer 2 projects</span>
-                <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
-              </TabsTrigger>
-              <TabsTrigger value="layer3s" className="gap-1.5">
-                <span className="md:hidden">Layer 3s</span>
-                <span className="max-md:hidden">Layer 3 projects</span>
-                <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
-              </TabsTrigger>
-              <TabsTrigger value="upcoming" className="gap-1.5">
-                <span className="md:hidden">Upcoming</span>
-                <span className="max-md:hidden">Upcoming projects</span>
-                <TabCountBadge>{upcomingTable.getRowCount()}</TabCountBadge>
-              </TabsTrigger>
-              <TabsTrigger value="archived" className="gap-1.5">
-                <span className="md:hidden">Archived</span>
-                <span className="max-md:hidden">Archived projects</span>
-                <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
-              </TabsTrigger>
-            </TabsList>
-          </OverflowWrapper>
-          <TabsContent value="layer2s">
-            <BasicTable
-              table={layer2sTable}
-              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-            />
-            <ScalingLegend />
-          </TabsContent>
-          <TabsContent value="layer3s">
-            <BasicTable
-              table={layer3sTable}
-              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-            />
-          </TabsContent>
-          <TabsContent value="upcoming">
-            <BasicTable
-              table={upcomingTable}
-              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-            />
-          </TabsContent>
-          <TabsContent value="archived">
-            <BasicTable
-              table={archivedTable}
-              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-            />
-          </TabsContent>
-        </Tabs>
-      </div>
-    </>
+    <div className="space-y-2">
+      <ScalingFilters
+        items={[
+          ...layer2sProjects,
+          ...layer3sProjects,
+          ...archivedProjects,
+          ...upcomingProjects,
+        ]}
+        state={scalingFilters}
+        setState={setScalingFilters}
+      />
+      <Tabs defaultValue="layer2s" className="w-full">
+        <OverflowWrapper>
+          <TabsList>
+            <TabsTrigger value="layer2s" className="gap-1.5">
+              <span className="md:hidden">Layer2s</span>
+              <span className="max-md:hidden">Layer 2 projects</span>
+              <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
+            </TabsTrigger>
+            <TabsTrigger value="layer3s" className="gap-1.5">
+              <span className="md:hidden">Layer 3s</span>
+              <span className="max-md:hidden">Layer 3 projects</span>
+              <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
+            </TabsTrigger>
+            <TabsTrigger value="upcoming" className="gap-1.5">
+              <span className="md:hidden">Upcoming</span>
+              <span className="max-md:hidden">Upcoming projects</span>
+              <TabCountBadge>{upcomingTable.getRowCount()}</TabCountBadge>
+            </TabsTrigger>
+            <TabsTrigger value="archived" className="gap-1.5">
+              <span className="md:hidden">Archived</span>
+              <span className="max-md:hidden">Archived projects</span>
+              <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
+            </TabsTrigger>
+          </TabsList>
+        </OverflowWrapper>
+        <TabsContent value="layer2s">
+          <BasicTable
+            table={layer2sTable}
+            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+          />
+          <ScalingLegend />
+        </TabsContent>
+        <TabsContent value="layer3s">
+          <BasicTable
+            table={layer3sTable}
+            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+          />
+        </TabsContent>
+        <TabsContent value="upcoming">
+          <BasicTable
+            table={upcomingTable}
+            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+          />
+        </TabsContent>
+        <TabsContent value="archived">
+          <BasicTable
+            table={archivedTable}
+            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+          />
+        </TabsContent>
+      </Tabs>
+    </div>
   )
 }
