@@ -21,7 +21,7 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(['development', 'test', 'production'])
       .default('development'),
-    VERCEL_GIT_COMMIT_SHA: z.string(),
+    VERCEL_GIT_COMMIT_SHA: z.string().default('local'),
   },
 
   /**
