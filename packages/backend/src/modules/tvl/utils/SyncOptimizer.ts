@@ -4,23 +4,14 @@ import { Clock } from '../../../tools/Clock'
 export class SyncOptimizer {
   private readonly sixHourlyCutoffDays = 90
   private readonly hourlyCutoffDays = 7
-  // it is only used for fetching data and tvlCleaner, not for API
   private readonly gracePeriodDays = 3
 
   constructor(private readonly clock: Clock) {}
-
-  get sixHourlyCutOff() {
-    return this.clock.getLastHour().add(-this.sixHourlyCutoffDays, 'days')
-  }
 
   get sixHourlyCutOffWithGracePeriod() {
     return this.clock
       .getLastHour()
       .add(-this.sixHourlyCutoffDays - this.gracePeriodDays, 'days')
-  }
-
-  get hourlyCutOff() {
-    return this.clock.getLastHour().add(-this.hourlyCutoffDays, 'days')
   }
 
   get hourlyCutOffWithGracePeriod() {
@@ -61,13 +52,5 @@ export class SyncOptimizer {
     }
 
     return timestamps
-  }
-
-  getAllTimestampsToSync() {
-    return this.getTimestampsToSync(
-      this.clock.getFirstDay().toNumber(),
-      this.clock.getLastHour().toNumber(),
-      Infinity,
-    )
   }
 }
