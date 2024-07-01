@@ -1,5 +1,6 @@
 import { NEW_CRYPTOGRAPHY, RISK_VIEW } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
@@ -27,6 +28,7 @@ const upgradeability = {
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
+  badges: [Badge.VM.EVM, Badge.Infra.AggLayer],
   daProvider: {
     name: 'DAC',
     bridge: {

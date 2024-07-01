@@ -11,6 +11,8 @@ export const BadgeType = {
   RaaS: 'RaaS',
   DA: 'DA',
   VM: 'VM',
+  Infra: 'Infra',
+  Stack: 'Stack',
   Other: 'Other',
 } as const
 
@@ -132,6 +134,43 @@ export const badges = {
       description: 'Lorem Custom dolor sit amet...',
     },
     type: BadgeType.VM,
+  },
+  //Infra
+  Superchain: {
+    display: {
+      name: 'Part of the Superchain',
+      description: 'The project is part of the Superchain.',
+    },
+    type: BadgeType.Infra,
+  },
+  SHARP: {
+    display: {
+      name: 'Uses SHARP',
+      description: 'The project uses a shared prover - SHARP.',
+    },
+    type: BadgeType.Infra,
+  },
+  AggLayer: {
+    display: {
+      name: 'Part of the AggLayer',
+      description: 'The project is part of the AggLayer.',
+    },
+    type: BadgeType.Infra,
+  },
+  // Stack/forks
+  OPStack: {
+    display: {
+      name: 'Built on OP Stack',
+      description: 'The project is built on the OP Stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  Orbit: {
+    display: {
+      name: 'Built on Arbitrum Orbit',
+      description: 'The project is built on Arbitrum Orbit.',
+    },
+    type: BadgeType.Stack,
   },
   // Other
   AccountAbstraction: {

@@ -4,7 +4,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   EXITS,
@@ -27,6 +26,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('apex')
@@ -107,6 +107,7 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
+  badges: [Badge.VM.Cairo, Badge.Infra.SHARP],
   display: {
     name: 'ApeX',
     slug: 'apex',

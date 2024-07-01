@@ -12,6 +12,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -83,6 +84,7 @@ export const taiko: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Taiko',
     slug: 'taiko',
