@@ -31,11 +31,6 @@ export class ValuesDataService {
     )
     const valuesByProject = groupBy(values, 'projectId')
 
-    const minTimestamp = projects.reduce(
-      (a, b) => UnixTime.min(a, b.minTimestamp),
-      UnixTime.now(),
-    )
-
     const result = {
       valuesByTimestampForProject: {} as Dictionary<Dictionary<ValueRecord[]>>,
       lagging: new Map<
@@ -68,7 +63,7 @@ export class ValuesDataService {
       const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
       const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
-        minTimestampOverride: minTimestamp,
+        minTimestampOverride: project.minTimestamp,
       })
       for (const timestamp of timestamps) {
         const configuredValues = getConfiguredValuesForTimestamp(
