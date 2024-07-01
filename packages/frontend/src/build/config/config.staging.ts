@@ -9,7 +9,7 @@ export function getStagingConfig(): Config {
       buildAllProjectPages: true,
     },
     backend: {
-      apiUrl: 'https://api-staging.eltwobeat.com',
+      apiUrl: 'https://staging.l2beat.com',
       skipCache: false,
     },
   }

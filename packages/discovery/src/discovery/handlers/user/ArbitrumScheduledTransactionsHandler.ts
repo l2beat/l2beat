@@ -1,16 +1,11 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { ethers, providers, utils } from 'ethers'
+import { ethers, utils } from 'ethers'
 import * as z from 'zod'
 
-import { getChainConfig } from '../../../config/config.discovery'
-import { EtherscanLikeClient } from '../../../utils/EtherscanLikeClient'
-import { HttpClient } from '../../../utils/HttpClient'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ProviderWithCache } from '../../provider/ProviderWithCache'
-import { ClassicHandler, HandlerResult } from '../Handler'
-import { callMethod } from '../utils/callMethod'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { toContractValue } from '../utils/toContractValue'
 
 export type ArbitrumScheduledTransactionsHandlerDefinition = z.infer<
@@ -33,7 +28,7 @@ const L2Inboxes: Record<string, string | undefined> = {
   '0xc4448b71118c9071Bcb9734A0EAc55D18A153949': 'nova',
 }
 
-export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
+export class ArbitrumScheduledTransactionsHandler implements Handler {
   readonly dependencies: string[] = []
   readonly timelockInterface: utils.Interface
 
@@ -46,21 +41,16 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     const retryableTicketMagic = await this.getRetryableTicketMagic(
       provider,
       address,
-      blockNumber,
     )
-    const logs = await provider.getLogs(
-      address,
-      [this.timelockInterface.getEventTopic('CallScheduled')],
-      0,
-      blockNumber,
-    )
+    const logs = await provider.getLogs(address, [
+      this.timelockInterface.getEventTopic('CallScheduled'),
+    ])
     const result: ContractValue[] = []
     for (const log of logs) {
       const parsed = this.timelockInterface.parseLog(log)
@@ -79,24 +69,22 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
   }
 
   async getRetryableTicketMagic(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<EthereumAddress> {
-    const res = await callMethod(
-      provider,
+    // TODO: (sz-piotr) reverts?
+    const res = await provider.callMethod(
       address,
       this.timelockInterface.getFunction('RETRYABLE_TICKET_MAGIC'),
       [],
-      blockNumber,
     )
-    return EthereumAddress(res.value as string)
+    return EthereumAddress(res as string)
   }
 
   async decodeLog(
     log: utils.LogDescription,
     retryableTicketMagic: EthereumAddress,
-    provider: DiscoveryProvider,
+    provider: IProvider,
   ): Promise<ContractValue> {
     const target = EthereumAddress(log.args.target as string)
     // Scheduled transaction is either a call to an Executor contract on Ethereum
@@ -132,14 +120,14 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     chain: string,
     executorAddress: EthereumAddress,
     executeCalldata: string,
-    provider: DiscoveryProvider | undefined,
+    provider: IProvider | undefined,
   ): Promise<Record<string, ContractValue | undefined>> {
     const parsed = ExecutorInterface.parseTransaction({ data: executeCalldata })
     const addrToCall = EthereumAddress(parsed.args.upgrade as string)
     const calldata = parsed.args.upgradeCallData as string
     let decoded
     if (provider !== undefined) {
-      const metadata = await provider.getMetadata(addrToCall)
+      const metadata = await provider.getSource(addrToCall)
       const contractInterface = new utils.Interface(metadata.abi)
       const decodedCalldata = this.decodeCalldata(contractInterface, calldata)
       decoded = {
@@ -178,7 +166,7 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
 
   async decodeL2Call(
     log: utils.LogDescription,
-    provider: DiscoveryProvider,
+    provider: IProvider,
   ): Promise<ContractValue> {
     // A call to an Executor on L2 starts as a call to an Inbox contract on
     // Ethereum. The call data has the following structure:
@@ -203,7 +191,9 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     }
     const l2Executor = EthereumAddress(res.l2Target as string)
     const l2Calldata = res.l2Calldata as string
-    const providerForChain = this.createProviderForChain(chain, provider)
+    const providerForChain =
+      // Nova arbiscan doesn't provide API so we're out of luck
+      chain === 'nova' ? undefined : provider.switchChain(chain, 0)
     const decoded = await this.decodeExecuteCall(
       chain,
       l2Executor,
@@ -213,47 +203,6 @@ export class ArbitrumScheduledTransactionsHandler implements ClassicHandler {
     return {
       ...decoded,
       inboxOnEthereum: targetInbox.toString(),
-    }
-  }
-
-  createProviderForChain(
-    chain: string,
-    curProvider: DiscoveryProvider,
-  ): DiscoveryProvider | undefined {
-    if (chain === 'nova') {
-      // Nova arbiscan doesn't provide API so we're out of luck
-      return undefined
-    }
-    const chainConfig = getChainConfig(chain)
-    const logger = DiscoveryLogger.SILENT
-    const http = new HttpClient()
-    const etherscanClient = EtherscanLikeClient.createForDiscovery(
-      http,
-      chainConfig.etherscanUrl,
-      chainConfig.etherscanApiKey,
-      chainConfig.etherscanUnsupported,
-    )
-    const provider = new providers.StaticJsonRpcProvider(chainConfig.rpcUrl)
-
-    if (curProvider instanceof ProviderWithCache) {
-      return new ProviderWithCache(
-        provider,
-        provider,
-        etherscanClient,
-        logger,
-        chainConfig.name,
-        curProvider.cache,
-        chainConfig.rpcGetLogsMaxRange,
-        chainConfig.reorgSafeDepth,
-      )
-    } else {
-      return new DiscoveryProvider(
-        provider,
-        provider,
-        etherscanClient,
-        logger,
-        chainConfig.rpcGetLogsMaxRange,
-      )
     }
   }
 }

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825376,
   "configHash": "0x6fd4301a2c9e4ae00ed8224575e08660581e9726e77386f40cd7a19a38b45d4d",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -128,9 +128,15 @@
     }
   ],
   "eoas": [
-    "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-    "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5",
-    "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+    {
+      "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"
+    },
+    {
+      "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
+    },
+    {
+      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
+    }
   ],
   "abis": {
     "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [

@@ -3,15 +3,15 @@
   "chain": "ethereum",
   "blockNumber": 19811607,
   "configHash": "0x9eb1a3eb20decdb8382eb8b7f5f17850cb57d755c28eb61bdabb00d662d70212",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
       "address": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
-      "ignoreInWatchMode": ["txFeeBalance"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["txFeeBalance"],
       "sinceTimestamp": 1619631231,
       "values": {
         "convertConstant": 3155360,
@@ -36,6 +36,9 @@
     {
       "name": "RollupProcessor",
       "address": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "dataRoot",
         "dataSize",
@@ -52,9 +55,6 @@
         "totalPendingDeposit",
         "totalWithdrawn"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1614799636,
       "values": {
         "dataRoot": "0x06d9b18d3023d526f333fa8e0f74262f66262743b724c43369978cfe024932ef",
@@ -134,13 +134,13 @@
       "name": "Aztec Multisig",
       "address": "0xE298a76986336686CC3566469e3520d23D1a8aaD",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "1 of 2 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1610552620,
       "values": {
@@ -158,11 +158,21 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x1D93fE338A035f297819EA867275661a4f5B4fdD",
-    "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f",
-    "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266",
-    "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x1D93fE338A035f297819EA867275661a4f5B4fdD"
+    },
+    {
+      "address": "0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"
+    },
+    {
+      "address": "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    },
+    {
+      "address": "0xFcF75295f242C4E87203Abb5d7C9BbEda90a8895"
+    }
   ],
   "abis": {
     "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734": [

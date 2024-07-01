@@ -50,6 +50,7 @@ export const layer2aWithDups: Layer2 = {
         },
         sinceTimestamp: new UnixTime(1609459200),
         tokens: ['SNX'],
+        chain: 'ethereum',
       },
       {
         // this is a new version, so it is visible on frontend and should be included in verification script output
@@ -60,13 +61,14 @@ export const layer2aWithDups: Layer2 = {
         },
         sinceTimestamp: new UnixTime(1609459200),
         tokens: ['SNX'],
+        chain: 'ethereum',
       },
     ],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'Transaction data',
   }),
   riskView: {
     stateValidation: RISK_VIEW.STATE_FP,

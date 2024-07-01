@@ -57,11 +57,13 @@ export const near: Bridge = {
         address: EthereumAddress('0x23Ddd3e3692d1861Ed57EDE224608875809e127f'),
         sinceTimestamp: new UnixTime(1615826693),
         tokens: '*',
+        chain: 'ethereum',
       },
       {
         address: EthereumAddress('0x6BFaD42cFC4EfC96f529D786D643Ff4A8B89FA52'),
         sinceTimestamp: new UnixTime(1624579200),
         tokens: ['ETH'],
+        chain: 'ethereum',
       },
     ],
   },

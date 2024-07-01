@@ -30,10 +30,7 @@ export const blast: Layer2 = opStackL2({
     purposes: ['Universal', 'DeFi'],
     links: {
       websites: ['https://blast.io/en'],
-      apps: [
-        'https://blast.io/en/airdrop/early-access',
-        'https://blast.io/en/bridge',
-      ],
+      apps: ['https://blast.io/en/bridge'],
       documentation: ['https://docs.blast.io/about-blast'],
       explorers: ['https://blastscan.io', 'https://blastexplorer.io'],
       repositories: [],
@@ -170,6 +167,7 @@ export const blast: Layer2 = opStackL2({
   ],
   isNodeAvailable: true,
   usesBlobs: true,
+  associatedTokens: ['BLAST'],
   nodeSourceLink: 'https://github.com/blast-io/blast',
   stateDerivation: {
     nodeSoftware:

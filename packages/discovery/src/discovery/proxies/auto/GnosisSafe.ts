@@ -2,77 +2,64 @@ import { assert } from '@l2beat/backend-tools'
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { bytes32ToAddress } from '../../utils/address'
-import { getCallResult } from '../../utils/getCallResult'
+import { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'
 
 async function getMasterCopy(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<EthereumAddress | undefined> {
   const [callResult, slot0] = await Promise.all([
-    getCallResult<string>(
-      provider,
+    provider.callMethod<EthereumAddress>(
       address,
       'function masterCopy() view returns(address)',
       [],
-      blockNumber,
     ),
-    provider.getStorage(address, 0, blockNumber),
+    provider.getStorageAsAddress(address, 0),
   ])
-  const slot0Address = bytes32ToAddress(slot0)
-  if (callResult && slot0Address === EthereumAddress(callResult)) {
-    return slot0Address
+  if (slot0 === callResult) {
+    return slot0
   }
 }
 
 async function getOwnersCount(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<number | undefined> {
-  const owners = await getCallResult<string[]>(
-    provider,
+  const owners = await provider.callMethod<string[]>(
     address,
     'function getOwners() view returns (address[])',
     [],
-    blockNumber,
   )
-
   return owners?.length
 }
 
 async function getThreshold(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<number | undefined> {
-  return await getCallResult<number>(
-    provider,
+  // TODO: (sz-piotr) Shouldn't this be BigNumber!?
+  return await provider.callMethod<number>(
     address,
     'function getThreshold() view returns (uint256)',
     [],
-    blockNumber,
   )
 }
 
 export async function detectGnosisSafe(
-  provider: DiscoveryProvider,
+  provider: IProvider,
   address: EthereumAddress,
-  blockNumber: number,
 ): Promise<ProxyDetails | undefined> {
-  const masterCopy = await getMasterCopy(provider, address, blockNumber)
+  const masterCopy = await getMasterCopy(provider, address)
   if (!masterCopy) {
     return
   }
 
-  const modules = await getModules(provider, address, blockNumber)
+  const modules = await getModules(provider, address)
   assert(modules, 'Could not find modules for GnosisSafe')
 
-  const ownerCount = await getOwnersCount(provider, address, blockNumber)
-  const threshold = await getThreshold(provider, address, blockNumber)
+  const ownerCount = await getOwnersCount(provider, address)
+  const threshold = await getThreshold(provider, address)
   assert(ownerCount !== undefined, 'Cannot retrieve owner count')
   assert(threshold !== undefined, 'Cannot retrieve threshold')
 

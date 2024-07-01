@@ -3,15 +3,15 @@
   "chain": "ethereum",
   "blockNumber": 20032836,
   "configHash": "0x82302d2f83f4b92e2adf822fe7cfc2c1981b0930381ba7c5ee23803de5dc52ec",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "DepositContract",
       "address": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
-      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["get_deposit_count", "get_deposit_root"],
       "sinceTimestamp": 1602667372,
       "values": {
         "get_deposit_count": "0xaf2f170000000000",
@@ -39,13 +39,13 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
-      "ignoreInWatchMode": ["messageNonce"],
       "upgradeability": {
         "type": "resolved delegate proxy",
         "addressManager": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
         "implementationName": "OVM_L1CrossDomainMessenger",
         "implementation": "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"
       },
+      "ignoreInWatchMode": ["messageNonce"],
       "implementations": ["0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -74,6 +74,12 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+        ]
+      },
       "sinceTimestamp": 1706811599,
       "values": {
         "addressManager": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
@@ -86,12 +92,15 @@
       "name": "SystemConfig",
       "address": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
       "template": "opstack/SystemConfig",
-      "ignoreInWatchMode": ["scalar", "overhead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367",
         "admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
       },
+      "descriptions": [
+        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+      ],
+      "ignoreInWatchMode": ["scalar", "overhead"],
       "implementations": ["0x4D7A1a16d0DA89B50FBd8b524508FC393A6Dc367"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -162,12 +171,12 @@
     {
       "name": "OptimismPortal",
       "address": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-      "ignoreInWatchMode": ["params"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23",
         "admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
       },
+      "ignoreInWatchMode": ["params"],
       "implementations": ["0x47Ec03B67ba4f3C71a4320D2947f2173E0B45a23"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -194,10 +203,10 @@
     {
       "name": "frxETH",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f",
-      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1665022895,
       "values": {
         "decimals": 18,
@@ -237,17 +246,17 @@
     {
       "name": "L2OutputOracle",
       "address": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65",
+        "admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
+      },
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
         "latestBlockNumber",
         "latestOutputIndex"
       ],
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65",
-        "admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA"
-      },
       "implementations": ["0x6f3CcC8C9DAf8B9b39aDe481213Ff7A626a42B65"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -276,13 +285,13 @@
       "name": "frxETHMultisig",
       "address": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1665087971,
       "values": {
@@ -354,6 +363,9 @@
     {
       "name": "sfrxETH",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "lastRewardAmount",
         "lastSync",
@@ -362,9 +374,6 @@
         "totalAssets",
         "totalSupply"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1665022895,
       "values": {
         "asset": "0x5E8422345238F34275888049021821E8E08CAa1f",
@@ -386,13 +395,13 @@
       "name": "TimelockMultisig",
       "address": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1629667690,
       "values": {
@@ -414,10 +423,10 @@
     {
       "name": "frxETHMinter",
       "address": "0xbAFA44EFE7901E04E39Dad13167D089C559c1138",
-      "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["currentWithheldETH", "numValidators"],
       "sinceTimestamp": 1665022895,
       "values": {
         "currentWithheldETH": "114731124162530620602",
@@ -440,13 +449,13 @@
       "name": "FraxtalMultisig",
       "address": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -467,23 +476,58 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x000000000000000000000000000000000000dEaD",
-    "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935",
-    "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
-    "0x4200000000000000000000000000000000000007",
-    "0x4200000000000000000000000000000000000010",
-    "0x4200000000000000000000000000000000000014",
-    "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
-    "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
-    "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2",
-    "0x8da4E997e051605878c9C0B793c496556EACC2C0",
-    "0xc28339c70054bC22255A74E927a0B9e9A475F224",
-    "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C",
-    "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
-    "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
-    "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
-    "0xfF000000000000000000000000000000000420fC"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x000000000000000000000000000000000000dEaD"
+    },
+    {
+      "address": "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
+    },
+    {
+      "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000007"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000010"
+    },
+    {
+      "address": "0x4200000000000000000000000000000000000014"
+    },
+    {
+      "address": "0x6017f75108f251a488B045A7ce2a7C15b179d1f2",
+      "roles": ["Sequencer"]
+    },
+    {
+      "address": "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2"
+    },
+    {
+      "address": "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
+    },
+    {
+      "address": "0x8da4E997e051605878c9C0B793c496556EACC2C0"
+    },
+    {
+      "address": "0xc28339c70054bC22255A74E927a0B9e9A475F224"
+    },
+    {
+      "address": "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C"
+    },
+    {
+      "address": "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228"
+    },
+    {
+      "address": "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    },
+    {
+      "address": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50"
+    },
+    {
+      "address": "0xfF000000000000000000000000000000000420fC"
+    }
   ],
   "abis": {
     "0x00000000219ab540356cBB839Cbe05303d7705Fa": [

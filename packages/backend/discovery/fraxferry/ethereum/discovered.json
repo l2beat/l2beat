@@ -3,15 +3,15 @@
   "chain": "ethereum",
   "blockNumber": 19697870,
   "configHash": "0x590dec4b66663c6aa99987e03a6892f0715da0976c8142a645d0743ec627f4aa",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "sfraxFerryBridgeFraxtal",
       "address": "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47",
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708807463,
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -38,10 +38,10 @@
     {
       "name": "fxsFerryBridgeFraxtal",
       "address": "0x4A6d155df9Ec9A1BB3639e6B7B99E46Fb68D42f6",
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806863,
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -68,10 +68,10 @@
     {
       "name": "sfrxFerryBridgeFraxtal",
       "address": "0x5c5f05cF8528FFe925A2264743bFfEdbAB2b0FE3",
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708807391,
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -98,10 +98,10 @@
     {
       "name": "fraxFerryBridgeFraxtal",
       "address": "0x5e1D94021484642863Ea8E7Cb4F0188e56B18FEE",
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806563,
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -130,13 +130,13 @@
       "name": "FPI Multisig",
       "address": "0x6A7efa964Cf6D9Ab3BC3c47eBdDB853A8853C502",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1649111477,
       "values": {
@@ -158,10 +158,10 @@
     {
       "name": "fpisFerryBridgeFraxtal",
       "address": "0x958815f476cD07354c0BC034EE5077B20fD93003",
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806983,
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -188,10 +188,10 @@
     {
       "name": "fpiFerryBridgeFraxtal",
       "address": "0x9A576A3d39c589A861B46864C253288bcA428a6c",
-      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["noBatches", "executeIndex", "noTransactions"],
       "sinceTimestamp": 1708806923,
       "values": {
         "captain": "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
@@ -219,13 +219,13 @@
       "name": "Frax Finance Multisig",
       "address": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1629667690,
       "values": {
@@ -246,14 +246,30 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935",
-    "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
-    "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
-    "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2",
-    "0xBB437059584e30598b3AF0154472E47E6e2a45B9",
-    "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
-    "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
+    },
+    {
+      "address": "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e"
+    },
+    {
+      "address": "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2"
+    },
+    {
+      "address": "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
+    },
+    {
+      "address": "0xBB437059584e30598b3AF0154472E47E6e2a45B9"
+    },
+    {
+      "address": "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228"
+    },
+    {
+      "address": "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+    }
   ],
   "abis": {
     "0x2b4864c2F2A2C275C6C66B90a2ae6BE9fA9cbE47": [

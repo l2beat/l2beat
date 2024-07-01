@@ -61,11 +61,7 @@ export const scroll: Layer2 = {
     category: 'ZK Rollup',
     links: {
       websites: ['https://scroll.io'],
-      apps: [
-        'https://scroll.io/bridge',
-        'https://uniswap-showcase.sepolia.scroll.xyz/',
-        'https://scroll.io/sessions',
-      ],
+      apps: ['https://scroll.io/bridge'],
       documentation: ['https://docs.scroll.io/en/home/'],
       explorers: [
         'https://scrollscan.com/',
@@ -266,7 +262,7 @@ export const scroll: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transactions data',
+    mode: 'Transaction data',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -402,7 +398,7 @@ export const scroll: Layer2 = {
       {
         title: 'Prover Architecture',
         description:
-          'The prover code can be found [here](https://github.com/scroll-tech/scroll-prover).',
+          'The prover code can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/prover).',
       },
       {
         title: 'ZK Circuits',

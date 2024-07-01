@@ -13,7 +13,6 @@ import { calculateValue } from '../../utils/calculateValue'
 
 import {
   ValuesForSource,
-  convertSourceName,
   getChart,
   getChartData,
   subtractTokenCharts,
@@ -198,9 +197,9 @@ export class TvlService {
       if (!breakdown) {
         projectData[projectId] = {
           tokens: {
-            CBV: [],
-            EBV: [],
-            NMV: [],
+            canonical: [],
+            external: [],
+            native: [],
           },
           charts,
         }
@@ -319,17 +318,17 @@ export class TvlService {
       // Remove token from breakdown
       switch (e.type) {
         case 'canonical':
-          project.tokens.CBV = project.tokens.CBV.filter(
+          project.tokens.canonical = project.tokens.canonical.filter(
             (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
         case 'external':
-          project.tokens.EBV = project.tokens.EBV.filter(
+          project.tokens.external = project.tokens.external.filter(
             (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
         case 'native':
-          project.tokens.NMV = project.tokens.NMV.filter(
+          project.tokens.native = project.tokens.native.filter(
             (c) => !(c.address === e.address && c.chain === e.chain),
           )
           break
@@ -364,9 +363,9 @@ export class TvlService {
       let breakdown = breakdownMap.get(config.project)
       if (!breakdown) {
         breakdown = {
-          CBV: [],
-          EBV: [],
-          NMV: [],
+          canonical: [],
+          external: [],
+          native: [],
         }
         breakdownMap.set(config.project, breakdown)
       }
@@ -382,13 +381,12 @@ export class TvlService {
         decimals: config.decimals,
       })
 
-      const source = convertSourceName(config.source)
-      breakdown[source].push({
+      breakdown[config.source].push({
         assetId: priceConfig.assetId,
         address: config.address.toString(),
         chain: config.chain,
         chainId: this.$.chainConverter.toChainId(config.chain),
-        assetType: convertSourceName(config.source),
+        source: config.source,
         usdValue: asNumber(value, 2),
       })
     }

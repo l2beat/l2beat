@@ -53,14 +53,6 @@ export class TokenService {
       UnixTime.now(),
     )
 
-    return getTokenCharts(
-      targetTimestamp,
-      minTimestamp,
-      UnixTime.max(minTimestamp, this.$.syncOptimizer.sixHourlyCutOff),
-      UnixTime.max(minTimestamp, this.$.syncOptimizer.hourlyCutOff),
-      amounts.amounts,
-      prices.prices[priceConfig.configId],
-      decimals,
-    )
+    return getTokenCharts(dailyStart, timestamp, amountsAndPrices, decimals)
   }
 }

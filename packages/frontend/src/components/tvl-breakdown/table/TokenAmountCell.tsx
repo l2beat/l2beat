@@ -17,9 +17,9 @@ interface TokenAmountCellProps {
 export function TokenAmountCell(props: TokenAmountCellProps) {
   const token = safeGetTokenByAssetId(props.assetId)
   const formula =
-    token?.formula === 'totalSupply'
+    token?.supply === 'totalSupply'
       ? 'Total supply'
-      : token?.formula === 'circulatingSupply'
+      : token?.supply === 'circulatingSupply'
         ? 'Circulating supply (Market Cap/Price)'
         : ''
 

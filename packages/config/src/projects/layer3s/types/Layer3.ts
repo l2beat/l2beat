@@ -16,6 +16,7 @@ import { ScalingProjectRiskView } from '../../../common/ScalingProjectRiskView'
 import { ScalingProjectStateDerivation } from '../../../common/ScalingProjectStateDerivation'
 import { ScalingProjectStateValidation } from '../../../common/ScalingProjectStateValidation'
 import { ScalingProjectTechnology } from '../../../common/ScalingProjectTechnology'
+import { type BadgeId } from '../../badges'
 
 export interface Layer3 {
   type: 'layer3'
@@ -39,7 +40,7 @@ export interface Layer3 {
   riskView: ScalingProjectRiskView
   /** Stacked risk view values for this layer3 and it's base chain */
   stackedRiskView?: ScalingProjectRiskView
-  /** Data availability of scaling project project */
+  /** Data availability of scaling project */
   dataAvailability?: DataAvailabilityWithSentiment
   /** Deep dive into layer3 technology */
   technology: ScalingProjectTechnology
@@ -52,11 +53,13 @@ export interface Layer3 {
   /** List of permissioned addresses */
   permissions?: ScalingProjectPermission[] | 'UnderReview'
   /** List of permissioned addresses on the chain itself */
-  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   /** Links to recent developments, milestones achieved by the project */
   milestones?: Milestone[]
   /** List of knowledge nuggets: useful articles worth reading */
   knowledgeNuggets?: KnowledgeNugget[]
+  /** List of badges */
+  badges?: BadgeId[]
 }
 
 export interface Layer3Config extends ScalingProjectConfig {

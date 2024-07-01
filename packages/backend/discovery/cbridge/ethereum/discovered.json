@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19724145,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -72,10 +72,10 @@
     {
       "name": "Liquidity Network",
       "address": "0x5427FEFA711Eff984124bFBB1AB6fbf5E3DA1820",
-      "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["addseq", "ssHash", "triggerTime"],
       "sinceTimestamp": 1638346811,
       "values": {
         "addseq": 5206,
@@ -151,6 +151,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
+      },
       "sinceTimestamp": 1690520231,
       "values": {
         "owner": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
@@ -205,6 +208,9 @@
         "implementation": "0xaE41e6a597f4c65646e94E330D8BAd218Bec7896",
         "admin": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b"
       },
+      "descriptions": [
+        "The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state."
+      ],
       "implementations": ["0xaE41e6a597f4c65646e94E330D8BAd218Bec7896"],
       "sinceTimestamp": 1691384579,
       "values": {
@@ -240,10 +246,10 @@
     {
       "name": "SimpleGovernance",
       "address": "0xF380166F8490F24AF32Bf47D1aA217FBA62B6575",
-      "ignoreInWatchMode": ["nextProposalId"],
       "upgradeability": {
         "type": "immutable"
       },
+      "ignoreInWatchMode": ["nextProposalId"],
       "sinceTimestamp": 1656926298,
       "values": {
         "getVoters": [
@@ -266,18 +272,42 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
-    "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
-    "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9",
-    "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0",
-    "0x83039377ddD862821d92d416b2DDB9EFb5BA9000",
-    "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1",
-    "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C",
-    "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823",
-    "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2",
-    "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3",
-    "0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c"
+    },
+    {
+      "address": "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2"
+    },
+    {
+      "address": "0x34dFa1226F8b3E36FE597B34eEa809a2B5c0bBf9"
+    },
+    {
+      "address": "0x40C11BddeB38Dec685Eed3586BAeBf086fac9dA0"
+    },
+    {
+      "address": "0x83039377ddD862821d92d416b2DDB9EFb5BA9000"
+    },
+    {
+      "address": "0x8934b5d91A33269Ad7E2202482A0dF5dDbc5D4E1"
+    },
+    {
+      "address": "0x9Ad3A3ca7d6B14E830De247c8ca3FaD9D4c9d88C"
+    },
+    {
+      "address": "0x9F6B03Cb6d8AB8239cF1045Ab28B9Df43dfCC823"
+    },
+    {
+      "address": "0xDfE4F07D1F36B8d559b25082460a4f6A72531de2"
+    },
+    {
+      "address": "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
+    },
+    {
+      "address": "0xED9fdF5B16F9F254bec5Ad389B80B48225186655"
+    }
   ],
   "abis": {
     "0x16365b45EB269B5B5dACB34B4a15399Ec79b95eB": [

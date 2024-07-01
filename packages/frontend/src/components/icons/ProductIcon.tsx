@@ -7,7 +7,7 @@ import { LinkedInIcon } from './products/LinkedInIcon'
 import { MediumIcon } from './products/MediumIcon'
 import { RedditIcon } from './products/RedditIcon'
 import { TelegramIcon } from './products/TelegramIcon'
-import { TwitterIcon } from './products/TwitterIcon'
+import { XIcon } from './products/XIcon'
 import { YouTubeIcon } from './products/YouTubeIcon'
 
 export type ProductIconType =
@@ -18,8 +18,8 @@ export type ProductIconType =
   | 'medium'
   | 'reddit'
   | 'telegram'
-  | 'twitter'
   | 'youtube'
+  | 'x'
 
 interface Props extends SVGAttributes<SVGElement> {
   product: ProductIconType
@@ -41,8 +41,8 @@ export function ProductIcon({ product, ...props }: Props): JSX.Element {
       return <RedditIcon {...props} />
     case 'telegram':
       return <TelegramIcon {...props} />
-    case 'twitter':
-      return <TwitterIcon {...props} />
+    case 'x':
+      return <XIcon {...props} />
     case 'youtube':
       return <YouTubeIcon {...props} />
   }

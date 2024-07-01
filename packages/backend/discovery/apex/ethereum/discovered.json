@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825348,
   "configHash": "0x337a5ff15a122bd974e00bbfe46a4cf2b443ee344d041a199bbf3b8bf4e15bda",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "AggregationRouterV4",
@@ -84,13 +84,13 @@
       "name": "AggregationRouterV4Owner",
       "address": "0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1608623778,
       "values": {
@@ -134,17 +134,6 @@
     {
       "name": "StarkExchangeUSDC",
       "address": "0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getRollupTreeHeight",
-        "getRollupVaultRoot",
-        "getSequenceNumber",
-        "getSystemAssetType",
-        "getValidiumTreeHeight",
-        "getValidiumVaultRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
@@ -161,6 +150,17 @@
           "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6"
         ]
       },
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getRollupTreeHeight",
+        "getRollupVaultRoot",
+        "getSequenceNumber",
+        "getSystemAssetType",
+        "getValidiumTreeHeight",
+        "getValidiumVaultRoot"
+      ],
       "implementations": [
         "0xdD813397b79f8df581eEb0c4B8aB72304c528396",
         "0x533a7f4bE5453513049EB94A2b115F2CcE161dce",
@@ -240,13 +240,13 @@
       "name": "PerpetualGovernanceMultisig",
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1672216439,
       "values": {
@@ -265,17 +265,6 @@
     {
       "name": "StarkExchangeUSDT",
       "address": "0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b",
-      "ignoreInWatchMode": [
-        "getLastBatchId",
-        "getOrderRoot",
-        "getOrderTreeHeight",
-        "getRollupTreeHeight",
-        "getRollupVaultRoot",
-        "getSequenceNumber",
-        "getSystemAssetType",
-        "getValidiumTreeHeight",
-        "getValidiumVaultRoot"
-      ],
       "upgradeability": {
         "type": "StarkWare diamond",
         "implementation": "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
@@ -289,6 +278,17 @@
         },
         "proxyGovernance": ["0x53c6Ec9640761c669B800088F097E01A8207Ac8b"]
       },
+      "ignoreInWatchMode": [
+        "getLastBatchId",
+        "getOrderRoot",
+        "getOrderTreeHeight",
+        "getRollupTreeHeight",
+        "getRollupVaultRoot",
+        "getSequenceNumber",
+        "getSystemAssetType",
+        "getValidiumTreeHeight",
+        "getValidiumVaultRoot"
+      ],
       "implementations": [
         "0x3167617e913BF59afb90e5ec1A7B32D4Ea03eae4",
         "0x5a50e280883B1FB39Aa04Eb263BCA47630D17D8E",
@@ -380,29 +380,75 @@
     }
   ],
   "eoas": [
-    "0x015155D9f7bb601FbF25084C106531c759c05379",
-    "0x04b4B6f7a61B121Cb4913871e3aB52Ce77589128",
-    "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8",
-    "0x17094A7Cc09686787E0dF95604fd1F9da94B9501",
-    "0x22c89137525b593Dd2A18434348b550ffA5984Fe",
-    "0x2BB718a3986C36c6E02D8d15cdA4370820D08169",
-    "0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92",
-    "0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8",
-    "0x467c78EF773C91836ccFdafd8Ed0be12a64476d3",
-    "0x4F753A937318A64b2867b16a55f5aea83A4C44dB",
-    "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-    "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169",
-    "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-    "0x696cC7615A50CF12d1d1B38bF18A5606e9708296",
-    "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb",
-    "0x81165b6504520416487E5b4935865b4D3eeaa6e5",
-    "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c",
-    "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A",
-    "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D",
-    "0xB1A308e7F02798377b7acF685E997E3D774c5863",
-    "0xb557219DC53Af7Da9777540426DEe9c196842420",
-    "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-    "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81"
+    {
+      "address": "0x015155D9f7bb601FbF25084C106531c759c05379"
+    },
+    {
+      "address": "0x04b4B6f7a61B121Cb4913871e3aB52Ce77589128"
+    },
+    {
+      "address": "0x0cbb676d12745948f75aF3A172cb7E4A4f8546e8"
+    },
+    {
+      "address": "0x17094A7Cc09686787E0dF95604fd1F9da94B9501"
+    },
+    {
+      "address": "0x22c89137525b593Dd2A18434348b550ffA5984Fe"
+    },
+    {
+      "address": "0x2BB718a3986C36c6E02D8d15cdA4370820D08169"
+    },
+    {
+      "address": "0x321072F3Ce95EDa4cc87F42FA483a5822a8A7A92"
+    },
+    {
+      "address": "0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8"
+    },
+    {
+      "address": "0x467c78EF773C91836ccFdafd8Ed0be12a64476d3"
+    },
+    {
+      "address": "0x4F753A937318A64b2867b16a55f5aea83A4C44dB"
+    },
+    {
+      "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b"
+    },
+    {
+      "address": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169"
+    },
+    {
+      "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A"
+    },
+    {
+      "address": "0x696cC7615A50CF12d1d1B38bF18A5606e9708296"
+    },
+    {
+      "address": "0x78e802d42Bbc1834f962A11B54e0F8e07f52d4Fb"
+    },
+    {
+      "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5"
+    },
+    {
+      "address": "0x8f3310cc6951AC11F2B125fC8AC2dfA133A9498c"
+    },
+    {
+      "address": "0xA6d068DE0da2Dc1BeCaB509B118CB88723f72b6A"
+    },
+    {
+      "address": "0xB0d71Ff040A941bB9CA8453044634EebCE5A053D"
+    },
+    {
+      "address": "0xB1A308e7F02798377b7acF685E997E3D774c5863"
+    },
+    {
+      "address": "0xb557219DC53Af7Da9777540426DEe9c196842420"
+    },
+    {
+      "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55"
+    },
+    {
+      "address": "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81"
+    }
   ],
   "abis": {
     "0x1111111254fb6c44bAC0beD2854e76F90643097d": [

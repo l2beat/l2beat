@@ -187,39 +187,20 @@ export function getTokenChartData(props: {
   }
   return data
 }
-export function convertSourceName(source: 'canonical' | 'external' | 'native') {
-  switch (source) {
-    case 'canonical':
-      return 'CBV' as const
-    case 'external':
-      return 'EBV' as const
-    case 'native':
-      return 'NMV' as const
-  }
-}
+
 export function getChart(data: TvlApiChart['data']): TvlApiChart {
   return {
     types: [
       'timestamp',
-      'valueUsd',
-      'cbvUsd',
-      'ebvUsd',
-      'nmvUsd',
-      'valueEth',
-      'cbvEth',
-      'ebvEth',
-      'nmvEth',
-    ] as [
-      'timestamp',
-      'valueUsd',
-      'cbvUsd',
-      'ebvUsd',
-      'nmvUsd',
-      'valueEth',
-      'cbvEth',
-      'ebvEth',
-      'nmvEth',
-    ],
+      'totalUsd',
+      'canonicalUsd',
+      'externalUsd',
+      'nativeUsd',
+      'totalEth',
+      'canonicalEth',
+      'externalEth',
+      'nativeEth',
+    ] as TvlApiChart['types'],
     data,
   }
 }
@@ -228,28 +209,28 @@ function getChartPoint(
   ethPrice: number,
   values: { canonical: bigint; external: bigint; native: bigint },
 ) {
-  const valueUsd = asNumber(
+  const totalUsd = asNumber(
     values.canonical + values.external + values.native,
     2,
   )
-  const cbvUsd = asNumber(values.canonical, 2)
-  const ebvUsd = asNumber(values.external, 2)
-  const nmvUsd = asNumber(values.native, 2)
-  const valueEth = valueUsd / ethPrice
-  const cbvEth = cbvUsd / ethPrice
-  const ebvEth = ebvUsd / ethPrice
-  const nmvEth = nmvUsd / ethPrice
+  const canonicalUsd = asNumber(values.canonical, 2)
+  const externalUsd = asNumber(values.external, 2)
+  const nativeUsd = asNumber(values.native, 2)
+  const totalEth = totalUsd / ethPrice
+  const canonicalEth = canonicalUsd / ethPrice
+  const external = externalUsd / ethPrice
+  const nativeEth = nativeUsd / ethPrice
 
   return [
     timestamp,
-    valueUsd,
-    cbvUsd,
-    ebvUsd,
-    nmvUsd,
-    valueEth,
-    cbvEth,
-    ebvEth,
-    nmvEth,
+    totalUsd,
+    canonicalUsd,
+    externalUsd,
+    nativeUsd,
+    totalEth,
+    canonicalEth,
+    external,
+    nativeEth,
   ] as TvlApiChart['data'][0]
 }
 export function sumCharts(

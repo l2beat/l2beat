@@ -36,12 +36,14 @@ export const synapse: Bridge = {
         address: EthereumAddress('0x2796317b0fF8538F253012862c06787Adfb8cEb6'),
         sinceTimestamp: new UnixTime(1629082107),
         tokens: ['ETH', 'WETH', 'FRAX', 'USDT', 'USDC', 'WBTC', 'DAI', 'gOHM'],
+        chain: 'ethereum',
       },
       // address of the Synapse AMM pool used for swaps to canonical tokens
       {
         address: EthereumAddress('0x1116898DdA4015eD8dDefb84b6e8Bc24528Af2d8'),
         sinceTimestamp: new UnixTime(1629082839),
         tokens: ['USDT', 'DAI', 'USDC'],
+        chain: 'ethereum',
       },
     ],
   },

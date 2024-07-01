@@ -5,8 +5,8 @@ import { ethers } from 'ethers'
 import { z } from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 
 export type ConstructorArgsDefinition = z.infer<
   typeof ConstructorArgsDefinition
@@ -16,7 +16,7 @@ export const ConstructorArgsDefinition = z.strictObject({
   nameArgs: z.boolean().optional(),
 })
 
-export class ConstructorArgsHandler implements ClassicHandler {
+export class ConstructorArgsHandler implements Handler {
   readonly dependencies: string[] = []
   readonly constructorFragment: ethers.utils.Fragment
 
@@ -39,7 +39,7 @@ export class ConstructorArgsHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
   ): Promise<HandlerResult> {
     const result = await this.getSerializedConstructorArgs(provider, address)
@@ -65,7 +65,7 @@ export class ConstructorArgsHandler implements ClassicHandler {
   }
 
   async getSerializedConstructorArgs(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
   ): Promise<ContractValue> {
     try {
@@ -86,17 +86,19 @@ export class ConstructorArgsHandler implements ClassicHandler {
   }
 
   async getWithDeploymentTransaction(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
   ): Promise<ethers.utils.Result> {
-    const deploymentTxHash = await provider.getContractDeploymentTx(address)
-    if (deploymentTxHash === undefined) {
+    const deployment = await provider.getDeployment(address)
+    if (deployment === undefined) {
       throw new Error(
-        "Can't discover constructor because getContractDeploymentTx is not available",
+        "Can't discover constructor because getDeployment is not available",
       )
     }
 
-    const deploymentTx = await provider.getTransaction(deploymentTxHash)
+    const deploymentTx = await provider.getTransaction(
+      deployment.transactionHash,
+    )
 
     const decodedConstructorArguments = decodeConstructorArgs(
       this.constructorFragment,
@@ -107,15 +109,14 @@ export class ConstructorArgsHandler implements ClassicHandler {
   }
 
   async getWithBlockExplorer(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
   ): Promise<ethers.utils.Result> {
-    const encodedConstructorArguments =
-      await provider.getConstructorArgs(address)
+    const { constructorArguments } = await provider.getSource(address)
 
     const decodedConstructorArguments = ethers.utils.defaultAbiCoder.decode(
       this.constructorFragment.inputs,
-      '0x' + encodedConstructorArguments,
+      '0x' + constructorArguments,
     )
 
     return decodedConstructorArguments

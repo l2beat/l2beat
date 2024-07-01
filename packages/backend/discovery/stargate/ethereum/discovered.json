@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532207,
   "configHash": "0x00386bee018153f5ccd18d3bc0cd5c5dbe5cc420fe92706140f661856f134387",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "Factory",
@@ -38,6 +38,9 @@
     {
       "name": "DAI Pool",
       "address": "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -48,9 +51,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1668459527,
       "values": {
         "batched": true,
@@ -98,6 +98,9 @@
     {
       "name": "SG-ETH Pool",
       "address": "0x101816545F6bd2b1076434B54383a1E633390A2E",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -108,9 +111,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1656354769,
       "values": {
         "batched": true,
@@ -190,6 +190,9 @@
     {
       "name": "WOO Pool",
       "address": "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -200,9 +203,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1677032255,
       "values": {
         "batched": true,
@@ -329,6 +329,9 @@
     {
       "name": "USDT Pool",
       "address": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -339,9 +342,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647511860,
       "values": {
         "batched": true,
@@ -476,6 +476,9 @@
     {
       "name": "USDT Pool2",
       "address": "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -486,9 +489,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1673830559,
       "values": {
         "batched": true,
@@ -573,6 +573,9 @@
     {
       "name": "sUSD Pool",
       "address": "0x590d4f8A68583639f215f675F3a259Ed84790580",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -583,9 +586,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1668459587,
       "values": {
         "batched": true,
@@ -648,13 +648,13 @@
       "name": "StarGate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 6 (50%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
       "values": {
@@ -699,6 +699,9 @@
     {
       "name": "USDD Pool",
       "address": "0x692953e758c3669290cb1677180c64183cEe374e",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -709,9 +712,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1656354769,
       "values": {
         "batched": true,
@@ -838,6 +838,9 @@
     {
       "name": "MAI Pool",
       "address": "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -848,9 +851,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1668566243,
       "values": {
         "batched": true,
@@ -893,6 +893,9 @@
     {
       "name": "mETH Pool",
       "address": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -903,9 +906,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706854619,
       "values": {
         "batched": false,
@@ -976,13 +976,13 @@
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 5 (40%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
@@ -1024,6 +1024,9 @@
     {
       "name": "METIS Pool",
       "address": "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1034,9 +1037,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1673830559,
       "values": {
         "batched": true,
@@ -1101,6 +1101,9 @@
     {
       "name": "USDC Pool",
       "address": "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1111,9 +1114,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647511732,
       "values": {
         "batched": true,
@@ -1203,6 +1203,9 @@
     {
       "name": "LUSD Pool",
       "address": "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1213,9 +1216,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1668459587,
       "values": {
         "batched": true,
@@ -1254,6 +1254,9 @@
     {
       "name": "Frax Pool",
       "address": "0xfA0F307783AC21C39E939ACFF795e27b650F6e68",
+      "upgradeability": {
+        "type": "immutable"
+      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1264,9 +1267,6 @@
         "getChainPathsLength",
         "totalWeight"
       ],
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1668459527,
       "values": {
         "batched": true,
@@ -1305,20 +1305,48 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d",
-    "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437",
-    "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070",
-    "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
-    "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e",
-    "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5",
-    "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523",
-    "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8",
-    "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
-    "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
-    "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
-    "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0",
-    "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
+    },
+    {
+      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
+    },
+    {
+      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
+    },
+    {
+      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
+    },
+    {
+      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
+    },
+    {
+      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
+    },
+    {
+      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523"
+    },
+    {
+      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
+    },
+    {
+      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
+    },
+    {
+      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
+    },
+    {
+      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
+    },
+    {
+      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
+    },
+    {
+      "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
+    }
   ],
   "abis": {
     "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": [

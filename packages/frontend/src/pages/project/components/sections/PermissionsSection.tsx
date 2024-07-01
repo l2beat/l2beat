@@ -16,7 +16,7 @@ export interface PermissionsSectionProps {
   sectionOrder: number
   isUnderReview: boolean | undefined
   permissions: TechnologyContract[]
-  nativePermissions: TechnologyContract[]
+  nativePermissions: Record<string, TechnologyContract[]>
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   references?: ScalingProjectReference[]
@@ -54,16 +54,27 @@ export function PermissionsSection({
             className="my-4"
           />
         ))}
-        {nativePermissions.map((permission, i) => (
-          <ContractEntry
-            key={i}
-            contract={permission}
-            verificationStatus={verificationStatus}
-            manuallyVerifiedContracts={manuallyVerifiedContracts}
-            className="my-4"
-            sourceBadge={projectType}
-          />
-        ))}
+        {nativePermissions !== undefined &&
+          Object.entries(nativePermissions).map(([chainName, permissions]) => {
+            return (
+              <div key={chainName}>
+                <h3 className="font-bold">
+                  The system consists of the following permissions on{' '}
+                  {chainName}:
+                </h3>
+                {permissions.map((permission, i) => (
+                  <ContractEntry
+                    key={i}
+                    contract={permission}
+                    verificationStatus={verificationStatus}
+                    manuallyVerifiedContracts={manuallyVerifiedContracts}
+                    className="my-4"
+                    sourceBadge={projectType}
+                  />
+                ))}
+              </div>
+            )
+          })}
       </div>
     </ProjectSection>
   )

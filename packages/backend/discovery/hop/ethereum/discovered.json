@@ -3,18 +3,18 @@
   "chain": "ethereum",
   "blockNumber": 19531595,
   "configHash": "0xb65597dc170a417db4f9924962294d8b248d20068901b7ecf5ea3307ec89d78d",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "Hop Multisig",
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "modules": [],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1625076853,
       "values": {
@@ -255,11 +255,21 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x404c2184a4027b0092C5877BC4599099cd63E62D",
-    "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07",
-    "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62",
-    "0xF56e305024B195383245A075737d16dBdb8487Fb"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x404c2184a4027b0092C5877BC4599099cd63E62D"
+    },
+    {
+      "address": "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07"
+    },
+    {
+      "address": "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
+    },
+    {
+      "address": "0xF56e305024B195383245A075737d16dBdb8487Fb"
+    }
   ],
   "abis": {
     "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": [

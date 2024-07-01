@@ -33,7 +33,7 @@ export const env = createEnv({
     NEXT_PUBLIC_GITCOIN_ROUND_LIVE: featureFlag.default('false'),
     NEXT_PUBLIC_PLAUSIBLE_DOMAIN: z.string().default('localhost'),
     NEXT_PUBLIC_PLAUSIBLE_ENABLED: coerceBoolean.optional(),
-    NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('true'),
+    NEXT_PUBLIC_SHOW_HIRING_BADGE: featureFlag.default('false'),
     NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: z.string().optional(),
   },
 

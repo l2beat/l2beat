@@ -7,7 +7,7 @@ import {
   GithubIcon,
   LinkedInIcon,
   MediumIcon,
-  TwitterIcon,
+  XIcon,
   YouTubeIcon,
 } from '../icons'
 
@@ -17,7 +17,7 @@ export function SocialLinks() {
     <>
       <li>
         <PlainLink href={config.links.twitter} title="Twitter">
-          <TwitterIcon />
+          <XIcon />
         </PlainLink>
       </li>
       <li>

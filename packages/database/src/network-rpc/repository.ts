@@ -7,6 +7,6 @@ export class NetworkRpcRepository {
   insertMany(rpcs: NetworkRpc[]) {
     const entities = rpcs.map(toRow)
 
-    return this.db.insertInto('NetworkRpc').values(entities).execute()
+    return this.db.insertInto('public.NetworkRpc').values(entities).execute()
   }
 }

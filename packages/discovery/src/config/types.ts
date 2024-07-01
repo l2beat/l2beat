@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { MulticallConfig } from '../discovery/provider/multicall/types'
-import { EtherscanUnsupportedMethods } from '../utils/EtherscanLikeClient'
+import { ExplorerConfig } from '../utils/IEtherscanClient'
 
 export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
@@ -15,6 +15,8 @@ export interface DiscoveryModuleConfig {
   readonly chain: DiscoveryChainConfig
   readonly dryRun?: boolean
   readonly dev?: boolean
+  readonly printStats?: boolean
+  readonly saveSources?: boolean
   readonly blockNumber?: number
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
@@ -28,14 +30,12 @@ export interface SingleDiscoveryModuleConfig {
 
 export interface DiscoveryChainConfig {
   name: string
+  chainId: number
   rpcUrl: string
   eventRpcUrl?: string
-  rpcGetLogsMaxRange?: number
   reorgSafeDepth?: number
   multicall: MulticallConfig
-  etherscanApiKey: string
-  etherscanUrl: string
-  etherscanUnsupported?: EtherscanUnsupportedMethods
+  explorer: ExplorerConfig
 }
 
 export interface InversionConfig {

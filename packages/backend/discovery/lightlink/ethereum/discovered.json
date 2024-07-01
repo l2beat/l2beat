@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20117905,
   "configHash": "0xbd532d50aee921cf92fede7bc5de97f9045a0e13b17f1abb4df7a6affca962a8",
-  "version": 6,
+  "version": 8,
   "contracts": [
     {
       "name": "Challenge",
@@ -63,6 +63,13 @@
       "address": "0x3345702FeA1669Efa1e085610A62F89d159Bc0c8",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x3ca373F5ecB92ac762f9876f6e773082A4589995",
+          "0x624631881655a310adcF0d1336658Cc977609b72",
+          "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+        ]
       },
       "sinceTimestamp": 1692154319,
       "values": {
@@ -162,12 +169,12 @@
     {
       "name": "CanonicalStateChain",
       "address": "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE",
-      "ignoreInWatchMode": ["chainHead", "getHead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5",
         "admin": "0xcc90c738acfc1695D19336Bc3E392a46234112BF"
       },
+      "ignoreInWatchMode": ["chainHead", "getHead"],
       "implementations": ["0xd8C81A0CB0044fC45B51531A8dcc48Ed385937B5"],
       "sinceTimestamp": 1717522271,
       "values": {
@@ -304,17 +311,46 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118",
-    "0x514F8211B64f0620349659DeaDB5911a9896E7EC",
-    "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91",
-    "0x6f933814903561F79137099587737DFB24c6E86D",
-    "0x7F17A74942c5b22b340688f099c99A79426447e1",
-    "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9",
-    "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df",
-    "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938",
-    "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
-    "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x12eCE4AA73ee8ea958bE327daE41Dd785c997118"
+    },
+    {
+      "address": "0x514F8211B64f0620349659DeaDB5911a9896E7EC"
+    },
+    {
+      "address": "0x67Ad58C203cEB0f39026270D920cc0f29eB4eE91"
+    },
+    {
+      "address": "0x6f933814903561F79137099587737DFB24c6E86D"
+    },
+    {
+      "address": "0x7F17A74942c5b22b340688f099c99A79426447e1"
+    },
+    {
+      "address": "0xaB0DDC4B1Fc1F24D4F7F67ab87B5dD8e5e0c5AC9"
+    },
+    {
+      "address": "0xB44C32Dd1ec374224eED43FD827EBE64db16b0df"
+    },
+    {
+      "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938"
+    },
+    {
+      "address": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
+      "permissions": {
+        "admin": [
+          "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+          "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+          "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
+        ]
+      }
+    },
+    {
+      "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590"
+    }
   ],
   "abis": {
     "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd": [

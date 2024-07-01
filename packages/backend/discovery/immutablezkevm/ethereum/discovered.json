@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017490,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -74,12 +74,12 @@
     {
       "name": "Bridge",
       "address": "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6",
-      "ignoreInWatchMode": ["withdrawalQueueActivated"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x177EaFe0f1F3359375B1728dae0530a75C83E154",
         "admin": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8"
       },
+      "ignoreInWatchMode": ["withdrawalQueueActivated"],
       "implementations": ["0x177EaFe0f1F3359375B1728dae0530a75C83E154"],
       "sinceTimestamp": 1702962563,
       "values": {
@@ -112,13 +112,13 @@
       "name": "OwnerMultisig",
       "address": "0xD2C37fC6fD89563187f3679304975655e448D192",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 5 (40%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1702945151,
       "values": {
@@ -143,6 +143,12 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
+          "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+        ]
+      },
       "sinceTimestamp": 1702962527,
       "values": {
         "owner": "0xD2C37fC6fD89563187f3679304975655e448D192"
@@ -150,17 +156,39 @@
     }
   ],
   "eoas": [
-    "0x000000000000000000000000000000000000007B",
-    "0x0000000000000000000000000000000000000Eee",
-    "0x0000000000000000000000000000000000000FfF",
-    "0x52A6c53869Ce09a731CD772f245b97A4401d3348",
-    "0x5C40EC9b11673925405ac132d248973a2b9d5cD4",
-    "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5",
-    "0x869896ac62ADc693322F461ded2fe4452bA74Ac3",
-    "0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7",
-    "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817",
-    "0xdAeDdFC3D4f10650E22939e6992349127C3F8C36",
-    "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
+    {
+      "address": "0x000000000000000000000000000000000000007B"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000Eee"
+    },
+    {
+      "address": "0x0000000000000000000000000000000000000FfF"
+    },
+    {
+      "address": "0x52A6c53869Ce09a731CD772f245b97A4401d3348"
+    },
+    {
+      "address": "0x5C40EC9b11673925405ac132d248973a2b9d5cD4"
+    },
+    {
+      "address": "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
+    },
+    {
+      "address": "0x869896ac62ADc693322F461ded2fe4452bA74Ac3"
+    },
+    {
+      "address": "0x9EA46f553de064ac0A2418ED5f50e85E087D8Fd7"
+    },
+    {
+      "address": "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
+    },
+    {
+      "address": "0xdAeDdFC3D4f10650E22939e6992349127C3F8C36"
+    },
+    {
+      "address": "0xdDA0d9448Ebe3eA43aFecE5Fa6401F5795c19333"
+    }
   ],
   "abis": {
     "0x177EaFe0f1F3359375B1728dae0530a75C83E154": [

@@ -38,6 +38,7 @@ export const hyphen: Bridge = {
         address: EthereumAddress('0x2A5c2568b10A0E826BfA892Cf21BA7218310180b'),
         sinceTimestamp: new UnixTime(1647128990),
         tokens: ['ETH', 'USDC', 'USDT', 'MATIC', 'BICO'],
+        chain: 'ethereum',
       },
     ],
   },

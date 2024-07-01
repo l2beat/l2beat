@@ -8,7 +8,7 @@ export class DeploymentRepository {
     const row = toRow(Deployment)
 
     return this.db
-      .insertInto('Deployment')
+      .insertInto('public.Deployment')
       .values(row)
       .onConflict((conflict) =>
         conflict.column('tokenId').doUpdateSet({

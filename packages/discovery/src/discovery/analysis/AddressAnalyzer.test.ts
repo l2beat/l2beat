@@ -1,25 +1,23 @@
 import { ContractParameters } from '@l2beat/discovery-types'
-import { Bytes, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
-import { DiscoveryProvider } from '../provider/DiscoveryProvider'
+import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
 import { AddressAnalyzer } from './AddressAnalyzer'
 import { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
-  const BLOCK_NUMBER = 1234
-
   describe(AddressAnalyzer.prototype.analyze.name, () => {
     it('handles EOAs', async () => {
+      const provider = mockObject<IProvider>({
+        getBytecode: async () => Bytes.EMPTY,
+      })
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>({
-          getCode: async () => Bytes.EMPTY,
-        }),
         mockObject<ProxyDetector>(),
         mockObject<SourceCodeService>(),
         mockObject<HandlerExecutor>(),
@@ -31,10 +29,10 @@ describe(AddressAnalyzer.name, () => {
 
       const address = EthereumAddress.random()
       const result = await addressAnalyzer.analyze(
+        provider,
         address,
         undefined,
         undefined,
-        BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
@@ -63,31 +61,42 @@ describe(AddressAnalyzer.name, () => {
             name: 'Proxy1',
             address: address,
             source: {
+              name: 'Proxy1',
+              isVerified: true,
+              abi: ['function foo()'],
+              solidityVersion: '0.8.0',
+              constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
-              solidityVersion: '0.8.0',
             },
           },
           {
             name: 'Impl1',
             address: implementation,
             source: {
+              name: 'Impl1',
+              isVerified: true,
+              abi: ['function bar()'],
+              solidityVersion: '0.8.0',
+              constructorArguments: '',
               files: { 'Bar.sol': 'contract Test { function bar() {} }' },
               remappings: [],
-              solidityVersion: '0.8.0',
             },
           },
         ],
       }
 
-      const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>({
-          getCode: async () => Bytes.fromHex('0x1234'),
-          getDeploymentInfo: async () => ({
-            timestamp: new UnixTime(1234),
-            blockNumber: 9876,
-          }),
+      const provider = mockObject<IProvider>({
+        getBytecode: async () => Bytes.fromHex('0x1234'),
+        getDeployment: async () => ({
+          timestamp: new UnixTime(1234),
+          blockNumber: 9876,
+          deployer: EthereumAddress.random(),
+          transactionHash: Hash256.random(),
         }),
+      })
+
+      const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
           detectProxy: async () => ({
             upgradeability: {
@@ -117,10 +126,10 @@ describe(AddressAnalyzer.name, () => {
       )
 
       const result = await addressAnalyzer.analyze(
+        provider,
         address,
         undefined,
         undefined,
-        BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
@@ -168,15 +177,23 @@ describe(AddressAnalyzer.name, () => {
             name: 'Test',
             address,
             source: {
+              name: 'Test',
+              isVerified: true,
+              abi: ['function foo()'],
+              solidityVersion: '0.8.0',
+              constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
-              solidityVersion: '0.8.0',
             },
           },
           {
             name: 'Test2',
             address: implementation,
             source: {
+              name: 'Test2',
+              isVerified: false,
+              abi: [],
+              constructorArguments: '',
               files: {},
               remappings: [],
               solidityVersion: '0.8.0',
@@ -185,14 +202,17 @@ describe(AddressAnalyzer.name, () => {
         ],
       }
 
-      const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>({
-          getCode: async () => Bytes.fromHex('0x1234'),
-          getDeploymentInfo: async () => ({
-            timestamp: new UnixTime(1234),
-            blockNumber: 9876,
-          }),
+      const provider = mockObject<IProvider>({
+        getBytecode: async () => Bytes.fromHex('0x1234'),
+        getDeployment: async () => ({
+          timestamp: new UnixTime(1234),
+          blockNumber: 9876,
+          deployer: EthereumAddress.random(),
+          transactionHash: Hash256.random(),
         }),
+      })
+
+      const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
           detectProxy: async () => ({
             upgradeability: {
@@ -222,10 +242,10 @@ describe(AddressAnalyzer.name, () => {
       )
 
       const result = await addressAnalyzer.analyze(
+        provider,
         address,
         undefined,
         undefined,
-        BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
@@ -274,28 +294,37 @@ describe(AddressAnalyzer.name, () => {
             name: 'Test',
             address,
             source: {
+              name: 'Test',
+              isVerified: true,
+              abi: ['function foo()'],
+              solidityVersion: '0.8.0',
+              constructorArguments: '',
               files: { 'Foo.sol': 'contract Test { function foo() {} }' },
               remappings: [],
-              solidityVersion: '0.8.0',
             },
           },
           {
             name: 'Test',
             address,
             source: {
+              name: 'Test',
+              isVerified: true,
+              abi: ['function bar()'],
+              solidityVersion: '0.8.0',
+              constructorArguments: '',
               files: { 'Bar.sol': 'contract Test { function bar() {} }' },
               remappings: [],
-              solidityVersion: '0.8.0',
             },
           },
         ],
       }
 
+      const provider = mockObject<IProvider>({
+        getBytecode: async () => Bytes.fromHex('0x1234'),
+        getDeployment: mockFn().resolvesTo(undefined),
+      })
+
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>({
-          getCode: async () => Bytes.fromHex('0x1234'),
-          getDeploymentInfo: mockFn().resolvesTo(undefined),
-        }),
         mockObject<ProxyDetector>({
           detectProxy: async () => ({
             upgradeability: {
@@ -325,10 +354,10 @@ describe(AddressAnalyzer.name, () => {
       )
 
       const result = await addressAnalyzer.analyze(
+        provider,
         address,
         undefined,
         undefined,
-        BLOCK_NUMBER,
         DiscoveryLogger.SILENT,
       )
 
@@ -364,10 +393,11 @@ describe(AddressAnalyzer.name, () => {
       const address = EthereumAddress.random()
       const values = { foo: 'bar' }
 
+      const provider = mockObject<IProvider>({
+        getBytecode: async () => Bytes.fromHex('0x10'),
+      })
+
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>({
-          getCode: async () => Bytes.fromHex('0x10'),
-        }),
         mockObject<ProxyDetector>(),
         mockObject<SourceCodeService>({
           getRelevantAbi: (abis) => abis[0] ?? [],
@@ -412,19 +442,19 @@ describe(AddressAnalyzer.name, () => {
       }
 
       const result = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         abis,
       )
       expect(result).toEqual(false)
 
       const changedResult = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         abis,
       )
       expect(changedResult).toEqual(true)
@@ -432,10 +462,10 @@ describe(AddressAnalyzer.name, () => {
       await expect(
         async () =>
           await addressAnalyzer.hasContractChanged(
+            provider,
             contractParameters,
             overrides,
             undefined,
-            BLOCK_NUMBER,
             abis,
           ),
       ).toBeRejected()
@@ -449,9 +479,9 @@ describe(AddressAnalyzer.name, () => {
       const implementationValues = { bar: 'baz' }
 
       const values = { ...proxyValues, ...implementationValues }
+      const provider = mockObject<IProvider>()
 
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>(),
         mockObject<ProxyDetector>(),
         mockObject<SourceCodeService>({
           getRelevantAbi: (abis) => [...(abis[0] ?? []), ...(abis[1] ?? [])],
@@ -489,19 +519,19 @@ describe(AddressAnalyzer.name, () => {
       }
 
       const result = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         abis,
       )
       expect(result).toEqual(false)
 
       const changedResult = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         abis,
       )
       expect(changedResult).toEqual(true)
@@ -510,8 +540,8 @@ describe(AddressAnalyzer.name, () => {
     it('handles unverified contracts', async () => {
       const address = EthereumAddress.random()
 
+      const provider = mockObject<IProvider>()
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>(),
         mockObject<ProxyDetector>(),
         mockObject<SourceCodeService>({
           getSources: mockFn()
@@ -534,20 +564,20 @@ describe(AddressAnalyzer.name, () => {
       const overrides: ContractOverrides = { address }
 
       const result = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         {},
       )
 
       expect(result).toEqual(false)
 
       const changedResult = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         {},
       )
 
@@ -558,8 +588,8 @@ describe(AddressAnalyzer.name, () => {
       const address = EthereumAddress.random()
       const implementation = EthereumAddress.random()
 
+      const provider = mockObject<IProvider>()
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<DiscoveryProvider>(),
         mockObject<ProxyDetector>(),
         mockObject<SourceCodeService>({
           getSources: mockFn()
@@ -587,20 +617,20 @@ describe(AddressAnalyzer.name, () => {
       const overrides: ContractOverrides = { address }
 
       const result = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         {},
       )
 
       expect(result).toEqual(false)
 
       const changedResult = await addressAnalyzer.hasContractChanged(
+        provider,
         contractParameters,
         overrides,
         undefined,
-        BLOCK_NUMBER,
         {},
       )
 
@@ -609,12 +639,12 @@ describe(AddressAnalyzer.name, () => {
   })
 
   it(AddressAnalyzer.prototype.hasEoaBecomeContract.name, async () => {
+    const provider = mockObject<IProvider>({
+      getBytecode: mockFn()
+        .resolvesToOnce(Bytes.EMPTY)
+        .resolvesToOnce(Bytes.fromHex('0x10')),
+    })
     const addressAnalyzer = new AddressAnalyzer(
-      mockObject<DiscoveryProvider>({
-        getCode: mockFn()
-          .resolvesToOnce(Bytes.EMPTY)
-          .resolvesToOnce(Bytes.fromHex('0x10')),
-      }),
       mockObject<ProxyDetector>(),
       mockObject<SourceCodeService>(),
       mockObject<HandlerExecutor>(),
@@ -626,16 +656,13 @@ describe(AddressAnalyzer.name, () => {
 
     const address = EthereumAddress.random()
 
-    const result = await addressAnalyzer.hasEoaBecomeContract(
-      address,
-      BLOCK_NUMBER,
-    )
+    const result = await addressAnalyzer.hasEoaBecomeContract(provider, address)
 
     expect(result).toEqual(false)
 
     const changedResult = await addressAnalyzer.hasEoaBecomeContract(
+      provider,
       address,
-      BLOCK_NUMBER,
     )
 
     expect(changedResult).toEqual(true)

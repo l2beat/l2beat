@@ -3,18 +3,18 @@
   "chain": "ethereum",
   "blockNumber": 19531994,
   "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
-      "ignoreInWatchMode": ["committedRoot"],
       "upgradeability": {
         "type": "Optics Beacon proxy",
         "upgradeBeacon": "0x0876dFe4AcAe0e1c0a43302716483f5752298b71",
         "beaconController": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
         "implementation": "0x7f221A1850c12b57fed1f0831dd25399a13b68c2"
       },
+      "ignoreInWatchMode": ["committedRoot"],
       "implementations": ["0x7f221A1850c12b57fed1f0831dd25399a13b68c2"],
       "sinceTimestamp": 1641898337,
       "values": {
@@ -163,13 +163,13 @@
       "name": "Governor",
       "address": "0x93277b8f5939975b9E6694d5Fd2837143afBf68A",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641859677,
       "values": {
@@ -209,13 +209,13 @@
       "name": "RecoveryManager",
       "address": "0xda2f881f7f4e9D2b9559F97c7670472A85C1986A",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1641860106,
       "values": {
@@ -266,21 +266,51 @@
     }
   ],
   "eoas": [
-    "0x06D8902cfae8235047DC7783875279311798c715",
-    "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
-    "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f",
-    "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98",
-    "0x83865712c50f702fA4650C7fadEd90A54242046e",
-    "0x9782A3C8128f5D1BD3C9655d03181ba5b420883E",
-    "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3",
-    "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D",
-    "0xa728bE5Be33E60D9c65677EBa569555536e587E4",
-    "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5",
-    "0xC69b66cc2811B509829448FBFfb2553c4CBb627e",
-    "0xCc20f031B2F06374e4986Af33A36bDda55bed21d",
-    "0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960",
-    "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
-    "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A"
+    {
+      "address": "0x06D8902cfae8235047DC7783875279311798c715"
+    },
+    {
+      "address": "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F"
+    },
+    {
+      "address": "0x499B1Fa18E3CaC1c8cDF2B14C458aA70A6a2B68f"
+    },
+    {
+      "address": "0x77b4962f97dc4dDB9cc5B28DC1a92C0158e37a98"
+    },
+    {
+      "address": "0x83865712c50f702fA4650C7fadEd90A54242046e"
+    },
+    {
+      "address": "0x9782A3C8128f5D1BD3C9655d03181ba5b420883E"
+    },
+    {
+      "address": "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3"
+    },
+    {
+      "address": "0x9E8e7eb5886A9C77E955Fd5D717581556eb7F98D"
+    },
+    {
+      "address": "0xa728bE5Be33E60D9c65677EBa569555536e587E4"
+    },
+    {
+      "address": "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5"
+    },
+    {
+      "address": "0xC69b66cc2811B509829448FBFfb2553c4CBb627e"
+    },
+    {
+      "address": "0xCc20f031B2F06374e4986Af33A36bDda55bed21d"
+    },
+    {
+      "address": "0xcE941bbAD38B35bD7F6B039Af5AE67F8F0c99960"
+    },
+    {
+      "address": "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4"
+    },
+    {
+      "address": "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A"
+    }
   ],
   "abis": {
     "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF": [

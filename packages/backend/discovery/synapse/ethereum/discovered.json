@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19876012,
   "configHash": "0xc5323f647a9ea9322c162facb56fb967aeeda5e72064249d3a787e7cde4d646a",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "SynapseBridge",
@@ -77,13 +77,13 @@
       "name": "Bridge Multisig",
       "address": "0x67F60b0891EBD842Ebe55E4CCcA1098d7Aac1A55",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": ["0xCFbFaC74C26F8647cBDb8c5caf80BB5b32E43134"],
         "threshold": "2 of 3 (67%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1628970480,
       "values": {
@@ -105,6 +105,9 @@
       "address": "0x7B3C1f09088Bdc9f136178E170aC668C8Ed095f2",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x2796317b0fF8538F253012862c06787Adfb8cEb6"]
       },
       "sinceTimestamp": 1629075985,
       "values": {
@@ -128,11 +131,21 @@
     }
   ],
   "eoas": [
-    "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC",
-    "0x230A1AC45690B9Ae1176389434610B9526d2f21b",
-    "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3",
-    "0xa31C04BFD3545E6d00A80573a0B009F7557D958D",
-    "0xb3DAD3C24A861b84fDF380B212662620627D4e15"
+    {
+      "address": "0x0d745Ad687F2b1E1941569f09f612F60ad4aD5BC"
+    },
+    {
+      "address": "0x230A1AC45690B9Ae1176389434610B9526d2f21b"
+    },
+    {
+      "address": "0x9Ce9dc8B12E264F00e80F35326040C75201C38f3"
+    },
+    {
+      "address": "0xa31C04BFD3545E6d00A80573a0B009F7557D958D"
+    },
+    {
+      "address": "0xb3DAD3C24A861b84fDF380B212662620627D4e15"
+    }
   ],
   "abis": {
     "0x2796317b0fF8538F253012862c06787Adfb8cEb6": [

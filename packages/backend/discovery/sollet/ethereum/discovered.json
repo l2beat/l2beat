@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 16154924,
   "configHash": "0x55cbc16ba9446d3735b73865468a11d4f0fb92404912bf08048aae525a8029aa",
-  "version": 5,
+  "version": 8,
   "contracts": [
     {
       "name": "SplTokenSwap",
@@ -18,7 +18,11 @@
       }
     }
   ],
-  "eoas": ["0x067D382e61c06Cea2815069D9D97fd3ee5df2361"],
+  "eoas": [
+    {
+      "address": "0x067D382e61c06Cea2815069D9D97fd3ee5df2361"
+    }
+  ],
   "abis": {
     "0xeae57ce9cc1984F202e15e038B964bb8bdF7229a": [
       "event NonceUsed(uint256 indexed nonce, bytes signature)",

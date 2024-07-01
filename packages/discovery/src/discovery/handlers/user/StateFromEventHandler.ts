@@ -6,8 +6,8 @@ import { pick, reduce } from 'lodash'
 import * as z from 'zod'
 
 import { DiscoveryLogger } from '../../DiscoveryLogger'
-import { DiscoveryProvider } from '../../provider/DiscoveryProvider'
-import { ClassicHandler, HandlerResult } from '../Handler'
+import { IProvider } from '../../provider/IProvider'
+import { Handler, HandlerResult } from '../Handler'
 import { getEventFragment } from '../utils/getEventFragment'
 import { toContractValue } from '../utils/toContractValue'
 import { toTopics } from '../utils/toTopics'
@@ -24,7 +24,7 @@ export const StateFromEventDefinition = z.strictObject({
   ignoreRelative: z.optional(z.boolean()),
 })
 
-export class StateFromEventHandler implements ClassicHandler {
+export class StateFromEventHandler implements Handler {
   readonly dependencies: string[] = []
   private readonly fragment: utils.EventFragment
   private readonly abi: utils.Interface
@@ -44,13 +44,12 @@ export class StateFromEventHandler implements ClassicHandler {
   }
 
   async execute(
-    provider: DiscoveryProvider,
+    provider: IProvider,
     address: EthereumAddress,
-    blockNumber: number,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Querying ', this.fragment.name])
     const topics = toTopics(this.abi, this.fragment, this.definition.topics)
-    const logs = await provider.getLogs(address, topics, 0, blockNumber)
+    const logs = await provider.getLogs(address, topics)
 
     const values = new Set<ContractValue>()
     for (const log of logs) {

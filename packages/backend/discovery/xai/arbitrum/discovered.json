@@ -1,21 +1,21 @@
 {
   "name": "xai",
   "chain": "arbitrum",
-  "blockNumber": 220738640,
-  "configHash": "0x6bbcb2d4272609e25950c3367e27d16cc4aae4921af5ad5820ef23a21df45f15",
-  "version": 5,
+  "blockNumber": 225981844,
+  "configHash": "0x3fee7bf5bcf369adef21f7b4a76b445a92772bd9b06b6beee9c5ec2ae2e06111",
+  "version": 8,
   "contracts": [
     {
       "name": "GnosisSafeAdminMember",
       "address": "0x000d8C5A70B8805DF02f409F2715d05B9A63E871",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
         "threshold": "1 of 3 (33%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1704399729,
       "values": {
@@ -27,7 +27,7 @@
           "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6"
         ],
         "getThreshold": 1,
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -37,6 +37,12 @@
       "address": "0x041F85dD87c46B941dc9b15c6628B19ee5358485",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
+          "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1"
+        ]
       },
       "sinceTimestamp": 1704309371,
       "values": {
@@ -50,6 +56,9 @@
         "type": "EIP1967 proxy",
         "implementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1",
         "admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
+      },
+      "assignedPermissions": {
+        "admin": ["0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336"]
       },
       "implementations": ["0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"],
       "sinceTimestamp": 1704309371,
@@ -203,13 +212,13 @@
       "name": "ExecutorMultisig",
       "address": "0x4972A8EF186Ee42A14Cdd3c47f52ec06a6dc495E",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
         "threshold": "3 of 5 (60%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1704757616,
       "values": {
@@ -311,16 +320,16 @@
     {
       "name": "Bridge",
       "address": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
-      "ignoreInWatchMode": [
-        "delayedMessageCount",
-        "sequencerMessageCount",
-        "sequencerReportedSubMessageCount"
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC",
         "admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
       },
+      "ignoreInWatchMode": [
+        "delayedMessageCount",
+        "sequencerMessageCount",
+        "sequencerReportedSubMessageCount"
+      ],
       "implementations": ["0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC"],
       "sinceTimestamp": 1704309371,
       "values": {
@@ -330,12 +339,12 @@
           "0x36aDe24988E4C47602e38BD9a0Bd89031eF807a8"
         ],
         "allowedOutboxList": ["0x1E400568AD4840dbE50FB32f306B842e9ddeF726"],
-        "delayedMessageCount": 24962,
+        "delayedMessageCount": 35700,
         "nativeToken": "0x4Cb9a7AE498CEDcBb5EAe9f25736aE7d428C9D66",
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerInbox": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
-        "sequencerMessageCount": 14826,
-        "sequencerReportedSubMessageCount": 7897279
+        "sequencerMessageCount": 24085,
+        "sequencerReportedSubMessageCount": 12228828
       },
       "derivedName": "ERC20Bridge"
     },
@@ -375,16 +384,17 @@
       "name": "SequencerInbox",
       "address": "0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1",
       "template": "orbitstack/SequencerInbox",
-      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F",
         "admin": "0x041F85dD87c46B941dc9b15c6628B19ee5358485"
       },
+      "descriptions": ["State batches / commitments get posted here."],
+      "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1704309371,
       "values": {
-        "batchCount": 14826,
+        "batchCount": 24085,
         "batchPosters": ["0x7F68dba68E72a250004812fe04F1123Fca89aBa9"],
         "bridge": "0x7dd8A76bdAeBE3BBBaCD7Aa87f1D4FDa1E60f94f",
         "dacKeyset": {
@@ -404,7 +414,7 @@
         "rollup": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 24961
+        "totalDelayedMessagesRead": 35699
       },
       "derivedName": "SequencerInbox"
     },
@@ -484,29 +494,24 @@
     {
       "name": "NodeLicenseRegistry",
       "address": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
-      "ignoreInWatchMode": ["totalSupply"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xfD6Bb931D2Ee134E70568ca36584c043cB278734",
         "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
       },
+      "ignoreInWatchMode": ["totalSupply"],
       "implementations": ["0xfD6Bb931D2Ee134E70568ca36584c043cB278734"],
       "sinceTimestamp": 1701801243,
       "values": {
         "claimable": true,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "fundsReceiver": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
-        "getApproved": [],
-        "getAverageCost": [],
-        "getMintTimestamp": [],
         "getPricingTiersLength": 40,
         "maxSupply": 50000,
         "name": "Sentry Node License",
-        "ownerOf": [],
         "referralDiscountPercentage": 5,
         "referralRewardPercentage": 15,
         "symbol": "SNL",
-        "tokenURI": [],
         "totalSupply": 35174
       },
       "derivedName": "NodeLicense5"
@@ -515,17 +520,20 @@
       "name": "RollupProxy",
       "address": "0xC47DacFbAa80Bd9D8112F4e8069482c2A3221336",
       "template": "orbitstack/RollupProxy",
-      "ignoreInWatchMode": [
-        "firstUnresolvedNode",
-        "latestConfirmed",
-        "latestNodeCreated"
-      ],
       "upgradeability": {
         "type": "Arbitrum proxy",
         "admin": "0x0EE7AD3Cc291343C9952fFd8844e86d294fa513F",
         "adminImplementation": "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
         "userImplementation": "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
       },
+      "descriptions": [
+        "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
+      ],
+      "ignoreInWatchMode": [
+        "firstUnresolvedNode",
+        "latestConfirmed",
+        "latestNodeCreated"
+      ],
       "implementations": [
         "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
         "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A"
@@ -540,12 +548,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 0,
-        "firstUnresolvedNode": 3538,
+        "firstUnresolvedNode": 3899,
         "inbox": "0xaE21fDA3de92dE2FDAF606233b2863782Ba046F9",
         "isERC20Enabled": false,
         "lastStakeBlock": 18944658,
-        "latestConfirmed": 3537,
-        "latestNodeCreated": 3689,
+        "latestConfirmed": 3898,
+        "latestNodeCreated": 4051,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x1E400568AD4840dbE50FB32f306B842e9ddeF726",
@@ -593,12 +601,12 @@
     {
       "name": "PoolFactory",
       "address": "0xF9E08660223E2dbb1c0b28c82942aB6B5E38b8E5",
-      "ignoreInWatchMode": ["getPoolsCount"],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E",
         "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
       },
+      "ignoreInWatchMode": ["getPoolsCount"],
       "implementations": ["0x21EEC6626f15d02A8896ebB7EDD68ff3CB61e89E"],
       "sinceTimestamp": 1712865940,
       "values": {
@@ -606,7 +614,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "deployerAddress": "0x68D78D1E81379EfD9C61f8E9131D52CE571AF4fD",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
-        "getPoolsCount": 215,
+        "getPoolsCount": 229,
         "nodeLicenseAddress": "0xbc14d8563b248B79689ECbc43bBa53290e0b6b66",
         "refereeAddress": "0xfD41041180571C5D371BEA3D9550E55653671198",
         "stakingEnabled": true,
@@ -633,13 +641,16 @@
       "name": "FundsReiceiverMultisig",
       "address": "0xFCF7248C495d6fd3641eE43F861c48Ebe402c878",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
         "threshold": "3 of 6 (50%)"
       },
+      "descriptions": [
+        "The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints."
+      ],
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1701577782,
       "values": {
@@ -662,16 +673,16 @@
     {
       "name": "SentryReferee",
       "address": "0xfD41041180571C5D371BEA3D9550E55653671198",
-      "ignoreInWatchMode": [
-        "challengeCounter",
-        "getKycWalletCount",
-        "calculateChallengeEmissionAndTier"
-      ],
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x609152cb742916E0F7FBC4391Be750C458b049fe",
         "admin": "0xD88c8E0aE21beA6adE41A41130Bb4cd43e6b1723"
       },
+      "ignoreInWatchMode": [
+        "challengeCounter",
+        "getKycWalletCount",
+        "calculateChallengeEmissionAndTier"
+      ],
       "implementations": ["0x609152cb742916E0F7FBC4391Be750C458b049fe"],
       "sinceTimestamp": 1701801226,
       "values": {
@@ -679,13 +690,13 @@
           "35673515981735159817351",
           "625000000000000000000000000"
         ],
-        "challengeCounter": 4431,
+        "challengeCounter": 4791,
         "CHALLENGER_ROLE": "0xe752add323323eb13e36c71ee508dfd16d74e9e4c4fd78786ba97989e5e13818",
         "challengerPublicKey": "0x977f9fe1d570ba7e48ea76566718023b260ed56eba368ff20dca06e99e650804126663c1a5febdb065ef139a0156a9ad",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "esXaiAddress": "0x4C749d097832DE2FEcc989ce18fDc5f1BD76700c",
         "gasSubsidyRecipient": "0x94F4aBC83eae00b693286B6eDCa09e1D76183C97",
-        "getKycWalletCount": 6519,
+        "getKycWalletCount": 6542,
         "isCheckingAssertions": true,
         "KYC_ADMIN_ROLE": "0x811427a0fa4932aef534bba16bc34e9b7b2d7d2a79c475fca1765f6cc1faebea",
         "maxKeysPerPool": 1000,
@@ -707,27 +718,71 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x08a361fE449b1371cC21b286d88F69eF6d205809",
-    "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a",
-    "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc",
-    "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
-    "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4",
-    "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
-    "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7",
-    "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
-    "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6",
-    "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c",
-    "0xa2E7768789921a36eCFe8c239dBd8213120fFF83",
-    "0xbBE90F6748C82623F130A4486722a436c5a72440",
-    "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44",
-    "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51",
-    "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF",
-    "0xd427165292B2E39cdac102eD963B14fFBACc964a",
-    "0xd4318D959B46d555143f56E03077028aB94D85d2",
-    "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A",
-    "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a",
-    "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x08a361fE449b1371cC21b286d88F69eF6d205809"
+    },
+    {
+      "address": "0x0c71417917D24F4A6A6A55559B98c5cCEcb33F7a"
+    },
+    {
+      "address": "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc"
+    },
+    {
+      "address": "0x25EA41f0bDa921a0eBf48291961B1F10b59BC6b8",
+      "roles": ["Validator"]
+    },
+    {
+      "address": "0x2B95cdD1adD34461Fe737800c0D5A68d556B51b4"
+    },
+    {
+      "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    },
+    {
+      "address": "0x7C94E07bbf73518B0E25D1Be200a5b58F46F9dC7"
+    },
+    {
+      "address": "0x7F68dba68E72a250004812fe04F1123Fca89aBa9",
+      "roles": ["Sequencer"]
+    },
+    {
+      "address": "0x7f910C718bAF6698FBF9b56e047ECd52d157bAD6"
+    },
+    {
+      "address": "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c"
+    },
+    {
+      "address": "0xa2E7768789921a36eCFe8c239dBd8213120fFF83"
+    },
+    {
+      "address": "0xbBE90F6748C82623F130A4486722a436c5a72440"
+    },
+    {
+      "address": "0xC65de812db42Bfa8bd4E0fCf6ffcad8fe3072D44"
+    },
+    {
+      "address": "0xc7185e37A4aB4Af0E77bC08249CD2590AE3E1b51"
+    },
+    {
+      "address": "0xd096e8dE90D34de758B0E0bA4a796eA2e1e272cF"
+    },
+    {
+      "address": "0xd427165292B2E39cdac102eD963B14fFBACc964a"
+    },
+    {
+      "address": "0xd4318D959B46d555143f56E03077028aB94D85d2"
+    },
+    {
+      "address": "0xD766Abf27CEc67393FF475f7fE969902f5D0A80A"
+    },
+    {
+      "address": "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+    },
+    {
+      "address": "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
+    }
   ],
   "abis": {
     "0x000d8C5A70B8805DF02f409F2715d05B9A63E871": [
