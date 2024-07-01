@@ -105,7 +105,7 @@ export const scalingLayer2sColumns = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor('tvlData.marketShare', {
+  columnHelper.accessor((e) => e.tvlData?.marketShare, {
     header: 'Market share',
     cell: (ctx) => {
       const value = ctx.getValue()

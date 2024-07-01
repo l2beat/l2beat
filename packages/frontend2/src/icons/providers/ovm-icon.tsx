@@ -1,19 +1,17 @@
-import React, { type SVGAttributes } from 'react'
+import React, { useId, type SVGAttributes } from 'react'
 import { cn } from '~/utils/cn'
 
-let i = 0
-
 export function OVMIcon(props: SVGAttributes<SVGElement>) {
-  const current = i++
-  const gradientId = `ovm-icon-gradient-${current}`
+  const gradientId = useId()
 
   return (
     <>
+      id
       <svg
         width="24"
         height="24"
         viewBox="0 0 24 24"
-        aria-label="OVM badge icon"
+        aria-label="OVM icon"
         {...props}
         style={{ fill: `url(#${gradientId})` }}
         className={cn('dark:hidden', props.className)}
@@ -28,7 +26,7 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
             id={gradientId}
             x1="24"
             y1="3"
-            x2="1.16229e-06"
+            x2="id6"
             y2="21"
             gradientUnits="userSpaceOnUse"
           >
