@@ -88,7 +88,6 @@ export const orderly: Layer2 = opStackL2({
     },
     {
       chain: 'ethereum',
-      includeInTotal: false,
       address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
       sinceTimestamp: new UnixTime(1705702751),
       tokens: ['USDC'],
