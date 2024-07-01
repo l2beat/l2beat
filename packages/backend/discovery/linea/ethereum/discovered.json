@@ -59,6 +59,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x504A330327A089d8364C4ab3811Ee26976d388ce"]
+      },
       "sinceTimestamp": 1691086259,
       "values": {
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3"
@@ -350,7 +353,10 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0xd19d4B5d358258f05D7B411E21A1460D11B0876F"]
+        "admin": [
+          "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
+          "0xd19d4B5d358258f05D7B411E21A1460D11B0876F"
+        ]
       },
       "sinceTimestamp": 1689158711,
       "values": {

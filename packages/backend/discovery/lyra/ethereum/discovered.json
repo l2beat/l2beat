@@ -99,8 +99,12 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x08Dea366F26C25a08C8D1C3568ad07d1e587136d",
           "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
-          "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba"
+          "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
+          "0x61E44dC0dae6888B5a301887732217d5725B0bFf",
+          "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22",
+          "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8"
         ]
       },
       "sinceTimestamp": 1700021675,

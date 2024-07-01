@@ -24,6 +24,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x3c3a81e81dc49A522A592e7622A7E711c06bf354"]
+      },
       "sinceTimestamp": 1687241639,
       "values": {
         "owner": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
@@ -131,6 +134,15 @@
       "address": "0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
+          "0xA937660031787C4408587D2c6A67Ec4B260630F5",
+          "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+          "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+          "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
+        ]
       },
       "sinceTimestamp": 1687930823,
       "values": {
@@ -272,7 +284,13 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"]
+        "admin": [
+          "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
+          "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
+          "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+          "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+          "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
+        ]
       },
       "sinceTimestamp": 1687931879,
       "values": {
@@ -301,6 +319,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "6 of 13 (46%)"
+      },
+      "assignedPermissions": {
+        "admin": ["0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -665,7 +686,9 @@
       "assignedPermissions": {
         "admin": [
           "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
-          "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+          "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+          "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+          "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
         ]
       },
       "sinceTimestamp": 1710439895,

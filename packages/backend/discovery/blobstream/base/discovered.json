@@ -172,7 +172,7 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "permissions": {
+      "assignedPermissions": {
         "admin": ["0xA83ca7775Bc2889825BcDeDfFa5b758cf69e8794"]
       }
     },
