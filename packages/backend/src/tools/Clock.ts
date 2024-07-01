@@ -1,9 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-const SAFETY_OFFSET = 3
-const REMOVE_HOURLY_AFTER_DAYS = 7 + SAFETY_OFFSET
-const REMOVE_SIX_HOURLY_AFTER_DAYS = 90 + SAFETY_OFFSET
-
 export class Clock {
   constructor(
     private readonly minTimestamp: UnixTime,
@@ -38,34 +34,6 @@ export class Clock {
 
   getLastDay(): UnixTime {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('day')
-  }
-
-  /**
-   * WARNING: this method should be used only in TVL module
-   */
-  _TVL_ONLY_onEveryHour(callback: (timestamp: UnixTime) => void) {
-    let next = this.getFirstHour()
-    const onNewTimestamps = () => {
-      const last = this.getLastHour()
-      while (next.lte(last)) {
-        if (next.add(REMOVE_HOURLY_AFTER_DAYS, 'days').gte(last)) {
-          callback(next)
-        } else if (next.add(REMOVE_SIX_HOURLY_AFTER_DAYS, 'days').gte(last)) {
-          if (next.isFull('six hours')) {
-            callback(next)
-          }
-        } else {
-          if (next.isFull('day')) {
-            callback(next)
-          }
-        }
-        next = next.add(1, 'hours')
-      }
-    }
-
-    onNewTimestamps()
-    const interval = setInterval(onNewTimestamps, this.refreshIntervalMs)
-    return () => clearInterval(interval)
   }
 
   onNewHour(callback: (timestamp: UnixTime) => void) {
