@@ -106,4 +106,39 @@ export class ValueRepository {
   }
 
   // #endregion
+
+  //# region DA-BEAT
+
+  /**
+   * For each projectId x data source pick the latest value according to latest timestamp
+   */
+  async getLatestValuesForProjects(projectIds: ProjectId[]): Promise<Value[]> {
+    const rows = await this.db
+      .with('latest_values', (cb) =>
+        cb
+          .selectFrom('public.values')
+          .select([
+            ...selectValue,
+            this.db.fn
+              .agg('ROW_NUMBER')
+              .over((over) =>
+                over
+                  .partitionBy(['project_id', 'data_source'])
+                  .orderBy('timestamp', 'desc'),
+              )
+              .as('combination_number'),
+          ])
+          .where(
+            'project_id',
+            'in',
+            projectIds.map((id) => id.toString()),
+          ),
+      )
+      .selectFrom('latest_values')
+      .select(selectValue)
+      .where('combination_number', '=', 1)
+      .execute()
+
+    return rows.map(toRecord)
+  }
 }
