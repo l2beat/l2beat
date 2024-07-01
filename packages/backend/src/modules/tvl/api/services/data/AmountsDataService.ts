@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 
 import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
@@ -23,11 +23,11 @@ export class AmountsDataService {
     this.$.logger = $.logger.for(this)
   }
 
-  async getAmounts(
+  async getAggregatedAmounts(
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const records = await this.$.amountRepository.getByConfigIdsInRange(
+    const amountRecords = await this.$.amountRepository.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
       configurations.reduce(
         (a, b) => UnixTime.min(a, b.sinceTimestamp),
@@ -36,88 +36,49 @@ export class AmountsDataService {
       targetTimestamp,
     )
 
-    const result = {
-      amounts: {} as Dictionary<Dictionary<bigint>>,
-      lagging: new Map<
-        string,
-        { latestTimestamp: UnixTime; latestValue: AmountRecord }
-      >(),
-      excluded: new Set<string>(),
-    }
+    const amountsByTimestamp = groupBy(amountRecords, 'timestamp')
 
-    const amountsByConfig = groupBy(records, 'configId')
-    for (const [configId, amounts] of Object.entries(amountsByConfig)) {
-      const config = configurations.find((c) => c.configId === configId)
-      assert(config, 'Config should be defined')
+    const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
+      configurations.map((c) => ({
+        minTimestamp: c.sinceTimestamp,
+        id: c.configId,
+      })),
+      amountsByTimestamp,
+      (value: AmountRecord) => value.configId,
+      targetTimestamp,
+    )
 
-      let amountsByTimestamp = groupBy(amounts, 'timestamp')
+    const doubleCheckedExcluded = await this.doubleCheckExcluded(excluded)
 
-      const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
-        [
-          {
-            id: configId,
-            minTimestamp: config.sinceTimestamp,
-          },
-        ],
-        amountsByTimestamp,
-        (value: AmountRecord) => value.configId,
-        targetTimestamp,
+    const aggregatedByTimestamp: Dictionary<bigint> = {}
+    for (const [_timestamp, amounts] of Object.entries(amountsByTimestamp)) {
+      const timestamp = new UnixTime(+_timestamp)
+
+      if (!this.$.clock.shouldTimestampBeIncluded(targetTimestamp, timestamp)) {
+        continue
+      }
+
+      amounts.push(
+        ...lagging
+          .filter((l) => timestamp.gt(l.latestTimestamp))
+          .map((l) => l.latestValue),
       )
 
-      lagging.forEach((l) => result.lagging.set(configId, { ...l }))
-      // TODO: it can exclude amounts that were more than zero in the past but are not now
-      const aaa = await this.$.amountRepository.getByConfigIds(excluded)
+      const aggregatedAmount =
+        amounts
+          .filter((a) => !doubleCheckedExcluded.includes(a.configId))
+          .reduce((acc, curr) => acc + curr.amount, 0n) ?? 0n
 
-      for (const e of excluded) {
-        const aaaa = aaa.filter((a) => a.configId === e)
-
-        if (aaaa.length > 0) {
-          amountsByTimestamp = groupBy(aaaa, 'timestamp')
-
-          const ll = aaaa[aaaa.length - 1]
-          result.lagging.set(e, {
-            latestTimestamp: ll.timestamp,
-            latestValue: {
-              timestamp: ll.timestamp,
-              amount: 0n,
-              configId: configId,
-            },
-          })
-        } else {
-          result.excluded.add(e)
-          continue
-        }
-      }
-
-      const amountsByTimestampForConfig: Dictionary<bigint> = {}
-      const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
-        minTimestampOverride: config.sinceTimestamp,
-      })
-      for (const timestamp of timestamps) {
-        const amount = amountsByTimestamp[timestamp.toString()]
-
-        if (amount === undefined) {
-          const l = result.lagging.get(configId)
-
-          if (l && l.latestTimestamp.gte(timestamp)) {
-            amountsByTimestampForConfig[timestamp.toString()] =
-              l.latestValue.amount
-          } else {
-            // zeroes are not stored in the DB
-            amountsByTimestampForConfig[timestamp.toString()] = 0n
-          }
-
-          continue
-        }
-
-        assert(amount.length === 1, 'There should be one amount')
-        amountsByTimestampForConfig[timestamp.toString()] = amount[0].amount
-      }
-
-      result.amounts[configId] = amountsByTimestampForConfig
+      aggregatedByTimestamp[_timestamp] = aggregatedAmount
     }
 
-    return result
+    return {
+      amounts: aggregatedByTimestamp,
+      laggingFrom: new Map<string, UnixTime>(
+        lagging.map((l) => [l.id, l.latestTimestamp]),
+      ),
+      excluded: new Set<string>(excluded),
+    }
   }
 
   async getLatestAmount(
@@ -182,5 +143,30 @@ export class AmountsDataService {
     }
 
     return result
+  }
+
+  // Configs marked as excluded have to be double checked -
+  // due to the logic of amount that we are not storing zeros
+  // there can be configurations with no amounts for latest X days
+  // but they used to have amounts in the past -
+  // so we do not want to exclude them
+  private async doubleCheckExcluded(potentiallyExcludedIds: string[]) {
+    const excluded = []
+
+    const records = await this.$.amountRepository.getByConfigIds(
+      potentiallyExcludedIds,
+    )
+
+    for (const e of potentiallyExcludedIds) {
+      const recordsForExcluded = records.filter((a) => a.configId === e)
+
+      if (recordsForExcluded.length > 0) {
+        continue
+      } else {
+        excluded.push(e)
+      }
+    }
+
+    return excluded
   }
 }

@@ -4,7 +4,6 @@ import {
   TokenTvlApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Dictionary } from 'lodash'
 import { Clock } from '../../../../tools/Clock'
 import { ConfigMapping } from '../../utils/ConfigMapping'
 import { getTokenCharts } from '../utils/chartsUtils'
@@ -38,7 +37,7 @@ export class TokenService {
       amountConfigs[0],
     )
 
-    const amounts = await this.$.amountsDataService.getAmounts(
+    const amounts = await this.$.amountsDataService.getAggregatedAmounts(
       amountConfigs,
       targetTimestamp,
     )
@@ -53,23 +52,6 @@ export class TokenService {
       UnixTime.now(),
     )
 
-    const d: Dictionary<bigint> = {}
-
-    const t = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
-      minTimestampOverride: minTimestamp,
-    })
-
-    for (const tt of t) {
-      let sum = 0n
-
-      Object.values(amounts.amounts).forEach((a) => {
-        const b = a[tt.toString()] ?? 0n
-        sum += b
-      })
-
-      d[tt.toString()] = sum
-    }
-
     return getTokenCharts(
       targetTimestamp,
       minTimestamp.toEndOf('day'),
@@ -79,7 +61,7 @@ export class TokenService {
       this.$.clock.getHourlyCutoff(targetTimestamp, {
         minTimestampOverride: minTimestamp,
       }),
-      d,
+      amounts.amounts,
       prices.prices,
       amountConfigs[0].decimals,
     )

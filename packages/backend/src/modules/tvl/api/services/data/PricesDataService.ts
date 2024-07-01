@@ -74,7 +74,7 @@ export class PricesDataService {
 
     return {
       prices: pricesByTimestamp,
-      lagging: latest.timestamp,
+      laggingFrom: latest.timestamp,
     }
   }
 
