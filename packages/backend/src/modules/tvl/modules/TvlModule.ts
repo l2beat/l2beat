@@ -103,20 +103,20 @@ export function createTvlModule(
 
   const valuesDataService = new ValuesDataService({
     valueRepository: peripherals.getRepository(ValueRepository),
-    syncOptimizer,
+    clock,
     logger,
   })
 
   const pricesDataService = new PricesDataService({
     priceRepository: peripherals.getRepository(PriceRepository),
-    syncOptimizer,
+    clock,
     etherPriceConfig: { ...ethPrice, configId: createPriceId(ethPrice) },
     logger,
   })
 
   const amountsDataService = new AmountsDataService({
     amountRepository: peripherals.getRepository(AmountRepository),
-    syncOptimizer,
+    clock,
     logger,
   })
 
@@ -128,20 +128,19 @@ export function createTvlModule(
     amountsDataService,
     pricesDataService,
     configMapping,
-    syncOptimizer,
+    clock,
   })
 
   const aggregatedService = new AggregatedService({
     valuesDataService,
     pricesDataService,
-    syncOptimizer,
+    clock,
     tokenService,
   })
 
   const breakdownService = new BreakdownService({
     pricesDataService,
     amountsDataService,
-    syncOptimizer,
     configMapping,
     chainConverter,
   })
@@ -151,7 +150,7 @@ export function createTvlModule(
     pricesDataService,
     amountsDataService,
     tokenService,
-    syncOptimizer,
+    clock,
     configMapping,
     chainConverter,
   })

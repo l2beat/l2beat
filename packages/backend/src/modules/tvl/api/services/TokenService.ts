@@ -4,8 +4,8 @@ import {
   TokenTvlApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { Clock } from '../../../../tools/Clock'
 import { ConfigMapping } from '../../utils/ConfigMapping'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { getTokenCharts } from '../utils/chartsUtils'
 import { ApiProject } from '../utils/types'
 import { AmountsDataService } from './data/AmountsDataService'
@@ -15,7 +15,7 @@ interface Dependencies {
   configMapping: ConfigMapping
   pricesDataService: PricesDataService
   amountsDataService: AmountsDataService
-  syncOptimizer: SyncOptimizer
+  clock: Clock
 }
 
 export class TokenService {
@@ -56,12 +56,12 @@ export class TokenService {
     return getTokenCharts(
       targetTimestamp,
       minTimestamp.toEndOf('day'),
-      UnixTime.max(minTimestamp, this.$.syncOptimizer.sixHourlyCutOff).toEndOf(
-        'six hours',
-      ),
-      UnixTime.max(minTimestamp, this.$.syncOptimizer.hourlyCutOff).toEndOf(
-        'hour',
-      ),
+      this.$.clock.getSixHourlyCutoff(targetTimestamp, {
+        minTimestampOverride: minTimestamp,
+      }),
+      this.$.clock.getHourlyCutoff(targetTimestamp, {
+        minTimestampOverride: minTimestamp,
+      }),
       amounts.amounts,
       prices.prices[priceConfig.configId],
       decimals,

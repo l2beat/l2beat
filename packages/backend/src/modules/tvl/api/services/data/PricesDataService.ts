@@ -2,11 +2,11 @@ import { assert, Logger } from '@l2beat/backend-tools'
 
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
+import { Clock } from '../../../../../tools/Clock'
 import {
   PriceRecord,
   PriceRepository,
 } from '../../../repositories/PriceRepository'
-import { SyncOptimizer } from '../../../utils/SyncOptimizer'
 import {
   CONSIDER_EXCLUDED_AFTER_DAYS,
   getLaggingAndSyncing,
@@ -14,7 +14,7 @@ import {
 
 interface Dependencies {
   readonly priceRepository: PriceRepository
-  readonly syncOptimizer: SyncOptimizer
+  readonly clock: Clock
   etherPriceConfig: PriceConfigEntry & { configId: string }
   logger: Logger
 }
@@ -74,9 +74,9 @@ export class PricesDataService {
 
       const pricesByTimestampForConfig: Dictionary<number> = {}
 
-      const timestamps = this.$.syncOptimizer
-        .getAllTimestampsForApi()
-        .filter((t) => t.gte(config.sinceTimestamp) && t.lte(targetTimestamp))
+      const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
+        minTimestampOverride: config.sinceTimestamp,
+      })
       for (const timestamp of timestamps) {
         const price = pricesByTimestamp[timestamp.toString()]
 

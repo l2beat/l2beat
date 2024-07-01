@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { TvlApiCharts, UnixTime } from '@l2beat/shared-pure'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
+import { Clock } from '../../../../tools/Clock'
 import {
   ValuesForSource,
   getChartsData,
@@ -15,7 +15,7 @@ import { ValuesDataService } from './data/ValuesDataService'
 interface Dependencies {
   valuesDataService: ValuesDataService
   pricesDataService: PricesDataService
-  syncOptimizer: SyncOptimizer
+  clock: Clock
   tokenService: TokenService
 }
 
@@ -69,11 +69,11 @@ export class AggregatedService {
 
     const dailyStart = minTimestamp
     const sixHourlyStart = UnixTime.max(
-      this.$.syncOptimizer.sixHourlyCutOff,
+      this.$.clock.getSixHourlyCutoff(targetTimestamp),
       minTimestamp,
     ).toEndOf('day')
     const hourlyStart = UnixTime.max(
-      this.$.syncOptimizer.hourlyCutOff,
+      this.$.clock.getHourlyCutoff(targetTimestamp),
       minTimestamp,
     )
 

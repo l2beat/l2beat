@@ -2,18 +2,18 @@ import { assert, Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Dictionary, groupBy } from 'lodash'
+import { Clock } from '../../../../../tools/Clock'
 import {
   ValueRecord,
   ValueRepository,
 } from '../../../repositories/ValueRepository'
-import { SyncOptimizer } from '../../../utils/SyncOptimizer'
 import { getConfiguredValuesForTimestamp } from '../../utils/getConfiguredValuesForTimestamp'
 import { getLaggingAndSyncing } from '../../utils/getLaggingAndSyncing'
 import { ApiProject } from '../../utils/types'
 
 interface Dependencies {
   readonly valueRepository: ValueRepository
-  readonly syncOptimizer: SyncOptimizer
+  readonly clock: Clock
   logger: Logger
 }
 
@@ -67,15 +67,10 @@ export class ValuesDataService {
 
       const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
-      const timestamps = this.$.syncOptimizer.getAllTimestampsForApi()
+      const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
+        minTimestampOverride: minTimestamp,
+      })
       for (const timestamp of timestamps) {
-        if (timestamp.lt(minTimestamp)) {
-          continue
-        }
-        if (timestamp.gt(targetTimestamp)) {
-          continue
-        }
-
         const configuredValues = getConfiguredValuesForTimestamp(
           values,
           project,

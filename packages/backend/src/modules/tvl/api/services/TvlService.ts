@@ -7,10 +7,10 @@ import {
 } from '@l2beat/shared-pure'
 import { ChainConverter } from '../../../../tools/ChainConverter'
 import { ConfigMapping } from '../../utils/ConfigMapping'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
 
+import { Clock } from '../../../../tools/Clock'
 import {
   ValuesForSource,
   getChart,
@@ -29,7 +29,7 @@ interface Dependencies {
   valuesDataService: ValuesDataService
   pricesDataService: PricesDataService
   amountsDataService: AmountsDataService
-  syncOptimizer: SyncOptimizer
+  clock: Clock
   tokenService: TokenService
   configMapping: ConfigMapping
   chainConverter: ChainConverter
@@ -58,14 +58,12 @@ export class TvlService {
     const minTimestamp = projectsMinTimestamp.toEndOf('day')
 
     const dailyStart = minTimestamp
-    const sixHourlyStart = UnixTime.max(
-      this.$.syncOptimizer.sixHourlyCutOff,
-      minTimestamp,
-    ).toEndOf('day')
-    const hourlyStart = UnixTime.max(
-      this.$.syncOptimizer.hourlyCutOff,
-      minTimestamp,
-    )
+    const sixHourlyStart = this.$.clock.getSixHourlyCutoff(targetTimestamp, {
+      minTimestampOverride: minTimestamp,
+    })
+    const hourlyStart = this.$.clock.getSixHourlyCutoff(targetTimestamp, {
+      minTimestampOverride: minTimestamp,
+    })
 
     const aggregates = {
       layer3: new Map<number, ValuesForSource>(),

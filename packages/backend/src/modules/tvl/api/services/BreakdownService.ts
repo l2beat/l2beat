@@ -10,7 +10,6 @@ import {
 } from '@l2beat/shared-pure'
 import { ChainConverter } from '../../../../tools/ChainConverter'
 import { ConfigMapping } from '../../utils/ConfigMapping'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { CanonicalAssetBreakdown } from '../utils/types'
 import { AmountsDataService } from './data/AmountsDataService'
@@ -19,7 +18,6 @@ import { PricesDataService } from './data/PricesDataService'
 interface Dependencies {
   pricesDataService: PricesDataService
   amountsDataService: AmountsDataService
-  syncOptimizer: SyncOptimizer
   chainConverter: ChainConverter
   configMapping: ConfigMapping
 }

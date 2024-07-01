@@ -4,6 +4,8 @@ export class Clock {
   constructor(
     private readonly minTimestamp: UnixTime,
     private readonly delayInSeconds: number,
+    readonly hourlyCutoffDays = 7,
+    readonly sixHourlyCutoffDays = 90,
     private readonly refreshIntervalMs = 1000,
   ) {}
 
@@ -34,6 +36,95 @@ export class Clock {
 
   getLastDay(): UnixTime {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('day')
+  }
+
+  getSixHourlyCutoff(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride?: UnixTime
+    },
+  ): UnixTime {
+    const result = targetTimestamp
+      .add(-this.sixHourlyCutoffDays, 'days')
+      .toEndOf('six hours')
+
+    if (options && options.minTimestampOverride) {
+      if (options.minTimestampOverride.gt(result)) {
+        return options.minTimestampOverride.toEndOf('six hours')
+      }
+    }
+
+    return result
+  }
+
+  getHourlyCutoff(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride?: UnixTime
+    },
+  ): UnixTime {
+    const result = targetTimestamp
+      .add(-this.hourlyCutoffDays, 'days')
+      .toEndOf('hour')
+
+    if (options && options.minTimestampOverride) {
+      if (options.minTimestampOverride.gt(result)) {
+        return options.minTimestampOverride.toEndOf('hour')
+      }
+    }
+
+    return result
+  }
+
+  getAllTimestampsForApi(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride?: UnixTime
+    },
+  ): UnixTime[] {
+    const timestamps: UnixTime[] = []
+
+    const minTimestampOverride =
+      options && options.minTimestampOverride
+        ? UnixTime.max(
+            options.minTimestampOverride.toEndOf('day'),
+            this.getFirstDay(),
+          )
+        : undefined
+
+    const from = minTimestampOverride ?? this.getFirstDay()
+
+    let current = this._getTimestampToSync(targetTimestamp, from.toNumber())
+    const last = targetTimestamp
+
+    while (current.lte(last)) {
+      timestamps.push(current)
+      current = this._getTimestampToSync(
+        targetTimestamp,
+        current.toNumber() + 1,
+      )
+    }
+
+    return timestamps
+  }
+
+  _getTimestampToSync(targetTimestamp: UnixTime, _timestamp: number): UnixTime {
+    const timestamp = new UnixTime(_timestamp)
+
+    const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
+    const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
+
+    if (timestamp.gte(hourlyCutOff)) {
+      return timestamp.toEndOf('hour')
+    }
+
+    if (timestamp.gte(sixHourlyCutOff)) {
+      const result = timestamp.toEndOf('six hours')
+      return result.lte(hourlyCutOff) ? result : hourlyCutOff
+    }
+
+    const result = timestamp.toEndOf('day')
+    return result.lte(sixHourlyCutOff) ? result : sixHourlyCutOff
   }
 
   onNewHour(callback: (timestamp: UnixTime) => void) {

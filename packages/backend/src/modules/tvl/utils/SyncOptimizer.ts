@@ -2,8 +2,6 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
 export class SyncOptimizer {
-  private readonly sixHourlyCutoffDays = 90
-  private readonly hourlyCutoffDays = 7
   private readonly gracePeriodDays = 3
 
   constructor(private readonly clock: Clock) {}
@@ -11,13 +9,13 @@ export class SyncOptimizer {
   get sixHourlyCutOffWithGracePeriod() {
     return this.clock
       .getLastHour()
-      .add(-this.sixHourlyCutoffDays - this.gracePeriodDays, 'days')
+      .add(-this.clock.sixHourlyCutoffDays - this.gracePeriodDays, 'days')
   }
 
   get hourlyCutOffWithGracePeriod() {
     return this.clock
       .getLastHour()
-      .add(-this.hourlyCutoffDays - this.gracePeriodDays, 'days')
+      .add(-this.clock.hourlyCutoffDays - this.gracePeriodDays, 'days')
   }
 
   shouldTimestampBeSynced(timestamp: UnixTime) {

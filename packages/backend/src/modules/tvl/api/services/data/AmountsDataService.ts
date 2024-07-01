@@ -2,11 +2,11 @@ import { assert, Logger } from '@l2beat/backend-tools'
 
 import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
+import { Clock } from '../../../../../tools/Clock'
 import {
   AmountRecord,
   AmountRepository,
 } from '../../../repositories/AmountRepository'
-import { SyncOptimizer } from '../../../utils/SyncOptimizer'
 import {
   CONSIDER_EXCLUDED_AFTER_DAYS,
   getLaggingAndSyncing,
@@ -14,7 +14,7 @@ import {
 
 interface Dependencies {
   readonly amountRepository: AmountRepository
-  readonly syncOptimizer: SyncOptimizer
+  readonly clock: Clock
   logger: Logger
 }
 
@@ -72,19 +72,22 @@ export class AmountsDataService {
       }
 
       const amountsByTimestampForConfig: Dictionary<bigint> = {}
-      const timestamps = this.$.syncOptimizer
-        .getAllTimestampsForApi()
-        .filter((t) => t.gte(config.sinceTimestamp) && t.lte(targetTimestamp))
+      const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
+        minTimestampOverride: config.sinceTimestamp,
+      })
       for (const timestamp of timestamps) {
         const amount = amountsByTimestamp[timestamp.toString()]
 
         if (amount === undefined) {
-          if (lagging.length === 1) {
+          const l = lagging[0]
+
+          if (l && l.latestTimestamp.gte(timestamp)) {
             amountsByTimestampForConfig[timestamp.toString()] =
-              lagging[0].latestValue.amount
+              l.latestValue.amount
+          } else {
+            // zeroes are not stored in the DB
+            amountsByTimestampForConfig[timestamp.toString()] = 0n
           }
-          // zeroes are not stored in the DB
-          amountsByTimestampForConfig[timestamp.toString()] = 0n
 
           continue
         }
