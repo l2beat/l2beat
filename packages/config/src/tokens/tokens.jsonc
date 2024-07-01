@@ -2430,6 +2430,14 @@
   ],
   "kinto": [
     {
+      "symbol": "USD+",
+      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply",
+      "coingeckoId": "dinari-usd"
+    },
+    {
       "symbol": "weETH",
       "category": "ether",
       "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
