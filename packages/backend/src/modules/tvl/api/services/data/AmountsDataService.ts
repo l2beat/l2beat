@@ -65,6 +65,7 @@ export class AmountsDataService {
       )
 
       lagging.forEach((l) => result.lagging.set(configId, { ...l }))
+      // TODO: it can exclude amounts that were more than zero in the past but are not now
       excluded.forEach((s) => result.excluded.add(s))
 
       if (excluded.includes(configId)) {

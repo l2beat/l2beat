@@ -8,7 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
-import _ from 'lodash'
 import { ValueRecord } from '../../repositories/ValueRepository'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
@@ -108,7 +107,7 @@ export function getTokenCharts(
   dailyStart: UnixTime,
   sixHourlyStart: UnixTime,
   hourlyStart: UnixTime,
-  amounts: Dictionary<Dictionary<bigint>>,
+  amounts: Dictionary<bigint>,
   prices: Dictionary<number>,
   decimals: number,
 ): TokenTvlApiCharts {
@@ -159,7 +158,7 @@ export function getTokenChartData(props: {
   start: UnixTime
   end: UnixTime
   step: [number, 'days' | 'hours']
-  amounts: Dictionary<Dictionary<bigint>>
+  amounts: Dictionary<bigint>
   prices: Dictionary<number>
   decimals: number
 }) {
@@ -169,8 +168,7 @@ export function getTokenChartData(props: {
     curr <= props.end;
     curr = curr.add(...props.step)
   ) {
-    const amounts = props.amounts[curr.toString()]
-    const amount = _.values(amounts).reduce((acc, curr) => acc + curr, 0n)
+    const amount = props.amounts[curr.toString()] ?? 0n
 
     const price = props.prices[curr.toString()]
     assert(price, 'Price not found for timestamp ' + curr.toString())
