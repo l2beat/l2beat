@@ -8,14 +8,18 @@
     {
       "name": "ProxyAdmin",
       "address": "0x25aBB510386A658c622280f488844BD3b485DC32",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
       "assignedPermissions": {
         "admin": [
           "0x52c901666Cfc8AeE9b46A3b7C101688351529B37",
-          "0xCC61c26901E719B73273C1484e337cBAB84369EF"
-        ]
+          "0x752BE2A1c6DBe40884D7851CDC58c9cA54DCBD3E",
+          "0xCC61c26901E719B73273C1484e337cBAB84369EF",
+          "0xbA256039AEdaD407692D8Deb366308BE6Bb2515C"
+        ],
+        "owner": ["0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668"]
       },
       "sinceTimestamp": 1709680173,
       "values": {
@@ -27,6 +31,7 @@
     {
       "name": "AddressManager",
       "address": "0x31f09c4a4151EeBB1c0Ac10003bF3b06f4Aa5668",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -136,6 +141,9 @@
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "modules": [],
         "threshold": "3 of 5 (60%)"
+      },
+      "assignedPermissions": {
+        "owner": ["0x25aBB510386A658c622280f488844BD3b485DC32"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],

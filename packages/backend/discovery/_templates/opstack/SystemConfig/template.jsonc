@@ -29,6 +29,11 @@
     "gasLimit": {
       "description": "Gas limit for blocks on L2.",
       "severity": "LOW"
+    },
+    "owner": {
+      "target": {
+        "permission": "owner"
+      }
     }
   },
   "ignoreInWatchMode": ["scalar", "overhead"]

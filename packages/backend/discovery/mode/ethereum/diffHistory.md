@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xdc72671cbdee8a464b4853df9da7ac1fffca6cd6
+
+# Diff at Fri, 28 Jun 2024 07:30:45 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@555efdd96fadc389c2c70beacf820125fbb25a7d block: 20073661
+- current block number: 20188700
+
+## Description
+
+Nonce of foundation multisig increased, after executing transaction to change the owner of the SystemConfig contract.
+
+## Watched changes
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      values.nonce:
+-        92
++        93
+    }
+```
+
 Generated with discovered.json: 0x6a375fc46bdbde85214e37d66370814e5f3b66c1
 
 # Diff at Wed, 12 Jun 2024 05:28:56 GMT:

@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20063194,
+  "blockNumber": 20189741,
   "configHash": "0xa84e78187a82cd64cb1eed2be4f1ea39926ae20c90426528f8d6e8ac34ca360c",
   "version": 8,
   "contracts": [
@@ -54,12 +54,12 @@
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 47805,
-            "lastSynecdAt": 1718042807
+            "lastSyncedBlockId": 105566,
+            "lastSynecdAt": 1719571751
           },
           {
-            "numBlocks": 51218,
-            "lastVerifiedBlockId": 47836,
+            "numBlocks": 108928,
+            "lastVerifiedBlockId": 105588,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -86,12 +86,12 @@
         "slotA": {
           "genesisHeight": 19923613,
           "genesisTimestamp": 1716358991,
-          "lastSyncedBlockId": 47805,
-          "lastSynecdAt": 1718042807
+          "lastSyncedBlockId": 105566,
+          "lastSynecdAt": 1719571751
         },
         "slotB": {
-          "numBlocks": 51218,
-          "lastVerifiedBlockId": 47836,
+          "numBlocks": 108928,
+          "lastVerifiedBlockId": 105588,
           "provingPaused": false,
           "__reservedB1": 0,
           "__reservedB2": 0,
@@ -103,12 +103,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 47805,
-            "lastSynecdAt": 1718042807
+            "lastSyncedBlockId": 105566,
+            "lastSynecdAt": 1719571751
           },
           "slotB": {
-            "numBlocks": 51218,
-            "lastVerifiedBlockId": 47836,
+            "numBlocks": 108928,
+            "lastVerifiedBlockId": 105588,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -141,7 +141,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1718043803,
+        "clock": 1719572339,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -419,7 +419,7 @@
           "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
         ],
         "getThreshold": 3,
-        "nonce": 32,
+        "nonce": 33,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -488,10 +488,44 @@
           ["0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"],
           ["0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"],
           ["0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34"],
-          ["0xF445C0b580454E21a8b836318D83782d35986666"]
+          ["0xF445C0b580454E21a8b836318D83782d35986666"],
+          ["0xe79d80cC4CF385e30473cA41279BC4845c82bb9e"],
+          ["0x7D5798Ce898E7E79f60A126eE82a84fE564067B2"],
+          ["0x1E0b96e4665E622dcc2F2c11ba7a7dD8Bc1fDD8A"],
+          ["0x7eAb069309335b615cC99545542d9d3FDeb46534"],
+          ["0x1dE96F45CB6f78aBC35F0DfD68Cf356691B429da"],
+          ["0xBfDa132503F664d6B4c2cA4B1f41413956bB6ab1"],
+          ["0x25C1069AdA9D2E3c6e9706cAA6b5494062E27679"],
+          ["0x87f1bf0A503b025684136cdE16dd606De4f46b67"],
+          ["0xb0E92092bAAab77ba628CC5cD91397Ca4b675ec0"],
+          ["0x76BEc9620cbc4b15422CC8726a07765736A52Dd0"],
+          ["0x6037E46fDdB6278e2fc5BbC87bBf5AD040A7C38D"],
+          ["0xB22148BC3819b1519e0b21e667D0F4F183CDC20c"],
+          ["0xbf690e318D5C183D9ad1A626a0bd1DafD605b126"],
+          ["0x374DC646a6EDaDcCA4D653677444b5bb803CdfD4"],
+          ["0x70f067776426EBeB33aee88DEb03CD6C57DAE703"],
+          ["0x84f272246697d5C872890AfB6A5FbD5524ebcFef"],
+          ["0x40A2D3c20d766280C71EcE4E4aD4edF135C35634"],
+          ["0x0b0dEf1167893541cF8F951A8d627e206Ef2c47E"],
+          ["0x2C4DBAD36A5b7d59eAc38def94D9bBEa3b6D351B"],
+          ["0x0568b34255fc451F651d3021b0ee66DE80210A14"],
+          ["0x8033455650e71FF8376974AC8A7D6f4aEecad17c"],
+          ["0x6Ac9022c4bFBE548aA2621f9E10fA485EC013e6a"],
+          ["0x4Fe0dBb789b2204201e82f6Eae8491510bF74B2D"],
+          ["0xbc1671F4cFdDaA3CC28aa64Cf1C1874cADef7AC1"],
+          ["0xeBb85864BA610EFE2CA0B949A4189f1675c7FcAf"],
+          ["0xe8471669e79ff941Fe766a50fca219DD68ad81AC"],
+          ["0xF0495642611461Ae25F4867B043717D9F53a9237"],
+          ["0xda4d5372188B0b8502AeD3770212Ed5784f71550"],
+          ["0xCbC0c2D518cD3C832b210a9FC9Cb265119BedAf1"],
+          ["0x77Eb511caCCEdD71924B361dc24dE3A762A55927"],
+          ["0x1DD5E0E5b03608a30b55806358ddbABC6Dc83b3f"],
+          ["0x62a966A7492Be75182C89E6E2a519a87884A0382"],
+          ["0x4Ef2201f196196be4B9e50F93F67Ad462A0d25A8"],
+          ["0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"]
         ],
         "lastUnpausedAt": 0,
-        "nextInstanceId": 12,
+        "nextInstanceId": 46,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -523,21 +557,20 @@
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561",
+        "implementation": "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
       },
       "ignoreInWatchMode": ["nextMessageId"],
-      "implementations": ["0xD28f2c26aD8bA88b0691F6BB41Ff021878052561"],
+      "implementations": ["0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"],
       "sinceTimestamp": 1714550603,
       "values": {
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
-        "CALLDATA_MESSAGE_SIZE_BYTES": 352,
         "GAS_OVERHEAD": 120000,
         "GAS_RESERVE": 800000,
-        "impl": "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561",
+        "impl": "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 11904,
+        "nextMessageId": 23435,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -617,7 +650,13 @@
       "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33"
     },
     {
+      "address": "0x0568b34255fc451F651d3021b0ee66DE80210A14"
+    },
+    {
       "address": "0x085Bf649bef6b9e97C73822724eD33553C20a1CA"
+    },
+    {
+      "address": "0x0b0dEf1167893541cF8F951A8d627e206Ef2c47E"
     },
     {
       "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
@@ -629,7 +668,28 @@
       "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
     },
     {
+      "address": "0x1DD5E0E5b03608a30b55806358ddbABC6Dc83b3f"
+    },
+    {
+      "address": "0x1dE96F45CB6f78aBC35F0DfD68Cf356691B429da"
+    },
+    {
+      "address": "0x1E0b96e4665E622dcc2F2c11ba7a7dD8Bc1fDD8A"
+    },
+    {
+      "address": "0x25C1069AdA9D2E3c6e9706cAA6b5494062E27679"
+    },
+    {
+      "address": "0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"
+    },
+    {
       "address": "0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34"
+    },
+    {
+      "address": "0x2C4DBAD36A5b7d59eAc38def94D9bBEa3b6D351B"
+    },
+    {
+      "address": "0x374DC646a6EDaDcCA4D653677444b5bb803CdfD4"
     },
     {
       "address": "0x3777c454aF69C87df961E92dA99fCF96EdB30683"
@@ -638,10 +698,19 @@
       "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
     },
     {
+      "address": "0x40A2D3c20d766280C71EcE4E4aD4edF135C35634"
+    },
+    {
       "address": "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3"
     },
     {
       "address": "0x4A9d339c94D1D3b685e3923907A98c73b8168AFF"
+    },
+    {
+      "address": "0x4Ef2201f196196be4B9e50F93F67Ad462A0d25A8"
+    },
+    {
+      "address": "0x4Fe0dBb789b2204201e82f6Eae8491510bF74B2D"
     },
     {
       "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268"
@@ -653,13 +722,46 @@
       "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
     },
     {
+      "address": "0x6037E46fDdB6278e2fc5BbC87bBf5AD040A7C38D"
+    },
+    {
+      "address": "0x62a966A7492Be75182C89E6E2a519a87884A0382"
+    },
+    {
+      "address": "0x6Ac9022c4bFBE548aA2621f9E10fA485EC013e6a"
+    },
+    {
       "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
     },
     {
       "address": "0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3"
     },
     {
+      "address": "0x70f067776426EBeB33aee88DEb03CD6C57DAE703"
+    },
+    {
+      "address": "0x76BEc9620cbc4b15422CC8726a07765736A52Dd0"
+    },
+    {
+      "address": "0x77Eb511caCCEdD71924B361dc24dE3A762A55927"
+    },
+    {
       "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
+    },
+    {
+      "address": "0x7D5798Ce898E7E79f60A126eE82a84fE564067B2"
+    },
+    {
+      "address": "0x7eAb069309335b615cC99545542d9d3FDeb46534"
+    },
+    {
+      "address": "0x8033455650e71FF8376974AC8A7D6f4aEecad17c"
+    },
+    {
+      "address": "0x84f272246697d5C872890AfB6A5FbD5524ebcFef"
+    },
+    {
+      "address": "0x87f1bf0A503b025684136cdE16dd606De4f46b67"
     },
     {
       "address": "0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"
@@ -668,10 +770,28 @@
       "address": "0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"
     },
     {
+      "address": "0xb0E92092bAAab77ba628CC5cD91397Ca4b675ec0"
+    },
+    {
+      "address": "0xB22148BC3819b1519e0b21e667D0F4F183CDC20c"
+    },
+    {
+      "address": "0xbc1671F4cFdDaA3CC28aa64Cf1C1874cADef7AC1"
+    },
+    {
+      "address": "0xbf690e318D5C183D9ad1A626a0bd1DafD605b126"
+    },
+    {
+      "address": "0xBfDa132503F664d6B4c2cA4B1f41413956bB6ab1"
+    },
+    {
       "address": "0xC384B679c028787166b9B3725aC14A60da205861"
     },
     {
       "address": "0xC57230B9A1BD4f882c40C9f549a27034474e5962"
+    },
+    {
+      "address": "0xCbC0c2D518cD3C832b210a9FC9Cb265119BedAf1"
     },
     {
       "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
@@ -683,7 +803,22 @@
       "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
     },
     {
+      "address": "0xda4d5372188B0b8502AeD3770212Ed5784f71550"
+    },
+    {
+      "address": "0xe79d80cC4CF385e30473cA41279BC4845c82bb9e"
+    },
+    {
+      "address": "0xe8471669e79ff941Fe766a50fca219DD68ad81AC"
+    },
+    {
+      "address": "0xeBb85864BA610EFE2CA0B949A4189f1675c7FcAf"
+    },
+    {
       "address": "0xf02099f42d499028Ca52a5205d4E21001f5E3525"
+    },
+    {
+      "address": "0xF0495642611461Ae25F4867B043717D9F53a9237"
     },
     {
       "address": "0xF445C0b580454E21a8b836318D83782d35986666"
@@ -705,6 +840,80 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7": [
+      "error B_INSUFFICIENT_GAS()",
+      "error B_INVALID_CHAINID()",
+      "error B_INVALID_CONTEXT()",
+      "error B_INVALID_FEE()",
+      "error B_INVALID_GAS_LIMIT()",
+      "error B_INVALID_STATUS()",
+      "error B_INVALID_VALUE()",
+      "error B_MESSAGE_NOT_SENT()",
+      "error B_OUT_OF_ETH_QUOTA()",
+      "error B_PERMISSION_DENIED()",
+      "error B_PROOF_TOO_LARGE()",
+      "error B_RETRY_FAILED()",
+      "error B_SIGNAL_NOT_RECEIVED()",
+      "error ETH_TRANSFER_FAILED()",
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event MessageProcessed(bytes32 indexed msgHash, tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message, tuple(uint32 gasUsedInFeeCalc, uint32 proofSize, uint32 numCacheOps, bool processedByRelayer) stats)",
+      "event MessageSent(bytes32 indexed msgHash, tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message)",
+      "event MessageStatusChanged(bytes32 indexed msgHash, uint8 status)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function GAS_OVERHEAD() view returns (uint32)",
+      "function GAS_RESERVE() view returns (uint32)",
+      "function RELAYER_MAX_PROOF_BYTES() view returns (uint256)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function context() view returns (tuple(bytes32 msgHash, address from, uint64 srcChainId) ctx_)",
+      "function failMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message)",
+      "function getMessageMinGasLimit(uint256 dataLength) pure returns (uint32)",
+      "function hashMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message) pure returns (bytes32)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _addressManager)",
+      "function init2()",
+      "function isDestChainEnabled(uint64 _chainId) view returns (bool enabled_, address destBridge_)",
+      "function isMessageFailed(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof) view returns (bool)",
+      "function isMessageReceived(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof) view returns (bool)",
+      "function isMessageSent(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message) view returns (bool)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function messageStatus(bytes32 msgHash) view returns (uint8 status)",
+      "function nextMessageId() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function processMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof) returns (uint8 status_, uint8 reason_)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function recallMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function retryMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bool _isLastAttempt)",
+      "function selfDelegate(address _anyToken)",
+      "function sendMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message) payable returns (bytes32 msgHash_, tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message_)",
+      "function signalForFailedMessage(bytes32 _msgHash) pure returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": [
       "constructor(address es256Verifier)",
@@ -1341,81 +1550,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function verifyBlocks(uint64 _maxBlocksToVerify)"
-    ],
-    "0xD28f2c26aD8bA88b0691F6BB41Ff021878052561": [
-      "error B_INSUFFICIENT_GAS()",
-      "error B_INVALID_CHAINID()",
-      "error B_INVALID_CONTEXT()",
-      "error B_INVALID_FEE()",
-      "error B_INVALID_GAS_LIMIT()",
-      "error B_INVALID_STATUS()",
-      "error B_INVALID_VALUE()",
-      "error B_MESSAGE_NOT_SENT()",
-      "error B_OUT_OF_ETH_QUOTA()",
-      "error B_PERMISSION_DENIED()",
-      "error B_PROOF_TOO_LARGE()",
-      "error B_RETRY_FAILED()",
-      "error B_SIGNAL_NOT_RECEIVED()",
-      "error ETH_TRANSFER_FAILED()",
-      "error FUNC_NOT_IMPLEMENTED()",
-      "error INVALID_PAUSE_STATUS()",
-      "error REENTRANT_CALL()",
-      "error RESOLVER_DENIED()",
-      "error RESOLVER_INVALID_MANAGER()",
-      "error RESOLVER_UNEXPECTED_CHAINID()",
-      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
-      "error ZERO_ADDRESS()",
-      "error ZERO_VALUE()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Initialized(uint8 version)",
-      "event MessageProcessed(bytes32 indexed msgHash, tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message, tuple(uint32 gasUsedInFeeCalc, uint32 proofSize, uint32 numCacheOps, bool processedByRelayer) stats)",
-      "event MessageSent(bytes32 indexed msgHash, tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message)",
-      "event MessageStatusChanged(bytes32 indexed msgHash, uint8 status)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function CALLDATA_MESSAGE_SIZE_BYTES() view returns (uint256)",
-      "function GAS_OVERHEAD() view returns (uint32)",
-      "function GAS_RESERVE() view returns (uint32)",
-      "function RELAYER_MAX_PROOF_BYTES() view returns (uint256)",
-      "function acceptOwnership()",
-      "function addressManager() view returns (address)",
-      "function context() view returns (tuple(bytes32 msgHash, address from, uint64 srcChainId) ctx_)",
-      "function failMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message)",
-      "function getMessageMinGasLimit(uint256 dataLength) pure returns (uint32)",
-      "function hashMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message) pure returns (bytes32)",
-      "function impl() view returns (address)",
-      "function inNonReentrant() view returns (bool)",
-      "function init(address _owner, address _addressManager)",
-      "function init2()",
-      "function isDestChainEnabled(uint64 _chainId) view returns (bool enabled_, address destBridge_)",
-      "function isMessageFailed(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof) view returns (bool)",
-      "function isMessageReceived(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof) view returns (bool)",
-      "function isMessageSent(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message) view returns (bool)",
-      "function lastUnpausedAt() view returns (uint64)",
-      "function messageStatus(bytes32 msgHash) view returns (uint8 status)",
-      "function nextMessageId() view returns (uint64)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function pendingOwner() view returns (address)",
-      "function processMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof) returns (uint8 status_, uint8 reason_)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function recallMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bytes _proof)",
-      "function renounceOwnership()",
-      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
-      "function retryMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message, bool _isLastAttempt)",
-      "function selfDelegate(address _anyToken)",
-      "function sendMessage(tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) _message) payable returns (bytes32 msgHash_, tuple(uint64 id, uint64 fee, uint32 gasLimit, address from, uint64 srcChainId, address srcOwner, uint64 destChainId, address destOwner, address to, uint256 value, bytes data) message_)",
-      "function signalForFailedMessage(bytes32 _msgHash) pure returns (bytes32)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1": [
       "error FUNC_NOT_IMPLEMENTED()",

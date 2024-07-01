@@ -135,7 +135,10 @@
       "address": "0x3f5876a2b06E54949aB106651Ab6694d0289b2b4"
     },
     {
-      "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05"
+      "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
+      "assignedPermissions": {
+        "admin": ["0x2d5d7d31F671F86C782533cc367F14109a082712"]
+      }
     },
     {
       "address": "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC"

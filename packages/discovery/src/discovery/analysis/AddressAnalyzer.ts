@@ -170,10 +170,12 @@ export class AddressAnalyzer {
 
     const upgradeability = proxy?.upgradeability ?? { type: 'immutable' }
 
-    const targetsMeta =
-      overrides?.fields !== undefined
-        ? getTargetsMeta(address, upgradeability, results, overrides.fields)
-        : undefined
+    const targetsMeta = getTargetsMeta(
+      address,
+      upgradeability,
+      results,
+      overrides?.fields,
+    )
 
     return {
       type: 'Contract',
