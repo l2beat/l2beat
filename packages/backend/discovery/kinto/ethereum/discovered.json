@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 20210947,
+  "blockNumber": 20210980,
   "configHash": "0x2b6c0fe7fef51dbd870f6f2b10c39952085378daee0bfb80e6613a8362305f0e",
   "version": 8,
   "contracts": [
@@ -258,14 +258,7 @@
       },
       "assignedPermissions": {
         "admin": [
-          "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
           "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
-          "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
-          "0x655761AD5FC251F414D6993A73184B0669F278c8",
-          "0x7870D5398DB488c669B406fBE57b8d05b6A35e42",
-          "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
-          "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
-          "0xD9041DeCaDcBA88844b373e7053B4AC7A3390D60",
           "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a"
         ]
       },
@@ -421,9 +414,6 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 6 (50%)"
-      },
-      "assignedPermissions": {
-        "admin": ["0x0f1b7bd7762662B23486320AA91F30312184f70C"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
