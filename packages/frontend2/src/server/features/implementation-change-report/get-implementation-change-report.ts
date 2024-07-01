@@ -10,6 +10,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 import { db } from '~/server/database'
 
 export function getImplementationChangeReport() {
@@ -94,7 +95,7 @@ const getCachedImplementationChangeReport = cache(
 
     return result
   },
-  ['implementationChangeReport'],
+  ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
   { revalidate: 60 * 60 },
 )
 

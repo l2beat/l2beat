@@ -5,6 +5,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { env } from '~/env'
 
 export function getVerificationStatus() {
   noStore()
@@ -25,7 +26,7 @@ const getCachedVerificationStatus = cache(
     }
     return VerificationStatus.parse(data)
   },
-  ['verificationStatus'],
+  ['verificationStatus', env.VERCEL_GIT_COMMIT_SHA],
   { revalidate: 60 * 60 },
 )
 
