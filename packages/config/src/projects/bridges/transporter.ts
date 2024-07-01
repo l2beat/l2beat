@@ -33,10 +33,8 @@ export const transporter: Bridge = {
       documentation: ['https://docs.chain.link/ccip'],
       socialMedia: ['https://x.com/transporter_io'],
     },
-    description: 'Transporter is a Token Bridge based on CCIP network.',
-    detailedDescription:
-      'Transporter is a hybrid bridge that can work either as a Token Bridge or Liquidity Network depending on the requirements of tokens.\
-      It is using Chainlink CCIP standard for cross-chain communication, and it makes use of a secondary network of nodes, called Risk Management Network, responsible for validating the messages or halt the bridge.',
+    description: 'Transporter is a Token Bridge based on CCIP network. \ It is a hybrid bridge that can work either as a Token Bridge or Liquidity Network depending on the requirements of tokens.\
+    It is using Chainlink CCIP standard for cross-chain communication, and it makes use of a secondary network of nodes, called Risk Management Network, responsible for validating the messages or halt the bridge.',
   },
   riskView: {
     validatedBy: {
