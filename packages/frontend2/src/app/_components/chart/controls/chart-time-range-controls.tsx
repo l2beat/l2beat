@@ -1,5 +1,4 @@
 import React from 'react'
-import { cn } from '~/utils/cn'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Skeleton } from '../../skeleton'
@@ -30,12 +29,8 @@ export function ChartTimeRangeControls({
   }
 
   return (
-    <div className="flex flex-wrap justify-between gap-2">
-      <p
-        className={cn(
-          'flex h-8 max-w-[130px] items-center font-bold transition-opacity duration-200 sm:max-w-full',
-        )}
-      >
+    <div className="flex flex-wrap-reverse justify-between gap-2">
+      <p className="flex h-8 items-center font-bold transition-opacity duration-200">
         {formatRange(...range)}
       </p>
       <RadioGroup value={value} onValueChange={setValue}>

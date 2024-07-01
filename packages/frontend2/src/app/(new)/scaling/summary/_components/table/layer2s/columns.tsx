@@ -77,6 +77,7 @@ export const scalingLayer2sColumns = [
     sortingFn: sortStages,
     meta: {
       tooltip: 'Rollup stage based on its features and maturity.',
+      hash: 'stage',
     },
   }),
   columnHelper.accessor('purposes', {

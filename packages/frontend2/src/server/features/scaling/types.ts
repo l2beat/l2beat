@@ -14,7 +14,6 @@ export interface ScalingSummaryLayer2sEntry {
   name: string
   shortName: string | undefined
   slug: string
-  // TODO: Is it the best way?
   href: string
   category: ScalingProjectCategory
   provider: Layer2Provider | undefined
@@ -38,7 +37,6 @@ export interface ScalingSummaryLayer3sEntry {
   name: string
   shortName: string | undefined
   slug: string
-  // TODO: Is it the best way?
   href: string
   category: ScalingProjectCategory
   provider: Layer3Provider | undefined

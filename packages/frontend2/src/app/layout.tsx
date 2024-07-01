@@ -18,7 +18,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
-  const shouldInjectToolbar = false && process.env.NODE_ENV === 'development'
+  const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
     // We suppress the hydration warning here because we're using:

@@ -5,6 +5,7 @@ import { Callout } from './Callout'
 import { Markdown } from './Markdown'
 import { PlainLink } from './PlainLink'
 import { OutLinkIcon, ShieldIcon } from './icons'
+import { cva } from 'class-variance-authority'
 
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'
@@ -16,6 +17,16 @@ export interface WarningBarProps {
   ignoreMarkdown?: boolean
 }
 
+const iconVariants = cva('size-5', {
+  variants: {
+    color: {
+      red: 'fill-red-300',
+      yellow: 'fill-yellow-700 dark:fill-yellow-300',
+      gray: 'fill-gray-700 dark:fill-gray-300',
+    },
+  },
+})
+
 export function WarningBar({
   color,
   text,
@@ -25,13 +36,6 @@ export function WarningBar({
   className,
   ignoreMarkdown,
 }: WarningBarProps) {
-  const iconFill =
-    color === 'red'
-      ? 'fill-red-300'
-      : color === 'yellow'
-        ? 'fill-yellow-700 dark:fill-yellow-300'
-        : 'fill-gray-700 dark:fill-gray-300'
-
   const textElement = ignoreMarkdown ? (
     <>
       {text}
@@ -52,8 +56,7 @@ export function WarningBar({
         <Callout
           className={cn('p-4', className)}
           color={color}
-          hoverable
-          icon={<Icon className={cn('size-5', iconFill)} />}
+          icon={<Icon className={iconVariants({ color })} />}
           body={
             <div className="flex items-center gap-1">
               {textElement}
@@ -69,7 +72,7 @@ export function WarningBar({
     <Callout
       className={cn('p-4', className)}
       color={color}
-      icon={<Icon className={cn('size-5', iconFill)} />}
+      icon={<Icon className={iconVariants({ color })} />}
       body={textElement}
     />
   )

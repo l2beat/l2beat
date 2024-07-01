@@ -140,7 +140,7 @@ function Header({
   const { loading } = useChartContext()
 
   return (
-    <header className="mb-4 flex flex-col justify-between text-base md:flex-row">
+    <header className="flex flex-col justify-between text-base md:flex-row">
       <div>
         <h1 className="mb-1 font-bold text-3xl">Value Locked</h1>
         <p className="hidden text-gray-500 md:block dark:text-gray-600">

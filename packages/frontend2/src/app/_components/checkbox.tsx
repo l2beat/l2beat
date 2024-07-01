@@ -16,7 +16,7 @@ const Checkbox = React.forwardRef<
       ref={ref}
       id={id}
       className={cn(
-        'peer h-4 w-4 shrink-0 rounded-sm dark:bg-black bg-white shadow focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-50',
+        'peer h-4 w-4 shrink-0 rounded-sm dark:bg-black bg-white focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300 dark:focus-visible:ring-zinc-800 disabled:cursor-not-allowed disabled:opacity-50',
         className,
       )}
       {...props}
@@ -27,7 +27,7 @@ const Checkbox = React.forwardRef<
     </CheckboxPrimitive.Root>
     <label
       htmlFor={id}
-      className="cursor-pointer leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+      className="cursor-pointer whitespace-pre leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
     >
       {children}
     </label>

@@ -18,12 +18,7 @@ export function CopyButton(props: Props) {
   const copy = useCopyToClipboard()
   const [copied, setCopied] = useState(false)
 
-  useTimeout(
-    () => {
-      if (copied) setCopied(false)
-    },
-    copied ? 1400 : null,
-  )
+  useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   function copyToClipboard() {
     copy(props.toCopy)

@@ -11,7 +11,7 @@ const RadioGroup = React.forwardRef<
   return (
     <RadioGroupPrimitive.Root
       className={cn(
-        'inline-flex items-center gap-1 bg-gray-200 font-medium text-base dark:bg-zinc-700 rounded-lg p-1',
+        'inline-flex w-max items-center gap-1 bg-gray-200 font-medium text-base dark:bg-zinc-700 rounded-lg p-1',
         className,
       )}
       {...props}
@@ -30,7 +30,7 @@ const RadioGroupItem = React.forwardRef<
       ref={ref}
       className={cn(
         'px-2 rounded-md disabled:cursor-not-allowed disabled:opacity-50 dark:data-[state=checked]:bg-black data-[state=checked]:bg-white',
-        'ring-current focus-visible:outline-none focus-visible:ring-1',
+        'focus-visible:ring-zinc-300 dark:focus-visible:ring-zinc-800 focus-visible:outline-none focus-visible:ring-1',
         className,
       )}
       {...props}

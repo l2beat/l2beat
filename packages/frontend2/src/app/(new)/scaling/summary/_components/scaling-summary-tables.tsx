@@ -36,7 +36,7 @@ const DEFAULT_SCALING_FILTERS = {
   purpose: undefined,
 }
 
-export function Tables({ layer2s, layer3s }: Props) {
+export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
     DEFAULT_SCALING_FILTERS,
   )

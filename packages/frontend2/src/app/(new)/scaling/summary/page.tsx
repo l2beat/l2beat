@@ -5,7 +5,7 @@ import { About } from '~/app/_components/about'
 import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
-import { Tables } from './_components/tables'
+import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 import { TvlChart } from '~/app/_components/chart/tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 
@@ -23,7 +23,7 @@ export default async function Page() {
     <div className="mb-20">
       <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
       <HorizontalSeparator className="my-4 md:my-6" />
-      <Tables layer2s={layer2s} layer3s={layer3s} />
+      <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
       <OtherSites />
       <About />
     </div>

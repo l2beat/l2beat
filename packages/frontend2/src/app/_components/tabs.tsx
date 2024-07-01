@@ -45,7 +45,6 @@ const TabsContent = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TabsPrimitive.Content
     ref={ref}
-    // TODO: review ring classes
     className={cn('mt-3 md:mt-6', className)}
     {...props}
   />
