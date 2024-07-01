@@ -87,7 +87,7 @@ const MOCK_LIVENESS: LivenessRecordWithSubtype[] = [
 describe(LivenessAggregatingIndexer.name, () => {
   describe(LivenessAggregatingIndexer.prototype.update.name, () => {
     it('should return parent safe height of not enough data', async () => {
-      const indexer = createIndexer()
+      const indexer = createIndexer({ tag: 'update-return' })
       const mockGenerateLiveness = mockFn().resolvesTo([])
       indexer.generateLiveness = mockGenerateLiveness
 
@@ -102,7 +102,7 @@ describe(LivenessAggregatingIndexer.name, () => {
     })
 
     it('should skip if already up to date', async () => {
-      const indexer = createIndexer()
+      const indexer = createIndexer({ tag: 'update-skip' })
       const mockGenerateLiveness = mockFn().resolvesTo([])
       indexer.generateLiveness = mockGenerateLiveness
 
@@ -122,6 +122,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       })
 
       const indexer = createIndexer({
+        tag: 'update',
         aggregatedLivenessRepository: mockLivenessRepository,
       })
       const mockLiveness: AggregatedLivenessRecord[] = [
@@ -168,6 +169,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       const safeHightMock = UnixTime.now().toNumber()
 
       const indexer = createIndexer({
+        tag: 'invalidate',
         livenessRepository: livenessRepositoryMock,
       })
 
@@ -185,6 +187,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         getWithSubtypeByProjectIdsUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
       })
       const indexer = createIndexer({
+        tag: 'generateLiveness',
         livenessRepository: mockLivenessRepository,
       })
 
@@ -228,7 +231,7 @@ describe(LivenessAggregatingIndexer.name, () => {
 
   describe(LivenessAggregatingIndexer.prototype.aggregatedRecords.name, () => {
     it('should aggregate records', async () => {
-      const indexer = createIndexer()
+      const indexer = createIndexer({ tag: 'aggregatedRecords' })
 
       const result = indexer.aggregatedRecords(
         MOCK_PROJECTS[0].projectId,
@@ -254,17 +257,17 @@ describe(LivenessAggregatingIndexer.name, () => {
 
   describe(LivenessAggregatingIndexer.prototype.filterByRange.name, () => {
     it('should filter intervals by range', async () => {
-      const indexer = createIndexer()
+      const indexer = createIndexer({ tag: 'filterByRange' })
 
       const result = indexer.filterByRange(MOCK_INTERVALS, NOW, '30D')
 
-      expect(result).toEqual(MOCK_INTERVALS.splice(0, 2))
+      expect(result).toEqual([...MOCK_INTERVALS].splice(0, 2))
     })
   })
 
   describe(LivenessAggregatingIndexer.prototype.calculateStats.name, () => {
     it('should calculate stats', async () => {
-      const indexer = createIndexer()
+      const indexer = createIndexer({ tag: 'calculateStats' })
 
       const result = indexer.calculateStats(MOCK_INTERVALS)
 
