@@ -15,9 +15,14 @@ import {
 } from '../../drawer'
 import { Popover, PopoverContent, PopoverTrigger } from '../../popover'
 
+interface Option {
+  label: string
+  value: string | undefined
+}
+
 interface Props {
   title: string
-  options: string[]
+  options: Option[]
   value: string | undefined
   onValueChange: (option: string | undefined) => void
 }
@@ -66,13 +71,15 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>
           </DrawerHeader>
-          <Options
-            options={options}
-            onClick={(option) => {
-              onValueChange(option)
-              setOpen(false)
-            }}
-          />
+          <div className="max-h-[60vh] [@supports(height:100dvh)]:max-h-[60dvh] overflow-y-scroll">
+            <Options
+              options={options}
+              onClick={(option) => {
+                onValueChange(option)
+                setOpen(false)
+              }}
+            />
+          </div>
         </DrawerContent>
       </Drawer>
     )
@@ -106,8 +113,8 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
 }
 
 interface OptionsProps {
-  options: string[]
-  onClick: (option: string) => void
+  options: Option[]
+  onClick: (option: string | undefined) => void
   className?: string
 }
 
@@ -116,14 +123,14 @@ function Options({ options, onClick, className }: OptionsProps) {
     <>
       {options.map((option) => (
         <button
-          key={option}
+          key={option.label}
           className={cn(
             'w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400',
             className,
           )}
-          onClick={() => onClick(option)}
+          onClick={() => onClick(option.value)}
         >
-          {option}
+          {option.label}
         </button>
       ))}
     </>

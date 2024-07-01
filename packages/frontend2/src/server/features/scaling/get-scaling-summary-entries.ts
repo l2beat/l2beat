@@ -71,6 +71,7 @@ function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
       !!implementationChangeReport.projects[layer2.id.toString()]
 
     const entry: ScalingSummaryLayer2sEntry = {
+      type: 'layer2',
       name: layer2.display.name,
       shortName: layer2.display.shortName,
       slug: layer2.display.slug,
@@ -130,6 +131,7 @@ function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
       !!implementationChangeReport.projects[layer3.id.toString()]
 
     const entry: ScalingSummaryLayer3sEntry = {
+      type: 'layer3',
       name: layer3.display.name,
       shortName: layer3.display.shortName,
       slug: layer3.display.slug,

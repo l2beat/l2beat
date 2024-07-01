@@ -10,6 +10,7 @@ import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-brea
 import { type RosetteValue } from '~/app/_components/rosette/types'
 
 export interface ScalingSummaryLayer2sEntry {
+  type: 'layer2'
   name: string
   shortName: string | undefined
   slug: string
@@ -33,6 +34,7 @@ export interface ScalingSummaryLayer2sEntry {
 }
 
 export interface ScalingSummaryLayer3sEntry {
+  type: 'layer3'
   name: string
   shortName: string | undefined
   slug: string

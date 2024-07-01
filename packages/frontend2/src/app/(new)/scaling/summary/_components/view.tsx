@@ -1,5 +1,5 @@
 'use client'
-import React, { useMemo, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import {
   Tabs,
   TabsContent,
@@ -16,12 +16,7 @@ import {
 import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import { type Milestone } from '@l2beat/config'
 import { useTable } from '~/hooks/use-table'
-import {
-  getCoreRowModel,
-  getSortedRowModel,
-  getFilteredRowModel,
-} from '@tanstack/react-table'
-import { Checkbox } from '~/app/_components/checkbox'
+import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
@@ -29,6 +24,8 @@ import { scalingUpcomingColumns } from './table/upcoming/columns'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import { ScalingLegend } from './table/layer2s/legend'
+import { ScalingFilters, type ScalingFiltersState } from './scaling-filters'
+import { notUndefined } from '@l2beat/shared-pure'
 
 interface Props {
   layer2s: ScalingSummaryLayer2sEntry[]
@@ -38,28 +35,65 @@ interface Props {
 }
 
 export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
-  const [rollupsOnly, setRollupsOnly] = useState(false)
+  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>({
+    rollupsOnly: false,
+    category: undefined,
+    stack: undefined,
+    stage: undefined,
+    purpose: undefined,
+  })
+
+  const includeFilters = useCallback(
+    (entry: ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry) => {
+      const checks = [
+        scalingFilters.rollupsOnly !== false
+          ? entry.category.includes('Rollup')
+          : undefined,
+        scalingFilters.category !== undefined
+          ? entry.category === scalingFilters.category
+          : undefined,
+        scalingFilters.stack !== undefined
+          ? entry.provider === scalingFilters.stack
+          : undefined,
+        scalingFilters.stage !== undefined
+          ? entry.type === 'layer2'
+            ? entry.stage?.stage === scalingFilters.stage
+            : false
+          : undefined,
+        scalingFilters.purpose !== undefined
+          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
+          : undefined,
+      ].filter(notUndefined)
+
+      return checks.length === 0 || checks.every(Boolean)
+    },
+    [scalingFilters],
+  )
 
   const layer2sProjects = useMemo(
-    () => layer2s.filter((item) => !item.isArchived && !item.isUpcoming),
-    [layer2s],
+    () =>
+      layer2s.filter(
+        (item) => !item.isArchived && !item.isUpcoming && includeFilters(item),
+      ),
+    [layer2s, includeFilters],
   )
   const layer3sProjects = useMemo(
-    () => layer3s.filter((item) => !item.isArchived && !item.isUpcoming),
-    [layer3s],
+    () =>
+      layer3s.filter(
+        (item) => !item.isArchived && !item.isUpcoming && includeFilters(item),
+      ),
+    [layer3s, includeFilters],
   )
   const upcomingProjects = useMemo(
-    () => [...layer2s, ...layer3s].filter((item) => item.isUpcoming),
-    [layer2s, layer3s],
+    () =>
+      [...layer2s, ...layer3s].filter(
+        (item) => item.isUpcoming && includeFilters(item),
+      ),
+    [layer2s, layer3s, includeFilters],
   )
   const archivedProjects = useMemo(
-    () => layer2s.filter((item) => item.isArchived),
-    [layer2s],
-  )
-
-  const columnFilters = useMemo(
-    () => (rollupsOnly ? [{ id: 'category', value: 'Rollup' }] : []),
-    [rollupsOnly],
+    () => layer2s.filter((item) => item.isArchived && includeFilters(item)),
+    [layer2s, includeFilters],
   )
 
   const layer2sTable = useTable({
@@ -67,10 +101,7 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     columns: scalingLayer2sColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
-    },
+    manualFiltering: true,
     initialState: {
       sorting: [
         {
@@ -86,10 +117,7 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     columns: summaryLayer3sColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
-    },
+    manualFiltering: true,
     initialState: {
       sorting: [
         {
@@ -105,10 +133,7 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     columns: scalingArchivedColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
-    },
+    manualFiltering: true,
     initialState: {
       sorting: [
         {
@@ -124,10 +149,7 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     columns: scalingUpcomingColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
-    getFilteredRowModel: getFilteredRowModel(),
-    state: {
-      columnFilters,
-    },
+    manualFiltering: true,
     initialState: {
       sorting: [
         {
@@ -142,14 +164,16 @@ export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     <>
       <TvlChart data={layer2sTvl} milestones={milestones} />
       <HorizontalSeparator className="my-4 md:my-6" />
-      <div className="flex items-center space-x-2">
-        <Checkbox
-          id="rollups-only"
-          onCheckedChange={(checked) => setRollupsOnly(!!checked)}
-        >
-          Rollups only
-        </Checkbox>
-      </div>
+      <ScalingFilters
+        items={[
+          ...layer2sProjects,
+          ...layer3sProjects,
+          ...archivedProjects,
+          ...upcomingProjects,
+        ]}
+        state={scalingFilters}
+        setState={setScalingFilters}
+      />
       <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
           <TabsList>

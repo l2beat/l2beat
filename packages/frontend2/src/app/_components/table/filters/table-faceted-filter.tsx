@@ -16,7 +16,10 @@ export function TableFacetedFilter<TData, TValue>({
     'Column cannot be undefined, probably used a wrong ID',
   )
   const facets = column.getFacetedUniqueValues() as Map<string, number>
-  const options = Array.from(facets.keys())
+  const options = Array.from(facets.keys()).map((value) => ({
+    label: value,
+    value,
+  }))
   const selected = column.getFilterValue() as string
 
   return (
