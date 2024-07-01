@@ -16,6 +16,7 @@ model CurrentPrice {
   coingeckoId String   @id @db.VarChar(255)
   priceUsd    Float    @db.Real
   updatedAt   DateTime @db.Timestamp(6)
+
   @@schema("public")
 }
 
@@ -23,6 +24,7 @@ model Stake {
   id             String @id @db.VarChar(255)
   totalStake     BigInt
   thresholdStake BigInt
+
   @@schema("public")
 }
 
@@ -38,6 +40,7 @@ model BridgeEscrow {
   tokens             Token[]
   updatedAt          DateTime        @default(now()) @updatedAt
   createdAt          DateTime        @default(now())
+
   @@unique([networkId, address])
   @@schema("public")
 }
@@ -47,17 +50,19 @@ enum ExternalBridgeType {
   LayerZeroV1
   Orbit
   Wormhole
+
   @@schema("public")
 }
 
 model ExternalBridge {
-  id      String             @id @db.Char(21)
-  name    String             @db.VarChar(256)
-  type    ExternalBridgeType @unique
-  tokens  TokenBridge[]
-  escrows BridgeEscrow[]
-  updatedAt DateTime @default(now()) @updatedAt
-  createdAt DateTime @default(now())
+  id        String             @id @db.Char(21)
+  name      String             @db.VarChar(256)
+  type      ExternalBridgeType @unique
+  tokens    TokenBridge[]
+  escrows   BridgeEscrow[]
+  updatedAt DateTime           @default(now()) @updatedAt
+  createdAt DateTime           @default(now())
+
   @@schema("public")
 }
 
@@ -74,11 +79,13 @@ model Deployment {
   sourceAvailable Boolean
   updatedAt       DateTime  @default(now()) @updatedAt
   createdAt       DateTime  @default(now())
+
   @@schema("public")
 }
 
 enum ExplorerType {
   Etherscan
+
   @@schema("public")
 }
 
@@ -89,6 +96,7 @@ model NetworkRpc {
   url       String
   updatedAt DateTime @default(now()) @updatedAt
   createdAt DateTime @default(now())
+
   @@schema("public")
 }
 
@@ -101,6 +109,7 @@ model NetworkExplorer {
   apiKey    String
   updatedAt DateTime     @default(now()) @updatedAt
   createdAt DateTime     @default(now())
+
   @@unique(networkId)
   @@unique([networkId, type])
   @@schema("public")
@@ -123,6 +132,7 @@ model Network {
   tokens                     Token[]
   updatedAt                  DateTime         @default(now()) @updatedAt
   createdAt                  DateTime         @default(now())
+
   @@schema("public")
 }
 
@@ -136,6 +146,7 @@ model TokenBridge {
   externalBridge   ExternalBridge? @relation(fields: [externalBridgeId], references: [id])
   updatedAt        DateTime        @default(now()) @updatedAt
   createdAt        DateTime        @default(now())
+
   @@schema("public")
 }
 
@@ -152,6 +163,7 @@ model TokenMeta {
   contractName String?  @db.VarChar(256)
   updatedAt    DateTime @default(now()) @updatedAt
   createdAt    DateTime @default(now())
+
   @@unique([tokenId, source])
   @@schema("public")
 }
@@ -168,6 +180,7 @@ model Token {
   escrows     BridgeEscrow[]
   updatedAt   DateTime       @default(now()) @updatedAt
   createdAt   DateTime       @default(now())
+
   @@unique([networkId, address])
   @@schema("public")
 }
@@ -179,6 +192,7 @@ model Cache {
   blockNumber Int?
   updatedAt   DateTime @default(now()) @updatedAt
   createdAt   DateTime @default(now())
+
   @@schema("public")
 }
 
@@ -200,6 +214,7 @@ model AggregatedL2Cost {
   overheadGasEth Float    @map("overhead_gas_eth") @db.Real
   overheadGasUsd Float    @map("overhead_gas_usd") @db.Real
   overheadGas    Int      @map("overhead_gas")
+
   @@id([projectId, timestamp])
   @@index([projectId], map: "aggregated_l2_costs_project_id_index")
   @@index([timestamp], map: "aggregated_l2_costs_timestamp_index")
@@ -211,6 +226,7 @@ model Amount {
   timestamp       DateTime @map("timestamp") @db.Timestamp(6)
   amount          Decimal  @map("amount") @db.Decimal(80, 0)
   configurationId String   @map("configuration_id") @db.Char(12)
+
   @@id([configurationId, timestamp])
   @@map("amounts")
   @@schema("public")
@@ -220,6 +236,7 @@ model BlockTimestamp {
   chain       String   @map("chain") @db.VarChar(255)
   timestamp   DateTime @map("timestamp") @db.Timestamp(6)
   blockNumber Int      @map("block_number")
+
   @@id([chain, timestamp])
   @@map("block_timestamps")
   @@schema("public")
@@ -233,6 +250,7 @@ model DailyDiscovery {
   version           Int      @map("version")
   configHash        String   @map("config_hash") @db.VarChar(255)
   discoveryJsonBlob Json     @map("discovery_json_blob")
+
   @@id([projectName, chainId, unixTimestamp])
   @@map("daily_discovery")
   @@schema("public")
@@ -243,6 +261,7 @@ model DiscoveryCache {
   value       String @map("value")
   blockNumber Int    @map("block_number")
   chain       String @map("chain") @db.VarChar(255)
+
   @@map("discovery_cache")
   @@schema("public")
 }
@@ -254,6 +273,7 @@ model Finality {
   maximumTimeToInclusion Int      @map("maximum_time_to_inclusion")
   averageTimeToInclusion Int      @map("average_time_to_inclusion")
   averageStateUpdate     Int?     @map("average_state_update")
+
   @@id([projectId, timestamp])
   @@map("finality")
   @@schema("public")
@@ -266,6 +286,7 @@ model IndexerConfiguration {
   minHeight     Int    @map("min_height")
   maxHeight     Int?   @map("max_height")
   properties    String @map("properties")
+
   @@index([indexerId], map: "indexer_configurations_indexer_id_index")
   @@map("indexer_configurations")
   @@schema("public")
@@ -276,6 +297,7 @@ model IndexerState {
   safeHeight   Int       @map("safe_height")
   minTimestamp DateTime? @map("min_timestamp") @db.Timestamp(6)
   configHash   String?   @map("config_hash")
+
   @@map("indexer_state")
   @@schema("public")
 }
@@ -291,6 +313,7 @@ model L2Cost {
   blobGasUsed       Int?             @map("blob_gas_used")
   blobGasPrice      BigInt?          @map("blob_gas_price")
   trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "l2_costs_tracked_tx_id_foreign")
+
   @@index([trackedTxId], map: "l2_costs_tracked_tx_id_index")
   @@map("l2_costs")
   @@schema("public")
@@ -299,6 +322,7 @@ model L2Cost {
 model L2CostPrice {
   timestamp DateTime @id @map("timestamp") @db.Timestamp(6)
   priceUsd  Float    @map("price_usd") @db.Real
+
   @@map("l2_costs_prices")
   @@schema("public")
 }
@@ -309,6 +333,7 @@ model Liveness {
   txHash            String           @map("tx_hash") @db.VarChar(255)
   trackedTxId       String           @map("tracked_tx_id") @db.VarChar(8)
   trackedTxsConfigs TrackedTxsConfig @relation(fields: [trackedTxId], references: [id], onDelete: Cascade, map: "liveness_tracked_tx_id_foreign")
+
   @@id(trackedTxId, map: "liveness_tracked_tx_id_index")
   @@map("liveness")
   @@schema("public")
@@ -318,6 +343,7 @@ model Price {
   timestamp       DateTime @map("timestamp") @db.Timestamp(6)
   priceUsd        Float    @map("price_usd") @db.Real
   configurationId String   @map("configuration_id") @db.Char(12)
+
   @@id([configurationId, timestamp])
   @@map("prices")
   @@schema("public")
@@ -329,6 +355,7 @@ model SequenceProcessor {
   updatedAt     DateTime @map("updated_at") @db.Timestamp(6)
   latest        Int      @map("latest")
   syncedOnce    Boolean  @default(false) @map("synced_once")
+
   @@map("sequence_processor")
   @@schema("public")
 }
@@ -344,6 +371,7 @@ model TrackedTxsConfig {
   lastSyncedTimestamp     DateTime?  @map("last_synced_timestamp") @db.Timestamp(6)
   l2Costs                 L2Cost[]
   liveness                Liveness[]
+
   @@map("tracked_txs_configs")
   @@schema("public")
 }
@@ -352,6 +380,7 @@ model TvlCleaner {
   repositoryName        String    @id @map("repository_name") @db.VarChar(255)
   hourlyCleanedUntil    DateTime? @map("hourly_cleaned_until") @db.Timestamp(6)
   sixHourlyCleanedUntil DateTime? @map("six_hourly_cleaned_until") @db.Timestamp(6)
+
   @@map("tvl_cleaner")
   @@schema("public")
 }
@@ -364,6 +393,7 @@ model UpdateMonitor {
   configHash        String    @default("") @map("config_hash") @db.VarChar(255)
   version           Int       @default(0) @map("version")
   chainId           Int       @default(1) @map("chain_id")
+
   @@id([projectName, chainId])
   @@map("update_monitor")
   @@schema("public")
@@ -377,6 +407,7 @@ model UpdateNotifier {
   blockNumber  Int      @map("block_number")
   diffJsonBlob Json     @map("diff_json_blob")
   chainId      Int      @default(1) @map("chain_id")
+
   @@index([blockNumber], map: "update_notifier_block_number_index")
   @@index([projectName], map: "update_notifier_project_name_index")
   @@map("update_notifier")
@@ -393,6 +424,7 @@ model Value {
   canonicalForTotal BigInt   @map("canonical_for_total")
   native            BigInt   @map("native")
   nativeForTotal    BigInt   @map("native_for_total")
+
   @@id([timestamp, projectId, dataSource])
   @@map("values")
   @@schema("public")
@@ -403,6 +435,7 @@ model VerifierStatus {
   chainId     Int      @map("chain_id")
   lastUsed    DateTime @map("last_used") @db.Timestamp(6)
   lastUpdated DateTime @map("last_updated") @db.Timestamp(6)
+
   @@id([address, chainId])
   @@map("verifier_status")
   @@schema("public")
@@ -413,6 +446,7 @@ model Block {
   unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
   count         Int
   blockNumber   Int      @map("block_number")
+
   @@id([projectId, blockNumber])
   @@map("block")
   @@schema("activity")
@@ -422,6 +456,7 @@ model Starkex {
   projectId     String   @map("project_id") @db.VarChar(255)
   unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
   count         Int
+
   @@id([projectId, unixTimestamp])
   @@map("starkex")
   @@schema("activity")
@@ -431,6 +466,7 @@ model ZkSync {
   blockNumber   Int      @map("block_number")
   blockIndex    Int      @map("block_index")
   unixTimestamp DateTime @map("unix_timestamp") @db.Timestamp(6)
+
   @@id([blockNumber, blockIndex])
   @@map("zksync")
   @@schema("activity")

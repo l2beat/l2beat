@@ -1,5 +1,6 @@
 'use client'
 
+import { assert } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import ChevronIcon from '~/icons/chevron.svg'
@@ -14,7 +15,6 @@ import {
   DrawerTrigger,
 } from '../../drawer'
 import { Popover, PopoverContent, PopoverTrigger } from '../../popover'
-import { assert } from '@l2beat/shared-pure'
 
 interface Option {
   label: string
