@@ -1,4 +1,5 @@
 import {
+  BadgeId,
   ScalingProjectPurpose,
   StageConfig,
   WarningWithSentiment,
@@ -54,6 +55,7 @@ export interface ScalingProjectHeaderProps {
   isUnderReview?: boolean
   warning?: string | { text: string; href: string }
   hostChain?: string
+  badges?: BadgeId[]
 }
 
 export function ScalingProjectHeader(props: ScalingProjectHeaderProps) {
@@ -168,6 +170,7 @@ export function ScalingProjectHeader(props: ScalingProjectHeaderProps) {
       isUnderReview={props.isUnderReview}
       isImplementationUnderReview={props.isImplementationUnderReview}
       isRiskRosetteUnderReview={props.isRiskRosetteUnderReview}
+      badges={props.badges}
     />
   )
 }

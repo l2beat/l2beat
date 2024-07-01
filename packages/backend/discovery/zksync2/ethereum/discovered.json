@@ -380,7 +380,12 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0x303a465B659cBB0ab36eE643eA362c509EEb5213"]
+        "admin": [
+          "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+          "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
+          "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+        ]
       },
       "sinceTimestamp": 1717520627,
       "values": {

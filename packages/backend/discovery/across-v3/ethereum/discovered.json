@@ -1,8 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 19976242,
-  "configHash": "0xcffebba091e4ed4e857f8933a919d410f67cec3001021555f861d13088eac059",
+  "blockNumber": 20204613,
+  "configHash": "0x7df15e92583fb295cad51c4d8842e59786e367c47cf4317583c37f3af032b93c",
   "version": 8,
   "contracts": [
     {
@@ -18,7 +18,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "119318055685610205968488991",
+        "totalSupply": "120000713286659504167011279",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -66,7 +66,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -122,11 +122,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1351583,
+        "numberOfDeposits": 1419218,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -146,7 +146,7 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -202,7 +202,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 628,
+        "nonce": 673,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -249,7 +249,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1716994451,
+        "getCurrentTime": 1719751847,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -302,7 +302,7 @@
           "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
         ],
         "getThreshold": 3,
-        "nonce": 216,
+        "nonce": 217,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -386,13 +386,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x5e30134e2245b12ee5a1014d32f55cb9d08629f7ae9ba4ce172c91057216fc21",
-          "relayerRefundRoot": "0x15aa8a795120b241a99e71ddb102c8005a618f86fcb455047346933463282841",
+          "poolRebalanceRoot": "0x03c516c9e29668cac681aee4389787ee607338909028c3726520c6aecce8b4c7",
+          "relayerRefundRoot": "0x4a8d84269cee142dc89ff4999c95056fb0814937ebad89133483491ad239d0ca",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "claimedBitMap": 127,
+          "claimedBitMap": 255,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 0,
-          "challengePeriodEndTimestamp": 1716993251
+          "challengePeriodEndTimestamp": 1719751043
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -445,10 +445,8 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getL1CallValue"],
       "sinceTimestamp": 1691158667,
       "values": {
-        "getL1CallValue": 500000000000000,
         "L1_GAS_TO_L2_GAS_PER_PUB_DATA_LIMIT": 800,
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "L2_GAS_LIMIT": 2000000,

@@ -122,6 +122,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"]
+      },
       "sinceTimestamp": 1708655543
     },
     {
@@ -146,6 +149,14 @@
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
+          "0x830433dE03ABedE062660CC629e1A2c714272474",
+          "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
+        ]
       },
       "sinceTimestamp": 1649901966,
       "values": {

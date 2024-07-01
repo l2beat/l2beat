@@ -139,7 +139,10 @@
       "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
     },
     {
-      "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A"
+      "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
+      "assignedPermissions": {
+        "admin": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"]
+      }
     }
   ],
   "abis": {

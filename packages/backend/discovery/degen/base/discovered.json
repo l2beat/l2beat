@@ -378,8 +378,13 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x21A1e2BFC61F30F2E81E0b08cd37c1FC7ef776E7",
           "0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221",
-          "0xaA3A7A2ec2477A61082E1C41a2c6710587917028"
+          "0x67812161Bbb6aCF891aA6028BC614a660961ceD8",
+          "0x766DD3A13d17C6D175975C89225bde89F052dBc4",
+          "0xEfEf4558802bF373Ce3307189C79a9cAb0a4Cb9C",
+          "0xaA3A7A2ec2477A61082E1C41a2c6710587917028",
+          "0xe63ddb12FBb6211a73F12a4367b10dA0834B82da"
         ]
       },
       "sinceTimestamp": 1710087441,
