@@ -50,7 +50,7 @@ export class AmountsDataService {
       const config = configurations.find((c) => c.configId === configId)
       assert(config, 'Config should be defined')
 
-      const amountsByTimestamp = groupBy(amounts, 'timestamp')
+      let amountsByTimestamp = groupBy(amounts, 'timestamp')
 
       const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
         [
@@ -66,10 +66,27 @@ export class AmountsDataService {
 
       lagging.forEach((l) => result.lagging.set(configId, { ...l }))
       // TODO: it can exclude amounts that were more than zero in the past but are not now
-      excluded.forEach((s) => result.excluded.add(s))
+      const aaa = await this.$.amountRepository.getByConfigIds(excluded)
 
-      if (excluded.includes(configId)) {
-        continue
+      for (const e of excluded) {
+        const aaaa = aaa.filter((a) => a.configId === e)
+
+        if (aaaa.length > 0) {
+          amountsByTimestamp = groupBy(aaaa, 'timestamp')
+
+          const ll = aaaa[aaaa.length - 1]
+          result.lagging.set(e, {
+            latestTimestamp: ll.timestamp,
+            latestValue: {
+              timestamp: ll.timestamp,
+              amount: 0n,
+              configId: configId,
+            },
+          })
+        } else {
+          result.excluded.add(e)
+          continue
+        }
       }
 
       const amountsByTimestampForConfig: Dictionary<bigint> = {}
@@ -80,7 +97,7 @@ export class AmountsDataService {
         const amount = amountsByTimestamp[timestamp.toString()]
 
         if (amount === undefined) {
-          const l = lagging[0]
+          const l = result.lagging.get(configId)
 
           if (l && l.latestTimestamp.gte(timestamp)) {
             amountsByTimestampForConfig[timestamp.toString()] =
