@@ -71,7 +71,6 @@ export class AmountsDataService {
         continue
       }
 
-      const amountsByTimestampForConfig: Dictionary<bigint> = {}
       const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
       for (const timestamp of timestamps) {
         if (timestamp.lt(config.sinceTimestamp)) {
@@ -82,7 +81,7 @@ export class AmountsDataService {
 
         if (amount === undefined) {
           if (lagging.length === 1) {
-            amountsByTimestampForConfig[timestamp.toString()] =
+            result.amounts[configId][timestamp.toString()] =
               lagging[0].latestValue.amount
             continue
           }
@@ -91,7 +90,7 @@ export class AmountsDataService {
         }
 
         assert(amount.length === 1, 'There should be one amount')
-        amountsByTimestampForConfig[timestamp.toString()] = amount[0].amount
+        result.amounts[configId][timestamp.toString()] = amount[0].amount
       }
     }
 
@@ -161,13 +160,9 @@ export class AmountsDataService {
         latestTimestamp: latest.timestamp,
         latestValue: latest,
       })
-    }
 
-    assert(
-      result.amounts.length + result.excluded.size + result.lagging.size ===
-        configurations.length,
-      'There should be an equal amount of configurations',
-    )
+      result.amounts.push(latest)
+    }
 
     return result
   }
