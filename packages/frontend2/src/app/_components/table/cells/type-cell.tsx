@@ -12,6 +12,7 @@ import { ZKStackIcon } from '~/icons/providers/ZKStackIcon'
 import { ZkSyncLiteIcon } from '~/icons/providers/ZkSyncLiteIcon'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
+import { TaikoIcon } from '~/icons/providers/TaikoIcon'
 
 export interface TypeCellProps {
   children: string
@@ -21,6 +22,7 @@ export interface TypeCellProps {
 
 export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
   const isRollup = children.includes('Rollup')
+  const providerProps = provider ? providerMap[provider] : undefined
 
   return (
     <span
@@ -29,62 +31,70 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
       )}
     >
       {children}
-      {provider === 'StarkEx' && (
+      {providerProps ? (
         <TypeTooltip
-          text="This project is built using StarkEx."
-          Icon={StarkWareIcon}
+          Icon={providerProps.Icon}
+          text={
+            providerProps.text ??
+            `This project is based on ${provider}'s code base.`
+          }
         />
-      )}
-      {provider === 'OP Stack' && (
-        <TypeTooltip
-          text="This project is based on OP Stack's code base."
-          Icon={OptimismIcon}
-        />
-      )}
-      {provider === 'OVM' && (
-        <TypeTooltip
-          text="This project is based on old OVM's code base."
-          Icon={OVMIcon}
-        />
-      )}
-      {provider === 'ZKsync Lite' && (
-        <TypeTooltip
-          text="This project is based on ZKsync Lite's code base."
-          Icon={ZkSyncLiteIcon}
-        />
-      )}
-      {provider === 'ZK Stack' && (
-        <TypeTooltip
-          text="This project is based on ZK Stack's code base."
-          Icon={ZKStackIcon}
-        />
-      )}
-      {provider === 'Loopring' && (
-        <TypeTooltip
-          text="This project is based on Loopring's code base."
-          Icon={LoopringIcon}
-        />
-      )}
-      {provider === 'Arbitrum' && (
-        <TypeTooltip
-          text="This project is based on Arbitrum's code base."
-          Icon={ArbitrumIcon}
-        />
-      )}
-      {provider === 'Polygon' && (
-        <TypeTooltip
-          text="This project is based on Polygon's code base."
-          Icon={PolygonIcon}
-        />
-      )}
-      {provider === 'Starknet' && (
-        <TypeTooltip
-          text="This project is based on Starknet's code base."
-          Icon={StarknetIcon}
-        />
-      )}
+      ) : null}
     </span>
   )
+}
+
+interface ProviderProps {
+  Icon: (props: { className: string }) => JSX.Element
+  text: string
+}
+
+export const providerMap: Record<
+  Layer2Provider | Layer3Provider,
+  ProviderProps | undefined
+> = {
+  StarkEx: {
+    Icon: StarkWareIcon,
+    text: 'This project is built using StarkEx.',
+  },
+  'OP Stack': {
+    Icon: OptimismIcon,
+    text: "This project is based on OP Stack's code base.",
+  },
+  OVM: {
+    Icon: OVMIcon,
+    text: "This project is based on old OVM's code base.",
+  },
+  'ZKsync Lite': {
+    Icon: ZkSyncLiteIcon,
+    text: "This project is based on ZKsync Lite's code base.",
+  },
+  'ZK Stack': {
+    Icon: ZKStackIcon,
+    text: "This project is based on ZK Stack's code base.",
+  },
+  Loopring: {
+    Icon: LoopringIcon,
+    text: "This project is based on Loopring's code base.",
+  },
+  Arbitrum: {
+    Icon: ArbitrumIcon,
+    text: "This project is based on Arbitrum's code base.",
+  },
+  Polygon: {
+    Icon: PolygonIcon,
+    text: "This project is based on Polygon's code base.",
+  },
+  Starknet: {
+    Icon: StarknetIcon,
+    text: "This project is based on Starknet's code base.",
+  },
+  Taiko: {
+    Icon: TaikoIcon,
+    text: "This project is based on Taiko's code base.",
+  },
+  'Cartesi Rollups': undefined,
+  'zkLink Nexus': undefined,
 }
 
 interface TypeTooltipProps {
