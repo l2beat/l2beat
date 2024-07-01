@@ -94,12 +94,12 @@ export class Clock {
 
     const from = minTimestampOverride ?? this.getFirstDay()
 
-    let current = this._getTimestampToSync(targetTimestamp, from.toNumber())
+    let current = this._getTimestampForApi(targetTimestamp, from.toNumber())
     const last = targetTimestamp
 
     while (current.lte(last)) {
       timestamps.push(current)
-      current = this._getTimestampToSync(
+      current = this._getTimestampForApi(
         targetTimestamp,
         current.toNumber() + 1,
       )
@@ -108,7 +108,7 @@ export class Clock {
     return timestamps
   }
 
-  _getTimestampToSync(targetTimestamp: UnixTime, _timestamp: number): UnixTime {
+  _getTimestampForApi(targetTimestamp: UnixTime, _timestamp: number): UnixTime {
     const timestamp = new UnixTime(_timestamp)
 
     const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
@@ -125,6 +125,12 @@ export class Clock {
 
     const result = timestamp.toEndOf('day')
     return result.lte(sixHourlyCutOff) ? result : sixHourlyCutOff
+  }
+
+  shouldTimestampBeIncluded(targetTimestamp: UnixTime, timestamp: UnixTime) {
+    return timestamp.equals(
+      this._getTimestampForApi(targetTimestamp, timestamp.toNumber()),
+    )
   }
 
   onNewHour(callback: (timestamp: UnixTime) => void) {

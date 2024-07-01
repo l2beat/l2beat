@@ -44,7 +44,7 @@ export class TokenService {
     )
 
     const prices = await this.$.pricesDataService.getPrices(
-      [priceConfig],
+      priceConfig,
       targetTimestamp,
     )
 
@@ -80,7 +80,7 @@ export class TokenService {
         minTimestampOverride: minTimestamp,
       }),
       d,
-      prices.prices[priceConfig.configId],
+      prices.prices,
       amountConfigs[0].decimals,
     )
   }
