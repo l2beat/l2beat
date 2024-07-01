@@ -9,7 +9,7 @@ import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-
 import { getTvl } from '~/server/features/scaling/get-tvl'
 import { OtherSites } from '~/app/_components/other-sites'
 import { About } from '~/app/_components/about'
-import { View } from './_components/view'
+import { Tables } from './_components/tables'
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 
 export default async function Page() {
@@ -18,7 +18,7 @@ export default async function Page() {
 
   return (
     <div className="mb-20">
-      <View
+      <Tables
         layer2s={layer2s}
         layer3s={layer3s}
         layer2sTvl={tvl.layers2s}

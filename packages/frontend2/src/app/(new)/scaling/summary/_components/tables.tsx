@@ -34,7 +34,7 @@ interface Props {
   milestones: Milestone[]
 }
 
-export function View({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
+export function Tables({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>({
     rollupsOnly: false,
     category: undefined,
