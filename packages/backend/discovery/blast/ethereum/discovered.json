@@ -72,7 +72,8 @@
           "0xa230285d5683C74935aD14c446e137c8c8828438",
           "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
           "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
-        ]
+        ],
+        "owner": ["0xE064B565Cf2A312a3e66Fe4118890583727380C0"]
       },
       "sinceTimestamp": 1708812851,
       "values": {
@@ -486,6 +487,7 @@
     {
       "name": "AddressManager",
       "address": "0xE064B565Cf2A312a3e66Fe4118890583727380C0",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },

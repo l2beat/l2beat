@@ -15,6 +15,9 @@
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
+      "assignedPermissions": {
+        "owner": ["0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1680797639,
@@ -72,6 +75,7 @@
     {
       "name": "AddressManager",
       "address": "0x87630a802a3789463eC4b00f89b27b1e9f6b92e9",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -166,6 +170,7 @@
     {
       "name": "ProxyAdmin",
       "address": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
@@ -176,7 +181,8 @@
           "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84",
           "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC",
           "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1"
-        ]
+        ],
+        "owner": ["0x87630a802a3789463eC4b00f89b27b1e9f6b92e9"]
       },
       "sinceTimestamp": 1696608287,
       "values": {
