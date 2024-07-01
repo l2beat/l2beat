@@ -1,11 +1,11 @@
 import React from 'react'
 
+import { cva } from 'class-variance-authority'
 import { cn } from '../utils/cn'
 import { Callout } from './Callout'
 import { Markdown } from './Markdown'
 import { PlainLink } from './PlainLink'
 import { OutLinkIcon, ShieldIcon } from './icons'
-import { cva } from 'class-variance-authority'
 
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'

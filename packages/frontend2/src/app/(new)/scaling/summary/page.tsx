@@ -2,12 +2,12 @@ import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { About } from '~/app/_components/about'
+import { TvlChart } from '~/app/_components/chart/tvl-chart'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
-import { TvlChart } from '~/app/_components/chart/tvl-chart'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

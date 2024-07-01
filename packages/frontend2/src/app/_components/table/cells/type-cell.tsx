@@ -3,16 +3,16 @@ import React from 'react'
 
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
 import { LoopringIcon } from '~/icons/providers/loopring-icon'
-import { OVMIcon } from '~/icons/providers/ovm-icon'
 import { OptimismIcon } from '~/icons/providers/optimism-icon'
+import { OVMIcon } from '~/icons/providers/ovm-icon'
 import { PolygonIcon } from '~/icons/providers/polygon-icon'
-import { StarkWareIcon } from '~/icons/providers/starkware-icon'
 import { StarknetIcon } from '~/icons/providers/starknet-icon'
+import { StarkWareIcon } from '~/icons/providers/starkware-icon'
+import { TaikoIcon } from '~/icons/providers/taiko-icon'
 import { ZKStackIcon } from '~/icons/providers/zkstack-icon'
 import { ZkSyncLiteIcon } from '~/icons/providers/zksync-lite-icon'
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
-import { TaikoIcon } from '~/icons/providers/taiko-icon'
 
 export interface TypeCellProps {
   children: string
