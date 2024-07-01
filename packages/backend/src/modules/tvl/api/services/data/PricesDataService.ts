@@ -31,7 +31,7 @@ export class PricesDataService {
     const records = await this.$.priceRepository.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
       configurations.reduce(
-        (a, b) => UnixTime.max(a, b.sinceTimestamp),
+        (a, b) => UnixTime.min(a, b.sinceTimestamp),
         UnixTime.now(),
       ),
       targetTimestamp,
@@ -72,9 +72,14 @@ export class PricesDataService {
         continue
       }
 
-      const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
+      const pricesByTimestampForConfig: Dictionary<number> = {}
+
+      const timestamps = this.$.syncOptimizer.getAllTimestampsForApi()
       for (const timestamp of timestamps) {
         if (timestamp.lt(config.sinceTimestamp)) {
+          continue
+        }
+        if (timestamp.gt(targetTimestamp)) {
           continue
         }
 
@@ -82,17 +87,23 @@ export class PricesDataService {
 
         if (price === undefined) {
           if (lagging.length === 1) {
-            result.prices[configId][timestamp.toString()] =
+            pricesByTimestampForConfig[timestamp.toString()] =
               lagging[0].latestValue.priceUsd
             continue
           }
 
-          throw new Error('Lagging entry should be defined')
+          throw new Error(
+            `Lagging entry should be defined for ${timestamp.toNumber()} ${JSON.stringify(
+              config,
+            )}`,
+          )
         }
 
         assert(price.length === 1, 'There should be one price')
-        result.prices[configId][timestamp.toString()] = price[0].priceUsd
+        pricesByTimestampForConfig[timestamp.toString()] = price[0].priceUsd
       }
+
+      result.prices[configId] = pricesByTimestampForConfig
     }
 
     return result

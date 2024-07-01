@@ -31,6 +31,11 @@ export class ValuesDataService {
     )
     const valuesByProject = groupBy(values, 'projectId')
 
+    const minTimestamp = projects.reduce(
+      (a, b) => UnixTime.min(a, b.minTimestamp),
+      UnixTime.now(),
+    )
+
     const result = {
       valuesByTimestampForProject: {} as Dictionary<Dictionary<ValueRecord[]>>,
       lagging: new Map<
@@ -62,8 +67,12 @@ export class ValuesDataService {
 
       const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
-      for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
-        if (!this.shouldTimestampBeCalculated(new UnixTime(+timestamp))) {
+      const timestamps = this.$.syncOptimizer.getAllTimestampsForApi()
+      for (const timestamp of timestamps) {
+        if (timestamp.lt(minTimestamp)) {
+          continue
+        }
+        if (timestamp.gt(targetTimestamp)) {
           continue
         }
 
@@ -75,7 +84,7 @@ export class ValuesDataService {
           result.syncing,
         )
 
-        valuesByTimestampForProject[timestamp] = configuredValues
+        valuesByTimestampForProject[timestamp.toString()] = configuredValues
       }
 
       assert(
@@ -88,19 +97,5 @@ export class ValuesDataService {
     }
 
     return result
-  }
-
-  shouldTimestampBeCalculated(timestamp: UnixTime) {
-    if (timestamp.isFull('day')) {
-      return true
-    }
-
-    if (timestamp.isFull('six hours')) {
-      return timestamp.gte(this.$.syncOptimizer.sixHourlyCutOff)
-    }
-
-    if (timestamp.isFull('hour')) {
-      return timestamp.gte(this.$.syncOptimizer.hourlyCutOff)
-    }
   }
 }

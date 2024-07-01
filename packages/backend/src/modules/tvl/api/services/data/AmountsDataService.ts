@@ -30,7 +30,7 @@ export class AmountsDataService {
     const records = await this.$.amountRepository.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
       configurations.reduce(
-        (a, b) => UnixTime.max(a, b.sinceTimestamp),
+        (a, b) => UnixTime.min(a, b.sinceTimestamp),
         UnixTime.now(),
       ),
       targetTimestamp,
@@ -71,9 +71,13 @@ export class AmountsDataService {
         continue
       }
 
-      const timestamps = this.$.syncOptimizer.getAllTimestampsToSync()
+      const amountsByTimestampForConfig: Dictionary<bigint> = {}
+      const timestamps = this.$.syncOptimizer.getAllTimestampsForApi()
       for (const timestamp of timestamps) {
         if (timestamp.lt(config.sinceTimestamp)) {
+          continue
+        }
+        if (timestamp.gt(targetTimestamp)) {
           continue
         }
 
@@ -81,17 +85,20 @@ export class AmountsDataService {
 
         if (amount === undefined) {
           if (lagging.length === 1) {
-            result.amounts[configId][timestamp.toString()] =
+            amountsByTimestampForConfig[timestamp.toString()] =
               lagging[0].latestValue.amount
-            continue
           }
+          // zeroes are not stored in the DB
+          amountsByTimestampForConfig[timestamp.toString()] = 0n
 
-          throw new Error('Lagging entry should be defined')
+          continue
         }
 
         assert(amount.length === 1, 'There should be one amount')
-        result.amounts[configId][timestamp.toString()] = amount[0].amount
+        amountsByTimestampForConfig[timestamp.toString()] = amount[0].amount
       }
+
+      result.amounts[configId] = amountsByTimestampForConfig
     }
 
     return result
@@ -139,15 +146,9 @@ export class AmountsDataService {
       amountsAtExcludedHeuristic.find((p) => p.configId === c.configId),
     )
 
-    const recordsForLagging =
-      await this.$.amountRepository.getByConfigIdsInRange(
-        lagging.map((l) => l.configId),
-        lagging.reduce(
-          (a, b) => UnixTime.max(a, b.sinceTimestamp),
-          UnixTime.now(),
-        ),
-        targetTimestamp,
-      )
+    const recordsForLagging = await this.$.amountRepository.getByConfigIds(
+      lagging.map((l) => l.configId),
+    )
 
     for (const laggingConfig of lagging) {
       const sortedRecordsForConfig = recordsForLagging

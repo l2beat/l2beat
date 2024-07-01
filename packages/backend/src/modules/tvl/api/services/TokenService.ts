@@ -48,11 +48,18 @@ export class TokenService {
       targetTimestamp,
     )
 
-    const minTimestamp = amountConfigs.reduce(
-      (a, b) => UnixTime.max(a, b.sinceTimestamp),
-      UnixTime.now(),
-    )
+    const minTimestamp = amountConfigs
+      .reduce((a, b) => UnixTime.min(a, b.sinceTimestamp), UnixTime.now())
+      .toEndOf('day')
 
-    return getTokenCharts(dailyStart, timestamp, amountsAndPrices, decimals)
+    return getTokenCharts(
+      targetTimestamp,
+      minTimestamp,
+      UnixTime.max(minTimestamp, this.$.syncOptimizer.sixHourlyCutOff),
+      UnixTime.max(minTimestamp, this.$.syncOptimizer.hourlyCutOff),
+      amounts.amounts,
+      prices.prices[priceConfig.configId],
+      decimals,
+    )
   }
 }
