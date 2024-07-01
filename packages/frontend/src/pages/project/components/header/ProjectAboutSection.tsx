@@ -33,7 +33,7 @@ export function ProjectAboutSection({
         className,
       )}
     >
-      {badgesEnabled && badges && (
+      {badges.length > 0 && (
         <div className="flex shrink-0 flex-col gap-3 lg:min-w-[288px]">
           <h2 className="font-medium text-gray-600 text-xs uppercase">
             Badges
