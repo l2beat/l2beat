@@ -40,7 +40,12 @@ export function TrackedTxsStatusPage({
       <div className="tabs">
         {data.map(([projectId, configs], i) => (
           <Fragment key={projectId}>
-            <input type="radio" name="tabs" id={projectId} checked={i === 0} />
+            <input
+              type="radio"
+              name="tabs"
+              id={projectId}
+              defaultChecked={i === 0}
+            />
             <label
               htmlFor={projectId}
               style={{
@@ -90,13 +95,16 @@ function Table({ data }: { data: TrackedTxsTableRow[] }) {
             <TableData
               value={
                 config.currentHeight &&
-                new Date(config.currentHeight).toUTCString()
+                new Date(config.currentHeight * 1000).toUTCString()
               }
             />
-            <TableData value={new Date(config.minHeight).toUTCString()} />
+            <TableData
+              value={new Date(config.minHeight * 1000).toUTCString()}
+            />
             <TableData
               value={
-                config.maxHeight && new Date(config.maxHeight).toUTCString()
+                config.maxHeight &&
+                new Date(config.maxHeight * 1000).toUTCString()
               }
             />
           </tr>
