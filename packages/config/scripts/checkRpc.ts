@@ -1,11 +1,11 @@
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { providers } from 'ethers'
 
-const RPC_URL = 'https://rpc.hypr.network'
+const RPC_URL = 'https://rpc.alienxchain.io/http'
 
 // this script is here so you can stress test a RPC url.
 async function main() {
-  const callsPerMinute = 1500
+  const callsPerMinute = 900
   const provider = new providers.JsonRpcProvider(RPC_URL)
   const rateLimitedProvider = new RateLimitedProvider(provider, callsPerMinute)
 
