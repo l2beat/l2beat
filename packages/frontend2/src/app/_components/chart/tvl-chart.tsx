@@ -73,10 +73,9 @@ export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
         },
       ]}
       formatYAxisLabel={(value: number) =>
-        // Pass UNIT from controls
         formatCurrency(value, unit, { showLessThanMinimum: false })
       }
-      range={[1687039200, 1718661600]}
+      range={[rangeStart, rangeEnd]}
       useLogScale={scale === 'log'}
       renderHoverContents={(data) => <ChartHover data={data} />}
     >

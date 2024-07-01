@@ -64,6 +64,8 @@ export function ScalingFilters({ items, state, setState }: Props) {
       value,
     }))
 
+  const isRollupInItems = items.some((item) => item.category.includes('Rollup'))
+
   return (
     <OverflowWrapper>
       <div className="flex space-x-2">
@@ -72,6 +74,7 @@ export function ScalingFilters({ items, state, setState }: Props) {
           onCheckedChange={(checked) =>
             setState((prev) => ({ ...prev, rollupsOnly: !!checked }))
           }
+          disabled={!isRollupInItems}
         >
           Rollups only
         </Checkbox>

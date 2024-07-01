@@ -14,6 +14,7 @@ import {
   DrawerTrigger,
 } from '../../drawer'
 import { Popover, PopoverContent, PopoverTrigger } from '../../popover'
+import { assert } from '@l2beat/shared-pure'
 
 interface Option {
   label: string
@@ -32,6 +33,8 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
   const breakpoint = useBreakpoint()
 
   if (value) {
+    const option = options.find((option) => option.value === value)
+    assert(option, 'Option not found')
     return (
       <button
         autoFocus
@@ -44,7 +47,7 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
         className="cursor-pointer outline-none select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:hover:bg-slate-600 hover:bg-gray-400"
       >
         <div className="w-max items-center gap-1.5 rounded-md bg-white px-2 inline-flex dark:bg-black dark:group-hover:bg-gray-950">
-          <span>{value}</span>
+          <span>{option.label}</span>
           <div className="flex size-3 items-center justify-center rounded-sm bg-black dark:bg-white">
             <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
           </div>

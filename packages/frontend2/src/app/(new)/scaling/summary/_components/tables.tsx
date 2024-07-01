@@ -34,14 +34,18 @@ interface Props {
   milestones: Milestone[]
 }
 
+const DEFAULT_SCALING_FILTERS = {
+  rollupsOnly: false,
+  category: undefined,
+  stack: undefined,
+  stage: undefined,
+  purpose: undefined,
+}
+
 export function Tables({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
-  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>({
-    rollupsOnly: false,
-    category: undefined,
-    stack: undefined,
-    stage: undefined,
-    purpose: undefined,
-  })
+  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
+    DEFAULT_SCALING_FILTERS,
+  )
 
   const includeFilters = useCallback(
     (entry: ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry) => {
@@ -164,55 +168,69 @@ export function Tables({ layer2s, layer3s, layer2sTvl, milestones }: Props) {
     <>
       <TvlChart data={layer2sTvl} milestones={milestones} />
       <HorizontalSeparator className="my-4 md:my-6" />
-      <ScalingFilters
-        items={[
-          ...layer2sProjects,
-          ...layer3sProjects,
-          ...archivedProjects,
-          ...upcomingProjects,
-        ]}
-        state={scalingFilters}
-        setState={setScalingFilters}
-      />
-      <Tabs defaultValue="layer2s" className="w-full">
-        <OverflowWrapper>
-          <TabsList>
-            <TabsTrigger value="layer2s" className="gap-1.5">
-              <span className="md:hidden">Layer2s</span>
-              <span className="max-md:hidden">Layer 2 projects</span>
-              <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>
-            <TabsTrigger value="layer3s" className="gap-1.5">
-              <span className="md:hidden">Layer 3s</span>
-              <span className="max-md:hidden">Layer 3 projects</span>
-              <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>
-            <TabsTrigger value="upcoming" className="gap-1.5">
-              <span className="md:hidden">Upcoming</span>
-              <span className="max-md:hidden">Upcoming projects</span>
-              <TabCountBadge>{upcomingTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>
-            <TabsTrigger value="archived" className="gap-1.5">
-              <span className="md:hidden">Archived</span>
-              <span className="max-md:hidden">Archived projects</span>
-              <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>
-          </TabsList>
-        </OverflowWrapper>
-        <TabsContent value="layer2s">
-          <BasicTable table={layer2sTable} />
-          <ScalingLegend />
-        </TabsContent>
-        <TabsContent value="layer3s">
-          <BasicTable table={layer3sTable} />
-        </TabsContent>
-        <TabsContent value="upcoming">
-          <BasicTable table={upcomingTable} />
-        </TabsContent>
-        <TabsContent value="archived">
-          <BasicTable table={archivedTable} />
-        </TabsContent>
-      </Tabs>
+      <div className="space-y-2">
+        <ScalingFilters
+          items={[
+            ...layer2sProjects,
+            ...layer3sProjects,
+            ...archivedProjects,
+            ...upcomingProjects,
+          ]}
+          state={scalingFilters}
+          setState={setScalingFilters}
+        />
+        <Tabs defaultValue="layer2s" className="w-full">
+          <OverflowWrapper>
+            <TabsList>
+              <TabsTrigger value="layer2s" className="gap-1.5">
+                <span className="md:hidden">Layer2s</span>
+                <span className="max-md:hidden">Layer 2 projects</span>
+                <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
+              </TabsTrigger>
+              <TabsTrigger value="layer3s" className="gap-1.5">
+                <span className="md:hidden">Layer 3s</span>
+                <span className="max-md:hidden">Layer 3 projects</span>
+                <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
+              </TabsTrigger>
+              <TabsTrigger value="upcoming" className="gap-1.5">
+                <span className="md:hidden">Upcoming</span>
+                <span className="max-md:hidden">Upcoming projects</span>
+                <TabCountBadge>{upcomingTable.getRowCount()}</TabCountBadge>
+              </TabsTrigger>
+              <TabsTrigger value="archived" className="gap-1.5">
+                <span className="md:hidden">Archived</span>
+                <span className="max-md:hidden">Archived projects</span>
+                <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
+              </TabsTrigger>
+            </TabsList>
+          </OverflowWrapper>
+          <TabsContent value="layer2s">
+            <BasicTable
+              table={layer2sTable}
+              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+            />
+            <ScalingLegend />
+          </TabsContent>
+          <TabsContent value="layer3s">
+            <BasicTable
+              table={layer3sTable}
+              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+            />
+          </TabsContent>
+          <TabsContent value="upcoming">
+            <BasicTable
+              table={upcomingTable}
+              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+            />
+          </TabsContent>
+          <TabsContent value="archived">
+            <BasicTable
+              table={archivedTable}
+              onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
+            />
+          </TabsContent>
+        </Tabs>
+      </div>
     </>
   )
 }
