@@ -36,7 +36,7 @@ export function OverflowWrapper({
           within === 'full-page-header' &&
             'from-pure-white via-pure-white dark:from-zinc-900 dark:via-zinc-900',
           within === 'details-header' &&
-            'from-pure-white dark:via-zinc-900/80 via-70% dark:from-zinc-900',
+            'from-pure-white via-70% dark:from-zinc-900 dark:via-zinc-900/80',
         )}
         data-role="overflow-wrapper-arrow-left"
       >
@@ -60,7 +60,7 @@ export function OverflowWrapper({
           within === 'full-page-header' &&
             'from-pure-white via-pure-white dark:from-zinc-900 dark:via-zinc-900',
           within === 'details-header' &&
-            'from-pure-white dark:via-zinc-900/80 via-30% dark:from-zinc-900',
+            'from-pure-white via-30% dark:from-zinc-900 dark:via-zinc-900/80',
         )}
         data-role="overflow-wrapper-arrow-right"
       >

@@ -36,7 +36,7 @@ export const common: Omit<Config, 'backend'> = {
     zkCatalog: true,
     tvl: true,
     layer3sTvl: true,
-    badges: true
+    badges: true,
   },
   layer2s,
   layer3s,
