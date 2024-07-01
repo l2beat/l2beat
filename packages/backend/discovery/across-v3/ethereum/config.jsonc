@@ -90,7 +90,10 @@
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
     },
     "ZkSync_Adapter": {
-      "ignoreInWatchMode": ["getL1CallValue"], // required amount of ETH to send a message, changes depending on the gas price
+      // required amount of ETH to send a message,
+      // changes depending on the gas price, so discovery with batching
+      // returns different values for the same block number
+      "ignoreMethods": ["getL1CallValue"],
       "ignoreRelatives": [
         "zkErc20Bridge",
         "zkSyncEthBridge",
