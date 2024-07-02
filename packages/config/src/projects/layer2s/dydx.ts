@@ -73,7 +73,7 @@ const longTimelockUpgradeability = {
 export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
-  badges: [Badge.VM.Cairo, Badge.DA.EthereumCalldata],
+  badges: [Badge.VM.CairoVM, Badge.DA.EthereumCalldata],
   display: {
     name: 'dYdX v3',
     slug: 'dydx',

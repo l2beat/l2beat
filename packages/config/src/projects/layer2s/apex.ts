@@ -107,7 +107,7 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
-  badges: [Badge.VM.Cairo, Badge.Infra.SHARP],
+  badges: [Badge.VM.CairoVM, Badge.Infra.SHARP],
   display: {
     name: 'ApeX',
     slug: 'apex',
