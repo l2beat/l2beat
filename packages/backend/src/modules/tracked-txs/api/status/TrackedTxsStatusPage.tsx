@@ -1,12 +1,15 @@
 import React, { Fragment } from 'react'
 
+import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { IndexerConfigurationRecord } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { TableData, TableHead } from '../../../status/Components'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'
 import { DASHBOARD_COLORS } from '../../../update-monitor/api/view/constants'
-import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepository'
 
-type TrackedTxsTableRow = TrackedTxsConfigRecord & {
+type TrackedTxsTableRow = Omit<IndexerConfigurationRecord, 'properties'> & {
+  properties: TrackedTxConfigEntry
+} & {
   active: boolean
   healthy: boolean
   unused: boolean
@@ -21,10 +24,10 @@ export function TrackedTxsStatusPage({
   const data = Object.entries(
     [...rawData].reduce(
       (acc, curr) => {
-        if (acc[curr.projectId]) {
-          acc[curr.projectId].push(curr)
+        if (acc[curr.properties.projectId]) {
+          acc[curr.properties.projectId].push(curr)
         } else {
-          acc[curr.projectId] = [curr]
+          acc[curr.properties.projectId] = [curr]
         }
         return acc
       },
@@ -37,7 +40,12 @@ export function TrackedTxsStatusPage({
       <div className="tabs">
         {data.map(([projectId, configs], i) => (
           <Fragment key={projectId}>
-            <input type="radio" name="tabs" id={projectId} checked={i === 0} />
+            <input
+              type="radio"
+              name="tabs"
+              id={projectId}
+              defaultChecked={i === 0}
+            />
             <label
               htmlFor={projectId}
               style={{
@@ -82,16 +90,22 @@ function Table({ data }: { data: TrackedTxsTableRow[] }) {
             }}
             key={config.id}
           >
-            <TableData value={config.type} />
+            <TableData value={config.properties.type} />
             <TableData value={config.id} />
             <TableData
-              value={config.lastSyncedTimestamp?.toDate().toUTCString()}
+              value={
+                config.currentHeight &&
+                new Date(config.currentHeight * 1000).toUTCString()
+              }
             />
             <TableData
-              value={config.sinceTimestampInclusive?.toDate().toUTCString()}
+              value={new Date(config.minHeight * 1000).toUTCString()}
             />
             <TableData
-              value={config.untilTimestampExclusive?.toDate().toUTCString()}
+              value={
+                config.maxHeight &&
+                new Date(config.maxHeight * 1000).toUTCString()
+              }
             />
           </tr>
         ))}

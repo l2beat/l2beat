@@ -3,7 +3,9 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import { createTrackedTxId } from '@l2beat/shared'
 import { FinalityProjectConfig } from '../../../config/features/finality'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import {
   calculateDetailsFor,
   calculateIntervals,
@@ -12,7 +14,6 @@ import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
 } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { TrackedTxsConfigsRepository } from '../../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -22,12 +23,15 @@ import { FinalityController } from './FinalityController'
 describe(FinalityController.name, () => {
   describe(FinalityController.prototype.getFinality.name, () => {
     it('returns empty object if no data', async () => {
-      const finalityController = new FinalityController(
-        getMockLivenessRepository([]),
-        getMockFinalityRepository([]),
-        mockObject<TrackedTxsConfigsRepository>(),
-        [],
-      )
+      const finalityController = new FinalityController({
+        projects: [],
+        finalityRepository: getMockFinalityRepository([]),
+        livenessRepository: getMockLivenessRepository([]),
+        indexerConfigurationRepository:
+          mockObject<IndexerConfigurationRepository>({
+            getSavedConfigurations: mockFn().resolvesTo([]),
+          }),
+      })
 
       const result = await finalityController.getFinality()
       expect(result).toEqual({ projects: {} })
@@ -61,15 +65,10 @@ describe(FinalityController.name, () => {
         averageStateUpdate: 3,
         maximumStateUpdate: 4,
       }
-      const finalityController = new FinalityController(
-        getMockLivenessRepository(RECORDS),
-        getMockFinalityRepository([project2Result]),
-        mockObject<TrackedTxsConfigsRepository>({
-          findLatestSyncedTimestampByProjectIdAndSubtype: mockFn()
-            .given(ProjectId('project1'), 'batchSubmissions')
-            .resolvesToOnce(START),
-        }),
-        mockProjectConfig([
+      const finalityController = new FinalityController({
+        finalityRepository: getMockFinalityRepository([project2Result]),
+        livenessRepository: getMockLivenessRepository(RECORDS),
+        projects: mockProjectConfig([
           {
             projectId: ProjectId('project1'),
             lag: 0,
@@ -83,7 +82,20 @@ describe(FinalityController.name, () => {
             stateUpdate: 'analyze',
           },
         ]),
-      )
+        indexerConfigurationRepository:
+          mockObject<IndexerConfigurationRepository>({
+            getSavedConfigurations: mockFn().resolvesTo([
+              {
+                id: createTrackedTxId.random(),
+                properties: JSON.stringify({
+                  projectId: ProjectId('project1'),
+                  subtype: 'batchSubmissions',
+                }),
+                currentHeight: START.toNumber(),
+              },
+            ]),
+          }),
+      })
 
       const records = [...RECORDS]
       calculateIntervals(records)
@@ -157,18 +169,32 @@ describe(FinalityController.name, () => {
           stateUpdate: 'disabled',
         },
       ])
-      const finalityController = new FinalityController(
-        getMockLivenessRepository(RECORDS),
-        getMockFinalityRepository([]),
-        mockObject<TrackedTxsConfigsRepository>({
-          findLatestSyncedTimestampByProjectIdAndSubtype: mockFn()
-            .given(ProjectId('project1'), 'batchSubmissions')
-            .resolvesToOnce(START)
-            .given(ProjectId('project2'), 'batchSubmissions')
-            .resolvesToOnce(undefined),
-        }),
+      const finalityController = new FinalityController({
         projects,
-      )
+        finalityRepository: getMockFinalityRepository([]),
+        livenessRepository: getMockLivenessRepository(RECORDS),
+        indexerConfigurationRepository:
+          mockObject<IndexerConfigurationRepository>({
+            getSavedConfigurations: mockFn().resolvesTo([
+              {
+                id: createTrackedTxId.random(),
+                properties: JSON.stringify({
+                  projectId: ProjectId('project1'),
+                  subtype: 'batchSubmissions',
+                }),
+                currentHeight: START.toNumber(),
+              },
+              {
+                id: createTrackedTxId.random(),
+                properties: JSON.stringify({
+                  projectId: ProjectId('project2'),
+                  subtype: 'batchSubmissions',
+                }),
+                currentHeight: null,
+              },
+            ]),
+          }),
+      })
 
       const project1Records = RECORDS.filter(
         (r) => r.projectId === ProjectId('project1'),
@@ -220,9 +246,9 @@ describe(FinalityController.name, () => {
           stateUpdate: 'analyze',
         },
       ])
-      const finalityController = new FinalityController(
-        getMockLivenessRepository([]),
-        getMockFinalityRepository([
+      const finalityController = new FinalityController({
+        livenessRepository: getMockLivenessRepository([]),
+        finalityRepository: getMockFinalityRepository([
           {
             projectId: ProjectId('project1'),
             timestamp: new UnixTime(1000),
@@ -248,9 +274,10 @@ describe(FinalityController.name, () => {
             averageStateUpdate: null,
           },
         ]),
-        mockObject<TrackedTxsConfigsRepository>(),
         projects,
-      )
+        indexerConfigurationRepository:
+          mockObject<IndexerConfigurationRepository>({}),
+      })
 
       const result = await finalityController.getProjectsFinality(projects)
 

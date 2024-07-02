@@ -1,19 +1,19 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { L2CostsRow } from 'knex/types/tables'
 
+import { TrackedTxId } from '@l2beat/shared'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 
 export interface L2CostsRecord {
   timestamp: UnixTime
   txHash: string
-  trackedTxId: TrackedTxId
+  configurationId: TrackedTxId
   gasUsed: number
   gasPrice: bigint
   calldataLength: number
@@ -53,19 +53,34 @@ export class L2CostsRepository extends BaseRepository {
   ): Promise<L2CostsRecordWithProjectId[]> {
     const [from, to] = timeRange
     const knex = await this.knex()
-    const rows = await knex('l2_costs')
+    const l2costsRows = await knex('l2_costs')
       .where('timestamp', '>=', from.toDate())
       .andWhere('timestamp', '<=', to.toDate())
-      .join(
-        'tracked_txs_configs',
-        'l2_costs.tracked_tx_id',
-        'tracked_txs_configs.id',
-      )
       .distinct('tx_hash')
-      .select('tracked_txs_configs.project_id', 'l2_costs.*')
+      .select('*')
       .orderBy('timestamp', 'asc')
 
-    return rows.map(toRecordWithProjectId)
+    if (l2costsRows.length === 0) {
+      return []
+    }
+
+    const configRows = await knex('indexer_configurations').whereIn(
+      'id',
+      l2costsRows.map((r) => r.configuration_id),
+    )
+
+    const resultRows = l2costsRows.map((l2costsRow) => {
+      const config = configRows.find(
+        (configRow) => configRow.id === l2costsRow.configuration_id,
+      )
+      assert(config?.id, `Cannot found config with id: ${config?.id}`)
+      return {
+        ...l2costsRow,
+        project_id: JSON.parse(config.properties).projectId,
+      }
+    })
+
+    return resultRows.map(toRecordWithProjectId)
   }
 
   async deleteFromById(
@@ -75,7 +90,7 @@ export class L2CostsRepository extends BaseRepository {
   ) {
     const knex = await this.knex(trx)
     return knex('l2_costs')
-      .where('tracked_tx_id', id)
+      .where('configuration_id', id)
       .andWhere('timestamp', '>=', deleteFromInclusive.toDate())
       .delete()
   }
@@ -84,13 +99,36 @@ export class L2CostsRepository extends BaseRepository {
     const knex = await this.knex()
     return knex('l2_costs').delete()
   }
+
+  async deleteByConfigInTimeRange(
+    configId: string,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ) {
+    const knex = await this.knex()
+    return knex('l2_costs')
+      .where('configuration_id', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .delete()
+  }
+
+  // #region Status page
+
+  async getUsedConfigsIds(): Promise<string[]> {
+    const knex = await this.knex()
+    const rows = await knex('l2_costs').distinct('configuration_id')
+    return rows.map((row) => row.configuration_id)
+  }
+
+  // #endregion
 }
 
 function toRow(record: L2CostsRecord): L2CostsRow {
   return {
     timestamp: record.timestamp.toDate(),
     tx_hash: record.txHash,
-    tracked_tx_id: record.trackedTxId.toString(),
+    configuration_id: record.configurationId.toString(),
     gas_used: record.gasUsed,
     gas_price: record.gasPrice.toString(),
     calldata_gas_used: record.calldataGasUsed,
@@ -104,7 +142,7 @@ function toRecord(row: L2CostsRow): L2CostsRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    configurationId: row.configuration_id,
     gasUsed: row.gas_used,
     gasPrice: BigInt(row.gas_price),
     calldataGasUsed: row.calldata_gas_used,

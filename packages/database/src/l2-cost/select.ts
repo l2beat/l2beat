@@ -8,6 +8,6 @@ export const selectL2Cost = [
   'gas_price',
   'gas_used',
   'timestamp',
-  'tracked_tx_id',
+  'configuration_id',
   'tx_hash',
 ] as const satisfies (keyof L2CostRow)[]

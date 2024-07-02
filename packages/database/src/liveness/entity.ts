@@ -11,7 +11,7 @@ export interface Liveness {
   timestamp: UnixTime
   blockNumber: number
   txHash: string
-  trackedTxId: TrackedTxId
+  configurationId: TrackedTxId
 }
 
 export interface LivenessRecordWithProjectIdAndSubtype {
@@ -48,7 +48,7 @@ export function toRecord(row: Selectable<LivenessRow>): Liveness {
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
     txHash: row.tx_hash,
-    trackedTxId: TrackedTxId.unsafe(row.tracked_tx_id),
+    configurationId: row.configuration_id,
   }
 }
 
@@ -76,6 +76,6 @@ export function toRow(record: Liveness): Insertable<LivenessRow> {
     timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
     tx_hash: record.txHash,
-    tracked_tx_id: record.trackedTxId.toString(),
+    configuration_id: record.configurationId.toString(),
   }
 }

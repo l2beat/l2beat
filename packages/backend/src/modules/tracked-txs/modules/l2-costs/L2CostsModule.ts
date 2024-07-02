@@ -2,8 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../../../config'
 import { Peripherals } from '../../../../peripherals/Peripherals'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerService } from '../../../../tools/uif/IndexerService'
+import { IndexerStateRepository } from '../../../../tools/uif/IndexerStateRepository'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
-import { TrackedTxsConfigsRepository } from '../../repositories/TrackedTxsConfigsRepository'
 import { L2CostsUpdater } from './L2CostsUpdater'
 import { L2CostsController } from './api/L2CostsController'
 import { createL2CostsRouter } from './api/L2CostsRouter'
@@ -20,10 +22,19 @@ export function createL2CostsModule(
     return
   }
 
+  const indexerStateRepository = peripherals.getRepository(
+    IndexerStateRepository,
+  )
+  const configurationsRepository = peripherals.getRepository(
+    IndexerConfigurationRepository,
+  )
+  const indexerService = new IndexerService(
+    indexerStateRepository,
+    configurationsRepository,
+  )
+
   const l2CostsController = new L2CostsController({
-    trackedTxsConfigsRepository: peripherals.getRepository(
-      TrackedTxsConfigsRepository,
-    ),
+    indexerService,
     aggregatedL2CostsRepository: peripherals.getRepository(
       AggregatedL2CostsRepository,
     ),

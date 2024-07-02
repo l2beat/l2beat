@@ -3,24 +3,24 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
+import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../../../../test/database'
-import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (knex, kysely) => {
   const oldRepo = new L2CostsRepository(knex, Logger.SILENT)
-  const oldConfigRepo = new TrackedTxsConfigsRepository(knex, Logger.SILENT)
+  const oldConfigRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
   const newRepo = kysely.l2Cost
-  const newConfigRepo = kysely.trackedTxConfig
+  const newConfigRepo = kysely.indexerConfiguration
 
   // Extracted since we have single describe and two running contexts
   // in tandem with database constraints and data integrity
   // it results in failed constraints and errors - simple race conditions
-  const txIdA = TrackedTxId.random()
-  const txIdB = TrackedTxId.random()
-  const txIdC = TrackedTxId.random()
-  const txIdD = TrackedTxId.random()
+  const txIdA = createTrackedTxId.random()
+  const txIdB = createTrackedTxId.random()
+  const txIdC = createTrackedTxId.random()
+  const txIdD = createTrackedTxId.random()
 
   suite(oldRepo, oldConfigRepo)
   suite(newRepo, newConfigRepo)
@@ -34,7 +34,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START,
         txHash: '0x1',
-        trackedTxId: txIdA,
+        configurationId: txIdA,
         gasUsed: 100,
         gasPrice: 1n,
         calldataLength: 100,
@@ -45,7 +45,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START.add(-1, 'hours'),
         txHash: '0x2',
-        trackedTxId: txIdB,
+        configurationId: txIdB,
         gasUsed: 200,
         gasPrice: 2n,
         calldataLength: 200,
@@ -56,7 +56,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
       {
         timestamp: START.add(-2, 'hours'),
         txHash: '0x3',
-        trackedTxId: txIdC,
+        configurationId: txIdC,
         gasUsed: 150,
         gasPrice: 2n,
         calldataLength: 400,
@@ -69,13 +69,14 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
     beforeEach(async function () {
       this.timeout(10000)
       await configRepository.deleteAll()
-      await configRepository.addMany(
+      await configRepository.addOrUpdateMany(
         DATA.map((d, i) => ({
-          id: d.trackedTxId,
-          projectId: ProjectId(`project-${i % 2 ? 1 : 2}`),
-          type: 'liveness',
-          sinceTimestampInclusive: START,
-          debugInfo: '',
+          indexerId: 'indexer',
+          id: d.configurationId,
+          minHeight: START.toNumber(),
+          maxHeight: null,
+          currentHeight: null,
+          properties: JSON.stringify({ projectId: `project-${i}` }),
         })),
       )
       await repository.deleteAll()
@@ -93,7 +94,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START,
             txHash: '0x4',
-            trackedTxId: DATA[0].trackedTxId,
+            configurationId: DATA[0].configurationId,
             gasUsed: 100,
             gasPrice: 1n,
             calldataLength: 100,
@@ -171,7 +172,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(-1, 'hours'),
             txHash: '0x4',
-            trackedTxId: txIdD,
+            configurationId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -182,7 +183,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(1, 'hours'),
             txHash: '0x45',
-            trackedTxId: txIdD,
+            configurationId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -193,7 +194,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           {
             timestamp: START.add(2, 'hours'),
             txHash: '0x5',
-            trackedTxId: txIdD,
+            configurationId: txIdD,
             gasUsed: 150,
             gasPrice: 2n,
             calldataLength: 400,
@@ -203,13 +204,14 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
           },
         ]
 
-        await configRepository.addMany([
+        await configRepository.addOrUpdateMany([
           {
             id: txIdD,
-            projectId: ProjectId('project'),
-            type: 'liveness',
-            sinceTimestampInclusive: START,
-            debugInfo: '',
+            indexerId: 'indexer',
+            minHeight: START.toNumber(),
+            properties: '',
+            currentHeight: null,
+            maxHeight: null,
           },
         ])
         await repository.addMany(records)

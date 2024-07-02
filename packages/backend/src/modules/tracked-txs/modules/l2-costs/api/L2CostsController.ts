@@ -1,31 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   L2CostsApiChart,
   L2CostsApiChartPoint,
   L2CostsApiResponse,
   L2CostsProjectApiCharts,
-  TrackedTxsConfigSubtype,
   UnixTime,
-  notUndefined,
 } from '@l2beat/shared-pure'
-
 import { Project } from '../../../../../model/Project'
-import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
 } from '../repositories/AggregatedL2CostsRepository'
-
-export type L2CostsTrackedTxsConfig = {
-  entries: L2CostsTrackedTxsConfigEntry[]
-}
-
-type L2CostsTrackedTxsConfigEntry = {
-  subtype: TrackedTxsConfigSubtype
-  untilTimestamp: UnixTime | undefined
-}
 
 const MAX_DAYS = 180
 
@@ -49,7 +37,7 @@ export const CHART_TYPES: L2CostsApiChart['types'] = [
 ] as const
 
 export interface L2CostsControllerDeps {
-  trackedTxsConfigsRepository: TrackedTxsConfigsRepository
+  indexerService: IndexerService
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   projects: Project[]
   logger?: Logger
@@ -68,27 +56,29 @@ export class L2CostsController {
     const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
     const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
 
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
+      )
+
     const activeProjects = this.$.projects.filter((p) => !p.isArchived)
     for (const project of activeProjects) {
       if (!project.trackedTxsConfig) {
         continue
       }
 
-      const l2CostsConfig = this.getL2CostsTrackedTxsConfig(
-        project.trackedTxsConfig,
+      const projectRuntimeConfigIds = project.trackedTxsConfig
+        .filter((c) => c.type === 'l2costs')
+        .map((c) => c.id)
+      const projectConfigs = configurations.filter((c) =>
+        projectRuntimeConfigIds.includes(c.id),
       )
 
-      if (l2CostsConfig.entries?.length === 0) {
+      if (projectConfigs.length === 0) {
         continue
       }
 
-      const configurations =
-        await this.$.trackedTxsConfigsRepository.getByProjectIdAndType(
-          project.projectId,
-          'l2costs',
-        )
-
-      const syncedUntil = getSyncedUntil(configurations)
+      const syncedUntil = getSyncedUntil(projectConfigs)
       if (!syncedUntil) {
         continue
       }
@@ -163,27 +153,6 @@ export class L2CostsController {
     return {
       hourly,
       daily,
-    }
-  }
-
-  getL2CostsTrackedTxsConfig(
-    trackedTxsConfig: TrackedTxsConfig,
-  ): L2CostsTrackedTxsConfig {
-    return {
-      entries: trackedTxsConfig.entries
-        .flatMap((entry) => {
-          return entry.uses.flatMap((use) => {
-            if (use.type !== 'l2costs') {
-              return
-            }
-
-            return {
-              subtype: use.subtype,
-              untilTimestamp: entry.untilTimestampExclusive,
-            }
-          })
-        })
-        .filter(notUndefined),
     }
   }
 

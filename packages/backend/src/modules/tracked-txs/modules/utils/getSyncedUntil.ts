@@ -1,10 +1,13 @@
-import { UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
-
-import { TrackedTxsConfigRecord } from '../../repositories/TrackedTxsConfigsRepository'
+import { SavedConfiguration } from '../../../../tools/uif/multi/types'
 
 export function getSyncedUntil(
-  configurations: TrackedTxsConfigRecord[],
+  configurations: Omit<
+    SavedConfiguration<TrackedTxConfigEntry>,
+    'properties'
+  >[],
 ): UnixTime | undefined {
   if (configurations.length === 0) {
     return undefined
@@ -12,18 +15,18 @@ export function getSyncedUntil(
 
   const [configsWithoutUntil, configsWithUntil] = partition(
     configurations,
-    (c) => c.untilTimestampExclusive === undefined,
+    (c) => c.maxHeight === null,
   )
 
   const configsToUse =
     configsWithoutUntil.length !== 0 &&
-    configsWithoutUntil.some((c) => c.lastSyncedTimestamp !== undefined)
+    configsWithoutUntil.some((c) => c.currentHeight !== null)
       ? configsWithoutUntil
       : configsWithUntil
 
   const lastSyncedTimestamps = configsToUse
-    .map((c) => c.lastSyncedTimestamp?.toNumber())
-    .filter(notUndefined)
+    .map((c) => c.currentHeight)
+    .filter((height): height is number => height !== null)
 
   if (lastSyncedTimestamps.length === 0) {
     return undefined

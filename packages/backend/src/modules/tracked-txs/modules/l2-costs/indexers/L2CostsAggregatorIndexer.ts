@@ -1,11 +1,11 @@
 import { assert, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
+import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -122,8 +122,10 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         }]: ETH price not found: ${timestamp.toNumber()}`,
       )
 
-      const multiplier = multipliers.find((c) => c.id === record.trackedTxId)
-      assert(multiplier, `Multiplier not found for ${record.trackedTxId}`)
+      const multiplier = multipliers.find(
+        (c) => c.id === record.configurationId,
+      )
+      assert(multiplier, `Multiplier not found for ${record.configurationId}`)
 
       const calculations = this.calculate(
         record,
@@ -251,16 +253,14 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         continue
       }
 
-      const projectMultipliers = project.trackedTxsConfig.entries.flatMap(
-        (e) => {
-          return e.uses
-            .filter((u) => u.type === 'l2costs')
-            .map((use) => ({
-              id: use.id,
-              factor: e.costMultiplier ?? 1,
-            }))
-        },
-      )
+      const projectMultipliers = project.trackedTxsConfig
+        .filter((u): u is TrackedTxCostsConfig => u.type === 'l2costs')
+        .map((e) => {
+          return {
+            id: e.id,
+            factor: e.costMultiplier ?? 1,
+          }
+        })
 
       multipliers.push(...projectMultipliers)
     }
