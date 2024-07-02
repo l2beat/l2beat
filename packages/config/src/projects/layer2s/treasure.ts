@@ -17,9 +17,7 @@ export const treasure: Layer2 = upcomingL2({
       documentation: [],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://x.com/Treasure_DAO',
-      ],
+      socialMedia: ['https://x.com/Treasure_DAO'],
     },
   },
 })

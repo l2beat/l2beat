@@ -17,9 +17,7 @@ export const align: Layer2 = upcomingL2({
       documentation: ['https://docs.align.network/docs/getting-started'],
       explorers: [],
       repositories: [],
-      socialMedia: [
-        'https://x.com/align_network',
-      ],
+      socialMedia: ['https://x.com/align_network'],
     },
   },
 })
