@@ -1,3 +1,143 @@
+Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
+
+# Diff at Tue, 02 Jul 2024 15:07:07 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@4894f60c1f3d7a498ee8fdfa670bc6f901872c10 block: 20189741
+- current block number: 20219615
+
+## Description
+
+L1RollupAddressManager.sol: changed harcoded B_TIER_ROUTER address.
+Bridge.sol: small change in retryMessage logic.
+TaikoL1.sol: changes in block verification. assignedProver and hookCalls now DEPRECATED. assignedProver is now msg.sender of proposeBlock tx.
+
+New getters (getLastVerifiedBlock, getLastSyncedBlock), and decreased liveness bond to 125 TAIKO.
+
+
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      upgradeability.implementation:
+-        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
++        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      implementations.0:
+-        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
++        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.getConfig.maxBlocksToVerifyPerProposal:
+-        10
+      values.getConfig.livenessBond:
+-        "250000000000000000000"
++        "125000000000000000000"
+      values.getConfig.blockSyncThreshold:
+-        32
+      values.getConfig.maxBlocksToVerify:
++        16
+      values.getConfig.stateRootSyncInternal:
++        16
+      values.impl:
+-        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
++        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.tier_router:
+-        "0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F"
++        "0x6E997f1F22C40ba37F633B08f3b07E10Ed43155a"
+    }
+```
+
+```diff
+    contract TaikoToken (0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
++        "0xcfe803378D79d1180EbF030455040EA6513869dF"
+      implementations.0:
+-        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
++        "0xcfe803378D79d1180EbF030455040EA6513869dF"
+      values.impl:
+-        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
++        "0xcfe803378D79d1180EbF030455040EA6513869dF"
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"
++        "0x29a88d60246C76E4F28806b9C8a42d2183154900"
+      implementations.0:
+-        "0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"
++        "0x29a88d60246C76E4F28806b9C8a42d2183154900"
+      values.impl:
+-        "0x8EEf314878A7E56314E8DF285d0B0D649C903aF6"
++        "0x29a88d60246C76E4F28806b9C8a42d2183154900"
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
++        "0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
+      implementations.0:
+-        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
++        "0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
+      values.impl:
+-        "0x75b5E276c5C1e9378E899cb3A87977421980Eb22"
++        "0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract TierRouter (0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F)
+    +++ description: None
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
++        "0x01E7D369a619eF1B0E92563d8737F42C09789986"
+      implementations.0:
+-        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
++        "0x01E7D369a619eF1B0E92563d8737F42C09789986"
+      values.impl:
+-        "0x40f8Be2969D0D5717768F6799c8840e5D5D603F7"
++        "0x01E7D369a619eF1B0E92563d8737F42C09789986"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract TierProviderV2 (0x3a1A900680BaADb889202faf12915F7E47B71ddd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TierRouter (0x6E997f1F22C40ba37F633B08f3b07E10Ed43155a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../L1RollupAddressManager.sol                     |   2 +-
+ .../TaikoBridge/Bridge.sol                         |  11 +-
+ .../TaikoL1Contract/TaikoL1.sol                    | 874 +++++++++++----------
+ .../TaikoToken/TaikoToken.sol                      |  21 +-
+ ...-0x3a1A900680BaADb889202faf12915F7E47B71ddd.sol | 159 ++++
+ ...0x4cffe56C947E26D07C14020499776DB3e9AE3a23.sol} |   0
+ .../{.flat@20189741 => .flat}/TierRouter.sol       |   2 +-
+ 7 files changed, 643 insertions(+), 426 deletions(-)
+```
+
 Generated with discovered.json: 0x1a9d9e0714596a68f80cbf3b326f615b15bcfa66
 
 # Diff at Fri, 28 Jun 2024 10:59:39 GMT:
