@@ -20,7 +20,7 @@
     "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03": "SecurityCouncilMultisig",
     "0x847B5c174615B1B7fDF770882256e2D3E95b9D92": "FoundationMultisig_1",
     "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A": "FoundationMultisig_2",
-    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "GuardianMultisig",
+    "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2": "SuperChainGuardianMultisig",
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
   },
   "overrides": {
