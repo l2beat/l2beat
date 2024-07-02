@@ -84,13 +84,24 @@ export class Clock {
   ): UnixTime[] {
     const timestamps: UnixTime[] = []
 
-    const minTimestampOverride =
-      options && options.minTimestampOverride
-        ? UnixTime.max(
-            options.minTimestampOverride.toEndOf('day'),
-            this.getFirstDay(),
-          )
-        : undefined
+    const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
+    const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
+
+    let minTimestampOverride: UnixTime | undefined = undefined
+
+    if (
+      options &&
+      options.minTimestampOverride &&
+      options.minTimestampOverride.gte(this.getFirstDay())
+    ) {
+      if (options.minTimestampOverride.gte(hourlyCutOff)) {
+        minTimestampOverride = options.minTimestampOverride.toEndOf('hour')
+      } else if (options.minTimestampOverride.gte(sixHourlyCutOff)) {
+        minTimestampOverride = options.minTimestampOverride.toEndOf('six hours')
+      } else {
+        minTimestampOverride = options.minTimestampOverride.toEndOf('day')
+      }
+    }
 
     const from = minTimestampOverride ?? this.getFirstDay()
 
