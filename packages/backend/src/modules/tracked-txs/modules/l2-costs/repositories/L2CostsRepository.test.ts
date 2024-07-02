@@ -5,8 +5,8 @@ import { describe } from 'mocha'
 
 import { describeDatabase } from '../../../../../test/database'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
+import { TrackedTxId } from '@l2beat/shared'
 
 describeDatabase(L2CostsRepository.name, (knex, kysely) => {
   const oldRepo = new L2CostsRepository(knex, Logger.SILENT)

@@ -1,15 +1,15 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import {
+  TrackedTxConfigEntry,
+  TrackedTxId,
+  TrackedTxUseWithId,
+} from '@l2beat/shared'
 
 import {
   TrackedTxsConfigRecord,
   trackedTxConfigEntryToRecord,
 } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
-import {
-  TrackedTxConfigEntry,
-  TrackedTxUseWithId,
-} from '../types/TrackedTxsConfig'
 import { diffTrackedTxConfigurations } from './diffTrackedTxConfigurations'
 
 describe(diffTrackedTxConfigurations.name, () => {

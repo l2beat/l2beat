@@ -20,12 +20,12 @@ import { utils } from 'ethers'
 import { isArray, isString } from 'lodash'
 
 import { join } from 'path'
+import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
 import {
-  ScalingProjectEscrow,
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
-  ScalingProjectReference,
-} from '../common'
+} from '../common/ScalingProjectPermission'
+import { ScalingProjectReference } from '../common/ScalingProjectReference'
 import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,

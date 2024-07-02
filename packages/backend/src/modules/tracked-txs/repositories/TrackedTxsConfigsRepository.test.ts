@@ -4,11 +4,11 @@ import { expect } from 'earl'
 
 import { describeDatabase } from '../../../test/database'
 import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
 } from './TrackedTxsConfigsRepository'
+import { TrackedTxId } from '@l2beat/shared'
 
 const START = UnixTime.now()
 

@@ -8,7 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { tokenList } from '../tokens'
 import { chains } from '../chains'
-import { BackendProject } from '../common/BackendProject'
+import { BackendProject } from '../backend/BackendProject'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],

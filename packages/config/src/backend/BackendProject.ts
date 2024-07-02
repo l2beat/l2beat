@@ -24,8 +24,8 @@ import {
   Layer3,
 } from '../projects'
 import { tokenList } from '../tokens'
-import { ScalingProjectTransactionApi } from './ScalingProjectTransactionApi'
-import { ScalingProjectEscrow } from './ScalingProjectEscrow'
+import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
+import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
 
 export interface BackendProject {
   projectId: ProjectId

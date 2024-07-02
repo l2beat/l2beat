@@ -39,7 +39,6 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING, StageConfig } from '../common'
 import { getStage } from '../common/stages/getStage'
 import {
   type Layer2,
@@ -47,6 +46,8 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { StageConfig } from '../common/stages/types'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
