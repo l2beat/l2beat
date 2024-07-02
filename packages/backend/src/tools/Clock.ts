@@ -39,42 +39,10 @@ export class Clock {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('day')
   }
 
-  getSixHourlyCutoff(
-    targetTimestamp: UnixTime,
-    options?: {
-      minTimestampOverride?: UnixTime
-    },
-  ): UnixTime {
-    const result = targetTimestamp
-      .add(-this.sixHourlyCutoffDays, 'days')
-      .toEndOf('six hours')
-
-    if (options && options.minTimestampOverride) {
-      if (options.minTimestampOverride.gt(result)) {
-        return options.minTimestampOverride.toEndOf('six hours')
-      }
-    }
-
-    return result
-  }
-
-  getHourlyCutoff(
-    targetTimestamp: UnixTime,
-    options?: {
-      minTimestampOverride?: UnixTime
-    },
-  ): UnixTime {
-    const result = targetTimestamp
-      .add(-this.hourlyCutoffDays, 'days')
-      .toEndOf('hour')
-
-    if (options && options.minTimestampOverride) {
-      if (options.minTimestampOverride.gt(result)) {
-        return options.minTimestampOverride.toEndOf('hour')
-      }
-    }
-
-    return result
+  shouldTimestampBeIncluded(targetTimestamp: UnixTime, timestamp: UnixTime) {
+    return timestamp.equals(
+      this.getTimestampForApi(targetTimestamp, timestamp.toNumber()),
+    )
   }
 
   getAllTimestampsForApi(
@@ -83,23 +51,17 @@ export class Clock {
       minTimestampOverride: UnixTime
     },
   ): UnixTime[] {
-    const timestamps: UnixTime[] = []
-
-    let minTimestampOverride: UnixTime | undefined = undefined
-
-    if (options && options.minTimestampOverride.gte(this.getFirstDay())) {
-      minTimestampOverride = this.getTimestampForApi(
-        targetTimestamp,
-        options.minTimestampOverride.toNumber(),
-      )
-    }
-
-    const from = minTimestampOverride ?? this.getFirstDay()
+    const from = options?.minTimestampOverride.gt(this.getFirstDay())
+      ? this.getTimestampForApi(
+          targetTimestamp,
+          options.minTimestampOverride.toNumber(),
+        )
+      : this.getFirstDay()
 
     let current = this.getTimestampForApi(targetTimestamp, from.toNumber())
-    const last = targetTimestamp
 
-    while (current.lte(last)) {
+    const timestamps: UnixTime[] = []
+    while (current.lte(targetTimestamp)) {
       timestamps.push(current)
       current = this.getTimestampForApi(targetTimestamp, current.toNumber() + 1)
     }
@@ -122,10 +84,34 @@ export class Clock {
     )
   }
 
-  shouldTimestampBeIncluded(targetTimestamp: UnixTime, timestamp: UnixTime) {
-    return timestamp.equals(
-      this.getTimestampForApi(targetTimestamp, timestamp.toNumber()),
-    )
+  getSixHourlyCutoff(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride: UnixTime
+    },
+  ): UnixTime {
+    const cutoff = targetTimestamp
+      .add(-this.sixHourlyCutoffDays, 'days')
+      .toEndOf('six hours')
+
+    return options?.minTimestampOverride.gt(cutoff)
+      ? options.minTimestampOverride.toEndOf('six hours')
+      : cutoff
+  }
+
+  getHourlyCutoff(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride: UnixTime
+    },
+  ): UnixTime {
+    const cutoff = targetTimestamp
+      .add(-this.hourlyCutoffDays, 'days')
+      .toEndOf('hour')
+
+    return options?.minTimestampOverride.gt(cutoff)
+      ? options.minTimestampOverride.toEndOf('hour')
+      : cutoff
   }
 
   onNewHour(callback: (timestamp: UnixTime) => void) {
