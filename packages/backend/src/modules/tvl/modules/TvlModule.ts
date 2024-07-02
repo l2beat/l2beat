@@ -14,9 +14,11 @@ import { ApplicationModule } from '../../ApplicationModule'
 import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
 import { BreakdownService } from '../api/services/BreakdownService'
-import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
+import { AmountsDataService } from '../api/services/data/AmountsDataService'
+import { PricesDataService } from '../api/services/data/PricesDataService'
+import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
@@ -99,12 +101,25 @@ export function createTvlModule(
   )
   assert(ethPrice, 'Eth priceId not found')
 
-  const dataService = new DataService({
-    amountRepository: peripherals.getRepository(AmountRepository),
-    priceRepository: peripherals.getRepository(PriceRepository),
+  const valuesDataService = new ValuesDataService({
     valueRepository: peripherals.getRepository(ValueRepository),
-    syncOptimizer,
-    ethPriceId: createPriceId(ethPrice),
+    clock,
+    logger,
+  })
+
+  const pricesDataService = new PricesDataService({
+    priceRepository: peripherals.getRepository(PriceRepository),
+    clock,
+    etherPriceConfig: { ...ethPrice, configId: createPriceId(ethPrice) },
+    logger,
+  })
+
+  const amountsDataService = new AmountsDataService({
+    amountRepository: peripherals.getRepository(AmountRepository),
+    configurationRepository: peripherals.getRepository(
+      IndexerConfigurationRepository,
+    ),
+    clock,
     logger,
   })
 
@@ -113,29 +128,34 @@ export function createTvlModule(
   )
 
   const tokenService = new TokenService({
-    dataService,
+    amountsDataService,
+    pricesDataService,
     configMapping,
+    clock,
   })
 
   const aggregatedService = new AggregatedService({
-    dataService,
-    syncOptimizer,
+    valuesDataService,
+    pricesDataService,
+    clock,
     tokenService,
   })
 
   const breakdownService = new BreakdownService({
-    dataService,
+    pricesDataService,
+    amountsDataService,
     configMapping,
-    syncOptimizer,
     chainConverter,
   })
 
   const tvlService = new TvlService({
-    syncOptimizer,
+    valuesDataService,
+    pricesDataService,
+    amountsDataService,
     tokenService,
-    dataService,
-    chainConverter,
+    clock,
     configMapping,
+    chainConverter,
   })
 
   const tvlRouter = createTvlRouter(

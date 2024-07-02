@@ -34,6 +34,8 @@ export class Application {
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
+      7,
+      90,
     )
 
     const http = new HttpClient()

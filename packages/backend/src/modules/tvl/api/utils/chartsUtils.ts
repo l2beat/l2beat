@@ -36,7 +36,7 @@ export function getChartsData(props: {
   hourlyStart: UnixTime
   lastHour: UnixTime
   aggregate: Map<number, ValuesForSource>
-  ethPrices: Map<number, number>
+  ethPrices: Dictionary<number>
 }): TvlApiCharts {
   const dailyData = getChartData({
     start: props.dailyStart,
@@ -77,7 +77,7 @@ export function getChartData(props: {
   end: UnixTime
   step: [number, 'hours' | 'days']
   aggregatedValues: Map<number, ValuesForSource>
-  ethPrices: Map<number, number>
+  ethPrices: Dictionary<number>
   chartId: string | ProjectId
 }) {
   const values = []
@@ -94,7 +94,7 @@ export function getChartData(props: {
         ' at timestamp ' +
         curr.toString(),
     )
-    const ethPrice = props.ethPrices.get(curr.toNumber())
+    const ethPrice = props.ethPrices[curr.toNumber()]
     assert(ethPrice, 'Eth price not found for timestamp ' + curr.toString())
 
     values.push(getChartPoint(curr, ethPrice, value))
@@ -103,34 +103,38 @@ export function getChartData(props: {
 }
 
 export function getTokenCharts(
+  targetTimestamp: UnixTime,
   dailyStart: UnixTime,
-  lastHour: UnixTime,
-  amountsAndPrices: Dictionary<{ amount: bigint; price: number }> = {},
-  decimals: number,
   sixHourlyStart: UnixTime,
   hourlyStart: UnixTime,
+  amounts: Dictionary<bigint>,
+  prices: Dictionary<number>,
+  decimals: number,
 ): TokenTvlApiCharts {
   const dailyData = getTokenChartData({
     start: dailyStart,
-    end: lastHour,
+    end: targetTimestamp,
     step: [1, 'days'],
-    amountsAndPrices,
+    amounts,
+    prices,
     decimals,
   })
 
   const sixHourlyData = getTokenChartData({
     start: sixHourlyStart,
-    end: lastHour,
+    end: targetTimestamp,
     step: [6, 'hours'],
-    amountsAndPrices,
+    amounts,
+    prices,
     decimals,
   })
 
   const hourlyData = getTokenChartData({
     start: hourlyStart,
-    end: lastHour,
+    end: targetTimestamp,
     step: [1, 'hours'],
-    amountsAndPrices,
+    amounts,
+    prices,
     decimals,
   })
 
@@ -154,7 +158,8 @@ export function getTokenChartData(props: {
   start: UnixTime
   end: UnixTime
   step: [number, 'days' | 'hours']
-  amountsAndPrices: Dictionary<{ amount: bigint; price: number }>
+  amounts: Dictionary<bigint>
+  prices: Dictionary<number>
   decimals: number
 }) {
   const data: [UnixTime, number, number][] = []
@@ -163,19 +168,18 @@ export function getTokenChartData(props: {
     curr <= props.end;
     curr = curr.add(...props.step)
   ) {
-    const amountAndPrice = props.amountsAndPrices[curr.toString()]
-    assert(
-      amountAndPrice !== undefined,
-      'Value not found for timestamp ' + curr.toString(),
-    )
+    const amount = props.amounts[curr.toString()] ?? 0n
+
+    const price = props.prices[curr.toString()]
+    assert(price, 'Price not found for timestamp ' + curr.toString())
     const valueUsd = calculateValue({
-      amount: amountAndPrice.amount,
-      priceUsd: amountAndPrice.price,
+      amount: amount,
+      priceUsd: price,
       decimals: props.decimals,
     })
     data.push([
       curr,
-      asNumber(amountAndPrice.amount, props.decimals),
+      asNumber(amount, props.decimals),
       asNumber(valueUsd, 2),
     ] as const)
   }
@@ -271,7 +275,7 @@ export function subtractTokenCharts(
   main: TvlApiCharts,
   token: TokenTvlApiCharts,
   tokenType: 'canonical' | 'external' | 'native',
-  ethPrices: Map<number, number>,
+  ethPrices: Dictionary<number>,
 ): TvlApiCharts {
   return {
     hourly: subtractTokenChart(main.hourly, token.hourly, tokenType, ethPrices),
@@ -289,7 +293,7 @@ export function subtractTokenChart(
   main: TvlApiChart,
   token: TokenTvlApiChart,
   tokenType: 'canonical' | 'external' | 'native',
-  ethPrices: Map<number, number>,
+  ethPrices: Dictionary<number>,
 ): TvlApiChart {
   const data = main.data.map((x) => {
     const tokenAt = token.data.find((d) => d[0].equals(x[0]))
@@ -298,8 +302,7 @@ export function subtractTokenChart(
       return x
     }
     const tokenUsdValue = tokenAt[2]
-    // TODO
-    const ethPriceAt = ethPrices.get(x[0].toNumber())
+    const ethPriceAt = ethPrices[x[0].toNumber()]
     assert(ethPriceAt, `Eth price not found for timestamp ${x[0].toString()}`)
     const tokenEthValue = tokenUsdValue / ethPriceAt
 
