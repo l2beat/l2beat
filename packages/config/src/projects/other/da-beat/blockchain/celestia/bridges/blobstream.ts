@@ -7,19 +7,19 @@ import { DaExitWindowRisk } from '../../../types/DaExitWindowRisk'
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
-export const blobStream = {
-  id: 'blob-stream',
+export const blobstream = {
+  id: 'blobstream',
   kind: DaBridgeKind.OnChainBridge,
   display: {
-    name: 'Blob Stream',
-    slug: 'blob-stream',
-    description: 'Celestia with Blob Stream bridge on Ethereum.',
+    name: 'Blobstream',
+    slug: 'blobstream',
+    description: 'Celestia with Blobstream bridge on Ethereum.',
   },
   chain: ChainId.ETHEREUM,
   usedIn: [],
   contracts: {
-    name: 'BlobStreamBridge',
-    address: EthereumAddress('0x1234567890123456789012345678901234567890'),
+    name: 'BlobstreamBridge',
+    address: EthereumAddress('0x7Cf3876F681Dbb6EdA8f6FfC45D66B996Df08fAe'),
   },
   permissions: [],
   risks: {
