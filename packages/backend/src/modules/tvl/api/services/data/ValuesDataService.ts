@@ -67,7 +67,7 @@ export class ValuesDataService {
       })
       for (const timestamp of timestamps) {
         const configuredValues = getConfiguredValuesForTimestamp(
-          values,
+          valuesByTimestamp[timestamp.toString()],
           project,
           new UnixTime(+timestamp),
           result.lagging,
