@@ -43,6 +43,8 @@ describe(DiscoveryRunner.name, () => {
         MOCK_PROVIDER,
         new DiscoveryConfig({
           ...getMockConfig().raw,
+          maxAddresses: 600,
+          maxDepth: 18,
           initialAddresses: [ADDRESS],
         }),
       )
