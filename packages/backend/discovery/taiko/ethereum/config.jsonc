@@ -373,7 +373,7 @@
           }
         }
       },
-      "ignoreInWatchMode": ["getStateVariables", "slotA", "slotB", "state"]
+      "ignoreInWatchMode": ["getStateVariables", "getLastSyncedBlock", "getLastVerifiedBlock", "slotA", "slotB", "state"]
     },
     "TierRouter": {
       "ignoreMethods": ["getProvider"], // too many values
