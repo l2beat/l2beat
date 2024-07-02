@@ -6161,6 +6161,21 @@
       }
     },
     {
+      "id": "kinto:usd+-usd+",
+      "name": "USD+",
+      "coingeckoId": "dinari-usd",
+      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
+      "symbol": "USD+",
+      "decimals": 6,
+      "deploymentTimestamp": 1718908690,
+      "coingeckoListingTimestamp": 1719360000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38879/large/USDplus-200.png?1719374938",
+      "chainId": 7887,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "id": "kinto:weeth-wrapped-eeth",
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
