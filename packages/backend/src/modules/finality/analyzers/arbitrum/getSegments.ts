@@ -5,11 +5,12 @@ import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'
+import { Blob } from '@l2beat/shared'
 
 export function getSegments(
-  relevantBlobs: { blob: string }[],
+  relevantBlobs: Blob[],
 ): RlpSerializable[] {
-  const blobs = relevantBlobs.map(({ blob }) => byteArrFromHexStr(blob))
+  const blobs = relevantBlobs.map(({ data }) => byteArrFromHexStr(data))
   const payload = blobsToData(blobs)
   const decompressed = decompressPayload(payload)
   // I do not understand why this is necessary, but it is

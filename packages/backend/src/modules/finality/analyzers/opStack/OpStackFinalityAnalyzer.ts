@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { BlobClient } from '../../../../peripherals/blobclient/BlobClient'
+import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
@@ -44,9 +44,9 @@ export class OpStackFinalityAnalyzer extends BaseAnalyzer {
       this.logger.debug('Getting finality', { transaction })
       const l1Timestamp = transaction.timestamp
       // get blobs relevant to the transaction
-      const { relevantBlobs, blockNumber } =
+      const { blobs, blockNumber } =
         await this.blobClient.getRelevantBlobs(transaction.txHash)
-      const rollupData = getRollupData(relevantBlobs)
+      const rollupData = getRollupData(blobs)
       const frames = rollupData.map((ru) => getFrames(ru))
       const channel = this.channelBank.addFramesToChannel(frames, blockNumber)
       // no channel was closed in this tx, so no txs were finalized
