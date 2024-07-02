@@ -104,7 +104,7 @@ export const mode: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
-      'Member of the ProxyAdminOwner.',
+      'Member of the SuperChainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
