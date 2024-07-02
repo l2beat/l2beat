@@ -29,6 +29,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -1039,6 +1040,13 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       description:
         'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',
     },
+  ],
+  badges: [
+    Badge.DA.EthereumBlobs,
+    Badge.VM.Cairo,
+    Badge.Other.L3HostChain,
+    Badge.Other.AccountAbstraction,
+    Badge.Other.Governance,
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
 }
