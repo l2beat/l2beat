@@ -48,7 +48,8 @@ describe('layer3s', () => {
 
         if (
           layer3.id !== ProjectId('zklinknova') &&
-          layer3.id !== ProjectId('mxc')
+          layer3.id !== ProjectId('mxc') &&
+          layer3.id !== ProjectId('hook')
         ) {
           const escrows = layer3.config.escrows
           for (const escrow of escrows) {

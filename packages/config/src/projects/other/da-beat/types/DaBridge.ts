@@ -37,9 +37,9 @@ export type OnChainDaBridge = CommonDaBridge & {
   kind: typeof OnChainBridge
 
   /**
-   * The chain ID of the data availability bridge
+   * The chain name the data availability bridge lives on
    */
-  chain: ChainId
+  chain: string
 
   /**
    * Data about related permissions - preferably from discovery
@@ -49,7 +49,7 @@ export type OnChainDaBridge = CommonDaBridge & {
   /**
    * Data about the contracts used in the bridge - preferably from discovery
    */
-  contracts: ScalingProjectContractSingleAddress
+  contracts: ScalingProjectContractSingleAddress[]
 }
 
 export type DacBridge = CommonDaBridge & {
