@@ -5057,7 +5057,7 @@
       "address": "0x4200000000000000000000000000000000000006",
       "symbol": "WETH",
       "decimals": 18,
-      "deploymentTimestamp": 0,
+      "deploymentTimestamp": 1636665399,
       "coingeckoListingTimestamp": 1573689600,
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
