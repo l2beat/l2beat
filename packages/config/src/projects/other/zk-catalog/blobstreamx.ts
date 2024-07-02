@@ -21,9 +21,9 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
+            proofSystem: 'Plonk SNARK',
+            mainArithmetization: 'Plonk',
+            mainPCS: 'KZG',
             trustedSetup: '?',
           },
           {
@@ -48,9 +48,9 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
+            proofSystem: 'Plonk SNARK',
+            mainArithmetization: 'Plonk',
+            mainPCS: 'KZG',
             trustedSetup: '?',
           },
           {
@@ -75,9 +75,9 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
+            proofSystem: 'Plonk SNARK',
+            mainArithmetization: 'Plonk',
+            mainPCS: 'KZG',
             trustedSetup: '?',
           },
           {
@@ -102,9 +102,9 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
+            proofSystem: 'Plonk SNARK',
+            mainArithmetization: 'Plonk',
+            mainPCS: 'KZG',
             trustedSetup: '?',
           },
           {
@@ -129,9 +129,9 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
+            proofSystem: 'Plonk SNARK',
+            mainArithmetization: 'Plonk',
+            mainPCS: 'KZG',
             trustedSetup: '?',
           },
           {
@@ -156,9 +156,9 @@ export const blobstreamx: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
+            proofSystem: 'Plonk SNARK',
+            mainArithmetization: 'Plonk',
+            mainPCS: 'KZG',
             trustedSetup: '?',
           },
           {
