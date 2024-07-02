@@ -3,12 +3,29 @@ import { type TvlProject } from './get-tvl-projects'
 import { db } from '~/server/database'
 import { type Dictionary, groupBy } from 'lodash'
 import { type Value } from '@l2beat/database'
+import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
+import {
+  getRangeConfig,
+  type rangeToResolution,
+  type TvlChartRange,
+} from './range-utils'
 
-export async function getValuesForProjects(
+export async function getTvlValuesForProjects(
   projects: TvlProject[],
-  target: UnixTime,
+  range: TvlChartRange,
 ) {
-  const values = await db.value.getForProjects(projects.map((p) => p.id))
+  const target = getTvlTargetTimestamp()
+  const { days, resolution } = getRangeConfig(range)
+  const from = days && target.add(-days, 'days')
+  const values = await (from
+    ? db.value.getForProjectsInRange(
+        projects.map((p) => p.id),
+        {
+          from,
+          to: target,
+        },
+      )
+    : db.value.getForProjects(projects.map((p) => p.id)))
   const valuesByProject = groupBy(values, 'projectId')
 
   const result: Dictionary<Dictionary<Value[]>> = {}
@@ -21,7 +38,9 @@ export async function getValuesForProjects(
     const valuesByTimestampForProject: Dictionary<Value[]> = {}
 
     for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
-      // TODO: Check if timestamp should be calculated
+      if (!shouldTimestampBeCalculated(resolution, new UnixTime(+timestamp))) {
+        continue
+      }
 
       const configuredSources = getConfiguredSourcesForTimestamp(
         values,
@@ -46,6 +65,20 @@ export async function getValuesForProjects(
   }
 
   return result
+}
+
+/**
+ * Ideally we shouldn't need this method, as we should get only the values we need from the database.
+ */
+function shouldTimestampBeCalculated(
+  resolution: ReturnType<typeof rangeToResolution>,
+  timestamp: UnixTime,
+) {
+  return (
+    resolution === 'hourly' ||
+    (resolution === 'sixHourly' && timestamp.isFull('six hours')) ||
+    (resolution === 'daily' && timestamp.isFull('day'))
+  )
 }
 
 function getConfiguredSourcesForTimestamp(

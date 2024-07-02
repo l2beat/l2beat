@@ -4,7 +4,6 @@ import {
   bridges,
   chainConverter,
   chains,
-  getChainToProjectMapping,
   getTvlAmountsConfig,
   getTvlPricesConfig,
   layer2ToBackendProject,
@@ -29,8 +28,6 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  const chainToProject = getChainToProjectMapping()
-
   const chainConfigs = getChainsWithTokens(tokenList, chains).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
       minTimestamp: minTimestampOverride,
@@ -38,11 +35,7 @@ export function getTvlConfig(
   )
 
   return {
-    amounts: getTvlAmountsConfig(
-      projects,
-      chainToProject,
-      minTimestampOverride,
-    ),
+    amounts: getTvlAmountsConfig(projects, minTimestampOverride),
     prices: getTvlPricesConfig(minTimestampOverride),
     chains: chainConfigs,
     coingeckoApiKey: env.optionalString(['COINGECKO_API_KEY']),

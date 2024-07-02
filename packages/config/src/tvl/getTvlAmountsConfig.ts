@@ -3,16 +3,15 @@ import {
   AmountConfigEntry,
   ChainConverter,
   ChainId,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { BackendProject } from '../backend/BackendProject'
 import { chains } from '../chains'
 import { tokenList } from '../tokens'
+import { chainToProject } from '../backend'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],
-  chainToProject: Map<string, ProjectId>,
   minTimestampOverride?: UnixTime,
 ): AmountConfigEntry[] {
   const chainConverter = new ChainConverter(

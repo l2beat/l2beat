@@ -7,7 +7,6 @@ import {
   layer3ToBackendProject,
   bridgeToBackendProject,
   getTvlAmountsConfig,
-  getChainToProjectMapping,
 } from '@l2beat/config'
 import { type ProjectId, UnixTime, assert } from '@l2beat/shared-pure'
 
@@ -32,9 +31,7 @@ export function getTvlProjects(): TvlProject[] {
     ...bridges.map(bridgeToBackendProject),
   ]
 
-  const chainToProject = getChainToProjectMapping()
-
-  const tvlAmounts = getTvlAmountsConfig(projects, chainToProject)
+  const tvlAmounts = getTvlAmountsConfig(projects)
 
   return projects.flatMap(({ projectId, type, slug }) => {
     const amounts = tvlAmounts.filter((o) => o.project === projectId)
