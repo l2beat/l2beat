@@ -61,7 +61,7 @@ export class TvlService {
     const sixHourlyStart = this.$.clock.getSixHourlyCutoff(targetTimestamp, {
       minTimestampOverride: minTimestamp,
     })
-    const hourlyStart = this.$.clock.getSixHourlyCutoff(targetTimestamp, {
+    const hourlyStart = this.$.clock.getHourlyCutoff(targetTimestamp, {
       minTimestampOverride: minTimestamp,
     })
 
