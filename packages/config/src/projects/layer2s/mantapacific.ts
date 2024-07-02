@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -86,4 +87,5 @@ export const mantapacific: Layer2 = opStackL2({
       description: 'Manta Pacific is live on mainnet.',
     },
   ],
+  badges: [Badge.DA.Celestia, Badge.VM.EVM, Badge.Fork.ForkOP],
 })
