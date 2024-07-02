@@ -1,9 +1,12 @@
+import { anomaly } from './anomaly'
+import { apechain } from './apechain'
+import { aviveworld } from './aviveworld'
 import { bugless } from './bugless'
 import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
 import { dodochain } from './dodochain'
-import { l3x } from './l3x'
+import { l3x } from './l3x' 
 import { molten } from './molten'
 import { muster } from './muster'
 import { mxc } from './mxc'
@@ -21,6 +24,9 @@ import { zklinknova } from './zklinknova'
 export * from './types'
 
 export const layer3s: Layer3[] = [
+  anomaly,
+  apechain,
+  aviveworld,
   bugless,
   degen,
   dcamonster,
