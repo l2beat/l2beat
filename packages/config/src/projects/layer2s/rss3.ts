@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -12,6 +13,7 @@ const upgradeability = {
 }
 
 export const rss3: Layer2 = opStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack],
   daProvider: {
     name: 'NearDA',
     riskView: {

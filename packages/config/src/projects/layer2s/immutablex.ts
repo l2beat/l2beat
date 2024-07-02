@@ -4,7 +4,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-
 import {
   CONTRACTS,
   EXITS,
@@ -27,6 +26,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -55,6 +55,7 @@ const committee = getCommittee(discovery)
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
+  badges: [Badge.VM.CairoVM, Badge.Infra.SHARP],
   display: {
     name: 'Immutable X',
     slug: 'immutablex',

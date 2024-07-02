@@ -11,6 +11,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
@@ -38,6 +39,7 @@ const upgradeDelayString = formatSeconds(
 export const polygonzkevm: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Infra.AggLayer],
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
