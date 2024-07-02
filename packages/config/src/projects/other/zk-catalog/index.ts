@@ -1,5 +1,5 @@
-import { ZkCatalogProject } from './types/ZkCatalogProject'
 import { blobstreamx } from './blobstreamx'
+import { ZkCatalogProject } from './types/ZkCatalogProject'
 import { worldcoinsemaphore } from './worldcoinsemaphore'
 import { worldcoinsmtb } from './worldcoinsmtb'
 
