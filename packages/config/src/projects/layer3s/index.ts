@@ -7,6 +7,8 @@ import { degen } from './degen'
 import { deri } from './deri'
 import { dodochain } from './dodochain'
 import { l3x } from './l3x' 
+import { hook } from './hook'
+import { l3x } from './l3x'
 import { molten } from './molten'
 import { muster } from './muster'
 import { mxc } from './mxc'
@@ -32,6 +34,7 @@ export const layer3s: Layer3[] = [
   dcamonster,
   deri,
   dodochain,
+  hook,
   rari,
   zklinknova,
   teva,
