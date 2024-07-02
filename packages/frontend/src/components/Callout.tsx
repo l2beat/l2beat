@@ -1,53 +1,41 @@
+import { VariantProps, cva } from 'class-variance-authority'
 import React, { ReactNode } from 'react'
 
-import { cn } from '../utils/cn'
+const calloutVariants = cva('flex rounded-lg', {
+  variants: {
+    color: {
+      red: 'bg-red-600/20 hover:bg-red-500/20',
+      yellow: 'bg-yellow-700/20',
+      blue: 'bg-blue-700/20',
+      gray: 'bg-gray-500/20',
+    },
+    small: {
+      true: 'gap-2 rounded text-sm',
+      false: 'gap-3',
+    },
+  },
+  defaultVariants: {
+    small: false,
+  },
+})
 
-export interface CalloutProps {
-  color?: 'red' | 'yellow' | 'blue' | 'gray'
+export interface CalloutProps extends VariantProps<typeof calloutVariants> {
   icon: ReactNode
   body: ReactNode
   message?: ReactNode
   className?: string
-  hoverable?: boolean
-  small?: boolean
 }
 
 export function Callout({
   color,
+  small,
   icon,
   body,
   message,
   className,
-  hoverable,
-  small,
 }: CalloutProps) {
-  let background: string
-  if (hoverable && color === 'red') {
-    background = 'bg-red-600/20 hover:bg-red-500/20'
-  } else if (hoverable && color === 'yellow') {
-    background = 'bg-yellow-700/20 hover:bg-opacity-40/20'
-  } else if (color === 'red') {
-    background = 'bg-red-600/20'
-  } else if (color === 'yellow') {
-    background = 'bg-yellow-700/20'
-  } else if (color === 'blue') {
-    background = 'bg-blue-700/20'
-  } else if (color === 'gray') {
-    background = 'bg-gray-500/20'
-  } else {
-    background = ''
-  }
-
   return (
-    <div
-      className={cn(
-        'flex',
-        'rounded-lg',
-        background,
-        className,
-        small ? 'gap-2 rounded text-sm' : 'gap-3',
-      )}
-    >
+    <div className={calloutVariants({ color, small, className })}>
       <span>{icon}</span>
       <div className="flex flex-col gap-2">
         {message && message}

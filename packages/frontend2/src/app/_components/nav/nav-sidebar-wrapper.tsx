@@ -1,6 +1,8 @@
 'use client'
 
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
+import { useEventCallback } from '~/hooks/use-event-callback'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
 import { useMobileNav } from './mobile-nav-context'
 import { NavSideBarCollapseToggle } from './nav-sidebar-collapse-toggle'
@@ -11,6 +13,7 @@ export const NavSideBarWrapper = ({
 }: { children: React.ReactNode; legacyNav?: boolean }) => {
   const { open } = useMobileNav()
   const ref = useRef<HTMLDivElement>(null)
+  const timeout = useRef<ReturnType<typeof setTimeout>>()
   const [resizing, setResizing] = useState(false)
   const [overflows, setOverflows] = useState(false)
 
@@ -19,25 +22,16 @@ export const NavSideBarWrapper = ({
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
   )
 
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>
+  const onResize = useEventCallback(() => {
+    clearTimeout(timeout.current)
+    setResizing(true)
+    setOverflows(
+      (ref.current?.scrollHeight ?? 0) > (ref.current?.clientHeight ?? 0),
+    )
+    timeout.current = setTimeout(() => setResizing(false), 300)
+  })
 
-    const onResize = () => {
-      clearTimeout(timeout)
-      setResizing(true)
-      setOverflows(
-        (ref.current?.scrollHeight ?? 0) > (ref.current?.clientHeight ?? 0),
-      )
-      timeout = setTimeout(() => setResizing(false), 300)
-    }
-
-    window.addEventListener('resize', onResize)
-
-    return () => {
-      clearTimeout(timeout)
-      window.removeEventListener('resize', onResize)
-    }
-  }, [ref])
+  useEventListener('resize', onResize)
 
   return (
     <div

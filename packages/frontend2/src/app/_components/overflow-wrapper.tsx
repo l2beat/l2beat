@@ -2,6 +2,8 @@
 
 import clamp from 'lodash/clamp'
 import React, { forwardRef, useEffect, useRef, useState } from 'react'
+import { useEventCallback } from '~/hooks/use-event-callback'
+import { useEventListener } from '~/hooks/use-event-listener'
 
 import ChevronIcon from '~/icons/chevron.svg'
 import { cn } from '~/utils/cn'
@@ -45,39 +47,32 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
       })
     }
 
-    useEffect(() => {
+    const onScroll = useEventCallback(() => {
+      if (!contentRef.current) return
       const content = contentRef.current
-      if (!content) return
 
-      function onScroll() {
-        if (!contentRef.current) return
-        const content = contentRef.current
+      const isScrolledToStart = content.scrollLeft < ARROWS_THRESHOLD
+      const isScrolledToEnd =
+        content.scrollLeft >
+        content.scrollWidth - content.clientWidth - ARROWS_THRESHOLD
 
-        const isScrolledToStart = content.scrollLeft < ARROWS_THRESHOLD
-        const isScrolledToEnd =
-          content.scrollLeft >
-          content.scrollWidth - content.clientWidth - ARROWS_THRESHOLD
+      const visibleArrows =
+        isScrolledToStart && isScrolledToEnd
+          ? undefined
+          : isScrolledToStart
+            ? 'right'
+            : isScrolledToEnd
+              ? 'left'
+              : 'both'
+      setVisibleArrows(visibleArrows)
+    })
 
-        const visibleArrows =
-          isScrolledToStart && isScrolledToEnd
-            ? undefined
-            : isScrolledToStart
-              ? 'right'
-              : isScrolledToEnd
-                ? 'left'
-                : 'both'
-        setVisibleArrows(visibleArrows)
-      }
-
+    useEffect(() => {
       onScroll()
-      content?.addEventListener('scroll', onScroll)
-      window.addEventListener('resize', onScroll)
+    }, [onScroll])
 
-      return () => {
-        content?.removeEventListener('scroll', onScroll)
-        window.removeEventListener('resize', onScroll)
-      }
-    }, [])
+    useEventListener('scroll', onScroll, contentRef)
+    useEventListener('resize', onScroll)
 
     return (
       <div className={cn('relative', className)} {...rest}>

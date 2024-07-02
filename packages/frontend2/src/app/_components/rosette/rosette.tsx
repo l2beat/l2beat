@@ -54,9 +54,7 @@ export function SmallRosette({
         d="M16.3566 17.2429C16.354 16.7344 16.8476 16.3708 17.3325 16.5239L28.7071 20.116C29.1291 20.2493 29.3404 20.7137 29.1397 21.1081C28.4617 22.4405 26.8261 25.265 24.3593 27.0826C21.6755 29.0599 18.6122 29.7068 17.2043 29.9093C16.7793 29.9704 16.4197 29.6363 16.4175 29.2069L16.3566 17.2429Z"
         className={sentimentToFillColor(fifth)}
       />
-      {
-        // #region question marks
-      }
+
       {isUnderReview && (
         <>
           <path
@@ -97,9 +95,6 @@ export function SmallRosette({
           </defs>
         </>
       )}
-      {
-        // #endregion
-      }
     </svg>
   )
 }

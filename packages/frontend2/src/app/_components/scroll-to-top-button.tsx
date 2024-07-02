@@ -1,5 +1,7 @@
 'use client'
 import React, { useEffect, useState } from 'react'
+import { useEventCallback } from '~/hooks/use-event-callback'
+import { useEventListener } from '~/hooks/use-event-listener'
 
 import ChevronIcon from '~/icons/chevron.svg'
 import { cn } from '~/utils/cn'
@@ -13,18 +15,21 @@ export function ScrollToTopButton() {
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
+  const manageVisibility = useEventCallback(() => {
+    const isVisible = window.scrollY > DEFAULT_SCROLL_OFFSET
+
+    if (isVisible) {
+      setIsVisible(true)
+      return
+    }
+
+    setIsVisible(false)
+  })
+
   useEffect(() => {
-    window.addEventListener('scroll', () => {
-      const isVisible = window.scrollY > DEFAULT_SCROLL_OFFSET
-
-      if (isVisible) {
-        setIsVisible(true)
-        return
-      }
-
-      setIsVisible(false)
-    })
-  }, [])
+    manageVisibility()
+  }, [manageVisibility])
+  useEventListener('scroll', manageVisibility)
 
   return (
     <button

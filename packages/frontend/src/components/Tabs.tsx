@@ -47,7 +47,7 @@ export function Tabs({ items }: TabsProps) {
                 {tab.itemsCount}
               </span>
             )}
-            <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80" />
+            <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-200 group-hover:opacity-80" />
           </a>
         ))}
         <span

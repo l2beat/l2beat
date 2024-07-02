@@ -2,6 +2,8 @@
 import { indexOf, max, sum } from 'lodash'
 import { useEffect, useRef } from 'react'
 import { type ClassNameValue } from 'tailwind-merge'
+import { useEventCallback } from '~/hooks/use-event-callback'
+import { useEventListener } from '~/hooks/use-event-listener'
 import { cn } from '~/utils/cn'
 import { formatNumberWithCommas } from '~/utils/format-number'
 
@@ -118,30 +120,23 @@ function BreakdownItem({
   const textRef = useRef<HTMLSpanElement | null>(null)
   const valueRef = useRef<HTMLSpanElement | null>(null)
 
-  useEffect(() => {
-    const checkOverflow = () => {
-      const containerWidth = parentRef.current?.clientWidth
-      const textWidth = textRef.current?.scrollWidth
-      const valueWidth = valueRef.current?.scrollWidth
+  const checkOverflow = useEventCallback(() => {
+    const containerWidth = parentRef.current?.clientWidth
+    const textWidth = textRef.current?.scrollWidth
+    const valueWidth = valueRef.current?.scrollWidth
 
-      if (textWidth && containerWidth && valueWidth) {
-        if (
-          textWidth > containerWidth - 32 ||
-          valueWidth > containerWidth - 32
-        ) {
-          textRef.current?.classList.add('opacity-0')
-          valueRef.current?.classList.add('opacity-0')
-        } else {
-          textRef.current?.classList.remove('opacity-0')
-          valueRef.current?.classList.remove('opacity-0')
-        }
+    if (textWidth && containerWidth && valueWidth) {
+      if (textWidth > containerWidth - 32 || valueWidth > containerWidth - 32) {
+        textRef.current?.classList.add('opacity-0')
+        valueRef.current?.classList.add('opacity-0')
+      } else {
+        textRef.current?.classList.remove('opacity-0')
+        valueRef.current?.classList.remove('opacity-0')
       }
     }
-
-    checkOverflow()
-    window.addEventListener('resize', checkOverflow)
-    return () => window.removeEventListener('resize', checkOverflow)
-  }, [])
+  })
+  useEffect(() => checkOverflow(), [checkOverflow])
+  useEventListener('resize', checkOverflow)
 
   return (
     <div

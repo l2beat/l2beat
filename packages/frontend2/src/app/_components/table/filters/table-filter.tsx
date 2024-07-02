@@ -1,5 +1,6 @@
+'use client'
+
 import { assert } from '@l2beat/shared-pure'
-import { type Column } from '@tanstack/react-table'
 import { useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import ChevronIcon from '~/icons/chevron.svg'
@@ -12,42 +13,41 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger,
-} from '../drawer'
-import { Popover, PopoverContent, PopoverTrigger } from '../popover'
+} from '../../drawer'
+import { Popover, PopoverContent, PopoverTrigger } from '../../popover'
 
-interface TableFacetedFilterProps<TData, TValue> {
-  column: Column<TData, TValue> | undefined
-  title: string
+interface Option {
+  label: string
+  value: string | undefined
 }
 
-export function TableFacetedFilter<TData, TValue>({
-  column,
-  title,
-}: TableFacetedFilterProps<TData, TValue>) {
+interface Props {
+  title: string
+  options: Option[]
+  value: string | undefined
+  onValueChange: (option: string | undefined) => void
+}
+
+export function TableFilter({ title, options, value, onValueChange }: Props) {
   const [open, setOpen] = useState(false)
   const breakpoint = useBreakpoint()
-  assert(
-    column !== undefined,
-    'Column cannot be undefined, probably used a wrong ID',
-  )
-  const facets = column.getFacetedUniqueValues() as Map<string, number>
-  const options = Array.from(facets.keys())
-  const selected = column.getFilterValue() as string
 
-  if (selected) {
+  if (value) {
+    const option = options.find((option) => option.value === value)
+    assert(option, 'Option not found')
     return (
       <button
         autoFocus
-        onClick={() => column.setFilterValue(undefined)}
+        onClick={() => onValueChange(undefined)}
         onKeyDown={(e) => {
           if (e.key === 'Escape') {
-            column.setFilterValue(undefined)
+            onValueChange(undefined)
           }
         }}
         className="cursor-pointer outline-none select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:hover:bg-slate-600 hover:bg-gray-400"
       >
         <div className="w-max items-center gap-1.5 rounded-md bg-white px-2 inline-flex dark:bg-black dark:group-hover:bg-gray-950">
-          <span>{selected}</span>
+          <span>{option.label}</span>
           <div className="flex size-3 items-center justify-center rounded-sm bg-black dark:bg-white">
             <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
           </div>
@@ -61,7 +61,7 @@ export function TableFacetedFilter<TData, TValue>({
     return (
       <Drawer open={open} onOpenChange={setOpen}>
         <DrawerTrigger asChild>
-          <button className="inline-flex items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">
+          <button className="inline-flex w-max items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">
             {title}
             <ExpandIcon
               width={12}
@@ -74,13 +74,15 @@ export function TableFacetedFilter<TData, TValue>({
           <DrawerHeader>
             <DrawerTitle>{title}</DrawerTitle>
           </DrawerHeader>
-          <Options
-            options={options}
-            onClick={(option) => {
-              column.setFilterValue(option)
-              setOpen(false)
-            }}
-          />
+          <div className="max-h-[60vh] [@supports(height:100dvh)]:max-h-[60dvh] overflow-y-scroll">
+            <Options
+              options={options}
+              onClick={(option) => {
+                onValueChange(option)
+                setOpen(false)
+              }}
+            />
+          </div>
         </DrawerContent>
       </Drawer>
     )
@@ -104,7 +106,7 @@ export function TableFacetedFilter<TData, TValue>({
           options={options}
           className="px-2.5"
           onClick={(option) => {
-            column.setFilterValue(option)
+            onValueChange(option)
             setOpen(false)
           }}
         />
@@ -114,8 +116,8 @@ export function TableFacetedFilter<TData, TValue>({
 }
 
 interface OptionsProps {
-  options: string[]
-  onClick: (option: string) => void
+  options: Option[]
+  onClick: (option: string | undefined) => void
   className?: string
 }
 
@@ -124,14 +126,14 @@ function Options({ options, onClick, className }: OptionsProps) {
     <>
       {options.map((option) => (
         <button
-          key={option}
+          key={option.label}
           className={cn(
             'w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400',
             className,
           )}
-          onClick={() => onClick(option)}
+          onClick={() => onClick(option.value)}
         >
-          {option}
+          {option.label}
         </button>
       ))}
     </>

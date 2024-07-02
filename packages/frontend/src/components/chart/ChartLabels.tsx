@@ -10,7 +10,7 @@ export function ChartLabels(props: Props) {
   return (
     <div
       className={cn(
-        'pointer-events-none relative z-25 flex h-full flex-col justify-between pt-[20px]',
+        'pointer-events-none relative z-25 flex h-full flex-col justify-between pt-5',
         props.className,
       )}
     >

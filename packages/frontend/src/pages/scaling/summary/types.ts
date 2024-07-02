@@ -47,19 +47,18 @@ export interface TvlData {
   syncStatus?: never
 }
 
-export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
-  riskValues: RiskValues
-  // TODO: Clean up this mess
-  data:
-    | (TvlData & {
+interface L2TvlData extends TvlData {
+  marketShare: ValueWithDisplayValue
+  excludedTokens:
+    | (Omit<TvlData, 'excludedTokens'> & {
         marketShare: ValueWithDisplayValue
-        excludedTokens:
-          | (Omit<TvlData, 'excludedTokens'> & {
-              marketShare: ValueWithDisplayValue
-            })
-          | undefined
       })
     | undefined
+}
+
+export interface ScalingL2SummaryViewEntry extends ScalingSummaryViewEntryBase {
+  riskValues: RiskValues
+  data: L2TvlData | undefined
   stage: StageConfig
   provider?: Layer2Provider
 }

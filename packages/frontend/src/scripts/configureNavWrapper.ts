@@ -61,7 +61,7 @@ export function configureNavWrapper() {
 
   // Fix navbar animations when resizing
 
-  let resizeTimer: NodeJS.Timeout | null = null
+  let resizeTimer: ReturnType<typeof setTimeout> | null = null
 
   window.addEventListener('resize', () => {
     if (resizeTimer) {
