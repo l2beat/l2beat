@@ -11,7 +11,7 @@ export const apechain: Layer3 = upcomingL3({
     name: 'ApeChain',
     slug: 'apechain',
     description:
-      'ApeChain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It scales $APE and supports the growth of the ApeCoin ecosystem. Powered by the $APE token and the home of assets and games in the ApeCoin ecosystem with development and growth led by Horizen Labs. ',
+      'ApeChain is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It scales $APE and supports the growth of the ApeCoin ecosystem. Powered by the $APE token and the home of assets and games in the ApeCoin ecosystem with development and growth led by Horizen Labs.',
     purposes: ['Gaming'],
     category: 'Optimium',
     provider: 'Arbitrum',

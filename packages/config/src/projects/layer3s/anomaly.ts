@@ -16,7 +16,7 @@ export const anomaly: Layer3 = upcomingL3({
     category: 'Optimium',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.anomalygames.ai/'],
+      websites: ['https://anomalygames.ai/'],
       apps: [],
       documentation: [],
       explorers: [],
