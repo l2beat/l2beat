@@ -119,6 +119,10 @@
           }
         }
       }
+    },
+    "0xD3cF979e676265e4f6379749DECe4708B9A22476": {
+      // ProxyAdmin of GHO token TokenPool at 0x5756880B6a1EAba0175227bf02a7E87c1e02B28C
+      "ignoreDiscovery": true
     }
   }
 }

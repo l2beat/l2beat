@@ -1,3 +1,50 @@
+Generated with discovered.json: 0xf7442661475f0d41ad948d2a8d42265e1aaa8ee6
+
+# Diff at Mon, 01 Jul 2024 11:22:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b5540be6f0b9cb1f69a05dba32413b0eae0acbf4 block: 19926649
+- current block number: 20211335
+
+## Description
+
+Small upgrade of LockingInfo and LockingPool to add a `withdraw()` function that allows whitelisted sequencers to withdraw their collateral.
+No other changes.
+
+## Watched changes
+
+```diff
+    contract LockingInfo (0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"
++        "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"
+      implementations.0:
+-        "0x8db636418F10d514c4c68235ee3d640dDBCC7a8a"
++        "0x0D30F0d7934f53aaF6a1630A4c109AF4513a65cC"
+    }
+```
+
+```diff
+    contract LockingPool (0xD54c868362C2098E0E46F12E7D924C6A332952Dd) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xd87Da73F82abe83915d61342199A4690cfdf4718"
++        "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"
+      implementations.0:
+-        "0xd87Da73F82abe83915d61342199A4690cfdf4718"
++        "0xD8f38c831E5032d23065Eaaee8c0620e17c04D60"
+    }
+```
+
+## Source code changes
+
+```diff
+.../LockingInfo/LockingInfo.sol                    | 41 +++++++++++++++++++++-
+ .../LockingPool/LockingPool.sol                    | 31 ++++++++++++++++
+ 2 files changed, 71 insertions(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0xa6118ecf8ee031edb689b088ecd67c6ab3dce64a
 
 # Diff at Wed, 22 May 2024 16:35:57 GMT:

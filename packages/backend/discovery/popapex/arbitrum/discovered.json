@@ -1,7 +1,7 @@
 {
   "name": "popapex",
   "chain": "arbitrum",
-  "blockNumber": 225981315,
+  "blockNumber": 227940683,
   "configHash": "0x77f9c3066da9e329e54ac7351860f5fe405aeef7a154e4ccc822fc8d92e00016",
   "version": 8,
   "contracts": [
@@ -27,11 +27,11 @@
           "0x7b18A3073774e00C072DeBd390ed6fE4251493A7"
         ],
         "allowedOutboxList": ["0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2"],
-        "delayedMessageCount": 14370,
+        "delayedMessageCount": 16255,
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerInbox": "0xa58F38102579dAE7C584850780dDA55744f67DF1",
-        "sequencerMessageCount": 13931,
-        "sequencerReportedSubMessageCount": 21200790
+        "sequencerMessageCount": 15761,
+        "sequencerReportedSubMessageCount": 22940820
       },
       "derivedName": "Bridge"
     },
@@ -154,12 +154,12 @@
         "confirmPeriodBlocks": 40320,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1954,
+        "firstUnresolvedNode": 1965,
         "inbox": "0xC3874bE54E3f25BBC6B4fB582654fd9294f485a1",
         "isERC20Enabled": false,
         "lastStakeBlock": 19278432,
-        "latestConfirmed": 1953,
-        "latestNodeCreated": 1964,
+        "latestConfirmed": 1964,
+        "latestNodeCreated": 1976,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0cD85675897B7020d7121e63AB250d3F47ff3Ff2",
@@ -200,7 +200,7 @@
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
-        "threshold": "2 of 4 (50%)"
+        "threshold": "2 of 7 (29%)"
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
@@ -209,13 +209,16 @@
         "domainSeparator": "0x8e983e66cfd245a874ba795dfb67eec98f9f6261d8eed2360f67db156c7d3a86",
         "getChainId": 42161,
         "getOwners": [
+          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
+          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
+          "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
         "getThreshold": 2,
-        "nonce": 25,
+        "nonce": 28,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -280,7 +283,7 @@
       "implementations": ["0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F"],
       "sinceTimestamp": 1708543048,
       "values": {
-        "batchCount": 13931,
+        "batchCount": 15761,
         "batchPosters": ["0x139aC582825DD6A9b9D6A6a64f1bE149C84e0d03"],
         "bridge": "0x074fFD20C6D8865752C997f4980Cf70F2a3Fbac6",
         "dacKeyset": {
@@ -300,7 +303,7 @@
         "rollup": "0x65AD139061B3f6DDb16170a07b925337ddf42407",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 14369
+        "totalDelayedMessagesRead": 16253
       },
       "derivedName": "SequencerInbox"
     },
@@ -395,11 +398,20 @@
       "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
     },
     {
+      "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+    },
+    {
       "address": "0xD09d81aaA88E0e0EfCF91B0C96779E6B164A1A00",
       "roles": ["Validator"]
     },
     {
       "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+    },
+    {
+      "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    },
+    {
+      "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
     }
   ],
   "abis": {
