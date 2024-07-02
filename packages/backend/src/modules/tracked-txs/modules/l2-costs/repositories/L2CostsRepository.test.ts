@@ -3,9 +3,9 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
+import { TrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../../../../test/database'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (knex, kysely) => {

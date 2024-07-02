@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
 import {
   CleanDateRange,
@@ -22,6 +22,25 @@ export class ValueRepository {
         'in',
         projectIds.map((id) => id.toString()),
       )
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getForProjectsInRange(
+    projectIds: ProjectId[],
+    { from, to = UnixTime.now() }: { from: UnixTime; to?: UnixTime },
+  ): Promise<Value[]> {
+    const rows = await this.db
+      .selectFrom('public.values')
+      .select(selectValue)
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((id) => id.toString()),
+      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
       .execute()
 
     return rows.map(toRecord)

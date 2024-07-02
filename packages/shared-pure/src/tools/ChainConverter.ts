@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId } from '../types/ChainId'
 
 export class ChainConverter {
   private readonly nameToId = new Map<string, ChainId>()

@@ -1,11 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import {
   TrackedTxsConfigRecord,
   trackedTxConfigEntryToRecord,
 } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 
 export type ToChangeUntilTimestamp = {
   id: TrackedTxId

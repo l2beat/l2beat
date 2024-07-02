@@ -12,12 +12,12 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../../../model/Project'
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxsConfig } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
@@ -65,7 +65,7 @@ export class LivenessController {
     private readonly livenessRepository: LivenessRepository,
     private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
     private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly projects: Project[],
+    private readonly projects: BackendProject[],
     private readonly clock: Clock,
     private readonly logger = Logger.SILENT,
   ) {

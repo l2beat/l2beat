@@ -1,3 +1,4 @@
+import { BackendProject } from '@l2beat/config'
 import {
   AmountConfigEntry,
   AssetId,
@@ -7,7 +8,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../../model/Project'
 
 export interface CanonicalAssetBreakdown {
   assetId: AssetId
@@ -29,7 +29,7 @@ export type PriceConfigIdMap = Map<
 export interface ApiProject {
   id: ProjectId
   minTimestamp: UnixTime
-  type: Project['type']
+  type: BackendProject['type']
   slug: string
   sources: Map<
     string,

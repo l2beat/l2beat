@@ -1,9 +1,8 @@
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { findConfigurationsToSync } from './findConfigurationsToSync'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))

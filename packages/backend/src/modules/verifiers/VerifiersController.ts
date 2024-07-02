@@ -8,6 +8,7 @@ import {
   layer2s,
   zkCatalogProjects,
 } from '@l2beat/config'
+import { BackendProject } from '@l2beat/config'
 import { BlockscoutV2Client } from '@l2beat/shared'
 import {
   assert,
@@ -17,14 +18,13 @@ import {
   VerifiersApiResponse,
   cacheAsyncFunction,
 } from '@l2beat/shared-pure'
-import { Project } from '../../model/Project'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
 
 export interface VerifiersControllerDeps {
   peripherals: Peripherals
-  projects: Project[]
+  projects: BackendProject[]
   logger: Logger
 }
 

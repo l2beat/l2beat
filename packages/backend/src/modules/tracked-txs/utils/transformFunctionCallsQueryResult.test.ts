@@ -1,12 +1,12 @@
 import { readFileSync } from 'fs'
+import {
+  TrackedTxFunctionCallConfig,
+  TrackedTxId,
+  TrackedTxSharpSubmissionConfig,
+} from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { TrackedTxId } from '../types/TrackedTxId'
-import {
-  TrackedTxFunctionCallConfig,
-  TrackedTxSharpSubmissionConfig,
-} from '../types/TrackedTxsConfig'
 import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,

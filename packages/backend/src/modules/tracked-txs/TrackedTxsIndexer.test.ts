@@ -9,6 +9,7 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
@@ -18,8 +19,6 @@ import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
 } from './repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from './types/TrackedTxId'
-import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { TrackedTxResult } from './types/model'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'

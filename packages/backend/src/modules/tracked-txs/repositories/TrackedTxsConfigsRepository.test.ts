@@ -2,9 +2,9 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { TrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../../test/database'
 import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,

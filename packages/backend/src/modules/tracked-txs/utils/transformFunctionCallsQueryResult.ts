@@ -3,7 +3,7 @@ import { assert } from '@l2beat/shared-pure'
 import {
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
-} from '../types/TrackedTxsConfig'
+} from '@l2beat/shared'
 import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
