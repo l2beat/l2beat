@@ -7317,6 +7317,21 @@
       "supply": "zero"
     },
     {
+      "id": "arbitrum:weth-wrapped-ether",
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1622346702,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:wsteth-wrapped-liquid-staked-ether-2.0",
       "name": "Wrapped liquid staked Ether 2.0",
       "coingeckoId": "wrapped-steth",
