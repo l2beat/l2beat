@@ -1,8 +1,10 @@
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 export const treasure: Layer2 = upcomingL2({
   id: 'treasure',
+  badges: [Badge.VM.EVM, Badge.RaaS.Caldera],
   display: {
     name: 'Treasure Chain',
     slug: 'treasure',
