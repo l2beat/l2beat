@@ -1,3 +1,58 @@
+Generated with discovered.json: 0xd1b44ecdbb1036ffdccd93481c30c610d9f1144b
+
+# Diff at Mon, 01 Jul 2024 13:10:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@fb78e4d497d7b23ec78438cad86db49fa84dcdd6 block: 20175047
+- current block number: 20211873
+
+## Description
+
+New plugs for an sUSDeBULL token with various chain destinations. Not yet used and not on coingecko, so no escrow changes for the socket bridge.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.63:
++        "0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.62:
++        "0xAda55E4762c3663f90D55Dc6ACC073B012D1e6eA"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.61:
++        "0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.60:
++        "0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.59:
++        "0x12fBD04CB103c596B78110C70eEDF16821CBfcAE"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.58:
++        "0x1967F0F374Eed3c0152d9CF0541F814206964041"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.57:
++        "0xfa8c07E28461eb7c65b33De024DB97eE4C052C97"
+    }
+```
+
 Generated with discovered.json: 0xc756f3131ca96d16bfed9654446846c762cd7a50
 
 # Diff at Wed, 26 Jun 2024 09:44:54 GMT:
