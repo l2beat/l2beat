@@ -1,5 +1,12 @@
 import { assert } from '@l2beat/backend-tools'
 import {
+  SHARP_SUBMISSION_ADDRESS,
+  SHARP_SUBMISSION_SELECTOR,
+  TrackedTxId,
+  TrackedTxUseWithId,
+  TrackedTxsConfig,
+} from '@l2beat/shared'
+import {
   ChainConverter,
   ChainId,
   EthereumAddress,
@@ -7,25 +14,18 @@ import {
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  TrackedTxId,
-  SHARP_SUBMISSION_ADDRESS,
-  SHARP_SUBMISSION_SELECTOR,
-  TrackedTxUseWithId,
-  TrackedTxsConfig,
-} from '@l2beat/shared'
 import { chains } from '../chains'
+import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
+import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
 import {
-  Layer2LivenessConfig,
-  Layer2FinalityConfig,
-  Layer2,
   Bridge,
+  Layer2,
+  Layer2FinalityConfig,
+  Layer2LivenessConfig,
   Layer2TxConfig,
   Layer3,
 } from '../projects'
 import { tokenList } from '../tokens'
-import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
-import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
 
 export interface BackendProject {
   projectId: ProjectId

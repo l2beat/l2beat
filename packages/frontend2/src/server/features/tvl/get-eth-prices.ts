@@ -1,6 +1,6 @@
-import { db } from '~/server/database'
 import { createPriceId } from '@l2beat/backend/src/modules/tvl/utils/createPriceId'
-import { CoingeckoId, AssetId, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { db } from '~/server/database'
 
 const ethPriceId = createPriceId({
   type: 'coingecko',

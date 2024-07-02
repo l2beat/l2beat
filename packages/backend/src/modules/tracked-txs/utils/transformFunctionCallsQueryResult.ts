@@ -1,14 +1,14 @@
 import { assert } from '@l2beat/shared-pure'
 
 import {
+  TrackedTxFunctionCallConfig,
+  TrackedTxSharpSubmissionConfig,
+} from '@l2beat/shared'
+import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
 } from '../types/model'
 import { isProgramHashProven } from './isProgramHashProven'
-import {
-  TrackedTxFunctionCallConfig,
-  TrackedTxSharpSubmissionConfig,
-} from '@l2beat/shared'
 
 export function transformFunctionCallsQueryResult(
   functionCalls: TrackedTxFunctionCallConfig[],

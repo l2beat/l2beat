@@ -20,16 +20,16 @@ import { utils } from 'ethers'
 import { isArray, isString } from 'lodash'
 
 import { join } from 'path'
+import {
+  ScalingProjectContractSingleAddress,
+  ScalingProjectUpgradeability,
+} from '../common/ScalingProjectContracts'
 import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
 import {
   ScalingProjectPermission,
   ScalingProjectPermissionedAccount,
 } from '../common/ScalingProjectPermission'
 import { ScalingProjectReference } from '../common/ScalingProjectReference'
-import {
-  ScalingProjectContractSingleAddress,
-  ScalingProjectUpgradeability,
-} from '../common/ScalingProjectContracts'
 import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,

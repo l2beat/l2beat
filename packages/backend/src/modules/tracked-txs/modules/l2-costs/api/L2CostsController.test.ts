@@ -10,6 +10,8 @@ import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxId } from '@l2beat/shared'
 import {
   TrackedTxsConfigRecord,
   TrackedTxsConfigsRepository,
@@ -23,8 +25,6 @@ import {
   L2CostsController,
   L2CostsControllerDeps,
 } from './L2CostsController'
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxId } from '@l2beat/shared'
 
 describe(L2CostsController.name, () => {
   let time: InstalledClock

@@ -7,12 +7,12 @@ import {
 import { Knex } from 'knex'
 import { LivenessRow } from 'knex/types/tables'
 
+import { TrackedTxId } from '@l2beat/shared'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
-import { TrackedTxId } from '@l2beat/shared'
 
 export interface LivenessRecord {
   timestamp: UnixTime

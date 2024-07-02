@@ -12,6 +12,8 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxsConfig } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
@@ -24,8 +26,6 @@ import {
   calcIntervalWithAvgsPerProject,
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxsConfig } from '@l2beat/shared'
 
 export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 

@@ -1,14 +1,14 @@
 import {
+  assert,
   AmountConfigEntry,
   ChainConverter,
   ChainId,
   ProjectId,
   UnixTime,
-  assert,
 } from '@l2beat/shared-pure'
-import { tokenList } from '../tokens'
-import { chains } from '../chains'
 import { BackendProject } from '../backend/BackendProject'
+import { chains } from '../chains'
+import { tokenList } from '../tokens'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],

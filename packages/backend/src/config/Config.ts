@@ -8,12 +8,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
 import { ChainConverter } from '@l2beat/shared-pure'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
-import { BackendProject } from '@l2beat/config'
 
 export interface Config {
   readonly name: string

@@ -3,12 +3,12 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { L2CostsRow } from 'knex/types/tables'
 
+import { TrackedTxId } from '@l2beat/shared'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
-import { TrackedTxId } from '@l2beat/shared'
 
 export interface L2CostsRecord {
   timestamp: UnixTime

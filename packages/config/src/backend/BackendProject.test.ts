@@ -1,11 +1,11 @@
 import { assert } from '@l2beat/backend-tools'
 import { layer2s } from '@l2beat/config'
 
-import { layer2ToBackendProject } from './BackendProject'
 import {
   TrackedTxFunctionCallConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { layer2ToBackendProject } from './BackendProject'
 
 describe('BackendProject', () => {
   describe('Tracked transactions', () => {

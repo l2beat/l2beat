@@ -1,10 +1,10 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
 import {
   TrackedTxConfigEntry,
   TrackedTxId,
   TrackedTxUseWithId,
 } from '@l2beat/shared'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
 
 import {
   TrackedTxsConfigRecord,

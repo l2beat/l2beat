@@ -1,9 +1,9 @@
 import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
 import { UpdateMonitorRepository } from '../../repositories/UpdateMonitorRepository'
 import { getDiff } from './utils/getDiff'
-import { BackendProject } from '@l2beat/config'
 
 export interface DashboardProject {
   name: string

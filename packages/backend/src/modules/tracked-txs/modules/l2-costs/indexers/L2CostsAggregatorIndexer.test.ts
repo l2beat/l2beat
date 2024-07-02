@@ -7,6 +7,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxId } from '@l2beat/shared'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
   AggregatedL2CostsRecord,
@@ -25,8 +27,6 @@ import {
   L2CostsAggregatorIndexerDeps,
   TrackedTxMultiplier,
 } from './L2CostsAggregatorIndexer'
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxId } from '@l2beat/shared'
 
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)

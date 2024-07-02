@@ -9,6 +9,7 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
 
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
 import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
@@ -21,7 +22,6 @@ import {
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { TrackedTxResult } from './types/model'
 import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
-import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})

@@ -1,6 +1,6 @@
+import { TrackedTxId, TrackedTxTransferConfig } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { TrackedTxTransferConfig, TrackedTxId } from '@l2beat/shared'
 
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'

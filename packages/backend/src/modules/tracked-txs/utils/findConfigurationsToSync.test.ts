@@ -1,6 +1,6 @@
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
 import { findConfigurationsToSync } from './findConfigurationsToSync'

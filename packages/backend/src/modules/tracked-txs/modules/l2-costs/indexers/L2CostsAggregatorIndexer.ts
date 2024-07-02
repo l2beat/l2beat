@@ -1,5 +1,7 @@
 import { assert, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxId } from '@l2beat/shared'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -17,8 +19,6 @@ import type {
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxId } from '@l2beat/shared'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000

@@ -9,14 +9,14 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxsConfig } from '@l2beat/shared'
 import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
 } from '../repositories/AggregatedL2CostsRepository'
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxsConfig } from '@l2beat/shared'
 
 export type L2CostsTrackedTxsConfig = {
   entries: L2CostsTrackedTxsConfigEntry[]

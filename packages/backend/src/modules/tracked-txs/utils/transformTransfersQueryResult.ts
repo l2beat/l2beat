@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/shared-pure'
 
-import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { TrackedTxTransferConfig } from '@l2beat/shared'
+import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 
 export function transformTransfersQueryResult(
   configs: TrackedTxTransferConfig[],

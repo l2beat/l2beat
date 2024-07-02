@@ -3,13 +3,13 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { Knex } from 'knex'
 
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import { TrackedTxResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
 import {
   LivenessRecord,
   LivenessRepository,
 } from './repositories/LivenessRepository'
-import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
 const TRX = mockObject<Knex.Transaction>({})

@@ -10,15 +10,15 @@ import { Knex } from 'knex'
 import { TrackedTxsConfigRow } from 'knex/types/tables'
 
 import {
-  BaseRepository,
-  CheckConvention,
-} from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
-import {
   TrackedTxConfigEntry,
   TrackedTxId,
   TrackedTxUseWithId,
 } from '@l2beat/shared'
+import {
+  BaseRepository,
+  CheckConvention,
+} from '../../../peripherals/database/BaseRepository'
+import { Database } from '../../../peripherals/database/Database'
 
 export interface TrackedTxsConfigRecord {
   id: TrackedTxId

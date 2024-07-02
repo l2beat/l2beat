@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
@@ -8,7 +9,6 @@ import {
   L2CostsRecord,
   L2CostsRepository,
 } from './repositories/L2CostsRepository'
-import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 
 const MIN_TIMESTAMP = UnixTime.now()
 
