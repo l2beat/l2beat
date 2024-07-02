@@ -132,8 +132,12 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
           "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
-          "0x83Cb1531Ec8447366501aE440478da245EcffB89"
+          "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+          "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+          "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+          "0xc632347cc96A4400653E3514eA148630455295b5"
         ]
       },
       "sinceTimestamp": 1639569183,

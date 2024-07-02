@@ -117,7 +117,13 @@
         "Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system."
       ],
       "assignedPermissions": {
-        "admin": ["0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"]
+        "admin": [
+          "0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
+          "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a",
+          "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6",
+          "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb",
+          "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+        ]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -277,7 +283,10 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0xD54c868362C2098E0E46F12E7D924C6A332952Dd"]
+        "admin": [
+          "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48",
+          "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+        ]
       },
       "sinceTimestamp": 1710314795,
       "values": {

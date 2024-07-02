@@ -76,7 +76,12 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x0389E24A4Bc96518169f83F50FCDdA442dD8eAFd",
+          "0x617f70525Dc4D2BBbd6ADFd3781DbEAe5C8F0048",
+          "0x73C6af7029E714DFf1F1554F88b79B335011Da68",
           "0x88d3f3F43Ecd46635bd9f546bE7C4d52eBc20881",
+          "0xD6c596b7ca17870DD50D322393deCE6C2085a116",
+          "0xE8AcC0E28a82a26D498f2C66B64C56B9Ef996c2e",
           "0xaF5800ADF22301968613c37DA9C3C2a486eA915A"
         ]
       },

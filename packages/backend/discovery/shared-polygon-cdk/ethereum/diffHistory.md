@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xe187c281eb0dc50a8c9d425f0f0d54dfd05cd099
+
+# Diff at Fri, 28 Jun 2024 10:40:16 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@555efdd96fadc389c2c70beacf820125fbb25a7d block: 20110313
+- current block number: 20189645
+
+## Description
+
+New zk rollup is launching, same verifier as polygon zk and astar zk. Not public yet, waiting on more info.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupCount:
+-        6
++        7
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.6:
++        ["0x92726F7dE49300DBdb60930066bc1d0803c0740B",994873017,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
 Generated with discovered.json: 0x9a73a2c326dacbeb2ddcf0eab4fa287e6a66cc55
 
 # Diff at Mon, 17 Jun 2024 08:28:41 GMT:

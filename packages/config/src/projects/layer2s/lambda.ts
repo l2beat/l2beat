@@ -69,17 +69,19 @@ export const lambda: Layer2 = opStackL2({
       // },
     ],
   },
-  nonTemplateNativePermissions: [
-    {
-      name: 'Lambda Admin EOA',
-      accounts: [
-        {
-          address: discovery.getAddressFromValue('SystemConfig', 'owner'),
-          type: 'EOA',
-        },
-      ],
-      description:
-        "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-    },
-  ],
+  nonTemplateNativePermissions: {
+    lambda: [
+      {
+        name: 'Lambda Admin EOA',
+        accounts: [
+          {
+            address: discovery.getAddressFromValue('SystemConfig', 'owner'),
+            type: 'EOA',
+          },
+        ],
+        description:
+          "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
+      },
+    ],
+  },
 })

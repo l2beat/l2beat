@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xdd3117528b64646f54e12b7227622285b4411ab1
+
+# Diff at Thu, 27 Jun 2024 08:04:02 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@fa87256215827e86de3c150df238331f18654881 block: 20175233
+- current block number: 20181708
+
+## Description
+
+Proposed and executed a proposal to unfreeze bridges, Vault6 and unverified 0xD02c8a355599FEe7e4F1d1d71f7A01c0108E353c.
+
+Vault6 implementation is unverified, currently no visibility on what was frozen.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        54
++        55
+    }
+```
+
 Generated with discovered.json: 0xb8c06d6916518287da115de7a043ff208ec8a78a
 
 # Diff at Wed, 26 Jun 2024 10:22:05 GMT:

@@ -1,5 +1,6 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
 import { aevo } from './aevo'
+import { alienx } from './alienx'
 import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
@@ -133,6 +134,7 @@ export const layer2s: Layer2[] = [
   arbitrum,
   arcology,
   astarzkevm,
+  alienx,
   axonum,
   aztecV1,
   aztecconnect,

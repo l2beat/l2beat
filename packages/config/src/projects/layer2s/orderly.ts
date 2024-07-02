@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
@@ -20,8 +20,10 @@ export const orderly: Layer2 = opStackL2({
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:
-      'Orderly is an Optimium based on the OP Stack and using Celestia DA. It serves as a ledger for all transaction data, user data balances, and trading data retrieved from the Orderbook and order-related services.',
-    purposes: ['DeFi'],
+      'Orderly is an OP stack Optimium on Ethereum using Celestia for data availability. It has a unified ledger for assets from multiple chains and an orderbook that can be used by apps that build on top of it.',
+    detailedDescription:
+      'While ETH deposited to Orderly is using an OP Stack canonical bridge, the multichain USDC escrows are sending / receiving their deposit / withdrawal messages through the external LayerZero v1 AMB.',
+    purposes: ['DeFi', 'Exchange'],
     links: {
       websites: ['https://orderly.network/'],
       apps: ['https://app.orderly.network/'],
@@ -39,6 +41,62 @@ export const orderly: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  nonTemplateEscrows: [
+    {
+      chain: 'arbitrum',
+      includeInTotal: false,
+      address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
+      sinceTimestamp: new UnixTime(1697682598),
+      tokens: ['USDC'],
+      source: 'external',
+      bridge: {
+        name: 'Arbitrum escrow -> LayerZero AMB',
+      },
+    },
+    {
+      chain: 'optimism',
+      includeInTotal: false,
+      address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
+      sinceTimestamp: new UnixTime(1701153879),
+      tokens: ['USDC'],
+      source: 'external',
+      bridge: {
+        name: 'Optimism escrow -> LayerZero AMB',
+      },
+    },
+    {
+      chain: 'base',
+      includeInTotal: false,
+      address: EthereumAddress('0x816f722424b49cf1275cc86da9840fbd5a6167e9'),
+      sinceTimestamp: new UnixTime(1712584295),
+      tokens: ['USDC'],
+      source: 'external',
+      bridge: {
+        name: 'Base escrow -> LayerZero AMB',
+      },
+    },
+    {
+      chain: 'mantle',
+      includeInTotal: false,
+      address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
+      sinceTimestamp: new UnixTime(1705831672),
+      tokens: ['USDC'],
+      source: 'external',
+      bridge: {
+        name: 'Mantle escrow -> LayerZero AMB',
+      },
+    },
+    {
+      chain: 'ethereum',
+      address: EthereumAddress('0x816f722424B49Cf1275cc86DA9840Fbd5a6167e9'),
+      sinceTimestamp: new UnixTime(1705702751),
+      tokens: ['USDC'],
+      source: 'external',
+      bridge: {
+        name: 'Ethereum escrow -> LayerZero AMB',
+      },
+    },
+  ],
   upgradeability,
   rpcUrl: 'https://rpc.orderly.network',
   genesisTimestamp: new UnixTime(1696566432),

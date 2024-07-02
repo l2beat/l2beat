@@ -1,7 +1,7 @@
 {
   "name": "metal",
   "chain": "ethereum",
-  "blockNumber": 20073647,
+  "blockNumber": 20188697,
   "configHash": "0x8e8c2aa00605b772cc3810b085938c01021e7dc431130534680b148b428bdfba",
   "version": 8,
   "contracts": [
@@ -61,7 +61,7 @@
       "sinceTimestamp": 1711563671,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619822",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619875",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -110,14 +110,20 @@
     {
       "name": "ProxyAdmin",
       "address": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
       "assignedPermissions": {
         "admin": [
+          "0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730",
           "0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426",
+          "0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956",
+          "0x50D700e97967F9115e3f999bDB263d69F6704680",
+          "0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3",
           "0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA"
-        ]
+        ],
+        "owner": ["0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37"]
       },
       "sinceTimestamp": 1711563575,
       "values": {
@@ -150,10 +156,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3283200,
-        "latestOutputIndex": 151,
-        "nextBlockNumber": 3304800,
-        "nextOutputIndex": 152,
+        "latestBlockNumber": 3996000,
+        "latestOutputIndex": 184,
+        "nextBlockNumber": 4017600,
+        "nextOutputIndex": 185,
         "proposer": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "PROPOSER": "0xC8187d40AD440328104A52BBed2D8Efc5ab1F1F6",
         "startingBlockNumber": 0,
@@ -184,7 +190,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 491310,
-          "prevBlockNum": 20051797
+          "prevBlockNum": 20188479
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -215,7 +221,7 @@
           "0x4665374939642965EfD8357D4568D2A77f677429"
         ],
         "getThreshold": 2,
-        "nonce": 34,
+        "nonce": 39,
         "VERSION": "1.3.0"
       }
     },
@@ -228,6 +234,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "4 of 7 (57%)"
+      },
+      "assignedPermissions": {
+        "owner": ["0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -245,7 +254,7 @@
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
         "getThreshold": 4,
-        "nonce": 36,
+        "nonce": 40,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -273,8 +282,13 @@
     {
       "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x95703e0982140D16f8ebA6d158FccEde42f04a4C"],
+        "owner": ["0xdE1FCfB0851916CA5101820A69b13a4E276bd81F"]
       },
       "sinceTimestamp": 1685377355,
       "values": {
@@ -293,6 +307,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "2 of 2 (100%)"
+      },
+      "assignedPermissions": {
+        "owner": ["0x543bA4AADBAb8f9025686Bd03993043599c6fB04"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
@@ -474,7 +491,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 92,
+        "nonce": 93,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -519,6 +536,7 @@
     {
       "name": "AddressManager",
       "address": "0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -530,6 +548,7 @@
     {
       "name": "Lib_AddressManager",
       "address": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },

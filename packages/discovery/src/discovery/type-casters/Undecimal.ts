@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
-import { BigNumber } from 'ethers'
+import { BigNumber } from 'bignumber.js'
 import { z } from 'zod'
 import { toContractValue } from '../handlers/utils/toContractValue'
 import { ArgType, BaseTypeCaster } from './BaseTypeCaster'
@@ -16,10 +16,10 @@ export const Undecimal: BaseTypeCaster = {
       'Incoming value must be a number or a string',
     )
     const validated = Validator.parse(arg)
-    const asBigInt = BigNumber.from(incomingValue)
-    const decimals = BigNumber.from(validated.decimals)
-    const base = BigNumber.from(10)
+    const asBigInt = BigNumber(incomingValue)
+    const decimals = BigNumber(validated.decimals)
+    const base = BigNumber(10)
 
-    return toContractValue(asBigInt.div(base.pow(decimals)))
+    return toContractValue(asBigInt.div(base.pow(decimals)).toFormat())
   },
 }

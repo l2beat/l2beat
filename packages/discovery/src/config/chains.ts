@@ -187,4 +187,16 @@ export const chains: ChainConfig[] = [
       url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
     },
   },
+  {
+    name: 'mantapacific',
+    chainId: 169,
+    multicall: getMulticall3Config(332890),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://pacific-explorer.manta.network/api',
+      unsupported: {
+        getContractCreation: true,
+      },
+    },
+  },
 ]

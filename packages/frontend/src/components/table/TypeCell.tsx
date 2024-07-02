@@ -4,12 +4,14 @@ import React from 'react'
 import { cn } from '../../utils/cn'
 import {
   ArbitrumIcon,
+  CartesiIcon,
   LoopringIcon,
   OVMIcon,
   OptimismIcon,
   PolygonIcon,
   StarkWareIcon,
   StarknetIcon,
+  TaikoIcon,
   ZKStackIcon,
   ZkSyncLiteIcon,
 } from '../icons'
@@ -39,50 +41,62 @@ export function TypeCell({ provider, children, disableColors }: TypeCellProps) {
       )}
       {provider === 'OP Stack' && (
         <TypeTooltip
-          text="This project is based on OP Stack's code base."
+          text="This project is based on OP Stack's codebase."
           Icon={OptimismIcon}
         />
       )}
       {provider === 'OVM' && (
         <TypeTooltip
-          text="This project is based on old OVM's code base."
+          text="This project is based on old OVM's codebase."
           Icon={OVMIcon}
         />
       )}
       {provider === 'ZKsync Lite' && (
         <TypeTooltip
-          text="This project is based on ZKsync Lite's code base."
+          text="This project is based on ZKsync Lite's codebase."
           Icon={ZkSyncLiteIcon}
         />
       )}
       {provider === 'ZK Stack' && (
         <TypeTooltip
-          text="This project is based on ZK Stack's code base."
+          text="This project is based on ZK Stack's codebase."
           Icon={ZKStackIcon}
         />
       )}
       {provider === 'Loopring' && (
         <TypeTooltip
-          text="This project is based on Loopring's code base."
+          text="This project is based on Loopring's codebase."
           Icon={LoopringIcon}
         />
       )}
       {provider === 'Arbitrum' && (
         <TypeTooltip
-          text="This project is based on Arbitrum's code base."
+          text="This project is based on Arbitrum's codebase."
           Icon={ArbitrumIcon}
         />
       )}
       {provider === 'Polygon' && (
         <TypeTooltip
-          text="This project is based on Polygon's code base."
+          text="This project is based on Polygon's codebase."
           Icon={PolygonIcon}
         />
       )}
       {provider === 'Starknet' && (
         <TypeTooltip
-          text="This project is based on Starknet's code base."
+          text="This project is based on Starknet's codebase."
           Icon={StarknetIcon}
+        />
+      )}
+      {provider === 'Taiko' && (
+        <TypeTooltip
+          text="This project is based on Taiko's codebase."
+          Icon={TaikoIcon}
+        />
+      )}
+      {provider === 'Cartesi Rollups' && (
+        <TypeTooltip
+          text="This project is based on Cartesi's codebase."
+          Icon={CartesiIcon}
         />
       )}
     </span>
