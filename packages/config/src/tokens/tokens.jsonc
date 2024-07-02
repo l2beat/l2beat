@@ -1907,6 +1907,13 @@
   ],
   "base": [
     {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "source": "native",
