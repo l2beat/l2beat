@@ -5,7 +5,7 @@
   "initialAddresses": [
     "0x608d94945A64503E642E6370Ec598e519a2C1E53", //L1ERC721Bridge
     "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72", //wstETHEscrow
-    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35", //L1StandardBridge
+    "0x3154Cf16ccdb4C6d922629664174b904d80F2C35" //L1StandardBridge
   ],
   "names": {
     "0x3154Cf16ccdb4C6d922629664174b904d80F2C35": "L1StandardBridge",
@@ -23,45 +23,45 @@
     "0x9de443AdC5A411E83F1878Ef24C3F52C61571e72": "wstETHEscrow",
     "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c": "wstETHEscrowAdmin",
     "0x73b047fe6337183A454c5217241D780a932777bD": "LidoEmergencyBrakeMultisig",
-    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule",
+    "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
   },
   "overrides": {
     "LivenessModule": {
-      "ignoreMethods": ["getRequiredThreshold"],
+      "ignoreMethods": ["getRequiredThreshold"]
     },
     "L1StandardBridge": {
-      "extends": "opstack/L1StandardBridge",
+      "extends": "opstack/L1StandardBridge"
     },
     "L1ERC721Bridge": {
-      "extends": "opstack/L1ERC721Bridge",
+      "extends": "opstack/L1ERC721Bridge"
     },
     "wstETHEscrow": {
       "ignoreRelatives": ["l2Token", "l1Token"],
       "fields": {
         "accessControl": {
           "handler": {
-            "type": "accessControl",
-          },
-        },
-      },
+            "type": "accessControl"
+          }
+        }
+      }
     },
     "wstETHEscrowAdmin": {
-      "ignoreDiscovery": true,
+      "ignoreDiscovery": true
     },
     "LidoEmergencyBrakeMultisig": {
-      "ignoreDiscovery": true,
+      "ignoreDiscovery": true
     },
     "OptimismMultisig": {
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": ["nonce"]
     },
     "BaseMultisig": {
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": ["nonce"]
     },
     "GuardianMultisig": {
-      "ignoreInWatchMode": ["nonce"],
+      "ignoreInWatchMode": ["nonce"]
     },
     "GnosisSafe": {
-      "ignoreDiscovery": true,
-    },
-  },
+      "ignoreDiscovery": true
+    }
+  }
 }
