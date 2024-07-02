@@ -99,7 +99,7 @@ export const mode: Layer2 = opStackL2({
       'Owner of the SuperchainProxyAdmin.',
     ),
     ...discovery.getMultisigPermission(
-      'SuperChainGuardianMultisig',
+      'GuardianMultisig',
       'Address allowed to pause withdrawals in case of an emergency. It is controlled by the Security Council multisig, but a deputy module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
     ),
     ...discovery.getMultisigPermission(

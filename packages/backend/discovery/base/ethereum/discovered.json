@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 20219162,
-  "configHash": "0x06cf184ccb106c509038b28b5d442031f35bad4e5af528633d024dc88f88ac74",
+  "configHash": "0x38a117ca57dee3b382d4377d2bc96e17d05a9346972ae389f90ae329d7115072",
   "version": 8,
   "contracts": [
     {
@@ -67,7 +67,7 @@
       "derivedName": "OptimismMintableERC20Factory"
     },
     {
-      "name": "SuperChainGuardianMultisig",
+      "name": "GuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
       "upgradeability": {
