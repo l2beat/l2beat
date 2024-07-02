@@ -32,7 +32,7 @@ export function toDaBridge(bridge: DaBridge): DaSummaryEntryBridge | null {
   }
 
   if (isOnChainBridge(bridge)) {
-    const chain = chains.find((c) => c.chainId === bridge.chain.valueOf())
+    const chain = chains.find((c) => c.name === bridge.chain)
     assert(chain !== undefined, 'Chain not found')
     return {
       type: 'OnChain',

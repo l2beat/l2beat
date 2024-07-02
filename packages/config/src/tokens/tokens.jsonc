@@ -1292,6 +1292,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "WETH",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "MOR",
       "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
       "source": "native",
@@ -1660,6 +1667,13 @@
   ],
   "optimism": [
     {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "USDC.e",
       "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
       "source": "canonical",
@@ -1899,6 +1913,13 @@
     }
   ],
   "base": [
+    {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
     {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
