@@ -1,9 +1,9 @@
 import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId } from '@l2beat/shared-pure'
 
-import { Project } from '../../../../model/Project'
 import { UpdateMonitorRepository } from '../../repositories/UpdateMonitorRepository'
 import { getDiff } from './utils/getDiff'
+import { BackendProject } from '@l2beat/config'
 
 export interface DashboardProject {
   name: string
@@ -13,7 +13,7 @@ export interface DashboardProject {
 }
 
 export async function getDashboardProjects(
-  projects: Project[],
+  projects: BackendProject[],
   configs: DiscoveryConfig[],
   configReader: ConfigReader,
   updateMonitorRepository: UpdateMonitorRepository,

@@ -4,8 +4,7 @@ import {
   TrackedTxsConfigRecord,
   trackedTxConfigEntryToRecord,
 } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxId } from '../types/TrackedTxId'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
 
 export type ToChangeUntilTimestamp = {
   id: TrackedTxId

@@ -1,17 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
 import {
-  Bridge,
-  Layer2,
-  Layer2FinalityConfig,
-  Layer2LivenessConfig,
-  Layer2TxConfig,
-  Layer3,
-  ScalingProjectEscrow,
-  ScalingProjectTransactionApi,
-  chains,
-  tokenList,
-} from '@l2beat/config'
-import {
   ChainConverter,
   ChainId,
   EthereumAddress,
@@ -19,22 +7,33 @@ import {
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { TrackedTxId } from '../modules/tracked-txs/types/TrackedTxId'
 import {
+  TrackedTxId,
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
   TrackedTxUseWithId,
   TrackedTxsConfig,
-} from '../modules/tracked-txs/types/TrackedTxsConfig'
+} from '@l2beat/shared'
+import { chains } from '../chains'
+import {
+  Layer2LivenessConfig,
+  Layer2FinalityConfig,
+  Layer2,
+  Bridge,
+  Layer2TxConfig,
+  Layer3,
+} from '../projects'
+import { tokenList } from '../tokens'
+import { ScalingProjectTransactionApi } from './ScalingProjectTransactionApi'
+import { ScalingProjectEscrow } from './ScalingProjectEscrow'
 
-export interface Project {
+export interface BackendProject {
   projectId: ProjectId
   slug: string
   isArchived?: boolean
   type: 'layer2' | 'bridge' | 'layer3'
   isUpcoming?: boolean
-  escrows: ProjectEscrow[]
+  escrows: BackendProjectEscrow[]
   transactionApi?: ScalingProjectTransactionApi
   trackedTxsConfig?: TrackedTxsConfig
   livenessConfig?: Layer2LivenessConfig
@@ -42,7 +41,7 @@ export interface Project {
   associatedTokens?: string[]
 }
 
-export interface ProjectEscrow {
+export interface BackendProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
@@ -57,7 +56,7 @@ export interface ProjectEscrow {
   }
 }
 
-export function layer2ToProject(layer2: Layer2): Project {
+export function layer2ToBackendProject(layer2: Layer2): BackendProject {
   return {
     projectId: layer2.id,
     slug: layer2.display.slug,
@@ -79,7 +78,7 @@ export function layer2ToProject(layer2: Layer2): Project {
   }
 }
 
-export function bridgeToProject(bridge: Bridge): Project {
+export function bridgeToBackendProject(bridge: Bridge): BackendProject {
   return {
     projectId: bridge.id,
     slug: bridge.display.slug,
@@ -123,7 +122,7 @@ const chainConverter = new ChainConverter(
   chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
 )
 
-export function layer3ToProject(layer3: Layer3): Project {
+export function layer3ToBackendProject(layer3: Layer3): BackendProject {
   return {
     projectId: layer3.id,
     slug: layer3.display.slug,
@@ -147,7 +146,7 @@ function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
   }))
 }
 
-function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
+function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
   const chainId = chainConverter.toChainId(escrow.chain)
 
   const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)

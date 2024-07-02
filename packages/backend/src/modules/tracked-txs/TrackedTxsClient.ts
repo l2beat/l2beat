@@ -1,12 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
-
-import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
-} from './types/TrackedTxsConfig'
+} from '@l2beat/shared'
+
+import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,

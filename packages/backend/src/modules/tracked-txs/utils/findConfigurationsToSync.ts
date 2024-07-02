@@ -2,8 +2,8 @@ import { assert } from '@l2beat/backend-tools'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
 import { isConfigToSync } from './isConfigToSync'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 
 /* EXAMPLE
 

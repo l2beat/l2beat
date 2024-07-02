@@ -9,16 +9,16 @@ import {
 } from '@l2beat/shared-pure'
 
 import { ChainConverter } from '@l2beat/shared-pure'
-import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
+import { BackendProject } from '@l2beat/config'
 
 export interface Config {
   readonly name: string
   readonly isReadonly: boolean
-  readonly projects: Project[]
+  readonly projects: BackendProject[]
   readonly clock: ClockConfig
   readonly metricsAuth: MetricsAuthConfig | false
   readonly database: DatabaseConfig
@@ -82,7 +82,7 @@ export interface TvlConfig {
   readonly prices: PriceConfigEntry[]
   readonly amounts: AmountConfigEntry[]
   readonly chains: ChainTvlConfig[]
-  readonly projects: Project[]
+  readonly projects: BackendProject[]
   readonly coingeckoApiKey: string | undefined
   readonly chainConverter: ChainConverter
   // used by value indexer

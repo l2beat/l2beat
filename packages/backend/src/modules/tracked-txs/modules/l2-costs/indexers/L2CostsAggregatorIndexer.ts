@@ -1,11 +1,9 @@
 import { assert, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 
-import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -19,6 +17,8 @@ import type {
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxId } from '@l2beat/shared'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -28,7 +28,7 @@ export interface L2CostsAggregatorIndexerDeps
   l2CostsRepository: L2CostsRepository
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   l2CostsPricesRepository: L2CostsPricesRepository
-  projects: Project[]
+  projects: BackendProject[]
 }
 
 export interface TrackedTxMultiplier {

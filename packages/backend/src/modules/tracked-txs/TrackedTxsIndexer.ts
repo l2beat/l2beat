@@ -13,7 +13,6 @@ import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { HourlyIndexer } from './HourlyIndexer'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
-import { TrackedTxConfigEntry } from './types/TrackedTxsConfig'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { findConfigurationsToSync } from './utils'
 import {
@@ -21,6 +20,7 @@ import {
   diffTrackedTxConfigurations,
 } from './utils/diffTrackedTxConfigurations'
 import { getSafeHeight } from './utils/getSafeHeight'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export type TrackedTxsIndexerUpdaters = Record<
   TrackedTxsConfigType,

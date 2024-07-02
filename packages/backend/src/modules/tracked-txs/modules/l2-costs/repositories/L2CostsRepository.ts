@@ -8,7 +8,7 @@ import {
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
 import { Database } from '../../../../../peripherals/database/Database'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { TrackedTxId } from '@l2beat/shared'
 
 export interface L2CostsRecord {
   timestamp: UnixTime

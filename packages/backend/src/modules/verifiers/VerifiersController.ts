@@ -17,14 +17,14 @@ import {
   VerifiersApiResponse,
   cacheAsyncFunction,
 } from '@l2beat/shared-pure'
-import { Project } from '../../model/Project'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { VerifierStatusRepository } from './repositories/VerifierStatusRepository'
+import { BackendProject } from '@l2beat/config'
 
 export interface VerifiersControllerDeps {
   peripherals: Peripherals
-  projects: Project[]
+  projects: BackendProject[]
   logger: Logger
 }
 

@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { TrackedTxsConfigRecord } from '../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxConfigEntry } from '../types/TrackedTxsConfig'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export function isConfigToSync(
   configEntry: TrackedTxConfigEntry,

@@ -14,11 +14,11 @@ import {
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
 import { Database } from '../../../peripherals/database/Database'
-import { TrackedTxId } from '../types/TrackedTxId'
 import {
   TrackedTxConfigEntry,
+  TrackedTxId,
   TrackedTxUseWithId,
-} from '../types/TrackedTxsConfig'
+} from '@l2beat/shared'
 
 export interface TrackedTxsConfigRecord {
   id: TrackedTxId

@@ -1,15 +1,15 @@
 import { assert } from '@l2beat/backend-tools'
 import { layer2s } from '@l2beat/config'
 
+import { layer2ToBackendProject } from './BackendProject'
 import {
   TrackedTxFunctionCallConfig,
   TrackedTxTransferConfig,
-} from '../modules/tracked-txs/types/TrackedTxsConfig'
-import { layer2ToProject } from './Project'
+} from '@l2beat/shared'
 
-describe('Backend project config', () => {
+describe('BackendProject', () => {
   describe('Tracked transactions', () => {
-    const projects = layer2s.map(layer2ToProject)
+    const projects = layer2s.map(layer2ToBackendProject)
     it('every LivenessId is unique', () => {
       const ids = new Set<string>()
       for (const project of projects) {

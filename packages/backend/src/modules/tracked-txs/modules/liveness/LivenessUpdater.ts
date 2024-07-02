@@ -2,13 +2,13 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
-import { TrackedTxId } from '../../types/TrackedTxId'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { TrackedTxResult } from '../../types/model'
 import {
   LivenessRecord,
   LivenessRepository,
 } from './repositories/LivenessRepository'
+import { TrackedTxId } from '@l2beat/shared'
 
 export class LivenessUpdater implements TxUpdaterInterface {
   constructor(

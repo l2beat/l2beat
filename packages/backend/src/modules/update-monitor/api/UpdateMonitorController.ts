@@ -1,7 +1,6 @@
 import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { ChainConverter, DiscoveryDiff } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model/Project'
 import { UpdateMonitorRepository } from '../repositories/UpdateMonitorRepository'
 import { getDashboardContracts } from './props/getDashboardContracts'
 import {
@@ -11,6 +10,7 @@ import {
 import { getDiff } from './props/utils/getDiff'
 import { renderDashboardPage } from './view/DashboardPage'
 import { renderDashboardProjectPage } from './view/DashboardProjectPage'
+import { BackendProject } from '@l2beat/config'
 
 export class UpdateMonitorController {
   private readonly onDiskChains: string[] = []
@@ -18,7 +18,7 @@ export class UpdateMonitorController {
 
   constructor(
     private readonly updateMonitorRepository: UpdateMonitorRepository,
-    private readonly projects: Project[],
+    private readonly projects: BackendProject[],
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
   ) {
