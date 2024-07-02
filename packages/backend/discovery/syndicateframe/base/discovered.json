@@ -95,6 +95,7 @@
     {
       "name": "AddressManager",
       "address": "0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -144,14 +145,18 @@
     {
       "name": "ProxyAdmin",
       "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
+      "template": "opstack/ProxyAdmin",
       "upgradeability": {
         "type": "immutable"
       },
       "assignedPermissions": {
         "admin": [
           "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
+          "0x52fA397D799f1CE416a2089B964Aa293c347994F",
+          "0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b",
           "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
-        ]
+        ],
+        "owner": ["0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"]
       },
       "sinceTimestamp": 1707369295,
       "values": {
@@ -193,7 +198,10 @@
       "address": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5"
     },
     {
-      "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4"
+      "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
+      "assignedPermissions": {
+        "owner": ["0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"]
+      }
     },
     {
       "address": "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c"

@@ -25,6 +25,7 @@ export const ScalingNavigationTabs: Story = {
       buildAllProjectPages: false,
       tvl: false,
       layer3sTvl: false,
+      badges: true,
     },
   },
   argTypes: {

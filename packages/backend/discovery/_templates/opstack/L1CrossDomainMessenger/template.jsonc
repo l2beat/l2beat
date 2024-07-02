@@ -5,11 +5,6 @@
   "ignoreMethods": ["xDomainMessageSender"],
   "ignoreInWatchMode": ["messageNonce"],
   "fields": {
-    "addressManager": {
-      "target": {
-        "template": "opstack/AddressManager"
-      }
-    },
     "portal": {
       "target": {
         "template": "opstack/OptimismPortal"

@@ -170,6 +170,13 @@
         "modules": [],
         "threshold": "5 of 10 (50%)"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
+          "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
+          "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+        ]
+      },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1694792111,

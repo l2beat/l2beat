@@ -76,7 +76,16 @@
   ],
   "eoas": [
     {
-      "address": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02"
+      "address": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
+      "assignedPermissions": {
+        "admin": [
+          "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a",
+          "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74",
+          "0xA9c5519a7c1d85fB6d6695853787964a0D3d49A6",
+          "0xB612eb073ebc8638b8E445D7F15f02400e1d99d8",
+          "0xC31a6C0C1087BBB6E6660F27014aD1321591c641"
+        ]
+      }
     },
     {
       "address": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
