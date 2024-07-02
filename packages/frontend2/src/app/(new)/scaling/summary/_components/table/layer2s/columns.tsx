@@ -99,6 +99,7 @@ export const scalingLayer2sColumns = [
 
       return <TotalCell data={value} />
     },
+    sortUndefined: 'last',
     meta: {
       headClassName: 'justify-end',
       cellClassName: 'justify-end',
@@ -116,6 +117,7 @@ export const scalingLayer2sColumns = [
 
       return formatPercent(value)
     },
+    sortUndefined: 'last',
     meta: {
       headClassName: 'justify-end',
       cellClassName: 'justify-end',
