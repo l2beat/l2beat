@@ -64,6 +64,13 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByIds(ids: string[]): Promise<IndexerConfigurationRecord[]> {
+    const knex = await this.knex()
+
+    const rows = await knex('indexer_configurations').whereIn('id', ids)
+    return rows.map(toRecord)
+  }
+
   async updateSavedConfigurations(
     indexerId: string,
     configurationIds: string[],

@@ -3,6 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
+import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
   AmountRecord,
   AmountRepository,
@@ -14,6 +15,7 @@ import {
 
 interface Dependencies {
   readonly amountRepository: AmountRepository
+  readonly configurationRepository: IndexerConfigurationRepository
   readonly clock: Clock
   logger: Logger
 }
@@ -48,7 +50,10 @@ export class AmountsDataService {
       targetTimestamp,
     )
 
-    const doubleCheckedExcluded = await this.doubleCheckExcluded(excluded)
+    const doubleCheckedExcluded = await this.doubleCheckExcluded(
+      targetTimestamp,
+      excluded,
+    )
 
     const aggregatedByTimestamp: Dictionary<bigint> = {}
     for (const [_timestamp, amounts] of Object.entries(amountsByTimestamp)) {
@@ -150,20 +155,40 @@ export class AmountsDataService {
   // there can be configurations with no amounts for latest X days
   // but they used to have amounts in the past -
   // so we do not want to exclude them
-  private async doubleCheckExcluded(potentiallyExcludedIds: string[]) {
+  private async doubleCheckExcluded(
+    targetTimestamp: UnixTime,
+    potentiallyExcludedIds: string[],
+  ) {
     const excluded = []
 
-    const records = await this.$.amountRepository.getByConfigIds(
+    const configurations = await this.$.configurationRepository.getByIds(
       potentiallyExcludedIds,
     )
 
-    for (const e of potentiallyExcludedIds) {
-      const recordsForExcluded = records.filter((a) => a.configId === e)
+    for (const config of configurations) {
+      const syncStatus = config.currentHeight
+        ? new UnixTime(config.currentHeight)
+        : undefined
 
-      if (recordsForExcluded.length > 0) {
+      // newly added configuration
+      if (syncStatus === undefined) {
+        excluded.push(config.id)
         continue
-      } else {
-        excluded.push(e)
+      }
+
+      // phased out configuration - but we still want to display data
+      if (config.maxHeight && config.maxHeight === config.currentHeight) {
+        continue
+      }
+
+      // out of sync configuration
+      if (
+        syncStatus.lt(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        excluded.push(config.id)
+        continue
       }
     }
 
