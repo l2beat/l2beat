@@ -1,6 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
 import { aevo } from './aevo'
 import { alienx } from './alienx'
+import { align } from './align'
 import { ancient } from './ancient'
 import { apex } from './apex'
 import { arbitrum } from './arbitrum'
@@ -107,6 +108,7 @@ import { telos } from './telos'
 import { ten } from './ten'
 import { termstructure } from './termstructure'
 import { tradable } from './tradable'
+import { treasure } from './treasure'
 import { Layer2 } from './types'
 import { world } from './world'
 import { xchain } from './xchain'
@@ -133,6 +135,7 @@ export const layer2s: Layer2[] = [
   arbitrum,
   astarzkevm,
   alienx,
+  align,
   axonum,
   aztecV1,
   aztecconnect,
@@ -235,6 +238,7 @@ export const layer2s: Layer2[] = [
   ten,
   termstructure,
   tradable,
+  treasure,
   world,
   xchain,
   xlayer,
