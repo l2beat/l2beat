@@ -478,4 +478,6 @@ export const zklinknova: Layer3 = {
     },
     risks: [],
   },
+  permissions: [],
+  nativePermissions: [],
 }
