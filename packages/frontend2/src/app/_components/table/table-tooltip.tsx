@@ -1,5 +1,5 @@
 import InfoIcon from '~/icons/info.svg'
-import { Tooltip, TooltipTrigger, TooltipContent } from '../tooltip/tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
 
 interface Props {
   children: React.ReactNode

@@ -1,6 +1,7 @@
 import { type Stage, type StageConfig } from '@l2beat/config'
 import React from 'react'
 
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 import InfoIcon from '~/icons/info.svg'
 import MissingIcon from '~/icons/missing.svg'
 import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
@@ -9,7 +10,6 @@ import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 export interface StageCellProps {
   stageConfig: StageConfig

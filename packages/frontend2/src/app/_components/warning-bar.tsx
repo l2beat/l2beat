@@ -1,11 +1,11 @@
 import React, { type FC } from 'react'
 
+import { cva } from 'class-variance-authority'
 import OutLinkIcon from '~/icons/outlink.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import { cn } from '~/utils/cn'
 import { Callout } from './callout'
 import { Markdown } from './markdown/markdown'
-import { cva } from 'class-variance-authority'
 import { PlainLink } from './plain-link'
 export interface WarningBarProps {
   color: 'red' | 'yellow' | 'gray'

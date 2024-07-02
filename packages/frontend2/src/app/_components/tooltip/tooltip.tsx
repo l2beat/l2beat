@@ -2,13 +2,13 @@
 
 import * as TooltipPrimitive from '@radix-ui/react-tooltip'
 import React, { useRef, useState } from 'react'
+import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
+import { mergeRefs } from '~/utils/merge-refs'
 import {
   TooltipTriggerContextProvider,
   useTooltipTriggerContext,
 } from './tooltip-trigger-context'
-import { useOnClickOutside } from '~/hooks/use-on-click-outside'
-import { mergeRefs } from '~/utils/merge-refs'
 
 const TooltipProvider = TooltipPrimitive.Provider
 
