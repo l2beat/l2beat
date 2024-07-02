@@ -1,9 +1,10 @@
 import { Env } from '@l2beat/backend-tools'
 import {
-  Layer2,
   bridgeToBackendProject,
   bridges,
+  chainConverter,
   chains,
+  getChainToProjectMapping,
   getTvlAmountsConfig,
   getTvlPricesConfig,
   layer2ToBackendProject,
@@ -12,9 +13,8 @@ import {
   layer3s,
   tokenList,
 } from '@l2beat/config'
-import { ChainId, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
-import { ChainConverter } from '@l2beat/shared-pure'
 import { TvlConfig } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
@@ -29,10 +29,7 @@ export function getTvlConfig(
     .concat(bridges.map(bridgeToBackendProject))
     .concat(layer3s.map(layer3ToBackendProject))
 
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
-  const chainToProject = getChainToProjectMapping(layer2s, chainConverter)
+  const chainToProject = getChainToProjectMapping()
 
   const chainConfigs = getChainsWithTokens(tokenList, chains).map((chain) =>
     getChainTvlConfig(flags.isEnabled('tvl', chain), env, chain, {
@@ -59,27 +56,4 @@ export function getTvlConfig(
       env.optionalString('TVL_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ?? [],
     tvlCleanerEnabled: flags.isEnabled('tvlCleaner'),
   }
-}
-
-function getChainToProjectMapping(
-  layer2s: Layer2[],
-  chainConverter: ChainConverter,
-) {
-  const chainToProject = new Map<string, ProjectId>()
-
-  for (const project of layer2s) {
-    if (project.chainConfig) {
-      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
-      chainToProject.set(chain, project.id)
-    }
-  }
-
-  for (const project of layer3s) {
-    if (project.chainConfig) {
-      const chain = chainConverter.toName(ChainId(project.chainConfig.chainId))
-      chainToProject.set(chain, project.id)
-    }
-  }
-
-  return chainToProject
 }

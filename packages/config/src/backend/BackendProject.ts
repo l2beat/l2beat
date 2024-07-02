@@ -7,14 +7,11 @@ import {
   TrackedTxsConfig,
 } from '@l2beat/shared'
 import {
-  ChainConverter,
-  ChainId,
   EthereumAddress,
   ProjectId,
   Token,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { chains } from '../chains'
 import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
 import { ScalingProjectTransactionApi } from '../common/ScalingProjectTransactionApi'
 import {
@@ -26,6 +23,7 @@ import {
   Layer3,
 } from '../projects'
 import { tokenList } from '../tokens'
+import { chainConverter } from './utils'
 
 export interface BackendProject {
   projectId: ProjectId
@@ -117,10 +115,6 @@ function toBackendTrackedTxsConfig(
     }),
   }
 }
-
-const chainConverter = new ChainConverter(
-  chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-)
 
 export function layer3ToBackendProject(layer3: Layer3): BackendProject {
   return {

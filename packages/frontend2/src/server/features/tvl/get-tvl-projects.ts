@@ -1,10 +1,20 @@
-import { type Project, bridges, layer2s, layer3s } from '@l2beat/config'
-import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  type BackendProject,
+  bridges,
+  layer2s,
+  layer3s,
+  layer2ToBackendProject,
+  layer3ToBackendProject,
+  bridgeToBackendProject,
+  getTvlAmountsConfig,
+  getChainToProjectMapping,
+} from '@l2beat/config'
+import { type ProjectId, UnixTime, assert } from '@l2beat/shared-pure'
 
-export interface ApiProject {
+export interface TvlProject {
   id: ProjectId
   minTimestamp: UnixTime
-  type: Project['type']
+  type: BackendProject['type']
   slug: string
   sources: Map<
     string,
@@ -15,11 +25,19 @@ export interface ApiProject {
   >
 }
 
-export function getApiProjects(configMapping: ConfigMapping): ApiProject[] {
-  const projects = [...layer2s, ...layer3s, ...bridges]
+export function getTvlProjects(): TvlProject[] {
+  const projects = [
+    ...layer2s.map(layer2ToBackendProject),
+    ...layer3s.map(layer3ToBackendProject),
+    ...bridges.map(bridgeToBackendProject),
+  ]
 
-  return projects.flatMap(({ id, type, display: { slug } }) => {
-    const amounts = configMapping.getAmountsByProject(projectId)
+  const chainToProject = getChainToProjectMapping()
+
+  const tvlAmounts = getTvlAmountsConfig(projects, chainToProject)
+
+  return projects.flatMap(({ projectId, type, slug }) => {
+    const amounts = tvlAmounts.filter((o) => o.project === projectId)
     if (!amounts) {
       return []
     }
