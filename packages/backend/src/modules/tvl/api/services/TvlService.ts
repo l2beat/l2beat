@@ -1,11 +1,11 @@
 import {
   assert,
+  ChainConverter,
   TvlApiCharts,
   TvlApiProject,
   TvlApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ChainConverter } from '../../../../tools/ChainConverter'
 import { ConfigMapping } from '../../utils/ConfigMapping'
 import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'

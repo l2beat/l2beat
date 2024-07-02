@@ -1,8 +1,7 @@
 import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { DiscoveryDiff } from '@l2beat/shared-pure'
+import { ChainConverter, DiscoveryDiff } from '@l2beat/shared-pure'
 
 import { Project } from '../../../model/Project'
-import { ChainConverter } from '../../../tools/ChainConverter'
 import { UpdateMonitorRepository } from '../repositories/UpdateMonitorRepository'
 import { getDashboardContracts } from './props/getDashboardContracts'
 import {

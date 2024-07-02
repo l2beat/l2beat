@@ -12,6 +12,7 @@ import {
   tokenList,
 } from '@l2beat/config'
 import {
+  ChainConverter,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -26,7 +27,6 @@ import {
   TrackedTxUseWithId,
   TrackedTxsConfig,
 } from '../modules/tracked-txs/types/TrackedTxsConfig'
-import { ChainConverter } from '../tools/ChainConverter'
 
 export interface Project {
   projectId: ProjectId

@@ -7,10 +7,9 @@ import {
   normalizeDiffPath,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert, ChainConverter, UnixTime } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
-import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'

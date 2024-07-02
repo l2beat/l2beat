@@ -8,10 +8,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { ChainConverter } from '@l2beat/shared-pure'
 import { Project } from '../model/Project'
 import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
-import { ChainConverter } from '../tools/ChainConverter'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
 

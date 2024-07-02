@@ -1,11 +1,10 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 
 import { chains } from '@l2beat/config'
-import { ChainId, UnixTime } from '@l2beat/shared-pure'
+import { ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
-import { ChainConverter } from '../../../tools/ChainConverter'
 import { Clock } from '../../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../tools/uif/IndexerService'

@@ -16,13 +16,13 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { ChainConverter } from '@l2beat/shared-pure'
 import {
   Project,
   bridgeToProject,
   layer2ToProject,
   layer3ToProject,
 } from '../../model/Project'
-import { ChainConverter } from '../../tools/ChainConverter'
 import { TvlConfig } from '../Config'
 import { FeatureFlags } from '../FeatureFlags'
 import { getChainTvlConfig, getChainsWithTokens } from './chains'
