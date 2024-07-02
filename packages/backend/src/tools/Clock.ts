@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { getEarliestPossibleTimestamp } from '../modules/tvl/utils/getEarliestPossibleTimestamp'
 
 export class Clock {
   constructor(
@@ -79,68 +80,51 @@ export class Clock {
   getAllTimestampsForApi(
     targetTimestamp: UnixTime,
     options?: {
-      minTimestampOverride?: UnixTime
+      minTimestampOverride: UnixTime
     },
   ): UnixTime[] {
     const timestamps: UnixTime[] = []
 
-    const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
-    const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
-
     let minTimestampOverride: UnixTime | undefined = undefined
 
-    if (
-      options &&
-      options.minTimestampOverride &&
-      options.minTimestampOverride.gte(this.getFirstDay())
-    ) {
-      if (options.minTimestampOverride.gte(hourlyCutOff)) {
-        minTimestampOverride = options.minTimestampOverride.toEndOf('hour')
-      } else if (options.minTimestampOverride.gte(sixHourlyCutOff)) {
-        minTimestampOverride = options.minTimestampOverride.toEndOf('six hours')
-      } else {
-        minTimestampOverride = options.minTimestampOverride.toEndOf('day')
-      }
+    if (options && options.minTimestampOverride.gte(this.getFirstDay())) {
+      minTimestampOverride = this.getTimestampForApi(
+        targetTimestamp,
+        options.minTimestampOverride.toNumber(),
+      )
     }
 
     const from = minTimestampOverride ?? this.getFirstDay()
 
-    let current = this._getTimestampForApi(targetTimestamp, from.toNumber())
+    let current = this.getTimestampForApi(targetTimestamp, from.toNumber())
     const last = targetTimestamp
 
     while (current.lte(last)) {
       timestamps.push(current)
-      current = this._getTimestampForApi(
-        targetTimestamp,
-        current.toNumber() + 1,
-      )
+      current = this.getTimestampForApi(targetTimestamp, current.toNumber() + 1)
     }
 
     return timestamps
   }
 
-  _getTimestampForApi(targetTimestamp: UnixTime, _timestamp: number): UnixTime {
+  private getTimestampForApi(
+    targetTimestamp: UnixTime,
+    _timestamp: number,
+  ): UnixTime {
     const timestamp = new UnixTime(_timestamp)
-
     const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
     const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
 
-    if (timestamp.gte(hourlyCutOff)) {
-      return timestamp.toEndOf('hour')
-    }
-
-    if (timestamp.gte(sixHourlyCutOff)) {
-      const result = timestamp.toEndOf('six hours')
-      return result.lte(hourlyCutOff) ? result : hourlyCutOff
-    }
-
-    const result = timestamp.toEndOf('day')
-    return result.lte(sixHourlyCutOff) ? result : sixHourlyCutOff
+    return getEarliestPossibleTimestamp(
+      timestamp,
+      hourlyCutOff,
+      sixHourlyCutOff,
+    )
   }
 
   shouldTimestampBeIncluded(targetTimestamp: UnixTime, timestamp: UnixTime) {
     return timestamp.equals(
-      this._getTimestampForApi(targetTimestamp, timestamp.toNumber()),
+      this.getTimestampForApi(targetTimestamp, timestamp.toNumber()),
     )
   }
 
