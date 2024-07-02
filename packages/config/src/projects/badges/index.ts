@@ -187,6 +187,14 @@ export const badges = {
     },
     type: BadgeType.Other,
   },
+  //Forks
+  ForkOP: {
+    display: {
+      name: 'Fork of OP Stack',
+      description: 'Lorem Fork of OP Stack dolor sit amet...',
+    },
+    type: BadgeType.Fork,
+  },
 } as const satisfies Record<
   string,
   {
