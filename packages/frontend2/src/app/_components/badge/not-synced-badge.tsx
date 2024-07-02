@@ -2,7 +2,7 @@ import React from 'react'
 
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
 import { Badge } from './badge'
 
 interface NotSyncedBadgeProps {

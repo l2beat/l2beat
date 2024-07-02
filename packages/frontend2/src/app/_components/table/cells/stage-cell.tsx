@@ -7,20 +7,37 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import UnderReviewIcon from '~/icons/under-review.svg'
 import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
 
 export interface StageCellProps {
   stageConfig: StageConfig
 }
 
 export function StageCell({ stageConfig }: StageCellProps) {
+  const breakpoint = useBreakpoint()
+  const isMobile = breakpoint === 'mobile'
+
   if (stageConfig.stage === 'NotApplicable') {
     return <StageBadge stage={stageConfig.stage} oneSize />
   }
 
+  if (isMobile) {
+    return (
+      <StageBadge
+        stage={stageConfig.stage}
+        icon={
+          stageConfig.stage !== 'UnderReview'
+            ? stageConfig.message?.type
+            : undefined
+        }
+        oneSize
+      />
+    )
+  }
+
   return (
-    // TODO: disabledOnMobile
     <Tooltip>
       <TooltipTrigger>
         <StageBadge

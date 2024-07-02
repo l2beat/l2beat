@@ -7,7 +7,7 @@ import { useTimeout } from '~/hooks/use-timeout'
 import CopyIcon from '~/icons/copy.svg'
 import SatisfiedIcon from '~/icons/satisfied.svg'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/tooltip'
 
 interface Props {
   toCopy: string

@@ -5,7 +5,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip'
+} from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import {

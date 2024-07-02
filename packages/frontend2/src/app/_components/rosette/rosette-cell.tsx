@@ -1,5 +1,5 @@
 import React from 'react'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
 import { SmallRosette } from './rosette'
 import { RosetteTooltip } from './rosette-tooltip'
 import { type RosetteValue } from './types'
@@ -17,7 +17,7 @@ export function RosetteCell(props: RosetteCellProps) {
 
   return (
     <Tooltip>
-      <TooltipTrigger>
+      <TooltipTrigger className="flex items-center justify-center size-full">
         <SmallRosette
           values={props.values.map((value) => value.sentiment)}
           className="size-6 md:size-8"

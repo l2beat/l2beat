@@ -12,7 +12,7 @@ import { TaikoIcon } from '~/icons/providers/taiko-icon'
 import { ZKStackIcon } from '~/icons/providers/zkstack-icon'
 import { ZkSyncLiteIcon } from '~/icons/providers/zksync-lite-icon'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 
 export interface TypeCellProps {
   children: string
@@ -105,8 +105,10 @@ interface TypeTooltipProps {
 function TypeTooltip({ Icon, text }: TypeTooltipProps) {
   return (
     <Tooltip>
-      <TooltipTrigger className="relative ml-1 inline-block size-4">
-        <Icon className="-top-0.5 absolute left-0 size-4" />
+      <TooltipTrigger>
+        <div className="relative ml-1 inline-block size-4">
+          <Icon className="-top-0.5 absolute left-0 size-4" />
+        </div>
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>
     </Tooltip>

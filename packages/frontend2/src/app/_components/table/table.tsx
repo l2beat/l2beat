@@ -88,7 +88,7 @@ const TableHead = React.forwardRef<
     )}
     {...props}
   >
-    <div className="flex items-center gap-1.5">
+    <div className="flex items-center gap-1.5 leading-none">
       {children}
       {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
     </div>

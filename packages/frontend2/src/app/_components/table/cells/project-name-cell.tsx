@@ -4,7 +4,7 @@ import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip'
+} from '~/app/_components/tooltip/tooltip'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import UnderReviewIcon from '~/icons/under-review.svg'
