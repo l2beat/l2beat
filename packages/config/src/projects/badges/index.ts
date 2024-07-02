@@ -15,6 +15,7 @@ export const BadgeType = {
   Stack: 'Stack',
   Fork: 'Fork',
   L3ParentChain: 'L3ParentChain',
+  Infra: 'Infra',
   Other: 'Other',
 } as const
 
