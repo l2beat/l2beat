@@ -127,6 +127,8 @@ export class DiscoveryRunner {
     return new DiscoveryConfig({
       ...config.raw,
       initialAddresses,
+      maxAddresses: (config.raw.maxAddresses ?? 200) * 3,
+      maxDepth: (config.raw.maxDepth ?? 6) * 3,
     })
   }
 }

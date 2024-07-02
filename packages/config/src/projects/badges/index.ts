@@ -11,6 +11,10 @@ export const BadgeType = {
   RaaS: 'RaaS',
   DA: 'DA',
   VM: 'VM',
+  Token: 'Token',
+  Stack: 'Stack',
+  Fork: 'Fork',
+  L3ParentChain: 'L3ParentChain',
   Other: 'Other',
 } as const
 
@@ -123,6 +127,34 @@ export const badges = {
     display: {
       name: 'Cairo',
       description: 'Lorem Cairo dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  FuelVM: {
+    display: {
+      name: 'FuelVM',
+      description: 'Lorem FuelVM dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  AztecVM: {
+    display: {
+      name: 'AztecVM',
+      description: 'Lorem AztecVM dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  MoveVM: {
+    display: {
+      name: 'MoveVM',
+      description: 'Lorem MoveVM dolor sit amet...',
+    },
+    type: BadgeType.VM,
+  },
+  SolanaVM: {
+    display: {
+      name: 'SolanaVM',
+      description: 'Lorem SolanaVM dolor sit amet...',
     },
     type: BadgeType.VM,
   },

@@ -25,6 +25,12 @@
     "0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
   },
   "overrides": {
+    "FoundationMultisig_1": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "FoundationMultisig_2": {
+      "ignoreInWatchMode": ["nonce"]
+    },
     "LivenessModule": {
       "ignoreMethods": ["getRequiredThreshold"]
     },

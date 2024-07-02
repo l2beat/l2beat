@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xd29b22b3ed6f160baac562d824fd49ab96965df6
+
+# Diff at Mon, 01 Jul 2024 12:13:33 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@b5540be6f0b9cb1f69a05dba32413b0eae0acbf4 block: 20181951
+- current block number: 20211590
+
+## Description
+
+New token pools for WETH, GHO, egETH (Eigenpie LRT), EARNM (not on CG).
+All are empty.
+These escrows would be fetched from discovery to the frontend automatically, but transporter is currently not shown on the frontend.
+
+## Watched changes
+
+```diff
+    contract LockReleaseTokenPool (0x69c24c970B65e22Ac26864aF10b2295B7d78f93A) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "15971525489660198786"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x4Ce6f5cacF8Bd393104c12F6151B727eabBf675c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x7559a84Ae7B75F4B0E0E540312A3Ec912B2128CA)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x7559a84Ae7B75F4B0E0E540312A3Ec912B2128CA.sol |  998 +++++++++++
+ ...-0x4Ce6f5cacF8Bd393104c12F6151B727eabBf675c.sol | 1407 +++++++++++++++
+ .../TransparentUpgradeableProxy.p.sol              |  587 +++++++
+ .../UpgradeableLockReleaseTokenPool.sol            | 1822 ++++++++++++++++++++
+ 4 files changed, 4814 insertions(+)
+```
+
 Generated with discovered.json: 0x7c650b93b3b74635f636b7c782164479d7f37500
 
 # Diff at Wed, 26 Jun 2024 09:58:15 GMT:
