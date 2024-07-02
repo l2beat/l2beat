@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 20219162,
-  "configHash": "0x38a117ca57dee3b382d4377d2bc96e17d05a9346972ae389f90ae329d7115072",
+  "configHash": "0xcaa59284af830487e53e32a2c6784e66d1d6c34af742380085b84588129d2bea",
   "version": 8,
   "contracts": [
     {
@@ -224,7 +224,7 @@
       "derivedName": "OptimismPortal"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "template": "opstack/ProxyAdmin",
       "upgradeability": {
@@ -239,7 +239,8 @@
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "isUpgrading": false,
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "L2OutputOracle",
