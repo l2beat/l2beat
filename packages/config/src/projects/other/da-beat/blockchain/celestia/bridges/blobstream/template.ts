@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { capitalize } from 'lodash'
-import { chains } from '../../../../../../../chains'
+import { chains } from '../../../../../../../'
 import {
   DaAccessibilityRisk,
   DaBridgeKind,

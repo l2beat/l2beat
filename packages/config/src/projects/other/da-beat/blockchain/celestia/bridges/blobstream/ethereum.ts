@@ -7,7 +7,7 @@ const discovery = new ProjectDiscovery('blobstream')
 
 // Example
 const _maxDataCommitment = discovery.getContractValue(
-  'BlobStreamX',
+  'BlobstreamX',
   'DATA_COMMITMENT_MAX',
 )
 
