@@ -116,6 +116,9 @@ export function createTvlModule(
 
   const amountsDataService = new AmountsDataService({
     amountRepository: peripherals.getRepository(AmountRepository),
+    configurationRepository: peripherals.getRepository(
+      IndexerConfigurationRepository,
+    ),
     clock,
     logger,
   })
