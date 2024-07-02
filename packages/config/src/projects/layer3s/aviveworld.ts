@@ -6,7 +6,7 @@ import { Layer3 } from './types'
 export const aviveworld: Layer3 = upcomingL3({
   id: 'aviveworld',
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.RaaS.Caldera],
+  badges: [Badge.VM.EVM, Badge.RaaS.AltLayer],
   display: {
     name: 'Avive World',
     slug: 'avive-world',
