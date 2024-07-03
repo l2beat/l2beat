@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x22b5fad9f228c6024af112ee1a140d2bac34f69c
+
+# Diff at Wed, 03 Jul 2024 10:08:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@630eced58a4371f4873c6b323d9fb5123fad28ef block: 20175250
+- current block number: 20225285
+
+## Description
+
+The StakingInfo owner is changed from an EOA to the Polygon Multisig.
+
+## Watched changes
+
+```diff
+    contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
+    +++ description: None
+      values.owner:
+-        "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+    }
+```
+
 Generated with discovered.json: 0xfa4e15c7558a27920cf19b49d048b4c4be1aa237
 
 # Diff at Wed, 26 Jun 2024 10:26:01 GMT:
