@@ -128,9 +128,15 @@ export class AmountsDataService {
       amountsAtExcludedHeuristic.find((p) => p.configId === c.configId),
     )
 
-    const recordsForLagging = await this.$.amountRepository.getByConfigIds(
-      lagging.map((l) => l.configId),
-    )
+    const recordsForLagging =
+      await this.$.amountRepository.getByConfigIdsInRange(
+        lagging.map((l) => l.configId),
+        lagging.reduce(
+          (a, b) => UnixTime.min(a, b.sinceTimestamp),
+          UnixTime.now(),
+        ),
+        targetTimestamp,
+      )
 
     for (const laggingConfig of lagging) {
       const sortedRecordsForConfig = recordsForLagging
