@@ -1,8 +1,7 @@
-import { type SortDirection } from '@tanstack/react-table'
 import Link from 'next/link'
 import * as React from 'react'
 import { cn } from '~/utils/cn'
-import { SortingArrows } from './sorting-arrows'
+import { TableTooltip } from './table-tooltip'
 
 const Table = React.forwardRef<
   HTMLTableElement,
@@ -75,15 +74,12 @@ const TableRow = React.forwardRef<
 ))
 TableRow.displayName = 'TableRow'
 
-interface HeaderSorting {
-  direction: SortDirection | false
-  nextDirection: SortDirection | false
-}
-
 const TableHead = React.forwardRef<
   HTMLTableCellElement,
-  React.ThHTMLAttributes<HTMLTableCellElement> & { sorting?: HeaderSorting }
->(({ className, children, sorting, ...props }, ref) => (
+  React.ThHTMLAttributes<HTMLTableCellElement> & {
+    tooltip?: React.ReactNode
+  }
+>(({ className, children, tooltip, ...props }, ref) => (
   <th
     ref={ref}
     className={cn(
@@ -92,13 +88,10 @@ const TableHead = React.forwardRef<
     )}
     {...props}
   >
-    {children !== null ? (
-      sorting ? (
-        <SortingArrows {...sorting}>{children}</SortingArrows>
-      ) : (
-        children
-      )
-    ) : null}
+    <div className="flex items-center gap-1.5 leading-none">
+      {children}
+      {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
+    </div>
   </th>
 ))
 TableHead.displayName = 'TableHead'
@@ -110,16 +103,19 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'h-9 md:h-14 align-middle whitespace-pre',
+      'h-9 md:h-14 align-middle whitespace-pre group',
       !href && 'first:pl-2 pr-3 last:pr-2',
-      className,
+      !href && className,
     )}
     {...props}
   >
     {href ? (
       <Link
         href={href}
-        className="flex size-full items-center first:pl-2 pr-3 last:pr-2"
+        className={cn(
+          'flex size-full items-center group-first:pl-2 pr-3 md:pr-4 group-last:pr-2',
+          className,
+        )}
       >
         {children}
       </Link>

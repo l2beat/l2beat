@@ -482,6 +482,11 @@
       "address": "0x21413c119b0C11C5d96aE1bD328917bC5C8ED67E"
     },
     {
+      "symbol": "GHO",
+      "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "GLM",
       "address": "0x7DD9c5Cba05E151C895FDe1CF355C9A1D5DA6429"
     },
@@ -1292,6 +1297,24 @@
   ],
   "arbitrum": [
     {
+      "symbol": "GHO",
+      "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "gho",
+      "bridgedUsing": {
+        "bridge": "Chainlink CCIP"
+      }
+    },
+    {
+      "symbol": "WETH",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "MOR",
       "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
       "source": "native",
@@ -1660,6 +1683,13 @@
   ],
   "optimism": [
     {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "USDC.e",
       "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
       "source": "canonical",
@@ -1899,6 +1929,13 @@
     }
   ],
   "base": [
+    {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
     {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
@@ -2429,6 +2466,30 @@
     }
   ],
   "kinto": [
+    {
+      "symbol": "USDe",
+      "category": "stablecoin",
+      "address": "0x05dE0003C333A503bea5224fCc64f0D4b5446C38",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ethena-usde"
+    },
+    {
+      "symbol": "WETH",
+      "category": "ether",
+      "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "weth"
+    },
     {
       "symbol": "USD+",
       "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
@@ -3174,6 +3235,15 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    }
+  ],
+  "sanko": [
+    {
+      "symbol": "SMOKE",
+      "address": "0xe78a3857593083dd6e1f7859e1b711401fc6f2cc",
+      "source": "native",
+      "supply": "circulatingSupply",
+      "coingeckoId": "smoke-the-ticker"
     }
   ]
 }

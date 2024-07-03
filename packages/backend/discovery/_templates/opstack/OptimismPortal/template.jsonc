@@ -10,12 +10,22 @@
         "role": "Guardian"
       }
     },
+    "L2_ORACLE": {
+      "target": {
+        "template": "opstack/L2OutputOracle"
+      }
+    },
     "l2Oracle": {
       "target": {
         "template": "opstack/L2OutputOracle"
       }
     },
     "systemConfig": {
+      "target": {
+        "template": "opstack/SystemConfig"
+      }
+    },
+    "SYSTEM_CONFIG": {
       "target": {
         "template": "opstack/SystemConfig"
       }

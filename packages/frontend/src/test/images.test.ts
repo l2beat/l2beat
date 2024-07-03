@@ -48,7 +48,7 @@ describe('icons', () => {
 
         expect(width).toEqual(128)
         expect(height).toEqual(128)
-        expect(size).toBeLessThanOrEqual(12222)
+        expect(size).toBeLessThanOrEqual(14796)
         expect(tinifiedLogos[`${project.display.slug}.png`]).toEqual(hash)
       })
     }

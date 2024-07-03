@@ -91,8 +91,7 @@ function getStageName(stage: Stage | 'UnderReview') {
     case 'Stage 2':
       return 'No training wheels'
     default:
-      return ''
-    // assertUnreachable(stage)
+      return undefined
   }
 }
 
@@ -103,6 +102,6 @@ function getColorClassName(stage: Stage) {
     case 'Stage 2':
       return 'text-green-400'
     default:
-      return ''
+      return undefined
   }
 }
