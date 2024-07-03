@@ -72,6 +72,7 @@ export function createFinalityModule(
     blobClient,
     logger,
     peripherals.getRepository(LivenessRepository),
+    peripherals.getRepository(IndexerConfigurationRepository),
     config.finality.configurations,
     peripherals,
   )
@@ -107,6 +108,7 @@ function initializeConfigurations(
   blobClient: BlobClient,
   logger: Logger,
   livenessRepository: LivenessRepository,
+  indexerConfigurationRepository: IndexerConfigurationRepository,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
 ): FinalityConfig[] {
@@ -120,6 +122,7 @@ function initializeConfigurations(
               timeToInclusion: new LineaFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, RpcClient),
               ),
@@ -134,6 +137,8 @@ function initializeConfigurations(
               timeToInclusion: new zkSyncEraFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
+
                 configuration.projectId,
               ),
             },
@@ -149,6 +154,7 @@ function initializeConfigurations(
                 logger,
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 {
                   l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
@@ -168,6 +174,7 @@ function initializeConfigurations(
                 logger,
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
               ),
             },
@@ -181,6 +188,7 @@ function initializeConfigurations(
               timeToInclusion: new ScrollFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
               ),
             },
@@ -194,6 +202,7 @@ function initializeConfigurations(
               timeToInclusion: new ZkSyncLiteFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
               ),
             },
@@ -207,6 +216,7 @@ function initializeConfigurations(
               timeToInclusion: new StarknetFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, StarknetClient),
               ),
@@ -223,6 +233,7 @@ function initializeConfigurations(
               timeToInclusion: new LoopringFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, LoopringClient),
               ),
@@ -237,6 +248,7 @@ function initializeConfigurations(
               timeToInclusion: new LoopringFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, DegateClient),
               ),
@@ -251,6 +263,7 @@ function initializeConfigurations(
               timeToInclusion: new PolygonZkEvmFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, RpcClient),
               ),

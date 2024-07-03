@@ -14,6 +14,7 @@ import {
   IndexerConfigurationRepository,
 } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -94,6 +95,9 @@ const MOCK_PROJECTS: Project[] = [
 ]
 
 describe(L2CostsAggregatorIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
   describe(L2CostsAggregatorIndexer.prototype.update.name, () => {
     it('updates correctly', async () => {
       // 2023-05-01 00:01:00
