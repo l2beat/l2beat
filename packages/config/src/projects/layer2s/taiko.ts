@@ -35,15 +35,23 @@ const proposerOne = discovery.getContractValue<string>(
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
-const TIER_SGX = discovery.getContractValue<string[]>(
-  'TierProvider',
-  'TIER_SGX',
-)
+const TIER_SGX = discovery.getContractValue<{
+  verifierName: string
+  validityBond: number
+  contestBond: number
+  cooldownWindow: number
+  provingWindow: number
+  maxBlocksToVerifyPerProof: number
+}>('TierProvider', 'TIER_SGX')
 
-const TIER_MINORITY_GUARDIAN = discovery.getContractValue<string[]>(
-  'TierProvider',
-  'TIER_GUARDIAN_MINORITY',
-)
+const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
+  verifierName: string
+  validityBond: number
+  contestBond: number
+  cooldownWindow: number
+  provingWindow: number
+  maxBlocksToVerifyPerProof: number
+}>('TierProvider', 'TIER_GUARDIAN_MINORITY')
 
 const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
   'GuardianMinorityProver',
@@ -67,12 +75,16 @@ const TaikoChainConfig = discovery.getContractValue<{
   [key: string]: number | string
 }>('TaikoL1Contract', 'getConfig')
 
-const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
-const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes
-const SGXvalidityBond = utils.formatEther(TIER_SGX[1]) // value in TAIKO
-const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
-const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
-const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
+const SGXcooldownWindow = formatSeconds(Number(TIER_SGX.cooldownWindow) * 60) // value in minutes
+const SGXprovingWindow = formatSeconds(Number(TIER_SGX.provingWindow) * 60) // value in minutes
+const SGXvalidityBond = utils.formatEther(TIER_SGX.validityBond) // value in TAIKO
+const SGXcontestBond = utils.formatEther(TIER_SGX.contestBond) // value in TAIKO
+const MinorityValidityBond = utils.formatEther(
+  TIER_MINORITY_GUARDIAN.validityBond,
+) // value in TAIKO
+const MinorityContestBond = utils.formatEther(
+  TIER_MINORITY_GUARDIAN.contestBond,
+) // value in TAIKO
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
@@ -273,8 +285,7 @@ export const taiko: Layer2 = {
       description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. 
         The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the initial proving window. 
         Currently, proving a block requires the block proposer to run an SGX instance. Proposing a block also requires depositing a liveness bond as a commitment to proving the block. 
-        Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.
-        `,
+        Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',

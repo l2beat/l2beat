@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20224536,
-  "configHash": "0xceb4f2c9d3cf34fccd49818b13886e2918d014bb91da25ffb43298896b03f971",
+  "blockNumber": 20225431,
+  "configHash": "0x47e801f35f3cb2c3bef7ec829e84f79e66865f9df7016ee2618dd4b498683eb8",
   "version": 8,
   "contracts": [
     {
@@ -56,25 +56,25 @@
           "checkEOAForCalldataDA": true
         },
         "getLastSyncedBlock": {
-          "blockId_": 122767,
-          "blockHash_": "0xf9ddd36d57ea9b84842ff6f11472a12752d34c3c0643643279d06b7c9b66c3f4",
-          "stateRoot_": "0x359f10dfe239657d3405b8867a530f6631c45f6dbbd3b9dec69c9c308fc3e494"
+          "blockId_": 123263,
+          "blockHash_": "0xb76e9f9c45cf5eef85553320bbc185a19a0140ea4b807417b0b518e841ec79d3",
+          "stateRoot_": "0x3a551ffd3d4aeea51f25b828766fee55242729ef0c6a72a9b758668ea74c9a52"
         },
         "getLastVerifiedBlock": {
-          "blockId_": 122782,
-          "blockHash_": "0x2f7eb877bc9420d4e46395d382caf5e2bdac6d2ddca8bbd08520456cc57b335d",
+          "blockId_": 123268,
+          "blockHash_": "0xa1e7904ad55825bc7e8d18fec8e5de8412b4effe506ae14320f96e82dd28c12e",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 122767,
-            "lastSynecdAt": 1719992099
+            "lastSyncedBlockId": 123263,
+            "lastSynecdAt": 1720002947
           },
           {
-            "numBlocks": 126663,
-            "lastVerifiedBlockId": 122782,
+            "numBlocks": 127131,
+            "lastVerifiedBlockId": 123268,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -103,12 +103,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 122767,
-            "lastSynecdAt": 1719992099
+            "lastSyncedBlockId": 123263,
+            "lastSynecdAt": 1720002947
           },
           "slotB": {
-            "numBlocks": 126663,
-            "lastVerifiedBlockId": 122782,
+            "numBlocks": 127131,
+            "lastVerifiedBlockId": 123268,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -141,7 +141,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1719992231,
+        "clock": 1720003031,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -185,46 +185,46 @@
           ["0x746965725f677561726469616e00000000000000000000000000000000000000"]
         ],
         "getTierIds": [200, 900, 1000],
-        "TIER_GUARDIAN": [
-          "0x746965725f677561726469616e00000000000000000000000000000000000000",
-          0,
-          0,
-          1440,
-          2880,
-          0
-        ],
-        "TIER_GUARDIAN_MINORITY": [
-          "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
-          "250000000000000000000",
-          "1640000000000000000000",
-          240,
-          2880,
-          0
-        ],
-        "TIER_OPTIMISTIC": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "125000000000000000000",
-          "250000000000000000000",
-          1440,
-          15,
-          0
-        ],
-        "TIER_SGX": [
-          "0x746965725f736778000000000000000000000000000000000000000000000000",
-          "125000000000000000000",
-          "820000000000000000000",
-          1440,
-          60,
-          0
-        ],
-        "TIER_SGX_ZKVM": [
-          "0x746965725f7367785f7a6b766d00000000000000000000000000000000000000",
-          "250000000000000000000",
-          "1640000000000000000000",
-          1440,
-          240,
-          0
-        ]
+        "TIER_GUARDIAN": {
+          "verifierName": "0x746965725f677561726469616e00000000000000000000000000000000000000",
+          "validityBond": 0,
+          "contestBond": 0,
+          "cooldownWindow": 1440,
+          "provingWindow": 2880,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_GUARDIAN_MINORITY": {
+          "verifierName": "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
+          "validityBond": "250000000000000000000",
+          "contestBond": "1640000000000000000000",
+          "cooldownWindow": 240,
+          "provingWindow": 2880,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_OPTIMISTIC": {
+          "verifierName": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "validityBond": "125000000000000000000",
+          "contestBond": "250000000000000000000",
+          "cooldownWindow": 1440,
+          "provingWindow": 15,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SGX": {
+          "verifierName": "0x746965725f736778000000000000000000000000000000000000000000000000",
+          "validityBond": "125000000000000000000",
+          "contestBond": "820000000000000000000",
+          "cooldownWindow": 1440,
+          "provingWindow": 60,
+          "maxBlocksToVerifyPerProof": 0
+        },
+        "TIER_SGX_ZKVM": {
+          "verifierName": "0x746965725f7367785f7a6b766d00000000000000000000000000000000000000",
+          "validityBond": "250000000000000000000",
+          "contestBond": "1640000000000000000000",
+          "cooldownWindow": 1440,
+          "provingWindow": 240,
+          "maxBlocksToVerifyPerProof": 0
+        }
       },
       "derivedName": "TierProviderV2"
     },
@@ -570,7 +570,7 @@
         "impl": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 25665,
+        "nextMessageId": 25701,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
