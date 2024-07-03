@@ -1,3 +1,97 @@
+Generated with discovered.json: 0xe3ed2d74571e0110c685fed2c2b0d772b212d59c
+
+# Diff at Wed, 03 Jul 2024 13:07:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c21b1d328274bd86f14640bbbecf658b3e4a0c87 block: 20138546
+- current block number: 20226174
+
+## Description
+
+This upgrade is called [the Curie Upgrade](https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade) by Scroll.
+It brings a new batch version that has new compression and an accompanying new verifier and verifier-manager.
+The L2 changes are listed in the blog post.
+
+### ScrollChain
+
+Batch version > 1 is now suported. This allows for the new batch version 2 to be posted.
+
+### MultipleVersionRollupVerifier (manages verifiers)
+
+In the `updateVerifier()` function, a check wether the new verifier's `_startBatchIndex` is already finalized (-->revert), is removed. 
+
+### ZkEvmVerifierV1
+
+This is the contract in the third slot of `latestVerifier`, added in this upgrade. It is code-identical with the previous one, but points to the new Plonk Verifier.
+
+### New Plonk Verfier
+
+The source code (yul+) can be found at https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0x1Ea29d57dAC237152d878758bAe4BeB2668998f6)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"
++        "0x4F250B05262240C787a1eE222687C6eC395C628A"
+      implementations.0:
+-        "0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"
++        "0x4F250B05262240C787a1eE222687C6eC395C628A"
+      values.verifier:
+-        "0x1Ea29d57dAC237152d878758bAe4BeB2668998f6"
++        "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV2 (0x03a72B00D036C479105fF98A1953b15d9c510110)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+## Source code changes
+
+```diff
+.../MultipleVersionRollupVerifier.sol              | 26 ++-------
+ .../ScrollChain/ScrollChain.sol                    | 24 ++++----
+ .../scroll/ethereum/.flat/ZkEvmVerifierV1-1.sol    | 66 ++++++++++++++++++++++
+ 3 files changed, 82 insertions(+), 34 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138546 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (0x1Ea29d57dAC237152d878758bAe4BeB2668998f6) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      errors:
++        {"latestVerifier":"Too many values. Update configuration to explore fully","legacyVerifiersLength":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0x355fd622fa9cc92e25f4e7c966a40b13dc467a75
 
 # Diff at Wed, 29 May 2024 07:42:54 GMT:
