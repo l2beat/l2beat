@@ -128,6 +128,9 @@ export function createTrackedTxsModule(
       l2CostsPricesRepository: peripherals.getRepository(
         L2CostsPricesRepository,
       ),
+      indexerConfigurationRepository: peripherals.getRepository(
+        IndexerConfigurationRepository,
+      ),
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),

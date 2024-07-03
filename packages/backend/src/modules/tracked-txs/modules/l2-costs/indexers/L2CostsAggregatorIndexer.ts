@@ -1,7 +1,13 @@
-import { assert, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
+import {
+  assert,
+  ProjectId,
+  UnixTime,
+  clampRangeToDay,
+} from '@l2beat/shared-pure'
 
 import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
+import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -28,6 +34,7 @@ export interface L2CostsAggregatorIndexerDeps
   l2CostsRepository: L2CostsRepository
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   l2CostsPricesRepository: L2CostsPricesRepository
+  indexerConfigurationRepository: IndexerConfigurationRepository
   projects: Project[]
 }
 
@@ -49,7 +56,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const costs = await this.$.l2CostsRepository.getWithProjectIdByTimeRange([
+    const costs = await this.getL2CostsRecordsWithProjectId([
       shiftedFrom,
       shiftedTo,
     ])
@@ -101,6 +108,35 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     })
 
     return [shiftedUnixFrom, shiftedUnixTo]
+  }
+
+  async getL2CostsRecordsWithProjectId(
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<L2CostsRecordWithProjectId[]> {
+    const [shiftedFrom, shiftedTo] = timeRange
+    const costs = await this.$.l2CostsRepository.getByTimeRange([
+      shiftedFrom,
+      shiftedTo,
+    ])
+
+    const configurations =
+      await this.$.indexerConfigurationRepository.getSavedConfigurationsByIds(
+        costs.map((c) => c.configurationId),
+      )
+
+    return costs.map((l2costsRow) => {
+      const config = configurations.find(
+        (configRow) => configRow.id === l2costsRow.configurationId,
+      )
+      assert(
+        config?.id,
+        `Indexer config with id: ${config?.id} could not be found`,
+      )
+      return {
+        ...l2costsRow,
+        projectId: JSON.parse(config.properties).projectId as ProjectId,
+      }
+    })
   }
 
   aggregate(
