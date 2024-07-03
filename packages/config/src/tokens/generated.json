@@ -5916,6 +5916,21 @@
       }
     },
     {
+      "id": "sanko:smoke-smoke-the-ticker",
+      "name": "smoke the ticker",
+      "coingeckoId": "smoke-the-ticker",
+      "address": "0xe78A3857593083dD6e1F7859e1B711401FC6f2cc",
+      "symbol": "SMOKE",
+      "decimals": 18,
+      "deploymentTimestamp": 1716185196,
+      "coingeckoListingTimestamp": 1718755200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38767/large/smoke.png?1718766917",
+      "chainId": 1996,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "aevo:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
