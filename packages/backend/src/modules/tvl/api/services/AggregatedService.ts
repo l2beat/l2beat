@@ -27,14 +27,26 @@ export class AggregatedService {
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiCharts> {
-    const ethPrices =
-      await this.$.pricesDataService.getEthPrices(targetTimestamp)
-
-    const valuesByProjectByTimestamp =
-      await this.$.valuesDataService.getValuesForProjects(
-        projects,
-        targetTimestamp,
-      )
+    const [ethPrices, valuesByProjectByTimestamp, ...associatedTokensData] =
+      await Promise.all([
+        this.$.pricesDataService.getEthPrices(targetTimestamp),
+        this.$.valuesDataService.getValuesForProjects(
+          projects,
+          targetTimestamp,
+        ),
+        ...associatedTokens.map(async (token) => {
+          const project = projects.find((p) => p.id === token.project)
+          assert(project, 'Project not found!')
+          return {
+            ...token,
+            data: await this.$.tokenService.getTokenChart(
+              targetTimestamp,
+              project,
+              token,
+            ),
+          }
+        }),
+      ])
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
@@ -86,25 +98,12 @@ export class AggregatedService {
       ethPrices: ethPrices.prices,
     })
 
-    if (associatedTokens.length > 0) {
-      await Promise.all(
-        associatedTokens.map(async (token) => {
-          const project = projects.find((p) => p.id === token.project)
-          assert(project, 'Project not found!')
-
-          const data = await this.$.tokenService.getTokenChart(
-            targetTimestamp,
-            project,
-            token,
-          )
-
-          result = subtractTokenCharts(
-            result,
-            data,
-            token.type,
-            ethPrices.prices,
-          )
-        }),
+    for (const associatedToken of associatedTokensData) {
+      result = subtractTokenCharts(
+        result,
+        associatedToken.data,
+        associatedToken.type,
+        ethPrices.prices,
       )
     }
 

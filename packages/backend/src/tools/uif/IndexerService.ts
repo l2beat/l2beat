@@ -1,4 +1,4 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
@@ -225,6 +225,69 @@ export class IndexerService {
       ) {
         lagging.push({
           id: valueId,
+          latestTimestamp: syncStatus,
+        })
+        continue
+      }
+    }
+
+    return {
+      excluded,
+      lagging,
+    }
+  }
+
+  async getAmountsStatus(
+    configurations: { configId: string }[],
+    coingecko: { configId: string; coingeckoId: CoingeckoId }[],
+    targetTimestamp: UnixTime,
+  ) {
+    const { lagging, excluded } = await this.getConfigurationsStatus(
+      configurations,
+      targetTimestamp,
+    )
+
+    const indexers = await this.indexerStateRepository.getAll()
+
+    for (const indexer of indexers) {
+      // TODO: filter in sql
+      if (!indexer.indexerId.includes('circulating_supply_indexer::')) {
+        continue
+      }
+
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      const coingeckoId = indexer.indexerId.split('::')[1]
+      const c = coingecko.find(
+        (cc) => cc.coingeckoId.toString() === coingeckoId,
+      )
+
+      if (!c) {
+        continue
+      }
+
+      // synced configuration
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
+
+      // out of sync configuration
+      if (
+        syncStatus.lt(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        excluded.add(c.configId)
+        continue
+      }
+
+      // lagging configuration
+      if (
+        syncStatus.gte(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        lagging.push({
+          id: c.configId,
           latestTimestamp: syncStatus,
         })
         continue

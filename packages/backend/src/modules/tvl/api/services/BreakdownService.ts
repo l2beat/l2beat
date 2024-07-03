@@ -28,18 +28,19 @@ export class BreakdownService {
   async getTvlBreakdown(
     targetTimestamp: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const prices = await this.$.pricesDataService.getLatestPrice(
-      this.$.configMapping.prices,
-      targetTimestamp,
-    )
+    const [prices, tokenAmounts] = await Promise.all([
+      this.$.pricesDataService.getLatestPrice(
+        this.$.configMapping.prices,
+        targetTimestamp,
+      ),
+      this.$.amountsDataService.getLatestAmount(
+        this.$.configMapping.amounts,
+        targetTimestamp,
+      ),
+    ])
 
     const pricesMap = new Map(
       prices.prices.map((x) => [x.configId, x.priceUsd]),
-    )
-
-    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
-      this.$.configMapping.amounts,
-      targetTimestamp,
     )
 
     const breakdowns: Record<
