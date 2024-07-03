@@ -1304,7 +1304,7 @@
       "supply": "totalSupply",
       "coingeckoId": "gho",
       "bridgedUsing": {
-        "bridge": "Chainlinl CCIP"
+        "bridge": "Chainlink CCIP"
       }
     },
     {
