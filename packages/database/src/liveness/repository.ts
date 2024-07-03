@@ -69,47 +69,24 @@ export class LivenessRepository {
 
   /**
    *
-   * @param projectId Filter only transactions for a specific project.
-   * @param subtype Filter only transactions of a specific subtype.
+   * @param configurationIds Filter only transactions for a specific configurations.
    * @param from Lower bound timestamp, inclusive.
    * @param to Upper bound timestamp, exclusive.
    * @returns An array of transactions that fall within the specified time range.
    */
-  async getTransactionsWithinTimeRange(
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
+  async getTransactionsWithinTimeRangeByConfigurationsIds(
+    configurationIds: string[],
     from: UnixTime,
     to: UnixTime,
   ) {
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
-
-    const configRows = await this.db
-      .selectFrom('public.indexer_configurations')
-      .selectAll()
-      .execute()
-
-    const projectConfigs = configRows
-      .map((c) => {
-        const properties = JSON.parse(c.properties)
-
-        if (
-          properties.projectId === projectId.toString() &&
-          properties.subtype === subtype.toString() &&
-          properties.type === 'liveness'
-        ) {
-          return [c.id, properties.subtype]
-        }
-      })
-      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
-
-    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
 
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(['timestamp', 'block_number', 'tx_hash', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('configuration_id', 'in', Array.from(configsMap.keys())),
+          eb('configuration_id', 'in', configurationIds),
           eb('timestamp', '>=', from.toDate()),
           eb('timestamp', '<', to.toDate()),
         ]),

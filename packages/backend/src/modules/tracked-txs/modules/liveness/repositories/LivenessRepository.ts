@@ -104,41 +104,22 @@ export class LivenessRepository extends BaseRepository {
 
   /**
    *
-   * @param projectId Filter only transactions for a specific project.
-   * @param subtype Filter only transactions of a specific subtype.
+   * @param configurationIds Filter only transactions for a specific configurations.
    * @param from Lower bound timestamp, inclusive.
    * @param to Upper bound timestamp, exclusive.
    * @returns An array of transactions that fall within the specified time range.
    */
-  async getTransactionsWithinTimeRange(
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
+  async getTransactionsWithinTimeRangeByConfigurationsIds(
+    configurationIds: string[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<LivenessRecord[]> {
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
     const knex = await this.knex()
 
-    const configRows = await knex('indexer_configurations')
-    const projectConfigs = configRows
-      .map((c) => {
-        const properties = JSON.parse(c.properties)
-
-        if (
-          properties.projectId === projectId.toString() &&
-          properties.subtype === subtype.toString() &&
-          properties.type === 'liveness'
-        ) {
-          return [c.id, properties.subtype]
-        }
-      })
-      .filter(notUndefined) as [string, string][]
-
-    const configsMap = new Map<string, string>(projectConfigs)
-
     const rows = await knex('liveness')
       .select('timestamp', 'block_number', 'tx_hash', 'configuration_id')
-      .whereIn('configuration_id', Array.from(configsMap.keys()))
+      .whereIn('configuration_id', configurationIds)
       .andWhere('timestamp', '>=', from.toDate())
       .andWhere('timestamp', '<', to.toDate())
       .orderBy('timestamp', 'asc')

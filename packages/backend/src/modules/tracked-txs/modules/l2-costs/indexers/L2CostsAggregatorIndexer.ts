@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
+import { uniq } from 'lodash'
 import { Project } from '../../../../../model/Project'
 import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
@@ -121,7 +122,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
 
     const configurations =
       await this.$.indexerConfigurationRepository.getSavedConfigurationsByIds(
-        costs.map((c) => c.configurationId),
+        uniq(costs.map((c) => c.configurationId)),
       )
 
     return costs.map((l2costsRow) => {

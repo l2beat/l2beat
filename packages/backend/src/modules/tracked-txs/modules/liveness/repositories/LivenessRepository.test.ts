@@ -229,15 +229,16 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
     })
 
     describe(
-      LivenessRepository.prototype.getTransactionsWithinTimeRange.name,
+      LivenessRepository.prototype
+        .getTransactionsWithinTimeRangeByConfigurationsIds.name,
       () => {
         it('should return rows within given time range', async () => {
-          const results = await repository.getTransactionsWithinTimeRange(
-            ProjectId('project1'),
-            'batchSubmissions',
-            START.add(-2, 'hours'),
-            START.add(0, 'hours'),
-          )
+          const results =
+            await repository.getTransactionsWithinTimeRangeByConfigurationsIds(
+              [DATA[0].configurationId, DATA[1].configurationId],
+              START.add(-2, 'hours'),
+              START.add(0, 'hours'),
+            )
 
           expect(results).toEqualUnsorted([DATA[0], DATA[1]])
         })
