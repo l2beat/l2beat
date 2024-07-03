@@ -7,11 +7,16 @@ export interface ReadMoreProps {
 
 export function ReadMore({ children, maxLength = 160 }: ReadMoreProps) {
   const alwaysVisible = children
-    .slice(0, maxLength)
+    // Accounting for the ellipsis
+    .slice(0, maxLength - 3)
     .split(' ')
     .slice(0, -1)
     .join(' ')
   const collapsible = children.slice(alwaysVisible.length)
+
+  if (!collapsible) {
+    return <>{children}</>
+  }
 
   return (
     <CustomReadMore alwaysVisible={alwaysVisible} collapsible={collapsible} />
