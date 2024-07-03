@@ -7,7 +7,7 @@ export interface ReadMoreProps {
 
 export function ReadMore({
   children,
-  maxLength: maxChildrenLength = 160,
+  maxLength: maxChildrenLength = 260,
 }: ReadMoreProps) {
   // Accounting for the ellipsis
   const maxLength = maxChildrenLength - 3
