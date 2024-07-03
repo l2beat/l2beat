@@ -98,6 +98,9 @@ export function createTvlModule(
 
   const pricesDataService = new PricesDataService({
     priceRepository: peripherals.getRepository(PriceRepository),
+    configurationRepository: peripherals.getRepository(
+      IndexerConfigurationRepository,
+    ),
     clock,
     etherPriceConfig: getEtherPriceConfig(config.tvl),
     logger,

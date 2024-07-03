@@ -3,14 +3,13 @@ import { assert, Logger } from '@l2beat/backend-tools'
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
-import {
-  PriceRecord,
-  PriceRepository,
-} from '../../../repositories/PriceRepository'
+import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
+import { PriceRepository } from '../../../repositories/PriceRepository'
 import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../utils/getLaggingAndExcluded'
 
 interface Dependencies {
   readonly priceRepository: PriceRepository
+  readonly configurationRepository: IndexerConfigurationRepository
   readonly clock: Clock
   etherPriceConfig: PriceConfigEntry & { configId: string }
   logger: Logger
@@ -82,68 +81,91 @@ export class PricesDataService {
     configurations: (PriceConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const prices = await this.$.priceRepository.getByTimestamp(targetTimestamp)
+    const [prices, excluded] = await Promise.all([
+      this.$.priceRepository.getByTimestamp(targetTimestamp),
+      this.getExcluded(configurations, targetTimestamp),
+    ])
 
     const result = {
       prices,
-      lagging: new Map<
-        string,
-        { latestTimestamp: UnixTime; latestValue: PriceRecord }
-      >(),
-      excluded: new Set<string>(),
+      lagging: new Map(),
+      excluded: new Set(excluded),
     }
 
-    if (prices.length === configurations.length) {
+    if (prices.length + excluded.size === configurations.length) {
       return result
     }
 
-    const missing = configurations.filter(
-      (c) => !prices.find((p) => p.configId === c.configId),
+    const lagging = configurations
+      .filter((c) => !excluded.has(c.configId))
+      // TODO: perf
+      .filter((c) => !prices.find((p) => p.configId === c.configId))
+
+    await Promise.all(
+      lagging.map(async (laggingConfig) => {
+        const sortedRecordsForConfig =
+          await this.$.priceRepository.getByConfigIdsInRange(
+            [laggingConfig.configId],
+            laggingConfig.sinceTimestamp,
+            targetTimestamp,
+          )
+
+        const latest = sortedRecordsForConfig[sortedRecordsForConfig.length - 1]
+
+        result.lagging.set(laggingConfig.configId, {
+          latestTimestamp: latest.timestamp,
+          latestValue: latest,
+        })
+
+        result.prices.push({ ...latest, timestamp: targetTimestamp })
+      }),
     )
-
-    const pricesAtExcludedHeuristic =
-      await this.$.priceRepository.getByTimestamp(
-        targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-      )
-
-    const excluded = missing.filter(
-      (c) => !pricesAtExcludedHeuristic.find((p) => p.configId === c.configId),
-    )
-    excluded.forEach((e) => result.excluded.add(e.configId))
-
-    if (excluded.length + prices.length === configurations.length) {
-      return result
-    }
-
-    const lagging = missing.filter((c) =>
-      pricesAtExcludedHeuristic.find((p) => p.configId === c.configId),
-    )
-
-    const recordsForLagging =
-      await this.$.priceRepository.getByConfigIdsInRange(
-        lagging.map((l) => l.configId),
-        lagging.reduce(
-          (a, b) => UnixTime.min(a, b.sinceTimestamp),
-          UnixTime.now(),
-        ),
-        targetTimestamp,
-      )
-
-    for (const laggingConfig of lagging) {
-      const sortedRecordsForConfig = recordsForLagging
-        .filter((r) => r.configId === laggingConfig.configId)
-        .sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
-
-      const latest = sortedRecordsForConfig[sortedRecordsForConfig.length - 1]
-
-      result.lagging.set(laggingConfig.configId, {
-        latestTimestamp: latest.timestamp,
-        latestValue: latest,
-      })
-
-      result.prices.push(latest)
-    }
     return result
+  }
+
+  private async getExcluded(
+    configurations: (PriceConfigEntry & { configId: string })[],
+    targetTimestamp: UnixTime,
+  ) {
+    const excluded = new Set<string>()
+
+    const configurationsState = await this.$.configurationRepository.getByIds(
+      configurations.map((c) => c.configId),
+    )
+
+    for (const config of configurationsState) {
+      const syncStatus = config.currentHeight
+        ? new UnixTime(config.currentHeight)
+        : undefined
+
+      // newly added configuration
+      if (syncStatus === undefined) {
+        excluded.add(config.id)
+        continue
+      }
+
+      // synced configuration
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
+
+      // phased out configuration - but we still want to display data
+      if (config.maxHeight && config.maxHeight === config.currentHeight) {
+        continue
+      }
+
+      // out of sync configuration
+      if (
+        syncStatus.lt(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        excluded.add(config.id)
+        continue
+      }
+    }
+
+    return excluded
   }
 
   async getEthPrices(targetTimestamp: UnixTime) {

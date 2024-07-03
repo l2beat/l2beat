@@ -28,10 +28,6 @@ export class BreakdownService {
   async getTvlBreakdown(
     targetTimestamp: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
-      this.$.configMapping.amounts,
-      targetTimestamp,
-    )
     const prices = await this.$.pricesDataService.getLatestPrice(
       this.$.configMapping.prices,
       targetTimestamp,
@@ -40,6 +36,12 @@ export class BreakdownService {
     const pricesMap = new Map(
       prices.prices.map((x) => [x.configId, x.priceUsd]),
     )
+
+    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
+      this.$.configMapping.amounts,
+      targetTimestamp,
+    )
+
     const breakdowns: Record<
       string,
       {
@@ -67,7 +69,7 @@ export class BreakdownService {
       const priceConfig =
         this.$.configMapping.getPriceConfigFromAmountConfig(config)
       const price = pricesMap.get(priceConfig.configId)
-      assert(price, 'Price not found for id ' + amount.configId)
+      assert(price, 'Price not found for id ' + priceConfig.configId)
 
       const amountAsNumber = asNumber(amount.amount, config.decimals)
       const valueAsNumber = amountAsNumber * price
