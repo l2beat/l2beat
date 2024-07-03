@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 20224230,
-  "configHash": "0xcaa59284af830487e53e32a2c6784e66d1d6c34af742380085b84588129d2bea",
+  "configHash": "0xa425343d7a0183435026944aaf0955f2478fdb24978afc2b8129559002c0dd89",
   "version": 8,
   "contracts": [
     {
@@ -596,6 +596,7 @@
     {
       "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",

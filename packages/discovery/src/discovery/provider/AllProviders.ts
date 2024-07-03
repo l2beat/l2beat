@@ -1,3 +1,6 @@
+import { Logger } from '@l2beat/backend-tools'
+import { HttpClient as SharedHttpClient } from '@l2beat/shared'
+import { BlobClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig } from '../../config/types'
@@ -43,6 +46,17 @@ export class AllProviders {
             )
 
       const etherscanClient = getExplorerClient(httpClient, config.explorer)
+      let blobClient: BlobClient | undefined
+
+      if (config.beaconApiUrl) {
+        blobClient = new BlobClient(
+          config.beaconApiUrl,
+          config.rpcUrl,
+          httpClient as unknown as SharedHttpClient,
+          Logger.SILENT,
+          { callsPerMinute: undefined, timeout: undefined },
+        )
+      }
 
       this.config.set(config.name, {
         config,
@@ -50,6 +64,7 @@ export class AllProviders {
           baseProvider,
           eventProvider,
           etherscanClient,
+          blobClient,
         },
       })
     }
@@ -74,6 +89,7 @@ export class AllProviders {
         config.providers.baseProvider,
         config.providers.eventProvider,
         config.providers.etherscanClient,
+        config.providers.blobClient,
       )
     this.lowLevelProviders.set(chain, lowLevelProvider)
 

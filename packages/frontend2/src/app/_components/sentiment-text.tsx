@@ -3,7 +3,7 @@ import React from 'react'
 
 import { cn } from '~/utils/cn'
 import { sentimentToTextColor } from '~/utils/sentiment'
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/tooltip'
 
 interface Props {
   sentiment: Sentiment
