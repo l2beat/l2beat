@@ -270,8 +270,11 @@ export const taiko: Layer2 = {
     },
     operator: {
       name: 'The system uses a based sequencing mechanism',
-      description:
-        'The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. Proposing a block requires designating a prover, which will be the only entity allowed to provide a proof for the block during the initial proving window. Proposing a block also requires depositing a liveness bond as a commitment to proving the block.',
+      description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. 
+        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the initial proving window. 
+        Currently, proving a block requires the block proposer to run an SGX instance. Proposing a block also requires depositing a liveness bond as a commitment to proving the block. 
+        Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.
+        `,
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
@@ -282,8 +285,9 @@ export const taiko: Layer2 = {
     },
     forceTransactions: {
       name: `Users can force any transaction`,
-      description:
-        'The system is designed to allow users to propose L2 blocks directly on L1. However, the TaikoAdmin multisig can pause block proposals without delay.',
+      description: `The system is designed to allow users to propose L2 blocks directly on L1. 
+        Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
+        The TaikoAdmin multisig can pause block proposals without delay.`,
       references: [],
       risks: [],
     },
