@@ -111,6 +111,39 @@ export const kinto: Layer2 = orbitStackL2({
       description:
         "Bridger gateway that can swap assets to 'L2 final assets' before bridging them to the L2.",
     }),
+    {
+      address: EthereumAddress('0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94'),
+      sinceTimestamp: new UnixTime(1716142367),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['WETH'],
+      chain: 'ethereum',
+    },
+    {
+      address: EthereumAddress('0xfDF267c43c0C868046c66695c1a85c973418CBFb'),
+      sinceTimestamp: new UnixTime(1716142417),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['WETH'],
+      chain: 'base',
+    },
+    {
+      address: EthereumAddress('0x4D585D346DFB27b297C37F480a82d4cAB39491Bb'),
+      sinceTimestamp: new UnixTime(1716142397),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
+      tokens: ['WETH'],
+      chain: 'arbitrum',
+    },
   ],
   isNodeAvailable: false,
   bridge: discovery.getContract('Bridge'),
