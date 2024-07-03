@@ -97,7 +97,11 @@ export const base: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'BaseMultisig',
-      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimisism Foundation multisig is also required.",
+    ),
+    ...discovery.getMultisigPermission(
+      'BaseMultisig2',
+      'Base Multisig being a member of a Challenger1of2 contract. It can challenge state roots without going through the fault proof process.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('SuperchainProxyAdmin'),
@@ -129,7 +133,7 @@ export const base: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_2',
-      'Deputy to the GuardianMultisig. It can also challenge state roots without going through the fault proof process.',
+      'Deputy to the GuardianMultisig. It can also challenge state roots without going through the fault proof process. Its signature is also required to upgrade the system.',
     ),
   ],
   nonTemplateContracts: [

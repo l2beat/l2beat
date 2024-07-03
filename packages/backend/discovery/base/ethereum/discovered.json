@@ -1,7 +1,7 @@
 {
   "name": "base",
   "chain": "ethereum",
-  "blockNumber": 20219162,
+  "blockNumber": 20224230,
   "configHash": "0xcaa59284af830487e53e32a2c6784e66d1d6c34af742380085b84588129d2bea",
   "version": 8,
   "contracts": [
@@ -212,8 +212,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 60000,
-          "prevBlockNum": 20219152
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20224228
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -279,10 +279,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 16567200,
-        "latestOutputIndex": 9203,
-        "nextBlockNumber": 16569000,
-        "nextOutputIndex": 9204,
+        "latestBlockNumber": 16597800,
+        "latestOutputIndex": 9220,
+        "nextBlockNumber": 16599600,
+        "nextOutputIndex": 9221,
         "proposer": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "PROPOSER": "0x642229f238fb9dE03374Be34B0eD8D9De80752c5",
         "startingBlockNumber": 0,
@@ -510,7 +510,7 @@
       "sinceTimestamp": 1686793895,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292843008",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292843627",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

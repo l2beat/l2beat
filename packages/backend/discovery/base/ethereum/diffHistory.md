@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
+Generated with discovered.json: 0xcd0724b1ac5831c0bacc7bc8b780be5a578cbcf4
 
-# Diff at Tue, 02 Jul 2024 13:35:10 GMT:
+# Diff at Wed, 03 Jul 2024 06:36:00 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: main@cf42b351c892788d89ff6698567a5c95122d93a1 block: 20124790
-- current block number: 20219162
+- current block number: 20224230
 
 ## Description
 
@@ -215,7 +215,7 @@ Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
     +++ description: None
 ```
 
@@ -227,13 +227,13 @@ Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
     +++ description: None
 ```
 
@@ -245,7 +245,7 @@ Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
     +++ description: None
 ```
 
@@ -257,7 +257,7 @@ Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
     +++ description: None
 ```
 
@@ -271,14 +271,10 @@ Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
 
 ```diff
 .../base/ethereum/.flat/DeputyGuardianModule.sol   |  139 ++
- .../GnosisSafe.sol                                 |  952 +++++++++
- .../GnosisSafeProxy.p.sol                          |   34 +
- .../GnosisSafe.sol                                 |  952 +++++++++
- .../GnosisSafeProxy.p.sol                          |   34 +
- .../GnosisSafe.sol                                 |  952 +++++++++
- .../GnosisSafeProxy.p.sol                          |   34 +
- .../GnosisSafe.sol                                 |  952 +++++++++
- .../GnosisSafeProxy.p.sol                          |   34 +
+ .../.flat/FoundationMultisig_1/GnosisSafe.sol      |  952 +++++++++
+ .../FoundationMultisig_1/GnosisSafeProxy.p.sol     |   34 +
+ .../ethereum/.flat/GuardianMultisig/GnosisSafe.sol |  952 +++++++++
+ .../.flat/GuardianMultisig/GnosisSafeProxy.p.sol   |   34 +
  .../L1CrossDomainMessenger.sol                     | 1654 +++++++--------
  .../L1ERC721Bridge/L1ERC721Bridge.sol              |  611 +++---
  .../L1StandardBridge/L1StandardBridge.sol          | 1459 +++++++------
@@ -289,12 +285,15 @@ Generated with discovered.json: 0x012fc1ca12353289c9a3f0409b23eb25081328de
  .../OptimismMintableERC20Factory.sol               |  426 ++++
  .../.flat/OptimismMintableERC20Factory/Proxy.p.sol |  210 ++
  .../OptimismPortal/OptimismPortal.sol              | 2144 ++++++++------------
- ...0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E.sol} |    0
- ...-0x543bA4AADBAb8f9025686Bd03993043599c6fB04.sol |  297 +++
+ .../.flat/SecurityCouncilMultisig/GnosisSafe.sol   |  952 +++++++++
+ .../SecurityCouncilMultisig/GnosisSafeProxy.p.sol  |   34 +
  .../ethereum/.flat/SuperchainConfig/Proxy.p.sol    |  199 ++
  .../.flat/SuperchainConfig/SuperchainConfig.sol    |  476 +++++
+ .../base/ethereum/.flat/SuperchainProxyAdmin.sol   |  297 +++
+ .../.flat/SuperchainProxyAdminOwner/GnosisSafe.sol |  952 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   34 +
  .../SystemConfig/SystemConfig.sol                  |  602 +++---
- 24 files changed, 9768 insertions(+), 3930 deletions(-)
+ 23 files changed, 9768 insertions(+), 3930 deletions(-)
 ```
 
 ## Config/verification related changes
@@ -307,6 +306,15 @@ discovery. Values are for block 20124790 (main branch discovery), not current.
 -   Status: DELETED
     contract OptimismMintableERC20Factory (0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84)
     +++ description: None
+```
+
+```diff
+    contract GuardianMultisig (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      name:
+-        "GuardianMultisig"
++        "BaseMultisig2"
+    }
 ```
 
 ```diff
@@ -348,6 +356,21 @@ discovery. Values are for block 20124790 (main branch discovery), not current.
       values.sequencerInbox:
 -        "0xFf00000000000000000000000000000000008453"
     }
+```
+
+```diff
+    contract OptimismMultisig (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "OptimismMultisig"
++        "FoundationMultisig_2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x30d8e15050c1b9b217c2211de9ec9b56f4d22523
