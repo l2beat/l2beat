@@ -1,3 +1,4 @@
+import path from 'path'
 import { chains } from '@l2beat/config'
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import { type DiscoveryOutput } from '@l2beat/discovery-types'
@@ -10,7 +11,6 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import path from 'path'
 import { env } from '~/env'
 import { db } from '~/server/database'
 
