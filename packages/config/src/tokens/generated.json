@@ -1711,6 +1711,21 @@
       "supply": "zero"
     },
     {
+      "id": "gho-gho-token",
+      "name": "Gho Token",
+      "coingeckoId": "gho",
+      "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "symbol": "GHO",
+      "decimals": 18,
+      "deploymentTimestamp": 1689420227,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/ghoaave.jpeg?1696529533",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "gno-gnosis-token",
       "name": "Gnosis Token",
       "coingeckoId": "gnosis",
@@ -6870,6 +6885,24 @@
       "chainId": 42161,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "id": "arbitrum:gho-gho-token",
+      "name": "Gho Token",
+      "coingeckoId": "gho",
+      "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
+      "symbol": "GHO",
+      "decimals": 18,
+      "deploymentTimestamp": 1719102305,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/ghoaave.jpeg?1696529533",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Chainlinl CCIP"
+      }
     },
     {
       "id": "arbitrum:gmx-gmx",
