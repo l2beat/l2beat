@@ -86,7 +86,7 @@ const MOCK_LIVENESS: LivenessRecordWithSubtype[] = [
 
 describe(LivenessAggregatingIndexer.name, () => {
   describe(LivenessAggregatingIndexer.prototype.update.name, () => {
-    it('should return parent safe height of not enough data', async () => {
+    it('should return parent safe height if not enough data', async () => {
       const indexer = createIndexer({ tag: 'update-return' })
       const mockGenerateLiveness = mockFn().resolvesTo([])
       indexer.generateLiveness = mockGenerateLiveness
@@ -116,7 +116,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       expect(result).toEqual(parentSafeHeight)
     })
 
-    it('should generate liveness data and save it to DB', async () => {
+    it('should adjust target height and generate liveness data', async () => {
       const mockLivenessRepository = mockObject<AggregatedLivenessRepository>({
         addOrUpdateMany: mockFn().resolvesTo(1),
       })
@@ -140,7 +140,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockGenerateLiveness = mockFn().resolvesTo(mockLiveness)
       indexer.generateLiveness = mockGenerateLiveness
 
-      const safeHeight = NOW.add(-1, 'days')
+      const safeHeight = NOW.add(-4, 'days')
       const parentSafeHeight = NOW.add(-1, 'hours')
 
       const result = await indexer.update(
@@ -149,7 +149,7 @@ describe(LivenessAggregatingIndexer.name, () => {
       )
 
       expect(mockGenerateLiveness).toHaveBeenCalledWith(
-        safeHeight.toEndOf('day').add(-1, 'seconds'),
+        NOW.toStartOf('day').add(-1, 'seconds'),
       )
 
       expect(mockLivenessRepository.addOrUpdateMany).toHaveBeenCalledWith(

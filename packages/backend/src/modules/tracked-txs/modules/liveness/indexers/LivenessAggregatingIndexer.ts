@@ -45,34 +45,34 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     parentSafeHeight: number,
   ): Promise<number> {
     const now = UnixTime.now()
-    const startOfCurrentDay = now.toStartOf('day')
-    const endOfPreviuosDay = now
-      .toEndOf('day')
-      .add(-1, 'days')
-      .add(-1, 'seconds')
-    const endOfSyncedDay = new UnixTime(safeHeight)
+    const endOfPeviousDay = now.toStartOf('day').add(-1, 'seconds')
+    let targetHeight = new UnixTime(safeHeight)
       .toEndOf('day')
       .add(-1, 'seconds')
 
-    const syncTo =
-      endOfSyncedDay < endOfPreviuosDay ? endOfPreviuosDay : endOfSyncedDay
-
-    if (parentSafeHeight < startOfCurrentDay.toNumber()) {
-      this.logger.info('Not enough data to calculate', { parentSafeHeight })
-      return parentSafeHeight
-    }
-
-    if (syncTo.toNumber() > parentSafeHeight) {
-      this.logger.info('Up to date - skipping', {
-        nextSync: syncTo,
+    if (parentSafeHeight <= endOfPeviousDay.toNumber()) {
+      this.logger.info('Not enough data to calculate - skipping', {
         parentSafeHeight,
       })
       return parentSafeHeight
     }
 
-    this.logger.info('Recalculating liveness data', { syncTo })
+    if (targetHeight < endOfPeviousDay) {
+      targetHeight = endOfPeviousDay
+      this.logger.info('Adjusting target height', { targetHeight })
+    }
 
-    const updatedLivenessRecords = await this.generateLiveness(syncTo)
+    if (targetHeight.toNumber() > parentSafeHeight) {
+      this.logger.info('Up to date - skipping', {
+        targetHeight,
+        parentSafeHeight,
+      })
+      return parentSafeHeight
+    }
+
+    this.logger.info('Recalculating liveness data', { targetHeight })
+
+    const updatedLivenessRecords = await this.generateLiveness(targetHeight)
 
     await this.$.aggregatedLivenessRepository.addOrUpdateMany(
       updatedLivenessRecords,
