@@ -174,7 +174,7 @@ export const arbitrum: Layer2 = {
       discovery.getEscrowDetails({
         // LPT L1 Escrow
         address: EthereumAddress('0x6A23F4940BD5BA117Da261f98aae51A8BFfa210A'),
-        tokens: ['ETH'],
+        tokens: ['LPT'],
         description: 'LPT Vault for custom Livepeer Token Gateway.',
       }),
       {

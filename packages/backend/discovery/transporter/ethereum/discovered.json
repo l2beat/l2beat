@@ -1,7 +1,7 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20211590,
+  "blockNumber": 20217553,
   "configHash": "0xd153a30272464b9dbbbb1496ccfdd79275ee8db31642739ebbe961844167b148",
   "version": 8,
   "contracts": [
@@ -37,7 +37,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1718911127,
       "values": {
         "canAcceptLiquidity": false,
@@ -61,7 +61,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1711406459,
       "values": {
         "canAcceptLiquidity": false,
@@ -85,7 +85,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1688661647,
       "values": {
         "getAllowList": [
@@ -117,7 +117,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715364563,
       "values": {
         "getAllowList": [],
@@ -198,7 +198,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1712691755,
       "values": {
         "canAcceptLiquidity": false,
@@ -226,7 +226,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1716484655,
       "values": {
         "canAcceptLiquidity": false,
@@ -320,7 +320,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1709671307,
       "values": {
         "getAllowList": [],
@@ -615,7 +615,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 2501635,
+        "getLatestPriceEpochAndRound": 2571777,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "gnosis",
@@ -667,7 +667,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1697125163,
       "values": {
         "getAllowList": [],
@@ -696,7 +696,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715364503,
       "values": {
         "getAllowList": [],
@@ -840,7 +840,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1707769379,
       "values": {
         "canAcceptLiquidity": false,
@@ -930,7 +930,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1706051735,
       "values": {
         "canAcceptLiquidity": false,
@@ -952,7 +952,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715364491,
       "values": {
         "getAllowList": [],
@@ -981,8 +981,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2006,
-        "getLatestPriceEpochAndRound": 2503937,
+        "getExpectedNextSequenceNumber": 2031,
+        "getLatestPriceEpochAndRound": 2572035,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -1096,7 +1096,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1697125139,
       "values": {
         "getAllowList": [],
@@ -1219,8 +1219,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 938,
-        "getLatestPriceEpochAndRound": 2502913,
+        "getExpectedNextSequenceNumber": 958,
+        "getLatestPriceEpochAndRound": 2569731,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "wemix",
@@ -1378,10 +1378,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2004,
-        "getNopFeesJuels": "5519100136425889947",
+        "getExpectedNextSequenceNumber": 2013,
+        "getNopFeesJuels": "5833755156541680986",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "6353448633275073195",
+        "linkAvailableForPayment": "6071407884742255967",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1512,7 +1512,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 6,
-        "getLatestPriceEpochAndRound": 936193,
+        "getLatestPriceEpochAndRound": 1004290,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "4411394078118774322",
@@ -1646,10 +1646,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1597,
-        "getNopFeesJuels": "7763558209459400352",
+        "getExpectedNextSequenceNumber": 1607,
+        "getNopFeesJuels": "8329134689497774034",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "6260513575224593201",
+        "linkAvailableForPayment": "5694937095186219519",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1836,7 +1836,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715364551,
       "values": {
         "getAllowList": [],
@@ -1932,8 +1932,8 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 5,
-        "getNopFeesJuels": "42645125745792842",
+        "getExpectedNextSequenceNumber": 9,
+        "getNopFeesJuels": "174013136025123015",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "4799246137389302902",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
@@ -1995,10 +1995,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 60,
-        "getNopFeesJuels": "34744132117274933",
+        "getExpectedNextSequenceNumber": 61,
+        "getNopFeesJuels": "69398725826568906",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "1739601236623179188",
+        "linkAvailableForPayment": "1704946642913885215",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2046,8 +2046,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1445,
-        "getLatestPriceEpochAndRound": 2504707,
+        "getExpectedNextSequenceNumber": 1468,
+        "getLatestPriceEpochAndRound": 2571267,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "optimism",
@@ -2099,7 +2099,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715888579,
       "values": {
         "getAllowList": [],
@@ -2119,7 +2119,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1719424067,
       "values": {
         "canAcceptLiquidity": false,
@@ -2143,7 +2143,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1698777515,
       "values": {
         "getAllowList": [],
@@ -2173,7 +2173,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1698777455,
       "values": {
         "getAllowList": [],
@@ -2262,7 +2262,7 @@
         "implementation": "0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7",
         "admin": "0xD3cF979e676265e4f6379749DECe4708B9A22476"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "implementations": ["0x72427dA7EFBa1585E94F30C72221d8d394aE3Bb7"],
       "sinceTimestamp": 1719078695,
       "values": {
@@ -2272,7 +2272,7 @@
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
         "getBridgeLimit": "1000000000000000000000000",
         "getBridgeLimitAdmin": "0x0000000000000000000000000000000000000000",
-        "getCurrentBridgedAmount": 0,
+        "getCurrentBridgedAmount": "706250000000000000021",
         "getLockReleaseInterfaceId": "0x98a47177",
         "getRateLimitAdmin": "0x0000000000000000000000000000000000000000",
         "getRebalancer": "0x0000000000000000000000000000000000000000",
@@ -2290,7 +2290,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1697125187,
       "values": {
         "getAllowList": [],
@@ -2379,7 +2379,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1711027487,
       "values": {
         "canAcceptLiquidity": false,
@@ -2407,7 +2407,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1718219663,
       "values": {
         "canAcceptLiquidity": false,
@@ -2448,7 +2448,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1709738675,
       "values": {
         "canAcceptLiquidity": true,
@@ -2476,7 +2476,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1713201839,
       "values": {
         "canAcceptLiquidity": false,
@@ -2500,7 +2500,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1714419443,
       "values": {
         "canAcceptLiquidity": false,
@@ -2524,7 +2524,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1711027655,
       "values": {
         "canAcceptLiquidity": false,
@@ -2548,7 +2548,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1706129963,
       "values": {
         "canAcceptLiquidity": false,
@@ -2570,7 +2570,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1719424031,
       "values": {
         "getAllowList": [],
@@ -2600,7 +2600,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 4,
-        "getLatestPriceEpochAndRound": 2373890,
+        "getLatestPriceEpochAndRound": 2441987,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "mode",
@@ -2651,7 +2651,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1709671463,
       "values": {
         "getAllowList": [],
@@ -2889,7 +2889,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1713201383,
       "values": {
         "canAcceptLiquidity": false,
@@ -2913,7 +2913,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1708552763,
       "values": {
         "canAcceptLiquidity": false,
@@ -2949,7 +2949,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715888555,
       "values": {
         "getAllowList": [],
@@ -2979,7 +2979,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 2500353,
+        "getLatestPriceEpochAndRound": 2569217,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "celo",
@@ -3051,10 +3051,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1024,
-        "getNopFeesJuels": "4561222979369729797",
+        "getExpectedNextSequenceNumber": 1035,
+        "getNopFeesJuels": "5004892453417102101",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3542263999818704133",
+        "linkAvailableForPayment": "3098594525771331829",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3121,8 +3121,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1730,
-        "getLatestPriceEpochAndRound": 2505987,
+        "getExpectedNextSequenceNumber": 1753,
+        "getLatestPriceEpochAndRound": 2572545,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "bnb",
@@ -3195,7 +3195,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1712691803,
       "values": {
         "getAllowList": [],
@@ -3323,8 +3323,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2721,
-        "getLatestPriceEpochAndRound": 2502914,
+        "getExpectedNextSequenceNumber": 2759,
+        "getLatestPriceEpochAndRound": 2568705,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "base",
@@ -3397,10 +3397,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1884,
-        "getNopFeesJuels": "7570647230169109539",
+        "getExpectedNextSequenceNumber": 1897,
+        "getNopFeesJuels": "8251029918781851587",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "6701026304645545301",
+        "linkAvailableForPayment": "6189440236404433645",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3483,10 +3483,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 3013,
-        "getNopFeesJuels": "8127836302135305544",
+        "getExpectedNextSequenceNumber": 3043,
+        "getNopFeesJuels": "9250866604139503283",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "5950564092282328982",
+        "linkAvailableForPayment": "5077042855925697340",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3602,7 +3602,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1709217539,
       "values": {
         "getAllowList": [],
@@ -3639,8 +3639,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2105,
-        "getLatestPriceEpochAndRound": 2508289,
+        "getExpectedNextSequenceNumber": 2132,
+        "getLatestPriceEpochAndRound": 2574849,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "arbitrum",
@@ -3692,7 +3692,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1707769415,
       "values": {
         "canAcceptLiquidity": false,
@@ -3714,7 +3714,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715888531,
       "values": {
         "getAllowList": [],
@@ -3734,7 +3734,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1711406315,
       "values": {
         "canAcceptLiquidity": false,
@@ -3758,7 +3758,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1701285215,
       "values": {
         "getAllowList": [],
@@ -3795,7 +3795,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1712692055,
       "values": {
         "canAcceptLiquidity": false,
@@ -4125,7 +4125,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1713201359,
       "values": {
         "canAcceptLiquidity": false,
@@ -4209,7 +4209,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1715888603,
       "values": {
         "getAllowList": [],
@@ -4259,7 +4259,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1688661575,
       "values": {
         "getAllowList": [],
@@ -4293,7 +4293,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1707769439,
       "values": {
         "canAcceptLiquidity": false,
@@ -4321,7 +4321,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1709217479,
       "values": {
         "getAllowList": [],
@@ -4428,10 +4428,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1396,
-        "getNopFeesJuels": "4017573579902619725",
+        "getExpectedNextSequenceNumber": 1404,
+        "getNopFeesJuels": "4323397247422302000",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "6075817061801312920",
+        "linkAvailableForPayment": "5769993394281630645",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -4540,7 +4540,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1697125199,
       "values": {
         "getAllowList": [],
@@ -4569,7 +4569,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1718911091,
       "values": {
         "canAcceptLiquidity": false,
@@ -4654,7 +4654,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1714419419,
       "values": {
         "canAcceptLiquidity": false,
@@ -4687,8 +4687,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 800,
-        "getLatestPriceEpochAndRound": 2505475,
+        "getExpectedNextSequenceNumber": 802,
+        "getLatestPriceEpochAndRound": 2574338,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "polygon",
@@ -4835,7 +4835,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1708552811,
       "values": {
         "canAcceptLiquidity": false,
@@ -5006,10 +5006,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 4660,
-        "getNopFeesJuels": "11394194099938245724",
+        "getExpectedNextSequenceNumber": 4686,
+        "getNopFeesJuels": "12332580548910791009",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "2860563157348311752",
+        "linkAvailableForPayment": "2020158971355982580",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -5172,7 +5172,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1711406435,
       "values": {
         "canAcceptLiquidity": false,
@@ -5458,7 +5458,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1707769475,
       "values": {
         "getAllowList": [],
@@ -5602,7 +5602,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1695218939,
       "values": {
         "getAllowList": ["0xF9F5bcd3a50653387ee0b9d60C1905854093e8Fb"],
@@ -5639,7 +5639,7 @@
       "upgradeability": {
         "type": "immutable"
       },
-      "ignoreInWatchMode": ["getOnRamps"],
+      "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"],
       "sinceTimestamp": 1717695479,
       "values": {
         "getAllowList": [],
