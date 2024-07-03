@@ -33,18 +33,6 @@ export class ValuesDataService {
 
     const valuesByProject = groupBy(valueRecords, 'projectId')
 
-    const lagging = groupBy(
-      status.lagging.map((l) => {
-        const project = l.id.split('_')[0]
-
-        return {
-          ...l,
-          project,
-        }
-      }),
-      'project',
-    )
-
     const result: Dictionary<Dictionary<ValueRecord[]>> = {}
     for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
       const project = projects.find((p) => p.id === projectId)
@@ -69,7 +57,7 @@ export class ValuesDataService {
           },
         )
 
-        const interpolatedValues = lagging[projectId]
+        const interpolatedValues = status.lagging[projectId]
           .filter((l) => timestamp.gt(l.latestTimestamp))
           .map((l) => {
             const record = valuesByTimestamp[
@@ -95,8 +83,8 @@ export class ValuesDataService {
 
     return {
       valuesByTimestampForProjects: result,
-      lagging: new Map(status.lagging.map((l) => [l.id, l.latestTimestamp])),
-      excluded: new Set<string>(status.excluded),
+      lagging: status.lagging,
+      excluded: status.excluded,
     }
   }
 }

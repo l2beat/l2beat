@@ -1,4 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
@@ -115,16 +117,98 @@ export class IndexerService {
 
   // #endregion
 
+  async getValuesStatus(targetTimestamp: UnixTime) {
+    const excluded = new Set<string>()
+    const lagging = []
+
+    const indexersState =
+      await this.indexerStateRepository.getByIndexerIdLike('value_indexer::%')
+
+    for (const indexer of indexersState) {
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
+
+      const [project, source] = indexer.indexerId.split('::')[1].split('_')
+      const valueId = `${project}_${source}`
+
+      // decide whether it is excluded or lagging
+      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
+        excluded.add(valueId)
+      } else {
+        lagging.push({
+          id: valueId,
+          latestTimestamp: syncStatus,
+        })
+      }
+    }
+
+    return {
+      excluded,
+      lagging: groupBy(
+        lagging.map((l) => ({
+          ...l,
+          project: l.id.split('_')[0],
+        })),
+        'project',
+      ),
+    }
+  }
+
+  async getAmountsStatus(
+    configurations: { configId: string }[],
+    circulatingSupplyConfigs: { configId: string; coingeckoId: CoingeckoId }[],
+    targetTimestamp: UnixTime,
+  ) {
+    const { lagging, excluded } = await this.getConfigurationsStatus(
+      configurations,
+      targetTimestamp,
+    )
+
+    const indexersState = await this.indexerStateRepository.getByIndexerIds(
+      circulatingSupplyConfigs.map(
+        (c) => `circulating_supply_indexer::${c.coingeckoId}`,
+      ),
+    )
+
+    for (const indexer of indexersState) {
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
+
+      const circulatingSupplyConfig = circulatingSupplyConfigs.find(
+        (cc) => cc.coingeckoId.toString() === indexer.indexerId.split('::')[1],
+      )
+      assert(
+        circulatingSupplyConfig,
+        `Config should be defined for ${indexer.indexerId}`,
+      )
+
+      // decide whether it is excluded or lagging
+      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
+        excluded.add(circulatingSupplyConfig.configId)
+      } else {
+        lagging.push({
+          id: circulatingSupplyConfig.configId,
+          latestTimestamp: syncStatus,
+        })
+      }
+    }
+
+    return {
+      excluded,
+      lagging,
+    }
+  }
+
   async getConfigurationsStatus(
     configurations: { configId: string }[],
     targetTimestamp: UnixTime,
   ) {
     const excluded = new Set<string>()
-
-    const lagging: {
-      id: string
-      latestTimestamp: UnixTime
-    }[] = []
+    const lagging = []
 
     const configurationsState =
       await this.indexerConfigurationRepository.getByIds(
@@ -135,44 +219,29 @@ export class IndexerService {
       const syncStatus = config.currentHeight
         ? new UnixTime(config.currentHeight)
         : undefined
-
       // newly added configuration
       if (syncStatus === undefined) {
         excluded.add(config.id)
         continue
       }
-
-      // synced configuration
+      // fully synced configuration
       if (syncStatus.equals(targetTimestamp)) {
         continue
       }
 
-      // phased out configuration - but we still want to display data
+      // phased out configuration - but we still want to display its data
       if (config.maxHeight && config.maxHeight === config.currentHeight) {
         continue
       }
 
-      // out of sync configuration
-      if (
-        syncStatus.lt(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
+      // decide whether it is excluded or lagging
+      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
         excluded.add(config.id)
-        continue
-      }
-
-      // lagging configuration
-      if (
-        syncStatus.gte(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
+      } else {
         lagging.push({
           id: config.id,
           latestTimestamp: syncStatus,
         })
-        continue
       }
     }
 
@@ -181,115 +250,7 @@ export class IndexerService {
       lagging,
     }
   }
-
-  async getValuesStatus(targetTimestamp: UnixTime) {
-    const excluded = new Set<string>()
-
-    const lagging: {
-      id: string
-      latestTimestamp: UnixTime
-    }[] = []
-
-    const indexers =
-      await this.indexerStateRepository.getByIndexerIdLike('value_indexer::%')
-
-    for (const indexer of indexers) {
-      const syncStatus = new UnixTime(indexer.safeHeight)
-      const [project, source] = indexer.indexerId.split('::')[1].split('_')
-      const valueId = `${project}_${source}`
-
-      // synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
-      // out of sync configuration
-      if (
-        syncStatus.lt(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        excluded.add(valueId)
-        continue
-      }
-
-      // lagging configuration
-      if (
-        syncStatus.gte(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        lagging.push({
-          id: valueId,
-          latestTimestamp: syncStatus,
-        })
-        continue
-      }
-    }
-
-    return {
-      excluded,
-      lagging,
-    }
-  }
-
-  async getAmountsStatus(
-    configurations: { configId: string }[],
-    coingecko: { configId: string; coingeckoId: CoingeckoId }[],
-    targetTimestamp: UnixTime,
-  ) {
-    const { lagging, excluded } = await this.getConfigurationsStatus(
-      configurations,
-      targetTimestamp,
-    )
-
-    const indexers = await this.indexerStateRepository.getByIndexerIdLike(
-      'circulating_supply_indexer::%',
-    )
-
-    for (const indexer of indexers) {
-      const syncStatus = new UnixTime(indexer.safeHeight)
-      const coingeckoId = indexer.indexerId.split('::')[1]
-      const c = coingecko.find(
-        (cc) => cc.coingeckoId.toString() === coingeckoId,
-      )
-
-      if (!c) {
-        continue
-      }
-
-      // synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
-      // out of sync configuration
-      if (
-        syncStatus.lt(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        excluded.add(c.configId)
-        continue
-      }
-
-      // lagging configuration
-      if (
-        syncStatus.gte(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        lagging.push({
-          id: c.configId,
-          latestTimestamp: syncStatus,
-        })
-        continue
-      }
-    }
-
-    return {
-      excluded,
-      lagging,
-    }
-  }
+}
+function getExclusionBoundary(targetTimestamp: UnixTime): UnixTime {
+  return targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days')
 }
