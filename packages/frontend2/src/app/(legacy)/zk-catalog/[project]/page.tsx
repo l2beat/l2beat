@@ -1,8 +1,8 @@
 import { type Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { fetchVerifiersApi } from '../_utils/fetchVerifiersApi'
 import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/getZkCatalogView'
 import { projects } from '../_utils/projects'
 import { ZkCatalogProjectPage } from './_components/ZkCatalogProjectPage'
@@ -43,9 +43,8 @@ export default async function Page(props: Props) {
     return notFound()
   }
 
-  const response = await fetchVerifiersApi()
-
-  const details = getZkCatalogProjectDetails(project, response)
+  const verifiers = await getVerifiers()
+  const details = getZkCatalogProjectDetails(project, verifiers)
 
   const projectDetails = {
     details: details,
