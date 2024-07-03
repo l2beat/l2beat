@@ -2467,6 +2467,30 @@
   ],
   "kinto": [
     {
+      "symbol": "USDe",
+      "category": "stablecoin",
+      "address": "0x05dE0003C333A503bea5224fCc64f0D4b5446C38",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "ethena-usde"
+    },
+    {
+      "symbol": "WETH",
+      "category": "ether",
+      "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      },
+      "coingeckoId": "weth"
+    },
+    {
       "symbol": "USD+",
       "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
       "category": "stablecoin",

@@ -6206,6 +6206,25 @@
       "supply": "totalSupply"
     },
     {
+      "id": "kinto:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x05dE0003C333A503bea5224fCc64f0D4b5446C38",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884936,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 7887,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "id": "kinto:weeth-wrapped-eeth",
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
@@ -6216,6 +6235,25 @@
       "coingeckoListingTimestamp": 1701648000,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 7887,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:weth-wrapped-ether",
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1716142042,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "chainId": 7887,
       "source": "external",
       "supply": "totalSupply",
