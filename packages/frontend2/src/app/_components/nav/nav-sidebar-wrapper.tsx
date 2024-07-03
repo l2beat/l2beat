@@ -50,7 +50,7 @@ export const NavSideBarWrapper = ({
     >
       <div
         className={cn(
-          'bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-clip transition-all ease-out duration-300',
+          'custom-scrollbar bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-clip transition-all ease-out duration-300',
           sharedSizeClasses,
           resizing && 'transition-none',
         )}
