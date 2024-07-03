@@ -1,4 +1,5 @@
 import { z } from 'zod'
+
 import { defineCollection } from '../define-collections'
 
 export const zkCatalogDescriptionsCollection = defineCollection({

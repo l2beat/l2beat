@@ -1,43 +1,43 @@
-import { assert } from '@l2beat/shared-pure';
-import CircleQuestionMark from '~/icons/circle-question-mark.svg';
-import UnverifiedIcon from '~/icons/unverified.svg';
-import VerifiedIcon from '~/icons/verified.svg';
+import { assert } from '@l2beat/shared-pure'
+import CircleQuestionMark from '~/icons/circle-question-mark.svg'
+import UnverifiedIcon from '~/icons/unverified.svg'
+import VerifiedIcon from '~/icons/verified.svg'
 
-import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage';
+import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
-  verifiers: ZkCatalogProjectDetails['verifiers'];
+  verifiers: ZkCatalogProjectDetails['verifiers']
 }
 
 export function VerifiedCountWithDetails(props: Props) {
   const successfullyVerifiedCount = props.verifiers.filter(
-    (verifier) => verifier.verified === 'yes'
-  ).length;
+    (verifier) => verifier.verified === 'yes',
+  ).length
   const unsuccessfullyVerifiedCount = props.verifiers.filter(
-    (verifier) => verifier.verified === 'failed'
-  ).length;
+    (verifier) => verifier.verified === 'failed',
+  ).length
   const notVerifiedCount = props.verifiers.filter(
-    (verifier) => verifier.verified === 'no'
-  ).length;
+    (verifier) => verifier.verified === 'no',
+  ).length
 
   const groupedByStatus = [
     { Icon: VerifiedIcon, count: successfullyVerifiedCount },
     { Icon: CircleQuestionMark, count: notVerifiedCount },
     { Icon: UnverifiedIcon, count: unsuccessfullyVerifiedCount },
-  ].filter((item) => item.count > 0);
+  ].filter((item) => item.count > 0)
 
-  const isOnlyOneStatus = groupedByStatus.length === 1;
+  const isOnlyOneStatus = groupedByStatus.length === 1
 
   if (isOnlyOneStatus) {
-    const status = groupedByStatus[0];
-    assert(status, 'status should be defined');
-    const { count, Icon } = status;
+    const status = groupedByStatus[0]
+    assert(status, 'status should be defined')
+    const { count, Icon } = status
     return (
       <div className="flex items-center">
         <span>{count}</span>
         {<Icon />}
       </div>
-    );
+    )
   }
 
   return (
@@ -68,5 +68,5 @@ export function VerifiedCountWithDetails(props: Props) {
         )
       </div>
     </div>
-  );
+  )
 }
