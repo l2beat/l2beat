@@ -58,13 +58,8 @@ export class DiscoveryRunner {
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<DiscoveryOutput> {
-    const histogramDone = syncHistogram.startTimer()
-
     const provider = this.allProviders.get(config.chain, blockNumber)
     const result = await this.discoveryEngine.discover(provider, config)
-
-    histogramDone({ project: config.name })
-    latestBlock.set({ project: config.name }, blockNumber)
 
     return toDiscoveryOutput(
       config.name,
@@ -132,16 +127,3 @@ export class DiscoveryRunner {
     })
   }
 }
-
-const latestBlock = new Gauge({
-  name: 'discovery_last_synced',
-  help: 'Value showing latest block number with which UpdateMonitor was run',
-  labelNames: ['project'],
-})
-
-const syncHistogram = new Histogram({
-  name: 'discovery_sync_duration_histogram',
-  help: 'Histogram showing discovery duration',
-  labelNames: ['project'],
-  buckets: [2, 4, 6, 8, 10, 15, 20, 30, 60, 120],
-})
