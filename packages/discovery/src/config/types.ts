@@ -34,6 +34,7 @@ export interface DiscoveryChainConfig {
   rpcUrl: string
   eventRpcUrl?: string
   reorgSafeDepth?: number
+  beaconApiUrl?: string
   multicall: MulticallConfig
   explorer: ExplorerConfig
 }

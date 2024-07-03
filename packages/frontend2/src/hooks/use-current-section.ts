@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
+import { useEventListener } from './use-event-listener'
 import { useBreakpoint } from './use-is-mobile'
 
 const DEFAULT_THRESHOLD = `15%`
@@ -14,44 +15,43 @@ export function useCurrentSection(threshold?: Threshold) {
   const breakpoint = useBreakpoint()
   const [currentSection, setCurrentSection] = useState<HTMLElement>()
 
-  useEffect(() => {
+  const findCurrentSection = useCallback(() => {
     const sections = Array.from(
       document.querySelectorAll<HTMLElement>('section'),
     )
     const firstSection = sections.at(0)
     const lastSection = sections.at(-1)
 
-    function findCurrentSection() {
-      if (isScrolledToTop()) {
-        setCurrentSection(firstSection)
-        return
-      }
-      if (isScrolledToBottom()) {
-        setCurrentSection(lastSection)
-        return
-      }
-      const currentSection = sections.find((section) => {
-        const sectionTop = section.offsetTop
-        const sectionHeight = section.offsetHeight
-        const sectionBottom = sectionTop + sectionHeight
-
-        const scrollPos =
-          window.scrollY +
-          getViewportHeightOffset(threshold, breakpoint === 'mobile')
-        const isCurrentSection =
-          scrollPos >= sectionTop && scrollPos < sectionBottom
-        return isCurrentSection
-      })
-
-      if (!currentSection) return
-
-      setCurrentSection(currentSection)
+    if (isScrolledToTop()) {
+      setCurrentSection(firstSection)
+      return
     }
-    findCurrentSection()
-    document.addEventListener('scroll', findCurrentSection)
+    if (isScrolledToBottom()) {
+      setCurrentSection(lastSection)
+      return
+    }
+    const currentSection = sections.find((section) => {
+      const sectionTop = section.offsetTop
+      const sectionHeight = section.offsetHeight
+      const sectionBottom = sectionTop + sectionHeight
 
-    return () => document.removeEventListener('scroll', findCurrentSection)
+      const scrollPos =
+        window.scrollY +
+        getViewportHeightOffset(threshold, breakpoint === 'mobile')
+      const isCurrentSection =
+        scrollPos >= sectionTop && scrollPos < sectionBottom
+      return isCurrentSection
+    })
+
+    if (!currentSection) return
+
+    setCurrentSection(currentSection)
   }, [breakpoint, threshold])
+
+  useEffect(() => {
+    findCurrentSection()
+  }, [findCurrentSection])
+  useEventListener('scroll', findCurrentSection)
 
   return currentSection
 }
