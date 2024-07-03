@@ -119,9 +119,15 @@ export class PricesDataService {
       pricesAtExcludedHeuristic.find((p) => p.configId === c.configId),
     )
 
-    const recordsForLagging = await this.$.priceRepository.getByConfigIds(
-      lagging.map((l) => l.configId),
-    )
+    const recordsForLagging =
+      await this.$.priceRepository.getByConfigIdsInRange(
+        lagging.map((l) => l.configId),
+        lagging.reduce(
+          (a, b) => UnixTime.min(a, b.sinceTimestamp),
+          UnixTime.now(),
+        ),
+        targetTimestamp,
+      )
 
     for (const laggingConfig of lagging) {
       const sortedRecordsForConfig = recordsForLagging
