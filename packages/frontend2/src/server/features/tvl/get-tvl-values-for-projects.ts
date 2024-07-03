@@ -57,7 +57,7 @@ export async function getTvlValuesForProjects(
 
     // TODO: Interpolate here
     assert(
-      valuesByTimestamp[target.toString()],
+      valuesByTimestampForProject[target.toString()],
       `Missing value for last hour for ${projectId}, timestamp: ${target.toString()}`,
     )
 
