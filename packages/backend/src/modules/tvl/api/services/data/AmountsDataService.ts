@@ -29,12 +29,13 @@ export class AmountsDataService {
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
+    const minTimestamp = configurations.reduce(
+      (a, b) => UnixTime.min(a, b.sinceTimestamp),
+      UnixTime.now(),
+    )
     const amountRecords = await this.$.amountRepository.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
-      configurations.reduce(
-        (a, b) => UnixTime.min(a, b.sinceTimestamp),
-        UnixTime.now(),
-      ),
+      minTimestamp,
       targetTimestamp,
     )
 
@@ -55,26 +56,31 @@ export class AmountsDataService {
       excluded,
     )
 
+    const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
+      minTimestampOverride: minTimestamp,
+    })
+
     const aggregatedByTimestamp: Dictionary<bigint> = {}
-    for (const [_timestamp, amounts] of Object.entries(amountsByTimestamp)) {
-      const timestamp = new UnixTime(+_timestamp)
+    for (const timestamp of timestamps) {
+      const amounts = amountsByTimestamp[timestamp.toString()] ?? []
 
       if (!this.$.clock.shouldTimestampBeIncluded(targetTimestamp, timestamp)) {
         continue
       }
 
-      amounts.push(
-        ...lagging
-          .filter((l) => timestamp.gt(l.latestTimestamp))
-          .map((l) => l.latestValue),
-      )
+      const interpolatedRecords = lagging
+        .filter((l) => timestamp.gt(l.latestTimestamp))
+        .map((l) => l.latestValue)
 
-      const aggregatedAmount =
-        amounts
-          .filter((a) => !doubleCheckedExcluded.includes(a.configId))
-          .reduce((acc, curr) => acc + curr.amount, 0n) ?? 0n
+      const aggregatedAmount = [...amounts, ...interpolatedRecords]
+        .filter((a) => !doubleCheckedExcluded.includes(a.configId))
+        .reduce((acc, curr) => acc + curr.amount, 0n)
 
-      aggregatedByTimestamp[_timestamp] = aggregatedAmount
+      if (aggregatedAmount === 0n) {
+        console.log('zero')
+      }
+
+      aggregatedByTimestamp[timestamp.toString()] = aggregatedAmount
     }
 
     return {
