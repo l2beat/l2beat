@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
+Generated with discovered.json: 0x676d7b25da3f38e91952b8dbd0f48eef244806e9
 
-# Diff at Tue, 02 Jul 2024 15:07:07 GMT:
+# Diff at Wed, 03 Jul 2024 07:37:40 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@4894f60c1f3d7a498ee8fdfa670bc6f901872c10 block: 20189741
-- current block number: 20219615
+- current block number: 20224536
 
 ## Description
 
@@ -40,6 +40,10 @@ Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
       values.impl:
 -        "0xB9E1E58bcF33B79CcfF99c298963546a6c334388"
 +        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
+      values.slotA:
+-        {"genesisHeight":19923613,"genesisTimestamp":1716358991,"lastSyncedBlockId":105566,"lastSynecdAt":1719571751}
+      values.slotB:
+-        {"numBlocks":108928,"lastVerifiedBlockId":105588,"provingPaused":false,"__reservedB1":0,"__reservedB2":0,"__reservedB3":0,"lastUnpausedAt":1716571955}
       values.tier_router:
 -        "0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F"
 +        "0x6E997f1F22C40ba37F633B08f3b07E10Ed43155a"
@@ -59,6 +63,12 @@ Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
 -        "0x55833dA2962c2330ccCF043ff8037e6D2939bCF6"
 +        "0xcfe803378D79d1180EbF030455040EA6513869dF"
     }
+```
+
+```diff
+-   Status: DELETED
+    contract TierProviderV2 (0x4cffe56C947E26D07C14020499776DB3e9AE3a23)
+    +++ description: None
 ```
 
 ```diff
@@ -114,7 +124,7 @@ Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
 
 ```diff
 +   Status: CREATED
-    contract TierProviderV2 (0x3a1A900680BaADb889202faf12915F7E47B71ddd)
+    contract TierProvider (0x3a1A900680BaADb889202faf12915F7E47B71ddd)
     +++ description: None
 ```
 
@@ -131,10 +141,57 @@ Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
  .../TaikoBridge/Bridge.sol                         |  11 +-
  .../TaikoL1Contract/TaikoL1.sol                    | 874 +++++++++++----------
  .../TaikoToken/TaikoToken.sol                      |  21 +-
- ...-0x3a1A900680BaADb889202faf12915F7E47B71ddd.sol | 159 ++++
- ...0x4cffe56C947E26D07C14020499776DB3e9AE3a23.sol} |   0
+ .../TierProviderV2.sol => .flat/TierProvider.sol}  |  41 +-
  .../{.flat@20189741 => .flat}/TierRouter.sol       |   2 +-
- 7 files changed, 643 insertions(+), 426 deletions(-)
+ 6 files changed, 504 insertions(+), 447 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20189741 (main branch discovery), not current.
+
+```diff
+    contract TierProvider (0x4cffe56C947E26D07C14020499776DB3e9AE3a23) {
+    +++ description: None
+      name:
+-        "TierProvider"
++        "TierProviderV2"
+      values.active_tiers:
+-        [["0x746965725f736778000000000000000000000000000000000000000000000000"],["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000"],["0x746965725f677561726469616e00000000000000000000000000000000000000"]]
++++ description: tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof
+      values.TIER_GUARDIAN:
+-        ["0x746965725f677561726469616e00000000000000000000000000000000000000",0,0,60,2880,16]
++++ description: tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof
+      values.TIER_GUARDIAN_MINORITY:
+-        ["0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000","500000000000000000000","3280000000000000000000",1440,2880,16]
++++ description: tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof
+      values.TIER_OPTIMISTIC:
+-        ["0x0000000000000000000000000000000000000000000000000000000000000000","250000000000000000000","500000000000000000000",1440,30,16]
++++ description: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof
+      values.TIER_SGX:
+-        ["0x746965725f736778000000000000000000000000000000000000000000000000","250000000000000000000","1640000000000000000000",1440,60,8]
++++ description: tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof
+      values.TIER_SGX_ZKVM:
+-        ["0x746965725f7367785f7a6b766d00000000000000000000000000000000000000","500000000000000000000","3280000000000000000000",1440,240,4]
+      values.getMinTier:
++        [200,200,200,200,200]
+      errors:
++        {"getMinTier":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract TierRouter (0xa8e5D3a2E2052bea7f10bE6a0386454b721d1f9F) {
+    +++ description: None
+      values.tier_provider:
+-        "0x4cffe56C947E26D07C14020499776DB3e9AE3a23"
+      values.getProvider:
++        ["0x4cffe56C947E26D07C14020499776DB3e9AE3a23","0x4cffe56C947E26D07C14020499776DB3e9AE3a23","0x4cffe56C947E26D07C14020499776DB3e9AE3a23","0x4cffe56C947E26D07C14020499776DB3e9AE3a23","0x4cffe56C947E26D07C14020499776DB3e9AE3a23"]
+      errors:
++        {"getProvider":"Too many values. Update configuration to explore fully"}
+    }
 ```
 
 Generated with discovered.json: 0x1a9d9e0714596a68f80cbf3b326f615b15bcfa66

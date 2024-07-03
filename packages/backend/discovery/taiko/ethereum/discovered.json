@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20219615,
-  "configHash": "0x90fefe7b010729eb18bef78a8d4958c0ffae5c7e49bebb14f8f455e79486e7aa",
+  "blockNumber": 20224536,
+  "configHash": "0xceb4f2c9d3cf34fccd49818b13886e2918d014bb91da25ffb43298896b03f971",
   "version": 8,
   "contracts": [
     {
@@ -28,8 +28,6 @@
         "getStateVariables",
         "getLastSyncedBlock",
         "getLastVerifiedBlock",
-        "slotA",
-        "slotB",
         "state"
       ],
       "implementations": ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"],
@@ -58,25 +56,25 @@
           "checkEOAForCalldataDA": true
         },
         "getLastSyncedBlock": {
-          "blockId_": 120191,
-          "blockHash_": "0x5e0aa72fdae511d79f0b12b29c25388d9baf6996818aa0f1077284211d473513",
-          "stateRoot_": "0xeae9ea94db990fd9b7da3c52f0028ae86855bda38bd326213f019b576e732ca4"
+          "blockId_": 122767,
+          "blockHash_": "0xf9ddd36d57ea9b84842ff6f11472a12752d34c3c0643643279d06b7c9b66c3f4",
+          "stateRoot_": "0x359f10dfe239657d3405b8867a530f6631c45f6dbbd3b9dec69c9c308fc3e494"
         },
         "getLastVerifiedBlock": {
-          "blockId_": 120194,
-          "blockHash_": "0x3d824cee3754dbfcf2268f584f5cf3280b60c27e64bd5b9cf6e59f06d5b7a9f2",
-          "stateRoot_": "0x9d262797d7d1a770d9c94bbf41a69974fbf825de7660742326a4d3ac77a96cde"
+          "blockId_": 122782,
+          "blockHash_": "0x2f7eb877bc9420d4e46395d382caf5e2bdac6d2ddca8bbd08520456cc57b335d",
+          "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 120191,
-            "lastSynecdAt": 1719932471
+            "lastSyncedBlockId": 122767,
+            "lastSynecdAt": 1719992099
           },
           {
-            "numBlocks": 123991,
-            "lastVerifiedBlockId": 120194,
+            "numBlocks": 126663,
+            "lastVerifiedBlockId": 122782,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -105,12 +103,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 120191,
-            "lastSynecdAt": 1719932471
+            "lastSyncedBlockId": 122767,
+            "lastSynecdAt": 1719992099
           },
           "slotB": {
-            "numBlocks": 123991,
-            "lastVerifiedBlockId": 120194,
+            "numBlocks": 126663,
+            "lastVerifiedBlockId": 122782,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -143,7 +141,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1719932783,
+        "clock": 1719992231,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -170,35 +168,12 @@
       "derivedName": "TaikoToken"
     },
     {
-      "name": "TierProviderV2",
+      "name": "TierProvider",
       "address": "0x3a1A900680BaADb889202faf12915F7E47B71ddd",
       "upgradeability": {
         "type": "immutable"
       },
       "sinceTimestamp": 1719819275,
-      "values": {
-        "getMinTier": [200, 200, 200, 200, 200],
-        "getTierIds": [200, 900, 1000]
-      },
-      "errors": {
-        "getMinTier": "Too many values. Update configuration to explore fully"
-      }
-    },
-    {
-      "name": "SigVerifyLib",
-      "address": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1714550639
-    },
-    {
-      "name": "TierProvider",
-      "address": "0x4cffe56C947E26D07C14020499776DB3e9AE3a23",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1715745047,
       "values": {
         "active_tiers": [
           [
@@ -214,44 +189,52 @@
           "0x746965725f677561726469616e00000000000000000000000000000000000000",
           0,
           0,
-          60,
+          1440,
           2880,
-          16
+          0
         ],
         "TIER_GUARDIAN_MINORITY": [
           "0x746965725f677561726469616e5f6d696e6f7269747900000000000000000000",
-          "500000000000000000000",
-          "3280000000000000000000",
-          1440,
+          "250000000000000000000",
+          "1640000000000000000000",
+          240,
           2880,
-          16
+          0
         ],
         "TIER_OPTIMISTIC": [
           "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "125000000000000000000",
           "250000000000000000000",
-          "500000000000000000000",
           1440,
-          30,
-          16
+          15,
+          0
         ],
         "TIER_SGX": [
           "0x746965725f736778000000000000000000000000000000000000000000000000",
-          "250000000000000000000",
-          "1640000000000000000000",
+          "125000000000000000000",
+          "820000000000000000000",
           1440,
           60,
-          8
+          0
         ],
         "TIER_SGX_ZKVM": [
           "0x746965725f7367785f7a6b766d00000000000000000000000000000000000000",
-          "500000000000000000000",
-          "3280000000000000000000",
+          "250000000000000000000",
+          "1640000000000000000000",
           1440,
           240,
-          4
+          0
         ]
       },
       "derivedName": "TierProviderV2"
+    },
+    {
+      "name": "SigVerifyLib",
+      "address": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1714550639
     },
     {
       "name": "GuardianMinorityProver",
@@ -348,17 +331,9 @@
       },
       "sinceTimestamp": 1719819443,
       "values": {
-        "getProvider": [
-          "0x3a1A900680BaADb889202faf12915F7E47B71ddd",
-          "0x3a1A900680BaADb889202faf12915F7E47B71ddd",
-          "0x3a1A900680BaADb889202faf12915F7E47B71ddd",
-          "0x3a1A900680BaADb889202faf12915F7E47B71ddd",
-          "0x3a1A900680BaADb889202faf12915F7E47B71ddd"
-        ]
+        "tier_provider": "0x3a1A900680BaADb889202faf12915F7E47B71ddd"
       },
-      "errors": {
-        "getProvider": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "TierRouter"
     },
     {
       "name": "AutomataDcapV3Attestation",
@@ -595,7 +570,7 @@
         "impl": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 25484,
+        "nextMessageId": 25665,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -991,12 +966,6 @@
     "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": [
       "constructor(address es256Verifier)",
       "function verifyES256Signature(bytes tbs, bytes signature, bytes publicKey) view returns (bool sigValid)"
-    ],
-    "0x4cffe56C947E26D07C14020499776DB3e9AE3a23": [
-      "error TIER_NOT_FOUND()",
-      "function getMinTier(uint256) pure returns (uint16)",
-      "function getTier(uint16 _tierId) pure returns (tuple(bytes32 verifierName, uint96 validityBond, uint96 contestBond, uint24 cooldownWindow, uint16 provingWindow, uint8 maxBlocksToVerifyPerProof))",
-      "function getTierIds() pure returns (uint16[] tiers_)"
     ],
     "0x579A8d63a2Db646284CBFE31FE5082c9989E985c": [
       "constructor(address _logic, bytes _data) payable",
