@@ -54,5 +54,5 @@ export const layer3s: Layer3[] = [
   muster,
   l3x,
   superposition,
-  syndr
+  syndr,
 ]
