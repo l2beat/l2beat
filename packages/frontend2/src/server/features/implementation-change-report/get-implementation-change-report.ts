@@ -10,6 +10,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import path from 'path'
 import { env } from '~/env'
 import { db } from '~/server/database'
 
@@ -20,7 +21,9 @@ export function getImplementationChangeReport() {
 
 const getCachedImplementationChangeReport = cache(
   async () => {
-    const configReader = new ConfigReader('../discovery')
+    const configReader = new ConfigReader(
+      path.join(process.cwd(), '../backend'),
+    )
     const onDiskChains = configReader.readAllChains()
     const onDiskProjects: Record<string, string[]> = {}
     const onDiskDiscoveries: Record<
