@@ -8,7 +8,7 @@ export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 /**
  * WARNING:  In this function we assume that the values data is saved to DB without holes with hourly granularity
  */
-export function getLaggingAndSyncing<T>(
+export function getLaggingAndExcluded<T>(
   configurations: { id: string; minTimestamp: UnixTime }[],
   recordsByTimestamp: Dictionary<T[]>,
   getIdFromRecord: (t: T) => string,

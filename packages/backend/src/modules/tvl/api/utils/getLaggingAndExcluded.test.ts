@@ -1,11 +1,11 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { ValueRecord } from '../../repositories/ValueRepository'
-import { getLaggingAndSyncing } from './getLaggingAndSyncing'
+import { getLaggingAndExcluded } from './getLaggingAndExcluded'
 
 const projectId = ProjectId('project')
 
-describe(getLaggingAndSyncing.name, () => {
+describe(getLaggingAndExcluded.name, () => {
   it('everything up to date', () => {
     const targetTimestamp = new UnixTime(100)
 
@@ -15,7 +15,7 @@ describe(getLaggingAndSyncing.name, () => {
 
     const configurations = mockConfigurations(['A', 'B', 'C'])
 
-    const result = getLaggingAndSyncing<ValueRecord>(
+    const result = getLaggingAndExcluded<ValueRecord>(
       configurations,
       valuesByTimestamp,
       (t: ValueRecord) => t.dataSource,
@@ -38,7 +38,7 @@ describe(getLaggingAndSyncing.name, () => {
 
     const configurations = mockConfigurations(['A', 'B'])
 
-    const result = getLaggingAndSyncing(
+    const result = getLaggingAndExcluded(
       configurations,
       valuesByTimestamp,
       (t: ValueRecord) => t.dataSource,
@@ -64,7 +64,7 @@ describe(getLaggingAndSyncing.name, () => {
 
     const configurations = mockConfigurations(['A'])
 
-    const result = getLaggingAndSyncing(
+    const result = getLaggingAndExcluded(
       configurations,
       valuesByTimestamp,
       (t: ValueRecord) => t.dataSource,

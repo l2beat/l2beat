@@ -8,7 +8,7 @@ import {
   ValueRepository,
 } from '../../../repositories/ValueRepository'
 import { getConfiguredValuesForTimestamp } from '../../utils/getConfiguredValuesForTimestamp'
-import { getLaggingAndSyncing } from '../../utils/getLaggingAndSyncing'
+import { getLaggingAndExcluded } from '../../utils/getLaggingAndExcluded'
 import { ApiProject } from '../../utils/types'
 
 interface Dependencies {
@@ -45,7 +45,7 @@ export class ValuesDataService {
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const { lagging, excluded } = getLaggingAndSyncing<ValueRecord>(
+      const { lagging, excluded } = getLaggingAndExcluded<ValueRecord>(
         Array.from(project.sources.entries()).map(([source, v]) => ({
           id: source,
           minTimestamp: v.minTimestamp,

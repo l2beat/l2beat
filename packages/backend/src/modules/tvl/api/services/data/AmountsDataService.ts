@@ -10,8 +10,8 @@ import {
 } from '../../../repositories/AmountRepository'
 import {
   CONSIDER_EXCLUDED_AFTER_DAYS,
-  getLaggingAndSyncing,
-} from '../../utils/getLaggingAndSyncing'
+  getLaggingAndExcluded,
+} from '../../utils/getLaggingAndExcluded'
 
 interface Dependencies {
   readonly amountRepository: AmountRepository
@@ -40,7 +40,7 @@ export class AmountsDataService {
 
     const amountsByTimestamp = groupBy(amountRecords, 'timestamp')
 
-    const { lagging, excluded } = getLaggingAndSyncing<AmountRecord>(
+    const { lagging, excluded } = getLaggingAndExcluded<AmountRecord>(
       configurations.map((c) => ({
         minTimestamp: c.sinceTimestamp,
         id: c.configId,

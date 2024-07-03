@@ -7,7 +7,7 @@ import {
   PriceRecord,
   PriceRepository,
 } from '../../../repositories/PriceRepository'
-import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../utils/getLaggingAndSyncing'
+import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../utils/getLaggingAndExcluded'
 
 interface Dependencies {
   readonly priceRepository: PriceRepository
