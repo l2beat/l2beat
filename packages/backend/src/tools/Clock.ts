@@ -125,21 +125,6 @@ export class Clock {
     return () => clearInterval(interval)
   }
 
-  onEveryDay(callback: (timestamp: UnixTime) => void) {
-    let next = this.getFirstDay()
-    const onNewTimestamps = () => {
-      const last = this.getLastDay()
-      while (next.lte(last)) {
-        callback(next)
-        next = next.add(1, 'days')
-      }
-    }
-
-    onNewTimestamps()
-    const interval = setInterval(onNewTimestamps, this.refreshIntervalMs)
-    return () => clearInterval(interval)
-  }
-
   onNewDay(callback: (timestamp: UnixTime) => void) {
     let current = this.getLastDay()
     const onNewTimestamps = () => {
