@@ -46,11 +46,11 @@ export function CustomReadMore({
       >
         {collapsible}
       </span>
+      <span className="group-data-[collapsed=false]:hidden lg:hidden"> </span>
       <span
         data-role="read-more-toggle"
         className="underline group-data-[collapsed=false]:hidden lg:hidden"
       >
-        {' '}
         Read more
       </span>
     </span>
