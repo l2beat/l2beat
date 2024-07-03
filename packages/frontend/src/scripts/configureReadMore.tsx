@@ -6,12 +6,14 @@ export function configureReadMore() {
   const readMoreComponents = $$('[data-role=read-more]')
 
   for (const component of readMoreComponents) {
-    const { $ } = makeQuery(component)
-    const toggle = $('[data-role=read-more-toggle]')
+    const { $$ } = makeQuery(component)
+    const toggles = $$('[data-role=read-more-toggle]')
 
-    toggle.addEventListener('click', () => {
-      component.dataset.collapsed =
-        component.dataset.collapsed === 'false' ? 'true' : 'false'
-    })
+    for (const toggle of toggles) {
+      toggle.addEventListener('click', () => {
+        component.dataset.collapsed =
+          component.dataset.collapsed === 'false' ? 'true' : 'false'
+      })
+    }
   }
 }

@@ -37,22 +37,25 @@ export function CustomReadMore({
   collapsible,
 }: CustomReadMoreProps) {
   return (
-    <span data-role="read-more">
+    <span className="group" data-role="read-more">
       {alwaysVisible}
-      <span className="group-data-[collapsed=false]:hidden lg:hidden">...</span>
+      <span className="group-data-[collapsed=false]:hidden md:hidden">...</span>
       <span
-        className="hidden group-data-[collapsed=false]:inline lg:inline"
+        className="hidden group-data-[collapsed=false]:inline md:inline"
         data-role="read-more-collapsible"
       >
         {collapsible}
       </span>
-      <span className="group-data-[collapsed=false]:hidden lg:hidden"> </span>
-      <span
+      <span className="md:hidden"> </span>
+      <button
         data-role="read-more-toggle"
-        className="underline group-data-[collapsed=false]:hidden lg:hidden"
+        className="cursor-pointer underline md:hidden"
       >
-        Read more
-      </span>
+        <span className="group-data-[collapsed=false]:hidden">Read more</span>
+        <span className="hidden group-data-[collapsed=false]:inline">
+          Hide description
+        </span>
+      </button>
     </span>
   )
 }
