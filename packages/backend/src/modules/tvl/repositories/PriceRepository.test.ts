@@ -18,15 +18,6 @@ describeDatabase(PriceRepository.name, (knex, kysely) => {
       await repository.deleteAll()
     })
 
-    describe(PriceRepository.prototype.getByConfigId.name, () => {
-      it('gets by id', async () => {
-        const record = saved('a', UnixTime.ZERO, 1)
-        await repository.addMany([record, saved('b', UnixTime.ZERO, 2)])
-        const result = await repository.getByConfigId(record.configId)
-        expect(result).toEqual([record])
-      })
-    })
-
     describe(PriceRepository.prototype.getByTimestamp.name, () => {
       it('gets by timestamp', async () => {
         await repository.addMany([
