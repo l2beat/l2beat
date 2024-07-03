@@ -1,11 +1,24 @@
 import { type Value } from '@l2beat/database'
 import { getEthPrices } from './get-eth-prices'
-import { getTvlProjects } from './get-tvl-projects'
+import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range-utils'
 
-export async function getTvlChart({ range }: { range: TvlChartRange }) {
-  const projects = getTvlProjects()
+export async function getTvlChart({
+  range,
+  ...rest
+}: { range: TvlChartRange } & (
+  | { type: 'all' | TvlProject['type'] }
+  | { type: 'projects'; projectIds: string[] }
+)) {
+  const projectsFilter =
+    rest.type === 'all'
+      ? () => true
+      : rest.type === 'projects'
+        ? (project: TvlProject) => rest.projectIds.includes(project.id)
+        : (project: TvlProject) => project.type === rest.type
+
+  const projects = getTvlProjects().filter(projectsFilter)
   const ethPrices = await getEthPrices()
 
   const valuesByProjectByTimestamp = await getTvlValuesForProjects(
