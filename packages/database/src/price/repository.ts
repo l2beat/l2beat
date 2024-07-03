@@ -32,6 +32,17 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
+  async getByTimestamp(timestamp: UnixTime) {
+    const rows = await this.db
+      .selectFrom('public.prices')
+      .select(selectPrice)
+      .where((eb) => eb.and([eb('timestamp', '=', timestamp.toDate())]))
+      .orderBy('timestamp')
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async getByConfigIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
     const rows = await this.db
       .selectFrom('public.prices')
