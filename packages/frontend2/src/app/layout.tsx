@@ -9,7 +9,7 @@ import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { TooltipProvider } from './_components/tooltip'
+import { TooltipProvider } from './_components/tooltip/tooltip'
 
 export const metadata: Metadata = getDefaultMetadata()
 

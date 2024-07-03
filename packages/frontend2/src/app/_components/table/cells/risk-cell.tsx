@@ -7,8 +7,8 @@ import {
 import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { SentimentText } from '../sentiment-text'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip'
+import { SentimentText } from '../../sentiment-text'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 
 interface Risk {
   value: string
