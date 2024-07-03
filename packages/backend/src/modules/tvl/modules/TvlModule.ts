@@ -96,21 +96,10 @@ export function createTvlModule(
     configMapping,
   )
 
-  const ethPrice = config.tvl.prices.find(
-    (p) => p.chain === 'ethereum' && p.address === 'native',
-  )
-  assert(ethPrice, 'Eth priceId not found')
-
-  const valuesDataService = new ValuesDataService({
-    valueRepository: peripherals.getRepository(ValueRepository),
-    clock,
-    logger,
-  })
-
   const pricesDataService = new PricesDataService({
     priceRepository: peripherals.getRepository(PriceRepository),
     clock,
-    etherPriceConfig: { ...ethPrice, configId: createPriceId(ethPrice) },
+    etherPriceConfig: getEtherPriceConfig(config.tvl),
     logger,
   })
 
@@ -119,6 +108,12 @@ export function createTvlModule(
     configurationRepository: peripherals.getRepository(
       IndexerConfigurationRepository,
     ),
+    clock,
+    logger,
+  })
+
+  const valuesDataService = new ValuesDataService({
+    valueRepository: peripherals.getRepository(ValueRepository),
     clock,
     logger,
   })
@@ -201,6 +196,15 @@ export function createTvlModule(
     routers: [tvlRouter],
     start,
   }
+}
+
+function getEtherPriceConfig(config: TvlConfig) {
+  const ethPrice = config.prices.find(
+    (p) => p.chain === 'ethereum' && p.address === 'native',
+  )
+  assert(ethPrice, 'Eth priceId not found')
+  const etherPriceConfig = { ...ethPrice, configId: createPriceId(ethPrice) }
+  return etherPriceConfig
 }
 
 function getApiProjects(
