@@ -63,6 +63,22 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
       })
     })
 
+    describe(AmountRepository.prototype.findByConfigAndTimestamp.name, () => {
+      it('finds by config and timestamp', async () => {
+        await amountRepository.addMany([
+          amount('a', new UnixTime(100), 1n),
+          amount('b', new UnixTime(100), 1n),
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+        ])
+        const result = await amountRepository.findByConfigAndTimestamp(
+          'a'.repeat(12),
+          new UnixTime(200),
+        )
+        expect(result).toEqual(amount('a', new UnixTime(200), 2n))
+      })
+    })
+
     describe(AmountRepository.prototype.addMany.name, () => {
       it('adds new rows', async () => {
         await amountRepository.addMany([

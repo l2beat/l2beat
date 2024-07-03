@@ -43,6 +43,21 @@ export class AmountRepository {
     return rows.map(toRecord)
   }
 
+  async findByConfigAndTimestamp(configId: string, timestamp: UnixTime) {
+    const row = await this.db
+      .selectFrom('public.amounts')
+      .select(selectAmount)
+      .where((eb) =>
+        eb.and([
+          eb('configuration_id', '=', configId),
+          eb('timestamp', '=', timestamp.toDate()),
+        ]),
+      )
+      .executeTakeFirst()
+
+    return row ? toRecord(row) : null
+  }
+
   async addMany(records: Amount[], trx?: Transaction) {
     if (records.length === 0) {
       return

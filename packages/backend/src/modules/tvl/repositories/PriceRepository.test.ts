@@ -67,6 +67,22 @@ describeDatabase(PriceRepository.name, (knex, kysely) => {
       })
     })
 
+    describe(PriceRepository.prototype.findByConfigAndTimestamp.name, () => {
+      it('finds by config and timestamp', async () => {
+        await repository.addMany([
+          saved('a', new UnixTime(100), 1),
+          saved('b', new UnixTime(100), 1),
+          saved('a', new UnixTime(200), 2),
+          saved('b', new UnixTime(200), 2),
+        ])
+        const result = await repository.findByConfigAndTimestamp(
+          'a'.repeat(12),
+          new UnixTime(200),
+        )
+        expect(result).toEqual(saved('a', new UnixTime(200), 2))
+      })
+    })
+
     describe(PriceRepository.prototype.addMany.name, () => {
       it('adds new rows', async () => {
         await repository.addMany([

@@ -1,3 +1,5 @@
+import { UnixTime } from '@l2beat/shared-pure'
+import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../modules/tvl/api/utils/getLaggingAndExcluded'
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
@@ -111,4 +113,71 @@ export class IndexerService {
   }
 
   // #endregion
+
+  async getConfigurationsStatus(
+    configurations: { configId: string }[],
+    targetTimestamp: UnixTime,
+  ) {
+    const excluded = new Set<string>()
+
+    const lagging: {
+      id: string
+      latestTimestamp: UnixTime
+    }[] = []
+
+    const configurationsState =
+      await this.indexerConfigurationRepository.getByIds(
+        configurations.map((c) => c.configId),
+      )
+
+    for (const config of configurationsState) {
+      const syncStatus = config.currentHeight
+        ? new UnixTime(config.currentHeight)
+        : undefined
+
+      // newly added configuration
+      if (syncStatus === undefined) {
+        excluded.add(config.id)
+        continue
+      }
+
+      // synced configuration
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
+
+      // phased out configuration - but we still want to display data
+      if (config.maxHeight && config.maxHeight === config.currentHeight) {
+        continue
+      }
+
+      // out of sync configuration
+      if (
+        syncStatus.lt(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        excluded.add(config.id)
+        continue
+      }
+
+      // lagging configuration
+      if (
+        syncStatus.gte(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        lagging.push({
+          id: config.id,
+          latestTimestamp: syncStatus,
+        })
+        continue
+      }
+    }
+
+    return {
+      excluded,
+      lagging,
+    }
+  }
 }

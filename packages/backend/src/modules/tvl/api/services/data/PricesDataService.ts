@@ -3,13 +3,13 @@ import { assert, Logger } from '@l2beat/backend-tools'
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { PriceRepository } from '../../../repositories/PriceRepository'
 import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../utils/getLaggingAndExcluded'
 
 interface Dependencies {
   readonly priceRepository: PriceRepository
-  readonly configurationRepository: IndexerConfigurationRepository
+  readonly indexerService: IndexerService
   readonly clock: Clock
   etherPriceConfig: PriceConfigEntry & { configId: string }
   logger: Logger
@@ -81,91 +81,43 @@ export class PricesDataService {
     configurations: (PriceConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const [prices, excluded] = await Promise.all([
+    const [prices, status] = await Promise.all([
       this.$.priceRepository.getByTimestamp(targetTimestamp),
-      this.getExcluded(configurations, targetTimestamp),
+      this.$.indexerService.getConfigurationsStatus(
+        configurations,
+        targetTimestamp,
+      ),
     ])
 
     const result = {
       prices,
       lagging: new Map(),
-      excluded: new Set(excluded),
+      excluded: new Set(status.excluded),
     }
 
-    if (prices.length + excluded.size === configurations.length) {
+    if (prices.length + status.excluded.size === configurations.length) {
       return result
     }
 
-    const lagging = configurations
-      .filter((c) => !excluded.has(c.configId))
-      // TODO: perf
-      .filter((c) => !prices.find((p) => p.configId === c.configId))
-
     await Promise.all(
-      lagging.map(async (laggingConfig) => {
-        const sortedRecordsForConfig =
-          await this.$.priceRepository.getByConfigIdsInRange(
-            [laggingConfig.configId],
-            laggingConfig.sinceTimestamp,
-            targetTimestamp,
+      status.lagging.map(async (laggingConfig) => {
+        const latestRecord =
+          await this.$.priceRepository.findByConfigAndTimestamp(
+            laggingConfig.id,
+            laggingConfig.latestTimestamp,
           )
 
-        const latest = sortedRecordsForConfig[sortedRecordsForConfig.length - 1]
+        assert(latestRecord, `Undefined record for ${laggingConfig.id}`)
 
-        result.lagging.set(laggingConfig.configId, {
-          latestTimestamp: latest.timestamp,
-          latestValue: latest,
+        result.lagging.set(laggingConfig.id, {
+          latestTimestamp: laggingConfig.latestTimestamp,
+          latestValue: latestRecord,
         })
 
-        result.prices.push({ ...latest, timestamp: targetTimestamp })
+        result.prices.push({ ...latestRecord, timestamp: targetTimestamp })
       }),
     )
     return result
-  }
-
-  private async getExcluded(
-    configurations: (PriceConfigEntry & { configId: string })[],
-    targetTimestamp: UnixTime,
-  ) {
-    const excluded = new Set<string>()
-
-    const configurationsState = await this.$.configurationRepository.getByIds(
-      configurations.map((c) => c.configId),
-    )
-
-    for (const config of configurationsState) {
-      const syncStatus = config.currentHeight
-        ? new UnixTime(config.currentHeight)
-        : undefined
-
-      // newly added configuration
-      if (syncStatus === undefined) {
-        excluded.add(config.id)
-        continue
-      }
-
-      // synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
-      // phased out configuration - but we still want to display data
-      if (config.maxHeight && config.maxHeight === config.currentHeight) {
-        continue
-      }
-
-      // out of sync configuration
-      if (
-        syncStatus.lt(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        excluded.add(config.id)
-        continue
-      }
-    }
-
-    return excluded
   }
 
   async getEthPrices(targetTimestamp: UnixTime) {

@@ -53,6 +53,19 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async findByConfigAndTimestamp(
+    configId: string,
+    timestamp: UnixTime,
+  ): Promise<AmountRecord | undefined> {
+    const knex = await this.knex()
+    const row = await knex('amounts')
+      .where('configuration_id', configId)
+      .andWhere('timestamp', timestamp.toDate())
+      .first()
+
+    return row ? toRecord(row) : undefined
+  }
+
   async addMany(records: AmountRecord[], trx?: Knex.Transaction) {
     const rows: AmountRow[] = records.map(toRow)
     const knex = await this.knex(trx)
