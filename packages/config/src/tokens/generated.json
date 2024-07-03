@@ -6939,7 +6939,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Chainlinl CCIP"
+        "bridge": "Chainlink CCIP"
       }
     },
     {
