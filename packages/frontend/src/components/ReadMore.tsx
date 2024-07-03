@@ -35,9 +35,7 @@ export function CustomReadMore({
   return (
     <span data-role="read-more">
       {alwaysVisible}
-      <span style={{ display: 'none' }} data-role="read-more-indicator">
-        ...
-      </span>
+      <span data-role="read-more-indicator">...</span>
       <span style={{ display: 'none' }} data-role="read-more-collapsible">
         {collapsible}
       </span>{' '}
