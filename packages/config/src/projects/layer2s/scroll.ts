@@ -467,7 +467,7 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'Final circuit',
+              name: 'ZkEvmVerifierV1',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
@@ -502,7 +502,7 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'ZkEvmVerifierV1',
+              name: 'ZkEvmVerifierV1-1',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
