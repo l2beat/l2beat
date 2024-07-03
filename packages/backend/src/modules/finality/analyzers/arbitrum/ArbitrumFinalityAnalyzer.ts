@@ -35,9 +35,7 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
     this.logger.debug('Getting finality', { transaction })
     const submissionTimestamp = transaction.timestamp
     // get blobs relevant to the transaction
-    const { blobs } = await this.blobClient.getRelevantBlobs(
-      transaction.txHash,
-    )
+    const { blobs } = await this.blobClient.getRelevantBlobs(transaction.txHash)
 
     const segments = getSegments(blobs)
     const delays = calculateDelaysFromSegments(

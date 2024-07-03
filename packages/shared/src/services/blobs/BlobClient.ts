@@ -69,8 +69,8 @@ export class BlobClient {
     const parsed = BlockSidecarSchema.parse(response)
 
     return parsed.data.map((blob) => ({
-        kzg_commitment: blob.kzg_commitment,
-        data: blob.blob,
+      kzg_commitment: blob.kzg_commitment,
+      data: blob.blob,
     }))
   }
 
@@ -88,10 +88,10 @@ export class BlobClient {
     return json
   }
 
-  private async getTransaction(txHash: string): Promise<{ 
+  private async getTransaction(txHash: string): Promise<{
     blockNumber: number
     blobVersionedHashes: string[]
-    }> {
+  }> {
     const result = await this.callRpc('eth_getTransactionByHash', [txHash])
     const parsed = TxWithBlobsSchema.parse(result)
 
@@ -121,7 +121,10 @@ export class BlobClient {
     return parsed.data.parentBeaconBlockRoot
   }
 
-  private async callRpc(method: string, params?: (string | boolean)[]): Promise<unknown> {
+  private async callRpc(
+    method: string,
+    params?: (string | boolean)[],
+  ): Promise<unknown> {
     const id = Math.floor(Math.random() * 1000)
     const response = await this.httpClient.fetch(this.rpcUrl, {
       method: 'POST',
@@ -164,23 +167,23 @@ function kzgCommitmentToVersionedHash(commitment: string): string {
 }
 
 const Blob = z.object({
-    kzg_commitment: z.string(),
-    data: z.string(),
+  kzg_commitment: z.string(),
+  data: z.string(),
 })
 export type Blob = z.infer<typeof Blob>
 
 const BlockSidecarSchema = z.object({
-    data: z.array(
-        z.object({
-            kzg_commitment: z.string(),
-            blob: z.string(),
-        })
-    ),
+  data: z.array(
+    z.object({
+      kzg_commitment: z.string(),
+      blob: z.string(),
+    }),
+  ),
 })
 
 export interface BlobsInBlock {
-    blobs: Blob[]
-    blockNumber: number
+  blobs: Blob[]
+  blockNumber: number
 }
 
 const TxWithBlobsSchema = z.object({

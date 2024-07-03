@@ -1,15 +1,13 @@
 import zlib from 'zlib'
 import { assert } from '@l2beat/shared-pure'
 
+import { Blob } from '@l2beat/shared'
 import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { blobsToData } from './blobsToData'
 import { numberToByteArr } from './utils'
-import { Blob } from '@l2beat/shared'
 
-export function getSegments(
-  relevantBlobs: Blob[],
-): RlpSerializable[] {
+export function getSegments(relevantBlobs: Blob[]): RlpSerializable[] {
   const blobs = relevantBlobs.map(({ data }) => byteArrFromHexStr(data))
   const payload = blobsToData(blobs)
   const decompressed = decompressPayload(payload)
