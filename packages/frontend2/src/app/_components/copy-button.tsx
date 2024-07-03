@@ -1,12 +1,13 @@
 'use client'
 
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 
 import { useCopyToClipboard } from '~/hooks/use-copy-to-clipboard'
+import { useTimeout } from '~/hooks/use-timeout'
 import CopyIcon from '~/icons/copy.svg'
 import SatisfiedIcon from '~/icons/satisfied.svg'
 import { cn } from '~/utils/cn'
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/tooltip'
 
 interface Props {
   toCopy: string
@@ -17,12 +18,7 @@ export function CopyButton(props: Props) {
   const copy = useCopyToClipboard()
   const [copied, setCopied] = useState(false)
 
-  useEffect(() => {
-    if (copied) {
-      const timeout = setTimeout(() => setCopied(false), 1400)
-      return () => clearTimeout(timeout)
-    }
-  }, [copied])
+  useTimeout(() => setCopied(false), copied ? 1400 : null)
 
   function copyToClipboard() {
     copy(props.toCopy)
