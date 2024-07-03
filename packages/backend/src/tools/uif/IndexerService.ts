@@ -190,14 +190,10 @@ export class IndexerService {
       latestTimestamp: UnixTime
     }[] = []
 
-    const indexers = await this.indexerStateRepository.getAll()
+    const indexers =
+      await this.indexerStateRepository.getByIndexerIdLike('value_indexer::%')
 
     for (const indexer of indexers) {
-      // TODO: filter in sql
-      if (!indexer.indexerId.includes('value_indexer::')) {
-        continue
-      }
-
       const syncStatus = new UnixTime(indexer.safeHeight)
       const [project, source] = indexer.indexerId.split('::')[1].split('_')
       const valueId = `${project}_${source}`
@@ -247,14 +243,11 @@ export class IndexerService {
       targetTimestamp,
     )
 
-    const indexers = await this.indexerStateRepository.getAll()
+    const indexers = await this.indexerStateRepository.getByIndexerIdLike(
+      'circulating_supply_indexer::%',
+    )
 
     for (const indexer of indexers) {
-      // TODO: filter in sql
-      if (!indexer.indexerId.includes('circulating_supply_indexer::')) {
-        continue
-      }
-
       const syncStatus = new UnixTime(indexer.safeHeight)
       const coingeckoId = indexer.indexerId.split('::')[1]
       const c = coingecko.find(
