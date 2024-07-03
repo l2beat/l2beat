@@ -1,9 +1,10 @@
 import { Logger, RateLimiter } from '@l2beat/backend-tools'
-import { HttpClient } from '@l2beat/shared'
 import { utils } from 'ethers'
 import { z } from 'zod'
 
-type BlobClientOptions = {
+import { HttpClient } from '../HttpClient'
+
+interface BlobClientOptions {
   callsPerMinute: number | undefined
   timeout: number | undefined
 }
@@ -38,7 +39,7 @@ export class BlobClient {
       callsPerMinute: number | undefined
       timeout: number | undefined
     },
-  ) {
+  ): BlobClient {
     return new BlobClient(
       options.beaconApiUrl,
       options.rpcUrl,
@@ -48,42 +49,32 @@ export class BlobClient {
     )
   }
 
-  async getRelevantBlobs(txHash: string) {
+  async getRelevantBlobs(txHash: string): Promise<BlobsInBlock> {
     const tx = await this.getTransaction(txHash.toString())
 
     const blockSidecar = await this.getBlockSidecar(tx.blockNumber)
-
-    if (!tx.blobVersionedHashes) {
-      return { relevantBlobs: [], blockNumber: tx.blockNumber }
-    }
-
     const relevantBlobs = filterOutIrrelevant(
       blockSidecar,
       tx.blobVersionedHashes,
     )
 
-    return { relevantBlobs, blockNumber: tx.blockNumber }
+    return { blobs: relevantBlobs, blockNumber: tx.blockNumber }
   }
 
-  private async getBlockSidecar(blockNumber: number) {
+  private async getBlockSidecar(blockNumber: number): Promise<Blob[]> {
     const blockId = await this.getBeaconBlockId(blockNumber)
     const endpoint = `eth/v1/beacon/blob_sidecars/${blockId}`
 
     const response = await this.call(endpoint)
-    const parsed = BlockSidecarSchema.safeParse(response)
-    if (!parsed.success) {
-      this.logger.warn('Error downloading block sidecar', {
-        blockNumber,
-        error: parsed.error,
-        response,
-      })
-      throw parsed.error
-    }
+    const parsed = BlockSidecarSchema.parse(response)
 
-    return parsed.data.data
+    return parsed.data.map((blob) => ({
+      kzg_commitment: blob.kzg_commitment,
+      data: blob.blob,
+    }))
   }
 
-  private async call(endpoint: string) {
+  private async call(endpoint: string): Promise<unknown> {
     const url = `${this.beaconApiUrl}${endpoint}`
 
     const response = await this.httpClient.fetch(url, {
@@ -97,33 +88,29 @@ export class BlobClient {
     return json
   }
 
-  private async getTransaction(txHash: string) {
+  private async getTransaction(txHash: string): Promise<{
+    blockNumber: number
+    blobVersionedHashes: string[]
+  }> {
     const result = await this.callRpc('eth_getTransactionByHash', [txHash])
-    const parsed = TxWithBlobsSchema.safeParse(result)
-    if (!parsed.success) {
-      this.logger.warn('Error downloading transaction', {
-        txHash,
-        error: parsed.error,
-        result,
-      })
-      throw parsed.error
-    }
+    const parsed = TxWithBlobsSchema.parse(result)
 
     return {
-      blockNumber: Number(parsed.data.blockNumber),
-      blobVersionedHashes: parsed.data.blobVersionedHashes,
+      blockNumber: Number(parsed.blockNumber),
+      blobVersionedHashes: parsed.blobVersionedHashes,
     }
   }
 
-  private async getBlock(blockNumber: number) {
-    this.logger.debug('Getting block ' + blockNumber, { blockNumber })
+  private async getBlockParentBeaconRoot(blockNumber: number): Promise<string> {
+    this.logger.debug(`Getting block ${blockNumber}`, { blockNumber })
     const result = await this.callRpc('eth_getBlockByNumber', [
       '0x' + blockNumber.toString(16),
       false,
     ])
     const parsed = BlockWithParentBeaconBlockRootSchema.safeParse(result)
+
     if (!parsed.success) {
-      this.logger.warn('Error downloading block', {
+      this.logger.error('Error downloading block', {
         blockNumber,
         error: parsed.error,
         result,
@@ -131,10 +118,13 @@ export class BlobClient {
       throw parsed.error
     }
 
-    return parsed.data
+    return parsed.data.parentBeaconBlockRoot
   }
 
-  private async callRpc(method: string, params?: (string | boolean)[]) {
+  private async callRpc(
+    method: string,
+    params?: (string | boolean)[],
+  ): Promise<unknown> {
     const id = Math.floor(Math.random() * 1000)
     const response = await this.httpClient.fetch(this.rpcUrl, {
       method: 'POST',
@@ -148,44 +138,23 @@ export class BlobClient {
         params,
       }),
     })
-    const json = (await response.json()) as unknown
-    const parsed = RpcResultSchema.safeParse(json)
-    if (!parsed.success) {
-      this.logger.warn('Error calling RPC', {
-        method,
-        params,
-        error: parsed.error,
-        json,
-      })
-      throw parsed.error
-    }
 
-    return parsed.data.result
+    const json = (await response.json()) as unknown
+    const parsed = RpcResultSchema.parse(json)
+    return parsed.result
   }
 
   // this is very hacky, but it's the only way i know to get the beacon block id
   // if you know a better way, please fix it
-  private async getBeaconBlockId(blockNumber: number) {
-    const childBlock = await this.getBlock(blockNumber + 1)
-    const parsedBlock =
-      BlockWithParentBeaconBlockRootSchema.safeParse(childBlock)
-    if (!parsedBlock.success) {
-      this.logger.warn('Error getting beacon block id', {
-        blockNumber,
-        error: parsedBlock.error,
-        childBlock,
-      })
-      throw parsedBlock.error
-    }
-
-    return parsedBlock.data.parentBeaconBlockRoot
+  private async getBeaconBlockId(blockNumber: number): Promise<string> {
+    return await this.getBlockParentBeaconRoot(blockNumber + 1)
   }
 }
 
 function filterOutIrrelevant(
-  sidecarData: BlockSidecar['data'],
+  sidecarData: Blob[],
   relevantBlobVersionedHashes: string[],
-) {
+): Blob[] {
   return sidecarData.filter((blob) =>
     relevantBlobVersionedHashes.includes(
       kzgCommitmentToVersionedHash(blob.kzg_commitment),
@@ -193,9 +162,15 @@ function filterOutIrrelevant(
   )
 }
 
-function kzgCommitmentToVersionedHash(commitment: string) {
+function kzgCommitmentToVersionedHash(commitment: string): string {
   return '0x01' + utils.sha256(commitment).substring(4)
 }
+
+const Blob = z.object({
+  kzg_commitment: z.string(),
+  data: z.string(),
+})
+export type Blob = z.infer<typeof Blob>
 
 const BlockSidecarSchema = z.object({
   data: z.array(
@@ -205,11 +180,15 @@ const BlockSidecarSchema = z.object({
     }),
   ),
 })
-type BlockSidecar = z.infer<typeof BlockSidecarSchema>
+
+export interface BlobsInBlock {
+  blobs: Blob[]
+  blockNumber: number
+}
 
 const TxWithBlobsSchema = z.object({
   blockNumber: z.string(),
-  blobVersionedHashes: z.array(z.string()).optional(),
+  blobVersionedHashes: z.array(z.string()),
 })
 
 const BlockWithParentBeaconBlockRootSchema = z.object({
