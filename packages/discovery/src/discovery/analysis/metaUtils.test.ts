@@ -236,7 +236,7 @@ describe('metaUtils', () => {
         {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-          displayName: undefined,
+            displayName: undefined,
             descriptions: ['Important contract'],
             roles: new Set(['Challenger']),
             permissions: {
@@ -247,7 +247,7 @@ describe('metaUtils', () => {
             types: new Set(['CODE_CHANGE']),
           },
           '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
-          displayName: undefined,
+            displayName: undefined,
             categories: new Set(['Core', 'Gateways&Escrows']),
             descriptions: ['The resource config of the contract'],
             permissions: {
@@ -262,7 +262,7 @@ describe('metaUtils', () => {
         {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
-          displayName: undefined,
+            displayName: undefined,
             descriptions: ['Very important contract'],
             roles: undefined,
             permissions: {
@@ -273,7 +273,7 @@ describe('metaUtils', () => {
             types: new Set(['EXTERNAL', 'L2']),
           },
           '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
-          displayName: undefined,
+            displayName: undefined,
             categories: new Set(['Core', 'Gateways&Escrows']),
             descriptions: ['The resource config of the contract'],
             permissions: {

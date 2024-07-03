@@ -21,7 +21,7 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 // using `| undefined` for strong type safety,
 // making sure ever field of meta is always processed.
 export interface ContractMeta {
-  displayName: string | undefined,
+  displayName: string | undefined
   descriptions: string[] | undefined
   roles: Set<StackRole> | undefined
   permissions: { [permission: string]: Set<EthereumAddress> } | undefined
