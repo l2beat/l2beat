@@ -78,6 +78,16 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
       },
     )
 
+    it(IndexerConfigurationRepository.prototype.getByIds.name, async () => {
+      const records = CONFIGURATIONS
+
+      await repository.addOrUpdateMany(records)
+
+      const result = await repository.getByIds(['a'.repeat(12), 'b'.repeat(12)])
+
+      expect(result).toEqualUnsorted(records.slice(0, 2))
+    })
+
     it(
       IndexerConfigurationRepository.prototype.updateSavedConfigurations.name,
       async () => {

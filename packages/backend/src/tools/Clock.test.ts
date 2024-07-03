@@ -134,10 +134,10 @@ describe(Clock.name, () => {
 
       expect(timestamps).toEqual([
         minTimestamp, // 22.06
-        minTimestamp.add(1, 'days'), // 23.06
-        minTimestamp.add(2, 'days'), // 24.06
-        minTimestamp.add(3, 'days'), // 25.06
-        minTimestamp.add(4, 'days'), // 26.06
+        minTimestamp.add(1, 'days'),
+        minTimestamp.add(2, 'days'),
+        minTimestamp.add(3, 'days'),
+        minTimestamp.add(4, 'days'),
         minTimestamp.add(4, 'days').add(18, 'hours'),
         minTimestamp.add(5, 'days'),
         minTimestamp.add(5, 'days').add(6, 'hours'),

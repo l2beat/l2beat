@@ -40,6 +40,16 @@ export class IndexerConfigurationRepository {
     return rows.map(toRecord)
   }
 
+  async getByIds(ids: string[]) {
+    const rows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .select(selectIndexerConfiguration)
+      .where('id', 'in', ids)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   updateSavedConfigurations(
     indexerId: string,
     configurationsIds: string[],
