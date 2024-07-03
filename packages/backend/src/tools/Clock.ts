@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { getEarliestPossibleTimestamp } from '../modules/tvl/utils/getEarliestPossibleTimestamp'
+import { alignTimestamp } from '../modules/tvl/utils/alignTimestamp'
 
 export class Clock {
   constructor(
@@ -77,11 +77,7 @@ export class Clock {
     const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
     const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
 
-    return getEarliestPossibleTimestamp(
-      timestamp,
-      hourlyCutOff,
-      sixHourlyCutOff,
-    )
+    return alignTimestamp(timestamp, hourlyCutOff, sixHourlyCutOff)
   }
 
   getSixHourlyCutoff(

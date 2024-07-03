@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { Clock } from '../../../tools/Clock'
-import { getEarliestPossibleTimestamp } from './getEarliestPossibleTimestamp'
+import { alignTimestamp } from './alignTimestamp'
 export class SyncOptimizer {
   private readonly gracePeriodDays = 3
 
@@ -29,11 +29,7 @@ export class SyncOptimizer {
     const hourlyCutOff = this.hourlyCutOffWithGracePeriod
     const sixHourlyCutOff = this.sixHourlyCutOffWithGracePeriod
 
-    return getEarliestPossibleTimestamp(
-      timestamp,
-      hourlyCutOff,
-      sixHourlyCutOff,
-    )
+    return alignTimestamp(timestamp, hourlyCutOff, sixHourlyCutOff)
   }
 
   getTimestampsToSync(from: number, to: number, maxTimestamps: number) {

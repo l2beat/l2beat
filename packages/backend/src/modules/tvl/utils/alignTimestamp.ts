@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
-export function getEarliestPossibleTimestamp(
+export function alignTimestamp(
   timestamp: UnixTime,
   hourlyCutOff: UnixTime,
   sixHourlyCutOff: UnixTime,

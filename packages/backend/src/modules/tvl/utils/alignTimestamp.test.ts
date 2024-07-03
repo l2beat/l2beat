@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { getEarliestPossibleTimestamp } from './getEarliestPossibleTimestamp'
+import { alignTimestamp } from './alignTimestamp'
 
-describe(getEarliestPossibleTimestamp.name, () => {
+describe(alignTimestamp.name, () => {
   const cases = [
     {
       name: 'Greater than hourly cutoff',
@@ -46,7 +46,7 @@ describe(getEarliestPossibleTimestamp.name, () => {
 
   for (const c of cases) {
     it(c.name, () => {
-      const result = getEarliestPossibleTimestamp(
+      const result = alignTimestamp(
         c.timestamp,
         c.hourlyCutOff,
         c.sixHourlyCutoff,
