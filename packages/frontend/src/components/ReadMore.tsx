@@ -39,11 +39,18 @@ export function CustomReadMore({
   return (
     <span data-role="read-more">
       {alwaysVisible}
-      <span data-role="read-more-indicator">...</span>
-      <span style={{ display: 'none' }} data-role="read-more-collapsible">
+      <span className="lg:hidden group-data-[collapsed=false]:hidden">...</span>
+      <span
+        className="hidden lg:inline group-data-[collapsed=false]:inline"
+        data-role="read-more-collapsible"
+      >
         {collapsible}
-      </span>{' '}
-      <span data-role="read-more-toggle" className="underline">
+      </span>
+      <span
+        data-role="read-more-toggle"
+        className="lg:hidden group-data-[collapsed=false]:hidden underline"
+      >
+        {' '}
         Read more
       </span>
     </span>
