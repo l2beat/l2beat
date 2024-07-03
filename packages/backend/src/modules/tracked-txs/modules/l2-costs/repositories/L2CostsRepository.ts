@@ -1,4 +1,4 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { L2CostsRow } from 'knex/types/tables'
@@ -48,39 +48,19 @@ export class L2CostsRepository extends BaseRepository {
     return rows.length
   }
 
-  async getWithProjectIdByTimeRange(
+  async getByTimeRange(
     timeRange: [UnixTime, UnixTime],
-  ): Promise<L2CostsRecordWithProjectId[]> {
+  ): Promise<L2CostsRecord[]> {
     const [from, to] = timeRange
     const knex = await this.knex()
-    const l2costsRows = await knex('l2_costs')
-      .where('timestamp', '>=', from.toDate())
+    const rows = await knex('l2_costs')
+      .andWhere('timestamp', '>=', from.toDate())
       .andWhere('timestamp', '<=', to.toDate())
       .distinct('tx_hash')
       .select('*')
       .orderBy('timestamp', 'asc')
 
-    if (l2costsRows.length === 0) {
-      return []
-    }
-
-    const configRows = await knex('indexer_configurations').whereIn(
-      'id',
-      l2costsRows.map((r) => r.configuration_id),
-    )
-
-    const resultRows = l2costsRows.map((l2costsRow) => {
-      const config = configRows.find(
-        (configRow) => configRow.id === l2costsRow.configuration_id,
-      )
-      assert(config?.id, `Cannot found config with id: ${config?.id}`)
-      return {
-        ...l2costsRow,
-        project_id: JSON.parse(config.properties).projectId,
-      }
-    })
-
-    return resultRows.map(toRecordWithProjectId)
+    return rows.map(toRecord)
   }
 
   async deleteFromById(
@@ -149,14 +129,5 @@ function toRecord(row: L2CostsRow): L2CostsRecord {
     calldataLength: row.calldata_length,
     blobGasUsed: row.blob_gas_used,
     blobGasPrice: row.blob_gas_price ? BigInt(row.blob_gas_price) : null,
-  }
-}
-
-function toRecordWithProjectId(
-  row: L2CostsRow & { project_id: string },
-): L2CostsRecord & { projectId: ProjectId } {
-  return {
-    ...toRecord(row),
-    projectId: ProjectId(row.project_id),
   }
 }

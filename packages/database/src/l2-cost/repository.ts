@@ -1,7 +1,7 @@
 import { TrackedTxId } from '@l2beat/shared'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { L2Cost, toRecord, toRecordWithProjectId, toRow } from './entity'
+import { L2Cost, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
 export class L2CostRepository {
@@ -24,10 +24,10 @@ export class L2CostRepository {
     return rows.length
   }
 
-  async getWithProjectIdByTimeRange(timeRange: [UnixTime, UnixTime]) {
+  async getByTimeRange(timeRange: [UnixTime, UnixTime]) {
     const [from, to] = timeRange
 
-    const l2costsRows = await this.db
+    const rows = await this.db
       .selectFrom('public.l2_costs')
       .where((eb) =>
         eb.and([
@@ -43,32 +43,7 @@ export class L2CostRepository {
       .orderBy('timestamp', 'asc')
       .execute()
 
-    if (l2costsRows.length === 0) {
-      return []
-    }
-
-    const configRows = await this.db
-      .selectFrom('public.indexer_configurations')
-      .where(
-        'id',
-        'in',
-        l2costsRows.map((r) => r.configuration_id),
-      )
-      .select(['id', 'properties'])
-      .execute()
-
-    const resultRows = l2costsRows.map((l2costsRow) => {
-      const config = configRows.find(
-        (configRow) => configRow.id === l2costsRow.configuration_id,
-      )
-      assert(config?.id, `Cannot found config with id: ${config?.id}`)
-      return {
-        ...l2costsRow,
-        project_id: JSON.parse(config.properties).projectId,
-      }
-    })
-
-    return resultRows.map(toRecordWithProjectId)
+    return rows.map(toRecord)
   }
 
   async deleteFromById(
