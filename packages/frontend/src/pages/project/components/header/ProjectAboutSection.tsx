@@ -3,9 +3,9 @@ import React from 'react'
 import { type BadgeId } from '@l2beat/config'
 import { usePageBuildContext } from '../../../../build/pageBuildContext'
 import { OverflowWrapper } from '../../../../components/OverflowWrapper'
+import { ReadMore } from '../../../../components/ReadMore'
 import { cn } from '../../../../utils/cn'
 import { ProjectBadge } from './ProjectBadge'
-import { ReadMore } from '../../../../components/ReadMore'
 
 export function ProjectAboutSection({
   badges: projectBadges,

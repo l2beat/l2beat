@@ -39,16 +39,16 @@ export function CustomReadMore({
   return (
     <span data-role="read-more">
       {alwaysVisible}
-      <span className="lg:hidden group-data-[collapsed=false]:hidden">...</span>
+      <span className='group-data-[collapsed=false]:hidden lg:hidden'>...</span>
       <span
-        className="hidden lg:inline group-data-[collapsed=false]:inline"
+        className='hidden group-data-[collapsed=false]:inline lg:inline'
         data-role="read-more-collapsible"
       >
         {collapsible}
       </span>
       <span
         data-role="read-more-toggle"
-        className="lg:hidden group-data-[collapsed=false]:hidden underline"
+        className='underline group-data-[collapsed=false]:hidden lg:hidden'
       >
         {' '}
         Read more
