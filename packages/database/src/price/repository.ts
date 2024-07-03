@@ -43,21 +43,6 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
-  async getByConfigIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
-    const rows = await this.db
-      .selectFrom('public.prices')
-      .select(selectPrice)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configIds),
-          eb('timestamp', '=', timestamp.toDate()),
-        ]),
-      )
-      .execute()
-
-    return rows.map(toRecord)
-  }
-
   async addMany(records: Price[]) {
     if (records.length === 0) {
       return 0
