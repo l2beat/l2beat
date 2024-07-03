@@ -238,8 +238,8 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX tier, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-        When proposing a block, the sequencer specifies a designated prover for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the block, which will be returned once the block is proven.
-        The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
+        When proposing a block, the sequencer is assigned the designated prover role for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the block, which will be returned once the block is proven.
+        The SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
         After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. For the SGX Proof tier, the validity bond is currently set to ${SGXvalidityBond} TAIKO, while ${SGXcontestBond} TAIKO is required to contest the proof. 
         For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.

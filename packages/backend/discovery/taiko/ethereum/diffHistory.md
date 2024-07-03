@@ -8,13 +8,12 @@ Generated with discovered.json: 0x817d43f0597d982d2f27d68447fda92a716c83b5
 
 ## Description
 
-L1RollupAddressManager.sol: changed harcoded B_TIER_ROUTER address.
-Bridge.sol: small change in retryMessage logic.
-TaikoL1.sol: changes in block verification. assignedProver and hookCalls now DEPRECATED. assignedProver is now msg.sender of proposeBlock tx.
-
-New getters (getLastVerifiedBlock, getLastSyncedBlock), and decreased liveness bond to 125 TAIKO.
-
-
+- L1RollupAddressManager.sol: changed harcoded B_TIER_ROUTER address.
+- Bridge.sol: small change in retryMessage logic.
+- TaikoL1.sol: changes in block verification. assignedProver and hookCalls now DEPRECATED. assignedProver is now msg.sender of proposeBlock tx. New getters (getLastVerifiedBlock, getLastSyncedBlock), and decreased liveness bond to 125 TAIKO. Block proposers can now bribe the Ethereum block builder. Move some functions into libraries.
+- TaikoToken.sol: can now call batchTransfer for multiple recipients and amounts.
+- TierProviderV2.sol: validityBond and contestBond decreased (halved), cooldownWindow decreased (24h to 4h) for tiers TIER_SGX,TIER_GUARDIAN_MINORITY, for TIER_GUARDIAN increased from 1 to 24 hours. maxBlocksToVerifyPerProof now deprecated.
+- TierRouter.sol: change hardcoded tier provider address.
 
 ## Watched changes
 
