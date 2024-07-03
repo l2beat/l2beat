@@ -1,9 +1,19 @@
 import { Meta, StoryObj } from '@storybook/react'
+import React, { useEffect } from 'react'
 
+import { configureReadMore } from '../scripts/configureReadMore'
 import { ReadMore } from './ReadMore'
 
 const meta: Meta<typeof ReadMore> = {
   component: ReadMore,
+  decorators: [
+    (Story) => {
+      useEffect(() => {
+        configureReadMore()
+      }, [])
+      return <Story />
+    },
+  ],
 }
 export default meta
 type Story = StoryObj<typeof ReadMore>
