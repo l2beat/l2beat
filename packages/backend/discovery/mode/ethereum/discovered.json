@@ -2,7 +2,7 @@
   "name": "mode",
   "chain": "ethereum",
   "blockNumber": 20211472,
-  "configHash": "0x82e49ad7655eceadb4fa1648984dfee814b278017db73e5a036cd25df72d8e69",
+  "configHash": "0x48e9f513ac9811fafa00c4e4979c3ca9748e874a7b569196d8222969fe0bb3a3",
   "version": 8,
   "contracts": [
     {
