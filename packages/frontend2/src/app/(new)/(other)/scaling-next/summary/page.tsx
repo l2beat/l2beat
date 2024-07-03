@@ -13,6 +13,9 @@ export const metadata = getDefaultMetadata({
   openGraph: {
     url: '/scaling/summary',
   },
+  robots: {
+    index: false,
+  },
 })
 
 export default async function Page() {
