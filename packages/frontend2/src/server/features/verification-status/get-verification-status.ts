@@ -1,11 +1,11 @@
+import { readFileSync } from 'fs'
+import path from 'path'
 import { bridges, getChainNames, layer2s, layer3s } from '@l2beat/config'
 import { VerificationStatus } from '@l2beat/shared-pure'
-import { readFileSync } from 'fs'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import path from 'path'
 import { env } from '~/env'
 
 export function getVerificationStatus() {

@@ -1,18 +1,105 @@
-import { AssetId, ChainId, branded } from '@l2beat/shared-pure'
+import { layer2s } from '@l2beat/config'
+import { AssetId, ChainId, UnixTime, branded } from '@l2beat/shared-pure'
+import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
 
 export async function getTvl() {
-  // TEMPORARY UNTIL WE SWITCH TO QUERYING DB
-  const response = await fetch('https://api.l2beat.com/api/tvl', {
-    next: {
-      revalidate: 60 * 60,
-    },
-  })
-  const json: unknown = await response.json()
-  const data = TvlResponse.parse(json)
-  return data
+  // Once we will get data from DB we will not use mock as default
+  return getCachedMockTvlApiResponse()
 }
 
+const getCachedMockTvlApiResponse = cache(async () => {
+  const result: TvlResponse = {
+    bridges: getMockTvlApiCharts(),
+    layers2s: getMockTvlApiCharts(),
+    combined: getMockTvlApiCharts(),
+    projects: {},
+  }
+  for (const project of layer2s) {
+    result.projects[project.id.toString()] = {
+      charts: getMockTvlApiCharts(),
+      tokens: {
+        canonical: [
+          {
+            assetId: AssetId.ETH,
+            chain: 'ethereum',
+            chainId: ChainId.ETHEREUM,
+            source: 'canonical',
+            usdValue: 100,
+          },
+        ],
+        external: [
+          {
+            assetId: AssetId.ETH,
+            chain: 'ethereum',
+            chainId: ChainId.ETHEREUM,
+            source: 'external',
+            usdValue: 100,
+          },
+        ],
+        native: [
+          {
+            assetId: AssetId.ETH,
+            chain: 'ethereum',
+            chainId: ChainId.ETHEREUM,
+            source: 'native',
+            usdValue: 100,
+          },
+        ],
+      },
+    }
+  }
+
+  return result
+}, ['mockTvl'])
+
+const LABELS: TvlChart['types'] = [
+  'timestamp',
+  'totalUsd',
+  'canonicalUsd',
+  'externalUsd',
+  'nativeUsd',
+  'totalEth',
+  'canonicalEth',
+  'externalEth',
+  'nativeEth',
+]
+
+const MOCK_VALUES = [60, 30, 20, 10, 5, 3, 2, 1] as const
+
+function getMockTvlApiCharts(): TvlCharts {
+  let now = UnixTime.now().toStartOf('hour')
+  const charts: TvlCharts = {
+    hourly: {
+      types: LABELS,
+      data: [],
+    },
+    sixHourly: {
+      types: LABELS,
+      data: [],
+    },
+    daily: {
+      types: LABELS,
+      data: [],
+    },
+  }
+  for (let i = -7 * 24; i <= 0; i++) {
+    const timestamp = now.add(i, 'hours')
+    charts.hourly.data.push([timestamp.toNumber(), ...MOCK_VALUES])
+  }
+  for (let i = -30 * 4; i <= 0; i++) {
+    const timestamp = now.add(i * 6, 'hours')
+    charts.sixHourly.data.push([timestamp.toNumber(), ...MOCK_VALUES])
+  }
+  now = UnixTime.now().toStartOf('day')
+  for (let i = -180; i <= 0; i++) {
+    const timestamp = now.add(i, 'days')
+    charts.daily.data.push([timestamp.toNumber(), ...MOCK_VALUES])
+  }
+  return charts
+}
+
+type TvlChart = z.infer<typeof TvlChart>
 const TvlChart = z.object({
   types: z.tuple([
     z.literal('timestamp'),
