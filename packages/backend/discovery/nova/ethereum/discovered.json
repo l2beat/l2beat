@@ -253,7 +253,14 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"]
+        "admin": [
+          "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
+          "0x304807A7ed6c1296df2128E6ff3836e477329CD2",
+          "0xA59075221b50C598aED0Eae0bB9869639513af0D",
+          "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd",
+          "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
+          "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+        ]
       },
       "sinceTimestamp": 1656050353,
       "values": {
@@ -266,6 +273,9 @@
       "address": "0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"]
       },
       "sinceTimestamp": 1660078092,
       "values": {
@@ -331,6 +341,13 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
+          "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf",
+          "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
+        ]
+      },
       "sinceTimestamp": 1656312664,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
@@ -342,6 +359,9 @@
       "address": "0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"]
       },
       "sinceTimestamp": 1659949972,
       "values": {
@@ -373,6 +393,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"]
+      },
       "sinceTimestamp": 1659997241,
       "values": {
         "owner": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47"
@@ -400,6 +423,9 @@
       "address": "0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x3B0369CAD35d257793F51c28213a4Cf4001397AC"]
       },
       "sinceTimestamp": 1653129278,
       "values": {
@@ -608,6 +634,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"]
+      },
       "sinceTimestamp": 1656217585,
       "values": {
         "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
@@ -698,6 +727,9 @@
       "address": "0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"]
       },
       "sinceTimestamp": 1657735979,
       "values": {

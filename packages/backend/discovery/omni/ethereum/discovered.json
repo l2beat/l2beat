@@ -16,7 +16,11 @@
         "threshold": "8 of 16 (50%)"
       },
       "assignedPermissions": {
-        "admin": ["0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"]
+        "admin": [
+          "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
+        ]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],

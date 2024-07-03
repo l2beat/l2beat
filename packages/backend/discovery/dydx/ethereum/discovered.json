@@ -378,6 +378,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x639192D54431F8c816368D3FB4107Bc168d0E871"]
+      },
       "sinceTimestamp": 1627708831,
       "values": {
         "owner": "0x64c7d40c07EFAbec2AafdC243bF59eaF2195c6dc"

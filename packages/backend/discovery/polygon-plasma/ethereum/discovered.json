@@ -1,7 +1,7 @@
 {
   "name": "polygon-plasma",
   "chain": "ethereum",
-  "blockNumber": 20175250,
+  "blockNumber": 20225285,
   "configHash": "0x4d61691a42ad106313ec274f92462885c512ac1e1e893cc7f99ea5866028ea0f",
   "version": 8,
   "contracts": [
@@ -36,7 +36,7 @@
       "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
-        "counter": 2926907,
+        "counter": 2929674,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -168,13 +168,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 64442,
+        "currentEpoch": 64792,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3692894501219136824247951901",
+        "currentValidatorSetTotalStake": "3681557174373882225818227302",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 64442,
+        "epoch": 64792,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -187,7 +187,7 @@
         "minDeposit": "1000000000000000000",
         "minHeimdallFee": "1000000000000000000",
         "NFTContract": "0x47Cbe25BbDB40a774cC37E1dA92d10C2C7Ec897F",
-        "NFTCounter": 174,
+        "NFTCounter": 175,
         "owner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "ownerOf": [
           "0x21A5418009C5d70db1552e7206Ed884F9Adb903A",
@@ -204,14 +204,14 @@
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
-        "totalHeimdallFee": "10101939209428901681108",
+        "totalHeimdallFee": "10112939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "106141721357693703667700203",
-        "totalStaked": "10828057051541609241833718",
+        "totalRewardsLiquidated": "106918505340100470494134077",
+        "totalStaked": "10832360662068080577050667",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3692894501219136824247951901",
+          "amount": "3681557174373882225818227302",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -285,10 +285,10 @@
       "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 644420000,
+        "_nextHeaderBlock": 647920000,
         "CHAINID": 137,
-        "currentHeaderBlock": 644410000,
-        "getLastChildBlock": 58624933,
+        "currentHeaderBlock": 647910000,
+        "getLastChildBlock": 58903205,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -328,7 +328,7 @@
           [0, 0, 0, 0, "0x0000000000000000000000000000000000000000", 0]
         ],
         "isOwner": false,
-        "owner": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78",
+        "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71"
       },
       "derivedName": "StakingInfo"
@@ -346,6 +346,12 @@
       "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": [
+          "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908",
+          "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+        ]
       },
       "sinceTimestamp": 1630059303,
       "values": {
@@ -496,9 +502,6 @@
     },
     {
       "address": "0x8F9953FC47Bd5d5531FD2504612a5F4ecA16d7CF"
-    },
-    {
-      "address": "0xA2D9846c352cA61dCb20D6AaD40Cec1d1b228a78"
     },
     {
       "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"

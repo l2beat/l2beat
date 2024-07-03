@@ -21,6 +21,7 @@ type AddressToMetaMap = { [address: string]: ContractMeta }
 // using `| undefined` for strong type safety,
 // making sure ever field of meta is always processed.
 export interface ContractMeta {
+  displayName: string | undefined
   descriptions: string[] | undefined
   roles: Set<StackRole> | undefined
   permissions: { [permission: string]: Set<EthereumAddress> } | undefined
@@ -34,6 +35,7 @@ export function mergeContractMeta(
   b?: ContractMeta,
 ): ContractMeta | undefined {
   const result: ContractMeta = {
+    displayName: a?.displayName ?? b?.displayName,
     descriptions: concatArrays(a?.descriptions, b?.descriptions),
     roles: mergeSets(a?.roles, b?.roles),
     permissions: mergePermissions(a?.permissions, b?.permissions),
@@ -69,6 +71,7 @@ export function getSelfMeta(
     return undefined
   }
   return {
+    displayName: overrides.displayName ?? undefined,
     descriptions: [overrides.description],
     roles: undefined,
     permissions: undefined,
@@ -82,21 +85,23 @@ export function getTargetsMeta(
   self: EthereumAddress,
   upgradeability: UpgradeabilityParameters,
   handlerResults: HandlerResult[],
-  fields: { [address: string]: DiscoveryContractField },
+  fields?: { [address: string]: DiscoveryContractField },
 ): AddressToMetaMap | undefined {
   const result = getMetaFromUpgradeability(self, upgradeability)
 
-  for (const handlerResult of handlerResults) {
-    const field = fields?.[handlerResult.field]
-    const target = field?.target
-    if (target) {
-      for (const address of getAddresses(handlerResult.value)) {
-        const meta = mergeContractMeta(
-          result[address.toString()],
-          targetConfigToMeta(self, field, target),
-        )
-        if (meta) {
-          result[address.toString()] = meta
+  if (fields !== undefined) {
+    for (const handlerResult of handlerResults) {
+      const field = fields?.[handlerResult.field]
+      const target = field?.target
+      if (target) {
+        for (const address of getAddresses(handlerResult.value)) {
+          const meta = mergeContractMeta(
+            result[address.toString()],
+            targetConfigToMeta(self, field, target),
+          )
+          if (meta) {
+            result[address.toString()] = meta
+          }
         }
       }
     }
@@ -117,6 +122,7 @@ export function getMetaFromUpgradeability(
   if (upgradeabilityAdmin !== undefined) {
     const permission: Permission = 'admin'
     result[upgradeabilityAdmin.toString()] = {
+      displayName: undefined,
       categories: undefined,
       descriptions: undefined,
       roles: undefined,
@@ -139,6 +145,7 @@ export function targetConfigToMeta(
     return undefined
   }
   const result: ContractMeta = {
+    displayName: undefined,
     descriptions: target.description ? [target.description] : undefined,
     roles: toSet(target.role),
     permissions: getTargetPermissions(self, toSet(target.permission)),

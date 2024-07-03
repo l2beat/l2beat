@@ -1,7 +1,8 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -11,6 +12,16 @@ const upgradeability = {
   upgradableBy: ['ProxyAdmin'],
   upgradeDelay: 'No delay',
 }
+
+const superchainUpgradeability = {
+  upgradableBy: ['SuperchainProxyAdmin'],
+  upgradeDelay: 'No delay',
+}
+
+const livenessInterval = discovery.getContractValue<number>(
+  'LivenessModule',
+  'livenessInterval',
+)
 
 export const base: Layer2 = opStackL2({
   discovery,
@@ -69,6 +80,7 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
+  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
@@ -83,22 +95,55 @@ export const base: Layer2 = opStackL2({
       'This address is the owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds.',
     ),
     ...discovery.getMultisigPermission(
-      'GuardianMultisig',
-      "Address designated as a Guardian of the OptimismPortal, meaning it can halt withdrawals. It's the owner of SystemConfig, which allows to update the sequencer address. Moreover, it can challenge state roots without going through the fault proof process.",
-    ),
-    ...discovery.getMultisigPermission(
       'BaseMultisig',
-      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimisism Foundation multisig is also required.",
     ),
     ...discovery.getMultisigPermission(
-      'OptimismMultisig',
-      "Core multisig of the Optimism team, it can challenge state roots without going through the fault proof process. It's also a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds.",
+      'BaseMultisig2',
+      'Base Multisig being a member of a Challenger1of2 contract. It can challenge state roots without going through the fault proof process.',
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('SuperchainProxyAdmin'),
+      'Admin of the shared SuperchainConfig contract.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SuperchainProxyAdminOwner',
+      'Owner of the SuperchainProxyAdmin.',
+    ),
+    ...discovery.getMultisigPermission(
+      'GuardianMultisig',
+      'Address allowed to pause withdrawals in case of an emergency. It is controlled by the Security Council multisig, but a deputy module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_1',
+      'Member of the SuperChainProxyAdminOwner.',
+    ),
+    ...discovery.getMultisigPermission(
+      'SecurityCouncilMultisig',
+      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
+        livenessInterval,
+      )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
+      [
+        {
+          text: 'Security Council members - Optimism Collective forum',
+          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
+        },
+      ],
+    ),
+    ...discovery.getMultisigPermission(
+      'FoundationMultisig_2',
+      'Deputy to the GuardianMultisig. It can also challenge state roots without going through the fault proof process. Its signature is also required to upgrade the system.',
     ),
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('Challenger1of2', {
       description:
         "This contract is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process. It is functionally equivalent to a 1/2 multisig where neither party can remove the other's permission to execute a Challenger call. It is controlled by the GuardianMultisig and the OptimismMultisig.",
+    }),
+    discovery.getContractDetails('SuperchainConfig', {
+      description:
+        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
+      ...superchainUpgradeability,
     }),
   ],
   chainConfig: {

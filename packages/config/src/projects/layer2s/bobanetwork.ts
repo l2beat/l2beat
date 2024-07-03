@@ -14,6 +14,7 @@ export const bobanetwork: Layer2 = opStackL2({
     name: 'Boba Network',
     shortName: 'Boba',
     slug: 'bobanetwork',
+    architectureImage: 'bobanetwork',
     description:
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
     purposes: ['Universal'],

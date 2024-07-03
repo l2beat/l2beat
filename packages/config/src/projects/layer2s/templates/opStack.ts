@@ -37,6 +37,7 @@ import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
+import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING, StageConfig } from '../common'
 import { getStage } from '../common/stages/getStage'
@@ -83,7 +84,7 @@ export interface OpStackConfigCommon {
   knowledgeNuggets?: KnowledgeNugget[]
   roleOverrides?: Record<string, string>
   nonTemplatePermissions?: ScalingProjectPermission[]
-  nonTemplateNativePermissions?: ScalingProjectPermission[]
+  nonTemplateNativePermissions?: Record<string, ScalingProjectPermission[]>
   nonTemplateContracts?: ScalingProjectContract[]
   nonTemplateNativeContracts?: Record<string, ScalingProjectContract[]>
   nonTemplateEscrows?: ScalingProjectEscrow[]
@@ -98,6 +99,7 @@ export interface OpStackConfigCommon {
   usesBlobs?: boolean
   isUnderReview?: boolean
   stage?: StageConfig
+  badges?: BadgeId[]
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -324,6 +326,7 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
+    badges: templateVars.badges,
   }
 }
 
@@ -376,6 +379,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      architectureImage: 'bedrock-superchain',
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
@@ -728,6 +732,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     ...opStackCommon(templateVars),
     hostChain: templateVars.hostChain,
     display: {
+      architectureImage: 'bedrock-superchain',
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',

@@ -320,8 +320,15 @@
       },
       "assignedPermissions": {
         "admin": [
+          "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
+          "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
+          "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
+          "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
           "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-          "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+          "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
+          "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+          "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
+          "0xfC89B875970122E24C6C5ADd4Dea139443943ea7"
         ]
       },
       "sinceTimestamp": 1710580715,
@@ -675,7 +682,10 @@
       "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
     },
     {
-      "address": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
+      "address": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
+      "assignedPermissions": {
+        "admin": ["0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8"]
+      }
     },
     {
       "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"

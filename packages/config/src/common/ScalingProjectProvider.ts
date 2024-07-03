@@ -9,6 +9,8 @@ export type Layer2Provider =
   | 'Polygon'
   | 'OVM'
   | 'Starknet'
+  | 'Taiko'
+  | 'Cartesi Rollups'
 
 export type Layer3Provider =
   | ScalingProviderBase
