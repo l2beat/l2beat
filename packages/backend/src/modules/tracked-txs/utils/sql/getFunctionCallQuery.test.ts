@@ -76,7 +76,7 @@ describe(getFunctionCallQuery.name, () => {
       AND traces.call_type = 'call'
       AND traces.status = 1
       AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp < TIMESTAMP(?)
+      AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${range(2)
           .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
@@ -84,7 +84,7 @@ describe(getFunctionCallQuery.name, () => {
       )
     WHERE
       txs.block_timestamp >= TIMESTAMP(?)
-      AND txs.block_timestamp < TIMESTAMP(?)
+      AND txs.block_timestamp <= TIMESTAMP(?)
   `)
 
     expect(params).toEqual([

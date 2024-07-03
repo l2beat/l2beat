@@ -203,7 +203,7 @@ export const scroll: Layer2 = {
           selector: '0x31fa742d',
           functionSignature:
             'function finalizeBatchWithProof(bytes _batchHeader,bytes32 _prevStateRoot,bytes32 _postStateRoot,bytes32 _withdrawRoot,bytes _aggrProof)',
-          sinceTimestampInclusive: new UnixTime(1696782323),
+          sinceTimestamp: new UnixTime(1696782323),
         },
       },
       {
@@ -225,7 +225,7 @@ export const scroll: Layer2 = {
           selector: '0x00b0f4d7',
           functionSignature:
             'function finalizeBatchWithProof4844(bytes _batchHeader, bytes32 _prevStateRoot, bytes32 _postStateRoot, bytes32 _withdrawRoot, bytes _blobDataProof, bytes _aggrProof)',
-          sinceTimestampInclusive: new UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
+          sinceTimestamp: new UnixTime(1714362335), // first blob tx: https://etherscan.io/tx/0x0c2b6063a92ab124c45ef518c12fe181a5728bb3a40015270493bd430ed400ea
         },
       },
       {
@@ -241,7 +241,7 @@ export const scroll: Layer2 = {
           selector: '0x1325aca0',
           functionSignature:
             'function commitBatch(uint8 _version,bytes _parentBatchHeader,bytes[] _chunks,bytes _skippedL1MessageBitmap)',
-          sinceTimestampInclusive: new UnixTime(1696782323),
+          sinceTimestamp: new UnixTime(1696782323),
         },
       },
     ],

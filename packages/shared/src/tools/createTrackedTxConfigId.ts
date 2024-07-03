@@ -9,7 +9,7 @@ export function createTrackedTxId(
   const input = []
 
   input.push(trackedTxConfig.projectId)
-  input.push(trackedTxConfig.sinceTimestampInclusive)
+  input.push(trackedTxConfig.sinceTimestamp)
   input.push(trackedTxConfig.type)
   input.push(trackedTxConfig.subtype)
   // untilTimestamp is not used in the ID calculation.

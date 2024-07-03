@@ -37,7 +37,7 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_1,
         to: ADDRESS_2,
         subtype: 'batchSubmissions',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
       }),
       mock({
         id: '0x2',
@@ -45,7 +45,7 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_1,
         to: ADDRESS_2,
         subtype: 'stateUpdates',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
       }),
       mock({
         id: '0x3',
@@ -53,7 +53,7 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_3,
         to: ADDRESS_4,
         subtype: 'stateUpdates',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
       }),
       mock({
         id: '0x4',
@@ -61,7 +61,7 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_5,
         to: ADDRESS_6,
         subtype: 'proofSubmissions',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
       }),
     ]
 
@@ -201,7 +201,7 @@ describe(transformTransfersQueryResult.name, () => {
         from: ADDRESS_1,
         to: ADDRESS_2,
         subtype: 'batchSubmissions',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
       }),
     ]
 
@@ -233,14 +233,14 @@ function mock({
   subtype,
   from,
   to,
-  sinceTimestampInclusive,
+  sinceTimestamp,
 }: {
   id: TrackedTxId
   projectId: ProjectId
   subtype: TrackedTxsConfigSubtype
   from: EthereumAddress
   to: EthereumAddress
-  sinceTimestampInclusive: UnixTime
+  sinceTimestamp: UnixTime
 }): UpdateConfiguration<
   TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
 > {
@@ -254,7 +254,7 @@ function mock({
       projectId,
       type: 'liveness',
       subtype,
-      sinceTimestampInclusive,
+      sinceTimestamp,
       params: {
         formula: 'transfer',
         from,

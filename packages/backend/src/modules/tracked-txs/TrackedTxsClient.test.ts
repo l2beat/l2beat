@@ -91,8 +91,8 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestampInclusive: FROM,
-      untilTimestampExclusive: FROM.add(2, 'days'),
+      sinceTimestamp: FROM,
+      untilTimestamp: FROM.add(2, 'days'),
       params: {
         formula: 'transfer',
         from: ADDRESS_1,
@@ -112,7 +112,7 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestampInclusive: FROM,
+      sinceTimestamp: FROM,
       params: {
         formula: 'functionCall',
         address: ADDRESS_3,
@@ -132,7 +132,7 @@ const CONFIGURATIONS = [
       projectId: ProjectId('project1'),
       type: 'l2costs',
       subtype: 'batchSubmissions',
-      sinceTimestampInclusive: FROM,
+      sinceTimestamp: FROM,
       params: {
         formula: 'sharpSubmission',
         address: EthereumAddress.random(),

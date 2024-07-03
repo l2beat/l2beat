@@ -58,7 +58,7 @@ describe(getTransferQuery.name, () => {
       AND txs.hash = traces.transaction_hash
       AND traces.call_type = 'call'
       AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp < TIMESTAMP(?)
+      AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${range(2)
           .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
@@ -66,7 +66,7 @@ describe(getTransferQuery.name, () => {
       )
     WHERE
       txs.block_timestamp >= TIMESTAMP(?)
-      AND txs.block_timestamp < TIMESTAMP(?)
+      AND txs.block_timestamp <= TIMESTAMP(?)
   `)
     expect(query.params).toEqual([
       new Date('2021-01-01Z').toISOString(),

@@ -12,12 +12,12 @@ describe(createTrackedTxId.name, () => {
       shouldUpdateHash: true,
     },
     {
-      key: 'sinceTimestampInclusive',
+      key: 'sinceTimestamp',
       newValue: new UnixTime(1),
       shouldUpdateHash: true,
     },
     {
-      key: 'untilTimestampExclusive',
+      key: 'untilTimestamp',
       newValue: new UnixTime(1),
       shouldUpdateHash: false,
     },
@@ -62,8 +62,8 @@ function mock(
 ): Omit<TrackedTxConfigEntry, 'id'> {
   return {
     projectId: ProjectId('project-id'),
-    sinceTimestampInclusive: UnixTime.ZERO,
-    untilTimestampExclusive: UnixTime.ZERO,
+    sinceTimestamp: UnixTime.ZERO,
+    untilTimestamp: UnixTime.ZERO,
     subtype: 'stateUpdates',
     type: 'l2costs',
     params: {

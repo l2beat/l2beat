@@ -50,7 +50,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: ADDRESS_1,
         selector: SELECTOR_1,
         formula: 'functionCall',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'batchSubmissions',
       }),
       mockFunctionCall({
@@ -59,7 +59,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: ADDRESS_2,
         selector: SELECTOR_2,
         formula: 'functionCall',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'stateUpdates',
       }),
     ]
@@ -71,7 +71,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
         formula: 'sharpSubmission',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'proofSubmissions',
         programHashes: [paradexProgramHash],
       }),
@@ -191,7 +191,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: ADDRESS_1,
         selector: SELECTOR_1,
         formula: 'functionCall',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'batchSubmissions',
       }),
     ]
@@ -225,7 +225,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: EthereumAddress.random(),
         selector: '0x9b3b76cc',
         formula: 'sharpSubmission',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'proofSubmissions',
         programHashes: [paradexProgramHash],
       }),
@@ -235,7 +235,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
         address: EthereumAddress.random(),
         selector: 'random-selector-2',
         formula: 'sharpSubmission',
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
+        sinceTimestamp: SINCE_TIMESTAMP,
         subtype: 'proofSubmissions',
         programHashes: [paradexProgramHash + 'wrong-rest-part-of-hash'],
       }),
@@ -294,7 +294,7 @@ function mockFunctionCall({
   subtype,
   address,
   selector,
-  sinceTimestampInclusive,
+  sinceTimestamp,
   formula,
 }: {
   id: TrackedTxId
@@ -302,7 +302,7 @@ function mockFunctionCall({
   subtype: TrackedTxsConfigSubtype
   address: EthereumAddress
   selector: string
-  sinceTimestampInclusive: UnixTime
+  sinceTimestamp: UnixTime
   formula: TrackedTxFunctionCallConfig['formula']
 }): UpdateConfiguration<
   TrackedTxConfigEntry & {
@@ -319,7 +319,7 @@ function mockFunctionCall({
       projectId,
       type: 'liveness',
       subtype,
-      sinceTimestampInclusive,
+      sinceTimestamp,
       params: {
         formula,
         address,
@@ -335,7 +335,7 @@ function mockSharpSubmission({
   subtype,
   address,
   selector,
-  sinceTimestampInclusive,
+  sinceTimestamp,
   formula,
   programHashes,
 }: {
@@ -344,7 +344,7 @@ function mockSharpSubmission({
   subtype: TrackedTxsConfigSubtype
   address: EthereumAddress
   selector: string
-  sinceTimestampInclusive: UnixTime
+  sinceTimestamp: UnixTime
   formula: TrackedTxSharpSubmissionConfig['formula']
   programHashes: string[]
 }): UpdateConfiguration<
@@ -362,7 +362,7 @@ function mockSharpSubmission({
       projectId,
       type: 'liveness',
       subtype,
-      sinceTimestampInclusive,
+      sinceTimestamp,
       params: {
         formula,
         address,

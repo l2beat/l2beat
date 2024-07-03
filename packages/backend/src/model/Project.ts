@@ -98,8 +98,8 @@ function toBackendTrackedTxsConfig(
     config.uses.map((use) => {
       const base = {
         projectId,
-        sinceTimestampInclusive: config.query.sinceTimestampInclusive,
-        untilTimestampExclusive: config.query.untilTimestampExclusive,
+        sinceTimestamp: config.query.sinceTimestamp,
+        untilTimestamp: config.query.untilTimestamp,
         type: use.type,
         subtype: use.subtype,
         costMultiplier:

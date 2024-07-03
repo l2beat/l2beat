@@ -281,7 +281,7 @@ function mockProjectConfig(
             type: 'liveness',
             subtype: 'batchSubmissions',
             id: createTrackedTxId.random(),
-            untilTimestampExclusive: UnixTime.now(),
+            untilTimestamp: UnixTime.now(),
             projectId,
           }),
         ],

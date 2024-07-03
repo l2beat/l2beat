@@ -110,7 +110,7 @@ export const zksynclite: Layer2 = {
           selector: '0x45269298',
           functionSignature:
             'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,(bytes,uint32)[],uint32,uint32)[])',
-          sinceTimestampInclusive: new UnixTime(1612885558),
+          sinceTimestamp: new UnixTime(1612885558),
         },
       },
       {
@@ -126,7 +126,7 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
-          sinceTimestampInclusive: new UnixTime(1592218707),
+          sinceTimestamp: new UnixTime(1592218707),
         },
       },
       {
@@ -142,7 +142,7 @@ export const zksynclite: Layer2 = {
           selector: '0xb0705b42',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
-          sinceTimestampInclusive: new UnixTime(1592218707),
+          sinceTimestamp: new UnixTime(1592218707),
         },
       },
     ],

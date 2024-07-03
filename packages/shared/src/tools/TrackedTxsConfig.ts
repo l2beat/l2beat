@@ -18,8 +18,8 @@ export type TrackedTxConfigEntry =
 interface TrackedTxConfigBase {
   id: TrackedTxId
   projectId: ProjectId
-  sinceTimestampInclusive: UnixTime
-  untilTimestampExclusive?: UnixTime
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
   params:
     | TrackedTxFunctionCallConfig
     | TrackedTxTransferConfig

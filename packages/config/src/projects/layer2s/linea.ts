@@ -149,7 +149,7 @@ export const linea: Layer2 = {
           selector: '0x7a776315',
           functionSignature:
             'function submitData((bytes32,bytes32,bytes32,uint256,uint256,bytes32,bytes))',
-          sinceTimestampInclusive: new UnixTime(1707831168),
+          sinceTimestamp: new UnixTime(1707831168),
         },
       },
       {
@@ -167,8 +167,8 @@ export const linea: Layer2 = {
             'function submitBlobData(tuple(bytes32,bytes32,bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)',
           // first tx with blobs
           // https://etherscan.io/tx/0x4d03b7e1950256de257ff95b52fac047faeb11600c5975abe7e0ccbc7be7ecfb
-          sinceTimestampInclusive: new UnixTime(1711449407),
-          untilTimestampExclusive: new UnixTime(1717588271),
+          sinceTimestamp: new UnixTime(1711449407),
+          untilTimestamp: new UnixTime(1717588271),
         },
       },
       {
@@ -186,7 +186,7 @@ export const linea: Layer2 = {
             'function submitBlobs(((bytes32,uint256,uint256,bytes32),uint256,bytes,bytes)[], bytes32, bytes32)',
           // first tx with blobs
           // https://etherscan.io/tx/0x88bca59bc9581b15b39379e5c68a6d0e4847eae04185c838f1c48c9b67abf87a
-          sinceTimestampInclusive: new UnixTime(1717588271),
+          sinceTimestamp: new UnixTime(1717588271),
         },
       },
       {
@@ -208,8 +208,8 @@ export const linea: Layer2 = {
           selector: '0x4165d6dd',
           functionSignature:
             'function finalizeBlocks((bytes32, uint32, bytes[], bytes32[], bytes, uint16[])[] _blocksData,bytes _proof,uint256 _proofType,bytes32 _parentStateRootHash)',
-          sinceTimestampInclusive: new UnixTime(1689159923),
-          untilTimestampExclusive: new UnixTime(1707831168),
+          sinceTimestamp: new UnixTime(1689159923),
+          untilTimestamp: new UnixTime(1707831168),
         },
       },
       {
@@ -231,7 +231,7 @@ export const linea: Layer2 = {
           selector: '0xd630280f',
           functionSignature:
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
-          sinceTimestampInclusive: new UnixTime(1707831168),
+          sinceTimestamp: new UnixTime(1707831168),
         },
       },
     ],
