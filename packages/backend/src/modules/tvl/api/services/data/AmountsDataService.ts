@@ -3,13 +3,8 @@ import { Logger } from '@l2beat/backend-tools'
 import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
-import { IndexerConfigurationRecord } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import {
-  AmountRecord,
-  AmountRepository,
-} from '../../../repositories/AmountRepository'
-import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../utils/getLaggingAndExcluded'
+import { AmountRepository } from '../../../repositories/AmountRepository'
 
 interface Dependencies {
   readonly amountRepository: AmountRepository
@@ -121,99 +116,5 @@ export class AmountsDataService {
     )
 
     return result
-  }
-
-  private getLagging(
-    configurations: IndexerConfigurationRecord[],
-    amountsByTimestamp: Dictionary<AmountRecord[]>,
-    targetTimestamp: UnixTime,
-  ) {
-    const lagging: {
-      id: string
-      latestTimestamp: UnixTime
-      latestValue: bigint
-    }[] = []
-
-    for (const config of configurations) {
-      const syncStatus = config.currentHeight
-        ? new UnixTime(config.currentHeight)
-        : undefined
-
-      // newly added configuration
-      if (syncStatus === undefined) {
-        continue
-      }
-
-      // synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
-      // phased out configuration - but we still want to display data
-      if (config.maxHeight && config.maxHeight === config.currentHeight) {
-        continue
-      }
-
-      if (
-        syncStatus.gte(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        const latest =
-          amountsByTimestamp[syncStatus.toString()]?.find(
-            (a) => a.configId === config.id,
-          )?.amount ?? 0n
-
-        lagging.push({
-          id: config.id,
-          latestTimestamp: syncStatus,
-          latestValue: latest,
-        })
-        continue
-      }
-    }
-
-    return lagging
-  }
-
-  private getExcluded(
-    configurations: IndexerConfigurationRecord[],
-    targetTimestamp: UnixTime,
-  ) {
-    const excluded = new Set<string>()
-
-    for (const config of configurations) {
-      const syncStatus = config.currentHeight
-        ? new UnixTime(config.currentHeight)
-        : undefined
-
-      // newly added configuration
-      if (syncStatus === undefined) {
-        excluded.add(config.id)
-        continue
-      }
-
-      // synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
-      // phased out configuration - but we still want to display data
-      if (config.maxHeight && config.maxHeight === config.currentHeight) {
-        continue
-      }
-
-      // out of sync configuration
-      if (
-        syncStatus.lt(
-          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-        )
-      ) {
-        excluded.add(config.id)
-        continue
-      }
-    }
-
-    return excluded
   }
 }

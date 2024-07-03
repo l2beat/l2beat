@@ -5,7 +5,6 @@ import { Dictionary } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { PriceRepository } from '../../../repositories/PriceRepository'
-import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../utils/getLaggingAndExcluded'
 
 interface Dependencies {
   readonly priceRepository: PriceRepository
@@ -24,10 +23,21 @@ export class PricesDataService {
     configuration: PriceConfigEntry & { configId: string },
     targetTimestamp: UnixTime,
   ) {
-    const priceRecords = await this.$.priceRepository.getByConfigIdsInRange(
-      [configuration.configId],
-      configuration.sinceTimestamp,
-      targetTimestamp,
+    const [priceRecords, status] = await Promise.all([
+      this.$.priceRepository.getByConfigIdsInRange(
+        [configuration.configId],
+        configuration.sinceTimestamp,
+        targetTimestamp,
+      ),
+      this.$.indexerService.getConfigurationsStatus(
+        [configuration],
+        targetTimestamp,
+      ),
+    ])
+
+    assert(
+      !status.excluded.has(configuration.configId),
+      `This code should not run when price still syncing id ${configuration.configId}`,
     )
 
     const pricesByTimestamp: Dictionary<number> = {}
@@ -45,20 +55,13 @@ export class PricesDataService {
       pricesByTimestamp[price.timestamp.toString()] = price.priceUsd
     }
 
-    if (pricesByTimestamp[targetTimestamp.toString()] !== undefined) {
+    if (status.lagging.length === 0) {
       return {
         prices: pricesByTimestamp,
-        laggingFrom: undefined,
       }
     }
 
     const latest = priceRecords[priceRecords.length - 1]
-    assert(
-      latest.timestamp.gte(
-        targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
-      ),
-      'This code should not run when price still syncing',
-    )
 
     const missingTimestamps = this.$.clock.getAllTimestampsForApi(
       targetTimestamp,

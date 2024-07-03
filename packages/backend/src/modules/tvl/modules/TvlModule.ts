@@ -113,6 +113,7 @@ export function createTvlModule(
 
   const valuesDataService = new ValuesDataService({
     valueRepository: peripherals.getRepository(ValueRepository),
+    indexerService,
     clock,
     logger,
   })

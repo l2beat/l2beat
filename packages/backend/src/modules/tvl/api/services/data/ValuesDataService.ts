@@ -3,16 +3,16 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
   ValueRecord,
   ValueRepository,
 } from '../../../repositories/ValueRepository'
-import { getConfiguredValuesForTimestamp } from '../../utils/getConfiguredValuesForTimestamp'
-import { getLaggingAndExcluded } from '../../utils/getLaggingAndExcluded'
 import { ApiProject } from '../../utils/types'
 
 interface Dependencies {
   readonly valueRepository: ValueRepository
+  readonly indexerService: IndexerService
   readonly clock: Clock
   logger: Logger
 }
@@ -26,66 +26,66 @@ export class ValuesDataService {
     projects: ApiProject[],
     targetTimestamp: UnixTime,
   ) {
-    const values = await this.$.valueRepository.getForProjects(
-      projects.map((p) => p.id),
-    )
-    const valuesByProject = groupBy(values, 'projectId')
+    const [valueRecords, status] = await Promise.all([
+      this.$.valueRepository.getForProjects(projects.map((p) => p.id)),
+      this.$.indexerService.getValuesStatus(targetTimestamp),
+    ])
 
-    const result = {
-      valuesByTimestampForProject: {} as Dictionary<Dictionary<ValueRecord[]>>,
-      lagging: new Map<
-        string,
-        { latestTimestamp: UnixTime; latestValue: ValueRecord }
-      >(),
-      syncing: new Set<string>(),
-    }
+    const valuesByProject = groupBy(valueRecords, 'projectId')
 
+    const result: Dictionary<Dictionary<ValueRecord[]>> = {}
     for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
       const project = projects.find((p) => p.id === projectId)
       assert(project, `Project ${projectId.toString()} not found`)
 
-      const { lagging, excluded } = getLaggingAndExcluded<ValueRecord>(
-        Array.from(project.sources.entries()).map(([source, v]) => ({
-          id: source,
-          minTimestamp: v.minTimestamp,
-        })),
-        valuesByTimestamp,
-        (value: ValueRecord) => value.dataSource,
-        targetTimestamp,
-      )
-
-      lagging.forEach((l) =>
-        result.lagging.set(`${project.id}-${l.id}`, { ...l }),
-      )
-      excluded.forEach((s) => result.syncing.add(s))
-
-      const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
+      const valuesByTimestamp = groupBy(projectValues, 'timestamp')
 
       const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
         minTimestampOverride: project.minTimestamp,
       })
+      const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
       for (const timestamp of timestamps) {
-        const configuredValues = getConfiguredValuesForTimestamp(
-          valuesByTimestamp[timestamp.toString()],
-          project,
-          new UnixTime(+timestamp),
-          result.lagging,
-          result.syncing,
+        const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(
+          (v) => {
+            if (status.excluded.has(`${v.projectId}_${v.dataSource}`)) {
+              return false
+            }
+            const projectSource = project.sources.get(v.dataSource)
+            if (!projectSource) return false
+
+            return timestamp.gte(projectSource.minTimestamp)
+          },
         )
 
-        valuesByTimestampForProject[timestamp.toString()] = configuredValues
+        const interpolatedValues = status.lagging
+          .filter((l) => l.id.split('_')[0] === projectId)
+          .filter((l) => timestamp.gt(l.latestTimestamp))
+          .map((l) => {
+            const record = valuesByTimestamp[
+              l.latestTimestamp.toString()
+            ]?.find((v) => l.id === `${v.projectId}_${v.dataSource}`)
+            assert(
+              record,
+              `Value should be defined for ${
+                l.id
+              } at ${l.latestTimestamp.toString()} in project ${projectId}`,
+            )
+            return record
+          })
+
+        valuesByTimestampForProject[timestamp.toString()] = [
+          ...values,
+          ...interpolatedValues,
+        ]
       }
 
-      assert(
-        valuesByTimestamp[targetTimestamp.toString()],
-        `Missing value for last hour for ${projectId}, timestamp: ${targetTimestamp.toString()}`,
-      )
-
-      result.valuesByTimestampForProject[projectId] =
-        valuesByTimestampForProject
+      result[projectId] = valuesByTimestampForProject
     }
 
-    return result
+    return {
+      valuesByTimestampForProjects: result,
+      lagging: new Map(status.lagging.map((l) => [l.id, l.latestTimestamp])),
+      excluded: new Set<string>(status.excluded),
+    }
   }
 }

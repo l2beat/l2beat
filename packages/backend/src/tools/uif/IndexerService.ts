@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../modules/tvl/api/utils/getLaggingAndExcluded'
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
@@ -10,6 +9,8 @@ import {
   IndexerStateRepository,
 } from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'
+
+const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
 export class IndexerService {
   constructor(
@@ -169,6 +170,61 @@ export class IndexerService {
       ) {
         lagging.push({
           id: config.id,
+          latestTimestamp: syncStatus,
+        })
+        continue
+      }
+    }
+
+    return {
+      excluded,
+      lagging,
+    }
+  }
+
+  async getValuesStatus(targetTimestamp: UnixTime) {
+    const excluded = new Set<string>()
+
+    const lagging: {
+      id: string
+      latestTimestamp: UnixTime
+    }[] = []
+
+    const indexers = await this.indexerStateRepository.getAll()
+
+    for (const indexer of indexers) {
+      // TODO: filter in sql
+      if (!indexer.indexerId.includes('value_indexer::')) {
+        continue
+      }
+
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      const [project, source] = indexer.indexerId.split('::')[1].split('_')
+      const valueId = `${project}_${source}`
+
+      // synced configuration
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
+
+      // out of sync configuration
+      if (
+        syncStatus.lt(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        excluded.add(valueId)
+        continue
+      }
+
+      // lagging configuration
+      if (
+        syncStatus.gte(
+          targetTimestamp.add(-CONSIDER_EXCLUDED_AFTER_DAYS, 'days'),
+        )
+      ) {
+        lagging.push({
+          id: valueId,
           latestTimestamp: syncStatus,
         })
         continue
