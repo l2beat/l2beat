@@ -1,21 +1,25 @@
 {
   "name": "zklinknova",
   "chain": "arbitrum",
-  "blockNumber": 225587668,
-  "configHash": "0xa5ef25d82f5713543bf6ec4f8ef70fa1e33426429c598bf390c9850f5c3a0d62",
-  "version": 7,
+  "blockNumber": 228335907,
+  "configHash": "0x4f7999d7d0a44f9732bcf904508877ac93969fa8e5f0e1b13c48db04a42971d9",
+  "version": 8,
   "contracts": [
     {
-      "name": "ProxyAdmin",
+      "name": "ArbitrumProxyAdmin",
       "address": "0x48698A17D193bFc882395AC06a1DEdbb222F2917",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"]
       },
       "sinceTimestamp": 1709296973,
       "values": {
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
       "name": "ArbitrumL2Gateway",
@@ -37,16 +41,22 @@
       "derivedName": "ArbitrumL2Gateway"
     },
     {
-      "name": "GnosisSafeL2",
+      "name": "ArbitrumOwner",
       "address": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
         "modules": [],
         "threshold": "6 of 8 (75%)"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+          "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+        ]
+      },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1692604751,
       "values": {
@@ -65,7 +75,8 @@
         "getThreshold": 6,
         "nonce": 24,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "L1ERC20Bridge",
@@ -110,15 +121,15 @@
         "getGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
         "getGovernor": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 14033,
-        "getTotalPriorityTxs": 132319,
+        "getTotalBatchesExecuted": 15163,
+        "getTotalPriorityTxs": 132464,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "paused": false,
-        "totalBatchesExecuted": 14033,
-        "totalPriorityTxs": 132319,
-        "totalSyncedPriorityTxs": 132318,
-        "totalValidatorForwardFee": "71384304591358809347",
+        "totalBatchesExecuted": 15163,
+        "totalPriorityTxs": 132464,
+        "totalSyncedPriorityTxs": 132462,
+        "totalValidatorForwardFee": "71459346886245223986",
         "totalValidatorForwardFeeWithdrawn": "40000000000000000000",
         "txGasPrice": 40000000000
       },
@@ -126,16 +137,36 @@
     }
   ],
   "eoas": [
-    "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-    "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-    "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4",
-    "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-    "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01",
-    "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
-    "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
-    "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
-    "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-    "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    },
+    {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    },
+    {
+      "address": "0x6B7551DBbaE2fb728cF851baee5c3A52DF6F60a4"
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    },
+    {
+      "address": "0x7804969714BF5Ff6356E25acF2Bcb657368c8A01"
+    },
+    {
+      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+    },
+    {
+      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    },
+    {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
   ],
   "abis": {
     "0x1202e0557A23531D09015C802e993d6423685FfB": [

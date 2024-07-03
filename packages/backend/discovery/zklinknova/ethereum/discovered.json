@@ -1,9 +1,9 @@
 {
   "name": "zklinknova",
   "chain": "ethereum",
-  "blockNumber": 20167543,
+  "blockNumber": 20226153,
   "configHash": "0x1b0e8f32221c336ace7815a63a025db660f6da77bf101a9a6de8367644b93af1",
-  "version": 7,
+  "version": 8,
   "contracts": [
     {
       "name": "Arbitrator",
@@ -34,6 +34,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"]
+      },
       "sinceTimestamp": 1709295323,
       "values": {
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
@@ -43,6 +46,7 @@
     {
       "name": "zkLink",
       "address": "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
+      "template": "zklinknova/secondaryZkLink",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7",
@@ -65,15 +69,15 @@
         "getGateway": "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
         "getGovernor": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 13833,
-        "getTotalPriorityTxs": 25863,
+        "getTotalBatchesExecuted": 15163,
+        "getTotalPriorityTxs": 25912,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "paused": false,
-        "totalBatchesExecuted": 13833,
-        "totalPriorityTxs": 25863,
-        "totalSyncedPriorityTxs": 25855,
-        "totalValidatorForwardFee": "14259137820546232665",
+        "totalBatchesExecuted": 15163,
+        "totalPriorityTxs": 25912,
+        "totalSyncedPriorityTxs": 25912,
+        "totalValidatorForwardFee": "14284284942486183662",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 40000000000
       },
@@ -136,13 +140,21 @@
       "name": "GnosisSafe",
       "address": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "6 of 8 (75%)"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+          "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
+          "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
+          "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+        ]
+      },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1692603863,
       "values": {
@@ -165,16 +177,36 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-    "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-    "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-    "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
-    "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
-    "0xC75EFCffEE930706daec5CaCA012551f6a1845D7",
-    "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
-    "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-    "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    },
+    {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    },
+    {
+      "address": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
+    },
+    {
+      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+    },
+    {
+      "address": "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    },
+    {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
   ],
   "abis": {
     "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002": [

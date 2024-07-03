@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantapacific",
-  "blockNumber": 2533926,
+  "blockNumber": 2578624,
   "configHash": "0x454c2823fa29e2c1d471ca60fffcf8c069dddab07f90a9e35a74cc754653e583",
   "version": 8,
   "contracts": [
@@ -10,6 +10,9 @@
       "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x44a65dc12865A1e5249b45b4868f32b0E37168FF"]
       },
       "values": {
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
@@ -43,6 +46,12 @@
         "modules": [],
         "threshold": "6 of 8 (75%)"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+        ]
+      },
       "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "derivedName": ""
     },
@@ -71,15 +80,15 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 14263,
-        "getTotalPriorityTxs": 6477,
+        "getTotalBatchesExecuted": 15163,
+        "getTotalPriorityTxs": 6482,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "paused": false,
-        "totalBatchesExecuted": 14263,
-        "totalPriorityTxs": 6477,
-        "totalSyncedPriorityTxs": 6474,
-        "totalValidatorForwardFee": "3202728876256890012",
+        "totalBatchesExecuted": 15163,
+        "totalPriorityTxs": 6482,
+        "totalSyncedPriorityTxs": 6482,
+        "totalValidatorForwardFee": "3205192504924205002",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 40000000000
       },

@@ -1,12 +1,12 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 65716196,
-  "configHash": "0x9edab5789eeac6ebe9dd411953a6fa64972ba58b5e014b5bea0f953522246d2c",
+  "blockNumber": 65940151,
+  "configHash": "0xda7fb0a875e332e4f1efa5ba280af8dc50583aba60e8893bec028a7afba3c4e4",
   "version": 8,
   "contracts": [
     {
-      "name": "",
+      "name": "MantleOwner",
       "address": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
       "unverified": true,
       "upgradeability": {
@@ -15,72 +15,15 @@
         "modules": [],
         "threshold": "4 of 7 (57%)"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
+          "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
+        ]
+      },
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
-      "sinceTimestamp": 1710253012
-    },
-    {
-      "name": "L2CrossDomainMessenger",
-      "address": "0x4200000000000000000000000000000000000007",
-      "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
-        "admin": "0x4200000000000000000000000000000000000018"
-      },
-      "implementations": ["0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007"],
-      "sinceTimestamp": 1688314886,
-      "values": {
-        "HASH_MESSAGE_BASE_GAS": 800,
-        "HASH_MESSAGE_GAS_PER_BYTE": 2,
-        "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "l1CrossDomainMessenger": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
-        "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621609",
-        "MIN_GAS_CALLDATA_OVERHEAD": 16,
-        "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
-        "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
-        "OTHER_MESSENGER": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
-        "RELAY_CALL_OVERHEAD": 40000,
-        "RELAY_CONSTANT_OVERHEAD": 200000,
-        "RELAY_GAS_CHECK_BUFFER": 55000,
-        "RELAY_RESERVED_GAS": 90000,
-        "version": "1.5.0"
-      },
-      "errors": {
-        "xDomainMessageSender": "Execution reverted"
-      }
-    },
-    {
-      "name": "L2StandardBridge",
-      "address": "0x4200000000000000000000000000000000000010",
-      "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010",
-        "admin": "0x4200000000000000000000000000000000000018"
-      },
-      "implementations": ["0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010"],
-      "sinceTimestamp": 1688314886,
-      "values": {
-        "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
-        "l1TokenBridge": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
-        "messenger": "0x4200000000000000000000000000000000000007",
-        "MESSENGER": "0x4200000000000000000000000000000000000007",
-        "OTHER_BRIDGE": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
-        "version": "1.1.0"
-      }
-    },
-    {
-      "name": "",
-      "address": "0x4200000000000000000000000000000000000018",
-      "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018",
-        "admin": "0x4200000000000000000000000000000000000018"
-      },
-      "implementations": ["0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018"],
-      "sinceTimestamp": 1688314886
+      "sinceTimestamp": 1710253012,
+      "derivedName": ""
     },
     {
       "name": "L1ERC20Bridge",
@@ -125,39 +68,18 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 14263,
-        "getTotalPriorityTxs": 827,
+        "getTotalBatchesExecuted": 15163,
+        "getTotalPriorityTxs": 829,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": false,
-        "totalBatchesExecuted": 14263,
-        "totalPriorityTxs": 827,
-        "totalSyncedPriorityTxs": 827,
-        "totalValidatorForwardFee": "1035481910985739034594",
+        "totalBatchesExecuted": 15163,
+        "totalPriorityTxs": 829,
+        "totalSyncedPriorityTxs": 829,
+        "totalValidatorForwardFee": "1039144057119072918626",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 140000000000000
       },
       "derivedName": "ZkLink"
-    },
-    {
-      "name": "BVM_ETH",
-      "address": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1688314886,
-      "values": {
-        "bridge": "0x4200000000000000000000000000000000000010",
-        "BRIDGE": "0x4200000000000000000000000000000000000010",
-        "decimals": 18,
-        "l1Token": "0x0000000000000000000000000000000000000000",
-        "l2Bridge": "0x4200000000000000000000000000000000000010",
-        "name": "Ether",
-        "REMOTE_TOKEN": "0x0000000000000000000000000000000000000000",
-        "remoteToken": "0x0000000000000000000000000000000000000000",
-        "symbol": "WETH",
-        "totalSupply": "51173978549380225059905",
-        "version": "1.0.0"
-      }
     },
     {
       "name": "MantleL2Gateway",
@@ -181,16 +103,20 @@
       "derivedName": "MantleL2Gateway"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
       },
       "sinceTimestamp": 1709296907,
       "values": {
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     }
   ],
   "eoas": [
@@ -202,15 +128,6 @@
     },
     {
       "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272"
-    },
-    {
-      "address": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354"
-    },
-    {
-      "address": "0x676A795fe6E43C17c668de16730c3F690FEB7120"
-    },
-    {
-      "address": "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
     }
   ],
   "abis": {
@@ -318,67 +235,6 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
-    "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": [
-      "constructor(address _l1CrossDomainMessenger, address l1mnt)",
-      "event FailedRelayedMessage(bytes32 indexed msgHash)",
-      "event Initialized(uint8 version)",
-      "event RelayedMessage(bytes32 indexed msgHash)",
-      "event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit)",
-      "event SentMessageExtension1(address indexed sender, uint256 mntValue, uint256 ethValue)",
-      "function HASH_MESSAGE_BASE_GAS() view returns (uint64)",
-      "function HASH_MESSAGE_GAS_PER_BYTE() view returns (uint64)",
-      "function L1_MNT_ADDRESS() view returns (address)",
-      "function MESSAGE_VERSION() view returns (uint16)",
-      "function MIN_GAS_CALLDATA_OVERHEAD() view returns (uint64)",
-      "function MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR() view returns (uint64)",
-      "function MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR() view returns (uint64)",
-      "function OTHER_MESSENGER() view returns (address)",
-      "function RELAY_CALL_OVERHEAD() view returns (uint64)",
-      "function RELAY_CONSTANT_OVERHEAD() view returns (uint64)",
-      "function RELAY_GAS_CHECK_BUFFER() view returns (uint64)",
-      "function RELAY_RESERVED_GAS() view returns (uint64)",
-      "function baseGas(bytes _message, uint32 _minGasLimit) pure returns (uint64)",
-      "function failedMessages(bytes32) view returns (bool)",
-      "function initialize()",
-      "function l1CrossDomainMessenger() view returns (address)",
-      "function messageNonce() view returns (uint256)",
-      "function relayMessage(uint256 _nonce, address _sender, address _target, uint256 _mntValue, uint256 _ethValue, uint256 _minGasLimit, bytes _message) payable",
-      "function sendMessage(address _target, bytes _message, uint32 _minGasLimit) payable",
-      "function sendMessage(uint256 _ethAmount, address _target, bytes _message, uint32 _minGasLimit) payable",
-      "function successfulMessages(bytes32) view returns (bool)",
-      "function version() view returns (string)",
-      "function xDomainMessageSender() view returns (address)"
-    ],
-    "0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": [
-      "constructor(address _otherBridge, address _l1mnt)",
-      "event DepositFinalized(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeFinalized(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ERC20BridgeInitiated(address indexed localToken, address indexed remoteToken, address indexed from, address to, uint256 amount, bytes extraData)",
-      "event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event MNTBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event MNTBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData)",
-      "event WithdrawalInitiated(address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 amount, bytes extraData)",
-      "function L1_MNT_ADDRESS() view returns (address)",
-      "function MESSENGER() view returns (address)",
-      "function OTHER_BRIDGE() view returns (address)",
-      "function bridgeERC20(address _localToken, address _remoteToken, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeERC20To(address _localToken, address _remoteToken, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETH(uint256 _value, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeETHTo(uint256 _value, address _to, uint32 _minGasLimit, bytes _extraData)",
-      "function bridgeMNT(uint32 _minGasLimit, bytes _extraData) payable",
-      "function bridgeMNTTo(address _to, uint32 _minGasLimit, bytes _extraData) payable",
-      "function deposits(address, address) view returns (uint256)",
-      "function finalizeBridgeERC20(address _localToken, address _remoteToken, address _from, address _to, uint256 _amount, bytes _extraData)",
-      "function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function finalizeBridgeMNT(address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function finalizeDeposit(address _l1Token, address _l2Token, address _from, address _to, uint256 _amount, bytes _extraData) payable",
-      "function l1TokenBridge() view returns (address)",
-      "function messenger() view returns (address)",
-      "function version() view returns (string)",
-      "function withdraw(address _l2Token, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable",
-      "function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _minGasLimit, bytes _extraData) payable"
-    ],
     "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D": [
       "constructor(address _zkLink)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -411,34 +267,6 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
-    ],
-    "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111": [
-      "constructor()",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event Burn(address indexed account, uint256 amount)",
-      "event Mint(address indexed account, uint256 amount)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "function BRIDGE() view returns (address)",
-      "function REMOTE_TOKEN() view returns (address)",
-      "function allowance(address owner, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 amount) returns (bool)",
-      "function balanceOf(address account) view returns (uint256)",
-      "function bridge() view returns (address)",
-      "function burn(address _from, uint256 _amount)",
-      "function decimals() view returns (uint8)",
-      "function decreaseAllowance(address spender, uint256 subtractedValue) returns (bool)",
-      "function increaseAllowance(address spender, uint256 addedValue) returns (bool)",
-      "function l1Token() view returns (address)",
-      "function l2Bridge() view returns (address)",
-      "function mint(address _to, uint256 _amount)",
-      "function name() view returns (string)",
-      "function remoteToken() view returns (address)",
-      "function supportsInterface(bytes4 _interfaceId) pure returns (bool)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address to, uint256 amount) returns (bool)",
-      "function transferFrom(address from, address to, uint256 amount) returns (bool)",
-      "function version() view returns (string)"
     ],
     "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0": [
       "constructor(address implementation, bytes _data) payable",

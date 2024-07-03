@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x3aaefb544711fb521ca4e1ad44a2c88043d9458a
+Generated with discovered.json: 0xfbdb84bb4840ce605250b6c59b2c67377c2e9329
 
-# Diff at Fri, 28 Jun 2024 08:18:40 GMT:
+# Diff at Wed, 03 Jul 2024 12:43:45 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 65716196
+- current block number: 65940151
 
 ## Description
 
@@ -13,25 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract  (0x4200000000000000000000000000000000000018)
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60)
     +++ description: None
 ```
 
@@ -49,18 +31,12 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract BVM_ETH (0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract MantleL2Gateway (0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82)
+    contract MantleProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82)
     +++ description: None
 ```

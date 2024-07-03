@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x2fcb1bf00ed347703651b239c4f0456f98330316
+Generated with discovered.json: 0x82a3f9a03873bf5079302fd839038add675f57c3
 
-# Diff at Tue, 25 Jun 2024 14:46:14 GMT:
+# Diff at Wed, 03 Jul 2024 13:08:55 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 16268706
+- current block number: 16611390
 
 ## Description
 
@@ -25,7 +25,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE)
+    contract BaseProxyAdmin (0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE)
     +++ description: None
 ```
 
@@ -37,6 +37,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C)
+    contract BaseOwner (0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C)
     +++ description: None
 ```

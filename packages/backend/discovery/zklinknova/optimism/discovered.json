@@ -1,21 +1,24 @@
 {
   "name": "zklinknova",
   "chain": "optimism",
-  "blockNumber": 121854234,
-  "configHash": "0x39863fe3d5f3ffcc384f9baf79b4fdf2abf61a8a16a85d59dc966799be4f3f8b",
-  "version": 7,
+  "blockNumber": 122206489,
+  "configHash": "0x6ccf6464f053f935f3d90a6d01deb3f3ae400e5c039bef9859cf7ca254197d3e",
+  "version": 8,
   "contracts": [
     {
       "name": "OptimismOwner",
       "address": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
       "template": "GnosisSafe",
-      "ignoreInWatchMode": ["nonce"],
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
         "modules": [],
-        "threshold": "5 of 7 (71%)"
+        "threshold": "4 of 7 (57%)"
       },
+      "assignedPermissions": {
+        "admin": ["0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"]
+      },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1692605961,
       "values": {
@@ -30,8 +33,8 @@
           "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "getThreshold": 5,
-        "nonce": 17,
+        "getThreshold": 4,
+        "nonce": 18,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -62,15 +65,15 @@
         "getGateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
         "getGovernor": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 14033,
-        "getTotalPriorityTxs": 13362,
+        "getTotalBatchesExecuted": 15163,
+        "getTotalPriorityTxs": 13383,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "paused": false,
-        "totalBatchesExecuted": 14033,
-        "totalPriorityTxs": 13362,
-        "totalSyncedPriorityTxs": 13357,
-        "totalValidatorForwardFee": "8022196635977771044",
+        "totalBatchesExecuted": 15163,
+        "totalPriorityTxs": 13383,
+        "totalSyncedPriorityTxs": 13383,
+        "totalValidatorForwardFee": "8034255471114277755",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 40000000000
       },
@@ -98,6 +101,9 @@
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x5Bd51296423A9079b931414C1De65e7057326EaA"]
       },
       "sinceTimestamp": 1711095511,
       "values": {
@@ -127,17 +133,42 @@
     }
   ],
   "eoas": [
-    "0x0000000000000000000000000000000000000000",
-    "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
-    "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-    "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
-    "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
-    "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
-    "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
-    "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
-    "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5",
-    "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
-    "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    {
+      "address": "0x0000000000000000000000000000000000000000"
+    },
+    {
+      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+    },
+    {
+      "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "assignedPermissions": {
+        "admin": ["0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"]
+      }
+    },
+    {
+      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+    },
+    {
+      "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15"
+    },
+    {
+      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+    },
+    {
+      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+    },
+    {
+      "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d"
+    },
+    {
+      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+    },
+    {
+      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+    },
+    {
+      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+    }
   ],
   "abis": {
     "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": [
