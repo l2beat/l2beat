@@ -5,13 +5,17 @@ export interface ReadMoreProps {
   maxLength?: number
 }
 
-export function ReadMore({ children, maxLength = 160 }: ReadMoreProps) {
-  const alwaysVisible = children
-    // Accounting for the ellipsis
-    .slice(0, maxLength - 3)
-    .split(' ')
-    .slice(0, -1)
-    .join(' ')
+export function ReadMore({
+  children,
+  maxLength: maxChildrenLength = 160,
+}: ReadMoreProps) {
+  // Accounting for the ellipsis
+  const maxLength = maxChildrenLength - 3
+
+  const alwaysVisible =
+    children.length > maxLength
+      ? children.slice(0, maxLength).split(' ').slice(0, -1).join(' ')
+      : children
   const collapsible = children.slice(alwaysVisible.length)
 
   if (!collapsible) {
