@@ -22,6 +22,7 @@
     },
     {
       "symbol": "pxETH",
+      "category": "ether",
       "address": "0x04c154b66cb340f3ae24111cc767e0184ed00cc6"
     },
     {
@@ -30,6 +31,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0xa1290d69c65a6fe4df752f95823fae25cb99e5a7"
     },
     {
@@ -101,6 +103,7 @@
     },
     {
       "symbol": "ankrETH",
+      "category": "ether",
       "address": "0xE95A203B1a91a908F9B9CE46459d101078c2c3cb"
     },
     {
@@ -215,6 +218,7 @@
     },
     {
       "symbol": "cbETH",
+      "category": "ether",
       "address": "0xBe9895146f7AF43049ca1c1AE358B0541Ea49704"
     },
     {
@@ -236,6 +240,7 @@
     },
     {
       "symbol": "cETH",
+      "category": "ether",
       "address": "0x4Ddc2D193948926D02f9B1fE9e1daa0718270ED5"
     },
     {
@@ -400,6 +405,7 @@
     },
     {
       "symbol": "ezETH",
+      "category": "ether",
       "address": "0xbf5495efe5db9ce00f80364c8b423567e58d2110",
       "coingeckoId": "renzo-restaked-eth"
     },
@@ -439,6 +445,7 @@
     },
     {
       "symbol": "frxETH",
+      "category": "ether",
       "address": "0x5E8422345238F34275888049021821E8E08CAa1f"
     },
     {
@@ -673,6 +680,7 @@
     },
     {
       "symbol": "mETH",
+      "category": "ether",
       "address": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa"
     },
     {
@@ -851,6 +859,7 @@
     },
     {
       "symbol": "pufETH",
+      "category": "ether",
       "address": "0xD9A442856C234a39a81a089C06451EBAa4306a72"
     },
     {
@@ -912,6 +921,7 @@
     },
     {
       "symbol": "rETH",
+      "category": "ether",
       "address": "0xae78736Cd615f374D3085123A210448E74Fc6393"
     },
     {
@@ -940,6 +950,7 @@
     },
     {
       "symbol": "rswETH",
+      "category": "ether",
       "address": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0"
     },
     {
@@ -958,6 +969,7 @@
     },
     {
       "symbol": "sfrxETH",
+      "category": "ether",
       "address": "0xac3E018457B222d93114458476f3E3416Abbe38F"
     },
     {
@@ -1004,6 +1016,7 @@
     },
     {
       "symbol": "spETH",
+      "category": "ether",
       "address": "0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474",
       "coingeckoId": "wrapped-eeth" // 1:1 backed by it, spETH currently not on CG
     },
@@ -1017,6 +1030,7 @@
     },
     {
       "symbol": "stETH",
+      "category": "ether",
       "address": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84"
     },
     {
@@ -1029,6 +1043,7 @@
     },
     {
       "symbol": "cSTONE",
+      "category": "ether",
       "address": "0x4d831e22F062b5327dFdB15f0b6a5dF20E2E3dD0",
       "coingeckoId": "stakestone-ether"
     },
@@ -1115,10 +1130,12 @@
     },
     {
       "symbol": "uniETH",
+      "category": "ether",
       "address": "0xF1376bceF0f78459C0Ed0ba5ddce976F1ddF51F4"
     },
     {
       "symbol": "mswETH",
+      "category": "ether",
       "address": "0x32bd822d615A3658A68b6fDD30c2fcb2C996D678"
     },
     {
@@ -1191,6 +1208,7 @@
     },
     {
       "symbol": "weETH",
+      "category": "ether",
       "address": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee"
     },
     {
@@ -1208,6 +1226,7 @@
     },
     {
       "symbol": "wstETH",
+      "category": "ether",
       "address": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0"
     },
     {
@@ -1273,6 +1292,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "WETH",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "MOR",
       "address": "0x092bAaDB7DEf4C3981454dD9c0A0D7FF07bCFc86",
       "source": "native",
@@ -1309,6 +1335,7 @@
     },
     {
       "symbol": "wstETH",
+      "category": "ether",
       "address": "0x5979D7b546E38E414F7E9822514be443A4800529",
       "source": "canonical",
       "supply": "zero"
@@ -1363,6 +1390,7 @@
     },
     {
       "symbol": "frxETH",
+      "category": "ether",
       "address": "0x178412e79c25968a32e89b11f63B33F733770c2A",
       "source": "native",
       "supply": "totalSupply",
@@ -1373,6 +1401,7 @@
     },
     {
       "symbol": "sfrxETH",
+      "category": "ether",
       "address": "0x95aB45875cFFdba1E5f451B950bC2E42c0053f39",
       "source": "native",
       "supply": "totalSupply",
@@ -1438,6 +1467,7 @@
     },
     {
       "symbol": "ezETH",
+      "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
       "source": "external",
@@ -1523,6 +1553,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "source": "external",
       "supply": "totalSupply",
@@ -1636,6 +1667,13 @@
   ],
   "optimism": [
     {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "USDC.e",
       "address": "0x7F5c764cBc14f9669B88837ca1490cCa17c31607",
       "source": "canonical",
@@ -1729,6 +1767,7 @@
     },
     {
       "symbol": "frxETH",
+      "category": "ether",
       "address": "0x6806411765Af15Bddd26f8f544A34cC40cb9838B",
       "source": "native",
       "supply": "totalSupply",
@@ -1739,6 +1778,7 @@
     },
     {
       "symbol": "sfrxETH",
+      "category": "ether",
       "address": "0x484c2D6e3cDd945a8B2DF735e079178C1036578c",
       "source": "native",
       "supply": "totalSupply",
@@ -1777,6 +1817,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "source": "external",
       "supply": "totalSupply",
@@ -1873,6 +1914,13 @@
   ],
   "base": [
     {
+      "symbol": "WETH",
+      "address": "0x4200000000000000000000000000000000000006",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "ZRO",
       "address": "0x6985884C4392D348587B19cb9eAAf157F13271cd",
       "source": "native",
@@ -1902,6 +1950,7 @@
     },
     {
       "symbol": "ezETH",
+      "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
       "source": "external",
@@ -1925,6 +1974,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
       "source": "external",
       "supply": "totalSupply",
@@ -1977,6 +2027,7 @@
     },
     {
       "symbol": "weETH",
+      "category": "ether",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "source": "external",
       "coingeckoId": "wrapped-eeth",
@@ -2027,6 +2078,7 @@
     },
     {
       "symbol": "rswETH",
+      "category": "ether",
       "address": "0xC419959850d49166C2d5250Ee89ff9910679D8c8",
       "source": "external",
       "supply": "totalSupply",
@@ -2038,6 +2090,7 @@
     },
     {
       "symbol": "weETH",
+      "category": "ether",
       "address": "0x7B35b4c05a90Ea5f311AeC815BE4148b446a68a2",
       "source": "external",
       "supply": "totalSupply",
@@ -2060,6 +2113,7 @@
     },
     {
       "symbol": "wstETH",
+      "category": "ether",
       "address": "0xdf77b286eDa539CCb6326e9eDB86aa69D83108a5",
       "source": "external",
       "supply": "totalSupply",
@@ -2195,6 +2249,7 @@
     },
     {
       "symbol": "mETH",
+      "category": "ether",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
       "source": "canonical",
       "supply": "zero"
@@ -2274,6 +2329,7 @@
     },
     {
       "symbol": "ezETH",
+      "category": "ether",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
       "coingeckoId": "renzo-restaked-eth",
       "source": "external",
@@ -2285,6 +2341,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "source": "external",
       "supply": "totalSupply",
@@ -2373,6 +2430,7 @@
     },
     {
       "symbol": "weETH",
+      "category": "ether",
       "address": "0x1Bf74C010E6320bab11e2e5A532b5AC15e0b8aA6",
       "source": "external",
       "coingeckoId": "wrapped-eeth",
@@ -2393,7 +2451,16 @@
   ],
   "kinto": [
     {
+      "symbol": "USD+",
+      "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
+      "category": "stablecoin",
+      "source": "native",
+      "supply": "totalSupply",
+      "coingeckoId": "dinari-usd"
+    },
+    {
       "symbol": "weETH",
+      "category": "ether",
       "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
       "source": "external",
       "supply": "totalSupply",
@@ -2405,6 +2472,7 @@
     },
     {
       "symbol": "wstETH",
+      "category": "ether",
       "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
       "source": "external",
       "supply": "totalSupply",
@@ -2498,6 +2566,7 @@
     },
     {
       "symbol": "WETH",
+      "category": "ether",
       "address": "0xEB5eAb7315f6721d90ED8DD007F802ecbFb99cE8",
       "source": "external",
       "supply": "totalSupply",
@@ -2527,6 +2596,7 @@
     },
     {
       "symbol": "ezETH",
+      "category": "ether",
       "address": "0x2416092f143378750bb29b79ed961ab195cceea5",
       "coingeckoId": "renzo-restaked-eth",
       "source": "external",
@@ -2538,6 +2608,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "source": "external",
       "supply": "totalSupply",
@@ -2590,6 +2661,7 @@
     },
     {
       "symbol": "weETH",
+      "category": "ether",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "source": "external",
       "coingeckoId": "wrapped-eeth",
@@ -2615,6 +2687,7 @@
   "mode": [
     {
       "symbol": "ezETH",
+      "category": "ether",
       "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
       "coingeckoId": "renzo-restaked-eth",
       "source": "external",
@@ -2626,6 +2699,7 @@
     },
     {
       "symbol": "rsETH",
+      "category": "ether",
       "address": "0x4186BFC76E2E237523CBC30FD220FE055156b41F",
       "source": "external",
       "supply": "totalSupply",
@@ -2637,6 +2711,7 @@
     },
     {
       "symbol": "STONE",
+      "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
       "coingeckoId": "stakestone-ether",
       "source": "external",
@@ -2687,6 +2762,7 @@
     },
     {
       "symbol": "weETH.mode",
+      "category": "ether",
       "address": "0x04C0599Ae5A44757c0af6F9eC3b93da8976c150A",
       "source": "external",
       "supply": "totalSupply",
@@ -2748,6 +2824,7 @@
       "address": "0x65421ba909200b81640d98B979d07487C9781B66",
       "source": "external",
       "supply": "totalSupply",
+      "category": "ether",
       "coingeckoId": "kelp-dao-restaked-eth",
       "bridgedUsing": {
         "bridge": "Layer Zero",
@@ -2779,6 +2856,7 @@
     },
     {
       "symbol": "STONE",
+      "category": "ether",
       "address": "0x80137510979822322193FC997d400D5A6C747bf7",
       "source": "external",
       "supply": "totalSupply",
@@ -2877,6 +2955,7 @@
     },
     {
       "symbol": "frxETH",
+      "category": "ether",
       "address": "0xB54aAE4A0743aeEc1d584F2b2abC1EBDC12f1b0F",
       "source": "native",
       "supply": "totalSupply",
@@ -2894,6 +2973,7 @@
     },
     {
       "symbol": "sfrxETH",
+      "category": "ether",
       "address": "0x22F91E9436C220af83fb0Ce27a08918dD1d27D32",
       "source": "native",
       "supply": "totalSupply",
@@ -2991,6 +3071,7 @@
     },
     {
       "symbol": "frxETH",
+      "category": "ether",
       "address": "0xCf7eceE185f19e2E970a301eE37F93536ed66179",
       "source": "native",
       "supply": "totalSupply",
@@ -3002,6 +3083,7 @@
     },
     {
       "symbol": "sfrxETH",
+      "category": "ether",
       "address": "0x7c2aF1Fb79D0b1c67d4eb802d44C673D0A1D2C04",
       "source": "native",
       "supply": "totalSupply",

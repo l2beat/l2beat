@@ -1,8 +1,8 @@
 {
   "name": "mode",
   "chain": "ethereum",
-  "blockNumber": 20188700,
-  "configHash": "0xe0a59705e4719232ab745c81310b37fe6766f38e2e4c7807b168570b85a5268e",
+  "blockNumber": 20211472,
+  "configHash": "0x82e49ad7655eceadb4fa1648984dfee814b278017db73e5a036cd25df72d8e69",
   "version": 8,
   "contracts": [
     {
@@ -166,10 +166,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 9694800,
-        "latestOutputIndex": 5385,
-        "nextBlockNumber": 9696600,
-        "nextOutputIndex": 5386,
+        "latestBlockNumber": 9831600,
+        "latestOutputIndex": 5461,
+        "nextBlockNumber": 9833400,
+        "nextOutputIndex": 5462,
         "proposer": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "PROPOSER": "0x674F64D64Ddc198db83cd9047dF54BF89cCD0ddB",
         "startingBlockNumber": 0,
@@ -192,7 +192,6 @@
           "0x2901dA832a4D0297FF0691100A8E496626cc626D",
           "0x4317ba146D4933D889518a3e5E11Fe7a53199b04",
           "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221",
-          "0x69216395A62dFb243C05EF4F1C27AF8655096a95",
           "0x735aDBbE72226BD52e818E7181953f42E3b0FF21",
           "0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07"
         ],
@@ -471,8 +470,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 287624,
-          "prevBlockNum": 20188603
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 20211409
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -524,7 +523,7 @@
       "sinceTimestamp": 1700167631,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292824254",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292824432",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -551,6 +550,7 @@
         "modules": [],
         "threshold": "5 of 7 (71%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1610850364,
       "values": {
@@ -567,7 +567,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 93,
+        "nonce": 94,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
