@@ -2,11 +2,11 @@ import React from 'react'
 import { cn } from '~/utils/cn'
 
 interface IndexCellProps {
-  index: number
+  children: number
   className?: string
 }
 
-export function IndexCell({ index, className }: IndexCellProps) {
+export function IndexCell({ children, className }: IndexCellProps) {
   return (
     <span
       className={cn(
@@ -14,7 +14,7 @@ export function IndexCell({ index, className }: IndexCellProps) {
         className,
       )}
     >
-      {index + 1}
+      {children}
     </span>
   )
 }

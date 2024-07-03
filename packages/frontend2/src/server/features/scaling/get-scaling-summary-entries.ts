@@ -10,7 +10,7 @@ import {
   type VerificationStatus,
 } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
+import { getL2Risks } from '~/app/(new)/(other)/scaling-next/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getVerificationStatus } from '../verification-status/get-verification-status'
 import { type TvlResponse } from './get-tvl'

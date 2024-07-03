@@ -1,18 +1,21 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/types'
-import { TotalCell } from '../total-cell'
+import {
+  type ScalingSummaryLayer2sEntry,
+  type ScalingSummaryLayer3sEntry,
+} from '~/server/features/scaling/types'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer3sEntry>()
+const columnHelper = createColumnHelper<
+  ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
+>()
 
-export const summaryLayer3sColumns = [
+export const scalingUpcomingColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
-    cell: (ctx) => <IndexCell index={ctx.row.index} />,
+    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
       headClassName: 'w-0',
     },
@@ -38,7 +41,9 @@ export const summaryLayer3sColumns = [
   }),
   columnHelper.accessor('category', {
     header: 'Type',
-    cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
+    cell: (ctx) => (
+      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
+    ),
     meta: {
       tooltip: (
         <div>
@@ -57,50 +62,12 @@ export const summaryLayer3sColumns = [
       ),
     },
   }),
-  columnHelper.accessor('provider', {
-    header: 'Technology',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      return value === 'Arbitrum' ? 'Arbitrum Orbit' : value
-    },
-    enableSorting: false,
-    meta: {
-      tooltip: 'The technology stack used.',
-    },
-  }),
-  columnHelper.accessor('hostChainName', {
-    header: 'Host chain',
-    enableSorting: false,
-
-    meta: {
-      tooltip: 'The technology stack used.',
-    },
-  }),
   columnHelper.accessor('purposes', {
     header: 'Purpose',
     cell: (ctx) => ctx.getValue().join(', '),
     enableSorting: false,
     meta: {
       tooltip: 'Functionality supported by this project.',
-    },
-  }),
-  columnHelper.accessor('tvlData', {
-    id: 'total',
-    header: 'Total',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
-        return <UpcomingBadge />
-      }
-
-      return <TotalCell data={value} />
-    },
-    sortUndefined: 'last',
-    meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
-      tooltip:
-        'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
 ]

@@ -13,7 +13,7 @@ const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
 export const scalingArchivedColumns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
-    cell: (ctx) => <IndexCell index={ctx.row.index} />,
+    cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
       headClassName: 'w-0',
     },
