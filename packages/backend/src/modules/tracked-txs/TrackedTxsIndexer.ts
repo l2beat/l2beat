@@ -18,7 +18,7 @@ import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsReposi
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
-export interface TrackedTxsIndexerDeps
+interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
   updaters: TxUpdaterInterface[]
   trackedTxsClient: TrackedTxsClient
@@ -27,7 +27,7 @@ export interface TrackedTxsIndexerDeps
 }
 
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
-  constructor(private readonly $: TrackedTxsIndexerDeps) {
+  constructor(private readonly $: Dependencies) {
     const name = 'tracked_txs_indexer'
     const logger = $.logger.tag(name)
     super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
@@ -71,12 +71,13 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         const filteredTxs = txs.filter((tx) => tx.type === updater.type)
         await updater.update(filteredTxs, trx)
       }
-      this.logger.info('Saving txs into DB', {
+      this.logger.info('Saved txs into DB', {
         from,
         to: unixTo.toNumber(),
         configurationsToSync: configurationsToSync.length,
       })
     })
+
     return unixTo.toNumber()
   }
 
