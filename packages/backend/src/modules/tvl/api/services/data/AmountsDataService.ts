@@ -37,7 +37,7 @@ export class AmountsDataService {
         targetTimestamp,
       ),
       this.$.indexerService.getAmountsStatus(
-        configurations,
+        configurations.filter((c) => c.type !== 'circulatingSupply'),
         configurations.filter(
           (c): c is CirculatingSupplyEntry & { configId: string } =>
             c.type === 'circulatingSupply',
@@ -90,7 +90,7 @@ export class AmountsDataService {
     const [amounts, status] = await Promise.all([
       this.$.amountRepository.getByTimestamp(targetTimestamp),
       this.$.indexerService.getAmountsStatus(
-        configurations,
+        configurations.filter((c) => c.type !== 'circulatingSupply'),
         configurations.filter(
           (c): c is CirculatingSupplyEntry & { configId: string } =>
             c.type === 'circulatingSupply',
