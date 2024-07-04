@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "ethereum",
-  "blockNumber": 20226153,
+  "blockNumber": 20231729,
   "configHash": "0x1b0e8f32221c336ace7815a63a025db660f6da77bf101a9a6de8367644b93af1",
   "version": 8,
   "contracts": [
@@ -70,14 +70,14 @@
         "getGovernor": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "getPriorityTxMaxGasLimit": 72000000,
         "getTotalBatchesExecuted": 15163,
-        "getTotalPriorityTxs": 25912,
+        "getTotalPriorityTxs": 25916,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "paused": false,
         "totalBatchesExecuted": 15163,
-        "totalPriorityTxs": 25912,
+        "totalPriorityTxs": 25916,
         "totalSyncedPriorityTxs": 25912,
-        "totalValidatorForwardFee": "14284284942486183662",
+        "totalValidatorForwardFee": "14286340743753391329",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 40000000000
       },
