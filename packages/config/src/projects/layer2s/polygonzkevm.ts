@@ -115,8 +115,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xecef3f99',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
-        sinceTimestampInclusive: new UnixTime(1707824735),
-        untilTimestampExclusive: new UnixTime(1710419699),
+        sinceTimestamp: new UnixTime(1707824735),
+        untilTimestamp: new UnixTime(1710419699),
       },
     },
     {
@@ -130,7 +130,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xdef57e54',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
-        sinceTimestampInclusive: new UnixTime(1710419699),
+        sinceTimestamp: new UnixTime(1710419699),
       },
     },
   ],
