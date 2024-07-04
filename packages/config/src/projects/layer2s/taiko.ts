@@ -12,6 +12,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -35,15 +36,23 @@ const proposerOne = discovery.getContractValue<string>(
 
 const TaikoL1ContractAddress = discovery.getContract('TaikoL1Contract').address
 
-const TIER_SGX = discovery.getContractValue<string[]>(
-  'TierProvider',
-  'TIER_SGX',
-)
+const TIER_SGX = discovery.getContractValue<{
+  verifierName: string
+  validityBond: number
+  contestBond: number
+  cooldownWindow: number
+  provingWindow: number
+  maxBlocksToVerifyPerProof: number
+}>('TierProvider', 'TIER_SGX')
 
-const TIER_MINORITY_GUARDIAN = discovery.getContractValue<string[]>(
-  'TierProvider',
-  'TIER_GUARDIAN_MINORITY',
-)
+const TIER_MINORITY_GUARDIAN = discovery.getContractValue<{
+  verifierName: string
+  validityBond: number
+  contestBond: number
+  cooldownWindow: number
+  provingWindow: number
+  maxBlocksToVerifyPerProof: number
+}>('TierProvider', 'TIER_GUARDIAN_MINORITY')
 
 const GuardianMinorityProverMinSigners = discovery.getContractValue<string[]>(
   'GuardianMinorityProver',
@@ -67,12 +76,16 @@ const TaikoChainConfig = discovery.getContractValue<{
   [key: string]: number | string
 }>('TaikoL1Contract', 'getConfig')
 
-const SGXcooldownWindow = formatSeconds(Number(TIER_SGX[3]) * 60) // value in minutes
-const SGXprovingWindow = formatSeconds(Number(TIER_SGX[4]) * 60) // value in minutes
-const SGXvalidityBond = utils.formatEther(TIER_SGX[1]) // value in TAIKO
-const SGXcontestBond = utils.formatEther(TIER_SGX[2]) // value in TAIKO
-const MinorityValidityBond = utils.formatEther(TIER_MINORITY_GUARDIAN[1]) // value in TAIKO
-const MinorityContestBond = utils.formatEther(TIER_MINORITY_GUARDIAN[2]) // value in TAIKO
+const SGXcooldownWindow = formatSeconds(Number(TIER_SGX.cooldownWindow) * 60) // value in minutes
+const SGXprovingWindow = formatSeconds(Number(TIER_SGX.provingWindow) * 60) // value in minutes
+const SGXvalidityBond = utils.formatEther(TIER_SGX.validityBond) // value in TAIKO
+const SGXcontestBond = utils.formatEther(TIER_SGX.contestBond) // value in TAIKO
+const MinorityValidityBond = utils.formatEther(
+  TIER_MINORITY_GUARDIAN.validityBond,
+) // value in TAIKO
+const MinorityContestBond = utils.formatEther(
+  TIER_MINORITY_GUARDIAN.contestBond,
+) // value in TAIKO
 
 const LivenessBond = utils.formatEther(TaikoChainConfig.livenessBond)
 
@@ -83,6 +96,7 @@ export const taiko: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Taiko',
     slug: 'taiko',
@@ -238,8 +252,8 @@ export const taiko: Layer2 = {
     stateCorrectness: {
       name: 'Multi-tier proof system',
       description: `Taiko uses a multi-tier proof system to validate the state. Currently there are three tiers, SGX tier, ${GuardianMinorityProverMinSigners}/${NumGuardiansMinorityProver} Guardian tier and ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian tier (from lowest to highest).
-        When proposing a block, the sequencer specifies a designated prover for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the block, which will be returned once the block is proven.
-        The SGX tier has a proving window of ${SGXprovingWindow}, meaning that only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
+        When proposing a block, the sequencer is assigned the designated prover role for that block. The prover is required to deposit a liveness bond (${LivenessBond} TAIKO) as a commitment to prove the block, which will be returned once the block is proven.
+        The SGX tier has a proving window of ${SGXprovingWindow}, during which only the designated prover can submit proof for the block. Once elapsed, proving is open to everyone able to submit SGX proofs.
         After the proof is submitted, anyone within the cooldown window - for SGX tier is ${SGXcooldownWindow} - can contest the block by submitting a bond. For the SGX Proof tier, the validity bond is currently set to ${SGXvalidityBond} TAIKO, while ${SGXcontestBond} TAIKO is required to contest the proof. 
         For the Minority guardian tier, validity and contest bonds are set to ${MinorityValidityBond} TAIKO and ${MinorityContestBond} TAIKO, respectively. It is not required to provide a proof for the block to submit a contestation.
         When someone contests, a higher level tier has to step in to prove the contested block. Decision of the highest tier (currently the ${GuardianProverMinSigners}/${NumGuardiansProver} Guardian) is considered final.
@@ -270,8 +284,10 @@ export const taiko: Layer2 = {
     },
     operator: {
       name: 'The system uses a based sequencing mechanism',
-      description:
-        'The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. Proposing a block requires designating a prover, which will be the only entity allowed to provide a proof for the block during the initial proving window. Proposing a block also requires depositing a liveness bond as a commitment to proving the block.',
+      description: `The system uses a based (or L1-sequenced) sequencing mechanism. Anyone can sequence Taiko L2 blocks by proposing them directly on the TaikoL1 contract. 
+        The proposer of a block is assigned the designated prover role, and will be the only entity allowed to provide a proof for the block during the initial proving window. 
+        Currently, proving a block requires the block proposer to run an SGX instance. Proposing a block also requires depositing a liveness bond as a commitment to proving the block. 
+        Unless the block proposer proves the block within the proving window, it will forfeit its liveness bond to the TaikoL1 smart contract.`,
       references: [
         {
           text: 'TaikoL1.sol - Etherscan source code, proposeBlock function',
@@ -282,8 +298,9 @@ export const taiko: Layer2 = {
     },
     forceTransactions: {
       name: `Users can force any transaction`,
-      description:
-        'The system is designed to allow users to propose L2 blocks directly on L1. However, the TaikoAdmin multisig can pause block proposals without delay.',
+      description: `The system is designed to allow users to propose L2 blocks directly on L1. 
+        Note that this would require the user to run an SGX instance to prove the block, or forfeit the liveness bond of ${LivenessBond} TAIKO.
+        The TaikoAdmin multisig can pause block proposals without delay.`,
       references: [],
       risks: [],
     },

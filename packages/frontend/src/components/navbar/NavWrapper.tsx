@@ -301,7 +301,7 @@ export function Sidenav({
     >
       <div
         className={cn(
-          'flex flex-col overflow-x-clip bg-[#E6E7EC] transition-all xl:fixed xl:sidenav-collapsed:w-20 dark:border-gray-850 xl:dark:border-r dark:border-r-0 dark:bg-[#1E1C21]',
+          'custom-scrollbar flex flex-col overflow-x-clip bg-[#E6E7EC] transition-all xl:fixed xl:sidenav-collapsed:w-20 dark:border-gray-850 xl:dark:border-r dark:border-r-0 dark:bg-[#1E1C21]',
           sharedSizeClasses,
         )}
         data-role="sidenav-inner"
@@ -358,7 +358,7 @@ export function Sidenav({
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
             <Divider />
-            <ul className="flex gap-2 pb-12 sidenav-collapsed:hidden xl:justify-between">
+            <ul className="flex gap-2 sidenav-collapsed:hidden xl:justify-between">
               <SocialLinks />
             </ul>
           </nav>

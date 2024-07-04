@@ -25,6 +25,7 @@ export const mint: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    architectureImage: 'opstack',
   },
   chainConfig: {
     name: 'mint',

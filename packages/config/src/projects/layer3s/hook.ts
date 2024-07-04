@@ -51,6 +51,11 @@ export const hook: Layer3 = underReviewL3({
     {
       address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
       sinceTimestamp: new UnixTime(1709063015),
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
       tokens: ['WETH'],
       chain: 'ethereum',
     },
@@ -59,42 +64,77 @@ export const hook: Layer3 = underReviewL3({
       sinceTimestamp: new UnixTime(1712179919),
       tokens: ['USDC'],
       chain: 'ethereum',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
     {
       address: EthereumAddress('0xCa34d7cc253b47E0248b80c859F38a658db7BcCC'),
       sinceTimestamp: new UnixTime(1707792505),
       tokens: ['WETH'],
       chain: 'arbitrum',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
     {
       address: EthereumAddress('0x7b017d4fcC370D32Fe13e60cA7424037BDEEcba6'),
       sinceTimestamp: new UnixTime(1712179761),
       tokens: ['USDC'],
       chain: 'arbitrum',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
     {
       address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
       sinceTimestamp: new UnixTime(1712177617),
       tokens: ['WETH'],
       chain: 'base',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
     {
       address: EthereumAddress('0x3411942F8FdAd5995Fbecb66bc07aA839D738500'),
       sinceTimestamp: new UnixTime(1712179763),
       tokens: ['USDC'],
       chain: 'base',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
     {
       address: EthereumAddress('0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa'),
       sinceTimestamp: new UnixTime(1707792507),
       tokens: ['WETH'],
       chain: 'optimism',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
     {
       address: EthereumAddress('0xdBfE75271E3427D5b5480A1B4a4279e92518AB39'),
       sinceTimestamp: new UnixTime(1712179763),
       tokens: ['USDC'],
       chain: 'optimism',
+      source: 'external',
+      bridge: {
+        name: 'Socket bridge',
+        slug: 'socket',
+      },
     },
   ],
 })

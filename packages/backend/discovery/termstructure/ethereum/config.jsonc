@@ -24,7 +24,8 @@
         "getBlockNum",
         "getBorrowFeeRate",
         "getFundWeight",
-        "getL1RequestNum"
+        "getL1RequestNum",
+        "getTokenNum"
       ],
       "ignoreRelatives": ["getAaveV3Pool", "getWETH"],
       "fields": {

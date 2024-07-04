@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
 import { Badge } from './badge'
 
 export interface UpcomingBadgeProps {

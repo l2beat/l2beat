@@ -1,8 +1,8 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 20204613,
-  "configHash": "0x7df15e92583fb295cad51c4d8842e59786e367c47cf4317583c37f3af032b93c",
+  "blockNumber": 20232297,
+  "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
   "version": 8,
   "contracts": [
     {
@@ -18,7 +18,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "120000713286659504167011279",
+        "totalSupply": "120058019130411207956938028",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -31,6 +31,7 @@
     {
       "name": "Boba_Adapter",
       "address": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -40,8 +41,7 @@
         "l1Weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
         "l2GasLimit": 2000000,
         "messenger": "0x6D4528d192dB72E282265D6092F4B872f9Dff69e"
-      },
-      "derivedName": "Boba_Adapter"
+      }
     },
     {
       "name": "Finder",
@@ -66,7 +66,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1719751847,
+        "getCurrentTime": 1720085807,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -76,6 +76,7 @@
     {
       "name": "Ethereum_Adapter",
       "address": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -84,6 +85,7 @@
     {
       "name": "Arbitrum_Adapter",
       "address": "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -101,8 +103,7 @@
         "RELAY_MESSAGE_L2_GAS_LIMIT": 2000000,
         "RELAY_TOKENS_L2_GAS_LIMIT": 300000,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "Arbitrum_Adapter"
+      }
     },
     {
       "name": "Ethereum_SpokePool",
@@ -122,11 +123,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1719751847,
+        "getCurrentTime": 1720085807,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1419218,
+        "numberOfDeposits": 1425607,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -146,7 +147,7 @@
       "sinceTimestamp": 1677230459,
       "values": {
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1719751847,
+        "getCurrentTime": 1720085807,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -167,6 +168,7 @@
     {
       "name": "Linea_Adapter",
       "address": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -176,8 +178,7 @@
         "L1_TOKEN_BRIDGE": "0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319",
         "L1_USDC_BRIDGE": "0x504A330327A089d8364C4ab3811Ee26976d388ce",
         "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
-      },
-      "derivedName": "Linea_Adapter"
+      }
     },
     {
       "name": "EmergencyProposalExecutor",
@@ -202,10 +203,28 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 673,
+        "nonce": 674,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "Lisk_Adapter",
+      "address": "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B",
+      "template": "acrossv3/adapter",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1719509639,
+      "values": {
+        "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
+        "L1_STANDARD_BRIDGE": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08",
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "0x31B72D76FB666844C41EdF08dF0254875Dbb7edB",
+        "recipientCircleDomainId": 4294967295,
+        "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      }
     },
     {
       "name": "OptimisticGovernor",
@@ -249,7 +268,7 @@
       "values": {
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1719751847,
+        "getCurrentTime": 1720085807,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -261,6 +280,7 @@
     {
       "name": "Polygon_Adapter",
       "address": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -275,8 +295,7 @@
         "recipientCircleDomainId": 7,
         "ROOT_CHAIN_MANAGER": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "Polygon_Adapter"
+      }
     },
     {
       "name": "HubPool Multisig",
@@ -302,7 +321,7 @@
           "0x868CF19464e17F76D6419ACC802B122c22D2FD34"
         ],
         "getThreshold": 3,
-        "nonce": 217,
+        "nonce": 218,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -327,54 +346,31 @@
       "ignoreInWatchMode": ["rootBundleProposal"],
       "sinceTimestamp": 1653167916,
       "values": {
+        "Adapters": {
+          "1": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
+          "10": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
+          "137": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
+          "288": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
+          "324": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+          "1135": "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B",
+          "8453": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
+          "34443": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
+          "42161": "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426",
+          "59144": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE"
+        },
         "bondAmount": "450000000000000000",
         "bondToken": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
         "CrossChainContracts": {
-          "1": {
-            "l2ChainId": 1,
-            "adapter": "0x527E872a5c3f0C7c24Fe33F2593cFB890a285084",
-            "spokePool": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
-          },
-          "10": {
-            "l2ChainId": 10,
-            "adapter": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
-            "spokePool": "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
-          },
-          "137": {
-            "l2ChainId": 137,
-            "adapter": "0xb4AeF0178f5725392A26eE18684C2aB62adc912e",
-            "spokePool": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
-          },
-          "288": {
-            "l2ChainId": 288,
-            "adapter": "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3",
-            "spokePool": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
-          },
-          "324": {
-            "l2ChainId": 324,
-            "adapter": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
-            "spokePool": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
-          },
-          "8453": {
-            "l2ChainId": 8453,
-            "adapter": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
-            "spokePool": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
-          },
-          "34443": {
-            "l2ChainId": 34443,
-            "adapter": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
-            "spokePool": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
-          },
-          "42161": {
-            "l2ChainId": 42161,
-            "adapter": "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426",
-            "spokePool": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
-          },
-          "59144": {
-            "l2ChainId": 59144,
-            "adapter": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE",
-            "spokePool": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
-          }
+          "1": "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5",
+          "10": "0x6f26Bf09B1C792e3228e5467807a900A503c0281",
+          "137": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
+          "288": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
+          "324": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
+          "1135": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
+          "8453": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
+          "34443": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
+          "42161": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
+          "59144": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
         },
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
@@ -386,13 +382,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x03c516c9e29668cac681aee4389787ee607338909028c3726520c6aecce8b4c7",
-          "relayerRefundRoot": "0x4a8d84269cee142dc89ff4999c95056fb0814937ebad89133483491ad239d0ca",
+          "poolRebalanceRoot": "0x75c267602f19e7f9e9b22843eda4f88daae94f659977e46c36e2734a6a965c64",
+          "relayerRefundRoot": "0x57362646e17fbf039a62edf2fd0d7f01135af23f1448a43a1fa0507f25ae014e",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "claimedBitMap": 255,
+          "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 0,
-          "challengePeriodEndTimestamp": 1719751043
+          "unclaimedPoolRebalanceLeafCount": 8,
+          "challengePeriodEndTimestamp": 1720088183
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -402,6 +398,7 @@
     {
       "name": "Base_Adapter",
       "address": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -414,12 +411,12 @@
         "MESSENGER": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
         "recipientCircleDomainId": 6,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "Base_Adapter"
+      }
     },
     {
       "name": "Optimism_Adapter",
       "address": "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -436,12 +433,12 @@
         "SNX": "0xC011a73ee8576Fb46F5E1c5751cA3B9Fe0af2a6F",
         "SNX_OPTIMISM_BRIDGE": "0x39Ea01a0298C315d149a490E34B59Dbf2EC7e48F",
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "Optimism_Adapter"
+      }
     },
     {
       "name": "ZkSync_Adapter",
       "address": "0xE233009838CB898b50e0012a6E783FC9FeE447FB",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -454,8 +451,7 @@
         "zkErc20Bridge": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
         "zkSyncEthBridge": "0x32400084C286CF3E17e7B677ea9583e60a000324",
         "zkSyncMessageBridge": "0x32400084C286CF3E17e7B677ea9583e60a000324"
-      },
-      "derivedName": "ZkSync_Adapter"
+      }
     },
     {
       "name": "BondToken",
@@ -478,6 +474,7 @@
     {
       "name": "Mode_Adapter",
       "address": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
+      "template": "acrossv3/adapter",
       "upgradeability": {
         "type": "immutable"
       },
@@ -490,8 +487,7 @@
         "MESSENGER": "0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f",
         "recipientCircleDomainId": 0,
         "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
-      },
-      "derivedName": "Mode_Adapter"
+      }
     },
     {
       "name": "OptimisticOracleV3",
@@ -530,9 +526,6 @@
       "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
     },
     {
-      "address": "0x428AB2BA90Eba0a4Be7aF34C9Ac451ab061AC010"
-    },
-    {
       "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
     },
     {
@@ -546,6 +539,9 @@
     },
     {
       "address": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+    },
+    {
+      "address": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8"
     },
     {
       "address": "0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9"
@@ -799,6 +795,20 @@
     ],
     "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a": [
       "constructor(address _masterCopy)"
+    ],
+    "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
     ],
     "0x8692B776d1Ff0664177c90465038056Dc64f8991": [
       "constructor(address _finder, address _owner, address _collateral, uint256 _bondAmount, string _rules, bytes32 _identifier, uint64 _liveness)",

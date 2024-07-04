@@ -1,3 +1,4 @@
+import { BlobClient, BlobsInBlock } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -28,6 +29,7 @@ export class LowLevelProvider {
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanClient: IEtherscanClient,
+    private readonly blobClient?: BlobClient,
   ) {}
 
   getRawProviders(): RawProviders {
@@ -35,6 +37,7 @@ export class LowLevelProvider {
       baseProvider: this.provider,
       eventProvider: this.eventProvider,
       etherscanClient: this.etherscanClient,
+      blobClient: this.blobClient,
     }
   }
 
@@ -175,6 +178,11 @@ export class LowLevelProvider {
     return await rpcWithRetries(async () => {
       return await this.provider.getBlockNumber()
     })
+  }
+
+  async getBlobs(txHash: string): Promise<BlobsInBlock> {
+    assert(this.blobClient, 'BlobClient is not available')
+    return await this.blobClient.getRelevantBlobs(txHash)
   }
 }
 
