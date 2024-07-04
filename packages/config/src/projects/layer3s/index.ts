@@ -6,6 +6,8 @@ import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
 import { dodochain } from './dodochain'
+import { educhain } from './educhain'
+import { fiefdom } from './fiefdom'
 import { hook } from './hook'
 import { l3x } from './l3x'
 import { molten } from './molten'
@@ -16,7 +18,9 @@ import { popapex } from './popapex'
 import { rari } from './rari'
 import { sanko } from './sanko'
 import { stack } from './stack'
+import { superposition } from './superposition'
 import { syndicateframe } from './syndicateframe'
+import { syndr } from './syndr'
 import { teva } from './teva'
 import { Layer3 } from './types'
 import { xai } from './xai'
@@ -33,6 +37,8 @@ export const layer3s: Layer3[] = [
   dcamonster,
   deri,
   dodochain,
+  educhain,
+  fiefdom,
   hook,
   rari,
   zklinknova,
@@ -47,4 +53,6 @@ export const layer3s: Layer3[] = [
   molten,
   muster,
   l3x,
+  superposition,
+  syndr,
 ]
