@@ -5,7 +5,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-
 const discovery = new ProjectDiscovery('base')
 
 const upgradeability = {
