@@ -2,7 +2,7 @@ import { DaExitWindowRisk } from '../../../../types'
 import { DaAttestationSecurityRisk } from '../../../../types/DaAttestationSecurityRisk'
 import { CELESTIA_BLOBSTREAM } from './template'
 
-export const blobStreamBase = CELESTIA_BLOBSTREAM({
+export const blobstreamBase = CELESTIA_BLOBSTREAM({
   chain: 'base',
   contracts: [],
   permissions: [],

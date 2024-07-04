@@ -11,7 +11,7 @@ const _maxDataCommitment = discovery.getContractValue(
   'DATA_COMMITMENT_MAX',
 )
 
-export const blobStreamEthereum = CELESTIA_BLOBSTREAM({
+export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
   contracts: [],
   permissions: [],

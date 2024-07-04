@@ -10,7 +10,7 @@ import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer, DaLayerKind } from '../../types/DaLayer'
-import { blobStream } from './bridges/blobstream'
+import { blobstream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
 /**
@@ -24,7 +24,7 @@ export const celestia: DaLayer = {
     slug: 'celestia',
     description: 'Celestia is a modular data availability network.',
   },
-  bridges: [noBridge, blobstream],
+  bridges: [noBridge, ...blobstream],
   usedIn: [
     // can we fetch these from the layer2s and layer3s?
     mantapacific.id,
