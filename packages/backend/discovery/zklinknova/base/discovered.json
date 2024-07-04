@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "base",
-  "blockNumber": 16611390,
-  "configHash": "0xcdf85d6af96fea09dda70b2489ece1f3ace2dd92502e225cff5cff7fec453776",
+  "blockNumber": 16656405,
+  "configHash": "0x49f7bf7640f2f567471dbb7179bf811af73dcafa29f1fb7e91dce5adda9dc2db",
   "version": 8,
   "contracts": [
     {
@@ -83,15 +83,15 @@
         "getGateway": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
         "getGovernor": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 15163,
-        "getTotalPriorityTxs": 15329,
+        "getTotalBatchesExecuted": 15253,
+        "getTotalPriorityTxs": 15332,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "paused": false,
-        "totalBatchesExecuted": 15163,
-        "totalPriorityTxs": 15329,
-        "totalSyncedPriorityTxs": 15328,
-        "totalValidatorForwardFee": "8500537532770316894",
+        "totalBatchesExecuted": 15253,
+        "totalPriorityTxs": 15332,
+        "totalSyncedPriorityTxs": 15332,
+        "totalValidatorForwardFee": "8502083461437390384",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 40000000000
       },

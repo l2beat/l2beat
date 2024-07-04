@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "linea",
-  "blockNumber": 6338052,
-  "configHash": "0x3b881d325103e48f3cf11c92a77e43d167905fe1386ed10d5f43d962f9bb3cad",
+  "blockNumber": 6349114,
+  "configHash": "0xc06ac91585b125df16b71d1a13312b4511867e950d5d29612724868155e69ba6",
   "version": 8,
   "contracts": [
     {
@@ -70,6 +70,10 @@
         "revertedBlocks": [],
         "validator": "0x4732015b3B1712A4FC5C059195300D12d529bb77",
         "zkSyncContract": "0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05"
+      },
+      "errors": {
+        "validatorsAdded": "Cannot find a matching event for ValidatorAdded",
+        "validatorsRemoved": "Cannot find a matching event for ValidatorRemoved"
       },
       "derivedName": "ValidatorTimelock"
     },
@@ -202,7 +206,7 @@
           }
         ],
         "FORWARD_REQUEST_TYPE_HASH": "0xe0aaca1722ef50bb0c9b032e5b16ce2b79fa9f23638835456b27fd6894f8292c",
-        "getFirstUnprocessedPriorityTx": 251476,
+        "getFirstUnprocessedPriorityTx": 251483,
         "getGateway": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB",
         "getGovernor": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
         "getL2BootloaderBytecodeHash": "0x010007ed0e328b940e241f7666a6303b7ffd4e3fd7e8c154d6e7556befe6cd6d",
@@ -211,16 +215,16 @@
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingGovernor": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 338,
+        "getPriorityQueueSize": 349,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 18,
-        "getTotalBatchesCommitted": 16379,
-        "getTotalBatchesExecuted": 15253,
-        "getTotalBatchesVerified": 16371,
-        "getTotalBlocksCommitted": 16379,
-        "getTotalBlocksExecuted": 15253,
-        "getTotalBlocksVerified": 16371,
-        "getTotalPriorityTxs": 251814,
+        "getTotalBatchesCommitted": 16416,
+        "getTotalBatchesExecuted": 15283,
+        "getTotalBatchesVerified": 16405,
+        "getTotalBlocksCommitted": 16416,
+        "getTotalBlocksExecuted": 15283,
+        "getTotalBlocksVerified": 16405,
+        "getTotalPriorityTxs": 251832,
         "getVerifier": "0x902C3806A84f4e855a8746e92d7F1C9a51400458",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0x5a3ef282b21e12fe1f4438e5bb158fc5060b160559c5158c6389d62d9fe3d080",
@@ -229,8 +233,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x10c4974d4ce2302a2b39b2afac7e024534860d9d669df8088699f76c4b2da511",
-          "expirationTimestamp": 1719398982,
+          "canonicalTxHash": "0xcdc6fda5d12245e127a021765e023576a70c7e42641312198098e82645027264",
+          "expirationTimestamp": 1719419624,
           "layer2Tip": 0
         },
         "validators": [

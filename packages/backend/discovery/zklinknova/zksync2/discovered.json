@@ -1,8 +1,8 @@
 {
   "name": "zklinknova",
   "chain": "zksync2",
-  "blockNumber": 37709163,
-  "configHash": "0xf96fd51b5a2481c8d9d5a5d803fb6fb2bb70dea832331a09b618a87f3a7c2667",
+  "blockNumber": 38233605,
+  "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
   "version": 8,
   "contracts": [
     {
@@ -14,6 +14,9 @@
         "masterCopy": "0x1727c2c531cf966f902E5927b98490fDFb3b2b70",
         "modules": [],
         "threshold": "5 of 8 (63%)"
+      },
+      "assignedPermissions": {
+        "admin": ["0xaFe8C7Cf33eD0fee179DFF20ae174C660883273A"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x1727c2c531cf966f902E5927b98490fDFb3b2b70"],
@@ -69,6 +72,9 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0xaB3DDB86072a35d74beD49AA0f9210098ebf2D08"]
       },
       "sinceTimestamp": 1709297074,
       "derivedName": ""

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x1396d77636797eb5287f664d0d728909e641087c
+Generated with discovered.json: 0xd58b8b1583c81cac7fa46a2fb28abb31457a3fca
 
-# Diff at Thu, 04 Jul 2024 07:42:57 GMT:
+# Diff at Thu, 04 Jul 2024 14:08:31 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 20231729
+- current block number: 20233648
 
 ## Description
 
@@ -19,7 +19,25 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract ProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2)
+    contract ArbitrumL1Gateway (0x273D59aed2d793167c162E64b9162154B07583C0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EthereumProxyAdmin (0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BlastL1Gateway (0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BaseL1Gateway (0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E)
     +++ description: None
 ```
 
@@ -31,13 +49,31 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
+    contract MantaL1Gateway (0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismL1Gateway (0x668e8F67adB8219e1816C2E5bBEa055A78AF3026)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
     contract LineaL1Gateway (0x803460416C2682Ac54FccF03eF77b10A12f2809b)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract EthereumGateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c)
+    contract EthereumL1Gateway (0x83Bc7394738A7A084081aF22EEC0051908c0055c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92)
     +++ description: None
 ```
 
@@ -49,6 +85,18 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xdb4D755E3b8735314147b9bB146327C269701E2D)
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MantleL1Gateway (0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EraL1Gateway (0xeCD189e0f390826E137496a4e4a23ACf76c942Ab)
     +++ description: None
 ```

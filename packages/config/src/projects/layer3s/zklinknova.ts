@@ -17,7 +17,7 @@ const blastDiscovery = new ProjectDiscovery('zklinknova', 'blast')
 const zksync2Discovery = new ProjectDiscovery('zklinknova', 'zksync2')
 const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 
-const lineaDiscovery = new ProjectDiscovery('linea')
+const lineaDiscovery = new ProjectDiscovery('zklinknova', 'linea')
 
 const optimismUpgradability = {
   upgradableBy: ['OptimismOwner'],
@@ -78,35 +78,6 @@ const upgradeDelaySeconds = lineaDiscovery.getContractValue<number>(
   'Governance',
   'minDelay',
 )
-
-const validators = () => {
-  const validatorsAdded = lineaDiscovery.getContractValue<string[]>(
-    'ValidatorTimelock',
-    'validatorsAdded',
-  )
-  const validatorsRemoved = lineaDiscovery.getContractValue<string[]>(
-    'ValidatorTimelock',
-    'validatorsRemoved',
-  )
-
-  // Create a map to track the net state of each validator (added or removed)
-  const validatorStates = new Map<string, number>()
-
-  // Increment for added validators
-  validatorsAdded.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) + 1)
-  })
-
-  // Decrement for removed validators
-  validatorsRemoved.forEach((validator) => {
-    validatorStates.set(validator, (validatorStates.get(validator) || 0) - 1)
-  })
-
-  // Filter validators that have a net positive state (added more times than removed)
-  return Array.from(validatorStates.entries())
-    .filter(([_, state]) => state > 0)
-    .map(([validator, _]) => validator)
-}
 
 export const zklinknova: Layer3 = {
   type: 'layer3',
@@ -627,12 +598,12 @@ export const zklinknova: Layer3 = {
       'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
     ),
     {
-      name: 'Validators',
-      accounts: validators().map((v) =>
-        lineaDiscovery.formatPermissionedAccount(v),
-      ),
+      name: 'Validator',
+      accounts: [
+        lineaDiscovery.getPermissionedAccount('ValidatorTimelock', 'validator'),
+      ],
       description:
-        'Actors that are allowed to propose, execute and revert L2 batches on L1 through the ValidatorTimelock.',
+        'Single permissioned actor that can commit, prove and execute blocks.',
     },
   ],
   nativePermissions: {

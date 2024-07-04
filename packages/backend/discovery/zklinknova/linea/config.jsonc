@@ -71,19 +71,21 @@
             "type": "constructorArgs",
             "nameArgs": true
           }
-        }
-        /* TODO: add validator discovery
-          "validatorsAdded": {
+        },
+        "validatorsAdded": {
+          "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorAdded",
             "valueKey": "_addedValidator"
-          },
-          "validatorsRemoved": {
+          }
+        },
+        "validatorsRemoved": {
+          "handler": {
             "type": "arrayFromOneEvent",
             "event": "ValidatorRemoved",
             "valueKey": "_removedValidator"
           }
-          */
+        }
       }
     },
     "L2MessageService": {

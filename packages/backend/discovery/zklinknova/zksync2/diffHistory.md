@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xcaa14b997460991a130b4ac921538514664fe6ec
+Generated with discovered.json: 0xedc3746a6876bbb6df9b4faf6c8cffb9335317a7
 
-# Diff at Fri, 28 Jun 2024 09:29:06 GMT:
+# Diff at Thu, 04 Jul 2024 14:11:24 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 37709163
+- current block number: 38233605
 
 ## Description
 
@@ -13,7 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x3334552599C9aA1FE08CfF276A02033FF37646ca)
+    contract EraOwner (0x3334552599C9aA1FE08CfF276A02033FF37646ca)
     +++ description: None
 ```
 
@@ -31,6 +31,6 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract  (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98)
+    contract EraProxyAdmin (0xe8184919c7200EF09e7007DFaB89BA4a99CeDc98)
     +++ description: None
 ```

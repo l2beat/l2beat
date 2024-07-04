@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x40d64449f86ebe0f1990640b6734485837d4ef65
+Generated with discovered.json: 0xe10ce73bd8b80f0098e4eaeaadd0c70a60dba5bf
 
-# Diff at Thu, 04 Jul 2024 07:46:45 GMT:
+# Diff at Thu, 04 Jul 2024 13:55:20 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 6338052
+- current block number: 6349114
 
 ## Description
 
@@ -13,25 +13,13 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x1E1f6F22f97b4a7522D8B62e983953639239774E)
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
     contract  (0x217C85a8B14466963905C22E817Dd1553fa62DFC)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2MessageService (0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec)
     +++ description: None
 ```
 
@@ -61,19 +49,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Verifier (0x803460416C2682Ac54FccF03eF77b10A12f2809b)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract Verifier (0x902C3806A84f4e855a8746e92d7F1C9a51400458)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract TimeLock (0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca)
     +++ description: None
 ```
 
