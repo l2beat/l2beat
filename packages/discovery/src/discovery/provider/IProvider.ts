@@ -1,3 +1,4 @@
+import { BlobClient, BlobsInBlock } from '@l2beat/shared'
 import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import { IEtherscanClient } from '../../utils/IEtherscanClient'
@@ -15,6 +16,7 @@ export interface RawProviders {
   baseProvider: providers.JsonRpcProvider
   eventProvider: providers.JsonRpcProvider
   etherscanClient: IEtherscanClient
+  blobClient?: BlobClient
 }
 
 export interface IProvider {
@@ -77,4 +79,6 @@ export interface IProvider {
   getDeployment(
     address: EthereumAddress,
   ): Promise<ContractDeployment | undefined>
+
+  getBlobs(txHash: string): Promise<BlobsInBlock>
 }

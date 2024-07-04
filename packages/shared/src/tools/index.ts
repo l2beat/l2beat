@@ -1,4 +1,4 @@
 export * from './EventTracker'
-export * from './TrackedTxId'
+export * from './createTrackedTxConfigId'
 export * from './TrackedTxsConfig'
 export * from './hashJson'

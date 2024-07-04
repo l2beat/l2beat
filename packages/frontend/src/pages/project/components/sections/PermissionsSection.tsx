@@ -12,7 +12,6 @@ import { ProjectSectionId } from './common/sectionId'
 export interface PermissionsSectionProps {
   id: ProjectSectionId
   title: string
-  projectType: 'L2' | 'L3'
   sectionOrder: number
   isUnderReview: boolean | undefined
   permissions: TechnologyContract[]
@@ -25,7 +24,6 @@ export interface PermissionsSectionProps {
 export function PermissionsSection({
   id,
   title,
-  projectType,
   sectionOrder,
   permissions,
   nativePermissions,
@@ -69,7 +67,6 @@ export function PermissionsSection({
                     verificationStatus={verificationStatus}
                     manuallyVerifiedContracts={manuallyVerifiedContracts}
                     className="my-4"
-                    sourceBadge={projectType}
                   />
                 ))}
               </div>

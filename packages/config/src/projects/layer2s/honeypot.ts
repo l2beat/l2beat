@@ -103,7 +103,7 @@ export const honeypot: Layer2 = {
           selector: '0xddfdfbb0',
           functionSignature:
             'function submitClaim(bytes calldata _claimData) external onlyOwner',
-          sinceTimestampInclusive: new UnixTime(1694467715),
+          sinceTimestamp: new UnixTime(1694467715),
         },
       },
     ],
