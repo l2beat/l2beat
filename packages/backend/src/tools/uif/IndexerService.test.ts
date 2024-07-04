@@ -1,4 +1,9 @@
-import { CoingeckoId, UnixTime, json } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  CoingeckoId,
+  UnixTime,
+  json,
+} from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import {
@@ -332,18 +337,16 @@ describe(IndexerService.name, () => {
 
     const result = await indexerService.getAmountsStatus(
       [
-        { configId: 'a' },
-        { configId: 'b' },
-        { configId: 'c' },
-        { configId: 'd' },
-        { configId: 'e' },
-        { configId: 'f' },
-      ],
-      [
-        { configId: 'g', coingeckoId: CoingeckoId('g') },
-        { configId: 'h', coingeckoId: CoingeckoId('h') },
-        { configId: 'i', coingeckoId: CoingeckoId('i') },
-        { configId: 'j', coingeckoId: CoingeckoId('j') },
+        configuration('a', undefined, 'escrow'),
+        configuration('b', undefined, 'escrow'),
+        configuration('c', undefined, 'escrow'),
+        configuration('d', undefined, 'escrow'),
+        configuration('e', undefined, 'escrow'),
+        configuration('f', undefined, 'escrow'),
+        configuration('g', CoingeckoId('g'), 'circulatingSupply'),
+        configuration('h', CoingeckoId('h'), 'circulatingSupply'),
+        configuration('i', CoingeckoId('i'), 'circulatingSupply'),
+        configuration('j', CoingeckoId('j'), 'circulatingSupply'),
       ],
       targetTimestamp,
     )
@@ -455,4 +458,16 @@ function config(
     maxHeight,
     currentHeight,
   }
+}
+
+function configuration(
+  configId: string,
+  coingeckoId: CoingeckoId | undefined,
+  type: 'circulatingSupply' | 'escrow',
+) {
+  return mockObject<AmountConfigEntry & { configId: string }>({
+    configId,
+    coingeckoId,
+    type,
+  })
 }

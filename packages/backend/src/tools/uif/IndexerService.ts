@@ -1,5 +1,11 @@
 import { assert } from '@l2beat/backend-tools'
-import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
+import {
+  AmountConfigEntry,
+  CirculatingSupplyEntry,
+  EscrowEntry,
+  TotalSupplyEntry,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import {
   DatabaseMiddleware,
@@ -164,13 +170,22 @@ export class IndexerService {
   }
 
   async getAmountsStatus(
-    configurations: { configId: string }[],
-    circulatingSupplyConfigs: { configId: string; coingeckoId: CoingeckoId }[],
+    configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
+    const chainIndexersConfigurations = configurations.filter(
+      (c): c is (EscrowEntry | TotalSupplyEntry) & { configId: string } =>
+        c.type !== 'circulatingSupply',
+    )
+
     const { lagging, excluded } = await this.getConfigurationsStatus(
-      configurations,
+      chainIndexersConfigurations,
       targetTimestamp,
+    )
+
+    const circulatingSupplyConfigs = configurations.filter(
+      (c): c is CirculatingSupplyEntry & { configId: string } =>
+        c.type === 'circulatingSupply',
     )
 
     const indexersState = await this.indexerStateRepository.getByIndexerIds(

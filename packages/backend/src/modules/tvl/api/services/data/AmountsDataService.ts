@@ -1,10 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import {
-  AmountConfigEntry,
-  CirculatingSupplyEntry,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
@@ -36,14 +32,7 @@ export class AmountsDataService {
         minTimestamp,
         targetTimestamp,
       ),
-      this.$.indexerService.getAmountsStatus(
-        configurations.filter((c) => c.type !== 'circulatingSupply'),
-        configurations.filter(
-          (c): c is CirculatingSupplyEntry & { configId: string } =>
-            c.type === 'circulatingSupply',
-        ),
-        targetTimestamp,
-      ),
+      this.$.indexerService.getAmountsStatus(configurations, targetTimestamp),
     ])
 
     const amountsByTimestamp = groupBy(amountRecords, 'timestamp')
@@ -89,14 +78,7 @@ export class AmountsDataService {
   ) {
     const [amounts, status] = await Promise.all([
       this.$.amountRepository.getByTimestamp(targetTimestamp),
-      this.$.indexerService.getAmountsStatus(
-        configurations.filter((c) => c.type !== 'circulatingSupply'),
-        configurations.filter(
-          (c): c is CirculatingSupplyEntry & { configId: string } =>
-            c.type === 'circulatingSupply',
-        ),
-        targetTimestamp,
-      ),
+      this.$.indexerService.getAmountsStatus(configurations, targetTimestamp),
     ])
 
     const result = {
