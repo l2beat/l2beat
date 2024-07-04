@@ -68,5 +68,5 @@ export function getTransferQuery(
       AND txs.block_timestamp <= TIMESTAMP(?)
   `
 
-  return { query, params, limitInGb: 5 }
+  return { query, params, limitInGb: 10 }
 }
