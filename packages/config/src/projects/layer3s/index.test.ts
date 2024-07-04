@@ -1,8 +1,10 @@
 import { expect } from 'earl'
 
 import { assert } from '@l2beat/backend-tools'
-import { ProjectId } from '@l2beat/shared-pure'
+import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
+import { tokenList } from '../../tokens'
 import { layer2s } from '../layer2s'
 import { layer3s } from './index'
 
@@ -48,7 +50,8 @@ describe('layer3s', () => {
 
         if (
           layer3.id !== ProjectId('zklinknova') &&
-          layer3.id !== ProjectId('mxc')
+          layer3.id !== ProjectId('mxc') &&
+          layer3.id !== ProjectId('hook')
         ) {
           const escrows = layer3.config.escrows
           for (const escrow of escrows) {
@@ -59,6 +62,31 @@ describe('layer3s', () => {
           }
         }
       })
+    }
+  })
+
+  describe('every escrow can resolve all of its tokens', () => {
+    const chainsMap = new Map<string, ChainId>(
+      chains.map((c) => [c.name, ChainId(c.chainId)]),
+    )
+    for (const layer3 of layer3s) {
+      for (const escrow of layer3.config.escrows) {
+        const chainId = chainsMap.get(escrow.chain)
+        if (!chainId) continue
+        const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
+
+        if (escrow.tokens === '*') continue
+        for (const token of escrow.tokens) {
+          it(`${layer3.id.toString()}:${escrow.address.toString()}:${token}`, () => {
+            const foundToken = tokensOnChain.find((t) => t.symbol === token)
+            assert(
+              foundToken,
+              `Please add token with symbol ${token} on ${escrow.chain} chain`,
+            )
+            expect(foundToken).not.toBeNullish()
+          })
+        }
+      }
     }
   })
 

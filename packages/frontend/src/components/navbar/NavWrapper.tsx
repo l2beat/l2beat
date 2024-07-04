@@ -30,10 +30,10 @@ function NavLinkGroup({
 }) {
   return (
     <div className="flex flex-col gap-2">
-      <div className="ml-1 font-medium text-[0.8125rem] text-slate-600 uppercase leading-[0.8125rem] xl:sidenav-collapsed:hidden dark:text-zinc-500">
+      <div className="ml-1 font-medium text-[15px] text-slate-600 uppercase leading-[15px] tracking-tight xl:sidenav-collapsed:hidden dark:text-gray-50">
         {title}
       </div>
-      <div className="mt-[12px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-zinc-500" />
+      <div className="mt-[12px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-gray-50" />
       <ul className="flex flex-col gap-0.5">{children}</ul>
     </div>
   )
@@ -301,7 +301,7 @@ export function Sidenav({
     >
       <div
         className={cn(
-          'flex flex-col overflow-x-clip bg-[#E6E7EC] transition-all xl:fixed xl:sidenav-collapsed:w-20 dark:border-gray-850 xl:dark:border-r dark:border-r-0 dark:bg-[#1E1C21]',
+          'custom-scrollbar flex flex-col overflow-x-clip bg-[#E6E7EC] transition-all xl:fixed xl:sidenav-collapsed:w-20 dark:border-gray-850 xl:dark:border-r dark:border-r-0 dark:bg-[#1E1C21]',
           sharedSizeClasses,
         )}
         data-role="sidenav-inner"
@@ -357,8 +357,8 @@ export function Sidenav({
               </NavSmallLink>
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
-            <Divider className="xl:hidden" />
-            <ul className="flex flex-row gap-4 pb-12 xl:hidden">
+            <Divider />
+            <ul className="flex gap-2 sidenav-collapsed:hidden xl:justify-between">
               <SocialLinks />
             </ul>
           </nav>

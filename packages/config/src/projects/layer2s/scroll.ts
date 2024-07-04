@@ -398,7 +398,7 @@ export const scroll: Layer2 = {
       {
         title: 'Prover Architecture',
         description:
-          'The prover code can be found [here](https://github.com/scroll-tech/scroll-prover).',
+          'The prover code can be found [here](https://github.com/scroll-tech/zkevm-circuits/tree/develop/prover).',
       },
       {
         title: 'ZK Circuits',
@@ -467,14 +467,14 @@ export const scroll: Layer2 = {
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'ZkEvmVerifierV1',
+              name: 'Final circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Powers of Tau 26',
             },
             {
-              name: 'RecursiveVerifier',
+              name: 'Aggregation circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
@@ -482,7 +482,7 @@ export const scroll: Layer2 = {
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
             },
             {
-              name: 'MainVerifier',
+              name: 'Main circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',

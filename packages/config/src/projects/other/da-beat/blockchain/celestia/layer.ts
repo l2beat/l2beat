@@ -10,7 +10,7 @@ import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer, DaLayerKind } from '../../types/DaLayer'
-import { blobstream } from './bridges/blobstream'
+import { blobStream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
 /**

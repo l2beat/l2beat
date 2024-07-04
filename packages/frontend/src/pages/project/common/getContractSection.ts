@@ -127,7 +127,10 @@ export function getContractSection(
     contracts: contracts ?? [],
     escrows: escrows,
     risks: risks,
-    architectureImage: getDiagramImage('architecture', project.display.slug),
+    architectureImage: getDiagramImage(
+      'architecture',
+      project.display.architectureImage ?? project.display.slug,
+    ),
     references: project.contracts?.references ?? [],
     isIncomplete: project.contracts?.isIncomplete,
     isUnderReview: project.isUnderReview ?? project.contracts?.isUnderReview,
@@ -517,7 +520,7 @@ function areAllAddressesUnverified(
   })
 }
 
-function slugToDisplayName(slug: string): string {
+export function slugToDisplayName(slug: string): string {
   if (slug === 'ethereum') {
     return 'Ethereum'
   }

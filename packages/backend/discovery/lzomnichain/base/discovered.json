@@ -841,6 +841,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x3c2269811836af69497E5F486A85D7316753cf62"]
+      },
       "sinceTimestamp": 1689300855
     },
     {
@@ -958,6 +961,9 @@
       "unverified": true,
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"]
       },
       "sinceTimestamp": 1689301191
     }

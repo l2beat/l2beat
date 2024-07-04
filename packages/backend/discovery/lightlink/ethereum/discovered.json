@@ -340,7 +340,7 @@
     },
     {
       "address": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
-      "permissions": {
+      "assignedPermissions": {
         "admin": [
           "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
           "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",

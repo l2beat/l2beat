@@ -9,6 +9,7 @@ import {
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { getZeroStats } from '@l2beat/discovery/dist/discovery/provider/Stats'
 import { DiscoveryRunner } from './DiscoveryRunner'
 
 const ADDRESS = EthereumAddress.random()
@@ -27,6 +28,11 @@ describe(DiscoveryRunner.name, () => {
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
           get: () => MOCK_PROVIDER,
+          getStats: () => ({
+            highLevelCounts: getZeroStats(),
+            cacheCounts: getZeroStats(),
+            lowLevelCounts: getZeroStats(),
+          }),
         }),
         engine,
         configReader,
@@ -43,6 +49,8 @@ describe(DiscoveryRunner.name, () => {
         MOCK_PROVIDER,
         new DiscoveryConfig({
           ...getMockConfig().raw,
+          maxAddresses: 600,
+          maxDepth: 18,
           initialAddresses: [ADDRESS],
         }),
       )
@@ -61,6 +69,11 @@ describe(DiscoveryRunner.name, () => {
       const runner = new DiscoveryRunner(
         mockObject<AllProviders>({
           get: () => MOCK_PROVIDER,
+          getStats: () => ({
+            highLevelCounts: getZeroStats(),
+            cacheCounts: getZeroStats(),
+            lowLevelCounts: getZeroStats(),
+          }),
         }),
         engine,
         configReader,
@@ -85,6 +98,11 @@ describe(DiscoveryRunner.name, () => {
         const runner = new DiscoveryRunner(
           mockObject<AllProviders>({
             get: () => MOCK_PROVIDER,
+            getStats: () => ({
+              highLevelCounts: getZeroStats(),
+              cacheCounts: getZeroStats(),
+              lowLevelCounts: getZeroStats(),
+            }),
           }),
           engine,
           mockObject<ConfigReader>({}),
@@ -111,6 +129,11 @@ describe(DiscoveryRunner.name, () => {
         const runner = new DiscoveryRunner(
           mockObject<AllProviders>({
             get: () => MOCK_PROVIDER,
+            getStats: () => ({
+              highLevelCounts: getZeroStats(),
+              cacheCounts: getZeroStats(),
+              lowLevelCounts: getZeroStats(),
+            }),
           }),
           engine,
           mockObject<ConfigReader>({}),

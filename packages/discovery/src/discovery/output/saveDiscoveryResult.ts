@@ -111,71 +111,41 @@ async function saveFlatSources(
 ): Promise<void> {
   const flatSourcesFolder = options.flatSourcesFolder ?? '.flat'
   const flatSourcesPath = posix.join(rootPath, flatSourcesFolder)
-  const allContractNames = results.map((c) =>
-    c.type !== 'EOA' ? c.derivedName ?? c.name : 'EOA',
-  )
 
   await rimraf(flatSourcesPath)
+  await mkdirp(flatSourcesPath)
 
   logger.log(`Saving flattened sources`)
+
+  const nameCounts = new Map<string, number>()
+  for (const contract of results) {
+    if (contract.type === 'EOA') {
+      continue
+    }
+
+    const name = contract.name
+    const count = nameCounts.get(name) || 0
+    nameCounts.set(name, count + 1)
+  }
+
   for (const analyzedContract of results) {
     try {
       if (analyzedContract.type === 'EOA') {
         continue
       }
 
-      for (const [
-        bundleIndex,
-        bundle,
-      ] of analyzedContract.sourceBundles.entries()) {
-        const input: FileContent[] = Object.entries(bundle.source.files)
-          .map(([fileName, content]) => ({
-            path: fileName,
-            content,
-          }))
-          .filter((e) => e.path.endsWith('.sol'))
-
-        if (input.length === 0) {
-          logger.log(
-            `[SKIP]: ${analyzedContract.name}-${bundle.name} no .sol files`,
-          )
-          continue
-        }
-
-        const result = timed(() => {
-          const parsedFileManager = ParsedFilesManager.parseFiles(
-            input,
-            bundle.source.remappings,
-          )
-          const output = flattenStartingFrom(bundle.name, parsedFileManager)
-
-          return output
-        })
-
-        const throughput = formatThroughput(input, result.executionTime)
-
-        const containingDirectory = getFlatContainingDirectoryName(
-          analyzedContract,
-          allContractNames,
-        )
-
-        const fileName = getFlatSourceFileName(
-          analyzedContract,
-          bundleIndex,
-          bundle,
-          allContractNames,
-        )
-
-        const flatContent = addSolidityVersionComment(
-          bundle.source.solidityVersion,
-          result.value,
-        )
-        const path = posix.join(flatSourcesPath, containingDirectory, fileName)
-        await mkdirp(dirname(path))
-        await writeFile(path, flatContent)
-
-        logger.log(`[ OK ]: ${bundle.name} @ ${throughput}`)
+      let outName = analyzedContract.name
+      const count = nameCounts.get(outName) || 0
+      if (count > 1) {
+        outName = `${outName}-${analyzedContract.address}`
       }
+
+      await writeFlattenedFiles(
+        flatSourcesPath,
+        outName,
+        analyzedContract.sourceBundles,
+        logger,
+      )
     } catch (e) {
       assert(analyzedContract.type !== 'EOA', 'This should never happen')
       const contractName = analyzedContract.derivedName ?? analyzedContract.name
@@ -185,48 +155,78 @@ async function saveFlatSources(
   }
 }
 
+async function writeFlattenedFiles(
+  flatSourcesPath: string,
+  topLevelName: string,
+  bundles: PerContractSource[],
+  logger: DiscoveryLogger,
+) {
+  let containingDirectory = ''
+  if (bundles.length > 1) {
+    containingDirectory = topLevelName
+
+    const path = posix.join(flatSourcesPath, containingDirectory)
+    await mkdirp(path)
+  }
+
+  for (const [bundleIndex, bundle] of bundles.entries()) {
+    const input: FileContent[] = Object.entries(bundle.source.files)
+      .map(([fileName, content]) => ({
+        path: fileName,
+        content,
+      }))
+      .filter((e) => e.path.endsWith('.sol'))
+
+    if (input.length === 0) {
+      logger.log(`[SKIP]: ${topLevelName}-${bundle.name} no .sol files`)
+      continue
+    }
+
+    const result = timed(() => {
+      const parsedFileManager = ParsedFilesManager.parseFiles(
+        input,
+        bundle.source.remappings,
+      )
+      const output = flattenStartingFrom(bundle.name, parsedFileManager)
+
+      return output
+    })
+
+    const throughput = formatThroughput(input, result.executionTime)
+
+    const flatContent = addSolidityVersionComment(
+      bundle.source.solidityVersion,
+      result.value,
+    )
+
+    const fileName = bundles.length > 1 ? bundle.name : topLevelName
+
+    const hasProxy = bundles.length > 1
+    const isProxy = hasProxy && bundleIndex === 0
+    const hasManyImplementations = bundles.length > 2
+
+    const implementationPostfix = hasManyImplementations
+      ? `.${bundleIndex}`
+      : ''
+    const proxyPostfix = isProxy ? '.p' : ''
+    const postfix = isProxy ? proxyPostfix : implementationPostfix
+
+    const path = posix.join(
+      flatSourcesPath,
+      containingDirectory,
+      `${fileName}${postfix}.sol`,
+    )
+    await writeFile(path, flatContent)
+
+    logger.log(`[ OK ]: ${topLevelName} @ ${throughput}`)
+  }
+}
+
 function addSolidityVersionComment(
   solidityVersion: string,
   flatSource: string,
 ): string {
   return `// Compiled with solc version: ${solidityVersion}\n\n${flatSource}`
-}
-
-function getFlatContainingDirectoryName(
-  contract: Analysis,
-  allContractNames: string[],
-): string {
-  assert(contract.type !== 'EOA', 'Invalid execution path')
-
-  const hasNameClash =
-    allContractNames.filter((n) => n === contract.name).length > 1
-  const uniquenessSuffix = hasNameClash ? `-${contract.address.toString()}` : ''
-
-  const hasProxy = contract.sourceBundles.length > 1
-  return hasProxy ? `${contract.name}${uniquenessSuffix}` : ''
-}
-
-function getFlatSourceFileName(
-  contract: Analysis,
-  sourceIndex: number,
-  source: PerContractSource,
-  allContractNames: string[],
-): string {
-  assert(contract.type !== 'EOA', 'Invalid execution path')
-
-  const hasProxy = contract.sourceBundles.length > 1
-  const isProxy = hasProxy && sourceIndex === 0
-
-  const hasNameClash =
-    allContractNames.filter((n) => n === source.name).length > 1
-  const uniquenessSuffix =
-    hasNameClash && !hasProxy ? `-${source.address.toString()}` : ''
-  const hasManyImplementations = contract.implementations.length > 1
-
-  const implementationPostfix = hasManyImplementations ? `.${sourceIndex}` : ''
-  const proxyPostfix = isProxy ? '.p' : ''
-  const postfix = isProxy ? proxyPostfix : implementationPostfix
-  return `${source.name}${uniquenessSuffix}${postfix}.sol`
 }
 
 function formatThroughput(

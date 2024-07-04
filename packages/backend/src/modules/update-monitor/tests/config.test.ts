@@ -3,7 +3,6 @@ import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
-
 import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
 
 describe('discovery config.jsonc', () => {
@@ -29,6 +28,8 @@ describe('discovery config.jsonc', () => {
       chainConfigs
         ?.flat()
         ?.filter((c) => !c.name.startsWith('shared-'))
+        // TODO!: Please remove this check once transporter bridge is back in the config
+        ?.filter((c) => c.name !== 'transporter')
         ?.filter((c) => !projectIds.includes(c.name))
         .map((c) => c.name) ?? []
 

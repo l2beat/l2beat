@@ -23,7 +23,7 @@ export interface Bridge {
   technology: BridgeTechnology
   contracts?: ScalingProjectContracts
   permissions?: ScalingProjectPermission[] | 'UnderReview'
-  nativePermissions?: ScalingProjectPermission[] | 'UnderReview'
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
   milestones?: Milestone[]
   knowledgeNuggets?: KnowledgeNugget[]
 }
@@ -37,6 +37,7 @@ export interface BridgeDisplay {
   detailedDescription?: string
   category: 'Token Bridge' | 'Liquidity Network' | 'Hybrid'
   links: Partial<ScalingProjectLinks>
+  architectureImage?: string
 }
 
 export interface BridgeConfig {

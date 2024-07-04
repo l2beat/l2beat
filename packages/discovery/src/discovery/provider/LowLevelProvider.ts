@@ -1,3 +1,4 @@
+import { BlobClient, BlobsInBlock } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -28,6 +29,7 @@ export class LowLevelProvider {
     private readonly provider: providers.JsonRpcProvider,
     private readonly eventProvider: providers.JsonRpcProvider,
     private readonly etherscanClient: IEtherscanClient,
+    private readonly blobClient?: BlobClient,
   ) {}
 
   getRawProviders(): RawProviders {
@@ -35,6 +37,7 @@ export class LowLevelProvider {
       baseProvider: this.provider,
       eventProvider: this.eventProvider,
       etherscanClient: this.etherscanClient,
+      blobClient: this.blobClient,
     }
   }
 
@@ -176,6 +179,11 @@ export class LowLevelProvider {
       return await this.provider.getBlockNumber()
     })
   }
+
+  async getBlobs(txHash: string): Promise<BlobsInBlock> {
+    assert(this.blobClient, 'BlobClient is not available')
+    return await this.blobClient.getRelevantBlobs(txHash)
+  }
 }
 
 export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
@@ -185,7 +193,7 @@ export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
       return await fn()
     } catch (e) {
       attempts++
-      if (!isHttpErrorResponse(e)) {
+      if (!isServerError(e)) {
         throw e
       }
       const result = shouldRetry(attempts, e)
@@ -198,11 +206,15 @@ export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
   }
 }
 
-function isHttpErrorResponse(e: unknown): boolean {
+function isServerError(e: unknown): boolean {
   const parsed = ethersError.safeParse(e)
-  return parsed.success && parsed.data.status >= 400
+  return (
+    parsed.success &&
+    ((parsed.data.status ?? 200) >= 400 || parsed.data.code === 'SERVER_ERROR')
+  )
 }
 
 const ethersError = z.object({
-  status: z.number(),
+  code: z.string(),
+  status: z.number().optional(),
 })

@@ -14,6 +14,7 @@ export const aevo: Layer2 = opStackL2({
   display: {
     name: 'Aevo',
     slug: 'aevo',
+    architectureImage: 'aevo',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:

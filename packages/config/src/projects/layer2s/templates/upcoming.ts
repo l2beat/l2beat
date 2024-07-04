@@ -1,18 +1,21 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { CONTRACTS, TECHNOLOGY, UPCOMING_RISK_VIEW } from '../../../common'
+import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s'
 import { type Layer2, type Layer2Display } from '../types'
 
 export interface UpcomingConfigL2 {
   id: string
   display: Omit<Layer2Display, 'dataAvailabilityMode'>
+  badges?: BadgeId[]
 }
 
 export interface UpcomingConfigL3 {
   id: string
   display: Omit<Layer3Display, 'dataAvailabilityMode'>
   hostChain: Layer3['hostChain']
+  badges?: BadgeId[]
 }
 
 export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
@@ -32,6 +35,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
     riskView: UPCOMING_RISK_VIEW,
     technology: TECHNOLOGY.UPCOMING,
     contracts: CONTRACTS.EMPTY,
+    badges: templateVars.badges,
   }
 }
 
@@ -50,5 +54,6 @@ export function upcomingL3(templateVars: UpcomingConfigL3): Layer3 {
     riskView: UPCOMING_RISK_VIEW,
     technology: TECHNOLOGY.UPCOMING,
     contracts: CONTRACTS.EMPTY,
+    badges: templateVars.badges,
   }
 }
