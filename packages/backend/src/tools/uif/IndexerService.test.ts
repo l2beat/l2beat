@@ -267,6 +267,15 @@ describe(IndexerService.name, () => {
         },
       ],
     })
+
+    expect(indexerConfigurationsRepository.getByIds).toHaveBeenOnlyCalledWith([
+      'a',
+      'b',
+      'c',
+      'd',
+      'e',
+      'f',
+    ])
   })
 })
 
