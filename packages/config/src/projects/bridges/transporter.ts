@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, formatSeconds } from '@l2beat/shared-pure'
-
-import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -33,7 +31,8 @@ export const transporter: Bridge = {
       documentation: ['https://docs.chain.link/ccip'],
       socialMedia: ['https://x.com/transporter_io'],
     },
-    description: 'Transporter is a Token Bridge based on Chainlink’s Cross-Chain Interoperability Protocol (CCIP) network.',
+    description:
+      'Transporter is a Token Bridge based on Chainlink’s Cross-Chain Interoperability Protocol (CCIP) network.',
     detailedDescription:
       'Transporter is a hybrid bridge that can work either as a Token Bridge or Liquidity Network depending on the requirements of tokens.\
       It is using Chainlink CCIP standard for cross-chain communication, and it makes use of a secondary network of nodes, called Risk Management Network, responsible for validating the messages or halt the bridge.',
@@ -140,10 +139,12 @@ export const transporter: Bridge = {
         })(),
       ),
     ],
-    risks: [{
-      category: 'Funds can be stolen if',
-      text: `a contract receives a malicious code upgrade. There is a ${upgradeDelayString} delay on code upgrades, during which designated Cancellers can veto the upgrade.`,
-    }],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: `a contract receives a malicious code upgrade. There is a ${upgradeDelayString} delay on code upgrades, during which designated Cancellers can veto the upgrade.`,
+      },
+    ],
   },
   permissions: [
     {
