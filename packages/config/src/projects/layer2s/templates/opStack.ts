@@ -379,6 +379,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
+      architectureImage: 'bedrock-superchain',
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
@@ -460,7 +461,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   formula: 'transfer',
                   from: sequencerAddress,
                   to: sequencerInbox,
-                  sinceTimestampInclusive: templateVars.genesisTimestamp,
+                  sinceTimestamp: templateVars.genesisTimestamp,
                 },
               },
               {
@@ -474,7 +475,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   selector: '0x9aaab648',
                   functionSignature:
                     'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-                  sinceTimestampInclusive: new UnixTime(
+                  sinceTimestamp: new UnixTime(
                     l2OutputOracle.sinceTimestamp ??
                       templateVars.genesisTimestamp.toNumber(),
                   ),
@@ -731,6 +732,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     ...opStackCommon(templateVars),
     hostChain: templateVars.hostChain,
     display: {
+      architectureImage: 'bedrock-superchain',
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',

@@ -8,6 +8,7 @@
     {
       "name": "Multisig 1",
       "address": "0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -36,6 +37,7 @@
     {
       "name": "Multisig 2",
       "address": "0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
@@ -135,6 +137,7 @@
       "assignedPermissions": {
         "admin": [
           "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01",
+          "0x5290E9582B4FB706EaDf87BB1c129e897e04d06D",
           "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
         ]
       },
@@ -273,6 +276,7 @@
     {
       "name": "ZkSync Multisig",
       "address": "0xE24f4870Ab85DE8E356C5fC56138587206c70d99",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",

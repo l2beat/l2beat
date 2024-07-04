@@ -39,7 +39,6 @@ export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
   description: z.string().nullable().optional(),
-  displayName: z.string().nullable().optional(),
   severity: z.optional(ContractFieldSeverity).nullable(),
   returnType: z.string().nullable().optional(),
   target: z
@@ -84,6 +83,7 @@ export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
+  displayName: z.string().nullable().optional(),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
   ignoreRelatives: z.optional(z.array(z.string())),

@@ -14,6 +14,7 @@ export const publicgoodsnetwork: Layer2 = opStackL2({
     name: 'Public Goods Network',
     shortName: 'PGN',
     slug: 'publicgoodsnetwork',
+    architectureImage: 'publicgoodsnetwork',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:

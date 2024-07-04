@@ -149,7 +149,19 @@ describe(AddressAnalyzer.name, () => {
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
         selfMeta: undefined,
-        targetsMeta: undefined,
+        targetsMeta: {
+          [admin.toString()]: {
+            displayName: undefined,
+            categories: undefined,
+            descriptions: undefined,
+            permissions: {
+              admin: new Set([address]),
+            },
+            roles: undefined,
+            severity: undefined,
+            types: undefined,
+          },
+        },
         ignoreInWatchMode: undefined,
         usedTypes: [],
         relatives: {
@@ -265,7 +277,19 @@ describe(AddressAnalyzer.name, () => {
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
         selfMeta: undefined,
-        targetsMeta: undefined,
+        targetsMeta: {
+          [admin.toString()]: {
+            displayName: undefined,
+            categories: undefined,
+            descriptions: undefined,
+            permissions: {
+              admin: new Set([address]),
+            },
+            roles: undefined,
+            severity: undefined,
+            types: undefined,
+          },
+        },
         ignoreInWatchMode: undefined,
         usedTypes: [],
         relatives: {
@@ -377,7 +401,19 @@ describe(AddressAnalyzer.name, () => {
         sourceBundles: sources.sources,
         extendedTemplate: undefined,
         selfMeta: undefined,
-        targetsMeta: undefined,
+        targetsMeta: {
+          [admin.toString()]: {
+            displayName: undefined,
+            categories: undefined,
+            descriptions: undefined,
+            permissions: {
+              admin: new Set([address]),
+            },
+            roles: undefined,
+            severity: undefined,
+            types: undefined,
+          },
+        },
         ignoreInWatchMode: undefined,
         usedTypes: [],
         relatives: {

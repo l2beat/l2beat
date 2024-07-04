@@ -1,3 +1,151 @@
+Generated with discovered.json: 0x8aee8ab7fc7f72a1e83341840da8714f5dbb04c7
+
+# Diff at Mon, 01 Jul 2024 10:10:33 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0e7b6918e773793a1ad0061ea07b42646c37a13d block: 20177353
+- current block number: 20210980
+
+## Description
+
+ChallengeManager.sol: added function to make challengeManager aware of the new OneStepProver contracts after updating to 4844.
+
+OneStepProverHostIo.sol: added support for reading preimage from blobs.
+
+SequencerInbox.sol: Added support for blobs posting (addSequencerL2BatchFromBlobs), and a for a batch poster manager that has the ability to change the batch poster addresses.
+
+It is not posting data to blobs yet.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract OneStepProofEntry (0x09824fe72BFF474d16D9c2774432E381BBD60662)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMemory (0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x6948185c62070f9523a93664e8d064627f65830fd308af5e82f21292a2060fb8"
++        "0x89e305433a6403ac5e73b659b16ccaa2ed796cf6cd6fcb46e72c7d865a8ec6ae"
+    }
+```
+
+```diff
+    contract ChallengeManager (0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0x122B88885F1f365B69CAd38B167B039fEd0Ba096"
+      implementations.0:
+-        "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"
++        "0x122B88885F1f365B69CAd38B167B039fEd0Ba096"
+      values.osp:
+-        "0x09824fe72BFF474d16D9c2774432E381BBD60662"
++        "0x8B02a8B985a81f96e49B8289FF60847FC6020e51"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverMath (0x89AF7C4C2198c426cFe6E86de0680A0850503e06)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProverHostIo (0x99a2A31300816C1FA3f40818AC9280fe7271F878)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract OneStepProver0 (0xDf94F0474F205D086dbc2e66D69a856FCf520622)
+    +++ description: None
+```
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x873484Ba63353C8b71210ce123B465512d408B27"
++        "0x57411f5BA52531e8199066bC8EC650470A744883"
+      implementations.0:
+-        "0x873484Ba63353C8b71210ce123B465512d408B27"
++        "0x57411f5BA52531e8199066bC8EC650470A744883"
+      values.batchPosterManager:
++        "0x0000000000000000000000000000000000000000"
+      values.BROTLI_MESSAGE_HEADER_FLAG:
++        "0x00"
+      values.DAS_MESSAGE_HEADER_FLAG:
++        "0x80"
+      values.DATA_BLOB_HEADER_FLAG:
++        "0x50"
+      values.isUsingFeeToken:
++        false
+      values.reader4844:
++        "0x434345973Ebf8249398E1EeB03A62bE418B48a05"
+      values.TREE_DAS_MESSAGE_HEADER_FLAG:
++        "0x08"
+      values.ZERO_HEAVY_MESSAGE_HEADER_FLAG:
++        "0x20"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract  (0x434345973Ebf8249398E1EeB03A62bE418B48a05)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverHostIo (0x6c4322e9A0478CA7aDd30e561f96af379D3A22Bb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProver0 (0x76f72B8eFDA2DCDD3fB5A8c16d576c25eD43D645)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProofEntry (0x8B02a8B985a81f96e49B8289FF60847FC6020e51)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMath (0xba9D43FA3576bc40f13cb0731D770d1e510EdE46)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OneStepProverMemory (0xf09Bc0285055BEA82165cA3F54054aa88BB3C169)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ChallengeManager/ChallengeManager.sol          |   6 +
+ .../OneStepProverHostIo.sol                        | 107 +++-
+ .../SequencerInbox/SequencerInbox.sol              | 662 ++++++++++++++++-----
+ 3 files changed, 611 insertions(+), 164 deletions(-)
+```
+
 Generated with discovered.json: 0xd28981bbb340b8d7f4a0a3cc529555b09df580e4
 
 # Diff at Mon, 24 Jun 2024 08:19:51 GMT:

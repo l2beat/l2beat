@@ -118,5 +118,6 @@ export function getProjectHeader(
           ? 'Multiple'
           : layer2s.find((l) => l.id === project.hostChain)?.display.name
         : undefined,
+    badges: project.badges,
   }
 }

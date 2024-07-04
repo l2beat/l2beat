@@ -1,3 +1,109 @@
+Generated with discovered.json: 0xe2911b92366b4237fe21f8a3c4618b2a85535bc3
+
+# Diff at Thu, 04 Jul 2024 09:37:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bfc05c606d82c4a38bb3b8c60569f0c976d7ba3a block: 20204613
+- current block number: 20232297
+
+## Description
+
+A new adapter for Lisk is registered. Other changes are config related.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.1135:
++        "0x8229E812f20537caA1e8Fb41749b4887B8a75C3B"
+      values.CrossChainContracts.1135:
++        "0x9552a0a6624A23B848060AE5901659CDDa1f83f8"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Lisk_Adapter (0x8229E812f20537caA1e8Fb41749b4887B8a75C3B)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Lisk_Adapter.sol      | 590 +++++++++++++++++++++
+ 1 file changed, 590 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20204613 (main branch discovery), not current.
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.CrossChainContracts.1:
+-        {"l2ChainId":1,"adapter":"0x527E872a5c3f0C7c24Fe33F2593cFB890a285084","spokePool":"0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"}
++        "0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"
+      values.CrossChainContracts.10:
+-        {"l2ChainId":10,"adapter":"0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b","spokePool":"0x6f26Bf09B1C792e3228e5467807a900A503c0281"}
++        "0x6f26Bf09B1C792e3228e5467807a900A503c0281"
+      values.CrossChainContracts.137:
+-        {"l2ChainId":137,"adapter":"0xb4AeF0178f5725392A26eE18684C2aB62adc912e","spokePool":"0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"}
++        "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096"
+      values.CrossChainContracts.288:
+-        {"l2ChainId":288,"adapter":"0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3","spokePool":"0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"}
++        "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58"
+      values.CrossChainContracts.324:
+-        {"l2ChainId":324,"adapter":"0xE233009838CB898b50e0012a6E783FC9FeE447FB","spokePool":"0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"}
++        "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF"
+      values.CrossChainContracts.8453:
+-        {"l2ChainId":8453,"adapter":"0xE1421233BF7158A19f89F17c9735F9cbd3D9529c","spokePool":"0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"}
++        "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64"
+      values.CrossChainContracts.34443:
+-        {"l2ChainId":34443,"adapter":"0xf1B59868697f3925b72889ede818B9E7ba0316d0","spokePool":"0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"}
++        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+      values.CrossChainContracts.42161:
+-        {"l2ChainId":42161,"adapter":"0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426","spokePool":"0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"}
++        "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A"
+      values.CrossChainContracts.59144:
+-        {"l2ChainId":59144,"adapter":"0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE","spokePool":"0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"}
++        "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
+      values.Adapters:
++        {"1":"0x527E872a5c3f0C7c24Fe33F2593cFB890a285084","10":"0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b","137":"0xb4AeF0178f5725392A26eE18684C2aB62adc912e","288":"0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3","324":"0xE233009838CB898b50e0012a6E783FC9FeE447FB","8453":"0xE1421233BF7158A19f89F17c9735F9cbd3D9529c","34443":"0xf1B59868697f3925b72889ede818B9E7ba0316d0","42161":"0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426","59144":"0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE"}
+    }
+```
+
+Generated with discovered.json: 0x44dcb247700d419ff4f0fe12d00a6c356c1963ba
+
+# Diff at Sun, 30 Jun 2024 12:51:10 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@60708cb34918009c7ee36a463625bddd2353d3c5 block: 19976242
+- current block number: 20204613
+
+## Description
+
+Added ZkSync_Adapter.getL1CallValue to "ignoreMethods" because it is dependent
+on tx.gasprice and returns different results event for the same block number
+(e.g. when call is batched).
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976242 (main branch discovery), not current.
+
+```diff
+    contract ZkSync_Adapter (0xE233009838CB898b50e0012a6E783FC9FeE447FB) {
+    +++ description: None
+      values.getL1CallValue:
+-        500000000000000
+    }
+```
+
 Generated with discovered.json: 0x4d7efdd31fe5b56bea03552b2c01f60249641603
 
 # Diff at Wed, 29 May 2024 14:54:44 GMT:

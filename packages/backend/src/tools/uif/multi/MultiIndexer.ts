@@ -185,7 +185,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       )
     }
 
-    if (newHeight > from) {
+    if (newHeight >= from) {
       const updatedIds = this.updateSavedConfigurations(
         configurations,
         newHeight,

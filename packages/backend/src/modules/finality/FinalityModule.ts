@@ -1,19 +1,19 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
 
+import { BlobClient } from '@l2beat/shared'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
-import { BlobClient } from '../../peripherals/blobclient/BlobClient'
 import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
+import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { TrackedTxsIndexer } from '../tracked-txs/TrackedTxsIndexer'
 import { LivenessRepository } from '../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { TrackedTxsConfigsRepository } from '../tracked-txs/repositories/TrackedTxsConfigsRepository'
 import { FinalityIndexer } from './FinalityIndexer'
 import { LineaFinalityAnalyzer } from './analyzers/LineaFinalityAnalyzer'
 import { LoopringFinalityAnalyzer } from './analyzers/LoopringFinalityAnalyzer'
@@ -45,12 +45,14 @@ export function createFinalityModule(
     return
   }
 
-  const finalityController = new FinalityController(
-    peripherals.getRepository(LivenessRepository),
-    peripherals.getRepository(FinalityRepository),
-    peripherals.getRepository(TrackedTxsConfigsRepository),
-    config.finality.configurations,
-  )
+  const finalityController = new FinalityController({
+    finalityRepository: peripherals.getRepository(FinalityRepository),
+    indexerConfigurationRepository: peripherals.getRepository(
+      IndexerConfigurationRepository,
+    ),
+    livenessRepository: peripherals.getRepository(LivenessRepository),
+    projects: config.finality.configurations,
+  })
   const finalityRouter = createFinalityRouter(finalityController)
 
   const ethereumClient = peripherals.getClient(RpcClient, {
@@ -70,6 +72,7 @@ export function createFinalityModule(
     blobClient,
     logger,
     peripherals.getRepository(LivenessRepository),
+    peripherals.getRepository(IndexerConfigurationRepository),
     config.finality.configurations,
     peripherals,
   )
@@ -105,6 +108,7 @@ function initializeConfigurations(
   blobClient: BlobClient,
   logger: Logger,
   livenessRepository: LivenessRepository,
+  indexerConfigurationRepository: IndexerConfigurationRepository,
   configs: FinalityProjectConfig[],
   peripherals: Peripherals,
 ): FinalityConfig[] {
@@ -118,6 +122,7 @@ function initializeConfigurations(
               timeToInclusion: new LineaFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, RpcClient),
               ),
@@ -132,6 +137,8 @@ function initializeConfigurations(
               timeToInclusion: new zkSyncEraFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
+
                 configuration.projectId,
               ),
             },
@@ -147,6 +154,7 @@ function initializeConfigurations(
                 logger,
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 {
                   l2BlockTimeSeconds: configuration.l2BlockTimeSeconds,
@@ -166,6 +174,7 @@ function initializeConfigurations(
                 logger,
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
               ),
             },
@@ -179,6 +188,7 @@ function initializeConfigurations(
               timeToInclusion: new ScrollFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
               ),
             },
@@ -192,6 +202,7 @@ function initializeConfigurations(
               timeToInclusion: new ZkSyncLiteFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
               ),
             },
@@ -205,6 +216,7 @@ function initializeConfigurations(
               timeToInclusion: new StarknetFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, StarknetClient),
               ),
@@ -221,6 +233,7 @@ function initializeConfigurations(
               timeToInclusion: new LoopringFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, LoopringClient),
               ),
@@ -235,6 +248,7 @@ function initializeConfigurations(
               timeToInclusion: new LoopringFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, DegateClient),
               ),
@@ -249,6 +263,7 @@ function initializeConfigurations(
               timeToInclusion: new PolygonZkEvmFinalityAnalyzer(
                 ethereumRPC,
                 livenessRepository,
+                indexerConfigurationRepository,
                 configuration.projectId,
                 getL2Rpc(configuration, peripherals, RpcClient),
               ),

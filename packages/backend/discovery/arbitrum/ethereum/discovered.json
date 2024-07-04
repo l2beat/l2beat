@@ -34,6 +34,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"]
+      },
       "sinceTimestamp": 1661962059,
       "values": {
         "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
@@ -162,6 +165,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"]
+      },
       "sinceTimestamp": 1661964258,
       "values": {
         "owner": "0xC234E41AE2cb00311956Aa7109fC801ae8c80941"
@@ -209,6 +215,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"]
+      },
       "sinceTimestamp": 1662368855,
       "values": {
         "owner": "0x194DAFaB3B9B24B181a63F81eE42b322Cd0Db6E5"
@@ -238,6 +247,9 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": ["0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"]
+      },
       "sinceTimestamp": 1665084515,
       "values": {
         "owner": "0xd3132d052C9045D7cB0236586C9E2276e654343D"
@@ -250,7 +262,16 @@
         "type": "immutable"
       },
       "assignedPermissions": {
-        "admin": ["0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"]
+        "admin": [
+          "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
+          "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+          "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
+          "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+          "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
+          "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
+          "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
+        ]
       },
       "sinceTimestamp": 1661457944,
       "values": {
@@ -573,6 +594,13 @@
       "upgradeability": {
         "type": "immutable"
       },
+      "assignedPermissions": {
+        "admin": [
+          "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+          "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
+          "0xcEe284F754E854890e311e3280b767F80797180d"
+        ]
+      },
       "sinceTimestamp": 1623784062,
       "values": {
         "owner": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"
@@ -638,6 +666,9 @@
       "address": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"]
       },
       "sinceTimestamp": 1659013011,
       "values": {
@@ -738,6 +769,9 @@
       "address": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c",
       "upgradeability": {
         "type": "immutable"
+      },
+      "assignedPermissions": {
+        "admin": ["0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"]
       },
       "sinceTimestamp": 1664352371,
       "values": {

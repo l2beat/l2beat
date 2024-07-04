@@ -23,6 +23,7 @@ export const honeypot: Layer2 = {
     name: 'Honeypot (Cartesi)',
     shortName: 'Honeypot',
     slug: 'cartesi-honeypot',
+    provider: 'Cartesi Rollups',
     description:
       'Honeypot is an application-specific rollup designed to challenge the security of Cartesi Rollups. It provides a gamified battlefield to incentivize bug hunters to hack the application to obtain the funds locked in the rollup contract.',
     purposes: ['Bug bounty'],
@@ -102,7 +103,7 @@ export const honeypot: Layer2 = {
           selector: '0xddfdfbb0',
           functionSignature:
             'function submitClaim(bytes calldata _claimData) external onlyOwner',
-          sinceTimestampInclusive: new UnixTime(1694467715),
+          sinceTimestamp: new UnixTime(1694467715),
         },
       },
     ],

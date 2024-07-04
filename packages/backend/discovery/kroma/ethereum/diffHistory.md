@@ -1,4 +1,55 @@
-Generated with discovered.json: 0x8135b8fba23f1d6f2293898f0a0a5240b78bcd1b
+Generated with discovered.json: 0xd1960fe0019b1c394f76512f50c3a4a86dd0a6ff
+
+# Diff at Thu, 04 Jul 2024 09:46:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e880b32f603c98cd7ec9cadedc3a383e26a650a block: 20139536
+- current block number: 20232340
+
+## Description
+
+One SecurityCouncil signer is removed and the threshold / quorum is lowered to 7/9.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      values.quorum:
+-        8
++        7
+    }
+```
+
+```diff
+    contract SecurityCouncilToken (0xe4D08346609055c091D3DEECdAAd3Bf83119B08c) {
+    +++ description: None
+      values.getApproved.2:
+-        "0x0000000000000000000000000000000000000000"
+      values.locked.2:
+-        true
+      values.tokenOwners.9:
+-        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+      values.tokenOwners.1:
+-        "0xe1b712e16Be1Eb098D0b2B846e2f547F9E292851"
++        "0x77Fe100758c5320cdfBb4f4a0Bed57885c97158A"
+      values.tokens.9:
+-        11
+      values.tokens.1:
+-        3
++        11
+      values.tokenURI.2:
+-        "https://nft.kroma.network/sc/3.png"
+      values.tokenURI.1:
+-        "https://nft.kroma.network/sc/2.png"
++        "https://nft.kroma.network/sc/3.png"
+      values.totalSupply:
+-        10
++        9
+    }
+```
+
+Generated with discovered.json: 0x272adbeea1cb884bd882b20ce10fc34e78b95430
 
 # Diff at Fri, 21 Jun 2024 10:36:16 GMT:
 

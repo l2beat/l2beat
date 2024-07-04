@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 20032836,
-  "configHash": "0x82302d2f83f4b92e2adf822fe7cfc2c1981b0930381ba7c5ee23803de5dc52ec",
+  "configHash": "0xd876a6d6f3e89862ac4e377b04f521cad35d1a85a27a2dc1cbaeb4770583c2bf",
   "version": 8,
   "contracts": [
     {
@@ -75,9 +75,15 @@
         "type": "immutable"
       },
       "assignedPermissions": {
+        "owner": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"],
         "admin": [
+          "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
           "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+          "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
         ]
       },
       "sinceTimestamp": 1706811599,
@@ -330,6 +336,7 @@
     {
       "name": "AddressManager",
       "address": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+      "template": "opstack/AddressManager",
       "upgradeability": {
         "type": "immutable"
       },
@@ -454,6 +461,9 @@
         "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
         "modules": [],
         "threshold": "3 of 5 (60%)"
+      },
+      "assignedPermissions": {
+        "owner": ["0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"]
       },
       "ignoreInWatchMode": ["nonce"],
       "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],

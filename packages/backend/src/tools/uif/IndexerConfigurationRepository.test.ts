@@ -65,6 +65,21 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
       },
     )
 
+    describe(
+      IndexerConfigurationRepository.prototype.getSavedConfigurationsByIds.name,
+      () => {
+        it('returns configurations by ids', async () => {
+          await repository.addOrUpdateMany(CONFIGURATIONS)
+
+          const result = await repository.getSavedConfigurationsByIds([
+            CONFIGURATIONS[0].id,
+            CONFIGURATIONS[2].id,
+          ])
+          expect(result).toEqualUnsorted([CONFIGURATIONS[0], CONFIGURATIONS[2]])
+        })
+      },
+    )
+
     it(
       IndexerConfigurationRepository.prototype.getSavedConfigurations.name,
       async () => {
