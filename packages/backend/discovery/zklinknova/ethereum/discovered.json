@@ -2,7 +2,7 @@
   "name": "zklinknova",
   "chain": "ethereum",
   "blockNumber": 20231729,
-  "configHash": "0x1b0e8f32221c336ace7815a63a025db660f6da77bf101a9a6de8367644b93af1",
+  "configHash": "0x13fa08e1b15b1d566779ca87e48da7cd2407661208fc46ee0053aba99c5a9d73",
   "version": 8,
   "contracts": [
     {
@@ -29,7 +29,26 @@
       "derivedName": "Arbitrator"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "ArbitrumL1Gateway",
+      "address": "0x273D59aed2d793167c162E64b9162154B07583C0",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xF69302b6fF21116F9266bFA2fbE4ee23f6292875",
+        "admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "implementations": ["0xF69302b6fF21116F9266bFA2fbE4ee23f6292875"],
+      "sinceTimestamp": 1709281415,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+        "INBOX": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
+        "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "derivedName": "ArbitrumL1Gateway"
+    },
+    {
+      "name": "EthereumProxyAdmin",
       "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
       "upgradeability": {
         "type": "immutable"
@@ -41,7 +60,46 @@
       "values": {
         "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
-      }
+      },
+      "derivedName": "ProxyAdmin"
+    },
+    {
+      "name": "BlastL1Gateway",
+      "address": "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x01334Df58feE28db184ae9D11467F38F7437FD80",
+        "admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "implementations": ["0x01334Df58feE28db184ae9D11467F38F7437FD80"],
+      "sinceTimestamp": 1710418475,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0x3f64e2e09732969813904a8473074CFADeE66AF1",
+        "MESSAGE_SERVICE": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
+        "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "derivedName": "OptimismL1Gateway"
+    },
+    {
+      "name": "BaseL1Gateway",
+      "address": "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518",
+        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      },
+      "implementations": ["0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518"],
+      "sinceTimestamp": 1711095887,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
+        "MESSAGE_SERVICE": "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa",
+        "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      },
+      "derivedName": "OptimismL1Gateway"
     },
     {
       "name": "zkLink",
@@ -84,8 +142,47 @@
       "derivedName": "ZkLink"
     },
     {
+      "name": "MantaL1Gateway",
+      "address": "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962",
+        "admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "implementations": ["0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962"],
+      "sinceTimestamp": 1709281103,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+        "MESSAGE_SERVICE": "0x635ba609680c55C3bDd0B3627b4c5dB21b13c310",
+        "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "derivedName": "OptimismL1Gateway"
+    },
+    {
+      "name": "OptimismL1Gateway",
+      "address": "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x2e8AD1434663b209EE59eF1a6612114239F4a190",
+        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      },
+      "implementations": ["0x2e8AD1434663b209EE59eF1a6612114239F4a190"],
+      "sinceTimestamp": 1711092707,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
+        "MESSAGE_SERVICE": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+        "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      },
+      "derivedName": "OptimismL1Gateway"
+    },
+    {
       "name": "LineaL1Gateway",
       "address": "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
+      "template": "zklinknova/secondaryGateway",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0xD2ED3FA35be899fe850075946Fc7320bB4c18C29",
@@ -102,8 +199,9 @@
       "derivedName": "LineaL1Gateway"
     },
     {
-      "name": "EthereumGateway",
+      "name": "EthereumL1Gateway",
       "address": "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
+      "template": "zklinknova/secondaryGateway",
       "upgradeability": {
         "type": "EIP1967 proxy",
         "implementation": "0x65c7B3E1B877131986247B49474834b0347eF332",
@@ -118,6 +216,25 @@
         "ZKLINK": "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf"
       },
       "derivedName": "EthereumGateway"
+    },
+    {
+      "name": "ScrollL1Gateway",
+      "address": "0x986c905087a663db3C81ad319b94c1E9dd388e92",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB",
+        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      },
+      "implementations": ["0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB"],
+      "sinceTimestamp": 1718004791,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
+        "MESSAGE_SERVICE": "0x6774Bcbd5ceCeF1336b5300fb5186a12DDD8b367",
+        "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
+      },
+      "derivedName": "ScrollL1Gateway"
     },
     {
       "name": "L1ERC20Bridge",
@@ -137,7 +254,7 @@
       "derivedName": "L1ERC20Bridge"
     },
     {
-      "name": "GnosisSafe",
+      "name": "EthereumOwner",
       "address": "0xdb4D755E3b8735314147b9bB146327C269701E2D",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -149,9 +266,14 @@
       "assignedPermissions": {
         "admin": [
           "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+          "0x273D59aed2d793167c162E64b9162154B07583C0",
+          "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
           "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
+          "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
           "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
-          "0x83Bc7394738A7A084081aF22EEC0051908c0055c"
+          "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
+          "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
+          "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
         ]
       },
       "ignoreInWatchMode": ["nonce"],
@@ -173,7 +295,46 @@
         "getThreshold": 6,
         "nonce": 35,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
+    },
+    {
+      "name": "MantleL1Gateway",
+      "address": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0xe98EDDAd1f49abc7586eE516d019D834FBDc2951",
+        "admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "implementations": ["0xe98EDDAd1f49abc7586eE516d019D834FBDc2951"],
+      "sinceTimestamp": 1709281211,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
+        "MESSAGE_SERVICE": "0x676A795fe6E43C17c668de16730c3F690FEB7120",
+        "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "derivedName": "OptimismL1Gateway"
+    },
+    {
+      "name": "EraL1Gateway",
+      "address": "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab",
+      "template": "zklinknova/secondaryGateway",
+      "upgradeability": {
+        "type": "EIP1967 proxy",
+        "implementation": "0x59Ad3580c9e0992D474954327f5879AF5B3e4a22",
+        "admin": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "implementations": ["0x59Ad3580c9e0992D474954327f5879AF5B3e4a22"],
+      "sinceTimestamp": 1709281355,
+      "values": {
+        "ARBITRATOR": "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+        "getRemoteGateway": "0xC203a2DF4DDFF9eDE2200F1F02054fD721182535",
+        "MESSAGE_SERVICE": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+        "owner": "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      },
+      "derivedName": "ZkSyncL1Gateway"
     }
   ],
   "eoas": [
@@ -184,13 +345,20 @@
       "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
     },
     {
+      "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+      "assignedPermissions": {
+        "admin": [
+          "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
+          "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
+          "0x986c905087a663db3C81ad319b94c1E9dd388e92"
+        ]
+      }
+    },
+    {
       "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
     },
     {
       "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
-    },
-    {
-      "address": "0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"
     },
     {
       "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
@@ -209,6 +377,50 @@
     }
   ],
   "abis": {
+    "0x01334Df58feE28db184ae9D11467F38F7437FD80": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event NewRemoteGateway(address remoteGateWay)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x0C25f3ACCB17a9D60408D1c79bD7218073DAd518": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event NewRemoteGateway(address remoteGateWay)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
@@ -216,6 +428,36 @@
       "error ERC1967NonPayable()",
       "error FailedInnerCall()",
       "event Upgraded(address indexed implementation)"
+    ],
+    "0x273D59aed2d793167c162E64b9162154B07583C0": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x2e8AD1434663b209EE59eF1a6612114239F4a190": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event NewRemoteGateway(address remoteGateWay)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2": [
       "constructor(address initialOwner)",
@@ -246,7 +488,57 @@
       "function l2TokenBeacon() view returns (address)",
       "function l2TokenProxyBytecodeHash() view returns (bytes32)"
     ],
+    "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x59Ad3580c9e0992D474954327f5879AF5B3e4a22": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event NewRemoteGateway(address remoteGateWay)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RetryFailedMessage(bytes32 failedL2TxHash, bytes32 replacedL2TxHash)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function executedMessage(bytes32 l2TxHash) view returns (bytes32 messageHash)",
+      "function finalizeMessage(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function isMessageFinalized(uint256, uint256) view returns (bool)",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function retryFailedMessage(bytes _executeData, uint256 _l2GasLimit, uint256 _l2GasPerPubdataByteLimit, address _refundRecipient, bytes32 _failedL2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof) payable",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -271,6 +563,36 @@
       "function renounceOwnership()",
       "function sendMessage(uint256 _value, bytes _callData, bytes) payable",
       "function sendMessage(uint256 _value, bytes _callData) payable",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x6d6Ce5A491cC2BE2f56AA02aa68AaE8acE927962": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetRemoteGateway(address remoteGateWay)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
       "function transferOwnership(address newOwner)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
@@ -324,6 +646,14 @@
       "event Upgraded(address indexed implementation)"
     ],
     "0x83Bc7394738A7A084081aF22EEC0051908c0055c": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0x986c905087a663db3C81ad319b94c1E9dd388e92": [
       "constructor(address implementation, bytes _data) payable",
       "error AddressEmptyCode(address target)",
       "error ERC1967InvalidImplementation(address implementation)",
@@ -416,6 +746,58 @@
     "0xdb4D755E3b8735314147b9bB146327C269701E2D": [
       "constructor(address _singleton)"
     ],
+    "0xdB97dBF9c0A20aA8B4787563B6bE04e83E7ECDFB": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event NewRemoteGateway(address remoteGateWay)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
+    "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xe98EDDAd1f49abc7586eE516d019D834FBDc2951": [
+      "constructor(address _arbitrator, address _messageService)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetRemoteGateway(address remoteGateWay)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function MESSAGE_SERVICE() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
+    ],
     "0xeaC8E6c1acBabC7135Fc8357FF2D718a36177Ab7": [
       "constructor(bool _isEthGasToken)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -491,6 +873,36 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function validators(address validatorAddress) view returns (bool isValidator)",
       "function withdrawForwardFee(address _receiver, uint256 _amount)"
+    ],
+    "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab": [
+      "constructor(address implementation, bytes _data) payable",
+      "error AddressEmptyCode(address target)",
+      "error ERC1967InvalidImplementation(address implementation)",
+      "error ERC1967NonPayable()",
+      "error FailedInnerCall()",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xF69302b6fF21116F9266bFA2fbE4ee23f6292875": [
+      "constructor(address _arbitrator, address _inbox)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetRemoteGateway(address remoteGateWay)",
+      "event Upgraded(address indexed implementation)",
+      "function ARBITRATOR() view returns (address)",
+      "function INBOX() view returns (address)",
+      "function claimMessageCallback(uint256 _value, bytes _callData) payable",
+      "function getRemoteGateway() view returns (address)",
+      "function initialize()",
+      "function owner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sendMessage(uint256 _value, bytes _callData, bytes _adapterParams) payable",
+      "function setRemoteGateway(address _remoteGateway)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
   }
 }

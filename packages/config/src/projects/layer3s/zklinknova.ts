@@ -10,7 +10,7 @@ const mantleDiscovery = new ProjectDiscovery('zklinknova', 'mantle')
 const scrollDiscovery = new ProjectDiscovery('zklinknova', 'scroll')
 const blastDiscovery = new ProjectDiscovery('zklinknova', 'blast')
 const zksync2Discovery = new ProjectDiscovery('zklinknova', 'zksync2')
-// const ethereumDiscovery = new ProjectDiscovery('zklinknova')
+const ethereumDiscovery = new ProjectDiscovery('zklinknova')
 
 const optimismUpgradability = {
   upgradableBy: ['OptimismOwner'],
@@ -49,6 +49,11 @@ const blastUpgradability = {
 
 const zksync2Upgradability = {
   upgradableBy: ['EraOwner'],
+  upgradeDelay: 'No delay',
+}
+
+const ethereumUpgradability = {
+  upgradableBy: ['zkLinkOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -332,13 +337,68 @@ export const zklinknova: Layer3 = {
   contracts: {
     addresses: [],
     nativeAddresses: {
-      /*
       ethereum: [
-        ethereumDiscovery.getContractDetails('Arbitrator', {
-          description: '',
+        ethereumDiscovery.getContractDetails('L1ERC20Bridge', {
+          description:
+            'Main entry point for depositing ERC20 tokens from Ethereum to zkLink Nova. Outgoing messages and incoming withdrawal validation is delegated to the zkLink contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('zkLink', {
+          description:
+            "Main messaging contract on Ethereum and ETH escrow. Outgoing messages (like deposits) are sent through the EthereumL2Gateway which ultimately makes use of Ethereum's canonical messaging bridge to reach the Arbitrator on L1. Only whitelisted validators can sync messages with zkLink Nova, which also transfer the ETH to it via the respective canonical bridges. Incoming messages (like withdrawals) are validated on Linea first and then sent to this contract through the same path. Whitelisted validators can also relay messages to zkLink without going through the canonical bridge (fast path), which are later cross-checked with the slow path. If the check fails, the system halts.",
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('EthereumL1Gateway', {
+          description:
+            "High level interface between the local zkLink contract and Ethereum's message service.",
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('LineaL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the LineaL2Gateway on Linea. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('MantaL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the MantaL2Gateway on Manta Pacific. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('MantleL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the MantleL2Gateway on Mantle. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('EraL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the EraL2Gateway on ZKsync Era. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('ArbitrumL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the ArbitrumL2Gateway on Arbitrum One. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('BlastL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the BlastL2Gateway on Blast. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('OptimismL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the OptimismL2Gateway on OP Mainnet. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('BaseL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the BaseL2Gateway on Base. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('ScrollL1Gateway', {
+          description:
+            'L1 counterpart receiving messages from the ScrollL2Gateway on Scroll. It redirects them to the Arbitrator contract.',
+          ...ethereumUpgradability,
         }),
       ],
-      */
       optimism: [
         optimismDiscovery.getContractDetails('L1ERC20Bridge', {
           description:

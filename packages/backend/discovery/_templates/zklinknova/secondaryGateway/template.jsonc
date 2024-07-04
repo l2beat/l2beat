@@ -5,6 +5,7 @@
     "MESSAGE_SERVICE",
     "ARB_SYS",
     "getRemoteGateway",
-    "ethToken"
+    "ethToken",
+    "INBOX"
   ]
 }
