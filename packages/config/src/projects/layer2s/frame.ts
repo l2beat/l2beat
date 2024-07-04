@@ -1,6 +1,5 @@
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
-import { Badge } from '../badges'
 
 export const frame: Layer2 = upcomingL2({
   id: 'frame',

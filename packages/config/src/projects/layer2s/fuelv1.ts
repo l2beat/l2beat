@@ -11,9 +11,9 @@ import {
   addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { Badge } from '../badges'
 
 export const fuelv1: Layer2 = {
   type: 'layer2',

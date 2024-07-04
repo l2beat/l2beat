@@ -2,9 +2,9 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
-import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 

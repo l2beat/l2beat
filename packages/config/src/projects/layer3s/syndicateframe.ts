@@ -1,9 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
-import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 

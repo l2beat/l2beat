@@ -26,8 +26,8 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
-import { Layer2 } from './types'
 import { Badge } from '../badges'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('brine')
 

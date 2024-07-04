@@ -3,9 +3,9 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 

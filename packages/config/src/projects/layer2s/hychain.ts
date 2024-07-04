@@ -1,7 +1,7 @@
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
-import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('hychain', 'ethereum')
 

@@ -18,8 +18,8 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Layer2 } from './types'
 import { Badge } from '../badges'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(

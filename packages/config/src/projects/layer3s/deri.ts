@@ -1,8 +1,8 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Badge } from '../badges'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 
 const discovery = new ProjectDiscovery('deri', 'arbitrum')
 

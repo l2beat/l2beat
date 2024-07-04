@@ -18,9 +18,9 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('loopring')
 const forcedWithdrawalDelay = discovery.getContractValue<{
