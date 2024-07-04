@@ -1,11 +1,6 @@
 import { Bridge, Layer2, Layer3 } from '../projects'
 
 export type Project = Layer2 | Layer3 | Bridge
-interface Config {
-  layer2s: Layer2[]
-  layer3s: Layer3[]
-  bridges: Bridge[]
-}
 
 /**
  * This function is used by checkVerifiedContracts.ts script to know on which
@@ -14,8 +9,9 @@ interface Config {
  * @param projects
  * @returns chain names of all the contracts and escrows in the provided projects.
  */
-export function getChainNames(config: Config): string[] {
-  const projects = [...config.layer2s, ...config.layer3s, ...config.bridges]
+export function getChainNames(
+  projects: (Layer2 | Layer3 | Bridge)[],
+): string[] {
   return projects
     .flatMap(getProjectDevIds)
     .filter((x, i, a) => a.indexOf(x) === i)

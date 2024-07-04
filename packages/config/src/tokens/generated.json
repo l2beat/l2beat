@@ -1711,6 +1711,21 @@
       "supply": "zero"
     },
     {
+      "id": "gho-gho-token",
+      "name": "Gho Token",
+      "coingeckoId": "gho",
+      "address": "0x40D16FC0246aD3160Ccc09B8D0D3A2cD28aE6C2f",
+      "symbol": "GHO",
+      "decimals": 18,
+      "deploymentTimestamp": 1689420227,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/ghoaave.jpeg?1696529533",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "gno-gnosis-token",
       "name": "Gnosis Token",
       "coingeckoId": "gnosis",
@@ -5051,6 +5066,21 @@
       "supply": "zero"
     },
     {
+      "id": "optimism:weth-wrapped-ether",
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x4200000000000000000000000000000000000006",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1636665399,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 10,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "mantapacific:eth-ether",
       "name": "Ether",
       "coingeckoId": "ethereum",
@@ -5901,6 +5931,21 @@
       }
     },
     {
+      "id": "sanko:smoke-smoke-the-ticker",
+      "name": "smoke the ticker",
+      "coingeckoId": "smoke-the-ticker",
+      "address": "0xe78A3857593083dD6e1F7859e1B711401FC6f2cc",
+      "symbol": "SMOKE",
+      "decimals": 18,
+      "deploymentTimestamp": 1716185196,
+      "coingeckoListingTimestamp": 1718755200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38767/large/smoke.png?1718766917",
+      "chainId": 1996,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "aevo:usdc-usd-coin",
       "name": "USD Coin",
       "coingeckoId": "usd-coin",
@@ -6176,6 +6221,25 @@
       "supply": "totalSupply"
     },
     {
+      "id": "kinto:usde-usde",
+      "name": "USDe",
+      "coingeckoId": "ethena-usde",
+      "address": "0x05dE0003C333A503bea5224fCc64f0D4b5446C38",
+      "symbol": "USDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1715884936,
+      "coingeckoListingTimestamp": 1702512000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 7887,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "id": "kinto:weeth-wrapped-eeth",
       "name": "Wrapped eETH",
       "coingeckoId": "wrapped-eeth",
@@ -6186,6 +6250,25 @@
       "coingeckoListingTimestamp": 1701648000,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 7887,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "kinto:weth-wrapped-ether",
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1716142042,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "chainId": 7887,
       "source": "external",
       "supply": "totalSupply",
@@ -6456,6 +6539,21 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
+    },
+    {
+      "id": "base:weth-wrapped-ether",
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x4200000000000000000000000000000000000006",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1686789347,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "mode:rseth-kelpdao-restaked-eth",
@@ -6840,6 +6938,24 @@
       "chainId": 42161,
       "source": "native",
       "supply": "totalSupply"
+    },
+    {
+      "id": "arbitrum:gho-gho-token",
+      "name": "Gho Token",
+      "coingeckoId": "gho",
+      "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
+      "symbol": "GHO",
+      "decimals": 18,
+      "deploymentTimestamp": 1719102305,
+      "coingeckoListingTimestamp": 1689379200,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30663/large/ghoaave.jpeg?1696529533",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Chainlink CCIP"
+      }
     },
     {
       "id": "arbitrum:gmx-gmx",
@@ -7312,6 +7428,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/7598/large/wrapped_bitcoin_wbtc.png?1696507857",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "arbitrum:weth-wrapped-ether",
+      "name": "Wrapped Ether",
+      "coingeckoId": "weth",
+      "address": "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
+      "symbol": "WETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1622346702,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
       "chainId": 42161,
       "source": "canonical",
       "supply": "zero"

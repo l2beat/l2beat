@@ -1,9 +1,9 @@
-import { useCallback } from 'react'
+import { useEventCallback } from './use-event-callback'
 
 type CopyFn = (text: string) => Promise<boolean>
 
 export function useCopyToClipboard(): CopyFn {
-  const copy: CopyFn = useCallback(async (text) => {
+  const copy: CopyFn = useEventCallback(async (text) => {
     if (!navigator?.clipboard) {
       console.warn('Clipboard not supported')
       return false
@@ -17,7 +17,7 @@ export function useCopyToClipboard(): CopyFn {
       console.warn('Copy failed', error)
       return false
     }
-  }, [])
+  })
 
   return copy
 }

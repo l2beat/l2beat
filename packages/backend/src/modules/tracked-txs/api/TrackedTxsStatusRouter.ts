@@ -1,38 +1,58 @@
 import Router from '@koa/router'
 
+import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Clock } from '../../../tools/Clock'
-import { TrackedTxsConfigsRepository } from '../repositories/TrackedTxsConfigsRepository'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
+import { L2CostsRepository } from '../modules/l2-costs/repositories/L2CostsRepository'
+import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
+import { findUnusedConfigs } from '../utils/findUnusedConfigs'
 import { renderTrackedTxsStatusPage } from './status/TrackedTxsStatusPage'
 
 export function createTrackedTxsStatusRouter({
   clock,
-  trackedTxsConfigsRepository: repository,
+  indexerConfigurationRepository,
+  l2CostsRepository,
+  livenessRepository,
 }: {
   clock: Clock
-  trackedTxsConfigsRepository: TrackedTxsConfigsRepository
+  indexerConfigurationRepository: IndexerConfigurationRepository
+  l2CostsRepository: L2CostsRepository
+  livenessRepository: LivenessRepository
 }) {
   const router = new Router()
 
   router.get('/status/tracked-txs', async (ctx) => {
-    const allConfigs = await repository.getAll()
-    const unusedIds = await repository.findUnusedConfigurationsIds()
+    const allConfigs = await indexerConfigurationRepository.getAll()
+    const unusedIds = await findUnusedConfigs(
+      indexerConfigurationRepository,
+      l2CostsRepository,
+      livenessRepository,
+    )
+    // const unusedIds = await repository.findUnusedConfigurationsIds()
     ctx.body = renderTrackedTxsStatusPage({
       data: allConfigs.map((config) => {
+        const parsedConfig = {
+          ...config,
+          properties: JSON.parse(config.properties) as TrackedTxConfigEntry,
+        }
         const active =
-          !!config.lastSyncedTimestamp &&
-          (!config.untilTimestampExclusive ||
-            config.untilTimestampExclusive.gte(clock.getLastHour()))
+          !!config.currentHeight &&
+          (!config.maxHeight ||
+            new UnixTime(config.maxHeight).gte(clock.getLastHour()))
 
         const healthy =
           active ||
           !!(
-            config.lastSyncedTimestamp &&
-            config.untilTimestampExclusive &&
-            config.untilTimestampExclusive.equals(config.lastSyncedTimestamp)
+            config.currentHeight &&
+            config.maxHeight &&
+            new UnixTime(config.maxHeight).equals(
+              new UnixTime(config.currentHeight),
+            )
           )
 
         return {
-          ...config,
+          ...parsedConfig,
           active,
           healthy,
           unused: unusedIds.includes(config.id),

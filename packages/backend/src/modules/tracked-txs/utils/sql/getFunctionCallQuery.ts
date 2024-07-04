@@ -71,7 +71,7 @@ export function getFunctionCallQuery(
       AND traces.call_type = 'call'
       AND traces.status = 1
       AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp < TIMESTAMP(?)
+      AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${configs
           .map(() => `(traces.to_address = ? AND traces.input LIKE ?)`)
@@ -79,7 +79,7 @@ export function getFunctionCallQuery(
       )
     WHERE
       txs.block_timestamp >= TIMESTAMP(?)
-      AND txs.block_timestamp < TIMESTAMP(?)
+      AND txs.block_timestamp <= TIMESTAMP(?)
   `
 
   // @ts-expect-error BigQuery types are wrong
@@ -92,5 +92,5 @@ export function getFunctionCallQuery(
     `STRING`,
   ]
 
-  return { query, params, types, limitInGb: 11 }
+  return { query, params, types, limitInGb: 22 }
 }

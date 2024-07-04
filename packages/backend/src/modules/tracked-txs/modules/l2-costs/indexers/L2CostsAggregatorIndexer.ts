@@ -1,11 +1,18 @@
-import { assert, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
+import {
+  assert,
+  ProjectId,
+  UnixTime,
+  clampRangeToDay,
+} from '@l2beat/shared-pure'
 
+import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
+import { uniq } from 'lodash'
 import { Project } from '../../../../../model/Project'
+import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { TrackedTxId } from '../../../types/TrackedTxId'
 import type {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -28,6 +35,7 @@ export interface L2CostsAggregatorIndexerDeps
   l2CostsRepository: L2CostsRepository
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   l2CostsPricesRepository: L2CostsPricesRepository
+  indexerConfigurationRepository: IndexerConfigurationRepository
   projects: Project[]
 }
 
@@ -49,7 +57,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const costs = await this.$.l2CostsRepository.getWithProjectIdByTimeRange([
+    const costs = await this.getL2CostsRecordsWithProjectId([
       shiftedFrom,
       shiftedTo,
     ])
@@ -103,6 +111,35 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     return [shiftedUnixFrom, shiftedUnixTo]
   }
 
+  async getL2CostsRecordsWithProjectId(
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<L2CostsRecordWithProjectId[]> {
+    const [shiftedFrom, shiftedTo] = timeRange
+    const costs = await this.$.l2CostsRepository.getByTimeRange([
+      shiftedFrom,
+      shiftedTo,
+    ])
+
+    const configurations =
+      await this.$.indexerConfigurationRepository.getSavedConfigurationsByIds(
+        uniq(costs.map((c) => c.configurationId)),
+      )
+
+    return costs.map((l2costsRow) => {
+      const config = configurations.find(
+        (configRow) => configRow.id === l2costsRow.configurationId,
+      )
+      assert(
+        config?.id,
+        `Indexer config with id: ${config?.id} could not be found`,
+      )
+      return {
+        ...l2costsRow,
+        projectId: JSON.parse(config.properties).projectId as ProjectId,
+      }
+    })
+  }
+
   aggregate(
     records: L2CostsRecordWithProjectId[],
     ethPrices: L2CostsPricesRecord[],
@@ -122,8 +159,10 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         }]: ETH price not found: ${timestamp.toNumber()}`,
       )
 
-      const multiplier = multipliers.find((c) => c.id === record.trackedTxId)
-      assert(multiplier, `Multiplier not found for ${record.trackedTxId}`)
+      const multiplier = multipliers.find(
+        (c) => c.id === record.configurationId,
+      )
+      assert(multiplier, `Multiplier not found for ${record.configurationId}`)
 
       const calculations = this.calculate(
         record,
@@ -251,16 +290,14 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
         continue
       }
 
-      const projectMultipliers = project.trackedTxsConfig.entries.flatMap(
-        (e) => {
-          return e.uses
-            .filter((u) => u.type === 'l2costs')
-            .map((use) => ({
-              id: use.id,
-              factor: e.costMultiplier ?? 1,
-            }))
-        },
-      )
+      const projectMultipliers = project.trackedTxsConfig
+        .filter((u): u is TrackedTxCostsConfig => u.type === 'l2costs')
+        .map((e) => {
+          return {
+            id: e.id,
+            factor: e.costMultiplier ?? 1,
+          }
+        })
 
       multipliers.push(...projectMultipliers)
     }

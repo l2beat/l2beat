@@ -5,6 +5,7 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
+import { KnexMiddleware } from '../../peripherals/database/KnexMiddleware'
 import { Clock } from '../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -24,7 +25,7 @@ import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/Agg
 import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2CostsPricesRepository'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
+import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -51,7 +52,7 @@ export function createTrackedTxsModule(
   const trackedTxsClient = new TrackedTxsClient(bigQueryClient)
 
   const runtimeConfigurations = config.projects
-    .flatMap((project) => project.trackedTxsConfig?.entries)
+    .flatMap((project) => project.trackedTxsConfig)
     .filter(notUndefined)
 
   const livenessModule = createLivenessModule(
@@ -67,25 +68,33 @@ export function createTrackedTxsModule(
     l2costsModule,
   ]
 
-  const updaters = {
-    liveness: livenessModule?.updater,
-    l2costs: l2costsModule?.updater,
-  }
-
-  const trackedTxsConfigsRepository = peripherals.getRepository(
-    TrackedTxsConfigsRepository,
+  const updaters = [livenessModule?.updater, l2costsModule?.updater].filter(
+    notUndefined,
   )
 
-  const trackedTxsIndexer = new TrackedTxsIndexer(
+  const minTimestamp = config.trackedTxsConfig.minTimestamp.toNumber()
+
+  const trackedTxsIndexer = new TrackedTxsIndexer({
     logger,
-    hourlyIndexer,
-    updaters,
+    parents: [hourlyIndexer],
+    indexerService,
     trackedTxsClient,
-    peripherals.getRepository(IndexerStateRepository),
-    trackedTxsConfigsRepository,
-    runtimeConfigurations,
-    config.trackedTxsConfig.minTimestamp,
-  )
+    configurations: runtimeConfigurations.map((c) => ({
+      properties: c,
+      minHeight:
+        c.sinceTimestamp.toNumber() < minTimestamp
+          ? minTimestamp
+          : c.sinceTimestamp.toNumber(),
+      maxHeight: c.untilTimestamp?.toNumber() ?? null,
+      id: c.id,
+    })),
+    updaters,
+    createDatabaseMiddleware: async () =>
+      new KnexMiddleware(peripherals.getRepository(LivenessRepository)),
+    serializeConfiguration: (config) => JSON.stringify(config),
+    livenessRepository: peripherals.getRepository(LivenessRepository),
+    l2CostsRepository: peripherals.getRepository(L2CostsRepository),
+  })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined
   let l2CostsAggregatorIndexer: L2CostsAggregatorIndexer | undefined
@@ -119,6 +128,9 @@ export function createTrackedTxsModule(
       l2CostsPricesRepository: peripherals.getRepository(
         L2CostsPricesRepository,
       ),
+      indexerConfigurationRepository: peripherals.getRepository(
+        IndexerConfigurationRepository,
+      ),
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
@@ -146,7 +158,11 @@ export function createTrackedTxsModule(
       ...subModules.flatMap((m) => m?.routers ?? []),
       createTrackedTxsStatusRouter({
         clock,
-        trackedTxsConfigsRepository,
+        indexerConfigurationRepository: peripherals.getRepository(
+          IndexerConfigurationRepository,
+        ),
+        l2CostsRepository: peripherals.getRepository(L2CostsRepository),
+        livenessRepository: peripherals.getRepository(LivenessRepository),
       }),
     ],
     indexer: trackedTxsIndexer,

@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { Badge } from '../badges'
 
 import {
   CONTRACTS,
@@ -72,6 +73,7 @@ const longTimelockUpgradeability = {
 export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
+  badges: [Badge.VM.CairoVM, Badge.DA.EthereumCalldata],
   display: {
     name: 'dYdX v3',
     slug: 'dydx',
@@ -82,7 +84,6 @@ export const dydx: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [
@@ -148,7 +149,7 @@ export const dydx: Layer2 = {
           selector: '0x9b3b76cc',
           functionSignature:
             'function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)',
-          sinceTimestampInclusive: new UnixTime(1615417556),
+          sinceTimestamp: new UnixTime(1615417556),
         },
       },
       {
@@ -164,7 +165,7 @@ export const dydx: Layer2 = {
           selector: '0x538f9406',
           functionSignature:
             'function updateState(uint256[] publicInput, uint256[] applicationData)',
-          sinceTimestampInclusive: new UnixTime(1613033682),
+          sinceTimestamp: new UnixTime(1613033682),
         },
       },
     ],

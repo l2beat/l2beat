@@ -1,8 +1,8 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20138435,
-  "configHash": "0x0abc07c2a3779ca4b18c3453b50574892390d318d2859f27993356e87052d1c4",
+  "blockNumber": 20225271,
+  "configHash": "0x194537b8435cd3929c23c50ed4f2c1da87d7d6ad8471582b383d61ab38bb697d",
   "version": 8,
   "contracts": [
     {
@@ -28,7 +28,8 @@
         "getBlockNum",
         "getBorrowFeeRate",
         "getFundWeight",
-        "getL1RequestNum"
+        "getL1RequestNum",
+        "getTokenNum"
       ],
       "implementations": [
         "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
@@ -246,8 +247,8 @@
           }
         ],
         "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
-        "getAccountNum": 32,
-        "getBlockNum": [55, 55, 55],
+        "getAccountNum": 46,
+        "getBlockNum": [95, 95, 95],
         "getBorrowFeeRate": 10000000,
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
@@ -259,10 +260,10 @@
         },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
-        "getL1RequestNum": [120, 120, 123],
+        "getL1RequestNum": [179, 179, 179],
         "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
-        "getTokenNum": 65,
+        "getTokenNum": 69,
         "getTreasuryAddr": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
         "getVaultAddr": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
         "getVerifier": "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE",
