@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xe10ce73bd8b80f0098e4eaeaadd0c70a60dba5bf
+Generated with discovered.json: 0x48530b35afd5a6ba7a92e6e1d1770b393de6fcdc
 
-# Diff at Thu, 04 Jul 2024 13:55:20 GMT:
+# Diff at Thu, 04 Jul 2024 14:15:56 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 6349114
+- current block number: 6349728
 
 ## Description
 

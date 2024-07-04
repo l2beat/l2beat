@@ -71,20 +71,6 @@
             "type": "constructorArgs",
             "nameArgs": true
           }
-        },
-        "validatorsAdded": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorAdded",
-            "valueKey": "_addedValidator"
-          }
-        },
-        "validatorsRemoved": {
-          "handler": {
-            "type": "arrayFromOneEvent",
-            "event": "ValidatorRemoved",
-            "valueKey": "_removedValidator"
-          }
         }
       }
     },
