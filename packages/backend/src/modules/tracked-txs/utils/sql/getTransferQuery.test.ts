@@ -79,6 +79,6 @@ describe(getTransferQuery.name, () => {
       new Date('2021-01-02Z').toISOString(),
     ])
 
-    expect(query.limitInGb).toEqual(5)
+    expect(query.limitInGb).toEqual(10)
   })
 })
