@@ -102,6 +102,9 @@
             "actorType": "batchPoster"
           }
         },
+        "maxTimeVariation": {
+          "returnType": "(uint256 delayBlocks, uint256 futureBlocks, uint256 delaySeconds, uint256 futureSeconds)"
+        },
         "keySetUpdates": {
           "handler": {
             "type": "eventCount",

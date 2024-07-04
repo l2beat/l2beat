@@ -1,7 +1,7 @@
 {
   "name": "blobstream",
   "chain": "ethereum",
-  "blockNumber": 20085541,
+  "blockNumber": 20218838,
   "configHash": "0xcf8eb56d57080d480c766eda217b523305fd0fa54653550aace47ce9679209ad",
   "version": 8,
   "contracts": [
@@ -90,9 +90,9 @@
         "gateway": "0x6c7a05e0AE641c6559fD76ac56641778B6eCd776",
         "GUARDIAN_ROLE": "0x55435dd261a4b9b3364963f7738a7a662ad9c84396d64be3365284bb7f0a5041",
         "headerRangeFunctionId": "0xdb3232748ba9f2906d9d2ce97d2fac3963d4346de23c30521f346e10ddad82f7",
-        "latestBlock": 1664100,
+        "latestBlock": 1800000,
         "nextHeaderFunctionId": "0xf7ab2ac6f5ccf2da79050efcc0dbdb06d5ae05a332f58076aeac7fc8c73811fe",
-        "state_proofNonce": 66,
+        "state_proofNonce": 218,
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "VERSION": "0.1.0"
       },

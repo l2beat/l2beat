@@ -1,3 +1,44 @@
+Generated with discovered.json: 0xfec06e38b2522067a4f7281481b4a8f8c67b2006
+
+# Diff at Tue, 02 Jul 2024 09:38:31 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6e87a8f437fbb4bda4cdabd5107dd1f20f111445 block: 225981315
+- current block number: 227940683
+
+## Description
+
+Three new signers are added to the popapex OwnerMultisig.
+
+## Watched changes
+
+```diff
+    contract RollupOwnerMultisig (0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56) {
+    +++ description: None
+      upgradeability.threshold:
+-        "2 of 4 (50%)"
++        "2 of 7 (29%)"
+      values.getOwners.6:
++        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
+      values.getOwners.5:
++        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
+      values.getOwners.4:
++        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
+      values.getOwners.3:
+-        "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
++        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
+      values.getOwners.2:
+-        "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038"
++        "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4"
+      values.getOwners.1:
+-        "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f"
++        "0xF3313C48BD8E17b823d5498D62F37019dFEA647D"
+      values.getOwners.0:
+-        "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
++        "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0"
+    }
+```
+
 Generated with discovered.json: 0x4220660393dd05d99d4710998df879bf64a48ba1
 
 # Diff at Tue, 11 Jun 2024 12:22:46 GMT:

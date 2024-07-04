@@ -1,7 +1,8 @@
 import { notUndefined } from '@l2beat/shared-pure'
 
 import { ChainConfig } from '../common/ChainConfig'
-import { layer2s, layer3s } from '../projects'
+import { layer2s } from '../projects/layer2s'
+import { layer3s } from '../projects/layer3s'
 import { avalanche } from './avalanche'
 import { bsc } from './bsc'
 import { celo } from './celo'

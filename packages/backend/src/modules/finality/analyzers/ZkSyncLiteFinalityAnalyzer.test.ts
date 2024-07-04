@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { ZkSyncLiteFinalityAnalyzer } from './ZkSyncLiteFinalityAnalyzer'
 
@@ -24,6 +25,7 @@ describe(ZkSyncLiteFinalityAnalyzer.name, () => {
       const analyzer = new ZkSyncLiteFinalityAnalyzer(
         rpcClient,
         livenessRepository,
+        mockObject<IndexerConfigurationRepository>({}),
         projectId,
       )
 

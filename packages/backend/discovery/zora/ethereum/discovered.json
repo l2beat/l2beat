@@ -1,8 +1,8 @@
 {
   "name": "zora",
   "chain": "ethereum",
-  "blockNumber": 20188709,
-  "configHash": "0xd13302d6a275e2febd912ad610a77780313e4647bdb7e24c7edfd04abbc8a3f3",
+  "blockNumber": 20211651,
+  "configHash": "0x2b7af7c11e8f11a37352a7c924e8a14f66e9fbf2dffdf417a058a75f4b64360d",
   "version": 8,
   "contracts": [
     {
@@ -72,7 +72,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 100000,
-          "prevBlockNum": 20188700
+          "prevBlockNum": 20211647
         },
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
@@ -321,12 +321,14 @@
     {
       "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
+      "template": "GnosisSafe",
       "upgradeability": {
         "type": "gnosis safe",
         "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
         "modules": [],
         "threshold": "5 of 7 (71%)"
       },
+      "ignoreInWatchMode": ["nonce"],
       "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1610850364,
       "values": {
@@ -343,7 +345,7 @@
         ],
         "getThreshold": 5,
         "NAME": "Gnosis Safe",
-        "nonce": 93,
+        "nonce": 94,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -376,10 +378,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 16430580,
-        "latestOutputIndex": 9352,
-        "nextBlockNumber": 16432380,
-        "nextOutputIndex": 9353,
+        "latestBlockNumber": 16569180,
+        "latestOutputIndex": 9429,
+        "nextBlockNumber": 16570980,
+        "nextOutputIndex": 9430,
         "proposer": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "PROPOSER": "0x48247032092e7b0ecf5dEF611ad89eaf3fC888Dd",
         "startingBlockNumber": 0,
@@ -615,7 +617,7 @@
       "sinceTimestamp": 1686694019,
       "values": {
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622088",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292622128",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,

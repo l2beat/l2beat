@@ -1,4 +1,6 @@
 import {
+  assert,
+  ChainId,
   EthereumAddress,
   UnixTime,
   assertUnreachable,
@@ -9,6 +11,7 @@ import { expect } from 'earl'
 import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
+import { chains } from '../../chains'
 import {
   NUGGETS,
   ScalingProjectReference,
@@ -18,6 +21,7 @@ import {
 import { ScalingProjectTechnology } from '../../common/ScalingProjectTechnology'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
+import { tokenList } from '../../tokens'
 import { layer2s, milestonesLayer2s } from './index'
 
 describe('layer2s', () => {
@@ -84,6 +88,32 @@ describe('layer2s', () => {
 
         for (const escrow of layer2.config.escrows) {
           expect([false, undefined]).toInclude(escrow.isUpcoming)
+        }
+      }
+    })
+
+    describe('every escrow can resolve all of its tokens', () => {
+      const chainsMap = new Map<string, ChainId>(
+        chains.map((c) => [c.name, ChainId(c.chainId)]),
+      )
+      for (const layer2 of layer2s) {
+        for (const escrow of layer2.config.escrows) {
+          const chainId = chainsMap.get(escrow.chain)
+          if (!chainId) continue
+          const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
+
+          if (escrow.tokens === '*') continue
+          for (const token of escrow.tokens) {
+            it(`${layer2.id.toString()}:${escrow.address.toString()}:${token}`, () => {
+              const foundToken = tokensOnChain.find((t) => t.symbol === token)
+
+              assert(
+                foundToken,
+                `Please add token with symbol ${token} on ${escrow.chain} chain`,
+              )
+              expect(foundToken).not.toBeNullish()
+            })
+          }
         }
       }
     })

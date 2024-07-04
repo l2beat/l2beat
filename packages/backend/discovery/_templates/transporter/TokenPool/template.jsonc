@@ -7,5 +7,5 @@
     "i_messageTransmitter",
     "i_tokenMessenger"
   ],
-  "ignoreInWatchMode": ["getOnRamps"]
+  "ignoreInWatchMode": ["getOnRamps", "getCurrentBridgedAmount"]
 }

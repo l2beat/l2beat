@@ -29,6 +29,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -429,8 +430,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1636978914),
-          untilTimestampExclusive: new UnixTime(1702921247),
+          sinceTimestamp: new UnixTime(1636978914),
+          untilTimestamp: new UnixTime(1702921247),
           programHashes: [
             '1865367024509426979036104162713508294334262484507712987283009063059134893433',
           ],
@@ -444,8 +445,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1702921247),
-          untilTimestampExclusive: new UnixTime(1704855731),
+          sinceTimestamp: new UnixTime(1702921247),
+          untilTimestamp: new UnixTime(1704855731),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
@@ -459,8 +460,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1704855731),
-          untilTimestampExclusive: new UnixTime(1710252995),
+          sinceTimestamp: new UnixTime(1704855731),
+          untilTimestamp: new UnixTime(1710252995),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
@@ -474,8 +475,8 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1710252995),
-          untilTimestampExclusive: new UnixTime(1710625271),
+          sinceTimestamp: new UnixTime(1710252995),
+          untilTimestamp: new UnixTime(1710625271),
           programHashes: [
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
@@ -489,7 +490,7 @@ export const starknet: Layer2 = {
         ],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1710625271),
+          sinceTimestamp: new UnixTime(1710625271),
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
@@ -509,7 +510,7 @@ export const starknet: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestampInclusive: new UnixTime(1636978914),
+          sinceTimestamp: new UnixTime(1636978914),
         },
       },
       {
@@ -525,7 +526,7 @@ export const starknet: Layer2 = {
           selector: '0xb72d42a1',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
-          sinceTimestampInclusive: new UnixTime(1710252995),
+          sinceTimestamp: new UnixTime(1710252995),
         },
       },
       {
@@ -538,8 +539,8 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestampInclusive: new UnixTime(1678095635),
-          untilTimestampExclusive: new UnixTime(1706789063),
+          sinceTimestamp: new UnixTime(1678095635),
+          untilTimestamp: new UnixTime(1706789063),
         },
         _hackCostMultiplier: 0.9,
       },
@@ -553,8 +554,8 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestampInclusive: new UnixTime(1706789063),
-          untilTimestampExclusive: new UnixTime(1710342000),
+          sinceTimestamp: new UnixTime(1706789063),
+          untilTimestamp: new UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.9,
       },
@@ -568,7 +569,7 @@ export const starknet: Layer2 = {
           selector: '0x5578ceae',
           functionSignature:
             'function registerContinuousMemoryPage(uint256 startAddr,uint256[] values,uint256 z,uint256 alpha,uint256 prime)',
-          sinceTimestampInclusive: new UnixTime(1710342000),
+          sinceTimestamp: new UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.5,
       },
@@ -582,8 +583,8 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestampInclusive: new UnixTime(1706772791),
-          untilTimestampExclusive: new UnixTime(1710342000),
+          sinceTimestamp: new UnixTime(1706772791),
+          untilTimestamp: new UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.7,
       },
@@ -597,7 +598,7 @@ export const starknet: Layer2 = {
           selector: '0xe85a6a28',
           functionSignature:
             'function verifyFRI(uint256[] proof,uint256[] friQueue,uint256 evaluationPoint,uint256 friStepSize,uint256 expectedRoot)',
-          sinceTimestampInclusive: new UnixTime(1710342000),
+          sinceTimestamp: new UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.65,
       },
@@ -611,8 +612,8 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestampInclusive: new UnixTime(1706767355),
-          untilTimestampExclusive: new UnixTime(1710342000),
+          sinceTimestamp: new UnixTime(1706767355),
+          untilTimestamp: new UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.7,
       },
@@ -626,7 +627,7 @@ export const starknet: Layer2 = {
           selector: '0x3fe317a6',
           functionSignature:
             'function verifyMerkle(uint256[] merkleView,uint256[] initialMerkleQueue,uint256 height,uint256 expectedRoot)',
-          sinceTimestampInclusive: new UnixTime(1710342000),
+          sinceTimestamp: new UnixTime(1710342000),
         },
         _hackCostMultiplier: 0.65,
       },
@@ -1039,6 +1040,13 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
       description:
         'Bridge is live on mainnet, serving as gateway between Ethereum and Starknet.',
     },
+  ],
+  badges: [
+    Badge.DA.EthereumBlobs,
+    Badge.VM.CairoVM,
+    Badge.Other.L3HostChain,
+    Badge.Other.AccountAbstraction,
+    Badge.Other.Governance,
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
 }

@@ -7,6 +7,9 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from '@tanstack/react-table'
+import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
+import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
+import { SortingArrows } from '~/app/_components/table/sorting/sorting-arrows'
 import {
   Table,
   TableBody,
@@ -16,8 +19,6 @@ import {
   TableHeaderRow,
   TableRow,
 } from '~/app/_components/table/table'
-import { TableFacetedFilter } from '~/app/_components/table/table-faceted-filter'
-import { TableToolbar } from '~/app/_components/table/table-toolbar'
 import { useTable } from '~/hooks/use-table'
 import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
 import { columns } from './columns'
@@ -39,12 +40,12 @@ export function DaRiskTable({ items }: Props) {
 
   return (
     <>
-      <TableToolbar>
+      <FilterWrapper>
         <TableFacetedFilter
           title="DA Layer"
           column={table.getColumn('daLayer')}
         />
-      </TableToolbar>
+      </FilterWrapper>
       <Table>
         <TableHeader>
           {table.getHeaderGroups().map((headerGroup) => (
@@ -54,21 +55,24 @@ export function DaRiskTable({ items }: Props) {
                   key={header.id}
                   colSpan={header.colSpan}
                   onClick={header.column.getToggleSortingHandler()}
-                  sorting={
-                    header.column.getCanSort()
-                      ? {
-                          direction: header.column.getIsSorted(),
-                          nextDirection: header.column.getNextSortingOrder(),
-                        }
-                      : undefined
-                  }
                 >
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
+                  {header.isPlaceholder ? null : header.column.getCanSort() ? (
+                    <SortingArrows
+                      direction={header.column.getIsSorted()}
+                      nextDirection={header.column.getNextSortingOrder()}
+                      onClick={header.column.getToggleSortingHandler()}
+                    >
+                      {flexRender(
                         header.column.columnDef.header,
                         header.getContext(),
                       )}
+                    </SortingArrows>
+                  ) : (
+                    flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )
+                  )}
                 </TableHead>
               ))}
             </TableHeaderRow>

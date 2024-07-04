@@ -1,3 +1,378 @@
+Generated with discovered.json: 0x9efa2c8ccfb080227d7db5e3731ae5fd7ddda014
+
+# Diff at Wed, 03 Jul 2024 06:36:00 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@cf42b351c892788d89ff6698567a5c95122d93a1 block: 20124790
+- current block number: 20224230
+
+## Description
+
+* L1StandardBridge stops functioning when Rollup is paused by SuperChain Guardian
+* L1ERC721Bridge stops functioning when Rollup is paused by SuperChain Guardian
+* L1CrossDomainMessenger stops functioning when Rollup is paused by SuperChain Guardian
+* OptmismPortal - Guardian could pause/unpause withdrawals. Now guardian that can pause is SuperChain Guardian
+* L2OutputOracle, SystemConfig - no significant changes 
+
+
+## Watched changes
+
+```diff
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.
+      upgradeability.implementation:
+-        "0x3F3C0F6bC115E698E35038E1759E9c31032E590c"
++        "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
+      implementations.0:
+-        "0x3F3C0F6bC115E698E35038E1759E9c31032E590c"
++        "0x64B5a5Ed26DCb17370Ff4d33a8D503f0fbD06CfF"
+      values.version:
+-        "1.1.0"
++        "2.1.0"
+      values.otherBridge:
++        "0x4200000000000000000000000000000000000010"
+      values.paused:
++        false
+      values.superchainConfig:
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x5FB30336A8d0841cf15d452afA297cB6D10877D7"
++        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
+      implementations.0:
+-        "0x5FB30336A8d0841cf15d452afA297cB6D10877D7"
++        "0x2D778797049FE9259d947D1ED8e5442226dFB589"
+      values.GUARDIAN:
+-        "0x14536667Cd30e52C0b458BaACcB9faDA7046E056"
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.isOutputFinalized:
+-        [true,true,true,true,true]
+      values.version:
+-        "1.7.0"
++        "2.5.0"
+      values.guardian:
++        "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
+      values.l2Oracle:
++        "0x56315b90c40730925ec5485cf004d835058518A0"
+      values.superchainConfig:
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+      values.systemConfig:
++        "0x73a79Fab69143498Ed3712e519A88a918e1f4072"
+      errors:
+-        {"isOutputFinalized":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x56315b90c40730925ec5485cf004d835058518A0) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xf2460D3433475C8008ceFfe8283F07EB1447E39a"
++        "0xF243BEd163251380e78068d317ae10f26042B292"
+      implementations.0:
+-        "0xf2460D3433475C8008ceFfe8283F07EB1447E39a"
++        "0xF243BEd163251380e78068d317ae10f26042B292"
+      values.computeL2Timestamp:
+-        [1686789348,1686789350,1686789352,1686789354,1686789356]
+      values.getL2Output:
+-        [["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x04ef6eb5d5d7654d8d4a35a8a514dc5a3a5ed8bdefb5b354293eeb41b397d3a3",1686798023,3600],["0xadba58d47f714a60453283369665d7e4d59a8fed2a104da459dcaaccef836fb3",1686801431,5400],["0xba2976155bd45bd7b1742831fc73a2183103c73f93cc33f5441b228cba69886a",1686804875,7200],["0x24ed985d22ccdf05d8d41fddefe433d34975d41c3cfb0d6329940b9243fc1d0d",1686808343,9000]]
+      values.getL2OutputAfter:
+-        [["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800]]
+      values.getL2OutputIndexAfter:
+-        [0,0,0,0,0]
+      values.version:
+-        "1.3.0"
++        "1.8.0"
+      values.challenger:
++        "0x6F8C5bA3F59ea3E76300E3BEcDC231D656017824"
+      values.deletedOutputs:
++        [{"prevNextOutputIndex":1030,"newNextOutputIndex":1027},{"prevNextOutputIndex":1364,"newNextOutputIndex":1359}]
+      values.finalizationPeriodSeconds:
++        604800
+      values.l2BlockTime:
++        2
+      values.proposer:
++        "0x642229f238fb9dE03374Be34B0eD8D9De80752c5"
+      values.submissionInterval:
++        1800
+      errors:
+-        {"computeL2Timestamp":"Too many values. Update configuration to explore fully","getL2Output":"Too many values. Update configuration to explore fully","getL2OutputAfter":"Too many values. Update configuration to explore fully","getL2OutputIndexAfter":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x608d94945A64503E642E6370Ec598e519a2C1E53) {
+    +++ description: Used to bridge ERC-721 tokens from L1 to L2
+      upgradeability.implementation:
+-        "0x3311aC7F72bb4108d9f4D5d50E7623B1498A9eC0"
++        "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+      implementations.0:
+-        "0x3311aC7F72bb4108d9f4D5d50E7623B1498A9eC0"
++        "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"
+      values.version:
+-        "1.1.1"
++        "2.1.0"
+      values.paused:
++        false
+      values.superchainConfig:
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"
++        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+      implementations.0:
+-        "0x6481ff79597Fe4F77E1063f615ec5BDaDDEFfd4B"
++        "0xba2492e52F45651B60B8B38d4Ea5E2390C64Ffb1"
+      values.batcherHash:
+-        "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9"
++        "0x5050F69a9786F081509234F1a7F4684b5E5b76C9"
+      values.version:
+-        "1.3.0"
++        "1.12.0"
+      values.BATCH_INBOX_SLOT:
++        "0x71ac12829d66ee73d8d95bff50b3589745ce57edae70a3fb111a2342464dc597"
+      values.batchInbox:
++        "0xFf00000000000000000000000000000000008453"
+      values.L1_CROSS_DOMAIN_MESSENGER_SLOT:
++        "0x383f291819e6d54073bc9a648251d97421076bdd101933c0c022219ce9580636"
+      values.L1_ERC_721_BRIDGE_SLOT:
++        "0x46adcbebc6be8ce551740c29c47c8798210f23f7f4086c41752944352568d5a7"
+      values.L1_STANDARD_BRIDGE_SLOT:
++        "0x9904ba90dde5696cda05c9e0dab5cbaa0fea005ace4d11218a02ac668dad6376"
+      values.l1CrossDomainMessenger:
++        "0x866E82a600A1414e583f7F13623F1aC5d58b0Afa"
+      values.l1ERC721Bridge:
++        "0x608d94945A64503E642E6370Ec598e519a2C1E53"
+      values.l1StandardBridge:
++        "0x3154Cf16ccdb4C6d922629664174b904d80F2C35"
+      values.L2_OUTPUT_ORACLE_SLOT:
++        "0xe52a667f71ec761b9b381c7b76ca9b852adf7e8905da0e0ad49986a0a6871815"
+      values.l2OutputOracle:
++        "0x56315b90c40730925ec5485cf004d835058518A0"
+      values.opStackDA:
++        {"isSomeTxsLengthEqualToCelestiaDAExample":false,"isSequencerSendingBlobTx":true}
+      values.OPTIMISM_MINTABLE_ERC20_FACTORY_SLOT:
++        "0xa04c5bb938ca6fc46d95553abf0a76345ce3e722a30bf4f74928b8e7d852320c"
+      values.OPTIMISM_PORTAL_SLOT:
++        "0x4b6c74f9e688cb39801f2112c14a8c57232a3fc5202e1444126d4bce86eb19ac"
+      values.optimismMintableERC20Factory:
++        "0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84"
+      values.optimismPortal:
++        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
+      values.sequencerInbox:
++        "0xFf00000000000000000000000000000000008453"
+      values.START_BLOCK_SLOT:
++        "0xa11ee3ab75b40e88a0105e935d17cd36c8faee0138320d776c411291bdbbb19f"
+      values.startBlock:
++        17482144
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x81C4Bd600793EBd1C0323604E1F455fE50A951F8"
++        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      implementations.0:
+-        "0x81C4Bd600793EBd1C0323604E1F455fE50A951F8"
++        "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65"
+      values.version:
+-        "1.4.0"
++        "2.3.0"
+      values.otherMessenger:
++        "0x4200000000000000000000000000000000000007"
+      values.paused:
++        false
+      values.portal:
++        "0x49048044D57e1C92A77f79988d21Fa8fAF74E97e"
+      values.superchainConfig:
++        "0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OptimismMintableERC20Factory (0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdmin (0x543bA4AADBAb8f9025686Bd03993043599c6fB04)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract SecurityCouncilMultisig (0xc2819DC788505Aac350142A7A707BF9D03E3Bd03)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract Lib_AddressManager (0xdE1FCfB0851916CA5101820A69b13a4E276bd81F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../base/ethereum/.flat/DeputyGuardianModule.sol   |  139 ++
+ .../.flat/FoundationMultisig_1/GnosisSafe.sol      |  952 +++++++++
+ .../FoundationMultisig_1/GnosisSafeProxy.p.sol     |   34 +
+ .../ethereum/.flat/GuardianMultisig/GnosisSafe.sol |  952 +++++++++
+ .../.flat/GuardianMultisig/GnosisSafeProxy.p.sol   |   34 +
+ .../L1CrossDomainMessenger.sol                     | 1654 +++++++--------
+ .../L1ERC721Bridge/L1ERC721Bridge.sol              |  611 +++---
+ .../L1StandardBridge/L1StandardBridge.sol          | 1459 +++++++------
+ .../L2OutputOracle/L2OutputOracle.sol              |  548 ++---
+ .../base/ethereum/.flat/Lib_AddressManager.sol     |  151 ++
+ .../base/ethereum/.flat/LivenessGuard.sol          |  581 ++++++
+ .../base/ethereum/.flat/LivenessModule.sol         |  257 +++
+ .../OptimismMintableERC20Factory.sol               |  426 ++++
+ .../.flat/OptimismMintableERC20Factory/Proxy.p.sol |  210 ++
+ .../OptimismPortal/OptimismPortal.sol              | 2144 ++++++++------------
+ .../.flat/SecurityCouncilMultisig/GnosisSafe.sol   |  952 +++++++++
+ .../SecurityCouncilMultisig/GnosisSafeProxy.p.sol  |   34 +
+ .../ethereum/.flat/SuperchainConfig/Proxy.p.sol    |  199 ++
+ .../.flat/SuperchainConfig/SuperchainConfig.sol    |  476 +++++
+ .../base/ethereum/.flat/SuperchainProxyAdmin.sol   |  297 +++
+ .../.flat/SuperchainProxyAdminOwner/GnosisSafe.sol |  952 +++++++++
+ .../GnosisSafeProxy.p.sol                          |   34 +
+ .../SystemConfig/SystemConfig.sol                  |  602 +++---
+ 23 files changed, 9768 insertions(+), 3930 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20124790 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract OptimismMintableERC20Factory (0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84)
+    +++ description: None
+```
+
+```diff
+    contract GuardianMultisig (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      name:
+-        "GuardianMultisig"
++        "BaseMultisig2"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: None
+      values.isOutputFinalized:
++        [true,true,true,true,true]
+      errors:
++        {"isOutputFinalized":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x56315b90c40730925ec5485cf004d835058518A0) {
+    +++ description: None
+      values.deletedOutputs:
+-        [{"prevNextOutputIndex":1030,"newNextOutputIndex":1027},{"prevNextOutputIndex":1364,"newNextOutputIndex":1359}]
+      values.computeL2Timestamp:
++        [1686789348,1686789350,1686789352,1686789354,1686789356]
+      values.getL2Output:
++        [["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x04ef6eb5d5d7654d8d4a35a8a514dc5a3a5ed8bdefb5b354293eeb41b397d3a3",1686798023,3600],["0xadba58d47f714a60453283369665d7e4d59a8fed2a104da459dcaaccef836fb3",1686801431,5400],["0xba2976155bd45bd7b1742831fc73a2183103c73f93cc33f5441b228cba69886a",1686804875,7200],["0x24ed985d22ccdf05d8d41fddefe433d34975d41c3cfb0d6329940b9243fc1d0d",1686808343,9000]]
+      values.getL2OutputAfter:
++        [["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800],["0x61f4942f1af46203331e11dc496d2205d9585abec165134d8b22c108373ac44e",1686797963,1800]]
+      values.getL2OutputIndexAfter:
++        [0,0,0,0,0]
+      errors:
++        {"computeL2Timestamp":"Too many values. Update configuration to explore fully","getL2Output":"Too many values. Update configuration to explore fully","getL2OutputAfter":"Too many values. Update configuration to explore fully","getL2OutputIndexAfter":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.batcherHash:
+-        "0x5050F69a9786F081509234F1a7F4684b5E5b76C9"
++        "0x0000000000000000000000005050f69a9786f081509234f1a7f4684b5e5b76c9"
+      values.opStackDA:
+-        {"isSomeTxsLengthEqualToCelestiaDAExample":false,"isSequencerSendingBlobTx":true}
+      values.sequencerInbox:
+-        "0xFf00000000000000000000000000000000008453"
+    }
+```
+
+```diff
+    contract OptimismMultisig (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      name:
+-        "OptimismMultisig"
++        "FoundationMultisig_2"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x42d27eEA1AD6e22Af6284F609847CB3Cd56B9c64)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x30d8e15050c1b9b217c2211de9ec9b56f4d22523
 
 # Diff at Wed, 19 Jun 2024 09:08:15 GMT:

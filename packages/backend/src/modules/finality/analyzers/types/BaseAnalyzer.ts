@@ -6,6 +6,7 @@ import {
 import { chunk } from 'lodash'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 
 export type Transaction = {
@@ -17,6 +18,7 @@ export abstract class BaseAnalyzer {
   constructor(
     protected readonly provider: RpcClient,
     protected readonly livenessRepository: LivenessRepository,
+    protected readonly indexerConfigurationRepository: IndexerConfigurationRepository,
     protected readonly projectId: ProjectId,
   ) {}
 
@@ -24,10 +26,22 @@ export abstract class BaseAnalyzer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<number[] | undefined> {
+    const configs =
+      await this.indexerConfigurationRepository.getSavedConfigurations(
+        'tracked_txs_indexer',
+      )
+    const projectConfigs = configs.filter((c) => {
+      const properties = JSON.parse(c.properties)
+      return (
+        properties.projectId === this.projectId.toString() &&
+        properties.subtype === this.getTrackedTxSubtype() &&
+        properties.type === 'liveness'
+      )
+    })
+
     const transactions =
-      await this.livenessRepository.getTransactionsWithinTimeRange(
-        this.projectId,
-        this.getTrackedTxSubtype(),
+      await this.livenessRepository.getTransactionsWithinTimeRangeByConfigurationsIds(
+        projectConfigs.map((c) => c.id),
         from,
         to,
       )

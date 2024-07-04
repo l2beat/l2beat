@@ -7,9 +7,14 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { TrackedTxId, createTrackedTxId } from '@l2beat/shared'
 import { Project } from '../../../../../model/Project'
+import {
+  IndexerConfigurationRecord,
+  IndexerConfigurationRepository,
+} from '../../../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { TrackedTxId } from '../../../types/TrackedTxId'
+import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -19,6 +24,7 @@ import {
   L2CostsPricesRepository,
 } from '../repositories/L2CostsPricesRepository'
 import {
+  L2CostsRecord,
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
@@ -40,62 +46,64 @@ const MOCK_PROJECTS: Project[] = [
   mockObject<Project>({
     projectId: ProjectId('project2'),
     isArchived: false,
-    trackedTxsConfig: {
-      entries: [
-        {
+    trackedTxsConfig: [
+      {
+        params: {
+          formula: 'functionCall',
+          address: EthereumAddress.random(),
+          selector: '0x1234',
+        },
+        projectId: ProjectId('project2'),
+        sinceTimestamp: new UnixTime(1000),
+        id: 'p2-t1',
+        type: 'liveness',
+        subtype: 'batchSubmissions',
+      },
+      {
+        params: {
           address: EthereumAddress.random(),
           formula: 'functionCall',
-          projectId: ProjectId('project2'),
           selector: '0x1234',
-          sinceTimestampInclusive: new UnixTime(1000),
-          uses: [
-            {
-              id: TrackedTxId.unsafe('p2-t1'),
-              type: 'liveness',
-              subtype: 'batchSubmissions',
-            },
-            {
-              id: TrackedTxId.unsafe('p2-t2'),
-              type: 'l2costs',
-              subtype: 'batchSubmissions',
-            },
-          ],
-          costMultiplier: 0.6,
         },
-      ],
-    },
+        projectId: ProjectId('project2'),
+        sinceTimestamp: new UnixTime(1000),
+        id: 'p2-t2',
+        type: 'l2costs',
+        subtype: 'batchSubmissions',
+        costMultiplier: 0.6,
+      },
+    ],
   }),
   mockObject<Project>({
     projectId: ProjectId('project3'),
     isArchived: false,
-    trackedTxsConfig: {
-      entries: [
-        {
+    trackedTxsConfig: [
+      {
+        params: {
           from: EthereumAddress.random(),
           to: EthereumAddress.random(),
           formula: 'transfer',
-          projectId: ProjectId('project3'),
-          sinceTimestampInclusive: new UnixTime(2000),
-          uses: [
-            {
-              id: TrackedTxId.unsafe('p3-t1'),
-              type: 'l2costs',
-              subtype: 'stateUpdates',
-            },
-          ],
         },
-      ],
-    },
+        projectId: ProjectId('project3'),
+        sinceTimestamp: new UnixTime(2000),
+        id: 'p3-t1',
+        type: 'l2costs',
+        subtype: 'stateUpdates',
+      },
+    ],
   }),
 ]
 
 describe(L2CostsAggregatorIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
   describe(L2CostsAggregatorIndexer.prototype.update.name, () => {
     it('updates correctly', async () => {
       // 2023-05-01 00:01:00
       const txTime = MIN.add(1, 'minutes')
 
-      const trackedTxId = TrackedTxId.random()
+      const trackedTxId = 'adaw'
 
       const txs = [
         tx(trackedTxId, {
@@ -108,17 +116,30 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ]
 
       const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
-        getWithProjectIdByTimeRange: mockFn().resolvesTo(txs),
+        getByTimeRange: mockFn().resolvesTo(txs),
       })
 
       const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
         getByTimestampRange: mockFn().resolvesTo(ethPrices),
       })
 
+      const indexerConfigurationRepositoryMock =
+        mockObject<IndexerConfigurationRepository>({
+          getSavedConfigurationsByIds: mockFn().resolvesTo([
+            mockObject<IndexerConfigurationRecord>({
+              id: txs[0].configurationId,
+              properties: JSON.stringify({
+                projectId: txs[0].projectId,
+              }),
+            }),
+          ]),
+        })
+
       const indexer = createIndexer({
         tag: 'update-correct',
         l2CostsRepository: l2CostsRepositoryMock,
         l2CostsPricesRepository: l2CostsPricesRepositoryMock,
+        indexerConfigurationRepository: indexerConfigurationRepositoryMock,
       })
 
       const multipliers: TrackedTxMultiplier[] = [
@@ -137,9 +158,10 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const to = await indexer.update(MIN.toNumber(), NOW.toNumber())
 
       // should get records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
-      expect(
-        l2CostsRepositoryMock.getWithProjectIdByTimeRange,
-      ).toHaveBeenOnlyCalledWith([MIN, endOfFirstDay])
+      expect(l2CostsRepositoryMock.getByTimeRange).toHaveBeenOnlyCalledWith([
+        MIN,
+        endOfFirstDay,
+      ])
 
       // should get prices records between 2023-05-02 00:00:00 and 2023-05-02 23:59:59
       expect(
@@ -191,7 +213,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
       indexer.calculate = mockedCalculate
 
-      const trackedTxId = TrackedTxId.random()
+      const trackedTxId = 'adad'
       const multipliers: TrackedTxMultiplier[] = [
         {
           id: trackedTxId,
@@ -283,7 +305,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     it('throws if multplier missing', async () => {
       const indexer = createIndexer({ tag: 'aggregate-throws-no-multiplier' })
 
-      const trackedTxId = TrackedTxId.random()
+      const trackedTxId = 'dwadad'
       indexer.findTxConfigsWithMultiplier = mockFn().returns([])
 
       const txs = [tx(trackedTxId)]
@@ -299,7 +321,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
     it('throws if prices not available', async () => {
       const indexer = createIndexer({ tag: 'aggregate-throws-no-price' })
-      const txs = [tx(TrackedTxId.random())]
+      const txs = [tx('wada')]
 
       const ethPrices: L2CostsPricesRecord[] = [
         { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
@@ -314,6 +336,83 @@ describe(L2CostsAggregatorIndexer.name, () => {
   })
 
   describe(
+    L2CostsAggregatorIndexer.prototype.getL2CostsRecordsWithProjectId.name,
+    () => {
+      it('match records with projectIds', async () => {
+        const id1 = createTrackedTxId.random()
+        const id2 = createTrackedTxId.random()
+
+        const project1 = ProjectId('project1')
+        const project2 = ProjectId('project2')
+
+        const txs = [
+          mockObject<L2CostsRecord>({
+            timestamp: new UnixTime(1),
+            configurationId: id1,
+          }),
+          mockObject<L2CostsRecord>({
+            timestamp: new UnixTime(2),
+            configurationId: id1,
+          }),
+          mockObject<L2CostsRecord>({
+            timestamp: new UnixTime(3),
+            configurationId: id2,
+          }),
+        ]
+        const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
+          getByTimeRange: mockFn().resolvesTo(txs),
+        })
+        const indexerConfigurationRepositoryMock =
+          mockObject<IndexerConfigurationRepository>({
+            getSavedConfigurationsByIds: mockFn().resolvesTo([
+              mockObject<IndexerConfigurationRecord>({
+                id: id1,
+                properties: JSON.stringify({
+                  projectId: project1,
+                }),
+              }),
+              mockObject<IndexerConfigurationRecord>({
+                id: id2,
+                properties: JSON.stringify({
+                  projectId: project2,
+                }),
+              }),
+            ]),
+          })
+
+        const indexer = createIndexer({
+          tag: 'update-correct',
+          l2CostsRepository: l2CostsRepositoryMock,
+          indexerConfigurationRepository: indexerConfigurationRepositoryMock,
+        })
+
+        const result = await indexer.getL2CostsRecordsWithProjectId([
+          new UnixTime(0),
+          new UnixTime(4),
+        ])
+
+        expect(result).toEqual([
+          mockObject<L2CostsRecordWithProjectId>({
+            timestamp: new UnixTime(1),
+            projectId: project1,
+            configurationId: id1,
+          }),
+          mockObject<L2CostsRecordWithProjectId>({
+            timestamp: new UnixTime(2),
+            projectId: project1,
+            configurationId: id1,
+          }),
+          mockObject<L2CostsRecordWithProjectId>({
+            timestamp: new UnixTime(3),
+            projectId: project2,
+            configurationId: id2,
+          }),
+        ])
+      })
+    },
+  )
+
+  describe(
     L2CostsAggregatorIndexer.prototype.findTxConfigsWithMultiplier.name,
     () => {
       it('finds transactions with multipliers', () => {
@@ -321,8 +420,8 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const result = indexer.findTxConfigsWithMultiplier()
 
         expect(result).toEqual([
-          { id: TrackedTxId.unsafe('p2-t2'), factor: 0.6 },
-          { id: TrackedTxId.unsafe('p3-t1'), factor: 1 },
+          { id: 'p2-t2', factor: 0.6 },
+          { id: 'p3-t1', factor: 1 },
         ])
       })
     },
@@ -332,7 +431,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     const indexer = createIndexer({ tag: 'calculate' })
 
     it('calculates correctly for non blob tx', () => {
-      const result = indexer.calculate(tx(TrackedTxId.random()), 2000, 1)
+      const result = indexer.calculate(tx('dwada'), 2000, 1)
 
       expect(result).toEqual({
         totalGas: 601201,
@@ -354,7 +453,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
     })
 
     it('calculates correctly with multiplier', () => {
-      const result = indexer.calculate(tx(TrackedTxId.random()), 2000, 0.6)
+      const result = indexer.calculate(tx('dwadad'), 2000, 0.6)
 
       expect(result).toEqual({
         totalGas: 360721,
@@ -454,6 +553,8 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
     aggregatedL2CostsRepository: mockObject<AggregatedL2CostsRepository>({
       addMany: mockFn().resolvesTo(1),
     }),
+    indexerConfigurationRepository:
+      mockObject<IndexerConfigurationRepository>(),
     l2CostsRepository: mockObject<L2CostsRepository>(),
     l2CostsPricesRepository: mockObject<L2CostsPricesRepository>(),
     projects: MOCK_PROJECTS,
@@ -462,7 +563,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
 }
 
 function tx(
-  trackedTxId: TrackedTxId,
+  configurationId: TrackedTxId,
   data?: Partial<AggregatedL2CostsRecord>,
 ): L2CostsRecordWithProjectId {
   return {
@@ -474,7 +575,7 @@ function tx(
     calldataGasUsed: 450980,
     blobGasPrice: null,
     blobGasUsed: null,
-    trackedTxId,
+    configurationId,
     txHash: Hash256.random().toString(),
     ...data,
   }
@@ -492,7 +593,7 @@ function txWithBlob(
     calldataGasUsed: 450980,
     blobGasUsed: 131072,
     blobGasPrice: 1n,
-    trackedTxId: TrackedTxId.random(),
+    configurationId: 'wdada',
     txHash: Hash256.random().toString(),
     ...data,
   }
