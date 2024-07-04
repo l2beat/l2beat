@@ -209,6 +209,7 @@ export class IndexerService {
   ) {
     const excluded = new Set<string>()
     const lagging = []
+    const processed = new Set<string>()
 
     const configurationsState =
       await this.indexerConfigurationRepository.getByIds(
@@ -216,6 +217,7 @@ export class IndexerService {
       )
 
     for (const config of configurationsState) {
+      processed.add(config.id)
       const syncStatus = config.currentHeight
         ? new UnixTime(config.currentHeight)
         : undefined
@@ -243,6 +245,13 @@ export class IndexerService {
           latestTimestamp: syncStatus,
         })
       }
+    }
+
+    if (processed.size !== configurations.length) {
+      const unprocessed = configurations.filter(
+        (c) => !processed.has(c.configId),
+      )
+      unprocessed.forEach((u) => excluded.add(u.configId))
     }
 
     return {

@@ -1,7 +1,10 @@
 import { UnixTime, json } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
+import {
+  IndexerConfigurationRecord,
+  IndexerConfigurationRepository,
+} from './IndexerConfigurationRepository'
 import { IndexerService } from './IndexerService'
 import {
   IndexerStateRecord,
@@ -223,6 +226,48 @@ describe(IndexerService.name, () => {
       indexerConfigurationsRepository.deleteConfigurationsExcluding,
     ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
   })
+
+  it(IndexerService.prototype.getConfigurationsStatus.name, async () => {
+    const targetTimestamp = UnixTime.now()
+
+    const indexerConfigurationsRepository =
+      mockObject<IndexerConfigurationRepository>({
+        getByIds: async () => [
+          config('a', 0, null, null),
+          config('b', 0, null, targetTimestamp.toNumber()),
+          config('c', 0, 100, 100),
+          config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+          config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+        ],
+      })
+
+    const indexerService = new IndexerService(
+      mockObject<IndexerStateRepository>({}),
+      indexerConfigurationsRepository,
+    )
+
+    const result = await indexerService.getConfigurationsStatus(
+      [
+        { configId: 'a' },
+        { configId: 'b' },
+        { configId: 'c' },
+        { configId: 'd' },
+        { configId: 'e' },
+        { configId: 'f' },
+      ],
+      targetTimestamp,
+    )
+
+    expect(result).toEqual({
+      excluded: new Set(['a', 'e', 'f']),
+      lagging: [
+        {
+          id: 'd',
+          latestTimestamp: targetTimestamp.add(-1, 'hours'),
+        },
+      ],
+    })
+  })
 })
 
 function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
@@ -232,5 +277,21 @@ function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
     configHash: '0x123456',
     minTimestamp: UnixTime.ZERO,
     ...v,
+  }
+}
+
+function config(
+  id: string,
+  minHeight: number,
+  maxHeight: number | null,
+  currentHeight: number | null,
+): IndexerConfigurationRecord {
+  return {
+    id,
+    indexerId: 'indexer',
+    properties: '',
+    minHeight,
+    maxHeight,
+    currentHeight,
   }
 }
