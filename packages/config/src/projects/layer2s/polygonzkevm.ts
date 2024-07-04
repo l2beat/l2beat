@@ -265,11 +265,12 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
               trustedSetup: 'None',
             },
             {
-              name: 'Main circuit',
+              name: 'Polygon zkEVM ROM',
               proofSystem: 'eSTARK',
               mainArithmetization: 'eAIR',
               mainPCS: 'FRI',
               trustedSetup: 'None',
+              link: 'https://github.com/0xPolygonHermez/zkevm-rom',
             },
           ],
         },

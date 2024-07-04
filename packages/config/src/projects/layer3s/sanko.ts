@@ -1,4 +1,4 @@
-import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
@@ -30,6 +30,25 @@ export const sanko: Layer3 = orbitStackL3({
         'https://t.me/sankogamecorp',
       ],
     },
+  },
+  chainConfig: {
+    name: 'sanko',
+    chainId: 1996,
+    explorerUrl: 'https://explorer.sanko.xyz/',
+    explorerApi: {
+      url: 'https://explorer.sanko.xyz/api',
+      type: 'blockscout',
+    },
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 38,
+        version: '3',
+      },
+    ],
+    minTimestampForTvl: new UnixTime(1712970000),
+    coingeckoPlatform: 'sanko',
   },
   nativeToken: 'DMT',
   associatedTokens: ['DMT'],
