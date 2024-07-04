@@ -51,10 +51,10 @@ export const reddioex: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddioex'),
   display: {
-    name: 'ReddioEx',
-    slug: 'reddioex',
+    name: 'RedSonic',
+    slug: 'redSonic',
     description:
-      'ReddioEx is a Validium based on the StarkEx technology. Its goal is to power the next generation of web3 apps and games by providing developers with the ability to create digital assets (NFTs) and easily integrate them in-game.',
+      'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs/SDKs to create digital assets (NFTs&Tokens) and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
     provider: 'StarkEx',
     category: 'Validium',
@@ -65,6 +65,7 @@ export const reddioex: Layer2 = {
         'https://dashboard.reddio.com',
         'https://bridge.reddio.com',
         'https://reddio.com/redSonic',
+        "https://points.reddio.com"
       ],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],
@@ -84,7 +85,7 @@ export const reddioex: Layer2 = {
     escrows: [
       discovery.getEscrowDetails({
         address: EthereumAddress('0xB62BcD40A24985f560b5a9745d478791d8F1945C'),
-        tokens: ['ETH', 'USDC', 'USDT'],
+        tokens: '*',
         description: 'Main StarkEx contract, used also as an escrow.',
       }),
     ],
