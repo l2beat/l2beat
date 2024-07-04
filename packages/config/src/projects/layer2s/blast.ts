@@ -4,6 +4,7 @@ import { EXITS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('blast')
 
@@ -22,6 +23,7 @@ assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')
 
 export const blast: Layer2 = opStackL2({
   discovery,
+  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Blast',
     slug: 'blast',

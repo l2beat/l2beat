@@ -24,6 +24,7 @@ import { VALUES } from '../../discovery/values'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
@@ -87,6 +88,7 @@ const nOfChallengers = discovery.getContractValue<string[]>(
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
+  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain],
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',

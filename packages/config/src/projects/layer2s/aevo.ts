@@ -4,10 +4,12 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
+  badges: [Badge.VM.EVM, Badge.DA.Celestia, Badge.Stack.OPStack],
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,

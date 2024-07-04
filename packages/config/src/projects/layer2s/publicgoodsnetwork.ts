@@ -4,10 +4,12 @@ import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.Celestia],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {

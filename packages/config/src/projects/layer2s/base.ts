@@ -80,7 +80,13 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
-  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain],
+  badges: [
+    Badge.DA.EthereumBlobs,
+    Badge.VM.EVM,
+    Badge.Other.L3HostChain,
+    Badge.Stack.OPStack,
+    Badge.Infra.Superchain,
+  ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),

@@ -28,6 +28,7 @@ import {
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('sorare')
 const freezeGracePeriod = discovery.getContractValue<number>(
@@ -53,6 +54,7 @@ const committee = getCommittee(discovery)
 
 export const sorare: Layer2 = {
   type: 'layer2',
+  badges: [Badge.VM.CairoVM, Badge.RaaS.StarkEx, Badge.Infra.SHARP],
   id: ProjectId('sorare'),
   display: {
     name: 'Sorare',

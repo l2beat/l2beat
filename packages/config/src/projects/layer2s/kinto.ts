@@ -4,11 +4,13 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('kinto')
 
 export const kinto: Layer2 = orbitStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Stack.Orbit],
   display: {
     name: 'Kinto',
     slug: 'kinto',

@@ -3,6 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('ancient')
 
@@ -13,6 +14,7 @@ const upgradeability = {
 
 export const ancient: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.Celestia],
   discovery,
   display: {
     name: 'Ancient8',

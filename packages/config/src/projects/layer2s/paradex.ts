@@ -28,6 +28,7 @@ import {
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
@@ -63,6 +64,7 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
+  badges: [Badge.VM.CairoVM, Badge.DA.EthereumBlobs, Badge.Infra.SHARP],
   display: {
     name: 'Paradex',
     slug: 'paradex',

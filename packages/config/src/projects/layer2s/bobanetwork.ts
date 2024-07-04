@@ -5,11 +5,13 @@ import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.EthereumBlobs],
   display: {
     name: 'Boba Network',
     shortName: 'Boba',

@@ -2,11 +2,13 @@ import { ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('deri', 'arbitrum')
 
 export const deri = orbitStackL3({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Deri',

@@ -17,6 +17,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('zkspace')
 
@@ -32,6 +33,7 @@ const upgradeability = {
 export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
+  badges: [Badge.VM.EVM],
   display: {
     name: 'ZKSpace',
     slug: 'zkspace',

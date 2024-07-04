@@ -24,6 +24,7 @@ import { HARDCODED } from '../../discovery/values/hardcoded'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
@@ -87,6 +88,7 @@ const livenessInterval = discovery.getContractValue<number>(
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
+  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Infra.Superchain],
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',

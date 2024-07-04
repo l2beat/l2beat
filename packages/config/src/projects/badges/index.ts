@@ -218,6 +218,49 @@ export const badges = {
     },
     type: BadgeType.Stack,
   },
+  ZKStack: {
+    display: {
+      name: 'Built on the ZK Stack',
+      description: 'The project is built on the ZK Stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  PolygonCDK: {
+    display: {
+      name: 'Built on the Polygon CDK stack',
+      description: 'The project is built on the Polygon CDK stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  Loopring: {
+    display: {
+      name: 'Fork of Loopring',
+      description: 'The project is fork of Loopring.',
+    },
+    type: BadgeType.Fork,
+  },
+  //L3 host chains
+  Arbitrum: {
+    display: {
+      name: 'Built on top of Arbitrum',
+      description: 'The project has Arbitrum as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Base: {
+    display: {
+      name: 'Built on top of Base',
+      description: 'The project has Base as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Linea: {
+    display: {
+      name: 'Built on top of Linea',
+      description: 'The project has Linea as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
   // Other
   AccountAbstraction: {
     display: {

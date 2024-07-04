@@ -19,6 +19,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('zkfair')
 const upgradeDelay = discovery.getContractValue<number>(
@@ -87,6 +88,7 @@ const requiredSignatures = discovery.getContractValue<number>(
 
 export const zkfair: Layer2 = {
   type: 'layer2',
+  badges: [Badge.VM.EVM, Badge.Stack.PolygonCDK],
   id: ProjectId('zkfair'),
   display: {
     name: 'ZKFair',

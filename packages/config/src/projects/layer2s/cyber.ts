@@ -3,6 +3,7 @@ import { assert, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('cyber')
 
@@ -23,6 +24,7 @@ const daResolveWindow = formatSeconds(
 export const cyber: Layer2 = opStackL2({
   associatedTokens: ['CYBER'],
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack],
   display: {
     name: 'Cyber',
     slug: 'cyber',

@@ -4,10 +4,12 @@ import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
 export const popapex: Layer3 = orbitStackL3({
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
   discovery,
   hostChain: ProjectId('arbitrum'),
   bridge: discovery.getContract('Bridge'),

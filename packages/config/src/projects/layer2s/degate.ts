@@ -20,6 +20,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('degate')
 
@@ -49,6 +50,7 @@ export const degate: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Fork.Loopring],
   display: {
     name: 'DeGate Legacy',
     slug: 'degate',

@@ -13,12 +13,14 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('honeypot')
 
 export const honeypot: Layer2 = {
   type: 'layer2',
   id: ProjectId('honeypot'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata],
   display: {
     name: 'Honeypot (Cartesi)',
     shortName: 'Honeypot',

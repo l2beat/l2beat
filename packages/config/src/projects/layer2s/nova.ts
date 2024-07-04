@@ -7,6 +7,7 @@ import {
   orbitStackL2,
 } from './templates/orbitStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('nova')
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
@@ -43,6 +44,7 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   discovery,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),

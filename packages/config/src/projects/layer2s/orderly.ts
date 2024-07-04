@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('orderly')
 
@@ -13,6 +14,7 @@ const upgradeability = {
 
 export const orderly: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  badges: [Badge.VM.EVM, Badge.DA.Celestia, Badge.Stack.OPStack],
   discovery,
   display: {
     name: 'Orderly Network',
@@ -40,6 +42,7 @@ export const orderly: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    architectureImage: 'opstack',
   },
   nonTemplateEscrows: [
     {

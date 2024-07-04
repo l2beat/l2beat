@@ -3,6 +3,7 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('redstone')
 
@@ -22,6 +23,7 @@ const daResolveWindow = formatSeconds(
 
 export const redstone: Layer2 = opStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     name: 'Redstone',
     slug: 'redstone',

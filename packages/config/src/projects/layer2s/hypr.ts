@@ -3,11 +3,13 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('hypr')
 
 export const hypr: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  badges: [Badge.VM.EVM, Badge.DA.Celestia, Badge.Stack.OPStack],
   discovery,
   display: {
     name: 'Hypr',

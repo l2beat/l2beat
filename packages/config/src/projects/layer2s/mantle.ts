@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -23,6 +24,7 @@ const threshold =
   ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
 
 export const mantle: Layer2 = opStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack],
   daProvider: {
     name: 'MantleDA',
     bridge: {

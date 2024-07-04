@@ -16,6 +16,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('metis')
 
@@ -30,6 +31,7 @@ export const metis: Layer2 = {
   isUnderReview: false,
   type: 'layer2',
   id: ProjectId('metis'),
+  badges: [Badge.VM.EVM],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',

@@ -3,11 +3,13 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
 export const syndicateframe: Layer3 = opStackL3({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.L3ParentChain.Base],
   hostChain: ProjectId('base'),
   display: {
     name: 'Syndicate Frame Chain',

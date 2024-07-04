@@ -4,6 +4,7 @@ import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('mode')
 
@@ -24,6 +25,12 @@ const livenessInterval = discovery.getContractValue<number>(
 
 export const mode: Layer2 = opStackL2({
   discovery,
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
+    Badge.Infra.Superchain,
+  ],
   display: {
     name: 'Mode Network',
     slug: 'mode',

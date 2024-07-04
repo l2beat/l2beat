@@ -21,6 +21,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { Badge } from '../badges'
 
 const discovery = new ProjectDiscovery('scroll')
 
@@ -52,6 +53,7 @@ const upgradeDelay = 0
 export const scroll: Layer2 = {
   type: 'layer2',
   id: ProjectId('scroll'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Scroll',
     slug: 'scroll',
