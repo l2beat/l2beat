@@ -15,6 +15,7 @@ import { configureMultipleEscrowsButton } from './configureMultipleEscrowsButton
 import { configureNavWrapper } from './configureNavWrapper'
 import { configureOverflowWrappers } from './configureOverflowWrappers'
 import { configureProjectFilters } from './configureProjectFilters'
+import { configureReadMore } from './configureReadMore'
 import { configureRichSelects } from './configureRichSelect'
 import { configureRosetteOverlay } from './configureRosetteOverlay'
 import { configureScrollToTopButton } from './configureScrollToTopButton'
@@ -60,3 +61,4 @@ configureGlossarySideNav()
 configureCopyButtons()
 configureNavWrapper()
 configureExcludeAssociatedTokensCheckbox()
+configureReadMore()
