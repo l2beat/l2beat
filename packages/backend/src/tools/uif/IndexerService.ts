@@ -172,12 +172,8 @@ export class IndexerService {
       ),
     )
 
+    const processed = new Set<string>()
     for (const indexer of indexersState) {
-      const syncStatus = new UnixTime(indexer.safeHeight)
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
       const circulatingSupplyConfig = circulatingSupplyConfigs.find(
         (cc) => cc.coingeckoId.toString() === indexer.indexerId.split('::')[1],
       )
@@ -185,6 +181,12 @@ export class IndexerService {
         circulatingSupplyConfig,
         `Config should be defined for ${indexer.indexerId}`,
       )
+      processed.add(circulatingSupplyConfig.configId)
+
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      if (syncStatus.equals(targetTimestamp)) {
+        continue
+      }
 
       // decide whether it is excluded or lagging
       if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
@@ -195,6 +197,13 @@ export class IndexerService {
           latestTimestamp: syncStatus,
         })
       }
+    }
+
+    if (processed.size !== circulatingSupplyConfigs.length) {
+      const unprocessed = circulatingSupplyConfigs.filter(
+        (c) => !processed.has(c.configId),
+      )
+      unprocessed.forEach((u) => excluded.add(u.configId))
     }
 
     return {
@@ -209,13 +218,13 @@ export class IndexerService {
   ) {
     const excluded = new Set<string>()
     const lagging = []
-    const processed = new Set<string>()
 
     const configurationsState =
       await this.indexerConfigurationRepository.getByIds(
         configurations.map((c) => c.configId),
       )
 
+    const processed = new Set<string>()
     for (const config of configurationsState) {
       processed.add(config.id)
       const syncStatus = config.currentHeight
