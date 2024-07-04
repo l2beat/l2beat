@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { capitalize } from 'lodash'
+import capitalize from 'lodash/capitalize'
 import { chains } from '../../../../../../../'
 import {
   DaAccessibilityRisk,
@@ -27,7 +27,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
 
   const id = `blobstream-${chain.name}`
   const display = {
-    name: 'Blobstream',
+    name: `Blobstream on ${capitalize(chain.name)}`,
     slug: id,
     description: `Celestia with Blobstream bridge on ${capitalize(chain.name)}`,
   }

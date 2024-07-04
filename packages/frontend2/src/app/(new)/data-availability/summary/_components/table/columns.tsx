@@ -3,7 +3,6 @@ import { EM_DASH } from '~/app/_components/nav/consts'
 import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
-import { DaBridgeCell } from './da-bridge-cell'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 
@@ -17,9 +16,8 @@ export const columns = [
   columnHelper.accessor('daLayer', {
     header: 'DA Layer',
   }),
-  columnHelper.accessor('daBridge', {
+  columnHelper.accessor('daBridge.name', {
     header: 'DA Bridge',
-    cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks', {
     header: 'Risks',

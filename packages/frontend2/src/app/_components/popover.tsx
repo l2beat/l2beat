@@ -6,7 +6,22 @@ import { cn } from '~/utils/cn'
 
 const Popover = PopoverPrimitive.Root
 
-const PopoverTrigger = PopoverPrimitive.Trigger
+const PopoverTrigger = React.forwardRef<
+  React.ElementRef<typeof PopoverPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof PopoverPrimitive.Trigger>
+>(({ className, ...props }, ref) => (
+  <PopoverPrimitive.Trigger
+    ref={ref}
+    className={cn(
+      'group inline-flex items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400',
+      className,
+    )}
+    {...props}
+  >
+    {props.children}
+  </PopoverPrimitive.Trigger>
+))
+PopoverTrigger.displayName = PopoverPrimitive.Trigger.displayName
 
 const PopoverContent = React.forwardRef<
   React.ElementRef<typeof PopoverPrimitive.Content>,

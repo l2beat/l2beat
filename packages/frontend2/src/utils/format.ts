@@ -15,7 +15,8 @@ interface FormatCurrencyOptions {
 
 export function formatCurrency(
   value: number,
-  currency: string,
+  // eslint-disable-next-line @typescript-eslint/ban-types
+  currency: 'usd' | 'eth' | (string & {}),
   opts?: FormatCurrencyOptions,
 ) {
   const symbol = currencyToSymbol[currency.toLowerCase()]

@@ -14,6 +14,8 @@ export function BigRosetteLabels({
 }) {
   const [first, second, third, fourth, fifth] = values
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
+  const sharedClassName =
+    'text-center font-medium text-xs uppercase leading-tight whitespace-pre select-none'
   return (
     <>
       <span
@@ -23,6 +25,7 @@ export function BigRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[36deg]',
+          sharedClassName,
           content && content.risk.name !== first.name && 'opacity-20',
         )}
       >
@@ -35,6 +38,7 @@ export function BigRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-72deg]',
+          sharedClassName,
           content && content.risk.name !== second.name && 'opacity-20',
         )}
       >
@@ -47,6 +51,7 @@ export function BigRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full',
+          sharedClassName,
           content && content.risk.name !== third.name && 'opacity-20',
         )}
       >
@@ -59,6 +64,7 @@ export function BigRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[72deg]',
+          sharedClassName,
           content && content.risk.name !== fourth.name && 'opacity-20',
         )}
       >
@@ -71,6 +77,7 @@ export function BigRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[-36deg]',
+          sharedClassName,
           content && content.risk.name !== fifth.name && 'opacity-20',
         )}
       >

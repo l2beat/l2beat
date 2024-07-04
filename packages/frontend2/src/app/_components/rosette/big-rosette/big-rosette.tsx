@@ -58,10 +58,7 @@ export function BigRosette(props: BigRosetteProps) {
     <Tooltip>
       <div
         data-role="rosette"
-        className={cn(
-          'relative w-[272px] p-12 text-center font-medium text-xs uppercase leading-tight whitespace-pre',
-          props.className,
-        )}
+        className={cn('relative w-[272px] p-12', props.className)}
         data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
       >
         <TooltipTrigger>
@@ -76,7 +73,11 @@ export function BigRosette(props: BigRosetteProps) {
         <BigRosetteLabels values={props.values} content={content} />
       </div>
       {content ? (
-        <TooltipContent side={content.side} sideOffset={content.sideOffset}>
+        <TooltipContent
+          side={content.side}
+          sideOffset={content.sideOffset}
+          className="w-[300px]"
+        >
           <SentimentText
             sentiment={content.risk.sentiment}
             className="mb-2 flex items-center gap-1 font-medium"

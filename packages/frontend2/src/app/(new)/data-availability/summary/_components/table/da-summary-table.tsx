@@ -88,8 +88,8 @@ export function DaSummaryTable({ items }: Props) {
               {row.getVisibleCells().map((cell) => {
                 const hash = cell.column.columnDef.meta?.hash
                 const href = hash
-                  ? `/data-availability/projects/${row.original.slug}#${hash}`
-                  : `/data-availability/projects/${row.original.slug}`
+                  ? `/data-availability/projects/${row.original.slug}/${row.original.daBridge.slug}#${hash}`
+                  : `/data-availability/projects/${row.original.slug}/${row.original.daBridge.slug}`
                 return (
                   <TableCell key={cell.id} href={href}>
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
