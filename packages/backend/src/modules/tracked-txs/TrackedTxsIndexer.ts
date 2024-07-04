@@ -1,11 +1,5 @@
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import {
-  TrackedTxsConfigType,
-  UnixTime,
-  clampRangeToDay,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import { pickBy } from 'lodash'
+import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
@@ -24,27 +18,19 @@ import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsReposi
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
-export type TrackedTxsIndexerUpdaters = Record<
-  TrackedTxsConfigType,
-  TxUpdaterInterface | undefined
->
-
 export interface TrackedTxsIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
-  updaters: TrackedTxsIndexerUpdaters
+  updaters: TxUpdaterInterface[]
   trackedTxsClient: TrackedTxsClient
   livenessRepository: LivenessRepository
   l2CostsRepository: L2CostsRepository
 }
 
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
-  readonly enabledUpdaters: Partial<TrackedTxsIndexerUpdaters>
-
   constructor(private readonly $: TrackedTxsIndexerDeps) {
     const name = 'tracked_txs_indexer'
     const logger = $.logger.tag(name)
     super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
-    this.enabledUpdaters = pickBy(this.$.updaters, notUndefined)
   }
 
   override async multiUpdate(
@@ -74,47 +60,44 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     }
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
-    const allSyncTo = configurationsToSync
-      .map((config) => config.maxHeight)
-      .filter((c) => !!c) as number[]
-    const syncTo = new UnixTime(Math.min(unixTo.toNumber(), ...allSyncTo))
-
     const txs = await this.$.trackedTxsClient.getData(
       configurationsToSync,
       unixFrom,
-      syncTo,
+      unixTo,
     )
 
     dbMiddleware.add(async (trx?: DatabaseTransaction) => {
-      for (const [type, updater] of Object.entries(this.enabledUpdaters)) {
-        const filteredTxs = txs.filter((tx) => tx.type === type)
-        await updater?.update(filteredTxs, trx)
+      for (const updater of this.$.updaters) {
+        const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+        await updater.update(filteredTxs, trx)
       }
       this.logger.info('Saving txs into DB', {
         from,
-        to: syncTo.toNumber(),
+        to: unixTo.toNumber(),
         configurationsToSync: configurationsToSync.length,
       })
     })
-    return syncTo.toNumber()
+    return unixTo.toNumber()
   }
 
   override async removeData(
     configurations: RemovalConfiguration[],
   ): Promise<void> {
     for (const configuration of configurations) {
-      const livenessDeletedRecords =
-        await this.$.livenessRepository.deleteByConfigInTimeRange(
-          configuration.id,
-          new UnixTime(configuration.from),
-          new UnixTime(configuration.to),
-        )
-      const l2CostsDeletedRecords =
-        await this.$.l2CostsRepository.deleteByConfigInTimeRange(
-          configuration.id,
-          new UnixTime(configuration.from),
-          new UnixTime(configuration.to),
-        )
+      const [livenessDeletedRecords, l2CostsDeletedRecords] = await Promise.all(
+        [
+          this.$.livenessRepository.deleteByConfigInTimeRange(
+            configuration.id,
+            new UnixTime(configuration.from),
+            new UnixTime(configuration.to),
+          ),
+          this.$.l2CostsRepository.deleteByConfigInTimeRange(
+            configuration.id,
+            new UnixTime(configuration.from),
+            new UnixTime(configuration.to),
+          ),
+        ],
+      )
 
       if (livenessDeletedRecords > 0) {
         this.logger.info('Deleted liveness records', {

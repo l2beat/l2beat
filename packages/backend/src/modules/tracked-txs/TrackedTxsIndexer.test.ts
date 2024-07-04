@@ -1,10 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import {
-  EthereumAddress,
-  TrackedTxsConfigType,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { DatabaseMiddleware } from '../../peripherals/database/DatabaseMiddleware'
@@ -39,17 +35,16 @@ describe(TrackedTxsIndexer.name, () => {
         getData: async () => trackedTxResults,
       })
       const l2costsUpdater = mockObject<L2CostsUpdater>({
+        type: 'l2costs',
         update: mockFn(async () => {}),
       })
       const livenessUpdater = mockObject<LivenessUpdater>({
+        type: 'liveness',
         update: mockFn(async () => {}),
       })
 
       const indexer = getMockTrackedTxsIndexer({
-        updaters: {
-          l2costs: l2costsUpdater,
-          liveness: livenessUpdater,
-        },
+        updaters: [livenessUpdater, l2costsUpdater],
         trackedTxsClient,
       })
 
@@ -126,50 +121,6 @@ describe(TrackedTxsIndexer.name, () => {
       expect(safeHeight).toEqual(expected.toNumber())
     })
 
-    it('calls getData with the lowest timestamp', async () => {
-      const from = 100
-      const to = 300
-
-      const trackedTxsClient = mockObject<TrackedTxsClient>({
-        getData: async () => [],
-      })
-
-      const indexer = getMockTrackedTxsIndexer({
-        trackedTxsClient,
-      })
-
-      const parameters: Partial<TrackedTxConfigEntry> = {
-        projectId: ProjectId('test'),
-      }
-
-      const LOWEST_TIMESTAMP = 200
-      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
-        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
-        update<TrackedTxConfigEntry>(
-          'a',
-          100,
-          LOWEST_TIMESTAMP,
-          false,
-          parameters,
-        ),
-      ]
-
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        mockDbMiddleware,
-      )
-
-      expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
-        1,
-        [configurations[0], configurations[1]],
-        new UnixTime(from),
-        new UnixTime(LOWEST_TIMESTAMP),
-      )
-      expect(safeHeight).toEqual(LOWEST_TIMESTAMP)
-    })
-
     it('returns to if no configurations to sync', async () => {
       const from = 100
       const to = 300
@@ -237,7 +188,7 @@ function getMockTrackedTxsIndexer(params: {
   indexerService?: IndexerService
   configurations?: UpdateConfiguration<TrackedTxConfigEntry>[]
   trackedTxsClient?: TrackedTxsClient
-  updaters?: Record<TrackedTxsConfigType, TxUpdaterInterface>
+  updaters?: TxUpdaterInterface[]
   createDatabaseMiddleware?: () => Promise<DatabaseMiddleware>
   livenessRepository?: LivenessRepository
   l2CostsRepository?: L2CostsRepository
@@ -259,10 +210,10 @@ function getMockTrackedTxsIndexer(params: {
       (async () => mockObject<DatabaseMiddleware>({})),
     indexerService: indexerService ?? mockObject<IndexerService>({}),
     trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
-    updaters: updaters ?? {
-      liveness: mockObject<TxUpdaterInterface>({}),
-      l2costs: mockObject<TxUpdaterInterface>({}),
-    },
+    updaters: updaters ?? [
+      mockObject<TxUpdaterInterface>({ type: 'liveness' }),
+      mockObject<TxUpdaterInterface>({ type: 'l2costs' }),
+    ],
     l2CostsRepository: l2CostsRepository ?? mockObject<L2CostsRepository>({}),
     livenessRepository:
       livenessRepository ?? mockObject<LivenessRepository>({}),

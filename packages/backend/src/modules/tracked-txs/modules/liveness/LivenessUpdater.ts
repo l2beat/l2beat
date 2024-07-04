@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 import { TrackedTxId } from '@l2beat/shared'
@@ -11,6 +11,8 @@ import {
 } from './repositories/LivenessRepository'
 
 export class LivenessUpdater implements TxUpdaterInterface {
+  type: TrackedTxsConfigType = 'liveness'
+
   constructor(
     private readonly livenessRepository: LivenessRepository,
     private readonly logger: Logger,

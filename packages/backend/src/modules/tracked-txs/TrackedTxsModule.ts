@@ -68,10 +68,10 @@ export function createTrackedTxsModule(
     l2costsModule,
   ]
 
-  const updaters = {
-    liveness: livenessModule?.updater,
-    l2costs: l2costsModule?.updater,
-  }
+  const updaters = [livenessModule?.updater, l2costsModule?.updater].filter(
+    notUndefined,
+  )
+
   const minTimestamp = config.trackedTxsConfig.minTimestamp.toNumber()
 
   const trackedTxsIndexer = new TrackedTxsIndexer({
