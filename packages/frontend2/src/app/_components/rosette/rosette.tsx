@@ -99,7 +99,7 @@ export function SmallRosette({
   )
 }
 
-const TEXT_RADIUS = 88
+const TEXT_RADIUS = 76
 
 export interface RosetteProps {
   values: RosetteValue[]
@@ -116,7 +116,7 @@ export function MediumRosette(props: RosetteProps) {
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
   return (
-    <div className="relative w-[201px] h-[200px] p-8">
+    <div className="relative w-[201px] h-[200px] p-8 whitespace-pre text-center font-medium text-[10px] uppercase leading-tight">
       <BigRosetteIcon
         values={props.values}
         className="h-[136px] w-[137px]"
@@ -127,7 +127,7 @@ export function MediumRosette(props: RosetteProps) {
           top: 100 - Math.cos((-4 * Math.PI) / 5) * TEXT_RADIUS,
           left: 100 + Math.sin((-4 * Math.PI) / 5) * TEXT_RADIUS,
         }}
-        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[36deg]"
+        className="absolute -translate-x-1/2 origin-top rotate-[36deg]"
       >
         {first.name.split(' ').join('\n')}
       </span>
@@ -136,7 +136,7 @@ export function MediumRosette(props: RosetteProps) {
           top: 100 - Math.cos((-2 * Math.PI) / 5) * TEXT_RADIUS,
           left: 100 + Math.sin((-2 * Math.PI) / 5) * TEXT_RADIUS,
         }}
-        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[-68deg]"
+        className="absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-72deg]"
       >
         {second.name.split(' ').join('\n')}
       </span>
@@ -145,7 +145,7 @@ export function MediumRosette(props: RosetteProps) {
           top: 100 - TEXT_RADIUS,
           left: '50%',
         }}
-        className="-translate-x-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight"
+        className="absolute -translate-x-1/2 -translate-y-full"
       >
         {third.name.split(' ').join('\n')}
       </span>
@@ -154,7 +154,7 @@ export function MediumRosette(props: RosetteProps) {
           top: 100 - Math.cos((2 * Math.PI) / 5) * TEXT_RADIUS,
           left: 100 + Math.sin((2 * Math.PI) / 5) * TEXT_RADIUS,
         }}
-        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[68deg]"
+        className="absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[72deg]"
       >
         {fourth.name.split(' ').join('\n')}
       </span>
@@ -163,7 +163,7 @@ export function MediumRosette(props: RosetteProps) {
           top: 100 - Math.cos((4 * Math.PI) / 5) * TEXT_RADIUS,
           left: 100 + Math.sin((4 * Math.PI) / 5) * TEXT_RADIUS,
         }}
-        className="-translate-x-1/2 -translate-y-1/2 absolute text-center font-medium text-[10px] uppercase leading-tight rotate-[-36deg]"
+        className="absolute -translate-x-1/2 origin-top rotate-[-36deg]"
       >
         {fifth.name.split(' ').join('\n')}
       </span>

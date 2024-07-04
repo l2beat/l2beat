@@ -33,16 +33,17 @@ export function configureRosetteOverlay() {
     }
 
     const hide = () => {
-      texts.forEach((text) =>
-        text.classList.remove('text-gray-300', 'dark:text-zinc-700'),
-      )
-      descriptions.forEach((description) => description.classList.add('hidden'))
-      slices.forEach((slice) => slice.classList.remove('opacity-20'))
+      // texts.forEach((text) =>
+      //   text.classList.remove('text-gray-300', 'dark:text-zinc-700'),
+      // )
+      // descriptions.forEach((description) => description.classList.add('hidden'))
+      // slices.forEach((slice) => slice.classList.remove('opacity-20'))
     }
 
     rosette.addEventListener('mouseleave', hide)
     document.body.addEventListener('scroll', hide)
     document.body.addEventListener('click', (e) => {
+      console.log('click')
       if (!slices.includes(e.target as HTMLElement)) {
         hide()
       }
