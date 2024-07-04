@@ -14,17 +14,7 @@
     "0xB524735356985D2f267FA010D681f061DfF03715": "HubPool Multisig",
     "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea": "BondToken",
     "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE": "OptimisticOracleV3",
-    "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor",
-    "0xE233009838CB898b50e0012a6E783FC9FeE447FB": "ZkSync_Adapter",
-    "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE": "Linea_Adapter",
-    "0xE1e74B3D6A8E2A479B62958D4E4E6eEaea5B612b": "Optimism_Adapter",
-    "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426": "Arbitrum_Adapter",
-    "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a": "Arbitrum_Bridge",
-    "0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515": "Arbitrum_Old_Bridge",
-    "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c": "Base_Adapter",
-    "0x33B0Ec794c15D6Cc705818E70d4CaCe7bCfB5Af3": "Boba_Adapter",
-    "0xb4AeF0178f5725392A26eE18684C2aB62adc912e": "Polygon_Adapter",
-    "0xf1B59868697f3925b72889ede818B9E7ba0316d0": "Mode_Adapter"
+    "0x8692B776d1Ff0664177c90465038056Dc64f8991": "OptimisticGovernor"
   },
   "overrides": {
     "HubPool": {
@@ -34,8 +24,21 @@
           "handler": {
             "type": "stateFromEvent",
             "event": "CrossChainContractsSet",
-            "returnParams": ["l2ChainId", "adapter", "spokePool"],
-            "groupBy": "l2ChainId"
+            "returnParams": ["l2ChainId", "spokePool"],
+            "groupBy": "l2ChainId",
+            "onlyValue": true
+          }
+        },
+        "Adapters": {
+          "target": {
+            "template": "acrossv3/adapter" // this template is used to ignore common relatives (like bridged and tokens) found in adapters
+          },
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "CrossChainContractsSet",
+            "groupBy": "l2ChainId",
+            "onlyValue": true,
+            "returnParams": ["l2ChainId", "adapter"]
           }
         }
       },
@@ -53,12 +56,6 @@
           }
         }
       }
-    },
-    "0xB524735356985D2f267FA010D681f061DfF03715": {
-      "ignoreInWatchMode": ["nonce"]
-    },
-    "EmergencyProposalExecutor": {
-      "ignoreInWatchMode": ["nonce"]
     },
     "ProposerV2": {
       "ignoreMethods": ["bondedProposals"],
@@ -89,82 +86,6 @@
     "VotingToken": {
       "ignoreInWatchMode": ["totalSupply", "totalSupplyAt"]
     },
-    "ZkSync_Adapter": {
-      // required amount of ETH to send a message,
-      // changes depending on the gas price, so discovery with batching
-      // returns different values for the same block number
-      "ignoreMethods": ["getL1CallValue"],
-      "ignoreRelatives": [
-        "zkErc20Bridge",
-        "zkSyncEthBridge",
-        "zkSyncMessageBridge",
-        "l1Weth"
-      ]
-    },
-    "Linea_Adapter": {
-      "ignoreRelatives": [
-        "L1_MESSAGE_SERVICE",
-        "L1_TOKEN_BRIDGE",
-        "L1_USDC_BRIDGE",
-        "L1_WETH"
-      ]
-    },
-    "Optimism_Adapter": {
-      "ignoreRelatives": [
-        "cctpTokenMessenger",
-        "DAI",
-        "DAI_OPTIMISM_BRIDGE",
-        "L1_STANDARD_BRIDGE",
-        "L1_WETH",
-        "MESSENGER",
-        "SNX",
-        "SNX_OPTIMISM_BRIDGE",
-        "usdcToken"
-      ]
-    },
-    "Arbitrum_Adapter": {
-      "ignoreRelatives": [
-        "cctpTokenMessenger",
-        "L1_DAI",
-        "L1_ERC20_GATEWAY_ROUTER",
-        "L1_INBOX",
-        "L2_REFUND_L2_ADDRESS",
-        "usdcToken"
-      ]
-    },
-    "Base_Adapter": {
-      "ignoreRelatives": [
-        "cctpTokenMessenger",
-        "L1_STANDARD_BRIDGE",
-        "L1_WETH",
-        "MESSENGER",
-        "usdcToken"
-      ]
-    },
-    "Boba_Adapter": {
-      "ignoreRelatives": ["l1StandardBridge", "l1Weth", "messenger"]
-    },
-    "Polygon_Adapter": {
-      "ignoreRelatives": [
-        "cctpTokenMessenger",
-        "DEPOSIT_MANAGER",
-        "ERC20_PREDICATE",
-        "FX_STATE_SENDER",
-        "L1_MATIC",
-        "L1_WETH",
-        "ROOT_CHAIN_MANAGER",
-        "usdcToken"
-      ]
-    },
-    "Mode_Adapter": {
-      "ignoreRelatives": [
-        "cctpTokenMessenger",
-        "L1_STANDARD_BRIDGE",
-        "L1_WETH",
-        "MESSENGER",
-        "usdcToken"
-      ]
-    },
     "OptimisticOracleV3": {
       "ignoreMethods": ["getCurrentTime"],
       "ignoreRelatives": ["cachedOracle", "defaultCurrency"]
@@ -172,13 +93,6 @@
     "OptimisticGovernor": {
       "ignoreMethods": ["getCurrentTime"],
       "ignoreRelatives": ["collateral"]
-    },
-    "Arbitrum_Bridge": {
-      "ignoreMethods": ["delayedInboxAccs", "sequencerInboxAccs"],
-      "ignoreRelatives": ["allowedOutboxList", "rollup", "sequencerInbox"]
-    },
-    "Arbitrum_Old_Bridge": {
-      "ignoreMethods": ["inboxAccs"]
     }
   }
 }

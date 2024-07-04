@@ -4,6 +4,7 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
+import { Badge } from '../badges'
 
 import {
   CONTRACTS,
@@ -72,6 +73,7 @@ const longTimelockUpgradeability = {
 export const dydx: Layer2 = {
   type: 'layer2',
   id: ProjectId('dydx'),
+  badges: [Badge.VM.CairoVM, Badge.DA.EthereumCalldata],
   display: {
     name: 'dYdX v3',
     slug: 'dydx',
@@ -82,7 +84,6 @@ export const dydx: Layer2 = {
     purposes: ['Exchange'],
     provider: 'StarkEx',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://dydx.exchange/'],
       apps: [

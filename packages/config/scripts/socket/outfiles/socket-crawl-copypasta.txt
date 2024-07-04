@@ -6,8 +6,8 @@
     "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592",
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa",
@@ -37,8 +37,8 @@
     "0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4": "rswETH Vault Lyra",
     "0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3": "wstETH Vault Lyra",
     "0x7D7aC8d55A9bD4152b703011f3E61AB3bB0A5592": "SNX Vault Lyra",
-    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Lyra",
     "0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e": "WETH Vault Lyra",
+    "0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab": "WBTC Vault Lyra",
 // Hook
     "0x855Aaf2f690Ef6e5EF451D7AE73EC3fa61c50981": "USDC Vault Hook",
     "0xB39DF6BBB1Cf2B609DeE43F109caFEFF1A7CCBEa": "WETH Vault Hook",
@@ -68,8 +68,8 @@
     "rswETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "wstETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "SNX Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
-    "WBTC Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
     "WETH Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
+    "WBTC Vault Lyra": {"ignoreMethods":["token","token__","hook__"]},
 // Hook
     "USDC Vault Hook": {"ignoreMethods":["token","token__","hook__"]},
     "WETH Vault Hook": {"ignoreMethods":["token","token__","hook__"]},
@@ -130,16 +130,16 @@ discovery.getEscrowDetails({
                 tokens: ['SNX'],
               }),
 discovery.getEscrowDetails({
-                address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),
-                name: 'WBTC Vault Lyra',
-                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
-                tokens: ['WBTC'],
-              }),
-discovery.getEscrowDetails({
                 address: EthereumAddress('0xD4efe33C66B8CdE33B8896a2126E41e5dB571b7e'),
                 name: 'WETH Vault Lyra',
                 description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
                 tokens: ['WETH'],
+              }),
+discovery.getEscrowDetails({
+                address: EthereumAddress('0x3Eec7c855aF33280F1eD38b93059F5aa5862E3ab'),
+                name: 'WBTC Vault Lyra',
+                description: 'Socket Vault associated with Lyra and owned by LyraMultisig.',
+                tokens: ['WBTC'],
               }),
 // Hook
 discovery.getEscrowDetails({

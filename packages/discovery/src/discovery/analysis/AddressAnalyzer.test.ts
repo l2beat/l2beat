@@ -151,6 +151,7 @@ describe(AddressAnalyzer.name, () => {
         selfMeta: undefined,
         targetsMeta: {
           [admin.toString()]: {
+            displayName: undefined,
             categories: undefined,
             descriptions: undefined,
             permissions: {
@@ -278,6 +279,7 @@ describe(AddressAnalyzer.name, () => {
         selfMeta: undefined,
         targetsMeta: {
           [admin.toString()]: {
+            displayName: undefined,
             categories: undefined,
             descriptions: undefined,
             permissions: {
@@ -401,6 +403,7 @@ describe(AddressAnalyzer.name, () => {
         selfMeta: undefined,
         targetsMeta: {
           [admin.toString()]: {
+            displayName: undefined,
             categories: undefined,
             descriptions: undefined,
             permissions: {

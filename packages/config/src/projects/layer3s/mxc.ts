@@ -53,6 +53,10 @@ export const mxc: Layer3 = {
         tokens: ['MXC'],
         description:
           'MXC tokens that are bridged from Ethereum to MXC Moonchain are escrowed here.',
+        source: 'external',
+        bridge: {
+          name: 'MXC Ethereum Bridge',
+        },
       }),
       discovery.getEscrowDetails({
         includeInTotal: false,
