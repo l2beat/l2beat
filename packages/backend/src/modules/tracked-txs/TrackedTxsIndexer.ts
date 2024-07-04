@@ -29,8 +29,7 @@ interface Dependencies
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
   constructor(private readonly $: Dependencies) {
     const name = 'tracked_txs_indexer'
-    const logger = $.logger.tag(name)
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({ ...$, name, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
   }
 
   override async multiUpdate(
