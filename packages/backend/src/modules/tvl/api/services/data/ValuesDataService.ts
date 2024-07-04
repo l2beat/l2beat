@@ -28,7 +28,10 @@ export class ValuesDataService {
   ) {
     const [valueRecords, status] = await Promise.all([
       this.$.valueRepository.getForProjects(projects.map((p) => p.id)),
-      this.$.indexerService.getValuesStatus(targetTimestamp),
+      this.$.indexerService.getValuesStatus(
+        projects.map(getProjectSources).flat(),
+        targetTimestamp,
+      ),
     ])
 
     const valuesByProject = groupBy(valueRecords, 'projectId')
@@ -87,4 +90,8 @@ export class ValuesDataService {
       excluded: status.excluded,
     }
   }
+}
+
+function getProjectSources(project: ApiProject): string[] {
+  return Array.from(project.sources.keys())
 }

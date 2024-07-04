@@ -227,6 +227,73 @@ describe(IndexerService.name, () => {
     ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
   })
 
+  it(IndexerService.prototype.getValuesStatus.name, async () => {
+    const targetTimestamp = UnixTime.now()
+
+    const indexerStateRepository = mockObject<IndexerStateRepository>({
+      getByIndexerIdLike: async () => [
+        mock({
+          indexerId: 'value_indexer::a_x',
+          safeHeight: targetTimestamp.toNumber(),
+        }),
+        mock({
+          indexerId: 'value_indexer::a_y',
+          safeHeight: targetTimestamp.add(-1, 'hours').toNumber(),
+        }),
+        mock({
+          indexerId: 'value_indexer::a_z',
+          safeHeight: targetTimestamp.add(-10, 'days').toNumber(),
+        }),
+        mock({
+          indexerId: 'value_indexer::b_x',
+          safeHeight: targetTimestamp.toNumber(),
+        }),
+        mock({
+          indexerId: 'value_indexer::b_y',
+          safeHeight: targetTimestamp.add(-1, 'hours').toNumber(),
+        }),
+        mock({
+          indexerId: 'value_indexer::b_z',
+          safeHeight: targetTimestamp.add(-10, 'days').toNumber(),
+        }),
+      ],
+    })
+
+    const indexerService = new IndexerService(
+      indexerStateRepository,
+      mockObject<IndexerConfigurationRepository>({}),
+    )
+
+    const result = await indexerService.getValuesStatus(
+      ['a_x', 'a_y', 'a_z', 'b_x', 'b_y', 'b_z', 'c_x', 'b_zz'],
+      targetTimestamp,
+    )
+
+    expect(result).toEqual({
+      excluded: new Set(['a_z', 'b_z', 'c_x', 'b_zz']),
+      lagging: {
+        a: [
+          {
+            project: 'a',
+            id: 'a_y',
+            latestTimestamp: targetTimestamp.add(-1, 'hours'),
+          },
+        ],
+        b: [
+          {
+            project: 'b',
+            id: 'b_y',
+            latestTimestamp: targetTimestamp.add(-1, 'hours'),
+          },
+        ],
+      },
+    })
+
+    expect(indexerStateRepository.getByIndexerIdLike).toHaveBeenOnlyCalledWith(
+      'value_indexer::%',
+    )
+  })
+
   it(IndexerService.prototype.getAmountsStatus.name, async () => {
     const targetTimestamp = UnixTime.now()
 

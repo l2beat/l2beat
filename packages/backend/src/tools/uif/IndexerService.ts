@@ -117,21 +117,23 @@ export class IndexerService {
 
   // #endregion
 
-  async getValuesStatus(targetTimestamp: UnixTime) {
+  async getValuesStatus(sources: string[], targetTimestamp: UnixTime) {
     const excluded = new Set<string>()
     const lagging = []
 
     const indexersState =
       await this.indexerStateRepository.getByIndexerIdLike('value_indexer::%')
 
+    const processed = new Set<string>()
     for (const indexer of indexersState) {
+      const [project, source] = indexer.indexerId.split('::')[1].split('_')
+      const valueId = `${project}_${source}`
+      processed.add(valueId)
+
       const syncStatus = new UnixTime(indexer.safeHeight)
       if (syncStatus.equals(targetTimestamp)) {
         continue
       }
-
-      const [project, source] = indexer.indexerId.split('::')[1].split('_')
-      const valueId = `${project}_${source}`
 
       // decide whether it is excluded or lagging
       if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
@@ -142,6 +144,11 @@ export class IndexerService {
           latestTimestamp: syncStatus,
         })
       }
+    }
+
+    if (processed.size !== sources.length) {
+      const unprocessed = sources.filter((s) => !processed.has(s))
+      unprocessed.forEach((u) => excluded.add(u))
     }
 
     return {
