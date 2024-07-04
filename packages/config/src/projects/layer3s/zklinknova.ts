@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer3 } from './types'
+import { arbitrum } from '../layer2s/arbitrum'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -374,7 +375,7 @@ export const zklinknova: Layer3 = {
         ...lineaUpgradability,
       }),
       lineaDiscovery.getContractDetails('ValidatorTimelock', {
-        description: `Intermediary contract between the Validators and the ZKsync Era diamond that can delay block execution (ie withdrawals and other L3 --> L2 messages). Currently, the delay is set to ${formatSeconds(
+        description: `Intermediary contract between the one of the validators and the ZKsync Era diamond that can delay block execution (ie withdrawals and other L3 --> L2 messages). Currently, the delay is set to ${formatSeconds(
           executionDelaySeconds,
         )}.`,
       }),
@@ -599,11 +600,9 @@ export const zklinknova: Layer3 = {
     ),
     {
       name: 'Validator',
-      accounts: [
-        lineaDiscovery.getPermissionedAccount('ValidatorTimelock', 'validator'),
-      ],
+      accounts: lineaDiscovery.getPermissionedAccounts('zkLink', 'validators'),
       description:
-        'Single permissioned actor that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
+        'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
     },
   ],
   nativePermissions: {
