@@ -271,7 +271,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
+            'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
           ],
         },
       ],
@@ -282,7 +282,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
+            'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
           ],
         },
       ],
@@ -321,7 +321,7 @@ export const scroll: Layer2 = {
         {
           contract: 'ScrollChain',
           references: [
-            'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
+            'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
           ],
         },
       ],
@@ -338,7 +338,7 @@ export const scroll: Layer2 = {
       references: [
         {
           text: 'ScrollChain.sol - Etherscan source code, verifyAggregateProof() and verifyAggregateProof4844() calls',
-          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
+          href: 'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
         },
       ],
     },
@@ -347,7 +347,7 @@ export const scroll: Layer2 = {
       references: [
         {
           text: 'ScrollChain.sol - Etherscan source, code commitBatch() function',
-          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
+          href: 'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
         },
       ],
     },
@@ -356,7 +356,7 @@ export const scroll: Layer2 = {
       references: [
         {
           text: 'ScrollChain.sol - Etherscan source code, finalizeBatchWithProof() function modifier',
-          href: 'https://etherscan.io/address/0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8#code',
+          href: 'https://etherscan.io/address/0x4F250B05262240C787a1eE222687C6eC395C628A#code',
         },
       ],
     },
@@ -427,7 +427,7 @@ export const scroll: Layer2 = {
             'Halo2 + KZG verifier using calldata for DA. Corresponds to version v0.9.5 of the circuits.',
           verified: 'no',
           contractAddress: EthereumAddress(
-            '0x585DfaD7bF4099E011D185E266907A8ab60DAD2D',
+            '0x4B8Aa8A96078689384DAb49691E9bA51F9d2F9E1',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
@@ -462,12 +462,12 @@ export const scroll: Layer2 = {
             'Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.10.3 of the circuits.',
           verified: 'no',
           contractAddress: EthereumAddress(
-            '0x4b289E4A5331bAFBc6cCb2F10C39B8EDceCDb247',
+            '0x2293cd12e8564e8219d314b075867c2f66ac6941',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
             {
-              name: 'Final circuit',
+              name: 'Final Circuit',
               proofSystem: 'Halo2',
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
@@ -488,6 +488,41 @@ export const scroll: Layer2 = {
               mainPCS: 'KZG',
               trustedSetup: 'Powers of Tau 26',
               link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.10.3/zkevm-circuits',
+            },
+          ],
+        },
+        {
+          name: 'ScrollVerifierV2',
+          description:
+            'Second generation (Curie Upgrade) Halo2 + KZG verifier using blobs for DA. Corresponds to version v0.11.4 of the circuits.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0x03a72B00D036C479105fF98A1953b15d9c510110',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Final circuit',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+            },
+            {
+              name: 'Aggregation circuit',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
+            },
+            {
+              name: 'Main verifier',
+              proofSystem: 'Halo2',
+              mainArithmetization: 'Plonk',
+              mainPCS: 'KZG',
+              trustedSetup: 'Powers of Tau 26',
+              link: 'https://github.com/scroll-tech/zkevm-circuits/tree/v0.11.4/zkevm-circuits',
             },
           ],
         },
@@ -539,17 +574,25 @@ export const scroll: Layer2 = {
       }),
       discovery.getContractDetails('ZkEvmVerifierV0', {
         description:
-          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifier.',
-      }),
-      discovery.getContractDetails('ZkEvmVerifierV1', {
-        description:
-          'Current verifier using blobs for DA, used to prepare data for the PlonkVerifier.',
+          'Current verifier using calldata for DA, used to prepare data for the PlonkVerifierV0.',
       }),
       discovery.getContractDetails('PlonkVerifierV0', {
         description:
           'Plonk verifier used to verify ZK proofs using calldata for DA.',
       }),
+      discovery.getContractDetails('ZkEvmVerifierV1', {
+        description:
+          'Verifier using blobs for DA, used to prepare data for the PlonkVerifierV1.',
+      }),
       discovery.getContractDetails('PlonkVerifierV1', {
+        description:
+          'Plonk verifier used to verify ZK proofs using blobs for DA.',
+      }),
+      discovery.getContractDetails('ZkEvmVerifierV1-1', {
+        description:
+          'Current verifier (post-Curie upgrade) using blobs for DA, used to prepare data for the PlonkVerifierV2.',
+      }),
+      discovery.getContractDetails('PlonkVerifierV2', {
         description:
           'Plonk verifier used to verify ZK proofs using blobs for DA.',
       }),
