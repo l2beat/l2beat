@@ -53,7 +53,7 @@ export function CustomReadMore({
       >
         <span className="group-data-[collapsed=false]:hidden">Read more</span>
         <span className="hidden group-data-[collapsed=false]:inline">
-          Hide description
+          Read less
         </span>
       </button>
     </span>
