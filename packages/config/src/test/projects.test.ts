@@ -52,19 +52,37 @@ describe('projects', () => {
   })
 
   describe('every escrow is unique', () => {
-    const addressToKey = (address: EthereumAddress, chain: string) =>
-      `${address.toString()} (${chain})`
-    const addresses = new Set<string>()
+    it('layer2s', () => {
+      const addressToKey = (address: EthereumAddress, chain: string) =>
+        `${address.toString()} (${chain})`
+      const addresses = new Set<string>()
 
-    for (const project of [...layer2s, ...bridges]) {
-      for (const { address, chain } of project.config.escrows) {
-        it(address.toString(), () => {
-          const key = addressToKey(address, chain ?? 'ethereum')
-          expect(addresses.has(key)).toEqual(false)
-          addresses.add(key)
-        })
+      for (const project of layer2s) {
+        for (const { address, chain } of project.config.escrows) {
+          it(address.toString(), () => {
+            const key = addressToKey(address, chain ?? 'ethereum')
+            expect(addresses.has(key)).toEqual(false)
+            addresses.add(key)
+          })
+        }
       }
-    }
+    })
+
+    it('bridges', () => {
+      const addressToKey = (address: EthereumAddress, chain: string) =>
+        `${address.toString()} (${chain})`
+      const addresses = new Set<string>()
+
+      for (const project of bridges) {
+        for (const { address, chain } of project.config.escrows) {
+          it(address.toString(), () => {
+            const key = addressToKey(address, chain ?? 'ethereum')
+            expect(addresses.has(key)).toEqual(false)
+            addresses.add(key)
+          })
+        }
+      }
+    })
   })
 
   describe('contracts', () => {
