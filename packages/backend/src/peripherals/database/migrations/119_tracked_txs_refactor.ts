@@ -14,6 +14,9 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
+  await knex('liveness').delete()
+  await knex('l2_costs').delete()
+
   await knex.schema.alterTable('l2_costs', function (table) {
     table.dropColumn('tracked_tx_id')
     table.string('configuration_id', 12).notNullable()
