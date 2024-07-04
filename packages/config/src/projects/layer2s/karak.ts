@@ -37,6 +37,7 @@ export const karak: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    architectureImage: 'opstack',
   },
   upgradeability,
   rpcUrl: 'https://rpc.karak.network/',
