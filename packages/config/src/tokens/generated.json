@@ -7126,7 +7126,7 @@
       "name": "Solv BTC",
       "coingeckoId": "solv-btc",
       "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
-      "symbol": "solvBTC",
+      "symbol": "SolvBTC",
       "decimals": 18,
       "deploymentTimestamp": 1711710476,
       "coingeckoListingTimestamp": 1712448000,

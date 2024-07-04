@@ -418,7 +418,7 @@ export const kinto: Layer2 = orbitStackL2({
         name: 'Socket bridge',
         slug: 'socket',
       },
-      tokens: ['solvBTC'],
+      tokens: ['SolvBTC'],
       chain: 'arbitrum',
     },
   ],
