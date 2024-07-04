@@ -88,7 +88,7 @@ const nOfChallengers = discovery.getContractValue<string[]>(
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
-  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain],
+  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain, Badge.Other.Governance],
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',

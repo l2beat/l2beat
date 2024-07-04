@@ -88,7 +88,7 @@ const livenessInterval = discovery.getContractValue<number>(
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
-  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Infra.Superchain],
+  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Infra.Superchain, Badge.Other.Governance],
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
