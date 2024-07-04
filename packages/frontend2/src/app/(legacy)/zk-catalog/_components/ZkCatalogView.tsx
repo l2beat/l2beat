@@ -33,17 +33,17 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
   return (
     <Accordion className="space-y-3" type="multiple">
       {props.items.map((item) => (
-        <AccordionItem key={item.slug}>
+        <AccordionItem key={item.slug} value={item.slug}>
           <AccordionTrigger
-            className="relative z-10 flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900"
+            className="relative w-full z-10 flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900"
             childrenClassName="grid md:grid-cols-5"
             indicator={
               <>
-                <button className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
+                <div className="flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
                   <span className="font-bold text-base">Verifiers</span>
-                  <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
-                </button>
-                <ChevronDownIcon className="fill-current hidden transition-transform duration-300 ease-out md:block group-data-[open]/accordion-item:rotate-180" />
+                  <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
+                </div>
+                <ChevronDownIcon className='fill-current hidden transition-transform duration-300 ease-out md:block group-data-[state="open"]/accordion-item:rotate-180' />
               </>
             }
           >
