@@ -60,7 +60,7 @@ export class ValuesDataService {
           },
         )
 
-        const interpolatedValues = status.lagging[projectId]
+        const interpolatedValues = (status.lagging[projectId] ?? [])
           .filter((l) => timestamp.gt(l.latestTimestamp))
           .map((l) => {
             const record = valuesByTimestamp[
