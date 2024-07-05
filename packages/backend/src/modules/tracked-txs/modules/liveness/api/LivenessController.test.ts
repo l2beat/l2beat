@@ -2,6 +2,7 @@ import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
@@ -14,7 +15,6 @@ import {
   calculateDetailsFor,
   calculateIntervals,
 } from './calculateIntervalWithAverages'
-import { BackendProject } from '@l2beat/config'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {
