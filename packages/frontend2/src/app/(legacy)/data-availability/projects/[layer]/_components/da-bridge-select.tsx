@@ -20,7 +20,7 @@ export function DaBridgeSelect({ project }: Props) {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger className="dark:bg-zinc-800">
           {project.selectedBridge.name}
-          <ChevronIcon className="group-data-[state=open]:-rotate-180 ease-out duration-300 hidden transition-transform md:block fill-black dark:fill-white" />
+          <ChevronIcon className="group-data-[state=open]:-rotate-180 ease-out duration-300 transition-transform fill-black dark:fill-white" />
         </PopoverTrigger>
         <PopoverContent className="flex flex-col" align="start">
           {project.bridges.map((bridge) =>

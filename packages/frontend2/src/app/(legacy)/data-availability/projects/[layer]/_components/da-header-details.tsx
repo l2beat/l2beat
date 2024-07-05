@@ -17,7 +17,7 @@ interface Props {
 
 export function DaHeaderDetails({ project }: Props) {
   return (
-    <div className="grid grid-cols-3 bg-gray-100 dark:bg-zinc-900 rounded-lg px-6 py-5">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-gray-100 dark:bg-zinc-900 rounded-lg md:px-6 md:py-5">
       <DetailsHeaderStat title="Type" value={project.type} />
       <DetailsHeaderStat
         title="Total value secured"
@@ -35,19 +35,19 @@ export function DaHeaderDetails({ project }: Props) {
             : 'Not synced'
         }
       />
-      <HorizontalSeparator className="col-span-full my-5" />
+      <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
       <DetailsHeaderStat
         title="Duration of storage"
         value={`${project.durationStorage}s` ?? EM_DASH}
       />
       <DetailsHeaderStat
-        className="col-span-2"
+        className="md:col-span-2"
         title="Used in"
         value={
           project.usedIn.length !== 0 ? (
             <Tooltip>
               <TooltipTrigger>
-                <div className="truncate max-w-[440px]">
+                <div className="truncate max-w-[250px] md:max-w-[440px]">
                   {project.usedIn.map((project) => project.name).join(', ')}
                 </div>
               </TooltipTrigger>
