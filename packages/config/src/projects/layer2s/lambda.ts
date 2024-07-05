@@ -34,7 +34,6 @@ export const lambda: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
-    architectureImage: 'opstack',
   },
   usesBlobs: true,
   associatedTokens: ['LAMB'],
