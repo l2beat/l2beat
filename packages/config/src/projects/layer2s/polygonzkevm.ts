@@ -11,6 +11,7 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { polygonCDKStack } from './templates/polygonCDKStack'
 import { Layer2 } from './types'
 
@@ -38,6 +39,7 @@ const upgradeDelayString = formatSeconds(
 export const polygonzkevm: Layer2 = polygonCDKStack({
   rollupModuleContract: discovery.getContract('PolygonZkEVMEtrog'),
   rollupVerifierContract: discovery.getContract('PolygonzkEVMVerifier'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Infra.AggLayer],
   display: {
     name: 'Polygon zkEVM',
     slug: 'polygonzkevm',
@@ -113,8 +115,8 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xecef3f99',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, address l2Coinbase)',
-        sinceTimestampInclusive: new UnixTime(1707824735),
-        untilTimestampExclusive: new UnixTime(1710419699),
+        sinceTimestamp: new UnixTime(1707824735),
+        untilTimestamp: new UnixTime(1710419699),
       },
     },
     {
@@ -128,7 +130,7 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
         selector: '0xdef57e54',
         functionSignature:
           'function sequenceBatches(tuple(bytes transactions, bytes32 forcedGlobalExitRoot, uint64 forcedTimestamp, bytes32 forcedBlockHashL1)[] batches, uint64 maxSequenceTimestamp, uint64 initSequencedBatch, address l2Coinbase)',
-        sinceTimestampInclusive: new UnixTime(1710419699),
+        sinceTimestamp: new UnixTime(1710419699),
       },
     },
   ],
@@ -263,11 +265,12 @@ export const polygonzkevm: Layer2 = polygonCDKStack({
               trustedSetup: 'None',
             },
             {
-              name: 'Main circuit',
+              name: 'Polygon zkEVM ROM',
               proofSystem: 'eSTARK',
               mainArithmetization: 'eAIR',
               mainPCS: 'FRI',
               trustedSetup: 'None',
+              link: 'https://github.com/0xPolygonHermez/zkevm-rom',
             },
           ],
         },

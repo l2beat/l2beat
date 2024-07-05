@@ -3,6 +3,7 @@ import React from 'react'
 import { type BadgeId } from '@l2beat/config'
 import { usePageBuildContext } from '../../../../build/pageBuildContext'
 import { OverflowWrapper } from '../../../../components/OverflowWrapper'
+import { ReadMore } from '../../../../components/ReadMore'
 import { cn } from '../../../../utils/cn'
 import { ProjectBadge } from './ProjectBadge'
 
@@ -58,7 +59,9 @@ export function ProjectAboutSection({
       {description && (
         <div className="flex flex-1 flex-col gap-2 text-base lg:min-w-[400px]">
           <h2 className="font-medium text-gray-600 text-xs uppercase">About</h2>
-          <p>{description}</p>
+          <p>
+            <ReadMore>{description}</ReadMore>
+          </p>
         </div>
       )}
     </div>

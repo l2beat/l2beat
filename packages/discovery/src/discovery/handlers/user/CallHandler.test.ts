@@ -206,6 +206,8 @@ describe(CallHandler.name, () => {
 
     it('calls the method with the provided parameters', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -235,6 +237,8 @@ describe(CallHandler.name, () => {
     it('calls the method with the provided parameters and address', async () => {
       const inAddress = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -268,6 +272,8 @@ describe(CallHandler.name, () => {
 
     it('calls the method with the resolved parameters', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -300,6 +306,8 @@ describe(CallHandler.name, () => {
     it('calls the method with the provided parameters and address as dependency', async () => {
       const inAddress = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -338,6 +346,8 @@ describe(CallHandler.name, () => {
 
     it('handles errors', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod() {
           throw new Error('oops')
         },
@@ -359,6 +369,8 @@ describe(CallHandler.name, () => {
 
     it('passes ignoreRelative', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>() {
           return 3 as T
         },
@@ -380,6 +392,8 @@ describe(CallHandler.name, () => {
 
     it('should catch revert error', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod() {
           return undefined
         },
@@ -401,6 +415,8 @@ describe(CallHandler.name, () => {
 
     it('should not catch revert error when expectRevert is false', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod() {
           return undefined
         },

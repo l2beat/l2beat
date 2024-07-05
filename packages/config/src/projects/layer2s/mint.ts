@@ -15,16 +15,20 @@ export const mint: Layer2 = opStackL2({
     purposes: ['Universal', 'NFT'],
     links: {
       websites: ['https://mintchain.io/'],
-      apps: ['https://bridge.mintchain.io/'],
+      apps: ['https://bridge.mintchain.io/', 'https://mintchain.io/faucet'],
       documentation: ['https://docs.mintchain.io/'],
       explorers: ['https://explorer.mintchain.io'],
       repositories: ['https://github.com/Mint-Blockchain'],
       socialMedia: [
         'https://twitter.com/Mint_Blockchain',
         'https://discord.gg/mint-blockchain',
+        'https://t.me/MintBlockchain',
+        'https://mirror.xyz/mintchain.eth',
+        'https://community.mintchain.io',
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    architectureImage: 'opstack',
   },
   chainConfig: {
     name: 'mint',

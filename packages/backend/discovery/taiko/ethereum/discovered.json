@@ -1,8 +1,8 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20225431,
-  "configHash": "0x47e801f35f3cb2c3bef7ec829e84f79e66865f9df7016ee2618dd4b498683eb8",
+  "blockNumber": 20232590,
+  "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
   "version": 8,
   "contracts": [
     {
@@ -56,25 +56,25 @@
           "checkEOAForCalldataDA": true
         },
         "getLastSyncedBlock": {
-          "blockId_": 123263,
-          "blockHash_": "0xb76e9f9c45cf5eef85553320bbc185a19a0140ea4b807417b0b518e841ec79d3",
-          "stateRoot_": "0x3a551ffd3d4aeea51f25b828766fee55242729ef0c6a72a9b758668ea74c9a52"
+          "blockId_": 127119,
+          "blockHash_": "0xd0be501559c6ec09edee6ded44c5fdb9c7edf04c1221493d33e391de7166eb14",
+          "stateRoot_": "0xd96e8f6ed7af460a06b7ad58618a9f76a56c2daec30f705a52d7f8bf51ad4bce"
         },
         "getLastVerifiedBlock": {
-          "blockId_": 123268,
-          "blockHash_": "0xa1e7904ad55825bc7e8d18fec8e5de8412b4effe506ae14320f96e82dd28c12e",
+          "blockId_": 127124,
+          "blockHash_": "0xc4c726a9169b75b293d2a4ea6ea04136627423ac0cbe7d0ef702597b11dc3f9a",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 123263,
-            "lastSynecdAt": 1720002947
+            "lastSyncedBlockId": 127119,
+            "lastSynecdAt": 1720089323
           },
           {
-            "numBlocks": 127131,
-            "lastVerifiedBlockId": 123268,
+            "numBlocks": 130745,
+            "lastVerifiedBlockId": 127124,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -103,12 +103,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 123263,
-            "lastSynecdAt": 1720002947
+            "lastSyncedBlockId": 127119,
+            "lastSynecdAt": 1720089323
           },
           "slotB": {
-            "numBlocks": 127131,
-            "lastVerifiedBlockId": 123268,
+            "numBlocks": 130745,
+            "lastVerifiedBlockId": 127124,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -141,7 +141,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1720003031,
+        "clock": 1720089347,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -522,10 +522,12 @@
           ["0x1DD5E0E5b03608a30b55806358ddbABC6Dc83b3f"],
           ["0x62a966A7492Be75182C89E6E2a519a87884A0382"],
           ["0x4Ef2201f196196be4B9e50F93F67Ad462A0d25A8"],
-          ["0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"]
+          ["0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"],
+          ["0xf2231009908E695C010c02F57Ac541D3470d95d5"],
+          ["0xe23A97f0c0a1Bc748709c2a348705773197A9c11"]
         ],
         "lastUnpausedAt": 0,
-        "nextInstanceId": 46,
+        "nextInstanceId": 48,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -570,7 +572,7 @@
         "impl": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 25701,
+        "nextMessageId": 25880,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -806,6 +808,9 @@
       "address": "0xda4d5372188B0b8502AeD3770212Ed5784f71550"
     },
     {
+      "address": "0xe23A97f0c0a1Bc748709c2a348705773197A9c11"
+    },
+    {
       "address": "0xe79d80cC4CF385e30473cA41279BC4845c82bb9e"
     },
     {
@@ -819,6 +824,9 @@
     },
     {
       "address": "0xF0495642611461Ae25F4867B043717D9F53a9237"
+    },
+    {
+      "address": "0xf2231009908E695C010c02F57Ac541D3470d95d5"
     },
     {
       "address": "0xF445C0b580454E21a8b836318D83782d35986666"

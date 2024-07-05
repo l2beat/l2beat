@@ -6,7 +6,12 @@ import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { getReferencedName, resolveReference } from '../reference'
+import {
+  ScopeVariables,
+  generateScopeVariables,
+  getReferencedName,
+  resolveReference,
+} from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 import { valueToBigInt } from '../utils/valueToBigInt'
@@ -45,7 +50,12 @@ export class DynamicArrayHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading dynamic array storage'])
-    const resolved = resolveDependencies(this.definition, previousResults)
+    const scopeVariables = generateScopeVariables(provider, address)
+    const resolved = resolveDependencies(
+      this.definition,
+      previousResults,
+      scopeVariables,
+    )
 
     const elementStorages: Bytes[] = []
     try {
@@ -86,11 +96,16 @@ function getDependencies(definition: DynamicArrayHandlerDefinition): string[] {
 function resolveDependencies(
   definition: DynamicArrayHandlerDefinition,
   previousResults: Record<string, HandlerResult | undefined>,
+  scopeVariables: ScopeVariables,
 ): {
   slot: bigint
   returnType: 'number' | 'address' | 'bytes'
 } {
-  const resolved = resolveReference(definition.slot, previousResults)
+  const resolved = resolveReference(
+    definition.slot,
+    previousResults,
+    scopeVariables,
+  )
   const slot = valueToBigInt(resolved)
 
   const returnType = definition.returnType ?? 'address'
