@@ -21,6 +21,7 @@ import {
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getProjectsToSync } from '../utils/getProjectsToSync'
 import { groupByType } from '../utils/groupByType'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -91,7 +92,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     syncTo: UnixTime,
   ): Promise<AggregatedLivenessRecord[]> {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
-    const projectsToSync = getProjectsToSync(this.$.projects)
+
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
+      )
+
+    const projectsToSync = getProjectsToSync(this.$.projects, configurations)
 
     for (const project of projectsToSync) {
       const livenessRecords =

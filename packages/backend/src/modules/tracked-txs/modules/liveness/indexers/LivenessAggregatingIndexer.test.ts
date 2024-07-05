@@ -1,9 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  TrackedTxConfigEntry,
-  TrackedTxUseWithId,
-  TrackedTxsConfig,
-} from '@l2beat/shared'
+import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Project } from '../../../../../model/Project'
@@ -21,27 +17,33 @@ import {
   LivenessAggregatingIndexer,
   LivenessAggregatingIndexerDeps,
 } from './LivenessAggregatingIndexer'
+import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
+
+const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 
 const MOCK_PROJECTS = [
   mockObject<Project>({
     projectId: ProjectId('mocked-project'),
     isArchived: false,
-    trackedTxsConfig: mockObject<TrackedTxsConfig>({
-      entries: [
-        mockObject<TrackedTxConfigEntry>({
-          uses: [
-            mockObject<TrackedTxUseWithId>({
-              type: 'liveness',
-              subtype: 'batchSubmissions',
-            }),
-          ],
-          untilTimestampExclusive: UnixTime.now(),
-        }),
-      ],
-    }),
+    trackedTxsConfig: [
+      mockObject<TrackedTxConfigEntry>({
+        id: MOCK_CONFIGURATION_ID,
+        type: 'liveness',
+        subtype: 'batchSubmissions',
+        untilTimestamp: UnixTime.now(),
+      }),
+    ],
+  }),
+]
+
+const MOCK_CONFIGURATIONS = [
+  mockObject<Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>>({
+    id: MOCK_CONFIGURATION_ID,
+    maxHeight: null,
+    currentHeight: 1,
   }),
 ]
 
@@ -186,9 +188,15 @@ describe(LivenessAggregatingIndexer.name, () => {
       const mockLivenessRepository = mockObject<LivenessRepository>({
         getWithSubtypeByProjectIdsUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
       })
+
+      const mockIndexerService = mockObject<IndexerService>({
+        getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
+      })
+
       const indexer = createIndexer({
         tag: 'generateLiveness',
         livenessRepository: mockLivenessRepository,
+        indexerService: mockIndexerService,
       })
 
       const result = await indexer.generateLiveness(NOW)

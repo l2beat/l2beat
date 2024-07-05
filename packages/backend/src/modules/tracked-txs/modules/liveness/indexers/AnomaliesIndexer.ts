@@ -23,6 +23,7 @@ import {
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getProjectsToSync } from '../utils/getProjectsToSync'
 import { groupByType } from '../utils/groupByType'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
@@ -71,7 +72,13 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
   async getAnomalies(to: UnixTime) {
     const anomalies: AnomaliesRecord[] = []
-    const projectsToSync = getProjectsToSync(this.$.projects)
+
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
+      )
+
+    const projectsToSync = getProjectsToSync(this.$.projects, configurations)
 
     // we need data from 2 * SYNC_RANGE past days to calcualate standard deviation
     const deviationRange = to.add(-1 * this.SYNC_RANGE * 2, 'days')
