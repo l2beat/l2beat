@@ -17,7 +17,7 @@ import {
 } from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'
 
-const CONSIDER_EXCLUDED_AFTER_DAYS = 7
+export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
 export class IndexerService {
   constructor(
