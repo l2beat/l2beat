@@ -2,9 +2,6 @@ import { assert } from '@l2beat/backend-tools'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  TrackedTxId,
-  TrackedTxUseWithId,
-  TrackedTxsConfig,
   TrackedTxConfigEntry,
   createTrackedTxId,
 } from '@l2beat/shared'

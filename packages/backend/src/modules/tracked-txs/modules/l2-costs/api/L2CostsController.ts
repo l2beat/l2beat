@@ -7,13 +7,13 @@ import {
   L2CostsProjectApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
 } from '../repositories/AggregatedL2CostsRepository'
+import { BackendProject } from '@l2beat/config'
 
 const MAX_DAYS = 180
 

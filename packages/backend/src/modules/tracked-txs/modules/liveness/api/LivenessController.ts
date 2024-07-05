@@ -23,6 +23,7 @@ import {
   calcIntervalWithAvgsPerProject,
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
+import { BackendProject } from '@l2beat/config'
 
 export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 

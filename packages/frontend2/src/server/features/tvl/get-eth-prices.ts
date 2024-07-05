@@ -12,7 +12,11 @@ const ethPriceId = createPriceId({
 })
 
 export async function getEthPrices() {
-  const prices = await db.price.getByConfigId(ethPriceId)
+  const prices = await db.price.getByConfigIdsInRange(
+    [ethPriceId],
+    UnixTime.ZERO,
+    UnixTime.now(),
+  )
   return prices.reduce<Record<number, number>>((acc, curr) => {
     acc[curr.timestamp.toNumber()] = curr.priceUsd
     return acc

@@ -7,7 +7,6 @@ import {
 
 import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { uniq } from 'lodash'
-import { Project } from '../../../../../model/Project'
 import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
   ManagedChildIndexer,
@@ -26,6 +25,7 @@ import type {
   L2CostsRecordWithProjectId,
   L2CostsRepository,
 } from '../repositories/L2CostsRepository'
+import { BackendProject } from '@l2beat/config'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
@@ -36,7 +36,7 @@ export interface L2CostsAggregatorIndexerDeps
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   l2CostsPricesRepository: L2CostsPricesRepository
   indexerConfigurationRepository: IndexerConfigurationRepository
-  projects: Project[]
+  projects: BackendProject[]
 }
 
 export interface TrackedTxMultiplier {
