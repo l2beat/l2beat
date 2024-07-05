@@ -14,9 +14,11 @@ import { ApplicationModule } from '../../ApplicationModule'
 import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
 import { BreakdownService } from '../api/services/BreakdownService'
-import { DataService } from '../api/services/DataService'
 import { TokenService } from '../api/services/TokenService'
 import { TvlService } from '../api/services/TvlService'
+import { AmountsDataService } from '../api/services/data/AmountsDataService'
+import { PricesDataService } from '../api/services/data/PricesDataService'
+import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { AmountRepository } from '../repositories/AmountRepository'
@@ -94,17 +96,25 @@ export function createTvlModule(
     configMapping,
   )
 
-  const ethPrice = config.tvl.prices.find(
-    (p) => p.chain === 'ethereum' && p.address === 'native',
-  )
-  assert(ethPrice, 'Eth priceId not found')
-
-  const dataService = new DataService({
-    amountRepository: peripherals.getRepository(AmountRepository),
+  const pricesDataService = new PricesDataService({
     priceRepository: peripherals.getRepository(PriceRepository),
+    indexerService,
+    clock,
+    etherPriceConfig: getEtherPriceConfig(config.tvl),
+    logger,
+  })
+
+  const amountsDataService = new AmountsDataService({
+    amountRepository: peripherals.getRepository(AmountRepository),
+    indexerService,
+    clock,
+    logger,
+  })
+
+  const valuesDataService = new ValuesDataService({
     valueRepository: peripherals.getRepository(ValueRepository),
-    syncOptimizer,
-    ethPriceId: createPriceId(ethPrice),
+    indexerService,
+    clock,
     logger,
   })
 
@@ -113,29 +123,34 @@ export function createTvlModule(
   )
 
   const tokenService = new TokenService({
-    dataService,
+    amountsDataService,
+    pricesDataService,
     configMapping,
+    clock,
   })
 
   const aggregatedService = new AggregatedService({
-    dataService,
-    syncOptimizer,
+    valuesDataService,
+    pricesDataService,
+    clock,
     tokenService,
   })
 
   const breakdownService = new BreakdownService({
-    dataService,
+    pricesDataService,
+    amountsDataService,
     configMapping,
-    syncOptimizer,
     chainConverter,
   })
 
   const tvlService = new TvlService({
-    syncOptimizer,
+    valuesDataService,
+    pricesDataService,
+    amountsDataService,
     tokenService,
-    dataService,
-    chainConverter,
+    clock,
     configMapping,
+    chainConverter,
   })
 
   const tvlRouter = createTvlRouter(
@@ -181,6 +196,15 @@ export function createTvlModule(
     routers: [tvlRouter],
     start,
   }
+}
+
+function getEtherPriceConfig(config: TvlConfig) {
+  const ethPrice = config.prices.find(
+    (p) => p.chain === 'ethereum' && p.address === 'native',
+  )
+  assert(ethPrice, 'Eth priceId not found')
+  const etherPriceConfig = { ...ethPrice, configId: createPriceId(ethPrice) }
+  return etherPriceConfig
 }
 
 function getApiProjects(

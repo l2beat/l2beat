@@ -4,21 +4,25 @@ import {
   TokenTvlApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { Clock } from '../../../../tools/Clock'
 import { ConfigMapping } from '../../utils/ConfigMapping'
 import { getTokenCharts } from '../utils/chartsUtils'
 import { ApiProject } from '../utils/types'
-import { DataService } from './DataService'
+import { AmountsDataService } from './data/AmountsDataService'
+import { PricesDataService } from './data/PricesDataService'
 
 interface Dependencies {
   configMapping: ConfigMapping
-  dataService: DataService
+  pricesDataService: PricesDataService
+  amountsDataService: AmountsDataService
+  clock: Clock
 }
 
 export class TokenService {
   constructor(private readonly $: Dependencies) {}
 
   async getTokenChart(
-    target: UnixTime,
+    targetTimestamp: UnixTime,
     project: ApiProject,
     token: { address: EthereumAddress | 'native'; chain: string },
   ): Promise<TokenTvlApiCharts> {
@@ -32,23 +36,32 @@ export class TokenService {
     const priceConfig = this.$.configMapping.getPriceConfigFromAmountConfig(
       amountConfigs[0],
     )
-    const decimals = amountConfigs[0].decimals
 
-    const { amountsAndPrices, dailyStart, hourlyStart, sixHourlyStart } =
-      await this.$.dataService.getPricesAndAmountsForToken(
-        amountConfigs.map((x) => x.configId),
-        priceConfig.configId,
-        project.minTimestamp,
-        target,
-      )
+    const [amounts, prices] = await Promise.all([
+      this.$.amountsDataService.getAggregatedAmounts(
+        amountConfigs,
+        targetTimestamp,
+      ),
+      this.$.pricesDataService.getPrices(priceConfig, targetTimestamp),
+    ])
+
+    const minTimestamp = amountConfigs.reduce(
+      (a, b) => UnixTime.min(a, b.sinceTimestamp),
+      UnixTime.now(),
+    )
 
     return getTokenCharts(
-      dailyStart,
-      target,
-      amountsAndPrices,
-      decimals,
-      sixHourlyStart,
-      hourlyStart,
+      targetTimestamp,
+      minTimestamp.toEndOf('day'),
+      this.$.clock.getSixHourlyCutoff(targetTimestamp, {
+        minTimestampOverride: minTimestamp,
+      }),
+      this.$.clock.getHourlyCutoff(targetTimestamp, {
+        minTimestampOverride: minTimestamp,
+      }),
+      amounts.amounts,
+      prices.prices,
+      amountConfigs[0].decimals,
     )
   }
 }

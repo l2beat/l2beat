@@ -7,10 +7,10 @@ import {
 } from '@l2beat/shared-pure'
 import { ChainConverter } from '../../../../tools/ChainConverter'
 import { ConfigMapping } from '../../utils/ConfigMapping'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
 
+import { Clock } from '../../../../tools/Clock'
 import {
   ValuesForSource,
   getChart,
@@ -20,12 +20,16 @@ import {
   sumValuesPerSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
-import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { AmountsDataService } from './data/AmountsDataService'
+import { PricesDataService } from './data/PricesDataService'
+import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
-  dataService: DataService
-  syncOptimizer: SyncOptimizer
+  valuesDataService: ValuesDataService
+  pricesDataService: PricesDataService
+  amountsDataService: AmountsDataService
+  clock: Clock
   tokenService: TokenService
   configMapping: ConfigMapping
   chainConverter: ChainConverter
@@ -35,13 +39,18 @@ export class TvlService {
   constructor(private readonly $: Dependencies) {}
 
   async getTvl(
-    target: UnixTime,
+    targetTimestamp: UnixTime,
     projects: ApiProject[],
   ): Promise<TvlApiResponse> {
-    const ethPrices = await this.$.dataService.getEthPrices(target)
-
-    const valuesByProjectByTimestamp =
-      await this.$.dataService.getValuesForProjects(projects, target)
+    const [ethPrices, valuesByProjectByTimestamp, breakdownMap] =
+      await Promise.all([
+        this.$.pricesDataService.getEthPrices(targetTimestamp),
+        this.$.valuesDataService.getValuesForProjects(
+          projects,
+          targetTimestamp,
+        ),
+        this.getBreakdownMap(targetTimestamp),
+      ])
 
     const projectsMinTimestamp = projects
       .map((x) => x.minTimestamp)
@@ -50,14 +59,12 @@ export class TvlService {
     const minTimestamp = projectsMinTimestamp.toEndOf('day')
 
     const dailyStart = minTimestamp
-    const sixHourlyStart = UnixTime.max(
-      this.$.syncOptimizer.sixHourlyCutOff,
-      minTimestamp,
-    ).toEndOf('day')
-    const hourlyStart = UnixTime.max(
-      this.$.syncOptimizer.hourlyCutOff,
-      minTimestamp,
-    )
+    const sixHourlyStart = this.$.clock.getSixHourlyCutoff(targetTimestamp, {
+      minTimestampOverride: minTimestamp,
+    })
+    const hourlyStart = this.$.clock.getHourlyCutoff(targetTimestamp, {
+      minTimestampOverride: minTimestamp,
+    })
 
     const aggregates = {
       layer3: new Map<number, ValuesForSource>(),
@@ -68,7 +75,9 @@ export class TvlService {
     const chartsMap = new Map<string, TvlApiCharts>()
     for (const project of projects) {
       const valuesByTimestamp =
-        valuesByProjectByTimestamp[project.id.toString()]
+        valuesByProjectByTimestamp.valuesByTimestampForProjects[
+          project.id.toString()
+        ]
 
       if (!valuesByTimestamp) {
         continue
@@ -102,10 +111,10 @@ export class TvlService {
 
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, project.minTimestamp).toEndOf('day'),
-        end: target,
+        end: targetTimestamp,
         step: [1, 'days'],
         aggregatedValues: valueSums,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: project.id,
       })
 
@@ -113,19 +122,19 @@ export class TvlService {
         start: UnixTime.max(sixHourlyStart, project.minTimestamp).toEndOf(
           'six hours',
         ),
-        end: target,
+        end: targetTimestamp,
         step: [6, 'hours'],
         aggregatedValues: valueSums,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: project.id,
       })
 
       const hourlyData = getChartData({
         start: UnixTime.max(hourlyStart, project.minTimestamp).toEndOf('hour'),
-        end: target,
+        end: targetTimestamp,
         step: [1, 'hours'],
         aggregatedValues: valueSums,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: project.id,
       })
 
@@ -147,26 +156,26 @@ export class TvlService {
       const minTimestamp = minTimestamps[type]
       const dailyData = getChartData({
         start: UnixTime.max(dailyStart, minTimestamp).toEndOf('day'),
-        end: target,
+        end: targetTimestamp,
         step: [1, 'days'],
         aggregatedValues: value,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: type,
       })
       const sixHourlyData = getChartData({
         start: UnixTime.max(sixHourlyStart, minTimestamp).toEndOf('six hours'),
-        end: target,
+        end: targetTimestamp,
         step: [6, 'hours'],
         aggregatedValues: value,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: type,
       })
       const hourlyData = getChartData({
         start: UnixTime.max(hourlyStart, minTimestamp).toEndOf('hour'),
-        end: target,
+        end: targetTimestamp,
         step: [1, 'hours'],
         aggregatedValues: value,
-        ethPrices,
+        ethPrices: ethPrices.prices,
         chartId: type,
       })
 
@@ -176,8 +185,6 @@ export class TvlService {
         hourly: getChart(hourlyData),
       })
     }
-
-    const breakdownMap = await this.getBreakdownMap(target)
 
     const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
@@ -247,74 +254,75 @@ export class TvlService {
       combined,
       projects: projectData,
     }
-
     return result
   }
 
   async getExcludedTvl(
-    target: UnixTime,
+    targetTimestamp: UnixTime,
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiResponse> {
-    const tvl = await this.getTvl(target, projects)
-
     // TODO: it is slow an can be optimized via querying for all tokens in one batch
-    const excluded = await Promise.all(
-      associatedTokens.map(async (x) => {
+    const [tvl, ethPrices, ...associatedTokensCharts] = await Promise.all([
+      this.getTvl(targetTimestamp, projects),
+      this.$.pricesDataService.getEthPrices(targetTimestamp),
+      ...associatedTokens.map(async (x) => {
         const project = projects.find((p) => p.id === x.project)
         assert(project, 'Project not found!')
 
         return {
           ...x,
-          data: await this.$.tokenService.getTokenChart(target, project, x),
+          data: await this.$.tokenService.getTokenChart(
+            targetTimestamp,
+            project,
+            x,
+          ),
         }
       }),
-    )
+    ])
 
-    const ethPrices = await this.$.dataService.getEthPrices(target)
-
-    for (const e of excluded) {
-      if (e.includeInTotal) {
+    for (const a of associatedTokensCharts) {
+      if (a.includeInTotal) {
         tvl.combined = subtractTokenCharts(
           tvl.combined,
-          e.data,
-          e.type,
-          ethPrices,
+          a.data,
+          a.type,
+          ethPrices.prices,
         )
 
-        tvl[e.projectType] = subtractTokenCharts(
-          tvl[e.projectType],
-          e.data,
-          e.type,
-          ethPrices,
+        tvl[a.projectType] = subtractTokenCharts(
+          tvl[a.projectType],
+          a.data,
+          a.type,
+          ethPrices.prices,
         )
       }
 
-      const project = tvl.projects[e.project.toString()]
-      assert(project, `No TVL entry for project ${e.project.toString()}`)
+      const project = tvl.projects[a.project.toString()]
+      assert(project, `No TVL entry for project ${a.project.toString()}`)
 
       project.charts = subtractTokenCharts(
         project.charts,
-        e.data,
-        e.type,
-        ethPrices,
+        a.data,
+        a.type,
+        ethPrices.prices,
       )
 
       // Remove token from breakdown
-      switch (e.type) {
+      switch (a.type) {
         case 'canonical':
           project.tokens.canonical = project.tokens.canonical.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain),
+            (c) => !(c.address === a.address && c.chain === a.chain),
           )
           break
         case 'external':
           project.tokens.external = project.tokens.external.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain),
+            (c) => !(c.address === a.address && c.chain === a.chain),
           )
           break
         case 'native':
           project.tokens.native = project.tokens.native.filter(
-            (c) => !(c.address === e.address && c.chain === e.chain),
+            (c) => !(c.address === a.address && c.chain === a.chain),
           )
           break
       }
@@ -324,22 +332,25 @@ export class TvlService {
 
   // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
   // and keep only the current values in the database.
-  private async getBreakdownMap(timestamp: UnixTime) {
-    const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
-        this.$.configMapping.amounts.map((x) => x.configId),
-        timestamp,
-      )
-    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
-      this.$.configMapping.prices.map((x) => x.configId),
-      timestamp,
-    )
+  private async getBreakdownMap(targetTimestamp: UnixTime) {
+    const [tokenAmounts, prices] = await Promise.all([
+      this.$.amountsDataService.getLatestAmount(
+        this.$.configMapping.amounts,
+        targetTimestamp,
+      ),
+      this.$.pricesDataService.getLatestPrice(
+        this.$.configMapping.prices,
+        targetTimestamp,
+      ),
+    ])
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const pricesMap = new Map(
+      prices.prices.map((x) => [x.configId, x.priceUsd]),
+    )
     const breakdownMap = new Map<string, TvlApiProject['tokens']>()
-    for (const amount of tokenAmounts) {
+    for (const amount of tokenAmounts.amounts) {
       const config = this.$.configMapping.getAmountConfig(amount.configId)
-      if (config.untilTimestamp && config.untilTimestamp.lt(timestamp)) {
+      if (config.untilTimestamp && config.untilTimestamp.lt(targetTimestamp)) {
         continue
       }
 
