@@ -4,6 +4,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import {
   AnomaliesRecord,
   AnomaliesRepository,
@@ -16,7 +17,6 @@ import {
   AnomaliesIndexer,
   AnomaliesIndexerIndexerDeps,
 } from './AnomaliesIndexer'
-import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')

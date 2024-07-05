@@ -1,3 +1,4 @@
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -21,7 +22,6 @@ import {
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getProjectsToSync } from '../utils/getProjectsToSync'
 import { groupByType } from '../utils/groupByType'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
