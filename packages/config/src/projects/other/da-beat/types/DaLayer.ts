@@ -3,6 +3,7 @@ import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import { DaDisplay } from './DaDisplay'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',
@@ -54,37 +55,13 @@ export type DacDaLayer = CommonDaLayer & {
 }
 
 export type CommonDaLayer = {
-  /**
-   * Unique identifier of the data availability layer
-   */
+  /* Unique identifier of the data availability layer */
   id: string
-
-  display: {
-    /**
-     * The name of the data availability layer.
-     */
-    name: string
-
-    /**
-     * Slug of the data availability bridge
-     */
-    slug: string
-
-    /**
-     * A short description of the data availability layer.
-     */
-    description?: string
-  }
-
-  /**
-   * List of projects given da layer is being used in
-   */
+  /* Display information for the data availability layer */
+  display: DaDisplay
+  /* List of projects given da layer is being used in */
   usedIn: ProjectId[]
-
-  /**
-   * Risks associated with the data availability layer.
-   * @see DaLayerRisks
-   */
+  /* Risks associated with the data availability layer. */
   risks: DaLayerRisks
 }
 

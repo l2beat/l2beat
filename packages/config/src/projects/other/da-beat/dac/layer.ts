@@ -13,6 +13,15 @@ export const dac: DaLayer = {
     slug: 'dac',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',
+    links: {
+      websites: ['https://dac.com'],
+      documentation: [
+        'https://docs.dac.com',
+        'https://docs.dac.com',
+        'https://docs.dac.com',
+      ],
+      repositories: ['https://github.com/data-availability-committee'],
+    },
   },
   bridges: [immutableXDac],
   usedIn: [...immutableXDac.usedIn],

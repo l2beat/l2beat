@@ -23,6 +23,11 @@ export const celestia: DaLayer = {
     name: 'Celestia',
     slug: 'celestia',
     description: 'Celestia lorem ipsum',
+    links: {
+      websites: ['https://celestia.org/'],
+      documentation: ['https://docs.celestia.org/'],
+      repositories: ['https://github.com/celestiaorg'],
+    },
   },
   bridges: [noBridge, ...blobStream],
   usedIn: [

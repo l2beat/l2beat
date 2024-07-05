@@ -1,6 +1,7 @@
 'use client'
 import { type DaLayer } from '@l2beat/config'
 import Link from 'next/link'
+import { useState } from 'react'
 import {
   Popover,
   PopoverContent,
@@ -14,24 +15,35 @@ interface Props {
 }
 
 export function DaBridgeSelect({ layer, label }: Props) {
+  const [open, setOpen] = useState(false)
   return (
     <div className="flex items-center gap-2">
       <span>DA Bridge:</span>
-      <Popover>
-        <PopoverTrigger>
+      <Popover open={open} onOpenChange={setOpen}>
+        <PopoverTrigger className="dark:bg-zinc-800">
           {label}
           <ChevronIcon className="group-data-[state=open]:-rotate-180 ease-out duration-300 hidden transition-transform md:block fill-black dark:fill-white" />
         </PopoverTrigger>
         <PopoverContent className="flex flex-col" align="start">
-          {layer.bridges.map((bridge) => (
-            <Link
-              key={`${layer.id}-${bridge.id}`}
-              className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400"
-              href={`/data-availability/projects/${layer.id}/${bridge.id}`}
-            >
-              {bridge.display.name}
-            </Link>
-          ))}
+          {layer.bridges.map((bridge) =>
+            bridge.display.name === label ? (
+              <button
+                key={`${layer.id}-${bridge.id}`}
+                onClick={() => setOpen(false)}
+                className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400"
+              >
+                {bridge.display.name}
+              </button>
+            ) : (
+              <Link
+                key={`${layer.id}-${bridge.id}`}
+                className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400"
+                href={`/data-availability/projects/${layer.id}/${bridge.id}`}
+              >
+                {bridge.display.name}
+              </Link>
+            ),
+          )}
         </PopoverContent>
       </Popover>
     </div>

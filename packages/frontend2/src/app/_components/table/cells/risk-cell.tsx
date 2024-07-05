@@ -4,7 +4,7 @@ import {
   type Sentiment,
   type WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { SentimentText } from '../../sentiment-text'

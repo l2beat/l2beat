@@ -1,5 +1,5 @@
 import React from 'react'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../badge/under-review-badge'

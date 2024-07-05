@@ -17,6 +17,7 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { formatCurrency } from '~/utils/format'
 import { EM_DASH } from '~/app/_components/nav/consts'
+import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
 
 interface Props {
   params: {
@@ -46,13 +47,16 @@ export default async function Page(props: Props) {
   return (
     <div>
       <header className="flex gap-10">
-        <div className="w-full">
-          <ProjectHeader
-            title={project.display.name}
-            src={`/icons/${project.display.slug}.png`}
-          />
-          <DaBridgeSelect layer={project} label={bridge.display.name} />
-          <HorizontalSeparator className="my-6" />
+        <div className="w-full space-y-4">
+          <div>
+            <ProjectHeader
+              title={project.display.name}
+              src={`/icons/${project.display.slug}.png`}
+            />
+            <DaBridgeSelect layer={project} label={bridge.display.name} />
+          </div>
+          <HorizontalSeparator className="!my-6" />
+          <DesktopProjectLinks projectLinks={daProjectEntry.links} />
           <div className="grid grid-cols-3 bg-gray-100 dark:bg-zinc-900 rounded-lg px-6 py-5">
             <DetailsHeaderStat title="Type" value={daProjectEntry.type} />
 
@@ -80,12 +84,13 @@ export default async function Page(props: Props) {
               value={`${daProjectEntry.durationStorage}s` ?? EM_DASH}
             />
             <DetailsHeaderStat
+              className="col-span-2"
               title="Used in"
               value={
                 daProjectEntry.usedIn.length !== 0 ? (
                   <Tooltip>
                     <TooltipTrigger>
-                      <div className="truncate max-w-[220px]">
+                      <div className="truncate max-w-[4400px]">
                         {daProjectEntry.usedIn
                           .map((project) => project.name)
                           .join(', ')}

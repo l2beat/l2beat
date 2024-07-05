@@ -2,6 +2,7 @@ import { layer2s, layer3s, type DaBridge, type DaLayer } from '@l2beat/config'
 import { getDaEconomicSecurity } from './utils/get-da-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { getProjectLinks } from '~/utils/project/get-project-links'
 
 export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
   const economicSecurity = await getDaEconomicSecurity()
@@ -11,6 +12,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
     slug: daLayer.display.slug,
     bridgeSlug: bridge.display.slug,
     type: kindToType(daLayer.kind),
+    links: getProjectLinks(daLayer.display.links),
     tvs,
     // TODO: economic security for single project
     economicSecurity: economicSecurity[daLayer.id],
