@@ -11,12 +11,14 @@ import {
   addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 export const fuelv1: Layer2 = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
+  badges: [Badge.DA.EthereumCalldata],
   display: {
     name: 'Fuel v1',
     slug: 'fuelv1',

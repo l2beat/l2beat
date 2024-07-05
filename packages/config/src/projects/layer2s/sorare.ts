@@ -27,6 +27,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('sorare')
@@ -53,6 +54,7 @@ const committee = getCommittee(discovery)
 
 export const sorare: Layer2 = {
   type: 'layer2',
+  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
   id: ProjectId('sorare'),
   display: {
     name: 'Sorare',

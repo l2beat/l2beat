@@ -1,6 +1,7 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -16,6 +17,7 @@ const upgradeability = {
 }
 
 export const fraxtal: Layer2 = opStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.CustomDA],
   daProvider: {
     name: 'FraxtalDA',
     riskView: {

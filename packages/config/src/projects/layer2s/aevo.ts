@@ -2,12 +2,19 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.Celestia,
+    Badge.Stack.OPStack,
+    Badge.RaaS.Conduit,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,
