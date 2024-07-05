@@ -10,14 +10,14 @@ import {
 } from '@l2beat/shared-pure'
 import { ChainConverter } from '../../../../tools/ChainConverter'
 import { ConfigMapping } from '../../utils/ConfigMapping'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
 import { asNumber } from '../../utils/asNumber'
 import { CanonicalAssetBreakdown } from '../utils/types'
-import { DataService } from './DataService'
+import { AmountsDataService } from './data/AmountsDataService'
+import { PricesDataService } from './data/PricesDataService'
 
 interface Dependencies {
-  dataService: DataService
-  syncOptimizer: SyncOptimizer
+  pricesDataService: PricesDataService
+  amountsDataService: AmountsDataService
   chainConverter: ChainConverter
   configMapping: ConfigMapping
 }
@@ -26,19 +26,21 @@ export class BreakdownService {
   constructor(private readonly $: Dependencies) {}
 
   async getTvlBreakdown(
-    timestamp: UnixTime,
+    targetTimestamp: UnixTime,
   ): Promise<ProjectAssetsBreakdownApiResponse> {
-    const tokenAmounts =
-      await this.$.dataService.getAmountsByConfigIdsAndTimestamp(
-        this.$.configMapping.amounts.map((a) => a.configId),
-        timestamp,
-      )
-    const prices = await this.$.dataService.getPricesByConfigIdsAndTimestamp(
-      this.$.configMapping.prices.map((x) => x.configId),
-      timestamp,
+    const prices = await this.$.pricesDataService.getLatestPrice(
+      this.$.configMapping.prices,
+      targetTimestamp,
+    )
+    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
+      this.$.configMapping.amounts,
+      targetTimestamp,
     )
 
-    const pricesMap = new Map(prices.map((x) => [x.configId, x.priceUsd]))
+    const pricesMap = new Map(
+      prices.prices.map((x) => [x.configId, x.priceUsd]),
+    )
+
     const breakdowns: Record<
       string,
       {
@@ -47,9 +49,9 @@ export class BreakdownService {
         native: NativeAssetBreakdownData[]
       }
     > = {}
-    for (const amount of tokenAmounts) {
+    for (const amount of tokenAmounts.amounts) {
       const config = this.$.configMapping.getAmountConfig(amount.configId)
-      if (config.untilTimestamp && config.untilTimestamp.lt(timestamp)) {
+      if (config.untilTimestamp && config.untilTimestamp.lt(targetTimestamp)) {
         continue
       }
 
@@ -66,7 +68,7 @@ export class BreakdownService {
       const priceConfig =
         this.$.configMapping.getPriceConfigFromAmountConfig(config)
       const price = pricesMap.get(priceConfig.configId)
-      assert(price, 'Price not found for id ' + amount.configId)
+      assert(price, 'Price not found for id ' + priceConfig.configId)
 
       const amountAsNumber = asNumber(amount.amount, config.decimals)
       const valueAsNumber = amountAsNumber * price
@@ -159,6 +161,6 @@ export class BreakdownService {
       }
     }
 
-    return { dataTimestamp: timestamp, breakdowns: result }
+    return { dataTimestamp: targetTimestamp, breakdowns: result }
   }
 }
