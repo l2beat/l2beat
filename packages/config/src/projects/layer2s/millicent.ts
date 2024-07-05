@@ -14,7 +14,7 @@ export const millicent: Layer2 = upcomingL2({
     category: 'Optimistic Rollup',
     provider: 'Arbitrum',
     links: {
-      websites: ['https://www.millicent.io/'],
+      websites: ['https://millicent.io/'],
       apps: [],
       documentation: [],
       explorers: [],
