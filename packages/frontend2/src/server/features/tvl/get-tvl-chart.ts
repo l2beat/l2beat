@@ -21,12 +21,29 @@ export async function getTvlChart({
   const projects = getTvlProjects().filter(projectsFilter)
   const ethPrices = await getEthPrices()
 
-  const valuesByProjectByTimestamp = await getTvlValuesForProjects(
-    projects,
-    range,
-  )
+  const timestampValues = Object.values(
+    await getTvlValuesForProjects(projects, range),
+  ).reduce<Record<string, Value[]>>((acc, projectValues) => {
+    for (const [timestamp, values] of Object.entries(projectValues)) {
+      if (!acc[timestamp]) {
+        acc[timestamp] = []
+      } else {
+        acc[timestamp].push(...values)
+      }
+    }
+    return acc
+  }, {})
 
-  return valuesByProjectByTimestamp
+  return Object.entries(timestampValues).map(([timestamp, values]) => {
+    const summed = sumValuesPerSource(values)
+    return [
+      +timestamp,
+      Number(summed.native),
+      Number(summed.canonical),
+      Number(summed.external),
+      ethPrices[+timestamp],
+    ] as const
+  })
 }
 
 export function sumValuesPerSource(values: Value[]): {
