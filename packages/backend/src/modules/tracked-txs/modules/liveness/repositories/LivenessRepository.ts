@@ -68,19 +68,7 @@ export class LivenessRepository extends BaseRepository {
     projectId: ProjectId,
   ): Promise<LivenessRecordWithSubtype[]> {
     const knex = await this.knex()
-    const configRows = await knex('indexer_configurations')
-    const projectConfigs = configRows
-      .map((c) => {
-        const properties = JSON.parse(c.properties)
-
-        if (
-          properties.projectId === projectId.toString() &&
-          properties.type === 'liveness'
-        ) {
-          return [c.id, properties.subtype]
-        }
-      })
-      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+    const projectConfigs = await this.getConfigRows(knex, projectId)
 
     const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
     const livenessRows = await knex('liveness')
@@ -107,13 +95,25 @@ export class LivenessRepository extends BaseRepository {
     to: UnixTime,
   ): Promise<LivenessRecordWithSubtype[]> {
     const knex = await this.knex()
-    const rows = await knex('liveness as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select('l.timestamp', 'c.subtype', 'c.project_id')
-      .where('c.project_id', projectId.toString())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .distinct('l.timestamp')
-      .orderBy('l.timestamp', 'desc')
+    const projectConfigs = await this.getConfigRows(knex, projectId)
+
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
+    const livenessRows = await knex('liveness')
+      .select('timestamp', 'configuration_id')
+      .whereIn('configuration_id', Array.from(configsMap.keys()))
+      .andWhere('timestamp', '<', to.toDate())
+      .distinct('timestamp')
+      .orderBy('timestamp', 'desc')
+
+    const rows = livenessRows.map((row) => {
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
+      return {
+        timestamp: row.timestamp,
+        subtype,
+        project_id: projectId,
+      }
+    })
 
     return rows.map(toRecordWithTimestampAndSubtype)
   }
@@ -124,14 +124,26 @@ export class LivenessRepository extends BaseRepository {
     to: UnixTime,
   ): Promise<LivenessRecordWithSubtype[]> {
     const knex = await this.knex()
-    const rows = await knex('liveness as l')
-      .join('tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select('l.timestamp', 'c.subtype', 'c.project_id')
-      .where('c.project_id', projectId.toString())
-      .andWhere('l.timestamp', '>=', from.toDate())
-      .andWhere('l.timestamp', '<', to.toDate())
-      .distinct('l.timestamp')
-      .orderBy('l.timestamp', 'desc')
+    const projectConfigs = await this.getConfigRows(knex, projectId)
+
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
+    const livenessRows = await knex('liveness')
+      .select('timestamp', 'configuration_id')
+      .whereIn('configuration_id', Array.from(configsMap.keys()))
+      .andWhere('timestamp', '>=', from.toDate())
+      .andWhere('timestamp', '<', to.toDate())
+      .distinct('timestamp')
+      .orderBy('timestamp', 'desc')
+
+    const rows = livenessRows.map((row) => {
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
+      return {
+        timestamp: row.timestamp,
+        subtype,
+        project_id: projectId,
+      }
+    })
 
     return rows.map(toRecordWithTimestampAndSubtype)
   }
@@ -167,19 +179,7 @@ export class LivenessRepository extends BaseRepository {
   ): Promise<LivenessTransactionsRecordWithSubtype[]> {
     const knex = await this.knex()
 
-    const configRows = await knex('indexer_configurations')
-    const projectConfigs = configRows
-      .map((c) => {
-        const properties = JSON.parse(c.properties)
-
-        if (
-          properties.projectId === projectId.toString() &&
-          properties.type === 'liveness'
-        ) {
-          return [c.id, properties.subtype]
-        }
-      })
-      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+    const projectConfigs = await this.getConfigRows(knex, projectId)
 
     const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
 
@@ -211,20 +211,7 @@ export class LivenessRepository extends BaseRepository {
   ): Promise<LivenessRecordWithSubtype[]> {
     const knex = await this.knex()
 
-    const configRows = await knex('indexer_configurations')
-    const projectConfigs = configRows
-      .map((c) => {
-        const properties = JSON.parse(c.properties)
-
-        if (
-          properties.projectId === projectId.toString() &&
-          properties.subtype === subtype.toString() &&
-          properties.type === 'liveness'
-        ) {
-          return [c.id, properties.subtype]
-        }
-      })
-      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+    const projectConfigs = await this.getConfigRows(knex, projectId, subtype)
 
     const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
 
@@ -294,6 +281,30 @@ export class LivenessRepository extends BaseRepository {
   }
 
   // #endregion
+
+  // todo: to refactor together with liveness controller/service
+  // matching configurationId with projectId and subtype should be done in parent class
+  async getConfigRows(
+    knex: Knex,
+    projectId: ProjectId,
+    subtype?: TrackedTxsConfigSubtype,
+  ): Promise<[string, TrackedTxsConfigSubtype][]> {
+    const configRows = await knex('indexer_configurations')
+    return configRows
+      .map((c) => {
+        const properties = JSON.parse(c.properties)
+
+        if (
+          properties.projectId === projectId.toString() &&
+          (subtype === undefined ||
+            properties.subtype === subtype.toString()) &&
+          properties.type === 'liveness'
+        ) {
+          return [c.id, properties.subtype]
+        }
+      })
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+  }
 }
 
 function toRecord(row: LivenessRow): LivenessRecord {
