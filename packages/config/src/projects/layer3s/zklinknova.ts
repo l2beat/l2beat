@@ -5,6 +5,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import {
+  CONTRACTS,
   EXITS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
@@ -639,7 +640,7 @@ export const zklinknova: Layer3 = {
         */
       ],
     },
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...lineaDiscovery.getMultisigPermission(
