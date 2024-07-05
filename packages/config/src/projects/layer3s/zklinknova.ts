@@ -7,6 +7,7 @@ import {
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer3 } from './types'
 import { arbitrum } from '../layer2s/arbitrum'
+import { RISK_VIEW, makeBridgeCompatible } from '../../common'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -314,48 +315,41 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
-  riskView: {
-    validatedBy: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-    sourceUpgradeability: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-    destinationToken: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
+  riskView: makeBridgeCompatible({
+    validatedBy: RISK_VIEW.VALIDATED_BY_L2(ProjectId('linea')),
+    destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     stateValidation: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
+      value: 'ZK proofs',
+      description:
+        'Uses PLONK zero-knowledge proof system with KZG commitments.',
+      sentiment: 'good',
+      sources: [
+        {
+          contract: 'zkLink',
+          references: [
+            'https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code',
+          ],
+        },
+      ],
     },
     dataAvailability: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
+      ...RISK_VIEW.DATA_EXTERNAL,
+      sources: [
+        {
+          contract: 'zkLink',
+          references: [
+            'https://lineascan.build/address/0x9f2E11F287733c4EF5B9A6ED923b780c28062727#code',
+          ],
+        },
+      ],
     },
-    exitWindow: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-    sequencerFailure: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-    proposerFailure: {
-      description: '',
-      sentiment: 'bad',
-      value: '',
-    },
-  },
+    exitWindow: RISK_VIEW.EXIT_WINDOW(
+      upgradeDelaySeconds,
+      executionDelaySeconds,
+    ),
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+    proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
+  }),
   technology: {},
   contracts: {
     addresses: [
