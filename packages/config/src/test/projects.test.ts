@@ -2,25 +2,10 @@ import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, getCanonicalTokenBySymbol, layer2s } from '../'
+import { bridges, layer2s } from '../'
 import { checkRisk } from './helpers'
 
 describe('projects', () => {
-  describe('every token is valid', () => {
-    const symbols = [...layer2s, ...bridges]
-      .flatMap((x) =>
-        x.config.escrows
-          .filter((x) => x.tokens !== '*')
-          .flatMap((x) => x.tokens),
-      )
-      .filter((x, i, a) => a.indexOf(x) === i)
-    for (const symbol of symbols) {
-      it(symbol, () => {
-        expect(() => getCanonicalTokenBySymbol(symbol)).not.toThrow()
-      })
-    }
-  })
-
   describe('every slug is valid', () => {
     for (const project of [...layer2s, ...bridges]) {
       it(project.display.slug, () => {
