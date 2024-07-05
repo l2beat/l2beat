@@ -19,6 +19,14 @@
     "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507": "XLayerValidiumEtrog",
     "0x88AaB361f108C3c959F2928Da3cD8e47298016B5": "UnverifiedProject" //TODO: change once verified
   },
+  "types": {
+    "IsGreaterThanOne": {
+      "typeCaster": "GreaterThan",
+      "arg": {
+        "value": 2
+      }
+    }
+  },
   "overrides": {
     "PolygonRollupManager": {
       "ignoreMethods": [
@@ -111,6 +119,17 @@
             "pickFields": ["consensusImplementation", "verifier"],
             "ignoreRelative": true
           }
+        },
+        "isVerifyingBatches": {
+          "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.",
+          "handler": {
+            "type": "array",
+            "method": "rollupIDToRollupData",
+            "startIndex": 1,
+            "length": "{{ rollupCount }}",
+            "pickFields": ["lastVerifiedBatch"]
+          },
+          "returnType": "(IsGreaterThanOne[][])"
         }
       }
     },

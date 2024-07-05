@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x0104b6d0bf04320f91ba5756570fddff0a9beef8
+Generated with discovered.json: 0xc9e1dc49d24c6f66bd78ef5e1e5f297c4a76a666
 
-# Diff at Fri, 05 Jul 2024 07:11:26 GMT:
+# Diff at Fri, 05 Jul 2024 09:06:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@38ab6c6f42360c40ef4d13f9e02761a9d45810a2 block: 20189645
-- current block number: 20238725
+- current block number: 20239298
 
 ## Description
 
@@ -32,6 +32,9 @@ rollupIDs:
 ```diff
     contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
     +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.7:
++        [false]
       values.rollupCount:
 -        7
 +        8
@@ -39,6 +42,23 @@ rollupIDs:
 +++ severity: MEDIUM
       values.rollupsData.7:
 +        ["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20189645 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches:
++        [[true],[true],[true],[false],[true],[true],[false]]
+      usedTypes:
++        [{"typeCaster":"GreaterThan","arg":{"value":2}}]
     }
 ```
 
