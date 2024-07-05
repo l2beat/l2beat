@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x0104b6d0bf04320f91ba5756570fddff0a9beef8
+
+# Diff at Fri, 05 Jul 2024 07:11:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@38ab6c6f42360c40ef4d13f9e02761a9d45810a2 block: 20189645
+- current block number: 20238725
+
+## Description
+
+`createNewRollup()` is called by the RollupManagerAdminMultisig, adding a new rollup with a new chainID and the same rollupTypeID 4 as currently all other registered zkEVM rollups in the manager except PolygonZkEVM (3). This one is related to [Pay Chain by Wirex](https://wirexapp.com/blog/post/introducing-wirex-pay-wirexs-zk-powered-app-chain-on-polygon-0783). (not launched / not producing blocks yet)
+
+### Current state of projects on Polygon CDK
+
+rolluptype: 3 = rollup, 4 = validium
+
+🚀 = live
+
+rollupIDs:
+-   1: pol zkEVM 1101 (type3) 🚀
+-	2: astar 3776 (type4) 🚀
+-	3: OkX X Chain 196 (type4) 🚀
+-	4: OEV network chainid 4913 (type4)
+-	5: gptprotocol.org 1511670449 (type4) 🚀
+-	6: witnesschain 1702448187 (type4) 🚀
+-	7: prism (by prism bridge?) 994873017 (type4)
+-	8: pay network (wirex) 31415 (type4)
+
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      values.rollupCount:
+-        7
++        8
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.7:
++        ["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
 Generated with discovered.json: 0xe187c281eb0dc50a8c9d425f0f0d54dfd05cd099
 
 # Diff at Fri, 28 Jun 2024 10:40:16 GMT:
