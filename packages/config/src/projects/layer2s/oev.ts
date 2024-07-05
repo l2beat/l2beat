@@ -13,17 +13,16 @@ export const oev: Layer2 = upcomingL2({
     provider: 'Arbitrum',
     links: {
       websites: ['https://api3.org/oev/'],
-      apps: [
+      apps: [],
+      documentation: [
+        'https://medium.com/api3/api3-builds-oev-network-on-arbitrum-orbit-b29f8f5d7dcf',
       ],
-      documentation: ['https://medium.com/api3/api3-builds-oev-network-on-arbitrum-orbit-b29f8f5d7dcf'
-      ],
-      explorers: [
-      ],
+      explorers: [],
       repositories: [],
       socialMedia: [
         'https://x.com/OEVNetwork',
         'https://discord.com/invite/api3dao',
-        'https://medium.com/api3'
+        'https://medium.com/api3',
       ],
     },
   },
