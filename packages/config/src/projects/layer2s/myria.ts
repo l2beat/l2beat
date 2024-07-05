@@ -75,6 +75,7 @@ export const myria: Layer2 = {
         'https://twitter.com/myria',
         'https://discord.gg/myria',
         'https://t.me/myriaofficialgroup',
+        'https://instagram.com/myriagames',
       ],
     },
     activityDataSource: 'Closed API',
@@ -185,6 +186,12 @@ export const myria: Layer2 = {
       link: 'https://medium.com/myria-official/myrias-layer-2-launch-has-arrived-6a3c3da9561f',
       description:
         'Layer 2 scaling solution powered by Starware is live on Ethereum.',
+    },
+    {
+      name: 'MYRIA Token Airdrop',
+      date: '2023-04-06T00:00:00Z',
+      link: 'https://medium.com/myria-official/the-myria-token-is-live-c8dd92b876cc',
+      description: 'MYRIA token launches.',
     },
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],
