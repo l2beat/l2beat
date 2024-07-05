@@ -1,7 +1,7 @@
 import { RateLimitedProvider } from '@l2beat/discovery'
 import { providers } from 'ethers'
 
-const RPC_URL = 'https://sequencer.gptprotocol.io/'
+const RPC_URL = 'https://rpc.hypr.network'
 
 // this script is here so you can stress test a RPC url.
 async function main() {
