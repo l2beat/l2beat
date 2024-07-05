@@ -54,7 +54,7 @@ const committee = getCommittee(discovery)
 
 export const rhinofi: Layer2 = {
   type: 'layer2',
-  badges: [Badge.VM.CairoVM, Badge.RaaS.StarkEx, Badge.Infra.SHARP],
+  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
   id: ProjectId('deversifi'),
   display: {
     name: 'rhino.fi',

@@ -30,6 +30,7 @@ export const zora: Layer2 = opStackL2({
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
     Badge.DA.EthereumBlobs,
+    Badge.RaaS.Conduit,
   ],
   display: {
     name: 'Zora',

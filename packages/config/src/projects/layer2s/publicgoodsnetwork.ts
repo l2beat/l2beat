@@ -9,7 +9,13 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.Celestia],
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.OPStack,
+    Badge.DA.Celestia,
+    Badge.RaaS.Conduit,
+    Badge.Infra.Superchain,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {

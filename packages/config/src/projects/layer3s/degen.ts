@@ -11,7 +11,12 @@ const discovery = new ProjectDiscovery('degen', 'base')
 export const degen: Layer3 = orbitStackL3({
   hostChain: ProjectId('base'),
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Base],
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.Orbit,
+    Badge.L3ParentChain.Base,
+    Badge.RaaS.Conduit,
+  ],
   nativeToken: 'DEGEN',
   display: {
     name: 'Degen Chain',

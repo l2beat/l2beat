@@ -56,7 +56,7 @@ const committee = getCommittee(discovery)
 export const tanx: Layer2 = {
   type: 'layer2',
   id: ProjectId('brine'),
-  badges: [Badge.VM.CairoVM, Badge.RaaS.StarkEx, Badge.Infra.SHARP],
+  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
   display: {
     name: 'tanX',
     slug: 'tanx',

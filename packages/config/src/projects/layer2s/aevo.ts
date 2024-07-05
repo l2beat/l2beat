@@ -9,7 +9,12 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('aevo')
 
 export const aevo: Layer2 = opStackL2({
-  badges: [Badge.VM.EVM, Badge.DA.Celestia, Badge.Stack.OPStack],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.Celestia,
+    Badge.Stack.OPStack,
+    Badge.RaaS.Conduit,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   associatedTokens: ['AEVO'],
   discovery,

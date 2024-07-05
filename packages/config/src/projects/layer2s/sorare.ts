@@ -54,7 +54,7 @@ const committee = getCommittee(discovery)
 
 export const sorare: Layer2 = {
   type: 'layer2',
-  badges: [Badge.VM.CairoVM, Badge.RaaS.StarkEx, Badge.Infra.SHARP],
+  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
   id: ProjectId('sorare'),
   display: {
     name: 'Sorare',

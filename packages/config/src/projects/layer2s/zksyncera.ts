@@ -88,13 +88,7 @@ const validators = () => {
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.ZKStack,
-    Badge.Other.Governance,
-    Badge.Other.AccountAbstraction,
-  ],
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.ZKStack],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',

@@ -17,7 +17,7 @@ const upgradeability = {
 }
 
 export const fraxtal: Layer2 = opStackL2({
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack],
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.CustomDA],
   daProvider: {
     name: 'FraxtalDA',
     riskView: {

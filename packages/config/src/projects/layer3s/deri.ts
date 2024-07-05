@@ -8,7 +8,12 @@ const discovery = new ProjectDiscovery('deri', 'arbitrum')
 
 export const deri = orbitStackL3({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.Orbit,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.DA.EthereumBlobs,
+  ],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Deri',

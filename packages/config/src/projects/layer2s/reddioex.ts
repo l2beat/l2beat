@@ -51,7 +51,7 @@ const committee = getCommittee(discovery)
 export const reddioex: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddioex'),
-  badges: [Badge.VM.CairoVM, Badge.RaaS.StarkEx, Badge.Infra.SHARP],
+  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
   display: {
     name: 'ReddioEx',
     slug: 'reddioex',

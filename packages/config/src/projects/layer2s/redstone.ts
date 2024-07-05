@@ -23,7 +23,7 @@ const daResolveWindow = formatSeconds(
 
 export const redstone: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.CustomDA],
   display: {
     name: 'Redstone',
     slug: 'redstone',

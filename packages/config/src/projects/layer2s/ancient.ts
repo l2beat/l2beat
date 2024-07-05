@@ -14,7 +14,12 @@ const upgradeability = {
 
 export const ancient: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.Celestia],
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.OPStack,
+    Badge.DA.Celestia,
+    Badge.RaaS.Conduit,
+  ],
   discovery,
   display: {
     name: 'Ancient8',

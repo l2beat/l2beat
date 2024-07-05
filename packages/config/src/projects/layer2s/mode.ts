@@ -30,6 +30,7 @@ export const mode: Layer2 = opStackL2({
     Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
   ],
   display: {
     name: 'Mode Network',

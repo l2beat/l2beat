@@ -20,7 +20,7 @@ const discovery = new ProjectDiscovery('honeypot')
 export const honeypot: Layer2 = {
   type: 'layer2',
   id: ProjectId('honeypot'),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata],
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Stack.Cartesi],
   display: {
     name: 'Honeypot (Cartesi)',
     shortName: 'Honeypot',
