@@ -9,7 +9,7 @@ export const aiechain: Layer2 = upcomingL2({
     name: 'AIE Chain',
     slug: 'aie-chain',
     description:
-      'AIE Chain is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It is dedicated to organizing, categorizing, and distributing AI creations. Built using the Orbit stack and leveraging EigenDA for data availability, ensuring security and scalability.',
+      'AIE Chain is an upcoming Layer 2 on Ethereum dedicated to organizing, categorizing, and distributing AI creations. Built using the Orbit stack and leveraging EigenDA for data availability, ensuring security and scalability.',
     purposes: ['AI'],
     category: 'Optimium',
     provider: 'Arbitrum',

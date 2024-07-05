@@ -9,7 +9,7 @@ export const ebi: Layer2 = upcomingL2({
     name: 'Ebi',
     slug: 'ebi',
     description:
-      'Ebi is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It is built to unlock liquidity for all tokens. DeFi perps dex built by the Figaro labs team.',
+      'Ebi is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It aims to unlock liquidity for all tokens. DeFi perps dex built by the Figaro labs team.',
     purposes: ['DeFi'],
     category: 'Optimium',
     provider: 'Arbitrum',

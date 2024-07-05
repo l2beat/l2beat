@@ -16,7 +16,7 @@ export const invm: Layer3 = upcomingL3({
     name: 'inVM',
     slug: 'invm',
     description:
-      'inVM is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It gives users access to cross-chain compatibility with Ethereum, Arbitrum, Injective, and Cosmos. Powered by the INJ token, inEVM transactions qualify for the Injective burn auction.',
+      'inVM is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It aims to give users access to cross-chain compatibility with Ethereum, Arbitrum, Injective and Cosmos. Powered by the INJ token, inEVM transactions qualify for the Injective burn auction.',
     purposes: ['Universal'],
     category: 'Optimium',
     provider: 'Arbitrum',

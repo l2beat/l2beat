@@ -9,7 +9,7 @@ export const alephzero: Layer2 = upcomingL2({
     name: 'Aleph Zero',
     slug: 'aleph-zero',
     description:
-      'Aleph Zero is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It will enable you to build and use unique privacy apps with the speed and UX that you love.',
+      'Aleph Zero is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It aims to enable you to build and use unique privacy apps with speed and a great UX.',
     purposes: ['Privacy'],
     category: 'Optimium',
     provider: 'Arbitrum',

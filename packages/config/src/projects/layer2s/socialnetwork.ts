@@ -9,7 +9,7 @@ export const socialnetwork: Layer2 = upcomingL2({
     name: 'Social Network',
     slug: 'social-network',
     description:
-      'Social Network is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It is the first Layer 2 scaling and staking solution for Bitcoin, aiming to reduce transaction fees (<1 SAT/byte), finality (<1 minute), and energy consumption (~99%), of the Bitcoin Network, by connecting it to Ethereum via Arbitrum.',
+      'Social Network is an upcoming Layer 2 on Ethereum, built on the Orbit stack. It is the first Layer 2 scaling and staking solution for Bitcoin, aiming to reduce transaction fees, finality, and energy consumption of the Bitcoin Network by connecting it to Ethereum via Arbitrum.',
     purposes: ['Bitcoin DApps'],
     category: 'Optimium',
     provider: 'Arbitrum',

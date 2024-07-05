@@ -11,7 +11,7 @@ export const winr: Layer3 = upcomingL3({
     name: 'WINR',
     slug: 'winr',
     description:
-      'WINR is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is focused on building a Decentralized iGaming infrastructure.',
+      'WINR is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is focused on building a decentralized iGaming infrastructure.',
     purposes: ['Gaming'],
     category: 'Optimium',
     provider: 'Arbitrum',
