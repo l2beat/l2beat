@@ -1,8 +1,8 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 20239323,
-  "configHash": "0xede2e3f4301508092d71ecaa3c37e08dbbc8a905372d48e460a5d6b3c74b1ed7",
+  "blockNumber": 20239375,
+  "configHash": "0x196941e7501e4988ab870468c7e190dfb4eaf7d734aee79b88f2a6bd4ef2a0e4",
   "version": 8,
   "contracts": [
     {
@@ -47,6 +47,7 @@
       "descriptions": [
         "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
       ],
+      "ignoreInWatchMode": ["registeredOperators"],
       "implementations": ["0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"],
       "sinceTimestamp": 1712353787,
       "values": {
@@ -399,7 +400,7 @@
       "sinceTimestamp": 1712353787,
       "values": {
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-        "batchId": 16184,
+        "batchId": 16185,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -429,7 +430,7 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 16184,
+        "taskNumber": 16185,
         "THRESHOLD_DENOMINATOR": 100
       },
       "derivedName": "EigenDAServiceManager"
