@@ -242,7 +242,7 @@ export class IndexerService {
     const lagging = []
 
     const configurationsState =
-      await this.indexerConfigurationRepository.getByIds(
+      await this.indexerConfigurationRepository.getSavedConfigurationsByIds(
         configurations.map((c) => c.configId),
       )
 

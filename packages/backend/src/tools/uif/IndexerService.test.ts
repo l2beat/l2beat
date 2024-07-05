@@ -304,7 +304,7 @@ describe(IndexerService.name, () => {
 
     const indexerConfigurationsRepository =
       mockObject<IndexerConfigurationRepository>({
-        getByIds: async () => [
+        getSavedConfigurationsByIds: async () => [
           config('a', 0, null, null),
           config('b', 0, null, targetTimestamp.toNumber()),
           config('c', 0, 100, 100),
@@ -365,14 +365,9 @@ describe(IndexerService.name, () => {
       ],
     })
 
-    expect(indexerConfigurationsRepository.getByIds).toHaveBeenOnlyCalledWith([
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-    ])
+    expect(
+      indexerConfigurationsRepository.getSavedConfigurationsByIds,
+    ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
 
     expect(indexerStateRepository.getByIndexerIds).toHaveBeenOnlyCalledWith([
       'circulating_supply_indexer::g',
@@ -387,7 +382,7 @@ describe(IndexerService.name, () => {
 
     const indexerConfigurationsRepository =
       mockObject<IndexerConfigurationRepository>({
-        getByIds: async () => [
+        getSavedConfigurationsByIds: async () => [
           config('a', 0, null, null),
           config('b', 0, null, targetTimestamp.toNumber()),
           config('c', 0, 100, 100),
@@ -423,14 +418,9 @@ describe(IndexerService.name, () => {
       ],
     })
 
-    expect(indexerConfigurationsRepository.getByIds).toHaveBeenOnlyCalledWith([
-      'a',
-      'b',
-      'c',
-      'd',
-      'e',
-      'f',
-    ])
+    expect(
+      indexerConfigurationsRepository.getSavedConfigurationsByIds,
+    ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
   })
 })
 
