@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x04c6637b971b5f8ed7b913205d28eff08ed758d0
+
+# Diff at Thu, 04 Jul 2024 09:41:56 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@5e880b32f603c98cd7ec9cadedc3a383e26a650a block: 225981844
+- current block number: 228630604
+
+## Description
+
+Add one new signer to the FundsReceiver multisig.
+
+## Watched changes
+
+```diff
+    contract FundsReiceiverMultisig (0xFCF7248C495d6fd3641eE43F861c48Ebe402c878) {
+    +++ description: The designated fundsReceiver in the NodeLicenseRegistry. Receives all ETH from 'Sentry Node License' mints.
+      upgradeability.threshold:
+-        "3 of 6 (50%)"
++        "3 of 7 (43%)"
+      values.getOwners.6:
++        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
+      values.getOwners.5:
+-        "0xfc6F0d26f817Bd31AeD0e8922575d1fb8bD7A894"
++        "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c"
+      values.getOwners.4:
+-        "0x807daF80b03Fd3C2709FFe0AeBEED617BC0a347c"
++        "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
+      values.getOwners.3:
+-        "0xE529a3271f9CC84B1FE9107ab4764a8dF177782a"
++        "0xbBE90F6748C82623F130A4486722a436c5a72440"
+      values.getOwners.2:
+-        "0xbBE90F6748C82623F130A4486722a436c5a72440"
++        "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc"
+      values.getOwners.1:
+-        "0x1f097F3f928415cD28e1B2cC6f0F3960f4fCa6fc"
++        "0xd427165292B2E39cdac102eD963B14fFBACc964a"
+      values.getOwners.0:
+-        "0xd427165292B2E39cdac102eD963B14fFBACc964a"
++        "0x90D77E3a3B660E54E04cD622937765d2375FB2e3"
+    }
+```
+
 Generated with discovered.json: 0x3d98a55a46dfb2c1aea08baba4d876d06a769918
 
 # Diff at Fri, 21 Jun 2024 07:41:42 GMT:

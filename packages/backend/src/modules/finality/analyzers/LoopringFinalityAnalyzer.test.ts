@@ -3,6 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LoopringFinalityAnalyzer } from './LoopringFinalityAnalyzer'
 
@@ -27,6 +28,7 @@ describe(LoopringFinalityAnalyzer.name, () => {
       const analyzer = new LoopringFinalityAnalyzer(
         rpcClient,
         livenessRepository,
+        mockObject<IndexerConfigurationRepository>({}),
         projectId,
         loopringClient,
       )

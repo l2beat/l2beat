@@ -3,6 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
@@ -21,6 +22,7 @@ describe(LineaFinalityAnalyzer.name, () => {
       const calculator = new LineaFinalityAnalyzer(
         provider,
         livenessRepository,
+        mockObject<IndexerConfigurationRepository>({}),
         ProjectId('linea'),
         l2provider,
       )
@@ -48,6 +50,8 @@ describe(LineaFinalityAnalyzer.name, () => {
       const calculator = new LineaFinalityAnalyzer(
         provider,
         livenessRepository,
+        mockObject<IndexerConfigurationRepository>({}),
+
         ProjectId('linea'),
         l2provider,
       )

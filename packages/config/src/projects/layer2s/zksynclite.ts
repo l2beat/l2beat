@@ -19,6 +19,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -54,6 +55,7 @@ const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
     slug: 'zksync-lite',
@@ -110,7 +112,7 @@ export const zksynclite: Layer2 = {
           selector: '0x45269298',
           functionSignature:
             'function commitBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32), (bytes32,bytes,uint256,(bytes,uint32)[],uint32,uint32)[])',
-          sinceTimestampInclusive: new UnixTime(1612885558),
+          sinceTimestamp: new UnixTime(1612885558),
         },
       },
       {
@@ -126,7 +128,7 @@ export const zksynclite: Layer2 = {
           selector: '0x83981808',
           functionSignature:
             'function proveBlocks((uint32,uint64,bytes32,uint256,bytes32,bytes32)[] calldata _committedBlocks, (uint256[],uint256[],uint256[],uint8[],uint256[16]) memory _proof)',
-          sinceTimestampInclusive: new UnixTime(1592218707),
+          sinceTimestamp: new UnixTime(1592218707),
         },
       },
       {
@@ -142,7 +144,7 @@ export const zksynclite: Layer2 = {
           selector: '0xb0705b42',
           functionSignature:
             'function executeBlocks(((uint32,uint64,bytes32,uint256,bytes32,bytes32),bytes[])[] calldata _blocksData)',
-          sinceTimestampInclusive: new UnixTime(1592218707),
+          sinceTimestamp: new UnixTime(1592218707),
         },
       },
     ],

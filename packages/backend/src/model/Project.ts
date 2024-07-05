@@ -19,13 +19,12 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { TrackedTxId } from '../modules/tracked-txs/types/TrackedTxId'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-  TrackedTxUseWithId,
-  TrackedTxsConfig,
-} from '../modules/tracked-txs/types/TrackedTxsConfig'
+  TrackedTxConfigEntry,
+  createTrackedTxId,
+} from '@l2beat/shared'
 import { ChainConverter } from '../tools/ChainConverter'
 
 export interface Project {
@@ -36,7 +35,7 @@ export interface Project {
   isUpcoming?: boolean
   escrows: ProjectEscrow[]
   transactionApi?: ScalingProjectTransactionApi
-  trackedTxsConfig?: TrackedTxsConfig
+  trackedTxsConfig?: TrackedTxConfigEntry[] | undefined
   livenessConfig?: Layer2LivenessConfig
   finalityConfig?: Layer2FinalityConfig
   associatedTokens?: string[]
@@ -92,31 +91,68 @@ export function bridgeToProject(bridge: Bridge): Project {
 function toBackendTrackedTxsConfig(
   projectId: ProjectId,
   configs: Layer2TxConfig[] | undefined,
-): TrackedTxsConfig | undefined {
+): TrackedTxConfigEntry[] | undefined {
   if (configs === undefined) return
 
-  return {
-    entries: configs.map((config) => {
-      const query = config.query
-      if (query.formula === 'sharpSubmission') {
-        return {
-          projectId,
-          address: SHARP_SUBMISSION_ADDRESS,
-          selector: SHARP_SUBMISSION_SELECTOR,
-          uses: getTrackedTxsConfigUses(config),
-          costMultiplier: config._hackCostMultiplier,
-          ...query,
-        }
+  return configs.flatMap((config) =>
+    config.uses.map((use) => {
+      const base = {
+        projectId,
+        sinceTimestamp: config.query.sinceTimestamp,
+        untilTimestamp: config.query.untilTimestamp,
+        type: use.type,
+        subtype: use.subtype,
+        costMultiplier:
+          use.type === 'l2costs' ? config._hackCostMultiplier : undefined,
       }
 
-      return {
-        projectId,
-        ...query,
-        uses: getTrackedTxsConfigUses(config),
-        costMultiplier: config._hackCostMultiplier,
+      switch (config.query.formula) {
+        case 'functionCall': {
+          const withParams = {
+            ...base,
+            params: {
+              formula: 'functionCall',
+              address: config.query.address,
+              selector: config.query.selector,
+            },
+          } as const
+          return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
+        case 'transfer': {
+          const withParams = {
+            ...base,
+            params: {
+              formula: 'transfer',
+              from: config.query.from,
+              to: config.query.to,
+            },
+          } as const
+          return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
+        case 'sharpSubmission': {
+          const withParams = {
+            ...base,
+            params: {
+              formula: 'sharpSubmission',
+              address: SHARP_SUBMISSION_ADDRESS,
+              selector: SHARP_SUBMISSION_SELECTOR,
+              programHashes: config.query.programHashes,
+            },
+          } as const
+          return {
+            ...withParams,
+            id: createTrackedTxId(withParams),
+          }
+        }
       }
     }),
-  }
+  )
 }
 
 const chainConverter = new ChainConverter(
@@ -132,19 +168,6 @@ export function layer3ToProject(layer3: Layer3): Project {
     escrows: layer3.config.escrows.map(toProjectEscrow),
     associatedTokens: layer3.config.associatedTokens,
   }
-}
-
-function getTrackedTxsConfigUses(config: Layer2TxConfig): TrackedTxUseWithId[] {
-  const { untilTimestampExclusive: _, ...queryWithoutUntilTimestamp } =
-    config.query
-
-  return config.uses.map((use) => ({
-    ...use,
-    id: TrackedTxId([
-      JSON.stringify(use),
-      JSON.stringify(queryWithoutUntilTimestamp),
-    ]),
-  }))
 }
 
 function toProjectEscrow(escrow: ScalingProjectEscrow): ProjectEscrow {
