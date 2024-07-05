@@ -2,48 +2,53 @@ import {
   EthereumAddress,
   ProjectId,
   TrackedTxsConfigSubtype,
-  TrackedTxsConfigType,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { TrackedTxId } from './createTrackedTxConfigId'
 
-import { TrackedTxId } from './TrackedTxId'
-
-export type TrackedTxsConfig = {
-  entries: TrackedTxConfigEntry[]
-}
+export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
+  '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
+)
+export const SHARP_SUBMISSION_SELECTOR = '0x9b3b76cc'
 
 export type TrackedTxConfigEntry =
-  | TrackedTxFunctionCallConfig
-  | TrackedTxTransferConfig
-  | TrackedTxSharpSubmissionConfig
+  | TrackedTxCostsConfig
+  | TrackedTxLivenessConfig
 
-export interface TrackedTxUseWithId {
+interface TrackedTxConfigBase {
   id: TrackedTxId
-  type: TrackedTxsConfigType
+  projectId: ProjectId
+  sinceTimestamp: UnixTime
+  untilTimestamp?: UnixTime
+  params:
+    | TrackedTxFunctionCallConfig
+    | TrackedTxTransferConfig
+    | TrackedTxSharpSubmissionConfig
   subtype: TrackedTxsConfigSubtype
 }
 
-interface TrackedTxConfigBase {
-  projectId: ProjectId
-  uses: TrackedTxUseWithId[]
-  sinceTimestampInclusive: UnixTime
-  untilTimestampExclusive?: UnixTime
+export interface TrackedTxCostsConfig extends TrackedTxConfigBase {
   costMultiplier?: number
+  type: 'l2costs'
 }
 
-export interface TrackedTxFunctionCallConfig extends TrackedTxConfigBase {
+export interface TrackedTxLivenessConfig extends TrackedTxConfigBase {
+  type: 'liveness'
+}
+
+export interface TrackedTxFunctionCallConfig {
   formula: 'functionCall'
   address: EthereumAddress
   selector: string
 }
 
-export interface TrackedTxTransferConfig extends TrackedTxConfigBase {
+export interface TrackedTxTransferConfig {
   formula: 'transfer'
   from: EthereumAddress
   to: EthereumAddress
 }
 
-export interface TrackedTxSharpSubmissionConfig extends TrackedTxConfigBase {
+export interface TrackedTxSharpSubmissionConfig {
   formula: 'sharpSubmission'
   address: EthereumAddress
   selector: string

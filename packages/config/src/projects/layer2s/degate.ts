@@ -97,8 +97,8 @@ export const degate: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestampInclusive: new UnixTime(1681993655),
-          untilTimestampExclusive: new UnixTime(1695902496),
+          sinceTimestamp: new UnixTime(1681993655),
+          untilTimestamp: new UnixTime(1695902496),
         },
       },
     ],

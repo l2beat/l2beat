@@ -5,7 +5,11 @@ import * as z from 'zod'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { getReferencedName, resolveReference } from '../reference'
+import {
+  generateScopeVariables,
+  getReferencedName,
+  resolveReference,
+} from '../reference'
 import { valueToAddress } from '../utils/valueToAddress'
 
 export type OpStackSequencerInboxHandlerDefinition = z.infer<
@@ -32,15 +36,21 @@ export class OpStackSequencerInboxHandler implements Handler {
 
   async execute(
     provider: IProvider,
-    _address: EthereumAddress,
+    currentContractAddress: EthereumAddress,
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, [
       'Checking OP Stack Sequencer Inbox Address',
     ])
+    const scopeVariables = generateScopeVariables(
+      provider,
+      currentContractAddress,
+    )
+
     const resolved = resolveReference(
       this.definition.sequencerAddress,
       previousResults,
+      scopeVariables,
     )
     const sequencerAddress = valueToAddress(resolved)
 
