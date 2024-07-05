@@ -43,19 +43,6 @@ export class IndexerStateRepository extends BaseRepository {
     return `[${record.indexerId}]: ${record.safeHeight}`
   }
 
-  async getByIndexerIdLike(
-    indexerIdLike: string,
-  ): Promise<IndexerStateRecord[]> {
-    const knex = await this.knex()
-
-    const rows = await knex('indexer_state').whereLike(
-      'indexer_id',
-      indexerIdLike,
-    )
-
-    return rows.map(toRecord)
-  }
-
   async getByIndexerIds(ids: string[]): Promise<IndexerStateRecord[]> {
     const knex = await this.knex()
 
