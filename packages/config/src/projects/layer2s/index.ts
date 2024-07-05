@@ -1,5 +1,7 @@
 import { HOMEPAGE_MILESTONES } from '../../common'
 import { aevo } from './aevo'
+import { aiechain } from './aiechain'
+import { alephzero } from './alephzero'
 import { alienx } from './alienx'
 import { align } from './align'
 import { ancient } from './ancient'
@@ -28,6 +30,7 @@ import { degate } from './degate'
 import { degate2 } from './degate2'
 import { degate3 } from './degate3'
 import { dydx } from './dydx'
+import { ebi } from './ebi'
 import { eclipse } from './eclipse'
 import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
@@ -44,6 +47,7 @@ import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
+import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
@@ -64,6 +68,7 @@ import { mantapacific } from './mantapacific'
 import { mantle } from './mantle'
 import { metal } from './metal'
 import { metis } from './metis'
+import { millicent } from './millicent'
 import { mint } from './mint'
 import { mode } from './mode'
 import { morph } from './morph'
@@ -96,6 +101,7 @@ import { rhinofi } from './rhinofi'
 import { rise } from './rise'
 import { rss3 } from './rss3'
 import { scroll } from './scroll'
+import { socialnetwork } from './socialnetwork'
 import { sophon } from './sophon'
 import { sorare } from './sorare'
 import { specular } from './specular'
@@ -134,6 +140,8 @@ export * from './types'
 
 export const layer2s: Layer2[] = [
   aevo,
+  aiechain,
+  alephzero,
   ancient,
   apex,
   arbitrum,
@@ -163,6 +171,7 @@ export const layer2s: Layer2[] = [
   degate2,
   degate3,
   dydx,
+  ebi,
   eclipse,
   edgeless,
   ethernity,
@@ -178,6 +187,7 @@ export const layer2s: Layer2[] = [
   galxegravity,
   grvt,
   hermez,
+  hybrid,
   hychain,
   hypr,
   immutablex,
@@ -199,6 +209,7 @@ export const layer2s: Layer2[] = [
   metal,
   metis,
   mint,
+  millicent,
   mode,
   morph,
   move,
@@ -231,6 +242,7 @@ export const layer2s: Layer2[] = [
   rss3,
   scroll,
   sophon,
+  socialnetwork,
   sorare,
   specular,
   starknet,
