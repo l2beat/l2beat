@@ -1,7 +1,18 @@
-import { TrackedTxId, TrackedTxTransferConfig } from '@l2beat/shared'
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  EthereumAddress,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { UpdateConfiguration } from '../../../tools/uif/multi/types'
+
+import {
+  TrackedTxConfigEntry,
+  TrackedTxId,
+  TrackedTxTransferConfig,
+} from '@l2beat/shared'
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
@@ -17,54 +28,41 @@ const RESULT_TIMESTAMP = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 
 describe(transformTransfersQueryResult.name, () => {
   it('should transform results', () => {
-    const config: TrackedTxTransferConfig[] = [
-      {
-        formula: 'transfer',
+    const config: UpdateConfiguration<
+      TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
+    >[] = [
+      mock({
+        id: '0x1',
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [
-          {
-            id: TrackedTxId.unsafe('0x1'),
-            type: 'liveness',
-            subtype: 'batchSubmissions',
-          },
-          {
-            id: TrackedTxId.unsafe('0x2'),
-            type: 'liveness',
-            subtype: 'stateUpdates',
-          },
-        ],
-      },
-      {
-        formula: 'transfer',
+        subtype: 'batchSubmissions',
+        sinceTimestamp: SINCE_TIMESTAMP,
+      }),
+      mock({
+        id: '0x2',
+        projectId: ProjectId('project1'),
+        from: ADDRESS_1,
+        to: ADDRESS_2,
+        subtype: 'stateUpdates',
+        sinceTimestamp: SINCE_TIMESTAMP,
+      }),
+      mock({
+        id: '0x3',
         projectId: ProjectId('project1'),
         from: ADDRESS_3,
         to: ADDRESS_4,
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [
-          {
-            id: TrackedTxId.unsafe('0x3'),
-            type: 'liveness',
-            subtype: 'stateUpdates',
-          },
-        ],
-      },
-      {
-        formula: 'transfer',
+        subtype: 'stateUpdates',
+        sinceTimestamp: SINCE_TIMESTAMP,
+      }),
+      mock({
+        id: '0x4',
         projectId: ProjectId('project2'),
         from: ADDRESS_5,
         to: ADDRESS_6,
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [
-          {
-            id: TrackedTxId.unsafe('0x4'),
-            type: 'liveness',
-            subtype: 'proofSubmissions',
-          },
-        ],
-      },
+        subtype: 'proofSubmissions',
+        sinceTimestamp: SINCE_TIMESTAMP,
+      }),
     ]
 
     const block = 1
@@ -117,9 +115,11 @@ describe(transformTransfersQueryResult.name, () => {
     ]
     const expected: TrackedTxTransferResult[] = [
       {
-        type: 'transfer',
-        projectId: config[0].projectId,
-        use: config[0].uses[0],
+        formula: 'transfer',
+        projectId: config[0].properties.projectId,
+        id: config[0].id,
+        type: config[0].properties.type,
+        subtype: config[0].properties.subtype,
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -133,9 +133,11 @@ describe(transformTransfersQueryResult.name, () => {
         receiptBlobGasUsed: 123,
       },
       {
-        type: 'transfer',
-        projectId: config[0].projectId,
-        use: config[0].uses[1],
+        formula: 'transfer',
+        projectId: config[1].properties.projectId,
+        id: config[1].id,
+        type: config[1].properties.type,
+        subtype: config[1].properties.subtype,
         hash: txHashes[0],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -149,9 +151,11 @@ describe(transformTransfersQueryResult.name, () => {
         receiptBlobGasUsed: 123,
       },
       {
-        type: 'transfer',
-        projectId: config[1].projectId,
-        use: config[1].uses[0],
+        formula: 'transfer',
+        projectId: config[2].properties.projectId,
+        id: config[2].id,
+        subtype: config[2].properties.subtype,
+        type: config[2].properties.type,
         hash: txHashes[1],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -165,9 +169,11 @@ describe(transformTransfersQueryResult.name, () => {
         receiptBlobGasUsed: null,
       },
       {
-        type: 'transfer',
-        projectId: config[2].projectId,
-        use: config[2].uses[0],
+        formula: 'transfer',
+        projectId: config[3].properties.projectId,
+        id: config[3].id,
+        subtype: config[3].properties.subtype,
+        type: config[3].properties.type,
         hash: txHashes[2],
         blockNumber: block,
         blockTimestamp: RESULT_TIMESTAMP,
@@ -188,15 +194,15 @@ describe(transformTransfersQueryResult.name, () => {
   })
 
   it('should throw when there is no matching config', () => {
-    const config: TrackedTxTransferConfig[] = [
-      {
-        formula: 'transfer',
+    const config = [
+      mock({
+        id: '0x1',
         projectId: ProjectId('project1'),
         from: ADDRESS_1,
         to: ADDRESS_2,
-        sinceTimestampInclusive: SINCE_TIMESTAMP,
-        uses: [],
-      },
+        subtype: 'batchSubmissions',
+        sinceTimestamp: SINCE_TIMESTAMP,
+      }),
     ]
 
     const queryResults: BigQueryTransferResult[] = [
@@ -220,3 +226,40 @@ describe(transformTransfersQueryResult.name, () => {
     )
   })
 })
+
+function mock({
+  id,
+  projectId,
+  subtype,
+  from,
+  to,
+  sinceTimestamp,
+}: {
+  id: TrackedTxId
+  projectId: ProjectId
+  subtype: TrackedTxsConfigSubtype
+  from: EthereumAddress
+  to: EthereumAddress
+  sinceTimestamp: UnixTime
+}): UpdateConfiguration<
+  TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
+> {
+  return {
+    id,
+    hasData: true,
+    minHeight: 0,
+    maxHeight: 0,
+    properties: {
+      id,
+      projectId,
+      type: 'liveness',
+      subtype,
+      sinceTimestamp,
+      params: {
+        formula: 'transfer',
+        from,
+        to,
+      },
+    },
+  }
+}

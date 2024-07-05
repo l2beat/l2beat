@@ -49,6 +49,7 @@
       "ignoreMethods": ["timestampToBlockRoot"]
     },
     "RegistryCoordinator": {
+      "ignoreInWatchMode": ["registeredOperators"],
       "description": "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum",
       "fields": {
         "operatorSetParamsQuorum1": {
@@ -71,6 +72,16 @@
           "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config",
           "severity": "HIGH",
           "type": "RISK_PARAMETER"
+        },
+        "registeredOperators": {
+          "description": "List of all registered operators ids",
+          "handler": {
+            "type": "arrayFromTwoEvents",
+            "addEvent": "event OperatorRegistered(address indexed operator, bytes32 indexed operatorId)",
+            "addKey": "operatorId",
+            "removeEvent": "event OperatorDeregistered(address indexed operator, bytes32 indexed operatorId)",
+            "removeKey": "operatorId"
+          }
         }
       }
     },

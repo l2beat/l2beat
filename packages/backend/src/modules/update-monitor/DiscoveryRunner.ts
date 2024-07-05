@@ -7,9 +7,13 @@ import {
   toDiscoveryOutput,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  AllProviderStats,
+  ProviderStats,
+} from '@l2beat/discovery/dist/discovery/provider/Stats'
 import { assert } from '@l2beat/shared-pure'
 import { isError } from 'lodash'
-import { Gauge, Histogram } from 'prom-client'
+import { Gauge } from 'prom-client'
 
 export interface DiscoveryRunnerOptions {
   logger: Logger
@@ -58,13 +62,10 @@ export class DiscoveryRunner {
     config: DiscoveryConfig,
     blockNumber: number,
   ): Promise<DiscoveryOutput> {
-    const histogramDone = syncHistogram.startTimer()
-
     const provider = this.allProviders.get(config.chain, blockNumber)
     const result = await this.discoveryEngine.discover(provider, config)
 
-    histogramDone({ project: config.name })
-    latestBlock.set({ project: config.name }, blockNumber)
+    setDiscoveryMetrics(this.allProviders.getStats(config.chain), config.chain)
 
     return toDiscoveryOutput(
       config.name,
@@ -127,19 +128,43 @@ export class DiscoveryRunner {
     return new DiscoveryConfig({
       ...config.raw,
       initialAddresses,
+      maxAddresses: (config.raw.maxAddresses ?? 200) * 3,
+      maxDepth: (config.raw.maxDepth ?? 6) * 3,
     })
   }
 }
 
-const latestBlock = new Gauge({
-  name: 'discovery_last_synced',
-  help: 'Value showing latest block number with which UpdateMonitor was run',
-  labelNames: ['project'],
+function setDiscoveryMetrics(stats: AllProviderStats, chain: string) {
+  setProviderGauge(lowLevelProviderGauge, stats.lowLevelCounts, chain)
+  setProviderGauge(cacheProviderGauge, stats.cacheCounts, chain)
+  setProviderGauge(highLevelProviderGauge, stats.highLevelCounts, chain)
+}
+
+function setProviderGauge(
+  gauge: ProviderGauge,
+  stats: ProviderStats,
+  chain: string,
+) {
+  for (const key of Object.keys(stats)) {
+    gauge.set({ chain: chain, method: key }, stats[key as keyof ProviderStats])
+  }
+}
+
+type ProviderGauge = Gauge<'chain' | 'method'>
+const lowLevelProviderGauge: ProviderGauge = new Gauge({
+  name: 'update_monitor_low_level_provider_stats',
+  help: 'Low level provider calls done during discovery',
+  labelNames: ['chain', 'method'],
 })
 
-const syncHistogram = new Histogram({
-  name: 'discovery_sync_duration_histogram',
-  help: 'Histogram showing discovery duration',
-  labelNames: ['project'],
-  buckets: [2, 4, 6, 8, 10, 15, 20, 30, 60, 120],
+const cacheProviderGauge: ProviderGauge = new Gauge({
+  name: 'update_monitor_cache_provider_stats',
+  help: 'Cache hit counts done during discovery',
+  labelNames: ['chain', 'method'],
+})
+
+const highLevelProviderGauge: ProviderGauge = new Gauge({
+  name: 'update_monitor_high_level_provider_stats',
+  help: 'High level provider calls done during discovery',
+  labelNames: ['chain', 'method'],
 })

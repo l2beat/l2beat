@@ -17,6 +17,7 @@ describe('metaUtils', () => {
   describe('mergeContractMeta', () => {
     it('should merge two ContractMeta objects correctly', () => {
       const a: ContractMeta = {
+        displayName: 'ContractA',
         descriptions: ['description 1'],
         roles: new Set(['Challenger', 'Guardian']),
         permissions: {
@@ -27,6 +28,7 @@ describe('metaUtils', () => {
         severity: 'LOW',
       }
       const b: ContractMeta = {
+        displayName: undefined,
         descriptions: ['description 2', 'description 3'],
         roles: new Set(['Proposer', 'Challenger']),
         permissions: {
@@ -41,6 +43,7 @@ describe('metaUtils', () => {
       const result = mergeContractMeta(a, b)
 
       expect(result).toEqual({
+        displayName: 'ContractA',
         descriptions: ['description 1', 'description 2', 'description 3'],
         roles: new Set(['Challenger', 'Guardian', 'Proposer']),
         permissions: {
@@ -176,6 +179,7 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          displayName: undefined,
           descriptions: ['The owner of the contract'],
           roles: new Set(['Challenger']),
           permissions: {
@@ -187,6 +191,7 @@ describe('metaUtils', () => {
           types: new Set(['CODE_CHANGE']),
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: ['The resource config of the contract'],
           permissions: {
@@ -198,6 +203,7 @@ describe('metaUtils', () => {
           types: new Set(['EXTERNAL', 'L2']),
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
           descriptions: ['The resource config of the contract'],
           permissions: {
@@ -230,6 +236,7 @@ describe('metaUtils', () => {
         {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+            displayName: undefined,
             descriptions: ['Important contract'],
             roles: new Set(['Challenger']),
             permissions: {
@@ -240,6 +247,7 @@ describe('metaUtils', () => {
             types: new Set(['CODE_CHANGE']),
           },
           '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+            displayName: undefined,
             categories: new Set(['Core', 'Gateways&Escrows']),
             descriptions: ['The resource config of the contract'],
             permissions: {
@@ -254,6 +262,7 @@ describe('metaUtils', () => {
         {
           // for merge:
           '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+            displayName: undefined,
             descriptions: ['Very important contract'],
             roles: undefined,
             permissions: {
@@ -264,6 +273,7 @@ describe('metaUtils', () => {
             types: new Set(['EXTERNAL', 'L2']),
           },
           '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+            displayName: undefined,
             categories: new Set(['Core', 'Gateways&Escrows']),
             descriptions: ['The resource config of the contract'],
             permissions: {
@@ -282,6 +292,7 @@ describe('metaUtils', () => {
       expect(result).toEqual({
         // merged:
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
+          displayName: undefined,
           descriptions: ['Important contract', 'Very important contract'],
           roles: new Set(['Challenger']),
           permissions: {
@@ -295,6 +306,7 @@ describe('metaUtils', () => {
           severity: 'MEDIUM',
         },
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
+          displayName: undefined,
           descriptions: ['The resource config of the contract'],
           roles: new Set(['Challenger', 'Guardian']),
           permissions: {
@@ -306,6 +318,7 @@ describe('metaUtils', () => {
           severity: 'HIGH',
         },
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
+          displayName: undefined,
           descriptions: ['The resource config of the contract'],
           roles: new Set(['Challenger', 'Guardian']),
           permissions: {
@@ -334,6 +347,7 @@ describe('metaUtils', () => {
 
       expect(result).toEqual({
         [admin.toString()]: {
+          displayName: undefined,
           categories: undefined,
           descriptions: undefined,
           roles: undefined,

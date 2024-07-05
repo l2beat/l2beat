@@ -5,6 +5,7 @@ import { TrackedTxId } from '@l2beat/shared'
 import { TrackedTxResult } from './model'
 
 export interface TxUpdaterInterface {
+  type: string
   update: (txs: TrackedTxResult[], knexTx?: Knex.Transaction) => Promise<void>
   deleteFromById: (
     id: TrackedTxId,

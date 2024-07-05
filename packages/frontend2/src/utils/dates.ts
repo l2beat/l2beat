@@ -1,4 +1,5 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
+import { EM_DASH } from '~/app/_components/nav/consts'
 
 const MONTHS: Record<
   string,
@@ -85,7 +86,7 @@ export function formatRange(from: number, to: number) {
       : parsedTo.month,
     parsedFrom.year === parsedTo.year ? undefined : parsedTo.year,
   )
-  return `${fromDate} &ndash;\n${toDate}`
+  return `${fromDate} ${EM_DASH}\n${toDate}`
 }
 
 export function formatTimestamp(

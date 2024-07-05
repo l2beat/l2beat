@@ -185,8 +185,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x5e9145c9',
                   functionSignature:
                     'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-                  sinceTimestampInclusive: new UnixTime(1679653163),
-                  untilTimestampExclusive: new UnixTime(1707824735),
+                  sinceTimestamp: new UnixTime(1679653163),
+                  untilTimestamp: new UnixTime(1707824735),
                 },
               },
               {
@@ -208,8 +208,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x2b0006fa',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-                  sinceTimestampInclusive: new UnixTime(1679653163),
-                  untilTimestampExclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1679653163),
+                  untilTimestamp: new UnixTime(1707822059),
                 },
               },
               {
@@ -231,8 +231,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x621dd411',
                   functionSignature:
                     'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-                  sinceTimestampInclusive: new UnixTime(1679653163),
-                  untilTimestampExclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1679653163),
+                  untilTimestamp: new UnixTime(1707822059),
                 },
               },
               {
@@ -254,7 +254,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x1489ed10',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestampInclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1707822059),
                 },
               },
               {
@@ -276,7 +276,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x87c20c01',
                   functionSignature:
                     'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestampInclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1707822059),
                 },
               },
             ],

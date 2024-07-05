@@ -173,7 +173,7 @@ export class UpdateMonitor {
     )
     const discovery = await runner.run(projectConfig, blockNumber, {
       logger: this.logger,
-      injectInitialAddresses: true,
+      injectInitialAddresses: false,
     })
 
     if (!previousDiscovery || !discovery) return
@@ -276,7 +276,7 @@ export class UpdateMonitor {
 
     return await runner.run(projectConfig, previousDiscovery.blockNumber, {
       logger: this.logger,
-      injectInitialAddresses: true,
+      injectInitialAddresses: false,
     })
   }
 

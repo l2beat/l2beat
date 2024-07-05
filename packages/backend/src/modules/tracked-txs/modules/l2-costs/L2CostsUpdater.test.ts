@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
+import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Knex } from 'knex'
@@ -55,7 +55,7 @@ describe(L2CostsUpdater.name, () => {
         {
           txHash: transactions[0].hash,
           timestamp: transactions[0].blockTimestamp,
-          trackedTxId: transactions[0].use.id,
+          configurationId: transactions[0].id,
           gasUsed: transactions[0].receiptGasUsed,
           gasPrice: transactions[0].gasPrice,
           //  input: 0x00aa00bbff
@@ -67,7 +67,7 @@ describe(L2CostsUpdater.name, () => {
         {
           txHash: transactions[1].hash,
           timestamp: transactions[1].blockTimestamp,
-          trackedTxId: transactions[1].use.id,
+          configurationId: transactions[1].id,
           gasUsed: transactions[1].receiptGasUsed,
           gasPrice: transactions[1].gasPrice,
           //  input: 0x
@@ -87,7 +87,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const updater = new L2CostsUpdater(repository, Logger.SILENT)
 
-      const id = TrackedTxId.random()
+      const id = createTrackedTxId.random()
       await updater.deleteFromById(id, MIN_TIMESTAMP, TRX)
 
       expect(repository.deleteFromById).toHaveBeenNthCalledWith(
@@ -113,32 +113,28 @@ function getMockL2CostsRepository() {
 function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
   return [
     {
-      formula: 'functionCall',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress.random(),
+        selector: '0x',
+      },
       projectId: ProjectId('test'),
-      address: EthereumAddress.random(),
-      selector: '0x',
-      sinceTimestampInclusive: MIN_TIMESTAMP,
-      uses: [
-        {
-          type: 'liveness',
-          subtype: 'batchSubmissions',
-          id: TrackedTxId.random(),
-        },
-      ],
+      sinceTimestamp: MIN_TIMESTAMP,
+      type: 'liveness',
+      id: createTrackedTxId.random(),
+      subtype: 'batchSubmissions',
     },
     {
-      formula: 'functionCall',
+      params: {
+        formula: 'functionCall',
+        address: EthereumAddress.random(),
+        selector: '0x',
+      },
       projectId: ProjectId('test2'),
-      address: EthereumAddress.random(),
-      selector: '0x',
-      sinceTimestampInclusive: MIN_TIMESTAMP,
-      uses: [
-        {
-          type: 'liveness',
-          subtype: 'stateUpdates',
-          id: TrackedTxId.random(),
-        },
-      ],
+      sinceTimestamp: MIN_TIMESTAMP,
+      type: 'liveness',
+      subtype: 'stateUpdates',
+      id: createTrackedTxId.random(),
     },
   ]
 }
@@ -146,18 +142,16 @@ function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
 function getMockTrackedTxResults(): TrackedTxResult[] {
   return [
     {
-      type: 'functionCall',
+      formula: 'functionCall',
       projectId: ProjectId('test'),
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       toAddress: EthereumAddress.random(),
       input: '',
       hash: '',
-      use: {
-        type: 'liveness',
-        subtype: 'batchSubmissions',
-        id: getMockRuntimeConfigurations()[0].uses[0].id,
-      },
+      type: 'liveness',
+      subtype: 'batchSubmissions',
+      id: getMockRuntimeConfigurations()[0].id,
       receiptGasUsed: 100,
       gasPrice: 10n,
       dataLength: 5,
@@ -166,12 +160,10 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       receiptBlobGasUsed: null,
     },
     {
-      type: 'transfer',
-      use: {
-        id: getMockRuntimeConfigurations()[1].uses[0].id,
-        type: 'liveness',
-        subtype: 'stateUpdates',
-      },
+      formula: 'transfer',
+      id: getMockRuntimeConfigurations()[1].id,
+      type: 'liveness',
+      subtype: 'stateUpdates',
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',

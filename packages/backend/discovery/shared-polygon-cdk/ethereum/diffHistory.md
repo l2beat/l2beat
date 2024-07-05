@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x6c7284e62751150f3d598db66cc024b11d5b68b7
+
+# Diff at Fri, 05 Jul 2024 09:12:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@38ab6c6f42360c40ef4d13f9e02761a9d45810a2 block: 20189645
+- current block number: 20239328
+
+## Description
+
+`createNewRollup()` is called by the RollupManagerAdminMultisig, adding a new rollup with a new chainID and the same rollupTypeID 4 as currently all other registered zkEVM rollups in the manager except PolygonZkEVM (3). This one is related to [Pay Chain by Wirex](https://wirexapp.com/blog/post/introducing-wirex-pay-wirexs-zk-powered-app-chain-on-polygon-0783). (not launched / not producing blocks yet)
+
+### Current state of projects on Polygon CDK
+
+rolluptype: 3 = rollup, 4 = validium
+
+🚀 = live
+
+rollupIDs:
+-   1: pol zkEVM 1101 (type3) 🚀
+-	2: astar 3776 (type4) 🚀
+-	3: OkX X Chain 196 (type4) 🚀
+-	4: OEV network chainid 4913 (type4)
+-	5: gptprotocol.org 1511670449 (type4) 🚀
+-	6: witnesschain 1702448187 (type4) 🚀
+-	7: prism (by prism bridge?) 994873017 (type4)
+-	8: pay network (wirex) 31415 (type4)
+
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.7:
++        [false]
+      values.rollupCount:
+-        7
++        8
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.7:
++        ["0x78253E2E6120164bd826668A4C96Db20f78A94c9",31415,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20189645 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches:
++        [[true],[true],[true],[false],[true],[true],[false]]
+      usedTypes:
++        [{"typeCaster":"GreaterThan","arg":{"value":1}}]
+    }
+```
+
 Generated with discovered.json: 0xe187c281eb0dc50a8c9d425f0f0d54dfd05cd099
 
 # Diff at Fri, 28 Jun 2024 10:40:16 GMT:

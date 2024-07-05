@@ -1,4 +1,5 @@
 import { createHash } from 'crypto'
+import { BlobsInBlock } from '@l2beat/shared'
 import {
   assert,
   Bytes,
@@ -493,6 +494,17 @@ export class BatchingAndCachingProvider {
       entry.write(UNDEFINED_MARKER_VALUE)
     }
     return deployment
+  }
+
+  async getBlobs(txHash: string): Promise<BlobsInBlock> {
+    const entry = await this.cache.entry('getBlobs', [txHash], undefined)
+    const cached = entry.read()
+    if (cached !== undefined) {
+      return parseCacheEntry(cached)
+    }
+    const blobs = await this.provider.getBlobs(txHash)
+    entry.write(JSON.stringify(blobs))
+    return blobs
   }
 }
 

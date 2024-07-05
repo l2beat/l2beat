@@ -1,486 +1,241 @@
 import { Logger } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  ProjectId,
-  TrackedTxsConfigType,
-  UnixTime,
-  clampRangeToDay,
-} from '@l2beat/shared-pure'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Knex } from 'knex'
-
-import { TrackedTxConfigEntry, TrackedTxId } from '@l2beat/shared'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from '../tracked-txs/HourlyIndexer'
-import { TrackedTxsClient } from '../tracked-txs/TrackedTxsClient'
-import { findConfigurationsToSync } from '../tracked-txs/utils'
-import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import { DatabaseMiddleware } from '../../peripherals/database/DatabaseMiddleware'
+import { IndexerService } from '../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
+import { mockDbMiddleware } from '../../tools/uif/multi/MultiIndexer.test'
+import { removal, update } from '../../tools/uif/multi/test/mockConfigurations'
 import {
-  TrackedTxsConfigRecord,
-  TrackedTxsConfigsRepository,
-} from './repositories/TrackedTxsConfigsRepository'
+  RemovalConfiguration,
+  UpdateConfiguration,
+} from '../../tools/uif/multi/types'
+import { TrackedTxsClient } from './TrackedTxsClient'
+import { TrackedTxsIndexer } from './TrackedTxsIndexer'
+import { L2CostsUpdater } from './modules/l2-costs/L2CostsUpdater'
+import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
+import { LivenessUpdater } from './modules/liveness/LivenessUpdater'
+import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { TrackedTxResult } from './types/model'
-import { diffTrackedTxConfigurations } from './utils/diffTrackedTxConfigurations'
-
-const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
-const TRX = mockObject<Knex.Transaction>({})
 
 describe(TrackedTxsIndexer.name, () => {
-  describe(TrackedTxsIndexer.prototype.update.name, () => {
-    it('downloads data and passes it to updaters', async () => {
-      const from = MIN_TIMESTAMP.add(365, 'days')
-      const to = from.add(1, 'hours')
-      const runtimeEntries = getMockRuntimeConfigurations()
-      const databaseEntries = runtimeEntries.flatMap((r) => toRecords(r, from))
-      const configurationRepository = getMockConfigRepository(databaseEntries)
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
+  describe(TrackedTxsIndexer.prototype.multiUpdate.name, () => {
+    it('fetches txs and calls updaters', async () => {
+      const from = 100
+      const to = 300
+
       const trackedTxResults = getMockTrackedTxResults()
       const trackedTxsClient = mockObject<TrackedTxsClient>({
         getData: async () => trackedTxResults,
       })
+      const l2costsUpdater = mockObject<L2CostsUpdater>({
+        type: 'l2costs',
+        update: mockFn(async () => {}),
+      })
+      const livenessUpdater = mockObject<LivenessUpdater>({
+        type: 'liveness',
+        update: mockFn(async () => {}),
+      })
 
-      const livenessUpdater = mockObject<TxUpdaterInterface>({
-        update: mockFn(async () => {}),
+      const indexer = getMockTrackedTxsIndexer({
+        updaters: [livenessUpdater, l2costsUpdater],
+        trackedTxsClient,
       })
-      const l2CostsUpdater = mockObject<TxUpdaterInterface>({
-        update: mockFn(async () => {}),
-      })
-      const mockedUpdaters = {
-        liveness: livenessUpdater,
-        l2costs: l2CostsUpdater,
+
+      const parameters: Partial<TrackedTxConfigEntry> = {
+        projectId: ProjectId('test'),
       }
 
-      const trackedTxIndexer = getMockTrackedTxsIndexer({
-        configRepository: configurationRepository,
-        configs: runtimeEntries,
-        trackedTxsClient,
-        updaters: mockedUpdaters,
-      })
-      const [configurationsToSync, syncTo] =
-        await trackedTxIndexer.getConfigurationsToSync(from, to)
+      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
+        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
+        update<TrackedTxConfigEntry>('b', 100, null, false, parameters),
+        update<TrackedTxConfigEntry>('c', 100, null, true, parameters),
+      ]
 
-      const value = await trackedTxIndexer.update(
-        // TODO: refactor tests after uif update
-        from.toNumber() + 1,
-        to.toNumber(),
-      )
-
-      expect(value).toEqual(syncTo.toNumber())
-      expect(trackedTxsClient.getData).toHaveBeenOnlyCalledWith(
-        configurationsToSync,
+      const safeHeight = await indexer.multiUpdate(
         from,
-        syncTo,
+        to,
+        configurations,
+        mockDbMiddleware,
       )
-      expect(livenessUpdater.update).toHaveBeenOnlyCalledWith(
-        [trackedTxResults[0], trackedTxResults[1]],
-        TRX,
+
+      expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
+        1,
+        [configurations[0], configurations[1]],
+        new UnixTime(from),
+        new UnixTime(to),
       )
-      expect(l2CostsUpdater.update).toHaveBeenOnlyCalledWith(
-        [trackedTxResults[2]],
-        TRX,
+      expect(livenessUpdater.update).toHaveBeenNthCalledWith(
+        1,
+        trackedTxResults.filter((tx) => tx.type === 'liveness'),
+        undefined,
       )
-      expect(
-        configurationRepository.setManyLastSyncedTimestamp,
-      ).toHaveBeenOnlyCalledWith(
-        runtimeEntries.flatMap((r) => r.uses.map((u) => u.id)),
-        syncTo,
-        TRX,
+      expect(l2costsUpdater.update).toHaveBeenNthCalledWith(
+        1,
+        trackedTxResults.filter((tx) => tx.type === 'l2costs'),
+        undefined,
       )
+      expect(safeHeight).toEqual(to)
     })
 
-    it('skips update if there are no configurations to sync', async () => {
-      const from = MIN_TIMESTAMP
-      const to = from.add(365, 'days')
-      const configs = getMockRuntimeConfigurations()
-      const databaseEntries = configs.flatMap((r) => toRecords(r, to))
-      const configRepository = getMockConfigRepository(databaseEntries)
-      const trackedTxsIndexer = getMockTrackedTxsIndexer({
-        configRepository,
-        configs,
-      })
+    it('correctly clamps FROM and TO to day', async () => {
+      const from = UnixTime.fromDate(new Date('2024-01-01T12:00:00Z'))
+      const to = UnixTime.fromDate(new Date('2024-01-02T12:00:00Z'))
+      const expected = UnixTime.fromDate(new Date('2024-01-02T00:00:00Z'))
+
       const trackedTxsClient = mockObject<TrackedTxsClient>({
         getData: async () => [],
       })
-      const { from: _, to: unixTo } = clampRangeToDay(
+
+      const indexer = getMockTrackedTxsIndexer({
+        trackedTxsClient,
+      })
+
+      const parameters: Partial<TrackedTxConfigEntry> = {
+        projectId: ProjectId('test'),
+      }
+
+      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
+        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
+      ]
+
+      const safeHeight = await indexer.multiUpdate(
         from.toNumber(),
         to.toNumber(),
+        configurations,
+        mockDbMiddleware,
       )
 
-      const value = await trackedTxsIndexer.update(
-        // TODO: refactor tests after uif update
-        from.toNumber() + 1,
-        to.toNumber(),
-      )
-
-      expect(value).toEqual(unixTo.toNumber())
-      expect(trackedTxsClient.getData).not.toHaveBeenCalled()
-    })
-  })
-
-  describe(TrackedTxsIndexer.prototype.getConfigurationsToSync.name, () => {
-    it('adjusts to and finds configurations to sync', async () => {
-      const from = MIN_TIMESTAMP
-      const to = from.add(365, 'days')
-
-      const runtimeEntries = getMockRuntimeConfigurations()
-      const databaseEntries = runtimeEntries.flatMap((r) => toRecords(r))
-      const configRepository = getMockConfigRepository(databaseEntries)
-
-      const livenessIndexer = getMockTrackedTxsIndexer({
-        configRepository,
-        configs: runtimeEntries,
-      })
-
-      const [configurationsToSync, syncTo] =
-        await livenessIndexer.getConfigurationsToSync(from, to)
-
-      const {
-        configurationsToSync: expectedConfigurationsToSync,
-        syncTo: expectedSyncTo,
-      } = findConfigurationsToSync(
-        ['liveness'],
-        runtimeEntries,
-        databaseEntries,
-        from,
-        syncTo,
-      )
-
-      expect(configurationsToSync).toEqual(expectedConfigurationsToSync)
-      expect(syncTo).toEqual(expectedSyncTo)
-      expect(configRepository.getAll).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe(TrackedTxsIndexer.prototype.initialize.name, () => {
-    it('initializes configurations and indexer state', async () => {
-      const runtimeEntries = [
-        getMockRuntimeConfigurations()[0],
-        {
-          ...getMockRuntimeConfigurations()[1],
-          untilTimestampExclusive: MIN_TIMESTAMP.add(1, 'days'),
-        },
-        {
-          ...getMockRuntimeConfigurations()[2],
-          untilTimestampExclusive: MIN_TIMESTAMP.add(2, 'days'),
-        },
-      ]
-
-      const databaseEntries: TrackedTxsConfigRecord[] = [
-        mockObject<TrackedTxsConfigRecord>({
-          sinceTimestampInclusive: MIN_TIMESTAMP,
-          untilTimestampExclusive: undefined,
-          lastSyncedTimestamp: undefined,
-          type: 'liveness',
-          subtype: 'batchSubmissions',
-          id: TrackedTxId.random(),
-        }),
-        mockObject<TrackedTxsConfigRecord>({
-          ...toRecords(runtimeEntries[1])[0],
-          untilTimestampExclusive: undefined,
-        }),
-        mockObject<TrackedTxsConfigRecord>({
-          ...toRecords(runtimeEntries[2])[0],
-          lastSyncedTimestamp: MIN_TIMESTAMP.add(3, 'days'),
-          untilTimestampExclusive: MIN_TIMESTAMP.add(3, 'days'),
-        }),
-        // rest of the configurations would be considered "toAdd"
-      ]
-
-      const configurationRepository = getMockConfigRepository(databaseEntries)
-      const stateRepository = getMockStateRepository()
-
-      const mockedLivenessUpdater = mockObject<TxUpdaterInterface>({
-        deleteFromById: mockFn(async () => {}),
-      })
-      const mockedL2CostsUpdater = mockObject<TxUpdaterInterface>({
-        deleteFromById: mockFn(async () => {}),
-      })
-
-      const trackedTxsIndexer = getMockTrackedTxsIndexer({
-        configRepository: configurationRepository,
-        stateRepository,
-        configs: runtimeEntries,
-        updaters: {
-          liveness: mockedLivenessUpdater,
-          l2costs: mockedL2CostsUpdater,
-        },
-      })
-
-      const result = await trackedTxsIndexer.initialize()
-
-      expect(result).toEqual({
-        safeHeight: 1682899200,
-      })
-
-      const { toAdd, toRemove, toChangeUntilTimestamp } =
-        diffTrackedTxConfigurations(runtimeEntries, databaseEntries)
-
-      expect(configurationRepository.addMany).toHaveBeenOnlyCalledWith(
-        toAdd,
-        TRX,
-      )
-      expect(configurationRepository.deleteMany).toHaveBeenOnlyCalledWith(
-        toRemove,
-        TRX,
-      )
-
-      expect(configurationRepository.setUntilTimestamp).toHaveBeenNthCalledWith(
+      expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
         1,
-        toChangeUntilTimestamp[0].id,
-        toChangeUntilTimestamp[0].untilTimestampExclusive,
-        TRX,
+        [configurations[0]],
+        from,
+        expected,
       )
-      expect(configurationRepository.setUntilTimestamp).toHaveBeenNthCalledWith(
-        2,
-        toChangeUntilTimestamp[1].id,
-        toChangeUntilTimestamp[1].untilTimestampExclusive,
-        TRX,
+      expect(safeHeight).toEqual(expected.toNumber())
+    })
+
+    it('returns to if no configurations to sync', async () => {
+      const from = 100
+      const to = 300
+
+      const indexer = getMockTrackedTxsIndexer({})
+
+      const parameters: Partial<TrackedTxConfigEntry> = {
+        projectId: ProjectId('test'),
+      }
+      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
+        update<TrackedTxConfigEntry>('a', 100, null, true, parameters),
+        update<TrackedTxConfigEntry>('c', 100, null, true, parameters),
+      ]
+
+      const safeHeight = await indexer.multiUpdate(
+        from,
+        to,
+        configurations,
+        mockDbMiddleware,
       )
-      expect(mockedLivenessUpdater.deleteFromById).toHaveBeenOnlyCalledWith(
-        toChangeUntilTimestamp[1].id,
-        toChangeUntilTimestamp[1].untilTimestampExclusive!,
-        TRX,
-      )
+
+      expect(safeHeight).toEqual(to)
+    })
+  })
+
+  describe(TrackedTxsIndexer.prototype.removeData.name, () => {
+    it('removes data for configurations', async () => {
+      const l2CostsRepository = mockObject<L2CostsRepository>({
+        deleteByConfigInTimeRange: async () => 1,
+      })
+      const livenessRepository = mockObject<LivenessRepository>({
+        deleteByConfigInTimeRange: async () => 1,
+      })
+
+      const indexer = getMockTrackedTxsIndexer({
+        l2CostsRepository,
+        livenessRepository,
+      })
+
+      const configurations: RemovalConfiguration[] = [
+        removal('a', 100, 200),
+        removal('b', 200, 300),
+      ]
+
+      await indexer.removeData(configurations)
+
       expect(
-        configurationRepository.setLastSyncedTimestamp,
-      ).toHaveBeenOnlyCalledWith(
-        toChangeUntilTimestamp[1].id,
-        toChangeUntilTimestamp[1].untilTimestampExclusive!,
-        TRX,
-      )
+        l2CostsRepository.deleteByConfigInTimeRange,
+      ).toHaveBeenNthCalledWith(1, 'a', new UnixTime(100), new UnixTime(200))
+      expect(
+        livenessRepository.deleteByConfigInTimeRange,
+      ).toHaveBeenNthCalledWith(1, 'a', new UnixTime(100), new UnixTime(200))
 
-      expect(configurationRepository.getAll).toHaveBeenCalledTimes(2)
-      expect(stateRepository.runInTransaction).toHaveBeenCalledTimes(1)
-
-      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(1)
-    })
-
-    it('indexer state undefined', async () => {
-      const configurationRepository = getMockConfigRepository([])
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => undefined,
-        addOrUpdate: async () => '',
-        setSafeHeight: async () => 0,
-        runInTransaction: async (fn) => fn(TRX),
-      })
-      const livenessIndexer = getMockTrackedTxsIndexer({
-        configRepository: configurationRepository,
-        stateRepository,
-        configs: [],
-      })
-
-      const result = await livenessIndexer.initialize()
-
-      expect(result).toEqual({
-        safeHeight: MIN_TIMESTAMP.toNumber(),
-      })
-
-      expect(stateRepository.findIndexerState).toHaveBeenCalledTimes(1)
-    })
-  })
-
-  describe(TrackedTxsIndexer.prototype.getSafeHeight.name, () => {
-    it('returns safe height from DB', async () => {
-      const safeHeightDB = 123
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => ({
-          indexerId: 'liveness_indexer',
-          safeHeight: safeHeightDB,
-          minTimestamp: MIN_TIMESTAMP,
-        }),
-      })
-      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
-
-      const safeHeight = await livenessIndexer.getSafeHeight()
-
-      expect(safeHeight).toEqual(safeHeightDB)
-      expect(stateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
-        livenessIndexer.indexerId,
-      )
-    })
-    it('returns minTimestamp if indexer state is undefined', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        findIndexerState: async () => undefined,
-      })
-      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
-
-      const safeHeight = await livenessIndexer.getSafeHeight()
-
-      expect(safeHeight).toEqual(MIN_TIMESTAMP.toNumber())
-      expect(stateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
-        livenessIndexer.indexerId,
-      )
-    })
-  })
-
-  describe(TrackedTxsIndexer.prototype.setSafeHeight.name, () => {
-    it('saves safe height in the database', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        setSafeHeight: async () => 0, // return value is not important
-      })
-      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
-
-      const safeHeight = MIN_TIMESTAMP.add(1, 'hours').toNumber()
-      await livenessIndexer.setSafeHeight(safeHeight, TRX)
-
-      expect(stateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
-        'tracked_txs_indexer',
-        safeHeight,
-        TRX,
-      )
-    })
-
-    it('throws if height is lower than minimum timestamp', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
-        setSafeHeight: async () => 0, // return value is not important
-      })
-      const livenessIndexer = getMockTrackedTxsIndexer({ stateRepository })
-
-      const incorrectHeight = MIN_TIMESTAMP.add(-1, 'hours').toNumber()
-      await expect(
-        async () => await livenessIndexer.setSafeHeight(incorrectHeight, TRX),
-      ).toBeRejectedWith(
-        'Cannot set height to be lower than the minimum timestamp',
-      )
-    })
-  })
-
-  describe(TrackedTxsIndexer.prototype.invalidate.name, () => {
-    it('only returns target height', async () => {
-      const livenessIndexer = getMockTrackedTxsIndexer({})
-
-      const targetHeight = 1
-      const value = await livenessIndexer.invalidate(targetHeight)
-
-      expect(value).toEqual(targetHeight)
+      expect(
+        l2CostsRepository.deleteByConfigInTimeRange,
+      ).toHaveBeenLastCalledWith('b', new UnixTime(200), new UnixTime(300))
+      expect(
+        livenessRepository.deleteByConfigInTimeRange,
+      ).toHaveBeenLastCalledWith('b', new UnixTime(200), new UnixTime(300))
     })
   })
 })
 
 function getMockTrackedTxsIndexer(params: {
-  stateRepository?: IndexerStateRepository
-  configRepository?: TrackedTxsConfigsRepository
-  configs?: TrackedTxConfigEntry[]
+  indexerService?: IndexerService
+  configurations?: UpdateConfiguration<TrackedTxConfigEntry>[]
   trackedTxsClient?: TrackedTxsClient
-  updaters?: Record<TrackedTxsConfigType, TxUpdaterInterface>
+  updaters?: TxUpdaterInterface[]
+  createDatabaseMiddleware?: () => Promise<DatabaseMiddleware>
+  livenessRepository?: LivenessRepository
+  l2CostsRepository?: L2CostsRepository
 }) {
   const {
-    stateRepository,
-    configRepository,
-    configs,
+    indexerService,
+    configurations,
     trackedTxsClient,
     updaters,
+    createDatabaseMiddleware,
+    l2CostsRepository,
+    livenessRepository,
   } = params
 
-  return new TrackedTxsIndexer(
-    Logger.SILENT,
-    mockObject<HourlyIndexer>({
-      start: async () => {},
-      tick: async () => 1,
-      subscribe: () => {},
-    }),
-    updaters ?? {
-      liveness: mockObject<TxUpdaterInterface>({}),
-      l2costs: mockObject<TxUpdaterInterface>({}),
-    },
-    trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
-    stateRepository ?? mockObject<IndexerStateRepository>({}),
-    configRepository ?? mockObject<TrackedTxsConfigsRepository>({}),
-    configs ?? [],
-    MIN_TIMESTAMP,
-  )
-}
-
-function getMockConfigRepository(databaseEntries: TrackedTxsConfigRecord[]) {
-  return mockObject<TrackedTxsConfigsRepository>({
-    addMany: async () => [],
-    deleteMany: async () => 0,
-    setUntilTimestamp: async () => 0,
-    getAll: async () => databaseEntries,
-    setManyLastSyncedTimestamp: async () => 0,
-    setLastSyncedTimestamp: async () => 0,
-    runInTransaction: mockFn(async (fn) => fn(TRX)),
+  return new TrackedTxsIndexer({
+    configurations: configurations ?? [],
+    createDatabaseMiddleware:
+      createDatabaseMiddleware ??
+      (async () => mockObject<DatabaseMiddleware>({})),
+    indexerService: indexerService ?? mockObject<IndexerService>({}),
+    trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
+    updaters: updaters ?? [
+      mockObject<TxUpdaterInterface>({ type: 'liveness' }),
+      mockObject<TxUpdaterInterface>({ type: 'l2costs' }),
+    ],
+    l2CostsRepository: l2CostsRepository ?? mockObject<L2CostsRepository>({}),
+    livenessRepository:
+      livenessRepository ?? mockObject<LivenessRepository>({}),
+    logger: Logger.SILENT,
+    parents: [],
+    serializeConfiguration: () => '',
   })
-}
-
-function getMockStateRepository(
-  indexerState = {
-    indexerId: 'tracked_txs_indexer',
-    safeHeight: MIN_TIMESTAMP.toNumber(),
-    minTimestamp: MIN_TIMESTAMP,
-  },
-) {
-  const stateRepository = mockObject<IndexerStateRepository>({
-    findIndexerState: async () => indexerState,
-    addOrUpdate: async () => '',
-    setSafeHeight: async () => 0,
-    runInTransaction: async (fn) => fn(TRX),
-  })
-  return stateRepository
-}
-
-function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {
-  return [
-    {
-      formula: 'functionCall',
-      projectId: ProjectId('test'),
-      address: EthereumAddress.random(),
-      selector: '0x',
-      sinceTimestampInclusive: MIN_TIMESTAMP,
-      uses: [
-        {
-          type: 'liveness',
-          subtype: 'batchSubmissions',
-          id: TrackedTxId.random(),
-        },
-      ],
-    },
-    {
-      formula: 'functionCall',
-      projectId: ProjectId('test2'),
-      address: EthereumAddress.random(),
-      selector: '0x',
-      sinceTimestampInclusive: MIN_TIMESTAMP,
-      uses: [
-        {
-          type: 'liveness',
-          subtype: 'stateUpdates',
-          id: TrackedTxId.random(),
-        },
-      ],
-    },
-    {
-      formula: 'functionCall',
-      projectId: ProjectId('test3'),
-      address: EthereumAddress.random(),
-      selector: '0x',
-      sinceTimestampInclusive: MIN_TIMESTAMP,
-      uses: [
-        {
-          type: 'liveness',
-          subtype: 'proofSubmissions',
-          id: TrackedTxId.random(),
-        },
-      ],
-    },
-  ]
 }
 
 function getMockTrackedTxResults(): TrackedTxResult[] {
   return [
     {
-      type: 'functionCall',
+      formula: 'functionCall',
       projectId: ProjectId('test'),
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       toAddress: EthereumAddress.random(),
       input: '',
       hash: '',
-      use: {
-        type: 'liveness',
-        subtype: 'batchSubmissions',
-        id: getMockRuntimeConfigurations()[0].uses[0].id,
-      },
+      id: '1',
+      type: 'liveness',
+      subtype: 'batchSubmissions',
       gasPrice: 10n,
       receiptGasUsed: 100,
       calldataGasUsed: 10,
@@ -489,12 +244,10 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       receiptBlobGasUsed: null,
     },
     {
-      type: 'transfer',
-      use: {
-        id: getMockRuntimeConfigurations()[1].uses[0].id,
-        type: 'liveness',
-        subtype: 'stateUpdates',
-      },
+      formula: 'transfer',
+      id: '2',
+      type: 'liveness',
+      subtype: 'stateUpdates',
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',
@@ -509,12 +262,10 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       receiptBlobGasUsed: null,
     },
     {
-      type: 'transfer',
-      use: {
-        id: getMockRuntimeConfigurations()[1].uses[0].id,
-        type: 'l2costs',
-        subtype: 'stateUpdates',
-      },
+      formula: 'transfer',
+      id: '3',
+      type: 'l2costs',
+      subtype: 'stateUpdates',
       blockNumber: 1,
       blockTimestamp: UnixTime.now(),
       hash: '',
@@ -529,20 +280,4 @@ function getMockTrackedTxResults(): TrackedTxResult[] {
       receiptBlobGasUsed: null,
     },
   ]
-}
-
-function toRecords(
-  entry: TrackedTxConfigEntry,
-  lastSyncedTimestamp?: UnixTime,
-): TrackedTxsConfigRecord[] {
-  return entry.uses.map((use) => ({
-    id: use.id,
-    projectId: entry.projectId,
-    type: use.type,
-    subtype: use.subtype,
-    sinceTimestampInclusive: entry.sinceTimestampInclusive,
-    untilTimestampExclusive: entry.untilTimestampExclusive,
-    debugInfo: '',
-    lastSyncedTimestamp,
-  }))
 }

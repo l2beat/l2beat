@@ -9,15 +9,12 @@ import {
   TrackedTxsConfigSubtypeValues,
   UnixTime,
   cacheAsyncFunction,
-  notUndefined,
 } from '@l2beat/shared-pure'
 
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxsConfig } from '@l2beat/shared'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
-import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
-import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import { calculateAnomalies } from './calculateAnomalies'
@@ -48,28 +45,21 @@ export type LivenessTransactionsResult = Result<
   'DATA_NOT_SYNCED'
 >
 
-type LivenessTrackedTxsConfig = {
-  entries: LivenessTrackedTxsConfigEntry[]
-}
-
-type LivenessTrackedTxsConfigEntry = {
-  subtype: TrackedTxsConfigSubtype
-  untilTimestamp: UnixTime | undefined
+export interface LivenessControllerDeps {
+  indexerService: IndexerService
+  livenessRepository: LivenessRepository
+  projects: BackendProject[]
+  clock: Clock
+  logger?: Logger
 }
 
 export class LivenessController {
   private readonly taskQueue: TaskQueue<void>
   getCachedLivenessApiResponse: () => Promise<LivenessResult>
+  private readonly logger: Logger
 
-  constructor(
-    private readonly livenessRepository: LivenessRepository,
-    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
-    private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly projects: BackendProject[],
-    private readonly clock: Clock,
-    private readonly logger = Logger.SILENT,
-  ) {
-    this.logger = this.logger.for(this)
+  constructor(private readonly $: LivenessControllerDeps) {
+    this.logger = $.logger ? $.logger.for(this) : Logger.SILENT
 
     const cached = cacheAsyncFunction(() => this.getLiveness())
     this.getCachedLivenessApiResponse = cached.call
@@ -94,34 +84,36 @@ export class LivenessController {
   async getLiveness(): Promise<LivenessResult> {
     const projects: LivenessApiResponse['projects'] = {}
 
-    const activeProjects = this.projects.filter((p) => !p.isArchived)
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
+      )
+
+    const activeProjects = this.$.projects.filter((p) => !p.isArchived)
     for (const project of activeProjects) {
       if (!project.trackedTxsConfig) {
         continue
       }
 
-      const livenessConfig = this.getLivenessTrackedTxsConfig(
-        project.trackedTxsConfig,
+      const projectRuntimeConfigIds = project.trackedTxsConfig
+        .filter((c) => c.type === 'liveness')
+        .map((c) => c.id)
+      const projectConfigs = configurations.filter((c) =>
+        projectRuntimeConfigIds.includes(c.id),
       )
 
-      if (livenessConfig.entries?.length === 0) {
+      if (projectConfigs.length === 0) {
         continue
       }
 
-      const configurations =
-        await this.trackedTxsConfigsRepository.getByProjectIdAndType(
-          project.projectId,
-          'liveness',
-        )
-
-      const syncedUntil = getSyncedUntil(configurations)
+      const syncedUntil = getSyncedUntil(projectConfigs)
 
       if (!syncedUntil) {
         continue
       }
 
       const records =
-        await this.livenessRepository.getWithSubtypeDistinctTimestamp(
+        await this.$.livenessRepository.getWithSubtypeDistinctTimestamp(
           project.projectId,
         )
 
@@ -137,7 +129,12 @@ export class LivenessController {
         TrackedTxsConfigSubtypeValues.reduce<LivenessApiProject>(
           (obj, subtype) => {
             const syncedUntil = getSyncedUntil(
-              configurations.filter((c) => c.subtype === subtype),
+              configurations.filter((c) => {
+                const config = project.trackedTxsConfig?.find(
+                  (pc) => pc.id === c.id,
+                )
+                return config?.subtype === subtype
+              }),
             )
             if (!syncedUntil) return obj
             obj[subtype] = {
@@ -175,7 +172,7 @@ export class LivenessController {
   }> {
     const lastHour = UnixTime.now().toStartOf('hour')
     const records: LivenessRecordWithInterval[] =
-      await this.livenessRepository.getByProjectIdAndType(
+      await this.$.livenessRepository.getByProjectIdAndType(
         projectId,
         subtype,
         lastHour.add(-60, 'days'),
@@ -189,9 +186,9 @@ export class LivenessController {
   }
 
   async getLivenessTransactions(): Promise<LivenessTransactionsResult> {
-    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
+    const requiredTimestamp = this.$.clock.getLastHour().add(-1, 'hours')
     const indexerState =
-      await this.indexerStateRepository.findIndexerState('liveness_indexer')
+      await this.$.indexerService.getIndexerState('liveness_indexer')
     if (
       indexerState === undefined ||
       new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
@@ -206,14 +203,14 @@ export class LivenessController {
     const last30Days = UnixTime.now().add(-30, 'days')
 
     await Promise.all(
-      this.projects
+      this.$.projects
         .filter((p) => !p.isArchived)
         .map(async (project) => {
           if (project.livenessConfig === undefined) {
             return
           }
           const records =
-            await this.livenessRepository.getTransactionWithSubtypeDistinctTimestamp(
+            await this.$.livenessRepository.getTransactionWithSubtypeDistinctTimestamp(
               project.projectId,
               last30Days,
             )
@@ -240,26 +237,5 @@ export class LivenessController {
     )
 
     return { type: 'success', data: { projects } }
-  }
-
-  getLivenessTrackedTxsConfig(
-    trackedTxsConfig: TrackedTxsConfig,
-  ): LivenessTrackedTxsConfig {
-    return {
-      entries: trackedTxsConfig.entries
-        .flatMap((entry) => {
-          return entry.uses.flatMap((use) => {
-            if (use.type !== 'liveness') {
-              return
-            }
-
-            return {
-              subtype: use.subtype,
-              untilTimestamp: entry.untilTimestampExclusive,
-            }
-          })
-        })
-        .filter(notUndefined),
-    }
   }
 }

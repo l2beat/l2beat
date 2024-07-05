@@ -10,12 +10,10 @@ import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
-import { BackendProject } from '@l2beat/config'
-import { TrackedTxId } from '@l2beat/shared'
-import {
-  TrackedTxsConfigRecord,
-  TrackedTxsConfigsRepository,
-} from '../../../repositories/TrackedTxsConfigsRepository'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { Project } from '../../../../../model/Project'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
@@ -48,35 +46,30 @@ describe(L2CostsController.name, () => {
         mockObject<AggregatedL2CostsRepository>({
           getByProjectAndTimeRange: mockFn().resolvesTo([]),
         })
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: mockFn().resolvesTo([
+          mockObject<
+            Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>
+          >({
+            id: 'aaa',
+            currentHeight: 1000,
+            maxHeight: undefined,
+          }),
+          mockObject<
+            Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>
+          >({
+            id: 'bbb',
+            currentHeight: 2000,
+            maxHeight: undefined,
+          }),
+        ]),
+      })
 
-      const trackedTxsConfigsRepository =
-        mockObject<TrackedTxsConfigsRepository>({
-          getByProjectIdAndType: mockFn()
-            .given(MOCK_PROJECTS[1].projectId, 'l2costs')
-            .resolvesToOnce([
-              mockObject<TrackedTxsConfigRecord>({
-                id: TrackedTxId.unsafe('aaa'),
-                projectId: MOCK_PROJECTS[1].projectId,
-                untilTimestampExclusive: undefined,
-                lastSyncedTimestamp: new UnixTime(1000),
-              }),
-            ])
-            .given(MOCK_PROJECTS[2].projectId, 'l2costs')
-            .resolvesToOnce([
-              mockObject<TrackedTxsConfigRecord>({
-                id: TrackedTxId.unsafe('bbb'),
-                projectId: MOCK_PROJECTS[2].projectId,
-                untilTimestampExclusive: undefined,
-                lastSyncedTimestamp: new UnixTime(2000),
-              }),
-            ]),
-        })
-
-      const controller = getMockL2CostsController(
+      const controller = getMockL2CostsController({
         aggregatedL2CostsRepository,
-        trackedTxsConfigsRepository,
-        MOCK_PROJECTS,
-      )
+        indexerService,
+        projects: MOCK_PROJECTS,
+      })
 
       controller.aggregateL2Costs = mockFn().returns(
         mockObject<L2CostsProjectApiCharts>({
@@ -123,7 +116,11 @@ describe(L2CostsController.name, () => {
     })
 
     it('returns empty object if no data', async () => {
-      const controller = getMockL2CostsController()
+      const controller = getMockL2CostsController({
+        indexerService: mockObject<IndexerService>({
+          getSavedConfigurations: mockFn().resolvesTo([]),
+        }),
+      })
 
       const result = await controller.getL2Costs()
       expect(result).toEqual({
@@ -144,7 +141,7 @@ describe(L2CostsController.name, () => {
 
   describe(L2CostsController.prototype.aggregateL2Costs.name, () => {
     it('aggregates l2 costs hourly and daily with blobs', () => {
-      const controller = getMockL2CostsController()
+      const controller = getMockL2CostsController({})
       const records = getMockAggregatedRecords(50)
       const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
       const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
@@ -189,18 +186,17 @@ describe(L2CostsController.name, () => {
     return newTime
   }
 
-  function getMockL2CostsController(
-    aggregatedL2CostsRepository?: AggregatedL2CostsRepository,
-    trackedTxsConfigsRepository?: TrackedTxsConfigsRepository,
-    projects?: BackendProject[],
-  ) {
+  function getMockL2CostsController(params: {
+    aggregatedL2CostsRepository?: AggregatedL2CostsRepository
+    indexerService?: IndexerService
+    projects?: Project[]
+  }) {
+    const { aggregatedL2CostsRepository, indexerService, projects } = params
     const deps: L2CostsControllerDeps = {
       aggregatedL2CostsRepository:
         aggregatedL2CostsRepository ??
         mockObject<AggregatedL2CostsRepository>({}),
-      trackedTxsConfigsRepository:
-        trackedTxsConfigsRepository ??
-        mockObject<TrackedTxsConfigsRepository>({}),
+      indexerService: indexerService ?? mockObject<IndexerService>({}),
       projects: projects ?? [],
     }
 
@@ -216,52 +212,51 @@ describe(L2CostsController.name, () => {
     mockObject<BackendProject>({
       projectId: ProjectId('project2'),
       isArchived: false,
-      trackedTxsConfig: {
-        entries: [
-          {
+      trackedTxsConfig: [
+        {
+          params: {
             address: EthereumAddress.random(),
             formula: 'functionCall',
-            projectId: ProjectId('project2'),
             selector: '0x1234',
-            sinceTimestampInclusive: new UnixTime(1000),
-            uses: [
-              {
-                id: TrackedTxId.unsafe('aaa'),
-                type: 'liveness',
-                subtype: 'batchSubmissions',
-              },
-              {
-                id: TrackedTxId.unsafe('aaa'),
-                type: 'l2costs',
-                subtype: 'batchSubmissions',
-              },
-            ],
-            costMultiplier: 0.6,
           },
-        ],
-      },
+          projectId: ProjectId('project2'),
+          sinceTimestamp: new UnixTime(1000),
+          id: 'aaa',
+          type: 'liveness',
+          subtype: 'batchSubmissions',
+        },
+        {
+          params: {
+            address: EthereumAddress.random(),
+            formula: 'functionCall',
+            selector: '0x1234',
+          },
+          projectId: ProjectId('project2'),
+          sinceTimestamp: new UnixTime(1000),
+          id: 'aaa',
+          type: 'l2costs',
+          subtype: 'batchSubmissions',
+          costMultiplier: 0.6,
+        },
+      ],
     }),
     mockObject<BackendProject>({
       projectId: ProjectId('project3'),
       isArchived: false,
-      trackedTxsConfig: {
-        entries: [
-          {
+      trackedTxsConfig: [
+        {
+          params: {
             from: EthereumAddress.random(),
             to: EthereumAddress.random(),
             formula: 'transfer',
-            projectId: ProjectId('project3'),
-            sinceTimestampInclusive: new UnixTime(2000),
-            uses: [
-              {
-                id: TrackedTxId.unsafe('bbb'),
-                type: 'l2costs',
-                subtype: 'stateUpdates',
-              },
-            ],
           },
-        ],
-      },
+          projectId: ProjectId('project3'),
+          sinceTimestamp: new UnixTime(2000),
+          id: 'bbb',
+          type: 'l2costs',
+          subtype: 'stateUpdates',
+        },
+      ],
     }),
   ]
 

@@ -50,6 +50,8 @@ export function makeConfig(
     clock: {
       minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,
+      hourlyCutoffDays: 7,
+      sixHourlyCutoffDays: 90,
     },
     database: isLocal
       ? {

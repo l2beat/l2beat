@@ -9,6 +9,11 @@
       "target": {
         "template": "opstack/OptimismPortal"
       }
+    },
+    "PORTAL": {
+      "target": {
+        "template": "opstack/OptimismPortal"
+      }
     }
   }
 }

@@ -1,7 +1,9 @@
-import { TrackedTxUseWithId } from '@l2beat/shared'
+import { TrackedTxId } from '@l2beat/shared'
 import {
   EthereumAddress,
   ProjectId,
+  TrackedTxsConfigSubtype,
+  TrackedTxsConfigType,
   UnixTime,
   branded,
 } from '@l2beat/shared-pure'
@@ -31,9 +33,11 @@ export const BigQueryFunctionCallResult = z.object({
 })
 
 export type TrackedTxFunctionCallResult = {
-  type: 'functionCall'
+  formula: 'functionCall'
+  id: TrackedTxId
   projectId: ProjectId
-  use: TrackedTxUseWithId
+  type: TrackedTxsConfigType
+  subtype: TrackedTxsConfigSubtype
   hash: string
   blockNumber: number
   blockTimestamp: UnixTime
@@ -65,9 +69,11 @@ export const BigQueryTransferResult = z.object({
 })
 
 export type TrackedTxTransferResult = {
-  type: 'transfer'
+  formula: 'transfer'
   projectId: ProjectId
-  use: TrackedTxUseWithId
+  id: TrackedTxId
+  type: TrackedTxsConfigType
+  subtype: TrackedTxsConfigSubtype
   hash: string
   blockNumber: number
   blockTimestamp: UnixTime

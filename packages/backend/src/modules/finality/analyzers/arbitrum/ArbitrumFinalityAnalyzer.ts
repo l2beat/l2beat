@@ -5,8 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
-import { BlobClient } from '../../../../peripherals/blobclient/BlobClient'
+import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
@@ -18,9 +19,15 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
     private readonly logger: Logger,
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
     this.logger = logger.for(this).tag(projectId.toString())
   }
 
@@ -35,11 +42,9 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
     this.logger.debug('Getting finality', { transaction })
     const submissionTimestamp = transaction.timestamp
     // get blobs relevant to the transaction
-    const { relevantBlobs } = await this.blobClient.getRelevantBlobs(
-      transaction.txHash,
-    )
+    const { blobs } = await this.blobClient.getRelevantBlobs(transaction.txHash)
 
-    const segments = getSegments(relevantBlobs)
+    const segments = getSegments(blobs)
     const delays = calculateDelaysFromSegments(
       segments,
       submissionTimestamp.toNumber(),

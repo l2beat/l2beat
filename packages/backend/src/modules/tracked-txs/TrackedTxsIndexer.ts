@@ -1,250 +1,120 @@
-import { assert, Logger } from '@l2beat/backend-tools'
-import {
-  TrackedTxsConfigType,
-  UnixTime,
-  clampRangeToDay,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import { ChildIndexer } from '@l2beat/uif'
-import { Knex } from 'knex'
-import { pickBy } from 'lodash'
-
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import { HourlyIndexer } from './HourlyIndexer'
-import { TrackedTxsClient } from './TrackedTxsClient'
-import { TrackedTxsConfigsRepository } from './repositories/TrackedTxsConfigsRepository'
-import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import { findConfigurationsToSync } from './utils'
+import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 import {
-  ToChangeUntilTimestamp,
-  diffTrackedTxConfigurations,
-} from './utils/diffTrackedTxConfigurations'
-import { getSafeHeight } from './utils/getSafeHeight'
+  DatabaseMiddleware,
+  DatabaseTransaction,
+} from '../../peripherals/database/DatabaseMiddleware'
+import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
+import {
+  ManagedMultiIndexer,
+  ManagedMultiIndexerOptions,
+} from '../../tools/uif/multi/ManagedMultiIndexer'
+import {
+  RemovalConfiguration,
+  UpdateConfiguration,
+} from '../../tools/uif/multi/types'
+import { TrackedTxsClient } from './TrackedTxsClient'
+import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
+import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
+import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
-export type TrackedTxsIndexerUpdaters = Record<
-  TrackedTxsConfigType,
-  TxUpdaterInterface | undefined
->
+interface Dependencies
+  extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
+  updaters: TxUpdaterInterface[]
+  trackedTxsClient: TrackedTxsClient
+  livenessRepository: LivenessRepository
+  l2CostsRepository: L2CostsRepository
+}
 
-export class TrackedTxsIndexer extends ChildIndexer {
-  readonly indexerId = 'tracked_txs_indexer'
-  readonly enabledUpdaters: Partial<TrackedTxsIndexerUpdaters>
-
-  constructor(
-    logger: Logger,
-    parentIndexer: HourlyIndexer,
-    updaters: TrackedTxsIndexerUpdaters,
-    private readonly trackedTxsClient: TrackedTxsClient,
-    private readonly stateRepository: IndexerStateRepository,
-    private readonly configRepository: TrackedTxsConfigsRepository,
-    private readonly configs: TrackedTxConfigEntry[],
-    private readonly minTimestamp: UnixTime,
-  ) {
-    super(logger, [parentIndexer])
-    this.enabledUpdaters = pickBy(updaters, notUndefined)
+export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
+  constructor(private readonly $: Dependencies) {
+    const name = 'tracked_txs_indexer'
+    super({ ...$, name, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
   }
 
-  override async start(): Promise<void> {
-    await super.start()
-    this.logger.info('Started')
-  }
+  override async multiUpdate(
+    from: number,
+    to: number,
+    configurations: UpdateConfiguration<TrackedTxConfigEntry>[],
+    dbMiddleware: DatabaseMiddleware,
+  ): Promise<number> {
+    const configurationsToSync = configurations.filter((c) => !c.hasData)
 
-  override async update(from: number, to: number): Promise<number> {
-    from -= 1 // TODO: refactor logic after uif update
+    if (configurationsToSync.length !== configurations.length) {
+      this.logger.info('Filtered out configurations with data', {
+        skippedConfigurations:
+          configurations.length - configurationsToSync.length,
+        configurationsToSync: configurationsToSync.length,
+        from,
+        to,
+      })
+    }
+
+    if (configurationsToSync.length === 0) {
+      this.logger.info('No configurations to sync', {
+        from,
+        to,
+      })
+      return to
+    }
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
-    const [configurations, syncTo] = await this.getConfigurationsToSync(
+    const txs = await this.$.trackedTxsClient.getData(
+      configurationsToSync,
       unixFrom,
       unixTo,
     )
 
-    if (configurations.length === 0) {
-      this.logger.info('Update skipped', { from: unixFrom, to: syncTo })
-      return syncTo.toNumber()
-    }
-
-    const txs = await this.trackedTxsClient.getData(
-      configurations,
-      unixFrom,
-      syncTo,
-    )
-
-    await this.configRepository.runInTransaction(async (trx) => {
-      for (const [type, updater] of Object.entries(this.enabledUpdaters)) {
-        const filteredTxs = txs.filter((tx) => tx.use.type === type)
-        await updater?.update(filteredTxs, trx)
+    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
+      for (const updater of this.$.updaters) {
+        const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+        await updater.update(filteredTxs, trx)
       }
-
-      const configIds = configurations.flatMap((config) =>
-        config.uses.map((use) => use.id),
-      )
-      await this.configRepository.setManyLastSyncedTimestamp(
-        configIds,
-        syncTo,
-        trx,
-      )
-    })
-
-    this.logger.info('Updated', {
-      from: unixFrom,
-      to: syncTo,
-      usedConfigurations: configurations.length,
-      fetchedTxsCount: txs.length,
-    })
-    return syncTo.toNumber()
-  }
-
-  async getConfigurationsToSync(
-    from: UnixTime,
-    to: UnixTime,
-  ): Promise<[TrackedTxConfigEntry[], UnixTime]> {
-    const databaseEntries = await this.configRepository.getAll()
-    const enabledUpdaterTypes = Object.keys(this.enabledUpdaters)
-
-    const { configurationsToSync, syncTo } = findConfigurationsToSync(
-      enabledUpdaterTypes,
-      this.configs,
-      databaseEntries,
-      from,
-      to,
-    )
-
-    return [configurationsToSync, syncTo]
-  }
-
-  override async initialize() {
-    await this.initializeConfigurations()
-    const safeHeight = await this.getInitialSafeHeight()
-    return { safeHeight: safeHeight }
-  }
-
-  private async initializeConfigurations(): Promise<void> {
-    const databaseEntries = await this.configRepository.getAll()
-    const { toAdd, toRemove, toChangeUntilTimestamp } =
-      diffTrackedTxConfigurations(this.configs, databaseEntries)
-
-    if ([...toAdd, ...toRemove, ...toChangeUntilTimestamp].length > 0) {
-      this.logger.info('Modifying tracked txs configs', {
-        toAdd: toAdd.map((add) => add.id),
-        toRemove: toRemove,
-        toChangeUntil: toChangeUntilTimestamp.map((c) => c.id),
+      this.logger.info('Saved txs into DB', {
+        from,
+        to: unixTo.toNumber(),
+        configurationsToSync: configurationsToSync.length,
       })
-    }
-
-    await this.stateRepository.runInTransaction(async (trx) => {
-      await this.configRepository.addMany(toAdd, trx)
-      await this.configRepository.deleteMany(toRemove, trx)
-      await this.changeConfigurationsUntilTimestamp(toChangeUntilTimestamp, trx)
     })
-    this.logger.info('Initialized')
+
+    return unixTo.toNumber()
   }
 
-  private async changeConfigurationsUntilTimestamp(
-    toChangeUntil: ToChangeUntilTimestamp[],
-    trx: Knex.Transaction,
-  ) {
-    // there can be a situation where untilTimestamp was set retroactively
-    // in this case we want to invoke deleteAfter on updaters for all the configurations that were added during this "misconfiguration" period
-    await Promise.all(
-      toChangeUntil.map(async (c) => {
-        await this.configRepository.setUntilTimestamp(
-          c.id,
-          c.untilTimestampExclusive,
-          trx,
-        )
-
-        if (!c.trim) {
-          return
-        }
-
-        assert(
-          c.untilTimestampExclusive,
-          'untilTimestampExclusive is required for trimming',
-        )
-
-        for (const updater of Object.values(this.enabledUpdaters)) {
-          await updater?.deleteFromById(c.id, c.untilTimestampExclusive, trx)
-        }
-
-        if (c.untilTimestampExclusive.gte(this.minTimestamp)) {
-          await this.configRepository.setLastSyncedTimestamp(
-            c.id,
-            c.untilTimestampExclusive,
-            trx,
-          )
-        }
-      }),
-    )
-  }
-
-  async getInitialSafeHeight(trx?: Knex.Transaction) {
-    const databaseEntriesAfterChanges = await this.configRepository.getAll(trx)
-    const safeHeight = getSafeHeight(
-      databaseEntriesAfterChanges,
-      this.minTimestamp,
-    )
-
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-
-    if (indexerState !== undefined) {
-      // We prevent updating the minimum timestamp of the indexer.
-      // This functionality can be added in the future if needed.
-      assert(
-        indexerState.minTimestamp &&
-          this.minTimestamp.equals(indexerState.minTimestamp),
-        'Minimum timestamp of this indexer cannot be updated',
+  override async removeData(
+    configurations: RemovalConfiguration[],
+  ): Promise<void> {
+    for (const configuration of configurations) {
+      const [livenessDeletedRecords, l2CostsDeletedRecords] = await Promise.all(
+        [
+          this.$.livenessRepository.deleteByConfigInTimeRange(
+            configuration.id,
+            new UnixTime(configuration.from),
+            new UnixTime(configuration.to),
+          ),
+          this.$.l2CostsRepository.deleteByConfigInTimeRange(
+            configuration.id,
+            new UnixTime(configuration.from),
+            new UnixTime(configuration.to),
+          ),
+        ],
       )
+
+      if (livenessDeletedRecords > 0) {
+        this.logger.info('Deleted liveness records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          livenessDeletedRecords,
+        })
+      }
+      if (l2CostsDeletedRecords > 0) {
+        this.logger.info('Deleted liveness records', {
+          from: configuration.from,
+          to: configuration.to,
+          id: configuration.id,
+          l2CostsDeletedRecords,
+        })
+      }
     }
-
-    return safeHeight
-  }
-
-  override async setInitialState(
-    safeHeight: number,
-    _configHash?: string | undefined,
-  ): Promise<void> {
-    await this.stateRepository.addOrUpdate({
-      indexerId: this.indexerId,
-      safeHeight,
-      minTimestamp: this.minTimestamp,
-    })
-  }
-
-  async getSafeHeight(): Promise<number> {
-    const indexerState = await this.stateRepository.findIndexerState(
-      this.indexerId,
-    )
-
-    return indexerState?.safeHeight ?? this.minTimestamp.toNumber()
-  }
-
-  override async setSafeHeight(
-    safeHeight: number,
-    trx?: Knex.Transaction,
-  ): Promise<void> {
-    assert(
-      safeHeight >= this.minTimestamp.toNumber(),
-      'Cannot set height to be lower than the minimum timestamp',
-    )
-
-    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight, trx)
-  }
-
-  /**
-   * WARNING: this method does not do anything
-   *
-    In our case there is no re-org handling so we do not have to worry
-    that our data will become invalid.
-    Also there is no need to handle the case when the server is randomly shut down during update,
-    liveness configurations are storing the latest synced timestamp, so even if the server is shut down
-    without setting new safeHeight. And although the next update will run on the already processed timestamp,
-    the configuration's lastSyncedTimestamp will filter out already processed configurations
-    and the data will not be fetched again
-  **/
-  override async invalidate(targetHeight: number): Promise<number> {
-    return await Promise.resolve(targetHeight)
   }
 }

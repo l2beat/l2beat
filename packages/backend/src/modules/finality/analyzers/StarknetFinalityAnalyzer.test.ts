@@ -3,6 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { StarknetFinalityAnalyzer } from './StarknetFinalityAnalyzer'
 
@@ -36,6 +37,8 @@ describe(StarknetFinalityAnalyzer.name, () => {
       const analyzer = new StarknetFinalityAnalyzer(
         rpcClient,
         livenessRepository,
+        mockObject<IndexerConfigurationRepository>({}),
+
         projectId,
         l2Client,
       )

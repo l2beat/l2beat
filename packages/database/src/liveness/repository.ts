@@ -4,6 +4,7 @@ import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
 import {
@@ -26,53 +27,71 @@ export class LivenessRepository {
   }
 
   async getWithSubtypeDistinctTimestamp(projectId: ProjectId) {
-    const rows = await this.db
-      .selectFrom('public.liveness as l')
-      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select(['l.timestamp', 'c.subtype', 'c.project_id'])
-      .where((eb) =>
-        eb.and([
-          eb('c.project_id', '=', projectId.toString()),
-          eb('c.subtype', 'is not', null),
-        ]),
-      )
-      .distinctOn('l.timestamp')
-      .orderBy('l.timestamp', 'desc')
-      .$narrowType<{ subtype: TrackedTxsConfigSubtype }>()
+    const configRows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .selectAll()
       .execute()
+    const projectConfigs = configRows
+      .map((c) => {
+        const properties = JSON.parse(c.properties)
+
+        if (
+          properties.projectId === projectId.toString() &&
+          properties.type === 'liveness'
+        ) {
+          return [c.id, properties.subtype]
+        }
+      })
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
+
+    const livenessRows = await this.db
+      .selectFrom('public.liveness')
+      .select(['timestamp', 'configuration_id'])
+      .where('configuration_id', 'in', Array.from(configsMap.keys()))
+      .distinctOn('timestamp')
+      .orderBy('timestamp', 'desc')
+      .execute()
+
+    const rows = livenessRows.map((row) => {
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
+      return {
+        timestamp: row.timestamp,
+        subtype,
+        project_id: projectId,
+      }
+    })
 
     return rows.map(toRecordWithTimestampAndSubtype)
   }
 
   /**
    *
-   * @param projectId Filter only transactions for a specific project.
-   * @param subtype Filter only transactions of a specific subtype.
+   * @param configurationIds Filter only transactions for a specific configurations.
    * @param from Lower bound timestamp, inclusive.
    * @param to Upper bound timestamp, exclusive.
    * @returns An array of transactions that fall within the specified time range.
    */
-  async getTransactionsWithinTimeRange(
-    projectId: ProjectId,
-    subtype: TrackedTxsConfigSubtype,
+  async getTransactionsWithinTimeRangeByConfigurationsIds(
+    configurationIds: string[],
     from: UnixTime,
     to: UnixTime,
   ) {
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
 
     const rows = await this.db
-      .selectFrom('public.liveness as l')
-      .select(['l.timestamp', 'l.block_number', 'l.tx_hash', 'l.tracked_tx_id'])
-      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
+      .selectFrom('public.liveness')
+      .select(['timestamp', 'block_number', 'tx_hash', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('c.project_id', '=', projectId.toString()),
-          eb('c.subtype', '=', subtype.toString()),
-          eb('l.timestamp', '>=', from.toDate()),
-          eb('l.timestamp', '<', to.toDate()),
+          eb('configuration_id', 'in', configurationIds),
+          eb('timestamp', '>=', from.toDate()),
+          eb('timestamp', '<', to.toDate()),
         ]),
       )
-      .orderBy('l.timestamp', 'asc')
+      .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map(toRecord)
@@ -82,21 +101,49 @@ export class LivenessRepository {
     projectId: ProjectId,
     since: UnixTime,
   ) {
-    const rows = await this.db
-      .selectFrom('public.liveness as l')
-      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select(['l.timestamp', 'c.subtype', 'l.tx_hash', 'c.project_id'])
+    const configRows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .selectAll()
+      .execute()
+
+    const projectConfigs = configRows
+      .map((c) => {
+        const properties = JSON.parse(c.properties)
+
+        if (
+          properties.projectId === projectId.toString() &&
+          properties.type === 'liveness'
+        ) {
+          return [c.id, properties.subtype]
+        }
+      })
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
+
+    const livenessRows = await this.db
+      .selectFrom('public.liveness')
+      .select(['timestamp', 'tx_hash', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('c.project_id', '=', projectId.toString()),
-          eb('l.timestamp', '>=', since.toDate()),
-          eb('c.subtype', 'is not', null),
+          eb('configuration_id', 'in', Array.from(configsMap.keys())),
+          eb('timestamp', '>=', since.toDate()),
         ]),
       )
-      .distinctOn('l.timestamp')
-      .orderBy('l.timestamp', 'desc')
-      .$narrowType<{ subtype: TrackedTxsConfigSubtype }>()
+      .distinctOn('timestamp')
+      .orderBy('timestamp', 'asc')
       .execute()
+
+    const rows = livenessRows.map((row) => {
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
+      return {
+        timestamp: row.timestamp,
+        subtype,
+        project_id: projectId,
+        tx_hash: row.tx_hash,
+      }
+    })
 
     return rows.map(toTransactionRecordWithTimestamp)
   }
@@ -106,21 +153,49 @@ export class LivenessRepository {
     subtype: TrackedTxsConfigSubtype,
     since: UnixTime,
   ) {
-    const rows = await this.db
-      .selectFrom('public.liveness as l')
-      .innerJoin('public.tracked_txs_configs as c', 'l.tracked_tx_id', 'c.id')
-      .select(['l.timestamp', 'c.subtype', 'c.project_id'])
+    const configRows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .selectAll()
+      .execute()
+
+    const projectConfigs = configRows
+      .map((c) => {
+        const properties = JSON.parse(c.properties)
+
+        if (
+          properties.projectId === projectId.toString() &&
+          properties.subtype === subtype.toString() &&
+          properties.type === 'liveness'
+        ) {
+          return [c.id, properties.subtype]
+        }
+      })
+      .filter(notUndefined) as [string, TrackedTxsConfigSubtype][]
+
+    const configsMap = new Map<string, TrackedTxsConfigSubtype>(projectConfigs)
+
+    const livenessRows = await this.db
+      .selectFrom('public.liveness')
+      .select(['timestamp', 'configuration_id'])
       .where((eb) =>
         eb.and([
-          eb('c.project_id', '=', projectId.toString()),
-          eb('c.subtype', '=', subtype),
-          eb('l.timestamp', '>=', since.toDate()),
+          eb('configuration_id', 'in', Array.from(configsMap.keys())),
+          eb('timestamp', '>=', since.toDate()),
         ]),
       )
-      .distinctOn('l.timestamp')
-      .orderBy('l.timestamp', 'desc')
-      .$narrowType<{ subtype: TrackedTxsConfigSubtype }>()
+      .distinctOn('timestamp')
+      .orderBy('timestamp', 'desc')
       .execute()
+
+    const rows = livenessRows.map((row) => {
+      const subtype = configsMap.get(row.configuration_id)
+      assert(subtype, `Cannot find subtype for ${row.configuration_id}`)
+      return {
+        timestamp: row.timestamp,
+        subtype,
+        project_id: projectId,
+      }
+    })
 
     return rows.map(toRecordWithTimestampAndSubtype)
   }
@@ -148,7 +223,7 @@ export class LivenessRepository {
       .deleteFrom('public.liveness')
       .where((eb) =>
         eb.and([
-          eb('tracked_tx_id', '=', id.toString()),
+          eb('configuration_id', '=', id.toString()),
           eb('timestamp', '>=', deleteFromInclusive.toDate()),
         ]),
       )

@@ -76,6 +76,8 @@ export interface DatabaseConfig {
 export interface ClockConfig {
   readonly minBlockTimestamp: UnixTime
   readonly safeTimeOffsetSeconds: number
+  readonly hourlyCutoffDays: number
+  readonly sixHourlyCutoffDays: number
 }
 
 export interface TvlConfig {

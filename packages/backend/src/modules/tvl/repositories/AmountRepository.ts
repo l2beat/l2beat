@@ -30,13 +30,9 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
-  async getByConfigIdsAndTimestamp(
-    configIds: string[],
-    timestamp: UnixTime,
-  ): Promise<AmountRecord[]> {
+  async getByTimestamp(timestamp: UnixTime): Promise<AmountRecord[]> {
     const knex = await this.knex()
     const rows = await knex('amounts')
-      .whereIn('configuration_id', configIds)
       .where('timestamp', timestamp.toDate())
       .orderBy('configuration_id')
     return rows.map(toRecord)
@@ -57,14 +53,17 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getDailyByConfigId(configIds: string[]) {
+  async findByConfigAndTimestamp(
+    configId: string,
+    timestamp: UnixTime,
+  ): Promise<AmountRecord | undefined> {
     const knex = await this.knex()
-    const rows = await knex('amounts')
-      .whereIn('configuration_id', configIds)
-      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
-      .orderBy('timestamp')
+    const row = await knex('amounts')
+      .where('configuration_id', configId)
+      .andWhere('timestamp', timestamp.toDate())
+      .first()
 
-    return rows.map(toRecord)
+    return row ? toRecord(row) : undefined
   }
 
   async addMany(records: AmountRecord[], trx?: Knex.Transaction) {

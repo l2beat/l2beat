@@ -19,6 +19,8 @@ describe(StorageHandler.name, () => {
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
         },
+        blockNumber: 123,
+        chain: 'foo',
       })
 
       const handler = new StorageHandler(
@@ -48,6 +50,8 @@ describe(StorageHandler.name, () => {
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
         },
+        blockNumber: 123,
+        chain: 'foo',
       })
 
       const handler = new StorageHandler(
@@ -79,6 +83,8 @@ describe(StorageHandler.name, () => {
             '0x000000000000000000000000' + resultAddress.slice(2).toLowerCase(),
           )
         },
+        blockNumber: 123,
+        chain: 'foo',
       })
 
       const handler = new StorageHandler(
@@ -206,6 +212,8 @@ describe(StorageHandler.name, () => {
           slot = receivedSlot
           return Bytes.fromHex('0'.repeat(64))
         },
+        blockNumber: 123,
+        chain: 'foo',
       })
       const result = await handler.execute(
         provider,
@@ -343,6 +351,8 @@ describe(StorageHandler.name, () => {
       async getStorage() {
         throw new Error('foo bar')
       },
+      blockNumber: 123,
+      chain: 'foo',
     })
     const address = EthereumAddress.random()
     const result = await handler.execute(provider, address, {})
