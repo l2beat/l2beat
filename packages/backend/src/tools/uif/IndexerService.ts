@@ -137,7 +137,7 @@ export class IndexerService {
       processed.add(valueId)
 
       const syncStatus = new UnixTime(indexer.safeHeight)
-      if (syncStatus.equals(targetTimestamp)) {
+      if (syncStatus.gte(targetTimestamp)) {
         continue
       }
 
@@ -206,7 +206,7 @@ export class IndexerService {
       processed.add(circulatingSupplyConfig.configId)
 
       const syncStatus = new UnixTime(indexer.safeHeight)
-      if (syncStatus.equals(targetTimestamp)) {
+      if (syncStatus.gte(targetTimestamp)) {
         continue
       }
 
@@ -258,7 +258,7 @@ export class IndexerService {
         continue
       }
       // fully synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
+      if (syncStatus.gte(targetTimestamp)) {
         continue
       }
 
