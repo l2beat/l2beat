@@ -1381,6 +1381,21 @@
       "supply": "zero"
     },
     {
+      "id": "eeth-ether.fi-eth",
+      "name": "ether.fi ETH",
+      "coingeckoId": "ether-fi-staked-eth",
+      "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+      "symbol": "eETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1689005015,
+      "coingeckoListingTimestamp": 1707264000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33049/large/ether.fi_eETH.png?1700473063",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "ethfi-ether.fi-governance-token",
       "name": "ether.fi governance token",
       "coingeckoId": "ether-fi",
@@ -6111,101 +6126,6 @@
       "supply": "zero"
     },
     {
-      "id": "kinto:dai-dai-stablecoin",
-      "name": "Dai Stablecoin",
-      "coingeckoId": "dai",
-      "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
-      "symbol": "DAI",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884930,
-      "coingeckoListingTimestamp": 1574121600,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:ena-ena",
-      "name": "ENA",
-      "coingeckoId": "ethena",
-      "address": "0xE040001C257237839a69E9683349C173297876F0",
-      "symbol": "ENA",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884952,
-      "coingeckoListingTimestamp": 1712016000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/36530/large/ethena.png?1711701436",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:ethfi-ether.fi-governance-token",
-      "name": "ether.fi governance token",
-      "coingeckoId": "ether-fi",
-      "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
-      "symbol": "ETHFI",
-      "decimals": 18,
-      "deploymentTimestamp": 1716212866,
-      "coingeckoListingTimestamp": 1710720000,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:sdai-savings-dai",
-      "name": "Savings Dai",
-      "coingeckoId": "savings-dai",
-      "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
-      "symbol": "sDAI",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884933,
-      "coingeckoListingTimestamp": 1696982400,
-      "category": "stablecoin",
-      "iconUrl": "https://assets.coingecko.com/coins/images/32254/large/sdai.png?1697015278",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:susde-staked-usde",
-      "name": "Staked USDe",
-      "coingeckoId": "ethena-staked-usde",
-      "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
-      "symbol": "sUSDe",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884939,
-      "coingeckoListingTimestamp": 1710892800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
       "id": "kinto:usd+-usd+",
       "name": "USD+",
       "coingeckoId": "dinari-usd",
@@ -6219,82 +6139,6 @@
       "chainId": 7887,
       "source": "native",
       "supply": "totalSupply"
-    },
-    {
-      "id": "kinto:usde-usde",
-      "name": "USDe",
-      "coingeckoId": "ethena-usde",
-      "address": "0x05dE0003C333A503bea5224fCc64f0D4b5446C38",
-      "symbol": "USDe",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884936,
-      "coingeckoListingTimestamp": 1702512000,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:weeth-wrapped-eeth",
-      "name": "Wrapped eETH",
-      "coingeckoId": "wrapped-eeth",
-      "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
-      "symbol": "weETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884946,
-      "coingeckoListingTimestamp": 1701648000,
-      "category": "ether",
-      "iconUrl": "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:weth-wrapped-ether",
-      "name": "Wrapped Ether",
-      "coingeckoId": "weth",
-      "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
-      "symbol": "WETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1716142042,
-      "coingeckoListingTimestamp": 1573689600,
-      "category": "ether",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
-    },
-    {
-      "id": "kinto:wsteth-wrapped-liquid-staked-ether-2.0",
-      "name": "Wrapped liquid staked Ether 2.0",
-      "coingeckoId": "wrapped-steth",
-      "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
-      "symbol": "wstETH",
-      "decimals": 18,
-      "deploymentTimestamp": 1715884943,
-      "coingeckoListingTimestamp": 1633564800,
-      "category": "ether",
-      "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
-      "chainId": 7887,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      }
     },
     {
       "id": "base:aero-aerodrome",
@@ -6340,6 +6184,21 @@
       "chainId": 8453,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "id": "base:dai-dai-stablecoin",
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1689928543,
+      "coingeckoListingTimestamp": 1574121600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "base:degen-degen",
@@ -6551,6 +6410,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "ether",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/2518/large/weth.png?1696503332",
+      "chainId": 8453,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "base:wsteth-wrapped-liquid-staked-ether-2.0",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "coingeckoId": "wrapped-steth",
+      "address": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+      "symbol": "wstETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1695935327,
+      "coingeckoListingTimestamp": 1633564800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "chainId": 8453,
       "source": "canonical",
       "supply": "zero"
@@ -6784,6 +6658,21 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:dai-dai-stablecoin",
+      "name": "Dai Stablecoin",
+      "coingeckoId": "dai",
+      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "symbol": "DAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1632133487,
+      "coingeckoListingTimestamp": 1574121600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/9956/large/Badge_Dai.png?1696509996",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "arbitrum:dmt-dream-machine-token",
@@ -7131,6 +7020,21 @@
       }
     },
     {
+      "id": "arbitrum:usdm-mountain-protocol-usd",
+      "name": "Mountain Protocol USD",
+      "coingeckoId": "mountain-protocol-usdm",
+      "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+      "symbol": "USDM",
+      "decimals": 18,
+      "deploymentTimestamp": 1700232777,
+      "coingeckoListingTimestamp": 1696982400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31719/large/usdm.png?1696530540",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "id": "arbitrum:moz-mozaic-token",
       "name": "Mozaic Token",
       "coingeckoId": "mozaic",
@@ -7216,6 +7120,21 @@
         "bridge": "Wormhole",
         "slug": "portal"
       }
+    },
+    {
+      "id": "arbitrum:solvbtc-solv-btc",
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1711710476,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "totalSupply"
     },
     {
       "id": "arbitrum:sparta-sparta",
@@ -7433,6 +7352,21 @@
       "supply": "zero"
     },
     {
+      "id": "arbitrum:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1701625072,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:weth-wrapped-ether",
       "name": "Wrapped Ether",
       "coingeckoId": "weth",
@@ -7460,6 +7394,21 @@
       "iconUrl": "https://assets.coingecko.com/coins/images/18834/large/wstETH.png?1696518295",
       "chainId": 42161,
       "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "arbitrum:wusdm-wrapped-mountain-protocol-usd",
+      "name": "Wrapped Mountain Protocol USD",
+      "coingeckoId": "wrapped-usdm",
+      "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+      "symbol": "wUSDM",
+      "decimals": 18,
+      "deploymentTimestamp": 1711503933,
+      "coingeckoListingTimestamp": 1703721600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "chainId": 42161,
+      "source": "native",
       "supply": "zero"
     },
     {
