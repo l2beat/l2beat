@@ -26,14 +26,16 @@ export class AmountsDataService {
       (a, b) => UnixTime.min(a, b.sinceTimestamp),
       UnixTime.now(),
     )
-    const [amountRecords, status] = await Promise.all([
-      this.$.amountRepository.getByConfigIdsInRange(
-        configurations.map((c) => c.configId),
-        minTimestamp,
-        targetTimestamp,
-      ),
-      this.$.indexerService.getAmountsStatus(configurations, targetTimestamp),
-    ])
+
+    const amountRecords = await this.$.amountRepository.getByConfigIdsInRange(
+      configurations.map((c) => c.configId),
+      minTimestamp,
+      targetTimestamp,
+    )
+    const status = await this.$.indexerService.getAmountsStatus(
+      configurations,
+      targetTimestamp,
+    )
 
     const amountsByTimestamp = groupBy(amountRecords, 'timestamp')
 
@@ -76,10 +78,12 @@ export class AmountsDataService {
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const [amounts, status] = await Promise.all([
-      this.$.amountRepository.getByTimestamp(targetTimestamp),
-      this.$.indexerService.getAmountsStatus(configurations, targetTimestamp),
-    ])
+    const amounts =
+      await this.$.amountRepository.getByTimestamp(targetTimestamp)
+    const status = await this.$.indexerService.getAmountsStatus(
+      configurations,
+      targetTimestamp,
+    )
 
     const result = {
       amounts,
@@ -91,23 +95,21 @@ export class AmountsDataService {
       return result
     }
 
-    await Promise.all(
-      status.lagging.map(async (laggingConfig) => {
-        const latestRecord =
-          await this.$.amountRepository.findByConfigAndTimestamp(
-            laggingConfig.id,
-            laggingConfig.latestTimestamp,
-          )
+    for (const laggingConfig of status.lagging) {
+      const latestRecord =
+        await this.$.amountRepository.findByConfigAndTimestamp(
+          laggingConfig.id,
+          laggingConfig.latestTimestamp,
+        )
 
-        if (latestRecord) {
-          result.lagging.set(laggingConfig.id, {
-            latestTimestamp: laggingConfig.latestTimestamp,
-            latestValue: latestRecord,
-          })
-          amounts.push({ ...latestRecord, timestamp: targetTimestamp })
-        }
-      }),
-    )
+      if (latestRecord) {
+        result.lagging.set(laggingConfig.id, {
+          latestTimestamp: laggingConfig.latestTimestamp,
+          latestValue: latestRecord,
+        })
+        amounts.push({ ...latestRecord, timestamp: targetTimestamp })
+      }
+    }
 
     return result
   }

@@ -23,17 +23,15 @@ export class PricesDataService {
     configuration: PriceConfigEntry & { configId: string },
     targetTimestamp: UnixTime,
   ) {
-    const [priceRecords, status] = await Promise.all([
-      this.$.priceRepository.getByConfigIdsInRange(
-        [configuration.configId],
-        configuration.sinceTimestamp,
-        targetTimestamp,
-      ),
-      this.$.indexerService.getConfigurationsStatus(
-        [configuration],
-        targetTimestamp,
-      ),
-    ])
+    const priceRecords = await this.$.priceRepository.getByConfigIdsInRange(
+      [configuration.configId],
+      configuration.sinceTimestamp,
+      targetTimestamp,
+    )
+    const status = await this.$.indexerService.getConfigurationsStatus(
+      [configuration],
+      targetTimestamp,
+    )
 
     assert(
       !status.excluded.has(configuration.configId),
@@ -84,13 +82,11 @@ export class PricesDataService {
     configurations: (PriceConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const [prices, status] = await Promise.all([
-      this.$.priceRepository.getByTimestamp(targetTimestamp),
-      this.$.indexerService.getConfigurationsStatus(
-        configurations,
-        targetTimestamp,
-      ),
-    ])
+    const prices = await this.$.priceRepository.getByTimestamp(targetTimestamp)
+    const status = await this.$.indexerService.getConfigurationsStatus(
+      configurations,
+      targetTimestamp,
+    )
 
     const result = {
       prices,
@@ -102,24 +98,23 @@ export class PricesDataService {
       return result
     }
 
-    await Promise.all(
-      status.lagging.map(async (laggingConfig) => {
-        const latestRecord =
-          await this.$.priceRepository.findByConfigAndTimestamp(
-            laggingConfig.id,
-            laggingConfig.latestTimestamp,
-          )
+    for (const laggingConfig of status.lagging) {
+      const latestRecord =
+        await this.$.priceRepository.findByConfigAndTimestamp(
+          laggingConfig.id,
+          laggingConfig.latestTimestamp,
+        )
 
-        assert(latestRecord, `Undefined record for ${laggingConfig.id}`)
+      assert(latestRecord, `Undefined record for ${laggingConfig.id}`)
 
-        result.lagging.set(laggingConfig.id, {
-          latestTimestamp: laggingConfig.latestTimestamp,
-          latestValue: latestRecord,
-        })
+      result.lagging.set(laggingConfig.id, {
+        latestTimestamp: laggingConfig.latestTimestamp,
+        latestValue: latestRecord,
+      })
 
-        result.prices.push({ ...latestRecord, timestamp: targetTimestamp })
-      }),
-    )
+      result.prices.push({ ...latestRecord, timestamp: targetTimestamp })
+    }
+
     return result
   }
 
