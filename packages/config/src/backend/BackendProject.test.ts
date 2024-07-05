@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { layer2s } from '@l2beat/config'
+import { layer2s } from '../projects/layer2s'
 
 import {
   TrackedTxConfigEntry,
