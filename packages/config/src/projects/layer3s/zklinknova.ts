@@ -6,8 +6,15 @@ import {
 } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Layer3 } from './types'
-import { arbitrum } from '../layer2s/arbitrum'
-import { RISK_VIEW, makeBridgeCompatible } from '../../common'
+import {
+  EXITS,
+  FORCE_TRANSACTIONS,
+  NEW_CRYPTOGRAPHY,
+  OPERATOR,
+  RISK_VIEW,
+  TECHNOLOGY_DATA_AVAILABILITY,
+  makeBridgeCompatible,
+} from '../../common'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -350,7 +357,32 @@ export const zklinknova: Layer3 = {
     sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }),
-  technology: {},
+  technology: {
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      risks: [
+        ...OPERATOR.CENTRALIZED_OPERATOR.risks,
+        {
+          category: 'Funds can be lost if',
+          text: 'the operator relays invalid messages using the fast path.',
+        },
+      ],
+    },
+    forceTransactions: {
+      name: 'Users can force any transaction via L1',
+      description:
+        'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
+        transactions from L1 queue in an L1 block.',
+      risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
+      references: [],
+    },
+    exitMechanisms: [
+      EXITS.REGULAR('zk', 'merkle proof'),
+      EXITS.FORCED('forced-withdrawals'),
+    ],
+  },
   contracts: {
     addresses: [
       lineaDiscovery.getContractDetails('L1ERC20Bridge', {
