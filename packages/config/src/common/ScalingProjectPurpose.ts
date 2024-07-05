@@ -12,6 +12,7 @@ export type ScalingProjectPurpose =
   | 'Launchpad'
   | 'Lending'
   | 'NFT'
+  | 'Oracles'
   | 'Payments'
   | 'Private payments'
   | 'Privacy'
