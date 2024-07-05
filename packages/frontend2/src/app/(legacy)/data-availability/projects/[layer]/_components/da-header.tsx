@@ -3,7 +3,7 @@ import { DaBridgeSelect } from './da-bridge-select'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
 import { DaHeaderDetails } from './da-header-details'
-import { BigRosette } from '~/app/_components/rosette/big-rosette/big-rosette'
+import { BigPizzaRosette } from '~/app/_components/rosette/pizza/big/big-rosette'
 import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { AboutSection } from '~/app/_components/projects/sections/about-section'
 import { MobileProjectLinks } from '~/app/_components/projects/links/mobile-project-links'
@@ -35,7 +35,10 @@ export function DaHeader({ project }: Props) {
           </div>
           <DaHeaderDetails project={project} />
         </div>
-        <BigRosette className="max-lg:hidden mt-auto" values={project.risks} />
+        <BigPizzaRosette
+          className="max-lg:hidden mt-auto"
+          values={project.risks}
+        />
       </div>
 
       <HorizontalSeparator className="mt-6 md:mb-6 max-md:-mx-4 max-md:w-screen" />

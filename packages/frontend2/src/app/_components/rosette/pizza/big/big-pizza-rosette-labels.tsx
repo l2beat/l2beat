@@ -1,11 +1,11 @@
 import assert from 'assert'
 import { cn } from '~/utils/cn'
-import { type RosetteValue } from '../types'
-import { type ContentState } from './big-rosette'
+import { type RosetteValue } from '../../types'
+import { type ContentState } from './big-pizza-rosette'
 
 const TEXT_RADIUS = 102
 
-export function BigRosetteLabels({
+export function BigPizzaRosetteLabels({
   values,
   content,
 }: {

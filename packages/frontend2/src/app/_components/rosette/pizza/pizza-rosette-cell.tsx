@@ -1,16 +1,16 @@
 import React from 'react'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/tooltip'
-import { SmallRosette } from './rosette'
-import { RosetteTooltip } from './rosette-tooltip'
-import { type RosetteValue } from './types'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
+import { SmallPizzaRosette } from './small-pizza-rosette'
+import { PizzaRosetteTooltip } from './pizza-rosette-tooltip'
+import { type RosetteValue } from '../types'
 
-export interface RosetteCellProps {
+export interface PizzaRosetteCellProps {
   values: RosetteValue[]
   isUpcoming?: boolean
   isUnderReview?: boolean
 }
 
-export function RosetteCell(props: RosetteCellProps) {
+export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
   const isUnderReview =
     props.isUnderReview ??
     props.values.every((value) => value.sentiment === 'UnderReview')
@@ -18,7 +18,7 @@ export function RosetteCell(props: RosetteCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center justify-center size-full">
-        <SmallRosette
+        <SmallPizzaRosette
           values={props.values.map((value) => value.sentiment)}
           className="size-6 md:size-8"
           isUpcoming={props.isUpcoming}
@@ -26,7 +26,10 @@ export function RosetteCell(props: RosetteCellProps) {
         />
       </TooltipTrigger>
       <TooltipContent fitContent>
-        <RosetteTooltip values={props.values} isUnderReview={isUnderReview} />
+        <PizzaRosetteTooltip
+          values={props.values}
+          isUnderReview={isUnderReview}
+        />
       </TooltipContent>
     </Tooltip>
   )

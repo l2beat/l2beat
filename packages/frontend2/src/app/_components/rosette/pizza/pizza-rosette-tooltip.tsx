@@ -2,17 +2,20 @@ import React from 'react'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { UnderReviewBadge } from '../badge/under-review-badge'
-import { SentimentText } from '../sentiment-text'
-import { MediumRosette } from './rosette'
-import { type RosetteValue } from './types'
+import { UnderReviewBadge } from '../../badge/under-review-badge'
+import { SentimentText } from '../../sentiment-text'
+import { type RosetteValue } from '../types'
+import { MediumPizzaRosette } from './medium-pizza-rosette'
 
-export interface RosetteTooltipProps {
+export interface PizzaRosetteTooltipProps {
   values: RosetteValue[]
   isUnderReview: boolean
 }
 
-export function RosetteTooltip({ values, isUnderReview }: RosetteTooltipProps) {
+export function PizzaRosetteTooltip({
+  values,
+  isUnderReview,
+}: PizzaRosetteTooltipProps) {
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
@@ -38,7 +41,7 @@ export function RosetteTooltip({ values, isUnderReview }: RosetteTooltipProps) {
       </span>
       <div className="flex items-center gap-6">
         <div>
-          <MediumRosette values={values} />
+          <MediumPizzaRosette values={values} />
         </div>
         <div className="flex flex-col gap-4">
           {values.map((value) => (

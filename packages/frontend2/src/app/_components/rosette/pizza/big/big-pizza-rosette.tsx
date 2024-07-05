@@ -1,16 +1,20 @@
 'use client'
 import { cn } from '~/utils/cn'
-import { type RosetteValue } from '../types'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
+import { type RosetteValue } from '../../types'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '../../../tooltip/tooltip'
 import { useState } from 'react'
-import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
+import { SentimentText } from '../../../sentiment-text'
+import { WarningBar } from '../../../warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { BigRosetteIcon } from './big-rosette-icon'
-import { BigRosetteLabels } from './big-rosette-labels'
-import { UpcomingBadge } from '../../badge/upcoming-badge'
+import { BigPizzaRosetteIcon } from './big-pizza-rosette-icon'
+import { BigPizzaRosetteLabels } from './big-pizza-rosette-labels'
+import { UpcomingBadge } from '../../../badge/upcoming-badge'
 
-export interface BigRosetteProps {
+export interface BigPizzaRosetteProps {
   values: RosetteValue[]
   isUpcoming?: boolean
   isUnderReview?: boolean
@@ -23,7 +27,7 @@ export interface ContentState {
   sideOffset: number
 }
 
-export function BigRosette(props: BigRosetteProps) {
+export function BigPizzaRosette(props: BigPizzaRosetteProps) {
   const isUnderReview =
     props.isUnderReview ??
     Object.values(props.values).every(
@@ -41,7 +45,7 @@ export function BigRosette(props: BigRosetteProps) {
           props.className,
         )}
       >
-        <BigRosetteIcon
+        <BigPizzaRosetteIcon
           values={props.values}
           isUpcoming={props.isUpcoming}
           isUnderReview={isUnderReview}
@@ -49,7 +53,7 @@ export function BigRosette(props: BigRosetteProps) {
         {props.isUpcoming && (
           <UpcomingBadge className="absolute top-[130px] left-[90px]" />
         )}
-        <BigRosetteLabels values={props.values} content={content} />
+        <BigPizzaRosetteLabels values={props.values} content={content} />
       </div>
     )
   }
@@ -62,7 +66,7 @@ export function BigRosette(props: BigRosetteProps) {
         data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
       >
         <TooltipTrigger>
-          <BigRosetteIcon
+          <BigPizzaRosetteIcon
             values={props.values}
             isUpcoming={props.isUpcoming}
             isUnderReview={isUnderReview}
@@ -70,7 +74,7 @@ export function BigRosette(props: BigRosetteProps) {
             setContent={setContent}
           />
         </TooltipTrigger>
-        <BigRosetteLabels values={props.values} content={content} />
+        <BigPizzaRosetteLabels values={props.values} content={content} />
       </div>
       {content ? (
         <TooltipContent

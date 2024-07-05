@@ -2,7 +2,6 @@ import { createColumnHelper } from '@tanstack/react-table'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
-import { DaBridgeCell } from '../../../summary/_components/table/da-bridge-cell'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
@@ -16,7 +15,6 @@ export const columns = [
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
-    cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks.economicSecurity', {
     header: 'Economic security',

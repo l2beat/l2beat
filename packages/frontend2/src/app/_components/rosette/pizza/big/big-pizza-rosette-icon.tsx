@@ -1,18 +1,21 @@
 import assert from 'assert'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { type ContentState, type BigRosetteProps } from './big-rosette'
-import { type RosetteValue } from '../types'
+import {
+  type ContentState,
+  type BigPizzaRosetteProps,
+} from './big-pizza-rosette'
+import { type RosetteValue } from '../../types'
 import { useRef } from 'react'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useEventListener } from '~/hooks/use-event-listener'
 
-interface Props extends BigRosetteProps {
+interface Props extends BigPizzaRosetteProps {
   content?: ContentState
   setContent?: (content: ContentState | undefined) => void
 }
 
-export function BigRosetteIcon({
+export function BigPizzaRosetteIcon({
   values,
   className,
   isUpcoming,

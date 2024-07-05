@@ -1,6 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
-import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
+import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
@@ -22,7 +22,7 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <RosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
+      <PizzaRosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
     ),
     enableSorting: false,
     meta: {
