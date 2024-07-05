@@ -72,9 +72,9 @@
           "severity": "HIGH",
           "type": "RISK_PARAMETER"
         },
-        "registeredOperators":{
+        "registeredOperators": {
           "description": "List of all registered operators ids",
-          "handler":{
+          "handler": {
             "type": "arrayFromTwoEvents",
             "addEvent": "event OperatorRegistered(address indexed operator, bytes32 indexed operatorId)",
             "addKey": "operatorId",
