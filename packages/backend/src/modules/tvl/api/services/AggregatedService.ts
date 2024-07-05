@@ -27,26 +27,14 @@ export class AggregatedService {
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiCharts> {
-    const [ethPrices, valuesByProjectByTimestamp, ...associatedTokensData] =
-      await Promise.all([
-        this.$.pricesDataService.getEthPrices(targetTimestamp),
-        this.$.valuesDataService.getValuesForProjects(
-          projects,
-          targetTimestamp,
-        ),
-        ...associatedTokens.map(async (token) => {
-          const project = projects.find((p) => p.id === token.project)
-          assert(project, 'Project not found!')
-          return {
-            ...token,
-            data: await this.$.tokenService.getTokenChart(
-              targetTimestamp,
-              project,
-              token,
-            ),
-          }
-        }),
-      ])
+    const ethPrices =
+      await this.$.pricesDataService.getEthPrices(targetTimestamp)
+
+    const valuesByProjectByTimestamp =
+      await this.$.valuesDataService.getValuesForProjects(
+        projects,
+        targetTimestamp,
+      )
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
@@ -97,6 +85,21 @@ export class AggregatedService {
       aggregate,
       ethPrices: ethPrices.prices,
     })
+
+    const associatedTokensData = await Promise.all(
+      associatedTokens.map(async (token) => {
+        const project = projects.find((p) => p.id === token.project)
+        assert(project, 'Project not found!')
+        return {
+          ...token,
+          data: await this.$.tokenService.getTokenChart(
+            targetTimestamp,
+            project,
+            token,
+          ),
+        }
+      }),
+    )
 
     for (const associatedToken of associatedTokensData) {
       result = subtractTokenCharts(

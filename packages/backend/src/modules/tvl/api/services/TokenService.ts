@@ -37,13 +37,14 @@ export class TokenService {
       amountConfigs[0],
     )
 
-    const [amounts, prices] = await Promise.all([
-      this.$.amountsDataService.getAggregatedAmounts(
-        amountConfigs,
-        targetTimestamp,
-      ),
-      this.$.pricesDataService.getPrices(priceConfig, targetTimestamp),
-    ])
+    const amounts = await this.$.amountsDataService.getAggregatedAmounts(
+      amountConfigs,
+      targetTimestamp,
+    )
+    const prices = await this.$.pricesDataService.getPrices(
+      priceConfig,
+      targetTimestamp,
+    )
 
     const minTimestamp = amountConfigs.reduce(
       (a, b) => UnixTime.min(a, b.sinceTimestamp),

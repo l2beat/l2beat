@@ -26,13 +26,13 @@ export class ValuesDataService {
     projects: ApiProject[],
     targetTimestamp: UnixTime,
   ) {
-    const [valueRecords, status] = await Promise.all([
-      this.$.valueRepository.getForProjects(projects.map((p) => p.id)),
-      this.$.indexerService.getValuesStatus(
-        projects.map(getProjectSources).flat(),
-        targetTimestamp,
-      ),
-    ])
+    const valueRecords = await this.$.valueRepository.getForProjects(
+      projects.map((p) => p.id),
+    )
+    const status = await this.$.indexerService.getValuesStatus(
+      projects.map(getProjectSources).flat(),
+      targetTimestamp,
+    )
 
     const valuesByProject = groupBy(valueRecords, 'projectId')
 
