@@ -5,10 +5,10 @@ import {
   ChainId,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { chainToProject } from '../backend'
 import { BackendProject } from '../backend/BackendProject'
 import { chains } from '../chains'
 import { tokenList } from '../tokens'
-import { chainToProject } from '../backend'
 
 export function getTvlAmountsConfig(
   projects: BackendProject[],

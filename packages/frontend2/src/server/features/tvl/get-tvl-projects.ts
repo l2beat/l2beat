@@ -1,14 +1,14 @@
 import {
   type BackendProject,
-  bridges,
-  layer2s,
-  layer3s,
-  layer2ToBackendProject,
-  layer3ToBackendProject,
   bridgeToBackendProject,
+  bridges,
   getTvlAmountsConfig,
+  layer2ToBackendProject,
+  layer2s,
+  layer3ToBackendProject,
+  layer3s,
 } from '@l2beat/config'
-import { type ProjectId, UnixTime, assert } from '@l2beat/shared-pure'
+import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 export interface TvlProject {
   id: ProjectId

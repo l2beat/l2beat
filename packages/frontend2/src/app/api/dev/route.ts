@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server'
-import { getTvlChart } from '~/server/features/tvl/get-tvl-chart'
 import SuperJSON from 'superjson'
+import { getTvlChart } from '~/server/features/tvl/get-tvl-chart'
 
 export const dynamic = 'force-dynamic'
 

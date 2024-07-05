@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   L2CostsApiChart,
@@ -13,7 +14,6 @@ import {
   AggregatedL2CostsRecord,
   AggregatedL2CostsRepository,
 } from '../repositories/AggregatedL2CostsRepository'
-import { BackendProject } from '@l2beat/config'
 
 const MAX_DAYS = 180
 

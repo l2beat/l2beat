@@ -1,13 +1,13 @@
-import { UnixTime, assert } from '@l2beat/shared-pure'
-import { type TvlProject } from './get-tvl-projects'
-import { db } from '~/server/database'
-import { type Dictionary, groupBy } from 'lodash'
 import { type Value } from '@l2beat/database'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { type Dictionary, groupBy } from 'lodash'
+import { db } from '~/server/database'
+import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
 import {
+  type TvlChartRange,
   getRangeConfig,
   type rangeToResolution,
-  type TvlChartRange,
 } from './range-utils'
 
 export async function getTvlValuesForProjects(

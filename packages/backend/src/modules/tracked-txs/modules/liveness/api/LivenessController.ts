@@ -11,6 +11,7 @@ import {
   cacheAsyncFunction,
 } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
@@ -23,7 +24,6 @@ import {
   calcIntervalWithAvgsPerProject,
 } from './calculateIntervalWithAverages'
 import { groupByType } from './groupByType'
-import { BackendProject } from '@l2beat/config'
 
 export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 

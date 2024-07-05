@@ -3,7 +3,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
