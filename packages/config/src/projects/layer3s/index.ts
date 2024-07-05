@@ -1,3 +1,4 @@
+import { alphadune } from './alphadune'
 import { animechain } from './animechain'
 import { anomaly } from './anomaly'
 import { apechain } from './apechain'
@@ -39,6 +40,7 @@ export * from './types'
 export const layer3s: Layer3[] = [
   anomaly,
   animechain,
+  alphadune,
   apechain,
   aviveworld,
   bugless,
