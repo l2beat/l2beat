@@ -1,7 +1,7 @@
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
-export const prism: Layer2 = upcomingL2({
+export const wirex: Layer2 = upcomingL2({
   id: 'wirex',
   display: {
     name: 'Pay Chain',

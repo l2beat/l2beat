@@ -14,17 +14,18 @@ export const gpt: Layer2 = underReviewL2({
     links: {
       websites: ['https://gptprotocol.org/'],
       apps: [
+        'https://bridge.gptprotocol.io/',
         'https://assistant.gptprotocol.io/',
         'https://staking.gptprotocol.org/',
       ],
       documentation: [],
-      explorers: [],
+      explorers: ['https://explorer.gptprotocol.io/'],
       repositories: ['https://github.com/gptprotocol'],
       socialMedia: [
         'https://x.com/gpt_protocol',
         'https://t.me/gpt_protocol',
         'https://discord.com/invite/gptprotocol',
-        'https://www.instagram.com/gptprotocol/',
+        'https://instagram.com/gptprotocol/',
       ],
     },
     activityDataSource: 'Blockchain RPC',

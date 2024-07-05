@@ -40,6 +40,7 @@ import { fuel } from './fuel'
 import { fuelv1 } from './fuelv1'
 import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
+import { gpt } from './gpt'
 import { grvt } from './grvt'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
@@ -111,6 +112,8 @@ import { termstructure } from './termstructure'
 import { tradable } from './tradable'
 import { treasure } from './treasure'
 import { Layer2 } from './types'
+import { wirex } from './wirex'
+import { witness } from './witness'
 import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
@@ -171,6 +174,7 @@ export const layer2s: Layer2[] = [
   fuel,
   fuelv1,
   gluon,
+  gpt,
   galxegravity,
   grvt,
   hermez,
@@ -241,6 +245,8 @@ export const layer2s: Layer2[] = [
   termstructure,
   tradable,
   treasure,
+  wirex,
+  witness,
   world,
   xchain,
   xlayer,
