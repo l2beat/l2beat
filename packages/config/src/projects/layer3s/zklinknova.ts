@@ -89,7 +89,7 @@ export const zklinknova: Layer3 = {
     name: 'zkLink Nova',
     slug: 'zklinknova',
     description:
-      'zkLink Nova is a Layer 3 zkEVM Rollup network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
+      'zkLink Nova is a Layer 3 zkEVM Validium network leveraging ZK Stack that allows for scattered assets across Ethereum Layer 2s to be aggregated for interoperable trade and transactions.',
     purposes: ['Universal'],
     category: 'Validium',
     provider: 'zkLink Nexus',
@@ -321,7 +321,7 @@ export const zklinknova: Layer3 = {
     stateValidation: {
       value: 'ZK proofs',
       description:
-        'Uses PLONK zero-knowledge proof system with KZG commitments.',
+        'Uses PLONK zero-knowledge proof system with KZG commitments. Proofs are verified on Linea.',
       sentiment: 'good',
       sources: [
         {
