@@ -14,6 +14,22 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
   suite(newRepo)
 
   function suite(amountRepository: typeof oldRepo | typeof newRepo) {
+    describe(AmountRepository.prototype.getByTimestamp.name, () => {
+      it('gets by timestamp', async () => {
+        await amountRepository.addMany([
+          amount('a', new UnixTime(100), 1n),
+          amount('b', new UnixTime(100), 1n),
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+        ])
+        const result = await amountRepository.getByTimestamp(new UnixTime(200))
+        expect(result).toEqual([
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+        ])
+      })
+    })
+
     describe(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
       it('gets by ids in inclusive range', async () => {
         await amountRepository.addMany([
@@ -44,6 +60,22 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
           amount('a', new UnixTime(300), 100n),
           amount('b', new UnixTime(300), 100n),
         ])
+      })
+    })
+
+    describe(AmountRepository.prototype.findByConfigAndTimestamp.name, () => {
+      it('finds by config and timestamp', async () => {
+        await amountRepository.addMany([
+          amount('a', new UnixTime(100), 1n),
+          amount('b', new UnixTime(100), 1n),
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+        ])
+        const result = await amountRepository.findByConfigAndTimestamp(
+          'a'.repeat(12),
+          new UnixTime(200),
+        )
+        expect(result).toEqual(amount('a', new UnixTime(200), 2n))
       })
     })
 

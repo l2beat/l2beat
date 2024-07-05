@@ -1,13 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
-
-const SAFETY_OFFSET = 3
-const REMOVE_HOURLY_AFTER_DAYS = 7 + SAFETY_OFFSET
-const REMOVE_SIX_HOURLY_AFTER_DAYS = 90 + SAFETY_OFFSET
+import { alignTimestamp } from '../modules/tvl/utils/alignTimestamp'
 
 export class Clock {
   constructor(
     private readonly minTimestamp: UnixTime,
     private readonly delayInSeconds: number,
+    readonly hourlyCutoffDays = 7,
+    readonly sixHourlyCutoffDays = 90,
     private readonly refreshIntervalMs = 1000,
   ) {}
 
@@ -40,32 +39,75 @@ export class Clock {
     return UnixTime.now().add(-this.delayInSeconds, 'seconds').toStartOf('day')
   }
 
-  /**
-   * WARNING: this method should be used only in TVL module
-   */
-  _TVL_ONLY_onEveryHour(callback: (timestamp: UnixTime) => void) {
-    let next = this.getFirstHour()
-    const onNewTimestamps = () => {
-      const last = this.getLastHour()
-      while (next.lte(last)) {
-        if (next.add(REMOVE_HOURLY_AFTER_DAYS, 'days').gte(last)) {
-          callback(next)
-        } else if (next.add(REMOVE_SIX_HOURLY_AFTER_DAYS, 'days').gte(last)) {
-          if (next.isFull('six hours')) {
-            callback(next)
-          }
-        } else {
-          if (next.isFull('day')) {
-            callback(next)
-          }
-        }
-        next = next.add(1, 'hours')
-      }
+  shouldTimestampBeIncluded(targetTimestamp: UnixTime, timestamp: UnixTime) {
+    return timestamp.equals(
+      this.getTimestampForApi(targetTimestamp, timestamp.toNumber()),
+    )
+  }
+
+  getAllTimestampsForApi(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride: UnixTime
+    },
+  ): UnixTime[] {
+    const from = options?.minTimestampOverride.gt(this.getFirstDay())
+      ? this.getTimestampForApi(
+          targetTimestamp,
+          options.minTimestampOverride.toNumber(),
+        )
+      : this.getFirstDay()
+
+    let current = this.getTimestampForApi(targetTimestamp, from.toNumber())
+
+    const timestamps: UnixTime[] = []
+    while (current.lte(targetTimestamp)) {
+      timestamps.push(current)
+      current = this.getTimestampForApi(targetTimestamp, current.toNumber() + 1)
     }
 
-    onNewTimestamps()
-    const interval = setInterval(onNewTimestamps, this.refreshIntervalMs)
-    return () => clearInterval(interval)
+    return timestamps
+  }
+
+  private getTimestampForApi(
+    targetTimestamp: UnixTime,
+    _timestamp: number,
+  ): UnixTime {
+    const timestamp = new UnixTime(_timestamp)
+    const hourlyCutOff = this.getHourlyCutoff(targetTimestamp)
+    const sixHourlyCutOff = this.getSixHourlyCutoff(targetTimestamp)
+
+    return alignTimestamp(timestamp, hourlyCutOff, sixHourlyCutOff)
+  }
+
+  getSixHourlyCutoff(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride: UnixTime
+    },
+  ): UnixTime {
+    const cutoff = targetTimestamp
+      .add(-this.sixHourlyCutoffDays, 'days')
+      .toEndOf('six hours')
+
+    return options?.minTimestampOverride.gt(cutoff)
+      ? options.minTimestampOverride.toEndOf('six hours')
+      : cutoff
+  }
+
+  getHourlyCutoff(
+    targetTimestamp: UnixTime,
+    options?: {
+      minTimestampOverride: UnixTime
+    },
+  ): UnixTime {
+    const cutoff = targetTimestamp
+      .add(-this.hourlyCutoffDays, 'days')
+      .toEndOf('hour')
+
+    return options?.minTimestampOverride.gt(cutoff)
+      ? options.minTimestampOverride.toEndOf('hour')
+      : cutoff
   }
 
   onNewHour(callback: (timestamp: UnixTime) => void) {
@@ -75,21 +117,6 @@ export class Clock {
       while (current.lt(last)) {
         current = current.add(1, 'hours')
         callback(current)
-      }
-    }
-
-    onNewTimestamps()
-    const interval = setInterval(onNewTimestamps, this.refreshIntervalMs)
-    return () => clearInterval(interval)
-  }
-
-  onEveryDay(callback: (timestamp: UnixTime) => void) {
-    let next = this.getFirstDay()
-    const onNewTimestamps = () => {
-      const last = this.getLastDay()
-      while (next.lte(last)) {
-        callback(next)
-        next = next.add(1, 'days')
       }
     }
 
