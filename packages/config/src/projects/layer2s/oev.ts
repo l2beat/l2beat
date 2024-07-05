@@ -7,25 +7,23 @@ export const oev: Layer2 = upcomingL2({
     name: 'OEV Network',
     slug: 'oev',
     description:
-      'OEV is an upcoming Validium by API3, built with Polygon CDK. It is designed to capture oracle extractable value and return it to the dApps and their users that generated it.',
-    purposes: ['Auctions'],
-    category: 'Validium',
-    provider: 'Polygon',
+      'OEV is an upcoming Optimium by API3, built with Arbitrum orbit stack. It is designed to capture oracle extractable value and return it to the dApps and their users that generated it.',
+    purposes: ['Oracles'],
+    category: 'Optimium',
+    provider: 'Arbitrum',
     links: {
-      websites: ['https://api3.org/'],
+      websites: ['https://api3.org/oev/'],
       apps: [
-        'https://oev-network-sepolia-testnet-bridge.eu-north-2.gateway.fm',
       ],
-      documentation: [
-        'https://medium.com/api3/oracle-extractable-value-oev-13c1b6d53c5b',
+      documentation: ['https://medium.com/api3/api3-builds-oev-network-on-arbitrum-orbit-b29f8f5d7dcf'
       ],
       explorers: [
-        'https://oev-network-sepolia-testnet-blockscout.eu-north-2.gateway.fm',
       ],
       repositories: [],
       socialMedia: [
-        'https://twitter.com/API3DAO',
+        'https://x.com/OEVNetwork',
         'https://discord.com/invite/api3dao',
+        'https://medium.com/api3'
       ],
     },
   },
