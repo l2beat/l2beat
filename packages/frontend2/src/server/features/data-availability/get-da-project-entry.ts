@@ -3,14 +3,29 @@ import { getDaEconomicSecurity } from './utils/get-da-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getDaRisks } from './utils/get-da-risks'
+import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
 
 export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
   const economicSecurity = await getDaEconomicSecurity()
   const tvs = await getDaProjectTvl(bridge.usedIn)
 
   return {
+    name: daLayer.display.name,
     slug: daLayer.display.slug,
-    bridgeSlug: bridge.display.slug,
+    // TODO: How to handle description for layer x bridge combination?
+    description: daLayer.display.description,
+    selectedBridge: {
+      id: bridge.id,
+      name: bridge.display.name,
+      slug: bridge.display.slug,
+    },
+    bridges: daLayer.bridges.map((bridge) => ({
+      id: bridge.id,
+      name: bridge.display.name,
+      slug: bridge.display.slug,
+    })),
+    risks: mapRisksToRosetteValues(getDaRisks(daLayer, bridge)),
     type: kindToType(daLayer.kind),
     links: getProjectLinks(daLayer.display.links),
     tvs,
