@@ -43,7 +43,8 @@
       ]
     },
     "Arbitrator": {
-      "ignoreMethods": ["proxiableUUID"],
+      "ignoreMethods": ["proxiableUUID"]
+      /*
       "fields": {
         "secondaryGateways": {
           "handler": {
@@ -55,6 +56,7 @@
           }
         }
       }
+      */
     },
     "LineaL1Gateway": {
       "extends": "zklinknova/secondaryGateway"

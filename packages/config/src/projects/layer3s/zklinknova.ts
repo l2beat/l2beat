@@ -4,8 +4,6 @@ import {
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Layer3 } from './types'
 import {
   EXITS,
   FORCE_TRANSACTIONS,
@@ -15,6 +13,8 @@ import {
   TECHNOLOGY_DATA_AVAILABILITY,
   makeBridgeCompatible,
 } from '../../common'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Layer3 } from './types'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
 const arbitrumDiscovery = new ProjectDiscovery('zklinknova', 'arbitrum')
@@ -362,6 +362,8 @@ export const zklinknova: Layer3 = {
     dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.GENERIC_OFF_CHAIN,
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
+      description:
+        'The operator is the only entity that can propose blocks and process transactions. Moreover, it is trusted to only relay valid messages using the fast path. Fast path messages are eventually checked against the slow path, and if they are invalid, the system halts.',
       risks: [
         ...OPERATOR.CENTRALIZED_OPERATOR.risks,
         {
@@ -381,6 +383,20 @@ export const zklinknova: Layer3 = {
     exitMechanisms: [
       EXITS.REGULAR('zk', 'merkle proof'),
       EXITS.FORCED('forced-withdrawals'),
+    ],
+    otherConsiderations: [
+      {
+        name: 'Bridging from multiple chains',
+        description:
+          'zkLink allows users to bridge assets from multiple chains, not just the base chain Linea. To do this, messages are sent through the canonical bridges of each respective chain to the main zkLink contract on Linea. To withdraw, state updates are relayed back to each chain with the respective canonical bridges. Since deposits in this way are processed quite slowly, the system allows validators to relay messages directly to the main zkLink contract in a trusted way. These messages are then checked against the slow path, and if they are invalid, the system eventually halts.',
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'the canonical bridges of the secondary chains are compromised.',
+          },
+        ],
+        references: [],
+      },
     ],
   },
   contracts: {
@@ -430,6 +446,11 @@ export const zklinknova: Layer3 = {
         ethereumDiscovery.getContractDetails('EthereumL1Gateway', {
           description:
             "High level interface between the local zkLink contract and Ethereum's message service.",
+          ...ethereumUpgradability,
+        }),
+        ethereumDiscovery.getContractDetails('Arbitrator', {
+          description:
+            'Contract storing the mapping between secondary chain bridges and acts as an intermediary to receive and relay messages to and from the main zkLink contract.',
           ...ethereumUpgradability,
         }),
         ethereumDiscovery.getContractDetails('LineaL1Gateway', {
