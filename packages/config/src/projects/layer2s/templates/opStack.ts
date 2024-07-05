@@ -375,7 +375,11 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
-    const architectureImage = templateVars.discovery.hasContract("SuperchainConfig") ? "bedrock-superchain" : "opstack"
+  const architectureImage = templateVars.discovery.hasContract(
+    'SuperchainConfig',
+  )
+    ? 'bedrock-superchain'
+    : 'opstack'
 
   return {
     type: 'layer2',
@@ -729,7 +733,11 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     })
   }
 
-    const architectureImage = templateVars.discovery.hasContract("SuperchainConfig") ? "bedrock-superchain" : "opstack"
+  const architectureImage = templateVars.discovery.hasContract(
+    'SuperchainConfig',
+  )
+    ? 'bedrock-superchain'
+    : 'opstack'
 
   return {
     type: 'layer3',
