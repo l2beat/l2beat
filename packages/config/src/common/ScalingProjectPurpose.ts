@@ -11,6 +11,7 @@ export type ScalingProjectPurpose =
   | 'Interoperability'
   | 'Launchpad'
   | 'Lending'
+  | 'Music'
   | 'NFT'
   | 'Oracles'
   | 'Payments'
