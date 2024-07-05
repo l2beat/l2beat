@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xc9e1dc49d24c6f66bd78ef5e1e5f297c4a76a666
+Generated with discovered.json: 0x6c7284e62751150f3d598db66cc024b11d5b68b7
 
-# Diff at Fri, 05 Jul 2024 09:06:14 GMT:
+# Diff at Fri, 05 Jul 2024 09:12:17 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@38ab6c6f42360c40ef4d13f9e02761a9d45810a2 block: 20189645
-- current block number: 20239298
+- current block number: 20239328
 
 ## Description
 
@@ -58,7 +58,7 @@ discovery. Values are for block 20189645 (main branch discovery), not current.
       values.isVerifyingBatches:
 +        [[true],[true],[true],[false],[true],[true],[false]]
       usedTypes:
-+        [{"typeCaster":"GreaterThan","arg":{"value":2}}]
++        [{"typeCaster":"GreaterThan","arg":{"value":1}}]
     }
 ```
 

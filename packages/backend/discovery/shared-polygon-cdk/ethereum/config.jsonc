@@ -23,7 +23,7 @@
     "IsGreaterThanOne": {
       "typeCaster": "GreaterThan",
       "arg": {
-        "value": 2
+        "value": 1
       }
     }
   },
