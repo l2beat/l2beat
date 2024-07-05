@@ -14,6 +14,7 @@ import {
   calculateDetailsFor,
   calculateIntervals,
 } from './calculateIntervalWithAverages'
+import { BackendProject } from '@l2beat/config'
 
 describe(LivenessController.name, () => {
   describe(LivenessController.prototype.getLiveness.name, () => {

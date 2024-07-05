@@ -11,7 +11,6 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import {
@@ -23,6 +22,7 @@ import {
   L2CostsController,
   L2CostsControllerDeps,
 } from './L2CostsController'
+import { BackendProject } from '@l2beat/config'
 
 describe(L2CostsController.name, () => {
   let time: InstalledClock
@@ -189,7 +189,7 @@ describe(L2CostsController.name, () => {
   function getMockL2CostsController(params: {
     aggregatedL2CostsRepository?: AggregatedL2CostsRepository
     indexerService?: IndexerService
-    projects?: Project[]
+    projects?: BackendProject[]
   }) {
     const { aggregatedL2CostsRepository, indexerService, projects } = params
     const deps: L2CostsControllerDeps = {
