@@ -8,6 +8,7 @@ import {
   ValueRecord,
   ValueRepository,
 } from '../../../repositories/ValueRepository'
+import { getValuesStatus } from '../../utils/getValuesStatus'
 import { ApiProject } from '../../utils/types'
 
 interface Dependencies {
@@ -29,10 +30,6 @@ export class ValuesDataService {
     const valueRecords = await this.$.valueRepository.getForProjects(
       projects.map((p) => p.id),
     )
-    const status = await this.$.indexerService.getValuesStatus(
-      projects.map(getProjectSources).flat(),
-      targetTimestamp,
-    )
 
     const valuesByProject = groupBy(valueRecords, 'projectId')
 
@@ -42,6 +39,11 @@ export class ValuesDataService {
       assert(project, `Project ${projectId.toString()} not found`)
 
       const valuesByTimestamp = groupBy(projectValues, 'timestamp')
+      const status = getValuesStatus(
+        project,
+        valuesByTimestamp,
+        targetTimestamp,
+      )
 
       const timestamps = this.$.clock.getAllTimestampsForApi(targetTimestamp, {
         minTimestampOverride: project.minTimestamp,
@@ -50,7 +52,7 @@ export class ValuesDataService {
       for (const timestamp of timestamps) {
         const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(
           (v) => {
-            if (status.excluded.has(`${v.projectId}_${v.dataSource}`)) {
+            if (status.excluded.has(v.dataSource)) {
               return false
             }
             const projectSource = project.sources.get(v.dataSource)
@@ -60,12 +62,12 @@ export class ValuesDataService {
           },
         )
 
-        const interpolatedValues = (status.lagging[projectId] ?? [])
+        const interpolatedValues = status.lagging
           .filter((l) => timestamp.gt(l.latestTimestamp))
           .map((l) => {
             const record = valuesByTimestamp[
               l.latestTimestamp.toString()
-            ]?.find((v) => l.id === `${v.projectId}_${v.dataSource}`)
+            ]?.find((v) => l.id === v.dataSource)
             assert(
               record,
               `Value should be defined for ${
@@ -86,12 +88,6 @@ export class ValuesDataService {
 
     return {
       valuesByTimestampForProjects: result,
-      lagging: status.lagging,
-      excluded: status.excluded,
     }
   }
-}
-
-function getProjectSources(project: ApiProject): string[] {
-  return Array.from(project.sources.keys())
 }
