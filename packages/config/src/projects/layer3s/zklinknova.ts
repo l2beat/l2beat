@@ -369,6 +369,7 @@ export const zklinknova: Layer3 = {
         {
           category: 'Funds can be lost if',
           text: 'the operator relays invalid messages using the fast path.',
+          isCritical: true,
         },
       ],
     },
