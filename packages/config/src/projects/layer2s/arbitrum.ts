@@ -21,6 +21,7 @@ import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { UPGRADE_MECHANISM } from '../../common/upgradeMechanism'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
+import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -87,6 +88,12 @@ const nOfChallengers = discovery.getContractValue<string[]>(
 export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
+  badges: [
+    Badge.DA.EthereumBlobs,
+    Badge.VM.EVM,
+    Badge.Other.L3HostChain,
+    Badge.Other.Governance,
+  ],
   display: {
     name: 'Arbitrum One',
     slug: 'arbitrum',

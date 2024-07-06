@@ -1,6 +1,7 @@
 import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -18,6 +19,12 @@ const livenessInterval = discovery.getContractValue<number>(
 export const metal: Layer2 = opStackL2({
   discovery,
   associatedTokens: ['MTL'],
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.OPStack,
+    Badge.DA.EthereumBlobs,
+    Badge.Infra.Superchain,
+  ],
   display: {
     name: 'Metal',
     slug: 'metal',

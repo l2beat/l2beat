@@ -54,14 +54,6 @@ export const badges = {
     },
     type: BadgeType.RaaS,
   },
-  StarkEx: {
-    display: {
-      name: 'StarkEx',
-      description:
-        'This project was deployed utilizing the StarkEx technology from StarkWare',
-    },
-    type: BadgeType.RaaS,
-  },
   Caldera: {
     display: {
       name: 'Caldera',
@@ -115,7 +107,13 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
-  // NOTE: The badges below are missing images
+  CustomDA: {
+    display: {
+      name: 'Custom DA solution',
+      description: 'This project is using a custom DA solution.',
+    },
+    type: BadgeType.DA,
+  },
   // VM
   EVM: {
     display: {
@@ -217,6 +215,71 @@ export const badges = {
       description: 'The project is built on Arbitrum Orbit.',
     },
     type: BadgeType.Stack,
+  },
+  StarkEx: {
+    display: {
+      name: 'StarkEx',
+      description:
+        'This project was deployed utilizing the StarkEx technology from StarkWare',
+    },
+    type: BadgeType.Stack,
+  },
+  ZKStack: {
+    display: {
+      name: 'Built on the ZK Stack',
+      description: 'The project is built on the ZK Stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  PolygonCDK: {
+    display: {
+      name: 'Built on the Polygon CDK stack',
+      description: 'The project is built on the Polygon CDK stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  Cartesi: {
+    display: {
+      name: 'Built on the Cartesi stack',
+      description: 'The project is built on the Cartesi stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  Loopring: {
+    display: {
+      name: 'Fork of Loopring',
+      description: 'The project is fork of Loopring.',
+    },
+    type: BadgeType.Fork,
+  },
+  ZKsyncLite: {
+    display: {
+      name: 'Fork of ZKsync Lite',
+      description: 'The project is fork of ZKsync Lite.',
+    },
+    type: BadgeType.Fork,
+  },
+  //L3 host chains
+  Arbitrum: {
+    display: {
+      name: 'Built on top of Arbitrum',
+      description: 'The project has Arbitrum as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Base: {
+    display: {
+      name: 'Built on top of Base',
+      description: 'The project has Base as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Linea: {
+    display: {
+      name: 'Built on top of Linea',
+      description: 'The project has Linea as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
   },
   // Other
   AccountAbstraction: {

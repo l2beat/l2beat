@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xacca7c1c48a7e8d4c89712849860aa5a71474873
+
+# Diff at Fri, 05 Jul 2024 14:22:47 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@111fee0655d72e75c60324b920975e421fd852f7 block: 20082109
+- current block number: 20240871
+
+## Description
+
+The LayerZero Executor contract is upgraded to a new implementation. (stays unverified)
+
+## Watched changes
+
+```diff
+    contract LayerZero Executor (0x173272739Bd7Aa6e4e214714048a9fE699453059) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"
++        "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+      implementations.0:
+-        "0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"
++        "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+    }
+```
+
 Generated with discovered.json: 0xc36ee197ed07f2b90a985666471e09b86a03e59c
 
 # Diff at Thu, 13 Jun 2024 09:49:18 GMT:

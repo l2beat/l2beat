@@ -97,15 +97,14 @@ export class AmountsDataService {
             laggingConfig.latestTimestamp,
           )
 
-        if (latestRecord) {
-          lagging.set(laggingConfig.id, {
-            latestTimestamp: laggingConfig.latestTimestamp,
-            latestValue: latestRecord,
-          })
-          amounts.push({ ...latestRecord, timestamp: targetTimestamp })
-        }
-      }),
-    )
+      if (latestRecord) {
+        result.lagging.set(laggingConfig.id, {
+          latestTimestamp: laggingConfig.latestTimestamp,
+          latestValue: latestRecord,
+        })
+        amounts.push({ ...latestRecord, timestamp: targetTimestamp })
+      }
+    }
 
     return {
       amounts,

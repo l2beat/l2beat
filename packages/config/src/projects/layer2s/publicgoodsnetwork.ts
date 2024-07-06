@@ -2,12 +2,20 @@ import { UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('publicgoodsnetwork')
 
 export const publicgoodsnetwork: Layer2 = opStackL2({
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.OPStack,
+    Badge.DA.Celestia,
+    Badge.RaaS.Conduit,
+    Badge.Infra.Superchain,
+  ],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,
   display: {

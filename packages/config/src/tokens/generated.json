@@ -7399,14 +7399,14 @@
     {
       "id": "arbitrum:wusdm-wrapped-mountain-protocol-usd",
       "name": "Wrapped Mountain Protocol USD",
-      "coingeckoId": "wrapped-usdm",
+      "coingeckoId": "mountain-protocol-usdm",
       "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
       "symbol": "wUSDM",
       "decimals": 18,
       "deploymentTimestamp": 1711503933,
-      "coingeckoListingTimestamp": 1703721600,
+      "coingeckoListingTimestamp": 1696982400,
       "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31719/large/usdm.png?1696530540",
       "chainId": 42161,
       "source": "native",
       "supply": "zero"

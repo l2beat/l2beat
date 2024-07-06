@@ -1,6 +1,7 @@
 import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
@@ -32,6 +33,7 @@ assert(
 export const xai: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
   display: {
     name: 'Xai',
     slug: 'xai',

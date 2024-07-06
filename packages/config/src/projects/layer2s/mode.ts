@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -24,6 +25,13 @@ const livenessInterval = discovery.getContractValue<number>(
 
 export const mode: Layer2 = opStackL2({
   discovery,
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
+    Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
+  ],
   display: {
     name: 'Mode Network',
     slug: 'mode',

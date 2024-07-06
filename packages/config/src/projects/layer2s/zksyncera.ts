@@ -20,6 +20,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -87,6 +88,7 @@ const validators = () => {
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.ZKStack],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',

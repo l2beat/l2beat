@@ -1320,7 +1320,7 @@
       "category": "stablecoin",
       "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
       "supply": "zero",
-      "coingeckoId": "wrapped-usdm",
+      "coingeckoId": "mountain-protocol-usdm", // wusdm on coingecko is broken so we use usdm
       "source": "native"
     },
     {

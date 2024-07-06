@@ -2,6 +2,7 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
@@ -10,6 +11,12 @@ const discovery = new ProjectDiscovery('degen', 'base')
 export const degen: Layer3 = orbitStackL3({
   hostChain: ProjectId('base'),
   discovery,
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.Orbit,
+    Badge.L3ParentChain.Base,
+    Badge.RaaS.Conduit,
+  ],
   nativeToken: 'DEGEN',
   display: {
     name: 'Degen Chain',
