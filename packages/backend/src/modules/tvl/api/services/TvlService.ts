@@ -44,11 +44,13 @@ export class TvlService {
   ): Promise<TvlApiResponse> {
     const ethPrices =
       await this.$.pricesDataService.getEthPrices(targetTimestamp)
+    console.time('VALUES')
     const valuesByProjectByTimestamp =
       await this.$.valuesDataService.getValuesForProjects(
         projects,
         targetTimestamp,
       )
+    console.timeEnd('VALUES')
 
     const projectsMinTimestamp = projects
       .map((x) => x.minTimestamp)
@@ -184,7 +186,9 @@ export class TvlService {
       })
     }
 
+    console.time('BREAKDOWN')
     const breakdownMap = await this.getBreakdownMap(targetTimestamp)
+    console.timeEnd('BREAKDOWN')
 
     const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
