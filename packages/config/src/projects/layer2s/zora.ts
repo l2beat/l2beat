@@ -3,8 +3,8 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { opStackSmartL2 } from './templates/opStackSmart'
 
 const discovery = new ProjectDiscovery('zora')
 
@@ -23,7 +23,7 @@ const livenessInterval = discovery.getContractValue<number>(
   'livenessInterval',
 )
 
-export const zora: Layer2 = opStackL2({
+export const zora: Layer2 = opStackSmartL2({
   discovery,
   badges: [
     Badge.VM.EVM,
