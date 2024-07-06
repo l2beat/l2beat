@@ -1,13 +1,13 @@
 import {
   ConfigReader,
   InvertedAddresses,
-  StackRole,
   calculateInversion,
 } from '@l2beat/discovery'
 import type {
   ContractParameters,
   ContractValue,
   DiscoveryOutput,
+  EoaParameters,
 } from '@l2beat/discovery-types'
 import {
   assert,
@@ -17,7 +17,7 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { isArray, isString } from 'lodash'
+import { isArray, isString, uniq } from 'lodash'
 
 import { join } from 'path'
 import {
@@ -661,7 +661,7 @@ export class ProjectDiscovery {
     return contracts.filter((contract) => contract.name === name)
   }
 
-  getPermissionsByRole(role: StackRole): ScalingProjectPermissionedAccount[] {
+  getPermissionsByRole(role: string): ScalingProjectPermissionedAccount[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
@@ -670,6 +670,29 @@ export class ProjectDiscovery {
     return [...contracts, ...eoas]
       .filter((x) => x.roles?.includes(role))
       .map((x) => this.formatPermissionedAccount(x.address))
+  }
+
+  getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    return [...contracts, ...eoas]
+  }
+
+  getDiscoveredRoles(): ScalingProjectPermission[] {
+    const contractsAndEoas = this.getContractsAndEoas()
+
+    const roles = uniq(
+      contractsAndEoas.flatMap((x) => x.roles).filter(notUndefined),
+    )
+    roles.sort()
+    return roles.map((role) => ({
+      name: role,
+      accounts: this.getPermissionsByRole(role),
+      description: roleDescriptions[role] ?? '',
+      chain: this.chain,
+    }))
   }
 }
 
@@ -684,4 +707,14 @@ export function stringFormat(str: string, ...val: string[]) {
     str = str.replaceAll(`{${index}}`, val[index])
   }
   return str
+}
+
+const roleDescriptions: Record<string, string> = {
+  Sequencer:
+    'Sequencer is an actor allowed to commit transactions from this layer to the host chain',
+  Proposer:
+    'Proposer is an actor allowed to post new state roots of this layer to the host chain',
+  Challenger:
+    'Challenger is an actor allowed to delete state roots  proposed by a Proposer',
+  Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
 }

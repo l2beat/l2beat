@@ -289,6 +289,7 @@ export function opStackSmartCommon(
       ],
     },
     permissions: [
+      ...templateVars.discovery.getDiscoveredRoles(),
       // ...templateVars.discovery.getOpStackPermissions({
       //   batcherHash: 'Sequencer',
       //   PROPOSER: 'Proposer',

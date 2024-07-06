@@ -20,12 +20,16 @@ export interface DiscoveryCustomType {
   severity?: string | null
 }
 
-export interface EoaParameters {
-  address: EthereumAddress
+export interface Meta {
   roles?: string[]
+  assignedPermissions?: Record<string, EthereumAddress[]>
 }
 
-export interface ContractParameters {
+export type EoaParameters = {
+  address: EthereumAddress
+} & Meta
+
+export type ContractParameters = {
   name: string
   derivedName?: string
   template?: string
@@ -38,8 +42,7 @@ export interface ContractParameters {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
-  roles?: string[]
-}
+} & Meta
 
 export type ContractValue =
   | string
