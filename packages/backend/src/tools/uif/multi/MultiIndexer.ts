@@ -14,32 +14,16 @@ import {
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
-  private configurations: Configuration<T>[] = []
   private saved = new Map<string, SavedConfiguration<T>>()
 
   constructor(
     logger: Logger,
     parents: Indexer[],
     private readonly createDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
-    configurations?: Configuration<T>[],
+    private readonly configurations: Configuration<T>[],
     options?: IndexerOptions,
   ) {
     super(logger, parents, options)
-    if (configurations) {
-      this.configurations = configurations
-    }
-  }
-
-  /**
-   * This will run as the first step of initialize() function.
-   * Allow overriding to provide configurations from a different source.
-   * Example: your configurations have autoincrement id, so you need to
-   * first add them to the database to get the MultiIndexer logic to work (it assumes every
-   * configuration has a unique id)
-   * @returns The configurations that the indexer should use to sync data.
-   */
-  getInitialConfigurations(): Promise<Configuration<T>[]> | Configuration<T>[] {
-    return this.configurations
   }
 
   /**
@@ -134,7 +118,6 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   async initialize() {
     const previouslySaved = await this.multiInitialize()
 
-    this.configurations = await this.getInitialConfigurations()
     this.ranges = toRanges(this.configurations)
 
     const { toRemove, toSave, safeHeight } = diffConfigurations(

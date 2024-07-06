@@ -95,10 +95,7 @@ describe(MultiIndexer.name, () => {
         calls.push('multiInitialize')
         return []
       })
-      testIndexer.getInitialConfigurations = mockFn(() => {
-        calls.push('getInitialConfigurations')
-        return []
-      })
+
       testIndexer.getSafeHeight = mockFn(() => {
         calls.push('getSafeHeight')
         return Promise.resolve(undefined)
@@ -106,11 +103,7 @@ describe(MultiIndexer.name, () => {
 
       await testIndexer.initialize()
 
-      expect(calls).toEqual([
-        'multiInitialize',
-        'getInitialConfigurations',
-        'getSafeHeight',
-      ])
+      expect(calls).toEqual(['multiInitialize', 'getSafeHeight'])
     })
 
     it('getSafeHeight lower than saved configs', async () => {
@@ -388,17 +381,6 @@ describe(MultiIndexer.name, () => {
         mockDbMiddleware,
       )
     })
-
-    it('gets configurations from different source', async () => {
-      const testIndexer = new TestMultiIndexer(undefined, [])
-      testIndexer.getInitialConfigurations = () => [
-        actual('a', 100, null),
-        actual('b', 100, null),
-      ]
-
-      const newHeight = await testIndexer.initialize()
-      expect(newHeight).toEqual({ safeHeight: 99 })
-    })
   })
 
   describe('multiUpdate', () => {
@@ -482,7 +464,7 @@ describe(MultiIndexer.name, () => {
 
 class TestMultiIndexer extends MultiIndexer<null> {
   constructor(
-    configurations: Configuration<null>[] | undefined,
+    configurations: Configuration<null>[],
     private readonly _saved: SavedConfiguration<null>[],
   ) {
     super(
