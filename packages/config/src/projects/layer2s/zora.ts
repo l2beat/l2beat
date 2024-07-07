@@ -3,8 +3,8 @@ import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { Layer2 } from './types'
 import { opStackSmartL2 } from './templates/opStackSmart'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 

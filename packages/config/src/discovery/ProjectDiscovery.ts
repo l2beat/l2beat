@@ -661,23 +661,18 @@ export class ProjectDiscovery {
     return contracts.filter((contract) => contract.name === name)
   }
 
-  getPermissionsByRole(role: string): ScalingProjectPermissionedAccount[] {
-    const contracts = this.discoveries.flatMap(
-      (discovery) => discovery.contracts,
-    )
-    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
-
-    return [...contracts, ...eoas]
-      .filter((x) => x.roles?.includes(role))
-      .map((x) => this.formatPermissionedAccount(x.address))
-  }
-
   getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
     return [...contracts, ...eoas]
+  }
+
+  getPermissionsByRole(role: string): ScalingProjectPermissionedAccount[] {
+    return this.getContractsAndEoas()
+      .filter((x) => x.roles?.includes(role))
+      .map((x) => this.formatPermissionedAccount(x.address))
   }
 
   getDiscoveredRoles(): ScalingProjectPermission[] {
@@ -693,6 +688,53 @@ export class ProjectDiscovery {
       description: roleDescriptions[role] ?? '',
       chain: this.chain,
     }))
+  }
+
+  constructDescriptionFromMeta(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string {
+    const combinedDescriptions = contractOrEoa.descriptions?.join(' ') ?? ''
+    const permissionDescriptions = Object.entries(
+      contractOrEoa.assignedPermissions ?? {},
+    )
+      .map(([role, addresses]) => {
+        const addressesString = addresses
+          .map((address) => this.getContract(address.toString()).name)
+          .join(', ')
+        return `${capitalize(role)} of ${addressesString}.`
+      })
+      .join(' ')
+    return combinedDescriptions + permissionDescriptions
+  }
+
+  getDiscoveredPermissions(): ScalingProjectPermission[] {
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const result: ScalingProjectPermission[] = []
+    for (const contract of contracts) {
+      const description = this.constructDescriptionFromMeta(contract)
+      if (contract.upgradeability.type === 'gnosis safe') {
+        result.push(...this.getMultisigPermission(contract.name, description))
+      } else if (contract.assignedPermissions !== undefined) {
+        result.push(this.contractAsPermissioned(contract, description))
+      }
+    }
+
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    for (const eoa of eoas) {
+      if (eoa.assignedPermissions === undefined) {
+        continue
+      }
+      const description = this.constructDescriptionFromMeta(eoa)
+      result.push({
+        name: eoa.address.toString(),
+        accounts: [this.formatPermissionedAccount(eoa.address)],
+        chain: this.chain,
+        description,
+      })
+    }
+    return result
   }
 }
 
@@ -718,3 +760,5 @@ const roleDescriptions: Record<string, string> = {
     'Challenger is an actor allowed to delete state roots  proposed by a Proposer',
   Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
 }
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

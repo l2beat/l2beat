@@ -21,6 +21,7 @@ export interface DiscoveryCustomType {
 }
 
 export interface Meta {
+  descriptions?: string[]
   roles?: string[]
   assignedPermissions?: Record<string, EthereumAddress[]>
 }
