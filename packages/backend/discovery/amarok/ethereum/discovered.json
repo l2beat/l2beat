@@ -1,7 +1,7 @@
 {
   "name": "amarok",
   "chain": "ethereum",
-  "blockNumber": 20082446,
+  "blockNumber": 20259771,
   "configHash": "0x29931306a2f49fce65dad2e589a736709e1930f6b4159c1fa824ed857b8f9194",
   "version": 8,
   "contracts": [
@@ -27,17 +27,17 @@
         "disputeBlocks": 120,
         "DOMAIN": 6648936,
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getLastCompletedSnapshotId": 954597,
+        "getLastCompletedSnapshotId": 955787,
         "getSnapshotDuration": 1800,
         "home": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc",
-        "lastSentBlock": 19098811,
+        "lastSentBlock": 20259707,
         "localDomain": 6648936,
         "MERKLE": "0x28A9e7bbed277092E2431F186E1aF898962d4E92",
         "minDisputeBlocks": 60,
         "MIRROR_DOMAIN": 6648936,
         "mirrorConnector": "0x0000000000000000000000000000000000000000",
-        "optimisticMode": true,
-        "outboundRoot": "0x0507a461474fdd2cc20030abf1b1309a0d55e9b7d763e6dae2e2fb376be6c434",
+        "optimisticMode": false,
+        "outboundRoot": "0x5172fb69be68899d88f1dcf1ecce9bb1fafc986aaf4d7f2b6ff2b0c44f617148",
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "PROCESS_GAS": 850000,
@@ -65,7 +65,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "119758391175615490488415018",
+        "totalSupply": "120079079902705051873030799",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -218,7 +218,7 @@
       "values": {
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1718276219,
+        "getCurrentTime": 1720417283,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -270,22 +270,22 @@
         ],
         "domainsHash": "0x239bee09d17b3de7ac10e1bff88ccb7863ff3379fc88b66db19dfe3e7714b7e4",
         "FINALIZED_HASH": "0x0000000000000000000000000000000000000000000000000000000000000001",
-        "getPendingInboundRootsCount": 0,
+        "getPendingInboundRootsCount": 6,
         "getSnapshotDuration": 1800,
         "hubDomain": 6648936,
-        "lastSavedAggregateRootTimestamp": 1718274347,
+        "lastSavedAggregateRootTimestamp": 1720412147,
         "MAX_DOMAINS": 500,
         "MERKLE": "0x7D2596D7E44b0990611d390Fbb0Bd24e64845694",
         "minDisputeBlocks": 60,
-        "optimisticMode": true,
+        "optimisticMode": false,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "pendingInboundRoots": {
-          "first": 170,
-          "last": 169
+          "first": 227,
+          "last": 232
         },
         "proposed": "0x0000000000000000000000000000000000000000",
-        "proposedAggregateRootHash": "0x1a0581a5ddf52bd7511827508f4868e885589a9468fb966b38fcd06c7e68e3de",
+        "proposedAggregateRootHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
         "proposedTimestamp": 0,
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
@@ -449,7 +449,7 @@
           "0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"
         ],
         "getThreshold": 1,
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "derivedName": "SafeL2"
@@ -507,7 +507,7 @@
           "0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"
         ],
         "getThreshold": 2,
-        "nonce": 635,
+        "nonce": 674,
         "VERSION": "1.3.0"
       }
     },
@@ -792,7 +792,7 @@
         "LIQUIDITY_FEE_NUMERATOR": 9995,
         "lpTokenTargetAddress": "0xf7DE5aCeEeE6091d1103209C337fA00D0B4b9092",
         "maxRoutersPerTransfer": 5,
-        "nonce": 52072,
+        "nonce": 56278,
         "owner": "0x4d50a469fc788a3c0CdC8Fd67868877dCb246625",
         "paused": false,
         "proposed": "0x0000000000000000000000000000000000000000",

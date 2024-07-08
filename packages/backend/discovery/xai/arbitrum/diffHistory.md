@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x08bf7b5fbb47546f441cceec29b97af860422f88
+
+# Diff at Mon, 08 Jul 2024 06:15:46 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e192ffbc9e265fdc44012a487bab5f0859ffe881 block: 228630604
+- current block number: 229959335
+
+## Description
+
+Xai's dacKeyset is hardened with 8/9 threshold.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0x995a9d3ca121D48d21087eDE20bc8acb2398c8B1) {
+    +++ description: State batches / commitments get posted here.
+      values.dacKeyset.requiredSignatures:
+-        5
++        8
+      values.dacKeyset.membersCount:
+-        6
++        9
+      values.keySetUpdates:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0x04c6637b971b5f8ed7b913205d28eff08ed758d0
 
 # Diff at Thu, 04 Jul 2024 09:41:56 GMT:

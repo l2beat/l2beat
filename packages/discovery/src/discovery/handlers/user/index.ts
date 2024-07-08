@@ -45,6 +45,10 @@ import {
   DynamicArrayHandlerDefinition,
 } from './DynamicArrayHandler'
 import {
+  EIP2535FacetHandler,
+  EIP2535FacetHandlerDefinition,
+} from './EIP2535FacetHandler'
+import {
   EventCountHandler,
   EventCountHandlerDefinition,
 } from './EventCountHandler'
@@ -111,6 +115,7 @@ export const UserHandlerDefinition = z.union([
   OpStackSequencerInboxHandlerDefinition,
   ArbitrumSequencerVersionDefinition,
   ArbitrumDACKeysetHandlerDefinition,
+  EIP2535FacetHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -168,5 +173,7 @@ export function getUserHandler(
       return new ArbitrumSequencerVersionHandler(field, definition, logger)
     case 'arbitrumDACKeyset':
       return new ArbitrumDACKeysetHandler(field, definition, logger)
+    case 'eip2535Facets':
+      return new EIP2535FacetHandler(field, definition, logger)
   }
 }

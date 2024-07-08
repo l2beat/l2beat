@@ -1,0 +1,28 @@
+{
+  "name": "@l2beat/l2b",
+  "version": "0.1.0",
+  "private": true,
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "l2b": "./cli.js"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "build:dependencies": "cd ../.. && yarn build:dependencies",
+    "typecheck": "tsc --noEmit",
+    "clean": "rm -rf dist",
+    "format": "biome format .",
+    "format:fix": "biome format --write .",
+    "lint:fix": "biome check --formatter-enabled=false --apply .",
+    "lint": "biome check --formatter-enabled=false ."
+  },
+  "dependencies": {
+    "@l2beat/backend-tools": "*",
+    "@l2beat/discovery-types": "*",
+    "@l2beat/shared": "*",
+    "@l2beat/shared-pure": "*",
+    "cmd-ts": "^0.13.0",
+    "ethers": "^5.7.2"
+  }
+}

@@ -65,7 +65,8 @@ export function getProjectWithIndexColumns(opts?: {
     },
     {
       name: 'Name',
-      headClassName: 'pl-2 2xl:pl-3',
+      headClassName: 'max-md:!pl-4 pl-2 2xl:pl-3',
+      className: 'max-md:pl-2',
       getValue: (project) => (
         <ProjectNameCell project={project} showIsL3={opts?.showIsL3} />
       ),
