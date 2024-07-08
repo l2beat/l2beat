@@ -25,31 +25,6 @@ export async function getTvlValuesForProjects(
       )
     : db.value.getForProjects(projects.map((p) => p.id)))
 
-  const minTimestamp = valueRecords[0]?.timestamp
-
-  if (!minTimestamp) {
-    return {}
-  }
-
-  const timestamps = lodashRange(
-    (target.toNumber() - minTimestamp.toNumber()) /
-      (resolution === 'hourly'
-        ? 3600
-        : resolution === 'sixHourly'
-          ? 21600
-          : 86400) +
-      1,
-  ).map((i) => {
-    return minTimestamp.add(
-      i * (resolution === 'sixHourly' ? 6 : 1),
-      resolution === 'hourly'
-        ? 'hours'
-        : resolution === 'sixHourly'
-          ? 'hours'
-          : 'days',
-    )
-  })
-
   const valuesByProject = groupBy(valueRecords, 'projectId')
 
   const result: Dictionary<Dictionary<Value[]>> = {}
@@ -61,6 +36,32 @@ export async function getTvlValuesForProjects(
     const status = getValuesStatus(project, valuesByTimestamp, target)
 
     const valuesByTimestampForProject: Dictionary<Value[]> = {}
+
+    const minTimestamp = projectValues[0]?.timestamp
+
+    if (!minTimestamp) {
+      continue
+    }
+
+    const timestamps = lodashRange(
+      (target.toNumber() - minTimestamp.toNumber()) /
+        (resolution === 'hourly'
+          ? 3600
+          : resolution === 'sixHourly'
+            ? 21600
+            : 86400) +
+        1,
+    ).map((i) => {
+      return minTimestamp.add(
+        i * (resolution === 'sixHourly' ? 6 : 1),
+        resolution === 'hourly'
+          ? 'hours'
+          : resolution === 'sixHourly'
+            ? 'hours'
+            : 'days',
+      )
+    })
+
     for (const timestamp of timestamps) {
       const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(
         (v) => {
