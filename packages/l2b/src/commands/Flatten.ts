@@ -10,8 +10,7 @@ import {
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import chalk from 'chalk'
 import { command, oneOf, option, positional, string } from 'cmd-ts'
-import { HttpUrl } from 'cmd-ts/batteries/url'
-import { EthereumAddressValue } from './types'
+import { EthereumAddressValue, HttpUrl } from './types'
 
 export const Flatten = command({
   name: 'flatten',
