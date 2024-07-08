@@ -62,16 +62,16 @@ function PentagonRosetteTooltip({ values, isUnderReview }: Props) {
         <span className="mr-2">Risk analysis</span>
       </span>
       <div className="flex items-center gap-6">
-        <div className="relative h-[200px] w-[200px] p-8 whitespace-pre text-center font-medium text-[10px] uppercase leading-tight">
+        <div className="relative h-[200px] w-[200px] flex items-center justify-center">
           <PentagonRosetteIcon
-            className="w-[136px] h-[129px]"
+            className="scale-75 -translate-y-[5.28%]"
             values={values}
             background={false}
           />
           <PentagonRosetteLabels
             values={values}
             containerSize={200}
-            textRadius={64}
+            textRadius={70}
             size="small"
           />
         </div>

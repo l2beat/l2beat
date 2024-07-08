@@ -64,10 +64,10 @@ function PizzaRosetteTooltip({ values, isUnderReview }: PizzaRosetteCellProps) {
         <span className="mr-2">Risk analysis</span>
       </span>
       <div className="flex items-center gap-6">
-        <div className="relative h-[200px] w-[201px] p-8 whitespace-pre text-center font-medium text-[10px] uppercase leading-tight">
+        <div className="relative size-[200px] flex items-center justify-center">
           <PizzaRosetteIcon
             values={values}
-            className="h-[136px] w-[137px]"
+            className="scale-75"
             isUnderReview={isUnderReview}
           />
           <PizzaRosetteLabels

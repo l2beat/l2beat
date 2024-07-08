@@ -15,7 +15,7 @@ const getCachedMockTvlApiResponse = cache(async () => {
     combined: getMockTvlApiCharts(),
     projects: {},
   }
-  for (const project of layer2s) {
+  for (const project of layer2s.slice(0, layer2s.length - 1)) {
     result.projects[project.id.toString()] = {
       charts: getMockTvlApiCharts(),
       tokens: {
