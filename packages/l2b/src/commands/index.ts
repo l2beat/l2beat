@@ -1,5 +1,6 @@
+import { CompareOpStacks } from './CompareOpStacks'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 
 export function getSubcommands() {
-  return [DeploymentTimestamp]
+  return [DeploymentTimestamp, CompareOpStacks]
 }
