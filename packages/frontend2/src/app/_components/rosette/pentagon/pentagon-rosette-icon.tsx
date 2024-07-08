@@ -49,7 +49,9 @@ export function PentagonRosetteIcon({
       xmlns="http://www.w3.org/2000/svg"
       ref={svgRef}
       onMouseLeave={() => setContent?.(undefined)}
-      className={className}
+      // Easiest way to move the center of the pentagon to the center of the div
+      // If any issues arise, we can think about other ways to do it
+      className={cn(className, '-translate-y-[5.28%]')}
     >
       {background ? (
         <path

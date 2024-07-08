@@ -44,10 +44,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
         <PentagonRosetteIcon
           values={props.values}
           isUnderReview={isUnderReview}
-          className={cn(
-            '-translate-y-[5.28%]',
-            props.isUpcoming && 'opacity-30',
-          )}
+          className={cn(props.isUpcoming && 'opacity-30')}
         />
         {props.isUpcoming && (
           <UpcomingBadge className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" />
@@ -70,8 +67,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
             props.className,
           )}
         >
-          {/* Move tooltip up to have a all Circumcircle radius intersection exactly at the center of div */}
-          <TooltipTrigger className="-translate-y-[5.28%]">
+          <TooltipTrigger>
             <PentagonRosetteIcon
               values={props.values}
               isUnderReview={props.isUnderReview}

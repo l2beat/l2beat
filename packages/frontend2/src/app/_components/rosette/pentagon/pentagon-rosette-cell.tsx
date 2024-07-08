@@ -64,7 +64,7 @@ function PentagonRosetteTooltip({ values, isUnderReview }: Props) {
       <div className="flex items-center gap-6">
         <div className="relative h-[200px] w-[200px] flex items-center justify-center">
           <PentagonRosetteIcon
-            className="scale-75 -translate-y-[5.28%]"
+            className="scale-75"
             values={values}
             background={false}
           />
