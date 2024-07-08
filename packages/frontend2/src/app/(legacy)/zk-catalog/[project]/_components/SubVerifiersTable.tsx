@@ -1,17 +1,17 @@
-import { EM_DASH } from '~/app/_components/nav/consts';
+import { EM_DASH } from '~/app/_components/nav/consts'
+import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip';
-import InfoIcon from '~/icons/info.svg';
-import { cn } from '~/utils/cn';
-import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage';
-import { OutLink } from '~/app/_components/out-link';
+} from '~/app/_components/tooltip/tooltip'
+import InfoIcon from '~/icons/info.svg'
+import { cn } from '~/utils/cn'
+import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
 interface Props {
-  verifier: ZkCatalogProjectDetails['verifiers'][number];
-  className?: string;
+  verifier: ZkCatalogProjectDetails['verifiers'][number]
+  className?: string
 }
 
 export function SubVerifiersTable({ verifier, className }: Props) {
@@ -19,7 +19,7 @@ export function SubVerifiersTable({ verifier, className }: Props) {
     <div
       className={cn(
         'overflow-x-auto whitespace-pre pb-1.5 lg:w-full',
-        className
+        className,
       )}
     >
       <table className="w-full border-collapse">
@@ -94,5 +94,5 @@ export function SubVerifiersTable({ verifier, className }: Props) {
         </tbody>
       </table>
     </div>
-  );
+  )
 }

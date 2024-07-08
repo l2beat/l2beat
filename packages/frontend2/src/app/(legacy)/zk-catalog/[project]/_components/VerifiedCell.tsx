@@ -1,22 +1,22 @@
-import { assertUnreachable } from '@l2beat/shared-pure';
-import CircleQuestionMark from '~/icons/circle-question-mark.svg';
-import UnverifiedIcon from '~/icons/unverified.svg';
-import VerifiedIcon from '~/icons/verified.svg';
+import { assertUnreachable } from '@l2beat/shared-pure'
+import CircleQuestionMark from '~/icons/circle-question-mark.svg'
+import UnverifiedIcon from '~/icons/unverified.svg'
+import VerifiedIcon from '~/icons/verified.svg'
 
-import { OutLink } from '~/app/_components/out-link';
+import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip';
+} from '~/app/_components/tooltip/tooltip'
 
 interface Props {
-  verified: 'yes' | 'no' | 'failed';
-  askForVerificationLink: string;
+  verified: 'yes' | 'no' | 'failed'
+  askForVerificationLink: string
   performedBy?: {
-    name: string;
-    link: string;
-  };
+    name: string
+    link: string
+  }
 }
 
 export function VerifiedCell({
@@ -50,7 +50,7 @@ export function VerifiedCell({
             )
           </div>
         </div>
-      );
+      )
     case 'no':
       return (
         <span className="flex flex-col items-start text-sm md:text-base">
@@ -67,7 +67,7 @@ export function VerifiedCell({
             Submit or ask for verification
           </OutLink>
         </span>
-      );
+      )
     case 'failed':
       return (
         <div className="flex w-max flex-col gap-1">
@@ -93,8 +93,8 @@ export function VerifiedCell({
             )
           </div>
         </div>
-      );
+      )
     default:
-      assertUnreachable(verified);
+      assertUnreachable(verified)
   }
 }
