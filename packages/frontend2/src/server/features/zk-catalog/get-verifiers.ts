@@ -11,11 +11,11 @@ import {
   UnixTime,
   type VerifierStatus,
 } from '@l2beat/shared-pure'
-import { db } from '~/server/database'
 import {
-  unstable_noStore as noStore,
   unstable_cache as cache,
+  unstable_noStore as noStore,
 } from 'next/cache'
+import { db } from '~/server/database'
 
 export function getVerifiers() {
   noStore()
