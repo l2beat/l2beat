@@ -1,3 +1,27 @@
+Generated with discovered.json: 0x2a401c2dc720c6e7514a9b52102493c3fb44f80e
+
+# Diff at Mon, 08 Jul 2024 06:11:47 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e192ffbc9e265fdc44012a487bab5f0859ffe881 block: 20239328
+- current block number: 20259919
+
+## Description
+
+The rollup contract associated with a project called `prism` (networkName string) is producing and verifying batches. Info on this project is hard to find.
+
+## Watched changes 
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.6.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x6c7284e62751150f3d598db66cc024b11d5b68b7
 
 # Diff at Fri, 05 Jul 2024 09:12:17 GMT:

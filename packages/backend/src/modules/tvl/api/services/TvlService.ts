@@ -366,6 +366,9 @@ export class TvlService {
 
       const priceConfig =
         this.$.configMapping.getPriceConfigFromAmountConfig(config)
+      if (prices.excluded.has(priceConfig.configId)) {
+        continue
+      }
       const price = pricesMap.get(priceConfig.configId)
       assert(price, 'Price not found for id ' + amount.configId)
 

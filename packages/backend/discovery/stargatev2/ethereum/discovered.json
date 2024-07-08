@@ -1,7 +1,7 @@
 {
   "name": "stargatev2",
   "chain": "ethereum",
-  "blockNumber": 20082109,
+  "blockNumber": 20240871,
   "configHash": "0x4b8d257de00edba7d5e55d61c9f581f3ee355f6546889ac91a2b53fa9b00048c",
   "version": 8,
   "contracts": [
@@ -25,10 +25,10 @@
       "unverified": true,
       "upgradeability": {
         "type": "EIP1967 proxy",
-        "implementation": "0x1E45F27F0e96e9757cff938F2c9d697AA8279C85",
+        "implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232",
         "admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
       },
-      "implementations": ["0x1E45F27F0e96e9757cff938F2c9d697AA8279C85"],
+      "implementations": ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"],
       "sinceTimestamp": 1706308043,
       "derivedName": ""
     },
@@ -119,14 +119,14 @@
           "version": 0
         },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 0,
-        "poolBalance": "798270000000000000",
+        "plannerFee": 5940783599822392,
+        "poolBalance": "2563522635000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xd5F7838F5C461fefF7FE49ea5ebaF7728bB0ADfa",
-        "treasuryFee": 0,
-        "tvl": "798270000000000000"
+        "treasuryFee": 83611,
+        "tvl": "3000998996000000000000"
       }
     },
     {
@@ -241,7 +241,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
-        "nonce": 748,
+        "nonce": 762,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -375,14 +375,14 @@
           "version": 0
         },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "53385827029613888",
-        "poolBalance": "10751078813000000000000",
+        "plannerFee": "443453043311204833",
+        "poolBalance": "4407205851000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x0000000000000000000000000000000000000000",
-        "treasuryFee": 193717,
-        "tvl": "11944300949000000000000"
+        "treasuryFee": 633938,
+        "tvl": "7559821261000000000000"
       }
     },
     {
@@ -431,14 +431,14 @@
           "version": 0
         },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": "10338488016806242",
-        "poolBalance": 19023978732472,
+        "plannerFee": "86065792585046238",
+        "poolBalance": 20081991396414,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        "treasuryFee": 999764604,
-        "tvl": 21908327404584
+        "treasuryFee": 4378364589,
+        "tvl": 23327962242353
       }
     },
     {
@@ -556,14 +556,14 @@
           "version": 0
         },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 4942759258192902,
-        "poolBalance": 27973629226605,
+        "plannerFee": "76989775155427131",
+        "poolBalance": 22841049484113,
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        "treasuryFee": 2255771513,
-        "tvl": 29295911505712
+        "treasuryFee": 4012915488,
+        "tvl": 23626774163020
       }
     },
     {
@@ -622,7 +622,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
-        "nonce": 113,
+        "nonce": 130,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -661,13 +661,13 @@
           "version": 0
         },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
-        "plannerFee": 0,
-        "poolBalance": 0,
+        "plannerFee": 1573303374785334,
+        "poolBalance": "8402466000000000000",
         "sharedDecimals": 6,
         "stargateType": 0,
         "status": 1,
         "token": "0x9E32b13ce7f2E80A01932B42553652E053D6ed8e",
-        "treasuryFee": 0,
+        "treasuryFee": 5557,
         "tvl": 0
       }
     },

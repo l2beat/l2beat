@@ -23,18 +23,6 @@ export const canonicalTokenList: Token[] = tokenList.filter(
   (t) => t.source === 'canonical' && t.chainId === ChainId.ETHEREUM,
 )
 
-const canonicalTokenMap = new Map(
-  canonicalTokenList.map((t) => [t.symbol, t] as const),
-)
-
-export function getCanonicalTokenBySymbol(symbol: string) {
-  const token = canonicalTokenMap.get(symbol)
-  if (!token) {
-    throw new TypeError(`Unknown token ${symbol}`)
-  }
-  return token
-}
-
 const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
 
 export function safeGetTokenByAssetId(assetId: AssetId) {

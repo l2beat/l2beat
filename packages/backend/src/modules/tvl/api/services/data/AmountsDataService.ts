@@ -95,21 +95,23 @@ export class AmountsDataService {
       return result
     }
 
-    for (const laggingConfig of status.lagging) {
-      const latestRecord =
-        await this.$.amountRepository.findByConfigAndTimestamp(
-          laggingConfig.id,
-          laggingConfig.latestTimestamp,
-        )
+    await Promise.all(
+      status.lagging.map(async (laggingConfig) => {
+        const latestRecord =
+          await this.$.amountRepository.findByConfigAndTimestamp(
+            laggingConfig.id,
+            laggingConfig.latestTimestamp,
+          )
 
-      if (latestRecord) {
-        result.lagging.set(laggingConfig.id, {
-          latestTimestamp: laggingConfig.latestTimestamp,
-          latestValue: latestRecord,
-        })
-        amounts.push({ ...latestRecord, timestamp: targetTimestamp })
-      }
-    }
+        if (latestRecord) {
+          result.lagging.set(laggingConfig.id, {
+            latestTimestamp: laggingConfig.latestTimestamp,
+            latestValue: latestRecord,
+          })
+          amounts.push({ ...latestRecord, timestamp: targetTimestamp })
+        }
+      }),
+    )
 
     return result
   }

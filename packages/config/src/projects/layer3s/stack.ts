@@ -1,6 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
@@ -8,6 +9,12 @@ const discovery = new ProjectDiscovery('stack', 'base')
 
 export const stack: Layer3 = opStackL3({
   discovery,
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.OPStack,
+    Badge.L3ParentChain.Base,
+    Badge.DA.Celestia,
+  ],
   hostChain: ProjectId('base'),
   display: {
     name: 'Stack',

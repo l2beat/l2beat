@@ -1,3 +1,33 @@
+Generated with discovered.json: 0x50708af9e43eceefe0914b697e409e95581ffa30
+
+# Diff at Fri, 05 Jul 2024 14:19:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@111fee0655d72e75c60324b920975e421fd852f7 block: 19532207
+- current block number: 20240852
+
+## Description
+
+Config related.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532207 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x9bfAc7947FC1b64aA9F12b24EcD519DaEcEf3Ba5)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe68bb3eb077b5467cdab7bf3fbb62717a6d63a4a
 
 # Diff at Thu, 28 Mar 2024 11:08:18 GMT:

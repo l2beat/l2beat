@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 import { MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import {
   DEFAULT_OTHER_CONSIDERATIONS,
   orbitStackL2,
@@ -43,6 +44,7 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   discovery,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
