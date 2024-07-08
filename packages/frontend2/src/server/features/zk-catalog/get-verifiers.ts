@@ -12,20 +12,11 @@ import {
   type VerifierStatus,
   type VerifiersApiResponse,
 } from '@l2beat/shared-pure'
-import {
-  unstable_cache as cache,
-  unstable_noStore as noStore,
-} from 'next/cache'
 import { db } from '~/server/database'
 
 export function getVerifiers() {
-  noStore()
-  return getCachedVerifiers()
+  return getVerifierStatuses()
 }
-
-const getCachedVerifiers = cache(getVerifierStatuses, ['verifiers'], {
-  revalidate: 60 * 60,
-})
 
 async function getVerifierStatuses(): Promise<VerifiersApiResponse> {
   const verifiers = getVerifiersFromConfig()

@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import * as RadixAccordion from '@radix-ui/react-accordion'
-import React, { type ReactElement } from 'react'
-import ChevronDownIcon from '~/icons/chevron.svg'
-import { cn } from '~/utils/cn'
+import * as RadixAccordion from '@radix-ui/react-accordion';
+import React, { type ReactElement } from 'react';
+import ChevronDownIcon from '~/icons/chevron.svg';
+import { cn } from '~/utils/cn';
 
 interface AccordionProps {
   children:
     | ReactElement<typeof RadixAccordion.Item>
-    | ReactElement<typeof RadixAccordion.Item>[]
-  type?: 'single' | 'multiple'
-  className?: string
-  indicator?: React.ReactNode
+    | ReactElement<typeof RadixAccordion.Item>[];
+  type?: 'single' | 'multiple';
+  className?: string;
+  indicator?: React.ReactNode;
 }
 
 function Accordion({ children, type = 'single', className }: AccordionProps) {
@@ -23,7 +23,7 @@ function Accordion({ children, type = 'single', className }: AccordionProps) {
     >
       {children}
     </RadixAccordion.Root>
-  )
+  );
 }
 
 const AccordionItem = React.forwardRef<
@@ -37,12 +37,12 @@ const AccordionItem = React.forwardRef<
   >
     {children}
   </RadixAccordion.Item>
-))
-AccordionItem.displayName = RadixAccordion.Item.displayName
+));
+AccordionItem.displayName = RadixAccordion.Item.displayName;
 
 interface AccordionTriggerProps {
-  childrenClassName?: string
-  indicator?: React.ReactNode
+  childrenClassName?: string;
+  indicator?: React.ReactNode;
 }
 
 const AccordionTrigger = React.forwardRef<
@@ -52,13 +52,13 @@ const AccordionTrigger = React.forwardRef<
 >(
   (
     { children, className, childrenClassName, indicator, ...props },
-    forwardedRef,
+    forwardedRef
   ) => (
     <RadixAccordion.Header>
       <RadixAccordion.Trigger
         className={cn(
           'group flex cursor-pointer items-center justify-between gap-2 md:gap-4',
-          className,
+          className
         )}
         {...props}
         ref={forwardedRef}
@@ -68,13 +68,13 @@ const AccordionTrigger = React.forwardRef<
         {indicator ? (
           indicator
         ) : (
-          <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[open]/accordion-item:rotate-180" />
+          <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
         )}
       </RadixAccordion.Trigger>
     </RadixAccordion.Header>
-  ),
-)
-AccordionTrigger.displayName = RadixAccordion.Trigger.displayName
+  )
+);
+AccordionTrigger.displayName = RadixAccordion.Trigger.displayName;
 
 const AccordionContent = React.forwardRef<
   React.ElementRef<typeof RadixAccordion.Content>,
@@ -83,7 +83,7 @@ const AccordionContent = React.forwardRef<
   <RadixAccordion.Content className={className} {...props} ref={forwardedRef}>
     {children}
   </RadixAccordion.Content>
-))
-AccordionContent.displayName = RadixAccordion.Content.displayName
+));
+AccordionContent.displayName = RadixAccordion.Content.displayName;
 
-export { AccordionContent, AccordionItem, Accordion, AccordionTrigger }
+export { AccordionContent, AccordionItem, Accordion, AccordionTrigger };

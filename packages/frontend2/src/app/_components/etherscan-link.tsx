@@ -15,7 +15,7 @@ export function EtherscanLink({
 }: EtherscanLinkProps) {
   const link = `${etherscanUrl}/address/${address}`
   return (
-    <CustomLink href={link} className={className} data-role={'etherscan-link'}>
+    <CustomLink href={link} className={className}>
       {truncate ? `${address.slice(0, 6)}…${address.slice(38, 42)}` : address}
     </CustomLink>
   )
