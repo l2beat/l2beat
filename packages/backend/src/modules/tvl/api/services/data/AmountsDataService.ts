@@ -78,22 +78,16 @@ export class AmountsDataService {
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const amounts =
-      await this.$.amountRepository.getByTimestamp(targetTimestamp)
+    const amounts = await this.$.amountRepository.getByIdsAndTimestamp(
+      configurations.map((c) => c.configId),
+      targetTimestamp,
+    )
     const status = await this.$.indexerService.getAmountsStatus(
       configurations,
       targetTimestamp,
     )
 
-    const result = {
-      amounts,
-      lagging: new Map(),
-      excluded: new Set(status.excluded),
-    }
-
-    if (amounts.length + status.excluded.size === configurations.length) {
-      return result
-    }
+    const lagging = new Map()
 
     await Promise.all(
       status.lagging.map(async (laggingConfig) => {
@@ -104,7 +98,7 @@ export class AmountsDataService {
           )
 
         if (latestRecord) {
-          result.lagging.set(laggingConfig.id, {
+          lagging.set(laggingConfig.id, {
             latestTimestamp: laggingConfig.latestTimestamp,
             latestValue: latestRecord,
           })
@@ -113,6 +107,10 @@ export class AmountsDataService {
       }),
     )
 
-    return result
+    return {
+      amounts,
+      lagging,
+      excluded: status.excluded,
+    }
   }
 }

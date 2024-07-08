@@ -11,11 +11,16 @@ import { selectAmount } from './select'
 export class AmountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async getByTimestamp(timestamp: UnixTime) {
+  async getByIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
-      .where((eb) => eb.and([eb('timestamp', '=', timestamp.toDate())]))
+      .where((eb) =>
+        eb.and([
+          eb('configuration_id', 'in', configIds),
+          eb('timestamp', '=', timestamp.toDate()),
+        ]),
+      )
       .orderBy('timestamp')
       .execute()
 
