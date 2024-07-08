@@ -11,7 +11,7 @@ import { OutLink } from '~/app/_components/out-link';
 
 interface Props {
   verifier: ZkCatalogProjectDetails['verifiers'][number];
-  className: string;
+  className?: string;
 }
 
 export function SubVerifiersTable({ verifier, className }: Props) {

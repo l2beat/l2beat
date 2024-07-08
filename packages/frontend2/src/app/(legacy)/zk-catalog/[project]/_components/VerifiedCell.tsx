@@ -63,7 +63,7 @@ export function VerifiedCell({
               Verification was not performed for this verifier.
             </TooltipContent>
           </Tooltip>
-          <OutLink className="ml-[26px] text-xs" href={askForVerificationLink}>
+          <OutLink className="ml-[21px] text-xs" href={askForVerificationLink}>
             Submit or ask for verification
           </OutLink>
         </span>

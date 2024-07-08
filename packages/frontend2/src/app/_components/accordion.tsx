@@ -43,6 +43,7 @@ AccordionItem.displayName = RadixAccordion.Item.displayName;
 interface AccordionTriggerProps {
   childrenClassName?: string;
   indicator?: React.ReactNode;
+  mergeIndicator?: boolean;
 }
 
 const AccordionTrigger = React.forwardRef<
@@ -51,28 +52,49 @@ const AccordionTrigger = React.forwardRef<
     AccordionTriggerProps
 >(
   (
-    { children, className, childrenClassName, indicator, ...props },
+    {
+      children,
+      className,
+      childrenClassName,
+      indicator,
+      mergeIndicator,
+      ...props
+    },
     forwardedRef
-  ) => (
-    <RadixAccordion.Header>
-      <RadixAccordion.Trigger
-        className={cn(
-          'group flex cursor-pointer items-center justify-between gap-2 md:gap-4',
-          className
-        )}
-        {...props}
-        ref={forwardedRef}
-      >
-        <div className={cn('w-full', childrenClassName)}>{children}</div>
+  ) => {
+    const indicatorComponent = indicator ? (
+      indicator
+    ) : (
+      <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
+    );
 
-        {indicator ? (
-          indicator
-        ) : (
-          <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
-        )}
-      </RadixAccordion.Trigger>
-    </RadixAccordion.Header>
-  )
+    const content = mergeIndicator ? (
+      <div className={cn('w-full', childrenClassName)}>
+        {children}
+        {indicatorComponent}
+      </div>
+    ) : (
+      <>
+        <div className={cn('w-full', childrenClassName)}>{children}</div>
+        {indicatorComponent}
+      </>
+    );
+
+    return (
+      <RadixAccordion.Header>
+        <RadixAccordion.Trigger
+          className={cn(
+            'group flex w-full cursor-pointer items-center justify-between gap-2 md:gap-4',
+            className
+          )}
+          {...props}
+          ref={forwardedRef}
+        >
+          {content}
+        </RadixAccordion.Trigger>
+      </RadixAccordion.Header>
+    );
+  }
 );
 AccordionTrigger.displayName = RadixAccordion.Trigger.displayName;
 
