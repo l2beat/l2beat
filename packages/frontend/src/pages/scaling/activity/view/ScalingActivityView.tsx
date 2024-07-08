@@ -6,6 +6,9 @@ import { getScalingRowProps } from '../../../../components/table/props/getScalin
 import { RowConfig } from '../../../../components/table/types'
 import { getScalingActivityColumnsConfig } from '../props/getScalingActivityColumnsConfig'
 import { ActivityViewEntry } from '../types'
+import uniq from 'lodash/uniq'
+import { generateSlugList } from '../../../../components/table/filters/FiltersWrapper'
+import { RichSelect } from '../../../../components/RichSelect'
 export interface ScalingActivityViewProps {
   items: ActivityViewEntry[]
 }
@@ -16,10 +19,45 @@ export function ScalingActivityView({ items }: ScalingActivityViewProps) {
     getProps: (entry) => getScalingRowProps(entry, 'activity'),
   }
 
+  const itemsWithoutEthereum = items.filter((i) => i.slug !== 'ethereum')
+
+  const layers = uniq(itemsWithoutEthereum.map((i) => i.type))
+    .sort()
+    .map((l) => ({
+      label: toLayerLabel(l),
+      value: generateSlugList(items, (i) => i.type === l),
+    }))
+
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
-      <ScalingFilters items={items.filter((i) => i.slug !== 'ethereum')} />
+      <ScalingFilters
+        items={items.filter((i) => i.slug !== 'ethereum')}
+        childrenPosition="first"
+      >
+        <RichSelect label="Layer" id="layer">
+          {layers.map((layer) => (
+            <RichSelect.Item
+              selectedLabel={layer.label}
+              key={layer.label}
+              value={layer.value}
+            >
+              {layer.label}
+            </RichSelect.Item>
+          ))}
+        </RichSelect>
+      </ScalingFilters>
       <TableView items={items} columnsConfig={columns} rows={rows} />
     </section>
   )
+}
+
+function toLayerLabel(layer: 'layer2' | 'layer3' | undefined) {
+  switch (layer) {
+    case 'layer2':
+      return 'Layer 2'
+    case 'layer3':
+      return 'Layer 3'
+    default:
+      return 'No provider'
+  }
 }
