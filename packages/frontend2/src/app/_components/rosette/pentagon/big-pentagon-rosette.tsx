@@ -36,7 +36,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
     return (
       <div
         className={cn(
-          'relative flex items-center justify-center size-[272px]',
+          'relative flex items-center justify-center size-[272px] shrink-0',
           props.className,
         )}
       >
@@ -66,7 +66,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
       <Tooltip>
         <div
           className={cn(
-            'relative flex items-center justify-center size-[272px]',
+            'relative flex items-center justify-center size-[272px] shrink-0',
             props.className,
           )}
         >
