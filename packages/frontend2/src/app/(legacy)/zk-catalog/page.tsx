@@ -2,7 +2,7 @@ import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { ZkCatalogView } from './_components/ZkCatalogView'
+import { ZkCatalogPage } from './_components/ZkCatalogPage'
 import { getZkCatalogView } from './_utils/getZkCatalogView'
 import { projects } from './_utils/projects'
 
@@ -30,7 +30,7 @@ export default async function Page() {
         </p>
       </header>
       <main className="mt-4 md:mt-12">
-        <ZkCatalogView {...view} />
+        <ZkCatalogPage {...view} />
       </main>
     </ContentWrapper>
   )

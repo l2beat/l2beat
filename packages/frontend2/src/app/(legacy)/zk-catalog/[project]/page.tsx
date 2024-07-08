@@ -31,8 +31,6 @@ export async function generateMetadata({
 
   return getDefaultMetadata({
     title: `${project.display.name} - ZK Catalog`,
-    // openGraph: {
-    // },
   })
 }
 
@@ -44,10 +42,9 @@ export default async function Page(props: Props) {
   }
 
   const verifiers = await getVerifiers()
-  const details = getZkCatalogProjectDetails(project, verifiers)
 
   const projectDetails = {
-    details: details,
+    details: getZkCatalogProjectDetails(project, verifiers),
     askForVerificationLink: ZK_CATALOG_ASK_FOR_VERIFICATION_LINK,
   }
 

@@ -24,7 +24,7 @@ interface Props {
 
 export function Verifiers(props: Props) {
   const grid =
-    'grid md:grid-cols-[8fr,3fr,6fr,2.5fr,0.5fr] grid-cols-[18fr,2.5fr,0.5fr]'
+    'grid md:grid-cols-[8fr,3fr,6fr,3fr,1fr] grid-cols-[7fr,2.5fr,1fr]'
 
   return (
     <div className="w-full">
@@ -40,7 +40,7 @@ export function Verifiers(props: Props) {
         <div className="hidden py-2 pr-4 text-start font-semibold text-gray-500 text-xs uppercase md:block dark:text-gray-50">
           Verifier
         </div>
-        <div className="py-2 pr-5 md:pl-0 text-start font-semibold text-gray-500 text-xs uppercase dark:text-gray-50">
+        <div className="py-2 md:pl-0 text-start font-semibold text-gray-500 text-xs uppercase dark:text-gray-50">
           Verification status
         </div>
         <div className="hidden py-2 pr-4 text-start font-semibold text-gray-500 text-xs uppercase md:block dark:text-gray-50">
@@ -60,11 +60,11 @@ export function Verifiers(props: Props) {
               <AccordionTrigger asChild>
                 <div
                   className={cn(
-                    'md:h-14 cursor-pointer border-gray-200 border-b dark:border-zinc-700 group-data-[state="open"]/accordion-item:border-none text-left flex w-full items-center justify-between gap-2 md:gap-4',
+                    'md:h-14 cursor-pointer border-gray-200 border-b dark:border-zinc-700 group-data-[state="open"]/accordion-item:border-none text-left flex w-full items-center justify-between',
                     grid,
                   )}
                 >
-                  <div className="px-4 font-medium text-base md:text-lg flex items-center">
+                  <div className="pl-4 font-medium text-base md:text-lg flex items-center">
                     {item.name}
                   </div>
                   <div className="hidden text-sm md:text-base md:flex items-center">
@@ -85,13 +85,12 @@ export function Verifiers(props: Props) {
                   <div className="hidden md:flex items-center">
                     <LastUsedCell days={item.lastUsedDaysAgo} />
                   </div>
-                  <div className="flex items-center">
+                  <div className="flex items-center px-1.5 md:p-0">
                     <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
                   </div>
                 </div>
               </AccordionTrigger>
             </AccordionHeader>
-
             <AccordionContent className="border-gray-200 border-b dark:border-zinc-700">
               <div className="mt-1 space-y-5 px-4 pb-5 md:hidden">
                 <div>

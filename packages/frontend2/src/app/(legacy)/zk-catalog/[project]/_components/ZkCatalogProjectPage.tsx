@@ -3,6 +3,7 @@ import { type ReactNode } from 'react'
 
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 
+import Link from 'next/link'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import { OutLink } from '~/app/_components/out-link'
 import {
@@ -60,7 +61,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
 function Breadcrumbs(props: { icon: string; title: string }) {
   return (
     <nav className="flex select-none gap-1 space-x-1 font-medium dark:text-gray-50">
-      <a href="/zk-catalog">ZK Catalog</a>
+      <Link href="/zk-catalog">ZK Catalog</Link>
       <span>/</span>
       <span>
         <Image

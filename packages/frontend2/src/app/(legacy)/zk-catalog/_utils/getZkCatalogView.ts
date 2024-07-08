@@ -1,5 +1,5 @@
 import { type VerifiersApiResponse } from '@l2beat/shared-pure'
-import { type ZkCatalogViewProps } from '../_components/ZkCatalogView'
+import { type ZkCatalogViewProps } from '../_components/ZkCatalogPage'
 import { getProofVerification } from './getProofVerification'
 import { getTrustedSetup } from './getTrustedSetup'
 import { type Project } from './types'
