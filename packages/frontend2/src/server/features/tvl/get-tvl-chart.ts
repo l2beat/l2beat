@@ -35,27 +35,30 @@ export async function getTvlChart({
   }, {})
 
   return Object.entries(timestampValues).map(([timestamp, values]) => {
-    const summed = sumValuesPerSource(values)
+    const summed = sumValuesPerSource(values, true)
     return [
       +timestamp,
       Number(summed.native),
       Number(summed.canonical),
       Number(summed.external),
-      ethPrices[+timestamp],
+      ethPrices[+timestamp]!,
     ] as const
   })
 }
 
-export function sumValuesPerSource(values: Value[]): {
+export function sumValuesPerSource(
+  values: Value[],
+  forTotal?: boolean,
+): {
   external: bigint
   canonical: bigint
   native: bigint
 } {
   return values.reduce(
     (acc, curr) => {
-      acc.canonical += curr.canonical
-      acc.external += curr.external
-      acc.native += curr.native
+      acc.canonical += forTotal ? curr.canonicalForTotal : curr.canonical
+      acc.external += forTotal ? curr.externalForTotal : curr.external
+      acc.native += forTotal ? curr.nativeForTotal : curr.native
       return acc
     },
     { canonical: 0n, external: 0n, native: 0n },
