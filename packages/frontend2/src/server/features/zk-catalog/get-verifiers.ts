@@ -10,6 +10,7 @@ import {
   type ChainId,
   UnixTime,
   type VerifierStatus,
+  VerifiersApiResponse,
 } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -17,9 +18,14 @@ import {
 } from 'next/cache'
 import { db } from '~/server/database'
 
-export function getVerifiers() {
+export async function getVerifiers() {
   noStore()
-  return getCachedVerifiersStatus()
+
+  // unstable-cache is limited - uses JSON.stringify under the hood causing
+  // issues with custom VOs like UnixTime - that's why we re-parse the data
+  // to coerce it back to the correct types
+  const cachedVerifiers = await getCachedVerifiersStatus()
+  return VerifiersApiResponse.parse(cachedVerifiers)
 }
 
 const getCachedVerifiersStatus = cache(async () => {

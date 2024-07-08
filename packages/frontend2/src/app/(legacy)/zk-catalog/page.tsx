@@ -8,8 +8,6 @@ import { projects } from './_utils/projects';
 import { env } from '~/env';
 import { notFound } from 'next/navigation';
 
-export const dynamic = 'force-static';
-
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',
   description: 'A catalog of the ZK projects with detailed research.',

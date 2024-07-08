@@ -15,11 +15,12 @@ interface Props {
   };
 }
 
-export async function generateStaticParams() {
-  return projects.map((project) => ({
-    project: project.display.slug,
-  }));
-}
+// Do we want to prerender these pages?
+// export async function generateStaticParams() {
+//   return projects.map((project) => ({
+//     project: project.display.slug,
+//   }));
+// }
 
 export async function generateMetadata({
   params,
