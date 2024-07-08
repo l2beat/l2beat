@@ -186,6 +186,8 @@ describe(ArrayHandler.name, () => {
 
     it('calls the method "length" times', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -216,6 +218,8 @@ describe(ArrayHandler.name, () => {
 
     it('passes the ignoreRelative field', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -243,6 +247,8 @@ describe(ArrayHandler.name, () => {
 
     it('resolves the "length" field', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -272,6 +278,8 @@ describe(ArrayHandler.name, () => {
 
     it('handles errors when length is present', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -301,6 +309,8 @@ describe(ArrayHandler.name, () => {
 
     it('calls the method until revert without length', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -331,6 +341,8 @@ describe(ArrayHandler.name, () => {
 
     it('handles non-revert errors without length', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -360,6 +372,8 @@ describe(ArrayHandler.name, () => {
 
     it('has a builtin limit of 100', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>() {
           return EthereumAddress.ZERO as T
         },
@@ -381,6 +395,8 @@ describe(ArrayHandler.name, () => {
 
     it('can have a different maxLength', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>() {
           return EthereumAddress.ZERO as T
         },
@@ -402,6 +418,8 @@ describe(ArrayHandler.name, () => {
 
     it('calls indices if present', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -430,6 +448,8 @@ describe(ArrayHandler.name, () => {
       const owners = new Array(10).fill(0).map(() => EthereumAddress.random())
 
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,
@@ -468,6 +488,8 @@ describe(ArrayHandler.name, () => {
 
     it('resolves the "indices" field', async () => {
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         async callMethod<T>(
           passedAddress: EthereumAddress,
           _abi: string,

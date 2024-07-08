@@ -1,3 +1,38 @@
+Generated with discovered.json: 0x99851fccea60dfd0899e1a92369d413a74f71555
+
+# Diff at Mon, 08 Jul 2024 05:42:55 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e192ffbc9e265fdc44012a487bab5f0859ffe881 block: 20082446
+- current block number: 20259771
+
+## Description
+
+The optimistic mode is deactivated on the ethereum domain by a watcher (`0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d`) with other chains following (https://app.blocksec.com/explorer/tx/base/0x4c550c961192befbd22a6eff5917ffdd41c33320ada8fd9bb340306a16385aff). Frontend automatically reflects this.
+
+This is a rare phenomenon and means that all roots must now be passed via canonical rollup AMBs. The result can be seen by looking at SpokeConnectors on the Spoke domain chains that now emit `AggregateRootReceived` (`0x84ef18531155afdb0e64ff905d67044ae3aac63a6fba4661cfd9c4c14f289bc8`) each time a root is received via AMB.
+Bridging can still be fast for users, just the reconciliation for LPs(routers) and slow-bridging (execution after reconciliation) much longer now. Also refer to the [architecture diagram on excalidraw](https://app.excalidraw.com/s/1Pobo8fNXle/7KAm671eZbq).
+
+## Watched changes
+
+```diff
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
+    +++ description: None
+      values.optimisticMode:
+-        true
++        false
+    }
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.optimisticMode:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x17beec9d610530d1b14aacb886211000ec5e431d
 
 # Diff at Mon, 10 Jun 2024 06:13:47 GMT:

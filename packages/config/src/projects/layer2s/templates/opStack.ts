@@ -375,11 +375,17 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
+  const architectureImage = templateVars.discovery.hasContract(
+    'SuperchainConfig',
+  )
+    ? 'bedrock-superchain'
+    : 'opstack'
+
   return {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
-      architectureImage: 'bedrock-superchain',
+      architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
@@ -727,12 +733,18 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     })
   }
 
+  const architectureImage = templateVars.discovery.hasContract(
+    'SuperchainConfig',
+  )
+    ? 'bedrock-superchain'
+    : 'opstack'
+
   return {
     type: 'layer3',
     ...opStackCommon(templateVars),
     hostChain: templateVars.hostChain,
     display: {
-      architectureImage: 'bedrock-superchain',
+      architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',

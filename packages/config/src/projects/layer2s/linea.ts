@@ -6,6 +6,7 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { Badge } from '../badges'
 
 import {
   CONTRACTS,
@@ -544,4 +545,5 @@ export const linea: Layer2 = {
       link: 'https://linea.mirror.xyz/7l9gKzYzKVOxEOnReavov467Ss_fsrkGzABvbRISPMY',
     },
   ],
+  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain],
 }

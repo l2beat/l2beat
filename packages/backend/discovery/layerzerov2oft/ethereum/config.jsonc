@@ -35,9 +35,13 @@
     "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92": "LayerZero Multisig",
     "0x589dEDbD617e0CBcB916A9223F4d1300c294236b": "LayerZeroDVN",
     "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc": "GoogleCloudDVN",
-    "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "PolyhedraDVN"
+    "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24": "PolyhedraDVN",
+    "0xC03f31fD86a9077785b7bCf6598Ce3598Fa91113": "PriceFeed"
   },
   "overrides": {
+    "PriceFeed": {
+      "ignoreDiscovery": true
+    },
     "PolyhedraDVN": {
       "ignoreRelatives": [
         "layerZeroEndpointV1",

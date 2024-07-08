@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { TvlApiCharts, UnixTime } from '@l2beat/shared-pure'
-import { SyncOptimizer } from '../../utils/SyncOptimizer'
+import { Clock } from '../../../../tools/Clock'
 import {
   ValuesForSource,
   getChartsData,
@@ -8,12 +8,14 @@ import {
   sumValuesPerSource,
 } from '../utils/chartsUtils'
 import { ApiProject, AssociatedToken } from '../utils/types'
-import { DataService } from './DataService'
 import { TokenService } from './TokenService'
+import { PricesDataService } from './data/PricesDataService'
+import { ValuesDataService } from './data/ValuesDataService'
 
 interface Dependencies {
-  dataService: DataService
-  syncOptimizer: SyncOptimizer
+  valuesDataService: ValuesDataService
+  pricesDataService: PricesDataService
+  clock: Clock
   tokenService: TokenService
 }
 
@@ -21,19 +23,25 @@ export class AggregatedService {
   constructor(private readonly $: Dependencies) {}
 
   async getAggregatedTvl(
-    target: UnixTime,
+    targetTimestamp: UnixTime,
     projects: ApiProject[],
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiCharts> {
-    const ethPrices = await this.$.dataService.getEthPrices(target)
+    const ethPrices =
+      await this.$.pricesDataService.getEthPrices(targetTimestamp)
 
     const valuesByProjectByTimestamp =
-      await this.$.dataService.getValuesForProjects(projects, target)
+      await this.$.valuesDataService.getValuesForProjects(
+        projects,
+        targetTimestamp,
+      )
 
     const aggregate = new Map<number, ValuesForSource>()
     for (const project of projects) {
       const valuesByTimestamp =
-        valuesByProjectByTimestamp[project.id.toString()]
+        valuesByProjectByTimestamp.valuesByTimestampForProjects[
+          project.id.toString()
+        ]
 
       if (!valuesByTimestamp) {
         continue
@@ -61,11 +69,11 @@ export class AggregatedService {
 
     const dailyStart = minTimestamp
     const sixHourlyStart = UnixTime.max(
-      this.$.syncOptimizer.sixHourlyCutOff,
+      this.$.clock.getSixHourlyCutoff(targetTimestamp),
       minTimestamp,
     ).toEndOf('day')
     const hourlyStart = UnixTime.max(
-      this.$.syncOptimizer.hourlyCutOff,
+      this.$.clock.getHourlyCutoff(targetTimestamp),
       minTimestamp,
     )
 
@@ -73,25 +81,32 @@ export class AggregatedService {
       dailyStart,
       sixHourlyStart,
       hourlyStart,
-      lastHour: target,
+      lastHour: targetTimestamp,
       aggregate,
-      ethPrices,
+      ethPrices: ethPrices.prices,
     })
 
-    if (associatedTokens.length > 0) {
-      await Promise.all(
-        associatedTokens.map(async (token) => {
-          const project = projects.find((p) => p.id === token.project)
-          assert(project, 'Project not found!')
-
-          const data = await this.$.tokenService.getTokenChart(
-            target,
+    const associatedTokensData = await Promise.all(
+      associatedTokens.map(async (token) => {
+        const project = projects.find((p) => p.id === token.project)
+        assert(project, 'Project not found!')
+        return {
+          ...token,
+          data: await this.$.tokenService.getTokenChart(
+            targetTimestamp,
             project,
             token,
-          )
+          ),
+        }
+      }),
+    )
 
-          result = subtractTokenCharts(result, data, token.type, ethPrices)
-        }),
+    for (const associatedToken of associatedTokensData) {
+      result = subtractTokenCharts(
+        result,
+        associatedToken.data,
+        associatedToken.type,
+        ethPrices.prices,
       )
     }
 

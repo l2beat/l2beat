@@ -34,6 +34,7 @@ const DEFAULT_SCALING_FILTERS = {
   stack: undefined,
   stage: undefined,
   purpose: undefined,
+  hostChain: undefined,
 }
 
 export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
@@ -60,6 +61,12 @@ export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
           : undefined,
         scalingFilters.purpose !== undefined
           ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
+          : undefined,
+        scalingFilters.hostChain !== undefined
+          ? scalingFilters.hostChain === 'Ethereum'
+            ? entry.type === 'layer2'
+            : entry.type === 'layer3' &&
+              entry.hostChainName === scalingFilters.hostChain
           : undefined,
       ].filter(notUndefined)
 

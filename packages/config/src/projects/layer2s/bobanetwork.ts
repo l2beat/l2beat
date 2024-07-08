@@ -3,6 +3,7 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -10,11 +11,11 @@ const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.EthereumBlobs],
   display: {
     name: 'Boba Network',
     shortName: 'Boba',
     slug: 'bobanetwork',
-    architectureImage: 'bobanetwork',
     description:
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
     purposes: ['Universal'],

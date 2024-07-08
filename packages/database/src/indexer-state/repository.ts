@@ -22,6 +22,16 @@ export class IndexerStateRepository {
     return `[${record.indexerId}]: ${record.safeHeight}`
   }
 
+  async getByIndexerIds(ids: string[]) {
+    const rows = await this.db
+      .selectFrom('public.indexer_state')
+      .selectAll()
+      .where('indexer_id', 'in', ids)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
   async findIndexerState(indexerId: string) {
     const row = await this.db
       .selectFrom('public.indexer_state')
