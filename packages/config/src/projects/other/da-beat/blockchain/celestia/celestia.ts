@@ -37,9 +37,14 @@ export const celestia: DaLayer = {
     hypr.id,
     stack.id,
   ],
+  /*
+    Node params sources:
+    - unbondingPeriod, block times (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
+    - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-4.md
+  */
   pruningWindow: 86400 * 30, // 30 days in seconds
-  consensusFinality: 1, // 1 second for tendermint
-  unbondingPeriod: 1814400, // 21 days
+  consensusFinality: 1, // 1 second for tendermint, time_iota_ms
+  unbondingPeriod: 1814400, // 21 days, staking.UnbondingTime
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
