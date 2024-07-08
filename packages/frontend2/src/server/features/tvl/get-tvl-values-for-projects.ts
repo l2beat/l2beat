@@ -1,14 +1,12 @@
 import { type Value } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { type Dictionary, groupBy } from 'lodash'
 import { db } from '~/server/database'
 import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
-import {
-  type TvlChartRange,
-  getRangeConfig,
-  type rangeToResolution,
-} from './range-utils'
+import { type TvlChartRange, getRangeConfig } from './range-utils'
+import { getValuesStatus } from './get-tvl-values-status'
+import { range as lodashRange } from 'lodash'
 
 export async function getTvlValuesForProjects(
   projects: TvlProject[],
@@ -17,7 +15,7 @@ export async function getTvlValuesForProjects(
   const target = getTvlTargetTimestamp()
   const { days, resolution } = getRangeConfig(range)
   const from = days && target.add(-days, 'days')
-  const values = await (from
+  const valueRecords = await (from
     ? db.value.getForProjectsInRange(
         projects.map((p) => p.id),
         {
@@ -26,81 +24,79 @@ export async function getTvlValuesForProjects(
         },
       )
     : db.value.getForProjects(projects.map((p) => p.id)))
-  const valuesByProject = groupBy(values, 'projectId')
+
+  const minTimestamp = valueRecords[0]?.timestamp
+
+  if (!minTimestamp) {
+    return {}
+  }
+
+  const timestamps = lodashRange(
+    (target.toNumber() - minTimestamp.toNumber()) /
+      (resolution === 'hourly'
+        ? 3600
+        : resolution === 'sixHourly'
+          ? 21600
+          : 86400) +
+      1,
+  ).map((i) => {
+    return minTimestamp.add(
+      i * (resolution === 'sixHourly' ? 6 : 1),
+      resolution === 'hourly'
+        ? 'hours'
+        : resolution === 'sixHourly'
+          ? 'hours'
+          : 'days',
+    )
+  })
+
+  const valuesByProject = groupBy(valueRecords, 'projectId')
 
   const result: Dictionary<Dictionary<Value[]>> = {}
-
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
-    const valuesByTimestamp = groupBy(projectValues, 'timestamp')
     const project = projects.find((p) => p.id === projectId)
     assert(project, `Project ${projectId.toString()} not found`)
 
+    const valuesByTimestamp = groupBy(projectValues, 'timestamp')
+    const status = getValuesStatus(project, valuesByTimestamp, target)
+
     const valuesByTimestampForProject: Dictionary<Value[]> = {}
+    for (const timestamp of timestamps) {
+      const values = (valuesByTimestamp[timestamp.toString()] ?? []).filter(
+        (v) => {
+          if (status.excluded.has(v.dataSource)) {
+            return false
+          }
+          const projectSource = project.sources.get(v.dataSource)
+          if (!projectSource) return false
 
-    for (const [timestamp, values] of Object.entries(valuesByTimestamp)) {
-      if (!shouldTimestampBeCalculated(resolution, new UnixTime(+timestamp))) {
-        continue
-      }
-
-      const configuredSources = getConfiguredSourcesForTimestamp(
-        values,
-        project,
-        new UnixTime(+timestamp),
+          return timestamp.gte(projectSource.minTimestamp)
+        },
       )
 
-      const onlyConfiguredValues = values.filter((v) =>
-        configuredSources.includes(v.dataSource),
-      )
+      const interpolatedValues = status.lagging
+        .filter((l) => timestamp.gt(l.latestTimestamp))
+        .map((l) => {
+          const record = valuesByTimestamp[l.latestTimestamp.toString()]?.find(
+            (v) => l.id === v.dataSource,
+          )
+          assert(
+            record,
+            `Value should be defined for ${
+              l.id
+            } at ${l.latestTimestamp.toString()} in project ${projectId}`,
+          )
+          return record
+        })
 
-      valuesByTimestampForProject[timestamp] = onlyConfiguredValues
+      valuesByTimestampForProject[timestamp.toString()] = [
+        ...values,
+        ...interpolatedValues,
+      ]
     }
-
-    // TODO: Interpolate here
-    assert(
-      valuesByTimestampForProject[target.toString()],
-      `Missing value for last hour for ${projectId}, timestamp: ${target.toString()}`,
-    )
 
     result[projectId] = valuesByTimestampForProject
   }
 
   return result
-}
-
-/**
- * Ideally we shouldn't need this method, as we should get only the values we need from the database.
- */
-function shouldTimestampBeCalculated(
-  resolution: ReturnType<typeof rangeToResolution>,
-  timestamp: UnixTime,
-) {
-  return (
-    resolution === 'hourly' ||
-    (resolution === 'sixHourly' && timestamp.isFull('six hours')) ||
-    (resolution === 'daily' && timestamp.isFull('day'))
-  )
-}
-
-function getConfiguredSourcesForTimestamp(
-  values: Value[],
-  project: TvlProject,
-  timestamp: UnixTime,
-) {
-  const valuesSources = values.map((x) => x.dataSource)
-  const configuredSources = Array.from(project.sources.values())
-    .filter((s) => s.minTimestamp.lte(timestamp))
-    .map((s) => s.name)
-
-  const missingSources = configuredSources.filter(
-    (s) => !valuesSources.includes(s),
-  )
-
-  // TODO: Interpolate here
-  assert(
-    missingSources.length === 0,
-    `Missing data sources [${missingSources.join(
-      ', ',
-    )}] for ${project.id.toString()} at ${timestamp.toNumber()}`,
-  )
-  return configuredSources
 }
