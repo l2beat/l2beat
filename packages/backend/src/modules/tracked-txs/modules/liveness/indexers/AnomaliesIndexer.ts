@@ -106,14 +106,14 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       const [batchSubmissions, stateUpdates, proofSubmissions] =
         groupByType(livenessRecords)
 
-      const test = this.detectAnomalies(
-        project.projectId,
-        'batchSubmissions',
-        batchSubmissions,
-        to,
+      anomalies.push(
+        ...this.detectAnomalies(
+          project.projectId,
+          'batchSubmissions',
+          batchSubmissions,
+          to,
+        ),
       )
-
-      anomalies.push(...test)
 
       anomalies.push(
         ...this.detectAnomalies(
@@ -168,7 +168,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
       interval.record.timestamp.lte(to.add(-1 * this.SYNC_RANGE, 'days')),
     )
 
-    const { means, stdDevs } = this.calculate30DayRollingStats(
+    const { means, stdDeviations } = this.calculate30DayRollingStats(
       intervals,
       0,
       lastIndex,
@@ -179,7 +179,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     currentRange.forEach((interval) => {
       const point = interval.record.timestamp.toStartOf('minute').toNumber()
       const mean = means.get(point)
-      const stdDev = stdDevs.get(
+      const stdDev = stdDeviations.get(
         interval.record.timestamp.toStartOf('minute').toNumber(),
       )
 
@@ -207,11 +207,11 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     upTo: UnixTime,
   ): {
     means: Map<number, number>
-    stdDevs: Map<number, number>
+    stdDeviations: Map<number, number>
   } {
     const result = {
       means: new Map<number, number>(),
-      stdDevs: new Map<number, number>(),
+      stdDeviations: new Map<number, number>(),
     }
 
     let timeStart = upTo
@@ -229,7 +229,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     )
 
     result.means.set(timeStart.toNumber(), mean)
-    result.stdDevs.set(
+    result.stdDeviations.set(
       timeStart.toNumber(),
       rollingStdDev.getStandardDeviation(),
     )
@@ -254,7 +254,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
       const mean = sum / (windowEndIndex - windowStartIndex)
       result.means.set(timeStart.toNumber(), mean)
-      result.stdDevs.set(
+      result.stdDeviations.set(
         timeStart.toNumber(),
         rollingStdDev.getStandardDeviation(),
       )

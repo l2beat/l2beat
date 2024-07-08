@@ -66,13 +66,49 @@ describe(AnomaliesIndexer.name, () => {
       expect(result).toEqual(to)
     })
 
-    it('should adjust and update', async () => {
+    it('should update', async () => {
       const mockAnomaliesRepository = mockObject<AnomaliesRepository>({
         addOrUpdateMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
         tag: 'update',
+        anomaliesRepository: mockAnomaliesRepository,
+      })
+
+      const mockAnomalies: AnomaliesRecord[] = [
+        {
+          timestamp: NOW.add(-1, 'days'),
+          projectId: MOCK_PROJECTS[0].projectId,
+          subtype: 'batchSubmissions',
+          duration: 100,
+        },
+      ]
+
+      const mockCalculateAnomalies = mockFn().resolvesTo(mockAnomalies)
+      indexer.getAnomalies = mockCalculateAnomalies
+
+      const from = NOW.add(-1, 'days').add(-1, 'hours').toNumber()
+      const to = NOW
+
+      const result = await indexer.update(from, to.toNumber())
+
+      expect(mockCalculateAnomalies).toHaveBeenCalledWith(NOW.toStartOf('day'))
+
+      expect(mockAnomaliesRepository.addOrUpdateMany).toHaveBeenCalledWith(
+        mockAnomalies,
+      )
+
+      expect(result).toEqual(NOW.toStartOf('day').toNumber())
+    })
+
+    it('should adjust and update', async () => {
+      const mockAnomaliesRepository = mockObject<AnomaliesRepository>({
+        addOrUpdateMany: mockFn().resolvesTo(1),
+      })
+
+      const indexer = createIndexer({
+        tag: 'adjust-update',
         anomaliesRepository: mockAnomaliesRepository,
       })
 
