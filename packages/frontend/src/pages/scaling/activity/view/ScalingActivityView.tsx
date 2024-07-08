@@ -1,14 +1,14 @@
 import React from 'react'
 
+import uniq from 'lodash/uniq'
+import { RichSelect } from '../../../../components/RichSelect'
 import { TableView } from '../../../../components/table/TableView'
+import { generateSlugList } from '../../../../components/table/filters/FiltersWrapper'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
 import { RowConfig } from '../../../../components/table/types'
 import { getScalingActivityColumnsConfig } from '../props/getScalingActivityColumnsConfig'
 import { ActivityViewEntry } from '../types'
-import uniq from 'lodash/uniq'
-import { generateSlugList } from '../../../../components/table/filters/FiltersWrapper'
-import { RichSelect } from '../../../../components/RichSelect'
 export interface ScalingActivityViewProps {
   items: ActivityViewEntry[]
 }
