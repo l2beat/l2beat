@@ -18,6 +18,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -44,6 +45,7 @@ const upgradeDelay = 0
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata],
   display: {
     name: 'Loopring',
     slug: 'loopring',
@@ -132,7 +134,7 @@ export const loopring: Layer2 = {
           selector: '0xdcb2aa31',
           functionSignature:
             'function submitBlocksWithCallbacks(bool isDataCompressed, bytes calldata data, ((uint16,(uint16,uint16,uint16,bytes)[])[], address[])  calldata config)',
-          sinceTimestampInclusive: new UnixTime(1616396742),
+          sinceTimestamp: new UnixTime(1616396742),
         },
       },
     ],

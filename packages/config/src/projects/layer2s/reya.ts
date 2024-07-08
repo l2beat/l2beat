@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
@@ -8,6 +9,7 @@ const discovery = new ProjectDiscovery('reya')
 
 export const reya: Layer2 = orbitStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     name: 'Reya',
     slug: 'reya',
@@ -54,7 +56,7 @@ export const reya: Layer2 = orbitStackL2({
         selector: '0x8f111f3c',
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestampInclusive: new UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
+        sinceTimestamp: new UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
       },
     },
     // add other SC-supported function signatures here if the sequencer changes behaviour (cp. kinto)
@@ -69,7 +71,7 @@ export const reya: Layer2 = orbitStackL2({
         selector: '0xa04cee60',
         functionSignature:
           'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestampInclusive: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
+        sinceTimestamp: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
       },
     },
   ],

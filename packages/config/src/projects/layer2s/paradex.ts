@@ -26,6 +26,7 @@ import {
   getSHARPVerifierGovernors,
 } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -63,6 +64,7 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
+  badges: [Badge.VM.CairoVM, Badge.DA.EthereumBlobs, Badge.Infra.SHARP],
   display: {
     name: 'Paradex',
     slug: 'paradex',
@@ -107,8 +109,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1636978914),
-          untilTimestampExclusive: new UnixTime(1704729971),
+          sinceTimestamp: new UnixTime(1636978914),
+          untilTimestamp: new UnixTime(1704729971),
           programHashes: [
             '3258367057337572248818716706664617507069572185152472699066582725377748079373',
           ],
@@ -118,8 +120,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1704729971),
-          untilTimestampExclusive: new UnixTime(1706626427),
+          sinceTimestamp: new UnixTime(1704729971),
+          untilTimestamp: new UnixTime(1706626427),
           programHashes: [
             '54878256403880350656938046611252303365750679698042371543935159963667935317',
           ],
@@ -130,8 +132,8 @@ export const paradex: Layer2 = {
         query: {
           // Updated to this program hash in tx 0x7eb527c897e8449234ad770573a2a5ba3737e6b9014600c261741bc258849639
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1706626427),
-          untilTimestampExclusive: new UnixTime(1710346919),
+          sinceTimestamp: new UnixTime(1706626427),
+          untilTimestamp: new UnixTime(1710346919),
           programHashes: [
             '2479841346739966073527450029179698923866252973805981504232089731754042431018',
           ],
@@ -141,8 +143,8 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1710346919),
-          untilTimestampExclusive: new UnixTime(1710764843),
+          sinceTimestamp: new UnixTime(1710346919),
+          untilTimestamp: new UnixTime(1710764843),
           programHashes: [
             '109586309220455887239200613090920758778188956576212125550190099009305121410',
           ],
@@ -152,7 +154,7 @@ export const paradex: Layer2 = {
         uses: [{ type: 'liveness', subtype: 'proofSubmissions' }],
         query: {
           formula: 'sharpSubmission',
-          sinceTimestampInclusive: new UnixTime(1710764843),
+          sinceTimestamp: new UnixTime(1710764843),
           programHashes: [
             '3383082961563516565935611087683915026448707331436034043529592588079494402084',
           ],
@@ -168,7 +170,7 @@ export const paradex: Layer2 = {
           selector: '0x77552641',
           functionSignature:
             'function updateState(uint256[] programOutput, uint256 onchainDataHash, uint256 onchainDataSize)',
-          sinceTimestampInclusive: new UnixTime(1689850631),
+          sinceTimestamp: new UnixTime(1689850631),
         },
       },
       {
@@ -181,7 +183,7 @@ export const paradex: Layer2 = {
           selector: '0xb72d42a1',
           functionSignature:
             'function updateStateKzgDA(uint256[] programOutput, bytes kzgProof)',
-          sinceTimestampInclusive: new UnixTime(1710346919),
+          sinceTimestamp: new UnixTime(1710346919),
         },
       },
     ],

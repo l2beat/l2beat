@@ -3,6 +3,7 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { NUGGETS } from '../../common'
 import { subtractOneAfterBlockInclusive } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -10,11 +11,11 @@ const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.EthereumBlobs],
   display: {
     name: 'Boba Network',
     shortName: 'Boba',
     slug: 'bobanetwork',
-    architectureImage: 'bobanetwork',
     description:
       'Boba is an OP stack Optimistic Rollup built by the Enya team as core contributors to the Boba Foundation.',
     purposes: ['Universal'],
@@ -88,8 +89,8 @@ export const bobanetwork: Layer2 = opStackL2({
         address: EthereumAddress('0xfBd2541e316948B259264c02f370eD088E04c3Db'),
         selector: '0xd0f89344',
         functionSignature: 'function appendSequencerBatch()',
-        sinceTimestampInclusive: new UnixTime(1635386025),
-        untilTimestampExclusive: new UnixTime(1713303530),
+        sinceTimestamp: new UnixTime(1635386025),
+        untilTimestamp: new UnixTime(1713303530),
       },
     },
     {
@@ -101,7 +102,7 @@ export const bobanetwork: Layer2 = opStackL2({
         formula: 'transfer',
         from: EthereumAddress('0xe1B64045351B0B6e9821F19b39f81bc4711D2230'),
         to: EthereumAddress('0xfFF0000000000000000000000000000000000288'),
-        sinceTimestampInclusive: new UnixTime(1713303530),
+        sinceTimestamp: new UnixTime(1713303530),
       },
     },
     {
@@ -115,8 +116,8 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x8ca5cbb9',
         functionSignature:
           'function appendStateBatch(bytes32[] _batch,uint256 _shouldStartAtElement)',
-        sinceTimestampInclusive: new UnixTime(1635386294),
-        untilTimestampExclusive: new UnixTime(1713303530),
+        sinceTimestamp: new UnixTime(1635386294),
+        untilTimestamp: new UnixTime(1713303530),
       },
     },
     {
@@ -130,7 +131,7 @@ export const bobanetwork: Layer2 = opStackL2({
         selector: '0x9aaab648',
         functionSignature:
           'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-        sinceTimestampInclusive: new UnixTime(1713303530),
+        sinceTimestamp: new UnixTime(1713303530),
       },
     },
   ],

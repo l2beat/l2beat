@@ -20,6 +20,7 @@ import { subtractOne } from '../../common/assessCount'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -70,6 +71,7 @@ const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.OPStack],
   display: {
     name: 'Kroma',
     slug: 'kroma',
@@ -173,7 +175,7 @@ export const kroma: Layer2 = {
           to: EthereumAddress(
             discovery.getContractValue('SystemConfig', 'sequencerInbox'),
           ),
-          sinceTimestampInclusive: new UnixTime(1693883663),
+          sinceTimestamp: new UnixTime(1693883663),
         },
       },
       {
@@ -189,7 +191,7 @@ export const kroma: Layer2 = {
           selector: '0x5a045f78',
           functionSignature:
             'function submitL2Output(bytes32 _outputRoot,uint256 _l2BlockNumber,bytes32 _l1BlockHash,uint256 _l1BlockNumber)',
-          sinceTimestampInclusive: new UnixTime(1693880579),
+          sinceTimestamp: new UnixTime(1693880579),
         },
       },
     ],

@@ -10,6 +10,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -19,6 +20,7 @@ const discovery = new ProjectDiscovery('honeypot')
 export const honeypot: Layer2 = {
   type: 'layer2',
   id: ProjectId('honeypot'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Stack.Cartesi],
   display: {
     name: 'Honeypot (Cartesi)',
     shortName: 'Honeypot',
@@ -103,7 +105,7 @@ export const honeypot: Layer2 = {
           selector: '0xddfdfbb0',
           functionSignature:
             'function submitClaim(bytes calldata _claimData) external onlyOwner',
-          sinceTimestampInclusive: new UnixTime(1694467715),
+          sinceTimestamp: new UnixTime(1694467715),
         },
       },
     ],

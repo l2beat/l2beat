@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -58,6 +59,12 @@ export const mantapacific: Layer2 = opStackL2({
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
     multicallContracts: [
       {
+        sinceBlock: 332890,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+      {
         sinceBlock: 54816,
         batchSize: 150,
         address: EthereumAddress('0x9731502B98F65BBb573D0106ECd9E4097dbcCD30'),
@@ -88,4 +95,5 @@ export const mantapacific: Layer2 = opStackL2({
       description: 'Manta Pacific is live on mainnet.',
     },
   ],
+  badges: [Badge.DA.Celestia, Badge.VM.EVM, Badge.Stack.OPStack],
 })

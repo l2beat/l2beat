@@ -1,10 +1,12 @@
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('hychain', 'ethereum')
 
 export const hychain: Layer2 = orbitStackL2({
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',

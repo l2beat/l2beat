@@ -18,12 +18,19 @@ describeDatabase(PriceRepository.name, (knex, kysely) => {
       await repository.deleteAll()
     })
 
-    describe(PriceRepository.prototype.getByConfigId.name, () => {
-      it('gets by id', async () => {
-        const record = saved('a', UnixTime.ZERO, 1)
-        await repository.addMany([record, saved('b', UnixTime.ZERO, 2)])
-        const result = await repository.getByConfigId(record.configId)
-        expect(result).toEqual([record])
+    describe(PriceRepository.prototype.getByTimestamp.name, () => {
+      it('gets by timestamp', async () => {
+        await repository.addMany([
+          saved('a', new UnixTime(100), 1),
+          saved('b', new UnixTime(100), 1),
+          saved('a', new UnixTime(200), 2),
+          saved('b', new UnixTime(200), 2),
+        ])
+        const result = await repository.getByTimestamp(new UnixTime(200))
+        expect(result).toEqual([
+          saved('a', new UnixTime(200), 2),
+          saved('b', new UnixTime(200), 2),
+        ])
       })
     })
 
@@ -57,6 +64,22 @@ describeDatabase(PriceRepository.name, (knex, kysely) => {
           saved('a', new UnixTime(300), 100),
           saved('b', new UnixTime(300), 100),
         ])
+      })
+    })
+
+    describe(PriceRepository.prototype.findByConfigAndTimestamp.name, () => {
+      it('finds by config and timestamp', async () => {
+        await repository.addMany([
+          saved('a', new UnixTime(100), 1),
+          saved('b', new UnixTime(100), 1),
+          saved('a', new UnixTime(200), 2),
+          saved('b', new UnixTime(200), 2),
+        ])
+        const result = await repository.findByConfigAndTimestamp(
+          'a'.repeat(12),
+          new UnixTime(200),
+        )
+        expect(result).toEqual(saved('a', new UnixTime(200), 2))
       })
     })
 

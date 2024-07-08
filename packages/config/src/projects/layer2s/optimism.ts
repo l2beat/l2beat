@@ -21,6 +21,7 @@ import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -87,6 +88,12 @@ const livenessInterval = discovery.getContractValue<number>(
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
+  badges: [
+    Badge.DA.EthereumBlobs,
+    Badge.VM.EVM,
+    Badge.Infra.Superchain,
+    Badge.Other.Governance,
+  ],
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
@@ -200,7 +207,7 @@ export const optimism: Layer2 = {
           formula: 'transfer',
           from: sequencerAddress,
           to: sequencerInbox,
-          sinceTimestampInclusive: genesisTimestamp,
+          sinceTimestamp: genesisTimestamp,
         },
       },
       {
@@ -216,8 +223,8 @@ export const optimism: Layer2 = {
           selector: '0x9aaab648',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestampInclusive: new UnixTime(1660662182),
-          untilTimestampExclusive: new UnixTime(1718039363),
+          sinceTimestamp: new UnixTime(1660662182),
+          untilTimestamp: new UnixTime(1718039363),
         },
       },
       {
@@ -231,7 +238,7 @@ export const optimism: Layer2 = {
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestampInclusive: new UnixTime(1718039363), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
+          sinceTimestamp: new UnixTime(1718039363), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
         },
       },
     ],
