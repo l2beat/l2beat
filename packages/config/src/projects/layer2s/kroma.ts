@@ -20,6 +20,7 @@ import { subtractOne } from '../../common/assessCount'
 import { RISK_VIEW } from '../../common/riskView'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -70,6 +71,7 @@ const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.OPStack],
   display: {
     name: 'Kroma',
     slug: 'kroma',

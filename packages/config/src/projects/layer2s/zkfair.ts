@@ -18,6 +18,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zkfair')
@@ -87,6 +88,7 @@ const requiredSignatures = discovery.getContractValue<number>(
 
 export const zkfair: Layer2 = {
   type: 'layer2',
+  badges: [Badge.VM.EVM, Badge.Stack.PolygonCDK],
   id: ProjectId('zkfair'),
   display: {
     name: 'ZKFair',

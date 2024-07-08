@@ -1,3 +1,133 @@
+Generated with discovered.json: 0xf31b08f14b13a96a57b0105fef7cb9920faa38b6
+
+# Diff at Mon, 08 Jul 2024 06:07:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e192ffbc9e265fdc44012a487bab5f0859ffe881 block: 20231628
+- current block number: 20259894
+
+## Description
+
+Batches are reverted [in this transaction](https://app.blocksec.com/explorer/tx/eth/0xf58cd0223418a4dd390be63d67c31ccd3b05a82d59461106227664e8fc417ac5). Unclear what justified this action.
+
+## Watched changes
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.revertedBatches.54:
++        {"batchIndex":275173}
+      values.revertedBatches.53:
++        {"batchIndex":275172}
+      values.revertedBatches.52:
++        {"batchIndex":275171}
+      values.revertedBatches.51:
++        {"batchIndex":275170}
+      values.revertedBatches.50:
++        {"batchIndex":275169}
+      values.revertedBatches.49:
++        {"batchIndex":275168}
+      values.revertedBatches.48:
++        {"batchIndex":275167}
+      values.revertedBatches.47:
++        {"batchIndex":275166}
+      values.revertedBatches.46:
++        {"batchIndex":275165}
+      values.revertedBatches.45:
++        {"batchIndex":275164}
+      values.revertedBatches.44:
++        {"batchIndex":275163}
+      values.revertedBatches.43:
++        {"batchIndex":275162}
+      values.revertedBatches.42:
++        {"batchIndex":275161}
+      values.revertedBatches.41:
++        {"batchIndex":275160}
+      values.revertedBatches.40:
++        {"batchIndex":275159}
+      values.revertedBatches.39:
++        {"batchIndex":275158}
+      values.revertedBatches.38:
++        {"batchIndex":275157}
+      values.revertedBatches.37:
++        {"batchIndex":275156}
+      values.revertedBatches.36:
++        {"batchIndex":275155}
+      values.revertedBatches.35:
++        {"batchIndex":275154}
+      values.revertedBatches.34:
++        {"batchIndex":275153}
+      values.revertedBatches.33:
++        {"batchIndex":275152}
+      values.revertedBatches.32:
++        {"batchIndex":275151}
+      values.revertedBatches.31:
++        {"batchIndex":275150}
+      values.revertedBatches.30:
++        {"batchIndex":275149}
+      values.revertedBatches.29:
++        {"batchIndex":275148}
+      values.revertedBatches.28:
++        {"batchIndex":275147}
+      values.revertedBatches.27:
++        {"batchIndex":275146}
+      values.revertedBatches.26:
++        {"batchIndex":275145}
+      values.revertedBatches.25:
++        {"batchIndex":275144}
+      values.revertedBatches.24:
++        {"batchIndex":275143}
+      values.revertedBatches.23:
++        {"batchIndex":275142}
+      values.revertedBatches.22:
++        {"batchIndex":275141}
+      values.revertedBatches.21:
++        {"batchIndex":275140}
+      values.revertedBatches.20:
++        {"batchIndex":275139}
+      values.revertedBatches.19:
++        {"batchIndex":275138}
+      values.revertedBatches.18:
++        {"batchIndex":275137}
+      values.revertedBatches.17:
++        {"batchIndex":275136}
+      values.revertedBatches.16:
++        {"batchIndex":275135}
+      values.revertedBatches.15:
++        {"batchIndex":275134}
+      values.revertedBatches.14:
++        {"batchIndex":275133}
+      values.revertedBatches.13:
++        {"batchIndex":275132}
+      values.revertedBatches.12:
++        {"batchIndex":275131}
+      values.revertedBatches.11:
++        {"batchIndex":275130}
+      values.revertedBatches.10:
++        {"batchIndex":275129}
+      values.revertedBatches.9:
++        {"batchIndex":275128}
+      values.revertedBatches.8:
++        {"batchIndex":275127}
+      values.revertedBatches.7:
++        {"batchIndex":275126}
+      values.revertedBatches.6:
++        {"batchIndex":275125}
+      values.revertedBatches.5:
++        {"batchIndex":275124}
+      values.revertedBatches.4:
++        {"batchIndex":275123}
+      values.revertedBatches.3:
++        {"batchIndex":275122}
+      values.revertedBatches.2:
++        {"batchIndex":275121}
+      values.revertedBatches.1:
++        {"batchIndex":275120}
+      values.revertedBatches.0:
++        {"batchIndex":275119}
+    }
+```
+
 Generated with discovered.json: 0xe79e01ccb7168b40e4ef5149d2f69fe16ddd49ca
 
 # Diff at Thu, 04 Jul 2024 07:23:55 GMT:

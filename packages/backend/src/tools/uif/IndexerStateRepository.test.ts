@@ -36,28 +36,6 @@ describeDatabase(IndexerStateRepository.name, (knex, kysely) => {
       })
     })
 
-    describe(IndexerStateRepository.prototype.getByIndexerIdLike.name, () => {
-      it('returns indexer matching like statement', async () => {
-        const record = {
-          indexerId: 'indexer_a::tag',
-          safeHeight: 12345,
-          minTimestamp: UnixTime.now(),
-          configHash: '0x123456',
-        }
-        await repository.addOrUpdate(record)
-        const record2 = {
-          indexerId: 'indexer_b::tag',
-          safeHeight: 12345,
-          minTimestamp: UnixTime.now(),
-          configHash: '0x123456',
-        }
-        await repository.addOrUpdate(record2)
-
-        const indexerState = await repository.getByIndexerIdLike('indexer_a%')
-        expect(indexerState).toEqual([record])
-      })
-    })
-
     describe(IndexerStateRepository.prototype.getByIndexerIds.name, () => {
       it('returns indexer matching like statement', async () => {
         const record = {

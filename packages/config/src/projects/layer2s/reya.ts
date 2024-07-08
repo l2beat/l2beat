@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
@@ -8,6 +9,7 @@ const discovery = new ProjectDiscovery('reya')
 
 export const reya: Layer2 = orbitStackL2({
   discovery,
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     name: 'Reya',
     slug: 'reya',

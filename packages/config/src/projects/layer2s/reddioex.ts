@@ -22,6 +22,7 @@ import {
   getSHARPVerifierUpgradeDelay,
 } from '../../discovery/starkware'
 import { delayDescriptionFromString } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('reddioex')
@@ -50,6 +51,7 @@ const committee = getCommittee(discovery)
 export const reddioex: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddioex'),
+  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
   display: {
     name: 'ReddioEx',
     slug: 'reddioex',

@@ -26,6 +26,7 @@ import {
   getSHARPVerifierGovernors,
 } from '../../discovery/starkware'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -63,6 +64,7 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
+  badges: [Badge.VM.CairoVM, Badge.DA.EthereumBlobs, Badge.Infra.SHARP],
   display: {
     name: 'Paradex',
     slug: 'paradex',

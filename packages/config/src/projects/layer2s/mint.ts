@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -8,6 +9,12 @@ const discovery = new ProjectDiscovery('mint')
 
 export const mint: Layer2 = opStackL2({
   discovery,
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.OPStack,
+    Badge.DA.EthereumBlobs,
+    Badge.RaaS.Conduit,
+  ],
   display: {
     name: 'Mint',
     slug: 'mint',

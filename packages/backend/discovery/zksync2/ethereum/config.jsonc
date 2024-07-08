@@ -108,6 +108,11 @@
         "getVerifierParams": {
           "description": "Verifier parameters used for proving batches",
           "severity": "LOW"
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
         }
       }
     },

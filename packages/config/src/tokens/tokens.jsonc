@@ -355,6 +355,11 @@
       "address": "0x92D6C1e31e14520e676a687F0a93788B716BEff5"
     },
     {
+      "symbol": "eETH",
+      "address": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
+      "category": "ether"
+    },
+    {
       "symbol": "ELG",
       "address": "0xA2085073878152aC3090eA13D1e41bD69e60Dc99"
     },
@@ -1297,6 +1302,43 @@
   ],
   "arbitrum": [
     {
+      "symbol": "weETH",
+      "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
+      "category": "ether",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "DAI",
+      "address": "0xDA10009cBd5D07dd0CeCc66161FC93D7c9000da1",
+      "category": "stablecoin",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wUSDM",
+      "category": "stablecoin",
+      "address": "0x57F5E098CaD7A3D1Eed53991D4d66C45C9AF7812",
+      "supply": "zero",
+      "coingeckoId": "mountain-protocol-usdm", // wusdm on coingecko is broken so we use usdm
+      "source": "native"
+    },
+    {
+      "symbol": "USDM",
+      "category": "stablecoin",
+      "address": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
+      "supply": "totalSupply",
+      "coingeckoId": "mountain-protocol-usdm",
+      "source": "native"
+    },
+    {
+      "symbol": "SolvBTC",
+      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+      "supply": "totalSupply",
+      "coingeckoId": "solv-btc",
+      "source": "native"
+    },
+    {
       "symbol": "GHO",
       "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
       "category": "stablecoin",
@@ -1930,6 +1972,20 @@
   ],
   "base": [
     {
+      "symbol": "DAI",
+      "address": "0x50c5725949A6F0c72E6C4a641F24049A917DB0Cb",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "stablecoin"
+    },
+    {
+      "symbol": "wstETH",
+      "address": "0xc1CBa3fCea344f92D9239c08C0568f6F2F0ee452",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
       "symbol": "WETH",
       "address": "0x4200000000000000000000000000000000000006",
       "source": "canonical",
@@ -2467,116 +2523,12 @@
   ],
   "kinto": [
     {
-      "symbol": "USDe",
-      "category": "stablecoin",
-      "address": "0x05dE0003C333A503bea5224fCc64f0D4b5446C38",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "ethena-usde"
-    },
-    {
-      "symbol": "WETH",
-      "category": "ether",
-      "address": "0x0E7000967bcB5fC76A5A89082db04ed0Bf9548d8",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "weth"
-    },
-    {
       "symbol": "USD+",
       "address": "0x6F086dB0f6A621a915bC90295175065c9e5d9b8c",
       "category": "stablecoin",
       "source": "native",
       "supply": "totalSupply",
       "coingeckoId": "dinari-usd"
-    },
-    {
-      "symbol": "weETH",
-      "category": "ether",
-      "address": "0x0Ee700095AeDFe0814fFf7d6DFD75461De8e2b19",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "wrapped-eeth"
-    },
-    {
-      "symbol": "wstETH",
-      "category": "ether",
-      "address": "0x057e70cCa0dC435786a50FcF440bf8FcC1eEAf17",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "wrapped-steth"
-    },
-    {
-      "symbol": "DAI",
-      "address": "0xdA100067134959575D87D11d54F2722Ba3C934aB",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "dai"
-    },
-    {
-      "symbol": "ENA",
-      "address": "0xE040001C257237839a69E9683349C173297876F0",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "ethena"
-    },
-    {
-      "symbol": "ETHFI",
-      "address": "0xe70F10CD4bD932a28b80d48D771026a4c88E6285",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "ether-fi"
-    },
-    {
-      "symbol": "sDAI",
-      "address": "0x5da1004F7341D510C6651C67B4EFcEEA76Cac0E8",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "savings-dai"
-    },
-    {
-      "symbol": "sUSDe",
-      "address": "0x505de0f7a5d786063348aB5BC31e3a21344fA7B0",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "ethena-staked-usde"
     }
   ],
   "kroma": [

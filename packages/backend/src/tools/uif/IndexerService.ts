@@ -6,7 +6,6 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { groupBy } from 'lodash'
 import {
   DatabaseMiddleware,
   DatabaseTransaction,
@@ -18,7 +17,7 @@ import {
 } from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'
 
-const CONSIDER_EXCLUDED_AFTER_DAYS = 7
+export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
 export class IndexerService {
   constructor(
@@ -123,52 +122,6 @@ export class IndexerService {
 
   // #endregion
 
-  async getValuesStatus(sources: string[], targetTimestamp: UnixTime) {
-    const excluded = new Set<string>()
-    const lagging = []
-
-    const indexersState =
-      await this.indexerStateRepository.getByIndexerIdLike('value_indexer::%')
-
-    const processed = new Set<string>()
-    for (const indexer of indexersState) {
-      const [project, source] = indexer.indexerId.split('::')[1].split('_')
-      const valueId = `${project}_${source}`
-      processed.add(valueId)
-
-      const syncStatus = new UnixTime(indexer.safeHeight)
-      if (syncStatus.equals(targetTimestamp)) {
-        continue
-      }
-
-      // decide whether it is excluded or lagging
-      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
-        excluded.add(valueId)
-      } else {
-        lagging.push({
-          id: valueId,
-          latestTimestamp: syncStatus,
-        })
-      }
-    }
-
-    if (processed.size !== sources.length) {
-      const unprocessed = sources.filter((s) => !processed.has(s))
-      unprocessed.forEach((u) => excluded.add(u))
-    }
-
-    return {
-      excluded,
-      lagging: groupBy(
-        lagging.map((l) => ({
-          ...l,
-          project: l.id.split('_')[0],
-        })),
-        'project',
-      ),
-    }
-  }
-
   async getAmountsStatus(
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
@@ -206,7 +159,7 @@ export class IndexerService {
       processed.add(circulatingSupplyConfig.configId)
 
       const syncStatus = new UnixTime(indexer.safeHeight)
-      if (syncStatus.equals(targetTimestamp)) {
+      if (syncStatus.gte(targetTimestamp)) {
         continue
       }
 
@@ -258,7 +211,7 @@ export class IndexerService {
         continue
       }
       // fully synced configuration
-      if (syncStatus.equals(targetTimestamp)) {
+      if (syncStatus.gte(targetTimestamp)) {
         continue
       }
 

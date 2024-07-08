@@ -98,22 +98,24 @@ export class PricesDataService {
       return result
     }
 
-    for (const laggingConfig of status.lagging) {
-      const latestRecord =
-        await this.$.priceRepository.findByConfigAndTimestamp(
-          laggingConfig.id,
-          laggingConfig.latestTimestamp,
-        )
+    await Promise.all(
+      status.lagging.map(async (laggingConfig) => {
+        const latestRecord =
+          await this.$.priceRepository.findByConfigAndTimestamp(
+            laggingConfig.id,
+            laggingConfig.latestTimestamp,
+          )
 
-      assert(latestRecord, `Undefined record for ${laggingConfig.id}`)
+        assert(latestRecord, `Undefined record for ${laggingConfig.id}`)
 
-      result.lagging.set(laggingConfig.id, {
-        latestTimestamp: laggingConfig.latestTimestamp,
-        latestValue: latestRecord,
-      })
+        result.lagging.set(laggingConfig.id, {
+          latestTimestamp: laggingConfig.latestTimestamp,
+          latestValue: latestRecord,
+        })
 
-      result.prices.push({ ...latestRecord, timestamp: targetTimestamp })
-    }
+        result.prices.push({ ...latestRecord, timestamp: targetTimestamp })
+      }),
+    )
 
     return result
   }
