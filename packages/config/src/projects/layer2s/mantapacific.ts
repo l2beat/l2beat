@@ -57,6 +57,12 @@ export const mantapacific: Layer2 = opStackL2({
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
     multicallContracts: [
       {
+        sinceBlock: 332890,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+      {
         sinceBlock: 54816,
         batchSize: 150,
         address: EthereumAddress('0x9731502B98F65BBb573D0106ECd9E4097dbcCD30'),
