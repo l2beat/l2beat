@@ -1,18 +1,18 @@
-import { type Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { ContentWrapper } from '~/app/_components/content-wrapper';
-import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers';
-import { getDefaultMetadata } from '~/utils/get-default-metadata';
-import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/getZkCatalogView';
-import { projects } from '../_utils/projects';
-import { ZkCatalogProjectPage } from './_components/ZkCatalogProjectPage';
-import { getZkCatalogProjectDetails } from './_utils/getZkCatalogProjectDetails';
-import { env } from '~/env';
+import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { env } from '~/env'
+import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/getZkCatalogView'
+import { projects } from '../_utils/projects'
+import { ZkCatalogProjectPage } from './_components/ZkCatalogProjectPage'
+import { getZkCatalogProjectDetails } from './_utils/getZkCatalogProjectDetails'
 
 interface Props {
   params: {
-    project: string;
-  };
+    project: string
+  }
 }
 
 // Do we want to prerender these pages?
@@ -25,34 +25,34 @@ interface Props {
 export async function generateMetadata({
   params,
 }: Props): Promise<Metadata | null> {
-  const project = projects.find((p) => p.display.slug === params.project);
+  const project = projects.find((p) => p.display.slug === params.project)
 
   if (!project) {
-    return null;
+    return null
   }
 
   return getDefaultMetadata({
     title: `${project.display.name} - ZK Catalog`,
-  });
+  })
 }
 
 export default async function Page(props: Props) {
   if (!env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG) {
-    return notFound();
+    return notFound()
   }
 
-  const project = projects.find((p) => p.display.slug === props.params.project);
+  const project = projects.find((p) => p.display.slug === props.params.project)
 
   if (!project) {
-    return notFound();
+    return notFound()
   }
 
-  const verifiers = await getVerifiers();
+  const verifiers = await getVerifiers()
 
   const projectDetails = {
     details: getZkCatalogProjectDetails(project, verifiers),
     askForVerificationLink: ZK_CATALOG_ASK_FOR_VERIFICATION_LINK,
-  };
+  }
 
   return (
     <ContentWrapper>
@@ -60,5 +60,5 @@ export default async function Page(props: Props) {
         <ZkCatalogProjectPage {...projectDetails} />
       </main>
     </ContentWrapper>
-  );
+  )
 }

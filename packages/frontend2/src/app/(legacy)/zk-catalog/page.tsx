@@ -1,12 +1,12 @@
-import { type Metadata } from 'next';
-import { ContentWrapper } from '~/app/_components/content-wrapper';
-import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers';
-import { getDefaultMetadata } from '~/utils/get-default-metadata';
-import { ZkCatalogPage } from './_components/ZkCatalogPage';
-import { getZkCatalogView } from './_utils/getZkCatalogView';
-import { projects } from './_utils/projects';
-import { env } from '~/env';
-import { notFound } from 'next/navigation';
+import { type Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { ContentWrapper } from '~/app/_components/content-wrapper'
+import { env } from '~/env'
+import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { ZkCatalogPage } from './_components/ZkCatalogPage'
+import { getZkCatalogView } from './_utils/getZkCatalogView'
+import { projects } from './_utils/projects'
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',
@@ -14,15 +14,15 @@ export const metadata: Metadata = getDefaultMetadata({
   openGraph: {
     url: '/zk-catalog',
   },
-});
+})
 
 export default async function Page() {
   if (!env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG) {
-    return notFound();
+    return notFound()
   }
 
-  const verifiers = await getVerifiers();
-  const view = getZkCatalogView(projects, verifiers);
+  const verifiers = await getVerifiers()
+  const view = getZkCatalogView(projects, verifiers)
 
   return (
     <ContentWrapper>
@@ -39,5 +39,5 @@ export default async function Page() {
         <ZkCatalogPage {...view} />
       </main>
     </ContentWrapper>
-  );
+  )
 }
