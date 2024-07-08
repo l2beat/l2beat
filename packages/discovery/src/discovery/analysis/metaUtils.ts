@@ -2,15 +2,15 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
   ContractValue,
+  Permission,
+  StackRole,
   UpgradeabilityParameters,
 } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   ContractFieldSeverity,
   DiscoveryContractField,
-  Permission,
   StackCategory,
-  StackRole,
   ValueType,
 } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'

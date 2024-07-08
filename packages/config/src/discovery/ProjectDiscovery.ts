@@ -8,6 +8,7 @@ import type {
   ContractValue,
   DiscoveryOutput,
   EoaParameters,
+  StackRole,
 } from '@l2beat/discovery-types'
 import {
   assert,
@@ -669,7 +670,7 @@ export class ProjectDiscovery {
     return [...contracts, ...eoas]
   }
 
-  getPermissionsByRole(role: string): ScalingProjectPermissionedAccount[] {
+  getPermissionsByRole(role: StackRole): ScalingProjectPermissionedAccount[] {
     return this.getContractsAndEoas()
       .filter((x) => x.roles?.includes(role))
       .map((x) => this.formatPermissionedAccount(x.address))
@@ -751,7 +752,7 @@ export function stringFormat(str: string, ...val: string[]) {
   return str
 }
 
-const roleDescriptions: Record<string, string> = {
+const roleDescriptions: { [key in StackRole]: string } = {
   Sequencer:
     'Sequencer is an actor allowed to commit transactions from this layer to the host chain',
   Proposer:
@@ -759,6 +760,8 @@ const roleDescriptions: Record<string, string> = {
   Challenger:
     'Challenger is an actor allowed to delete state roots  proposed by a Proposer',
   Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
+  Validator:
+    'Validator is an actor that validates the correctness of state transitions',
 }
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

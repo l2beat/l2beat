@@ -1,4 +1,4 @@
-import { ManualProxyType } from '@l2beat/discovery-types'
+import { ManualProxyType, Permission, StackRole } from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
@@ -12,18 +12,6 @@ export const ValueType = z.enum([
   'RISK_PARAMETER',
   'PERMISSION',
 ])
-
-export type StackRole = z.infer<typeof StackRole>
-export const StackRole = z.enum([
-  'Sequencer',
-  'Proposer',
-  'Challenger',
-  'Guardian',
-  'Validator',
-])
-
-export type Permission = z.infer<typeof Permission>
-export const Permission = z.enum(['admin', 'owner'])
 
 export type StackCategory = z.infer<typeof StackCategory>
 export const StackCategory = z.enum([

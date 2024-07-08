@@ -1,7 +1,19 @@
+import { z } from 'zod'
 import { EthereumAddress } from './EthereumAddress'
 import { Hash256 } from './Hash256'
 import { UpgradeabilityParameters } from './proxyDetails'
 
+export type StackRole = z.infer<typeof StackRole>
+export const StackRole = z.enum([
+  'Sequencer',
+  'Proposer',
+  'Challenger',
+  'Guardian',
+  'Validator',
+])
+
+export type Permission = z.infer<typeof Permission>
+export const Permission = z.enum(['admin', 'owner'])
 export interface DiscoveryOutput {
   name: string
   chain: string
@@ -22,7 +34,7 @@ export interface DiscoveryCustomType {
 
 export interface Meta {
   descriptions?: string[]
-  roles?: string[]
+  roles?: StackRole[]
   assignedPermissions?: Record<string, EthereumAddress[]>
 }
 

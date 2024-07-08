@@ -15,8 +15,6 @@ export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
 export {
   RawDiscoveryConfig,
   StackCategory,
-  StackRole,
-  Permission,
   ContractFieldSeverity,
 } from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'

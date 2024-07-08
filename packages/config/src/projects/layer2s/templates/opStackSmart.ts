@@ -142,7 +142,7 @@ export function opStackSmartCommon(
   const l2OutputOracle =
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
-  
+
   // TODO: use in contracts
   // const upgradeability = templateVars.upgradeability ?? {
   //   upgradableBy: ['ProxyAdmin'],
@@ -292,7 +292,7 @@ export function opStackSmartCommon(
     },
     permissions: [
       ...templateVars.discovery.getDiscoveredRoles(),
-      ...templateVars.discovery.getDiscoveredPermissions()
+      ...templateVars.discovery.getDiscoveredPermissions(),
       // ...templateVars.discovery.getOpStackPermissions({
       //   batcherHash: 'Sequencer',
       //   PROPOSER: 'Proposer',

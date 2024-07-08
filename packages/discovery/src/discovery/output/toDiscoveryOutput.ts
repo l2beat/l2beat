@@ -25,7 +25,24 @@ export function setToArray<T>(set?: Set<T>): T[] | undefined {
   if (set === undefined) {
     return undefined
   }
-  return Array.from(set)
+  const result = Array.from(set)
+  result.sort()
+  return result
+}
+
+export function setsToArrays<T>(
+  obj?: Record<string, Set<T>>,
+): Record<string, T[]> | undefined {
+  if (obj === undefined) {
+    return undefined
+  }
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => {
+      const result = Array.from(value)
+      result.sort()
+      return [key, result]
+    }),
+  )
 }
 
 export function processAnalysis(
@@ -56,7 +73,7 @@ export function processAnalysis(
           categories: x.combinedMeta?.categories,
           types: x.combinedMeta?.types,
           severity: x.combinedMeta?.severity,
-          assignedPermissions: x.combinedMeta?.permissions,
+          assignedPermissions: setsToArrays(x.combinedMeta?.permissions),
           ignoreInWatchMode: x.ignoreInWatchMode,
           implementations:
             Object.keys(x.implementations).length === 0
@@ -85,7 +102,7 @@ export function processAnalysis(
         categories: x.combinedMeta?.categories,
         types: x.combinedMeta?.types,
         severity: x.combinedMeta?.severity,
-        assignedPermissions: x.combinedMeta?.permissions,
+        assignedPermissions: setsToArrays(x.combinedMeta?.permissions),
       })),
     abis,
   }
