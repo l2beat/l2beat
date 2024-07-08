@@ -3,7 +3,6 @@
   "compilerOptions": {
     "outDir": "dist",
     "incremental": true,
-    "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": false
   },
   "include": ["src"]
