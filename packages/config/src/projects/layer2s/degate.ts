@@ -1,6 +1,5 @@
 import {
   assert,
-  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
@@ -274,59 +273,6 @@ export const degate: Layer2 = {
       'The system does not begin with a genesis state; instead, it initiates from a zero state, as referenced in [`CreateEmptyState`](https://github.com/degatedev/degate-state-recover/blob/main/statemanager/state.go#L28).',
     dataFormat:
       'DeGate bundles off-chain transactions into [zkBlocks](https://github.com/degatedev/protocols/blob/degate_mainnet/Circuit%20Design.md#zkblock) and submits them to the blockchain. zkBlock data definition is documented [here](https://github.com/degatedev/protocols/blob/degate_mainnet/Smart%20Contract%20Design.md#zkblock-data-definition).',
-  },
-  stateValidation: {
-    description:
-      'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract.',
-    categories: [
-      {
-        title: 'ZK Circuits',
-        description:
-          'DeGate utilizes Groth16 for their proving system. The source code of the circuits can be found [here](https://github.com/degatedev/protocols/tree/degate_mainnet/packages/loopring_v3/circuit).',
-        risks: [
-          {
-            category: 'Funds can be lost if',
-            text: 'the proof system is implemented incorrectly.',
-          },
-        ],
-      },
-      {
-        title: 'Verification Keys Generation',
-        description:
-          'Groth16 requires a circuit specific trusted setup, so they run their own ceremony. The first phase is run using Powers of Tau ceremony. Some of the instructions on how to regenerate the verification keys can be found [here](https://github.com/degatedev/trusted_setup/tree/master).',
-      },
-    ],
-    proofVerification: {
-      aggregation: false,
-      requiredTools: [
-        {
-          name: 'Custom tool',
-          version: 'v1.1.0',
-          link: 'https://github.com/degatedev/trusted_setup/tree/master',
-        },
-      ],
-      verifiers: [
-        {
-          name: 'BlockVerifier',
-          description: 'DeGate utilizes Groth16 for their proving system.',
-          verified: 'no',
-          contractAddress: EthereumAddress(
-            '0xE3B7fE3ce0fa54C5AC7F48E7ED9E52dA045bE4d6',
-          ),
-          chainId: ChainId.ETHEREUM,
-          subVerifiers: [
-            {
-              name: 'Main circuit',
-              proofSystem: 'Groth16',
-              mainArithmetization: 'R1CS+QAP',
-              mainPCS: 'N/A',
-              trustedSetup: '?',
-              link: 'https://github.com/degatedev/protocols/tree/degate_mainnet/packages/loopring_v3/circuit',
-            },
-          ],
-        },
-      ],
-    },
   },
   permissions: [
     {
