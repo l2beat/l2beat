@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x78a7a0805b72d26f35cfb5404e40c67584804ce5
+
+# Diff at Mon, 08 Jul 2024 13:19:34 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d3100be6db9452d1d69138aa6310415ece67a66f block: 20232590
+- current block number: 20262044
+
+## Description
+
+New ProverSet implementation: add possibility for authorized admin to call depositBond and withdrawBond on TaikoL1contract. These function don't exist yet on TaikoL1contract, so this change is probably the beginning of a bigger update.
+
+ProverSet address changed in L1RollupAddressManager, old implementation still in use under ProverSetProxy
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.prover_set:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x518845daA8870bE2C59E49620Fc262AD48953C9a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../taiko/ethereum/{.flat@20232590 => .flat}/ProverSet.sol     | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+```
+
 Generated with discovered.json: 0x6ea276c960b8bccf9d9d8ae744307cada936d2e3
 
 # Diff at Wed, 03 Jul 2024 10:37:45 GMT:

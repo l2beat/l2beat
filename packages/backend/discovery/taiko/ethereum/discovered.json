@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20261369,
+  "blockNumber": 20262044,
   "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
   "version": 8,
   "contracts": [
@@ -56,25 +56,25 @@
           "checkEOAForCalldataDA": true
         },
         "getLastSyncedBlock": {
-          "blockId_": 141263,
-          "blockHash_": "0x3e2135b54942fa21520d6d52e01bf113e8cb7769b67e0df4309d2bc92c34a3ca",
-          "stateRoot_": "0xb134f585205502945a882e39abee0a02abd219bb8875e1c07e401b0aa7a3ac22"
+          "blockId_": 141615,
+          "blockHash_": "0x3e27848ac65fdc070d7b99658e1e107aee70683f4293c8846e79634797baca85",
+          "stateRoot_": "0x0c5219889082793eebf74d07603eb6301023a41e19b172cd5f4648e118743dd8"
         },
         "getLastVerifiedBlock": {
-          "blockId_": 141276,
-          "blockHash_": "0x72472b74104c35ee7df606bfaae76f148d941b9dbaa03bf453210431ed24505b",
+          "blockId_": 141619,
+          "blockHash_": "0x708f6a30e9a263cc264324da72927b95a2c7367b08d2523538586b77c6bdf8cd",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 141263,
-            "lastSynecdAt": 1720436243
+            "lastSyncedBlockId": 141615,
+            "lastSynecdAt": 1720444751
           },
           {
-            "numBlocks": 145096,
-            "lastVerifiedBlockId": 141276,
+            "numBlocks": 145432,
+            "lastVerifiedBlockId": 141619,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -103,12 +103,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 141263,
-            "lastSynecdAt": 1720436243
+            "lastSyncedBlockId": 141615,
+            "lastSynecdAt": 1720444751
           },
           "slotB": {
-            "numBlocks": 145096,
-            "lastVerifiedBlockId": 141276,
+            "numBlocks": 145432,
+            "lastVerifiedBlockId": 141619,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -141,7 +141,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1720436627,
+        "clock": 1720444751,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -349,8 +349,8 @@
         "type": "immutable"
       },
       "sinceTimestamp": 1719819443,
-      "errors": {
-        "tier_provider": "invalid BigNumber string (argument=\"value\", value=\"{{ #blockNumber }}\", code=INVALID_ARGUMENT, version=bignumber/5.7.0)"
+      "values": {
+        "tier_provider": "0x3a1A900680BaADb889202faf12915F7E47B71ddd"
       },
       "derivedName": "TierRouter"
     },
@@ -581,7 +581,7 @@
         "impl": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 26740,
+        "nextMessageId": 26759,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
