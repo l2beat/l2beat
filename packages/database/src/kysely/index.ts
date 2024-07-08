@@ -3,18 +3,18 @@ import {
   Transaction as KyselyTransaction,
   PostgresDialect,
 } from 'kysely'
-import { Pool, PoolConfig, types } from 'pg'
+import { Pool, PoolConfig, types, defaults } from 'pg'
 import { DB } from './generated/types'
 
 // Interpret `timestamp without time zone` as UTC
-types.setTypeParser(1114, (stringValue) => new Date(stringValue + '+0000'))
+defaults.parseInputDatesAsUTC = true
+types.setTypeParser(types.builtins.TIMESTAMP, (value) => new Date(value + 'Z'))
 
 export class PostgresDatabase extends Kysely<DB> {
   constructor(config?: PoolConfig) {
     super({
       dialect: new PostgresDialect({
-        // Always parse input dates as UTC
-        pool: new Pool({ types, parseInputDatesAsUTC: true, ...config }),
+        pool: new Pool({ types, ...config }),
       }),
     })
   }
