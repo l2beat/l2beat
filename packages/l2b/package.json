@@ -23,6 +23,7 @@
     "@l2beat/shared": "*",
     "@l2beat/shared-pure": "*",
     "cmd-ts": "^0.13.0",
-    "ethers": "^5.7.2"
+    "ethers": "^5.7.2",
+    "chalk": "^4.1.2"
   }
 }
