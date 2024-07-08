@@ -31,12 +31,13 @@ async function getVerifierStatuses(): Promise<VerifiersApiResponse> {
       txs.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber())
       const lastUsed = txs[0]!.timestamp
 
-      await db.verifierStatus.addOrUpdate({
-        address: verifier.contractAddress.toString(),
-        chainId: verifier.chainId,
-        lastUsed: lastUsed,
-        lastUpdated: UnixTime.now(),
-      })
+      // TODO: Move it to the backend asap, stalling this will cause stale verifiers data
+      // await db.verifierStatus.addOrUpdate({
+      //   address: verifier.contractAddress.toString(),
+      //   chainId: verifier.chainId,
+      //   lastUsed: lastUsed,
+      //   lastUpdated: UnixTime.now(),
+      // })
 
       return {
         address: verifier.contractAddress.toString(),
