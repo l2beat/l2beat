@@ -2,7 +2,7 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 20224230,
-  "configHash": "0xa425343d7a0183435026944aaf0955f2478fdb24978afc2b8129559002c0dd89",
+  "configHash": "0x993c1cbcd4e77f03a3230375ac2d2e35cff3c3d0888435d6c9613695076448fe",
   "version": 8,
   "contracts": [
     {
@@ -345,7 +345,7 @@
         "implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
         "admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E"
       },
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "implementations": ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"],
       "sinceTimestamp": 1686793895,
       "values": {

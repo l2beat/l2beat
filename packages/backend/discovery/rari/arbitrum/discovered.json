@@ -2,7 +2,7 @@
   "name": "rari",
   "chain": "arbitrum",
   "blockNumber": 225981507,
-  "configHash": "0x0c6235d7a72cd3b16ea65699202aa7693c4d59309ab1b062abd26fc28335a00f",
+  "configHash": "0x8d70818d7b11955d77c1a6c59ddc6cba943e05f393dcc429d7a2525cf3cb77c8",
   "version": 8,
   "contracts": [
     {

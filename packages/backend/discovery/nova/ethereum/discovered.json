@@ -2,7 +2,7 @@
   "name": "nova",
   "chain": "ethereum",
   "blockNumber": 20177356,
-  "configHash": "0xc056bec0cd80167f043829baa216a3aacab854e78e4a3b1eefefb29ec7eb6240",
+  "configHash": "0xe383c8ac50c19d8e1aa6ab2fe3d308835f13015b8436c6c3fa5f693885cadb07",
   "version": 8,
   "contracts": [
     {

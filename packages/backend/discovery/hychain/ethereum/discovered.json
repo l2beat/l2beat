@@ -2,7 +2,7 @@
   "name": "hychain",
   "chain": "ethereum",
   "blockNumber": 20177349,
-  "configHash": "0xab10dfd4fb6ecf3a51083cdc218df7f7b73b774c2b587d39a486e5e3f741d3b7",
+  "configHash": "0xac5154c743117deede35093d1cdd71a6f30a8ac7240e0761be25bd25e3a05939",
   "version": 8,
   "contracts": [
     {

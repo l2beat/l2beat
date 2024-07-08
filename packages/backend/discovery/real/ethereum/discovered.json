@@ -2,7 +2,7 @@
   "name": "real",
   "chain": "ethereum",
   "blockNumber": 20177361,
-  "configHash": "0xeae5137c5dc041fed05dd5f940e33132f79c6732c109e778462087e2c24a39cd",
+  "configHash": "0xbb0b8a73029a722b0bb56e9231f731131f48b31292a92e42cf304119122592b1",
   "version": 8,
   "contracts": [
     {

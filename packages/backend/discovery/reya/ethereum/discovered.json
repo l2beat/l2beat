@@ -2,7 +2,7 @@
   "name": "reya",
   "chain": "ethereum",
   "blockNumber": 20177364,
-  "configHash": "0xceb47fefcba059ec3f9be446767c30c3b95e6f6787ac0db0a74bcad7aa52dc66",
+  "configHash": "0x173054a778ca1e3aff72a367f1fd26191bb31e85d3bb380cda8e3f4ca1dfeca1",
   "version": 8,
   "contracts": [
     {

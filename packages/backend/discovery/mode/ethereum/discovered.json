@@ -2,7 +2,7 @@
   "name": "mode",
   "chain": "ethereum",
   "blockNumber": 20211472,
-  "configHash": "0x48e9f513ac9811fafa00c4e4979c3ca9748e874a7b569196d8222969fe0bb3a3",
+  "configHash": "0x5e09ebc1af37d12842e0ceea7b8f18055f992f374f6cf1f138cd505410c0a40a",
   "version": 8,
   "contracts": [
     {
@@ -69,7 +69,7 @@
         "implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
         "admin": "0x470d87b1dae09a454A43D1fD772A561a03276aB7"
       },
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "implementations": ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"],
       "sinceTimestamp": 1700167631,
       "values": {

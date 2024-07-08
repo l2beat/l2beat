@@ -737,6 +737,21 @@ export class ProjectDiscovery {
     }
     return result
   }
+
+  getDiscoveredContracts(): ScalingProjectContractSingleAddress[] {
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    return contracts
+      .filter((contracts) => contracts.assignedPermissions === undefined)
+      .filter((contracts) => contracts.upgradeability.type !== 'gnosis safe')
+      .map((contract) =>
+        this.getContractDetails(
+          contract.address.toString(),
+          this.constructDescriptionFromMeta(contract),
+        ),
+      )
+  }
 }
 
 function isNonNullable<T>(
@@ -754,14 +769,14 @@ export function stringFormat(str: string, ...val: string[]) {
 
 const roleDescriptions: { [key in StackRole]: string } = {
   Sequencer:
-    'Sequencer is an actor allowed to commit transactions from this layer to the host chain',
+    'Sequencer is an actor allowed to commit transactions from this layer to the host chain.',
   Proposer:
-    'Proposer is an actor allowed to post new state roots of this layer to the host chain',
+    'Proposer is an actor allowed to post new state roots of this layer to the host chain.',
   Challenger:
-    'Challenger is an actor allowed to delete state roots  proposed by a Proposer',
+    'Challenger is an actor allowed to delete state roots  proposed by a Proposer.',
   Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
   Validator:
-    'Validator is an actor that validates the correctness of state transitions',
+    'Validator is an actor that validates the correctness of state transitions.',
 }
 
 const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 20210980,
-  "configHash": "0x2b6c0fe7fef51dbd870f6f2b10c39952085378daee0bfb80e6613a8362305f0e",
+  "configHash": "0x35dc0b5fd690dd1bdedb714f5ed0119d4258d9f5223b8deeb6bdaaa638d17904",
   "version": 8,
   "contracts": [
     {

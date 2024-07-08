@@ -2,7 +2,7 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 20211651,
-  "configHash": "0x2b7af7c11e8f11a37352a7c924e8a14f66e9fbf2dffdf417a058a75f4b64360d",
+  "configHash": "0xec4a934d8803255dc30664a371e2262c929ec55b6a9c2d04a0b743532482df37",
   "version": 8,
   "contracts": [
     {
@@ -251,7 +251,7 @@
         "implementation": "0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d",
         "admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
       },
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "implementations": ["0xAE2AF01232a6c4a4d3012C5eC5b1b35059caF10d"],
       "sinceTimestamp": 1686694055,
       "values": {

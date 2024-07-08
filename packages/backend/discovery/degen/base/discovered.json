@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 16561766,
-  "configHash": "0x6079c8ba931ed5b6ee8c22464df1630d88b6f7785b10eb0c5d0de65067372efb",
+  "configHash": "0x70ed7eed88e27304ac55e4b99893ad867e55a5cd4973f10754619dd8d3bf116f",
   "version": 8,
   "contracts": [
     {

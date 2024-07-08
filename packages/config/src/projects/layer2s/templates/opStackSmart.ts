@@ -305,6 +305,7 @@ export function opStackSmartCommon(
     // nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
       addresses: [
+        ...templateVars.discovery.getDiscoveredContracts(),
         // ...templateVars.discovery.getOpStackContractDetails(upgradeability),
         // ...(templateVars.nonTemplateContracts ?? []),
       ],

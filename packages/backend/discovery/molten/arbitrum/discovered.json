@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 225981159,
-  "configHash": "0x4f4d37e96efba8766ddc98d02a438c59212f6a56ff12c12e34c5144c5ca15137",
+  "configHash": "0x4bcc4ab1c1d8dceb270855fb93c856f1a041e875b0b0614026083a0039ba110a",
   "version": 8,
   "contracts": [
     {
