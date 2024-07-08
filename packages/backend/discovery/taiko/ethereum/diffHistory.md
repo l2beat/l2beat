@@ -8,9 +8,9 @@ Generated with discovered.json: 0x78a7a0805b72d26f35cfb5404e40c67584804ce5
 
 ## Description
 
-New ProverSet implementation: add possibility for authorized admin to call depositBond and withdrawBond on TaikoL1contract. These function don't exist yet on TaikoL1contract, so this change is probably the beginning of a bigger update.
+New ProverSet implementation: added possibility for authorized admin to call depositBond and withdrawBond on TaikoL1contract. These functions don't exist yet on TaikoL1contract, so this change is probably the beginning of a bigger update.
 
-ProverSet address changed in L1RollupAddressManager, old implementation still in use under ProverSetProxy
+ProverSet address changed in L1RollupAddressManager, old implementation still in use under ProverSetProxy.
 
 ## Watched changes
 
