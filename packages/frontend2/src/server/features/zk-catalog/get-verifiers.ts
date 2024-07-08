@@ -10,15 +10,19 @@ import {
   type ChainId,
   UnixTime,
   type VerifierStatus,
-  type VerifiersApiResponse,
 } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
+import {
+  unstable_noStore as noStore,
+  unstable_cache as cache,
+} from 'next/cache'
 
 export function getVerifiers() {
-  return getVerifierStatuses()
+  noStore()
+  return getCachedVerifiersStatus()
 }
 
-async function getVerifierStatuses(): Promise<VerifiersApiResponse> {
+const getCachedVerifiersStatus = cache(async () => {
   const verifiers = getVerifiersFromConfig()
   assert(verifiers.length > 0, 'No verifier addresses found')
 
@@ -49,7 +53,7 @@ async function getVerifierStatuses(): Promise<VerifiersApiResponse> {
   })
 
   return Promise.all(fetchOperations)
-}
+})
 
 function getVerifiersFromConfig(): OnchainVerifier[] {
   const verifiers: OnchainVerifier[] = []
