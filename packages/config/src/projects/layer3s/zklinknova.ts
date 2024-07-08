@@ -12,6 +12,7 @@ import {
   OPERATOR,
   RISK_VIEW,
   TECHNOLOGY_DATA_AVAILABILITY,
+  addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -401,6 +402,11 @@ export const zklinknova: Layer3 = {
       },
     ],
   },
+  dataAvailability: addSentimentToDataAvailability({
+    layers: ['External'],
+    bridge: { type: 'None' },
+    mode: 'State diffs (compressed)',
+  }),
   contracts: {
     addresses: [
       lineaDiscovery.getContractDetails('L1ERC20Bridge', {
