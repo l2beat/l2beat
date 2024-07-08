@@ -22,6 +22,7 @@ export class ValueRepository {
         'in',
         projectIds.map((id) => id.toString()),
       )
+      .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map(toRecord)
@@ -41,6 +42,7 @@ export class ValueRepository {
       )
       .where('timestamp', '>', from.toDate())
       .where('timestamp', '<=', to.toDate())
+      .orderBy('timestamp', 'asc')
       .execute()
 
     return rows.map(toRecord)
