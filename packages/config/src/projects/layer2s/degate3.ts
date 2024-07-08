@@ -1,10 +1,10 @@
 import {
   assert,
+  ChainId,
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
-  ChainId,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
