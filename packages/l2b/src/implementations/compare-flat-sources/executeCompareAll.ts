@@ -1,11 +1,21 @@
-import { CompareAllCommand } from './cli'
 import { computeStackSimilarity, getMostSimilar } from './common'
 import { colorMap, formatHeader, formatTable } from './output'
+
+import { Layer2Provider, Layer3Provider } from '@l2beat/config'
+
+export interface CompareAllCommand {
+  stack: Layer2Provider | Layer3Provider
+  forceTable: boolean
+  discoveryPath: string
+}
 
 export async function executeCompareAll(
   command: CompareAllCommand,
 ): Promise<void> {
-  const { matrix, projects } = await computeStackSimilarity(command.stack)
+  const { matrix, projects } = await computeStackSimilarity(
+    command.stack,
+    command.discoveryPath,
+  )
   const mostSimilar = getMostSimilar(matrix)
 
   const table = formatTable(

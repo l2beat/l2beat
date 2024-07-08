@@ -1,8 +1,7 @@
-import path from 'path'
-import { keyInYN } from 'readline-sync'
-
-import { powerdiff } from '../powerdiffCore'
-import { FindSimilarCommand } from './cli'
+// import path from 'path'
+// import { keyInYN } from 'readline-sync'
+//
+// import { powerdiff } from '../powerdiffCore'
 import {
   ALL_CONFIGS,
   computeComparisonBetweenProjects,
@@ -17,14 +16,21 @@ import {
   printComparisonBetweenProjects,
 } from './output'
 
+export interface FindSimilarCommand {
+  projectPath: string
+  forceTable: boolean
+  discoveryPath: string
+}
+
 export async function executeFindSimilar(
   command: FindSimilarCommand,
 ): Promise<void> {
-  const { name, chain } = decodeProjectPath(command.projectPath)
+  const { name } = decodeProjectPath(command.projectPath)
   const project = getProject(name, command)
 
   const { matrix: perProjectMatrix } = await computeStackSimilarity(
     project.stack,
+    command.discoveryPath,
   )
   const mostSimilar = getMostSimilar(perProjectMatrix)
 
@@ -37,6 +43,7 @@ export async function executeFindSimilar(
     await computeComparisonBetweenProjects(
       command.projectPath,
       `${otherChain}:${otherName}`,
+      command.discoveryPath,
     )
 
   printComparisonBetweenProjects(matrix, firstProject, secondProject, command)
@@ -48,11 +55,11 @@ export async function executeFindSimilar(
     return
   }
 
-  if (keyInYN('Run powerdiff?')) {
-    const path1 = path.join('discovery', name, chain, '.flat')
-    const path2 = path.join('discovery', otherName, otherChain, '.flat')
-    powerdiff(path1, path2)
-  }
+  // if (keyInYN('Run powerdiff?')) {
+  //   const path1 = path.join('discovery', name, chain, '.flat')
+  //   const path2 = path.join('discovery', otherName, otherChain, '.flat')
+  //   powerdiff(path1, path2)
+  // }
 }
 
 function getProject(name: string, command: FindSimilarCommand) {

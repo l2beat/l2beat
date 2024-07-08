@@ -25,8 +25,7 @@
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
-    "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts",
-    "compare-flat-sources": "ts-node --transpile-only scripts/compare-flat/index.ts"
+    "powerdiff": "ts-node --transpile-only scripts/powerdiff.ts"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
