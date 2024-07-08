@@ -1,5 +1,5 @@
-import { CustomLink } from './custom-link'
-import { SocialLinks } from './social-links'
+import { CustomLink } from './custom-link';
+import { SocialLinks } from './social-links';
 
 export function Footer() {
   return (
@@ -20,5 +20,5 @@ export function Footer() {
         </div>
       </div>
     </footer>
-  )
+  );
 }

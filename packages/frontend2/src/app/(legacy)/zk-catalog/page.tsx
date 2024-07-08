@@ -1,10 +1,10 @@
-import { type Metadata } from 'next'
-import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { ZkCatalogView } from './_components/ZkCatalogView'
-import { getZkCatalogView } from './_utils/getZkCatalogView'
-import { projects } from './_utils/projects'
+import { type Metadata } from 'next';
+import { ContentWrapper } from '~/app/_components/content-wrapper';
+import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers';
+import { getDefaultMetadata } from '~/utils/get-default-metadata';
+import { ZkCatalogView } from './_components/ZkCatalogView';
+import { getZkCatalogView } from './_utils/getZkCatalogView';
+import { projects } from './_utils/projects';
 
 export const metadata: Metadata = getDefaultMetadata({
   title: 'ZK Catalog - L2BEAT',
@@ -12,28 +12,26 @@ export const metadata: Metadata = getDefaultMetadata({
   openGraph: {
     url: '/zk-catalog',
   },
-})
+});
 
 export default async function Page() {
-  const verifiers = await getVerifiers()
-  const view = getZkCatalogView(projects, verifiers)
+  const verifiers = await getVerifiers();
+  const view = getZkCatalogView(projects, verifiers);
 
   return (
-    <>
-      <ContentWrapper>
-        <header className="mt-[72px] text-left md:text-center">
-          <h1 className="font-extrabold text-6xl">ZK Catalog</h1>
-          <p className="mx-auto mt-6 max-w-[994px] font-medium text-base">
-            ZK Catalog by L2BEAT is a community-driven resource offering
-            detailed insights into the ZK technology utilized by various
-            blockchain projects. It aims to enhance transparency and
-            understanding of ZK tech implementations across the industry.
-          </p>
-        </header>
-        <main className="mt-4 md:mt-12">
-          <ZkCatalogView {...view} />
-        </main>
-      </ContentWrapper>
-    </>
-  )
+    <ContentWrapper>
+      <header className="mt-[72px] text-left md:text-center">
+        <h1 className="font-extrabold text-6xl">ZK Catalog</h1>
+        <p className="mx-auto mt-6 max-w-[994px] font-medium text-base">
+          ZK Catalog by L2BEAT is a community-driven resource offering detailed
+          insights into the ZK technology utilized by various blockchain
+          projects. It aims to enhance transparency and understanding of ZK tech
+          implementations across the industry.
+        </p>
+      </header>
+      <main className="mt-4 md:mt-12">
+        <ZkCatalogView {...view} />
+      </main>
+    </ContentWrapper>
+  );
 }
