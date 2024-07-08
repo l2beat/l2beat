@@ -364,7 +364,7 @@ export const zklinknova: Layer3 = {
     operator: {
       ...OPERATOR.CENTRALIZED_OPERATOR,
       description:
-        'The operator is the only entity that can propose blocks and process transactions. Moreover, it is trusted to only relay valid messages using the fast path. Fast path messages are eventually checked against the slow path, and if they are invalid, the system halts.',
+        'The validators are the only entities that can propose blocks and process transactions. Moreover, they are trusted to only relay valid messages using the fast path. Fast path messages are eventually checked against the slow path, and if they are invalid, the system halts.',
       risks: [
         ...OPERATOR.CENTRALIZED_OPERATOR.risks,
         {
@@ -410,7 +410,7 @@ export const zklinknova: Layer3 = {
       }),
       lineaDiscovery.getContractDetails('zkLink', {
         description:
-          'Main contract of the system. It syncs messages from secondary chains ("slow" path) and accepts "fast" forwarded requests from permissioned validators that are later cross-checked with the slow path. ETH coming from secondary chains are transferred and escrowed here. State roots are then synced back to the secondary chains.',
+          'Main contract of the system where blocks are committed, proven and executed. It syncs messages from secondary chains ("slow" path) and accepts "fast" forwarded requests from permissioned validators that are later cross-checked with the slow path. ETH coming from secondary chains are transferred and escrowed here. State roots are then synced back to the secondary chains.',
         ...lineaUpgradability,
       }),
       lineaDiscovery.getContractDetails('LineaL2Gateway', {
@@ -648,7 +648,7 @@ export const zklinknova: Layer3 = {
       'Admin of the main zkLink contract, meaning it can upgrade the bridge implementation and potentially gaining access to all funds.',
     ),
     {
-      name: 'Validator',
+      name: 'Validators',
       accounts: lineaDiscovery.getPermissionedAccounts('zkLink', 'validators'),
       chain: 'linea',
       description:

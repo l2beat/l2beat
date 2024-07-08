@@ -375,6 +375,14 @@ export const zksyncera: Layer2 = {
     },
     minTimestampForTvl: new UnixTime(1676384520),
     coingeckoPlatform: 'zksync',
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xF9cda624FBC7e059355ce98a31693d299FACd963'),
+        batchSize: 150,
+        sinceBlock: 3908235,
+        version: '3',
+      },
+    ],
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],

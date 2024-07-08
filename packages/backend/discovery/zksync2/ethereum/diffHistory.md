@@ -1,4 +1,31 @@
-Generated with discovered.json: 0x08bf14a0f4496473a7d11e474a849f7d31f2f441
+Generated with discovered.json: 0xceb34098e05d75d42d80c7c4a6c9b045c12bde0d
+
+# Diff at Mon, 08 Jul 2024 13:00:35 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@555efdd96fadc389c2c70beacf820125fbb25a7d block: 20061811
+- current block number: 20261948
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20061811 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      values.facets:
+-        [{"addr":"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a","selectors":["0x0e18b681","0x64bf8d66","0xa9f6d941","0x27ae4c16","0x4dd18bf5","0x1cc5d103","0xbe6f11cf","0xe76db865","0x235d9eb5","0x21f603d7","0x4623c91d","0x17338945","0xfc57565f"]},{"addr":"0xE60E94fCCb18a81D501a38959E532C0A85A1be89","selectors":["0x1de72e34","0xea6c029c","0xcdffacc6","0x52ef6b2c","0xadfca15e","0x7a0ed627","0x6e9960c3","0x98acd7a6","0x086a56f8","0x3591c1a0","0x79823c9a","0xd86970d8","0xfd791f3c","0xe5355c75","0x9d1b5a81","0x7b30c8da","0xd0468156","0x631f4bac","0x0ec6b0b7","0x33ce93fe","0x06d49e5b","0xf5c1182c","0x5518c73b","0xdb1f0bf9","0xb8c2f66f","0xef3f0bae","0xfe26699e","0x39607382","0xaf6a2dcd","0xa1954fc5","0x46657fe9","0x18e3a941","0x29b98c67","0xbd7c5412","0xc3bbd2d7","0xe81e0ba1","0xfacd743b","0x9cd939e4","0x56142d7a","0xb22dd78e","0x74f4d30d"]},{"addr":"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C","selectors":["0x12f43dab","0x6c0960f9","0xb473318e","0x042901c7","0x263b7f8e","0xe4948f43","0xeb672419","0xc924de35"]},{"addr":"0xaD193aDe635576d8e9f7ada71Af2137b16c64075","selectors":["0x701f58c5","0x6edd4f12","0xc3d93e7c","0x6f497ac6","0x7f61885c","0xc37533bb","0x97c09d34","0x0f23da43"]}]
++        {"0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a":["acceptAdmin()","changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))","executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))","freezeDiamond()","setPendingAdmin(address)","setPorterAvailability(bool)","setPriorityTxMaxGasLimit(uint256)","setPubdataPricingMode(uint8)","setTokenMultiplier(uint128,uint128)","setTransactionFilterer(address)","setValidator(address,bool)","unfreezeDiamond()","upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))"],"0xE60E94fCCb18a81D501a38959E532C0A85A1be89":["baseTokenGasPriceMultiplierDenominator()","baseTokenGasPriceMultiplierNominator()","facetAddress(bytes4)","facetAddresses()","facetFunctionSelectors(address)","facets()","getAdmin()","getBaseToken()","getBaseTokenBridge()","getBridgehub()","getFirstUnprocessedPriorityTx()","getL2BootloaderBytecodeHash()","getL2DefaultAccountBytecodeHash()","getL2SystemContractsUpgradeBatchNumber()","getL2SystemContractsUpgradeBlockNumber()","getL2SystemContractsUpgradeTxHash()","getPendingAdmin()","getPriorityQueueSize()","getPriorityTxMaxGasLimit()","getProtocolVersion()","getPubdataPricingMode()","getSemverProtocolVersion()","getStateTransitionManager()","getTotalBatchesCommitted()","getTotalBatchesExecuted()","getTotalBatchesVerified()","getTotalBlocksCommitted()","getTotalBlocksExecuted()","getTotalBlocksVerified()","getTotalPriorityTxs()","getVerifier()","getVerifierParams()","isDiamondStorageFrozen()","isEthWithdrawalFinalized(uint256,uint256)","isFacetFreezable(address)","isFunctionFreezable(bytes4)","isValidator(address)","l2LogsRootHash(uint256)","priorityQueueFrontOperation()","storedBatchHash(uint256)","storedBlockHash(uint256)"],"0xCDB6228b616EEf8Df47D69A372C4f725C43e718C":["bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))","finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])","l2TransactionBaseCost(uint256,uint256,uint256)","proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)","proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])","proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])","requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)","transferEthToSharedBridge()"],"0xaD193aDe635576d8e9f7ada71Af2137b16c64075":["commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])","commitBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])","executeBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])","executeBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])","proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))","proveBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))","revertBatches(uint256)","revertBatchesSharedBridge(uint256,uint256)"]}
+    }
+```
+
+Generated with discovered.json: 0xc0fc7f99bf716dda44efaa9998f17de5c62e5d98
 
 # Diff at Mon, 10 Jun 2024 13:45:17 GMT:
 
