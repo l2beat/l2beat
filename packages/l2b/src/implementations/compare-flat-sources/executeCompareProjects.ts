@@ -1,6 +1,12 @@
-import { CompareProjectsCommand } from './cli'
 import { computeComparisonBetweenProjects } from './common'
 import { printComparisonBetweenProjects } from './output'
+
+export interface CompareProjectsCommand {
+  firstProjectPath: string
+  secondProjectPath: string
+  forceTable: boolean
+  discoveryPath: string
+}
 
 export async function executeCompareProjects(
   command: CompareProjectsCommand,
@@ -9,6 +15,7 @@ export async function executeCompareProjects(
     await computeComparisonBetweenProjects(
       command.firstProjectPath,
       command.secondProjectPath,
+      command.discoveryPath,
     )
 
   printComparisonBetweenProjects(matrix, firstProject, secondProject, {

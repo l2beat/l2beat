@@ -51,6 +51,16 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   }
 }
 
+export function getChainConfigs(): DiscoveryChainConfig[] {
+  return chains.flatMap((chain) => {
+    try {
+      return [getChainConfig(chain.name)]
+    } catch {
+      return []
+    }
+  })
+}
+
 export function getChainConfig(chain: string): DiscoveryChainConfig {
   const env = getEnv()
 

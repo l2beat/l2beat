@@ -41,6 +41,7 @@ export function needsToBe(
 
 export async function computeStackSimilarity(
   stack: Layer2Provider | Layer3Provider,
+  discoveryPath: string,
 ): Promise<{
   matrix: Record<string, Record<string, number>>
   projects: Project[]
@@ -58,6 +59,7 @@ export async function computeStackSimilarity(
       readProject(
         config.id.toString(),
         'hostChain' in config ? config.hostChain : 'ethereum',
+        discoveryPath,
       ),
     ),
   )
@@ -118,6 +120,7 @@ export function getMostSimilar(
 export async function computeComparisonBetweenProjects(
   firstProjectPath: string,
   secondProjectPath: string,
+  discoveryPath: string,
 ): Promise<{
   matrix: Record<string, Record<string, number>>
   firstProject: Project
@@ -128,8 +131,16 @@ export async function computeComparisonBetweenProjects(
   const { name: secondProjectName, chain: secondProjectChain } =
     decodeProjectPath(secondProjectPath)
 
-  const firstProject = await readProject(firstProjectName, firstProjectChain)
-  const secondProject = await readProject(secondProjectName, secondProjectChain)
+  const firstProject = await readProject(
+    firstProjectName,
+    firstProjectChain,
+    discoveryPath,
+  )
+  const secondProject = await readProject(
+    secondProjectName,
+    secondProjectChain,
+    discoveryPath,
+  )
   assert(firstProject, `Project ${firstProjectPath} not found`)
   assert(secondProject, `Project ${secondProjectPath} not found`)
 
@@ -180,9 +191,10 @@ export function removeCommonPath(fileIds: FileId[]): FileId[] {
 async function readProject(
   projectName: string,
   chain: string,
+  discoveryPath: string,
 ): Promise<Project | undefined> {
   try {
-    const sources = await getFlatSources(projectName, chain)
+    const sources = await getFlatSources(projectName, chain, discoveryPath)
     const concatenatedSources = sources.map((source) => source.content).join('')
     const concatenatedSourceHashChunks =
       buildSimilarityHashmap(concatenatedSources)
@@ -209,8 +221,9 @@ async function readProject(
 async function getFlatSources(
   project: string,
   chain: string,
+  discoveryPath: string,
 ): Promise<HashedFileContent[]> {
-  const path = `./discovery/${project}/${chain}/.flat/`
+  const path = `${discoveryPath}/discovery/${project}/${chain}/.flat/`
 
   const filePaths = await listFilesRecursively(path)
   const allFilesAreSol = filePaths.every((file) => file.endsWith('.sol'))

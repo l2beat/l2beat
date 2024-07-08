@@ -14,15 +14,23 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
   suite(newRepo)
 
   function suite(amountRepository: typeof oldRepo | typeof newRepo) {
-    describe(AmountRepository.prototype.getByTimestamp.name, () => {
+    describe(AmountRepository.prototype.getByIdsAndTimestamp.name, () => {
       it('gets by timestamp', async () => {
         await amountRepository.addMany([
           amount('a', new UnixTime(100), 1n),
           amount('b', new UnixTime(100), 1n),
+          amount('c', new UnixTime(100), 1n),
           amount('a', new UnixTime(200), 2n),
           amount('b', new UnixTime(200), 2n),
+          amount('c', new UnixTime(200), 2n),
+          amount('d', new UnixTime(200), 2n),
         ])
-        const result = await amountRepository.getByTimestamp(new UnixTime(200))
+
+        const configIds = ['a'.repeat(12), 'b'.repeat(12)]
+        const result = await amountRepository.getByIdsAndTimestamp(
+          configIds,
+          new UnixTime(200),
+        )
         expect(result).toEqual([
           amount('a', new UnixTime(200), 2n),
           amount('b', new UnixTime(200), 2n),
