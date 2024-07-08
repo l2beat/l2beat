@@ -39,7 +39,7 @@ export class ValueRepository {
         'in',
         projectIds.map((id) => id.toString()),
       )
-      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '>', from.toDate())
       .where('timestamp', '<=', to.toDate())
       .execute()
 
