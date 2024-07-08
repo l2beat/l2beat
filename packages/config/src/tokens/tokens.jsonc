@@ -64,6 +64,10 @@
       "address": "0xB528edBef013aff855ac3c50b381f253aF13b997"
     },
     {
+      "symbol": "AMO",
+      "address": "0x1a2EB478FA07125C9935A77b3C03a82470801E30"
+    },
+    {
       "symbol": "EKUBO",
       "address": "0x04c46e830bb56ce22735d5d8fc9cb90309317d0f"
     },
@@ -169,6 +173,10 @@
     {
       "symbol": "BEL",
       "address": "0xA91ac63D040dEB1b7A5E4d4134aD23eb0ba07e14"
+    },
+    {
+      "symbol": "BETS",
+      "address": "0x94025780a1aB58868D9B2dBBB775f44b32e8E6e5"
     },
     {
       "symbol": "BFC",
@@ -331,6 +339,14 @@
       "address": "0x3597bfD533a99c9aa083587B074434E61Eb0A258"
     },
     {
+      "symbol": "DEXTF",
+      "address": "0x5F64Ab1544D28732F0A24F4713c2C8ec0dA089f0"
+    },
+    {
+      "symbol": "DFX",
+      "address": "0x888888435FDe8e7d4c54cAb67f206e4199454c60"
+    },
+    {
       "symbol": "DG",
       "address": "0x53C8395465A84955c95159814461466053DedEDE"
     },
@@ -339,8 +355,16 @@
       "address": "0xca1207647Ff814039530D7d35df0e1Dd2e91Fa84"
     },
     {
+      "symbol": "DIP",
+      "address": "0xc719d010B63E5bbF2C0551872CD5316ED26AcD83"
+    },
+    {
       "symbol": "DOLA",
       "address": "0x865377367054516e17014CcdED1e7d814EDC9ce4"
+    },
+    {
+      "symbol": "DPI",
+      "address": "0x1494CA1F11D487c2bBe4543E90080AeBa4BA3C2b"
     },
     {
       "symbol": "DPX",
@@ -362,6 +386,10 @@
     {
       "symbol": "ELG",
       "address": "0xA2085073878152aC3090eA13D1e41bD69e60Dc99"
+    },
+    {
+      "symbol": "ETHx",
+      "address": "0xA35b1B31Ce002FBF2058D22F30f95D405200A15b"
     },
     {
       "symbol": "ELON",
@@ -616,6 +644,10 @@
       "address": "0x5A98FcBEA516Cf06857215779Fd812CA3beF1B32"
     },
     {
+      "symbol": "LDY",
+      "address": "0x482dF7483a52496F4C65AB499966dfcdf4DDFDbc"
+    },
+    {
       "symbol": "LEO",
       "address": "0x2AF5D2aD76741191D15Dfe7bF6aC92d4Bd912Ca3"
     },
@@ -720,6 +752,10 @@
     {
       "symbol": "MUTE",
       "address": "0xA49d7499271aE71cd8aB9Ac515e6694C755d400c"
+    },
+    {
+      "symbol": "MVI",
+      "address": "0x72e364F2ABdC788b7E918bc238B21f109Cd634D7"
     },
     {
       "symbol": "MXC",
@@ -973,6 +1009,14 @@
       "address": "0x3845badAde8e6dFF049820680d1F14bD3903a5d0"
     },
     {
+      "symbol": "SDT",
+      "address": "0x73968b9a57c6e53d41345fd57a6e6ae27d6cdb2f"
+    },
+    {
+      "symbol": "SDL",
+      "address": "0xa95c5ebb86e0de73b4fb8c47a45b792cfea28c23"
+    },
+    {
       "symbol": "sDAI",
       "address": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
       "category": "stablecoin"
@@ -1037,6 +1081,10 @@
     {
       "symbol": "STARL",
       "address": "0x8E6cd950Ad6ba651F6DD608Dc70e5886B1AA6B24"
+    },
+    {
+      "symbol": "stTAO",
+      "address": "0xB60acD2057067DC9ed8c083f5aa227a244044fD6"
     },
     {
       "symbol": "stETH",
@@ -1120,6 +1168,10 @@
     {
       "symbol": "TRIBE",
       "address": "0xc7283b66Eb1EB5FB86327f08e1B5816b0720212B"
+    },
+    {
+      "symbol": "TRUF",
+      "address": "0x38C2a4a7330b22788374B8Ff70BBa513C8D848cA"
     },
     {
       "symbol": "TUSD",
@@ -1227,6 +1279,11 @@
       "category": "ether"
     },
     {
+      "symbol": "WECO",
+      "address": "0x54Df3076ac0CdC9bC97fA290AB9c5a88E3D23630",
+      "coingeckoId": "wecoin"
+    },
+    {
       "symbol": "WLD",
       "address": "0x163f8C2467924be0ae7B5347228CABF260318753"
     },
@@ -1269,6 +1326,10 @@
     {
       "symbol": "xSUSHI",
       "address": "0x8798249c2E607446EfB7Ad49eC89dD1865Ff4272"
+    },
+    {
+      "symbol": "XSWAP",
+      "address": "0x8Fe815417913a93Ea99049FC0718ee1647A2a07c"
     },
     {
       "symbol": "XYO",
