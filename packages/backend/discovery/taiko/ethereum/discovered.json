@@ -1,7 +1,7 @@
 {
   "name": "taiko",
   "chain": "ethereum",
-  "blockNumber": 20225431,
+  "blockNumber": 20261321,
   "configHash": "0x47e801f35f3cb2c3bef7ec829e84f79e66865f9df7016ee2618dd4b498683eb8",
   "version": 8,
   "contracts": [
@@ -56,25 +56,25 @@
           "checkEOAForCalldataDA": true
         },
         "getLastSyncedBlock": {
-          "blockId_": 123263,
-          "blockHash_": "0xb76e9f9c45cf5eef85553320bbc185a19a0140ea4b807417b0b518e841ec79d3",
-          "stateRoot_": "0x3a551ffd3d4aeea51f25b828766fee55242729ef0c6a72a9b758668ea74c9a52"
+          "blockId_": 141247,
+          "blockHash_": "0x064ccba3606b8014393c946a2154b280472dd8fb8a1fd15b837be7b4077223cd",
+          "stateRoot_": "0xde87985103e8a55dca68cf0c4c779ee5877fe0c085c9c29c3898436e166a4856"
         },
         "getLastVerifiedBlock": {
-          "blockId_": 123268,
-          "blockHash_": "0xa1e7904ad55825bc7e8d18fec8e5de8412b4effe506ae14320f96e82dd28c12e",
+          "blockId_": 141253,
+          "blockHash_": "0x83e27f0bf92e52cbeaa4e658a414158d93d3ab0028bfbaa9fe842e3faf2832b4",
           "stateRoot_": "0x0000000000000000000000000000000000000000000000000000000000000000"
         },
         "getStateVariables": [
           {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 123263,
-            "lastSynecdAt": 1720002947
+            "lastSyncedBlockId": 141247,
+            "lastSynecdAt": 1720435919
           },
           {
-            "numBlocks": 127131,
-            "lastVerifiedBlockId": 123268,
+            "numBlocks": 145071,
+            "lastVerifiedBlockId": 141253,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -91,7 +91,7 @@
         "proposer": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0",
         "proposer_one": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045",
         "prover_assignment": "0x0000000000000000000000000000000000000000",
-        "prover_set": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
+        "prover_set": "0x518845daA8870bE2C59E49620Fc262AD48953C9a",
         "proxiableUUID": "EXPECT_REVERT",
         "quota_manager": "0x0000000000000000000000000000000000000000",
         "return_liveness_bond": "0x0000000000000000000000000000000000000000",
@@ -103,12 +103,12 @@
           "slotA": {
             "genesisHeight": 19923613,
             "genesisTimestamp": 1716358991,
-            "lastSyncedBlockId": 123263,
-            "lastSynecdAt": 1720002947
+            "lastSyncedBlockId": 141247,
+            "lastSynecdAt": 1720435919
           },
           "slotB": {
-            "numBlocks": 127131,
-            "lastVerifiedBlockId": 123268,
+            "numBlocks": 145071,
+            "lastVerifiedBlockId": 141253,
             "provingPaused": false,
             "__reservedB1": 0,
             "__reservedB2": 0,
@@ -141,7 +141,7 @@
       "sinceTimestamp": 1714033799,
       "values": {
         "addressManager": "0x0000000000000000000000000000000000000000",
-        "clock": 1720003031,
+        "clock": 1720436027,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -235,6 +235,25 @@
         "type": "immutable"
       },
       "sinceTimestamp": 1714550639
+    },
+    {
+      "name": "ProverSet",
+      "address": "0x518845daA8870bE2C59E49620Fc262AD48953C9a",
+      "upgradeability": {
+        "type": "immutable"
+      },
+      "sinceTimestamp": 1720085411,
+      "values": {
+        "addressManager": "0x0000000000000000000000000000000000000000",
+        "admin": "0x0000000000000000000000000000000000000000",
+        "impl": "0x0000000000000000000000000000000000000000",
+        "inNonReentrant": false,
+        "lastUnpausedAt": 0,
+        "owner": "0x0000000000000000000000000000000000000000",
+        "paused": false,
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
+      }
     },
     {
       "name": "GuardianMinorityProver",
@@ -431,7 +450,7 @@
           "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
         ],
         "getThreshold": 3,
-        "nonce": 36,
+        "nonce": 37,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -522,35 +541,27 @@
           ["0x1DD5E0E5b03608a30b55806358ddbABC6Dc83b3f"],
           ["0x62a966A7492Be75182C89E6E2a519a87884A0382"],
           ["0x4Ef2201f196196be4B9e50F93F67Ad462A0d25A8"],
-          ["0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"]
+          ["0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"],
+          ["0xf2231009908E695C010c02F57Ac541D3470d95d5"],
+          ["0xe23A97f0c0a1Bc748709c2a348705773197A9c11"],
+          ["0xE6e686341B58F5378e8913369d176dc47bc1DE7a"],
+          ["0x3410feA2fEC5c6830Ac4FC8664089a6FE32A81B0"],
+          ["0x6f66C3e73D6B0F9e3547954F1650b76428708Ad6"],
+          ["0xD1B462C00Cd0c852E00eeF0aD09a924fc3e1f3D5"],
+          ["0x0666C986800f3037793a46B96EBE75F5b4e68940"],
+          ["0x206A2e6bAF0304642FFed63B0aBA1AAEF3373515"],
+          ["0x2dD5B12E5847F196Dc9DaE90d620b81dcaB50e7D"],
+          ["0xDeEbeeC3B2951B72c232F6Aa30EAB9ae12e77E98"],
+          ["0x91eB9C57C46EA0bD928A911A56C3894f21e6D7Db"]
         ],
         "lastUnpausedAt": 0,
-        "nextInstanceId": 46,
+        "nextInstanceId": 57,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "proxiableUUID": "EXPECT_REVERT"
       },
       "derivedName": "SgxVerifier"
-    },
-    {
-      "name": "ProverSet",
-      "address": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1717839863,
-      "values": {
-        "addressManager": "0x0000000000000000000000000000000000000000",
-        "admin": "0x0000000000000000000000000000000000000000",
-        "impl": "0x0000000000000000000000000000000000000000",
-        "inNonReentrant": false,
-        "lastUnpausedAt": 0,
-        "owner": "0x0000000000000000000000000000000000000000",
-        "paused": false,
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "proxiableUUID": "0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc"
-      }
     },
     {
       "name": "TaikoBridge",
@@ -570,7 +581,7 @@
         "impl": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
         "inNonReentrant": false,
         "lastUnpausedAt": 1716809423,
-        "nextMessageId": 25701,
+        "nextMessageId": 26739,
         "owner": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "paused": false,
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -653,6 +664,9 @@
       "address": "0x0568b34255fc451F651d3021b0ee66DE80210A14"
     },
     {
+      "address": "0x0666C986800f3037793a46B96EBE75F5b4e68940"
+    },
+    {
       "address": "0x085Bf649bef6b9e97C73822724eD33553C20a1CA"
     },
     {
@@ -677,6 +691,9 @@
       "address": "0x1E0b96e4665E622dcc2F2c11ba7a7dD8Bc1fDD8A"
     },
     {
+      "address": "0x206A2e6bAF0304642FFed63B0aBA1AAEF3373515"
+    },
+    {
       "address": "0x25C1069AdA9D2E3c6e9706cAA6b5494062E27679"
     },
     {
@@ -687,6 +704,12 @@
     },
     {
       "address": "0x2C4DBAD36A5b7d59eAc38def94D9bBEa3b6D351B"
+    },
+    {
+      "address": "0x2dD5B12E5847F196Dc9DaE90d620b81dcaB50e7D"
+    },
+    {
+      "address": "0x3410feA2fEC5c6830Ac4FC8664089a6FE32A81B0"
     },
     {
       "address": "0x374DC646a6EDaDcCA4D653677444b5bb803CdfD4"
@@ -734,6 +757,9 @@
       "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
     },
     {
+      "address": "0x6f66C3e73D6B0F9e3547954F1650b76428708Ad6"
+    },
+    {
       "address": "0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3"
     },
     {
@@ -762,6 +788,9 @@
     },
     {
       "address": "0x87f1bf0A503b025684136cdE16dd606De4f46b67"
+    },
+    {
+      "address": "0x91eB9C57C46EA0bD928A911A56C3894f21e6D7Db"
     },
     {
       "address": "0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"
@@ -794,6 +823,9 @@
       "address": "0xCbC0c2D518cD3C832b210a9FC9Cb265119BedAf1"
     },
     {
+      "address": "0xD1B462C00Cd0c852E00eeF0aD09a924fc3e1f3D5"
+    },
+    {
       "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
     },
     {
@@ -804,6 +836,15 @@
     },
     {
       "address": "0xda4d5372188B0b8502AeD3770212Ed5784f71550"
+    },
+    {
+      "address": "0xDeEbeeC3B2951B72c232F6Aa30EAB9ae12e77E98"
+    },
+    {
+      "address": "0xe23A97f0c0a1Bc748709c2a348705773197A9c11"
+    },
+    {
+      "address": "0xE6e686341B58F5378e8913369d176dc47bc1DE7a"
     },
     {
       "address": "0xe79d80cC4CF385e30473cA41279BC4845c82bb9e"
@@ -819,6 +860,9 @@
     },
     {
       "address": "0xF0495642611461Ae25F4867B043717D9F53a9237"
+    },
+    {
+      "address": "0xf2231009908E695C010c02F57Ac541D3470d95d5"
     },
     {
       "address": "0xF445C0b580454E21a8b836318D83782d35986666"
@@ -966,6 +1010,57 @@
     "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9": [
       "constructor(address es256Verifier)",
       "function verifyES256Signature(bytes tbs, bytes signature, bytes publicKey) view returns (bool sigValid)"
+    ],
+    "0x518845daA8870bE2C59E49620Fc262AD48953C9a": [
+      "error FUNC_NOT_IMPLEMENTED()",
+      "error INVALID_PAUSE_STATUS()",
+      "error INVALID_STATUS()",
+      "error PERMISSION_DENIED()",
+      "error REENTRANT_CALL()",
+      "error RESOLVER_DENIED()",
+      "error RESOLVER_INVALID_MANAGER()",
+      "error RESOLVER_UNEXPECTED_CHAINID()",
+      "error RESOLVER_ZERO_ADDR(uint64 chainId, bytes32 name)",
+      "error ZERO_ADDRESS()",
+      "error ZERO_VALUE()",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event ProverEnabled(address indexed prover, bool indexed enabled)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function acceptOwnership()",
+      "function addressManager() view returns (address)",
+      "function admin() view returns (address)",
+      "function approveAllowance(address _address, uint256 _allowance)",
+      "function delegate(address _delegatee)",
+      "function depositBond(uint256 _amount)",
+      "function enableProver(address _prover, bool _isProver)",
+      "function impl() view returns (address)",
+      "function inNonReentrant() view returns (bool)",
+      "function init(address _owner, address _admin, address _addressManager)",
+      "function isProver(address prover) view returns (bool isProver)",
+      "function isValidSignature(bytes32 _hash, bytes _signature) view returns (bytes4 magicValue_)",
+      "function lastUnpausedAt() view returns (uint64)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function pendingOwner() view returns (address)",
+      "function proposeBlock(bytes _params, bytes _txList) payable",
+      "function proveBlock(uint64 _blockId, bytes _input)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function resolve(uint64 _chainId, bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function resolve(bytes32 _name, bool _allowZeroAddress) view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function withdrawBond(uint256 _amount)",
+      "function withdrawToAdmin(uint256 _amount)"
     ],
     "0x579A8d63a2Db646284CBFE31FE5082c9989E985c": [
       "constructor(address _logic, bytes _data) payable",
