@@ -31,7 +31,7 @@ export function ScalingActivityView({ items }: ScalingActivityViewProps) {
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <ScalingFilters
-        items={itemsWithoutEthereum)
+        items={itemsWithoutEthereum}
         childrenPosition="first"
       >
         <RichSelect label="Layer" id="layer">
