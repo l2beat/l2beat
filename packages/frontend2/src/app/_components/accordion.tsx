@@ -1,16 +1,16 @@
-'use client';
+'use client'
 
-import * as RadixAccordion from '@radix-ui/react-accordion';
-import React, { type ReactElement } from 'react';
-import { cn } from '~/utils/cn';
+import * as RadixAccordion from '@radix-ui/react-accordion'
+import React, { type ReactElement } from 'react'
+import { cn } from '~/utils/cn'
 
 interface AccordionProps {
   children:
     | ReactElement<typeof RadixAccordion.Item>
-    | ReactElement<typeof RadixAccordion.Item>[];
-  type?: 'single' | 'multiple';
-  className?: string;
-  indicator?: React.ReactNode;
+    | ReactElement<typeof RadixAccordion.Item>[]
+  type?: 'single' | 'multiple'
+  className?: string
+  indicator?: React.ReactNode
 }
 
 function Accordion({ children, type = 'single', className }: AccordionProps) {
@@ -22,7 +22,7 @@ function Accordion({ children, type = 'single', className }: AccordionProps) {
     >
       {children}
     </RadixAccordion.Root>
-  );
+  )
 }
 
 const AccordionItem = React.forwardRef<
@@ -36,10 +36,10 @@ const AccordionItem = React.forwardRef<
   >
     {children}
   </RadixAccordion.Item>
-));
-AccordionItem.displayName = RadixAccordion.Item.displayName;
+))
+AccordionItem.displayName = RadixAccordion.Item.displayName
 
-const AccordionContent = RadixAccordion.Content;
-const AccordionTrigger = RadixAccordion.Trigger;
+const AccordionContent = RadixAccordion.Content
+const AccordionTrigger = RadixAccordion.Trigger
 
-export { AccordionContent, AccordionItem, Accordion, AccordionTrigger };
+export { AccordionContent, AccordionItem, Accordion, AccordionTrigger }
