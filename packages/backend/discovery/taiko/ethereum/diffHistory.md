@@ -1,46 +1,4 @@
-Generated with discovered.json: 0x54f93000c03da21507e60561a3120b46e305c159
-
-# Diff at Mon, 08 Jul 2024 10:54:40 GMT:
-
-- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@b65a852b3c99fc8825c8712becd35c8e28018296 block: 20232590
-- current block number: 20261321
-
-## Description
-
-Provide description of changes. This section will be preserved.
-
-## Watched changes
-
-```diff
-    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
-    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
-      values.prover_set:
--        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
-+        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
-    }
-```
-
-```diff
--   Status: DELETED
-    contract ProverSet (0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProverSet (0x518845daA8870bE2C59E49620Fc262AD48953C9a)
-    +++ description: None
-```
-
-## Source code changes
-
-```diff
-.../taiko/ethereum/{.flat@20232590 => .flat}/ProverSet.sol     | 10 ++++++++++
- 1 file changed, 10 insertions(+)
-```
-
-Generated with discovered.json: 0x6ea276c960b8bccf9d9d8ae744307cada936d2e3
+Generated with discovered.json: 0xb44723559ac564e3c08943732e9a9dfda13bd295
 
 # Diff at Wed, 03 Jul 2024 10:37:45 GMT:
 
