@@ -1,5 +1,5 @@
 import { option } from 'cmd-ts'
-import { ExistingPath } from 'cmd-ts/batteries/fs'
+import { ExistingPath } from './types'
 
 export const discoveryPath = option({
   type: ExistingPath,

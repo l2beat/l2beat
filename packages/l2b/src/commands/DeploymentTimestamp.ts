@@ -1,8 +1,7 @@
 import { command, positional } from 'cmd-ts'
-import { HttpUrl } from 'cmd-ts/batteries/url'
 import { providers } from 'ethers'
 import { getContractCreationTimestamp } from '../implementations/rpcDeploymentFetch'
-import { EthereumAddressValue } from './types'
+import { EthereumAddressValue, HttpUrl } from './types'
 
 export const DeploymentTimestamp = command({
   name: 'deployment-timestamp',
@@ -13,7 +12,7 @@ export const DeploymentTimestamp = command({
     rpcUrl: positional({ type: HttpUrl, displayName: 'rpcUrl' }),
   },
   handler: async (args) => {
-    const provider = new providers.StaticJsonRpcProvider(args.rpcUrl.toString())
+    const provider = new providers.StaticJsonRpcProvider(args.rpcUrl)
     const timestamp = await getContractCreationTimestamp(provider, args.address)
     if (timestamp === undefined) {
       console.log('Contract not found')

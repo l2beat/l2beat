@@ -1,6 +1,6 @@
 import { command, option, positional, string } from 'cmd-ts'
-import { Directory } from 'cmd-ts/dist/esm/batteries/fs'
 import { powerdiff } from '../implementations/powerdiff'
+import { Directory } from './types'
 
 export const Powerdiff = command({
   name: 'powerdiff',
