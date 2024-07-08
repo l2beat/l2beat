@@ -1,17 +1,17 @@
-'use client'
+'use client';
 
-import * as RadixAccordion from '@radix-ui/react-accordion'
-import React, { type ReactElement } from 'react'
-import ChevronDownIcon from '~/icons/chevron.svg'
-import { cn } from '~/utils/cn'
+import * as RadixAccordion from '@radix-ui/react-accordion';
+import React, { type ReactElement } from 'react';
+import ChevronDownIcon from '~/icons/chevron.svg';
+import { cn } from '~/utils/cn';
 
 interface AccordionProps {
   children:
     | ReactElement<typeof RadixAccordion.Item>
-    | ReactElement<typeof RadixAccordion.Item>[]
-  type?: 'single' | 'multiple'
-  className?: string
-  indicator?: React.ReactNode
+    | ReactElement<typeof RadixAccordion.Item>[];
+  type?: 'single' | 'multiple';
+  className?: string;
+  indicator?: React.ReactNode;
 }
 
 function Accordion({ children, type = 'single', className }: AccordionProps) {
@@ -23,7 +23,7 @@ function Accordion({ children, type = 'single', className }: AccordionProps) {
     >
       {children}
     </RadixAccordion.Root>
-  )
+  );
 }
 
 const AccordionItem = React.forwardRef<
@@ -37,16 +37,16 @@ const AccordionItem = React.forwardRef<
   >
     {children}
   </RadixAccordion.Item>
-))
-AccordionItem.displayName = RadixAccordion.Item.displayName
+));
+AccordionItem.displayName = RadixAccordion.Item.displayName;
 
 interface AccordionTriggerProps {
-  childrenClassName?: string
-  indicator?: React.ReactNode
-  mergeIndicator?: boolean
+  childrenClassName?: string;
+  indicator?: React.ReactNode;
+  mergeIndicator?: boolean;
 }
 
-const AccordionTrigger = React.forwardRef<
+const AccordionComposedTrigger = React.forwardRef<
   React.ElementRef<typeof RadixAccordion.Trigger>,
   React.ComponentPropsWithoutRef<typeof RadixAccordion.Trigger> &
     AccordionTriggerProps
@@ -60,13 +60,13 @@ const AccordionTrigger = React.forwardRef<
       mergeIndicator,
       ...props
     },
-    forwardedRef,
+    forwardedRef
   ) => {
     const indicatorComponent = indicator ? (
       indicator
     ) : (
       <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
-    )
+    );
 
     const content = mergeIndicator ? (
       <div className={cn('w-full', childrenClassName)}>
@@ -78,14 +78,14 @@ const AccordionTrigger = React.forwardRef<
         <div className={cn('w-full', childrenClassName)}>{children}</div>
         {indicatorComponent}
       </>
-    )
+    );
 
     return (
       <RadixAccordion.Header>
         <RadixAccordion.Trigger
           className={cn(
-            'group flex w-full cursor-pointer items-center justify-between gap-2 md:gap-4',
-            className,
+            'flex w-full cursor-pointer items-center justify-between gap-2 md:gap-4',
+            className
           )}
           {...props}
           ref={forwardedRef}
@@ -93,19 +93,18 @@ const AccordionTrigger = React.forwardRef<
           {content}
         </RadixAccordion.Trigger>
       </RadixAccordion.Header>
-    )
-  },
-)
-AccordionTrigger.displayName = RadixAccordion.Trigger.displayName
+    );
+  }
+);
+AccordionComposedTrigger.displayName = RadixAccordion.Trigger.displayName;
 
-const AccordionContent = React.forwardRef<
-  React.ElementRef<typeof RadixAccordion.Content>,
-  React.ComponentPropsWithoutRef<typeof RadixAccordion.Content>
->(({ children, className, ...props }, forwardedRef) => (
-  <RadixAccordion.Content className={className} {...props} ref={forwardedRef}>
-    {children}
-  </RadixAccordion.Content>
-))
-AccordionContent.displayName = RadixAccordion.Content.displayName
+const AccordionContent = RadixAccordion.Content;
+const AccordionTrigger = RadixAccordion.Trigger;
 
-export { AccordionContent, AccordionItem, Accordion, AccordionTrigger }
+export {
+  AccordionContent,
+  AccordionItem,
+  Accordion,
+  AccordionComposedTrigger,
+  AccordionTrigger,
+};
