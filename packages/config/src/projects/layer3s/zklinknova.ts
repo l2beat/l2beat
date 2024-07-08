@@ -650,6 +650,7 @@ export const zklinknova: Layer3 = {
     {
       name: 'Validator',
       accounts: lineaDiscovery.getPermissionedAccounts('zkLink', 'validators'),
+      chain: 'linea',
       description:
         'Permissioned actors that can commit, prove and execute blocks. It can also "fast" relay messages to zkLink Nova without going through the canonical bridges, meaning it can potentially relay invalid messages and mint tokens out of thin air. In that case, since the system checks such messages against the slow path, after some time the system would halt.',
     },
