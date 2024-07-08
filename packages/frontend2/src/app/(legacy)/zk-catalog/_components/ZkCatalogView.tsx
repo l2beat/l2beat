@@ -1,31 +1,31 @@
-import React from 'react';
-import { cn } from '../../../../utils/cn';
+import React from 'react'
+import { cn } from '../../../../utils/cn'
 
-import Image from 'next/image';
+import Image from 'next/image'
 import {
   Accordion,
   AccordionComposedTrigger,
   AccordionContent,
   AccordionItem,
-} from '~/app/_components/accordion';
-import { EtherscanLink } from '~/app/_components/etherscan-link';
+} from '~/app/_components/accordion'
+import { EtherscanLink } from '~/app/_components/etherscan-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip';
-import ChevronDownIcon from '~/icons/chevron.svg';
-import InfoIcon from '~/icons/info.svg';
-import { LastUsedCell } from '../[project]/_components/LastUsedCell';
-import { SubVerifiersTable } from '../[project]/_components/SubVerifiersTable';
-import { VerifiedCell } from '../[project]/_components/VerifiedCell';
-import { VerifiedCountWithDetails } from '../[project]/_components/VerifiedCountWithDetails';
-import { getExplorerUrlByChainId } from '../_utils/getExplorerUrl';
-import { type ZkCatalogViewEntry } from '../types';
+} from '~/app/_components/tooltip/tooltip'
+import ChevronDownIcon from '~/icons/chevron.svg'
+import InfoIcon from '~/icons/info.svg'
+import { LastUsedCell } from '../[project]/_components/LastUsedCell'
+import { SubVerifiersTable } from '../[project]/_components/SubVerifiersTable'
+import { VerifiedCell } from '../[project]/_components/VerifiedCell'
+import { VerifiedCountWithDetails } from '../[project]/_components/VerifiedCountWithDetails'
+import { getExplorerUrlByChainId } from '../_utils/getExplorerUrl'
+import { type ZkCatalogViewEntry } from '../types'
 
 export interface ZkCatalogViewProps {
-  items: ZkCatalogViewEntry[];
-  askForVerificationLink: string;
+  items: ZkCatalogViewEntry[]
+  askForVerificationLink: string
 }
 
 // TODO: Add storybook after research team provides the config files
@@ -116,7 +116,7 @@ export function ZkCatalogView(props: ZkCatalogViewProps) {
         </AccordionItem>
       ))}
     </Accordion>
-  );
+  )
 }
 
 function DetailsItem({
@@ -125,10 +125,10 @@ function DetailsItem({
   className,
   tooltip,
 }: {
-  title: string;
-  children: React.ReactNode;
-  className?: string;
-  tooltip?: string;
+  title: string
+  children: React.ReactNode
+  className?: string
+  tooltip?: string
 }) {
   return (
     <div className={cn('flex flex-col gap-0.5', className)}>
@@ -145,15 +145,15 @@ function DetailsItem({
       </div>
       <div className="font-bold text-lg">{children}</div>
     </div>
-  );
+  )
 }
 
 function VerifierCard({
   verifier,
   askForVerificationLink,
 }: {
-  verifier: ZkCatalogViewEntry['verifiers'][number];
-  askForVerificationLink: string;
+  verifier: ZkCatalogViewEntry['verifiers'][number]
+  askForVerificationLink: string
 }) {
   return (
     <div className="border-gray-300 border-t px-5 py-4 md:first:mt-7 md:rounded-lg md:border dark:border-gray-800">
@@ -183,25 +183,25 @@ function VerifierCard({
         className="mt-7 w-[calc(100vw_-_82px)] md:w-[calc(100vw_-_188px)]"
       />
     </div>
-  );
+  )
 }
 
 function DetailsLink({
   slug,
   className,
 }: {
-  slug: string;
-  className?: string;
+  slug: string
+  className?: string
 }) {
   return (
     <a
       href={`/zk-catalog/${slug}`}
       className={cn(
         'mt-7 flex h-10 w-full items-center justify-center rounded-lg bg-black px-6 font-bold text-base text-white md:mt-0 md:h-8 md:w-max dark:bg-white dark:text-black',
-        className
+        className,
       )}
     >
       Details
     </a>
-  );
+  )
 }
