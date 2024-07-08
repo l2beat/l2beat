@@ -56,8 +56,20 @@ export async function executeFindSimilar(
   }
 
   if (keyInYN('Run powerdiff?')) {
-    const path1 = path.join(command.discoveryPath, 'discovery', name, chain, '.flat')
-    const path2 = path.join(command.discoveryPath, 'discovery', otherName, otherChain, '.flat')
+    const path1 = path.join(
+      command.discoveryPath,
+      'discovery',
+      name,
+      chain,
+      '.flat',
+    )
+    const path2 = path.join(
+      command.discoveryPath,
+      'discovery',
+      otherName,
+      otherChain,
+      '.flat',
+    )
     powerdiff(path1, path2)
   }
 }
