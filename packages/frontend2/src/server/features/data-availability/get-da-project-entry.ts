@@ -1,14 +1,12 @@
 import { layer2s, layer3s, type DaBridge, type DaLayer } from '@l2beat/config'
-import { getDaEconomicSecurity } from './utils/get-da-economic-security'
-import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getDaRisks } from './utils/get-da-risks'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
 
 export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
-  const economicSecurity = await getDaEconomicSecurity()
-  const tvs = await getDaProjectTvl(bridge.usedIn)
+  // const economicSecurity = await getDaEconomicSecurity()
+  // const tvs = await getDaProjectTvl(bridge.usedIn)
 
   return {
     name: daLayer.display.name,
@@ -28,9 +26,13 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
     risks: mapRisksToRosetteValues(getDaRisks(daLayer, bridge)),
     type: kindToType(daLayer.kind),
     links: getProjectLinks(daLayer.display.links),
-    tvs,
+    tvs: 1000,
     // TODO: economic security for single project
-    economicSecurity: economicSecurity[daLayer.id],
+    economicSecurity: {
+      id: 'noclue',
+      status: 'Synced',
+      economicSecurity: 10,
+    },
     durationStorage:
       daLayer.kind === 'PublicBlockchain' ? daLayer.storageDuration : undefined,
     usedIn: getUsedIn(bridge),

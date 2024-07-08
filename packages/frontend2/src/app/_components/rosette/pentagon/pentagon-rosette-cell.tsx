@@ -1,21 +1,46 @@
-import React from 'react'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { cn } from '~/utils/cn'
-import { sentimentToFillColor } from '~/utils/sentiment'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { SentimentText } from '../../sentiment-text'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { type RosetteValue } from '../types'
-import { MediumPizzaRosette } from './medium-pizza-rosette'
+import { PentagonRosetteIcon } from './pentagon-rosette-icon'
+import { cn } from '~/utils/cn'
+import { sentimentToFillColor } from '~/utils/sentiment'
+import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 
-export interface PizzaRosetteTooltipProps {
+interface Props {
   values: RosetteValue[]
-  isUnderReview: boolean
+  isUpcoming?: boolean
+  isUnderReview?: boolean
 }
 
-export function PizzaRosetteTooltip({
-  values,
-  isUnderReview,
-}: PizzaRosetteTooltipProps) {
+export function PentagonRosetteCell(props: Props) {
+  const isUnderReview =
+    props.isUnderReview ??
+    props.values.every((value) => value.sentiment === 'UnderReview')
+
+  return (
+    <Tooltip>
+      <TooltipTrigger className="flex items-center justify-center size-full">
+        <PentagonRosetteIcon
+          values={props.values}
+          className="size-6 md:size-8"
+          isUpcoming={props.isUpcoming}
+          isUnderReview={isUnderReview}
+          background={false}
+        />
+      </TooltipTrigger>
+      <TooltipContent fitContent>
+        <PentagonRosetteTooltip
+          values={props.values}
+          isUnderReview={isUnderReview}
+        />
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function PentagonRosetteTooltip({ values, isUnderReview }: Props) {
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
@@ -40,8 +65,19 @@ export function PizzaRosetteTooltip({
         <span className="mr-2">Risk analysis</span>
       </span>
       <div className="flex items-center gap-6">
-        <div>
-          <MediumPizzaRosette values={values} />
+        <div className="relative h-[200px] w-[200px] p-8 whitespace-pre text-center font-medium text-[10px] uppercase leading-tight">
+          <PentagonRosetteIcon
+            className="w-[136px] h-[129px]"
+            values={values}
+            background={false}
+          />
+          <PentagonRosetteLabels
+            values={values}
+            content={undefined}
+            containerSize={200}
+            textRadius={64}
+            size="small"
+          />
         </div>
         <div className="flex flex-col gap-4">
           {values.map((value) => (

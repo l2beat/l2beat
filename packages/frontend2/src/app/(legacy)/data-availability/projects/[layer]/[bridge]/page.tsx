@@ -2,6 +2,7 @@ import { daLayers } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { DaHeader } from '../_components/da-header'
+import { BigPentagonRosette } from '~/app/_components/rosette/pentagon/big-pentagon-rosette'
 
 interface Props {
   params: {
@@ -31,6 +32,7 @@ export default async function Page(props: Props) {
   return (
     <>
       <DaHeader project={daProjectEntry} />
+      <BigPentagonRosette values={daProjectEntry.risks} />
     </>
   )
 }

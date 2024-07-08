@@ -1,27 +1,38 @@
 import assert from 'assert'
 import { cn } from '~/utils/cn'
-import { type RosetteValue } from '../../types'
-import { type ContentState } from './big-pizza-rosette'
+import { type ContentState } from '../pentagon/big-pentagon-rosette'
+import { type RosetteValue } from '../types'
 
-const TEXT_RADIUS = 102
-
-export function BigPizzaRosetteLabels({
-  values,
-  content,
-}: {
+interface Props {
   values: RosetteValue[]
   content: ContentState | undefined
-}) {
+  containerSize: number
+  textRadius: number
+  size?: 'small' | 'regular'
+}
+
+export function PizzaRosetteLabels({
+  values,
+  content,
+  containerSize,
+  textRadius,
+  size = 'regular',
+}: Props) {
   const [first, second, third, fourth, fifth] = values
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
-  const sharedClassName =
-    'text-center font-medium text-xs uppercase leading-tight whitespace-pre select-none'
+  const sharedClassName = cn(
+    size === 'small' && 'text-3xs',
+    size === 'regular' && 'text-xs',
+    'text-center font-medium uppercase leading-tight whitespace-pre select-none',
+  )
+  const containerCenter = containerSize / 2
+
   return (
     <>
       <span
         style={{
-          top: 138 - Math.cos((-4 * Math.PI) / 5) * TEXT_RADIUS,
-          left: 138 + Math.sin((-4 * Math.PI) / 5) * TEXT_RADIUS,
+          top: containerCenter - Math.cos((-4 * Math.PI) / 5) * textRadius,
+          left: containerCenter + Math.sin((-4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[36deg]',
@@ -33,8 +44,8 @@ export function BigPizzaRosetteLabels({
       </span>
       <span
         style={{
-          top: 138 - Math.cos((-2 * Math.PI) / 5) * TEXT_RADIUS,
-          left: 138 + Math.sin((-2 * Math.PI) / 5) * TEXT_RADIUS,
+          top: containerCenter - Math.cos((-2 * Math.PI) / 5) * textRadius,
+          left: containerCenter + Math.sin((-2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-72deg]',
@@ -46,7 +57,7 @@ export function BigPizzaRosetteLabels({
       </span>
       <span
         style={{
-          top: 138 - TEXT_RADIUS,
+          top: containerCenter - textRadius,
           left: '50%',
         }}
         className={cn(
@@ -59,8 +70,8 @@ export function BigPizzaRosetteLabels({
       </span>
       <span
         style={{
-          top: 138 - Math.cos((2 * Math.PI) / 5) * TEXT_RADIUS,
-          left: 138 + Math.sin((2 * Math.PI) / 5) * TEXT_RADIUS,
+          top: containerCenter - Math.cos((2 * Math.PI) / 5) * textRadius,
+          left: containerCenter + Math.sin((2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[72deg]',
@@ -72,8 +83,8 @@ export function BigPizzaRosetteLabels({
       </span>
       <span
         style={{
-          top: 138 - Math.cos((4 * Math.PI) / 5) * TEXT_RADIUS,
-          left: 138 + Math.sin((4 * Math.PI) / 5) * TEXT_RADIUS,
+          top: containerCenter - Math.cos((4 * Math.PI) / 5) * textRadius,
+          left: containerCenter + Math.sin((4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[-36deg]',

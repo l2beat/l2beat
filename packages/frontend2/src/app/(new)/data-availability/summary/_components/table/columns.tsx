@@ -5,6 +5,7 @@ import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-
 import { formatNumber } from '~/utils/format-number'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
+import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -22,7 +23,7 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <PizzaRosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
+      <PentagonRosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
     ),
     enableSorting: false,
     meta: {

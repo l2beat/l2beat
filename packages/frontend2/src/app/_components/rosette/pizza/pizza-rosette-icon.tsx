@@ -3,25 +3,27 @@ import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import {
   type ContentState,
-  type BigPizzaRosetteProps,
+  type BigPizzaRosetteProps as PizzaRosetteProps,
 } from './big-pizza-rosette'
-import { type RosetteValue } from '../../types'
+import { type RosetteValue } from '../types'
 import { useRef } from 'react'
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { useEventListener } from '~/hooks/use-event-listener'
 
-interface Props extends BigPizzaRosetteProps {
+interface Props extends PizzaRosetteProps {
   content?: ContentState
   setContent?: (content: ContentState | undefined) => void
+  background?: boolean
 }
 
-export function BigPizzaRosetteIcon({
+export function PizzaRosetteIcon({
   values,
   className,
   isUpcoming,
   isUnderReview,
   content,
   setContent,
+  background = false,
 }: Props) {
   const svgRef = useRef(null)
   const [first, second, third, fourth, fifth] = values
@@ -48,12 +50,14 @@ export function BigPizzaRosetteIcon({
       ref={svgRef}
       onMouseLeave={() => setContent?.(undefined)}
     >
-      <circle
-        cx="90.8408"
-        cy="90"
-        r="90"
-        className="fill-gray-100 dark:fill-neutral-700"
-      />
+      {background ? (
+        <circle
+          cx="90.8408"
+          cy="90"
+          r="90"
+          className="fill-gray-100 dark:fill-neutral-700"
+        />
+      ) : null}
 
       <path
         d="M80.8589 98.2024C83.4853 97.3765 86.1548 99.3485 86.1374 102.102L85.7291 166.681C85.7139 169.077 83.649 170.912 81.288 170.504C73.3126 169.126 56.0884 165.178 42.7447 155.321C28.2279 144.597 19.9876 129.784 16.6906 122.825C15.6954 120.724 16.8492 118.33 19.0669 117.632L80.8589 98.2024Z"

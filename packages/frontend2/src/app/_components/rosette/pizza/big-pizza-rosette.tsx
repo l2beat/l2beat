@@ -1,18 +1,14 @@
 'use client'
 import { cn } from '~/utils/cn'
-import { type RosetteValue } from '../../types'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '../../../tooltip/tooltip'
+import { type RosetteValue } from '../types'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { useState } from 'react'
-import { SentimentText } from '../../../sentiment-text'
-import { WarningBar } from '../../../warning-bar'
+import { SentimentText } from '../../sentiment-text'
+import { WarningBar } from '../../warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { BigPizzaRosetteIcon } from './big-pizza-rosette-icon'
-import { BigPizzaRosetteLabels } from './big-pizza-rosette-labels'
-import { UpcomingBadge } from '../../../badge/upcoming-badge'
+import { PizzaRosetteIcon } from './pizza-rosette-icon'
+import { UpcomingBadge } from '../../badge/upcoming-badge'
+import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
 export interface BigPizzaRosetteProps {
   values: RosetteValue[]
@@ -45,7 +41,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           props.className,
         )}
       >
-        <BigPizzaRosetteIcon
+        <PizzaRosetteIcon
           values={props.values}
           isUpcoming={props.isUpcoming}
           isUnderReview={isUnderReview}
@@ -53,7 +49,12 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
         {props.isUpcoming && (
           <UpcomingBadge className="absolute top-[130px] left-[90px]" />
         )}
-        <BigPizzaRosetteLabels values={props.values} content={content} />
+        <PizzaRosetteLabels
+          values={props.values}
+          content={content}
+          containerSize={272}
+          textRadius={102}
+        />
       </div>
     )
   }
@@ -66,7 +67,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
         data-rosette-hover-disabled={isUnderReview || props.isUpcoming}
       >
         <TooltipTrigger>
-          <BigPizzaRosetteIcon
+          <PizzaRosetteIcon
             values={props.values}
             isUpcoming={props.isUpcoming}
             isUnderReview={isUnderReview}
@@ -74,7 +75,12 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
             setContent={setContent}
           />
         </TooltipTrigger>
-        <BigPizzaRosetteLabels values={props.values} content={content} />
+        <PizzaRosetteLabels
+          values={props.values}
+          content={content}
+          containerSize={138}
+          textRadius={102}
+        />
       </div>
       {content ? (
         <TooltipContent
