@@ -1,11 +1,10 @@
 import assert from 'assert'
 import { cn } from '~/utils/cn'
 import { type RosetteValue } from '../types'
-import { type ContentState } from './big-pentagon-rosette'
+import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 
 interface Props {
   values: RosetteValue[]
-  content: ContentState | undefined
   containerSize: number
   textRadius: number
   size?: 'small' | 'regular'
@@ -13,11 +12,11 @@ interface Props {
 
 export function PentagonRosetteLabels({
   values,
-  content,
   containerSize,
   textRadius,
   size = 'regular',
 }: Props) {
+  const context = useRosetteTooltipContext()
   const [first, second, third, fourth, fifth] = values
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
   const sharedClassName = cn(
@@ -38,7 +37,9 @@ export function PentagonRosetteLabels({
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[36deg]',
           sharedClassName,
-          content && content.risk.name !== first.name && 'opacity-20',
+          context?.content &&
+            context?.content.risk.name !== first.name &&
+            'opacity-20',
         )}
       >
         {first.name.split(' ').join('\n')}
@@ -51,7 +52,9 @@ export function PentagonRosetteLabels({
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[-72deg]',
           sharedClassName,
-          content && content.risk.name !== second.name && 'opacity-20',
+          context?.content &&
+            context?.content.risk.name !== second.name &&
+            'opacity-20',
         )}
       >
         {second.name.split(' ').join('\n')}
@@ -64,7 +67,9 @@ export function PentagonRosetteLabels({
         className={cn(
           'absolute -translate-x-1/2',
           sharedClassName,
-          content && content.risk.name !== third.name && 'opacity-20',
+          context?.content &&
+            context?.content.risk.name !== third.name &&
+            'opacity-20',
         )}
       >
         {third.name.split(' ').join('\n')}
@@ -77,7 +82,9 @@ export function PentagonRosetteLabels({
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[72deg]',
           sharedClassName,
-          content && content.risk.name !== fourth.name && 'opacity-20',
+          context?.content &&
+            context?.content.risk.name !== fourth.name &&
+            'opacity-20',
         )}
       >
         {fourth.name.split(' ').join('\n')}
@@ -90,7 +97,9 @@ export function PentagonRosetteLabels({
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-36deg]',
           sharedClassName,
-          content && content.risk.name !== fifth.name && 'opacity-20',
+          context?.content &&
+            context?.content.risk.name !== fifth.name &&
+            'opacity-20',
         )}
       >
         {fifth.name.split(' ').join('\n')}

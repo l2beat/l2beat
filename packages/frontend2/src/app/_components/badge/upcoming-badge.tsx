@@ -11,8 +11,8 @@ export interface UpcomingBadgeProps {
 export function UpcomingBadge(props: UpcomingBadgeProps) {
   return (
     <Tooltip>
-      <TooltipTrigger>
-        <Badge className={props.className} type="gray" size="small">
+      <TooltipTrigger className={props.className}>
+        <Badge type="gray" size="small">
           {props.isShort ? '?' : 'Coming soon'}
         </Badge>
       </TooltipTrigger>

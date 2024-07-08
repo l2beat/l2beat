@@ -30,7 +30,7 @@ const Tooltip = ({
 const TooltipTrigger = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
->(({ ...props }, ref) => {
+>((props, ref) => {
   const localRef = useRef(null)
   const { setOpen } = useTooltipTriggerContext()
   useOnClickOutside(localRef, () => setOpen(false), 'touchend')

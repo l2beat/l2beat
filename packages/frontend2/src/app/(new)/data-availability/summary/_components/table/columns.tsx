@@ -1,6 +1,5 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import { EM_DASH } from '~/app/_components/nav/consts'
-import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'

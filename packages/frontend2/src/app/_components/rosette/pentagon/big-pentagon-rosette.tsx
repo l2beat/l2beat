@@ -3,12 +3,16 @@
 import { cn } from '~/utils/cn'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { type RosetteValue } from '../types'
-import { useState } from 'react'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
 import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 import { PentagonRosetteIcon } from './pentagon-rosette-icon'
+import {
+  RosetteTooltipContextProvider,
+  useRosetteTooltipContext,
+} from '../rosette-tooltip-context'
+import { UpcomingBadge } from '../../badge/upcoming-badge'
 
 export interface BigPentagonRosetteProps {
   values: RosetteValue[]
@@ -24,59 +28,94 @@ export interface ContentState {
 }
 
 export function BigPentagonRosette(props: BigPentagonRosetteProps) {
-  const [content, setContent] = useState<ContentState>()
+  const isUnderReview =
+    props.isUnderReview ??
+    props.values.every((value) => value.sentiment === 'UnderReview')
 
-  return (
-    <Tooltip>
+  if (props.isUpcoming ?? isUnderReview) {
+    return (
       <div
-        data-role="rosette"
         className={cn(
           'relative flex items-center justify-center size-[272px]',
           props.className,
         )}
       >
         {/* Move tooltip up to have a all Circumcircle radius intersection exactly at the center of div */}
-        <TooltipTrigger className="-translate-y-[10px]">
-          <PentagonRosetteIcon
-            values={props.values}
-            isUpcoming={props.isUpcoming}
-            isUnderReview={props.isUnderReview}
-            content={content}
-            setContent={setContent}
-          />
-        </TooltipTrigger>
+        <PentagonRosetteIcon
+          values={props.values}
+          isUnderReview={isUnderReview}
+          className={cn(
+            '-translate-y-[5.28%]',
+            props.isUpcoming && 'opacity-30',
+          )}
+        />
+        {props.isUpcoming && (
+          <UpcomingBadge className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" />
+        )}
         <PentagonRosetteLabels
           values={props.values}
-          content={content}
           containerSize={272}
           textRadius={96}
         />
       </div>
-      {content ? (
-        <TooltipContent
-          side={content.side}
-          sideOffset={content.sideOffset}
-          className="w-[300px]"
-        >
-          <SentimentText
-            sentiment={content.risk.sentiment}
-            className="mb-2 flex items-center gap-1 font-medium"
-          >
-            {content.risk.value}
-          </SentimentText>
-          {content.risk.warning && (
-            <WarningBar
-              className="mb-2"
-              icon={RoundedWarningIcon}
-              text={content.risk.warning.value}
-              color={
-                content.risk.warning.sentiment === 'bad' ? 'red' : 'yellow'
-              }
-            />
+    )
+  }
+
+  return (
+    <RosetteTooltipContextProvider>
+      <Tooltip>
+        <div
+          className={cn(
+            'relative flex items-center justify-center size-[272px]',
+            props.className,
           )}
-          <span className="text-xs">{content.risk.description}</span>
-        </TooltipContent>
-      ) : null}
-    </Tooltip>
+        >
+          {/* Move tooltip up to have a all Circumcircle radius intersection exactly at the center of div */}
+          <TooltipTrigger className="-translate-y-[5.28%]">
+            <PentagonRosetteIcon
+              values={props.values}
+              isUnderReview={props.isUnderReview}
+              className={cn(props.isUpcoming && 'opacity-30')}
+            />
+          </TooltipTrigger>
+          <PentagonRosetteLabels
+            values={props.values}
+            containerSize={272}
+            textRadius={96}
+          />
+        </div>
+        <RosetteTooltipContent />
+      </Tooltip>
+    </RosetteTooltipContextProvider>
+  )
+}
+
+function RosetteTooltipContent() {
+  const context = useRosetteTooltipContext()
+  const content = context?.content
+  if (!content) return null
+
+  return (
+    <TooltipContent
+      side={content.side}
+      sideOffset={content.sideOffset}
+      className="w-[300px]"
+    >
+      <SentimentText
+        sentiment={content.risk.sentiment}
+        className="mb-2 flex items-center gap-1 font-medium"
+      >
+        {content.risk.value}
+      </SentimentText>
+      {content.risk.warning && (
+        <WarningBar
+          className="mb-2"
+          icon={RoundedWarningIcon}
+          text={content.risk.warning.value}
+          color={content.risk.warning.sentiment === 'bad' ? 'red' : 'yellow'}
+        />
+      )}
+      <span className="text-xs">{content.risk.description}</span>
+    </TooltipContent>
   )
 }

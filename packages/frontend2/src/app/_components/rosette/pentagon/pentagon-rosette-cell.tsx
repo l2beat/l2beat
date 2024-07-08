@@ -10,7 +10,6 @@ import { PentagonRosetteLabels } from './pentagon-rosette-labels'
 
 interface Props {
   values: RosetteValue[]
-  isUpcoming?: boolean
   isUnderReview?: boolean
 }
 
@@ -25,8 +24,6 @@ export function PentagonRosetteCell(props: Props) {
         <PentagonRosetteIcon
           values={props.values}
           className="size-6 md:size-8"
-          isUpcoming={props.isUpcoming}
-          isUnderReview={isUnderReview}
           background={false}
         />
       </TooltipTrigger>
@@ -73,7 +70,6 @@ function PentagonRosetteTooltip({ values, isUnderReview }: Props) {
           />
           <PentagonRosetteLabels
             values={values}
-            content={undefined}
             containerSize={200}
             textRadius={64}
             size="small"

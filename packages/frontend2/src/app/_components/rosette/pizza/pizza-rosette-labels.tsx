@@ -1,29 +1,34 @@
 import assert from 'assert'
 import { cn } from '~/utils/cn'
-import { type ContentState } from '../pentagon/big-pentagon-rosette'
 import { type RosetteValue } from '../types'
+import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 
 interface Props {
   values: RosetteValue[]
-  content: ContentState | undefined
   containerSize: number
   textRadius: number
   size?: 'small' | 'regular'
+  textClassName?: string
 }
 
 export function PizzaRosetteLabels({
   values,
-  content,
   containerSize,
   textRadius,
   size = 'regular',
+  textClassName,
 }: Props) {
+  const context = useRosetteTooltipContext()
+
   const [first, second, third, fourth, fifth] = values
+  const content = context?.content
+
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
   const sharedClassName = cn(
     size === 'small' && 'text-3xs',
     size === 'regular' && 'text-xs',
     'text-center font-medium uppercase leading-tight whitespace-pre select-none',
+    textClassName,
   )
   const containerCenter = containerSize / 2
 

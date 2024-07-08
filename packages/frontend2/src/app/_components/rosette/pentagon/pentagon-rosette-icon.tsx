@@ -1,34 +1,34 @@
 import { useOnClickOutside } from '~/hooks/use-on-click-outside'
-import {
-  type BigPentagonRosetteProps,
-  type ContentState,
-} from './big-pentagon-rosette'
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { assert } from '@l2beat/shared-pure'
 import { type RosetteValue } from '../types'
 import { sentimentToFillColor } from '~/utils/sentiment'
 import { cn } from '~/utils/cn'
+import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 
-interface Props extends BigPentagonRosetteProps {
-  content?: ContentState
-  setContent?: (content: ContentState | undefined) => void
+interface Props {
+  values: RosetteValue[]
+  isUnderReview?: boolean
+  className?: string
   background?: boolean
 }
 
 export function PentagonRosetteIcon({
   values,
-  isUpcoming,
   isUnderReview,
   className,
-  content,
-  setContent,
   background = true,
 }: Props) {
   const svgRef = useRef(null)
-  const [first, second, third, fourth, fifth] = values
+  const context = useRosetteTooltipContext()
+
   useOnClickOutside(svgRef, () => setContent?.(undefined))
   useEventListener('scroll', () => setContent?.(undefined))
+
+  const setContent = context?.setContent
+  const content = context?.content
+  const [first, second, third, fourth, fifth] = values
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
 
@@ -48,8 +48,8 @@ export function PentagonRosetteIcon({
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
       ref={svgRef}
-      className={cn(className, isUpcoming && 'opacity-30')}
       onMouseLeave={() => setContent?.(undefined)}
+      className={className}
     >
       {background ? (
         <path
@@ -64,6 +64,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity duration-50',
           sentimentToFillColor(first.sentiment),
+          isUnderReview && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== first.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(first, 'bottom')}
@@ -74,6 +75,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity duration-50',
           sentimentToFillColor(second.sentiment),
+          isUnderReview && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== second.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(second, 'top')}
@@ -84,6 +86,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity duration-50',
           sentimentToFillColor(third.sentiment),
+          isUnderReview && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== third.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(third, 'top')}
@@ -94,6 +97,7 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity duration-50',
           sentimentToFillColor(fourth.sentiment),
+          isUnderReview && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== fourth.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(fourth, 'top')}
@@ -104,11 +108,25 @@ export function PentagonRosetteIcon({
         className={cn(
           'transition-opacity duration-50',
           sentimentToFillColor(fifth.sentiment),
+          isUnderReview && sentimentToFillColor('UnderReview'),
           content && content.risk.name !== fifth.name && 'opacity-20',
         )}
         onMouseEnter={() => selectRisk(fifth, 'bottom')}
         onTouchStart={() => selectRisk(fifth, 'bottom')}
       />
+
+      {isUnderReview ? (
+        <>
+          <path
+            d="M93.213 110.444C92.978 110.443 92.7456 110.395 92.529 110.304C92.3124 110.213 92.116 110.08 91.9509 109.912C91.7858 109.745 91.6552 109.547 91.5668 109.329C91.4783 109.112 91.4336 108.879 91.4352 108.644C91.4583 103.844 91.613 101.909 92.5748 99.5769C93.8417 96.7447 95.736 94.2377 98.1143 92.2453C99.8567 90.8194 101.395 89.1606 102.685 87.3156C103.385 86.2612 103.796 85.0411 103.876 83.7778C103.96 83.0572 103.879 82.327 103.641 81.6418C103.402 80.9567 103.012 80.3343 102.499 79.8214C101.986 79.3084 101.364 78.9181 100.679 78.6796C99.9936 78.4412 99.2634 78.3608 98.5428 78.4444C94.9339 78.4444 93.6041 81.2107 93.261 83.9431C93.2153 84.3817 93.01 84.7883 92.6843 85.0856C92.3585 85.3828 91.9349 85.5501 91.4939 85.5556H80.7792C80.5389 85.5536 80.3014 85.5034 80.0809 85.4079C79.8604 85.3123 79.6613 85.1735 79.4955 84.9995C79.3296 84.8256 79.2005 84.6201 79.1156 84.3952C79.0307 84.1704 78.9919 83.9308 79.0014 83.6907C79.2503 76.6293 80.9872 73.5396 84.3686 70.4196C87.7926 67.2604 92.0877 66 98.5428 66C105.131 66 109.372 67.2444 112.719 70.1849C114.531 71.8453 115.952 73.8858 116.882 76.1602C117.812 78.4346 118.228 80.8866 118.099 83.3404C118.105 85.8948 117.509 88.4145 116.358 90.6951C114.841 93.4308 112.89 95.902 110.581 98.0124L107.265 101.168C105.199 103.183 104.005 105.927 103.938 108.812C103.901 109.255 103.7 109.669 103.373 109.97C103.047 110.272 102.619 110.441 102.175 110.443L93.213 110.444Z"
+            fill="#FFC107"
+          />
+          <path
+            d="M97.6529 130C102.071 130 105.653 126.418 105.653 122C105.653 117.582 102.071 114 97.6529 114C93.2346 114 89.6529 117.582 89.6529 122C89.6529 126.418 93.2346 130 97.6529 130Z"
+            fill="#FFC107"
+          />
+        </>
+      ) : null}
     </svg>
   )
 }

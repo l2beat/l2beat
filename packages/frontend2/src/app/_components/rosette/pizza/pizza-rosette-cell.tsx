@@ -11,7 +11,6 @@ import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
 export interface PizzaRosetteCellProps {
   values: RosetteValue[]
-  isUpcoming?: boolean
   isUnderReview?: boolean
 }
 
@@ -26,7 +25,6 @@ export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
         <PizzaRosetteIcon
           values={props.values}
           className="size-6 md:size-8"
-          isUpcoming={props.isUpcoming}
           isUnderReview={isUnderReview}
           background={false}
         />
@@ -74,7 +72,6 @@ function PizzaRosetteTooltip({ values, isUnderReview }: PizzaRosetteCellProps) {
           />
           <PizzaRosetteLabels
             values={values}
-            content={undefined}
             containerSize={200}
             textRadius={76}
             size="small"
