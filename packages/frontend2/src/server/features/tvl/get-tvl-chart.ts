@@ -13,7 +13,7 @@ export async function getTvlChart({
   | { type: 'projects'; projectIds: string[] }
 )) {
   noStore()
-  const projectsFilter = () => {
+  const projectsFilter = (() => {
     if (rest.type === 'all') {
       return () => true
     }
@@ -28,7 +28,7 @@ export async function getTvlChart({
     }
 
     return (project: TvlProject) => project.type === rest.type
-  }
+  })()
 
   const projects = getTvlProjects().filter(projectsFilter)
   const ethPrices = await getEthPrices()
