@@ -155,13 +155,10 @@ export class CoingeckoClient {
     coinIds: CoingeckoId[],
     vs_currency: string,
   ): Promise<CoinsMarketResultData> {
-    const data = await this.query(
-      '/coins/markets',
-      {
-        vs_currency: vs_currency.toLowerCase(),
-        ids: coinIds.map((id) => id.toString()).join(','),
-      },
-    )
+    const data = await this.query('/coins/markets', {
+      vs_currency: vs_currency.toLowerCase(),
+      ids: coinIds.map((id) => id.toString()).join(','),
+    })
 
     return CoinsMarketResultData.parse(data)
   }

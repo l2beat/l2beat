@@ -44,15 +44,13 @@ export interface CoinMarketChartRangeData {
   totalVolumes: { date: Date; value: number }[]
 }
 
-export const CoinsMarketResult = z.object(
-    {
-        id: z.string(),
-        symbol: z.string(),
-        name: z.string(),
-        image: z.string(),
-        current_price: z.number(),
-    }
-)
+export const CoinsMarketResult = z.object({
+  id: z.string(),
+  symbol: z.string(),
+  name: z.string(),
+  image: z.string(),
+  current_price: z.number(),
+})
 
 export const CoinsMarketResultData = z.array(CoinsMarketResult)
 export type CoinsMarketResultData = z.infer<typeof CoinsMarketResultData>
