@@ -11,7 +11,6 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   if (
     cli.mode !== 'invert' &&
     cli.mode !== 'discover' &&
-    cli.mode !== 'flatten' &&
     cli.mode !== 'single-discovery'
   ) {
     throw new Error(`No local config for mode: ${cli.mode}`)
