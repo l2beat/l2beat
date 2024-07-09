@@ -40,6 +40,11 @@
               "0xf6d4b94561d34a2e202535a880be5a411bcfa4d7aeb44117cc8d682e63ec4759": "EXECUTER_ROLE"
             }
           }
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
         }
       }
     },
