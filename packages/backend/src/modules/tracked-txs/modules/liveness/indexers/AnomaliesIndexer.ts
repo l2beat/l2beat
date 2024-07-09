@@ -80,7 +80,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     const projectsToSync = getProjectsToSync(this.$.projects, configurations)
 
-    // we need data from 2 * SYNC_RANGE past days to calcualate standard deviation
+    // we need data from 2 * SYNC_RANGE past days to calculate standard deviation
     const deviationRange = to.add(-1 * this.SYNC_RANGE * 2, 'days')
 
     for (const project of projectsToSync) {

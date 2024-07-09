@@ -46,20 +46,20 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     parentSafeHeight: number,
   ): Promise<number> {
     const now = UnixTime.now()
-    const endOfPeviousDay = now.toStartOf('day').add(-1, 'seconds')
+    const endOfPreviousDay = now.toStartOf('day').add(-1, 'seconds')
     let targetHeight = new UnixTime(safeHeight)
       .toEndOf('day')
       .add(-1, 'seconds')
 
-    if (parentSafeHeight <= endOfPeviousDay.toNumber()) {
+    if (parentSafeHeight <= endOfPreviousDay.toNumber()) {
       this.logger.info('Not enough data to calculate - skipping', {
         parentSafeHeight,
       })
       return parentSafeHeight
     }
 
-    if (targetHeight < endOfPeviousDay) {
-      targetHeight = endOfPeviousDay
+    if (targetHeight < endOfPreviousDay) {
+      targetHeight = endOfPreviousDay
       this.logger.info('Adjusting target height', { targetHeight })
     }
 
@@ -166,13 +166,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
 
     ranges.forEach((range) => {
-      const filteredItervals = this.filterByRange(intervals, syncTo, range)
+      const filteredIntervals = this.filterByRange(intervals, syncTo, range)
 
-      if (filteredItervals.length === 0) {
+      if (filteredIntervals.length === 0) {
         return
       }
 
-      const stats = this.calculateStats(filteredItervals)
+      const stats = this.calculateStats(filteredIntervals)
 
       const record: AggregatedLivenessRecord = {
         projectId: projectId,
