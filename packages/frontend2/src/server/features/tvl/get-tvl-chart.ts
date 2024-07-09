@@ -35,7 +35,7 @@ export async function getTvlChart({
     await getTvlValuesForProjects(projects, range),
   ).reduce<Record<string, Value[]>>((acc, projectValues) => {
     for (const [timestamp, values] of Object.entries(projectValues)) {
-      const map = acc[timestamp] || []
+      const map = acc[timestamp] ?? []
       acc[timestamp] = map.concat(values)
     }
     return acc
