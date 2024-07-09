@@ -28,38 +28,42 @@ export async function getVerifiers() {
   return VerifiersApiResponse.parse(cachedVerifiers)
 }
 
-const getCachedVerifiersStatus = cache(async () => {
-  const verifiers = getVerifiersFromConfig()
-  assert(verifiers.length > 0, 'No verifier addresses found')
+const getCachedVerifiersStatus = cache(
+  async () => {
+    const verifiers = getVerifiersFromConfig()
+    assert(verifiers.length > 0, 'No verifier addresses found')
 
-  const fetchOperations = verifiers.map(async (verifier) => {
-    try {
-      const blockscoutClient = getBlockscoutClient(verifier.chainId)
-      const txs = await blockscoutClient.getInternalTransactions(
-        verifier.contractAddress,
-      )
-      txs.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber())
-      const lastUsed = txs[0]!.timestamp
+    const fetchOperations = verifiers.map(async (verifier) => {
+      try {
+        const blockscoutClient = getBlockscoutClient(verifier.chainId)
+        const txs = await blockscoutClient.getInternalTransactions(
+          verifier.contractAddress,
+        )
+        txs.sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber())
+        const lastUsed = txs[0]!.timestamp
 
-      // TODO: Move it to the backend asap, stalling this will cause stale verifiers data
-      // await db.verifierStatus.addOrUpdate({
-      //   address: verifier.contractAddress.toString(),
-      //   chainId: verifier.chainId,
-      //   lastUsed: lastUsed,
-      //   lastUpdated: UnixTime.now(),
-      // })
+        // TODO: Move it to the backend asap, stalling this will cause stale verifiers data
+        // await db.verifierStatus.addOrUpdate({
+        //   address: verifier.contractAddress.toString(),
+        //   chainId: verifier.chainId,
+        //   lastUsed: lastUsed,
+        //   lastUpdated: UnixTime.now(),
+        // })
 
-      return {
-        address: verifier.contractAddress.toString(),
-        timestamp: lastUsed,
+        return {
+          address: verifier.contractAddress.toString(),
+          timestamp: lastUsed,
+        }
+      } catch {
+        return handleError(verifier)
       }
-    } catch {
-      return handleError(verifier)
-    }
-  })
+    })
 
-  return Promise.all(fetchOperations)
-})
+    return Promise.all(fetchOperations)
+  },
+  ['zk-catalog-verifiers'],
+  { revalidate: 60 * 60 },
+)
 
 function getVerifiersFromConfig(): OnchainVerifier[] {
   const verifiers: OnchainVerifier[] = []
