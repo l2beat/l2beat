@@ -5,9 +5,26 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  @apply scroll-pt-28 md:scroll-pt-36;
+@media (min-width: 750px) {
+  :root {
+    --header-height: 4rem;
+  }
+  :root:has(.header-height-glossary) {
+    --header-height: 9rem !important;
+ }
 }
+:root {
+  --header-height: 2rem;
+}
+:root:has(.header-height-glossary) {
+  --header-height: 7rem;
+}
+
+html {
+  scroll-padding-top: var(--header-height);
+  overscroll-behavior: none;
+}
+
 
 body {
   @apply bg-white dark:bg-neutral-900 text-base text-black dark:text-white md:text-lg font-sans transition-colors;
