@@ -1,9 +1,5 @@
 import { writeFileSync } from 'fs'
-import {
-  HttpClient,
-  ParsedFilesManager,
-  flattenStartingFrom,
-} from '@l2beat/discovery'
+import { HttpClient, flattenStartingFrom } from '@l2beat/discovery'
 import {
   ExplorerConfig,
   getExplorerClient,
