@@ -19,16 +19,20 @@ export function getProjectDetails(project: DaProjectEntry) {
   })
 
   items.push({
-    type: 'RiskAnalysisSection2',
+    type: 'MarkdownSection',
     props: {
-      id: 'risk-analysis2',
-      title: 'Risk analysis 2',
-      riskValues: project.risks,
-      // TODO: Do we want to add these to DA projects?
-      warning: undefined,
-      redWarning: undefined,
-      isVerified: undefined,
-      isUnderReview: false,
+      id: 'da-layer-technology',
+      title: 'DA Layer technology',
+      children: '## Some text\n### Next line',
+    },
+  })
+
+  items.push({
+    type: 'MarkdownSection',
+    props: {
+      id: 'da-bridge-technology',
+      title: 'DA Bridge technology',
+      children: '## Some text\n### Next line',
     },
   })
 

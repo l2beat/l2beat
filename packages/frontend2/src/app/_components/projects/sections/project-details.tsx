@@ -3,6 +3,7 @@ import React from 'react'
 
 import { type ProjectDetailsSection } from './types'
 import { RiskAnalysisSection } from './risk-analysis-section'
+import { MarkdownSection } from './markdown-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -24,13 +25,12 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
-          case 'RiskAnalysisSection2':
+          case 'MarkdownSection':
             return (
-              <RiskAnalysisSection
+              <MarkdownSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}
-                title="Risk analysis 2"
               />
             )
           default:

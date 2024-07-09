@@ -1,6 +1,10 @@
+import { type MarkdownSectionProps } from './markdown-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
 
-export type ProjectSectionId = 'risk-analysis' | 'risk-analysis2'
+export type ProjectSectionId =
+  | 'risk-analysis'
+  | 'da-layer-technology'
+  | 'da-bridge-technology'
 
 export interface ProjectSectionProps {
   id: ProjectSectionId
@@ -15,11 +19,11 @@ export interface ProjectDetailsRiskAnalysisSection {
   props: ProjectDetailsProps<RiskAnalysisSectionProps>
 }
 
-export interface ProjectDetailsRiskAnalysisSection2 {
-  type: 'RiskAnalysisSection2'
-  props: ProjectDetailsProps<RiskAnalysisSectionProps>
+export interface ProjectDetailsMarkdownSection {
+  type: 'MarkdownSection'
+  props: ProjectDetailsProps<MarkdownSectionProps>
 }
 
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
-} & (ProjectDetailsRiskAnalysisSection | ProjectDetailsRiskAnalysisSection2)
+} & (ProjectDetailsRiskAnalysisSection | ProjectDetailsMarkdownSection)
