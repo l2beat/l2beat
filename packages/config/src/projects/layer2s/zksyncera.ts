@@ -502,17 +502,9 @@ export const zksyncera: Layer2 = {
     },
   ),
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-    },
-    dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
-      references: [],
-    },
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [],
-    },
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+    operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       name: 'Users can force any transaction via L1',
       description:

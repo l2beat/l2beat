@@ -101,7 +101,7 @@ export const base: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'BaseMultisig',
-      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimisism Foundation multisig is also required.",
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimism Foundation multisig is also required.",
     ),
     ...discovery.getMultisigPermission(
       'BaseMultisig2',

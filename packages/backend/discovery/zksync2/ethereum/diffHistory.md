@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xb4d1584e5ed3722d45584dedfce63cd960e76c2e
+Generated with discovered.json: 0xceb34098e05d75d42d80c7c4a6c9b045c12bde0d
 
-# Diff at Fri, 05 Jul 2024 14:34:27 GMT:
+# Diff at Mon, 08 Jul 2024 13:00:35 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@111fee0655d72e75c60324b920975e421fd852f7 block: 20061811
-- current block number: 20240929
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@555efdd96fadc389c2c70beacf820125fbb25a7d block: 20061811
+- current block number: 20261948
 
 ## Description
 
-New handler for decoding EIP2535 facets.
+Provide description of changes. This section will be preserved.
 
 ## Config/verification related changes
 
@@ -25,7 +25,7 @@ discovery. Values are for block 20061811 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xa9df04f39554fde3357801ab7076a1dc1b4029fe
+Generated with discovered.json: 0xc0fc7f99bf716dda44efaa9998f17de5c62e5d98
 
 # Diff at Mon, 10 Jun 2024 13:45:17 GMT:
 

@@ -29,7 +29,11 @@
         "polygonzkevm",
         "gnosis",
         "sepolia",
-        "scroll"
+        "scroll",
+        "mantapacific",
+        "mantle",
+        "blast",
+        "zksync2"
       ]
     },
     "initialAddresses": {
