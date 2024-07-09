@@ -7,5 +7,5 @@ export const selectAggregatedLiveness = [
   'min',
   'avg',
   'max',
-  'timestamp',
+  'updated_at',
 ] as const satisfies (keyof AggregatedLivenessRow)[]

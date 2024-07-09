@@ -22,7 +22,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       min: 10,
       avg: 10,
       max: 10,
-      timestamp: START.add(-1, 'hours'),
+      updatedAt: START.add(-1, 'hours'),
     },
     {
       projectId: PROJECT_B,
@@ -31,7 +31,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       min: 10,
       avg: 10,
       max: 10,
-      timestamp: START.add(-1, 'hours'),
+      updatedAt: START.add(-1, 'hours'),
     },
   ]
 
@@ -52,7 +52,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 20,
           avg: 20,
           max: 20,
-          timestamp: START.add(-1, 'hours'),
+          updatedAt: START.add(-1, 'hours'),
         },
         // to add
         {
@@ -62,7 +62,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          timestamp: START.add(-1, 'hours'),
+          updatedAt: START.add(-1, 'hours'),
         },
       ]
 
@@ -77,7 +77,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 20,
           avg: 20,
           max: 20,
-          timestamp: START.add(-1, 'hours'),
+          updatedAt: START.add(-1, 'hours'),
         },
         {
           projectId: PROJECT_B,
@@ -86,7 +86,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          timestamp: START.add(-1, 'hours'),
+          updatedAt: START.add(-1, 'hours'),
         },
         {
           projectId: PROJECT_B,
@@ -95,7 +95,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          timestamp: START.add(-1, 'hours'),
+          updatedAt: START.add(-1, 'hours'),
         },
       ])
     })

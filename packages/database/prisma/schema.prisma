@@ -461,7 +461,7 @@ model AggregatedLiveness {
   min       Int
   avg       Int
   max       Int
-  timestamp DateTime @db.Timestamp(6)
+  updatedAt DateTime @map("updated_at") @db.Timestamp(6)
 
   @@id([projectId, subtype, range])
   @@map("aggregated_liveness")

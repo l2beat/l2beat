@@ -16,7 +16,7 @@ export interface AggregatedLivenessRecord {
   min: number
   avg: number
   max: number
-  timestamp: UnixTime
+  updatedAt: UnixTime
 }
 
 export class AggregatedLivenessRepository extends BaseRepository {
@@ -59,7 +59,7 @@ function toRecord(row: AggregatedLivenessRow): AggregatedLivenessRecord {
     min: row.min,
     avg: row.avg,
     max: row.max,
-    timestamp: UnixTime.fromDate(row.timestamp),
+    updatedAt: UnixTime.fromDate(row.updated_at),
   }
 }
 
@@ -71,6 +71,6 @@ function toRow(record: AggregatedLivenessRecord): AggregatedLivenessRow {
     min: record.min,
     avg: record.avg,
     max: record.max,
-    timestamp: record.timestamp.toDate(),
+    updated_at: record.updatedAt.toDate(),
   }
 }

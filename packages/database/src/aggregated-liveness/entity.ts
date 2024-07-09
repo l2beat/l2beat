@@ -24,7 +24,7 @@ export function toRow(
     min: record.min,
     avg: record.avg,
     max: record.max,
-    timestamp: record.timestamp.toDate(),
+    updated_at: record.timestamp.toDate(),
   }
 }
 
@@ -38,6 +38,6 @@ export function toRecord(
     min: row.min,
     avg: row.avg,
     max: row.max,
-    timestamp: UnixTime.fromDate(row.timestamp),
+    timestamp: UnixTime.fromDate(row.updated_at),
   }
 }

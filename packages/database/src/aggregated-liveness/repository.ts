@@ -29,7 +29,7 @@ export class AggregatedLivenessRepository {
           min: (eb) => eb.ref('excluded.min'),
           avg: (eb) => eb.ref('excluded.avg'),
           max: (eb) => eb.ref('excluded.max'),
-          timestamp: (eb) => eb.ref('excluded.timestamp'),
+          updated_at: (eb) => eb.ref('excluded.updated_at'),
         }),
       )
       .execute()

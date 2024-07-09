@@ -158,7 +158,7 @@ declare module 'knex/types/tables' {
     min: number
     avg: number
     max: number
-    timestamp: Date
+    updated_at: Date
   }
 
   export interface AnomaliesRow {

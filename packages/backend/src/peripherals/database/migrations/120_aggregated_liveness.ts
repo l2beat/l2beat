@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
     table.integer('min').notNullable()
     table.integer('avg').notNullable()
     table.integer('max').notNullable()
-    table.dateTime('timestamp', { useTz: false }).notNullable()
+    table.dateTime('updated_at', { useTz: false }).notNullable()
 
     table.primary(['project_id', 'subtype', 'range'])
   })
