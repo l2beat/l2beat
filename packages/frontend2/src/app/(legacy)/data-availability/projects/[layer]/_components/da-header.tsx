@@ -15,42 +15,44 @@ interface Props {
 export function DaHeader({ project }: Props) {
   return (
     <header className="pt-6 max-md:bg-gray-100 max-md:dark:bg-zinc-900 max-md:-mx-4 max-md:px-4">
-      <div className="flex gap-10">
-        <div className="w-full space-y-4">
-          <div className="space-y-4 md:space-y-3">
-            <ProjectHeader
-              title={project.name}
-              src={`/icons/${project.slug}.png`}
-            />
-            <DaBridgeSelect project={project} />
-          </div>
-          {project.description && (
-            <div className="md:hidden">
-              <AboutSection description={project.description} />
+      <section id="summary">
+        <div className="flex gap-10">
+          <div className="w-full space-y-4">
+            <div className="space-y-4 md:space-y-3">
+              <ProjectHeader
+                title={project.name}
+                src={`/icons/${project.slug}.png`}
+              />
+              <DaBridgeSelect project={project} />
             </div>
-          )}
-          <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
-          <div className="max-md:hidden">
-            <DesktopProjectLinks projectLinks={project.links} />
+            {project.description && (
+              <div className="md:hidden">
+                <AboutSection description={project.description} />
+              </div>
+            )}
+            <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
+            <div className="max-md:hidden">
+              <DesktopProjectLinks projectLinks={project.links} />
+            </div>
+            <DaHeaderDetails project={project} />
           </div>
-          <DaHeaderDetails project={project} />
+          <BigPentagonRosette
+            className="max-lg:hidden mt-auto"
+            values={project.risks}
+          />
         </div>
-        <BigPentagonRosette
-          className="max-lg:hidden mt-auto"
-          values={project.risks}
-        />
-      </div>
 
-      <HorizontalSeparator className="mt-6 md:mb-6 max-md:-mx-4 max-md:w-screen" />
-      <div className="md:hidden">
-        <MobileProjectLinks projectLinks={project.links} />
-      </div>
-      {project.description ? (
-        <div className="max-md:hidden">
-          <AboutSection description={project.description} />
-          <HorizontalSeparator className="my-6" />
+        <HorizontalSeparator className="mt-6 md:mb-6 max-md:-mx-4 max-md:w-screen" />
+        <div className="md:hidden">
+          <MobileProjectLinks projectLinks={project.links} />
         </div>
-      ) : null}
+        {project.description ? (
+          <div className="max-md:hidden">
+            <AboutSection description={project.description} />
+            <HorizontalSeparator className="my-6" />
+          </div>
+        ) : null}
+      </section>
     </header>
   )
 }

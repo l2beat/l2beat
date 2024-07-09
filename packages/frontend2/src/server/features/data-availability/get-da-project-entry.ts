@@ -11,6 +11,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
   return {
     name: daLayer.display.name,
     slug: daLayer.display.slug,
+    iconSrc: `/icons/${daLayer.display.slug}.png`,
     // TODO: How to handle description for layer x bridge combination?
     description: daLayer.display.description,
     selectedBridge: {
