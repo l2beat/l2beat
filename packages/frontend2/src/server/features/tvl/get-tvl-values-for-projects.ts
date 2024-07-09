@@ -1,12 +1,12 @@
 import { type Value } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { type Dictionary, groupBy } from 'lodash'
+import { range as lodashRange } from 'lodash'
 import { db } from '~/server/database'
 import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
-import { type TvlChartRange, getRangeConfig } from './range-utils'
 import { getValuesStatus } from './get-tvl-values-status'
-import { range as lodashRange } from 'lodash'
+import { type TvlChartRange, getRangeConfig } from './range-utils'
 
 export async function getTvlValuesForProjects(
   projects: TvlProject[],

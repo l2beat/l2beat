@@ -7,8 +7,8 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
-import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 import { getTvlChart } from '~/server/features/tvl/get-tvl-chart'
+import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

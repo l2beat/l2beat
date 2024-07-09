@@ -1,7 +1,7 @@
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
-import { BackendProject } from '@l2beat/config'
 
 export function getProjectsToSync(
   projects: BackendProject[],

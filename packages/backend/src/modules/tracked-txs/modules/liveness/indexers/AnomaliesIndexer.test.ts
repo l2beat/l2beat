@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -16,7 +17,6 @@ import {
   AnomaliesIndexer,
   AnomaliesIndexerIndexerDeps,
 } from './AnomaliesIndexer'
-import { BackendProject } from '@l2beat/config'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')

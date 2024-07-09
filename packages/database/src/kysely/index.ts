@@ -3,7 +3,7 @@ import {
   Transaction as KyselyTransaction,
   PostgresDialect,
 } from 'kysely'
-import { Pool, PoolConfig, types, defaults } from 'pg'
+import { Pool, PoolConfig, defaults, types } from 'pg'
 import { DB } from './generated/types'
 
 // Interpret `timestamp without time zone` as UTC
