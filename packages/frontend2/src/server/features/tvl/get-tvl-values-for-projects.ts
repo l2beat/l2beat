@@ -15,15 +15,9 @@ export async function getTvlValuesForProjects(
   const target = getTvlTargetTimestamp()
   const { days, resolution } = getRangeConfig(range)
   const from = days && target.add(-days, 'days')
-  const valueRecords = await (from
-    ? db.value.getForProjectsInRange(
-        projects.map((p) => p.id),
-        {
-          from,
-          to: target,
-        },
-      )
-    : db.value.getForProjects(projects.map((p) => p.id)))
+
+  // NOTE: This cannot be optimized using from because the values need to be interpolated
+  const valueRecords = await db.value.getForProjects(projects.map((p) => p.id))
 
   const valuesByProject = groupBy(valueRecords, 'projectId')
 
@@ -37,11 +31,21 @@ export async function getTvlValuesForProjects(
 
     const valuesByTimestampForProject: Dictionary<Value[]> = {}
 
-    const minTimestamp = projectValues[0]?.timestamp
+    let minTimestamp = projectValues[0]?.timestamp
 
     if (!minTimestamp) {
       continue
     }
+
+    minTimestamp = !from || minTimestamp.gte(from) ? minTimestamp : from
+
+    minTimestamp = minTimestamp.toEndOf(
+      resolution === 'hourly'
+        ? 'hour'
+        : resolution === 'sixHourly'
+          ? 'six hours'
+          : 'day',
+    )
 
     const timestamps = lodashRange(
       (target.toNumber() - minTimestamp.toNumber()) /
