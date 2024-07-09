@@ -11,12 +11,22 @@ export async function getTvlChart({
   | { type: 'all' | TvlProject['type'] }
   | { type: 'projects'; projectIds: string[] }
 )) {
-  const projectsFilter =
-    rest.type === 'all'
-      ? () => true
-      : rest.type === 'projects'
-        ? (project: TvlProject) => rest.projectIds.includes(project.id)
-        : (project: TvlProject) => project.type === rest.type
+  const projectsFilter = () => {
+    if (rest.type === 'all') {
+      return () => true
+    }
+    if (rest.type === 'projects') {
+      const projectIds = new Set(rest.projectIds)
+      return (project: TvlProject) => projectIds.has(project.id)
+    }
+
+    if (rest.type === 'layer2') {
+      return (project: TvlProject) =>
+        ['layer2', 'layer3'].includes(project.type)
+    }
+
+    return (project: TvlProject) => project.type === rest.type
+  }
 
   const projects = getTvlProjects().filter(projectsFilter)
   const ethPrices = await getEthPrices()
