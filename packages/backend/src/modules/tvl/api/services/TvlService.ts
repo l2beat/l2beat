@@ -263,7 +263,7 @@ export class TvlService {
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiResponse> {
     // TODO: it is slow an can be optimized via querying for all tokens in one batch
-    const [tvl, ethPrices,...associatedTokensCharts] = await Promise.all([
+    const [tvl, ethPrices, ...associatedTokensCharts] = await Promise.all([
       this.getTvl(targetTimestamp, projects),
       this.$.pricesDataService.getEthPrices(targetTimestamp),
       ...associatedTokens.map(async (x) => {
@@ -279,7 +279,7 @@ export class TvlService {
           ),
         }
       }),
-    ]) 
+    ])
 
     for (const a of associatedTokensCharts) {
       if (a.includeInTotal) {
