@@ -2,7 +2,6 @@ import { createHash } from 'crypto'
 import { assert } from '@l2beat/backend-tools'
 
 import {
-  ByteRange,
   DeclarationFilePair,
   FileContent,
   ParsedFile,
@@ -25,10 +24,7 @@ export function flattenStartingFrom(
   )
   const rootContract = parsedFileManager.findDeclaration(rootContractName)
 
-  let flatSource = formatSource(
-    rootContract.file.content,
-    rootContract.declaration.byteRange,
-  )
+  let flatSource = formatSource(rootContract.declaration.content)
 
   // Depth first search
   const visited = new Set<string>()
@@ -49,16 +45,16 @@ export function flattenStartingFrom(
     }
     visited.add(uniqueContractId)
 
-    const { declaration: contract, file } = foundContract
-    flatSource = formatSource(file.content, contract.byteRange) + flatSource
+    const { declaration: contract } = foundContract
+    flatSource = formatSource(contract.content) + flatSource
     stack.push(...getStackEntries(foundContract))
   }
 
   return changeLineEndingsToUnix(flatSource.trimEnd())
 }
 
-function formatSource(source: string, byteRange: ByteRange): string {
-  return source.slice(byteRange.start, byteRange.end + 1) + '\n\n'
+function formatSource(source: string): string {
+  return source + '\n\n'
 }
 
 function changeLineEndingsToUnix(source: string): string {
@@ -67,8 +63,7 @@ function changeLineEndingsToUnix(source: string): string {
 
 function getUniqueContractId(entry: DeclarationFilePair): string {
   const hasher = createHash('sha1')
-  const source = formatSource(entry.file.content, entry.declaration.byteRange)
-  hasher.update(source)
+  hasher.update(entry.declaration.content)
   return `0x${hasher.digest('hex')}`
 }
 

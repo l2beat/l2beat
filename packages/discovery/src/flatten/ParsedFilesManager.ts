@@ -35,6 +35,7 @@ export interface TopLevelDeclaration {
 
   ast: AST.ASTNode
   byteRange: ByteRange
+  content: string
 
   inheritsFrom: string[]
   referencedDeclaration: string[]
@@ -176,6 +177,7 @@ export class ParsedFilesManager {
           start: d.range[0],
           end: d.range[1],
         },
+        content: file.content.slice(d.range[0], d.range[1] + 1),
       }
     })
 
