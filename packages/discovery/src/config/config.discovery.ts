@@ -20,7 +20,6 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
   const discoveryEnabled = cli.mode === 'discover'
   const singleDiscoveryEnabled = cli.mode === 'single-discovery'
   const invertEnabled = cli.mode === 'invert'
-  const flattenEnabled = cli.mode === 'flatten'
 
   return {
     invert: invertEnabled && {
@@ -43,10 +42,6 @@ export function getDiscoveryCliConfig(cli: CliParameters): DiscoveryCliConfig {
     singleDiscovery: singleDiscoveryEnabled && {
       address: cli.address,
       chain: getChainConfig(cli.chain),
-    },
-    flatten: flattenEnabled && {
-      path: cli.path,
-      rootContractName: cli.rootContractName,
     },
   }
 }
