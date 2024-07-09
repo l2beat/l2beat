@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import {
@@ -17,6 +16,7 @@ import {
   AnomaliesIndexer,
   AnomaliesIndexerIndexerDeps,
 } from './AnomaliesIndexer'
+import { BackendProject } from '@l2beat/config'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
@@ -24,7 +24,7 @@ const MIN = NOW.add(-100, 'days')
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 
 const MOCK_PROJECTS = [
-  mockObject<Project>({
+  mockObject<BackendProject>({
     projectId: ProjectId('mocked-project'),
     isArchived: false,
     trackedTxsConfig: [
