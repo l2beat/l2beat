@@ -7,7 +7,9 @@
     "yarn": ">=1.22.0 <2"
   },
   "workspaces": {
-    "packages": ["packages/*"]
+    "packages": [
+      "packages/*"
+    ]
   },
   "packageManager": "yarn@1.22.19",
   "scripts": {
@@ -45,7 +47,7 @@
     "prettier": "^3.2.5",
     "ts-node": "^10.9.1",
     "turbo": "^2.0.1",
-    "typescript": "^5.3.3",
+    "typescript": "^5.5.3",
     "wait-for-expect": "^3.0.2",
     "wsrun": "^5.2.4"
   }
