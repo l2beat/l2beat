@@ -7,7 +7,6 @@ import {
   clampRangeToDay,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
@@ -24,12 +23,13 @@ import {
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getProjectsToSync } from '../utils/getProjectsToSync'
 import { groupByType } from '../utils/groupByType'
+import { BackendProject } from '@l2beat/config'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   livenessRepository: LivenessRepository
   anomaliesRepository: AnomaliesRepository
-  projects: Project[]
+  projects: BackendProject[]
 }
 
 export class AnomaliesIndexer extends ManagedChildIndexer {
