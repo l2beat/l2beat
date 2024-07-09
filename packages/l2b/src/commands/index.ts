@@ -4,6 +4,7 @@ import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
 import { Flatten } from './Flatten'
 import { Powerdiff } from './Powerdiff'
+import { TVL } from './TVL'
 
 export function getSubcommands() {
   return [
@@ -13,5 +14,6 @@ export function getSubcommands() {
     CompareFlatSources,
     Powerdiff,
     Flatten,
+    TVL,
   ]
 }
