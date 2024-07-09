@@ -1,9 +1,9 @@
 import { type Value } from '@l2beat/database'
+import { unstable_noStore as noStore } from 'next/cache'
 import { getEthPrices } from './get-eth-prices'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range-utils'
-import { unstable_noStore as noStore } from 'next/cache'
 
 export async function getTvlChart({
   range,
