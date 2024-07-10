@@ -1,13 +1,9 @@
-import {
-  type ManuallyVerifiedContracts,
-  type VerificationStatus,
-} from '@l2beat/shared-pure'
 import partition from 'lodash/partition'
 import React from 'react'
 import {
   type TechnologyContract,
   ContractEntry,
-} from '../permissions/contract-entry.'
+} from '../permissions/contract-entry'
 import {
   type TechnologyReference,
   ReferenceList,

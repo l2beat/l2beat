@@ -1,4 +1,3 @@
-import { type ProjectId } from '@l2beat/shared-pure'
 import React from 'react'
 import { Callout } from '~/app/_components/callout'
 import { Markdown } from '~/app/_components/markdown/markdown'
@@ -9,17 +8,7 @@ import UnverifiedIcon from '~/icons/unverified.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import BulletIcon from '~/icons/bullet.svg'
 import { UpgradeConsiderations } from './upgrade-considerations'
-import { UsedInProjectEntry } from './used-in-project'
-
-export interface UsedInProject {
-  id: ProjectId
-  name: string
-  slug: string
-  iconPath: string
-  targetName: string
-  hrefRoot: string
-  type: 'implementation' | 'proxy' | 'permission'
-}
+import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
 
 export interface TechnologyContract {
   name: string

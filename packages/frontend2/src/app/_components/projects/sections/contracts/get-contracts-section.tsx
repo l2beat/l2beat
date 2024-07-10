@@ -22,7 +22,7 @@ import { getExplorerUrl } from '~/utils/get-explorer-url'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../permissions/contract-entry.'
+} from '../permissions/contract-entry'
 import { languageJoin } from '~/utils/language-join'
 import { getDiagramImage } from '~/utils/project/get-diagram-image'
 import { type TechnologyReference } from '../permissions/reference-list'

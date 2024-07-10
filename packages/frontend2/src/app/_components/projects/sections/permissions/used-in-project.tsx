@@ -3,9 +3,19 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { type UsedInProject } from './contract-entry.'
 import Link from 'next/link'
 import Image from 'next/image'
+import { type ProjectId } from '@l2beat/shared-pure'
+
+export interface UsedInProject {
+  id: ProjectId
+  name: string
+  slug: string
+  iconPath: string
+  targetName: string
+  hrefRoot: string
+  type: 'implementation' | 'proxy' | 'permission'
+}
 
 export function UsedInProjectEntry({
   label,

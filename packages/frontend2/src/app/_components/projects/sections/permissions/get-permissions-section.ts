@@ -10,11 +10,11 @@ import {
 import {
   type TechnologyContractAddress,
   type TechnologyContract,
-  type UsedInProject,
-} from './contract-entry.'
+} from './contract-entry'
 import { type ProjectDetailsPermissionsSection } from '../types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { concat } from 'lodash'
+import { type UsedInProject } from './used-in-project'
 
 interface ProjectParams {
   permissions: ScalingProjectPermission[] | 'UnderReview'
