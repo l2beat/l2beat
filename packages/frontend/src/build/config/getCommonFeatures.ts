@@ -5,7 +5,6 @@ const backendFeaturesToConfigFeatures: Partial<
 > = {
   costsPage: 'tracked-txs.l2costs',
   liveness: 'tracked-txs.liveness',
-  zkCatalog: 'verifiers',
   implementationChange: 'implementationChangeReporter',
   tvlBreakdown: 'tvl',
 }
