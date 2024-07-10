@@ -3,6 +3,7 @@ import { assert } from '@l2beat/backend-tools'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
 
+import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import { getASTIdentifiers } from './getASTIdentifiers'
 
 type ParseResult = ReturnType<typeof parse>
@@ -329,9 +330,20 @@ export class ParsedFilesManager {
       const isTypedef =
         result !== undefined && result.declaration.type === 'typedef'
       const isEnum = result !== undefined && result.declaration.type === 'enum'
+      const isContract =
+        result !== undefined && result.declaration.type === 'contract'
+      const isAbstract =
+        result !== undefined && result.declaration.type === 'abstract'
+
+      if (isContract || isAbstract) {
+        result.declaration.content = generateInterfaceSourceFromContract(
+          result.declaration,
+        )
+      }
+
       if (
         result !== undefined &&
-        (isLibrary || isStruct || isFunction || isTypedef || isEnum)
+        (isLibrary || isStruct || isFunction || isTypedef || isEnum || isContract || isAbstract)
       ) {
         referenced.push(identifier)
       }
