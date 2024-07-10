@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
+  LivenessAnomaly,
   LivenessApiProject,
   LivenessApiResponse,
   LivenessDetails,
@@ -9,7 +10,6 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
   cacheAsyncFunction,
-  LivenessAnomaly,
 } from '@l2beat/shared-pure'
 
 import { TrackedTxConfigEntry } from '@l2beat/shared'
@@ -207,7 +207,8 @@ export class LivenessController {
 
   mapAnomalyRecords(records: AnomaliesRecord[]): LivenessAnomaly[] {
     return records.map((a) => ({
-      timestamp: a.timestamp,
+      // TODO: validate if it makes sense to pass the end of anomaly rather than the start
+      timestamp: new UnixTime(a.timestamp.toNumber() + a.duration),
       durationInSeconds: a.duration,
       type: a.subtype,
     }))

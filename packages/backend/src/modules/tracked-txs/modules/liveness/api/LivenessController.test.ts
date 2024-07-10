@@ -119,7 +119,7 @@ const MOCK_LIVENESS_DATA = {
 }
 
 const MOCK_ANOMALIES_DATA = MOCK_ANOMALIES.map((a) => ({
-  timestamp: a.timestamp,
+  timestamp: new UnixTime(a.timestamp.toNumber() + a.duration),
   durationInSeconds: a.duration,
   type: a.subtype,
 }))
@@ -171,7 +171,7 @@ describe(LivenessController.name, () => {
       expect(mockMapAggregatedLivenessRecords).toHaveBeenNthCalledWith(
         1,
         MOCK_AGGREGATED_LIVENESS,
-        'batchSubmissions',
+        'stateUpdates',
         MOCK_PROJECTS[0],
         MOCK_CONFIGURATIONS,
       )
@@ -179,7 +179,7 @@ describe(LivenessController.name, () => {
       expect(mockMapAggregatedLivenessRecords).toHaveBeenNthCalledWith(
         2,
         MOCK_AGGREGATED_LIVENESS,
-        'stateUpdates',
+        'batchSubmissions',
         MOCK_PROJECTS[0],
         MOCK_CONFIGURATIONS,
       )
@@ -196,8 +196,8 @@ describe(LivenessController.name, () => {
 
       const projects: LivenessApiResponse['projects'] = {}
       projects[MOCK_PROJECT_ID.toString()] = {
-        batchSubmissions: MOCK_LIVENESS_DATA,
         stateUpdates: MOCK_LIVENESS_DATA,
+        batchSubmissions: MOCK_LIVENESS_DATA,
         proofSubmissions: MOCK_LIVENESS_DATA,
         anomalies: MOCK_ANOMALIES_DATA,
       }
