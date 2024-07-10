@@ -72,8 +72,8 @@ describe(VerifiersStatusRefresher.name, () => {
     })
 
     it('throws if blockscout url is not configured', () => {
-      const controller = createVerifierStatusRefresher({ chains: [] })
-      expect(() => controller.getBlockscoutClient(ChainId.ETHEREUM)).toThrow(
+      const refresher = createVerifierStatusRefresher({ chains: [] })
+      expect(() => refresher.getBlockscoutClient(ChainId.ETHEREUM)).toThrow(
         'Blockscout API URL is not configured for chain 1',
       )
     })
