@@ -78,34 +78,29 @@ export class AmountsDataService {
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const amounts = await this.$.amountRepository.getByIdsAndTimestamp(
-      configurations.map((c) => c.configId),
-      targetTimestamp,
-    )
-    const status = await this.$.indexerService.getAmountsStatus(
-      configurations,
-      targetTimestamp,
+    const [amounts, status] = await Promise.all([
+      this.$.amountRepository.getByIdsAndTimestamp(
+        configurations.map((c) => c.configId),
+        targetTimestamp,
+      ),
+      this.$.indexerService.getAmountsStatus(configurations, targetTimestamp),
+    ])
+
+    const lagged = await this.$.amountRepository.findByConfigAndTimestamp(
+      status.lagging.map((l) => ({
+        configId: l.id,
+        timestamp: l.latestTimestamp,
+      })),
     )
 
     const lagging = new Map()
-
-    await Promise.all(
-      status.lagging.map(async (laggingConfig) => {
-        const latestRecord =
-          await this.$.amountRepository.findByConfigAndTimestamp(
-            laggingConfig.id,
-            laggingConfig.latestTimestamp,
-          )
-
-        if (latestRecord) {
-          lagging.set(laggingConfig.id, {
-            latestTimestamp: laggingConfig.latestTimestamp,
-            latestValue: latestRecord,
-          })
-          amounts.push({ ...latestRecord, timestamp: targetTimestamp })
-        }
-      }),
-    )
+    for (const l of lagged) {
+      lagging.set(l.configId, {
+        latestTimestamp: l.timestamp,
+        latestValue: l,
+      })
+      amounts.push({ ...l, timestamp: targetTimestamp })
+    }
 
     return {
       amounts,

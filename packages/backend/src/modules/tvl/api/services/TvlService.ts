@@ -42,13 +42,15 @@ export class TvlService {
     targetTimestamp: UnixTime,
     projects: ApiProject[],
   ): Promise<TvlApiResponse> {
-    const ethPrices =
-      await this.$.pricesDataService.getEthPrices(targetTimestamp)
-    const valuesByProjectByTimestamp =
-      await this.$.valuesDataService.getValuesForProjects(
-        projects,
-        targetTimestamp,
-      )
+    const [ethPrices, valuesByProjectByTimestamp, breakdownMap] =
+      await Promise.all([
+        this.$.pricesDataService.getEthPrices(targetTimestamp),
+        this.$.valuesDataService.getValuesForProjects(
+          projects,
+          targetTimestamp,
+        ),
+        this.getBreakdownMap(targetTimestamp),
+      ])
 
     const projectsMinTimestamp = projects
       .map((x) => x.minTimestamp)
@@ -184,8 +186,6 @@ export class TvlService {
       })
     }
 
-    const breakdownMap = await this.getBreakdownMap(targetTimestamp)
-
     const projectData: Record<string, TvlApiProject> = {}
     // TODO: we should rethink how we use chartsMap here
     // to avoid sending 'bridge', 'layer2', 'layer3' as projects
@@ -263,12 +263,10 @@ export class TvlService {
     associatedTokens: AssociatedToken[],
   ): Promise<TvlApiResponse> {
     // TODO: it is slow an can be optimized via querying for all tokens in one batch
-    const tvl = await this.getTvl(targetTimestamp, projects)
-    const ethPrices =
-      await this.$.pricesDataService.getEthPrices(targetTimestamp)
-
-    const associatedTokensCharts = await Promise.all(
-      associatedTokens.map(async (x) => {
+    const [tvl, ethPrices, ...associatedTokensCharts] = await Promise.all([
+      this.getTvl(targetTimestamp, projects),
+      this.$.pricesDataService.getEthPrices(targetTimestamp),
+      ...associatedTokens.map(async (x) => {
         const project = projects.find((p) => p.id === x.project)
         assert(project, 'Project not found!')
 
@@ -281,7 +279,7 @@ export class TvlService {
           ),
         }
       }),
-    )
+    ])
 
     for (const a of associatedTokensCharts) {
       if (a.includeInTotal) {
@@ -335,14 +333,16 @@ export class TvlService {
   // Maybe we should have "TokenValueIndexer" that would calculate the values for each token
   // and keep only the current values in the database.
   private async getBreakdownMap(targetTimestamp: UnixTime) {
-    const tokenAmounts = await this.$.amountsDataService.getLatestAmount(
-      this.$.configMapping.amounts,
-      targetTimestamp,
-    )
-    const prices = await this.$.pricesDataService.getLatestPrice(
-      this.$.configMapping.prices,
-      targetTimestamp,
-    )
+    const [tokenAmounts, prices] = await Promise.all([
+      this.$.amountsDataService.getLatestAmount(
+        this.$.configMapping.amounts,
+        targetTimestamp,
+      ),
+      this.$.pricesDataService.getLatestPrice(
+        this.$.configMapping.prices,
+        targetTimestamp,
+      ),
+    ])
 
     const pricesMap = new Map(
       prices.prices.map((x) => [x.configId, x.priceUsd]),
