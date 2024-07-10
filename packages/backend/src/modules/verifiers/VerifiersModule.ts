@@ -4,7 +4,7 @@ import { Peripherals } from '../../peripherals/Peripherals'
 import { ApplicationModule } from '../ApplicationModule'
 import { VerifiersStatusRefresher } from './VerifiersStatusRefresher'
 import { Clock } from '../../tools/Clock'
-import { chains, layer2s, zkCatalogProjects } from '@l2beat/config'
+import { chains, getVerifiersFromConfig } from '@l2beat/config'
 
 export function createVerifiersModule(
   config: Config,
@@ -22,8 +22,7 @@ export function createVerifiersModule(
     peripherals,
     clock,
     logger,
-    layer2s: layer2s,
-    zkCatalogProjects: zkCatalogProjects,
+    verifiersListProvider: getVerifiersFromConfig,
     chains: chains,
   })
 

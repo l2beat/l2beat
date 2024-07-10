@@ -1,11 +1,6 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 
-import {
-  ChainConfig,
-  Layer2,
-  OnchainVerifier,
-  ZkCatalogProject,
-} from '@l2beat/config'
+import { ChainConfig, VerifiersListProvider } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { BlockscoutV2Client } from '@l2beat/shared'
 import { Clock } from '../../tools/Clock'
@@ -18,8 +13,7 @@ export type VerifiersStatusRefresherDeps = {
   peripherals: Peripherals
   clock: Clock
   logger: Logger
-  layer2s: Layer2[]
-  zkCatalogProjects: ZkCatalogProject[]
+  verifiersListProvider: VerifiersListProvider
   chains: ChainConfig[]
 }
 
@@ -46,7 +40,8 @@ export class VerifiersStatusRefresher {
   }
 
   async refresh() {
-    const verifiers = this.getVerifiers()
+    const verifiers = this.$.verifiersListProvider()
+
     assert(verifiers.length > 0, 'No verifier addresses found')
 
     const toRefresh = verifiers.map(async (verifier) => {
@@ -77,39 +72,6 @@ export class VerifiersStatusRefresher {
     })
 
     await Promise.all(toRefresh)
-  }
-
-  getVerifiers(): OnchainVerifier[] {
-    const verifiers: OnchainVerifier[] = []
-
-    this.$.layer2s.forEach((l2) => {
-      if (l2.stateValidation?.proofVerification) {
-        this.logger.debug(
-          `Found l2 project with verifiers: ${l2.display.name}`,
-          {
-            verifiers: l2.stateValidation.proofVerification.verifiers.map(
-              (v) => ({
-                address: v.contractAddress.toString(),
-                chain: v.chainId.toString(),
-              }),
-            ),
-          },
-        )
-        verifiers.push(...l2.stateValidation.proofVerification.verifiers)
-      }
-    })
-
-    this.$.zkCatalogProjects.forEach((zk) => {
-      this.logger.debug(`Found zk project with verifiers: ${zk.display.name}`, {
-        verifiers: zk.proofVerification.verifiers.map((v) => ({
-          address: v.contractAddress.toString(),
-          chain: v.chainId.toString(),
-        })),
-      })
-      verifiers.push(...zk.proofVerification.verifiers)
-    })
-
-    return verifiers
   }
 
   getBlockscoutClient(chainId: ChainId): BlockscoutV2Client {
