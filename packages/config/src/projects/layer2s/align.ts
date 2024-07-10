@@ -1,4 +1,3 @@
-
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
