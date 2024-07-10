@@ -1,9 +1,4 @@
-import {
-  bridges,
-  layer2s,
-  layer3s,
-  milestonesLayer2s
-} from '@l2beat/config'
+import { bridges, layer2s, layer3s, milestonesLayer2s } from '@l2beat/config'
 
 import { Config } from './Config'
 

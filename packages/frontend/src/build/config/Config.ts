@@ -1,9 +1,4 @@
-import {
-  Bridge,
-  Layer2,
-  Layer3,
-  Milestone
-} from '@l2beat/config'
+import { Bridge, Layer2, Layer3, Milestone } from '@l2beat/config'
 
 export interface Config {
   links: ConfigLinks

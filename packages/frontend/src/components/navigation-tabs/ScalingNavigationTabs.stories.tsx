@@ -1,12 +1,12 @@
-import { Meta, StoryObj } from '@storybook/react';
+import { Meta, StoryObj } from '@storybook/react'
 
-import { ScalingNavigationTabs as ScalingNavigationTabsComponent } from './ScalingNavigationTabs';
+import { ScalingNavigationTabs as ScalingNavigationTabsComponent } from './ScalingNavigationTabs'
 
 const meta: Meta<typeof ScalingNavigationTabsComponent> = {
   component: ScalingNavigationTabsComponent,
-};
-export default meta;
-type Story = StoryObj<typeof ScalingNavigationTabsComponent>;
+}
+export default meta
+type Story = StoryObj<typeof ScalingNavigationTabsComponent>
 
 export const ScalingNavigationTabs: Story = {
   args: {
@@ -33,4 +33,4 @@ export const ScalingNavigationTabs: Story = {
       options: ['summary', 'risk', 'activity', 'liveness', 'finality', 'tvl'],
     },
   },
-};
+}
