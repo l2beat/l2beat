@@ -3,7 +3,6 @@ import { notFound } from 'next/navigation'
 import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { DaHeader } from '../_components/da-header'
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
-import { getProjectDetails } from '../_utils/get-project-details'
 import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
 
 interface Props {
@@ -31,7 +30,6 @@ export default async function Page(props: Props) {
   if (!bridge) return notFound()
   const daProjectEntry = await getDaProjectEntry(project, bridge)
 
-  const projectDetails = getProjectDetails(daProjectEntry)
   return (
     <>
       <DaHeader project={daProjectEntry} />
@@ -43,11 +41,11 @@ export default async function Page(props: Props) {
               icon: daProjectEntry.iconSrc,
               // showProjectUnderReview: daProjectEntry.isUnderReview,
             }}
-            sections={projectDetails}
+            sections={daProjectEntry.projectDetails}
           />
         </div>
         <div className="w-full">
-          <ProjectDetails items={projectDetails} />
+          <ProjectDetails items={daProjectEntry.projectDetails} />
         </div>
       </div>
     </>

@@ -32,19 +32,19 @@ export function DaHeader({ project }: Props) {
             )}
             <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
             <div className="max-md:hidden">
-              <DesktopProjectLinks projectLinks={project.links} />
+              <DesktopProjectLinks projectLinks={project.header.links} />
             </div>
             <DaHeaderDetails project={project} />
           </div>
           <BigPentagonRosette
             className="max-lg:hidden mt-auto"
-            values={project.risks}
+            values={project.header.rosetteValues}
           />
         </div>
 
         <HorizontalSeparator className="mt-6 md:mb-6 max-md:-mx-4 max-md:w-screen" />
         <div className="md:hidden">
-          <MobileProjectLinks projectLinks={project.links} />
+          <MobileProjectLinks projectLinks={project.header.links} />
         </div>
         {project.description ? (
           <div className="max-md:hidden">

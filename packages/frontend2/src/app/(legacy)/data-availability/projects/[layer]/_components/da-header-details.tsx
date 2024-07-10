@@ -21,39 +21,47 @@ export function DaHeaderDetails({ project }: Props) {
       <DetailsHeaderStat title="Type" value={project.type} />
       <DetailsHeaderStat
         title="Total value secured"
-        value={formatCurrency(project.tvs, 'usd', {
+        value={formatCurrency(project.header.tvs, 'usd', {
           showLessThanMinimum: false,
         })}
       />
       <DetailsHeaderStat
         title="Economic security"
         value={
-          project.economicSecurity?.status === 'Synced'
-            ? formatCurrency(project.economicSecurity.economicSecurity, 'usd', {
-                showLessThanMinimum: false,
-              })
+          project.header.economicSecurity?.status === 'Synced'
+            ? formatCurrency(
+                project.header.economicSecurity.economicSecurity,
+                'usd',
+                {
+                  showLessThanMinimum: false,
+                },
+              )
             : 'Not synced'
         }
       />
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
       <DetailsHeaderStat
         title="Duration of storage"
-        value={`${project.durationStorage}s` ?? EM_DASH}
+        value={`${project.header.durationStorage}s` ?? EM_DASH}
       />
       <DetailsHeaderStat
         className="md:col-span-2"
         title="Used in"
         value={
-          project.usedIn.length !== 0 ? (
+          project.header.usedIn.length !== 0 ? (
             <Tooltip>
               <TooltipTrigger>
                 <div className="truncate max-w-[250px] md:max-w-[440px]">
-                  {project.usedIn.map((project) => project.name).join(', ')}
+                  {project.header.usedIn
+                    .map((project) => project.name)
+                    .join(', ')}
                 </div>
               </TooltipTrigger>
               <TooltipContent>
                 <span>
-                  {project.usedIn.map((project) => project.name).join(', ')}
+                  {project.header.usedIn
+                    .map((project) => project.name)
+                    .join(', ')}
                 </span>
               </TooltipContent>
             </Tooltip>

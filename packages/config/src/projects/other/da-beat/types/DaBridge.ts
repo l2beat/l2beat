@@ -1,5 +1,8 @@
 import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { ScalingProjectContractSingleAddress } from '../../../../common'
+import {
+  ScalingProjectContractSingleAddress,
+  ScalingProjectPermission,
+} from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
@@ -76,33 +79,36 @@ type CommonDaBridge = {
    * Unique identifier of the data availability bridge
    */
   id: string
-
   display: {
     /**
      * The name of the data availability bridge
      */
     name: string
-
     /**
      * Slug of the data availability bridge
      */
     slug: string
-
     /**
      * Description of the data availability bridge
      */
     description: string
   }
-
   /**
    * List of projects given bridge is being used in
    */
   usedIn: ProjectId[]
-
   /**
    * Risks related to given data availability bridge
    */
   risks: DaBridgeRisks
+  /**
+   * List of permissioned addresses on the data availability bridge
+   */
+  permissions?: ScalingProjectPermission[] | 'UnderReview'
+  /**
+   * List of permissioned addresses on the data availability bridge
+   */
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
 }
 
 export type DaBridgeRisks = {

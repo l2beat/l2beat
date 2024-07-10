@@ -21,27 +21,22 @@ export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: typeof DaLayerKind.PublicBlockchain
-
   bridges: (OnChainDaBridge | NoDaBridge)[]
-
   /**
    * The duration of the data storage.
    * @unit seconds
    */
   storageDuration: number
-
   /**
    * Consensus finality time.
    * @unit seconds
    */
   consensusFinality: number
-
   /**
    * Duration of time for unbonding in seconds
    * @unit seconds
    */
   unbondingPeriod: number
-
   /**
    * Economic security configuration.
    */
@@ -55,13 +50,29 @@ export type DacDaLayer = CommonDaLayer & {
 }
 
 export type CommonDaLayer = {
-  /* Unique identifier of the data availability layer */
+  /**
+   * Unique identifier of the data availability layer
+   */
   id: string
-  /* Display information for the data availability layer */
+  /**
+   * Display information for the data availability layer
+   */
   display: DaDisplay
-  /* List of projects given da layer is being used in */
+  /**
+   * Is the DA layer upcoming?
+   */
+  isUpcoming?: boolean
+  /**
+   * Is the DA layer under review?
+   */
+  isUnderReview?: boolean
+  /**
+   * List of projects given da layer is being used in
+   */
   usedIn: ProjectId[]
-  /* Risks associated with the data availability layer. */
+  /**
+   * Risks associated with the data availability layer.
+   */
   risks: DaLayerRisks
 }
 

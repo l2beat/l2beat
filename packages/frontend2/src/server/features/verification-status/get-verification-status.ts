@@ -39,14 +39,11 @@ function getProjectVerificationStatus(): unknown {
   return JSON.parse(projects) as unknown
 }
 
-function getContractVerificationPath(chain: string) {
-  return path.join(
+function getContractVerificationStatus(chain: string): unknown {
+  const filePath = path.join(
     process.cwd(),
     `../config/src/verification/${chain}/verified.json`,
   )
-}
-function getContractVerificationStatus(chain: string): unknown {
-  const path = getContractVerificationPath(chain)
-  const contracts = readFileSync(path, 'utf8')
+  const contracts = readFileSync(filePath, 'utf8')
   return JSON.parse(contracts) as unknown
 }

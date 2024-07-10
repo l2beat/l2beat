@@ -21,14 +21,18 @@ import { gatherAddressesFromUpgradeability } from '../../scripts/checkVerifiedCo
 export function getCommonContractsIn(project: Project) {
   if (project.type === 'layer2') {
     return findCommonContractsMemoized(layer2s)
-  } else if (project.type === 'bridge') {
+  }
+
+  if (project.type === 'bridge') {
     return findCommonContractsMemoized(bridges)
-  } else if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
+  }
+
+  if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
     const projects = layer3s.filter((l3) => l3.hostChain === project.hostChain)
     return findCommonContractsMemoized(projects, project.hostChain as string)
-  } else {
-    return {}
   }
+
+  return {}
 }
 
 const memo = new Map<Hash256, Record<string, ReferenceInfo[]>>()
