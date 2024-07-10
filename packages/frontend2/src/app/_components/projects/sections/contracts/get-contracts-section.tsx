@@ -24,6 +24,9 @@ import {
   type TechnologyContractAddress,
 } from '../permissions/contract-entry.'
 import { languageJoin } from '~/utils/language-join'
+import { getDiagramImage } from '~/utils/project/get-diagram-image'
+import { type TechnologyReference } from '../permissions/reference-list'
+import { concat } from 'lodash'
 
 interface ProjectParams {
   id: string
@@ -54,6 +57,7 @@ export function getContractsSection(
       projectParams,
       isUnverified,
       verificationStatus,
+      manuallyVerifiedContracts,
       implementationChangeForProject,
     )
   })
@@ -75,6 +79,7 @@ export function getContractsSection(
               projectParams,
               isUnverified,
               verificationStatus,
+              manuallyVerifiedContracts,
               implementationChangeForProject,
             )
           }),
@@ -98,6 +103,7 @@ export function getContractsSection(
           projectParams,
           isUnverified,
           verificationStatus,
+          manuallyVerifiedContracts,
           implementationChangeForProject,
           true,
         )
@@ -132,15 +138,14 @@ export function getContractsSection(
     contracts,
     escrows,
     risks,
-    architectureImage: `/images/architecture/${
-      projectParams.architectureImage ?? projectParams.slug
-    }.png`,
+    architectureImage: getDiagramImage(
+      'architecture',
+      projectParams.architectureImage ?? projectParams.slug,
+    ),
     references: projectParams.contracts?.references ?? [],
     isIncomplete: projectParams.contracts?.isIncomplete,
     isUnderReview:
       projectParams.isUnderReview ?? projectParams.contracts?.isUnderReview,
-    verificationStatus,
-    manuallyVerifiedContracts,
   }
 }
 
@@ -149,31 +154,45 @@ function makeTechnologyContract(
   projectParams: ProjectParams,
   isUnverified: boolean,
   verificationStatus: VerificationStatus,
+  manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportProjectData | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain ?? 'ethereum'
   const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
+  const manuallyVerifiedContractsForChain =
+    manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
+
+  const getAddress = (opts: {
+    address: EthereumAddress
+    name?: string
+    isAdmin?: boolean
+  }) => {
+    const name =
+      opts.name ?? `${opts.address.slice(0, 6)}…${opts.address.slice(38, 42)}`
+
+    return {
+      name: name,
+      address: opts.address.toString(),
+      verified: !!verificationStatusForChain[opts.address.toString()],
+      href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
+      isAdmin: !!opts.isAdmin,
+    }
+  }
 
   const addresses: TechnologyContractAddress[] = isSingleAddress(item)
     ? [
-        {
-          name: item.address.toString(),
-          address: item.address.toString(),
-          verified: !!verificationStatusForChain[item.address.toString()],
-          href: `${etherscanUrl}/address/${item.address.toString()}#code`,
-          isAdmin: false,
-        },
+        getAddress({
+          address: item.address,
+        }),
       ]
     : [
-        ...item.multipleAddresses.map((address) => ({
-          name: address.toString(),
-          address: address.toString(),
-          verified: !!verificationStatusForChain[address.toString()],
-          href: `${etherscanUrl}/address/${address.toString()}#code`,
-          isAdmin: false,
-        })),
+        ...item.multipleAddresses.map((address) =>
+          getAddress({
+            address: address,
+          }),
+        ),
       ]
 
   if (isSingleAddress(item)) {
@@ -184,27 +203,20 @@ function makeTechnologyContract(
         case 'Custom':
         case 'ZeppelinOS proxy':
         case 'Eternal Storage proxy':
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          )
           if (item.upgradeability.admin) {
-            addresses.push({
-              name: 'Admin',
-              href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-              address: item.upgradeability.admin.toString(),
-              isAdmin: true,
-              verified:
-                !!verificationStatusForChain[
-                  item.upgradeability.admin.toString()
-                ],
-            })
+            addresses.push(
+              getAddress({
+                name: 'Admin',
+                address: item.upgradeability.admin,
+                isAdmin: true,
+              }),
+            )
           }
           break
 
@@ -214,16 +226,12 @@ function makeTechnologyContract(
         case 'EIP897 proxy':
         case 'CustomWithoutAdmin':
         case 'Polygon proxy':
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          )
           break
 
         case 'StarkWare proxy': {
@@ -232,225 +240,160 @@ function makeTechnologyContract(
           const implementation =
             item.upgradeability.callImplementation ??
             item.upgradeability.implementation
-          addresses.push({
-            name: `Implementation (Upgradable${
-              delay ? ` ${days} days delay` : ''
-            })`,
-            href: `${etherscanUrl}/address/${implementation.toString()}#code`,
-            address: implementation.toString(),
-            isAdmin: false,
-            verified: !!verificationStatusForChain[implementation.toString()],
-          })
+          addresses.push(
+            getAddress({
+              name: `Implementation (Upgradable${
+                delay ? ` ${days} days delay` : ''
+              })`,
+              address: implementation,
+            }),
+          )
           break
         }
 
         case 'Reference':
-          addresses.push({
-            name: 'Code (Upgradable)',
-            href: `${etherscanUrl}/address/${item.address.toString()}#code`,
-            address: item.address.toString(),
-            isAdmin: false,
-            verified: !!verificationStatusForChain[item.address.toString()],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Code (Upgradable)',
+              address: item.address,
+            }),
+          )
           break
 
         case 'new Arbitrum proxy':
         case 'Arbitrum proxy':
-          addresses.push({
-            name: 'Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-            address: item.upgradeability.admin.toString(),
-            isAdmin: true,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.admin.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Admin logic (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.adminImplementation.toString()}#code`,
-            address: item.upgradeability.adminImplementation.toString(),
-            isAdmin: true,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.adminImplementation.toString()
-              ],
-          })
-          addresses.push({
-            name: 'User logic (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.userImplementation.toString()}#code`,
-            address: item.upgradeability.userImplementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.userImplementation.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Admin',
+              address: item.upgradeability.admin,
+              isAdmin: true,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Admin logic (Upgradable)',
+              address: item.upgradeability.adminImplementation,
+              isAdmin: true,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'User logic (Upgradable)',
+              address: item.upgradeability.userImplementation,
+            }),
+          )
           break
 
         case 'Beacon':
-          addresses.push({
-            name: 'Beacon',
-            href: `${etherscanUrl}/address/${item.upgradeability.beacon.toString()}#code`,
-            address: item.upgradeability.beacon.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.beacon.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Beacon Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.beaconAdmin.toString()}#code`,
-            address: item.upgradeability.beaconAdmin.toString(),
-            isAdmin: true,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.beaconAdmin.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Beacon',
+              address: item.upgradeability.beacon,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Beacon Admin',
+              address: item.upgradeability.beaconAdmin,
+              isAdmin: true,
+            }),
+          )
           break
 
         case 'zkSync Lite proxy':
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Additional implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.additional.toString()}#code`,
-            address: item.upgradeability.additional.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.additional.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-            address: item.upgradeability.admin.toString(),
-            isAdmin: true,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.admin.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Additional implementation (Upgradable)',
+              address: item.upgradeability.additional,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Admin',
+              address: item.upgradeability.admin,
+              isAdmin: true,
+            }),
+          )
           break
 
         case 'zkSpace proxy':
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
           addresses.push(
-            ...item.upgradeability.additional.map((additional) => ({
-              name: 'Additional implementation (Upgradable)',
-              href: `${etherscanUrl}/address/${additional.toString()}#code`,
-              address: additional.toString(),
-              isAdmin: false,
-              verified: !!verificationStatusForChain[additional.toString()],
-            })),
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
           )
-          addresses.push({
-            name: 'Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-            address: item.upgradeability.admin.toString(),
-            isAdmin: true,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.admin.toString()
-              ],
-          })
+          addresses.push(
+            ...item.upgradeability.additional.map((additional) =>
+              getAddress({
+                name: 'Additional implementation (Upgradable)',
+                address: additional,
+              }),
+            ),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Admin',
+              address: item.upgradeability.admin,
+              isAdmin: true,
+            }),
+          )
           break
 
         case 'Polygon Extension proxy':
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          }),
-            addresses.push({
-              name: 'Extension (Upgradable)',
-              href: `${etherscanUrl}/address/${item.upgradeability.extension.toString()}#code`,
-              address: item.upgradeability.extension.toString(),
-              isAdmin: false,
-              verified:
-                !!verificationStatusForChain[
-                  item.upgradeability.extension.toString()
-                ],
-            })
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          ),
+            addresses.push(
+              getAddress({
+                name: 'Extension (Upgradable)',
+                address: item.upgradeability.extension,
+              }),
+            )
           break
         case 'Optics Beacon proxy':
-          addresses.push({
-            name: 'Upgrade Beacon',
-            href: `${etherscanUrl}/address/${item.upgradeability.upgradeBeacon.toString()}#code`,
-            address: item.upgradeability.upgradeBeacon.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.upgradeBeacon.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
-          addresses.push({
-            name: 'Beacon Controller',
-            href: `${etherscanUrl}/address/${item.upgradeability.beaconController.toString()}#code`,
-            address: item.upgradeability.beaconController.toString(),
-            isAdmin: true,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.beaconController.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Upgrade Beacon',
+              address: item.upgradeability.upgradeBeacon,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          )
+          addresses.push(
+            getAddress({
+              name: 'Beacon Controller',
+              address: item.upgradeability.beaconController,
+              isAdmin: true,
+            }),
+          )
           break
         case 'Axelar proxy':
-          addresses.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-            verified:
-              !!verificationStatusForChain[
-                item.upgradeability.implementation.toString()
-              ],
-          })
+          addresses.push(
+            getAddress({
+              name: 'Implementation (Upgradable)',
+              address: item.upgradeability.implementation,
+            }),
+          )
           break
         // Ignore types
         case 'immutable':
@@ -532,30 +475,47 @@ function makeTechnologyContract(
     addresses.map((a) => a.address).includes(ca.containingContract.toString()),
   )
 
+  const additionalReferences: TechnologyReference[] = []
+  addresses.forEach((address) => {
+    const manuallyVerified = manuallyVerifiedContractsForChain[address.address]
+    if (manuallyVerified) {
+      additionalReferences.push({
+        text: 'Source code',
+        href: manuallyVerified,
+      })
+    }
+  })
+
   // const usedInProjects = getUsedInProjects(
   //   project,
   //   addresses,
   //   implementationAddresses,
   // )
 
-  const result: TechnologyContract = {
+  if (isSingleAddress(item)) {
+    return {
+      name: item.name,
+      addresses,
+      description,
+      usedInProjects: [],
+      references: concat(item.references ?? [], additionalReferences),
+      chain,
+      implementationHasChanged,
+      upgradeableBy: languageJoin(item.upgradableBy),
+      upgradeDelay: item.upgradeDelay,
+      upgradeConsiderations: item.upgradeConsiderations,
+    }
+  }
+
+  return {
     name: item.name,
     addresses,
     description,
     usedInProjects: [],
-    references: [],
+    references: additionalReferences,
     chain,
     implementationHasChanged,
   }
-
-  if (isSingleAddress(item)) {
-    result.upgradeableBy = languageJoin(item.upgradableBy)
-    result.upgradeDelay = item.upgradeDelay
-    result.upgradeConsiderations = item.upgradeConsiderations
-    result.references = item.references ?? []
-  }
-
-  return result
 }
 
 function isContractUnverified(

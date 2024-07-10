@@ -16,7 +16,6 @@ import { ProjectSection } from '../project-section'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
-import Image from 'next/image'
 import { type TechnologyRisk, RiskList } from '../risk-list'
 
 export interface ContractsSectionProps {
@@ -32,8 +31,6 @@ export interface ContractsSectionProps {
   architectureImage?: string
   isIncomplete?: boolean
   isUnderReview?: boolean
-  verificationStatus: VerificationStatus
-  manuallyVerifiedContracts: ManuallyVerifiedContracts
 }
 
 export function ContractsSection(props: ContractsSectionProps) {
@@ -81,7 +78,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.isIncomplete && <TechnologyIncompleteNote />}
       {props.architectureImage && (
         <figure className="mt-4 mb-8 text-center">
-          <Image
+          <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}
             alt="A diagram of the smart contract architecture"

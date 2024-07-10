@@ -50,7 +50,7 @@ export function DaHeaderDetails({ project }: Props) {
         value={
           project.header.usedIn.length !== 0 ? (
             <Tooltip>
-              <TooltipTrigger>
+              <TooltipTrigger asChild>
                 <div className="truncate max-w-[250px] md:max-w-[440px]">
                   {project.header.usedIn
                     .map((project) => project.name)

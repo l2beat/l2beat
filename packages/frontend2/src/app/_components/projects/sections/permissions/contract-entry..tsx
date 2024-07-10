@@ -138,7 +138,9 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
 }
 
 function getCalloutProps(contract: TechnologyContract) {
-  const areAddressesUnverified = contract.addresses.some((c) => !c.verified)
+  const areAddressesUnverified = contract.addresses.some(
+    (c) => !c.verified && !c.isAdmin,
+  )
   const color = areAddressesUnverified ? ('red' as const) : undefined
 
   if (areAddressesUnverified) {

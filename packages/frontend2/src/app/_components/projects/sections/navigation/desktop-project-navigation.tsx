@@ -61,7 +61,10 @@ export function DesktopProjectNavigation({
 
       <ProjectNavigationList
         sections={sections}
-        className={cn(isSummarySection && translateClassName)}
+        className={cn(
+          (isSummarySection === true || isSummarySection === undefined) &&
+            translateClassName,
+        )}
       />
     </div>
   )
