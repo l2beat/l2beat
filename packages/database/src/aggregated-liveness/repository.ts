@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
 import { AggregatedLiveness, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
@@ -45,6 +46,16 @@ export class AggregatedLivenessRepository {
     const rows = await this.db
       .selectFrom('public.aggregated_liveness')
       .select(selectAggregatedLiveness)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getByProject(projectId: ProjectId): Promise<AggregatedLiveness[]> {
+    const rows = await this.db
+      .selectFrom('public.aggregated_liveness')
+      .select(selectAggregatedLiveness)
+      .where((eb) => eb('project_id', '=', projectId))
       .execute()
 
     return rows.map(toRecord)
