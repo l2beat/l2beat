@@ -1,5 +1,5 @@
 import { getVerifiersFromConfig } from '@l2beat/config/build/src/projects/other/zk-catalog'
-import { branded, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, branded } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
