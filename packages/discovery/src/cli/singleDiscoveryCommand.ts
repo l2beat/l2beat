@@ -27,6 +27,7 @@ export async function singleDiscoveryCommand(
       chain: singleDiscovery.chain.name,
       initialAddresses: [singleDiscovery.address],
     },
+    {},
     configReader,
   )
   const http = new HttpClient()

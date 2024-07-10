@@ -12,7 +12,11 @@ export class DiscoveryOverrides {
 
   constructor(
     public readonly config: Pick<RawDiscoveryConfig, 'names' | 'overrides'>,
+    private readonly commonAddressNames: Record<string, string> = {},
   ) {
+    for (const [address, name] of Object.entries(commonAddressNames ?? {})) {
+      this.nameToAddress.set(name, EthereumAddress(address))
+    }
     for (const [address, name] of Object.entries(config.names ?? {})) {
       this.nameToAddress.set(name, EthereumAddress(address))
     }
@@ -24,7 +28,8 @@ export class DiscoveryOverrides {
 
     if (EthereumAddress.check(nameOrAddress.toString())) {
       address = EthereumAddress(nameOrAddress.toString())
-      name = this.config.names?.[address.toString()]
+      const commonName = this.commonAddressNames[address.toString()]
+      name = this.config.names?.[address.toString()] ?? commonName
     } else {
       address = this.nameToAddress.get(nameOrAddress.toString())
       name = nameOrAddress.toString()

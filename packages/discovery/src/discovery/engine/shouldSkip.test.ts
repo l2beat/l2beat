@@ -54,6 +54,7 @@ describe(shouldSkip.name, () => {
           Foo: 'SharedFoo',
         },
       },
+      {},
       configReader,
     )
     const result = shouldSkip(address, config, 0, 1)
