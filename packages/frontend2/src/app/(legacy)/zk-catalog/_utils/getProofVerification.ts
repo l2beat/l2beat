@@ -1,14 +1,11 @@
 import { type OnchainVerifier, type ProofVerification } from '@l2beat/config'
-import {
-  assert,
-  UnixTime,
-  type VerifiersApiResponse,
-} from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { type Project, type ZkCatalogProofVerification } from './types'
 
 export function getProofVerification(
   project: Project,
-  verifiersApiResponse: VerifiersApiResponse,
+  verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogProofVerification {
   let proofVerification: ProofVerification
 
@@ -24,19 +21,16 @@ export function getProofVerification(
     shortDescription: proofVerification.shortDescription,
     verifiers: proofVerification.verifiers.map((verifier) => ({
       ...verifier,
-      lastUsedDaysAgo: getVerifierLastUsedDaysAgo(
-        verifier,
-        verifiersApiResponse,
-      ),
+      lastUsedDaysAgo: getVerifierLastUsedDaysAgo(verifier, verifiersStatuses),
     })),
   }
 }
 
 export function getVerifierLastUsedDaysAgo(
   verifier: OnchainVerifier,
-  verifiersApiResponse: VerifiersApiResponse,
+  verifiersStatuses: VerifiersStatuses,
 ): number | undefined {
-  const timestamp = verifiersApiResponse.find(
+  const timestamp = verifiersStatuses.find(
     (entry) => entry.address === verifier.contractAddress.toString(),
   )?.timestamp
 

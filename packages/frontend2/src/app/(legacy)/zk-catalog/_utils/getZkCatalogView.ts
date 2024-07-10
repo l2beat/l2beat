@@ -1,4 +1,4 @@
-import { type VerifiersApiResponse } from '@l2beat/shared-pure'
+import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
 import { type ZkCatalogViewProps } from '../_components/ZkCatalogPage'
 import { getProofVerification } from './getProofVerification'
 import { getTrustedSetup } from './getTrustedSetup'
@@ -9,14 +9,11 @@ export const ZK_CATALOG_ASK_FOR_VERIFICATION_LINK =
 
 export function getZkCatalogView(
   projects: Project[],
-  verifiersApiResponse: VerifiersApiResponse,
+  verifiersStatuses: VerifiersStatuses,
 ): ZkCatalogViewProps {
   return {
     items: projects.map((project) => {
-      const proofVerification = getProofVerification(
-        project,
-        verifiersApiResponse,
-      )
+      const proofVerification = getProofVerification(project, verifiersStatuses)
 
       return {
         name: project.display.name,
