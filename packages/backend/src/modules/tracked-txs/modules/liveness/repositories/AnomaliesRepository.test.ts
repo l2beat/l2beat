@@ -19,7 +19,13 @@ describeDatabase(AnomaliesRepository.name, (database) => {
       duration: 100,
     },
     {
-      timestamp: START.add(-1, 'hours'),
+      timestamp: START.add(-2, 'hours'),
+      projectId: PROJECT_B,
+      subtype: 'proofSubmissions',
+      duration: 100,
+    },
+    {
+      timestamp: START.add(-3, 'hours'),
       projectId: PROJECT_B,
       subtype: 'proofSubmissions',
       duration: 100,
@@ -42,8 +48,9 @@ describeDatabase(AnomaliesRepository.name, (database) => {
           subtype: 'batchSubmissions',
           duration: 200,
         },
+        //to add
         {
-          timestamp: START.add(-2, 'hours'),
+          timestamp: START.add(-4, 'hours'),
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           duration: 100,
@@ -54,24 +61,20 @@ describeDatabase(AnomaliesRepository.name, (database) => {
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        {
-          timestamp: START.add(-1, 'hours'),
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          duration: 200,
-        },
-        {
-          timestamp: START.add(-1, 'hours'),
-          projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          duration: 100,
-        },
+        newRows[0],
         {
           timestamp: START.add(-2, 'hours'),
           projectId: PROJECT_B,
           subtype: 'proofSubmissions',
           duration: 100,
         },
+        {
+          timestamp: START.add(-3, 'hours'),
+          projectId: PROJECT_B,
+          subtype: 'proofSubmissions',
+          duration: 100,
+        },
+        newRows[1],
       ])
     })
 
@@ -89,6 +92,17 @@ describeDatabase(AnomaliesRepository.name, (database) => {
           ...e,
         })),
       )
+    })
+  })
+
+  describe(AnomaliesRepository.prototype.getByProjectFrom.name, () => {
+    it('should return all rows for project from timestamp', async () => {
+      const results = await repository.getByProjectFrom(
+        PROJECT_B,
+        START.add(-2, 'hours'),
+      )
+
+      expect(results).toEqualUnsorted(DATA.slice(1, 2))
     })
   })
 
