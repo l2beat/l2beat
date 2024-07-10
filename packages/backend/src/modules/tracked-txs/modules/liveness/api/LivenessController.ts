@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
-  LivenessAnomaly,
   LivenessApiProject,
   LivenessApiResponse,
   LivenessDetails,
@@ -10,6 +9,7 @@ import {
   TrackedTxsConfigSubtype,
   UnixTime,
   cacheAsyncFunction,
+  LivenessAnomaly,
 } from '@l2beat/shared-pure'
 
 import { TrackedTxConfigEntry } from '@l2beat/shared'
@@ -116,15 +116,15 @@ export class LivenessController {
       )
 
       const livenessData: LivenessApiProject = {
-        batchSubmissions: this.mapAggregatedLivenessRecords(
-          aggregatedLivenessRecords,
-          'batchSubmissions',
-          project,
-          configurations,
-        ),
         stateUpdates: this.mapAggregatedLivenessRecords(
           aggregatedLivenessRecords,
           'stateUpdates',
+          project,
+          configurations,
+        ),
+        batchSubmissions: this.mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'batchSubmissions',
           project,
           configurations,
         ),
@@ -160,46 +160,47 @@ export class LivenessController {
       'properties'
     >[],
   ): LivenessDetails {
-    const last30Days = records.find(
-      (r) => r.subtype === subtype && r.range === '30D',
-    )
-    assert(last30Days, `Missing liveness data for ${subtype} and range 30D`)
-
-    const last90Days = records.find(
-      (r) => r.subtype === subtype && r.range === '90D',
-    )
-    assert(last90Days, `Missing liveness data for ${subtype} and range 90D`)
-
-    const max = records.find((r) => r.subtype === subtype && r.range === 'MAX')
-    assert(max, `Missing liveness data for ${subtype} and range MAX`)
-
     const syncedUntil = getSyncedUntil(
       configurations.filter((c) => {
         const config = project.trackedTxsConfig?.find((pc) => pc.id === c.id)
         return config?.subtype === subtype
       }),
     )
-    assert(
-      syncedUntil,
-      `Missing syncedUntil data for ${project.projectId} and ${subtype}`,
+
+    if (!syncedUntil) {
+      return undefined
+    }
+
+    const last30Days = records.find(
+      (r) => r.subtype === subtype && r.range === '30D',
     )
+    const last90Days = records.find(
+      (r) => r.subtype === subtype && r.range === '90D',
+    )
+    const max = records.find((r) => r.subtype === subtype && r.range === 'MAX')
 
     return {
-      last30Days: {
-        averageInSeconds: last30Days.avg,
-        minimumInSeconds: last30Days.min,
-        maximumInSeconds: last30Days.max,
-      },
-      last90Days: {
-        averageInSeconds: last90Days.avg,
-        minimumInSeconds: last90Days.min,
-        maximumInSeconds: last90Days.max,
-      },
-      allTime: {
-        averageInSeconds: max.avg,
-        minimumInSeconds: max.min,
-        maximumInSeconds: max.max,
-      },
+      last30Days: last30Days
+        ? {
+            averageInSeconds: last30Days.avg,
+            minimumInSeconds: last30Days.min,
+            maximumInSeconds: last30Days.max,
+          }
+        : undefined,
+      last90Days: last90Days
+        ? {
+            averageInSeconds: last90Days.avg,
+            minimumInSeconds: last90Days.min,
+            maximumInSeconds: last90Days.max,
+          }
+        : undefined,
+      allTime: max
+        ? {
+            averageInSeconds: max.avg,
+            minimumInSeconds: max.min,
+            maximumInSeconds: max.max,
+          }
+        : undefined,
       syncedUntil,
     }
   }
