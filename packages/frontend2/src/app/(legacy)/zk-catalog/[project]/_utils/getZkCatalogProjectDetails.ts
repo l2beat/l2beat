@@ -10,7 +10,7 @@ export function getZkCatalogProjectDetails(
   verifiersStatues: VerifiersStatuses,
 ): ZkCatalogProjectDetails {
   const descriptionEntry = getCollectionEntry(
-    'zkCatalogDescriptions',
+    'zk-catalog-descriptions',
     project.display.slug,
   )
 

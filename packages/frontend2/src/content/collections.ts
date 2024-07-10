@@ -11,5 +11,5 @@ export const collections = {
   events: eventsCollection,
   authors: authorsCollection,
   glossary: glossaryCollection,
-  zkCatalogDescriptions: zkCatalogDescriptionsCollection,
+  'zk-catalog-descriptions': zkCatalogDescriptionsCollection,
 }
