@@ -18,7 +18,6 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -50,7 +49,6 @@ export const degate: Layer2 = {
   isArchived: true,
   type: 'layer2',
   id: ProjectId('degate'),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Fork.Loopring],
   display: {
     name: 'DeGate Legacy',
     slug: 'degate',

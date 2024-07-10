@@ -1,10 +1,9 @@
-import { Badge } from '../badges'
+
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const aiechain: Layer2 = upcomingL2({
   id: 'aiechain',
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     name: 'AIE Chain',
     slug: 'aie-chain',
