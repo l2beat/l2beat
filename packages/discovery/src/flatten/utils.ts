@@ -1,6 +1,6 @@
 import { ContractSources } from '../discovery/source/SourceCodeService'
-import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
-import { flattenStartingFrom } from './flattenStartingFrom'
+import { FileContent } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flatten'
 
 export interface HashedChunks {
   content: string
@@ -40,12 +40,11 @@ export function flattenFirstSource(
     return undefined
   }
 
-  const parsedFileManager = ParsedFilesManager.parseFiles(
+  const output = flattenStartingFrom(
+    source.name,
     input,
     source.source.remappings,
   )
-
-  const output = flattenStartingFrom(source.name, parsedFileManager)
   return output
 }
 
