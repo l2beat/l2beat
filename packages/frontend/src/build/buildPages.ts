@@ -82,7 +82,6 @@ async function main() {
       config.features.costsPage
         ? fetchL2CostsApi(config.backend, http)
         : undefined,
-
     ])
     const supportedChains = getChainNames([
       ...config.layer2s,
