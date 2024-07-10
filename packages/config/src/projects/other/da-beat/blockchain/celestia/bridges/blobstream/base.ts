@@ -4,7 +4,10 @@ import { CELESTIA_BLOBSTREAM } from './template'
 
 export const blobStreamBase = CELESTIA_BLOBSTREAM({
   chain: 'base',
-  contracts: [],
+  contracts: {
+    addresses: [],
+    risks: [],
+  },
   permissions: [],
   usedIn: [],
   risks: {

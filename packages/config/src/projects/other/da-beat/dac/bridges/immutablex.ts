@@ -5,19 +5,24 @@ import {
   DaAttestationSecurityRisk,
   DaExitWindowRisk,
 } from '../../types'
-import { DaBridge, DaBridgeKind } from '../../types/DaBridge'
+import { DaBridge } from '../../types/DaBridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const immutableXDac = {
   id: 'immutablex-dac',
-  kind: DaBridgeKind.DAC,
+  type: 'DAC',
   display: {
     name: 'ImmutableX DAC',
     slug: 'immutablex-dac',
     description: 'ImmutableX DAC on Ethereum.',
   },
+  contracts: {
+    addresses: [],
+    risks: [],
+  },
+  permissions: [],
   chain: ChainId.ETHEREUM,
   requiredMembers: 5,
   totalMembers: 7,

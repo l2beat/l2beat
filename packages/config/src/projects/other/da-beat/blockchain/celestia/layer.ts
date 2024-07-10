@@ -1,3 +1,4 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { aevo } from '../../../../layer2s/aevo'
 import { ancient } from '../../../../layer2s/ancient'
 import { hypr } from '../../../../layer2s/hypr'
@@ -17,7 +18,7 @@ import { noBridge } from './bridges/no-bridge'
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const celestia: DaLayer = {
-  id: 'celestia',
+  id: ProjectId('celestia'),
   kind: DaLayerKind.PublicBlockchain,
   display: {
     name: 'Celestia',

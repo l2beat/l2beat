@@ -7,12 +7,14 @@ import { getProjectDetails } from '~/app/(legacy)/data-availability/projects/[la
 import { getVerificationStatus } from '../verification-status/get-verification-status'
 import { getManuallyVerifiedContracts } from '../verification-status/get-manually-verified-contracts'
 import { type RosetteValue } from '~/app/_components/rosette/types'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 
 export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
   // const economicSecurity = await getDaEconomicSecurity()
   // const tvs = await getDaProjectTvl(bridge.usedIn)
   const verificationStatus = await getVerificationStatus()
   const manuallyVerifiedContracts = getManuallyVerifiedContracts()
+  const implementationChangeReport = await getImplementationChangeReport()
 
   const rosetteValues = mapRisksToRosetteValues(getDaRisks(daLayer, bridge))
 
@@ -21,6 +23,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
     bridge,
     verificationStatus,
     manuallyVerifiedContracts,
+    implementationChangeReport,
     rosetteValues,
   })
 
@@ -37,8 +40,6 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
       id: bridge.id,
       name: bridge.display.name,
       slug: bridge.display.slug,
-      permissions: bridge.permissions,
-      nativePermissions: bridge.nativePermissions,
     },
     bridges: daLayer.bridges.map((bridge) => ({
       id: bridge.id,

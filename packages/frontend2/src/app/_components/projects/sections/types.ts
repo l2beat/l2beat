@@ -1,3 +1,4 @@
+import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type MarkdownSectionProps } from './markdown-section'
 import { type PermissionsSectionProps } from './permissions/permissions-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
@@ -7,6 +8,7 @@ export type ProjectSectionId =
   | 'da-layer-technology'
   | 'da-bridge-technology'
   | 'da-bridge-permissions'
+  | 'da-bridge-contracts'
 
 export interface ProjectSectionProps {
   id: ProjectSectionId
@@ -31,10 +33,16 @@ export interface ProjectDetailsPermissionsSection {
   props: ProjectDetailsProps<PermissionsSectionProps>
 }
 
+export interface ProjectDetailsContractsSection {
+  type: 'ContractsSection'
+  props: ProjectDetailsProps<ContractsSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
 } & (
   | ProjectDetailsRiskAnalysisSection
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
+  | ProjectDetailsContractsSection
 )

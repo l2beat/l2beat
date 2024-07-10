@@ -9,14 +9,14 @@ import { publicgoodsnetwork } from '../../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../../layer3s/stack'
 import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
-import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
+import { DaBridge } from '../../../types/DaBridge'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
  */
 export const noBridge = {
   id: 'no-bridge',
-  kind: DaBridgeKind.NoBridge,
+  type: 'NoBridge',
   display: {
     name: 'No Bridge',
     slug: 'no-bridge',

@@ -1,8 +1,6 @@
 import {
   type ScalingProjectReference,
   type ScalingProjectPermission,
-  type DaBridge,
-  type DaLayer,
 } from '@l2beat/config'
 import {
   notUndefined,
@@ -18,23 +16,39 @@ import { type ProjectDetailsPermissionsSection } from '../types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { concat } from 'lodash'
 
+interface ProjectParams {
+  permissions: ScalingProjectPermission[] | 'UnderReview'
+  nativePermissions:
+    | Record<string, ScalingProjectPermission[]>
+    | 'UnderReview'
+    | undefined
+  isUnderReview: boolean
+}
+
 export function getPermissionsSection(
-  layer: DaLayer,
-  bridge: DaBridge,
+  projectParams: ProjectParams,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): ProjectDetailsPermissionsSection['props'] | undefined {
+  if (
+    projectParams.permissions.length === 0 &&
+    (!projectParams.nativePermissions ||
+      projectParams.nativePermissions.length === 0)
+  ) {
+    return undefined
+  }
+
   const section: ProjectDetailsPermissionsSection['props'] = {
     id: 'da-bridge-permissions',
     title: 'DA Bridge permissions',
-    isUnderReview: layer.isUnderReview,
+    isUnderReview: projectParams.isUnderReview,
     permissions: [],
     nativePermissions: {},
   }
 
   if (
-    bridge.permissions === 'UnderReview' ||
-    bridge.nativePermissions === 'UnderReview'
+    projectParams.permissions === 'UnderReview' ||
+    projectParams.nativePermissions === 'UnderReview'
   ) {
     return {
       ...section,
@@ -42,30 +56,30 @@ export function getPermissionsSection(
     }
   }
 
-  if (!bridge.permissions && !bridge.nativePermissions) {
+  if (!projectParams.permissions && !projectParams.nativePermissions) {
     return undefined
   }
 
   return {
     ...section,
     permissions:
-      bridge.permissions?.flatMap((permission) =>
+      projectParams.permissions?.flatMap((permission) =>
         toTechnologyContract(
-          bridge,
+          projectParams,
           permission,
           verificationStatus,
           manuallyVerifiedContracts,
         ),
       ) ?? [],
     nativePermissions: Object.fromEntries(
-      Object.entries(bridge.nativePermissions ?? {}).map(
+      Object.entries(projectParams.nativePermissions ?? {}).map(
         ([slug, permissions]) => {
           return [
             // TODO: slugToDisplayName(slug),
             slug,
             permissions.flatMap((p) =>
               toTechnologyContract(
-                bridge,
+                projectParams,
                 p,
                 verificationStatus,
                 manuallyVerifiedContracts,
@@ -79,7 +93,7 @@ export function getPermissionsSection(
 }
 
 function toTechnologyContract(
-  bridge: DaBridge,
+  projectParams: ProjectParams,
   permission: ScalingProjectPermission,
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
@@ -157,10 +171,10 @@ function toTechnologyContract(
         )}`
 
         if (
-          bridge.permissions !== undefined &&
-          bridge.permissions !== 'UnderReview'
+          projectParams.permissions !== undefined &&
+          projectParams.permissions !== 'UnderReview'
         ) {
-          const matchingPermissions = bridge.permissions.filter((p) =>
+          const matchingPermissions = projectParams.permissions.filter((p) =>
             p.accounts
               .map((a) => a.address.toString())
               .includes(account.address.toString()),

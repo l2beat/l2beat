@@ -13,7 +13,10 @@ const _maxDataCommitment = discovery.getContractValue(
 
 export const blobStreamEthereum = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
-  contracts: [],
+  contracts: {
+    addresses: [],
+    risks: [],
+  },
   permissions: [],
   usedIn: [],
   risks: {

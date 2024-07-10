@@ -3,7 +3,6 @@ import capitalize from 'lodash/capitalize'
 import { chains } from '../../../../../../../'
 import {
   DaAccessibilityRisk,
-  DaBridgeKind,
   DaBridgeRisks,
   OnChainDaBridge,
 } from '../../../../types'
@@ -38,7 +37,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
   } satisfies DaBridgeRisks
 
   return {
-    kind: DaBridgeKind.OnChainBridge,
+    type: 'OnChainBridge',
     id,
     display,
     risks,

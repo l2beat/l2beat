@@ -1,4 +1,4 @@
-import { type DaBridge, isDacBridge } from '@l2beat/config'
+import { type DaBridge } from '@l2beat/config'
 
 export type DaSummaryEntryBridge = {
   name: string
@@ -6,7 +6,7 @@ export type DaSummaryEntryBridge = {
 }
 
 export function toDaBridge(bridge: DaBridge): DaSummaryEntryBridge {
-  if (isDacBridge(bridge)) {
+  if (bridge.type === 'DAC') {
     return {
       name: `${bridge.display.name} ${bridge.requiredMembers}/${bridge.totalMembers}`,
       slug: bridge.display.slug,

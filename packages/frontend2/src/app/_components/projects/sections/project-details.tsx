@@ -5,6 +5,7 @@ import { type ProjectDetailsSection } from './types'
 import { RiskAnalysisSection } from './risk-analysis-section'
 import { MarkdownSection } from './markdown-section'
 import { PermissionsSection } from './permissions/permissions-section'
+import { ContractsSection } from './contracts/contracts-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -37,6 +38,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'PermissionsSection':
             return (
               <PermissionsSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
+          case 'ContractsSection':
+            return (
+              <ContractsSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}
