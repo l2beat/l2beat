@@ -4,6 +4,7 @@ import { assert } from '@l2beat/backend-tools'
 import {
   ByteRange,
   DeclarationFilePair,
+  FileContent,
   ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
@@ -15,8 +16,13 @@ interface ContractNameFilePair {
 
 export function flattenStartingFrom(
   rootContractName: string,
-  parsedFileManager: ParsedFilesManager,
+  files: FileContent[],
+  remappingStrings: string[],
 ): string {
+  const parsedFileManager = ParsedFilesManager.parseFiles(
+    files,
+    remappingStrings,
+  )
   const rootContract = parsedFileManager.findDeclaration(rootContractName)
 
   let flatSource = formatSource(

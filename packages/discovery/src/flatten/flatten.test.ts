@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
-import { flattenStartingFrom } from './flattenStartingFrom'
+import { FileContent } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flatten'
 
 describe('flatten', () => {
   it('handles multiple files, imports, remappings, renames etc.', () => {
@@ -68,8 +68,7 @@ describe('flatten', () => {
       },
     ]
 
-    const manager = ParsedFilesManager.parseFiles(files, remappings)
-    const flattened = flattenStartingFrom('R1', manager)
+    const flattened = flattenStartingFrom('R1', files, remappings)
 
     expect(flattened).toEqual(
       [

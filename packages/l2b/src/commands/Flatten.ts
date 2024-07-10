@@ -1,9 +1,5 @@
 import { writeFileSync } from 'fs'
-import {
-  HttpClient,
-  ParsedFilesManager,
-  flattenStartingFrom,
-} from '@l2beat/discovery'
+import { HttpClient, flattenStartingFrom } from '@l2beat/discovery'
 import {
   ExplorerConfig,
   getExplorerClient,
@@ -58,11 +54,7 @@ export const Flatten = command({
       }))
       .filter((e) => e.path.endsWith('.sol'))
 
-    const parsedFileManager = ParsedFilesManager.parseFiles(
-      input,
-      source.remappings,
-    )
-    const output = flattenStartingFrom(source.name, parsedFileManager)
+    const output = flattenStartingFrom(source.name, input, source.remappings)
     console.log(`Done, saving to ${chalk.magenta(args.output)}.`)
     writeFileSync(args.output, output)
   },
