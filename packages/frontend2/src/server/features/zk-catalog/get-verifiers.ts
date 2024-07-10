@@ -14,7 +14,7 @@ export async function getVerifiers() {
   // issues with custom VOs like UnixTime - that's why we re-parse the data
   // to coerce it back to the correct types
   const cachedVerifiers = await getCachedVerifiersStatus()
-  return VerifierStatuses.parse(cachedVerifiers)
+  return VerifiersStatuses.parse(cachedVerifiers)
 }
 
 const getCachedVerifiersStatus = cache(
@@ -46,5 +46,5 @@ export const VerifierStatus = z.object({
   ),
 })
 export type VerifierStatus = z.infer<typeof VerifierStatus>
-export const VerifierStatuses = z.array(VerifierStatus)
-export type VerifierStatuses = z.infer<typeof VerifierStatuses>
+export const VerifiersStatuses = z.array(VerifierStatus)
+export type VerifiersStatuses = z.infer<typeof VerifiersStatuses>
