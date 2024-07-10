@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import {
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { AggregatedLivenessRow } from 'knex/types/tables'
 import {
   BaseRepository,
@@ -37,6 +41,14 @@ export class AggregatedLivenessRepository extends BaseRepository {
       .merge()
 
     return rows.length
+  }
+
+  async getByProject(
+    projectId: ProjectId,
+  ): Promise<AggregatedLivenessRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex(this.TABLE_NAME).where('project_id', projectId)
+    return rows.map(toRecord)
   }
 
   async getAll(): Promise<AggregatedLivenessRecord[]> {

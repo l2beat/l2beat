@@ -1,12 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-
-import { LivenessRecordWithInterval } from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
+import { LivenessRecordWithSubtype } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 
 const NOW = UnixTime.now()
 
-const RECORDS: LivenessRecordWithInterval[] = [
+const RECORDS: LivenessRecordWithSubtype[] = [
   {
     timestamp: NOW,
     subtype: 'batchSubmissions',
@@ -20,15 +19,15 @@ const RECORDS: LivenessRecordWithInterval[] = [
     subtype: 'batchSubmissions',
   },
   {
-    timestamp: NOW.add(-91, 'days'),
+    timestamp: NOW.add(-29, 'days'),
     subtype: 'batchSubmissions',
   },
   {
-    timestamp: NOW.add(-92, 'days'),
+    timestamp: NOW.add(-30, 'days'),
     subtype: 'batchSubmissions',
   },
   {
-    timestamp: NOW.add(-93, 'days'),
+    timestamp: NOW.add(-31, 'days'),
     subtype: 'batchSubmissions',
   },
 ]
@@ -38,8 +37,8 @@ describe(calcAvgsPerProject.name, () => {
     const result = calcAvgsPerProject(RECORDS)
 
     expect(result).toEqual({
-      averageInSeconds: (3600 + 7200 + 86_400 * 91 - 10_800) / 3,
-      maximumInSeconds: 86_400 * 91 - 10_800,
+      averageInSeconds: (3600 + 7200 + 86_400 * 29 - 10_800) / 3,
+      maximumInSeconds: 86_400 * 29 - 10_800,
     })
   })
 })

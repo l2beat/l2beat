@@ -3,7 +3,6 @@ import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { Project } from '../../../../../model/Project'
 import {
@@ -19,7 +18,9 @@ import {
   LivenessRecordWithSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
-import { Interval, calculateIntervals } from '../utils/calculateIntervals'
+import { calculateIntervals } from '../utils/calculateIntervals'
+import { calculateStats } from '../utils/calculateStats'
+import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
 import { getProjectsToSync } from '../utils/getProjectsToSync'
 import { groupByType } from '../utils/groupByType'
 
@@ -28,12 +29,6 @@ export interface LivenessAggregatingIndexerDeps
   livenessRepository: LivenessRepository
   aggregatedLivenessRepository: AggregatedLivenessRepository
   projects: Project[]
-}
-
-type Stats = {
-  averageInSeconds: number
-  minimumInSeconds: number
-  maximumInSeconds: number
 }
 
 export class LivenessAggregatingIndexer extends ManagedChildIndexer {
@@ -166,13 +161,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
 
     ranges.forEach((range) => {
-      const filteredIntervals = this.filterByRange(intervals, syncTo, range)
+      const filteredIntervals = filterIntervalsByRange(intervals, syncTo, range)
 
       if (filteredIntervals.length === 0) {
         return
       }
 
-      const stats = this.calculateStats(filteredIntervals)
+      const stats = calculateStats(filteredIntervals)
 
       const record: AggregatedLivenessRecord = {
         projectId: projectId,
@@ -188,52 +183,5 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     })
 
     return aggregatedRecords
-  }
-
-  filterByRange(
-    intervals: Interval[],
-    syncTo: UnixTime,
-    range: AggregatedLivenessRange,
-  ): Interval[] {
-    switch (range) {
-      case '30D':
-        return intervals.filter((i) =>
-          i.record.timestamp.gt(syncTo.add(-30, 'days')),
-        )
-      case '90D':
-        return intervals.filter((i) =>
-          i.record.timestamp.gt(syncTo.add(-90, 'days')),
-        )
-      case 'MAX':
-        return intervals
-      default:
-        assertUnreachable(range)
-    }
-  }
-
-  calculateStats(intervals: Interval[]): Stats {
-    const result: Stats = {
-      averageInSeconds: 0,
-      minimumInSeconds: Infinity,
-      maximumInSeconds: 0,
-    }
-
-    for (const interval of intervals) {
-      result.averageInSeconds += interval.duration
-      result.minimumInSeconds = Math.min(
-        result.minimumInSeconds,
-        interval.duration,
-      )
-      result.maximumInSeconds = Math.max(
-        result.maximumInSeconds,
-        interval.duration,
-      )
-    }
-
-    result.averageInSeconds = Math.ceil(
-      result.averageInSeconds / intervals.length,
-    )
-
-    return result
   }
 }

@@ -1,5 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
-import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
+import {
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { AnomaliesRow } from 'knex/types/tables'
 import {
   BaseRepository,
@@ -37,6 +41,17 @@ export class AnomaliesRepository extends BaseRepository {
   async getAll(): Promise<AnomaliesRecord[]> {
     const knex = await this.knex()
     const rows = await knex(this.TABLE_NAME)
+    return rows.map(toRecord)
+  }
+
+  async getByProjectFrom(
+    projectId: ProjectId,
+    from: UnixTime,
+  ): Promise<AnomaliesRecord[]> {
+    const knex = await this.knex()
+    const rows = await knex(this.TABLE_NAME)
+      .where('project_id', projectId)
+      .andWhere('timestamp', '>=', from.toDate())
     return rows.map(toRecord)
   }
 

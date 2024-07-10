@@ -7,13 +7,12 @@ import { createTrackedTxId } from '@l2beat/shared'
 import { FinalityProjectConfig } from '../../../config/features/finality'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import {
-  calculateDetailsFor,
-  calculateIntervals,
-} from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
-import {
   LivenessRecordWithProjectIdAndSubtype,
   LivenessRepository,
 } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { calculateIntervals } from '../../tracked-txs/modules/liveness/utils/calculateIntervals'
+import { calculateStats } from '../../tracked-txs/modules/liveness/utils/calculateStats'
+import { filterIntervalsByRange } from '../../tracked-txs/modules/liveness/utils/filterIntervalsByRange'
 import {
   FinalityRecord,
   FinalityRepository,
@@ -98,8 +97,13 @@ describe(FinalityController.name, () => {
       })
 
       const records = [...RECORDS]
-      calculateIntervals(records)
-      const last30Days = calculateDetailsFor(records, '30d')
+      const intervals = calculateIntervals(records)
+      const filteredIntervals = filterIntervalsByRange(
+        intervals,
+        UnixTime.now(),
+        '30D',
+      )
+      const last30Days = calculateStats(filteredIntervals)
 
       assert(last30Days, 'last30Days is undefined')
 
@@ -199,8 +203,14 @@ describe(FinalityController.name, () => {
       const project1Records = RECORDS.filter(
         (r) => r.projectId === ProjectId('project1'),
       )
-      calculateIntervals(project1Records)
-      const project1Last30Days = calculateDetailsFor(project1Records, '30d')
+
+      const intervals = calculateIntervals(project1Records)
+      const filteredIntervals = filterIntervalsByRange(
+        intervals,
+        UnixTime.now(),
+        '30D',
+      )
+      const project1Last30Days = calculateStats(filteredIntervals)
 
       assert(project1Last30Days, 'last30Days is undefined')
 

@@ -10,6 +10,8 @@ import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { LivenessUpdater } from './LivenessUpdater'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
+import { AggregatedLivenessRepository } from './repositories/AggregatedLivenessRepository'
+import { AnomaliesRepository } from './repositories/AnomaliesRepository'
 import { LivenessRepository } from './repositories/LivenessRepository'
 
 export function createLivenessModule(
@@ -44,6 +46,10 @@ export function createLivenessModule(
     indexerService,
     projects: config.projects,
     logger,
+    anomaliesRepository: peripherals.getRepository(AnomaliesRepository),
+    aggregatedLivenessRepository: peripherals.getRepository(
+      AggregatedLivenessRepository,
+    ),
     livenessRepository: peripherals.getRepository(LivenessRepository),
   })
 
