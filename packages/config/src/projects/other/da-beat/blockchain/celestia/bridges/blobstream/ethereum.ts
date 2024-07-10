@@ -13,6 +13,8 @@ const _maxDataCommitment = discovery.getContractValue(
 
 export const blobStreamEthereum = CELESTIA_BLOBSTREAM({
   chain: 'ethereum',
+  technology:
+    'Some note about the technology used by the bridge.\n## Markdown supported',
   contracts: {
     addresses: [],
     risks: [],

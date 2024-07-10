@@ -22,6 +22,8 @@ export const immutableXDac = {
     addresses: [],
     risks: [],
   },
+  technology:
+    'Some note about the technology used by the bridge.\n## Markdown supported',
   permissions: [],
   chain: ChainId.ETHEREUM,
   requiredMembers: 5,

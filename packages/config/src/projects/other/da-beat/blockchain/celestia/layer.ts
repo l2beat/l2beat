@@ -30,6 +30,8 @@ export const celestia: DaLayer = {
       repositories: ['https://github.com/celestiaorg'],
     },
   },
+  technology:
+    'Some note about the technology used by the data availability layer.\n## Markdown supported',
   bridges: [noBridge, ...blobStream],
   usedIn: [
     mantapacific.id,

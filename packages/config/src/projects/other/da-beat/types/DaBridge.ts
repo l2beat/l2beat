@@ -80,6 +80,10 @@ type CommonDaBridge = {
     description: string
   }
   /**
+   * The technology used by the data availability bridge. [MARKDOWN]
+   */
+  technology: string
+  /**
    * List of projects given bridge is being used in
    */
   usedIn: ProjectId[]

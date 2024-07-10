@@ -74,7 +74,7 @@ export function getProjectDetails({
     props: {
       id: 'da-layer-technology',
       title: 'DA Layer technology',
-      children: '## Some text\n### Next line',
+      children: daLayer.technology,
     },
   })
 
@@ -83,7 +83,7 @@ export function getProjectDetails({
     props: {
       id: 'da-bridge-technology',
       title: 'DA Bridge technology',
-      children: '## Some text\n### Next line',
+      children: bridge.technology,
     },
   })
 

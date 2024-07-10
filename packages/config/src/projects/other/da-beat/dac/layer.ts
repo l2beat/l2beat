@@ -23,6 +23,8 @@ export const dac: DaLayer = {
       repositories: ['https://github.com/data-availability-committee'],
     },
   },
+  technology:
+    'Some note about the technology used by the data availability layer.\n## Markdown supported',
   bridges: [immutableXDac],
   usedIn: [...immutableXDac.usedIn],
   risks: {

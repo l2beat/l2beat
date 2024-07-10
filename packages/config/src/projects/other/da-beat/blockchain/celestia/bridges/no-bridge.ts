@@ -22,6 +22,8 @@ export const noBridge = {
     slug: 'no-bridge',
     description: 'Celestia with no DA bridge',
   },
+  technology:
+    'Some note about the technology used by the bridge.\n## Markdown supported',
   usedIn: [
     mantapacific.id,
     karak.id,

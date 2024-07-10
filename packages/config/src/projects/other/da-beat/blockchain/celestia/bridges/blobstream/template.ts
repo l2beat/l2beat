@@ -11,7 +11,7 @@ type TemplateRisks = Omit<DaBridgeRisks, 'accessibility'>
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'usedIn'
+  'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology'
 > & {
   risks: TemplateRisks
 }
@@ -43,6 +43,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     risks,
     chain: chain.name,
     contracts: base.contracts,
+    technology: base.technology,
     permissions: base.permissions,
     usedIn: base.usedIn,
   }

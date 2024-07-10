@@ -67,6 +67,10 @@ export type CommonDaLayer = {
    */
   isUnderReview?: boolean
   /**
+   * The technology used by the data availability layer. [MARKDOWN]
+   */
+  technology: string
+  /**
    * List of projects given da layer is being used in
    */
   usedIn: ProjectId[]

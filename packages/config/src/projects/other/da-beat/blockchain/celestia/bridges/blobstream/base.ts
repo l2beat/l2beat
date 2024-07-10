@@ -4,6 +4,8 @@ import { CELESTIA_BLOBSTREAM } from './template'
 
 export const blobStreamBase = CELESTIA_BLOBSTREAM({
   chain: 'base',
+  technology:
+    'Some note about the technology used by the bridge.\n## Markdown supported',
   contracts: {
     addresses: [],
     risks: [],
