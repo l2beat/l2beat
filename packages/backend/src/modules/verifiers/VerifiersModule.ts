@@ -2,38 +2,41 @@ import { Logger } from '@l2beat/backend-tools'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { ApplicationModule } from '../ApplicationModule'
-import { VerifiersController } from './VerifiersController'
-import { createVerifiersRouter } from './VerifiersRouter'
+import { VerifiersStatusRefresher } from './VerifiersStatusRefresher'
+import { Clock } from '../../tools/Clock'
+import { chains, layer2s, zkCatalogProjects } from '@l2beat/config'
 
 export function createVerifiersModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
+  clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.verifiers) {
     logger.info('VerifiersModule disabled')
     return
   }
 
-  const verifiersController = new VerifiersController({
+  const refresher = new VerifiersStatusRefresher({
+    database: peripherals.database,
     peripherals,
-    projects: config.projects,
+    clock,
     logger,
+    layer2s: layer2s,
+    zkCatalogProjects: zkCatalogProjects,
+    chains: chains,
   })
-
-  const verifiersRouter = createVerifiersRouter(verifiersController, config.api)
 
   const start = () => {
     logger = logger.for('VerifiersModule')
     logger.info('Starting...')
 
-    if (config.api.cache.verifiers) {
-      verifiersController.start()
-    }
+    refresher.start()
+
+    logger.info('Started')
   }
 
   return {
     start,
-    routers: [verifiersRouter],
   }
 }
