@@ -1,4 +1,4 @@
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { UnixTime, } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
@@ -85,58 +85,5 @@ export const zora: Layer2 = opStackSmartL2({
     },
   ],
   knowledgeNuggets: [],
-  nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('SuperchainProxyAdmin'),
-      'Admin of the shared SuperchainConfig contract.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SuperchainProxyAdminOwner',
-      'Owner of the SuperchainProxyAdmin.',
-    ),
-    ...discovery.getMultisigPermission(
-      'GuardianMultisig',
-      'Address allowed to pause withdrawals in case of an emergency. It is controlled by the Security Council multisig, but a deputy module allows the Foundation to act through it. The Security Council can disable the module if the Foundation acts maliciously.',
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_1',
-      'Member of the ProxyAdminOwner.',
-    ),
-    ...discovery.getMultisigPermission(
-      'SecurityCouncilMultisig',
-      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
-        livenessInterval,
-      )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
-      [
-        {
-          text: 'Security Council members - Optimism Collective forum',
-          href: 'https://gov.optimism.io/t/security-council-vote-2-initial-member-ratification/7118',
-        },
-      ],
-    ),
-    ...discovery.getMultisigPermission(
-      'FoundationMultisig_2',
-      'Deputy to the GuardianMultisig.',
-    ),
-    ...discovery.getMultisigPermission(
-      'ZoraMultisig',
-      'Owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
-    ),
-    ...discovery.getMultisigPermission(
-      'ChallengerMultisig',
-      'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
-    ),
-  ],
-  nonTemplateContracts: [
-    discovery.getContractDetails('SuperchainConfig', {
-      description:
-        'The SuperchainConfig contract is used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.',
-      ...superchainUpgradeability,
-    }),
-  ],
   usesBlobs: true,
 })

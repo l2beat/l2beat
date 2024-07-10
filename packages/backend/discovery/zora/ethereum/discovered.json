@@ -2,15 +2,19 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 20211651,
-  "configHash": "0xec4a934d8803255dc30664a371e2262c929ec55b6a9c2d04a0b743532482df37",
+  "configHash": "0x212719a881c8b6760c1326511960723cc2bc7112911efac06c71a5e58d5a4b5e",
   "version": 8,
   "contracts": [
     {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "template": "opstack/LivenessModule",
       "upgradeability": {
         "type": "immutable"
       },
+      "descriptions": [
+        "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig"
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
@@ -21,11 +25,10 @@
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
         "thresholdPercentage": 75,
         "version": "1.2.0"
-      },
-      "derivedName": "LivenessModule"
+      }
     },
     {
-      "name": "GuardianMultisig",
+      "name": "GnosisSafe",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -45,8 +48,7 @@
         "getThreshold": 1,
         "nonce": 1,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "OptimismPortal",
@@ -79,8 +81,7 @@
         "SYSTEM_CONFIG": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "systemConfig": "0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86",
         "version": "2.5.0"
-      },
-      "derivedName": "OptimismPortal"
+      }
     },
     {
       "name": "LivenessGuard",
@@ -118,8 +119,7 @@
         "paused": false,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
-      },
-      "derivedName": "L1StandardBridge"
+      }
     },
     {
       "name": "GnosisSafe",
@@ -147,7 +147,7 @@
       }
     },
     {
-      "name": "ConduitMultisig",
+      "name": "GnosisSafe",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -177,11 +177,10 @@
         "getThreshold": 4,
         "nonce": 40,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
-      "name": "SuperchainProxyAdmin",
+      "name": "ProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "template": "opstack/ProxyAdmin",
       "upgradeability": {
@@ -196,11 +195,10 @@
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "isUpgrading": false,
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      },
-      "derivedName": "ProxyAdmin"
+      }
     },
     {
-      "name": "SuperchainProxyAdminOwner",
+      "name": "GnosisSafe",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -225,8 +223,7 @@
         "getThreshold": 2,
         "nonce": 4,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "DeputyGuardianModule",
@@ -265,7 +262,7 @@
       }
     },
     {
-      "name": "FoundationMultisig_1",
+      "name": "GnosisSafe",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -292,8 +289,7 @@
         "getThreshold": 5,
         "nonce": 4,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "SuperchainConfig",
@@ -319,7 +315,7 @@
       }
     },
     {
-      "name": "FoundationMultisig_2",
+      "name": "GnosisSafe",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -347,8 +343,7 @@
         "NAME": "Gnosis Safe",
         "nonce": 94,
         "VERSION": "1.1.1"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "L2OutputOracle",
@@ -389,8 +384,7 @@
         "SUBMISSION_INTERVAL": 1800,
         "submissionInterval": 1800,
         "version": "1.8.0"
-      },
-      "derivedName": "L2OutputOracle"
+      }
     },
     {
       "name": "SystemConfig",
@@ -447,11 +441,10 @@
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
         "version": "1.12.0",
         "VERSION": 0
-      },
-      "derivedName": "SystemConfig"
+      }
     },
     {
-      "name": "SecurityCouncilMultisig",
+      "name": "GnosisSafe",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -484,8 +477,7 @@
         "getThreshold": 10,
         "nonce": 5,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -543,7 +535,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "ChallengerMultisig",
+      "name": "GnosisSafe",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "template": "GnosisSafe",
       "upgradeability": {
@@ -570,8 +562,7 @@
         "getThreshold": 4,
         "nonce": 0,
         "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
+      }
     },
     {
       "name": "ProxyAdmin",
@@ -632,8 +623,7 @@
         "RELAY_RESERVED_GAS": 40000,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.3.0"
-      },
-      "derivedName": "L1CrossDomainMessenger"
+      }
     },
     {
       "name": "Lib_AddressManager",
@@ -657,8 +647,7 @@
       "sinceTimestamp": 1686693947,
       "values": {
         "owner": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49"
-      },
-      "derivedName": "AddressManager"
+      }
     }
   ],
   "eoas": [

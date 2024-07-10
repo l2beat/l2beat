@@ -1,0 +1,6 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "LivenessModule",
+  "description": "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig",
+  "ignoreMethods": ["getRequiredThreshold"]
+}

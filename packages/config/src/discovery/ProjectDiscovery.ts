@@ -343,7 +343,7 @@ export class ProjectDiscovery {
 
     return [
       {
-        name: identifier,
+        name: contract.name,
         description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
         )} threshold.`,
@@ -716,7 +716,12 @@ export class ProjectDiscovery {
     for (const contract of contracts) {
       const description = this.constructDescriptionFromMeta(contract)
       if (contract.upgradeability.type === 'gnosis safe') {
-        result.push(...this.getMultisigPermission(contract.name, description))
+        result.push(
+          ...this.getMultisigPermission(
+            contract.address.toString(),
+            description,
+          ),
+        )
       } else if (contract.assignedPermissions !== undefined) {
         result.push(this.contractAsPermissioned(contract, description))
       }
