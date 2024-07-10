@@ -86,7 +86,7 @@ function ProjectNavigationList({
         href="#"
         className={cn(
           'flex flex-row items-center gap-3 transition-opacity hover:opacity-100',
-          currentSection?.id !== 'summary' && 'opacity-60',
+          currentSection && currentSection.id !== 'summary' && 'opacity-60',
         )}
       >
         <SummaryIcon className="size-6" />
