@@ -15,12 +15,12 @@ import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { Peripherals } from '../../peripherals/Peripherals'
 
+import { Database, VerifierStatusRepository } from '@l2beat/database'
+import { Clock } from '../../tools/Clock'
 import {
   VerifiersStatusRefresher,
   VerifiersStatusRefresherDeps,
 } from './VerifiersStatusRefresher'
-import { Database, VerifierStatusRepository } from '@l2beat/database'
-import { Clock } from '../../tools/Clock'
 
 const zkVerifierAddress = EthereumAddress.random()
 const zksMock: ZkCatalogProject[] = [

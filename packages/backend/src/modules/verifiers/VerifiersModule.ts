@@ -1,10 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
+import { chains, getVerifiersFromConfig } from '@l2beat/config'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { VerifiersStatusRefresher } from './VerifiersStatusRefresher'
-import { Clock } from '../../tools/Clock'
-import { chains, getVerifiersFromConfig } from '@l2beat/config'
 
 export function createVerifiersModule(
   config: Config,

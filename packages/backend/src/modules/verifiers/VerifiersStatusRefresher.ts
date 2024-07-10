@@ -3,10 +3,10 @@ import { assert, Logger } from '@l2beat/backend-tools'
 import { ChainConfig, VerifiersListProvider } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { BlockscoutV2Client } from '@l2beat/shared'
-import { Clock } from '../../tools/Clock'
-import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { Clock } from '../../tools/Clock'
+import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export type VerifiersStatusRefresherDeps = {
   database: Database

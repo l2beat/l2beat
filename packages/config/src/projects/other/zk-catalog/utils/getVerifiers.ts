@@ -1,6 +1,6 @@
-import { OnchainVerifier } from '../../../types'
-import { layer2s } from '../../../layer2s'
 import { zkCatalogProjects } from '..'
+import { layer2s } from '../../../layer2s'
+import { OnchainVerifier } from '../../../types'
 
 export type VerifiersListProvider = () => OnchainVerifier[]
 
