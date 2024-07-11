@@ -8,7 +8,7 @@ import {
   layer3ToBackendProject,
   layer3s,
 } from '@l2beat/config'
-import { assert, type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 export interface TvlProject {
   id: ProjectId
@@ -38,7 +38,6 @@ export function getTvlProjects(): TvlProject[] {
     if (!amounts) {
       return []
     }
-    assert(amounts, 'Config not found: ' + projectId.toString())
     const minTimestamp = amounts
       .map((x) => x.sinceTimestamp)
       .reduce((a, b) => UnixTime.min(a, b), UnixTime.now())
