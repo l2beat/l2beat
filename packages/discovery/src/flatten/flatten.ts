@@ -7,6 +7,7 @@ import {
   ParsedFile,
   ParsedFilesManager,
 } from './ParsedFilesManager'
+import { FlattenOptions } from './types'
 
 interface ContractNameFilePair {
   contractName: string
@@ -17,10 +18,12 @@ export function flattenStartingFrom(
   rootContractName: string,
   files: FileContent[],
   remappingStrings: string[],
+  options?: FlattenOptions
 ): string {
   const parsedFileManager = ParsedFilesManager.parseFiles(
     files,
     remappingStrings,
+    options
   )
   const rootContract = parsedFileManager.findDeclaration(rootContractName)
 

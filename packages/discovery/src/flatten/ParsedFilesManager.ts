@@ -5,6 +5,7 @@ import { parse } from '@mradomski/fast-solidity-parser'
 
 import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import { getASTIdentifiers } from './getASTIdentifiers'
+import { FlattenOptions } from './types'
 
 type ParseResult = ReturnType<typeof parse>
 
@@ -82,14 +83,17 @@ export interface DeclarationFilePair {
 
 export class ParsedFilesManager {
   private files: ParsedFile[] = []
+  private options: FlattenOptions = {}
 
   static parseFiles(
     files: FileContent[],
     remappingStrings: string[],
+    options?: FlattenOptions
   ): ParsedFilesManager {
     const result = new ParsedFilesManager()
-    const remappings = decodeRemappings(remappingStrings)
+    result.options = options ?? result.options
 
+    const remappings = decodeRemappings(remappingStrings)
     result.files = files.map(({ path, content }) => {
       const remappedPath = resolveRemappings(path, remappings)
       return {
@@ -321,19 +325,17 @@ export class ParsedFilesManager {
     const referenced = []
     for (const identifier of identifiers) {
       const result = this.tryFindDeclaration(identifier, file)
-      const isLibrary =
-        result !== undefined && result.declaration.type === 'library'
-      const isStruct =
-        result !== undefined && result.declaration.type === 'struct'
-      const isFunction =
-        result !== undefined && result.declaration.type === 'function'
-      const isTypedef =
-        result !== undefined && result.declaration.type === 'typedef'
-      const isEnum = result !== undefined && result.declaration.type === 'enum'
-      const isContract =
-        result !== undefined && result.declaration.type === 'contract'
-      const isAbstract =
-        result !== undefined && result.declaration.type === 'abstract'
+      if(result === undefined) {
+        continue
+      }
+
+      const isContract = result.declaration.type === 'contract'
+      const isAbstract = result.declaration.type === 'abstract'
+      const isInterface = result.declaration.type === 'contract'
+
+      if((isInterface || isContract || isAbstract) && (this.options.includeAll !== true)) {
+          continue
+      }
 
       if (isContract || isAbstract) {
         result.declaration.content = generateInterfaceSourceFromContract(
@@ -341,12 +343,7 @@ export class ParsedFilesManager {
         )
       }
 
-      if (
-        result !== undefined &&
-        (isLibrary || isStruct || isFunction || isTypedef || isEnum || isContract || isAbstract)
-      ) {
-        referenced.push(identifier)
-      }
+      referenced.push(identifier)
     }
 
     return referenced
