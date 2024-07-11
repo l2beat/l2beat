@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xb7197565caa94fb5035083bcd95b00d8e88ed35c
+
+# Diff at Thu, 11 Jul 2024 05:46:17 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d24de9cba6f2065d20d85a470cdb447b439d6ff7 block: 20259919
+- current block number: 20281259
+
+## Description
+
+Pay network (Wirex) is verifying batches. The review is in the pipeline ;)
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.7.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x2a401c2dc720c6e7514a9b52102493c3fb44f80e
 
 # Diff at Mon, 08 Jul 2024 06:11:47 GMT:
