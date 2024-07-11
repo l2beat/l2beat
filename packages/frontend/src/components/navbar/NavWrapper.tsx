@@ -345,9 +345,7 @@ export function Sidenav({
             <Divider />
             <NavSmallLinkGroup>
               <NavSmallLink title="Forum" href={config.links.forum} />
-              {config.features.zkCatalog && (
-                <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
-              )}
+              <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
               <NavSmallLink title="Donate" href={'/donate'} />
               <NavSmallLink title="Governance" href={'/governance'} />
               <NavSmallLink title="Glossary" href="/glossary" />
@@ -437,9 +435,7 @@ function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
           <div className="hidden h-8 w-px bg-gray-300 2xl:block dark:bg-gray-700" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavBarLink title="Forum" href={config.links.forum} />
-            {config.features.zkCatalog && (
-              <LegacyNavBarLink title="ZK Catalog" href="/zk-catalog" />
-            )}
+            <LegacyNavBarLink title="ZK Catalog" href="/zk-catalog" />
             <LegacyNavBarLink title="Donate" href={'/donate'} />
             <LegacyNavBarLink title="Governance" href="/governance" />
             <LegacyNavBarLink title="Glossary" href="/glossary" />

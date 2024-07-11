@@ -5,11 +5,8 @@ import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
 
-import {
-  FileContent,
-  ParsedFilesManager,
-} from '../../flatten/ParsedFilesManager'
-import { flattenStartingFrom } from '../../flatten/flattenStartingFrom'
+import { FileContent } from '../../flatten/ParsedFilesManager'
+import { flattenStartingFrom } from '../../flatten/flatten'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis } from '../analysis/AddressAnalyzer'
@@ -183,11 +180,11 @@ async function writeFlattenedFiles(
     }
 
     const result = timed(() => {
-      const parsedFileManager = ParsedFilesManager.parseFiles(
+      const output = flattenStartingFrom(
+        bundle.name,
         input,
         bundle.source.remappings,
       )
-      const output = flattenStartingFrom(bundle.name, parsedFileManager)
 
       return output
     })
