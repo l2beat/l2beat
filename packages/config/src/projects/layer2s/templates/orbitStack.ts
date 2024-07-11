@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
 import { unionBy } from 'lodash'
@@ -692,7 +695,9 @@ function safeGetImplementation(
   contract: ContractParameters,
   implementationIndex?: number,
 ): string {
-  const implementation = contract.implementations?.[implementationIndex ?? 0]
+  const implementation = get$Implementations(contract.values)[
+    implementationIndex ?? 0
+  ]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

@@ -5,6 +5,6 @@ export function getProxyGovernance(
   contractIdentifier: string,
 ) {
   return discovery
-    .getContractUpgradeabilityParam(contractIdentifier, 'proxyGovernance')
+    .get$Admins(contractIdentifier)
     .map(discovery.formatPermissionedAccount.bind(discovery))
 }

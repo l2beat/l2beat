@@ -1,6 +1,5 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import { get$Implementations } from '@l2beat/discovery-types'
 import {
   ScalingProjectContract,
   ScalingProjectUpgradeability,
@@ -30,7 +29,7 @@ export function getUniqueContractsForProject(
     .filter(isSingleAddress)
     .map((c) => c.upgradeability)
     .filter((u): u is ScalingProjectUpgradeability => !!u) // remove undefined
-    .flatMap((u) => get$Implementations(u))
+    .flatMap((u) => u.implementations)
 
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }

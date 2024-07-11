@@ -31,9 +31,9 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('immutablex')
 
-const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractValue<number>(
   'StarkExchange',
-  'upgradeDelay',
+  'StarkWareDiamond_upgradeDelay',
 )
 const includingSHARPUpgradeDelaySeconds = Math.min(
   upgradeDelaySeconds,

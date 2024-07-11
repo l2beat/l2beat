@@ -14,9 +14,9 @@ const upgradeability = {
 }
 
 const optimismPortalImplementation =
-  discovery.getContract('OptimismPortal').implementations?.[0]
+  discovery.get$Implementations('OptimismPortal')[0]
 const l2OutputOracleImplementation =
-  discovery.getContract('L2OutputOracle').implementations?.[0]
+  discovery.get$Implementations('L2OutputOracle')[0]
 
 assert(optimismPortalImplementation, 'OptimismPortal implementation not found')
 assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')

@@ -99,11 +99,9 @@ export const layer2financezk: Layer2 = {
   },
   contracts: {
     addresses: [
-      {
+      discovery.getContractDetails('Proxy', {
         name: 'StarkExchange',
-        address: discovery.getContract('Proxy').address,
-        upgradeability: discovery.getContract('Proxy').upgradeability,
-      },
+      }),
       {
         name: 'Committee',
         address: EthereumAddress('0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9'),

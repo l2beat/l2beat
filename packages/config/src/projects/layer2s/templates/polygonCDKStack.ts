@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -619,7 +622,7 @@ function technologyDA(
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }
