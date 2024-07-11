@@ -83,6 +83,7 @@ export type Database = ReturnType<typeof createRepositories>
 
 export type { CurrentPrice } from './current-price'
 export type { Stake } from './stake'
+export type { Value } from './value'
 export type {
   VerifierStatus,
   VerifierStatusRepository,
