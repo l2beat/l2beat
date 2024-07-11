@@ -256,7 +256,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.referencedDeclaration.sort()).toEqual(
+      expect(root.declaration.dynamicReferences.sort()).toEqual(
         ['L1', 'L2'].sort(),
       )
     })
@@ -291,7 +291,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.referencedDeclaration.sort()).toEqual(
+      expect(root.declaration.dynamicReferences.sort()).toEqual(
         ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })

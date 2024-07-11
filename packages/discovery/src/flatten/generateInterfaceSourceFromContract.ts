@@ -45,24 +45,30 @@ export function generateInterfaceSourceFromContract(
         break
       }
       case 'EventDefinition': {
-          elements.push([child.type, padding + formatEventDefinition(child)])
+        elements.push([child.type, padding + formatEventDefinition(child)])
         break
       }
       case 'CustomErrorDefinition': {
-          elements.push([child.type, padding + formatErrorDefinition(child)])
+        elements.push([child.type, padding + formatErrorDefinition(child)])
         break
       }
       case 'StructDefinition': {
-        elements.push([child.type, padding + formatStructDefinition(child, padding)])
+        elements.push([
+          child.type,
+          padding + formatStructDefinition(child, padding),
+        ])
         break
       }
       case 'EnumDefinition': {
-          elements.push([child.type, padding + formatEnumDefinition(child, padding)])
-          break
+        elements.push([
+          child.type,
+          padding + formatEnumDefinition(child, padding),
+        ])
+        break
       }
       case 'UsingForDeclaration': {
-          // NOTE(radomski): Using for declaration is not supported in interfaces
-          break
+        // NOTE(radomski): Using for declaration is not supported in interfaces
+        break
       }
       case 'StateVariableDeclaration': {
         // NOTE(radomski): State variables are not supported in interfaces
@@ -78,18 +84,18 @@ export function generateInterfaceSourceFromContract(
     }
   }
 
-  if(elements.length > 0) {
-      result += '\n'
-      let prevType: string | undefined
-      for(const [type, element] of elements) {
-          if(prevType !== undefined && prevType !== type) {
-              result += '\n'
-          }
-
-          result += element + '\n'
-
-          prevType = type
+  if (elements.length > 0) {
+    result += '\n'
+    let prevType: string | undefined
+    for (const [type, element] of elements) {
+      if (prevType !== undefined && prevType !== type) {
+        result += '\n'
       }
+
+      result += element + '\n'
+
+      prevType = type
+    }
   }
 
   result += '}'
@@ -97,19 +103,22 @@ export function generateInterfaceSourceFromContract(
   return result
 }
 
-function formatEnumDefinition(enumDef: AST.EnumDefinition, padding: string): string {
-    let result = `enum ${enumDef.name} {`
-    if (enumDef.members.length > 0) {
-        result += '\n'
-        for (const [index, member] of enumDef.members.entries()) {
-            const isLast = index === enumDef.members.length - 1
-            const comma = isLast ? '' : ','
+function formatEnumDefinition(
+  enumDef: AST.EnumDefinition,
+  padding: string,
+): string {
+  let result = `enum ${enumDef.name} {`
+  if (enumDef.members.length > 0) {
+    result += '\n'
+    for (const [index, member] of enumDef.members.entries()) {
+      const isLast = index === enumDef.members.length - 1
+      const comma = isLast ? '' : ','
 
-            result += `${padding.repeat(2)}${member.name}${comma}\n`
-        }
+      result += `${padding.repeat(2)}${member.name}${comma}\n`
     }
-    result += `${padding}}`
-    return result
+  }
+  result += `${padding}}`
+  return result
 }
 
 function formatStructDefinition(

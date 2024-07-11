@@ -2,8 +2,6 @@ import * as posix from 'path'
 import { assert } from '@l2beat/backend-tools'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
-
-import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFromContract'
 import { getASTIdentifiers } from './getASTIdentifiers'
 import { FlattenOptions } from './types'
 
@@ -40,7 +38,7 @@ export interface TopLevelDeclaration {
   content: string
 
   inheritsFrom: string[]
-  referencedDeclaration: string[]
+  dynamicReferences: string[]
 }
 
 // If import is:
@@ -88,7 +86,7 @@ export class ParsedFilesManager {
   static parseFiles(
     files: FileContent[],
     remappingStrings: string[],
-    options?: FlattenOptions
+    options?: FlattenOptions,
   ): ParsedFilesManager {
     const result = new ParsedFilesManager()
     result.options = options ?? result.options
@@ -129,7 +127,7 @@ export class ParsedFilesManager {
     // Pass 3: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
-        declaration.referencedDeclaration = result.resolveReferencedLibraries(
+        declaration.dynamicReferences = result.resolveDynamicReferences(
           file,
           declaration.ast,
         )
@@ -177,7 +175,7 @@ export class ParsedFilesManager {
           d.type === 'ContractDefinition'
             ? d.baseContracts.map((c) => c.baseName.namePath)
             : [],
-        referencedDeclaration: [],
+        dynamicReferences: [],
         byteRange: {
           start: d.range[0],
           end: d.range[1],
@@ -299,10 +297,7 @@ export class ParsedFilesManager {
     })
   }
 
-  private resolveReferencedLibraries(
-    file: ParsedFile,
-    c: AST.ASTNode,
-  ): string[] {
+  private resolveDynamicReferences(file: ParsedFile, c: AST.ASTNode): string[] {
     let subNodes: AST.BaseASTNode[] = []
     if (c.type === 'ContractDefinition') {
       subNodes = c.subNodes
@@ -325,7 +320,7 @@ export class ParsedFilesManager {
     const referenced = []
     for (const identifier of identifiers) {
       const result = this.tryFindDeclaration(identifier, file)
-      if(result === undefined) {
+      if (result === undefined) {
         continue
       }
 
@@ -333,14 +328,11 @@ export class ParsedFilesManager {
       const isAbstract = result.declaration.type === 'abstract'
       const isInterface = result.declaration.type === 'contract'
 
-      if((isInterface || isContract || isAbstract) && (this.options.includeAll !== true)) {
-          continue
-      }
-
-      if (isContract || isAbstract) {
-        result.declaration.content = generateInterfaceSourceFromContract(
-          result.declaration,
-        )
+      if (
+        (isInterface || isContract || isAbstract) &&
+        this.options.includeAll !== true
+      ) {
+        continue
       }
 
       referenced.push(identifier)

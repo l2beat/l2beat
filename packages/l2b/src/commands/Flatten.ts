@@ -5,7 +5,15 @@ import {
   getExplorerClient,
 } from '@l2beat/discovery/dist/utils/IEtherscanClient'
 import chalk from 'chalk'
-import { command, oneOf, option, positional, string } from 'cmd-ts'
+import {
+  boolean,
+  command,
+  flag,
+  oneOf,
+  option,
+  positional,
+  string,
+} from 'cmd-ts'
 import { EthereumAddressValue, HttpUrl } from './types'
 
 export const Flatten = command({
@@ -34,6 +42,12 @@ export const Flatten = command({
       short: 'o',
       defaultValue: () => 'output.sol',
     }),
+    includeAll: flag({
+      type: boolean,
+      long: 'include-all',
+      short: 'a',
+      defaultValue: () => true,
+    }),
   },
   handler: async (args) => {
     const httpClient = new HttpClient()
@@ -54,7 +68,9 @@ export const Flatten = command({
       }))
       .filter((e) => e.path.endsWith('.sol'))
 
-    const output = flattenStartingFrom(source.name, input, source.remappings)
+    const output = flattenStartingFrom(source.name, input, source.remappings, {
+      includeAll: args.includeAll,
+    })
     console.log(`Done, saving to ${chalk.magenta(args.output)}.`)
     writeFileSync(args.output, output)
   },
