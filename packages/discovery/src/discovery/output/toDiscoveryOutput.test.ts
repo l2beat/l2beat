@@ -74,7 +74,6 @@ describe(processAnalysis.name, () => {
     address: ADDRESS_C,
     name: 'C',
     proxyType: 'EIP1967 proxy',
-    implementations: [ADDRESS_E],
     values: {
       $admin: ADDRESS_D,
       $implementation: ADDRESS_E,
@@ -117,8 +116,8 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
+          proxyType: CONTRACT_A.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
-          values: CONTRACT_A.values,
         },
       ],
       eoas: [],
@@ -135,6 +134,7 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_B,
           name: 'B',
           derivedName: 'Something not B',
+          proxyType: CONTRACT_B.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
@@ -148,10 +148,7 @@ describe(processAnalysis.name, () => {
   it('processes a proxy', () => {
     const result = processAnalysis([
       CONTRACT_C,
-      {
-        type: 'EOA',
-        address: ADDRESS_D,
-      },
+      { type: 'EOA', address: ADDRESS_D },
     ])
 
     expect(result).toEqual({
@@ -159,6 +156,7 @@ describe(processAnalysis.name, () => {
         {
           address: ADDRESS_C,
           name: 'C',
+          proxyType: CONTRACT_C.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
           values: CONTRACT_C.values,
         },
@@ -185,10 +183,12 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
+          proxyType: CONTRACT_A.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
         {
           address: ADDRESS_B,
+          proxyType: CONTRACT_B.proxyType,
           name: 'B',
           derivedName: 'Something not B',
           values: CONTRACT_B.values,
@@ -197,6 +197,7 @@ describe(processAnalysis.name, () => {
         },
         {
           address: ADDRESS_C,
+          proxyType: CONTRACT_C.proxyType,
           name: 'C',
           values: CONTRACT_C.values,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),

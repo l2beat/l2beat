@@ -57,7 +57,7 @@ describe(diffContracts.name, () => {
         after: JSON.stringify(NEW_ADDRESS),
       },
       {
-        key: 'upgradeability.admin',
+        key: 'values.$admin',
         before: JSON.stringify(OLD_ADMIN),
         after: JSON.stringify(NEW_ADMIN),
       },

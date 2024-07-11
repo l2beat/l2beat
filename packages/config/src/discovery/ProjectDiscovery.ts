@@ -5,11 +5,11 @@ import {
   calculateInversion,
 } from '@l2beat/discovery'
 import {
-  get$Admins,
-  get$Implementations,
   type ContractParameters,
   type ContractValue,
   type DiscoveryOutput,
+  get$Admins,
+  get$Implementations,
 } from '@l2beat/discovery-types'
 import {
   assert,

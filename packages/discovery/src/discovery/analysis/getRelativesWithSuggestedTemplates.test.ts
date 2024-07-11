@@ -125,7 +125,7 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
         { field: 'second', value: ADDRESS_B.toString() },
         { field: 'third', value: ADDRESS_A.toString() },
         { field: 'fourth', value: ADDRESS_C.toString() },
-        { field: 'fifth', value: ADDRESS_C.toString() },
+        { field: 'fifth', value: ADDRESS_D.toString() },
       ],
       ['second'],
       [ADDRESS_C],

@@ -3,9 +3,11 @@ import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
+import { get$Admins, get$Implementations } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
+import { HandlerResult } from '../handlers/Handler'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -16,8 +18,6 @@ import {
 import { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import { ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
-import { get$Admins, get$Implementations } from '@l2beat/discovery-types'
-import { HandlerResult } from '../handlers/Handler'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -187,6 +187,7 @@ export class AddressAnalyzer {
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,
+      proxyType: proxy?.type,
       values: { ...(proxy?.values ?? {}), ...(values ?? {}) },
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,

@@ -1,5 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import {
   ScalingProjectContract,
   ScalingProjectUpgradeability,
@@ -8,7 +9,6 @@ import {
 import { VerificationMapPerChain } from './output'
 import { Project } from './types'
 import { withoutDuplicates } from './utils'
-import { get$Implementations } from '@l2beat/discovery-types'
 
 export function getUniqueContractsForAllProjects(
   projects: Project[],

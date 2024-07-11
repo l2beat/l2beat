@@ -1,9 +1,9 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import { IProvider } from '../../provider/IProvider'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
-import { get$Implementations } from '@l2beat/discovery-types'
 
 export async function getNewArbitrumProxy(
   provider: IProvider,

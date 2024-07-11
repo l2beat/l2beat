@@ -21,13 +21,6 @@ export function toDiscoveryOutput(
   }
 }
 
-export function setToArray<T>(set?: Set<T>): T[] | undefined {
-  if (set === undefined) {
-    return undefined
-  }
-  return Array.from(set)
-}
-
 export function processAnalysis(
   results: Analysis[],
 ): Omit<
@@ -46,22 +39,20 @@ export function processAnalysis(
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
-          unverified: x.isVerified ? undefined : (true as const),
+          unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
           proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           descriptions: x.combinedMeta?.descriptions,
-          roles: setToArray(x.combinedMeta?.roles),
-          categories: x.combinedMeta?.categories,
-          types: x.combinedMeta?.types,
+          roles: setToSortedArray(x.combinedMeta?.roles),
+          categories: setToSortedArray(x.combinedMeta?.categories),
+          types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
-          assignedPermissions: x.combinedMeta?.permissions,
+          assignedPermissions: objectWithSetsToArrays(
+            x.combinedMeta?.permissions,
+          ),
           ignoreInWatchMode: x.ignoreInWatchMode,
-          implementations:
-            Object.keys(x.implementations).length === 0
-              ? undefined
-              : x.implementations,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
           values:
             Object.keys(x.values).length === 0
@@ -73,7 +64,7 @@ export function processAnalysis(
               : sortByKeys(x.errors),
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
-        })
+        } satisfies ContractParameters)
       }),
     eoas: results
       .filter((x) => x.type === 'EOA')
@@ -81,7 +72,7 @@ export function processAnalysis(
       .map((x) => ({
         address: x.address,
         descriptions: x.combinedMeta?.descriptions,
-        roles: setToArray(x.combinedMeta?.roles),
+        roles: setToSortedArray(x.combinedMeta?.roles),
         categories: x.combinedMeta?.categories,
         types: x.combinedMeta?.types,
         severity: x.combinedMeta?.severity,
@@ -110,7 +101,7 @@ function getContracts(results: Analysis[]): {
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj, convertSetToSortedArray)) as T
+  return JSON.parse(JSON.stringify(obj)) as T
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
@@ -119,9 +110,19 @@ export function sortByKeys<T extends object>(obj: T): T {
   ) as T
 }
 
-function convertSetToSortedArray(_key: string, value: unknown) {
-  if (value instanceof Set) {
-    return Array.from(value).sort()
+function setToSortedArray(
+  value: Set<string> | undefined,
+): string[] | undefined {
+  return value && Array.from(value).sort()
+}
+
+function objectWithSetsToArrays<T>(
+  obj: Record<string, Set<T>> | undefined,
+): Record<string, T[]> | undefined {
+  if (obj === undefined) {
+    return undefined
   }
-  return value
+  return Object.fromEntries(
+    Object.entries(obj).map(([key, value]) => [key, Array.from(value).sort()]),
+  )
 }

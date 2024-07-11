@@ -26,6 +26,8 @@ export interface EoaParameters {
 
 export interface ContractParameters {
   name: string
+  displayName?: string
+  descriptions?: string[]
   derivedName?: string
   template?: string
   unverified?: true
@@ -37,6 +39,10 @@ export interface ContractParameters {
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
   roles?: string[]
+  categories?: string[]
+  types?: string[]
+  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
+  assignedPermissions?: Record<string, EthereumAddress[]>
 }
 
 export type ContractValue =

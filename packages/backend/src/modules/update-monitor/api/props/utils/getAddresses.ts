@@ -1,6 +1,6 @@
 import {
-  get$Implementations,
   type ContractParameters,
+  get$Implementations,
 } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
