@@ -36,7 +36,7 @@ export default function Page() {
   const allEventEntries = getGovernanceEventEntries(events)
   const eventEntries = allEventEntries
     .slice(
-      allEventEntries.findIndex((e) => e.startDate > new Date()) - 1,
+      allEventEntries.findIndex((e) => e.startDate > new Date()),
       allEventEntries.length,
     )
     .slice(0, 8)
