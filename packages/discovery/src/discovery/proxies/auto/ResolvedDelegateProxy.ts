@@ -81,13 +81,12 @@ export async function detectResolvedDelegateProxy(
     implementationName,
   )
   return {
-    implementations: [implementation],
-    relatives: [addressManager],
-    upgradeability: {
-      type: 'resolved delegate proxy',
-      addressManager,
-      implementationName,
-      implementation,
+    type: 'resolved delegate proxy',
+    values: {
+      $immutable: false,
+      $implementation: implementation,
+      ResolvedDelegateProxy_addressManager: addressManager,
+      ResolvedDelegateProxy_implementationName: implementationName,
     },
   }
 }

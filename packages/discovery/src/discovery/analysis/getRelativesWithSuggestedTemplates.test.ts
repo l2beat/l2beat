@@ -71,23 +71,6 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
     })
   })
 
-  it('includes known relatives', () => {
-    const relatives = getRelativesWithSuggestedTemplates(
-      [
-        { field: 'a', value: ADDRESS_A.toString() },
-        { field: 'b', value: ADDRESS_B.toString() },
-      ],
-      [],
-      [ADDRESS_C],
-    )
-
-    expect(relatives).toEqual({
-      [ADDRESS_A.toString()]: new Set(),
-      [ADDRESS_B.toString()]: new Set(),
-      [ADDRESS_C.toString()]: new Set(),
-    })
-  })
-
   it('ignores ignored addresses', () => {
     const relatives = getRelativesWithSuggestedTemplates(
       [
@@ -95,7 +78,6 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
         { field: 'b', value: ADDRESS_B.toString() },
         { field: 'c', value: ADDRESS_C.toString() },
       ],
-      [],
       [],
       [ADDRESS_B],
     )
@@ -119,28 +101,11 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
       ],
       undefined,
       undefined,
-      undefined,
       {
-        a: {
-          target: {
-            template: 'template1',
-          },
-        },
-        b: {
-          target: {
-            template: 'template2',
-          },
-        },
-        c: {
-          target: {
-            template: 'template4',
-          },
-        },
-        d: {
-          target: {
-            template: 'template3',
-          },
-        },
+        a: { target: { template: 'template1' } },
+        b: { target: { template: 'template2' } },
+        c: { target: { template: 'template4' } },
+        d: { target: { template: 'template3' } },
       },
     )
 
@@ -163,24 +128,11 @@ describe(getRelativesWithSuggestedTemplates.name, () => {
         { field: 'fifth', value: ADDRESS_C.toString() },
       ],
       ['second'],
-      [ADDRESS_D],
       [ADDRESS_C],
       {
-        first: {
-          target: {
-            template: 'template1',
-          },
-        },
-        second: {
-          target: {
-            template: 'template2',
-          },
-        },
-        third: {
-          target: {
-            template: 'template2',
-          },
-        },
+        first: { target: { template: 'template1' } },
+        second: { target: { template: 'template2' } },
+        third: { target: { template: 'template2' } },
       },
     )
 

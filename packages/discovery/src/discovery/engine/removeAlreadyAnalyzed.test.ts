@@ -103,7 +103,6 @@ const generateFakeAnalysis = (
     name: `NameOf${address.toString()}`,
     derivedName: undefined,
     isVerified: true,
-    upgradeability: { type: 'immutable' },
     implementations: [],
     values: { a: 1 },
     errors: errors ?? {},

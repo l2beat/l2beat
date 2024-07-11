@@ -124,15 +124,14 @@ export async function detectStarkWareProxy(
   relatives.push(...proxyGovernance)
 
   return {
-    implementations: [implementation],
-    relatives,
-    upgradeability: {
-      type: 'StarkWare proxy',
-      implementation,
-      callImplementation,
-      upgradeDelay,
-      isFinal,
-      proxyGovernance,
+    type: 'StarkWare proxy',
+    values: {
+      $immutable: isFinal,
+      $admin: proxyGovernance,
+      $implementation: implementation,
+      StarkWareProxy_callImplementation: callImplementation,
+      // TODO: (sz-piotr) should be a property of the $admin permission
+      StarkWareProxy_upgradeDelay: upgradeDelay,
     },
   }
 }
@@ -241,16 +240,16 @@ async function getStarkWareDiamond(
     return false
   }
 
+  const implementations = [implementation, ...Object.values(facets)]
+
   return {
-    implementations: [implementation, ...Object.values(facets)],
-    relatives: proxyGovernance,
-    upgradeability: {
-      type: 'StarkWare diamond',
-      implementation,
-      upgradeDelay,
-      isFinal,
-      facets,
-      proxyGovernance,
+    type: 'StarkWare diamond',
+    values: {
+      $immutable: isFinal,
+      $admin: proxyGovernance,
+      $implementation: implementations,
+      // TODO: (sz-piotr) should be a property of the $admin permission
+      StarkWareDiamond_upgradeDelay: upgradeDelay,
     },
   }
 }

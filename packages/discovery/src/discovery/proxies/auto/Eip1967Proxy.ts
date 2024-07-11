@@ -53,12 +53,10 @@ export async function detectEip1967Proxy(
     admin = await getOwner(provider, address)
   }
   return {
-    implementations: [implementation],
-    relatives: [admin],
-    upgradeability: {
-      type: 'EIP1967 proxy',
-      implementation,
-      admin,
+    type: 'EIP1967 proxy',
+    values: {
+      $admin: admin,
+      $implementation: implementation,
     },
   }
 }

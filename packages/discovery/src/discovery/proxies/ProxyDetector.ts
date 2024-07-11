@@ -73,7 +73,7 @@ export class ProxyDetector {
       : await this.getAutoProxy(provider, address)
 
     if (proxy) {
-      logger.logProxyDetected(proxy.upgradeability.type)
+      logger.logProxyDetected(proxy.type)
     } else if (manualProxyType) {
       logger.logProxyDetectionFailed(manualProxyType)
     }

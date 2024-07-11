@@ -1,9 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import {
-  ContractParameters,
-  ContractValue,
-  UpgradeabilityParameters,
-} from '@l2beat/discovery-types'
+import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
@@ -20,6 +16,8 @@ import {
 import { TemplateService } from './TemplateService'
 import { getRelativesWithSuggestedTemplates } from './getRelativesWithSuggestedTemplates'
 import { ContractMeta, getSelfMeta, getTargetsMeta } from './metaUtils'
+import { get$Admins, get$Implementations } from '@l2beat/discovery-types'
+import { HandlerResult } from '../handlers/Handler'
 
 export type Analysis = AnalyzedContract | AnalyzedEOA
 
@@ -31,9 +29,9 @@ export interface AnalyzedContract {
   deploymentBlockNumber?: number
   derivedName: string | undefined
   isVerified: boolean
-  upgradeability: UpgradeabilityParameters
+  proxyType?: string
   implementations: EthereumAddress[]
-  values: Record<string, ContractValue>
+  values: Record<string, ContractValue | undefined>
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
@@ -113,11 +111,12 @@ export class AddressAnalyzer {
       logger,
       overrides?.proxyType,
     )
+    const implementations = get$Implementations(proxy?.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
       address,
-      proxy?.implementations,
+      implementations,
     )
     logger.logName(sources.name)
 
@@ -160,19 +159,21 @@ export class AddressAnalyzer {
         types,
         logger,
       )
+
+    const proxyResults = Object.entries(proxy?.values ?? {}).map(
+      ([field, value]): HandlerResult => ({ field, value }),
+    )
+
     const relatives = getRelativesWithSuggestedTemplates(
-      results,
+      results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      proxy?.relatives,
-      proxy?.implementations,
+      implementations,
       overrides?.fields,
     )
 
-    const upgradeability = proxy?.upgradeability ?? { type: 'immutable' }
-
     const targetsMeta = getTargetsMeta(
       address,
-      upgradeability,
+      get$Admins(proxy?.values),
       results,
       overrides?.fields,
     )
@@ -185,9 +186,8 @@ export class AddressAnalyzer {
       address,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
-      upgradeability,
-      implementations: proxy?.implementations ?? [],
-      values: values ?? {},
+      implementations: implementations,
+      values: { ...(proxy?.values ?? {}), ...(values ?? {}) },
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,
       sourceBundles: sources.sources,
@@ -207,12 +207,13 @@ export class AddressAnalyzer {
     types: Record<string, DiscoveryCustomType> | undefined,
     abis: Record<string, string[]>,
   ): Promise<boolean> {
+    const implementations = get$Implementations(contract.values)
     if (contract.unverified) {
       // Check if the contract is verified now
       const { isVerified } = await this.sourceCodeService.getSources(
         provider,
         contract.address,
-        contract.implementations,
+        implementations,
       )
       return isVerified
     }
@@ -220,7 +221,7 @@ export class AddressAnalyzer {
     const abi = this.sourceCodeService.getRelevantAbi(
       abis,
       contract.address,
-      contract.implementations,
+      implementations,
       contract.ignoreInWatchMode,
     )
 

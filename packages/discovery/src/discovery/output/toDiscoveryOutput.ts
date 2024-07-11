@@ -1,4 +1,4 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -41,14 +41,14 @@ export function processAnalysis(
   return {
     contracts: contracts
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x) => {
+      .map((x): ContractParameters => {
         const displayName = x.combinedMeta?.displayName
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
           unverified: x.isVerified ? undefined : (true as const),
           template: x.extendedTemplate?.template,
-          upgradeability: x.upgradeability,
+          proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           descriptions: x.combinedMeta?.descriptions,

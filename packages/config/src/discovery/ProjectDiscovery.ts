@@ -4,16 +4,17 @@ import {
   StackRole,
   calculateInversion,
 } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  ContractValue,
-  DiscoveryOutput,
+import {
+  get$Admins,
+  get$Implementations,
+  type ContractParameters,
+  type ContractValue,
+  type DiscoveryOutput,
 } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
   UnixTime,
-  gatherAddressesFromUpgradeability,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -566,6 +567,16 @@ export class ProjectDiscovery {
     ]
   }
 
+  get$Admins(contractIdentifier: string) {
+    const contract = this.getContract(contractIdentifier)
+    return get$Admins(contract.values)
+  }
+
+  get$Implementations(contractIdentifier: string) {
+    const contract = this.getContract(contractIdentifier)
+    return get$Implementations(contract.values)
+  }
+
   getContractUpgradeabilityParam<
     K extends keyof MergedUnion<ScalingProjectUpgradeability>,
     T extends MergedUnion<ScalingProjectUpgradeability>[K],
@@ -622,7 +633,7 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const addressesWithinUpgradeability = contracts.flatMap((contract) =>
-      gatherAddressesFromUpgradeability(contract.upgradeability),
+      get$Implementations(contract.values),
     )
 
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))

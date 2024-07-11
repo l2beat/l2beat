@@ -6,5 +6,5 @@
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src"]
+  "include": ["src", "../discovery-types/src/proxyUtils.ts"]
 }

@@ -20,7 +20,7 @@ export class HandlerExecutor {
     logger: DiscoveryLogger,
   ): Promise<{
     results: HandlerResult[]
-    values: Record<string, ContractValue> | undefined
+    values: Record<string, ContractValue | undefined> | undefined
     errors: Record<string, string> | undefined
     usedTypes: DiscoveryCustomType[]
   }> {

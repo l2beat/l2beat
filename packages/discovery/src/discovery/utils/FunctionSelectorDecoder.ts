@@ -6,6 +6,7 @@ import { ContractSource } from '../../utils/IEtherscanClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
+import { get$Implementations } from '@l2beat/discovery-types'
 
 export class FunctionSelectorDecoder {
   readonly proxyDetector: ProxyDetector
@@ -30,7 +31,7 @@ export class FunctionSelectorDecoder {
         )
 
         if (proxy) {
-          implementations.push(...proxy.implementations)
+          implementations.push(...get$Implementations(proxy.values))
         }
         this.implementations[address.toString()] = implementations
       }),
