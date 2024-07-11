@@ -4,6 +4,7 @@ import React from 'react'
 import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
@@ -12,6 +13,7 @@ import {
 type ScalingFiltersEntry =
   | ScalingSummaryLayer2sEntry
   | ScalingSummaryLayer3sEntry
+  | ScalingRiskEntry
 
 export interface ScalingFiltersState {
   rollupsOnly: boolean | undefined
@@ -47,7 +49,7 @@ export function ScalingFilters({ items, state, setState }: Props) {
     compact(
       items.map((item) => {
         if ('stage' in item) {
-          return item.stage.stage
+          return item.stage?.stage
         }
       }),
     ),
@@ -66,8 +68,9 @@ export function ScalingFilters({ items, state, setState }: Props) {
     }))
 
   const hostChainOptions = uniq(
-    items.map((item) =>
-      item.type === 'layer3' ? item.hostChainName : 'Ethereum',
+    items.map(
+      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
+      (item) => (item.type === 'layer3' && item.hostChainName) || 'Ethereum',
     ),
   )
     .sort()
