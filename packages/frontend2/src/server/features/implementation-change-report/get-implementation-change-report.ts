@@ -1,7 +1,10 @@
 import path from 'path'
 import { chains } from '@l2beat/config'
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import { type DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  type DiscoveryOutput,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
@@ -68,7 +71,8 @@ const getCachedImplementationChangeReport = cache(
             ? diffDiscovery(discovery.contracts, latestContracts)
             : []
         const implementationChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.key?.startsWith('implementation')),
+          // TODO: (sz-piotr) Why is this code duplicated!?
+          diff.diff?.some((f) => f.key === 'values.$implementation'),
         )
 
         if (implementationChanges.length === 0) {
@@ -86,7 +90,7 @@ const getCachedImplementationChangeReport = cache(
             (c) => c.address === diff.address,
           )
           assert(diffedContract, 'diffedContract is undefined')
-          const newImplementations = diffedContract.implementations ?? []
+          const newImplementations = get$Implementations(diffedContract.values)
 
           chainRecord.push({
             containingContract: diff.address,
