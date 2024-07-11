@@ -73,7 +73,9 @@ export async function getTvlValuesForProjects(
             return false
           }
           const projectSource = project.sources.get(v.dataSource)
-          if (!projectSource) return false
+          if (!projectSource) {
+            return false
+          }
 
           return timestamp.gte(projectSource.minTimestamp)
         },
