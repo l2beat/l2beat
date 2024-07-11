@@ -5546,6 +5546,24 @@
       }
     },
     {
+      "id": "kroma:m-btc-merlin-btc",
+      "name": "Merlin BTC",
+      "coingeckoId": "merlin-s-seal-btc",
+      "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
+      "symbol": "M-BTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1719217453,
+      "coingeckoListingTimestamp": 1711929600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36566/large/photo_2024-03-25_22-04-42.jpg?1711936162",
+      "chainId": 255,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
+    {
       "id": "kroma:wemix.e-wemix.e",
       "name": "WEMIX.e",
       "coingeckoId": "wemix-token",

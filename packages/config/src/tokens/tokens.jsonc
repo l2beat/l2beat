@@ -2594,6 +2594,16 @@
   ],
   "kroma": [
     {
+      "symbol": "M-BTC",
+      "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
+      "coingeckoId": "merlin-s-seal-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
+    {
       "symbol": "WEMIX.e",
       "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",
       "source": "external",
