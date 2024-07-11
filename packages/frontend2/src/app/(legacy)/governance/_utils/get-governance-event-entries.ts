@@ -19,7 +19,7 @@ export function getGovernanceEventEntries(
   events: CollectionEntry<'events'>[],
 ): GovernanceEventEntry[] {
   const oneTimeEvents = getOneTimeEvents(events).sort(
-    (a, b) => b.data.startDate.getTime() - a.data.startDate.getTime(),
+    (a, b) => a.data.startDate.getTime() - b.data.startDate.getTime(),
   )
 
   return oneTimeEvents.map(getGovernanceEventEntry)
