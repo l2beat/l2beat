@@ -296,6 +296,7 @@ export const arbitrum: Layer2 = {
   chainConfig: {
     name: 'arbitrum',
     chainId: 42161,
+    blockscoutV2ApiUrl: 'https://arbitrum.blockscout.com/api/v2',
     explorerUrl: 'https://arbiscan.io',
     explorerApi: {
       url: 'https://api.arbiscan.io/api',
