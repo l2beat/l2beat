@@ -94,7 +94,7 @@ export const kroma: Layer2 = {
       ],
       repositories: ['https://github.com/kroma-network/'],
       socialMedia: [
-        'https://discord.gg/kroma',
+        'https://discord.com/invite/kroma-network',
         'https://twitter.com/kroma_network',
         'https://medium.com/@kroma-network',
       ],
