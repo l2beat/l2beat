@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xd969f450b5e8ff43eaf9672b24d63c92fc5f16c6
+
+# Diff at Thu, 11 Jul 2024 05:51:31 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d24de9cba6f2065d20d85a470cdb447b439d6ff7 block: 20217553
+- current block number: 20281269
+
+## Description
+
+A new burn/mint tokenPool for USD+ (Dinari) is added.
+
+## Watched changes
+
+```diff
+    contract BurnMintTokenPool (0xeaE89E53B8317CaB04165F5323285252D5669B73) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0xdf85c8381954694E74abD07488f452b4c2Cddfb3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8.sol | 998 +++++++++++++++++++++
+ ...-0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD.sol | 998 +++++++++++++++++++++
+ 2 files changed, 1996 insertions(+)
+```
+
 Generated with discovered.json: 0x477be080c00203993ec9f502263501a905ee0e4d
 
 # Diff at Mon, 01 Jul 2024 12:13:33 GMT:
