@@ -18,7 +18,10 @@ export const sanko: Layer3 = orbitStackL3({
     purposes: ['Gaming', 'NFT', 'Social'],
     links: {
       websites: ['https://sanko.xyz/'],
-      apps: ['https://sanko.xyz/bridge'],
+      apps: [
+        'https://sanko.xyz/bridge',
+        'https://swap.sanko.xyz',
+      ],
       documentation: ['https://sanko-1.gitbook.io/sanko-mainnet-docs/'],
       explorers: [
         'https://sanko-mainnet.calderaexplorer.xyz/',

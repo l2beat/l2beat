@@ -106,7 +106,11 @@ export const zklinknova: Layer3 = {
     provider: 'zkLink Nexus',
     links: {
       websites: ['https://zklink.io', 'https://zk.link'],
-      apps: ['https://app.zklink.io', 'https://portal.zklink.io'],
+      apps: [
+        'https://app.zklink.io',
+        'https://portal.zklink.io',
+        'https://zklink.io/merge',
+      ],
       documentation: ['https://docs.zklink.io'],
       explorers: ['https://explorer.zklink.io'],
       repositories: ['https://github.com/zkLinkProtocol'],
@@ -115,6 +119,7 @@ export const zklinknova: Layer3 = {
         'https://twitter.com/zkLink_Official',
         'http://discord.gg/zklink',
         'https://t.me/zkLinkorg',
+        'https://medium.com/zklinkdefi',
       ],
     },
   },
