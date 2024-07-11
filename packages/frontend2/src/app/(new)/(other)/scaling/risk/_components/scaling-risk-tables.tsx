@@ -12,12 +12,12 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
-import { scalingRiskColumns } from './table/columns'
+import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   ScalingFilters,
   type ScalingFiltersState,
 } from '../../../_components/scaling-filters'
-import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
+import { scalingRiskColumns } from './table/columns'
 
 const DEFAULT_SCALING_FILTERS = {
   rollupsOnly: false,
@@ -54,12 +54,6 @@ export function ScalingRiskTables({
           : undefined,
         scalingFilters.purpose !== undefined
           ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-        scalingFilters.hostChain !== undefined
-          ? scalingFilters.hostChain === 'Ethereum'
-            ? entry.type === 'layer2'
-            : entry.type === 'layer3' &&
-              entry.hostChainName === scalingFilters.hostChain
           : undefined,
       ].filter(notUndefined)
 

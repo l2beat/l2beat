@@ -1,9 +1,9 @@
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
-import { getTvl } from '~/server/features/scaling/get-tvl'
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { ScalingRiskTables } from './_components/scaling-risk-tables'
 import { getScalingRiskEntries } from '~/server/features/scaling/get-scaling-risk-entries'
+import { getTvl } from '~/server/features/scaling/get-tvl'
+import { ScalingRiskTables } from './_components/scaling-risk-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

@@ -16,15 +16,15 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
+import {
+  ScalingFilters,
+  type ScalingFiltersState,
+} from '../../../_components/scaling-filters'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
-import {
-  ScalingFilters,
-  type ScalingFiltersState,
-} from '../../../_components/scaling-filters'
 
 interface Props {
   layer2s: ScalingSummaryLayer2sEntry[]
