@@ -13,8 +13,8 @@ export const storybookBuildContext: PageBuildContext = {
       hiringBadge: false,
       buildAllProjectPages: true,
       costsPage: true,
-      zkCatalog: true,
       tvl: true,
+      badges: true,
       layer3sTvl: true,
     },
     links: {
@@ -35,7 +35,6 @@ export const storybookBuildContext: PageBuildContext = {
     layer2s: [],
     layer3s: [],
     bridges: [],
-    zkCatalogProjects: [],
     milestones: [],
   },
   path: '/',

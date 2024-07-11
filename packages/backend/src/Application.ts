@@ -64,7 +64,7 @@ export class Application {
       ),
       createLzOAppsModule(config, logger),
       createTvlModule(config, logger, peripherals, clock),
-      createVerifiersModule(config, logger, peripherals),
+      createVerifiersModule(config, logger, peripherals, clock),
       createFeaturesModule(config),
       createDaBeatModule(config, logger, peripherals, clock),
     ]

@@ -22,15 +22,15 @@ import { isArray, isString } from 'lodash'
 
 import { join } from 'path'
 import {
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPermissionedAccount,
-  ScalingProjectReference,
-} from '../common'
-import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,
 } from '../common/ScalingProjectContracts'
+import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
+import {
+  ScalingProjectPermission,
+  ScalingProjectPermissionedAccount,
+} from '../common/ScalingProjectPermission'
+import { ScalingProjectReference } from '../common/ScalingProjectReference'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,

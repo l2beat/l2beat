@@ -11,8 +11,8 @@ import {
   cacheAsyncFunction,
 } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
@@ -49,7 +49,7 @@ export type LivenessTransactionsResult = Result<
 export interface LivenessControllerDeps {
   indexerService: IndexerService
   livenessRepository: LivenessRepository
-  projects: Project[]
+  projects: BackendProject[]
   clock: Clock
   logger?: Logger
 }

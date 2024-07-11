@@ -10,8 +10,8 @@ import { InstalledClock, install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import {
@@ -189,7 +189,7 @@ describe(L2CostsController.name, () => {
   function getMockL2CostsController(params: {
     aggregatedL2CostsRepository?: AggregatedL2CostsRepository
     indexerService?: IndexerService
-    projects?: Project[]
+    projects?: BackendProject[]
   }) {
     const { aggregatedL2CostsRepository, indexerService, projects } = params
     const deps: L2CostsControllerDeps = {
@@ -203,13 +203,13 @@ describe(L2CostsController.name, () => {
     return new L2CostsController(deps)
   }
 
-  const MOCK_PROJECTS: Project[] = [
-    mockObject<Project>({
+  const MOCK_PROJECTS: BackendProject[] = [
+    mockObject<BackendProject>({
       projectId: ProjectId('project1'),
       isArchived: false,
       trackedTxsConfig: undefined,
     }),
-    mockObject<Project>({
+    mockObject<BackendProject>({
       projectId: ProjectId('project2'),
       isArchived: false,
       trackedTxsConfig: [
@@ -240,7 +240,7 @@ describe(L2CostsController.name, () => {
         },
       ],
     }),
-    mockObject<Project>({
+    mockObject<BackendProject>({
       projectId: ProjectId('project3'),
       isArchived: false,
       trackedTxsConfig: [

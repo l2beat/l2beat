@@ -10,6 +10,7 @@ import type {
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
 import {
+  ChainConverter,
   ChainId,
   EthereumAddress,
   Hash256,
@@ -17,7 +18,6 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { DiscoveryRunner, DiscoveryRunnerOptions } from './DiscoveryRunner'
 import { UpdateMonitor } from './UpdateMonitor'

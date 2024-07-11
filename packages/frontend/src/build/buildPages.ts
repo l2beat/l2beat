@@ -12,7 +12,6 @@ import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
 import { fetchTvlApi } from './api/fetchTvlApi'
 import { fetchTvlBreakdownApi } from './api/fetchTvlBreakdownApi'
-import { fetchVerifiersApi } from './api/fetchVerifiersApi'
 import {
   getManuallyVerifiedContracts,
   getVerificationStatus,
@@ -59,7 +58,6 @@ async function main() {
       finalityApiResponse,
       implementationChange,
       l2CostsApiResponse,
-      verifiersApiResponse,
     ] = await Promise.all([
       fetchTvlApi(config.backend, http, { tvl: config.features.tvl }),
       fetchTvlApi(config.backend, http, {
@@ -83,9 +81,6 @@ async function main() {
         : undefined,
       config.features.costsPage
         ? fetchL2CostsApi(config.backend, http)
-        : undefined,
-      config.features.zkCatalog
-        ? fetchVerifiersApi(config.backend, http)
         : undefined,
     ])
     const supportedChains = getChainNames([
@@ -122,7 +117,6 @@ async function main() {
       finalityApiResponse,
       l2CostsApiResponse,
       implementationChange,
-      verifiersApiResponse,
     }
     renderPages(config, pagesData)
     console.timeEnd('[BUILDING PAGES]')

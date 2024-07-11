@@ -1,11 +1,11 @@
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import {
   assert,
+  ChainConverter,
   ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
 
 import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
-import { ChainConverter } from '../../../tools/ChainConverter'
 import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
 
 export class ImplementationChangeController {
