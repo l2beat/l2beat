@@ -23,8 +23,6 @@ export function getDiscoveredBy(
       continue
     }
     const discoveredFields = Object.values(discoveredContract.values ?? {})
-    discoveredFields.push(Object.values(discoveredContract.upgradeability))
-
     if (
       JSON.stringify(discoveredFields).includes(contract.address.toString())
     ) {

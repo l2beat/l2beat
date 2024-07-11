@@ -4,7 +4,7 @@ import {
   ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
 
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
 import { ChainConverter } from '../../../tools/ChainConverter'
 import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
 
@@ -54,7 +54,7 @@ export class ImplementationChangeController {
           ? diffDiscovery(discovery.contracts, latestContracts)
           : []
         const implementationChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.key && f.key.startsWith('implementation')),
+          diff.diff?.some((f) => f.key && f.key === 'values.$implementation'),
         )
 
         if (implementationChanges.length === 0) {
@@ -70,7 +70,7 @@ export class ImplementationChangeController {
             (c) => c.address === diff.address,
           )
           assert(diffedContract, 'diffedContract is undefined')
-          const newImplementations = diffedContract.implementations ?? []
+          const newImplementations = get$Implementations(diffedContract.values)
 
           result.projects[project][chain].push({
             containingContract: diff.address,

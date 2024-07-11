@@ -17,7 +17,6 @@ import {
   ImplementationChangeReportProjectData,
   ManuallyVerifiedContracts,
   VerificationStatus,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
@@ -153,208 +152,28 @@ function makeTechnologyContract(
   const etherscanUrl = getExplorerUrl(chain)
 
   if (isSingleAddress(item)) {
-    if (item.upgradeability?.type) {
-      switch (item.upgradeability.type) {
-        case 'EIP1967 proxy':
-        case 'LightLink proxy':
-        case 'Custom':
-        case 'ZeppelinOS proxy':
-        case 'Eternal Storage proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          if (item.upgradeability.admin) {
-            links.push({
-              name: 'Admin',
-              href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-              address: item.upgradeability.admin.toString(),
-              isAdmin: true,
-            })
-          }
-          break
+    const implementations = item.upgradeability?.implementations ?? []
+    for (const [i, implementation] of implementations.entries()) {
+      links.push({
+        // TODO: (sz-piotr). Add "(Upgradable)"
+        name:
+          implementations.length > 1
+            ? `Implementation (${i + 1})`
+            : 'Implementation',
+        href: `${etherscanUrl}/address/${implementation.toString()}#code`,
+        address: implementation.toString(),
+        isAdmin: false,
+      })
+    }
 
-        case 'StarkWare diamond':
-        case 'resolved delegate proxy':
-        case 'call implementation proxy':
-        case 'EIP897 proxy':
-        case 'CustomWithoutAdmin':
-        case 'Polygon proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          break
-
-        case 'StarkWare proxy': {
-          const delay = item.upgradeability.upgradeDelay !== 0
-          const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
-          const implementation =
-            item.upgradeability.callImplementation ??
-            item.upgradeability.implementation
-          links.push({
-            name: `Implementation (Upgradable${
-              delay ? ` ${days} days delay` : ''
-            })`,
-            href: `${etherscanUrl}/address/${implementation.toString()}#code`,
-            address: implementation.toString(),
-            isAdmin: false,
-          })
-          break
-        }
-
-        case 'Reference':
-          links.push({
-            name: 'Code (Upgradable)',
-            href: `${etherscanUrl}/address/${item.address.toString()}#code`,
-            address: item.address.toString(),
-            isAdmin: false,
-          })
-          break
-
-        case 'new Arbitrum proxy':
-        case 'Arbitrum proxy':
-          links.push({
-            name: 'Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-            address: item.upgradeability.admin.toString(),
-            isAdmin: true,
-          })
-          links.push({
-            name: 'Admin logic (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.adminImplementation.toString()}#code`,
-            address: item.upgradeability.adminImplementation.toString(),
-            isAdmin: true,
-          })
-          links.push({
-            name: 'User logic (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.userImplementation.toString()}#code`,
-            address: item.upgradeability.userImplementation.toString(),
-            isAdmin: false,
-          })
-          break
-
-        case 'Beacon':
-          links.push({
-            name: 'Beacon',
-            href: `${etherscanUrl}/address/${item.upgradeability.beacon.toString()}#code`,
-            address: item.upgradeability.beacon.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Beacon Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.beaconAdmin.toString()}#code`,
-            address: item.upgradeability.beaconAdmin.toString(),
-            isAdmin: true,
-          })
-          break
-
-        case 'zkSync Lite proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Additional implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.additional.toString()}#code`,
-            address: item.upgradeability.additional.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-            address: item.upgradeability.admin.toString(),
-            isAdmin: true,
-          })
-          break
-
-        case 'zkSpace proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          links.push(
-            ...item.upgradeability.additional.map((additional) => ({
-              name: 'Additional implementation (Upgradable)',
-              href: `${etherscanUrl}/address/${additional.toString()}#code`,
-              address: additional.toString(),
-              isAdmin: false,
-            })),
-          )
-          links.push({
-            name: 'Admin',
-            href: `${etherscanUrl}/address/${item.upgradeability.admin.toString()}#code`,
-            address: item.upgradeability.admin.toString(),
-            isAdmin: true,
-          })
-          break
-
-        case 'Polygon Extension proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          }),
-            links.push({
-              name: 'Extension (Upgradable)',
-              href: `${etherscanUrl}/address/${item.upgradeability.extension.toString()}#code`,
-              address: item.upgradeability.extension.toString(),
-              isAdmin: false,
-            })
-          break
-        case 'Optics Beacon proxy':
-          links.push({
-            name: 'Upgrade Beacon',
-            href: `${etherscanUrl}/address/${item.upgradeability.upgradeBeacon.toString()}#code`,
-            address: item.upgradeability.upgradeBeacon.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          links.push({
-            name: 'Beacon Controller',
-            href: `${etherscanUrl}/address/${item.upgradeability.beaconController.toString()}#code`,
-            address: item.upgradeability.beaconController.toString(),
-            isAdmin: true,
-          })
-          break
-        case 'Axelar proxy':
-          links.push({
-            name: 'Implementation (Upgradable)',
-            href: `${etherscanUrl}/address/${item.upgradeability.implementation.toString()}#code`,
-            address: item.upgradeability.implementation.toString(),
-            isAdmin: false,
-          })
-          break
-        // Ignore types
-        case 'immutable':
-        case 'gnosis safe':
-        case 'gnosis safe zodiac module':
-        case 'EIP2535 diamond proxy':
-          break
-
-        default:
-          assertUnreachable(item.upgradeability)
-      }
+    const admins = item.upgradeability?.admins ?? []
+    for (const [i, admin] of admins.entries()) {
+      links.push({
+        name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
+        href: `${etherscanUrl}/address/${admin.toString()}#code`,
+        address: admin.toString(),
+        isAdmin: true,
+      })
     }
   }
   const implementationAddresses = links

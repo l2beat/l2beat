@@ -863,8 +863,8 @@ function mockContract(
   return {
     name,
     address,
-    upgradeability: {
-      type: 'immutable',
+    values: {
+      $immutable: true,
     },
   }
 }
