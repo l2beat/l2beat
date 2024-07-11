@@ -1,3 +1,72 @@
+Generated with discovered.json: 0xcd31c30dd6edb87e78100ac4b33b52680e3caebc
+
+# Diff at Thu, 11 Jul 2024 05:29:24 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d24de9cba6f2065d20d85a470cdb447b439d6ff7 block: 20259771
+- current block number: 20281173
+
+## Description
+
+One of the op stack connectors (used for Base) is removed from the list of used connectors.
+The support of Base L2 is now removed from connnext/amarok/everclear.
+System is still in non-optimistic mode.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94)
+    +++ description: None
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors.13:
+-        "0x279fDA9AdDB854541f0bb86733d924e28c24c625"
+      values.connectors.10:
+-        "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94"
++        "0x279fDA9AdDB854541f0bb86733d924e28c24c625"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0xc42a577ed5d3cd88fe742888027cc407ea75817228119d14e6d19cd8e80208d6"
++        "0xa4e473cfb05a7a4dfaac6b579b027ef81b1daf44179b942325dddbba59d5e587"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BaseHubConnector.sol => /dev/null              | 958 ---------------------
+ 1 file changed, 958 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20259771 (main branch discovery), not current.
+
+```diff
+    contract NewOptimismHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94) {
+    +++ description: None
+      name:
+-        "NewOptimismHubConnector"
++        "BaseHubConnector"
+    }
+```
+
+```diff
+    contract OptimismV0HubConnector (0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa) {
+    +++ description: None
+      name:
+-        "OptimismV0HubConnector"
++        "MetisHubConnector"
+    }
+```
+
 Generated with discovered.json: 0x99851fccea60dfd0899e1a92369d413a74f71555
 
 # Diff at Mon, 08 Jul 2024 05:42:55 GMT:
