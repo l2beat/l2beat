@@ -10,6 +10,7 @@ import { sentimentToFillColor } from '~/utils/sentiment'
 import { SentimentText } from '../../sentiment-text'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
+import { UnderReviewBadge } from '../../badge/under-review-badge'
 
 interface Risk {
   value: string
@@ -25,6 +26,10 @@ interface Props {
 }
 
 export function RiskCell({ risk }: Props) {
+  if (risk.sentiment === 'UnderReview') {
+    return <UnderReviewBadge />
+  }
+
   const trigger = (
     <div className="flex flex-col">
       <div className="flex items-center gap-1">
