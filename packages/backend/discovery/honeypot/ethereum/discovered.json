@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 18226868,
   "configHash": "0x35db5f8a0df3ed146129e0e43df74c425532c80a960c281dc1427a78beebaad2",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "Honeypot",
       "address": "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694553335,
       "values": {
+        "$immutable": true,
         "getConsensus": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
         "getTemplateHash": "0x64523866b6437fd593d8c0c65f88f59717f2eefa81422cc4921214423c819bf2",
         "owner": "0x0000000000000000000000000000000000000000"
@@ -22,11 +20,9 @@
     {
       "name": "History",
       "address": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694457347,
       "values": {
+        "$immutable": true,
         "owner": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f"
       },
       "derivedName": "History"
@@ -34,20 +30,16 @@
     {
       "name": "InputBox",
       "address": "0x59b22D57D4f067708AB0c00552767405926dc768",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1690464923,
+      "values": { "$immutable": true },
       "derivedName": "InputBox"
     },
     {
       "name": "ERC20Portal",
       "address": "0x9C21AEb2093C32DDbC53eEF24B873BDCd1aDa1DB",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1690464947,
       "values": {
+        "$immutable": true,
         "getInputBox": "0x59b22D57D4f067708AB0c00552767405926dc768"
       },
       "derivedName": "ERC20Portal"
@@ -55,11 +47,9 @@
     {
       "name": "Authority",
       "address": "0x9DB17B9426E6d3d517a969994E7ADDadbCa9C45f",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694456915,
       "values": {
+        "$immutable": true,
         "getHistory": "0x385485FcaCD8AdB70C8A5a6B07155C907e78FAd9",
         "owner": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
       },
@@ -67,12 +57,8 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x79Ec6ba3352216E496FCfEd1d2e86Ee15eed3861" }
   ],
   "abis": {
     "0x0974CC873dF893B302f6be7ecf4F9D4b1A15C366": [

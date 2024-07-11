@@ -170,6 +170,9 @@ async function getStarkWareDiamond(
     const tx = await provider.getTransaction(
       Hash256(lastUpgrade.transactionHash),
     )
+    if (!tx) {
+      return false
+    }
 
     const abi = new utils.Interface([
       'function upgradeTo(address newImplementation, bytes data, bool finalize)',

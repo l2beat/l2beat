@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20240852,
   "configHash": "0xe296e313abe7ac0bad12697a4ed750d8b5b1476794e5ff0ab09642461c887fd1",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "Factory",
       "address": "0x06D538690AF257Da524f25D0CD52fD85b1c2173E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647504676,
       "values": {
+        "$immutable": true,
         "allPools": [
           "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
           "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
@@ -38,9 +36,6 @@
     {
       "name": "DAI Pool",
       "address": "0x0Faf1d2d3CED330824de3B8200fc8dc6E397850d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -53,6 +48,7 @@
       ],
       "sinceTimestamp": 1668459527,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -89,9 +85,6 @@
     {
       "name": "SG-ETH Pool",
       "address": "0x101816545F6bd2b1076434B54383a1E633390A2E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -104,6 +97,7 @@
       ],
       "sinceTimestamp": 1656354769,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -181,9 +175,6 @@
     {
       "name": "WOO Pool",
       "address": "0x1CE66c52C36757Daf6551eDc04800A0Ec9983A09",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -196,6 +187,7 @@
       ],
       "sinceTimestamp": 1677032255,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -290,11 +282,9 @@
     {
       "name": "Bridge",
       "address": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647504669,
       "values": {
+        "$immutable": true,
         "layerZeroEndpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "router": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
@@ -304,11 +294,9 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661529370,
       "values": {
+        "$immutable": true,
         "feeEnabled": false,
         "nativeBP": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
@@ -320,9 +308,6 @@
     {
       "name": "USDT Pool",
       "address": "0x38EA452219524Bb87e18dE1C24D3bB59510BD783",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -335,6 +320,7 @@
       ],
       "sinceTimestamp": 1647511860,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -458,9 +444,6 @@
     {
       "name": "USDT Pool2",
       "address": "0x430Ebff5E3E80A6C58E7e6ADA1d90F5c28AA116d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -473,6 +456,7 @@
       ],
       "sinceTimestamp": 1673830559,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -508,11 +492,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661529280,
       "values": {
+        "$immutable": true,
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
         "CONFIG_TYPE_ORACLE": 6,
@@ -555,9 +537,6 @@
     {
       "name": "sUSD Pool",
       "address": "0x590d4f8A68583639f215f675F3a259Ed84790580",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -570,6 +549,7 @@
       ],
       "sinceTimestamp": 1668459587,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -606,23 +586,20 @@
       "name": "TSS Oracle",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1",
-        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
-      },
-      "implementations": ["0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1661536020,
+      "values": {
+        "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+        "$implementation": "0x3eEA8d627ab6983fFFc7027ee623Fd7699343fc1"
+      },
       "derivedName": ""
     },
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661280206,
       "values": {
+        "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       }
     },
@@ -630,16 +607,13 @@
       "name": "StarGate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 6 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "3 of 6 (50%)",
         "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
         "getChainId": 1,
         "getOwners": [
@@ -651,6 +625,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
+        "GnosisSafe_modules": [],
         "nonce": 762,
         "VERSION": "1.3.0"
       },
@@ -659,11 +634,9 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647316591,
       "values": {
+        "$immutable": true,
         "BLOCK_VERSION": 65535,
         "chainId": 1,
         "DEFAULT_VERSION": 0,
@@ -681,9 +654,6 @@
     {
       "name": "USDD Pool",
       "address": "0x692953e758c3669290cb1677180c64183cEe374e",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -696,6 +666,7 @@
       ],
       "sinceTimestamp": 1656354769,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -741,11 +712,9 @@
     {
       "name": "Router",
       "address": "0x8731d54E9D02c286767d56ac03e8037C07e01e98",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647504658,
       "values": {
+        "$immutable": true,
         "bridge": "0x296F55F8Fb28E498B858d0BcDA06D955B2Cb3f97",
         "factory": "0x06D538690AF257Da524f25D0CD52fD85b1c2173E",
         "mintFeeOwner": "0x0000000000000000000000000000000000000000",
@@ -757,11 +726,9 @@
     {
       "name": "StarGateFeeLibrary7",
       "address": "0x8C3085D9a554884124C998CDB7f6d7219E9C1e6F",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1686244907,
       "values": {
+        "$immutable": true,
         "DELTA_1": "600000000000000000",
         "DELTA_2": "50000000000000000",
         "DENOMINATOR": "1000000000000000000",
@@ -788,35 +755,29 @@
       "name": "LayerZero Relayer",
       "address": "0x902F09715B6303d4173037652FA7377e5b98089E",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f",
-        "admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"
-      },
-      "implementations": ["0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1661531835,
+      "values": {
+        "$admin": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
+        "$implementation": "0xB830a5AfCBEBb936c30C607a18BbbA9f5B0a592f"
+      },
       "derivedName": ""
     },
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x5a54fe5234E811466D5366846283323c954310B2"]
       },
       "sinceTimestamp": 1661448939,
       "values": {
+        "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
     },
     {
       "name": "MAI Pool",
       "address": "0x9cef9a0b1bE0D289ac9f4a98ff317c33EAA84eb8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -829,6 +790,7 @@
       ],
       "sinceTimestamp": 1668566243,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -869,9 +831,6 @@
     {
       "name": "mETH Pool",
       "address": "0xA572d137666DCbAdFA47C3fC41F15e90134C618c",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -884,6 +843,7 @@
       ],
       "sinceTimestamp": 1706854619,
       "values": {
+        "$immutable": true,
         "batched": false,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -928,14 +888,12 @@
     {
       "name": "ProxyAdmin",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x902F09715B6303d4173037652FA7377e5b98089E"]
       },
       "sinceTimestamp": 1647317012,
       "values": {
+        "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
@@ -943,16 +901,13 @@
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 5 (40%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 5 (40%)",
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
         "getOwners": [
@@ -963,6 +918,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 130,
         "VERSION": "1.3.0"
       },
@@ -971,11 +927,9 @@
     {
       "name": "Google Cloud Oracle",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694217107,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12100,
@@ -991,9 +945,6 @@
     {
       "name": "METIS Pool",
       "address": "0xd8772edBF88bBa2667ed011542343b0eDDaCDa47",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1006,6 +957,7 @@
       ],
       "sinceTimestamp": 1673830559,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -1060,17 +1012,12 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1694217119
+      "sinceTimestamp": 1694217119,
+      "values": { "$immutable": true }
     },
     {
       "name": "USDC Pool",
       "address": "0xdf0770dF86a8034b3EFEf0A1Bb3c889B8332FF56",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1083,6 +1030,7 @@
       ],
       "sinceTimestamp": 1647511732,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -1152,9 +1100,6 @@
     {
       "name": "LUSD Pool",
       "address": "0xE8F55368C82D38bbbbDb5533e7F56AfC2E978CC2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1167,6 +1112,7 @@
       ],
       "sinceTimestamp": 1668459587,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -1203,9 +1149,6 @@
     {
       "name": "Frax Pool",
       "address": "0xfA0F307783AC21C39E939ACFF795e27b650F6e68",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "deltaCredit",
         "eqFeePool",
@@ -1218,6 +1161,7 @@
       ],
       "sinceTimestamp": 1668459527,
       "values": {
+        "$immutable": true,
         "batched": true,
         "BP_DENOMINATOR": 10000,
         "chainPaths": [
@@ -1254,48 +1198,20 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
-    },
-    {
-      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
-    },
-    {
-      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-    },
-    {
-      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523"
-    },
-    {
-      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    },
-    {
-      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
-    },
-    {
-      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
-    },
-    {
-      "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
+    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
+    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
+    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
+    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
+    { "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4" }
   ],
   "abis": {
     "0x06D538690AF257Da524f25D0CD52fD85b1c2173E": [

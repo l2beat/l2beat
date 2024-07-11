@@ -87,7 +87,7 @@ export class OpStackDAHandler implements Handler {
       last10Txs.map((tx) => provider.getTransaction(tx.hash)),
     )
     const isSequencerSendingBlobTx = rpcTxs.some(
-      (tx) => tx.type === BLOB_TX_TYPE,
+      (tx) => tx?.type === BLOB_TX_TYPE,
     )
 
     return {

@@ -3,20 +3,17 @@
   "chain": "arbitrum",
   "blockNumber": 225188961,
   "configHash": "0x5a179f0a51b35db4673cd86fcd4431dda2ff1c1c0a84d8b5c45f3d573ba2af21",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "L2CustomGateway",
       "address": "0x096760F208390250649E3e8763348E783AEF5562",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x190274fEa8f30e3f48CE43aDCBd9a74110118284",
-        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["exitNum"],
-      "implementations": ["0x190274fEa8f30e3f48CE43aDCBd9a74110118284"],
       "sinceTimestamp": 1623867828,
       "values": {
+        "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+        "$implementation": "0x190274fEa8f30e3f48CE43aDCBd9a74110118284",
         "counterpartGateway": "0xcEe284F754E854890e311e3280b767F80797180d",
         "exitNum": 17202,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
@@ -26,15 +23,12 @@
     {
       "name": "L2ERC20Gateway",
       "address": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
-        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["exitNum"],
-      "implementations": ["0x1DCf7D03574fbC7C205F41f2e116eE094a652e93"],
       "sinceTimestamp": 1623784105,
       "values": {
+        "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+        "$implementation": "0x1DCf7D03574fbC7C205F41f2e116eE094a652e93",
         "beaconProxyFactory": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d",
         "counterpartGateway": "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
@@ -46,14 +40,11 @@
     {
       "name": "L2CoreTimelock",
       "address": "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x41740588b86B4e0629b83A4e28786FF94361c3A3"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -92,11 +83,9 @@
     {
       "name": "StandardArbERC20",
       "address": "0x3f770Ac673856F105b586bb393d122721265aD46",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1634920833,
       "values": {
+        "$immutable": true,
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0x60a7ceacab02397e9248573e99be565f18250840b49a2ad0b3475658573dbceb",
         "isMaster": true,
@@ -110,11 +99,9 @@
     {
       "name": "BeaconProxyFactory",
       "address": "0x3fE38087A94903A9D946fa1915e1772fe611000f",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1623784070,
       "values": {
+        "$immutable": true,
         "beacon": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
         "cloneableProxyHash": "0x4b11cb57b978697e0aec0c18581326376d6463fd3f6699cbe78ee5935617082d"
       }
@@ -123,16 +110,13 @@
       "name": "SC9",
       "address": "0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
-        "threshold": "9 of 12 (75%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1692138844,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$multisigThreshold": "9 of 12 (75%)",
         "domainSeparator": "0xff371057f6d6cb8316f1509a9cd1073e8f68df0c1330b7437953035fce620bcb",
         "getChainId": 42161,
         "getOwners": [
@@ -150,6 +134,7 @@
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
         "getThreshold": 9,
+        "GnosisSafe_modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -158,14 +143,11 @@
     {
       "name": "L2GatewayRouter",
       "address": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
-        "admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86"
-      },
-      "implementations": ["0xe80eb0238029333e368e0bDDB7acDf1b9cb28278"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1623784105,
       "values": {
+        "$admin": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
+        "$implementation": "0xe80eb0238029333e368e0bDDB7acDf1b9cb28278",
         "counterpartGateway": "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
         "defaultGateway": "0x09e9222E96E7B4AE2a407B98d48e330053351EEe",
         "router": "0x0000000000000000000000000000000000000000"
@@ -175,11 +157,9 @@
     {
       "name": "UpgradeExecRouteBuilder",
       "address": "0x7481716f05E315Fc4C4a64E56DcD9bc1D6F24C0a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1692138965,
       "values": {
+        "$immutable": true,
         "DEFAULT_GOV_ACTION_CALLDATA": "0xb147f40c",
         "DEFAULT_PREDECESSOR": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEFAULT_VALUE": 0,
@@ -192,14 +172,11 @@
     {
       "name": "TreasuryGovernor",
       "address": "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
@@ -222,14 +199,11 @@
     {
       "name": "L2ArbitrumToken",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0xC4ed0A9Ea70d5bCC69f748547650d32cC219D882",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5",
         "l1Address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
@@ -247,11 +221,9 @@
     {
       "name": "SecurityCouncilMemberSyncAction",
       "address": "0x9BF7b8884Fa381a45f8CB2525905fb36C996297a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1692138730,
       "values": {
+        "$immutable": true,
         "actionContractId": "0x91a027369a797f7b79038b0977234c66212c6a4af81bff02b23b740c8fda9ddc",
         "SENTINEL_OWNERS": "0x0000000000000000000000000000000000000001",
         "store": "0xd343Fd9ba453D3AD0f868c24734808FB73f5F52B"
@@ -262,16 +234,13 @@
       "name": "SC7",
       "address": "0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
-        "threshold": "9 of 12 (75%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1692138742,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$multisigThreshold": "9 of 12 (75%)",
         "domainSeparator": "0x94e1e735cd2915903c45ecfce1215217a6fdbe2dabda30ee765417b67a52144d",
         "getChainId": 42161,
         "getOwners": [
@@ -289,6 +258,7 @@
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
         "getThreshold": 9,
+        "GnosisSafe_modules": ["0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"],
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -297,14 +267,11 @@
     {
       "name": "L2TreasuryTimelock",
       "address": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x41740588b86B4e0629b83A4e28786FF94361c3A3"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x41740588b86B4e0629b83A4e28786FF94361c3A3",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -339,15 +306,12 @@
     {
       "name": "L2ReverseCustomGateway",
       "address": "0xCaD7828a19b363A2B44717AFB1786B5196974D8E",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["exitNum"],
-      "implementations": ["0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056"],
       "sinceTimestamp": 1678968435,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x5D96786d3Eb13CAd05c9Fd7d0f7bb9560b4E5056",
         "counterpartGateway": "0xbbcE8aA77782F13D4202a230d978F361B011dB27",
         "exitNum": 1563,
         "router": "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
@@ -357,14 +321,11 @@
     {
       "name": "UpgradeExecutor",
       "address": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x7A013834D54e9B22d1978aAe3aaDDC909Aa79115",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -391,14 +352,11 @@
     {
       "name": "SecurityCouncilManager",
       "address": "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1692138965,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x468dA0eE5570Bdb1Dd81bFd925BAf028A93Dce64",
         "COHORT_REPLACER_ROLE": "0x1b3e51262cf8f48cf0dc9fdd7d86c0378cf467608e72e72cd4da66efe423f195",
         "cohortSize": 6,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -470,9 +428,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xd570aCE65C43af47101fC6250FD6fC63D1c22a86",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x096760F208390250649E3e8763348E783AEF5562",
@@ -482,15 +437,13 @@
       },
       "sinceTimestamp": 1623784105,
       "values": {
+        "$immutable": true,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       }
     },
     {
       "name": "ProxyAdmin",
       "address": "0xdb216562328215E010F819B5aBe947bad4ca961e",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0",
@@ -506,17 +459,16 @@
       },
       "sinceTimestamp": 1678968400,
       "values": {
+        "$immutable": true,
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       }
     },
     {
       "name": "UpgradeableBeacon",
       "address": "0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1623784070,
       "values": {
+        "$immutable": true,
         "implementation": "0x3f770Ac673856F105b586bb393d122721265aD46",
         "owner": "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
       }
@@ -524,14 +476,11 @@
     {
       "name": "CoreGovernor",
       "address": "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9",
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "EXCLUDE_ADDRESS": "0x00000000000000000000000000000000000A4B86",
@@ -554,82 +503,37 @@
     {
       "name": "FixedDelegateErc20Wallet",
       "address": "0xF3FC178157fb3c87548bAA86F9d24BA38E649B58",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x9F43ab02cACc8e709b05936a92dC85b76D1523c4",
-        "admin": "0xdb216562328215E010F819B5aBe947bad4ca961e"
-      },
-      "implementations": ["0x9F43ab02cACc8e709b05936a92dC85b76D1523c4"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1678968508,
       "values": {
+        "$admin": "0xdb216562328215E010F819B5aBe947bad4ca961e",
+        "$implementation": "0x9F43ab02cACc8e709b05936a92dC85b76D1523c4",
         "owner": "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
       }
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x0000000000000000000000000000000000000001"
-    },
-    {
-      "address": "0x00000000000000000000000000000000000A4B86"
-    },
-    {
-      "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
-    },
-    {
-      "address": "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23"
-    },
-    {
-      "address": "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF"
-    },
-    {
-      "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
-    },
-    {
-      "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3"
-    },
-    {
-      "address": "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
-    },
-    {
-      "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C"
-    },
-    {
-      "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28"
-    },
-    {
-      "address": "0xB3b60932E598fe946169EC209A197184Bad760B7"
-    },
-    {
-      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1"
-    },
-    {
-      "address": "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed"
-    },
-    {
-      "address": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3"
-    },
-    {
-      "address": "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
-    },
-    {
-      "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
-    },
-    {
-      "address": "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
-    },
-    {
-      "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85"
-    },
-    {
-      "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a"
-    },
-    {
-      "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0000000000000000000000000000000000000001" },
+    { "address": "0x00000000000000000000000000000000000A4B86" },
+    { "address": "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae" },
+    { "address": "0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23" },
+    { "address": "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF" },
+    { "address": "0x475816ca2a31D601B4e336f5c2418A67978aBf09" },
+    { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
+    { "address": "0xa0683d725420e2F75415806352Cd9c3fE10Fa960" },
+    { "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C" },
+    { "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28" },
+    { "address": "0xB3b60932E598fe946169EC209A197184Bad760B7" },
+    { "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1" },
+    { "address": "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed" },
+    { "address": "0xc232ee726E3C51B86778BB4dBe61C52cC07A60F3" },
+    { "address": "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D" },
+    { "address": "0xE6841D92B0C345144506576eC13ECf5103aC7f49" },
+    { "address": "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C" },
+    { "address": "0xF06E95eF589D9c38af242a8AAee8375f14023F85" },
+    { "address": "0xf7951D92B0C345144506576eC13Ecf5103aC905a" },
+    { "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd" }
   ],
   "abis": {
     "0x065620d99E1785Ccf56Fa95462d3012Eb844FDC9": [

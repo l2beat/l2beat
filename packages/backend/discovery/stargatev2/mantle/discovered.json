@@ -3,26 +3,21 @@
   "chain": "mantle",
   "blockNumber": 65329557,
   "configHash": "0xc64f0c7d05713cc872e2a5262959e8eda63ce1eb9cb5c467e2cc3ec3cb89ef48",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "TokenMessaging",
       "address": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837058,
       "values": {
+        "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 22,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -57,9 +52,6 @@
     {
       "name": "StargatePool",
       "address": "0x4c1d3Fc3fC3c177c3b633427c2F769276c547463",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -69,6 +61,7 @@
       ],
       "sinceTimestamp": 1716837014,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -83,10 +76,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0xc2c3Cc203FB607f2f93e6A15f45556bc83620644",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": "30259308523113258",
         "poolBalance": "1710010979000000000000",
@@ -101,9 +91,6 @@
     {
       "name": "StargatePoolUSDC",
       "address": "0xAc290Ad4e0c891FDc295ca4F0a6214cf6dC6acDC",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -113,6 +100,7 @@
       ],
       "sinceTimestamp": 1716837036,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
@@ -129,10 +117,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0x5D131cb99cE5642f3d539417A187a93EEae48177",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": "346862827018495804",
         "poolBalance": 12621142228200,
@@ -147,9 +132,6 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0xB715B85682B731dB9D5063187C450095c91C57FC",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -159,6 +141,7 @@
       ],
       "sinceTimestamp": 1716837046,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
@@ -175,10 +158,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0xe1152564ED7B59e01915FC95bBF87cF9b6636fe6",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": "56087345876298471",
         "poolBalance": 10967515157977,
@@ -193,9 +173,6 @@
     {
       "name": "StargatePool",
       "address": "0xF7628d84a2BbD9bb9c8E686AC95BB5d55169F3F1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -205,6 +182,7 @@
       ],
       "sinceTimestamp": 1716837026,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -219,10 +197,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30181,
         "lpToken": "0xfe1e5Ff7FFE3672C085a4b1Dd6b95273c9164022",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x44acb81da0D81573Feb9d794422Be91914eDcD3d",
         "plannerFee": 0,
         "poolBalance": "3070973294000000000000",
@@ -236,12 +211,8 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x41B491285A4f888F9f636cEc8a363AB9770a0AEF": [

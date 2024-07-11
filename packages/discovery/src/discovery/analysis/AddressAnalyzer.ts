@@ -188,7 +188,11 @@ export class AddressAnalyzer {
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,
       proxyType: proxy?.type,
-      values: { ...(proxy?.values ?? {}), ...(values ?? {}) },
+      values: {
+        ...(!proxy ? { $immutable: true } : {}),
+        ...(proxy?.values ?? {}),
+        ...(values ?? {}),
+      },
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,
       sourceBundles: sources.sources,

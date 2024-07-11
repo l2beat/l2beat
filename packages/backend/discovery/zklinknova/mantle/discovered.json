@@ -3,39 +3,36 @@
   "chain": "mantle",
   "blockNumber": 65985974,
   "configHash": "0x81005fd260dc9b0d28265c4280e9c9b2f07f745737399e78c30e47fb869356cb",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "MantleOwner",
       "address": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
       "unverified": true,
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": [],
-        "threshold": "4 of 7 (57%)"
-      },
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": [
           "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         ]
       },
-      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1710253012,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$multisigThreshold": "4 of 7 (57%)",
+        "GnosisSafe_modules": []
+      },
       "derivedName": ""
     },
     {
       "name": "L1ERC20Bridge",
       "address": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
-        "admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"
-      },
-      "implementations": ["0x7769C18828569692Dfb65affa0856533613ea458"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1709296907,
       "values": {
+        "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
+        "$implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -46,14 +43,11 @@
       "name": "zkLink",
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "template": "zklinknova/secondaryZkLink",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
-        "admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
-      },
-      "implementations": ["0x0C04046546C46652969Aa9eB4BFB758cFDf1e821"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1709279309,
       "values": {
+        "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+        "$implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -85,14 +79,11 @@
       "name": "MantleL2Gateway",
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "template": "zklinknova/secondaryGateway",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
-        "admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
-      },
-      "implementations": ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1709279398,
       "values": {
+        "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+        "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
         "ethToken": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
         "getRemoteGateway": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
         "isEthGasToken": false,
@@ -105,14 +96,12 @@
     {
       "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
       },
       "sinceTimestamp": 1709296907,
       "values": {
+        "$immutable": true,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -120,15 +109,9 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe"
-    },
-    {
-      "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe" },
+    { "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272" }
   ],
   "abis": {
     "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821": [

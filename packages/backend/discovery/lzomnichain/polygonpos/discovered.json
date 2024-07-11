@@ -3,31 +3,27 @@
   "chain": "polygonpos",
   "blockNumber": 58991670,
   "configHash": "0xce744ee7bc25cb5f9f0d45db11af4edfd1f88023463e53fc1c4ea11f4bc426b5",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
       },
       "sinceTimestamp": 1647316991,
       "values": {
+        "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
     {
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647316955,
       "values": {
+        "$immutable": true,
         "BLOCK_VERSION": 65535,
         "chainId": 9,
         "DEFAULT_VERSION": 0,
@@ -52,11 +48,9 @@
     {
       "name": "MPTValidator01",
       "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661528371,
       "values": {
+        "$immutable": true,
         "getProofType": 1,
         "getUtilsVersion": 4,
         "PACKET_SIGNATURE": "0xe9bded5f24a4168e4f3bf44e00298c993b22376aad8c58c7dda9718a54cbea82",
@@ -69,9 +63,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -82,6 +73,7 @@
       ],
       "sinceTimestamp": 1661528377,
       "values": {
+        "$immutable": true,
         "chainAddressSizeMap": {
           "101": 20,
           "102": 20,
@@ -1324,33 +1316,28 @@
       "name": "",
       "address": "0x5a54fe5234E811466D5366846283323c954310B2",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x674875DB7a89C7676188DCB590498DEC7AED7881",
-        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
-      },
-      "implementations": ["0x674875DB7a89C7676188DCB590498DEC7AED7881"],
-      "sinceTimestamp": 1661535854
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1661535854,
+      "values": {
+        "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+        "$implementation": "0x674875DB7a89C7676188DCB590498DEC7AED7881"
+      }
     },
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661279759,
       "values": {
+        "$immutable": true,
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
     },
     {
       "name": "TreasuryV2",
       "address": "0x5f3481F45A3926A136D3dEE078e14D5353C13f2D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661528687,
       "values": {
+        "$immutable": true,
         "feeEnabled": false,
         "nativeBP": 0,
         "owner": "0xF1a5F92F5F89e8b539136276f827BF1648375312",
@@ -1363,22 +1350,19 @@
       "name": "",
       "address": "0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9",
-        "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
-      },
-      "implementations": ["0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9"],
-      "sinceTimestamp": 1661531173
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1661531173,
+      "values": {
+        "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+        "$implementation": "0x6963Cc1424FCAa13356cE04be0AC5ddf03E3e3B9"
+      }
     },
     {
       "name": "FPValidator",
       "address": "0x86Bb63148d17d445Ed5398ef26Aa05Bf76dD5b59",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1665890423,
       "values": {
+        "$immutable": true,
         "getProofType": 2,
         "getUtilsVersion": 1,
         "proofType": 2,
@@ -1390,25 +1374,21 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x5a54fe5234E811466D5366846283323c954310B2"]
       },
       "sinceTimestamp": 1661448610,
       "values": {
+        "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
     },
     {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694218884,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12100,
@@ -1423,25 +1403,20 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1694218892
+      "sinceTimestamp": 1694218892,
+      "values": { "$immutable": true }
     },
     {
       "name": "LayerZero Multisig",
       "address": "0xF1a5F92F5F89e8b539136276f827BF1648375312",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": [],
-        "threshold": "2 of 6 (33%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1648074041,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$multisigThreshold": "2 of 6 (33%)",
         "domainSeparator": "0x044a8dd59b0665c360d1bb7987292aed8d68479d0d08219d5e3d215b5b1aa4ca",
         "getChainId": 137,
         "getOwners": [
@@ -1453,6 +1428,7 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 117,
         "VERSION": "1.3.0"
       },
@@ -1460,33 +1436,15 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-    },
-    {
-      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    },
-    {
-      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
-    },
-    {
-      "address": "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
+    { "address": "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553" }
   ],
   "abis": {
     "0x38dE71124f7a447a01D67945a51eDcE9FF491251": [

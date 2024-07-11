@@ -3,19 +3,16 @@
   "chain": "ethereum",
   "blockNumber": 20032128,
   "configHash": "0x3459f654cea5dcf018eac5553ee358c562d05a1e77feb12445ea837ef972b230",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "MXCL1Bridge",
       "address": "0x7C954170305b11572522313b6AD514070ce0339c",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "implementations": ["0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1689164375,
       "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0",
         "admin": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9",
         "MXCToken": "0x5Ca381bBfb58f0092df149bD3D243b08B9a8386e"
       },
@@ -25,13 +22,9 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "assignedPermissions": {
-        "admin": ["0x7C954170305b11572522313b6AD514070ce0339c"]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
-    }
+    { "address": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9" }
   ],
   "abis": {
     "0x12191531a8eD589CEa6C78a1e0b2aa5D4F1397f0": [

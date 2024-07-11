@@ -1,4 +1,8 @@
-import { ManualProxyType, ProxyDetails } from '@l2beat/discovery-types'
+import {
+  ContractValue,
+  ManualProxyType,
+  ProxyDetails,
+} from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
@@ -74,6 +78,7 @@ export class ProxyDetector {
 
     if (proxy) {
       logger.logProxyDetected(proxy.type)
+      adjust$Arrays(proxy.values)
     } else if (manualProxyType) {
       logger.logProxyDetectionFailed(manualProxyType)
     }
@@ -100,5 +105,18 @@ export class ProxyDetector {
     if (detector) {
       return await detector(provider, address)
     }
+  }
+}
+
+function adjust$Arrays(values: Record<string, ContractValue | undefined>) {
+  if (Array.isArray(values.$admin) && values.$admin.length === 1) {
+    values.$admin = values.$admin[0]
+  }
+
+  if (
+    Array.isArray(values.$implementation) &&
+    values.$implementation.length === 1
+  ) {
+    values.$implementation = values.$implementation[0]
   }
 }
