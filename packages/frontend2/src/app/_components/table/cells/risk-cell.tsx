@@ -7,10 +7,10 @@ import {
 import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
+import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { SentimentText } from '../../sentiment-text'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { WarningBar } from '../../warning-bar'
-import { UnderReviewBadge } from '../../badge/under-review-badge'
 
 interface Risk {
   value: string
