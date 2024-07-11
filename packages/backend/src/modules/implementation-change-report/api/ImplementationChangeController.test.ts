@@ -1,9 +1,8 @@
 import { ConfigReader } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainConverter, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { ChainConverter } from '../../../tools/ChainConverter'
 import {
   UpdateMonitorRecord,
   UpdateMonitorRepository,

@@ -39,8 +39,9 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
 import { BadgeId } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING, StageConfig } from '../common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { StageConfig } from '../common/stages/types'
 import {
   type Layer2,
   type Layer2Display,

@@ -1,9 +1,14 @@
 import { Env } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s } from '@l2beat/config'
+import {
+  bridgeToBackendProject,
+  bridges,
+  chains,
+  layer2ToBackendProject,
+  layer2s,
+} from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model/Project'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import {
@@ -39,7 +44,9 @@ export function makeConfig(
   return {
     name,
     isReadonly,
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    projects: layer2s
+      .map(layer2ToBackendProject)
+      .concat(bridges.map(bridgeToBackendProject)),
     clock: {
       minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,
