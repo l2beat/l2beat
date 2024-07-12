@@ -159,7 +159,7 @@ function makeTechnologyContract(
       links.push({
         name:
           implementations.length > 1
-            ? `Implementation (${i + 1})${upgradeableText}`
+            ? `Implementation #${i + 1}${upgradeableText}`
             : `Implementation${upgradeableText}`,
         href: `${etherscanUrl}/address/${implementation.toString()}#code`,
         address: implementation.toString(),
