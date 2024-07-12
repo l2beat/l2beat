@@ -1,12 +1,13 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getVerificationStatus } from '../verification-status/get-verification-status'
-import { type TvlResponse } from './get-tvl'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { orderByTvl } from './utils/order-by-tvl'
+import { type ProjectId } from '@l2beat/shared-pure'
 
-export async function getScalingRiskEntries(tvl: TvlResponse) {
-  const orderedProjects = orderByTvl(layer2s, tvl.projects)
+export async function getScalingRiskEntries(tvl: Record<ProjectId, number>) {
+  const orderedProjects = [...layer2s].sort(
+    (a, b) => (tvl[b.id] ?? 0) - (tvl[a.id] ?? 0),
+  )
 
   const implementationChangeReport = await getImplementationChangeReport()
   const verificationStatus = await getVerificationStatus()
