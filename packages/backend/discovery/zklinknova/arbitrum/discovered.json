@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "arbitrum",
-  "blockNumber": 228694559,
+  "blockNumber": 231375022,
   "configHash": "0x4e258a6d37db579d90ca6b8795256e842346300928c347ad3abfdd97b2620488",
   "version": 8,
   "contracts": [
@@ -104,6 +104,14 @@
         "implementation": "0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305",
         "admin": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F"
       },
+      "ignoreInWatchMode": [
+        "getTotalBatchesExecuted",
+        "getTotalPriorityTxs",
+        "totalBatchesExecuted",
+        "totalPriorityTxs",
+        "totalSyncedPriorityTxs",
+        "totalValidatorForwardFee"
+      ],
       "implementations": ["0xe2cd603BFAe63EEFBDf0C51485f835D8B419A305"],
       "sinceTimestamp": 1709280428,
       "values": {
@@ -121,15 +129,15 @@
         "getGateway": "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
         "getGovernor": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 15253,
-        "getTotalPriorityTxs": 132473,
+        "getTotalBatchesExecuted": 16403,
+        "getTotalPriorityTxs": 132607,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F",
         "paused": false,
-        "totalBatchesExecuted": 15253,
-        "totalPriorityTxs": 132473,
-        "totalSyncedPriorityTxs": 132472,
-        "totalValidatorForwardFee": "71464934340380027702",
+        "totalBatchesExecuted": 16403,
+        "totalPriorityTxs": 132607,
+        "totalSyncedPriorityTxs": 132578,
+        "totalValidatorForwardFee": "71536130527332096874",
         "totalValidatorForwardFeeWithdrawn": "40000000000000000000",
         "txGasPrice": 40000000000
       },

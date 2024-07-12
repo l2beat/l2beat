@@ -5,5 +5,13 @@
     "l2LogsRootHashes",
     "proxiableUUID",
     "priorityOpSyncStatus"
+  ],
+  "ignoreInWatchMode": [
+    "getTotalBatchesExecuted",
+    "getTotalPriorityTxs",
+    "totalBatchesExecuted",
+    "totalPriorityTxs",
+    "totalSyncedPriorityTxs",
+    "totalValidatorForwardFee"
   ]
 }
