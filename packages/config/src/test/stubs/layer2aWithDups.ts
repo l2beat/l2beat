@@ -228,11 +228,13 @@ export const layer2aWithDups: Layer2 = {
         address: EthereumAddress('0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e'),
         name: 'Duplicate ForeignAMB Proxy',
         upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          implementation: EthereumAddress(
-            '0x82B67a43b69914E611710C62e629dAbB2f7AC6AB',
-          ),
+          proxyType: 'Custom',
+          admins: [
+            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+          ],
+          implementations: [
+            EthereumAddress('0x82B67a43b69914E611710C62e629dAbB2f7AC6AB'),
+          ],
         },
       },
       {
@@ -263,11 +265,13 @@ export const layer2aWithDups: Layer2 = {
         name: 'L1CrossDomainMessenger',
         address: EthereumAddress('0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1'),
         upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A'),
-          implementation: EthereumAddress(
-            '0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5',
-          ),
+          proxyType: 'EIP1967 proxy',
+          admins: [
+            EthereumAddress('0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A'),
+          ],
+          implementations: [
+            EthereumAddress('0xd9166833FF12A5F900ccfBf2c8B62a90F1Ca1FD5'),
+          ],
         },
       },
       {
@@ -278,11 +282,13 @@ export const layer2aWithDups: Layer2 = {
         name: 'L1StandardBridge',
         address: EthereumAddress('0x99C9fc46f92E8a1c0deC1b1747d010903E884bE1'),
         upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: EthereumAddress('0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A'),
-          implementation: EthereumAddress(
-            '0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB',
-          ),
+          proxyType: 'EIP1967 proxy',
+          admins: [
+            EthereumAddress('0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A'),
+          ],
+          implementations: [
+            EthereumAddress('0x40E0C049f4671846E9Cff93AAEd88f2B48E527bB'),
+          ],
         },
       },
       {

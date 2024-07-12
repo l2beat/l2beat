@@ -147,13 +147,13 @@ describeDatabase(DiscoveryHistoryRepository.name, (knex, kysely) => {
           {
             name: 'MockContract1',
             address: EthereumAddress.random(),
-            upgradeability: { type: 'immutable' },
+            values: { $immutable: true },
           }
         const mockContractWithError: DiscoveryHistoryRecord['discovery']['contracts'][0] =
           {
             name: 'MockContract2',
             address: EthereumAddress.random(),
-            upgradeability: { type: 'immutable' },
+            values: { $immutable: true },
             errors: {
               nonce: 'https://endpoint.com/potential-api-key',
               totalLiquidity: 'https://endpoint.com/potential-api-key2',
@@ -210,7 +210,7 @@ describeDatabase(DiscoveryHistoryRepository.name, (knex, kysely) => {
             {
               name: 'MockContract1',
               address: EthereumAddress.random(),
-              upgradeability: { type: 'immutable' },
+              values: { $immutable: true },
             }
 
           const discovery: DiscoveryHistoryRecord = {

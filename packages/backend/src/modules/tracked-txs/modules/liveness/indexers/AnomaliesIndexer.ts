@@ -1,3 +1,4 @@
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   assert,
@@ -7,7 +8,6 @@ import {
   clampRangeToDay,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
@@ -29,7 +29,7 @@ export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   livenessRepository: LivenessRepository
   anomaliesRepository: AnomaliesRepository
-  projects: Project[]
+  projects: BackendProject[]
 }
 
 export class AnomaliesIndexer extends ManagedChildIndexer {

@@ -1,4 +1,3 @@
-import { EIP1967ProxyUpgradeability } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
@@ -160,19 +159,14 @@ describe('metaUtils', () => {
         },
       }
 
-      const upgradeabilityAdmin = EthereumAddress(
+      const admin = EthereumAddress(
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
       )
-      const upgradeability: EIP1967ProxyUpgradeability = {
-        type: 'EIP1967 proxy',
-        admin: upgradeabilityAdmin,
-        implementation: EthereumAddress.from('0x8888'),
-      }
 
       const selfAddress = EthereumAddress.from('0x1234')
       const result = getTargetsMeta(
         selfAddress,
-        upgradeability,
+        [admin],
         handlerResults,
         fields,
       )
@@ -337,13 +331,8 @@ describe('metaUtils', () => {
     it('should properly get meta from upgradeability', () => {
       const selfAddress = EthereumAddress.from('0x1234')
       const admin = EthereumAddress.from('0xabcd')
-      const upgradeability: EIP1967ProxyUpgradeability = {
-        type: 'EIP1967 proxy',
-        admin,
-        implementation: EthereumAddress.from('0x5678'),
-      }
 
-      const result = getMetaFromUpgradeability(selfAddress, upgradeability)
+      const result = getMetaFromUpgradeability(selfAddress, [admin])
 
       expect(result).toEqual({
         [admin.toString()]: {

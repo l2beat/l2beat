@@ -73,6 +73,10 @@ export async function NavSidebar({
             Jobs
             {hiringBadge && <HiringBadge />}
           </NavSmallLink>
+          <NavSmallLink
+            title="Brand Kit"
+            href="https://drive.google.com/drive/folders/1Il3RqsOm5_sV5NVzXuWRUwWYlptJxD-w?usp=drive_link"
+          />
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
         <NavDivider />

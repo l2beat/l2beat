@@ -5,7 +5,7 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('mxc', 'arbitrum')
 const discovery_ethereum = new ProjectDiscovery('mxc', 'ethereum')
 
-// Rollup contracts on Arbitrum are not verified
+// Rollup contracts on Arbitrum are now verified! Reviewing
 // RollupAddressManager: https://arbiscan.io/address/0x931a8ffccda64dc441bcca81bd65dc0c3d42af74
 //   deployer on arbitrum: https://arbiscan.io/txs?a=0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9
 
@@ -13,10 +13,11 @@ export const mxc: Layer3 = {
   id: ProjectId('mxc'),
   type: 'layer3',
   hostChain: ProjectId('arbitrum'),
+  isUnderReview: true,
   display: {
     name: 'MXC Moonchain zkEVM',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds. The system contracts are unverified.',
+    // redWarning:
+    //  'Critical contracts can be upgraded by an EOA which could result in the loss of all funds. The system contracts are unverified.',
     shortName: 'MXC',
     slug: 'mxc',
     provider: 'Taiko',
@@ -135,10 +136,8 @@ export const mxc: Layer3 = {
       name: 'Vault Admin EOA',
       accounts: [
         {
-          address: discovery.getContractUpgradeabilityParam(
-            'TokenVault?',
-            'admin',
-          ),
+          // TODO: (sz-piotr) This seems hacky
+          address: discovery.get$Admins('TokenVault?')[0],
           type: 'EOA',
         },
       ],

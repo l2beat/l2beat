@@ -5,11 +5,11 @@ import {
   HttpClient as DiscoveryHttpClient,
   DiscoveryLogger,
 } from '@l2beat/discovery'
+import { ChainConverter } from '@l2beat/shared-pure'
 
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DiscordClient } from '../../peripherals/discord/DiscordClient'
-import { ChainConverter } from '../../tools/ChainConverter'
 import { Clock } from '../../tools/Clock'
 import { ApplicationModule } from '../ApplicationModule'
 import { UpdateMonitor } from './UpdateMonitor'

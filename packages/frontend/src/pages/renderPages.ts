@@ -2,6 +2,7 @@ import { Config } from '../build/config'
 import { Page, PagesData } from './Page'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
+import { getDARiskPage } from './da-risk'
 import { getGlossaryPage } from './glossary'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
@@ -31,6 +32,7 @@ export function renderPages(config: Config, pagesData: PagesData) {
     implementationChange,
   } = pagesData
 
+  pages.push(getDARiskPage())
   pages.push(getSummaryPage(config, pagesData))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))

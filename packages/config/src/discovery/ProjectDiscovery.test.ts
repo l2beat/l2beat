@@ -83,44 +83,6 @@ describe(ProjectDiscovery.name, () => {
     })
   })
 
-  describe(
-    ProjectDiscovery.prototype.getContractUpgradeabilityParam.name,
-    () => {
-      it('should return given upgradeability param', () => {
-        const upgradeabilityParam = discovery.getContractUpgradeabilityParam(
-          contractStub.name,
-          'type',
-        )
-
-        expect(upgradeabilityParam).toEqual('StarkWare diamond')
-      })
-      it('should throw an error if upgradeability param does not exist', () => {
-        const key = 'randomParam'
-
-        expect(() =>
-          discovery.getContractUpgradeabilityParam(
-            contractStub.name,
-            //@ts-expect-error key does not exist on UpgradeabilityParams type
-            key,
-          ),
-        ).toThrow(
-          `Assertion Error: Upgradeability param of key ${key} does not exist in ${contractStub.name} contract (${projectName})`,
-        )
-      })
-
-      it('should not throw an error if upgradeability param is 0', () => {
-        const key = 'upgradeDelay'
-
-        const upgradeabilityParam = discovery.getContractUpgradeabilityParam(
-          contractStub.name,
-          key,
-        )
-
-        expect(upgradeabilityParam).toEqual(0)
-      })
-    },
-  )
-
   describe(ProjectDiscovery.prototype.getOpStackContractDetails.name, () => {
     const discovery = new ProjectDiscovery(
       'ExampleProject',
@@ -151,13 +113,13 @@ describe(ProjectDiscovery.name, () => {
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
-            admin: EthereumAddress(
-              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
-            ),
-            implementation: EthereumAddress(
-              '0x29510c3ac0248bBE92FDb57bd2cBAF7216cC217a',
-            ),
-            type: 'EIP1967 proxy',
+            admins: [
+              EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+            ],
+            implementations: [
+              EthereumAddress('0x29510c3ac0248bBE92FDb57bd2cBAF7216cC217a'),
+            ],
+            proxyType: 'EIP1967 proxy',
           },
         },
         {
@@ -171,13 +133,13 @@ describe(ProjectDiscovery.name, () => {
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
-            admin: EthereumAddress(
-              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
-            ),
-            implementation: EthereumAddress(
-              '0x1b927019071A2a9C2b852Fd36f7238D2376B82FA',
-            ),
-            type: 'EIP1967 proxy',
+            admins: [
+              EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+            ],
+            implementations: [
+              EthereumAddress('0x1b927019071A2a9C2b852Fd36f7238D2376B82FA'),
+            ],
+            proxyType: 'EIP1967 proxy',
           },
         },
         {
@@ -191,13 +153,13 @@ describe(ProjectDiscovery.name, () => {
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
-            admin: EthereumAddress(
-              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
-            ),
-            implementation: EthereumAddress(
-              '0xeba2dc4CC210e885F60b5feA41FDEab0C6527fdc',
-            ),
-            type: 'EIP1967 proxy',
+            admins: [
+              EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+            ],
+            implementations: [
+              EthereumAddress('0xeba2dc4CC210e885F60b5feA41FDEab0C6527fdc'),
+            ],
+            proxyType: 'EIP1967 proxy',
           },
         },
         {
@@ -211,14 +173,11 @@ describe(ProjectDiscovery.name, () => {
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
-            addressManager: EthereumAddress(
-              '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
-            ),
-            implementation: EthereumAddress(
-              '0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43',
-            ),
-            implementationName: 'OVM_L1CrossDomainMessenger',
-            type: 'resolved delegate proxy',
+            admins: [],
+            implementations: [
+              EthereumAddress('0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43'),
+            ],
+            proxyType: 'resolved delegate proxy',
           },
         },
         {
@@ -232,13 +191,13 @@ describe(ProjectDiscovery.name, () => {
           upgradableBy: ['MockAdmin'],
           upgradeDelay: 'No delay',
           upgradeability: {
-            type: 'EIP1967 proxy',
-            implementation: EthereumAddress(
-              '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
-            ),
-            admin: EthereumAddress(
-              '0x543bA4AADBAb8f9025686Bd03993043599c6fB04',
-            ),
+            proxyType: 'EIP1967 proxy',
+            implementations: [
+              EthereumAddress('0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f'),
+            ],
+            admins: [
+              EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+            ],
           },
         },
       ])

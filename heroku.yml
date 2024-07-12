@@ -1,0 +1,8 @@
+build:
+  docker:
+    backend: Dockerfile.backend
+run:
+  web:
+    command: 
+    - yarn start
+    image: backend

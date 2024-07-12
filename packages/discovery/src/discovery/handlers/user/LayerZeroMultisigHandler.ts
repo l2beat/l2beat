@@ -83,7 +83,9 @@ export class LayerZeroMultisigHandler implements Handler {
     const ctorValue = constructorArgs.value
     assert(ctorValue !== undefined, 'constructorArgs.value is undefined')
     assert(
-      typeof ctorValue === 'object' && !Array.isArray(ctorValue),
+      typeof ctorValue === 'object' &&
+        !Array.isArray(ctorValue) &&
+        isNotEthereumAddress(ctorValue),
       'constructorArgs.value is not an object',
     )
     assert(Array.isArray(ctorValue._signers), 'signers is not an array')
@@ -116,4 +118,10 @@ export class LayerZeroMultisigHandler implements Handler {
       },
     }
   }
+}
+
+function isNotEthereumAddress<T extends object>(
+  value: T | EthereumAddress,
+): value is T {
+  return typeof value !== 'string'
 }

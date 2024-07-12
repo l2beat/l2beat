@@ -1,15 +1,15 @@
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 
 export function getProjectsToSync(
-  projects: Project[],
+  projects: BackendProject[],
   configurations: Omit<
     SavedConfiguration<TrackedTxConfigEntry>,
     'properties'
   >[],
-): Project[] {
+): BackendProject[] {
   return projects.filter((p) => {
     if (p.isArchived || !p.trackedTxsConfig) {
       return false
