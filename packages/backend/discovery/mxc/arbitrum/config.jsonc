@@ -29,11 +29,23 @@
     "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
   },
   "overrides": {
-    "Bridge?": {
-      "ignoreDiscovery": true // temporary until reviewed
-    },
     "MxcL1Contract?": {
-      "ignoreDiscovery": true // temporary until reviewed
+      "ignoreInWatchMode": [
+        "getBlockFee",
+        "getConfig",
+        "getProposeReward",
+        "getStateVariables",
+        "state"
+      ], // temporary until reviewed
+      "ignoreMethods": [
+        "getBlock",
+        "getCrossChainBlockHash",
+        "getCrossChainSignalRoot"
+      ]
+    },
+    "Bridge?": {
+      "ignoreInWatchMode": ["context"],
+      "ignoreMethods": ["isDestChainEnabled"] // temporary until reviewed
     }
   }
 }
