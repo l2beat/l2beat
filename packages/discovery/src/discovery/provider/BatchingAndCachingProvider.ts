@@ -468,7 +468,9 @@ export class BatchingAndCachingProvider {
       return parseCacheEntry(cached)
     }
     const source = await this.provider.getSource(address)
-    entry.write(JSON.stringify(source))
+    if (source.isVerified) {
+      entry.write(JSON.stringify(source))
+    }
     return source
   }
 
