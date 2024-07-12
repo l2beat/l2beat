@@ -378,6 +378,7 @@ function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
         case 'HIGH':
           result.high++
           break
+        case undefined:
         case null:
           result.unknown++
           break
