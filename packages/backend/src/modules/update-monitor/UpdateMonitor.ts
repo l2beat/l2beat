@@ -7,7 +7,12 @@ import {
   normalizeDiffPath,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert, ChainConverter, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ChainConverter,
+  UnixTime,
+  assertUnreachable,
+} from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
 import { Clock } from '../../tools/Clock'
@@ -378,9 +383,12 @@ function countSeverities(diffs: DiscoveryDiff[], config?: DiscoveryConfig) {
         case 'HIGH':
           result.high++
           break
+        case undefined:
         case null:
           result.unknown++
           break
+        default:
+          assertUnreachable(severity)
       }
     }
   }
