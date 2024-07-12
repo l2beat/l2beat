@@ -19,7 +19,7 @@ function onToggle() {
 
 export function NavSideBarCollapseToggle() {
   return (
-    <button className="select-none cursor-pointer" onClick={onToggle}>
+    <button className="select-none cursor-pointer text-2xl" onClick={onToggle}>
       <NavCollapseIcon className="stroke-[#525C6A] dark:stroke-[#D3D5D9] sidenav-collapsed:rotate-180" />
     </button>
   )
