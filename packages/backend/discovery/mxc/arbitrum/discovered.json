@@ -1,21 +1,80 @@
 {
   "name": "mxc",
   "chain": "arbitrum",
-  "blockNumber": 218960264,
-  "configHash": "0xb6770d92de735e844697c0544c0deb9d7384fe272641b1b974a1ce3de7168fc9",
+  "blockNumber": 231407345,
+  "configHash": "0x3134efe881b170a9d308505fb2d8555e4f9fd879f0f184a06511db2340e3ea57",
   "version": 9,
   "contracts": [
     {
       "name": "MxcL1Contract?",
       "address": "0x54D8864e8855A7B66eE42B8F2Eaa0F2E06bd641a",
-      "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getBlockFee",
+        "getConfig",
+        "getProposeReward",
+        "getStateVariables",
+        "state"
+      ],
       "sinceTimestamp": 1689165595,
       "values": {
         "$admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-        "$implementation": "0xEe4Cd2139B65b5C38A438B63BdcfeCBF28D88e25"
+        "$implementation": "0xEe4Cd2139B65b5C38A438B63BdcfeCBF28D88e25",
+        "addressManager": "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74",
+        "getBlockFee": "100000000000000000",
+        "getConfig": {
+          "chainId": 18686,
+          "maxNumProposedBlocks": 604800,
+          "ringBufferSize": 604810,
+          "maxVerificationsPerTx": 10,
+          "blockMaxGasLimit": 6000000,
+          "maxTransactionsPerBlock": 79,
+          "maxBytesPerTxList": 120000,
+          "txListCacheExpiry": 0,
+          "proofCooldownPeriod": 7200,
+          "systemProofCooldownPeriod": 3600,
+          "realProofSkipSize": 0,
+          "ethDepositGas": 21000,
+          "ethDepositMaxFee": "100000000000000000",
+          "minEthDepositsPerBlock": 1,
+          "maxEthDepositsPerBlock": 32,
+          "maxEthDepositAmount": "10000000000000000000000",
+          "minEthDepositAmount": "100000000000000000",
+          "relaySignalRoot": false
+        },
+        "getProposeReward": "4420000000000000000",
+        "getStateVariables": {
+          "blockFee": 10000000,
+          "accBlockFees": 5215560000196,
+          "genesisHeight": 110450693,
+          "genesisTimestamp": 1689165595,
+          "numBlocks": 521893,
+          "proofTimeIssued": 48429053,
+          "proofTimeTarget": 101,
+          "lastVerifiedBlockId": 140,
+          "accProposedAt": 889820530882632,
+          "nextEthDepositToProcess": 0,
+          "numEthDeposits": 0
+        },
+        "owner": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9",
+        "state": {
+          "totalStakeMxcTokenBalances": "5947830399998040000000000",
+          "genesisHeight": 110450693,
+          "genesisTimestamp": 1689165595,
+          "adjustmentQuotient": 32000,
+          "prevBaseFee": 13365,
+          "proposerElectionTimeoutOffset": 0,
+          "accProposedAt": 889820530882632,
+          "accBlockFees": 5215560000196,
+          "numBlocks": 521893,
+          "proveMetaReward": 0,
+          "blockFee": 10000000,
+          "proofTimeIssued": 48429053,
+          "lastVerifiedBlockId": 140,
+          "proofTimeTarget": 101
+        }
       },
-      "derivedName": ""
+      "derivedName": "ProxiedMxcL1"
     },
     {
       "name": "AddressManager?",
@@ -32,14 +91,21 @@
     {
       "name": "Bridge?",
       "address": "0xA9c5519a7c1d85fB6d6695853787964a0D3d49A6",
-      "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["context"],
       "sinceTimestamp": 1689143141,
       "values": {
         "$admin": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
-        "$implementation": "0xd1e769572A2D2Fdc3B61622A38cD1A359881e8cC"
+        "$implementation": "0xd1e769572A2D2Fdc3B61622A38cD1A359881e8cC",
+        "addressManager": "0x931A8fFCcdA64dC441bcca81Bd65Dc0C3d42Af74",
+        "context": {
+          "msgHash": "0x0000000000000000000000000000000000000000000000000000000000000001",
+          "sender": "0x0000000000000000000000000000000000000001",
+          "srcChainId": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+        },
+        "owner": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9"
       },
-      "derivedName": ""
+      "derivedName": "ProxiedBridge"
     },
     {
       "name": "SignalService",
@@ -69,13 +135,11 @@
     }
   ],
   "eoas": [
-    { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x0000000000000000000000000000000000000001" },
     {
       "address": "0x5D9f59F49B5E5C83c1776c5ADD039a3C955d3B02",
       "assignedPermissions": { "admin": {} }
     },
-    { "address": "0x9173C3758e461236F3F03F08A4FAA851dB97d558" },
     { "address": "0xC6D7522f7B012b22Bc365C9C43b3DBf13B9aAfF9" }
   ],
   "abis": {
