@@ -10,6 +10,13 @@ Generated with discovered.json: 0x6c82d42b433ed39ceb66098f6f19c519b6885edb
 
 These changes are due to the [OP Mainnet 'Fjord' upgrade](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236) which, on the L1, affects the fault proof related contracts in order to introduce the new op-program pre-state hash (otherwise code-identical).
 
+### Fjord upgrade TLDR
+
+- secp256r1 precompile
+- brotli channel compression
+- FastLZ based DA fee calculation
+- max sequencer drift (time delta between L2 block ts and according epoch ts derived from L1) raised from 10 to 30 minutes
+
 ## Watched changes
 
 ```diff
