@@ -631,15 +631,15 @@ function getUpgradeability(
   if (!contract.proxyType) {
     return undefined
   }
-  return {
+  const upgradeability: ScalingProjectUpgradeability = {
     proxyType: contract.proxyType,
-    immutable:
-      contract.values?.$immutable !== undefined
-        ? !!contract.values.$immutable
-        : undefined,
     admins: get$Admins(contract.values),
     implementations: get$Implementations(contract.values),
   }
+  if (contract.values?.$immutable !== undefined) {
+    upgradeability.immutable = !!contract.values.$immutable
+  }
+  return upgradeability
 }
 
 function isNonNullable<T>(
