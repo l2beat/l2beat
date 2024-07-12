@@ -71,7 +71,6 @@ const getCachedImplementationChangeReport = cache(
             ? diffDiscovery(discovery.contracts, latestContracts)
             : []
         const implementationChanges = diffs.filter((diff) =>
-          // TODO: (sz-piotr) Why is this code duplicated!?
           diff.diff?.some((f) => f.key === 'values.$implementation'),
         )
 

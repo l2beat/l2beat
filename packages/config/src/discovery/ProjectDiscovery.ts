@@ -633,6 +633,10 @@ function getUpgradeability(
   }
   return {
     proxyType: contract.proxyType,
+    immutable:
+      contract.values?.$immutable !== undefined
+        ? !!contract.values.$immutable
+        : undefined,
     admins: get$Admins(contract.values),
     implementations: get$Implementations(contract.values),
   }

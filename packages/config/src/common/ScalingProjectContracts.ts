@@ -71,6 +71,7 @@ export interface ScalingProjectContractMultipleAddresses {
 
 export interface ScalingProjectUpgradeability {
   proxyType: string
+  immutable?: boolean
   admins: EthereumAddress[]
   implementations: EthereumAddress[]
 }

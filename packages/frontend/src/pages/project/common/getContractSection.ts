@@ -154,12 +154,13 @@ function makeTechnologyContract(
   if (isSingleAddress(item)) {
     const implementations = item.upgradeability?.implementations ?? []
     for (const [i, implementation] of implementations.entries()) {
+      const upgradable = !item.upgradeability?.immutable
+      const upgradeableText = upgradable ? ' (Upgradable)' : ''
       links.push({
-        // TODO: (sz-piotr). Add "(Upgradable)"
         name:
           implementations.length > 1
-            ? `Implementation (${i + 1})`
-            : 'Implementation',
+            ? `Implementation (${i + 1})${upgradeableText}`
+            : `Implementation${upgradeableText}`,
         href: `${etherscanUrl}/address/${implementation.toString()}#code`,
         address: implementation.toString(),
         isAdmin: false,
