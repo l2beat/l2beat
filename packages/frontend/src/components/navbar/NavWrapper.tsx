@@ -33,7 +33,7 @@ function NavLinkGroup({
       <div className="ml-1 font-medium text-[15px] text-slate-600 uppercase leading-[15px] tracking-tight xl:sidenav-collapsed:hidden dark:text-gray-50">
         {title}
       </div>
-      <div className="mt-[12px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-gray-50" />
+      <div className="mt-[14px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-gray-50" />
       <ul className="flex flex-col gap-0.5">{children}</ul>
     </div>
   )
