@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x1a0697c10ec38ce03639ddaff9cb23a01e5f27e4
+
+# Diff at Fri, 12 Jul 2024 10:06:36 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@48ec906f1df3ec8351c0e2324170592091f7c1db block: 20232297
+- current block number: 20289714
+
+## Description
+
+An adapter for Blast L2 is added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.81457:
++        "0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
+      values.CrossChainContracts.81457:
++        "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Blast_Adapter (0xF2bEf5E905AAE0295003ab14872F811E914EdD81)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Blast_Adapter.sol     | 601 +++++++++++++++++++++
+ 1 file changed, 601 insertions(+)
+```
+
 Generated with discovered.json: 0xe1c37ec100450be1198b8b4a281461e96e22f4fe
 
 # Diff at Thu, 04 Jul 2024 09:37:01 GMT:

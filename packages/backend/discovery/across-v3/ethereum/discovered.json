@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 20232297,
+  "blockNumber": 20289714,
   "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
   "version": 9,
   "contracts": [
@@ -16,7 +16,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "120058019130411207956938028",
+        "totalSupply": "120123464598946307399960013",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -58,7 +58,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1720085807,
+        "getCurrentTime": 1720778771,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -108,11 +108,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1720085807,
+        "getCurrentTime": 1720778771,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1425607,
+        "numberOfDeposits": 1437609,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -130,7 +130,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1720085807,
+        "getCurrentTime": 1720778771,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -180,7 +180,7 @@
         ],
         "getThreshold": 2,
         "GnosisSafe_modules": [],
-        "nonce": 674,
+        "nonce": 675,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -241,7 +241,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1720085807,
+        "getCurrentTime": 1720778771,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -290,7 +290,7 @@
         ],
         "getThreshold": 3,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
-        "nonce": 218,
+        "nonce": 224,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -321,7 +321,8 @@
           "8453": "0xE1421233BF7158A19f89F17c9735F9cbd3D9529c",
           "34443": "0xf1B59868697f3925b72889ede818B9E7ba0316d0",
           "42161": "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426",
-          "59144": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE"
+          "59144": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE",
+          "81457": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81"
         },
         "bondAmount": "450000000000000000",
         "bondToken": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
@@ -335,7 +336,8 @@
           "8453": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "34443": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
           "42161": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
-          "59144": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75"
+          "59144": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
+          "81457": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1"
         },
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
@@ -347,13 +349,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0x75c267602f19e7f9e9b22843eda4f88daae94f659977e46c36e2734a6a965c64",
-          "relayerRefundRoot": "0x57362646e17fbf039a62edf2fd0d7f01135af23f1448a43a1fa0507f25ae014e",
-          "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "poolRebalanceRoot": "0x4fd38d05652e960786a4de6bc5fba541eca795c6c6e35295535707a17a3634ba",
+          "relayerRefundRoot": "0x352f0f9553296f51c6872c4121c36bfd6e017a95c5b4544d6aefe6155921ee68",
+          "slowRelayRoot": "0x0590a81cf5e441b0a6f9ea1561eaef01ef9373284dcbc71154b7235d75b75fa1",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 8,
-          "challengePeriodEndTimestamp": 1720088183
+          "unclaimedPoolRebalanceLeafCount": 9,
+          "challengePeriodEndTimestamp": 1720779347
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -445,6 +447,24 @@
       }
     },
     {
+      "name": "Blast_Adapter",
+      "address": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
+      "template": "acrossv3/adapter",
+      "sinceTimestamp": 1719955511,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
+        "L1_BLAST_BRIDGE": "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
+        "L1_DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
+        "L1_STANDARD_BRIDGE": "0x697402166Fbf2F22E970df8a6486Ef171dbfc524",
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "0x5D4472f31Bd9385709ec61305AFc749F0fA8e9d0",
+        "recipientCircleDomainId": 4294967295,
+        "usdcToken": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"
+      }
+    },
+    {
       "name": "OptimisticOracleV3",
       "address": "0xfb55F43fB9F48F63f9269DB7Dde3BbBe1ebDC0dE",
       "sinceTimestamp": 1676487275,
@@ -466,6 +486,7 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64" },
     { "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05" },
+    { "address": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1" },
     { "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5" },
     { "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96" },
     { "address": "0x6f26Bf09B1C792e3228e5467807a900A503c0281" },
@@ -1038,6 +1059,22 @@
       "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address _cctpTokenMessenger)",
       "event MessageRelayed(address target, bytes message)",
       "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
+    "0xF2bEf5E905AAE0295003ab14872F811E914EdD81": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc, address l1BlastBridge, address l1Dai, uint32 l2GasLimit)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_BLAST_BRIDGE() view returns (address)",
+      "function L1_DAI() view returns (address)",
       "function L1_STANDARD_BRIDGE() view returns (address)",
       "function L1_WETH() view returns (address)",
       "function L2_GAS_LIMIT() view returns (uint32)",
