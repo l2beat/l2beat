@@ -5,6 +5,7 @@ import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
 import { callMethod } from '../utils/callMethod'
+import { rewriteSolidityIdentifier } from '../utils/rewriteSolidityIdentifier'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
 export class SimpleMethodHandler implements Handler {
@@ -19,7 +20,7 @@ export class SimpleMethodHandler implements Handler {
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
-    this.field = this.fragment.name
+    this.field = rewriteSolidityIdentifier(this.fragment.name)
   }
 
   async execute(
