@@ -24,6 +24,7 @@ export const metal: Layer2 = opStackL2({
     Badge.Stack.OPStack,
     Badge.DA.EthereumBlobs,
     Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
   ],
   display: {
     name: 'Metal',

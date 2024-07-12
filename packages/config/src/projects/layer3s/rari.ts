@@ -13,6 +13,7 @@ export const rari: Layer3 = orbitStackL3({
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
+    Badge.DA.DAC,
   ],
   discovery,
   hostChain: ProjectId('arbitrum'),

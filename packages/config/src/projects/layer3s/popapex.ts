@@ -14,6 +14,7 @@ export const popapex: Layer3 = orbitStackL3({
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Conduit,
+    Badge.DA.DAC,
   ],
   discovery,
   hostChain: ProjectId('arbitrum'),

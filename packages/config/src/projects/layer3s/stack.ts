@@ -14,6 +14,7 @@ export const stack: Layer3 = opStackL3({
     Badge.Stack.OPStack,
     Badge.L3ParentChain.Base,
     Badge.DA.Celestia,
+    Badge.RaaS.Conduit,
   ],
   hostChain: ProjectId('base'),
   display: {

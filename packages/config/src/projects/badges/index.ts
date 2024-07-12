@@ -92,7 +92,13 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
-  //should we mention that it is either calldata or blobs depending on the price? should it be one badge or two?
+  NearDA: {
+    display: {
+      name: 'NearDA',
+      description: 'This project is posting its data to NearDA',
+    },
+    type: BadgeType.DA,
+  },
   EthereumBlobs: {
     display: {
       name: 'Ethereum with blobs',
@@ -111,6 +117,14 @@ export const badges = {
     display: {
       name: 'Custom DA solution',
       description: 'This project is using a custom DA solution.',
+    },
+    type: BadgeType.DA,
+  },
+  DAC: {
+    display: {
+      name: 'Data Availability Committee',
+      description:
+        'There is a Data Availability Commitee that provides/attests to data availability.',
     },
     type: BadgeType.DA,
   },
@@ -179,6 +193,13 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
+  AppChain: {
+    display: {
+      name: 'Application-specific chain',
+      description: 'This project is built to operate a specific application.',
+    },
+    type: BadgeType.VM,
+  },
   //Infra
   Superchain: {
     display: {
@@ -213,6 +234,13 @@ export const badges = {
     display: {
       name: 'Built on Arbitrum Orbit',
       description: 'The project is built on Arbitrum Orbit.',
+    },
+    type: BadgeType.Stack,
+  },
+  Nitro: {
+    display: {
+      name: 'Built on Arbitrum Nitro',
+      description: 'The project is built on Arbitrum Nitro.',
     },
     type: BadgeType.Stack,
   },
@@ -252,10 +280,31 @@ export const badges = {
     },
     type: BadgeType.Fork,
   },
+  OVM: {
+    display: {
+      name: 'Fork of OVM',
+      description: 'The project is fork of the Optimistic Virtual Machine.',
+    },
+    type: BadgeType.Fork,
+  },
   ZKsyncLiteFork: {
     display: {
       name: 'Fork of ZKsync Lite',
       description: 'The project is fork of ZKsync Lite.',
+    },
+    type: BadgeType.Fork,
+  },
+  StarknetFork: {
+    display: {
+      name: 'Fork of Starknet',
+      description: 'The project is fork of Starknet.',
+    },
+    type: BadgeType.Fork,
+  },
+  TaikoFork: {
+    display: {
+      name: 'Fork of Taiko',
+      description: 'The project is fork of Taiko.',
     },
     type: BadgeType.Fork,
   },

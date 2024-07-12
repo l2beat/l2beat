@@ -16,6 +16,7 @@ export const degen: Layer3 = orbitStackL3({
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Base,
     Badge.RaaS.Conduit,
+    Badge.DA.DAC,
   ],
   nativeToken: 'DEGEN',
   display: {

@@ -14,6 +14,7 @@ export const syndicateframe: Layer3 = opStackL3({
     Badge.Stack.OPStack,
     Badge.L3ParentChain.Base,
     Badge.DA.EthereumBlobs,
+    Badge.RaaS.Conduit,
   ],
   hostChain: ProjectId('base'),
   display: {

@@ -91,6 +91,7 @@ export const arbitrum: Layer2 = {
   badges: [
     Badge.DA.EthereumBlobs,
     Badge.VM.EVM,
+    Badge.Stack.Nitro,
     Badge.Other.L3HostChain,
     Badge.Other.Governance,
   ],

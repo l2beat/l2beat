@@ -88,7 +88,7 @@ const requiredSignatures = discovery.getContractValue<number>(
 
 export const zkfair: Layer2 = {
   type: 'layer2',
-  badges: [Badge.VM.EVM, Badge.Stack.PolygonCDK],
+  badges: [Badge.VM.EVM, Badge.Stack.PolygonCDK, Badge.DA.DAC],
   id: ProjectId('zkfair'),
   display: {
     name: 'ZKFair',

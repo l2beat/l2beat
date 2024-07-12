@@ -97,6 +97,7 @@ export const optimism: Layer2 = {
     Badge.DA.EthereumBlobs,
     Badge.Infra.Superchain,
     Badge.Other.Governance,
+    Badge.Other.L3HostChain,
   ],
   display: {
     name: 'OP Mainnet',
