@@ -23,25 +23,25 @@ describe(ParsedFilesManager.name, () => {
       expect(manager.findDeclaration('Library1').declaration).toHaveSubset({
         name: 'Library1',
         type: 'library',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
       expect(manager.findDeclaration('Interface1').declaration).toHaveSubset({
         name: 'Interface1',
         type: 'interface',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
       expect(manager.findDeclaration('Abstract1').declaration).toHaveSubset({
         name: 'Abstract1',
         type: 'abstract',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
       expect(manager.findDeclaration('Contract1').declaration).toHaveSubset({
         name: 'Contract1',
         type: 'contract',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
     })
@@ -76,7 +76,7 @@ describe(ParsedFilesManager.name, () => {
         declaration: expect.subset({
           name: 'Contract1',
           type: 'contract',
-          referencedDeclaration: [],
+          dynamicReferences: [],
           inheritsFrom: [],
         }),
         file: expect.subset({
