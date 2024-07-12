@@ -34,12 +34,13 @@ export default function Page() {
 
   const events = getCollection('events')
   const allEventEntries = getGovernanceEventEntries(events)
-  const eventEntries = allEventEntries
-    .slice(
-      allEventEntries.findIndex((e) => e.startDate > new Date()),
-      allEventEntries.length,
-    )
-    .slice(0, 8)
+  const nearestEventIndex = allEventEntries.findIndex(
+    (e) => e.startDate > new Date(),
+  )
+  const eventEntries = allEventEntries.slice(
+    nearestEventIndex,
+    nearestEventIndex + 8,
+  )
 
   return (
     <>
