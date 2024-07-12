@@ -80,7 +80,7 @@ export async function NavSidebar({
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
         <NavDivider />
-        <ul className="flex xl:justify-between gap-2 sidenav-collapsed:hidden">
+        <ul className="flex xl:justify-between gap-2 sidenav-collapsed:hidden text-2xl">
           <SocialLinks />
         </ul>
       </nav>
