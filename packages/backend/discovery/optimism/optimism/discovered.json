@@ -1,8 +1,8 @@
 {
   "name": "optimism",
   "chain": "optimism",
-  "blockNumber": 121899221,
-  "configHash": "0x3cef7cdf62c41fc1031b255ed196846dcfa4428e3bd4402a7af2f2e9c4fa4799",
+  "blockNumber": 122593187,
+  "configHash": "0x31a3019cd0013048c71bd882672a02bed221167c8934d74ae1189dbeb3ceb61b",
   "version": 9,
   "contracts": [
     {
@@ -55,7 +55,7 @@
         "$implementation": "0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007",
         "l1CrossDomainMessenger": "0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638045",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292638481",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -76,17 +76,18 @@
       "sinceTimestamp": 1636665399,
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
-        "$implementation": "0xb528D11cC114E026F138fE568744c6D45ce6Da7A",
+        "$implementation": "0xa919894851548179A0750865e7974DA599C0Fac7",
         "baseFee": 0,
-        "baseFeeScalar": 1368,
+        "baseFeeScalar": 5227,
         "blobBaseFee": 1,
-        "blobBaseFeeScalar": 810949,
+        "blobBaseFeeScalar": 1014213,
         "decimals": 6,
         "DECIMALS": 6,
         "gasPrice": 0,
         "isEcotone": true,
-        "l1BaseFee": 3002056979,
-        "version": "1.2.0"
+        "isFjord": true,
+        "l1BaseFee": 2198118884,
+        "version": "1.3.0"
       },
       "derivedName": "GasPriceOracle"
     },
@@ -176,18 +177,18 @@
       "values": {
         "$admin": "0x4200000000000000000000000000000000000018",
         "$implementation": "0x07dbe8500fc591d1852B76feE44d5a05e13097Ff",
-        "basefee": 3002056979,
-        "baseFeeScalar": 1368,
+        "basefee": 2198118884,
+        "baseFeeScalar": 5227,
         "batcherHash": "0x0000000000000000000000006887246668a3b87f54deb3b94ba47a6f63f32985",
         "blobBaseFee": 1,
-        "blobBaseFeeScalar": 810949,
+        "blobBaseFeeScalar": 1014213,
         "DEPOSITOR_ACCOUNT": "0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001",
-        "hash": "0x3689bfdebef9303055294672be98cc49917858d49ab8f808d65fa528f7f0fddb",
+        "hash": "0x2e964eeaf833d19fd3135e9ff9aae81186b0a6630bf08e7396db845b3bbac9a2",
         "l1FeeOverhead": 188,
         "l1FeeScalar": 684000,
-        "number": 20175214,
+        "number": 20290230,
         "sequenceNumber": 4,
-        "timestamp": 1719397079,
+        "timestamp": 1720785011,
         "version": "1.2.0"
       },
       "derivedName": "L1Block"
@@ -667,7 +668,7 @@
       "function register(string schema, address resolver, bool revocable) returns (bytes32)",
       "function version() view returns (string)"
     ],
-    "0xb528D11cC114E026F138fE568744c6D45ce6Da7A": [
+    "0xa919894851548179A0750865e7974DA599C0Fac7": [
       "function DECIMALS() view returns (uint256)",
       "function baseFee() view returns (uint256)",
       "function baseFeeScalar() view returns (uint32)",
@@ -676,12 +677,15 @@
       "function decimals() pure returns (uint256)",
       "function gasPrice() view returns (uint256)",
       "function getL1Fee(bytes _data) view returns (uint256)",
+      "function getL1FeeUpperBound(uint256 _unsignedTxSize) view returns (uint256)",
       "function getL1GasUsed(bytes _data) view returns (uint256)",
       "function isEcotone() view returns (bool)",
+      "function isFjord() view returns (bool)",
       "function l1BaseFee() view returns (uint256)",
       "function overhead() view returns (uint256)",
       "function scalar() view returns (uint256)",
       "function setEcotone()",
+      "function setFjord()",
       "function version() view returns (string)"
     ],
     "0xc0d3c0d3C0d3c0D3c0d3C0D3c0d3C0d3c0D30002": [
