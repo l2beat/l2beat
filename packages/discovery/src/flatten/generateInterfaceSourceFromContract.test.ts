@@ -5,6 +5,10 @@ import { generateInterfaceSourceFromContract } from './generateInterfaceSourceFr
 describe(generateInterfaceSourceFromContract.name, () => {
   it('generates interface from contract', () => {
     const source = String.raw`contract E {
+            uint256 public variableToSkip;
+            using ThisShouldBe for Skipped;
+            modifier modifierToSkip() { _; }
+
             struct MyStructDifferent {
                 mapping(uint256 => uint256) elementInside;
             }
