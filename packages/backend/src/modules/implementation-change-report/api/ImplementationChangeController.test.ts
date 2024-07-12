@@ -22,11 +22,14 @@ describe(ImplementationChangeController.name, () => {
             contracts: [
               {
                 address: CONTRACT_A,
-                implementations: [IMPLEMENTATION_A_AFTER],
+                values: {
+                  $implementation: IMPLEMENTATION_A_AFTER,
+                },
               },
             ],
           },
-        } as UpdateMonitorRecord
+          // TODO: (sz-piotr) This is a very ugly workaround
+        } as unknown as UpdateMonitorRecord
       },
     })
     const configReader = mockObject<ConfigReader>({
@@ -39,19 +42,20 @@ describe(ImplementationChangeController.name, () => {
         return []
       },
       readDiscovery: (name: string, chain: string) => {
-        const result = {
+        return {
           contracts: [
             {
               address: CONTRACT_A,
-              implementations: [IMPLEMENTATION_A_AFTER],
+              values: {
+                $implementation:
+                  chain === 'ethereum' && name === 'arbitrum'
+                    ? IMPLEMENTATION_A_BEFORE
+                    : IMPLEMENTATION_A_AFTER,
+              },
             },
           ],
-        } as DiscoveryOutput
-
-        if (chain === 'ethereum' && name === 'arbitrum') {
-          result.contracts[0].implementations = [IMPLEMENTATION_A_BEFORE]
-        }
-        return result
+          // TODO: (sz-piotr) This is a very ugly workaround
+        } as unknown as DiscoveryOutput
       },
     })
 

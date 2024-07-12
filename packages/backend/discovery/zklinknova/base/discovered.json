@@ -3,20 +3,17 @@
   "chain": "base",
   "blockNumber": 16656405,
   "configHash": "0x49f7bf7640f2f567471dbb7179bf811af73dcafa29f1fb7e91dce5adda9dc2db",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "BaseL2Gateway",
       "address": "0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011",
       "template": "zklinknova/secondaryGateway",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7f00134427437b2883F59EF3880597FDc836E356",
-        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
-      },
-      "implementations": ["0x7f00134427437b2883F59EF3880597FDc836E356"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1711095783,
       "values": {
+        "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+        "$implementation": "0x7f00134427437b2883F59EF3880597FDc836E356",
         "getRemoteGateway": "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -27,14 +24,11 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x80d12A78EfE7604F00ed07aB2f16F643301674D5",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xA89aa7e3D34516EAB7129E401215d5d1239Ce715",
-        "admin": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE"
-      },
-      "implementations": ["0xA89aa7e3D34516EAB7129E401215d5d1239Ce715"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1711098033,
       "values": {
+        "$admin": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
+        "$implementation": "0xA89aa7e3D34516EAB7129E401215d5d1239Ce715",
         "l2Bridge": "0xa03248B029b4e348F156f4b1d93CB433a4e1361e",
         "l2TokenBeacon": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -44,14 +38,12 @@
     {
       "name": "BaseProxyAdmin",
       "address": "0x85F0d9da054C5FE399E079Cc0b47de74be5b22AE",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x80d12A78EfE7604F00ed07aB2f16F643301674D5"]
       },
       "sinceTimestamp": 1711098033,
       "values": {
+        "$immutable": true,
         "owner": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -61,14 +53,11 @@
       "name": "zkLink",
       "address": "0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd",
       "template": "zklinknova/secondaryZkLink",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388",
-        "admin": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C"
-      },
-      "implementations": ["0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1711095697,
       "values": {
+        "$admin": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
+        "$implementation": "0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388",
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -101,19 +90,16 @@
       "name": "BaseOwner",
       "address": "0xEf1c84A2fdCE663b75dB3F822cBe1cFddaaa162C",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": [],
-        "threshold": "5 of 7 (71%)"
-      },
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": ["0xE473ce141b1416Fe526eb63Cf7433b7B8d7264Dd"]
       },
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1692606269,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$multisigThreshold": "5 of 7 (71%)",
         "domainSeparator": "0x6ad6d99ef4e4782a3d265fefe7855f7478dc8ee9170cc73fd61410dcd5168801",
         "getChainId": 8453,
         "getOwners": [
@@ -126,6 +112,7 @@
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
         "getThreshold": 5,
+        "GnosisSafe_modules": [],
         "nonce": 15,
         "VERSION": "1.3.0"
       },
@@ -133,42 +120,20 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
-    },
-    {
-      "address": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9"
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
+    { "address": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": {
-        "admin": ["0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
-    },
-    {
-      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
-    },
-    {
-      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
-    },
-    {
-      "address": "0xa03248B029b4e348F156f4b1d93CB433a4e1361e"
-    },
-    {
-      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
-    },
-    {
-      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
-    },
-    {
-      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF"
-    }
+    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
+    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
+    { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
+    { "address": "0xa03248B029b4e348F156f4b1d93CB433a4e1361e" },
+    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
+    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
+    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x08Ca9154DA9318323D3f6DFd872f5cDC4C85E388": [

@@ -1,9 +1,6 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
-import {
-  ContractValue,
-  UpgradeabilityParameters,
-} from '@l2beat/discovery-types'
+import { ContractValue } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import {
   ContractFieldSeverity,
@@ -83,11 +80,11 @@ export function getSelfMeta(
 
 export function getTargetsMeta(
   self: EthereumAddress,
-  upgradeability: UpgradeabilityParameters,
+  admins: EthereumAddress[],
   handlerResults: HandlerResult[],
   fields?: { [address: string]: DiscoveryContractField },
 ): AddressToMetaMap | undefined {
-  const result = getMetaFromUpgradeability(self, upgradeability)
+  const result = getMetaFromUpgradeability(self, admins)
 
   if (fields !== undefined) {
     for (const handlerResult of handlerResults) {
@@ -112,13 +109,11 @@ export function getTargetsMeta(
 
 export function getMetaFromUpgradeability(
   self: EthereumAddress,
-  upgradeability: UpgradeabilityParameters,
+  admins: EthereumAddress[],
 ): AddressToMetaMap {
   const result: Record<string, ContractMeta> = {}
-  // @ts-expect-error pulling 'admin' from any type of proxy
-  const upgradeabilityAdmin = upgradeability['admin'] as
-    | EthereumAddress
-    | undefined
+  // TODO: (sz-piotr) handle multiple admins!
+  const upgradeabilityAdmin = admins[0]
   if (upgradeabilityAdmin !== undefined) {
     const permission: Permission = 'admin'
     result[upgradeabilityAdmin.toString()] = {

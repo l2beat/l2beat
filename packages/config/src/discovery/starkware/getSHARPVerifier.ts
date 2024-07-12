@@ -1,6 +1,7 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import { ScalingProjectPermission } from '../../common'
+import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { ProjectDiscovery } from '../ProjectDiscovery'
 import { getProxyGovernance } from './getProxyGovernance'
 
@@ -73,9 +74,9 @@ const MERKLE_STATEMENT_CONTRACT = discovery.getContractDetails(
   'Part of STARK Verifier.',
 )
 
-const upgradeDelay = discovery.getContractUpgradeabilityParam(
+const upgradeDelay = discovery.getContractValue<number>(
   'SHARPVerifierProxy',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
 const SHARP_VERIFIER_CONTRACTS = [
@@ -115,10 +116,7 @@ export function getSHARPVerifierGovernors(
       accounts: getProxyGovernance(discovery, 'SHARPVerifierProxy'),
       description:
         'Can upgrade implementation of SHARP Verifier, potentially with code approving fraudulent state. ' +
-        discovery.getDelayStringFromUpgradeability(
-          'SHARPVerifierProxy',
-          'upgradeDelay',
-        ),
+        delayDescriptionFromSeconds(upgradeDelay),
     },
     ...discovery.getMultisigPermission(
       'SHARPVerifierGovernorMultisig',

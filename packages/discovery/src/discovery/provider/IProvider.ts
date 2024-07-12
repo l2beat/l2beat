@@ -71,7 +71,7 @@ export interface IProvider {
 
   getTransaction(
     transactionHash: Hash256,
-  ): Promise<providers.TransactionResponse>
+  ): Promise<providers.TransactionResponse | undefined>
   getDebugTrace(transactionHash: Hash256): Promise<DebugTransactionCallResponse>
 
   getBytecode(address: EthereumAddress): Promise<Bytes>

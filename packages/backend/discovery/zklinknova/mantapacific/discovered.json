@@ -3,18 +3,16 @@
   "chain": "mantapacific",
   "blockNumber": 2587849,
   "configHash": "0x47105bb307ede9b31b7f4dff4a5ccbc362ced0d066f6eb8da52c0753e64b3f8a",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "MantaProxyAdmin",
       "address": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x44a65dc12865A1e5249b45b4868f32b0E37168FF"]
       },
       "values": {
+        "$immutable": true,
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -23,13 +21,10 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c",
-        "admin": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05"
-      },
-      "implementations": ["0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c"],
+      "proxyType": "EIP1967 proxy",
       "values": {
+        "$admin": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
+        "$implementation": "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c",
         "l2Bridge": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09",
         "l2TokenBeacon": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -40,32 +35,29 @@
       "name": "MantaOwner",
       "address": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
       "unverified": true,
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": [],
-        "threshold": "6 of 8 (75%)"
-      },
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": [
           "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         ]
       },
-      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
+      "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$multisigThreshold": "6 of 8 (75%)",
+        "GnosisSafe_modules": []
+      },
       "derivedName": ""
     },
     {
       "name": "zkLink",
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "template": "zklinknova/secondaryZkLink",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
-        "admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3"
-      },
-      "implementations": ["0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585"],
+      "proxyType": "EIP1967 proxy",
       "values": {
+        "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "$implementation": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -98,13 +90,10 @@
       "name": "MantaL2Gateway",
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "template": "zklinknova/secondaryGateway",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x50efC7f1290479cb879473512D89fDC80B726211",
-        "admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3"
-      },
-      "implementations": ["0x50efC7f1290479cb879473512D89fDC80B726211"],
+      "proxyType": "EIP1967 proxy",
       "values": {
+        "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
+        "$implementation": "0x50efC7f1290479cb879473512D89fDC80B726211",
         "getRemoteGateway": "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
@@ -114,15 +103,9 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F"
-    },
-    {
-      "address": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x7a646f3C9b0f50A70513636BdfCB6cC12e6D406F" },
+    { "address": "0xa898E175CfDE9C6ABfCF5948eEfBA1B852eE5B09" }
   ],
   "abis": {
     "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05": [

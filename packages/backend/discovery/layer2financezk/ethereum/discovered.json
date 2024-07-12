@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19825376,
   "configHash": "0x6fd4301a2c9e4ae00ed8224575e08660581e9726e77386f40cd7a19a38b45d4d",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1626352379,
       "values": {
+        "$immutable": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
       }
@@ -20,11 +18,9 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0x6e3AbCE72A3CD5edc05E59283c733Fd4bF8B3baE",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1640107463,
       "values": {
+        "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
@@ -34,32 +30,20 @@
     {
       "name": "Proxy",
       "address": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
-      "upgradeability": {
-        "type": "StarkWare diamond",
-        "implementation": "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-        "upgradeDelay": 0,
-        "isFinal": false,
-        "facets": {
-          "StarkWare_AllVerifiers_2020_1": "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-          "StarkWare_TokensAndRamping_2020_1": "0x8536850750956c2FEebeCAB786d82271a5467687",
-          "StarkWare_StarkExState_2021_1": "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-          "StarkWare_ForcedActions_2020_1": "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-          "StarkWare_OnchainVaults_2021_1": "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-          "StarkWare_ProxyUtils_2021_1": "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
-        },
-        "proxyGovernance": ["0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"]
-      },
-      "implementations": [
-        "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
-        "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
-        "0x8536850750956c2FEebeCAB786d82271a5467687",
-        "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
-        "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
-        "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
-        "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
-      ],
+      "proxyType": "StarkWare diamond",
       "sinceTimestamp": 1645130774,
       "values": {
+        "$admin": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+        "$immutable": false,
+        "$implementation": [
+          "0x4EDD62189732e9fF476ABa880b48c29432A7AC9B",
+          "0x62BCA4DB742A99c834e2c24b609656A70EA25379",
+          "0x8536850750956c2FEebeCAB786d82271a5467687",
+          "0x1c3A4EfF75a287Fe6249CAb49606FA25659929A2",
+          "0x3799ad2a4Eb4E882219B02C036656d4ECbD437A1",
+          "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339",
+          "0xB3788a88F063B217227E27ae16Ba550db3132bE6"
+        ],
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
@@ -95,6 +79,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
+        "StarkWareDiamond_upgradeDelay": 0,
         "UNFREEZE_DELAY": 31536000,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "VERIFIER_REMOVAL_DELAY": 2419200,
@@ -104,11 +89,9 @@
     {
       "name": "Broker",
       "address": "0xe7c753895d492f8D4B06a2A1B16c1aEF2A7d16E5",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1648452641,
       "values": {
+        "$immutable": true,
         "EXP_TIME": 2000000,
         "nonce": 23,
         "onchainVaults": "0x82123571C8a5e0910280C066bc634c4945FFcbC8",
@@ -121,22 +104,17 @@
       "name": "",
       "address": "0xF000A3B10e1920aDC6e7D829828e3357Fc5128A9",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1650870230
+      "sinceTimestamp": 1650870230,
+      "values": { "$immutable": true }
     }
   ],
   "eoas": [
     {
-      "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e"
+      "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5"
-    },
-    {
-      "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988"
-    }
+    { "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5" },
+    { "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988" }
   ],
   "abis": {
     "0x1688abB0B5c72F34B7f78e857Aa317deD5B5D339": [

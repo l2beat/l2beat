@@ -135,10 +135,8 @@ export const mxc: Layer3 = {
       name: 'Vault Admin EOA',
       accounts: [
         {
-          address: discovery.getContractUpgradeabilityParam(
-            'TokenVault?',
-            'admin',
-          ),
+          // TODO: (sz-piotr) This seems hacky
+          address: discovery.get$Admins('TokenVault?')[0],
           type: 'EOA',
         },
       ],

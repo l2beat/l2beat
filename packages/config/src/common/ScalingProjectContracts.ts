@@ -1,4 +1,3 @@
-import type { UpgradeabilityParameters } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { ScalingProjectReference } from './ScalingProjectReference'
@@ -70,43 +69,9 @@ export interface ScalingProjectContractMultipleAddresses {
   chain?: string
 }
 
-export type ScalingProjectUpgradeability =
-  | CustomUpgradeability
-  | CustomUpgradeabilityWithoutAdmin
-  | ReferenceUpgradeability
-  | BeaconUpgradeability
-  | UpgradeabilityParameters
-
-export interface CustomUpgradeability {
-  type: 'Custom'
-  /** Address of the admin */
-  admin: EthereumAddress
-  /** Address of the implementation */
-  implementation: EthereumAddress
-}
-
-export interface CustomUpgradeabilityWithoutAdmin {
-  type: 'CustomWithoutAdmin'
-  /** Address of the admin */
-  implementation: EthereumAddress
-}
-
-export interface ReferenceUpgradeability {
-  type: 'Reference'
-  /** Name of the base contract */
-  base: string
-  /** Method signature to check */
-  method: string
-  /** Arguments to the method */
-  args?: (string | boolean | number)[]
-}
-
-export interface BeaconUpgradeability {
-  type: 'Beacon'
-  /** Address of the beacon contract */
-  beacon: EthereumAddress
-  /** Address of the admin of the beacon contract */
-  beaconAdmin: EthereumAddress
-  /** Address of the implementation */
-  implementation: EthereumAddress
+export interface ScalingProjectUpgradeability {
+  proxyType: string
+  immutable?: boolean
+  admins: EthereumAddress[]
+  implementations: EthereumAddress[]
 }

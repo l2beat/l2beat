@@ -99,6 +99,11 @@ export class ConstructorArgsHandler implements Handler {
     const deploymentTx = await provider.getTransaction(
       deployment.transactionHash,
     )
+    if (deploymentTx === undefined) {
+      throw new Error(
+        "Can't discover constructor because getTransaction is not available",
+      )
+    }
 
     const decodedConstructorArguments = decodeConstructorArgs(
       this.constructorFragment,

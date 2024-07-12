@@ -3,49 +3,39 @@
   "chain": "ethereum",
   "blockNumber": 19816414,
   "configHash": "0x79ab0e953135f51ef67edee8308d7def1f7b57f24e77fe39d6d60da30592bd08",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "DefiBridgeProxy",
       "address": "0xA1BBa894a6D39D79C0D1ef9c68a2139c84B81487",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1654638146
+      "sinceTimestamp": 1654638146,
+      "values": { "$immutable": true }
     },
     {
       "name": "Verifier28x32",
       "address": "0xb7baA1420f88b7758E341c93463426A2b7651CFB",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1712567195,
       "values": {
+        "$immutable": true,
         "getVerificationKeyHash": "0x58ef3faae858309785d95440f2ae3192ad9e3a640d7d078a48f5200acd68dabd"
       }
     },
     {
       "name": "ProxyAdmin",
       "address": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455"]
       },
       "sinceTimestamp": 1654638154,
       "values": {
+        "$immutable": true,
         "owner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
       "name": "RollupProcessorV3",
       "address": "0xFF1F2B4ADb9dF6FC8eAFecDcbF96A2B351680455",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728",
-        "admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
         "getDataSize",
         "getDefiInteractionHashesLength",
@@ -56,30 +46,22 @@
         "prevDefiInteractionsHash",
         "rollupStateHash"
       ],
-      "implementations": ["0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728"],
       "sinceTimestamp": 1654638194,
       "values": {
+        "$admin": "0xC5b735d05c26579B701Be9bED253Bb588503B26B",
+        "$implementation": "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": []
           },
-          "OWNER_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
+          "OWNER_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
           "EMERGENCY_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": []
           },
-          "LISTER_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          },
-          "RESUME_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": []
-          }
+          "LISTER_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
+          "RESUME_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] }
         },
         "allowThirdPartyContracts": false,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -151,15 +133,9 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7"
-    },
-    {
-      "address": "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0xA173BDdF4953C1E8be2cA0695CFc07502Ff3B1e7" },
+    { "address": "0xD64791E747188b0e5061fC65b56Bf20FeE2e3321" }
   ],
   "abis": {
     "0x7d657Ddcf7e2A5fD118dC8A6dDc3dC308AdC2728": [

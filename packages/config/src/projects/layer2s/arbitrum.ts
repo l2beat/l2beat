@@ -559,11 +559,11 @@ export const arbitrum: Layer2 = {
       'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
     ),
     discovery.contractAsPermissioned(
-      discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
+      discovery.getContractFromValue('UpgradeExecutor', '$admin'),
       "This contract is an admin of the UpgradeExecutor contract, but is also owned by it. Can cancel Timelock's proposals.",
     ),
     discovery.contractAsPermissioned(
-      discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
+      discovery.getContractFromValue('L1GatewayRouter', '$admin'),
       'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
     ),
     {

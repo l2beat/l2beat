@@ -3,14 +3,11 @@
   "chain": "ethereum",
   "blockNumber": 19531401,
   "configHash": "0x4af8375cccf9b10109218a189531c737b3fd7e2a9b929dcae68abc66eedb1c54",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "USDC_POOL",
       "address": "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "a",
         "accRewardPerShareP",
@@ -27,6 +24,7 @@
       ],
       "sinceTimestamp": 1669206935,
       "values": {
+        "$immutable": true,
         "a": 20,
         "accRewardPerShareP": "293881805566878551",
         "adminFeeAmount": 0,
@@ -49,11 +47,9 @@
       "name": "Allbridge Messenger",
       "address": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1662595853,
       "values": {
+        "$immutable": true,
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "derivedName": ""
@@ -62,11 +58,9 @@
       "name": "Validator",
       "address": "0x93746538D4519C809827205Bd1C2c7a0E15bd74b",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1636666899,
       "values": {
+        "$immutable": true,
         "owner": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"
       },
       "derivedName": ""
@@ -74,11 +68,9 @@
     {
       "name": "LPBridge",
       "address": "0xA314330482f325D38A83B492EF6B006224a3bea9",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1662596119,
       "values": {
+        "$immutable": true,
         "allbridgeMessenger": "0x366a900eFE79aE7244C4d1d279EE4a702AdBEE50",
         "chainId": 1,
         "DAI_POOL": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
@@ -92,9 +84,6 @@
     {
       "name": "USDT_POOL",
       "address": "0xB827b15adA62D78F5cb90243bc4755cf4B9d1B0e",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "a",
         "accRewardPerShareP",
@@ -111,6 +100,7 @@
       ],
       "sinceTimestamp": 1662596190,
       "values": {
+        "$immutable": true,
         "a": 20,
         "accRewardPerShareP": "188388856323130911",
         "adminFeeAmount": 0,
@@ -133,11 +123,9 @@
       "name": "Fee Oracle",
       "address": "0xba6d8dE08f13A3D22FCEC54752812Dd4dcf2E1f6",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1636634854,
       "values": {
+        "$immutable": true,
         "owner": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
       },
       "derivedName": ""
@@ -145,11 +133,9 @@
     {
       "name": "TokenBridge",
       "address": "0xBBbD1BbB4f9b936C3604906D7592A644071dE884",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1636635220,
       "values": {
+        "$immutable": true,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -178,9 +164,6 @@
     {
       "name": "DAI_POOL",
       "address": "0xCe01bc1be28c0784492cB44EbBDa662c3F539172",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "a",
         "accRewardPerShareP",
@@ -197,6 +180,7 @@
       ],
       "sinceTimestamp": 1669207319,
       "values": {
+        "$immutable": true,
         "a": 20,
         "accRewardPerShareP": "21665218338930481943850442658",
         "adminFeeAmount": 0,
@@ -219,26 +203,18 @@
       "name": "Wormhole Messenger",
       "address": "0xF4830e4F739c8eB04EFDbf346BAE5c82163da83F",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1662998060,
       "values": {
+        "$immutable": true,
         "owner": "0x01a494079DCB715f622340301463cE50cd69A4D0"
       },
       "derivedName": ""
     }
   ],
   "eoas": [
-    {
-      "address": "0x01a494079DCB715f622340301463cE50cd69A4D0"
-    },
-    {
-      "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074"
-    },
-    {
-      "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E"
-    }
+    { "address": "0x01a494079DCB715f622340301463cE50cd69A4D0" },
+    { "address": "0x4BE5ef97B7cfD37F536324c7F18A2FfdE5892074" },
+    { "address": "0x83f53C078bF81F6d8B79E01e2eD36c473A960c5E" }
   ],
   "abis": {
     "0x1D3df13aDAe6cA91Fb90b977c21d6e90ad8d403C": [

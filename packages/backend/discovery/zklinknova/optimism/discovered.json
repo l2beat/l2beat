@@ -3,25 +3,22 @@
   "chain": "optimism",
   "blockNumber": 122251717,
   "configHash": "0xce10e15afb33d1b6e6810a19bcb0420abc52bc5646c858e42dda06270610dec1",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "OptimismOwner",
       "address": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": [],
-        "threshold": "4 of 7 (57%)"
-      },
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": ["0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"]
       },
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1692605961,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$multisigThreshold": "4 of 7 (57%)",
         "domainSeparator": "0x18b594ec6cbe81554af90ad5b8ef66a89f70d936be932a27159a978ab571232f",
         "getChainId": 10,
         "getOwners": [
@@ -34,6 +31,7 @@
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
         "getThreshold": 4,
+        "GnosisSafe_modules": [],
         "nonce": 18,
         "VERSION": "1.3.0"
       },
@@ -43,14 +41,11 @@
       "name": "zkLink",
       "address": "0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b",
       "template": "zklinknova/secondaryZkLink",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E",
-        "admin": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9"
-      },
-      "implementations": ["0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1711092485,
       "values": {
+        "$admin": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
+        "$implementation": "0xe71A6Cfb42D0398f6d6aeD8a19987C83bbE3B86E",
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -82,14 +77,11 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x5Bd51296423A9079b931414C1De65e7057326EaA",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8",
-        "admin": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4"
-      },
-      "implementations": ["0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1711095511,
       "values": {
+        "$admin": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
+        "$implementation": "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8",
         "l2Bridge": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15",
         "l2TokenBeacon": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -99,14 +91,12 @@
     {
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x5Bd51296423A9079b931414C1De65e7057326EaA"]
       },
       "sinceTimestamp": 1711095511,
       "values": {
+        "$immutable": true,
         "owner": "0x2c3FF918E3925CC3ba95f41307D1cfBEFDF93dB9",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -116,14 +106,11 @@
       "name": "OptimismL2Gateway",
       "address": "0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c",
       "template": "zklinknova/secondaryGateway",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e",
-        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
-      },
-      "implementations": ["0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1711092577,
       "values": {
+        "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+        "$implementation": "0x3C3f4b866f8c6F0D2c912feE36D5Ad337a9AA98e",
         "getRemoteGateway": "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
         "MESSAGE_SERVICE": "0x4200000000000000000000000000000000000007",
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
@@ -133,42 +120,20 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": {
-        "admin": ["0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
-    },
-    {
-      "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15"
-    },
-    {
-      "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
-    },
-    {
-      "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
-    },
-    {
-      "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d"
-    },
-    {
-      "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
-    },
-    {
-      "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
-    },
-    {
-      "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF"
-    }
+    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
+    { "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15" },
+    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
+    { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
+    { "address": "0xC9c41965710Dcc1434A7B7d44dAf6A4418E2C27d" },
+    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
+    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
+    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x21Fe89FfB96d4092b42c8ab35dcFEee50a86C3B8": [

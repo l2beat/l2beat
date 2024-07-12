@@ -3,14 +3,11 @@
   "chain": "scroll",
   "blockNumber": 6694912,
   "configHash": "0x9fa65037b0e93c454add856c6e9edc2c563b21e5c0a40fdad3a2286de4532ff0",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
       "address": "0x3Fc69CC4A842838bCDC9499178740226062b14E4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -20,6 +17,7 @@
       ],
       "sinceTimestamp": 1716837020,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
@@ -36,10 +34,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30214,
         "lpToken": "0x1eA77149Dfd4C80A753aaa39AaFC22453aefcc99",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
         "plannerFee": "68183656877608917",
         "poolBalance": 2462659462553,
@@ -54,21 +49,16 @@
     {
       "name": "TokenMessaging",
       "address": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837029,
       "values": {
+        "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 13,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x4e422B0aCb2Bd7e3aC70B5c0E5eb806e86a94038",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -94,9 +84,6 @@
     {
       "name": "StargatePoolNative",
       "address": "0xC2b638Cb5042c1B3c5d5C969361fB50569840583",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -106,6 +93,7 @@
       ],
       "sinceTimestamp": 1716837011,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -120,10 +108,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30214,
         "lpToken": "0x73424Acc8749b5c76c7AbBB1B17D1F18Ce0Bb092",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xC02c4Ac2DBaA4eC11C306dDb0ABab5b421bd19fB",
         "plannerFee": "598960801454452859",
         "poolBalance": "2956610241000000000000",
@@ -137,12 +122,8 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x3Fc69CC4A842838bCDC9499178740226062b14E4": [

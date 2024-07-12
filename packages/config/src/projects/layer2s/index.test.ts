@@ -4,13 +4,13 @@ import {
   EthereumAddress,
   UnixTime,
   assertUnreachable,
-  gatherAddressesFromUpgradeability,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {
   NUGGETS,
@@ -285,9 +285,7 @@ describe('layer2s', () => {
 
                     const contractAddresses = [
                       contract.address,
-                      ...gatherAddressesFromUpgradeability(
-                        contract.upgradeability,
-                      ),
+                      ...get$Implementations(contract.values),
                     ]
 
                     expect(

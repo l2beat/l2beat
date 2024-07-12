@@ -86,8 +86,12 @@ export class OpStackDAHandler implements Handler {
     const rpcTxs = await Promise.all(
       last10Txs.map((tx) => provider.getTransaction(tx.hash)),
     )
+    const missingIndex = rpcTxs.findIndex((x) => x === undefined)
+    if (missingIndex !== -1) {
+      throw new Error(`Transaction ${last10Txs[missingIndex]?.hash} is missing`)
+    }
     const isSequencerSendingBlobTx = rpcTxs.some(
-      (tx) => tx.type === BLOB_TX_TYPE,
+      (tx) => tx?.type === BLOB_TX_TYPE,
     )
 
     return {

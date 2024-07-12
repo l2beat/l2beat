@@ -1,6 +1,10 @@
 import { bridges, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractValue,
+  DiscoveryOutput,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 
@@ -63,7 +67,7 @@ async function findCommon(config: Config): Promise<void> {
       .includes(address)
     const isImplementation = linkedProjectes
       .flatMap((p) => p.contracts)
-      .flatMap((a) => a.implementations ?? [])
+      .flatMap((a) => get$Implementations(a.values))
       .map((a) => a.toString())
       .includes(address)
 
@@ -102,20 +106,20 @@ function printRelations(
   projectAddresses: Record<string, string[]>,
   discoveries: DiscoveryOutput[],
 ) {
-  const linkedProjectes = discoveries.filter((d) =>
+  const linkedProjects = discoveries.filter((d) =>
     projectAddresses[d.name].includes(address),
   )
-  const isEOA = linkedProjectes
+  const isEOA = linkedProjects
     .flatMap((p) => p.eoas)
     .map((a) => a.toString())
     .includes(address)
   function getContract() {
-    return linkedProjectes
+    return linkedProjects
       .flatMap((p) => p.contracts)
       .filter(
         (a) =>
           a.address.toString() === address ||
-          a.implementations?.includes(EthereumAddress(address)),
+          get$Implementations(a.values).includes(EthereumAddress(address)),
       )[0]
   }
   const header = isEOA
@@ -123,7 +127,7 @@ function printRelations(
     : chalk.cyan(`Contract (${getContract().name})`)
 
   console.log(`\nCommon ${header} | ${address}`)
-  linkedProjectes.forEach((p) => {
+  linkedProjects.forEach((p) => {
     const locations = getAddressLocations(p, address)
     locations.forEach((loc) =>
       console.log(
@@ -145,7 +149,8 @@ function getAddressLocations(
   const result: ContractLocation[] = []
 
   project.contracts.forEach((c) => {
-    if (!c.values && !c.implementations) {
+    const implementations = get$Implementations(c.values)
+    if (!c.values && implementations.length === 0) {
       return
     }
 
@@ -157,7 +162,7 @@ function getAddressLocations(
       )
       .map(([key, _]) => ({ key, contractName: c.name }))
       .concat(
-        (c.implementations ?? [])
+        implementations
           .filter((a) => a.toString() === address)
           .map((_) => ({ key: 'implementation', contractName: c.name })),
       )
@@ -183,7 +188,9 @@ function addToOccurrences(
 
 function getProjectAddresses(project: DiscoveryOutput) {
   const addresses: EthereumAddress[] = project.eoas.map((e) => e.address)
-  addresses.push(...project.contracts.flatMap((c) => c.implementations ?? []))
+  addresses.push(
+    ...project.contracts.flatMap((c) => get$Implementations(c.values)),
+  )
   addresses.push(...project.contracts.map((c) => c.address))
   addresses.push(
     ...project.contracts.flatMap((c) => {

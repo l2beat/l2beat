@@ -4,16 +4,17 @@ import {
   StackRole,
   calculateInversion,
 } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  ContractValue,
-  DiscoveryOutput,
+import {
+  type ContractParameters,
+  type ContractValue,
+  type DiscoveryOutput,
+  get$Admins,
+  get$Implementations,
 } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
   UnixTime,
-  gatherAddressesFromUpgradeability,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -30,7 +31,6 @@ import {
   ScalingProjectPermissionedAccount,
 } from '../common/ScalingProjectPermission'
 import { ScalingProjectReference } from '../common/ScalingProjectReference'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
@@ -47,16 +47,6 @@ import {
   StackPermissionsTag,
 } from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
-
-type AllKeys<T> = T extends T ? keyof T : never
-
-type MergedUnion<T extends object> = {
-  [K in AllKeys<T>]: PickType<T, K>
-}
-
-type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
-  ? T[K]
-  : undefined
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -98,7 +88,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name,
       address: contract.address,
-      upgradeability: contract.upgradeability,
+      upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
     }
@@ -336,7 +326,7 @@ export class ProjectDiscovery {
   ): ScalingProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
-      contract.upgradeability.type === 'gnosis safe',
+      contract.proxyType === 'gnosis safe',
       `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
     )
 
@@ -447,7 +437,7 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const contract = contracts.find((contract) => contract.address === address)
-    const isMultisig = contract?.upgradeability.type === 'gnosis safe'
+    const isMultisig = contract?.proxyType === 'gnosis safe'
 
     const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
 
@@ -497,35 +487,10 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       name: contract.name,
-      upgradeability: contract.upgradeability,
+      upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
     }
-  }
-
-  getContractFromUpgradeability<
-    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
-  >(contractIdentifier: string, key: K): ContractParameters {
-    const address = this.getContractUpgradeabilityParam(contractIdentifier, key)
-    assert(
-      isString(address) && EthereumAddress.check(address),
-      `Value of ${key} must be an Ethereum address`,
-    )
-    const contract = this.getContract(address)
-
-    return {
-      address: contract.address,
-      name: contract.name,
-      upgradeability: contract.upgradeability,
-    }
-  }
-
-  getDelayStringFromUpgradeability<
-    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
-  >(contractIdentifier: string, key: K): string {
-    const delay = this.getContractUpgradeabilityParam(contractIdentifier, key)
-    assert(typeof delay === 'number', `Value of ${key} must be a number`)
-    return delayDescriptionFromSeconds(delay)
   }
 
   contractAsPermissioned(
@@ -566,19 +531,14 @@ export class ProjectDiscovery {
     ]
   }
 
-  getContractUpgradeabilityParam<
-    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
-    T extends MergedUnion<ScalingProjectUpgradeability>[K],
-  >(contractIdentifier: string, key: K): NonNullable<T> {
+  get$Admins(contractIdentifier: string) {
     const contract = this.getContract(contractIdentifier)
-    //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
-    const result = contract.upgradeability[key] as T | undefined
-    assert(
-      isNonNullable(result),
-      `Upgradeability param of key ${key} does not exist in ${contract.name} contract (${this.projectName})`,
-    )
+    return get$Admins(contract.values)
+  }
 
-    return result
+  get$Implementations(contractIdentifier: string) {
+    const contract = this.getContract(contractIdentifier)
+    return get$Implementations(contract.values)
   }
 
   getAccessControlField(
@@ -589,15 +549,7 @@ export class ProjectDiscovery {
     members: EthereumAddress[]
   } {
     const accessControl = this.getContractValue<
-      Partial<
-        Record<
-          string,
-          {
-            adminRole: string
-            members: string[]
-          }
-        >
-      >
+      Partial<Record<string, { adminRole: string; members: string[] }>>
     >(contractIdentifier, 'accessControl')
     const role = accessControl && accessControl[roleName]
     assert(role, `Role ${roleName} does not exist`)
@@ -622,7 +574,7 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const addressesWithinUpgradeability = contracts.flatMap((contract) =>
-      gatherAddressesFromUpgradeability(contract.upgradeability),
+      get$Implementations(contract.values),
     )
 
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
@@ -671,6 +623,23 @@ export class ProjectDiscovery {
       .filter((x) => x.roles?.includes(role))
       .map((x) => this.formatPermissionedAccount(x.address))
   }
+}
+
+function getUpgradeability(
+  contract: ContractParameters,
+): ScalingProjectUpgradeability | undefined {
+  if (!contract.proxyType) {
+    return undefined
+  }
+  const upgradeability: ScalingProjectUpgradeability = {
+    proxyType: contract.proxyType,
+    admins: get$Admins(contract.values),
+    implementations: get$Implementations(contract.values),
+  }
+  if (contract.values?.$immutable !== undefined) {
+    upgradeability.immutable = !!contract.values.$immutable
+  }
+  return upgradeability
 }
 
 function isNonNullable<T>(

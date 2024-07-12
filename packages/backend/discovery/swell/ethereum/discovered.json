@@ -3,25 +3,22 @@
   "chain": "ethereum",
   "blockNumber": 20016207,
   "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "SwellMultisig",
       "address": "0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "4 of 6 (67%)"
-      },
+      "proxyType": "gnosis safe",
       "descriptions": [
         "Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem"
       ],
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1657096688,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "4 of 6 (67%)",
         "domainSeparator": "0x7ef947a4d0f9db951b663aca329bc6fdd6e078a18fd7d4bc7e89a1c40b0c5724",
         "getChainId": 1,
         "getOwners": [
@@ -33,6 +30,7 @@
           "0x5b27b9279251904AaF2127463eeFf91E0037F725"
         ],
         "getThreshold": 4,
+        "GnosisSafe_modules": [],
         "nonce": 110,
         "VERSION": "1.3.0"
       },
@@ -41,11 +39,9 @@
     {
       "name": "SwellL2PrelaunchVault",
       "address": "0x38D43a6Cb8DA0E855A42fB6b0733A0498531d774",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1712631371,
       "values": {
+        "$immutable": true,
         "owner": "0xCa2DF225ba3c4743E02611EC423FaAC311dEEEd4",
         "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
@@ -54,11 +50,9 @@
     {
       "name": "Zap",
       "address": "0xBD9fc4FdB07e46a69349101E862e82aa002aDe0d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1712632211,
       "values": {
+        "$immutable": true,
         "eETH": "0x35fA164735182de50811E8e2E824cFb9B6118ac2",
         "stakingContract": "0x38D43a6Cb8DA0E855A42fB6b0733A0498531d774",
         "stETH": "0xae7ab96520DE3A18E5e111B5EaAb095312D7fE84",
@@ -71,11 +65,9 @@
     {
       "name": "Timelock",
       "address": "0xCa2DF225ba3c4743E02611EC423FaAC311dEEEd4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1713411743,
       "values": {
+        "$immutable": true,
         "admin": "0x20fDF47509C5eFC0e1101e3CE443691781C17F90",
         "delay": 259200,
         "GRACE_PERIOD": 1209600,
@@ -86,27 +78,13 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x042d200e5375204F022570361f3913b245488091"
-    },
-    {
-      "address": "0x284C633962F2386590E934c4fBD2D3EafA0944A3"
-    },
-    {
-      "address": "0x5b27b9279251904AaF2127463eeFf91E0037F725"
-    },
-    {
-      "address": "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59"
-    },
-    {
-      "address": "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40"
-    },
-    {
-      "address": "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x042d200e5375204F022570361f3913b245488091" },
+    { "address": "0x284C633962F2386590E934c4fBD2D3EafA0944A3" },
+    { "address": "0x5b27b9279251904AaF2127463eeFf91E0037F725" },
+    { "address": "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59" },
+    { "address": "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40" },
+    { "address": "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238" }
   ],
   "abis": {
     "0x20fDF47509C5eFC0e1101e3CE443691781C17F90": [

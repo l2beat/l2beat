@@ -3,20 +3,17 @@
   "chain": "scroll",
   "blockNumber": 7132743,
   "configHash": "0xf8f80120476f885d8c2adbc166ca36d38ebe315447fcfa4b474d3b60f0da8ae4",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "zkLink",
       "address": "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
       "template": "zklinknova/secondaryZkLink",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
-        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
-      },
-      "implementations": ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1718004361,
       "values": {
+        "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+        "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -47,14 +44,11 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
-        "admin": "0xC4673dAbfAf04D2A430e244B63F040D27199102f"
-      },
-      "implementations": ["0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1718026877,
       "values": {
+        "$admin": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
+        "$implementation": "0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca",
         "l2Bridge": "0xC97c5E43c14D4F524347795410C299db1FA331b3",
         "l2TokenBeacon": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -64,14 +58,12 @@
     {
       "name": "ScrollProxyAdmin",
       "address": "0xC4673dAbfAf04D2A430e244B63F040D27199102f",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"]
       },
       "sinceTimestamp": 1718026877,
       "values": {
+        "$immutable": true,
         "owner": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -81,14 +73,11 @@
       "name": "ScrollL2Gateway",
       "address": "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7",
       "template": "zklinknova/secondaryGateway",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xe469c1330cEEcC375fE17E7D649eA270186D344F",
-        "admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
-      },
-      "implementations": ["0xe469c1330cEEcC375fE17E7D649eA270186D344F"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1718004634,
       "values": {
+        "$admin": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
+        "$implementation": "0xe469c1330cEEcC375fE17E7D649eA270186D344F",
         "ethToken": "0x0000000000000000000000000000000000000000",
         "getRemoteGateway": "0x986c905087a663db3C81ad319b94c1E9dd388e92",
         "isEthGasToken": true,
@@ -100,24 +89,13 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": {
-        "admin": [
-          "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
-          "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
-        ]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4"
-    },
-    {
-      "address": "0xC97c5E43c14D4F524347795410C299db1FA331b3"
-    }
+    { "address": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4" },
+    { "address": "0xC97c5E43c14D4F524347795410C299db1FA331b3" }
   ],
   "abis": {
     "0x067c7126a83560Ed2Fc345d25799F696B7Ea47Ca": [

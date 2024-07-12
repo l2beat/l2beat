@@ -3,14 +3,11 @@
   "chain": "ethereum",
   "blockNumber": 20138492,
   "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
@@ -20,20 +17,18 @@
       },
       "sinceTimestamp": 1647128852,
       "values": {
+        "$immutable": true,
         "owner": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7"
       }
     },
     {
       "name": "LiquidityPool",
       "address": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x4906b8E690EB1E09Fec924422452d1105D59d042",
-        "admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472"
-      },
-      "implementations": ["0x4906b8E690EB1E09Fec924422452d1105D59d042"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1647128990,
       "values": {
+        "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+        "$implementation": "0x4906b8E690EB1E09Fec924422452d1105D59d042",
         "baseGas": 21000,
         "getExecutorManager": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
         "liquidityProviders": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
@@ -45,11 +40,9 @@
     {
       "name": "ExecutorManager",
       "address": "0xbd761D917fB77381B4398Bda89C7F0d9A2BD1399",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647128800,
       "values": {
+        "$immutable": true,
         "getAllExecutors": [
           "0xEEFD474e80B6CAEA43F212D964409c473684E3fe",
           "0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685",
@@ -62,14 +55,11 @@
     {
       "name": "TokenManager",
       "address": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
-        "admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472"
-      },
-      "implementations": ["0x79E559AC5b499A5676e28f0074e29763F6c2A27e"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1652360689,
       "values": {
+        "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+        "$implementation": "0x79E559AC5b499A5676e28f0074e29763F6c2A27e",
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
       }
@@ -77,14 +67,11 @@
     {
       "name": "LiquidityProviders",
       "address": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103",
-        "admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472"
-      },
-      "implementations": ["0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1647128942,
       "values": {
+        "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+        "$implementation": "0x38391eA26F9EeE3ab81DE3C7eE9e168da5149103",
         "BASE_DIVISOR": "1000000000000000000",
         "owner": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6",
         "paused": false
@@ -92,24 +79,12 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7"
-    },
-    {
-      "address": "0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685"
-    },
-    {
-      "address": "0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0"
-    },
-    {
-      "address": "0x600Be30999eB256F2BEf451b69950f7dC84aC6b1"
-    },
-    {
-      "address": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6"
-    },
-    {
-      "address": "0xEEFD474e80B6CAEA43F212D964409c473684E3fe"
-    }
+    { "address": "0x129443cA2a9Dec2020808a2868b38dDA457eaCC7" },
+    { "address": "0x1439eDA7f9A911b9120E9A0DAfb60eAE317F7685" },
+    { "address": "0x4Fb5dF81b644e3Bd5Ad0BA07DCE2B67559C764E0" },
+    { "address": "0x600Be30999eB256F2BEf451b69950f7dC84aC6b1" },
+    { "address": "0xD76b82204BE75Ab9610B04CF27c4F4a34291D5E6" },
+    { "address": "0xEEFD474e80B6CAEA43F212D964409c473684E3fe" }
   ],
   "abis": {
     "0x13a4cC0750296bB72Eb0006febec306551A4f472": [

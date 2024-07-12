@@ -33,14 +33,14 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
 
-const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractValue<number>(
   'Paradex',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
-const escrowUSDCDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowUSDCDelaySeconds = discovery.getContractValue<number>(
   'USDC Bridge',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
 const minDelay = Math.min(upgradeDelaySeconds, escrowUSDCDelaySeconds)

@@ -1,5 +1,6 @@
 import type {
   ContractParameters,
+  ContractValue,
   DiscoveryOutput,
 } from '@l2beat/discovery-types'
 import { isArray, isObject } from 'lodash'
@@ -13,7 +14,13 @@ export function getUpgradeabilityParams(
 ): DashboardContractField[] {
   const result: DashboardContractField[] = []
 
-  Object.entries(contract.upgradeability).forEach(([key, value]) => {
+  const fields: [string, ContractValue | undefined][] = [
+    ['proxyType', contract.proxyType],
+    ['admin', contract.values?.$admin],
+    ['implementation', contract.values?.$implementation],
+  ]
+
+  fields.forEach(([key, value]) => {
     if (key === 'type' || value === undefined) {
       return
     }

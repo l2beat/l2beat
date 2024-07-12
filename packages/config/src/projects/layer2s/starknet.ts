@@ -36,9 +36,9 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('starknet')
 const verifierAddress = discovery.getAddressFromValue('Starknet', 'verifier')
 
-const starknetDelaySeconds = discovery.getContractUpgradeabilityParam(
+const starknetDelaySeconds = discovery.getContractValue<number>(
   'Starknet',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
 const ESCROW_ETH_ADDRESS = '0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419'
@@ -56,67 +56,67 @@ const ESCROW_LORDS_ADDRESS = '0x023A2aAc5d0fa69E3243994672822BA43E34E5C9'
 const ESCROW_STRK_ADDRESS = '0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4'
 const ESCROW_MULTIBRIDGE_ADDRESS = '0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb'
 
-const escrowETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_ETH_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowWBTCDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowWBTCDelaySeconds = discovery.getContractValue<number>(
   ESCROW_WBTC_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowUSDCDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowUSDCDelaySeconds = discovery.getContractValue<number>(
   ESCROW_USDC_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowUSDTDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowUSDTDelaySeconds = discovery.getContractValue<number>(
   ESCROW_USDT_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowWSTETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowWSTETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_WSTETH_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowRETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowRETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_RETH_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowUNIDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowUNIDelaySeconds = discovery.getContractValue<number>(
   ESCROW_UNI_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowFRAXDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowFRAXDelaySeconds = discovery.getContractValue<number>(
   ESCROW_FRAX_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowSFRXETHDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowSFRXETHDelaySeconds = discovery.getContractValue<number>(
   ESCROW_SFRXETH_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowFXSDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowFXSDelaySeconds = discovery.getContractValue<number>(
   ESCROW_FXS_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowLUSDDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowLUSDDelaySeconds = discovery.getContractValue<number>(
   ESCROW_LUSD_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowSTRKDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowSTRKDelaySeconds = discovery.getContractValue<number>(
   ESCROW_STRK_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
-const escrowMultibridgeDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowMultibridgeDelaySeconds = discovery.getContractValue<number>(
   ESCROW_MULTIBRIDGE_ADDRESS,
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
-const starkgateManagerDelaySeconds = discovery.getContractUpgradeabilityParam(
+const starkgateManagerDelaySeconds = discovery.getContractValue<number>(
   'StarkgateManager',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
-const starkgateRegistryDelaySeconds = discovery.getContractUpgradeabilityParam(
+const starkgateRegistryDelaySeconds = discovery.getContractValue<number>(
   'StarkgateRegistry',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
 const minDelay = Math.min(
