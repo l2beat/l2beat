@@ -4,6 +4,7 @@ import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
@@ -46,6 +47,11 @@ export const scalingRiskColumns = [
       tooltip: 'How is the validity of the system state checked?',
     },
     cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    sortingFn: (a, b) =>
+      sortSentiments(
+        a.original.risks.stateValidation,
+        b.original.risks.stateValidation,
+      ),
   }),
   columnHelper.accessor('risks.dataAvailability', {
     header: 'Data\nAvailability',
@@ -53,6 +59,11 @@ export const scalingRiskColumns = [
       tooltip: 'Is the data needed to reconstruct the state available?',
     },
     cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    sortingFn: (a, b) =>
+      sortSentiments(
+        a.original.risks.dataAvailability,
+        b.original.risks.dataAvailability,
+      ),
   }),
   columnHelper.accessor('risks.exitWindow', {
     header: 'Exit\nWindow',
@@ -61,6 +72,8 @@ export const scalingRiskColumns = [
         'How much time do users have to exit the system in case of an unwanted upgrade?',
     },
     cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    sortingFn: (a, b) =>
+      sortSentiments(a.original.risks.exitWindow, b.original.risks.exitWindow),
   }),
   columnHelper.accessor('risks.sequencerFailure', {
     header: 'Sequencer\nFailure',
@@ -69,6 +82,11 @@ export const scalingRiskColumns = [
         "Sequencer is an entity responsible for constructing blocks and deciding on the ordering of user's transactions. What happens if it is offline or censors individual user?",
     },
     cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    sortingFn: (a, b) =>
+      sortSentiments(
+        a.original.risks.sequencerFailure,
+        b.original.risks.sequencerFailure,
+      ),
   }),
   columnHelper.accessor('risks.proposerFailure', {
     header: 'Proposer\nFailure',
@@ -77,5 +95,10 @@ export const scalingRiskColumns = [
         'Proposer is an entity responsible for submitting state commitments to Ethereum (optionally, along with the zkProof). What happens if it is offline?',
     },
     cell: (ctx) => <RiskCell risk={ctx.getValue()} />,
+    sortingFn: (a, b) =>
+      sortSentiments(
+        a.original.risks.proposerFailure,
+        b.original.risks.proposerFailure,
+      ),
   }),
 ]

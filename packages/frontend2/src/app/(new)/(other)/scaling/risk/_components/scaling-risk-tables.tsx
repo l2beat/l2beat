@@ -102,8 +102,8 @@ export function ScalingRiskTables({
     initialState: {
       sorting: [
         {
-          id: 'total',
-          desc: true,
+          id: '#',
+          desc: false,
         },
       ],
     },
