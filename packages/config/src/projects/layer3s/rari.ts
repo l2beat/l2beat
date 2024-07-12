@@ -8,7 +8,12 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 export const rari: Layer3 = orbitStackL3({
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
+  badges: [
+    Badge.VM.EVM,
+    Badge.Stack.Orbit,
+    Badge.L3ParentChain.Arbitrum,
+    Badge.RaaS.Caldera,
+  ],
   discovery,
   hostChain: ProjectId('arbitrum'),
   display: {

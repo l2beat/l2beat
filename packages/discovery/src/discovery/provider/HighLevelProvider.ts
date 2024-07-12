@@ -170,7 +170,7 @@ export class HighLevelProvider implements IProvider {
 
   getTransaction(
     transactionHash: Hash256,
-  ): Promise<providers.TransactionResponse> {
+  ): Promise<providers.TransactionResponse | undefined> {
     this.stats.getTransactionCount++
     return this.provider.getTransaction(transactionHash)
   }

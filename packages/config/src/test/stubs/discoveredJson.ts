@@ -4,15 +4,12 @@ import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 export const contractStub: ContractParameters = {
   name: 'MockedContract',
   address: EthereumAddress('0x0D4C1222f5e839a911e2053860e45F18921D72ac'),
-  upgradeability: {
-    type: 'StarkWare diamond',
-    implementation: EthereumAddress.random(),
-    upgradeDelay: 0,
-    isFinal: false,
-    facets: {},
-  },
+  proxyType: 'StarkWare diamond',
   roles: ['Sequencer'],
   values: {
+    $immutable: false,
+    $implementation: EthereumAddress.random(),
+    StarkWareDiamond_upgradeDelay: 0,
     authority: '0x22405c1782913fb676bc74Ef54a60727B0e1026F',
     CHILD_BLOCK_INTERVAL: 1000,
     childBlockInterval: 1000,
@@ -37,10 +34,8 @@ export const discoveredJsonStub: DiscoveryOutput = {
     {
       name: 'DuplicatedNameContractMock',
       address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
-      upgradeability: {
-        type: 'immutable',
-      },
       values: {
+        $immutable: true,
         BOND_LOWER_BOUND_DIVISOR: 2,
         BOND_UPPER_BOUND_MULTIPLIER: 2,
         INITIAL_BOND_SIZE: '14000000000000000',
@@ -54,10 +49,8 @@ export const discoveredJsonStub: DiscoveryOutput = {
     {
       name: 'DuplicatedNameContractMock',
       address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
-      upgradeability: {
-        type: 'immutable',
-      },
       values: {
+        $immutable: true,
         BOND_LOWER_BOUND_DIVISOR: 2,
         BOND_UPPER_BOUND_MULTIPLIER: 2,
         INITIAL_BOND_SIZE: '14000000000000000',
@@ -92,42 +85,42 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
     {
       name: 'ProxyAdmin',
       address: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
-      upgradeability: {
-        type: 'immutable',
+      values: {
+        $immutable: true,
       },
     },
     {
       name: 'MockPortal',
       address: EthereumAddress('0x0a2CCDbBD00f61724C485518B940Ab25abe832aA'),
-      upgradeability: {
-        type: 'EIP1967 proxy',
-        implementation: EthereumAddress(
+      proxyType: 'EIP1967 proxy',
+      values: {
+        $implementation: EthereumAddress(
           '0x1b927019071A2a9C2b852Fd36f7238D2376B82FA',
         ),
-        admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
       },
     },
     {
       name: 'L2OutputOracle',
       address: EthereumAddress('0x48d7A6bbc428bca019A560cF3e8EA5364395Aad3'),
-      upgradeability: {
-        type: 'EIP1967 proxy',
-        implementation: EthereumAddress(
+      proxyType: 'EIP1967 proxy',
+      values: {
+        $implementation: EthereumAddress(
           '0x29510c3ac0248bBE92FDb57bd2cBAF7216cC217a',
         ),
-        admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
       },
     },
     {
       name: 'L1CrossDomainMessenger',
       address: EthereumAddress('0x17bFa0561d9Ae73e05EcEAEB6663aDc85fA1d3E2'),
-      upgradeability: {
-        type: 'resolved delegate proxy',
-        addressManager: EthereumAddress(
+      proxyType: 'resolved delegate proxy',
+      values: {
+        ResolvedDelegateProxy_addressManager: EthereumAddress(
           '0xdE1FCfB0851916CA5101820A69b13a4E276bd81F',
         ),
-        implementationName: 'OVM_L1CrossDomainMessenger',
-        implementation: EthereumAddress(
+        ResolvedDelegateProxy_implementationName: 'OVM_L1CrossDomainMessenger',
+        $implementation: EthereumAddress(
           '0x2150Bc3c64cbfDDbaC9815EF615D6AB8671bfe43',
         ),
       },
@@ -135,23 +128,23 @@ export const discoveredOpStackJsonStub: DiscoveryOutput = {
     {
       name: 'SystemConfig',
       address: EthereumAddress('0x6Dda3a70B9946fA8C015904d9E2BEC86ecE4E745'),
-      upgradeability: {
-        type: 'EIP1967 proxy',
-        implementation: EthereumAddress(
+      proxyType: 'EIP1967 proxy',
+      values: {
+        $implementation: EthereumAddress(
           '0xeba2dc4CC210e885F60b5feA41FDEab0C6527fdc',
         ),
-        admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
       },
     },
     {
       name: 'L1StandardBridge',
       address: EthereumAddress('0xeBec795c9c8bBD61FFc14A6662944748F299cAcf'),
-      upgradeability: {
-        type: 'EIP1967 proxy',
-        implementation: EthereumAddress(
+      proxyType: 'EIP1967 proxy',
+      values: {
+        $implementation: EthereumAddress(
           '0xC70dcb11c0673b0BBE2F415105fA2B15Ac58339f',
         ),
-        admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
+        $admin: EthereumAddress('0x543bA4AADBAb8f9025686Bd03993043599c6fB04'),
       },
     },
   ],

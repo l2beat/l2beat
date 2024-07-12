@@ -14,7 +14,7 @@ export const common: Omit<Config, 'backend'> = {
     medium: 'https://medium.com/l2beat',
     forum: 'https://gov.l2beat.com/',
     multisigReport:
-      'https://drive.google.com/file/d/182ycEW8C2wk5tGd3X1tG8oQfUy9WmSJk/view',
+      'https://drive.google.com/file/d/1w__7gL91tDg81Nyq9NohC1R6MVMSEzpD/view',
   },
   features: {
     banner: new Date() < GITCOIN_20_END,

@@ -22,11 +22,9 @@ export async function detectAxelarProxy(
   }
 
   return {
-    implementations: [implementation],
-    relatives: [],
-    upgradeability: {
-      type: 'Axelar proxy',
-      implementation,
+    type: 'Axelar proxy',
+    values: {
+      $implementation: implementation,
     },
   }
 }

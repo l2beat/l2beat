@@ -3,19 +3,16 @@
   "chain": "ethereum",
   "blockNumber": 20239375,
   "configHash": "0x196941e7501e4988ab870468c7e190dfb4eaf7d734aee79b88f2a6bd4ef2a0e4",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "StakeRegistry",
       "address": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96",
-        "admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-      },
-      "implementations": ["0x1C468cf7089D263c2f53e2579b329B16aBc4dd96"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1712353799,
       "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x1C468cf7089D263c2f53e2579b329B16aBc4dd96",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
         "MAX_WEIGHING_FUNCTION_LENGTH": 32,
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
@@ -25,32 +22,26 @@
     {
       "name": "BLSApkRegistry",
       "address": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b",
-        "admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-      },
-      "implementations": ["0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1712353799,
       "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x5d0B9cE2e277Daf508528E9f6Bf6314E79e4eD2b",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }
     },
     {
       "name": "RegistryCoordinator",
       "address": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF",
-        "admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum"
       ],
       "ignoreInWatchMode": ["registeredOperators"],
-      "implementations": ["0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"],
       "sinceTimestamp": 1712353787,
       "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF",
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "churnApprover": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
         "ejector": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
@@ -345,17 +336,14 @@
       "name": "EjectionManager",
       "address": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
       "template": "eigenlayer/EjectionManager",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa",
-        "admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contract used for ejection of operators from the RegistryCoordinator."
       ],
-      "implementations": ["0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"],
       "sinceTimestamp": 1715347895,
       "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa",
         "ejectableStakePercent": [3333],
         "ejectionRateLimitWindow": [604800],
         "ejectors": ["0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"],
@@ -368,9 +356,6 @@
     {
       "name": "eigenDAProxyAdmin",
       "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -383,6 +368,7 @@
       },
       "sinceTimestamp": 1712353787,
       "values": {
+        "$immutable": true,
         "owner": "0x369e6F597e22EaB55fFb173C6d9cD234BD699111"
       },
       "derivedName": "ProxyAdmin"
@@ -390,15 +376,12 @@
     {
       "name": "eigenDAServiceManager",
       "address": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1",
-        "admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["batchId", "taskNumber"],
-      "implementations": ["0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"],
       "sinceTimestamp": 1712353787,
       "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1",
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
         "batchId": 16185,
         "BLOCK_STALE_MEASURE": 300,
@@ -438,26 +421,19 @@
     {
       "name": "IndexRegistry",
       "address": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
-        "admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99"
-      },
-      "implementations": ["0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1712353799,
       "values": {
+        "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
+        "$implementation": "0x1ae0b73118906f39D5ED30Ae4A484ce2F479a14c",
         "OPERATOR_DOES_NOT_EXIST_ID": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656"
       }
     }
   ],
   "eoas": [
-    {
-      "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8"
-    },
-    {
-      "address": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734"
-    }
+    { "address": "0xD2Ee81Cf07B12140C793FcE5B26313CDd9d78eA8" },
+    { "address": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734" }
   ],
   "abis": {
     "0x006124Ae7976137266feeBFb3F4D2BE4C073139D": [

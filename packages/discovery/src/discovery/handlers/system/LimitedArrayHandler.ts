@@ -5,6 +5,7 @@ import { utils } from 'ethers'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
+import { rewriteSolidityIdentifier } from '../utils/rewriteSolidityIdentifier'
 import { toContractValue } from '../utils/toContractValue'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
 
@@ -20,7 +21,7 @@ export class LimitedArrayHandler implements Handler {
   ) {
     this.fragment =
       typeof fragment === 'string' ? toFunctionFragment(fragment) : fragment
-    this.field = this.fragment.name
+    this.field = rewriteSolidityIdentifier(this.fragment.name)
   }
 
   async execute(

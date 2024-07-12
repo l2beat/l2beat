@@ -33,7 +33,14 @@ export default function Page() {
   const publicationEntries = publications.map(getGovernancePublicationEntry)
 
   const events = getCollection('events')
-  const eventEntries = getGovernanceEventEntries(events).slice(0, 8)
+  const allEventEntries = getGovernanceEventEntries(events)
+  const nearestEventIndex = allEventEntries.findIndex(
+    (e) => e.startDate > new Date(),
+  )
+  const eventEntries = allEventEntries.slice(
+    nearestEventIndex,
+    nearestEventIndex + 8,
+  )
 
   return (
     <>

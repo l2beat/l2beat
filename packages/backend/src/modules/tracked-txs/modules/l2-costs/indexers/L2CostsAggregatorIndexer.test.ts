@@ -7,8 +7,8 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxId, createTrackedTxId } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
@@ -37,13 +37,13 @@ import {
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)
 
-const MOCK_PROJECTS: Project[] = [
-  mockObject<Project>({
+const MOCK_PROJECTS: BackendProject[] = [
+  mockObject<BackendProject>({
     projectId: ProjectId('project1'),
     isArchived: false,
     trackedTxsConfig: undefined,
   }),
-  mockObject<Project>({
+  mockObject<BackendProject>({
     projectId: ProjectId('project2'),
     isArchived: false,
     trackedTxsConfig: [
@@ -74,7 +74,7 @@ const MOCK_PROJECTS: Project[] = [
       },
     ],
   }),
-  mockObject<Project>({
+  mockObject<BackendProject>({
     projectId: ProjectId('project3'),
     isArchived: false,
     trackedTxsConfig: [

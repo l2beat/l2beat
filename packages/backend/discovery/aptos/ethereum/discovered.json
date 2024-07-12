@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19531425,
   "configHash": "0x6d3ba500f9e18492dde71766f7b8c6d0490b243723f0b0fc9f69d49a1ec55561",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661529370,
       "values": {
+        "$immutable": true,
         "feeEnabled": false,
         "nativeBP": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
@@ -24,11 +22,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661529280,
       "values": {
+        "$immutable": true,
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
         "CONFIG_TYPE_ORACLE": 6,
@@ -47,11 +43,9 @@
     {
       "name": "TokenBridge",
       "address": "0x50002CdFe7CCb0C41F519c6Eb0653158d11cd907",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1666143827,
       "values": {
+        "$immutable": true,
         "aptosChainId": 108,
         "BP_DENOMINATOR": 10000,
         "bridgeFeeBP": 7,
@@ -69,11 +63,9 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661280206,
       "values": {
+        "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       }
     },
@@ -81,16 +73,13 @@
       "name": "Aptos Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 6 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "3 of 6 (50%)",
         "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
         "getChainId": 1,
         "getOwners": [
@@ -102,6 +91,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
+        "GnosisSafe_modules": [],
         "nonce": 680,
         "VERSION": "1.3.0"
       },
@@ -110,11 +100,9 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647316591,
       "values": {
+        "$immutable": true,
         "BLOCK_VERSION": 65535,
         "chainId": 1,
         "DEFAULT_VERSION": 0,
@@ -133,16 +121,13 @@
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 5 (40%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 5 (40%)",
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
         "getOwners": [
@@ -153,6 +138,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 79,
         "VERSION": "1.3.0"
       },
@@ -160,42 +146,18 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
-    },
-    {
-      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
-    },
-    {
-      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    },
-    {
-      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
-    },
-    {
-      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
-    },
-    {
-      "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
+    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
+    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
+    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
+    { "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4" }
   ],
   "abis": {
     "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d": [

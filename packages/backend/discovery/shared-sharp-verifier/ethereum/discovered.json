@@ -3,65 +3,52 @@
   "chain": "ethereum",
   "blockNumber": 19531641,
   "configHash": "0x446f481375f24a1ebdb62c00d34185db930f81f5886f322ea3526361b22ab3b1",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "CpuConstraintPoly",
       "address": "0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706309663
+      "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true }
     },
     {
       "name": "Fri6_PoseidonPoseidonPartialRoundKey0Column",
       "address": "0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonPartialRoundKey0Column"
     },
     {
       "name": "Fri1_PoseidonPoseidonFullRoundKey1Column",
       "address": "0x1E8E41141347E01f33d84718b7f4cEFB433D5a94",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonFullRoundKey1Column"
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141015
+      "sinceTimestamp": 1706141015,
+      "values": { "$immutable": true }
     },
     {
       "name": "Fri1_PoseidonPoseidonPartialRoundKey1Column",
       "address": "0x20F10963eBCA608f8B24a5AEE275861B20ec868E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonPartialRoundKey1Column"
     },
     {
       "name": "SHARPVerifierGovernorMultisig",
       "address": "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 3 (67%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678120703,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 3 (67%)",
         "domainSeparator": "0xdc841842a6a324de5b6a29714a4394558c78638216ef50f533783d49856a58c0",
         "getChainId": 1,
         "getOwners": [
@@ -70,6 +57,7 @@
           "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -78,11 +66,9 @@
     {
       "name": "CpuFrilessVerifier1",
       "address": "0x28E3aD4201ba416B23d9950503dB28a9232BE32a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB",
@@ -101,10 +87,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 20,
-          "selectedBuiltins": 151
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 20, "selectedBuiltins": 151 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -116,74 +99,54 @@
     {
       "name": "Fri1_PoseidonPoseidonFullRoundKey2Column",
       "address": "0x2b159027d7F0E23D5C15b0517e33DdA838C46045",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonFullRoundKey2Column"
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x307982EB84858A04d32b5e0b72D152be5A3eEcEA",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141015
+      "sinceTimestamp": 1706141015,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuOods",
       "address": "0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706309651
+      "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true }
     },
     {
       "name": "PedersenHashPointsXColumn",
       "address": "0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140847,
+      "values": { "$immutable": true },
       "derivedName": "PedersenHashPointsXColumn"
     },
     {
       "name": "MemoryPageFactRegistry",
       "address": "0x40864568f679c10aC9e72211500096a5130770fA",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140835,
-      "values": {
-        "hasRegisteredFact": true
-      },
+      "values": { "$immutable": true, "hasRegisteredFact": true },
       "derivedName": "MemoryPageFactRegistry"
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0x450909cC615036Ca4772dDDd8a69988B031811c9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706140835
+      "sinceTimestamp": 1706140835,
+      "values": { "$immutable": true }
     },
     {
       "name": "SHARPVerifierProxy",
       "address": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
-        "callImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
-        "upgradeDelay": 0,
-        "isFinal": false,
-        "proxyGovernance": [
-          "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
-          "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
-        ]
-      },
-      "implementations": ["0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458"],
+      "proxyType": "StarkWare proxy",
       "sinceTimestamp": 1635077695,
       "values": {
+        "$admin": [
+          "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+          "0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4"
+        ],
+        "$immutable": false,
+        "$implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "CALL_PROXY_VERSION": "3.1.0",
         "callProxyImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
         "getUpgradeActivationDelay": 0,
@@ -192,6 +155,8 @@
         "isNotFinalized": true,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
+        "StarkWareProxy_callImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+        "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
       },
       "derivedName": "CallProxy"
@@ -199,27 +164,21 @@
     {
       "name": "CpuOods",
       "address": "0x473E7B002f9A3109fd0FcdA4597935E4E610f367",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141015
+      "sinceTimestamp": 1706141015,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuOods",
       "address": "0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141459
+      "sinceTimestamp": 1706141459,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuFrilessVerifier2",
       "address": "0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140859,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0x450909cC615036Ca4772dDDd8a69988B031811c9",
@@ -235,10 +194,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 18,
-          "selectedBuiltins": 15
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 18, "selectedBuiltins": 15 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -250,11 +206,9 @@
     {
       "name": "CpuFrilessVerifier3",
       "address": "0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706141015,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0xB62Dc40175812208f509B69506315A48C92fb15A",
@@ -270,10 +224,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 18,
-          "selectedBuiltins": 15
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 18, "selectedBuiltins": 15 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -285,31 +236,22 @@
     {
       "name": "Fri6_PoseidonPoseidonPartialRoundKey1Column",
       "address": "0x62960C874379653D7BBe3644Ac653736Da2eda12",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonPartialRoundKey1Column"
     },
     {
       "name": "MerkleStatementContract",
       "address": "0x634DCf4f1421Fc4D95A968A559a450ad0245804c",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140859,
-      "values": {
-        "hasRegisteredFact": true
-      }
+      "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
       "name": "CpuFrilessVerifier4",
       "address": "0x66F2345D003511a1A60D87E3984Bb8d12C21A970",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706141519,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676",
@@ -325,10 +267,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 22,
-          "selectedBuiltins": 63
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 22, "selectedBuiltins": 63 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -340,19 +279,15 @@
     {
       "name": "CpuOods",
       "address": "0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706309663
+      "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true }
     },
     {
       "name": "OldSHARPVerifier",
       "address": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1674001487,
       "values": {
+        "$immutable": true,
         "getBootloaderConfig": [
           "2962621603719000361370283216422448934312521782617806945663080079725495842070",
           "3178097804922730583543126053422762895998573737925004508949311089390705597156"
@@ -371,37 +306,29 @@
     {
       "name": "CpuOods",
       "address": "0x704DFf65eD9b3d121d469b7A790A9927C853607F",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706140859
+      "sinceTimestamp": 1706140859,
+      "values": { "$immutable": true }
     },
     {
       "name": "Fri1_PoseidonPoseidonPartialRoundKey0Column",
       "address": "0x75D887d2437eF87EA17B93143716BECD7BBbCa0a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonPartialRoundKey0Column"
     },
     {
       "name": "Fri1_PoseidonPoseidonFullRoundKey0Column",
       "address": "0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonFullRoundKey0Column"
     },
     {
       "name": "CpuFrilessVerifier5",
       "address": "0x8055948c530dbBc19cc350d53473EEe3a1e3d22B",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706141639,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02",
@@ -415,10 +342,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 18,
-          "selectedBuiltins": 23
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 18, "selectedBuiltins": 23 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -430,28 +354,22 @@
     {
       "name": "CpuOods",
       "address": "0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706140859
+      "sinceTimestamp": 1706140859,
+      "values": { "$immutable": true }
     },
     {
       "name": "EcdsaPointsYColumn",
       "address": "0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140859,
+      "values": { "$immutable": true },
       "derivedName": "EcdsaPointsYColumn"
     },
     {
       "name": "CpuFrilessVerifier6",
       "address": "0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253",
@@ -472,10 +390,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 24,
-          "selectedBuiltins": 191
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 24, "selectedBuiltins": 191 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -487,11 +402,9 @@
     {
       "name": "CairoBootloaderProgram",
       "address": "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140835,
       "values": {
+        "$immutable": true,
         "getCompiledProgram": [
           "290341444919459839",
           9,
@@ -1228,36 +1141,28 @@
     {
       "name": "Fri6_PoseidonPoseidonFullRoundKey2Column",
       "address": "0xB5A5759Dd063899F213eB9699906B445f855660D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonFullRoundKey2Column"
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xB62Dc40175812208f509B69506315A48C92fb15A",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706140859
+      "sinceTimestamp": 1706140859,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuOods",
       "address": "0xB640935b164024EF1BC0b9e176432c440a5cd4dc",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141519
+      "sinceTimestamp": 1706141519,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuFrilessVerifier7",
       "address": "0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706141015,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0x307982EB84858A04d32b5e0b72D152be5A3eEcEA",
@@ -1273,10 +1178,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 18,
-          "selectedBuiltins": 15
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 18, "selectedBuiltins": 15 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -1288,45 +1190,35 @@
     {
       "name": "Fri6_PoseidonPoseidonFullRoundKey1Column",
       "address": "0xC2969a099F22430e20bcE237F469ac6F3101Ac5f",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonFullRoundKey1Column"
     },
     {
       "name": "EcdsaPointsXColumn",
       "address": "0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140847,
+      "values": { "$immutable": true },
       "derivedName": "EcdsaPointsXColumn"
     },
     {
       "name": "CpuOods",
       "address": "0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706309447
+      "sinceTimestamp": 1706309447,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141519
+      "sinceTimestamp": 1706141519,
+      "values": { "$immutable": true }
     },
     {
       "name": "CpuFrilessVerifier8",
       "address": "0xD0fC19710c389ef4a7244656cB08db08eA9D88b4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309651,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0xE5313feE344376D22A42C9F0919e7F0d43920CAc",
@@ -1342,10 +1234,7 @@
           "96",
           "30"
         ],
-        "getLayoutInfo": {
-          "publicMemoryOffset": 20,
-          "selectedBuiltins": 31
-        },
+        "getLayoutInfo": { "publicMemoryOffset": 20, "selectedBuiltins": 31 },
         "PAGE_INFO_ADDRESS_OFFSET": 0,
         "PAGE_INFO_HASH_OFFSET": 2,
         "PAGE_INFO_SIZE": 3,
@@ -1357,11 +1246,9 @@
     {
       "name": "SHARPVerifier",
       "address": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309663,
       "values": {
+        "$immutable": true,
         "bootloaderProgramContractAddress": "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
         "cpuFrilessVerifiers": [
           "0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d",
@@ -1393,74 +1280,51 @@
     {
       "name": "CpuConstraintPoly",
       "address": "0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706309651
+      "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true }
     },
     {
       "name": "FriStatementContract",
       "address": "0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140859,
-      "values": {
-        "hasRegisteredFact": true
-      }
+      "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
       "name": "CpuConstraintPoly",
       "address": "0xE5313feE344376D22A42C9F0919e7F0d43920CAc",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706141639
+      "sinceTimestamp": 1706141639,
+      "values": { "$immutable": true }
     },
     {
       "name": "Fri6_PoseidonPoseidonFullRoundKey0Column",
       "address": "0xe7B835eA7e348B25aF2480272C4cA28429573293",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706309651,
+      "values": { "$immutable": true },
       "derivedName": "PoseidonPoseidonFullRoundKey0Column"
     },
     {
       "name": "PedersenHashPointsYColumn",
       "address": "0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706140847,
+      "values": { "$immutable": true },
       "derivedName": "PedersenHashPointsYColumn"
     },
     {
       "name": "OldMemoryPageFactRegistry",
       "address": "0xFD14567eaf9ba941cB8c8a94eEC14831ca7fD1b4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1673984795,
-      "values": {
-        "hasRegisteredFact": true
-      },
+      "values": { "$immutable": true, "hasRegisteredFact": true },
       "derivedName": "MemoryPageFactRegistry"
     }
   ],
   "eoas": [
     {
-      "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
+      "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6",
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x59232aC80E6d403b6381393e52f4665ECA328558"
-    },
-    {
-      "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec"
-    },
-    {
-      "address": "0xebc8416179fE90854fe8B3f774801165572cfD7F"
-    }
+    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
+    { "address": "0x955B978F3ee7818dA71fA25c676062E6BC462Fec" },
+    { "address": "0xebc8416179fE90854fe8B3f774801165572cfD7F" }
   ],
   "abis": {
     "0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975": [

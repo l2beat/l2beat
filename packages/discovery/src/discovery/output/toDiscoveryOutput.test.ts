@@ -1,4 +1,3 @@
-import { UpgradeabilityParameters } from '@l2beat/discovery-types'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -23,7 +22,7 @@ describe(processAnalysis.name, () => {
     isVerified: true,
     deploymentTimestamp: new UnixTime(1234),
     deploymentBlockNumber: 9876,
-    upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
+    proxyType: 'immutable',
     implementations: [],
     abis: {},
     sourceBundles: [],
@@ -74,13 +73,10 @@ describe(processAnalysis.name, () => {
     ...base,
     address: ADDRESS_C,
     name: 'C',
-    upgradeability: {
-      type: 'EIP1967 proxy',
-      admin: ADDRESS_D,
-      implementation: ADDRESS_E,
-    },
-    implementations: [ADDRESS_E],
+    proxyType: 'EIP1967 proxy',
     values: {
+      $admin: ADDRESS_D,
+      $implementation: ADDRESS_E,
       foo: 'foo',
       bar: 'bar',
     },
@@ -120,8 +116,8 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
+          proxyType: CONTRACT_A.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
-          upgradeability: CONTRACT_A.upgradeability,
         },
       ],
       eoas: [],
@@ -138,8 +134,8 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_B,
           name: 'B',
           derivedName: 'Something not B',
+          proxyType: CONTRACT_B.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
-          upgradeability: CONTRACT_B.upgradeability,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
         },
@@ -152,10 +148,7 @@ describe(processAnalysis.name, () => {
   it('processes a proxy', () => {
     const result = processAnalysis([
       CONTRACT_C,
-      {
-        type: 'EOA',
-        address: ADDRESS_D,
-      },
+      { type: 'EOA', address: ADDRESS_D },
     ])
 
     expect(result).toEqual({
@@ -163,9 +156,8 @@ describe(processAnalysis.name, () => {
         {
           address: ADDRESS_C,
           name: 'C',
+          proxyType: CONTRACT_C.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
-          upgradeability: CONTRACT_C.upgradeability,
-          implementations: CONTRACT_C.implementations,
           values: CONTRACT_C.values,
         },
       ],
@@ -191,23 +183,22 @@ describe(processAnalysis.name, () => {
           address: ADDRESS_A,
           name: 'A',
           unverified: true,
-          upgradeability: CONTRACT_A.upgradeability,
+          proxyType: CONTRACT_A.proxyType,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
         {
           address: ADDRESS_B,
+          proxyType: CONTRACT_B.proxyType,
           name: 'B',
           derivedName: 'Something not B',
-          upgradeability: CONTRACT_B.upgradeability,
           values: CONTRACT_B.values,
           errors: CONTRACT_B.errors,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
         {
           address: ADDRESS_C,
+          proxyType: CONTRACT_C.proxyType,
           name: 'C',
-          upgradeability: CONTRACT_C.upgradeability,
-          implementations: CONTRACT_C.implementations,
           values: CONTRACT_C.values,
           sinceTimestamp: base.deploymentTimestamp.toNumber(),
         },
@@ -241,21 +232,6 @@ describe(processAnalysis.name, () => {
     ])
 
     expect(JSON.stringify(result1)).toEqual(JSON.stringify(result2))
-  })
-
-  it('undefined keys in upgradeability are skipped', () => {
-    const resultUndefined = processAnalysis([
-      {
-        ...CONTRACT_A,
-        upgradeability: {
-          type: 'immutable',
-          key: undefined,
-        } as UpgradeabilityParameters,
-      },
-    ])
-    const result = processAnalysis([CONTRACT_A])
-
-    expect(resultUndefined).toEqual(result)
   })
 })
 

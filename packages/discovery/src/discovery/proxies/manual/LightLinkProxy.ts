@@ -46,12 +46,10 @@ export async function getLightLinkProxy(
   }
   const admin = await getAdminMultisig(provider, address)
   return {
-    implementations: [implementation],
-    relatives: [admin],
-    upgradeability: {
-      type: 'LightLink proxy',
-      implementation,
-      admin,
+    type: 'LightLink proxy',
+    values: {
+      $admin: admin,
+      $implementation: implementation,
     },
   }
 }

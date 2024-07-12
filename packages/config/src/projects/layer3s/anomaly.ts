@@ -1,12 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { Badge } from '../badges'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const anomaly: Layer3 = upcomingL3({
   id: 'anomaly',
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.RaaS.Gelato],
   display: {
     name: 'Anomaly Network',
     slug: 'anomaly',

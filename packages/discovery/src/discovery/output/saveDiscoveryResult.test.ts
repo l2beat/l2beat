@@ -16,7 +16,7 @@ describe(getSourceOutputPath.name, () => {
     isVerified: true,
     deploymentTimestamp: new UnixTime(1234),
     deploymentBlockNumber: 9876,
-    upgradeability: { type: 'immutable' },
+    proxyType: 'immutable',
     implementations: [],
     abis: {},
     sourceBundles: [],

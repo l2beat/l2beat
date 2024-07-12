@@ -1,6 +1,5 @@
 import { EthereumAddress } from './EthereumAddress'
 import { Hash256 } from './Hash256'
-import { UpgradeabilityParameters } from './proxyDetails'
 
 export interface DiscoveryOutput {
   name: string
@@ -27,22 +26,28 @@ export interface EoaParameters {
 
 export interface ContractParameters {
   name: string
+  displayName?: string
+  descriptions?: string[]
   derivedName?: string
   template?: string
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress
-  upgradeability: UpgradeabilityParameters
-  implementations?: EthereumAddress[]
-  values?: Record<string, ContractValue>
+  proxyType?: string
+  values?: Record<string, ContractValue | undefined>
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
   roles?: string[]
+  categories?: string[]
+  types?: string[]
+  severity?: 'HIGH' | 'MEDIUM' | 'LOW'
+  assignedPermissions?: Record<string, EthereumAddress[]>
 }
 
 export type ContractValue =
   | string
+  | EthereumAddress
   | number
   | boolean
   | ContractValue[]

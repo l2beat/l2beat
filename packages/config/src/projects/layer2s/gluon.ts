@@ -123,76 +123,72 @@ export const gluon: Layer2 = {
         name: 'RegistryLogic',
         address: EthereumAddress('0x385827aC8d1AC7B2960D4aBc303c843D9f87Bb0C'),
         upgradeability: {
-          type: 'Reference',
-          base: 'Gluon',
-          method: 'function current(uint32 id) view returns(address)',
-          args: [0],
+          proxyType: 'Reference',
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'RegistryData',
         address: EthereumAddress('0x0fC25C7931679B838209c484d49Df0Cb9E633C41'),
         upgradeability: {
-          type: 'Reference',
-          base: 'RegistryLogic',
-          method: 'function data() view returns(address)',
+          proxyType: 'Reference', // RegistryLogic.data()
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'StakeLogic',
         address: EthereumAddress('0x84e34fD82FC368F1a072075114AdC4b552a7a1F4'),
         upgradeability: {
-          type: 'Reference',
-          base: 'Gluon',
-          method: 'function current(uint32 id) view returns(address)',
-          args: [1],
+          proxyType: 'Reference', // Gluon.current(1)
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'StakeData',
         address: EthereumAddress('0xaB3AC436D66CBEeDc734ed2c1562c3a213c9bc77'),
         upgradeability: {
-          type: 'Reference',
-          base: 'StakeLogic',
-          method: 'function data() view returns(address)',
+          proxyType: 'Reference', // StakeLogic.data()
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'SpotLogic',
         address: EthereumAddress('0x2D627FF93d32f5FEBb04d68409A889895B4aef2D'),
         upgradeability: {
-          type: 'Reference',
-          base: 'Gluon',
-          method: 'function current(uint32 id) view returns(address)',
-          args: [2],
+          proxyType: 'Reference', // Gluon.current(2)
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'SpotData',
         address: EthereumAddress('0x0d283D685F0A741C463846176e4c8EFF90D3F9EC'),
         upgradeability: {
-          type: 'Reference',
-          base: 'SpotLogic',
-          method: 'function data() view returns(address)',
+          proxyType: 'Reference', // SpotLogic.data()
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'DerivativesLogic',
         address: EthereumAddress('0xDfBFe895e07e5115773Cb9631CB2148114589caC'),
         upgradeability: {
-          type: 'Reference',
-          base: 'Gluon',
-          method: 'function current(uint32 id) view returns(address)',
-          args: [3],
+          proxyType: 'Reference', // Gluon.current(3)
+          admins: [],
+          implementations: [],
         },
       },
       {
         name: 'DerivativesData',
         address: EthereumAddress('0x563052914Fd973a2305763269A106a7B0B6D50Cc'),
         upgradeability: {
-          type: 'Reference',
-          base: 'DerivativesLogic',
-          method: 'function data() view returns(address)',
+          proxyType: 'Reference', // DerivativesLogic.data()
+          admins: [],
+          implementations: [],
         },
       },
       {

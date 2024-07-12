@@ -47,13 +47,17 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     this.stats.callCount++
-    return await rpcWithRetries(async () => {
-      const result = await this.provider.call(
-        { to: address.toString(), data: data.toString() },
-        blockNumber,
-      )
-      return Bytes.fromHex(result)
-    })
+    return await rpcWithRetries(
+      async () => {
+        const result = await this.provider.call(
+          { to: address.toString(), data: data.toString() },
+          blockNumber,
+        )
+        return Bytes.fromHex(result)
+      },
+
+      () => `call ${address.toString()} ${data.length} ${blockNumber}`,
+    )
   }
 
   async getStorage(
@@ -62,14 +66,17 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     this.stats.getStorageCount++
-    return await rpcWithRetries(async () => {
-      const result = await this.provider.getStorageAt(
-        address.toString(),
-        slot instanceof Bytes ? slot.toString() : slot,
-        blockNumber,
-      )
-      return Bytes.fromHex(result)
-    })
+    return await rpcWithRetries(
+      async () => {
+        const result = await this.provider.getStorageAt(
+          address.toString(),
+          slot instanceof Bytes ? slot.toString() : slot,
+          blockNumber,
+        )
+        return Bytes.fromHex(result)
+      },
+      () => `getStorage ${address.toString()} ${slot} ${blockNumber}`,
+    )
   }
 
   async getLogs(
@@ -79,36 +86,48 @@ export class LowLevelProvider {
     toBlock: number,
   ) {
     this.stats.getLogsCount++
-    return await rpcWithRetries(async () => {
-      return await this.eventProvider.getLogs({
-        address: address.toString(),
-        fromBlock,
-        toBlock,
-        topics,
-      })
-    })
+    return await rpcWithRetries(
+      async () => {
+        return await this.eventProvider.getLogs({
+          address: address.toString(),
+          fromBlock,
+          toBlock,
+          topics,
+        })
+      },
+      () => `getLogs ${address.toString()} ${fromBlock} - ${toBlock}`,
+    )
   }
 
   async getTransaction(
     transactionHash: Hash256,
-  ): Promise<providers.TransactionResponse> {
+  ): Promise<providers.TransactionResponse | undefined> {
     this.stats.getTransactionCount++
-    return await rpcWithRetries(async () => {
-      return await this.provider.getTransaction(transactionHash.toString())
-    })
+    return await rpcWithRetries(
+      async () => {
+        return (
+          (await this.provider.getTransaction(transactionHash.toString())) ??
+          undefined
+        )
+      },
+      () => `getTransaction ${transactionHash.toString()}`,
+    )
   }
 
   async getDebugTrace(
     transactionHash: Hash256,
   ): Promise<DebugTransactionCallResponse> {
     this.stats.getDebugTraceCount++
-    return await rpcWithRetries(async () => {
-      const response = await this.provider.send('debug_traceTransaction', [
-        transactionHash.toString(),
-        { tracer: 'callTracer' },
-      ])
-      return DebugTransactionCallResponse.parse(response)
-    })
+    return await rpcWithRetries(
+      async () => {
+        const response = await this.provider.send('debug_traceTransaction', [
+          transactionHash.toString(),
+          { tracer: 'callTracer' },
+        ])
+        return DebugTransactionCallResponse.parse(response)
+      },
+      () => `debug_traceTransaction ${transactionHash.toString()}`,
+    )
   }
 
   async getBytecode(
@@ -116,13 +135,16 @@ export class LowLevelProvider {
     blockNumber: number,
   ): Promise<Bytes> {
     this.stats.getBytecodeCount++
-    return await rpcWithRetries(async () => {
-      const result = await this.provider.getCode(
-        address.toString(),
-        blockNumber,
-      )
-      return Bytes.fromHex(result)
-    })
+    return await rpcWithRetries(
+      async () => {
+        const result = await this.provider.getCode(
+          address.toString(),
+          blockNumber,
+        )
+        return Bytes.fromHex(result)
+      },
+      () => `getCode ${address.toString()} ${blockNumber}`,
+    )
   }
 
   async getSource(address: EthereumAddress): Promise<ContractSource> {
@@ -152,6 +174,10 @@ export class LowLevelProvider {
     }
 
     const tx = await this.getTransaction(transactionHash)
+    if (tx === undefined) {
+      return undefined
+    }
+
     assert(tx.blockNumber, 'Transaction returned without a block number.')
     const deployer = EthereumAddress(tx.from)
     const blockNumber = tx.blockNumber
@@ -168,16 +194,22 @@ export class LowLevelProvider {
 
   async getBlock(blockNumber: number): Promise<providers.Block> {
     this.stats.getBlockCount++
-    return await rpcWithRetries(async () => {
-      return await this.provider.getBlock(blockNumber)
-    })
+    return await rpcWithRetries(
+      async () => {
+        return await this.provider.getBlock(blockNumber)
+      },
+      () => `getBlock ${blockNumber}`,
+    )
   }
 
   async getBlockNumber(): Promise<number> {
     this.stats.getBlockNumberCount++
-    return await rpcWithRetries(async () => {
-      return await this.provider.getBlockNumber()
-    })
+    return await rpcWithRetries(
+      async () => {
+        return await this.provider.getBlockNumber()
+      },
+      () => `getBlockNumber`,
+    )
   }
 
   async getBlobs(txHash: string): Promise<BlobsInBlock> {
@@ -186,7 +218,10 @@ export class LowLevelProvider {
   }
 }
 
-export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
+export async function rpcWithRetries<T>(
+  fn: () => Promise<T>,
+  description: () => string,
+): Promise<T> {
   let attempts = 0
   while (true) {
     try {
@@ -200,7 +235,9 @@ export async function rpcWithRetries<T>(fn: () => Promise<T>): Promise<T> {
       if (result.shouldStop) {
         throw e
       }
-      console.log('awaiting')
+      // TODO: (sz-piotr) Why console and not logger :(
+      console.error('awaiting', description())
+      console.error(e)
       await new Promise((resolve) => setTimeout(resolve, result.executeAfter))
     }
   }

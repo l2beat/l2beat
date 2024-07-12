@@ -3,22 +3,19 @@
   "chain": "ethereum",
   "blockNumber": 19531595,
   "configHash": "0xb65597dc170a417db4f9924962294d8b248d20068901b7ecf5ea3307ec89d78d",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "Hop Multisig",
       "address": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "modules": [],
-        "threshold": "2 of 3 (67%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F"],
       "sinceTimestamp": 1625076853,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
+        "$multisigThreshold": "2 of 3 (67%)",
         "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
         "getModules": [],
         "getOwners": [
@@ -27,6 +24,7 @@
           "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "NAME": "Gnosis Safe",
         "nonce": 592,
         "VERSION": "1.1.1"
@@ -36,11 +34,9 @@
     {
       "name": "MATIC Bridge",
       "address": "0x22B1Cbb8D98a01a3B71D034BB899775A76Eb1cc2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1628225875,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -55,11 +51,9 @@
     {
       "name": "Timelock",
       "address": "0x22e3F828b3f47dAcFACd875D20bd5cc0879C96e7",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1625550046,
       "values": {
+        "$immutable": true,
         "admin": "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d",
         "delay": 86400,
         "GRACE_PERIOD": 1209600,
@@ -71,11 +65,9 @@
     {
       "name": "USDC Bridge",
       "address": "0x3666f603Cc164936C1b87e207F36BEBa4AC5f18a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1623907245,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -90,11 +82,9 @@
     {
       "name": "DAI Bridge",
       "address": "0x3d4Cc8A61c7528Fd86C55cfe061a78dCBA48EDd1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1631654328,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -109,11 +99,9 @@
     {
       "name": "USDT Bridge",
       "address": "0x3E4a3a4796d16c0Cd582C382691998f7c06420B6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1626739308,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -128,11 +116,9 @@
     {
       "name": "SNX Bridge",
       "address": "0x893246FACF345c99e4235E5A7bbEE7404c988b96",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1664398079,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -147,11 +133,9 @@
     {
       "name": "HOP Bridge",
       "address": "0x914f986a44AcB623A277d6Bd17368171FCbe4273",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1663897247,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -167,11 +151,9 @@
     {
       "name": "ETH Bridge",
       "address": "0xb8901acB165ed027E32754E0FFe830802919727f",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1633066189,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -185,11 +167,9 @@
     {
       "name": "WBTC Bridge",
       "address": "0xb98454270065A31D71Bf635F6F7Ee6A518dFb849",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1635022634,
       "values": {
+        "$immutable": true,
         "CHALLENGE_AMOUNT_DIVISOR": 10,
         "challengePeriod": 86400,
         "challengeResolutionPeriod": 1209600,
@@ -204,11 +184,9 @@
     {
       "name": "Hop Governor",
       "address": "0xed8Bdb5895B8B7f9Fdb3C087628FD8410E853D48",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1654646429,
       "values": {
+        "$immutable": true,
         "BALLOT_TYPEHASH": "0x150214d74d59b7d1e90c73fc22ef3d991dd0a76b046543d4d80ab92d2a50328f",
         "COUNTING_MODE": "support=bravo&quorum=for,abstain",
         "name": "HOP Governor",
@@ -227,11 +205,9 @@
     {
       "name": "Timelock Controller",
       "address": "0xeeA8422a08258e73c139Fc32a25e10410c14bd7a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1654646382,
       "values": {
+        "$immutable": true,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -256,21 +232,11 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x404c2184a4027b0092C5877BC4599099cd63E62D"
-    },
-    {
-      "address": "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07"
-    },
-    {
-      "address": "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
-    },
-    {
-      "address": "0xF56e305024B195383245A075737d16dBdb8487Fb"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x404c2184a4027b0092C5877BC4599099cd63E62D" },
+    { "address": "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07" },
+    { "address": "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62" },
+    { "address": "0xF56e305024B195383245A075737d16dBdb8487Fb" }
   ],
   "abis": {
     "0x1ec078551A5ac8F0f51fAc57Ffc48Ea7d9A86E9d": [
