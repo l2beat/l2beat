@@ -1,14 +1,14 @@
+import { type ProjectId } from '@l2beat/shared-pure'
 import {
-  unstable_noStore as noStore,
   unstable_cache as cache,
+  unstable_noStore as noStore,
 } from 'next/cache'
+import { getTvlProjects } from './get-tvl-projects'
+import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import {
   type TvlProjectFilter,
   createTvlProjectsFilter,
 } from './project-filter-utils'
-import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import { getTvlProjects } from './get-tvl-projects'
-import { type ProjectId } from '@l2beat/shared-pure'
 import { sumValuesPerSource } from './sum-values-per-source'
 
 export function getLatestTvlUsd(
@@ -30,7 +30,10 @@ export const getCachedLatestTvlUsd = cache(
     return Object.fromEntries(
       Object.entries(tvlValues).map(([projectId, values]) => {
         const latestTimestamp = Math.max(...Object.keys(values).map(Number))
-        const latestValues = sumValuesPerSource(values[latestTimestamp] ?? [])
+        const latestValues = sumValuesPerSource(
+          values[latestTimestamp] ?? [],
+          true,
+        )
         const sum =
           latestValues.native + latestValues.canonical + latestValues.external
         return [projectId, Number(sum) / 100]

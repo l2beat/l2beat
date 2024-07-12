@@ -12,6 +12,7 @@ import {
 import compact from 'lodash/compact'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { orderByTvl } from '../tvl/order-by-tvl'
 import { getVerificationStatus } from '../verification-status/get-verification-status'
 import { type TvlResponse } from './get-tvl'
 import {
@@ -22,11 +23,17 @@ import { getTvlStats } from './utils/get-tvl-stats'
 import { getTvlWarnings } from './utils/get-tvl-warnings'
 import { getTvlWithChange } from './utils/get-tvl-with-change'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { orderByTvl } from './utils/order-by-tvl'
 
 export async function getScalingSummaryEntries(tvl: TvlResponse) {
-  const orderedLayer2s = orderByTvl(LAYER_2S, tvl.projects)
-  const orderedLayer3s = orderByTvl(LAYER_3S, tvl.projects)
+  // NOTE: This is a temporary solution to keep the current behavior & will be removed in L2B-6115.
+  const preprocessedTvl = Object.fromEntries(
+    Object.entries(tvl.projects).map(([projectId, data]) => [
+      projectId,
+      data.charts.hourly.data.at(-1)?.[1] ?? 0,
+    ]),
+  )
+  const orderedLayer2s = orderByTvl(LAYER_2S, preprocessedTvl)
+  const orderedLayer3s = orderByTvl(LAYER_3S, preprocessedTvl)
 
   const implementationChangeReport = await getImplementationChangeReport()
   const verificationStatus = await getVerificationStatus()
