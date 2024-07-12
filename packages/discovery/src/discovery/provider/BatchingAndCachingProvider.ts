@@ -417,7 +417,6 @@ export class BatchingAndCachingProvider {
 
     const transaction = await this.provider.getTransaction(transactionHash)
     if (transaction === undefined) {
-      entry.write(UNDEFINED_MARKER_VALUE)
       return undefined
     }
     // We don't want to cache nor return non-mined transactions
