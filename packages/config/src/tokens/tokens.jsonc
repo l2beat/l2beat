@@ -297,6 +297,11 @@
       "address": "0xD533a949740bb3306d119CC777fa900bA034cd52"
     },
     {
+      "symbol": "crvUSD",
+      "category": "stablecoin",
+      "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+    },
+    {
       "symbol": "CTSI",
       "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D"
     },

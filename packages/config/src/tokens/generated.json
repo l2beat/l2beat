@@ -1052,6 +1052,21 @@
       "supply": "zero"
     },
     {
+      "id": "crvusd-curve.fi-usd-stablecoin",
+      "name": "Curve.Fi USD Stablecoin",
+      "coingeckoId": "crvusd",
+      "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E",
+      "symbol": "crvUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1684065467,
+      "coingeckoListingTimestamp": 1684886400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/30118/large/crvusd.jpeg?1696529040",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "cyber-cyberconnect",
       "name": "CyberConnect",
       "coingeckoId": "cyberconnect",
