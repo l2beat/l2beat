@@ -1,3 +1,84 @@
+Generated with discovered.json: 0xe0aa22d0f3fcab285c4391dcd2a21a8035e2fdae
+
+# Diff at Fri, 12 Jul 2024 10:19:04 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@48ec906f1df3ec8351c0e2324170592091f7c1db block: 20217553
+- current block number: 20289773
+
+## Description
+
+A new burn/mint tokenPool for USD+ (Dinari) is added.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.11:
++        {"sourceChainSelector":"8805746078405598895","offRamp":"0xCe6364dBe64D2789D916180131fAda2ABFF702E8"}
+      values.onRamps.8805746078405598895:
++        "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.11:
++        "0x3d8a95adA63D406ee8232562AbD83CEdb0B90466"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xeaE89E53B8317CaB04165F5323285252D5669B73) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0xdf85c8381954694E74abD07488f452b4c2Cddfb3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xCe6364dBe64D2789D916180131fAda2ABFF702E8)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8.sol |  998 +++++++
+ ...-0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD.sol |  998 +++++++
+ ...-0x3d8a95adA63D406ee8232562AbD83CEdb0B90466.sol | 1089 ++++++++
+ ...-0xCe6364dBe64D2789D916180131fAda2ABFF702E8.sol | 2894 ++++++++++++++++++++
+ ...-0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC.sol | 2732 ++++++++++++++++++
+ 5 files changed, 8711 insertions(+)
+```
+
 Generated with discovered.json: 0x635fd0f952f8a70017ac8f90189d49f723440119
 
 # Diff at Mon, 01 Jul 2024 12:13:33 GMT:
