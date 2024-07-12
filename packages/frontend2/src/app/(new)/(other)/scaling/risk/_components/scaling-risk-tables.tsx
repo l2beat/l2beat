@@ -18,6 +18,8 @@ import {
   type ScalingFiltersState,
 } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './table/columns'
+import ActiveIcon from '~/icons/active.svg'
+import ArchivedIcon from '~/icons/archived.svg'
 
 const DEFAULT_SCALING_FILTERS = {
   rollupsOnly: false,
@@ -120,11 +122,13 @@ export function ScalingRiskTables({
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="active" className="gap-1.5">
+              <ActiveIcon />
               <span className="md:hidden">Active</span>
               <span className="max-md:hidden">Active projects</span>
               <TabCountBadge>{activeTable.getRowCount()}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="archived" className="gap-1.5">
+              <ArchivedIcon />
               <span className="md:hidden">Archived</span>
               <span className="max-md:hidden">Archived projects</span>
               <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
