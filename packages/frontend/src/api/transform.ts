@@ -1,37 +1,30 @@
-import {
-  ContractParameters,
-  ContractValue,
-  DiscoveryOutput,
-} from '@l2beat/discovery-types'
-
+import { DiscoveryContract, DiscoveryOutput } from './paseDiscovery'
 import { ContractNode, EOANode, SimpleNode } from './SimpleNode'
 
 const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
 export function transformContracts(discovery: DiscoveryOutput): SimpleNode[] {
   const contractNodes: ContractNode[] = discovery.contracts.map((contract) => {
-    const { proxyFields, implementations } = getProxyDetails(contract)
+    const implementations = getAsStringArray(contract.values?.$implementation)
     return {
       type: 'Contract',
-      id: contract.address.toString(),
+      id: contract.address,
       name: emojifyContractName(contract),
       discovered: true,
-      fields: [...proxyFields, ...mapFields(contract.values)].filter(
+      fields: mapFields(contract.values).filter(
         (x) => !x.connection || !implementations.includes(x.connection),
       ),
       data: contract,
     }
   })
 
-  const eoaNodes: EOANode[] = discovery.eoas.map((address) => ({
+  const eoaNodes: EOANode[] = discovery.eoas.map((eoa) => ({
     type: 'EOA',
-    id: address.toString(),
-    name: `🧍 EOA ${address.toString()}`,
+    id: eoa.address,
+    name: `🧍 EOA ${eoa.address}`,
     discovered: true,
     fields: [],
-    data: {
-      address: address.toString(),
-    },
+    data: eoa,
   }))
 
   return [...contractNodes, ...eoaNodes]
@@ -44,14 +37,14 @@ interface FieldProps {
 }
 
 function mapFields(
-  values: Record<string, ContractValue> | ContractValue | undefined,
+  values: Record<string, unknown> | undefined,
   prefix = '',
 ): FieldProps[] {
   if (values === undefined) {
     return []
   }
   return Object.entries(values).flatMap(
-    ([key, value]: [string, ContractValue]): FieldProps[] => {
+    ([key, value]: [string, unknown]): FieldProps[] => {
       if (typeof value === 'string' && isAddress(value)) {
         if (value === ZERO_ADDRESS) {
           return []
@@ -64,8 +57,11 @@ function mapFields(
             connection: value,
           },
         ]
-      } else if (typeof value === 'object') {
-        return mapFields(value, concatKey(prefix, key))
+      } else if (typeof value === 'object' && value !== null) {
+        return mapFields(
+          value as Record<string, unknown>,
+          concatKey(prefix, key),
+        )
       }
       return []
     },
@@ -86,63 +82,25 @@ function isAddress(value: string): boolean {
   )
 }
 
-function emojifyContractName(contract: ContractParameters): string {
+function emojifyContractName(contract: DiscoveryContract): string {
   if (contract.name === 'GnosisSafe') {
     return '🔐 Gnosis Safe'
   }
 
-  if (contract.upgradeability.type !== 'immutable') {
+  if (contract.values?.$immutable !== true) {
     return '🔗 ' + contract.name
   }
 
   return contract.name
 }
 
-function getProxyDetails(contract: ContractParameters): {
-  proxyFields: FieldProps[]
-  implementations: string[]
-} {
-  const proxyFields: FieldProps[] = []
-  const implementations: string[] =
-    contract.implementations?.map((a) => a.toString()) ?? []
-  switch (contract.upgradeability.type) {
-    case 'immutable':
-      break
-    case 'EIP1967 proxy':
-      proxyFields.push({
-        name: 'admin',
-        value: contract.upgradeability.admin.toString(),
-      })
-      break
-    case 'ZeppelinOS proxy':
-      if (contract.upgradeability.admin) {
-        proxyFields.push({
-          name: 'admin',
-          value: contract.upgradeability.admin.toString(),
-        })
-      }
-      break
-    case 'Arbitrum proxy':
-    case 'new Arbitrum proxy':
-      proxyFields.push({
-        name: 'admin',
-        value: contract.upgradeability.admin.toString(),
-      })
-      break
-    case 'resolved delegate proxy':
-      proxyFields.push({
-        name: 'addressManager',
-        value: contract.upgradeability.addressManager.toString(),
-      })
-      break
+function getAsStringArray(value: unknown): string[] {
+  if (typeof value === 'string') {
+    return [value]
   }
-
-  return {
-    proxyFields: proxyFields.map((x) => ({
-      ...x,
-      name: `#️⃣ ${x.name}`,
-      connection: x.value,
-    })),
-    implementations,
+  if (Array.isArray(value)) {
+    // TODO: (sz-piotr) upgrade to TS 5.5.2 and remove cast
+    return value.filter((x) => typeof x === 'string') as string[]
   }
+  return []
 }

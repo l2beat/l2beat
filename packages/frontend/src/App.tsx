@@ -1,12 +1,11 @@
 import '@total-typescript/ts-reset'
 
-import { DiscoveryOutput } from '@l2beat/discovery-types'
 import cx from 'classnames'
 import { useState } from 'react'
 
 import { deleteNode } from './api/delete'
-import { discover } from './api/discover'
 import { merge } from './api/merge'
+import { parseDiscovery } from './api/paseDiscovery'
 import { SimpleNode } from './api/SimpleNode'
 import { transformContracts } from './api/transform'
 import { nodeToSimpleNode } from './store/actions/updateNodes'
@@ -39,15 +38,6 @@ export function App() {
     setLoading((loading) => ({ ...loading, [id]: value }))
   }
 
-  async function showPrompt() {
-    const address = window.prompt('Contract address')
-    if (!address) return []
-
-    markLoading('global', true)
-    await discoverContract(address)
-    markLoading('global', false)
-  }
-
   function clear() {
     setNodes([])
     setHiddenNodes(() => [])
@@ -66,15 +56,6 @@ export function App() {
     document.body.appendChild(downloadLink)
     downloadLink.click()
     document.body.removeChild(downloadLink)
-  }
-
-  async function discoverContract(address: string) {
-    console.log('DISCOVERING', address)
-
-    markLoading(address, true)
-    const result = await discover(address)
-    markLoading(address, false)
-    setNodes((nodes) => merge(nodes, result))
   }
 
   function revealAllNodes() {
@@ -98,8 +79,7 @@ export function App() {
 
       updateNodeLocations(locations.locations)
     } catch (_) {
-      const parsed: unknown = JSON.parse(contents)
-      const discovery = parsed as DiscoveryOutput
+      const discovery = parseDiscovery(JSON.parse(contents))
       const result = transformContracts(discovery)
 
       setNodes((nodes) => merge(nodes, result))
@@ -145,31 +125,11 @@ export function App() {
         )}
       >
         <div className="relative flex h-full w-full items-center justify-center">
-          <Viewport
-            nodes={nodes}
-            loading={loading}
-            // eslint-disable-next-line @typescript-eslint/no-misused-promises
-            onDiscover={discoverContract}
-          />
+          <Viewport nodes={nodes} loading={loading} />
 
           <div className="absolute top-0 w-full p-2">
             <div className="flex flex-row content-center items-center justify-between">
               <div className="ml-2">Contracts loaded: {nodes.length}</div>
-
-              <div>
-                <button
-                  className={cx(
-                    'rounded bg-blue-500 px-4 py-2 font-bold text-white',
-                    !loading.global && 'hover:bg-blue-700',
-                  )}
-                  type="button"
-                  disabled={loading.global}
-                  onClick={() => void showPrompt()}
-                >
-                  Discover!
-                  {loading.global && '🔄'}
-                </button>
-              </div>
 
               <div className="flex items-center gap-1">
                 <AutoLayoutButton />

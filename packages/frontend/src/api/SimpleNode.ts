@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import { DiscoveryContract, DiscoveryEoa } from './paseDiscovery'
 
 interface SimpleNodeShared {
   id: string
@@ -12,14 +12,12 @@ interface SimpleNodeShared {
 
 export interface ContractNode extends SimpleNodeShared {
   type: 'Contract'
-  data: ContractParameters
+  data: DiscoveryContract
 }
 
 export interface EOANode extends SimpleNodeShared {
   type: 'EOA'
-  data: {
-    address: string
-  }
+  data: DiscoveryEoa
 }
 export interface UnknownNode extends SimpleNodeShared {
   type: 'Unknown'

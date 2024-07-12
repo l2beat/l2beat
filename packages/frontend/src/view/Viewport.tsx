@@ -9,7 +9,6 @@ import { useViewport } from './useViewport'
 
 export interface ViewportProps {
   nodes: SimpleNode[]
-  onDiscover: (nodeId: string) => void
   loading: Record<string, boolean | undefined>
 }
 
@@ -73,7 +72,6 @@ export function Viewport(props: ViewportProps) {
             node={node}
             selected={selectedNodeIds.includes(node.simpleNode.id)}
             discovered={node.simpleNode.discovered}
-            onDiscover={props.onDiscover}
             onHideNode={hideNode}
             loading={!!props.loading[node.simpleNode.id]}
           />

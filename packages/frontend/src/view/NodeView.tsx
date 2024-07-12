@@ -10,7 +10,6 @@ export interface NodeViewProps {
   node: Node
   selected: boolean
   discovered: boolean
-  onDiscover: (nodeId: string) => void
   onHideNode: (nodeId: string) => void
   loading: boolean
 }
@@ -42,10 +41,6 @@ export function NodeView(props: NodeViewProps) {
       hideRef.current?.removeEventListener('mousedown', onHide, true)
     }
   }, [])
-
-  const onDiscover = useCallback(() => {
-    props.onDiscover(props.node.simpleNode.id)
-  }, [props.onDiscover, props.node.simpleNode.id])
 
   const onDoubleClick = useCallback(() => {
     if (!ref.current) {
@@ -82,11 +77,6 @@ export function NodeView(props: NodeViewProps) {
       >
         <div className="truncate">{props.node.simpleNode.name}</div>
         <div className="flex items-center justify-center gap-2">
-          {!props.discovered && (
-            <button onClick={onDiscover} disabled={props.loading}>
-              {props.loading ? '🔄' : '🔍'}
-            </button>
-          )}
           <button ref={hideRef} disabled={props.loading}>
             👁️
           </button>

@@ -1,6 +1,0 @@
-{
-  "$schema": "../config.schema.json",
-  "name": "sollet",
-  "initialAddresses": ["0xeae57ce9cc1984F202e15e038B964bb8bdF7229a"],
-  "overrides": {}
-}

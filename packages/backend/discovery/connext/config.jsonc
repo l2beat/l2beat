@@ -1,6 +1,0 @@
-{
-  "$schema": "../config.schema.json",
-  "name": "connext",
-  "initialAddresses": ["0x31eFc4AeAA7c39e54A33FDc3C46ee2Bd70ae0A09"],
-  "overrides": {}
-}
