@@ -297,6 +297,11 @@
       "address": "0xD533a949740bb3306d119CC777fa900bA034cd52"
     },
     {
+      "symbol": "crvUSD",
+      "category": "stablecoin",
+      "address": "0xf939E0A03FB07F59A73314E73794Be0E57ac1b4E"
+    },
+    {
       "symbol": "CTSI",
       "address": "0x491604c0FDF08347Dd1fa4Ee062a822A5DD06B5D"
     },
@@ -2593,6 +2598,16 @@
     }
   ],
   "kroma": [
+    {
+      "symbol": "M-BTC",
+      "address": "0x0F921c39eFd98809FE6D20a88A4357454578987a",
+      "coingeckoId": "merlin-s-seal-btc",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
     {
       "symbol": "WEMIX.e",
       "address": "0x3720b1Dc2c8dde3BD6cfCf0b593D0A2bBCAc856e",

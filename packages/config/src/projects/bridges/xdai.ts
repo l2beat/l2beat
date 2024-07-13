@@ -130,11 +130,13 @@ export const xdai: Bridge = {
         name: 'XDaiForeignBridge',
         description: 'xDai Bridge Contract (Escrow).',
         upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          implementation: EthereumAddress(
-            '0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473',
-          ),
+          proxyType: 'Custom',
+          admins: [
+            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+          ],
+          implementations: [
+            EthereumAddress('0xEeE4f8dB4410beBD74A76cB711D096c5E66d0473'),
+          ],
         },
       },
       {
@@ -142,11 +144,13 @@ export const xdai: Bridge = {
         name: 'BridgeValidators',
         description: 'Validator Management Contract.',
         upgradeability: {
-          type: 'Custom',
-          admin: EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
-          implementation: EthereumAddress(
-            '0x6943A218d58135793F1FE619414eD476C37ad65a',
-          ),
+          proxyType: 'Custom',
+          admins: [
+            EthereumAddress('0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6'),
+          ],
+          implementations: [
+            EthereumAddress('0x6943A218d58135793F1FE619414eD476C37ad65a'),
+          ],
         },
       },
     ],

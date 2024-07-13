@@ -3,19 +3,16 @@
   "chain": "ethereum",
   "blockNumber": 20175273,
   "configHash": "0xe1a60acb537887f5379f5ef47c07caff2cedb412828a9018fcba876f674fd447",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "ERC1155Predicate",
       "address": "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598437004,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x62D7e87677ac7e3bd02c198e3FABeFFdBc5eB2A3",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -30,11 +27,9 @@
     {
       "name": "CustomPredicate",
       "address": "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1617750281,
       "values": {
+        "$immutable": true,
         "CUSTOM_EVENT_SIG": "0x93f3e547dcb3ce9c356bb293f12e44f70fc24105d675b782bd639333aab70df7",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08"
@@ -44,11 +39,9 @@
     {
       "name": "ERC20EscrowPredicate",
       "address": "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1627373890,
       "values": {
+        "$immutable": true,
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
       },
@@ -57,12 +50,10 @@
     {
       "name": "StateSender",
       "address": "0x28e4F3a7f651294B9564800b2D01f35189A5bFbE",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["counter"],
       "sinceTimestamp": 1590850580,
       "values": {
+        "$immutable": true,
         "counter": 2926909,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
@@ -83,14 +74,11 @@
     {
       "name": "MintableERC1155Predicate",
       "address": "0x2d641867411650cd05dB93B59964536b1ED5b1B7",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0xDb161A896Be50a020B636D6B60DA7c59817412a5",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0xDb161A896Be50a020B636D6B60DA7c59817412a5"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1613107769,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0xDb161A896Be50a020B636D6B60DA7c59817412a5",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xDb161A896Be50a020B636D6B60DA7c59817412a5",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -105,14 +93,11 @@
     {
       "name": "ERC20Predicate",
       "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598436664,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -136,11 +121,9 @@
     {
       "name": "ERC20MintBurnPredicate",
       "address": "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1657162305,
       "values": {
+        "$immutable": true,
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
       },
@@ -149,14 +132,11 @@
     {
       "name": "EtherPredicate",
       "address": "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0x54006763154c764da4AF42a8c3cfc25Ea29765D5"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598437971,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -170,20 +150,17 @@
     {
       "name": "RootChain",
       "address": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03"
-      },
+      "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
         "getLastChildBlock",
         "currentHeaderBlock"
       ],
-      "implementations": ["0x536c55cFe4892E581806e10b38dFE8083551bd03"],
       "sinceTimestamp": 1590849960,
       "values": {
         "_nextHeaderBlock": 644420000,
+        "$immutable": false,
+        "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
         "currentHeaderBlock": 644410000,
         "getLastChildBlock": 58624933,
@@ -200,14 +177,11 @@
     {
       "name": "UnstoppableDomainsPredicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0x7FBd00c577cAA70318BCF1c6c11e23732823b387"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598436896,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x7FBd00c577cAA70318BCF1c6c11e23732823b387",
@@ -222,14 +196,11 @@
     {
       "name": "MintableERC20Predicate",
       "address": "0x9923263fA127b3d1484cFD649df8f1831c2A74e4",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1613100777,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -243,14 +214,11 @@
     {
       "name": "RootChainManager",
       "address": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0x37D26DC2890b35924b40574BAc10552794771997",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0x37D26DC2890b35924b40574BAc10552794771997"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598436547,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0x37D26DC2890b35924b40574BAc10552794771997",
         "checkpointManagerAddress": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "childChainManagerAddress": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
@@ -285,17 +253,12 @@
     {
       "name": "MerklePatriciaProof",
       "address": "0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1598436340
+      "sinceTimestamp": 1598436340,
+      "values": { "$immutable": true }
     },
     {
       "name": "Timelock",
       "address": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f",
@@ -311,6 +274,7 @@
       },
       "sinceTimestamp": 1630059303,
       "values": {
+        "$immutable": true,
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -340,14 +304,11 @@
     {
       "name": "ChainExitERC1155Predicate",
       "address": "0xDB2382413bCb9c2F1B6b62B52238558266361D68",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1630304491,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
         "CHAIN_EXIT_EVENT_SIG": "0xc7b80b68f1c661da97dbd7e6e143a0c7c587dfc522cb2ac508b9084fecc492bc",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xf17461C73d32f7545ADfdd478a6eC5a382F5A58f",
@@ -361,14 +322,11 @@
     {
       "name": "ERC721Predicate",
       "address": "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD",
-      "upgradeability": {
-        "type": "Polygon proxy",
-        "implementation": "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
-        "admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf"
-      },
-      "implementations": ["0xd515C8fF03eC79e7d5B3410c036f738e7f396C90"],
+      "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598436766,
       "values": {
+        "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
+        "$implementation": "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
         "BATCH_LIMIT": 20,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0xd515C8fF03eC79e7d5B3410c036f738e7f396C90",
@@ -384,16 +342,13 @@
       "name": "PolygonMultisig",
       "address": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "5 of 9 (56%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1593593561,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "5 of 9 (56%)",
         "domainSeparator": "0x1fedebc30994a7dba640edeed88b9bdc774c9f02b3797c8a6d3a2f17399477f4",
         "getChainId": 1,
         "getOwners": [
@@ -408,6 +363,7 @@
           "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
         ],
         "getThreshold": 5,
+        "GnosisSafe_modules": [],
         "nonce": 203,
         "VERSION": "1.3.0"
       },
@@ -415,36 +371,16 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03"
-    },
-    {
-      "address": "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529"
-    },
-    {
-      "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6"
-    },
-    {
-      "address": "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25"
-    },
-    {
-      "address": "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a"
-    },
-    {
-      "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602"
-    },
-    {
-      "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc"
-    },
-    {
-      "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5"
-    },
-    {
-      "address": "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a"
-    },
-    {
-      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-    }
+    { "address": "0x0D2600C228D9Bcc9757B64bBb232F86A912B7b03" },
+    { "address": "0x1aE033D45ce93bbB0dDBF71a0Da9de01FeFD8529" },
+    { "address": "0x39415255619783A2E71fcF7d8f708A951d92e1b6" },
+    { "address": "0x803B74766D8f79195D4DaeCF6f2aac31Dba78F25" },
+    { "address": "0x80D63799b1e08a80f73FB7a83264b5c31600bF3a" },
+    { "address": "0x8Eab5aEfe2755E1bAD2052944Ea096AEbdA1d602" },
+    { "address": "0xA7499Aa6464c078EeB940da2fc95C6aCd010c3Cc" },
+    { "address": "0xb771380f912E4b5F6beDdf81314C383c13F16ab5" },
+    { "address": "0xD0FD9303fe99EdFAF5eD4A2c1657a347d8053C9a" },
+    { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" }
   ],
   "abis": {
     "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f": [

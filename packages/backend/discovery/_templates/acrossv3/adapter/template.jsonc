@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreRelatives": [
+    "L1_BLAST_BRIDGE",
     "L1_STANDARD_BRIDGE",
     "L1_WETH",
     "MESSENGER",

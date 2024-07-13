@@ -17,12 +17,10 @@ describe(diffContracts.name, () => {
     const committed: ContractParameters = {
       name: 'A',
       address: OLD_ADDRESS,
-      upgradeability: {
-        type: 'EIP1967 proxy',
-        admin: OLD_ADMIN,
-        implementation: IMPLEMENTATION,
-      },
+      proxyType: 'EIP1967 proxy',
       values: {
+        $implementation: IMPLEMENTATION,
+        $admin: OLD_ADMIN,
         A: true,
         B: true,
         C: 1,
@@ -33,13 +31,11 @@ describe(diffContracts.name, () => {
     const discovered: ContractParameters = {
       name: 'A',
       address: NEW_ADDRESS,
-      upgradeability: {
-        type: 'EIP1967 proxy',
-        admin: NEW_ADMIN,
-        implementation: IMPLEMENTATION,
-      },
+      proxyType: 'EIP1967 proxy',
       ignoreInWatchMode: ['E', 'F'],
       values: {
+        $admin: NEW_ADMIN,
+        $implementation: IMPLEMENTATION,
         A: false,
         C: 1,
         D: [1, 2, 3, 4],
@@ -61,7 +57,7 @@ describe(diffContracts.name, () => {
         after: JSON.stringify(NEW_ADDRESS),
       },
       {
-        key: 'upgradeability.admin',
+        key: 'values.$admin',
         before: JSON.stringify(OLD_ADMIN),
         after: JSON.stringify(NEW_ADMIN),
       },

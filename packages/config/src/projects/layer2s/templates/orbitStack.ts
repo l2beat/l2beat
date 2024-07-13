@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
 import { unionBy } from 'lodash'
@@ -29,7 +32,7 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { VALUES } from '../../../discovery/values'
 import { BadgeId } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
 
@@ -692,7 +695,9 @@ function safeGetImplementation(
   contract: ContractParameters,
   implementationIndex?: number,
 ): string {
-  const implementation = contract.implementations?.[implementationIndex ?? 0]
+  const implementation = get$Implementations(contract.values)[
+    implementationIndex ?? 0
+  ]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

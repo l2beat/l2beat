@@ -21,12 +21,10 @@ export async function getEternalStorageProxy(
     return undefined
   }
   return {
-    implementations: [implementation],
-    relatives: [admin],
-    upgradeability: {
-      type: 'Eternal Storage proxy',
-      admin,
-      implementation: implementation,
+    type: 'Eternal Storage proxy',
+    values: {
+      $admin: admin,
+      $implementation: implementation,
     },
   }
 }

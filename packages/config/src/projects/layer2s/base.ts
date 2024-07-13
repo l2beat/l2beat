@@ -153,6 +153,7 @@ export const base: Layer2 = opStackL2({
   ],
   chainConfig: {
     name: 'base',
+    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
     chainId: 8453,
     explorerUrl: 'https://basescan.org',
     explorerApi: {

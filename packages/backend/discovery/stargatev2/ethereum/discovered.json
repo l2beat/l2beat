@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20240871,
   "configHash": "0x4b8d257de00edba7d5e55d61c9f581f3ee355f6546889ac91a2b53fa9b00048c",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "Treasurer",
       "address": "0x1041D127b2d4BC700F0F563883bC689502606918",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837503,
       "values": {
+        "$immutable": true,
         "admin": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "getTransferGasLimit": 2300,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705"
@@ -23,35 +21,30 @@
       "name": "LayerZero Executor",
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232",
-        "admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
-      },
-      "implementations": ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1706308043,
+      "values": {
+        "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+        "$implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+      },
       "derivedName": ""
     },
     {
       "name": "",
       "address": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1716837359
+      "sinceTimestamp": 1716837359,
+      "values": { "$immutable": true }
     },
     {
       "name": "EndpointV2",
       "address": "0x1a44076050125825900e736c501f859c50fE728c",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "descriptions": [
         "Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner."
       ],
       "sinceTimestamp": 1706307671,
       "values": {
+        "$immutable": true,
         "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
         "delegatesCreditMessaging": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "delegatesTokenMessaging": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
@@ -80,17 +73,12 @@
       "name": "",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706307671
+      "sinceTimestamp": 1706307671,
+      "values": { "$immutable": true }
     },
     {
       "name": "StargatePool",
       "address": "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -100,6 +88,7 @@
       ],
       "sinceTimestamp": 1716837323,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -114,10 +103,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0xD646CD9Dff77097b454a5a148BeaE6615e3bC2e2",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": 5940783599822392,
         "poolBalance": "2563522635000000000000",
@@ -132,11 +118,9 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661529370,
       "values": {
+        "$immutable": true,
         "feeEnabled": false,
         "nativeBP": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
@@ -148,11 +132,9 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661529280,
       "values": {
+        "$immutable": true,
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
         "CONFIG_TYPE_ORACLE": 6,
@@ -171,11 +153,9 @@
     {
       "name": "StargateMultiRewarder",
       "address": "0x5871A7f88b0f3F5143Bf599Fd45F8C0Dc237E881",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837491,
       "values": {
+        "$immutable": true,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "rewardTokens": ["0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6"],
         "staking": "0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD"
@@ -185,11 +165,9 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661280206,
       "values": {
+        "$immutable": true,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675"
       }
     },
@@ -197,19 +175,15 @@
       "name": "",
       "address": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1716837347
+      "sinceTimestamp": 1716837347,
+      "values": { "$immutable": true }
     },
     {
       "name": "Treasury",
       "address": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706307779,
       "values": {
+        "$immutable": true,
         "lzTokenEnabled": false,
         "lzTokenFee": 0,
         "nativeBP": 0,
@@ -220,16 +194,13 @@
       "name": "Stargate Multisig",
       "address": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 6 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1647498793,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "3 of 6 (50%)",
         "domainSeparator": "0x10cd04a3b7d65ccac18caff2fefc4c51c80b1d61ab414834e49fc8fbdd62f6be",
         "getChainId": 1,
         "getOwners": [
@@ -241,6 +212,7 @@
           "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
         ],
         "getThreshold": 3,
+        "GnosisSafe_modules": [],
         "nonce": 762,
         "VERSION": "1.3.0"
       },
@@ -249,11 +221,9 @@
     {
       "name": "Endpoint",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647316591,
       "values": {
+        "$immutable": true,
         "BLOCK_VERSION": 65535,
         "chainId": 1,
         "DEFAULT_VERSION": 0,
@@ -271,18 +241,13 @@
     {
       "name": "CreditMessaging",
       "address": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837383,
       "values": {
+        "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "maxAssetId": 22,
         "oApp": "0x6b8aD17795d89B283e6D0362A87A403f3544bb9d",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -316,24 +281,19 @@
     {
       "name": "TokenMessaging",
       "address": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "descriptions": [
         "This is a Layer Zero OApp. It also handles the batching logic: bus, taxi, quotes"
       ],
       "sinceTimestamp": 1716837371,
       "values": {
+        "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 22,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x6d6620eFa72948C5f68A3C8646d58C00d3f4A980",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "preCrime": "0x0000000000000000000000000000000000000000",
@@ -344,9 +304,6 @@
     {
       "name": "StargatePoolNative",
       "address": "0x77b2043768d28E9C9aB44E1aBfC95944bcE57931",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -356,6 +313,7 @@
       ],
       "sinceTimestamp": 1716837299,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -370,10 +328,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": "443453043311204833",
         "poolBalance": "4407205851000000000000",
@@ -389,18 +344,13 @@
       "name": "Stargate Verifier",
       "address": "0x8FafAE7Dd957044088b3d0F67359C327c6200d18",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716344279,
+      "values": { "$immutable": true },
       "derivedName": ""
     },
     {
       "name": "StargatePoolMigratable",
       "address": "0x933597a323Eb81cAe705C5bC29985172fd5A3973",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -410,6 +360,7 @@
       ],
       "sinceTimestamp": 1716837359,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
@@ -426,10 +377,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": "86065792585046238",
         "poolBalance": 20081991396414,
@@ -444,25 +392,21 @@
     {
       "name": "ProxyAdmin",
       "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x173272739Bd7Aa6e4e214714048a9fE699453059"]
       },
       "sinceTimestamp": 1706307875,
       "values": {
+        "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
     {
       "name": "Nethermind Verifier",
       "address": "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706489567,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12000,
@@ -478,11 +422,9 @@
     {
       "name": "StargateToken",
       "address": "0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1647504559,
       "values": {
+        "$immutable": true,
         "chainId": 1,
         "decimals": 18,
         "endpoint": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
@@ -497,14 +439,12 @@
     {
       "name": "SendUln302",
       "address": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "descriptions": [
         "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
       ],
       "sinceTimestamp": 1706307839,
       "values": {
+        "$immutable": true,
         "getExecutorConfig": [
           10000,
           "0x173272739Bd7Aa6e4e214714048a9fE699453059"
@@ -512,20 +452,13 @@
         "messageLibType": 0,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
-        "version": {
-          "major": 3,
-          "minor": 0,
-          "endpointVersion": 2
-        }
+        "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
       "derivedName": "SendUln302"
     },
     {
       "name": "StargatePoolUSDC",
       "address": "0xc026395860Db2d07ee33e05fE50ed7bD583189C7",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -535,6 +468,7 @@
       ],
       "sinceTimestamp": 1716837347,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
@@ -551,10 +485,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0x5DaAee9EF143faFF495B581e9863570e83F99d31",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": "76989775155427131",
         "poolBalance": 22841049484113,
@@ -569,14 +500,12 @@
     {
       "name": "ReceiveUln302",
       "address": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "descriptions": [
         "Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to."
       ],
       "sinceTimestamp": 1706307863,
       "values": {
+        "$immutable": true,
         "getUlnConfig": [
           20,
           2,
@@ -590,11 +519,7 @@
         ],
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
-        "version": {
-          "major": 3,
-          "minor": 0,
-          "endpointVersion": 2
-        }
+        "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
       "derivedName": "ReceiveUln302"
     },
@@ -602,16 +527,13 @@
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 5 (40%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 5 (40%)",
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
         "getOwners": [
@@ -622,6 +544,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 130,
         "VERSION": "1.3.0"
       },
@@ -630,9 +553,6 @@
     {
       "name": "StargatePool",
       "address": "0xcDafB1b2dB43f366E48e6F614b8DCCBFeeFEEcD3",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -642,6 +562,7 @@
       ],
       "sinceTimestamp": 1716837335,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -656,10 +577,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30101,
         "lpToken": "0xF14EEe033D8b00101aB147F87cB238a2d3E74940",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "plannerFee": 1573303374785334,
         "poolBalance": "8402466000000000000",
@@ -675,19 +593,15 @@
       "name": "",
       "address": "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1716837299
+      "sinceTimestamp": 1716837299,
+      "values": { "$immutable": true }
     },
     {
       "name": "StargateStaking",
       "address": "0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837455,
       "values": {
+        "$immutable": true,
         "owner": "0x65bb797c2B9830d891D87288F029ed8dACc19705",
         "tokens": [
           "0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A",
@@ -699,48 +613,20 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d"
-    },
-    {
-      "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437"
-    },
-    {
-      "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-    },
-    {
-      "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    },
-    {
-      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
-    },
-    {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
-    },
-    {
-      "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0"
-    },
-    {
-      "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x1D7C6783328C145393e84fb47a7f7C548f5Ee28d" },
+    { "address": "0x2E1078e128e8AA6A70eC8d1B17A79Fc4B457d437" },
+    { "address": "0x565cFd7224bbc2a81a6e2a1464892ecB27efB070" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x79e2b9C1F6C9ed1375C93AaF139e6C4537f48523" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
+    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" },
+    { "address": "0xf02CC4dc84aC59Bd6089BAddcEB9d4Ef3AEFb0f0" },
+    { "address": "0xF05F4211ad15A8e49b49C0436067CFFfEa783aA4" }
   ],
   "abis": {
     "0x1041D127b2d4BC700F0F563883bC689502606918": [

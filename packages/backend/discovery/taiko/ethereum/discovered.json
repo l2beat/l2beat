@@ -3,24 +3,18 @@
   "chain": "ethereum",
   "blockNumber": 20262044,
   "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "PEMCertChainLib",
       "address": "0x02772b7B3a5Bea0141C993Dbb8D0733C19F46169",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1714550639
+      "sinceTimestamp": 1714550639,
+      "values": { "$immutable": true }
     },
     {
       "name": "TaikoL1Contract",
       "address": "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": [
         "This contract provides functionalities for proposing, proving, and verifying blocks."
       ],
@@ -30,9 +24,10 @@
         "getLastVerifiedBlock",
         "state"
       ],
-      "implementations": ["0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"],
       "sinceTimestamp": 1714550627,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b",
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "assignment_hook": "0x0000000000000000000000000000000000000000",
         "automata_dcap_attestation": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
@@ -131,15 +126,12 @@
     {
       "name": "TaikoToken",
       "address": "0x10dea67478c5F8C5E2D90e5E9B26dBe60c54d800",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xcfe803378D79d1180EbF030455040EA6513869dF",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["clock"],
-      "implementations": ["0xcfe803378D79d1180EbF030455040EA6513869dF"],
       "sinceTimestamp": 1714033799,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0xcfe803378D79d1180EbF030455040EA6513869dF",
         "addressManager": "0x0000000000000000000000000000000000000000",
         "clock": 1720444751,
         "CLOCK_MODE": "mode=timestamp",
@@ -170,11 +162,9 @@
     {
       "name": "TierProvider",
       "address": "0x3a1A900680BaADb889202faf12915F7E47B71ddd",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1719819275,
       "values": {
+        "$immutable": true,
         "active_tiers": [
           [
             "0x746965725f736778000000000000000000000000000000000000000000000000"
@@ -231,19 +221,15 @@
     {
       "name": "SigVerifyLib",
       "address": "0x47bB416ee947fE4a4b655011aF7d6E3A1B80E6e9",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1714550639
+      "sinceTimestamp": 1714550639,
+      "values": { "$immutable": true }
     },
     {
       "name": "ProverSet",
       "address": "0x518845daA8870bE2C59E49620Fc262AD48953C9a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1720085411,
       "values": {
+        "$immutable": true,
         "addressManager": "0x0000000000000000000000000000000000000000",
         "admin": "0x0000000000000000000000000000000000000000",
         "impl": "0x0000000000000000000000000000000000000000",
@@ -258,17 +244,14 @@
     {
       "name": "GuardianMinorityProver",
       "address": "0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Verifier contract for blocks proven by Guardian minority."
       ],
-      "implementations": ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"],
       "sinceTimestamp": 1714550627,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "guardians": [
           "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
@@ -297,14 +280,11 @@
     {
       "name": "L1RollupAddressManager",
       "address": "0x579f40D0BE111b823962043702cabe6Aaa290780",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x29a88d60246C76E4F28806b9C8a42d2183154900",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
-      "implementations": ["0x29a88d60246C76E4F28806b9C8a42d2183154900"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1714550615,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x29a88d60246C76E4F28806b9C8a42d2183154900",
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "impl": "0x29a88d60246C76E4F28806b9C8a42d2183154900",
         "inNonReentrant": false,
@@ -319,17 +299,14 @@
     {
       "name": "ProverSetProxy",
       "address": "0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": [
         "A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO."
       ],
-      "implementations": ["0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"],
       "sinceTimestamp": 1716217559,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
         "impl": "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1",
@@ -345,11 +322,9 @@
     {
       "name": "TierRouter",
       "address": "0x6E997f1F22C40ba37F633B08f3b07E10Ed43155a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1719819443,
       "values": {
+        "$immutable": true,
         "tier_provider": "0x3a1A900680BaADb889202faf12915F7E47B71ddd"
       },
       "derivedName": "TierRouter"
@@ -357,14 +332,11 @@
     {
       "name": "AutomataDcapV3Attestation",
       "address": "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
-      "implementations": ["0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1714550639,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
         "addressManager": "0x0000000000000000000000000000000000000000",
         "checkLocalEnclaveReport": true,
         "impl": "0x5f73f0AdC7dAA6134Fe751C4a78d524f9384e0B5",
@@ -390,14 +362,11 @@
     {
       "name": "SharedERC20Vault",
       "address": "0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xa303784B0557BF1F1FB8b8abEF2B18a005722689",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
-      "implementations": ["0xa303784B0557BF1F1FB8b8abEF2B18a005722689"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1714550603,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0xa303784B0557BF1F1FB8b8abEF2B18a005722689",
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0xa303784B0557BF1F1FB8b8abEF2B18a005722689",
         "inNonReentrant": false,
@@ -415,12 +384,7 @@
       "name": "TaikoAdmin",
       "address": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 4 (75%)"
-      },
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": [
           "0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
@@ -438,9 +402,11 @@
         ]
       },
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1714192631,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "3 of 4 (75%)",
         "domainSeparator": "0x3a173428d0c590136352934d6660e8d16a6dc0181538aa341048cf31a1316c16",
         "getChainId": 1,
         "getOwners": [
@@ -450,6 +416,7 @@
           "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
         ],
         "getThreshold": 3,
+        "GnosisSafe_modules": [],
         "nonce": 37,
         "VERSION": "1.3.0"
       },
@@ -458,14 +425,11 @@
     {
       "name": "SignalService",
       "address": "0x9e0a24964e5397B566c1ed39258e21aB5E35C77C",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
-      "implementations": ["0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1714550603,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d",
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d",
         "inNonReentrant": false,
@@ -480,16 +444,13 @@
     {
       "name": "SgxVerifier",
       "address": "0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": ["Verifier contract for SGX proven blocks."],
       "ignoreInWatchMode": ["instances", "nextInstanceId"],
-      "implementations": ["0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"],
       "sinceTimestamp": 1714550627,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F",
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "impl": "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F",
         "inNonReentrant": false,
@@ -566,15 +527,12 @@
     {
       "name": "TaikoBridge",
       "address": "0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["nextMessageId"],
-      "implementations": ["0x01E7D369a619eF1B0E92563d8737F42C09789986"],
       "sinceTimestamp": 1714550603,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x01E7D369a619eF1B0E92563d8737F42C09789986",
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "GAS_OVERHEAD": 120000,
         "GAS_RESERVE": 800000,
@@ -593,15 +551,12 @@
     {
       "name": "GuardianProver",
       "address": "0xE3D777143Ea25A6E031d1e921F396750885f43aC",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": ["Verifier contract for Guardian proven blocks."],
-      "implementations": ["0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"],
       "sinceTimestamp": 1714550627,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4",
         "addressManager": "0x579f40D0BE111b823962043702cabe6Aaa290780",
         "guardians": [
           "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33",
@@ -630,14 +585,11 @@
     {
       "name": "L1SharedAddressManager",
       "address": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17",
-        "admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F"
-      },
-      "implementations": ["0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1714550603,
       "values": {
+        "$admin": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
+        "$implementation": "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17",
         "addressManager": "0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
         "impl": "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17",
         "inNonReentrant": false,
@@ -651,222 +603,78 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0"
-    },
-    {
-      "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33"
-    },
-    {
-      "address": "0x0568b34255fc451F651d3021b0ee66DE80210A14"
-    },
-    {
-      "address": "0x0666C986800f3037793a46B96EBE75F5b4e68940"
-    },
-    {
-      "address": "0x085Bf649bef6b9e97C73822724eD33553C20a1CA"
-    },
-    {
-      "address": "0x0b0dEf1167893541cF8F951A8d627e206Ef2c47E"
-    },
-    {
-      "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D"
-    },
-    {
-      "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200"
-    },
-    {
-      "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6"
-    },
-    {
-      "address": "0x1DD5E0E5b03608a30b55806358ddbABC6Dc83b3f"
-    },
-    {
-      "address": "0x1dE96F45CB6f78aBC35F0DfD68Cf356691B429da"
-    },
-    {
-      "address": "0x1E0b96e4665E622dcc2F2c11ba7a7dD8Bc1fDD8A"
-    },
-    {
-      "address": "0x206A2e6bAF0304642FFed63B0aBA1AAEF3373515"
-    },
-    {
-      "address": "0x25C1069AdA9D2E3c6e9706cAA6b5494062E27679"
-    },
-    {
-      "address": "0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089"
-    },
-    {
-      "address": "0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34"
-    },
-    {
-      "address": "0x2C4DBAD36A5b7d59eAc38def94D9bBEa3b6D351B"
-    },
-    {
-      "address": "0x2dD5B12E5847F196Dc9DaE90d620b81dcaB50e7D"
-    },
-    {
-      "address": "0x3410feA2fEC5c6830Ac4FC8664089a6FE32A81B0"
-    },
-    {
-      "address": "0x374DC646a6EDaDcCA4D653677444b5bb803CdfD4"
-    },
-    {
-      "address": "0x3777c454aF69C87df961E92dA99fCF96EdB30683"
-    },
-    {
-      "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1"
-    },
-    {
-      "address": "0x40A2D3c20d766280C71EcE4E4aD4edF135C35634"
-    },
-    {
-      "address": "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3"
-    },
-    {
-      "address": "0x4A9d339c94D1D3b685e3923907A98c73b8168AFF"
-    },
-    {
-      "address": "0x4Ef2201f196196be4B9e50F93F67Ad462A0d25A8"
-    },
-    {
-      "address": "0x4Fe0dBb789b2204201e82f6Eae8491510bF74B2D"
-    },
-    {
-      "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268"
-    },
-    {
-      "address": "0x584240b6296210BdF93E2221aBD69BDb312Dc8af"
-    },
-    {
-      "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68"
-    },
-    {
-      "address": "0x6037E46fDdB6278e2fc5BbC87bBf5AD040A7C38D"
-    },
-    {
-      "address": "0x62a966A7492Be75182C89E6E2a519a87884A0382"
-    },
-    {
-      "address": "0x6Ac9022c4bFBE548aA2621f9E10fA485EC013e6a"
-    },
-    {
-      "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87"
-    },
-    {
-      "address": "0x6f66C3e73D6B0F9e3547954F1650b76428708Ad6"
-    },
-    {
-      "address": "0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3"
-    },
-    {
-      "address": "0x70f067776426EBeB33aee88DEb03CD6C57DAE703"
-    },
-    {
-      "address": "0x76BEc9620cbc4b15422CC8726a07765736A52Dd0"
-    },
-    {
-      "address": "0x77Eb511caCCEdD71924B361dc24dE3A762A55927"
-    },
-    {
-      "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91"
-    },
-    {
-      "address": "0x7D5798Ce898E7E79f60A126eE82a84fE564067B2"
-    },
-    {
-      "address": "0x7eAb069309335b615cC99545542d9d3FDeb46534"
-    },
-    {
-      "address": "0x8033455650e71FF8376974AC8A7D6f4aEecad17c"
-    },
-    {
-      "address": "0x84f272246697d5C872890AfB6A5FbD5524ebcFef"
-    },
-    {
-      "address": "0x87f1bf0A503b025684136cdE16dd606De4f46b67"
-    },
-    {
-      "address": "0x91eB9C57C46EA0bD928A911A56C3894f21e6D7Db"
-    },
-    {
-      "address": "0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9"
-    },
-    {
-      "address": "0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7"
-    },
-    {
-      "address": "0xb0E92092bAAab77ba628CC5cD91397Ca4b675ec0"
-    },
-    {
-      "address": "0xB22148BC3819b1519e0b21e667D0F4F183CDC20c"
-    },
-    {
-      "address": "0xbc1671F4cFdDaA3CC28aa64Cf1C1874cADef7AC1"
-    },
-    {
-      "address": "0xbf690e318D5C183D9ad1A626a0bd1DafD605b126"
-    },
-    {
-      "address": "0xBfDa132503F664d6B4c2cA4B1f41413956bB6ab1"
-    },
-    {
-      "address": "0xC384B679c028787166b9B3725aC14A60da205861"
-    },
-    {
-      "address": "0xC57230B9A1BD4f882c40C9f549a27034474e5962"
-    },
-    {
-      "address": "0xCbC0c2D518cD3C832b210a9FC9Cb265119BedAf1"
-    },
-    {
-      "address": "0xD1B462C00Cd0c852E00eeF0aD09a924fc3e1f3D5"
-    },
-    {
-      "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51"
-    },
-    {
-      "address": "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf"
-    },
-    {
-      "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045"
-    },
-    {
-      "address": "0xda4d5372188B0b8502AeD3770212Ed5784f71550"
-    },
-    {
-      "address": "0xDeEbeeC3B2951B72c232F6Aa30EAB9ae12e77E98"
-    },
-    {
-      "address": "0xe23A97f0c0a1Bc748709c2a348705773197A9c11"
-    },
-    {
-      "address": "0xE6e686341B58F5378e8913369d176dc47bc1DE7a"
-    },
-    {
-      "address": "0xe79d80cC4CF385e30473cA41279BC4845c82bb9e"
-    },
-    {
-      "address": "0xe8471669e79ff941Fe766a50fca219DD68ad81AC"
-    },
-    {
-      "address": "0xeBb85864BA610EFE2CA0B949A4189f1675c7FcAf"
-    },
-    {
-      "address": "0xf02099f42d499028Ca52a5205d4E21001f5E3525"
-    },
-    {
-      "address": "0xF0495642611461Ae25F4867B043717D9F53a9237"
-    },
-    {
-      "address": "0xf2231009908E695C010c02F57Ac541D3470d95d5"
-    },
-    {
-      "address": "0xF445C0b580454E21a8b836318D83782d35986666"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x000000633b68f5D8D3a86593ebB815b4663BCBe0" },
+    { "address": "0x000012dd12a6D9Dd2045f5E2594f4996b99A5d33" },
+    { "address": "0x0568b34255fc451F651d3021b0ee66DE80210A14" },
+    { "address": "0x0666C986800f3037793a46B96EBE75F5b4e68940" },
+    { "address": "0x085Bf649bef6b9e97C73822724eD33553C20a1CA" },
+    { "address": "0x0b0dEf1167893541cF8F951A8d627e206Ef2c47E" },
+    { "address": "0x0cAC6E2Fd10e92Bf798341Ad0A57b5Cb39DA8D0D" },
+    { "address": "0x1602958A85494cd9C3e0D6672BA0eE42b95B4200" },
+    { "address": "0x1DB8Ac9f19AbdD60A6418383BfA56A4450aa80C6" },
+    { "address": "0x1DD5E0E5b03608a30b55806358ddbABC6Dc83b3f" },
+    { "address": "0x1dE96F45CB6f78aBC35F0DfD68Cf356691B429da" },
+    { "address": "0x1E0b96e4665E622dcc2F2c11ba7a7dD8Bc1fDD8A" },
+    { "address": "0x206A2e6bAF0304642FFed63B0aBA1AAEF3373515" },
+    { "address": "0x25C1069AdA9D2E3c6e9706cAA6b5494062E27679" },
+    { "address": "0x27dE58B8b5B3B643eA8e68Ec829caA20f51e1089" },
+    { "address": "0x2bcD4D02Fb1c703C6C3f2976e82ea7457D26CB34" },
+    { "address": "0x2C4DBAD36A5b7d59eAc38def94D9bBEa3b6D351B" },
+    { "address": "0x2dD5B12E5847F196Dc9DaE90d620b81dcaB50e7D" },
+    { "address": "0x3410feA2fEC5c6830Ac4FC8664089a6FE32A81B0" },
+    { "address": "0x374DC646a6EDaDcCA4D653677444b5bb803CdfD4" },
+    { "address": "0x3777c454aF69C87df961E92dA99fCF96EdB30683" },
+    { "address": "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1" },
+    { "address": "0x40A2D3c20d766280C71EcE4E4aD4edF135C35634" },
+    { "address": "0x412A2aDFe3a7e6D737539E0FF526523a47D86ab3" },
+    { "address": "0x4A9d339c94D1D3b685e3923907A98c73b8168AFF" },
+    { "address": "0x4Ef2201f196196be4B9e50F93F67Ad462A0d25A8" },
+    { "address": "0x4Fe0dBb789b2204201e82f6Eae8491510bF74B2D" },
+    { "address": "0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268" },
+    { "address": "0x584240b6296210BdF93E2221aBD69BDb312Dc8af" },
+    { "address": "0x5CfEb9a72256B1b49dc2C98b1b7b99d172D50B68" },
+    { "address": "0x6037E46fDdB6278e2fc5BbC87bBf5AD040A7C38D" },
+    { "address": "0x62a966A7492Be75182C89E6E2a519a87884A0382" },
+    { "address": "0x6Ac9022c4bFBE548aA2621f9E10fA485EC013e6a" },
+    { "address": "0x6B6072CE402F22fDcFbA1705383D8e280717Cb87" },
+    { "address": "0x6f66C3e73D6B0F9e3547954F1650b76428708Ad6" },
+    { "address": "0x6F6C0837b2c45B1bfE970bd5a0BB171605cb44F3" },
+    { "address": "0x70f067776426EBeB33aee88DEb03CD6C57DAE703" },
+    { "address": "0x76BEc9620cbc4b15422CC8726a07765736A52Dd0" },
+    { "address": "0x77Eb511caCCEdD71924B361dc24dE3A762A55927" },
+    { "address": "0x7Cdd1c128Cd72dd252f569eeD942735330937F91" },
+    { "address": "0x7D5798Ce898E7E79f60A126eE82a84fE564067B2" },
+    { "address": "0x7eAb069309335b615cC99545542d9d3FDeb46534" },
+    { "address": "0x8033455650e71FF8376974AC8A7D6f4aEecad17c" },
+    { "address": "0x84f272246697d5C872890AfB6A5FbD5524ebcFef" },
+    { "address": "0x87f1bf0A503b025684136cdE16dd606De4f46b67" },
+    { "address": "0x91eB9C57C46EA0bD928A911A56C3894f21e6D7Db" },
+    { "address": "0x98f0050D3c7ba3B938A98dFBe2024CA5c1E517A9" },
+    { "address": "0x9e7ae74CB0CCf4f49f2093097dCeE32C96Bef1a7" },
+    { "address": "0xb0E92092bAAab77ba628CC5cD91397Ca4b675ec0" },
+    { "address": "0xB22148BC3819b1519e0b21e667D0F4F183CDC20c" },
+    { "address": "0xbc1671F4cFdDaA3CC28aa64Cf1C1874cADef7AC1" },
+    { "address": "0xbf690e318D5C183D9ad1A626a0bd1DafD605b126" },
+    { "address": "0xBfDa132503F664d6B4c2cA4B1f41413956bB6ab1" },
+    { "address": "0xC384B679c028787166b9B3725aC14A60da205861" },
+    { "address": "0xC57230B9A1BD4f882c40C9f549a27034474e5962" },
+    { "address": "0xCbC0c2D518cD3C832b210a9FC9Cb265119BedAf1" },
+    { "address": "0xD1B462C00Cd0c852E00eeF0aD09a924fc3e1f3D5" },
+    { "address": "0xd26c4e85BC2fAAc27a320987e340971cF3b47d51" },
+    { "address": "0xd6BB974bc47626E3547426efa4CA2A8d7DFCccdf" },
+    { "address": "0xd8dA6BF26964aF9D7eEd9e03E53415D37aA96045" },
+    { "address": "0xda4d5372188B0b8502AeD3770212Ed5784f71550" },
+    { "address": "0xDeEbeeC3B2951B72c232F6Aa30EAB9ae12e77E98" },
+    { "address": "0xe23A97f0c0a1Bc748709c2a348705773197A9c11" },
+    { "address": "0xE6e686341B58F5378e8913369d176dc47bc1DE7a" },
+    { "address": "0xe79d80cC4CF385e30473cA41279BC4845c82bb9e" },
+    { "address": "0xe8471669e79ff941Fe766a50fca219DD68ad81AC" },
+    { "address": "0xeBb85864BA610EFE2CA0B949A4189f1675c7FcAf" },
+    { "address": "0xf02099f42d499028Ca52a5205d4E21001f5E3525" },
+    { "address": "0xF0495642611461Ae25F4867B043717D9F53a9237" },
+    { "address": "0xf2231009908E695C010c02F57Ac541D3470d95d5" },
+    { "address": "0xF445C0b580454E21a8b836318D83782d35986666" }
   ],
   "abis": {
     "0x01E7D369a619eF1B0E92563d8737F42C09789986": [

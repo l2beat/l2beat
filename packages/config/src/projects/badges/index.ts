@@ -245,14 +245,14 @@ export const badges = {
     },
     type: BadgeType.Stack,
   },
-  Loopring: {
+  LoopringFork: {
     display: {
       name: 'Fork of Loopring',
       description: 'The project is fork of Loopring.',
     },
     type: BadgeType.Fork,
   },
-  ZKsyncLite: {
+  ZKsyncLiteFork: {
     display: {
       name: 'Fork of ZKsync Lite',
       description: 'The project is fork of ZKsync Lite.',

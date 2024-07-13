@@ -94,21 +94,11 @@ export function calculateInversion(
   }
 
   for (const contract of discovery.contracts) {
-    const upgradeabilityValues = {
-      ...(contract.upgradeability as unknown as Record<string, ContractValue>),
-
-      // We don't want to show the implementation as nodes in the diagram
-      implementation: undefined,
-      callImplementation: undefined,
-      adminImplementation: undefined,
-      userImplementation: undefined,
-      implementations: undefined,
-    }
-
     add(contract.address.toString())
     const values: Record<string, ContractValue | undefined> = {
-      ...upgradeabilityValues,
       ...contract.values,
+      // We don't want to show the implementation as nodes in the diagram
+      $implementation: undefined,
     }
 
     for (const [key, value] of Object.entries(values)) {

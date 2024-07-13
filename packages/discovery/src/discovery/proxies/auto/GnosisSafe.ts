@@ -69,13 +69,14 @@ export async function detectGnosisSafe(
   ).toFixed()}%)`
 
   return {
-    implementations: [masterCopy],
-    relatives: modules,
-    upgradeability: {
-      type: 'gnosis safe',
-      masterCopy,
-      modules,
-      threshold: thresholdString,
+    type: 'gnosis safe',
+    values: {
+      // TODO: (sz-piotr) Is it always the case for safes?
+      $immutable: false,
+      $implementation: masterCopy,
+      // TODO: (sz-piotr) Why here, and not in the template?
+      $multisigThreshold: thresholdString,
+      GnosisSafe_modules: modules,
     },
   }
 }

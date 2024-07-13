@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20177361,
   "configHash": "0xeae5137c5dc041fed05dd5f940e33132f79c6732c109e778462087e2c24a39cd",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "OneStepProofEntry",
       "address": "0x09824fe72BFF474d16D9c2774432E381BBD60662",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1701972923,
       "values": {
+        "$immutable": true,
         "prover0": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
         "proverHostIo": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
         "proverMath": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
@@ -23,30 +21,23 @@
       "name": "",
       "address": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1701973211
+      "sinceTimestamp": 1701973211,
+      "values": { "$immutable": true }
     },
     {
       "name": "ValidatorUtils",
       "address": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1701973151
+      "sinceTimestamp": 1701973151,
+      "values": { "$immutable": true }
     },
     {
       "name": "ChallengeManager",
       "address": "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
-      "implementations": ["0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0xEe9E5546A11Cb5b4A86e92DA05f2ef75C26E4754",
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "osp": "0x09824fe72BFF474d16D9c2774432E381BBD60662",
         "resultReceiver": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
@@ -58,19 +49,16 @@
     {
       "name": "Bridge",
       "address": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
         "delayedMessageCount",
         "sequencerMessageCount",
         "sequencerReportedSubMessageCount"
       ],
-      "implementations": ["0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab"],
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x7EfcB76D0e2E776A298aAa603d433336e5F8b6ab",
         "activeOutbox": "0x0000000000000000000000000000000000000000",
         "allowedDelayedInboxList": [
           "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
@@ -89,22 +77,17 @@
     {
       "name": "OneStepProverMemory",
       "address": "0x4811500e0d376Fa8d2EA3CCb7c61E0afB4F5A7f1",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1701972755
+      "sinceTimestamp": 1701972755,
+      "values": { "$immutable": true }
     },
     {
       "name": "L1OrbitGatewayRouter",
       "address": "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
-      "implementations": ["0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1710845159,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0",
         "counterpartGateway": "0xF0b66c2d7Abb3CbbD26463a971BF62d6c4eaDE34",
         "defaultGateway": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
@@ -116,11 +99,9 @@
     {
       "name": "SwapManager",
       "address": "0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1715706239,
       "values": {
+        "$immutable": true,
         "MIN_TWAP_DURATION": 3600,
         "NULL": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "owner": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
@@ -134,14 +115,11 @@
     {
       "name": "ERC20RollupEventInbox",
       "address": "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
-      "implementations": ["0x302275067251F5FcdB9359Bda735fD8f7A4A54c0"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x302275067251F5FcdB9359Bda735fD8f7A4A54c0",
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "rollup": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"
       }
@@ -150,23 +128,17 @@
       "name": "SequencerInbox",
       "address": "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
       "template": "orbitstack/SequencerInbox",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x873484Ba63353C8b71210ce123B465512d408B27",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
+      "proxyType": "EIP1967 proxy",
       "descriptions": ["State batches / commitments get posted here."],
       "ignoreInWatchMode": ["batchCount", "totalDelayedMessagesRead"],
-      "implementations": ["0x873484Ba63353C8b71210ce123B465512d408B27"],
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x873484Ba63353C8b71210ce123B465512d408B27",
         "batchCount": 2116,
         "batchPosters": ["0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E"],
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
-        "dacKeyset": {
-          "requiredSignatures": 1,
-          "membersCount": 1
-        },
+        "dacKeyset": { "requiredSignatures": 1, "membersCount": 1 },
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "HEADER_LENGTH": 40,
         "keySetUpdates": 1,
@@ -187,9 +159,6 @@
     {
       "name": "StrategyManager",
       "address": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "getAllStrategiesValue",
         "getAllStrategyPendingValue",
@@ -197,6 +166,7 @@
       ],
       "sinceTimestamp": 1715706239,
       "values": {
+        "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
         "getAllStrategiesValue": "260589412771435303458",
         "getAllStrategyPendingValue": 0,
@@ -215,12 +185,10 @@
     {
       "name": "Minter",
       "address": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["getTokenPrice"],
       "sinceTimestamp": 1710542279,
       "values": {
+        "$immutable": true,
         "getTokenPrice": "1003726787144814899",
         "real": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
         "vault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1"
@@ -230,9 +198,6 @@
     {
       "name": "LidoStEthStrategy",
       "address": "0x679D4C1cC6855C57726BEA1784F578315d6431f6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "getInvestedValue",
         "getTotalValue",
@@ -240,12 +205,10 @@
       ],
       "sinceTimestamp": 1715706239,
       "values": {
+        "$immutable": true,
         "getClaimableValue": 0,
         "getInvestedValue": "260589412771435303458",
-        "getStETHWithdrawalStatus": {
-          "requestIds": [],
-          "statuses": []
-        },
+        "getStETHWithdrawalStatus": { "requestIds": [], "statuses": [] },
         "getTotalValue": "260589412771435303458",
         "governance": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "manager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8",
@@ -263,14 +226,11 @@
     {
       "name": "Outbox",
       "address": "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x19431dc37098877486532250FB3158140717C00C",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
-      "implementations": ["0x19431dc37098877486532250FB3158140717C00C"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x19431dc37098877486532250FB3158140717C00C",
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "l2ToL1BatchNum": 0,
         "l2ToL1Block": 0,
@@ -287,27 +247,21 @@
     {
       "name": "OneStepProverMath",
       "address": "0x89AF7C4C2198c426cFe6E86de0680A0850503e06",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1701972815
+      "sinceTimestamp": 1701972815,
+      "values": { "$immutable": true }
     },
     {
       "name": "OneStepProverHostIo",
       "address": "0x99a2A31300816C1FA3f40818AC9280fe7271F878",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1701972863
+      "sinceTimestamp": 1701972863,
+      "values": { "$immutable": true }
     },
     {
       "name": "ValidatorWalletCreator",
       "address": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1701973211,
       "values": {
+        "$immutable": true,
         "owner": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341",
         "template": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91"
       }
@@ -315,9 +269,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
@@ -333,6 +284,7 @@
       },
       "sinceTimestamp": 1710580715,
       "values": {
+        "$immutable": true,
         "owner": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
       }
     },
@@ -340,16 +292,13 @@
       "name": "GelatoMultisig",
       "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "6 of 10 (60%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1711489163,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "6 of 10 (60%)",
         "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
         "getChainId": 1,
         "getOwners": [
@@ -365,6 +314,7 @@
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
         "getThreshold": 6,
+        "GnosisSafe_modules": [],
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -373,14 +323,11 @@
     {
       "name": "Bridger",
       "address": "0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x977cA9732E618D32552BA16a52f258cEFadf970a",
-        "admin": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
-      },
-      "implementations": ["0x977cA9732E618D32552BA16a52f258cEFadf970a"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1715552075,
       "values": {
+        "$admin": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
+        "$implementation": "0x977cA9732E618D32552BA16a52f258cEFadf970a",
         "owner": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
@@ -390,12 +337,10 @@
     {
       "name": "Real",
       "address": "0xC0Cc5eA00cAe0894B441E3B5a3Bb57aa92F15421",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["tokenPrice", "totalSupply"],
       "sinceTimestamp": 1710542279,
       "values": {
+        "$immutable": true,
         "decimals": 18,
         "minter": "0x655756824385F8903AC8cFDa17B656cc26f7C7da",
         "name": "Real Ether",
@@ -409,12 +354,7 @@
       "name": "RollupProxy",
       "address": "0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a",
       "template": "orbitstack/RollupProxy",
-      "upgradeability": {
-        "type": "Arbitrum proxy",
-        "admin": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
-        "adminImplementation": "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
-        "userImplementation": "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
-      },
+      "proxyType": "Arbitrum proxy",
       "descriptions": [
         "Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs."
       ],
@@ -423,12 +363,13 @@
         "latestConfirmed",
         "latestNodeCreated"
       ],
-      "implementations": [
-        "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
-        "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
-      ],
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
+        "$implementation": [
+          "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A",
+          "0x660ea1675F7323dC3Ba0c8dDFB593225Eb01E3C1"
+        ],
         "baseStake": "100000000000000000",
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "chainId": 111188,
@@ -471,16 +412,13 @@
       "name": "EscrowMultisig",
       "address": "0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "4 of 5 (80%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1715303135,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "4 of 5 (80%)",
         "domainSeparator": "0xffed3c27670fc30ea34917db1b8f67e220488741f28e4112029e2fff249b118d",
         "getChainId": 1,
         "getOwners": [
@@ -491,6 +429,7 @@
           "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD"
         ],
         "getThreshold": 4,
+        "GnosisSafe_modules": [],
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -499,17 +438,14 @@
     {
       "name": "UpgradeExecutor",
       "address": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
+      "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
         "admin": ["0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"]
       },
-      "implementations": ["0x6c21303F5986180B1394d2C89f3e883890E2867b"],
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x6c21303F5986180B1394d2C89f3e883890E2867b",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -533,22 +469,17 @@
     {
       "name": "OneStepProver0",
       "address": "0xDf94F0474F205D086dbc2e66D69a856FCf520622",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1701972707
+      "sinceTimestamp": 1701972707,
+      "values": { "$immutable": true }
     },
     {
       "name": "Inbox",
       "address": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
-      "implementations": ["0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1710580715,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0x31fAAAB44e74eB408d1FC69A14806B4b9cA09da2",
         "allowListEnabled": false,
         "bridge": "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
         "getProxyAdmin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
@@ -561,12 +492,10 @@
     {
       "name": "AssetsVault",
       "address": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["getBalance"],
       "sinceTimestamp": 1715706239,
       "values": {
+        "$immutable": true,
         "getBalance": "747827465816192695",
         "realVault": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
         "strategyManager": "0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8"
@@ -576,9 +505,6 @@
     {
       "name": "RealVault",
       "address": "0xFC1db08622e81b2AFd643318f6B8B79E9980A5e1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "currentSharePrice",
         "withdrawingSharesInPast",
@@ -588,6 +514,7 @@
       ],
       "sinceTimestamp": 1715706239,
       "values": {
+        "$immutable": true,
         "assetsVault": "0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294",
         "currentSharePrice": "1003726787144814899",
         "feeRecipient": "0x0000000000000000000000000000000000000000",
@@ -610,14 +537,11 @@
     {
       "name": "L1OrbitERC20Gateway",
       "address": "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848",
-        "admin": "0xB032ff02cd6425e4b816137207AA8560932180f1"
-      },
-      "implementations": ["0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1710845159,
       "values": {
+        "$admin": "0xB032ff02cd6425e4b816137207AA8560932180f1",
+        "$implementation": "0xe80b4E0ed5e92d865F4708eeE0E1564287a7D848",
         "cloneableProxyHash": "0xce61ab08155a3a368bfd165ba9e1151d023608a155fce1ec0d87bba89a59cb4d",
         "counterpartGateway": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c",
         "inbox": "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
@@ -628,83 +552,39 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
-    },
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     {
       "address": "0x0e00df1afC8574762Ac4C4D8E5D1a19bD6A8Fa2E",
       "roles": ["Sequencer"]
     },
-    {
-      "address": "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A"
-    },
-    {
-      "address": "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3"
-    },
-    {
-      "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c"
-    },
-    {
-      "address": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c"
-    },
+    { "address": "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A" },
+    { "address": "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3" },
+    { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
+    { "address": "0x326FFa9E3836577C6C46b0aA5A5b223FB4a4067c" },
     {
       "address": "0x4b8Fbc3006F256dd470B070d6c70fAb413Fceb62",
       "roles": ["Validator"]
     },
-    {
-      "address": "0x547D0F472309e4239b296D01e03bEDc101241a26"
-    },
-    {
-      "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d"
-    },
-    {
-      "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2"
-    },
-    {
-      "address": "0x6bD40C6f7849160FE217D07a73E15f4ef8222283"
-    },
-    {
-      "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
-    },
-    {
-      "address": "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD"
-    },
-    {
-      "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621"
-    },
-    {
-      "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d"
-    },
-    {
-      "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849"
-    },
+    { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
+    { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
+    { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
+    { "address": "0x6bD40C6f7849160FE217D07a73E15f4ef8222283" },
+    { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
+    { "address": "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD" },
+    { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
+    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
     {
       "address": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
-      "assignedPermissions": {
-        "admin": ["0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8"]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE"
-    },
-    {
-      "address": "0xF0b66c2d7Abb3CbbD26463a971BF62d6c4eaDE34"
-    },
-    {
-      "address": "0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0"
-    },
-    {
-      "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5"
-    },
-    {
-      "address": "0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A"
-    },
-    {
-      "address": "0xFc1A48d5875Adc0E5f9e2805083C9c5300704BD7"
-    }
+    { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
+    { "address": "0xF0b66c2d7Abb3CbbD26463a971BF62d6c4eaDE34" },
+    { "address": "0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0" },
+    { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
+    { "address": "0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A" },
+    { "address": "0xFc1A48d5875Adc0E5f9e2805083C9c5300704BD7" }
   ],
   "abis": {
     "0x09824fe72BFF474d16D9c2774432E381BBD60662": [

@@ -8,14 +8,10 @@ import { getAddresses } from './metaUtils'
 export function getRelativesWithSuggestedTemplates(
   parameters: HandlerResult[],
   ignoredFields?: string[],
-  knownRelatives?: EthereumAddress[],
   ignoredAddresses?: EthereumAddress[],
   fields?: { [field: string]: DiscoveryContractField },
 ): AddressesWithTemplates {
   const result: AddressesWithTemplates = {}
-  for (const known of knownRelatives ?? []) {
-    result[known.toString()] = new Set()
-  }
   for (const param of parameters) {
     if (param.ignoreRelative || ignoredFields?.includes(param.field)) {
       continue
