@@ -28,5 +28,24 @@
     "0x537a2f0D3a5879b41BCb5A2afE2EA5c4961796F6": "AssignmentHook",
     "0x8d7C954960a36a7596d7eA4945dDf891967ca8A3": "AutomataDcapV3Attestation"
   },
-  "overrides": {}
+  "overrides": {
+    "MxcL1Contract?": {
+      "ignoreInWatchMode": [
+        "getBlockFee",
+        "getConfig",
+        "getProposeReward",
+        "getStateVariables",
+        "state"
+      ], // temporary until reviewed
+      "ignoreMethods": [
+        "getBlock",
+        "getCrossChainBlockHash",
+        "getCrossChainSignalRoot"
+      ]
+    },
+    "Bridge?": {
+      "ignoreInWatchMode": ["context"],
+      "ignoreMethods": ["isDestChainEnabled"] // temporary until reviewed
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import {
+  ChainConverter,
   ChainId,
   EthereumAddress,
   UnixTime,
@@ -12,7 +13,6 @@ import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
-import { ChainConverter } from '../../tools/ChainConverter'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 

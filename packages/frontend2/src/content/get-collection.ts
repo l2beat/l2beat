@@ -33,7 +33,7 @@ export type CollectionEntry<T extends CollectionKey> =
     ? DataCollectionEntry<T>
     : ContentCollectionEntry<T>
 
-const DIR_PATH = './src/content'
+const DIR_PATH = path.join('.', 'src', 'content')
 
 export function getCollection<T extends CollectionKey>(
   key: T,
@@ -125,7 +125,7 @@ function getContentCollectionEntry<T extends ContentCollectionKey>(
 ): ContentCollectionEntry<T> {
   const contentEntry = collections[key]
   const file = readFileSync(
-    path.join(DIR_PATH, key, `${id}.${contentEntry.extension}`),
+    path.join(process.cwd(), DIR_PATH, key, `${id}.${contentEntry.extension}`),
   )
   const parsedFile = matter(file.toString())
 

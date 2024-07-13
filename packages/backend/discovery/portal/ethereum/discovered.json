@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20089055,
   "configHash": "0x195ddce914e9f413f3a0b36e6718ae330961a2e3419eab147ab0fb6cec090d8b",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "TokenImplementation",
       "address": "0x0fD04a68d3c3A692d6Fa30384D1A87Ef93554eE6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1663610147,
       "values": {
+        "$immutable": true,
         "chainId": 0,
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0x0cf2c709fa7ea9acd67676f52f3dbf86e5aff34b6cdc82219ec4212ea2e0569f",
@@ -36,28 +34,22 @@
     {
       "name": "WormholeRelayer",
       "address": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x90995DBd1aae85872451b50A569dE947D34ac4ee",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "implementations": ["0x90995DBd1aae85872451b50A569dE947D34ac4ee"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1686938183,
       "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x90995DBd1aae85872451b50A569dE947D34ac4ee",
         "getDefaultDeliveryProvider": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"
       }
     },
     {
       "name": "TokenBridge",
       "address": "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "implementations": ["0x381752f5458282d317d12C30D2Bd4D6E1FD8841e"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1631535967,
       "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x381752f5458282d317d12C30D2Bd4D6E1FD8841e",
         "chainId": 2,
         "evmChainId": 1,
         "finality": 1,
@@ -74,14 +66,11 @@
     {
       "name": "NFTBridge",
       "address": "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "implementations": ["0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1632219043,
       "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x3e41904B3766F4cCEb145Cc53D75fEB61722a96C",
         "chainId": 2,
         "evmChainId": 1,
         "finality": 15,
@@ -97,14 +86,11 @@
     {
       "name": "DeliveryProviderImplementation",
       "address": "0x7A0a53847776f7e94Cc35742971aCb2217b0Db81",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2",
-        "admin": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2"
-      },
-      "implementations": ["0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1686937559,
       "values": {
+        "$admin": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
+        "$implementation": "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2",
         "chainId": 2,
         "coreRelayer": "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
         "getRewardAddress": "0x53207E216540125e322CdA8A693b0b89576DEb46",
@@ -118,14 +104,11 @@
     {
       "name": "WormholeCore",
       "address": "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "implementations": ["0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1628093444,
       "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x3c3d457f1522D3540AB3325Aa5f1864E34cBA9D0",
         "chainId": 2,
         "evmChainId": 1,
         "getCurrentGuardianSetIndex": 4,
@@ -168,14 +151,11 @@
     {
       "name": "CircleIntegration",
       "address": "0xAaDA05BD399372f0b0463744C09113c137636f6a",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x37f26277B1927c6bEDbD94e5C21C337A706af31c",
-        "admin": "0x0000000000000000000000000000000000000000"
-      },
-      "implementations": ["0x37f26277B1927c6bEDbD94e5C21C337A706af31c"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1682018903,
       "values": {
+        "$admin": "0x0000000000000000000000000000000000000000",
+        "$implementation": "0x37f26277B1927c6bEDbD94e5C21C337A706af31c",
         "chainId": 2,
         "circleBridge": "0xBd3fa81B58Ba92a82136038B25aDec7066af3155",
         "circleIntegrationImplementation": "0xa55315b5310bf674eccfe6b1537c17f7ef4a55b90365ed70e8fbff08e4f1c35e",
@@ -193,11 +173,9 @@
     {
       "name": "NFTImplementation",
       "address": "0xEc4d807Cd33a48A7C8Cd73D09B41Aa5160B3a7fc",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1632218833,
       "values": {
+        "$immutable": true,
         "chainId": 0,
         "getApproved": [],
         "name": "",
@@ -212,85 +190,33 @@
   "eoas": [
     {
       "address": "0x0000000000000000000000000000000000000000",
-      "assignedPermissions": {
-        "admin": [
-          "0x27428DD2d3DD32A4D7f7C497eAaa23130d894911",
-          "0x3ee18B2214AFF97000D974cf647E7C347E8fa585",
-          "0x6FFd7EdE62328b3Af38FCD61461Bbfc52F5651fE",
-          "0x98f3c9e6E3fAce36bAAd05FE09d375Ef1464288B",
-          "0xAaDA05BD399372f0b0463744C09113c137636f6a"
-        ]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e"
-    },
-    {
-      "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB"
-    },
-    {
-      "address": "0x114De8460193bdf3A2fCf81f86a09765F4762fD1"
-    },
-    {
-      "address": "0x11b39756C042441BE6D8650b69b54EbE715E2343"
-    },
-    {
-      "address": "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20"
-    },
-    {
-      "address": "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8"
-    },
-    {
-      "address": "0x53207E216540125e322CdA8A693b0b89576DEb46"
-    },
-    {
-      "address": "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd"
-    },
-    {
-      "address": "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3"
-    },
+    { "address": "0x000aC0076727b35FBea2dAc28fEE5cCB0fEA768e" },
+    { "address": "0x107A0086b32d7A0977926A205131d8731D39cbEB" },
+    { "address": "0x114De8460193bdf3A2fCf81f86a09765F4762fD1" },
+    { "address": "0x11b39756C042441BE6D8650b69b54EbE715E2343" },
+    { "address": "0x15e7cAF07C4e3DC8e7C469f92C8Cd88FB8005a20" },
+    { "address": "0x178e21ad2E77AE06711549CFBB1f9c7a9d8096e8" },
+    { "address": "0x53207E216540125e322CdA8A693b0b89576DEb46" },
+    { "address": "0x54Ce5B4D348fb74B958e8966e2ec3dBd4958a7cd" },
+    { "address": "0x5893B5A76c3f739645648885bDCcC06cd70a3Cd3" },
     {
       "address": "0x59278F587D4cFcDCbbc08019060be7231c37ddc2",
-      "assignedPermissions": {
-        "admin": ["0x7A0a53847776f7e94Cc35742971aCb2217b0Db81"]
-      }
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x5E1487F35515d02A92753504a8D75471b9f49EdB"
-    },
-    {
-      "address": "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d"
-    },
-    {
-      "address": "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3"
-    },
-    {
-      "address": "0x74a3bf913953D695260D88BC1aA25A4eeE363ef0"
-    },
-    {
-      "address": "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf"
-    },
-    {
-      "address": "0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2"
-    },
-    {
-      "address": "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14"
-    },
-    {
-      "address": "0xD2CC37A4dc036a8D232b48f62cDD4731412f4890"
-    },
-    {
-      "address": "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811"
-    },
-    {
-      "address": "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD"
-    },
-    {
-      "address": "0xf93124b7c738843CBB89E864c862c38cddCccF95"
-    },
-    {
-      "address": "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157"
-    }
+    { "address": "0x5E1487F35515d02A92753504a8D75471b9f49EdB" },
+    { "address": "0x6FbEBc898F403E4773E95feB15E80C9A99c8348d" },
+    { "address": "0x71AA1BE1D36CaFE3867910F99C09e347899C19C3" },
+    { "address": "0x74a3bf913953D695260D88BC1aA25A4eeE363ef0" },
+    { "address": "0x8192b6E7387CCd768277c17DAb1b7a5027c0b3Cf" },
+    { "address": "0x8C82B2fd82FaeD2711d59AF0F2499D16e726f6b2" },
+    { "address": "0xAF45Ced136b9D9e24903464AE889F5C8a723FC14" },
+    { "address": "0xD2CC37A4dc036a8D232b48f62cDD4731412f4890" },
+    { "address": "0xDA798F6896A3331F64b48c12D1D57Fd9cbe70811" },
+    { "address": "0xE8af07A8Eff87B99B7C8C2c18ea95a1FE86D0ACD" },
+    { "address": "0xf93124b7c738843CBB89E864c862c38cddCccF95" },
+    { "address": "0xfF6CB952589BDE862c25Ef4392132fb9D4A42157" }
   ],
   "abis": {
     "0x0b89ccD6b803CCEC4f0E0fBeFAeE1f7d16e734e2": [

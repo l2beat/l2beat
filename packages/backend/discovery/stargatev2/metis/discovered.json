@@ -3,14 +3,11 @@
   "chain": "metis",
   "blockNumber": 17386539,
   "configHash": "0x03bfc54a4e2ae6a05a108e8ab2267d96d0404d2c89eb1d6c4a3e907bc2bd00da",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "StargatePool",
       "address": "0x36ed193dc7160D3858EC250e69D12B03Ca087D08",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -20,6 +17,7 @@
       ],
       "sinceTimestamp": 1716837010,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -34,10 +32,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30151,
         "lpToken": "0x16C58802FD464D2Ac33B8f1DB57D7717f8365d91",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
         "plannerFee": "468043191475948754",
         "poolBalance": "935086575000000000000",
@@ -52,9 +47,6 @@
     {
       "name": "StargatePoolMigratable",
       "address": "0x4dCBFC0249e8d5032F89D6461218a9D2eFff5125",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -64,6 +56,7 @@
       ],
       "sinceTimestamp": 1716837024,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "burnAdmin": "0x0000000000000000000000000000000000000000",
         "burnAllowanceSD": 0,
@@ -80,10 +73,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30151,
         "lpToken": "0x222A9a6dD812CA5a27fFfEC39816A2DF6837D396",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
         "plannerFee": "484502171552392862",
         "poolBalance": 3001648036254,
@@ -98,21 +88,16 @@
     {
       "name": "TokenMessaging",
       "address": "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837030,
       "values": {
+        "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 17,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0xcbE78230CcA58b9EF4c3c5D1bC0D7E4b3206588a",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -142,9 +127,6 @@
     {
       "name": "StargatePool",
       "address": "0xD9050e7043102a0391F81462a3916326F86331F0",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -154,6 +136,7 @@
       ],
       "sinceTimestamp": 1716837016,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -168,10 +151,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30151,
         "lpToken": "0x2D4848d502B8B16b8ad86945d3D4e92F2d229dFF",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0x90c3DFD4Ea593336DBB9F925f73413e6EE84c90E",
         "plannerFee": "11000000000000000",
         "poolBalance": "10502070000000000000",
@@ -185,12 +165,8 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x36ed193dc7160D3858EC250e69D12B03Ca087D08": [

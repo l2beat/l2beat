@@ -17,16 +17,10 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        passedAddress: EthereumAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(passedAddress).toEqual(address)
-
+      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+        expect(a).toEqual(address)
         const index = data[0] as number
         expect(data).toEqual([index])
-
         return owners[index]!.toString() as T
       },
     })
@@ -51,12 +45,8 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        passedAddress: EthereumAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(passedAddress).toEqual(address)
+      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+        expect(a).toEqual(address)
 
         const index = data[0] as number
         expect(data).toEqual([index])
@@ -85,12 +75,8 @@ describe(LimitedArrayHandler.name, () => {
     ]
 
     const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        passedAddress: EthereumAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(passedAddress).toEqual(address)
+      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+        expect(a).toEqual(address)
 
         const index = data[0] as number
         expect(data).toEqual([index])
@@ -107,6 +93,32 @@ describe(LimitedArrayHandler.name, () => {
     expect(result).toEqual({
       field: 'owners',
       error: 'foo bar',
+    })
+  })
+
+  it('rewrites $foo to _$foo', async () => {
+    const address = EthereumAddress.random()
+    const provider = mockObject<IProvider>({
+      async callMethod<T>(a: EthereumAddress, _abi: string, data: unknown[]) {
+        expect(a).toEqual(address)
+        const index = data[0] as number
+        expect(data).toEqual([index])
+        if (index === 1) {
+          return undefined
+        }
+        return 1 as T
+      },
+    })
+
+    const handler = new LimitedArrayHandler(
+      'function $foo(uint256 index) view returns (uint)',
+      2,
+      DiscoveryLogger.SILENT,
+    )
+    const result = await handler.execute(provider, address)
+    expect(result).toEqual({
+      field: '_$foo',
+      value: [1],
     })
   })
 })

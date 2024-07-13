@@ -1,10 +1,4 @@
-import {
-  Bridge,
-  Layer2,
-  Layer3,
-  Milestone,
-  ZkCatalogProject,
-} from '@l2beat/config'
+import { Bridge, Layer2, Layer3, Milestone } from '@l2beat/config'
 
 export interface Config {
   links: ConfigLinks
@@ -13,7 +7,6 @@ export interface Config {
   layer2s: Layer2[]
   layer3s: Layer3[]
   bridges: Bridge[]
-  zkCatalogProjects: ZkCatalogProject[]
   milestones: Milestone[]
 }
 export interface ConfigLinks {
@@ -38,7 +31,6 @@ export interface ConfigFeatures {
   hiringBadge: boolean
   buildAllProjectPages: boolean
   costsPage: boolean
-  zkCatalog: boolean
   tvl: boolean
   layer3sTvl: boolean
   badges: boolean

@@ -1,6 +1,7 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import { IProvider } from '../../provider/IProvider'
 import { detectEip1967Proxy } from '../auto/Eip1967Proxy'
 
@@ -9,7 +10,7 @@ export async function getZkSpaceProxy(
   address: EthereumAddress,
 ): Promise<ProxyDetails | undefined> {
   const detection = await detectEip1967Proxy(provider, address)
-  if (!detection || detection.upgradeability.type !== 'EIP1967 proxy') {
+  if (!detection || detection.type !== 'EIP1967 proxy') {
     return undefined
   }
 
@@ -35,16 +36,14 @@ export async function getZkSpaceProxy(
   if (additional.some((a) => a === undefined)) {
     throw new Error('zkSpace proxy: missing additional addresses')
   }
-  const implementations = additional as EthereumAddress[]
 
   return {
-    implementations: [...detection.implementations, ...implementations],
-    relatives: [detection.upgradeability.admin],
-    upgradeability: {
-      type: 'zkSpace proxy',
-      admin: detection.upgradeability.admin,
-      implementation: detection.upgradeability.implementation,
-      additional: implementations,
+    type: 'zkSpace proxy',
+    values: {
+      $admin: detection.values.$admin,
+      $implementation: get$Implementations(detection.values).concat(
+        additional as EthereumAddress[],
+      ),
     },
   }
 }

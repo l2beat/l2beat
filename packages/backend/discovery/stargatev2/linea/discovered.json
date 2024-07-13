@@ -3,26 +3,21 @@
   "chain": "linea",
   "blockNumber": 5996230,
   "configHash": "0xb518fa3786fc0cee82738c9a8889c9d5275704fe7a50710cc695c1e0b1907a91",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "TokenMessaging",
       "address": "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716837017,
       "values": {
+        "$immutable": true,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "getTransferGasLimit": 2300,
         "maxAssetId": 13,
         "MSG_TYPE_BUS": 2,
         "MSG_TYPE_TAXI": 1,
         "oApp": "0x5f688F563Dc16590e570f97b542FA87931AF2feD",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
         "planner": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5",
         "pools": [
@@ -48,9 +43,6 @@
     {
       "name": "StargatePoolNative",
       "address": "0x81F6138153d473E8c5EcebD3DC8Cd4903506B075",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "plannerFee",
         "poolBalance",
@@ -60,6 +52,7 @@
       ],
       "sinceTimestamp": 1716837011,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "deficitOffset": 0,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -74,10 +67,7 @@
         "getTransferGasLimit": 2300,
         "localEid": 30183,
         "lpToken": "0x23A46eFDa973Bd4e97Ee84bAc87018537538D078",
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 0
-        },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 0 },
         "owner": "0xdBd9E7f55C3a7A0F17cCAc06dD4f4cbf06f7AD5c",
         "plannerFee": "580601103118266475",
         "poolBalance": "6220056930000000000000",
@@ -91,12 +81,8 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0xe37f7c80ceD04c4F243C0Fd04A5510D663CB88b5" }
   ],
   "abis": {
     "0x5f688F563Dc16590e570f97b542FA87931AF2feD": [

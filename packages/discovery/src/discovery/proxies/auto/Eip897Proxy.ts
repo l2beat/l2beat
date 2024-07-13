@@ -44,12 +44,10 @@ export async function detectEip897Proxy(
     return
   }
   return {
-    implementations: [implementation],
-    relatives: [],
-    upgradeability: {
-      type: 'EIP897 proxy',
-      isUpgradable: type === 2,
-      implementation,
+    type: 'EIP897 proxy',
+    values: {
+      $immutable: type !== 2,
+      $implementation: implementation,
     },
   }
 }

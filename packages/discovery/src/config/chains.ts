@@ -199,4 +199,13 @@ export const chains: ChainConfig[] = [
       },
     },
   },
+  {
+    name: 'blast',
+    chainId: 81457,
+    multicall: getMulticall3Config(88189),
+    explorer: {
+      type: 'etherscan',
+      url: 'https://api.blastscan.io/api',
+    },
+  },
 ]

@@ -1,7 +1,6 @@
 import { z } from 'zod'
 import { EthereumAddress } from './EthereumAddress'
 import { Hash256 } from './Hash256'
-import { UpgradeabilityParameters } from './proxyDetails'
 
 export type StackRole = z.infer<typeof StackRole>
 export const StackRole = z.enum([
@@ -44,14 +43,15 @@ export type EoaParameters = {
 
 export type ContractParameters = {
   name: string
+  displayName?: string
+  descriptions?: string[]
   derivedName?: string
   template?: string
   unverified?: true
   sinceTimestamp?: number
   address: EthereumAddress
-  upgradeability: UpgradeabilityParameters
-  implementations?: EthereumAddress[]
-  values?: Record<string, ContractValue>
+  proxyType?: string
+  values?: Record<string, ContractValue | undefined>
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
@@ -59,6 +59,7 @@ export type ContractParameters = {
 
 export type ContractValue =
   | string
+  | EthereumAddress
   | number
   | boolean
   | ContractValue[]

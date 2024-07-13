@@ -175,15 +175,11 @@ export const amarok: Bridge = {
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       ),
       discovery.getContractDetails(
-        'NewOptimismHubConnector',
-        'Contract for sending/receiving messages from mainnet to Optimism, duplicate of OptimismHubConnector.',
-      ),
-      discovery.getContractDetails(
         'MantleHubConnector',
         'Contract for sending/receiving messages from mainnet to Mantle via Optimism AMB.',
       ),
       discovery.getContractDetails(
-        'OptimismV0HubConnector',
+        'MetisHubConnector',
         'Contract for sending/receiving messages from mainnet to pre-bedrock Optimism based projects via Optimism AMB.',
       ),
       discovery.getContractDetails(

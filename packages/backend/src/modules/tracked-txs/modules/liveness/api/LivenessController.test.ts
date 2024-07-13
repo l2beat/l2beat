@@ -2,8 +2,8 @@ import { assert, ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
@@ -268,12 +268,12 @@ function getMockLivenessRepository(
 
 function mockProjectConfig(
   records: LivenessRecordWithProjectIdAndSubtype[],
-): Project[] {
+): BackendProject[] {
   return records
     .map((x) => x.projectId)
     .filter((x, i, a) => a.indexOf(x) === i)
     .map((projectId) =>
-      mockObject<Project>({
+      mockObject<BackendProject>({
         projectId,
         isArchived: false,
         trackedTxsConfig: [

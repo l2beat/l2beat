@@ -19,8 +19,6 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { assert } from '@l2beat/shared-pure'
 import { rimraf } from 'rimraf'
 
-import { Logger, getEnv } from '@l2beat/backend-tools'
-import { getChainDiscoveryConfig } from '../src/config/features/updateMonitor'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
@@ -157,18 +155,14 @@ async function performDiscoveryOnPreviousBlock(
 
   const blockNumberFromMainBranch = discoveryFromMainBranch.blockNumber
 
-  await discover(
-    {
-      project: projectName,
-      chain: getChainConfig(chain),
-      blockNumber: blockNumberFromMainBranch,
-      sourcesFolder: `.code@${blockNumberFromMainBranch}`,
-      flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
-      discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
-    },
-    Logger.DEBUG,
-    getChainConfigs(),
-  )
+  await discover({
+    project: projectName,
+    chain: getChainConfig(chain),
+    blockNumber: blockNumberFromMainBranch,
+    sourcesFolder: `.code@${blockNumberFromMainBranch}`,
+    flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
+    discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+  })
 
   const prevDiscoveryFile = readFileSync(
     `${root}/discovered@${blockNumberFromMainBranch}.json`,
@@ -366,12 +360,4 @@ function findDescription(
   }
 
   return followingLines.slice(0, lastIndex).join('\n')
-}
-
-function getChainConfigs() {
-  const env = getEnv()
-
-  return new ConfigReader()
-    .readAllChains()
-    .map((chain) => getChainDiscoveryConfig(env, chain))
 }

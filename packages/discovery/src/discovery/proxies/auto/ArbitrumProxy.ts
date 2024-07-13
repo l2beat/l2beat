@@ -25,13 +25,10 @@ export async function detectArbitrumProxy(
     getAdmin(provider, address),
   ])
   return {
-    implementations: [adminImplementation, userImplementation],
-    relatives: [admin],
-    upgradeability: {
-      type: 'Arbitrum proxy',
-      admin,
-      adminImplementation,
-      userImplementation,
+    type: 'Arbitrum proxy',
+    values: {
+      $admin: admin,
+      $implementation: [adminImplementation, userImplementation],
     },
   }
 }

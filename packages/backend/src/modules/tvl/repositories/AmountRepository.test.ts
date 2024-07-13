@@ -79,11 +79,14 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
           amount('a', new UnixTime(200), 2n),
           amount('b', new UnixTime(200), 2n),
         ])
-        const result = await amountRepository.findByConfigAndTimestamp(
-          'a'.repeat(12),
-          new UnixTime(200),
-        )
-        expect(result).toEqual(amount('a', new UnixTime(200), 2n))
+        const result = await amountRepository.findByConfigAndTimestamp([
+          { configId: 'a'.repeat(12), timestamp: new UnixTime(200) },
+          { configId: 'b'.repeat(12), timestamp: new UnixTime(100) },
+        ])
+        expect(result).toEqualUnsorted([
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(100), 1n),
+        ])
       })
     })
 

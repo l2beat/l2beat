@@ -3,14 +3,24 @@
   "chain": "ethereum",
   "blockNumber": 20225271,
   "configHash": "0x194537b8435cd3929c23c50ed4f2c1da87d7d6ad8471582b383d61ab38bb697d",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "ZkTrueUp",
       "address": "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
-      "upgradeability": {
-        "type": "EIP2535 diamond proxy",
-        "facets": [
+      "proxyType": "EIP2535 diamond proxy",
+      "ignoreInWatchMode": [
+        "getAccountNum",
+        "getBlockNum",
+        "getBorrowFeeRate",
+        "getFundWeight",
+        "getL1RequestNum",
+        "getTokenNum"
+      ],
+      "sinceTimestamp": 1716263903,
+      "values": {
+        "$immutable": false,
+        "$implementation": [
           "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
           "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
           "0x5d8A9DDA649524D1Ce31C204551a93560617D1D3",
@@ -21,30 +31,7 @@
           "0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC",
           "0x10a73b16f6CD03931484b4Ae69fEDc55E868D295",
           "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
-        ]
-      },
-      "ignoreInWatchMode": [
-        "getAccountNum",
-        "getBlockNum",
-        "getBorrowFeeRate",
-        "getFundWeight",
-        "getL1RequestNum",
-        "getTokenNum"
-      ],
-      "implementations": [
-        "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
-        "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
-        "0x5d8A9DDA649524D1Ce31C204551a93560617D1D3",
-        "0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c",
-        "0x84283289D7E57a2f5b80ddA065AC99450eB44cb6",
-        "0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9",
-        "0x955cdD2E56Ca2776a101a552A318d28fe311398D",
-        "0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC",
-        "0x10a73b16f6CD03931484b4Ae69fEDc55E868D295",
-        "0x882aBFb2F6A67d36350499991638044e8Bd83a72"
-      ],
-      "sinceTimestamp": 1716263903,
-      "values": {
+        ],
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -253,11 +240,7 @@
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
         "getFlashLoanPremium": 3,
-        "getFundWeight": {
-          "treasury": 0,
-          "insurance": 0,
-          "vault": 10000
-        },
+        "getFundWeight": { "treasury": 0, "insurance": 0, "vault": 10000 },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
         "getL1RequestNum": [179, 179, 179],
@@ -278,25 +261,20 @@
     {
       "name": "Verifier",
       "address": "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1716263747
+      "sinceTimestamp": 1716263747,
+      "values": { "$immutable": true }
     },
     {
       "name": "GnosisSafe",
       "address": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 2 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1716254495,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "1 of 2 (50%)",
         "domainSeparator": "0xcbdbe6506e1cb79232f4c965204bb95931a2e6dbfe5aaf5dd3b10f93d06d404a",
         "getChainId": 1,
         "getOwners": [
@@ -304,6 +282,7 @@
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
         "getThreshold": 1,
+        "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -312,16 +291,13 @@
       "name": "GnosisSafe",
       "address": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 2 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1716254831,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "1 of 2 (50%)",
         "domainSeparator": "0xa8d496ef58694c5b643be9bfdef2a52066c56fe63e93ee7b0d35bfd3c7385cd5",
         "getChainId": 1,
         "getOwners": [
@@ -329,6 +305,7 @@
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
         "getThreshold": 1,
+        "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -337,43 +314,29 @@
       "name": "",
       "address": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1716263735
+      "sinceTimestamp": 1716263735,
+      "values": { "$immutable": true }
     },
     {
       "name": "EvacuationFacet",
       "address": "0x882aBFb2F6A67d36350499991638044e8Bd83a72",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716263891,
-      "values": {
-        "isEvacuMode": false
-      },
+      "values": { "$immutable": true, "isEvacuMode": false },
       "derivedName": "EvacuationFacet"
     },
     {
       "name": "AccountFacet",
       "address": "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716263771,
-      "values": {
-        "getAccountNum": 0
-      },
+      "values": { "$immutable": true, "getAccountNum": 0 },
       "derivedName": "AccountFacet"
     },
     {
       "name": "RollupFacet",
       "address": "0x955cdD2E56Ca2776a101a552A318d28fe311398D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716263831,
       "values": {
+        "$immutable": true,
         "EXPIRATION_PERIOD": 1209600,
         "getBlockNum": [0, 0, 0],
         "getL1RequestNum": [0, 0, 0]
@@ -383,25 +346,20 @@
     {
       "name": "EvacuVerifier",
       "address": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1716263759
+      "sinceTimestamp": 1716263759,
+      "values": { "$immutable": true }
     },
     {
       "name": "TermStructureMultisig",
       "address": "0xa00d50A40B1635D293c87BA36503bD2504b5D818",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 2 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1716253799,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "1 of 2 (50%)",
         "domainSeparator": "0x480cfb113268edb43ba8a78c53a4301e006ab4f5579da686448e4b18647cd2c6",
         "getChainId": 1,
         "getOwners": [
@@ -409,6 +367,7 @@
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
         "getThreshold": 1,
+        "GnosisSafe_modules": [],
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -418,16 +377,13 @@
       "name": "GnosisSafe",
       "address": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 2 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1716254159,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "1 of 2 (50%)",
         "domainSeparator": "0x06a4de0d5b7b1171090ba38e2dc6ef3c5e2c8219915ef5a272fad0d29f2a9c06",
         "getChainId": 1,
         "getOwners": [
@@ -435,30 +391,19 @@
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
         "getThreshold": 1,
+        "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
       }
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"
-    },
-    {
-      "address": "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
-    },
-    {
-      "address": "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
-    },
-    {
-      "address": "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
-    },
-    {
-      "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12" },
+    { "address": "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348" },
+    { "address": "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b" },
+    { "address": "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93" },
+    { "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8" }
   ],
   "abis": {
     "0x09E01425780094a9754B2bd8A3298f73ce837CF9": [

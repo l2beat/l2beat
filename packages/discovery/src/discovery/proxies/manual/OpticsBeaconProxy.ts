@@ -40,14 +40,12 @@ export async function getOpticsBeaconProxy(
   const implementation = bytes32ToAddress(implementationCallResult)
 
   return {
-    upgradeability: {
-      type: 'Optics Beacon proxy',
-      upgradeBeacon,
-      beaconController,
-      implementation,
+    type: 'Optics Beacon proxy',
+    values: {
+      $admin: beaconController,
+      $implementation: implementation,
+      OpticsBeacon_beacon: upgradeBeacon,
     },
-    implementations: [implementation],
-    relatives: [upgradeBeacon, beaconController],
   }
 }
 

@@ -453,3 +453,28 @@ model ZkSync {
   @@map("zksync")
   @@schema("activity")
 }
+
+model AggregatedLiveness {
+  projectId String   @map("project_id") @db.VarChar(255)
+  subtype   String   @db.VarChar(255)
+  range     String   @db.VarChar(255)
+  min       Int
+  avg       Int
+  max       Int
+  updatedAt DateTime @map("updated_at") @db.Timestamp(6)
+
+  @@id([projectId, subtype, range])
+  @@map("aggregated_liveness")
+  @@schema("public")
+}
+
+model Anomaly {
+  timestamp DateTime @db.Timestamp(6)
+  projectId String   @map("project_id") @db.VarChar(255)
+  subtype   String   @db.VarChar(255)
+  duration  Int
+
+  @@id([timestamp, projectId, subtype])
+  @@map("anomalies")
+  @@schema("public")
+}

@@ -3,30 +3,22 @@
   "chain": "ethereum",
   "blockNumber": 20240831,
   "configHash": "0x7fda11b24b5eed1d80b7cd4d4072385ee8cff7a3cc6537727d204842c13b9d88",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
       "address": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1710000539,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x1964f3Eaf7d8fca7E559468a384453d2d8490744",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -38,36 +30,27 @@
       "name": "",
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232",
-        "admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3"
-      },
-      "implementations": ["0xDaC2d26317C42ae3CB21357B73404120E1dA4232"],
-      "sinceTimestamp": 1706308043
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1706308043,
+      "values": {
+        "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+        "$implementation": "0xDaC2d26317C42ae3CB21357B73404120E1dA4232"
+      }
     },
     {
       "name": "TBankOFT",
       "address": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1709311259,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x1762c17f671FA27cE6C59256f5F28242de9274d0",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x33C78a4EBE7950277B0Ba8b8F4C66526db73C502",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -78,24 +61,16 @@
     {
       "name": "TRESTLE_OFTAdapter",
       "address": "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716569111,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x17Ce6AEc7FD1aCcB5C0B2712eDDeFf8939BAB91E",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x1964f3Eaf7d8fca7E559468a384453d2d8490744",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -106,11 +81,9 @@
     {
       "name": "EndpointV2",
       "address": "0x1a44076050125825900e736c501f859c50fE728c",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706307671,
       "values": {
+        "$immutable": true,
         "blockedLibrary": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
         "defaultReceiveLib_rsETH": [
           "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
@@ -137,33 +110,23 @@
       "name": "",
       "address": "0x1ccBf0db9C192d969de57E25B3fF09A25bb1D862",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706307671
+      "sinceTimestamp": 1706307671,
+      "values": { "$immutable": true }
     },
     {
       "name": "DineroOFTLockbox",
       "address": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1709176895,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x1cd5b73d12CB23b2835C873E4FaFfE83bBCef208",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xA52Fd396891E7A74b641a2Cb1A6999Fcf56B077e",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -174,25 +137,17 @@
     {
       "name": "StakedFraxEtherOFTAdapter",
       "address": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1710884675,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x1f55a02A049033E3419a8E2975cF3F572F4e6E9A",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -203,25 +158,17 @@
     {
       "name": "StakedUSDeOFTAdapter",
       "address": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1709929547,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x211Cc4DD073734dA055fbF44a2b4667d5E5fE5d2",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "preCrime": "0x0000000000000000000000000000000000000000",
@@ -234,25 +181,17 @@
     {
       "name": "FraxSharesOFTAdapter",
       "address": "0x23432452B720C80553458496D4D9d7C5003280d0",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1710884099,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x23432452B720C80553458496D4D9d7C5003280d0",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x23432452B720C80553458496D4D9d7C5003280d0",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -263,11 +202,9 @@
     {
       "name": "DVN",
       "address": "0x380275805876Ff19055EA900CDb2B46a94ecF20D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706495231,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12000,
@@ -282,24 +219,16 @@
     {
       "name": "CyberTokenAdapter",
       "address": "0x3d2fe83ea885C2E43A422C82C738847669708210",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716878123,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x3d2fe83ea885C2E43A422C82C738847669708210",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x455DB34c99A866489F3ac63fa2F068c726BC286b",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -310,24 +239,16 @@
     {
       "name": "MysoOFTAdapter",
       "address": "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1713954323,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x3e52fd3383E1ee6D3959Ce5c6Aa9d1fCb46AbFA6",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xF3E76af90A74fE743db172996db484052e2bC61f",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -338,25 +259,17 @@
     {
       "name": "ENAOFTAdapter",
       "address": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1712705747,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x58538e6A46E07434d7E7375Bc268D3cb839C0133",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "preCrime": "0x0000000000000000000000000000000000000000",
@@ -369,11 +282,9 @@
     {
       "name": "LayerZeroDVN",
       "address": "0x589dEDbD617e0CBcB916A9223F4d1300c294236b",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706307995,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12200,
@@ -389,25 +300,17 @@
     {
       "name": "USDeOFTAdapter",
       "address": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1709926703,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x5d3a1Ff2b6BAb83b63cd9AD0787074081a52ef34",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x3B0AAf6e6fCd4a7cEEf8c92C32DFeA9E64dC1862",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "preCrime": "0x0000000000000000000000000000000000000000",
@@ -420,11 +323,9 @@
     {
       "name": "Treasury",
       "address": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706307779,
       "values": {
+        "$immutable": true,
         "lzTokenEnabled": false,
         "lzTokenFee": 0,
         "nativeBP": 0,
@@ -434,25 +335,17 @@
     {
       "name": "ParamOFTAdapter",
       "address": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1716348011,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x6182995916d79DeDb60db1570776F9994fCdCA0a",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x3B89fC2918D9F25977d6F85C13ff2395ba2f8022",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -463,25 +356,17 @@
     {
       "name": "MyOFTAdapter",
       "address": "0x801642B6efB861fE624dAD704b7A747779d9B433",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1710380783,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x801642B6efB861fE624dAD704b7A747779d9B433",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x801642B6efB861fE624dAD704b7A747779d9B433",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x21FE3e26E824783cA7E374355A8D30Ae8BBf6E37",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -492,25 +377,17 @@
     {
       "name": "RSETH_OFTAdapter",
       "address": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1707185231,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0x85d456B2DfF1fd8245387C0BfB64Dfb700e98Ef3",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xCbcdd778AA25476F203814214dD3E9b9c46829A1",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -521,14 +398,11 @@
     {
       "name": "PolyhedraDVN",
       "address": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2",
-        "admin": "0xe16d201cA134345601631D327a971A3741646B0d"
-      },
-      "implementations": ["0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1708740203,
       "values": {
+        "$admin": "0xe16d201cA134345601631D327a971A3741646B0d",
+        "$implementation": "0xcb75F0dFFf5c5046CAA9dB1DE56645a962FeFFc2",
         "getLzMessageLibLength": 1,
         "layerZeroEndpointV1": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
         "layerZeroEndpointV2": "0x1a44076050125825900e736c501f859c50fE728c",
@@ -545,22 +419,18 @@
       "name": "",
       "address": "0x9E930731cb4A6bf7eCc11F695A295c60bDd212eB",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706495219
+      "sinceTimestamp": 1706495219,
+      "values": { "$immutable": true }
     },
     {
       "name": "ProxyAdmin",
       "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x173272739Bd7Aa6e4e214714048a9fE699453059"]
       },
       "sinceTimestamp": 1706307875,
       "values": {
+        "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
@@ -568,16 +438,13 @@
       "name": "GnosisSafe",
       "address": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "3 of 5 (60%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1708767935,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "3 of 5 (60%)",
         "domainSeparator": "0x2733a735ed44ec7aaa644c6adc279215e332994d242364b19b2ca7462991b1eb",
         "getChainId": 1,
         "getOwners": [
@@ -588,6 +455,7 @@
           "0x1082E92A0b92e15212fD5879C1dd672AB548302c"
         ],
         "getThreshold": 3,
+        "GnosisSafe_modules": [],
         "nonce": 22,
         "VERSION": "1.3.0"
       }
@@ -595,24 +463,16 @@
     {
       "name": "WooTokenOFTAdapter",
       "address": "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1714491611,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0xAd6cA80Fe4D3c54f6433fF725d744772AaE87711",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x39e4fac1A21AE1D8c76B0ac52aC0417398fE738d",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -624,19 +484,15 @@
       "name": "",
       "address": "0xb3e790273f0A89e53d2C20dD4dFe82AA00bbf91b",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1706307983
+      "sinceTimestamp": 1706307983,
+      "values": { "$immutable": true }
     },
     {
       "name": "SendUln302",
       "address": "0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706307839,
       "values": {
+        "$immutable": true,
         "defaultExecutor_ENA": [
           10000,
           "0x173272739Bd7Aa6e4e214714048a9fE699453059"
@@ -677,53 +533,35 @@
           ],
           []
         ],
-        "version": {
-          "major": 3,
-          "minor": 0,
-          "endpointVersion": 2
-        }
+        "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
       "derivedName": "SendUln302"
     },
     {
       "name": "ReceiveUln302",
       "address": "0xc02Ab410f0734EFa3F14628780e6e695156024C2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1706307863,
       "values": {
+        "$immutable": true,
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
-        "version": {
-          "major": 3,
-          "minor": 0,
-          "endpointVersion": 2
-        }
+        "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
       "derivedName": "ReceiveUln302"
     },
     {
       "name": "CyberTokenAdapter",
       "address": "0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1718263967,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0xCB07992DE144bDeE56fDb66Fff2454B43243b052",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x455DB34c99A866489F3ac63fa2F068c726BC286b",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -735,16 +573,13 @@
       "name": "LayerZero Multisig",
       "address": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 5 (40%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1648243585,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 5 (40%)",
         "domainSeparator": "0x567922b7bf591eff89c84c8a0039bbda9499c5f39de9b1c4dde48a8c912f31b9",
         "getChainId": 1,
         "getOwners": [
@@ -755,6 +590,7 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 130,
         "VERSION": "1.3.0"
       },
@@ -763,11 +599,9 @@
     {
       "name": "GoogleCloudDVN",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694217107,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12100,
@@ -783,24 +617,16 @@
     {
       "name": "KinetixFinanceTokenOFTAdapter",
       "address": "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1715945063,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0xdDF5a3259a88Ab79D5530eB3eB14c1C92CD97FCf",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x58591456DD9FEdf8F629819F88cC02F4C6e9Aeb9",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -811,47 +637,35 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1694217119
+      "sinceTimestamp": 1694217119,
+      "values": { "$immutable": true }
     },
     {
       "name": "ZkBridgeAdmin",
       "address": "0xe16d201cA134345601631D327a971A3741646B0d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"]
       },
       "sinceTimestamp": 1708705703,
       "values": {
+        "$immutable": true,
         "owner": "0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7"
       }
     },
     {
       "name": "StakedFraxOFTAdapter",
       "address": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1710884663,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0xe4796cCB6bB5DE2290C417Ac337F2b66CA2E770E",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xB1748C79709f4Ba2Dd82834B8c82D4a505003f27",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -862,25 +676,17 @@
     {
       "name": "MaviaOFTAdapter",
       "address": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1708744931,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "composeMsgSender": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0xE6C2B672B3eB64A1F460AdcD9676a3B6c67abD4D",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 1
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 1 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0xEd43EaA4ADd5FCBf009e3E2d362a217745A11Cf3",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -891,24 +697,16 @@
     {
       "name": "EtherFiOFTAdapter",
       "address": "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1712811983,
       "values": {
+        "$immutable": true,
         "approvalRequired": true,
         "decimalConversionRate": 1000000000000,
         "endpoint": "0x1a44076050125825900e736c501f859c50fE728c",
         "msgInspector": "0x0000000000000000000000000000000000000000",
         "oApp": "0xFE7fe01F8B9A76803aF3750144C2715D9bcf7D0D",
-        "oAppVersion": {
-          "senderVersion": 1,
-          "receiverVersion": 2
-        },
-        "oftVersion": {
-          "interfaceId": "0x02e49c2c",
-          "version": 1
-        },
+        "oAppVersion": { "senderVersion": 1, "receiverVersion": 2 },
+        "oftVersion": { "interfaceId": "0x02e49c2c", "version": 1 },
         "owner": "0x2aCA71020De61bb532008049e1Bd41E451aE8AdC",
         "preCrime": "0x0000000000000000000000000000000000000000",
         "SEND": 1,
@@ -918,42 +716,18 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x1082E92A0b92e15212fD5879C1dd672AB548302c"
-    },
-    {
-      "address": "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-    },
-    {
-      "address": "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    },
-    {
-      "address": "0xd1846C61A063edA820305A5e568A12a570420cf6"
-    },
-    {
-      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
-    },
-    {
-      "address": "0xF94b16157948E10597481Da0523927c8BA0bd182"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x1082E92A0b92e15212fD5879C1dd672AB548302c" },
+    { "address": "0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xd1846C61A063edA820305A5e568A12a570420cf6" },
+    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
+    { "address": "0xF94b16157948E10597481Da0523927c8BA0bd182" }
   ],
   "abis": {
     "0x0ab9EfCb9DF64D575085A8d1eF7b961b57785aA2": [

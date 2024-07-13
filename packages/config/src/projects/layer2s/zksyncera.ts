@@ -448,7 +448,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
       sources: [
         {
           contract: 'ZKsync',
@@ -502,22 +502,14 @@ export const zksyncera: Layer2 = {
     },
   ),
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-    },
-    dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
-      references: [],
-    },
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [],
-    },
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+    operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       name: 'Users can force any transaction via L1',
       description:
         'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
-        transactions from L1 queue in an L1 block.',
+        transactions from L1 queue in an L2 block.',
       risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [
         {
