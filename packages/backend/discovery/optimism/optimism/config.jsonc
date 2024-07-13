@@ -47,7 +47,7 @@
       "ignoreMethods": ["totalProcessed"]
     },
     "GasPriceOracle": {
-      "ignoreMethods": ["overhead", "scalar"],
+      "ignoreMethods": ["overhead", "scalar", "getL1FeeUpperBound"],
       "ignoreInWatchMode": ["l1BaseFee", "blobBaseFee"]
     },
     "OPToken": {
