@@ -1,4 +1,4 @@
-import { UnixTime, } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'

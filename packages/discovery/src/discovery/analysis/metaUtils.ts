@@ -1,18 +1,15 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
+  ContractFieldSeverity,
   ContractValue,
+  ContractValueType,
   Permission,
+  StackCategory,
   StackRole,
-  UpgradeabilityParameters,
 } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
-import {
-  ContractFieldSeverity,
-  DiscoveryContractField,
-  StackCategory,
-  ValueType,
-} from '../config/RawDiscoveryConfig'
+import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
 import { AnalyzedContract } from './AddressAnalyzer'
 
@@ -26,7 +23,7 @@ export interface ContractMeta {
   roles: Set<StackRole> | undefined
   permissions: { [permission: string]: Set<EthereumAddress> } | undefined
   categories: Set<StackCategory> | undefined
-  types: Set<ValueType> | undefined
+  types: Set<ContractValueType> | undefined
   severity: ContractFieldSeverity | undefined
 }
 

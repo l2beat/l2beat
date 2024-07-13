@@ -817,7 +817,7 @@ export function opStackSmartL3(templateVars: OpStackConfigL3): Layer3 {
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = contract.values?.$implementation
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

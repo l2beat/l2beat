@@ -1,27 +1,15 @@
-import { ManualProxyType, Permission, StackRole } from '@l2beat/discovery-types'
+import {
+  ContractFieldSeverity,
+  ContractValueType,
+  ManualProxyType,
+  Permission,
+  StackCategory,
+  StackRole,
+} from '@l2beat/discovery-types'
 import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
-
-export type ValueType = z.infer<typeof ValueType>
-export const ValueType = z.enum([
-  'CODE_CHANGE',
-  'L2',
-  'EXTERNAL',
-  'RISK_PARAMETER',
-  'PERMISSION',
-])
-
-export type StackCategory = z.infer<typeof StackCategory>
-export const StackCategory = z.enum([
-  'Core',
-  'Gateways&Escrows',
-  'Upgrades&Governance',
-])
-
-export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
-export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
@@ -48,7 +36,7 @@ export const DiscoveryContractField = z.object({
     })
     .optional(),
   type: z
-    .union([ValueType, z.array(ValueType)])
+    .union([ContractValueType, z.array(ContractValueType)])
     .nullable()
     .optional(),
 })

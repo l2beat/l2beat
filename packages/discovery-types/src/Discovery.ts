@@ -11,6 +11,25 @@ export const StackRole = z.enum([
   'Validator',
 ])
 
+export type StackCategory = z.infer<typeof StackCategory>
+export const StackCategory = z.enum([
+  'Core',
+  'Gateways&Escrows',
+  'Upgrades&Governance',
+])
+
+export type ContractValueType = z.infer<typeof ContractValueType>
+export const ContractValueType = z.enum([
+  'CODE_CHANGE',
+  'L2',
+  'EXTERNAL',
+  'RISK_PARAMETER',
+  'PERMISSION',
+])
+
+export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
+export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
+
 export type Permission = z.infer<typeof Permission>
 export const Permission = z.enum(['admin', 'owner'])
 export interface DiscoveryOutput {
@@ -35,6 +54,9 @@ export interface Meta {
   descriptions?: string[]
   roles?: StackRole[]
   assignedPermissions?: Record<string, EthereumAddress[]>
+  categories?: StackCategory[]
+  types?: ContractValueType[]
+  severity?: ContractFieldSeverity
 }
 
 export type EoaParameters = {

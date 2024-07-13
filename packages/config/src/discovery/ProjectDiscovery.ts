@@ -7,10 +7,10 @@ import {
   type ContractParameters,
   type ContractValue,
   type DiscoveryOutput,
-  get$Admins,
-  get$Implementations,
   EoaParameters,
   StackRole,
+  get$Admins,
+  get$Implementations,
 } from '@l2beat/discovery-types'
 import {
   assert,
@@ -667,7 +667,7 @@ export class ProjectDiscovery {
     const result: ScalingProjectPermission[] = []
     for (const contract of contracts) {
       const description = this.constructDescriptionFromMeta(contract)
-      if (contract.upgradeability.type === 'gnosis safe') {
+      if (contract.proxyType === 'gnosis safe') {
         result.push(
           ...this.getMultisigPermission(
             contract.address.toString(),
@@ -701,7 +701,7 @@ export class ProjectDiscovery {
     )
     return contracts
       .filter((contracts) => contracts.assignedPermissions === undefined)
-      .filter((contracts) => contracts.upgradeability.type !== 'gnosis safe')
+      .filter((contracts) => contracts.proxyType !== 'gnosis safe')
       .map((contract) =>
         this.getContractDetails(
           contract.address.toString(),
@@ -709,23 +709,6 @@ export class ProjectDiscovery {
         ),
       )
   }
-}
-
-function getUpgradeability(
-  contract: ContractParameters,
-): ScalingProjectUpgradeability | undefined {
-  if (!contract.proxyType) {
-    return undefined
-  }
-  const upgradeability: ScalingProjectUpgradeability = {
-    proxyType: contract.proxyType,
-    admins: get$Admins(contract.values),
-    implementations: get$Implementations(contract.values),
-  }
-  if (contract.values?.$immutable !== undefined) {
-    upgradeability.immutable = !!contract.values.$immutable
-  }
-  return upgradeability
 }
 
 function getUpgradeability(

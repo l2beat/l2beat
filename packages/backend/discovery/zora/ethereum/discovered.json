@@ -2,12 +2,16 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 20211651,
-  "configHash": "0x2b7af7c11e8f11a37352a7c924e8a14f66e9fbf2dffdf417a058a75f4b64360d",
+  "configHash": "0xaa2173862e38fa7a6e51a41581793138775d738ebe69de384032662980471018",
   "version": 9,
   "contracts": [
     {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "template": "opstack/LivenessModule",
+      "descriptions": [
+        "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -218,7 +222,7 @@
       "address": "0x83A4521A3573Ca87f3a971B169C5A0E1d34481c3",
       "template": "opstack/L1ERC721Bridge",
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "sinceTimestamp": 1686694055,
       "values": {
         "$admin": "0xD4ef175B9e72cAEe9f1fe7660a6Ec19009903b49",

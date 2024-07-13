@@ -73,10 +73,12 @@ export function processAnalysis(
         address: x.address,
         descriptions: x.combinedMeta?.descriptions,
         roles: setToSortedArray(x.combinedMeta?.roles),
-        categories: x.combinedMeta?.categories,
-        types: x.combinedMeta?.types,
+        categories: setToSortedArray(x.combinedMeta?.categories),
+        types: setToSortedArray(x.combinedMeta?.types),
         severity: x.combinedMeta?.severity,
-        assignedPermissions: setsToArrays(x.combinedMeta?.permissions),
+        assignedPermissions: objectWithSetsToArrays(
+          x.combinedMeta?.permissions,
+        ),
       })),
     abis,
   }
@@ -110,9 +112,7 @@ export function sortByKeys<T extends object>(obj: T): T {
   ) as T
 }
 
-function setToSortedArray(
-  value: Set<string> | undefined,
-): string[] | undefined {
+function setToSortedArray<T>(value: Set<T> | undefined): T[] | undefined {
   return value && Array.from(value).sort()
 }
 
@@ -122,7 +122,13 @@ function objectWithSetsToArrays<T>(
   if (obj === undefined) {
     return undefined
   }
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => [key, Array.from(value).sort()]),
+  return (
+    obj &&
+    Object.fromEntries(
+      Object.entries(obj).map(([key, value]) => [
+        key,
+        Array.from(value).sort(),
+      ]),
+    )
   )
 }
