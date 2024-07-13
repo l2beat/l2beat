@@ -2,13 +2,13 @@
   "name": "zora",
   "chain": "ethereum",
   "blockNumber": 20276973,
-  "configHash": "0x4e2b5a7df4a1cce032b8966eeffe2ebd125c7ed9a225ec289276bb1cb1350727",
+  "configHash": "0xaa2173862e38fa7a6e51a41581793138775d738ebe69de384032662980471018",
   "version": 9,
   "contracts": [
     {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-      "template": "opstack/LivenessModule",
+      "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
         "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
       ],
@@ -26,7 +26,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "GuardianMultisig",
       "address": "0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -44,7 +44,8 @@
         "GnosisSafe_modules": ["0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8"],
         "nonce": 1,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OptimismPortal",
@@ -133,7 +134,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -161,10 +162,11 @@
         "GnosisSafe_modules": [],
         "nonce": 40,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "ProxyAdmin",
+      "name": "SuperchainProxyAdmin",
       "address": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
@@ -177,10 +179,11 @@
         "addressManager": "0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
         "isUpgrading": false,
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
-      }
+      },
+      "derivedName": "ProxyAdmin"
     },
     {
-      "name": "GnosisSafe",
+      "name": "SuperchainProxyAdminOwner",
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -203,7 +206,8 @@
         "GnosisSafe_modules": [],
         "nonce": 5,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "DeputyGuardianModule",
@@ -237,7 +241,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FoundationMultisig_1",
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -262,7 +266,8 @@
         "GnosisSafe_modules": [],
         "nonce": 6,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "SuperchainConfig",
@@ -285,7 +290,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "FoundationMultisig_2",
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -311,7 +316,8 @@
         "NAME": "Gnosis Safe",
         "nonce": 94,
         "VERSION": "1.1.1"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "L2OutputOracle",
@@ -406,7 +412,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "SecurityCouncilMultisig",
       "address": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -437,7 +443,8 @@
         "GnosisSafe_modules": ["0x0454092516c9A4d636d3CAfA1e82161376C8a748"],
         "nonce": 6,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -490,7 +497,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ChallengerMultisig",
       "address": "0xcA4571b1ecBeC86Ea2E660d242c1c29FcB55Dc72",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -515,7 +522,8 @@
         "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "ProxyAdmin",
