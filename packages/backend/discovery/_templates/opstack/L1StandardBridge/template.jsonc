@@ -5,13 +5,11 @@
   "fields": {
     "superchainConfig": {
       "target": {
-        "template": "opstack/SuperchainConfig",
         "category": "Upgrades&Governance"
       }
     },
     "messenger": {
       "target": {
-        "template": "opstack/L1CrossDomainMessenger",
         "category": "Core"
       }
     }
