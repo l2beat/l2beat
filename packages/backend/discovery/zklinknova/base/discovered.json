@@ -133,7 +133,9 @@
     { "address": "0x2f4EE4c9737916bBF9E6a29Bb9DFEae3348c5eE9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0x1054Ff8B3B7B9F68d2e55C4A42E8952332c69011"]
+      }
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
     { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },

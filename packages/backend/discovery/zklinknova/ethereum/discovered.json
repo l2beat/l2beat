@@ -301,7 +301,13 @@
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
+          "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026",
+          "0x986c905087a663db3C81ad319b94c1E9dd388e92"
+        ]
+      }
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
     { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },

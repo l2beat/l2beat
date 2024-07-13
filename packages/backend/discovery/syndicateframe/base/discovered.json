@@ -173,7 +173,9 @@
     { "address": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5" },
     {
       "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-      "assignedPermissions": { "owner": {} }
+      "assignedPermissions": {
+        "owner": ["0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"]
+      }
     },
     { "address": "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c" }
   ],

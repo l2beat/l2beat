@@ -132,7 +132,9 @@
     { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"]
+      }
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
     { "address": "0x6aAdaA7Bf9F5283cAF3eb2E40573D1A4d02C8B15" },

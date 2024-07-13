@@ -111,7 +111,9 @@
   "eoas": [
     {
       "address": "0x1E153596BceB29c6EAE88DDB290eBeCC3FE9735e",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0x82123571C8a5e0910280C066bc634c4945FFcbC8"]
+      }
     },
     { "address": "0x85A732d8e21f1890BdeA4eDddCf4Dd0E70a31EA5" },
     { "address": "0xe0b79Cf6311E72caF7D31a552BFec67841Dd5988" }

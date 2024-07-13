@@ -146,7 +146,9 @@
     { "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" },
     {
       "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
+      }
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x63881ac44293E22F3c3183a0C4113586ABb3e653" },

@@ -117,7 +117,9 @@
     { "address": "0x52E6ECB50D8C89fE9CBad2ef44Ce962A430D8714" },
     {
       "address": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"]
+      }
     },
     { "address": "0xC7544ad893710Bd0bf780bf78dE5547706da75c5" },
     { "address": "0xe997ece81cb8A686206ea6042886B594Ecf6DdED" },

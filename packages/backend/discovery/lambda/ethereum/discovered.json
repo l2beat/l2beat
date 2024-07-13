@@ -303,7 +303,9 @@
     {
       "address": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
       "roles": ["Guardian"],
-      "assignedPermissions": { "owner": {} }
+      "assignedPermissions": {
+        "owner": ["0xae809d42f861A6381b0DFCf7216556e95362a7a8"]
+      }
     },
     {
       "address": "0xDeC273BF31AD79ad00D619c52662f724176A12Fb",

@@ -968,25 +968,38 @@
     { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+        ]
+      }
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
     {
       "address": "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"]
+      }
     },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
     { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
     {
       "address": "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]
+      }
     },
     {
       "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"]
+      }
     },
     { "address": "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591" }
   ],

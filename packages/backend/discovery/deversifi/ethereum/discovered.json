@@ -159,7 +159,9 @@
     { "address": "0x2b6593FcFbfdeD663D7a6448d45b12C16DF6B648" },
     {
       "address": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
+      }
     },
     { "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36" },
     { "address": "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3" },

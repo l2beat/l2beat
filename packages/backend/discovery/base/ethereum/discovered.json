@@ -2,12 +2,16 @@
   "name": "base",
   "chain": "ethereum",
   "blockNumber": 20224230,
-  "configHash": "0xa425343d7a0183435026944aaf0955f2478fdb24978afc2b8129559002c0dd89",
+  "configHash": "0x993c1cbcd4e77f03a3230375ac2d2e35cff3c3d0888435d6c9613695076448fe",
   "version": 9,
   "contracts": [
     {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "template": "opstack/LivenessModule",
+      "descriptions": [
+        "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -305,7 +309,7 @@
       "address": "0x608d94945A64503E642E6370Ec598e519a2C1E53",
       "template": "opstack/L1ERC721Bridge",
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2"],
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "sinceTimestamp": 1686793895,
       "values": {
         "$admin": "0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E",
