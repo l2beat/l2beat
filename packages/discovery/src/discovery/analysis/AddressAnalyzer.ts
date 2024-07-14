@@ -177,11 +177,7 @@ export class AddressAnalyzer {
       ...(values ?? {}),
     }
 
-    const targetsMeta = getTargetsMeta(
-      address,
-      mergedValues,
-      overrides?.fields,
-    )
+    const targetsMeta = getTargetsMeta(address, mergedValues, overrides?.fields)
 
     return {
       type: 'Contract',

@@ -2,13 +2,18 @@
   "name": "lambda",
   "chain": "ethereum",
   "blockNumber": 20111587,
-  "configHash": "0xc506903fd5ff182563e82dcea63d001d7311b52c681224b03dc2f93718e39c37",
+  "configHash": "0x97e98625439e26f247f342a96a21c1c96a0fc8c99d8a5fb58bee4b2901db338e",
   "version": 9,
   "contracts": [
     {
       "name": "SuperchainConfig",
       "address": "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
+      "template": "opstack/SuperchainConfig",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      ],
+      "categories": ["Upgrades&Governance"],
       "sinceTimestamp": 1713347015,
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
@@ -24,6 +29,9 @@
       "name": "ProxyAdmin",
       "address": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
       "template": "opstack/ProxyAdmin",
+      "descriptions": [
+        "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
+      ],
       "assignedPermissions": {
         "admin": [
           "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
@@ -49,6 +57,9 @@
       "address": "0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions."
+      ],
       "assignedPermissions": {
         "owner": ["0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"]
       },
@@ -110,7 +121,11 @@
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4",
+      "template": "opstack/OptimismMintableERC20Factory",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
+      ],
       "sinceTimestamp": 1713347171,
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
@@ -169,6 +184,7 @@
       "descriptions": [
         "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
       ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1713347159,
       "values": {
@@ -198,7 +214,9 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0x8334f9A70294556101527bfB9bdEdeF7EB382D94",
+      "template": "opstack/L1ERC721Bridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "sinceTimestamp": 1713347183,
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
@@ -270,7 +288,12 @@
     {
       "name": "L1StandardBridge",
       "address": "0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F",
+      "template": "opstack/L1StandardBridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
+      ],
+      "categories": ["Gateways&Escrows"],
       "sinceTimestamp": 1713347147,
       "values": {
         "$admin": "0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f",
@@ -302,6 +325,9 @@
     },
     {
       "address": "0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40",
+      "descriptions": [
+        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      ],
       "roles": ["Guardian"],
       "assignedPermissions": {
         "owner": ["0xae809d42f861A6381b0DFCf7216556e95362a7a8"]

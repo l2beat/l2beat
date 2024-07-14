@@ -4,14 +4,13 @@ import {
   ContractFieldSeverity,
   ContractValue,
   ContractValueType,
-  get$Admins,
   Permission,
   StackCategory,
   StackRole,
+  get$Admins,
 } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
-import { HandlerResult } from '../handlers/Handler'
 import { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
@@ -81,14 +80,10 @@ export function getSelfMeta(
 
 export function getTargetsMeta(
   self: EthereumAddress,
-  values?: Record<string, ContractValue | undefined>,
-  fields?: { [address: string]: DiscoveryContractField },
+  values: Record<string, ContractValue | undefined> = {},
+  fields: { [address: string]: DiscoveryContractField } = {},
 ): AddressToMetaMap | undefined {
   const result = getMetaFromUpgradeability(self, get$Admins(values))
-
-  if (fields === undefined || values === undefined) {
-    return
-  }
 
   for (const [fieldName, value] of Object.entries(values)) {
     const field = fields[fieldName]

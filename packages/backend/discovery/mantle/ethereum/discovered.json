@@ -286,6 +286,9 @@
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions."
+      ],
       "assignedPermissions": {
         "admin": ["0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"],
         "owner": ["0xca35F8338054739D138884685e08b39EE2217794"]

@@ -216,6 +216,9 @@
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "assignedPermissions": {
+        "admin": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672216439,
       "values": {

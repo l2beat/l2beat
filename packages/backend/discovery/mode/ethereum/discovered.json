@@ -2,15 +2,15 @@
   "name": "mode",
   "chain": "ethereum",
   "blockNumber": 20211472,
-  "configHash": "0x5e09ebc1af37d12842e0ceea7b8f18055f992f374f6cf1f138cd505410c0a40a",
+  "configHash": "0xfb8bb2f3a36fcd6db94f25a3dd282bc7abddc046ab4e748e580bb779e88e1ddf",
   "version": 9,
   "contracts": [
     {
       "name": "LivenessModule",
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
-      "template": "opstack/LivenessModule",
+      "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
+        "used to remove inactive (for {{ livenessInterval }}) members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -51,6 +51,9 @@
     {
       "name": "LivenessGuard",
       "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
+      "descriptions": [
+        "Liveness Guard of the LivenessModule ({{ address }}) - used to remove inactive members."
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -172,6 +175,9 @@
       "name": "ProxyAdmin",
       "address": "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
       "template": "opstack/ProxyAdmin",
+      "descriptions": [
+        "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
+      ],
       "assignedPermissions": {
         "admin": [
           "0x2901dA832a4D0297FF0691100A8E496626cc626D",
@@ -196,6 +202,10 @@
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions.",
+        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      ],
       "assignedPermissions": {
         "owner": [
           "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
@@ -259,6 +269,9 @@
       "address": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions."
+      ],
       "assignedPermissions": {
         "owner": ["0x543bA4AADBAb8f9025686Bd03993043599c6fB04"]
       },
@@ -284,6 +297,10 @@
     {
       "name": "DeputyGuardianModule",
       "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
+      "template": "gnosisSafeModules/DeputyGuardianModule",
+      "descriptions": [
+        "allows the 'deputy guardian' {{ deputyGuardian }} to act on behalf of the Gnosis Safe."
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
@@ -351,7 +368,11 @@
     {
       "name": "OptimismMintableERC20Factory",
       "address": "0x69216395A62dFb243C05EF4F1C27AF8655096a95",
+      "template": "opstack/OptimismMintableERC20Factory",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
+      ],
       "sinceTimestamp": 1700167631,
       "values": {
         "$admin": "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
@@ -369,6 +390,7 @@
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
       ],
+      "categories": ["Gateways&Escrows"],
       "sinceTimestamp": 1700167631,
       "values": {
         "$admin": "0x470d87b1dae09a454A43D1fD772A561a03276aB7",
@@ -389,6 +411,9 @@
       "address": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "Fallback Owner of the LivenessModule ({{ address }}) - takes ownership of the multisig if the number of members falls below {{ minOwners }}."
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
       "values": {
@@ -504,6 +529,9 @@
       "address": "0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "Deputy of the DeputyGuardianModule ({{ address }}). It can act on behalf of the Gnosis Safe to which that that module is assigned."
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
       "values": {

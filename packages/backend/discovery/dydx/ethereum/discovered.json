@@ -798,6 +798,9 @@
     {
       "name": "PriorityExecutor",
       "address": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
+      "assignedPermissions": {
+        "admin": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]
+      },
       "sinceTimestamp": 1627710079,
       "values": {
         "$immutable": true,

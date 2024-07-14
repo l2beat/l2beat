@@ -2,7 +2,7 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 20032860,
-  "configHash": "0x7b3219aad0d333af8761c5a61696ffae0711fe8784d8453caad403da3410dbc5",
+  "configHash": "0x158501df2a3f65e7866ec7beff4dac18135a5c947526d5b8c96c37d11aec1913",
   "version": 9,
   "contracts": [
     {
@@ -26,6 +26,10 @@
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions.",
+        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      ],
       "assignedPermissions": {
         "owner": [
           "0xC975862927797812371A9Fb631f83F8f5e2240D5",

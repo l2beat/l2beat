@@ -2,7 +2,7 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 20032836,
-  "configHash": "0xd876a6d6f3e89862ac4e377b04f521cad35d1a85a27a2dc1cbaeb4770583c2bf",
+  "configHash": "0x9a61b7e1ab6bdbb84f9a5c02bde465c0175ca243900fddc7f797fb7dd8671539",
   "version": 9,
   "contracts": [
     {
@@ -34,7 +34,12 @@
     {
       "name": "L1CrossDomainMessenger",
       "address": "0x126bcc31Bc076B3d515f60FBC81FddE0B0d542Ed",
+      "template": "opstack/L1CrossDomainMessenger",
       "proxyType": "resolved delegate proxy",
+      "descriptions": [
+        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+      ],
+      "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -64,6 +69,9 @@
     {
       "name": "ProxyAdmin",
       "address": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+      "descriptions": [
+        "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
+      ],
       "assignedPermissions": {
         "owner": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"],
         "admin": [
@@ -143,7 +151,11 @@
     {
       "name": "L1StandardBridge",
       "address": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+      "template": "opstack/L1StandardBridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
+      ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
@@ -213,7 +225,12 @@
     {
       "name": "SuperchainConfig",
       "address": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+      "template": "opstack/SuperchainConfig",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      ],
+      "categories": ["Upgrades&Governance"],
       "sinceTimestamp": 1706811599,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
@@ -229,7 +246,11 @@
     {
       "name": "L2OutputOracle",
       "address": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+      "template": "opstack/L2OutputOracle",
       "proxyType": "EIP1967 proxy",
+      "descriptions": [
+        "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
         "nextOutputIndex",
@@ -317,7 +338,9 @@
     {
       "name": "L1ERC721Bridge",
       "address": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+      "template": "opstack/L1ERC721Bridge",
       "proxyType": "EIP1967 proxy",
+      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
       "sinceTimestamp": 1706811599,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
@@ -416,6 +439,10 @@
       "address": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      ],
+      "roles": ["Guardian"],
       "assignedPermissions": {
         "owner": ["0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"]
       },

@@ -10,7 +10,7 @@
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
+        "used to remove inactive (for {{ livenessInterval }}) members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
       ],
       "sinceTimestamp": 1717149791,
       "values": {

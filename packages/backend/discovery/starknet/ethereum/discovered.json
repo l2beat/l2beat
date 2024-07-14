@@ -17,6 +17,7 @@
           "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
           "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
           "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
           "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
@@ -283,6 +284,9 @@
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "assignedPermissions": {
+        "admin": ["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672587635,
       "values": {

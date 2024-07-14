@@ -672,7 +672,9 @@ export class ProjectDiscovery {
         ),
       )
       .map((contract) => contract.name)
-    return safesWithThisMember.length === 0 ? undefined : 'Member of ' + safesWithThisMember.join(', ') + '.'
+    return safesWithThisMember.length === 0
+      ? undefined
+      : 'Member of ' + safesWithThisMember.join(', ') + '.'
   }
 
   describeRoles(

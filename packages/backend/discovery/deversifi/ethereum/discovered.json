@@ -130,6 +130,9 @@
       "descriptions": [
         "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
       ],
+      "assignedPermissions": {
+        "admin": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1683214307,
       "values": {

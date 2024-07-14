@@ -159,17 +159,15 @@ describe('metaUtils', () => {
         },
       }
 
-      const admin = EthereumAddress(
-        '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
-      )
+      const mergedValues = {
+        $admin: '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
+        ...Object.fromEntries(
+          handlerResults.map(({ field, value }) => [field, value]),
+        ),
+      }
 
       const selfAddress = EthereumAddress.from('0x1234')
-      const result = getTargetsMeta(
-        selfAddress,
-        [admin],
-        handlerResults,
-        fields,
-      )
+      const result = getTargetsMeta(selfAddress, mergedValues, fields)
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
