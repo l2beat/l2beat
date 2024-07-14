@@ -336,10 +336,15 @@ export class ProjectDiscovery {
     const modulesDescriptions = modules
       .map((m) => this.getContractByAddress(m))
       .filter(notUndefined)
-      .map((contract) => `${contract.name} (${this.constructDescriptionFromMeta(contract)})`)
+      .map(
+        (contract) =>
+          `${contract.name} (${this.constructDescriptionFromMeta(contract)})`,
+      )
 
-    const fullModulesDescription = modulesDescriptions.length === 0 ?''
-    : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
+    const fullModulesDescription =
+      modulesDescriptions.length === 0
+        ? ''
+        : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
 
     return [
       {
@@ -655,6 +660,21 @@ export class ProjectDiscovery {
     }))
   }
 
+  describeGnosisSafeMembership(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const safesWithThisMember = this.discoveries
+      .flatMap((discovery) => discovery.contracts)
+      .filter((contract) => contract.proxyType === 'gnosis safe')
+      .filter((contract) =>
+        toAddressArray(contract.values?.getOwners).includes(
+          contractOrEoa.address,
+        ),
+      )
+      .map((contract) => contract.name)
+    return safesWithThisMember.length === 0 ? undefined : 'Member of ' + safesWithThisMember.join(', ') + '.'
+  }
+
   describeRoles(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string | undefined {
@@ -685,6 +705,7 @@ export class ProjectDiscovery {
   ): string {
     return [
       this.describeRoles(contractOrEoa),
+      this.describeGnosisSafeMembership(contractOrEoa),
       this.describePermissions(contractOrEoa),
       contractOrEoa.descriptions?.join(' '),
     ]
@@ -779,7 +800,7 @@ const roleDescriptions: { [key in StackRole]: string } = {
   Proposer:
     'Proposer is an actor allowed to post new state roots of current layer to the host chain.',
   Challenger:
-    'Challenger is an actor allowed to delete state roots  proposed by a Proposer.',
+    'Challenger is an actor allowed to delete state roots proposed by a Proposer.',
   Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
   Validator:
     'Validator is an actor that validates the correctness of state transitions.',
