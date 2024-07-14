@@ -10,7 +10,7 @@
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "LivenessModule module is used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
+        "used to remove inactive {{ livenessInterval }} members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -218,6 +218,10 @@
     {
       "name": "DeputyGuardianModule",
       "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
+      "template": "gnosisSafeModules/DeputyGuardianModule",
+      "descriptions": [
+        "allows the 'deputy guardian' {{ deputyGuardian }} to act on behalf of the Gnosis Safe."
+      ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,

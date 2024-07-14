@@ -1,0 +1,5 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "DeputyGuardianModule",
+  "description": "allows the 'deputy guardian' {{ deputyGuardian }} to act on behalf of the Gnosis Safe."
+}

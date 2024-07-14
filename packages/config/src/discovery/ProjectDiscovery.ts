@@ -11,6 +11,7 @@ import {
   StackRole,
   get$Admins,
   get$Implementations,
+  toAddressArray,
 } from '@l2beat/discovery-types'
 import {
   assert,
@@ -331,12 +332,21 @@ export class ProjectDiscovery {
       `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
     )
 
+    const modules = toAddressArray(contract.values?.GnosisSafe_modules)
+    const modulesDescriptions = modules
+      .map((m) => this.getContractByAddress(m))
+      .filter(notUndefined)
+      .map((contract) => `${contract.name} (${this.constructDescriptionFromMeta(contract)})`)
+
+    const fullModulesDescription = modulesDescriptions.length === 0 ?''
+    : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
+
     return [
       {
         name: contract.name,
         description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
-        )} threshold.`,
+        )} threshold. ${fullModulesDescription}`,
         accounts: [
           {
             address: contract.address,
@@ -581,12 +591,14 @@ export class ProjectDiscovery {
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
-  getContractByAddress(address: string): ContractParameters | undefined {
+  getContractByAddress(
+    address: string | EthereumAddress,
+  ): ContractParameters | undefined {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
     return contracts.find(
-      (contract) => contract.address === EthereumAddress(address),
+      (contract) => contract.address === EthereumAddress(address.toString()),
     )
   }
 
@@ -643,21 +655,41 @@ export class ProjectDiscovery {
     }))
   }
 
+  describeRoles(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const roles = contractOrEoa.roles
+    return roles === undefined
+      ? undefined
+      : (roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.'
+  }
+
+  describePermissions(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const permissions = contractOrEoa.assignedPermissions
+    return permissions === undefined
+      ? undefined
+      : Object.entries(contractOrEoa.assignedPermissions ?? {})
+          .map(([role, addresses]) => {
+            const addressesString = addresses
+              .map((address) => this.getContract(address.toString()).name)
+              .join(', ')
+            return `${capitalize(role)} of ${addressesString}.`
+          })
+          .join(' ')
+  }
+
   constructDescriptionFromMeta(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string {
-    const combinedDescriptions = contractOrEoa.descriptions?.join(' ') ?? ''
-    const permissionDescriptions = Object.entries(
-      contractOrEoa.assignedPermissions ?? {},
-    )
-      .map(([role, addresses]) => {
-        const addressesString = addresses
-          .map((address) => this.getContract(address.toString()).name)
-          .join(', ')
-        return `${capitalize(role)} of ${addressesString}.`
-      })
+    return [
+      this.describeRoles(contractOrEoa),
+      this.describePermissions(contractOrEoa),
+      contractOrEoa.descriptions?.join(' '),
+    ]
+      .filter(notUndefined)
       .join(' ')
-    return [permissionDescriptions, combinedDescriptions].join(' ')
   }
 
   getDiscoveredPermissions(): ScalingProjectPermission[] {
