@@ -657,7 +657,7 @@ export class ProjectDiscovery {
         return `${capitalize(role)} of ${addressesString}.`
       })
       .join(' ')
-    return combinedDescriptions + permissionDescriptions
+    return [permissionDescriptions, combinedDescriptions].join(' ')
   }
 
   getDiscoveredPermissions(): ScalingProjectPermission[] {
@@ -743,9 +743,9 @@ export function stringFormat(str: string, ...val: string[]) {
 
 const roleDescriptions: { [key in StackRole]: string } = {
   Sequencer:
-    'Sequencer is an actor allowed to commit transactions from this layer to the host chain.',
+    'Sequencer is an actor allowed to commit transactions from current layer to the host chain.',
   Proposer:
-    'Proposer is an actor allowed to post new state roots of this layer to the host chain.',
+    'Proposer is an actor allowed to post new state roots of current layer to the host chain.',
   Challenger:
     'Challenger is an actor allowed to delete state roots  proposed by a Proposer.',
   Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',

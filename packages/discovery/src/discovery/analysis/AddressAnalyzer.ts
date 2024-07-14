@@ -3,7 +3,7 @@ import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import { get$Admins, get$Implementations } from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
@@ -171,10 +171,19 @@ export class AddressAnalyzer {
       overrides?.fields,
     )
 
+    if (address.toString() === '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631') {
+      console.log(Object.keys(overrides?.fields ?? {}))
+    }
+
+    const mergedValues = {
+      ...(!proxy ? { $immutable: true } : {}),
+      ...(proxy?.values ?? {}),
+      ...(values ?? {}),
+    }
+
     const targetsMeta = getTargetsMeta(
       address,
-      get$Admins(proxy?.values),
-      results,
+      mergedValues,
       overrides?.fields,
     )
 
@@ -188,11 +197,7 @@ export class AddressAnalyzer {
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,
       proxyType: proxy?.type,
-      values: {
-        ...(!proxy ? { $immutable: true } : {}),
-        ...(proxy?.values ?? {}),
-        ...(values ?? {}),
-      },
+      values: mergedValues,
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,
       sourceBundles: sources.sources,

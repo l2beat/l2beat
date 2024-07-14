@@ -4,6 +4,7 @@ import {
   ContractFieldSeverity,
   ContractValue,
   ContractValueType,
+  get$Admins,
   Permission,
   StackCategory,
   StackRole,
@@ -80,25 +81,26 @@ export function getSelfMeta(
 
 export function getTargetsMeta(
   self: EthereumAddress,
-  admins: EthereumAddress[],
-  handlerResults: HandlerResult[],
+  values?: Record<string, ContractValue | undefined>,
   fields?: { [address: string]: DiscoveryContractField },
 ): AddressToMetaMap | undefined {
-  const result = getMetaFromUpgradeability(self, admins)
+  const result = getMetaFromUpgradeability(self, get$Admins(values))
 
-  if (fields !== undefined) {
-    for (const handlerResult of handlerResults) {
-      const field = fields?.[handlerResult.field]
-      const target = field?.target
-      if (target) {
-        for (const address of getAddresses(handlerResult.value)) {
-          const meta = mergeContractMeta(
-            result[address.toString()],
-            targetConfigToMeta(self, field, target),
-          )
-          if (meta) {
-            result[address.toString()] = meta
-          }
+  if (fields === undefined || values === undefined) {
+    return
+  }
+
+  for (const [fieldName, value] of Object.entries(values)) {
+    const field = fields[fieldName]
+    const target = field?.target
+    if (target) {
+      for (const address of getAddresses(value)) {
+        const meta = mergeContractMeta(
+          result[address.toString()],
+          targetConfigToMeta(self, field, target),
+        )
+        if (meta) {
+          result[address.toString()] = meta
         }
       }
     }
@@ -112,20 +114,20 @@ export function getMetaFromUpgradeability(
   admins: EthereumAddress[],
 ): AddressToMetaMap {
   const result: Record<string, ContractMeta> = {}
-  // TODO: (sz-piotr) handle multiple admins!
-  const upgradeabilityAdmin = admins[0]
-  if (upgradeabilityAdmin !== undefined) {
-    const permission: Permission = 'admin'
-    result[upgradeabilityAdmin.toString()] = {
-      displayName: undefined,
-      categories: undefined,
-      descriptions: undefined,
-      roles: undefined,
-      severity: undefined,
-      types: undefined,
-      permissions: {
-        [permission]: new Set([self]),
-      },
+  for (const upgradeabilityAdmin of admins) {
+    if (upgradeabilityAdmin !== undefined) {
+      const permission: Permission = 'admin'
+      result[upgradeabilityAdmin.toString()] = {
+        displayName: undefined,
+        categories: undefined,
+        descriptions: undefined,
+        roles: undefined,
+        severity: undefined,
+        types: undefined,
+        permissions: {
+          [permission]: new Set([self]),
+        },
+      }
     }
   }
   return result

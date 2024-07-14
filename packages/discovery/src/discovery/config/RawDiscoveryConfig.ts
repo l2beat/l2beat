@@ -64,7 +64,7 @@ export const DiscoveryContract = z.object({
   ignoreMethods: z.optional(z.array(z.string())),
   ignoreRelatives: z.optional(z.array(z.string())),
   fields: z
-    .record(z.string().regex(/^[a-z_][a-z\d_]*$/i), DiscoveryContractField)
+    .record(z.string().regex(/^\$?[a-z_][a-z\d_]*$/i), DiscoveryContractField)
     .optional(),
   description: z.optional(z.string()),
   // TODO: in fields?

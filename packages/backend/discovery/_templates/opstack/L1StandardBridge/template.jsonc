@@ -3,6 +3,11 @@
   "displayName": "L1StandardBridge",
   "description": "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.",
   "fields": {
+    "$admin": {
+      "target": {
+        "description": "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
+      }
+    },
     "superchainConfig": {
       "target": {
         "category": "Upgrades&Governance"
