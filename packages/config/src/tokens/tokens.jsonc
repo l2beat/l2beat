@@ -3263,6 +3263,13 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "symbol": "RWA",
+      "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
+      "source": "native",
+      "formula": "totalSupply",
+      "coingeckoId": "re-al"
     }
   ],
   "sanko": [
