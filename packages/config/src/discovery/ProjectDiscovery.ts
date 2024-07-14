@@ -761,12 +761,20 @@ export class ProjectDiscovery {
       .filter((contract) => !gnosisModules.includes(contract.address))
       .filter((contracts) => contracts.assignedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
-      .map((contract) =>
-        this.getContractDetails(
-          contract.address.toString(),
-          this.describeContractOrEoa(contract),
-        ),
-      )
+      .map((contract) => {
+        const admins = get$Admins(contract.values)
+        const upgradableBy = admins.length > 0 && {
+          upgradableBy: admins.map(
+            (a) => this.getContractByAddress(a)?.name ?? a.toString(),
+          ),
+          upgradeDelay: 'No delay',
+        }
+
+        return this.getContractDetails(contract.address.toString(), {
+          description: this.describeContractOrEoa(contract),
+          ...upgradableBy,
+        })
+      })
   }
 }
 
