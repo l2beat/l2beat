@@ -338,7 +338,7 @@ export class ProjectDiscovery {
       .filter(notUndefined)
       .map(
         (contract) =>
-          `${contract.name} (${this.constructDescriptionFromMeta(contract)})`,
+          `${contract.name} (${this.describeContractOrEoa(contract)})`,
       )
 
     const fullModulesDescription =
@@ -700,7 +700,7 @@ export class ProjectDiscovery {
           .join(' ')
   }
 
-  constructDescriptionFromMeta(
+  describeContractOrEoa(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string {
     return [
@@ -719,7 +719,7 @@ export class ProjectDiscovery {
     )
     const result: ScalingProjectPermission[] = []
     for (const contract of contracts) {
-      const description = this.constructDescriptionFromMeta(contract)
+      const description = this.describeContractOrEoa(contract)
       if (contract.proxyType === 'gnosis safe') {
         result.push(
           ...this.getMultisigPermission(
@@ -737,7 +737,7 @@ export class ProjectDiscovery {
       if (eoa.assignedPermissions === undefined) {
         continue
       }
-      const description = this.constructDescriptionFromMeta(eoa)
+      const description = this.describeContractOrEoa(eoa)
       result.push({
         name: eoa.address.toString(),
         accounts: [this.formatPermissionedAccount(eoa.address)],
@@ -752,13 +752,17 @@ export class ProjectDiscovery {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
+    const gnosisModules = contracts.flatMap((contract) =>
+      toAddressArray(contract.values?.GnosisSafe_modules),
+    )
     return contracts
+      .filter((contract) => !gnosisModules.includes(contract.address))
       .filter((contracts) => contracts.assignedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
       .map((contract) =>
         this.getContractDetails(
           contract.address.toString(),
-          this.constructDescriptionFromMeta(contract),
+          this.describeContractOrEoa(contract),
         ),
       )
   }
