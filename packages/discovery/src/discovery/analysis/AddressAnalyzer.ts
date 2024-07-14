@@ -171,10 +171,6 @@ export class AddressAnalyzer {
       overrides?.fields,
     )
 
-    if (address.toString() === '0x3e2Ea9B92B7E48A52296fD261dc26fd995284631') {
-      console.log(Object.keys(overrides?.fields ?? {}))
-    }
-
     const mergedValues = {
       ...(!proxy ? { $immutable: true } : {}),
       ...(proxy?.values ?? {}),
