@@ -24,10 +24,10 @@ describeDatabase(AggregatedL2CostsRepository.name, (knex, kysely) => {
       await repository.deleteAll()
     })
 
-    it(AggregatedL2CostsRepository.prototype.addMany.name, async () => {
-      const records = [record(), record()]
+    it(AggregatedL2CostsRepository.prototype.addOrUpdateMany.name, async () => {
+      const records = [record({ timestamp: NOW.add(-1, 'hours') }), record()]
 
-      await repository.addMany(records)
+      await repository.addOrUpdateMany(records)
 
       const result = await repository.getAll()
       expect(result).toEqual(records)
@@ -39,7 +39,7 @@ describeDatabase(AggregatedL2CostsRepository.name, (knex, kysely) => {
         record(),
         record({ timestamp: NOW.add(1, 'hours') }),
       ]
-      await repository.addMany(records)
+      await repository.addOrUpdateMany(records)
 
       await repository.deleteAfter(NOW)
 
@@ -57,7 +57,7 @@ describeDatabase(AggregatedL2CostsRepository.name, (knex, kysely) => {
             record(),
             record({ timestamp: NOW.add(1, 'hours') }),
           ]
-          await repository.addMany(records)
+          await repository.addOrUpdateMany(records)
 
           const results = await repository.getByProjectAndTimeRange(
             ProjectId('random'),
@@ -73,7 +73,7 @@ describeDatabase(AggregatedL2CostsRepository.name, (knex, kysely) => {
             record(),
             record({ timestamp: NOW.add(1, 'hours') }),
           ]
-          await repository.addMany(records)
+          await repository.addOrUpdateMany(records)
           const results = await repository.getByProjectAndTimeRange(
             ProjectId('random'),
             [NOW.add(-1, 'hours'), NOW.add(1, 'hours')],
