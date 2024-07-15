@@ -46,7 +46,9 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
         Users can interact with this contract to request proofs on-chain, emitting a RequestCall event for off-chain provers to consume. Once a proof is generated, this contract is used as the on-chain entry point for relayers to fulfill the request and submit the proof.`,
       }),
     ],
-    risks: [],
+    risks: [
+      // Add specific risks to Optimiums/Validiums
+    ],
   },
   permissions: [
     ...discovery.getMultisigPermission(
