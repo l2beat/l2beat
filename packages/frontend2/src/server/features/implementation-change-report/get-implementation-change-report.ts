@@ -79,9 +79,9 @@ const getCachedImplementationChangeReport = cache(
         }
 
         result.projects[project] ??= {}
-        const projectRecord = result.projects[project]!
+        const projectRecord = result.projects[project]
         projectRecord[chainName] ??= []
-        const chainRecord = projectRecord[chainName]!
+        const chainRecord = projectRecord[chainName]
 
         for (const diff of implementationChanges) {
           assert(latestContracts, 'latestContracts is undefined')
