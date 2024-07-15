@@ -423,11 +423,11 @@ export const arbitrum: Layer2 = {
       references: [
         {
           text: 'How is fraud proven - Arbitrum documentation FAQ',
-          href: 'https://developer.offchainlabs.com/intro/#q-and-how-exactly-is-fraud-proven-sounds-complicated',
+          href: 'https://docs.arbitrum.io/welcome/arbitrum-gentle-introduction#q-and-how-exactly-is-fraud-proven-sounds-complicated',
         },
         {
           text: 'Arbitrum Glossary: Challenge Period',
-          href: 'https://developer.arbitrum.io/intro/glossary#challenge-period',
+          href: 'https://docs.arbitrum.io/intro/glossary#challenge-period',
         },
         {
           text: 'RollupUser.sol#L288 - Etherscan source code, onlyValidator modifier',
@@ -444,7 +444,7 @@ export const arbitrum: Layer2 = {
       references: [
         {
           text: 'Sequencing followed by deterministic execution - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/#sequencing-followed-by-deterministic-execution',
+          href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro#sequencing-followed-by-deterministic-execution',
         },
         {
           text: 'SequencerInbox.sol#206 - Etherscan source code, addSequencerL2BatchFromOrigin function',
@@ -474,7 +474,7 @@ export const arbitrum: Layer2 = {
         },
         {
           text: 'Sequencer Isn’t Doing Its Job - Arbitrum documentation',
-          href: 'https://developer.offchainlabs.com/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
+          href: 'https://docs.arbitrum.io/how-arbitrum-works/sequencer#unhappyuncommon-case-sequencer-isnt-doing-its-job',
         },
       ],
     },
@@ -484,11 +484,11 @@ export const arbitrum: Layer2 = {
         references: [
           {
             text: 'Transaction lifecycle - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/tx-lifecycle',
+            href: 'https://docs.arbitrum.io/how-arbitrum-works/tx-lifecycle',
           },
           {
             text: 'L2 to L1 Messages - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/arbos/l2-to-l1-messaging',
+            href: 'https://docs.arbitrum.io/how-arbitrum-works/arbos/l2-l1-messaging',
           },
           {
             text: 'Mainnet for everyone - Arbitrum Blog',
@@ -505,7 +505,7 @@ export const arbitrum: Layer2 = {
         references: [
           {
             text: 'Tradeable Bridge Exits - Arbitrum documentation',
-            href: 'https://developer.offchainlabs.com/docs/withdrawals#tradeable-bridge-exits',
+            href: 'https://docs.arbitrum.io/how-arbitrum-works/tx-lifecycle#tradeable-bridge-exits',
           },
         ],
       },
@@ -525,7 +525,7 @@ export const arbitrum: Layer2 = {
         references: [
           {
             text: 'Inside Arbitrum Nitro',
-            href: 'https://developer.offchainlabs.com/inside-arbitrum-nitro/',
+            href: 'https://docs.arbitrum.io/how-arbitrum-works/inside-arbitrum-nitro',
           },
         ],
       },
