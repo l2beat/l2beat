@@ -4,6 +4,7 @@ import { keyBy, mapValues, partition } from 'lodash'
 import { FinalityProjectConfig } from '../../../config/features/finality'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { LivenessWithConfigService } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
@@ -108,6 +109,7 @@ export class FinalityController {
     projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const result: FinalityApiResponse['projects'] = {}
+
     const configurations = (
       await this.$.indexerConfigurationRepository.getSavedConfigurations(
         'tracked_txs_indexer',
@@ -119,14 +121,23 @@ export class FinalityController {
 
     await Promise.all(
       projects.map(async (project) => {
+        const configsToUse = configurations
+          .filter(
+            (c) =>
+              c.properties.projectId === project.projectId &&
+              c.properties.subtype === 'batchSubmissions',
+          )
+          .map((c) => ({
+            id: c.id,
+            subtype: c.properties.subtype,
+            currentHeight: c.currentHeight,
+          }))
+
+        if (!configsToUse) return
+
         const syncedUntil = new UnixTime(
           Math.max(
-            ...configurations
-              .filter(
-                (c) =>
-                  c.properties.projectId === project.projectId &&
-                  c.properties.subtype === 'batchSubmissions',
-              )
+            ...configsToUse
               .map((c) => c.currentHeight)
               .filter((h): h is number => h !== null),
           ),
@@ -134,8 +145,12 @@ export class FinalityController {
 
         if (!syncedUntil) return
 
-        const records = await this.$.livenessRepository.getByProjectIdAndType(
-          project.projectId,
+        const livenessWithConfig = new LivenessWithConfigService(
+          configsToUse,
+          this.$.livenessRepository,
+        )
+
+        const records = await livenessWithConfig.getByTypeSince(
           'batchSubmissions',
           syncedUntil.add(-1, 'days'),
         )
