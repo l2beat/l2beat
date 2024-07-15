@@ -35,7 +35,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
   const validation = {
     type: 'zk-proof',
     relayer: 'SuccinctGateway',
-    proverSource: 'https://hackmd.io/@succinctlabs/HJE7XRrup'
+    proverSource: 'https://hackmd.io/@succinctlabs/HJE7XRrup',
   }
 
   const risks = {
