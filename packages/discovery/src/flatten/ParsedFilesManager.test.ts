@@ -23,25 +23,25 @@ describe(ParsedFilesManager.name, () => {
       expect(manager.findDeclaration('Library1').declaration).toHaveSubset({
         name: 'Library1',
         type: 'library',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
       expect(manager.findDeclaration('Interface1').declaration).toHaveSubset({
         name: 'Interface1',
         type: 'interface',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
       expect(manager.findDeclaration('Abstract1').declaration).toHaveSubset({
         name: 'Abstract1',
         type: 'abstract',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
       expect(manager.findDeclaration('Contract1').declaration).toHaveSubset({
         name: 'Contract1',
         type: 'contract',
-        referencedDeclaration: [],
+        dynamicReferences: [],
         inheritsFrom: [],
       })
     })
@@ -76,7 +76,7 @@ describe(ParsedFilesManager.name, () => {
         declaration: expect.subset({
           name: 'Contract1',
           type: 'contract',
-          referencedDeclaration: [],
+          dynamicReferences: [],
           inheritsFrom: [],
         }),
         file: expect.subset({
@@ -256,7 +256,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.referencedDeclaration.sort()).toEqual(
+      expect(root.declaration.dynamicReferences.sort()).toEqual(
         ['L1', 'L2'].sort(),
       )
     })
@@ -291,7 +291,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.referencedDeclaration.sort()).toEqual(
+      expect(root.declaration.dynamicReferences.sort()).toEqual(
         ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })

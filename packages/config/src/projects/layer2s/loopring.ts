@@ -45,7 +45,7 @@ const upgradeDelay = 0
 export const loopring: Layer2 = {
   type: 'layer2',
   id: ProjectId('loopring'),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata],
+  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
     name: 'Loopring',
     slug: 'loopring',

@@ -67,7 +67,8 @@
         "firstPendingWithdrawalIndex",
         "numberOfPendingWithdrawals",
         "totalBlocksCommitted",
-        "totalBlocksVerified"
+        "totalBlocksVerified",
+        "firstPriorityRequestId"
       ]
     }
   }

@@ -10,10 +10,9 @@ import {
   AggregatedLivenessRepository,
 } from '../repositories/AggregatedLivenessRepository'
 import {
-  LivenessRecordWithSubtype,
+  LivenessRecord,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
-import { Interval } from '../utils/calculateIntervals'
 import {
   LivenessAggregatingIndexer,
   LivenessAggregatingIndexerDeps,
@@ -23,6 +22,7 @@ const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
 
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
+const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
 
 const MOCK_PROJECTS = [
   mockObject<BackendProject>({
@@ -32,7 +32,7 @@ const MOCK_PROJECTS = [
       mockObject<TrackedTxConfigEntry>({
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
-        subtype: 'batchSubmissions',
+        subtype: MOCK_CONFIGURATION_TYPE,
         untilTimestamp: UnixTime.now(),
       }),
     ],
@@ -47,43 +47,19 @@ const MOCK_CONFIGURATIONS = [
   }),
 ]
 
-const MOCK_INTERVALS: Interval[] = [
-  {
-    record: {
-      subtype: 'batchSubmissions',
-      timestamp: NOW.add(-1, 'days'),
-    },
-    duration: 10,
-  },
-  {
-    record: {
-      subtype: 'batchSubmissions',
-      timestamp: NOW.add(-10, 'days'),
-    },
-    duration: 20,
-  },
-  {
-    record: {
-      subtype: 'batchSubmissions',
-      timestamp: NOW.add(-40, 'days'),
-    },
-    duration: 30,
-  },
-]
-
-const MOCK_LIVENESS: LivenessRecordWithSubtype[] = [
-  {
+const MOCK_LIVENESS: LivenessRecord[] = [
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW.add(-1, 'hours'),
-    subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW.add(-3, 'hours'),
-    subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW.add(-7, 'hours'),
-    subtype: 'batchSubmissions',
-  },
+  }),
 ]
 
 describe(LivenessAggregatingIndexer.name, () => {
@@ -186,7 +162,7 @@ describe(LivenessAggregatingIndexer.name, () => {
   describe(LivenessAggregatingIndexer.prototype.generateLiveness.name, () => {
     it('should generate aggregated liveness', async () => {
       const mockLivenessRepository = mockObject<LivenessRepository>({
-        getWithSubtypeByProjectIdsUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
+        getByConfigurationIdUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
       })
 
       const mockIndexerService = mockObject<IndexerService>({
@@ -202,8 +178,8 @@ describe(LivenessAggregatingIndexer.name, () => {
       const result = await indexer.generateLiveness(NOW)
 
       expect(
-        mockLivenessRepository.getWithSubtypeByProjectIdsUpTo,
-      ).toHaveBeenCalledWith(MOCK_PROJECTS[0].projectId, NOW)
+        mockLivenessRepository.getByConfigurationIdUpTo,
+      ).toHaveBeenCalledWith([MOCK_CONFIGURATION_ID], NOW)
 
       expect(result).toEqual([
         {
@@ -244,7 +220,11 @@ describe(LivenessAggregatingIndexer.name, () => {
       const result = indexer.aggregatedRecords(
         MOCK_PROJECTS[0].projectId,
         'batchSubmissions',
-        MOCK_LIVENESS,
+        MOCK_LIVENESS.map((record) => ({
+          ...record,
+          id: MOCK_CONFIGURATION_ID,
+          subtype: MOCK_CONFIGURATION_TYPE,
+        })),
         NOW,
         ['30D'],
       )
@@ -260,30 +240,6 @@ describe(LivenessAggregatingIndexer.name, () => {
           updatedAt: NOW,
         },
       ])
-    })
-  })
-
-  describe(LivenessAggregatingIndexer.prototype.filterByRange.name, () => {
-    it('should filter intervals by range', async () => {
-      const indexer = createIndexer({ tag: 'filterByRange' })
-
-      const result = indexer.filterByRange(MOCK_INTERVALS, NOW, '30D')
-
-      expect(result).toEqual([...MOCK_INTERVALS].splice(0, 2))
-    })
-  })
-
-  describe(LivenessAggregatingIndexer.prototype.calculateStats.name, () => {
-    it('should calculate stats', async () => {
-      const indexer = createIndexer({ tag: 'calculateStats' })
-
-      const result = indexer.calculateStats(MOCK_INTERVALS)
-
-      expect(result).toEqual({
-        averageInSeconds: 20,
-        minimumInSeconds: 10,
-        maximumInSeconds: 30,
-      })
     })
   })
 })

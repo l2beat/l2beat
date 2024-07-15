@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
+import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
@@ -37,6 +38,7 @@ export const alienx: Layer2 = underReviewL2({
     defaultCallsPerMinute: 1500,
     assessCount: subtractOne,
   },
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.RaaS.Caldera],
   escrows: [
     {
       address: EthereumAddress('0x69aB55146Bc52A0b31F74dBDc527b8B7e9c7C27c'),

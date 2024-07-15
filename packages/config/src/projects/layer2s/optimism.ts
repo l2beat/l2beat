@@ -93,9 +93,10 @@ export const optimism: Layer2 = {
   id: ProjectId('optimism'),
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.OPStack,
     Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.Other.L3HostChain,
     Badge.Other.Governance,
   ],
   display: {
@@ -323,7 +324,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0x4146DF64D83acB0DcB0c1a4884a16f090165e122#code',
+          href: 'https://etherscan.io/address/0xf691F8A6d908B58C534B624cF16495b491E633BA#code',
         },
       ],
     },
