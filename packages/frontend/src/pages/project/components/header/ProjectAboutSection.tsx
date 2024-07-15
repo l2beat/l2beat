@@ -1,11 +1,18 @@
 import React from 'react'
 
-import { type BadgeId, badgesCompareFn } from '@l2beat/config'
 import { usePageBuildContext } from '../../../../build/pageBuildContext'
 import { OverflowWrapper } from '../../../../components/OverflowWrapper'
 import { ReadMore } from '../../../../components/ReadMore'
 import { cn } from '../../../../utils/cn'
 import { ProjectBadge } from './ProjectBadge'
+
+// NOTE: We cannot import from `@l2beat/config` because it uses native node modules
+// and Storybook does not support it. Change when we transition to using "exports" field
+// in `@l2beat/config`'s `package.json` or move the badge definitions somewhere else.
+import {
+  type BadgeId,
+  badgesCompareFn,
+} from '@l2beat/config/build/src/projects/badges'
 
 export function ProjectAboutSection({
   badges: projectBadges,
