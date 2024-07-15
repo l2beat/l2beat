@@ -143,12 +143,6 @@ export function opStackSmartCommon(
     templateVars.l2OutputOracle ??
     templateVars.discovery.getContract('L2OutputOracle')
 
-  // TODO: use in contracts
-  // const upgradeability = templateVars.upgradeability ?? {
-  //   upgradableBy: ['ProxyAdmin'],
-  //   upgradeDelay: 'No delay',
-  // }
-
   return {
     id: ProjectId(templateVars.discovery.projectName),
     isUnderReview: templateVars.isUnderReview ?? false,
@@ -293,21 +287,11 @@ export function opStackSmartCommon(
     permissions: [
       ...templateVars.discovery.getDiscoveredRoles(),
       ...templateVars.discovery.getDiscoveredPermissions(),
-      // ...templateVars.discovery.getOpStackPermissions({
-      //   batcherHash: 'Sequencer',
-      //   PROPOSER: 'Proposer',
-      //   GUARDIAN: 'Guardian',
-      //   CHALLENGER: 'Challenger',
-      //   ...(templateVars.roleOverrides ?? {}),
-      // }),
-      // ...(templateVars.nonTemplatePermissions ?? []),
     ],
     // nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
       addresses: [
         ...templateVars.discovery.getDiscoveredContracts(),
-        // ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-        // ...(templateVars.nonTemplateContracts ?? []),
       ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       // nativeAddresses: templateVars.nonTemplateNativeContracts,
