@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
+import { Badge } from '../badges'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
@@ -37,6 +38,7 @@ export const edgeless: Layer2 = underReviewL2({
     defaultCallsPerMinute: 1500,
     assessCount: subtractOne,
   },
+  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.RaaS.Caldera],
   escrows: [
     // this is not the bridge escrow itself but the strategy contract that holds all funds backing the ewETH in the canonical bridge escrow. The normal escrow can be used as soon as we track the ewETH token
     {
