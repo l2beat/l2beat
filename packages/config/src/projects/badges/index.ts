@@ -15,6 +15,7 @@ export const BadgeType = {
   Stack: 'Stack',
   Fork: 'Fork',
   L3ParentChain: 'L3ParentChain',
+  Infra: 'Infra',
   Other: 'Other',
 } as const
 
@@ -25,7 +26,8 @@ export const badges = {
   AltLayer: {
     display: {
       name: 'AltLayer',
-      description: 'Lorem AltLayer dolor sit amet...',
+      description:
+        'This project was deployed via the rollup-as-a-service provider AltLayer',
     },
     type: BadgeType.RaaS,
   },
@@ -50,14 +52,6 @@ export const badges = {
       name: 'Karnot',
       description:
         'This project was deployed via the rollup-as-a-service provider Karnot',
-    },
-    type: BadgeType.RaaS,
-  },
-  StarkEx: {
-    display: {
-      name: 'StarkEx',
-      description:
-        'This project was deployed utilizing the StarkEx technology from StarkWare',
     },
     type: BadgeType.RaaS,
   },
@@ -99,7 +93,13 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
-  //should we mention that it is either calldata or blobs depending on the price? should it be one badge or two?
+  NearDA: {
+    display: {
+      name: 'NearDA',
+      description: 'This project is posting its data to NearDA',
+    },
+    type: BadgeType.DA,
+  },
   EthereumBlobs: {
     display: {
       name: 'Ethereum with blobs',
@@ -114,7 +114,21 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
-  // NOTE: The badges below are missing images
+  CustomDA: {
+    display: {
+      name: 'Custom DA solution',
+      description: 'This project is using a custom DA solution.',
+    },
+    type: BadgeType.DA,
+  },
+  DAC: {
+    display: {
+      name: 'Data Availability Committee',
+      description:
+        'There is a Data Availability Commitee that provides/attests to data availability.',
+    },
+    type: BadgeType.DA,
+  },
   // VM
   EVM: {
     display: {
@@ -134,7 +148,7 @@ export const badges = {
   },
   CairoVM: {
     display: {
-      name: 'Cairo',
+      name: 'CairoVM',
       description:
         'This project uses the Cairo Virtual Machine to run its smart contracts and supports the Cairo programming language',
     },
@@ -179,6 +193,143 @@ export const badges = {
         'This project uses a custom-built virtual machine suitable for its own needs',
     },
     type: BadgeType.VM,
+  },
+  AppChain: {
+    display: {
+      name: 'Application-specific chain',
+      description: 'This project is built to operate a specific application.',
+    },
+    type: BadgeType.VM,
+  },
+  //Infra
+  Superchain: {
+    display: {
+      name: 'Part of the Superchain',
+      description: 'The project is part of the Superchain.',
+    },
+    type: BadgeType.Infra,
+  },
+  SHARP: {
+    display: {
+      name: 'Uses SHARP',
+      description: 'The project uses a shared prover - SHARP.',
+    },
+    type: BadgeType.Infra,
+  },
+  AggLayer: {
+    display: {
+      name: 'Part of the AggLayer',
+      description: 'The project is part of the AggLayer.',
+    },
+    type: BadgeType.Infra,
+  },
+  // Stack/forks
+  OPStack: {
+    display: {
+      name: 'Built on OP Stack',
+      description: 'The project is built on the OP Stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  Orbit: {
+    display: {
+      name: 'Built on Arbitrum Orbit',
+      description: 'The project is built on Arbitrum Orbit.',
+    },
+    type: BadgeType.Stack,
+  },
+  Nitro: {
+    display: {
+      name: 'Built on Arbitrum Nitro',
+      description: 'The project is built on Arbitrum Nitro.',
+    },
+    type: BadgeType.Stack,
+  },
+  StarkEx: {
+    display: {
+      name: 'StarkEx',
+      description:
+        'This project was deployed utilizing the StarkEx technology from StarkWare',
+    },
+    type: BadgeType.Stack,
+  },
+  ZKStack: {
+    display: {
+      name: 'Built on the ZK Stack',
+      description: 'The project is built on the ZK Stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  PolygonCDK: {
+    display: {
+      name: 'Built on the Polygon CDK stack',
+      description: 'The project is built on the Polygon CDK stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  Cartesi: {
+    display: {
+      name: 'Built on the Cartesi stack',
+      description: 'The project is built on the Cartesi stack.',
+    },
+    type: BadgeType.Stack,
+  },
+  LoopringFork: {
+    display: {
+      name: 'Fork of Loopring',
+      description: 'The project is fork of Loopring.',
+    },
+    type: BadgeType.Fork,
+  },
+  OVM: {
+    display: {
+      name: 'Fork of OVM',
+      description: 'The project is fork of the Optimistic Virtual Machine.',
+    },
+    type: BadgeType.Fork,
+  },
+  ZKsyncLiteFork: {
+    display: {
+      name: 'Fork of ZKsync Lite',
+      description: 'The project is fork of ZKsync Lite.',
+    },
+    type: BadgeType.Fork,
+  },
+  StarknetFork: {
+    display: {
+      name: 'Fork of Starknet',
+      description: 'The project is fork of Starknet.',
+    },
+    type: BadgeType.Fork,
+  },
+  TaikoFork: {
+    display: {
+      name: 'Fork of Taiko',
+      description: 'The project is fork of Taiko.',
+    },
+    type: BadgeType.Fork,
+  },
+  //L3 host chains
+  Arbitrum: {
+    display: {
+      name: 'Built on top of Arbitrum',
+      description: 'The project has Arbitrum as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Base: {
+    display: {
+      name: 'Built on top of Base',
+      description: 'The project has Base as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Linea: {
+    display: {
+      name: 'Built on top of Linea',
+      description: 'The project has Linea as its host chain.',
+    },
+    type: BadgeType.L3ParentChain,
   },
   // Other
   AccountAbstraction: {

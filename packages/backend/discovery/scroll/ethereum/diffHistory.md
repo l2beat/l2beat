@@ -1,3 +1,229 @@
+Generated with discovered.json: 0xc91c535b44afb48eb36ccafc1f98ec0e73dd837f
+
+# Diff at Mon, 08 Jul 2024 06:07:38 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@e192ffbc9e265fdc44012a487bab5f0859ffe881 block: 20231628
+- current block number: 20259894
+
+## Description
+
+Batches are reverted [in this transaction](https://app.blocksec.com/explorer/tx/eth/0xf58cd0223418a4dd390be63d67c31ccd3b05a82d59461106227664e8fc417ac5). Unclear what justified this action.
+
+Relevant incident page: https://status.scroll.io/incidents/44k6s4qg6kcs
+
+## Watched changes
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      values.revertedBatches.54:
++        {"batchIndex":275173}
+      values.revertedBatches.53:
++        {"batchIndex":275172}
+      values.revertedBatches.52:
++        {"batchIndex":275171}
+      values.revertedBatches.51:
++        {"batchIndex":275170}
+      values.revertedBatches.50:
++        {"batchIndex":275169}
+      values.revertedBatches.49:
++        {"batchIndex":275168}
+      values.revertedBatches.48:
++        {"batchIndex":275167}
+      values.revertedBatches.47:
++        {"batchIndex":275166}
+      values.revertedBatches.46:
++        {"batchIndex":275165}
+      values.revertedBatches.45:
++        {"batchIndex":275164}
+      values.revertedBatches.44:
++        {"batchIndex":275163}
+      values.revertedBatches.43:
++        {"batchIndex":275162}
+      values.revertedBatches.42:
++        {"batchIndex":275161}
+      values.revertedBatches.41:
++        {"batchIndex":275160}
+      values.revertedBatches.40:
++        {"batchIndex":275159}
+      values.revertedBatches.39:
++        {"batchIndex":275158}
+      values.revertedBatches.38:
++        {"batchIndex":275157}
+      values.revertedBatches.37:
++        {"batchIndex":275156}
+      values.revertedBatches.36:
++        {"batchIndex":275155}
+      values.revertedBatches.35:
++        {"batchIndex":275154}
+      values.revertedBatches.34:
++        {"batchIndex":275153}
+      values.revertedBatches.33:
++        {"batchIndex":275152}
+      values.revertedBatches.32:
++        {"batchIndex":275151}
+      values.revertedBatches.31:
++        {"batchIndex":275150}
+      values.revertedBatches.30:
++        {"batchIndex":275149}
+      values.revertedBatches.29:
++        {"batchIndex":275148}
+      values.revertedBatches.28:
++        {"batchIndex":275147}
+      values.revertedBatches.27:
++        {"batchIndex":275146}
+      values.revertedBatches.26:
++        {"batchIndex":275145}
+      values.revertedBatches.25:
++        {"batchIndex":275144}
+      values.revertedBatches.24:
++        {"batchIndex":275143}
+      values.revertedBatches.23:
++        {"batchIndex":275142}
+      values.revertedBatches.22:
++        {"batchIndex":275141}
+      values.revertedBatches.21:
++        {"batchIndex":275140}
+      values.revertedBatches.20:
++        {"batchIndex":275139}
+      values.revertedBatches.19:
++        {"batchIndex":275138}
+      values.revertedBatches.18:
++        {"batchIndex":275137}
+      values.revertedBatches.17:
++        {"batchIndex":275136}
+      values.revertedBatches.16:
++        {"batchIndex":275135}
+      values.revertedBatches.15:
++        {"batchIndex":275134}
+      values.revertedBatches.14:
++        {"batchIndex":275133}
+      values.revertedBatches.13:
++        {"batchIndex":275132}
+      values.revertedBatches.12:
++        {"batchIndex":275131}
+      values.revertedBatches.11:
++        {"batchIndex":275130}
+      values.revertedBatches.10:
++        {"batchIndex":275129}
+      values.revertedBatches.9:
++        {"batchIndex":275128}
+      values.revertedBatches.8:
++        {"batchIndex":275127}
+      values.revertedBatches.7:
++        {"batchIndex":275126}
+      values.revertedBatches.6:
++        {"batchIndex":275125}
+      values.revertedBatches.5:
++        {"batchIndex":275124}
+      values.revertedBatches.4:
++        {"batchIndex":275123}
+      values.revertedBatches.3:
++        {"batchIndex":275122}
+      values.revertedBatches.2:
++        {"batchIndex":275121}
+      values.revertedBatches.1:
++        {"batchIndex":275120}
+      values.revertedBatches.0:
++        {"batchIndex":275119}
+    }
+```
+
+Generated with discovered.json: 0xe79e01ccb7168b40e4ef5149d2f69fe16ddd49ca
+
+# Diff at Thu, 04 Jul 2024 07:23:55 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@a971675b742a033604993266a953472c91a5d327 block: 20138546
+- current block number: 20231628
+
+## Description
+
+This upgrade is called [the Curie Upgrade](https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade) by Scroll.
+It brings a new batch version that has new compression and an accompanying new verifier and verifier-manager.
+The L2 changes are listed in the blog post.
+
+### ScrollChain
+
+Batch version > 1 is now suported. This allows for the new batch version 2 to be posted.
+
+### MultipleVersionRollupVerifier (manages verifiers)
+
+In the `updateVerifier()` function, a check wether the new verifier's `_startBatchIndex` is already finalized (-->revert), is removed. 
+
+### ZkEvmVerifierV1
+
+This is the contract in the third slot of `latestVerifier`, added in this upgrade. It is code-identical with the previous one, but points to the new Plonk Verifier.
+
+### New Plonk Verfier
+
+The source code (yul+) can be found at https://circuit-release.s3.us-west-2.amazonaws.com/release-v0.11.4/evm_verifier.yul.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract MultipleVersionRollupVerifier (0x1Ea29d57dAC237152d878758bAe4BeB2668998f6)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+```diff
+    contract ScrollChain (0xa13BAF47339d63B743e7Da8741db5456DAc1E556) {
+    +++ description: None
+      upgradeability.implementation:
+-        "0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"
++        "0x4F250B05262240C787a1eE222687C6eC395C628A"
+      implementations.0:
+-        "0xaa6d0F2490AC3957B97e11afEC6F0f250593CaC8"
++        "0x4F250B05262240C787a1eE222687C6eC395C628A"
+      values.verifier:
+-        "0x1Ea29d57dAC237152d878758bAe4BeB2668998f6"
++        "0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PlonkVerifierV2 (0x03a72B00D036C479105fF98A1953b15d9c510110)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ZkEvmVerifierV1-1 (0x63FB51C55d9605a75F8872C80De260a00fACfaA2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MultipleVersionRollupVerifier (0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B)
+    +++ description: Used to update the verifier and keep track of current and old versions.
+```
+
+## Source code changes
+
+```diff
+.../MultipleVersionRollupVerifier.sol              | 26 ++-------
+ .../ScrollChain/ScrollChain.sol                    | 24 ++++----
+ .../scroll/ethereum/.flat/ZkEvmVerifierV1-1.sol    | 66 ++++++++++++++++++++++
+ 3 files changed, 82 insertions(+), 34 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20138546 (main branch discovery), not current.
+
+```diff
+    contract MultipleVersionRollupVerifier (0x1Ea29d57dAC237152d878758bAe4BeB2668998f6) {
+    +++ description: Used to update the verifier and keep track of current and old versions.
+      errors:
++        {"latestVerifier":"Too many values. Update configuration to explore fully","legacyVerifiersLength":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0x355fd622fa9cc92e25f4e7c966a40b13dc467a75
 
 # Diff at Wed, 29 May 2024 07:42:54 GMT:

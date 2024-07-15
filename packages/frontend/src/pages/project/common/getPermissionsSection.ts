@@ -26,7 +26,6 @@ export function getPermissionsSection(
   const section: ProjectDetailsPermissionsSection['props'] = {
     id: 'permissions',
     title: 'Permissions',
-    projectType: project.type === 'layer3' ? 'L3' : 'L2',
     verificationStatus,
     manuallyVerifiedContracts,
     isUnderReview: project.isUnderReview,

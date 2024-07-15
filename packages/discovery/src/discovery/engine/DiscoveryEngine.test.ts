@@ -1,7 +1,6 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { UpgradeabilityParameters } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
@@ -16,7 +15,6 @@ const base = {
   isVerified: true,
   deploymentTimestamp: new UnixTime(1234),
   deploymentBlockNumber: 9876,
-  upgradeability: { type: 'immutable' } as UpgradeabilityParameters,
   implementations: [],
   abis: {},
   sourceBundles: [],

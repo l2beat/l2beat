@@ -1,6 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -8,6 +9,7 @@ const discovery = new ProjectDiscovery('hypr')
 
 export const hypr: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  badges: [Badge.DA.Celestia],
   discovery,
   display: {
     name: 'Hypr',
@@ -26,6 +28,7 @@ export const hypr: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    architectureImage: 'opstack',
   },
   genesisTimestamp: new UnixTime(1705509623),
   isNodeAvailable: 'UnderReview',

@@ -9,6 +9,7 @@ import { z } from 'zod'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
@@ -24,10 +25,16 @@ export class StarknetFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
     private readonly l2Provider: StarknetClient,
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
   }
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'stateUpdates'

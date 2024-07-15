@@ -18,6 +18,8 @@ describe(executeHandlers.name, () => {
         const value = layout[number]
         return Bytes.fromHex(value!.toString(16).padStart(64, '0'))
       },
+      blockNumber: 123,
+      chain: 'foo',
     })
   }
 
@@ -250,6 +252,8 @@ describe(executeHandlers.name, () => {
     const provider = mockObject<IProvider>({
       getStorage: mockFn().returnsOnce(123),
       callMethod: mockFn().returns(0x12345678),
+      blockNumber: 123,
+      chain: 'foo',
     })
     const values = await executeHandlers(
       provider,
@@ -277,6 +281,8 @@ describe(executeHandlers.name, () => {
     const fragment = toFunctionFragment(method)
     const provider = mockObject<IProvider>({
       callMethod: mockFn().returnsOnce(3).returns(0x12345678),
+      blockNumber: 123,
+      chain: 'foo',
     })
     const values = await executeHandlers(
       provider,

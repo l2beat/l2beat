@@ -1,6 +1,4 @@
 import { EthereumAddress, ProjectId, formatSeconds } from '@l2beat/shared-pure'
-
-import { CONTRACTS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
@@ -33,7 +31,8 @@ export const transporter: Bridge = {
       documentation: ['https://docs.chain.link/ccip'],
       socialMedia: ['https://x.com/transporter_io'],
     },
-    description: 'Transporter is a Token Bridge based on CCIP network.',
+    description:
+      'Transporter is a Token Bridge based on Chainlink’s Cross-Chain Interoperability Protocol (CCIP) network.',
     detailedDescription:
       'Transporter is a hybrid bridge that can work either as a Token Bridge or Liquidity Network depending on the requirements of tokens.\
       It is using Chainlink CCIP standard for cross-chain communication, and it makes use of a secondary network of nodes, called Risk Management Network, responsible for validating the messages or halt the bridge.',
@@ -70,16 +69,16 @@ export const transporter: Bridge = {
     ],
     principleOfOperation: {
       name: 'Principle of operation',
-      description: `Transporter is a Token Bridge based on CCIP network. CCIP network is an AMB (Arbitrary Message Bridge) allowing to pass arbitrary messages that are attested by ChainLink Oracles. 
-        On each chain it has a singleton Router contract. For each route (”lane”) there is a triple of OnRamp, OffRamp and CommitStore contracts defined. OnRamp is used to send messages to a destination chain, 
-        while OffRamp and CommitStore are used to receive messages. The CommitStore is used to store message routes from the Source chain, while OffRamp is used to execute incoming messages. 
+      description: `Transporter is a Token Bridge based on the CCIP network. The CCIP network is an AMB (Arbitrary Message Bridge) that enables the cross-chain transfer of arbitrary messages that are attested by ChainLink Oracles as well as a separate Risk Management Network. 
+        On each chain it has a singleton Router contract. For each route (”lane”) there is a triplet of OnRamp, OffRamp and CommitStore contracts defined. OnRamp is used to send messages to a destination chain, 
+        while OffRamp and CommitStore are used to receive messages. The CommitStore is used to store Merkle roots of CCIP messages sent from the Source chain, while OffRamp is used to verify and execute incoming messages. 
         Both OnRamps and OffRamps use TokenPools to escrow tokens, one TokenPool per token. TokenPools - depending on token - may Lock/Release or Mint/Burn tokens. They may also use some custom setup, like e.g. for USDC where TokenPool is a wrapper for Circle’s CCTP bridge.`,
       risks: [],
       references: [],
     },
     validation: {
       name: 'Oracle Network',
-      description: `Chainlink Oracle network is responsible for validating cross-chain messages. For additional security it uses off-chain secondary validation network called Risk Management Network.
+      description: `Chainlink Oracle network is responsibile for validating cross-chain messages. For additional security, CCIP uses an off-chain secondary validation network called Risk Management Network.
         Each pathway between a source and a destination blockchain contains two Oracle committees. One committee interacts with the CommitStore contract on the destination chain to store the Merkle root 
         of the finalized messages on the source blockchain. After the Risk Management Network verifies the merkle root and submits a voteToBless() transaction, the second oracle committee can execute the message on the destination chain.`,
       references: [
@@ -96,8 +95,7 @@ export const transporter: Bridge = {
         },
         {
           category: 'Funds can be stolen if',
-          text: 'oracle network is compromised and Risk Management Network fails to halt ("curse") the bridge.',
-          isCritical: true,
+          text: 'oracle network is compromised and Risk Management Network fails to halt ("curse") the bridge. Both networks would need to be separately compromised.',
         },
       ],
     },
@@ -140,7 +138,12 @@ export const transporter: Bridge = {
         })(),
       ),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(upgradeDelayString)],
+    risks: [
+      {
+        category: 'Funds can be stolen if',
+        text: `a contract receives a malicious code upgrade. There is a ${upgradeDelayString} delay on code upgrades, during which designated Cancellers can veto the upgrade.`,
+      },
+    ],
   },
   permissions: [
     {

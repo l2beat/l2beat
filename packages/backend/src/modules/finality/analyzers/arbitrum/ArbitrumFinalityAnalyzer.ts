@@ -7,6 +7,7 @@ import {
 
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import { calculateDelaysFromSegments } from './calculateDelaysFromSegments'
@@ -18,9 +19,15 @@ export class ArbitrumFinalityAnalyzer extends BaseAnalyzer {
     private readonly logger: Logger,
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
     this.logger = logger.for(this).tag(projectId.toString())
   }
 

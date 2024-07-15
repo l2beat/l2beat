@@ -1,10 +1,19 @@
-FROM node:18 as builder
 ARG ARCH=x86_64
 
-COPY . /src/
-RUN cd /src/ && \
-  yarn install && \
-  yarn build:backend
+FROM node:18 as pruner
+WORKDIR /src/
+COPY . .
+RUN yarn global add turbo
+RUN turbo prune --docker @l2beat/backend
+
+FROM node:18 as builder
+ARG ARCH
+WORKDIR /src/
+COPY --from=pruner /src/out/json/ .
+RUN yarn install
+COPY --from=pruner /src/out/full/ /src/tsconfig.json ./
+RUN yarn build:backend
+
 RUN mkdir /dist/ && \
   cd /dist/ && \
   wget -q https://github.com/Wilfred/difftastic/releases/download/0.57.0/difft-$ARCH-unknown-linux-gnu.tar.gz && \
@@ -13,7 +22,7 @@ RUN mkdir /dist/ && \
 
 
 FROM node:18-slim as release
-COPY --from=builder /src/ /app/
-COPY --from=builder /dist/difft /usr/bin/difft
 WORKDIR /app/
+COPY --from=builder /src/ .
+COPY --from=builder /dist/difft /usr/local/bin/difft
 CMD yarn start

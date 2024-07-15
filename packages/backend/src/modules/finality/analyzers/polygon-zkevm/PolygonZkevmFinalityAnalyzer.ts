@@ -9,6 +9,7 @@ import { utils } from 'ethers'
 import { z } from 'zod'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
@@ -19,10 +20,16 @@ export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
     private readonly l2Provider: RpcClient,
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
   }
 
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {

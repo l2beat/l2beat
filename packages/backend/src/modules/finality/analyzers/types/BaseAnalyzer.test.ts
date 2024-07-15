@@ -2,6 +2,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer, Transaction } from './BaseAnalyzer'
 
@@ -16,14 +17,20 @@ describe(BaseAnalyzer.name, () => {
       ]
       const mockProvider = mockObject<RpcClient>({})
       const mockLivenessRepository = mockObject<LivenessRepository>({
-        getTransactionsWithinTimeRange: mockFn().resolvesTo(mockTxs),
+        getTransactionsWithinTimeRangeByConfigurationsIds:
+          mockFn().resolvesTo(mockTxs),
       })
+      const mockIndexerConfigurationRepository =
+        mockObject<IndexerConfigurationRepository>({
+          getSavedConfigurations: mockFn().resolvesTo([]),
+        })
       const projectId = ProjectId('projectId')
       const mockTxSubtype = 'batchSubmissions'
       const getFinalitySpy = mockFn((_tx: Transaction) => {})
       const mockAnalyzer = new MockAnalyzer(
         mockProvider,
         mockLivenessRepository,
+        mockIndexerConfigurationRepository,
         projectId,
         getFinalitySpy,
         mockTxSubtype,
@@ -33,13 +40,8 @@ describe(BaseAnalyzer.name, () => {
         await mockAnalyzer.analyzeInterval(now, now.add(10, 'hours')),
       ).toEqual([1, 1])
       expect(
-        mockLivenessRepository.getTransactionsWithinTimeRange,
-      ).toHaveBeenCalledWith(
-        projectId,
-        mockTxSubtype,
-        now,
-        now.add(10, 'hours'),
-      )
+        mockLivenessRepository.getTransactionsWithinTimeRangeByConfigurationsIds,
+      ).toHaveBeenCalledWith([], now, now.add(10, 'hours'))
       expect(getFinalitySpy).toHaveBeenCalledTimes(2)
       expect(getFinalitySpy).toHaveBeenCalledWith(mockTxs[0])
       expect(getFinalitySpy).toHaveBeenCalledWith(mockTxs[1])
@@ -51,6 +53,7 @@ class MockAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
     private readonly getFinalitySpy: (tx: Transaction) => void,
     private readonly txSubtype:
@@ -58,7 +61,12 @@ class MockAnalyzer extends BaseAnalyzer {
       | 'stateUpdates'
       | 'proofSubmissions',
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
   }
 
   async analyze(tx: Transaction) {

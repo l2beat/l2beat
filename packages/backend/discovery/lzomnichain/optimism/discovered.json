@@ -1,18 +1,16 @@
 {
   "name": "lzomnichain",
   "chain": "optimism",
-  "blockNumber": 118271566,
-  "configHash": "0x274b2293921895bb32324be7510a251305fe0b2720b6ecfe2f191c8c46772091",
-  "version": 8,
+  "blockNumber": 122295641,
+  "configHash": "0xef4a8d9fc64cd6cb4841c2f2a5a158c30e7d525c846e6834ae078ffc5521512d",
+  "version": 9,
   "contracts": [
     {
       "name": "FPValidator",
       "address": "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1665890286,
       "values": {
+        "$immutable": true,
         "getProofType": 2,
         "getUtilsVersion": 1,
         "proofType": 2,
@@ -25,16 +23,13 @@
       "name": "LayerZero Multisig",
       "address": "0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": [],
-        "threshold": "2 of 6 (33%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
       "sinceTimestamp": 1648074334,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$multisigThreshold": "2 of 6 (33%)",
         "domainSeparator": "0x3f2a130cb1407023e2fca39835115b4a69b3357e73a73b29fabcb127ee007bd1",
         "getChainId": 10,
         "getOwners": [
@@ -46,7 +41,8 @@
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
         "getThreshold": 2,
-        "nonce": 78,
+        "GnosisSafe_modules": [],
+        "nonce": 120,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -54,11 +50,9 @@
     {
       "name": "TreasuryV2",
       "address": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661528314,
       "values": {
+        "$immutable": true,
         "feeEnabled": false,
         "nativeBP": 0,
         "owner": "0x2458BAAbfb21aE1da11D9dD6AD4E48aB2fBF9959",
@@ -70,38 +64,22 @@
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"]
       },
       "sinceTimestamp": 1647317044,
       "values": {
+        "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
     {
-      "name": "",
-      "address": "0x3A01cfb9831E7c9A30917bd78C2A5C0243ab4b4F",
-      "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "assignedPermissions": {
-        "admin": ["0x6d65a44Bd6Cfe1a8b2E816c918Dd83a6b04c8DEe"]
-      },
-      "sinceTimestamp": 1687808651
-    },
-    {
       "name": "Endpoint",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1647316965,
       "values": {
+        "$immutable": true,
         "BLOCK_VERSION": 65535,
         "chainId": 11,
         "DEFAULT_VERSION": 0,
@@ -126,11 +104,9 @@
     {
       "name": "MPTValidator01",
       "address": "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661528296,
       "values": {
+        "$immutable": true,
         "getProofType": 1,
         "getUtilsVersion": 4,
         "PACKET_SIGNATURE": "0xe9bded5f24a4168e4f3bf44e00298c993b22376aad8c58c7dda9718a54cbea82",
@@ -143,9 +119,6 @@
     {
       "name": "UltraLightNodeV2",
       "address": "0x4D73AdB72bC3DD368966edD0f0b2148401A178E2",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -156,6 +129,7 @@
       ],
       "sinceTimestamp": 1661528314,
       "values": {
+        "$immutable": true,
         "chainAddressSizeMap": {
           "101": 20,
           "102": 20,
@@ -168,6 +142,7 @@
           "114": 20,
           "115": 20,
           "116": 20,
+          "118": 20,
           "125": 20,
           "126": 20,
           "138": 20,
@@ -209,11 +184,19 @@
           "230": 20,
           "234": 20,
           "235": 20,
+          "236": 20,
+          "237": 20,
           "238": 20,
           "243": 20,
           "255": 20,
           "257": 20,
-          "260": 20
+          "260": 20,
+          "263": 20,
+          "265": 20,
+          "266": 20,
+          "267": 20,
+          "274": 20,
+          "284": 20
         },
         "CONFIG_TYPE_INBOUND_BLOCK_CONFIRMATIONS": 2,
         "CONFIG_TYPE_INBOUND_PROOF_LIBRARY_VERSION": 1,
@@ -263,6 +246,10 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "116": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "118": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
@@ -430,6 +417,14 @@
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
+          "236": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "237": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
           "238": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
@@ -447,6 +442,30 @@
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           },
           "260": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "263": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "265": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "266": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "267": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "274": {
+            "proofType": 2,
+            "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
+          },
+          "284": {
             "proofType": 2,
             "adapterParams": "0x00010000000000000000000000000000000000000000000000000000000000030d40"
           }
@@ -540,6 +559,14 @@
             "oracle": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
             "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
           },
+          "118": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
           "125": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
@@ -614,7 +641,7 @@
           },
           "158": {
             "inboundProofLib": 2,
-            "inboundBlockConfirm": 20,
+            "inboundBlockConfirm": 225000,
             "outboundProofType": 2,
             "outboundBlockConfirm": 20,
             "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
@@ -868,6 +895,22 @@
             "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
             "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
           },
+          "236": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "237": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
           "238": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
@@ -901,6 +944,54 @@
             "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
           },
           "260": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "263": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "265": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "266": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 10,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "267": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 5,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "274": {
+            "inboundProofLib": 2,
+            "inboundBlockConfirm": 225000,
+            "outboundProofType": 2,
+            "outboundBlockConfirm": 20,
+            "oracle": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
+            "relayer": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"
+          },
+          "284": {
             "inboundProofLib": 2,
             "inboundBlockConfirm": 5,
             "outboundProofType": 2,
@@ -949,6 +1040,10 @@
             "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
           ],
           "116": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "118": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
           ],
@@ -1113,6 +1208,14 @@
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
           ],
+          "236": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "237": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
           "238": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
@@ -1130,6 +1233,30 @@
             "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
           ],
           "260": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "263": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "265": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "266": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "267": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "274": [
+            "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
+            "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
+          ],
+          "284": [
             "0x462F7eC57C6492B983a8C8322B4369a7f149B859",
             "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044"
           ]
@@ -1150,6 +1277,7 @@
           "114": [1, 2],
           "115": [1, 2],
           "116": [1, 2],
+          "118": [1, 2],
           "125": [1, 2],
           "126": [1, 2],
           "138": 2,
@@ -1191,11 +1319,19 @@
           "230": 2,
           "234": 2,
           "235": 2,
+          "236": 2,
+          "237": 2,
           "238": 2,
           "243": 2,
           "255": 2,
           "257": 2,
-          "260": 2
+          "260": 2,
+          "263": 2,
+          "265": 2,
+          "266": [1, 2],
+          "267": [1, 2],
+          "274": 2,
+          "284": 2
         },
         "treasuryContract": "0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d",
         "treasuryZROFees": 0,
@@ -1211,6 +1347,7 @@
           "114": "0x000000000000000000000000bb2753c1b940363d278c81d6402fa89e79ab4ebc",
           "115": "0x000000000000000000000000658fd63dca9378e3b7deb49463d0b25336433f91",
           "116": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
+          "118": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "125": "0x000000000000000000000000377530cda84dfb2673bf4d145dcf0c4d7fdcb5b6",
           "126": "0x0000000000000000000000004d73adb72bc3dd368966edd0f0b2148401a178e2",
           "138": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
@@ -1252,11 +1389,19 @@
           "230": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
           "234": "0x000000000000000000000000980205d352f198748b626f6f7c38a8a5663ec981",
           "235": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "236": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "237": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "238": "0x0000000000000000000000004bb746ed0df6a8be563ff66dfc502f084779f9c9",
           "243": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "255": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
           "257": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
-          "260": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
+          "260": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "263": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "265": "0x000000000000000000000000e1844c5d63a9543023008d332bd3d2e6f1fe1043",
+          "266": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "267": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "274": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251",
+          "284": "0x00000000000000000000000038de71124f7a447a01d67945a51edce9ff491251"
         }
       },
       "derivedName": "UltraLightNodeV2"
@@ -1264,49 +1409,32 @@
     {
       "name": "NonceContract",
       "address": "0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1661279306,
       "values": {
+        "$immutable": true,
         "endpoint": "0x3c2269811836af69497E5F486A85D7316753cf62"
       }
     },
     {
       "name": "",
-      "address": "0x6d65a44Bd6Cfe1a8b2E816c918Dd83a6b04c8DEe",
-      "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x098c11c44e2bEE854BD8Ff61eCb2953d7FdF66a1",
-        "admin": "0x3A01cfb9831E7c9A30917bd78C2A5C0243ab4b4F"
-      },
-      "implementations": ["0x098c11c44e2bEE854BD8Ff61eCb2953d7FdF66a1"],
-      "sinceTimestamp": 1687808663
-    },
-    {
-      "name": "",
       "address": "0x81E792e5a9003CC1C8BF5569A00f34b65d75b017",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x9A4DF6D81309c8a583C28eD8e449E320043e7A97",
-        "admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
-      },
-      "implementations": ["0x9A4DF6D81309c8a583C28eD8e449E320043e7A97"],
-      "sinceTimestamp": 1661531054
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1661531054,
+      "values": {
+        "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
+        "$implementation": "0x9A4DF6D81309c8a583C28eD8e449E320043e7A97"
+      }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f"]
       },
       "sinceTimestamp": 1661447982,
       "values": {
+        "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
     },
@@ -1314,22 +1442,19 @@
       "name": "",
       "address": "0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x81855cd82374C3700ee579Ad1fF0760ae039a19B",
-        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
-      },
-      "implementations": ["0x81855cd82374C3700ee579Ad1fF0760ae039a19B"],
-      "sinceTimestamp": 1661535679
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1661535679,
+      "values": {
+        "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+        "$implementation": "0x81855cd82374C3700ee579Ad1fF0760ae039a19B"
+      }
     },
     {
       "name": "VerifierNetwork",
       "address": "0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1694217097,
       "values": {
+        "$immutable": true,
         "allowlistSize": 0,
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultMultiplierBps": 12100,
@@ -1344,40 +1469,20 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1694217101
+      "sinceTimestamp": 1694217101,
+      "values": { "$immutable": true }
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-    },
-    {
-      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    },
-    {
-      "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687"
-    },
-    {
-      "address": "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" },
+    { "address": "0xe095F2590eF1Ab39601445025847Ed8E4B40D687" },
+    { "address": "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553" }
   ],
   "abis": {
     "0x23ec43e2b8f9aE21D895eEa5a1a9c444fe301044": [
@@ -1566,16 +1671,6 @@
       "function endpoint() view returns (address)",
       "function increment(uint16 _chainId, address _ua, bytes _path) returns (uint64)",
       "function outboundNonce(uint16, bytes) view returns (uint64)"
-    ],
-    "0x6d65a44Bd6Cfe1a8b2E816c918Dd83a6b04c8DEe": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ],
     "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8": [
       "constructor(address owner)",

@@ -81,7 +81,7 @@ declare module 'knex/types/tables' {
     timestamp: Date
     block_number: number
     tx_hash: string
-    tracked_tx_id: string
+    configuration_id: string
   }
 
   interface FinalityRow {
@@ -94,19 +94,8 @@ declare module 'knex/types/tables' {
     average_state_update: number | null
   }
 
-  interface TrackedTxsConfigRow {
-    id: string
-    project_id: string
-    type: string
-    subtype: string | null
-    debug_info: string
-    since_timestamp_inclusive: Date
-    until_timestamp_exclusive: Date | null
-    last_synced_timestamp: Date | null
-  }
-
   interface L2CostsRow {
-    tracked_tx_id: string
+    configuration_id: string
     tx_hash: string
     timestamp: Date
     gas_used: number
@@ -162,6 +151,23 @@ declare module 'knex/types/tables' {
     last_updated: Date
   }
 
+  export interface AggregatedLivenessRow {
+    project_id: string
+    subtype: string
+    range: string
+    min: number
+    avg: number
+    max: number
+    updated_at: Date
+  }
+
+  export interface AnomaliesRow {
+    timestamp: Date
+    project_id: string
+    subtype: string
+    duration: number
+  }
+
   interface Tables {
     sequence_processor: SequenceProcessorRow
     'activity.zksync': ZksyncTransactionRow
@@ -176,7 +182,6 @@ declare module 'knex/types/tables' {
     indexer_state: IndexerStateRow
     tvl_cleaner: TvlCleanerRow
     finality: FinalityRow
-    tracked_txs_configs: TrackedTxsConfigRow
     l2_costs: L2CostsRow
     l2_costs_prices: L2CostsPricesRow
     aggregated_l2_costs: AggregatedL2CostsRow
@@ -186,6 +191,7 @@ declare module 'knex/types/tables' {
     indexer_configurations: IndexerConfigurationRow
     values: ValueRow
     verifier_state: VerifierStatusRow
+    aggregated_liveness: AggregatedLivenessRow
   }
 }
 

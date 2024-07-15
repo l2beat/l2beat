@@ -1,15 +1,21 @@
 import { assert } from '@l2beat/shared-pure'
 
-import { TrackedTxTransferConfig } from '../types/TrackedTxsConfig'
+import { UpdateConfiguration } from '../../../tools/uif/multi/types'
+
+import { TrackedTxConfigEntry, TrackedTxTransferConfig } from '@l2beat/shared'
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 
 export function transformTransfersQueryResult(
-  configs: TrackedTxTransferConfig[],
+  configs: UpdateConfiguration<
+    TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
+  >[],
   queryResults: BigQueryTransferResult[],
 ): TrackedTxTransferResult[] {
   return queryResults.flatMap((r) => {
     const matchingConfigs = configs.filter(
-      (t) => t.from === r.from_address && t.to === r.to_address,
+      (t) =>
+        t.properties.params.from === r.from_address &&
+        t.properties.params.to === r.to_address,
     )
 
     assert(
@@ -17,26 +23,26 @@ export function transformTransfersQueryResult(
       'There should be at least one matching config',
     )
 
-    return matchingConfigs.flatMap((matchingConfig) =>
-      matchingConfig.uses.map(
-        (use) =>
-          ({
-            type: 'transfer',
-            projectId: matchingConfig.projectId,
-            use,
-            hash: r.hash,
-            blockNumber: r.block_number,
-            blockTimestamp: r.block_timestamp,
-            fromAddress: r.from_address,
-            toAddress: r.to_address,
-            receiptGasUsed: r.receipt_gas_used,
-            gasPrice: r.gas_price,
-            dataLength: r.data_length,
-            calldataGasUsed: r.calldata_gas_used,
-            receiptBlobGasUsed: r.receipt_blob_gas_used,
-            receiptBlobGasPrice: r.receipt_blob_gas_price,
-          }) as const,
-      ),
+    return matchingConfigs.map(
+      (matchingConfig) =>
+        ({
+          formula: 'transfer',
+          projectId: matchingConfig.properties.projectId,
+          id: matchingConfig.id,
+          type: matchingConfig.properties.type,
+          subtype: matchingConfig.properties.subtype,
+          hash: r.hash,
+          blockNumber: r.block_number,
+          blockTimestamp: r.block_timestamp,
+          fromAddress: r.from_address,
+          toAddress: r.to_address,
+          receiptGasUsed: r.receipt_gas_used,
+          gasPrice: r.gas_price,
+          dataLength: r.data_length,
+          calldataGasUsed: r.calldata_gas_used,
+          receiptBlobGasUsed: r.receipt_blob_gas_used,
+          receiptBlobGasPrice: r.receipt_blob_gas_price,
+        }) as const,
     )
   })
 }

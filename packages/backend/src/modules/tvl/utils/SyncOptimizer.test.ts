@@ -10,6 +10,8 @@ describe(SyncOptimizer.name, () => {
   const SIX_HOURLY_CUTOFF_WITH_GRACE_PERIOD = 93
   const CLOCK = mockObject<Clock>({
     getLastHour: () => LAST_HOUR,
+    hourlyCutoffDays: 7,
+    sixHourlyCutoffDays: 90,
   })
 
   describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
@@ -32,6 +34,8 @@ describe(SyncOptimizer.name, () => {
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
     const CLOCK = mockObject<Clock>({
       getLastHour: () => LAST_HOUR.add(1, 'minutes'),
+      hourlyCutoffDays: 7,
+      sixHourlyCutoffDays: 90,
     })
 
     it('returns daily timestamp', () => {

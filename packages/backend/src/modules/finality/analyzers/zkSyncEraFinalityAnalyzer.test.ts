@@ -3,6 +3,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
 
@@ -17,6 +18,7 @@ describe(zkSyncEraFinalityAnalyzer.name, () => {
       const calculator = new zkSyncEraFinalityAnalyzer(
         provider,
         mockRepo,
+        mockObject<IndexerConfigurationRepository>({}),
         ProjectId('zksync2'),
       )
       const results = await calculator.analyze({

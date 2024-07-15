@@ -32,30 +32,30 @@ export class PriceRepository {
     return rows.map(toRecord)
   }
 
-  async getByConfigId(configId: string) {
+  async getByTimestamp(timestamp: UnixTime) {
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where('configuration_id', '=', configId)
+      .where((eb) => eb.and([eb('timestamp', '=', timestamp.toDate())]))
       .orderBy('timestamp')
       .execute()
 
     return rows.map(toRecord)
   }
 
-  async getByConfigIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
-    const rows = await this.db
+  async findByConfigAndTimestamp(configId: string, timestamp: UnixTime) {
+    const row = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
       .where((eb) =>
         eb.and([
-          eb('configuration_id', 'in', configIds),
+          eb('configuration_id', '=', configId),
           eb('timestamp', '=', timestamp.toDate()),
         ]),
       )
-      .execute()
+      .executeTakeFirst()
 
-    return rows.map(toRecord)
+    return row ? toRecord(row) : null
   }
 
   async addMany(records: Price[]) {

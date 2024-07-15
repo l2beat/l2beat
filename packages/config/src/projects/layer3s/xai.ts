@@ -1,6 +1,7 @@
 import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
@@ -17,21 +18,19 @@ const stakingUpgradeability = {
 }
 
 assert(
-  discovery.getContractUpgradeabilityParam('SentryReferee', 'admin') ===
-    discovery.getContractUpgradeabilityParam('PoolFactory', 'admin') &&
-    discovery.getContractUpgradeabilityParam('PoolFactory', 'admin') ===
-      discovery.getContractUpgradeabilityParam(
-        'NodeLicenseRegistry',
-        'admin',
-      ) &&
-    discovery.getContractUpgradeabilityParam('NodeLicenseRegistry', 'admin') ===
-      <EthereumAddress>discovery.getContract('StakingProxyAdmin').address,
+  sameArrays(
+    discovery.get$Admins('SentryReferee'),
+    discovery.get$Admins('PoolFactory'),
+    discovery.get$Admins('NodeLicenseRegistry'),
+    [discovery.getContract('StakingProxyAdmin').address],
+  ),
   'The upgradeability changed, please review it in the .ts descriptions.',
 )
 
 export const xai: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   display: {
     name: 'Xai',
     slug: 'xai',
@@ -164,3 +163,19 @@ export const xai: Layer3 = orbitStackL3({
     },
   ],
 })
+
+function sameArrays<T>(...arrays: T[][]) {
+  const first = new Set(arrays[0] ?? [])
+  return arrays
+    .map((x) => new Set(x))
+    .every((set) => {
+      if (set.size !== first.size) return false
+      for (const x of set) {
+        if (!first.has(x)) return false
+      }
+      for (const x of first) {
+        if (!set.has(x)) return false
+      }
+      return true
+    })
+}

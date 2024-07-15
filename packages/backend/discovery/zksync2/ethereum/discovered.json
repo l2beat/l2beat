@@ -1,18 +1,16 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 20061811,
-  "configHash": "0xe49d3b0cd6b5050b2f2e9a1b0b7488acbc7fa50c887152525fc359af317d3c66",
-  "version": 8,
+  "blockNumber": 20261948,
+  "configHash": "0x464bf2652c278bff9396ad8d8aed7acbe4b136e0dddb24b7c2eed9e3cf2cc6da",
+  "version": 9,
   "contracts": [
     {
       "name": "Governance",
       "address": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1701258227,
       "values": {
+        "$immutable": true,
         "minDelay": 0,
         "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
@@ -23,14 +21,11 @@
     {
       "name": "BridgeHub",
       "address": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x12f893689f9603991a8c22C249FFd0509Be95661",
-        "admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-      },
-      "implementations": ["0x12f893689f9603991a8c22C249FFd0509Be95661"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1717520639,
       "values": {
+        "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+        "$implementation": "0x12f893689f9603991a8c22C249FFd0509Be95661",
         "admin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "chainsCreated": [
           {
@@ -52,15 +47,7 @@
     {
       "name": "ZKsync",
       "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-      "upgradeability": {
-        "type": "EIP2535 diamond proxy",
-        "facets": [
-          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
-        ]
-      },
+      "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
         "getTotalBlocksCommitted",
@@ -73,14 +60,15 @@
         "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
-      "implementations": [
-        "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-        "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-        "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-        "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
-      ],
       "sinceTimestamp": 1676315375,
       "values": {
+        "$immutable": false,
+        "$implementation": [
+          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
+          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
+          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
+          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
+        ],
         "baseTokenGasPriceMultiplierDenominator": 1,
         "baseTokenGasPriceMultiplierNominator": 1,
         "facetAddresses": [
@@ -89,122 +77,110 @@
           "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
           "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
         ],
-        "facets": [
-          {
-            "addr": "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
-            "selectors": [
-              "0x0e18b681",
-              "0x64bf8d66",
-              "0xa9f6d941",
-              "0x27ae4c16",
-              "0x4dd18bf5",
-              "0x1cc5d103",
-              "0xbe6f11cf",
-              "0xe76db865",
-              "0x235d9eb5",
-              "0x21f603d7",
-              "0x4623c91d",
-              "0x17338945",
-              "0xfc57565f"
-            ]
-          },
-          {
-            "addr": "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
-            "selectors": [
-              "0x1de72e34",
-              "0xea6c029c",
-              "0xcdffacc6",
-              "0x52ef6b2c",
-              "0xadfca15e",
-              "0x7a0ed627",
-              "0x6e9960c3",
-              "0x98acd7a6",
-              "0x086a56f8",
-              "0x3591c1a0",
-              "0x79823c9a",
-              "0xd86970d8",
-              "0xfd791f3c",
-              "0xe5355c75",
-              "0x9d1b5a81",
-              "0x7b30c8da",
-              "0xd0468156",
-              "0x631f4bac",
-              "0x0ec6b0b7",
-              "0x33ce93fe",
-              "0x06d49e5b",
-              "0xf5c1182c",
-              "0x5518c73b",
-              "0xdb1f0bf9",
-              "0xb8c2f66f",
-              "0xef3f0bae",
-              "0xfe26699e",
-              "0x39607382",
-              "0xaf6a2dcd",
-              "0xa1954fc5",
-              "0x46657fe9",
-              "0x18e3a941",
-              "0x29b98c67",
-              "0xbd7c5412",
-              "0xc3bbd2d7",
-              "0xe81e0ba1",
-              "0xfacd743b",
-              "0x9cd939e4",
-              "0x56142d7a",
-              "0xb22dd78e",
-              "0x74f4d30d"
-            ]
-          },
-          {
-            "addr": "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C",
-            "selectors": [
-              "0x12f43dab",
-              "0x6c0960f9",
-              "0xb473318e",
-              "0x042901c7",
-              "0x263b7f8e",
-              "0xe4948f43",
-              "0xeb672419",
-              "0xc924de35"
-            ]
-          },
-          {
-            "addr": "0xaD193aDe635576d8e9f7ada71Af2137b16c64075",
-            "selectors": [
-              "0x701f58c5",
-              "0x6edd4f12",
-              "0xc3d93e7c",
-              "0x6f497ac6",
-              "0x7f61885c",
-              "0xc37533bb",
-              "0x97c09d34",
-              "0x0f23da43"
-            ]
-          }
-        ],
+        "facets": {
+          "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a": [
+            "acceptAdmin()",
+            "changeFeeParams((uint8,uint32,uint32,uint32,uint32,uint64))",
+            "executeUpgrade(((address,uint8,bool,bytes4[])[],address,bytes))",
+            "freezeDiamond()",
+            "setPendingAdmin(address)",
+            "setPorterAvailability(bool)",
+            "setPriorityTxMaxGasLimit(uint256)",
+            "setPubdataPricingMode(uint8)",
+            "setTokenMultiplier(uint128,uint128)",
+            "setTransactionFilterer(address)",
+            "setValidator(address,bool)",
+            "unfreezeDiamond()",
+            "upgradeChainFromVersion(uint256,((address,uint8,bool,bytes4[])[],address,bytes))"
+          ],
+          "0xE60E94fCCb18a81D501a38959E532C0A85A1be89": [
+            "baseTokenGasPriceMultiplierDenominator()",
+            "baseTokenGasPriceMultiplierNominator()",
+            "facetAddress(bytes4)",
+            "facetAddresses()",
+            "facetFunctionSelectors(address)",
+            "facets()",
+            "getAdmin()",
+            "getBaseToken()",
+            "getBaseTokenBridge()",
+            "getBridgehub()",
+            "getFirstUnprocessedPriorityTx()",
+            "getL2BootloaderBytecodeHash()",
+            "getL2DefaultAccountBytecodeHash()",
+            "getL2SystemContractsUpgradeBatchNumber()",
+            "getL2SystemContractsUpgradeBlockNumber()",
+            "getL2SystemContractsUpgradeTxHash()",
+            "getPendingAdmin()",
+            "getPriorityQueueSize()",
+            "getPriorityTxMaxGasLimit()",
+            "getProtocolVersion()",
+            "getPubdataPricingMode()",
+            "getSemverProtocolVersion()",
+            "getStateTransitionManager()",
+            "getTotalBatchesCommitted()",
+            "getTotalBatchesExecuted()",
+            "getTotalBatchesVerified()",
+            "getTotalBlocksCommitted()",
+            "getTotalBlocksExecuted()",
+            "getTotalBlocksVerified()",
+            "getTotalPriorityTxs()",
+            "getVerifier()",
+            "getVerifierParams()",
+            "isDiamondStorageFrozen()",
+            "isEthWithdrawalFinalized(uint256,uint256)",
+            "isFacetFreezable(address)",
+            "isFunctionFreezable(bytes4)",
+            "isValidator(address)",
+            "l2LogsRootHash(uint256)",
+            "priorityQueueFrontOperation()",
+            "storedBatchHash(uint256)",
+            "storedBlockHash(uint256)"
+          ],
+          "0xCDB6228b616EEf8Df47D69A372C4f725C43e718C": [
+            "bridgehubRequestL2Transaction((address,address,uint256,uint256,bytes,uint256,uint256,bytes[],address))",
+            "finalizeEthWithdrawal(uint256,uint256,uint16,bytes,bytes32[])",
+            "l2TransactionBaseCost(uint256,uint256,uint256)",
+            "proveL1ToL2TransactionStatus(bytes32,uint256,uint256,uint16,bytes32[],uint8)",
+            "proveL2LogInclusion(uint256,uint256,(uint8,bool,uint16,address,bytes32,bytes32),bytes32[])",
+            "proveL2MessageInclusion(uint256,uint256,(uint16,address,bytes),bytes32[])",
+            "requestL2Transaction(address,uint256,bytes,uint256,uint256,bytes[],address)",
+            "transferEthToSharedBridge()"
+          ],
+          "0xaD193aDe635576d8e9f7ada71Af2137b16c64075": [
+            "commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])",
+            "commitBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])",
+            "executeBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])",
+            "executeBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[])",
+            "proveBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))",
+            "proveBatchesSharedBridge(uint256,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32),(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[],(uint256[],uint256[]))",
+            "revertBatches(uint256)",
+            "revertBatchesSharedBridge(uint256,uint256)"
+          ]
+        },
         "getAdmin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "getBaseToken": "0x0000000000000000000000000000000000000001",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3250788,
+        "getFirstUnprocessedPriorityTx": 3256462,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
         "getL2SystemContractsUpgradeBatchNumber": 0,
         "getL2SystemContractsUpgradeBlockNumber": 0,
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 614,
+        "getPriorityQueueSize": 105,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 484967,
-        "getTotalBatchesExecuted": 484806,
-        "getTotalBatchesVerified": 484941,
-        "getTotalBlocksCommitted": 484967,
-        "getTotalBlocksExecuted": 484806,
-        "getTotalBlocksVerified": 484941,
-        "getTotalPriorityTxs": 3251402,
+        "getTotalBatchesCommitted": 488585,
+        "getTotalBatchesExecuted": 488515,
+        "getTotalBatchesVerified": 488577,
+        "getTotalBlocksCommitted": 488585,
+        "getTotalBlocksExecuted": 488515,
+        "getTotalBlocksVerified": 488577,
+        "getTotalPriorityTxs": 3256567,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -213,8 +189,8 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0xd6f952eb2531fb1a787b415c936d5a407757f1b9c68d7c992db2da59b211f9e8",
-          "expirationTimestamp": 1717940195,
+          "canonicalTxHash": "0xcb328c5bd81913b27c06a5cff50df8646448e7e4017ed613d639e8f1f696876a",
+          "expirationTimestamp": 1720363331,
           "layer2Tip": 0
         },
         "txFilterer": [],
@@ -225,22 +201,17 @@
     {
       "name": "GenesisUpgrade",
       "address": "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1717507355
+      "sinceTimestamp": 1717507355,
+      "values": { "$immutable": true }
     },
     {
       "name": "L1ERC20Bridge_wstETH",
       "address": "0x41527B2d03844dB6b0945f25702cB958b6d55989",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x9a810469F4a451Ebb7ef53672142053b4971587c",
-        "admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c"
-      },
-      "implementations": ["0x9a810469F4a451Ebb7ef53672142053b4971587c"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1698065351,
       "values": {
+        "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
+        "$implementation": "0x9a810469F4a451Ebb7ef53672142053b4971587c",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
         "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
@@ -263,19 +234,16 @@
       "name": "Matter Labs Multisig",
       "address": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "4 of 8 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "descriptions": [
         "Can instantly upgrade all contracts and roles in the zksync Era contracts"
       ],
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1666872275,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "4 of 8 (50%)",
         "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
         "getChainId": 1,
         "getOwners": [
@@ -289,6 +257,7 @@
           "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
         ],
         "getThreshold": 4,
+        "GnosisSafe_modules": [],
         "nonce": 139,
         "VERSION": "1.3.0"
       },
@@ -297,14 +266,11 @@
     {
       "name": "L1ERC20Bridge",
       "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x8191975d8B0851C7f0740918896Cf298c09aA05E",
-        "admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-      },
-      "implementations": ["0x8191975d8B0851C7f0740918896Cf298c09aA05E"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1676370683,
       "values": {
+        "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+        "$implementation": "0x8191975d8B0851C7f0740918896Cf298c09aA05E",
         "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
         "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
         "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
@@ -315,11 +281,9 @@
     {
       "name": "ValidatorTimelock",
       "address": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1717520615,
       "values": {
+        "$immutable": true,
         "executionDelay": 75600,
         "getName": "ValidatorTimelock",
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
@@ -337,22 +301,18 @@
     {
       "name": "Verifier",
       "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1717507391,
       "values": {
+        "$immutable": true,
         "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
       }
     },
     {
       "name": "ValidatorTimelock_deprecated",
       "address": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1709850611,
       "values": {
+        "$immutable": true,
         "constructorArgs": {
           "_initialOwner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
           "_zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -376,9 +336,6 @@
     {
       "name": "ProxyAdmin",
       "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": [
           "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
@@ -389,20 +346,18 @@
       },
       "sinceTimestamp": 1717520627,
       "values": {
+        "$immutable": true,
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
       }
     },
     {
       "name": "StateTransitionManager",
       "address": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x8279B7E48fA074f966385d87AEf29Bd031e54fD5",
-        "admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-      },
-      "implementations": ["0x8279B7E48fA074f966385d87AEf29Bd031e54fD5"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1717520663,
       "values": {
+        "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+        "$implementation": "0x8279B7E48fA074f966385d87AEf29Bd031e54fD5",
         "admin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2",
@@ -423,14 +378,11 @@
     {
       "name": "L1SharedBridge",
       "address": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB",
-        "admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1"
-      },
-      "implementations": ["0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1717521479,
       "values": {
+        "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+        "$implementation": "0xCba1aF8f0bB223b2544F8eB8f69d1c7960f788dB",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "ERA_CHAIN_ID": 324,
         "ERA_DIAMOND_PROXY": "0x32400084C286CF3E17e7B677ea9583e60a000324",
@@ -443,45 +395,19 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x0000000000000000000000000000000000000001"
-    },
-    {
-      "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
-    },
-    {
-      "address": "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF"
-    },
-    {
-      "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
-    },
-    {
-      "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
-    },
-    {
-      "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481"
-    },
-    {
-      "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
-    },
-    {
-      "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
-    },
-    {
-      "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438"
-    },
-    {
-      "address": "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f"
-    },
-    {
-      "address": "0x9dF8bc0918F357c766A5697E031fF5237c05747A"
-    },
-    {
-      "address": "0xe79af29d618141Ffef951B240b250d47030D56d7"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0000000000000000000000000000000000000001" },
+    { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
+    { "address": "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF" },
+    { "address": "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc" },
+    { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" },
+    { "address": "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481" },
+    { "address": "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df" },
+    { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
+    { "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438" },
+    { "address": "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f" },
+    { "address": "0x9dF8bc0918F357c766A5697E031fF5237c05747A" },
+    { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" }
   ],
   "abis": {
     "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61": [

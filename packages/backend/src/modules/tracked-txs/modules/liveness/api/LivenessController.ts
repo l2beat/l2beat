@@ -1,31 +1,38 @@
 import { Logger } from '@l2beat/backend-tools'
 import {
   assert,
+  LivenessAnomaly,
   LivenessApiProject,
   LivenessApiResponse,
+  LivenessDetails,
   ProjectId,
   Result,
   TrackedTxsConfigSubtype,
-  TrackedTxsConfigSubtypeValues,
   UnixTime,
   cacheAsyncFunction,
-  notUndefined,
 } from '@l2beat/shared-pure'
 
-import { Project } from '../../../../../model/Project'
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
-import { IndexerStateRepository } from '../../../../../tools/uif/IndexerStateRepository'
-import { TrackedTxsConfigsRepository } from '../../../repositories/TrackedTxsConfigsRepository'
-import { TrackedTxsConfig } from '../../../types/TrackedTxsConfig'
+import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
-import { LivenessRepository } from '../repositories/LivenessRepository'
-import { calculateAnomalies } from './calculateAnomalies'
 import {
-  LivenessRecordWithInterval,
-  calcIntervalWithAvgsPerProject,
-} from './calculateIntervalWithAverages'
-import { groupByType } from './groupByType'
+  AggregatedLivenessRecord,
+  AggregatedLivenessRepository,
+} from '../repositories/AggregatedLivenessRepository'
+import {
+  AnomaliesRecord,
+  AnomaliesRepository,
+} from '../repositories/AnomaliesRepository'
+import {
+  LivenessRecordWithSubtype,
+  LivenessRepository,
+} from '../repositories/LivenessRepository'
+import { getProjectsToSync } from '../utils/getProjectsToSync'
+import { groupByType } from '../utils/groupByType'
 
 export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
 
@@ -48,28 +55,23 @@ export type LivenessTransactionsResult = Result<
   'DATA_NOT_SYNCED'
 >
 
-type LivenessTrackedTxsConfig = {
-  entries: LivenessTrackedTxsConfigEntry[]
-}
-
-type LivenessTrackedTxsConfigEntry = {
-  subtype: TrackedTxsConfigSubtype
-  untilTimestamp: UnixTime | undefined
+export interface LivenessControllerDeps {
+  indexerService: IndexerService
+  livenessRepository: LivenessRepository
+  aggregatedLivenessRepository: AggregatedLivenessRepository
+  anomaliesRepository: AnomaliesRepository
+  projects: BackendProject[]
+  clock: Clock
+  logger?: Logger
 }
 
 export class LivenessController {
   private readonly taskQueue: TaskQueue<void>
   getCachedLivenessApiResponse: () => Promise<LivenessResult>
+  private readonly logger: Logger
 
-  constructor(
-    private readonly livenessRepository: LivenessRepository,
-    private readonly trackedTxsConfigsRepository: TrackedTxsConfigsRepository,
-    private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly projects: Project[],
-    private readonly clock: Clock,
-    private readonly logger = Logger.SILENT,
-  ) {
-    this.logger = this.logger.for(this)
+  constructor(private readonly $: LivenessControllerDeps) {
+    this.logger = $.logger ? $.logger.for(this) : Logger.SILENT
 
     const cached = cacheAsyncFunction(() => this.getLiveness())
     this.getCachedLivenessApiResponse = cached.call
@@ -94,75 +96,122 @@ export class LivenessController {
   async getLiveness(): Promise<LivenessResult> {
     const projects: LivenessApiResponse['projects'] = {}
 
-    const activeProjects = this.projects.filter((p) => !p.isArchived)
-    for (const project of activeProjects) {
-      if (!project.trackedTxsConfig) {
-        continue
-      }
-
-      const livenessConfig = this.getLivenessTrackedTxsConfig(
-        project.trackedTxsConfig,
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
       )
 
-      if (livenessConfig.entries?.length === 0) {
-        continue
-      }
+    const livenessProjects = getProjectsToSync(this.$.projects, configurations)
 
-      const configurations =
-        await this.trackedTxsConfigsRepository.getByProjectIdAndType(
-          project.projectId,
-          'liveness',
-        )
-
-      const syncedUntil = getSyncedUntil(configurations)
-
-      if (!syncedUntil) {
-        continue
-      }
-
-      const records =
-        await this.livenessRepository.getWithSubtypeDistinctTimestamp(
+    for (const project of livenessProjects) {
+      const aggregatedLivenessRecords =
+        await this.$.aggregatedLivenessRepository.getByProject(
           project.projectId,
         )
 
-      const groupedByType = groupByType(records)
+      const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
+      const anomalyRecords = await this.$.anomaliesRepository.getByProjectFrom(
+        project.projectId,
+        last30Days,
+      )
 
-      const intervals = calcIntervalWithAvgsPerProject(groupedByType)
+      const livenessData: LivenessApiProject = {
+        stateUpdates: this.mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'stateUpdates',
+          project,
+          configurations,
+        ),
+        batchSubmissions: this.mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'batchSubmissions',
+          project,
+          configurations,
+        ),
+        proofSubmissions: this.mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'proofSubmissions',
+          project,
+          configurations,
+        ),
+        anomalies: this.mapAnomalyRecords(anomalyRecords),
+      }
 
-      const withAnomalies = calculateAnomalies(intervals)
-
-      const { anomalies, ...subtypeData } = withAnomalies
-
-      const withSyncedUntil =
-        TrackedTxsConfigSubtypeValues.reduce<LivenessApiProject>(
-          (obj, subtype) => {
-            const syncedUntil = getSyncedUntil(
-              configurations.filter((c) => c.subtype === subtype),
-            )
-            if (!syncedUntil) return obj
-            obj[subtype] = {
-              ...subtypeData[subtype],
-              syncedUntil,
-            }
-            return obj
-          },
-          {},
-        )
-
+      // duplicate data from one subtype to another if configured
       if (project.livenessConfig) {
         const { from, to } = project.livenessConfig.duplicateData
-        const data = withSyncedUntil[from]
+        const data = livenessData[from]
         assert(data, 'From data must exist')
-        withSyncedUntil[to] = { ...data }
+        livenessData[to] = { ...data }
       }
 
-      projects[project.projectId.toString()] = {
-        ...withSyncedUntil,
-        anomalies,
-      }
+      projects[project.projectId.toString()] = livenessData
     }
 
     return { type: 'success', data: { projects } }
+  }
+
+  mapAggregatedLivenessRecords(
+    records: AggregatedLivenessRecord[],
+    subtype: TrackedTxsConfigSubtype,
+    project: BackendProject,
+    configurations: Omit<
+      SavedConfiguration<TrackedTxConfigEntry>,
+      'properties'
+    >[],
+  ): LivenessDetails {
+    const syncedUntil = getSyncedUntil(
+      configurations.filter((c) => {
+        const config = project.trackedTxsConfig?.find((pc) => pc.id === c.id)
+        return config?.subtype === subtype
+      }),
+    )
+
+    if (!syncedUntil) {
+      return undefined
+    }
+
+    const last30Days = records.find(
+      (r) => r.subtype === subtype && r.range === '30D',
+    )
+    const last90Days = records.find(
+      (r) => r.subtype === subtype && r.range === '90D',
+    )
+    const max = records.find((r) => r.subtype === subtype && r.range === 'MAX')
+
+    return {
+      last30Days: last30Days
+        ? {
+            averageInSeconds: last30Days.avg,
+            minimumInSeconds: last30Days.min,
+            maximumInSeconds: last30Days.max,
+          }
+        : undefined,
+      last90Days: last90Days
+        ? {
+            averageInSeconds: last90Days.avg,
+            minimumInSeconds: last90Days.min,
+            maximumInSeconds: last90Days.max,
+          }
+        : undefined,
+      allTime: max
+        ? {
+            averageInSeconds: max.avg,
+            minimumInSeconds: max.min,
+            maximumInSeconds: max.max,
+          }
+        : undefined,
+      syncedUntil,
+    }
+  }
+
+  mapAnomalyRecords(records: AnomaliesRecord[]): LivenessAnomaly[] {
+    return records.map((a) => ({
+      // TODO: validate if it makes sense to pass the end of anomaly rather than the start
+      timestamp: new UnixTime(a.timestamp.toNumber() + a.duration),
+      durationInSeconds: a.duration,
+      type: a.subtype,
+    }))
   }
 
   async getLivenessPerProjectAndType(
@@ -174,8 +223,8 @@ export class LivenessController {
     data: UnixTime[]
   }> {
     const lastHour = UnixTime.now().toStartOf('hour')
-    const records: LivenessRecordWithInterval[] =
-      await this.livenessRepository.getByProjectIdAndType(
+    const records: LivenessRecordWithSubtype[] =
+      await this.$.livenessRepository.getByProjectIdAndType(
         projectId,
         subtype,
         lastHour.add(-60, 'days'),
@@ -189,9 +238,11 @@ export class LivenessController {
   }
 
   async getLivenessTransactions(): Promise<LivenessTransactionsResult> {
-    const requiredTimestamp = this.clock.getLastHour().add(-1, 'hours')
+    const requiredTimestamp = this.$.clock.getLastHour().add(-1, 'hours')
+
     const indexerState =
-      await this.indexerStateRepository.findIndexerState('liveness_indexer')
+      await this.$.indexerService.getIndexerState('liveness_indexer')
+
     if (
       indexerState === undefined ||
       new UnixTime(indexerState.safeHeight).lt(requiredTimestamp)
@@ -206,60 +257,38 @@ export class LivenessController {
     const last30Days = UnixTime.now().add(-30, 'days')
 
     await Promise.all(
-      this.projects
+      this.$.projects
         .filter((p) => !p.isArchived)
         .map(async (project) => {
           if (project.livenessConfig === undefined) {
             return
           }
           const records =
-            await this.livenessRepository.getTransactionWithSubtypeDistinctTimestamp(
+            await this.$.livenessRepository.getTransactionWithSubtypeDistinctTimestamp(
               project.projectId,
               last30Days,
             )
 
-          const groupedByType = groupByType<{
-            txHash: string
-            timestamp: UnixTime
-            subtype: TrackedTxsConfigSubtype
-          }>(records)
+          const [batchSubmissions, stateUpdates, proofSubmissions] =
+            groupByType(records)
 
           projects[project.projectId.toString()] = {
-            batchSubmissions: groupedByType.batchSubmissions.records.map(
-              (r) => ({ txHash: r.txHash, timestamp: r.timestamp }),
-            ),
-            stateUpdates: groupedByType.stateUpdates.records.map((r) => ({
+            batchSubmissions: batchSubmissions.map((r) => ({
               txHash: r.txHash,
               timestamp: r.timestamp,
             })),
-            proofSubmissions: groupedByType.proofSubmissions.records.map(
-              (r) => ({ txHash: r.txHash, timestamp: r.timestamp }),
-            ),
+            stateUpdates: stateUpdates.map((r) => ({
+              txHash: r.txHash,
+              timestamp: r.timestamp,
+            })),
+            proofSubmissions: proofSubmissions.map((r) => ({
+              txHash: r.txHash,
+              timestamp: r.timestamp,
+            })),
           }
         }),
     )
 
     return { type: 'success', data: { projects } }
-  }
-
-  getLivenessTrackedTxsConfig(
-    trackedTxsConfig: TrackedTxsConfig,
-  ): LivenessTrackedTxsConfig {
-    return {
-      entries: trackedTxsConfig.entries
-        .flatMap((entry) => {
-          return entry.uses.flatMap((use) => {
-            if (use.type !== 'liveness') {
-              return
-            }
-
-            return {
-              subtype: use.subtype,
-              untilTimestamp: entry.untilTimestampExclusive,
-            }
-          })
-        })
-        .filter(notUndefined),
-    }
   }
 }

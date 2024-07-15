@@ -14,6 +14,30 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
   suite(newRepo)
 
   function suite(amountRepository: typeof oldRepo | typeof newRepo) {
+    describe(AmountRepository.prototype.getByIdsAndTimestamp.name, () => {
+      it('gets by timestamp', async () => {
+        await amountRepository.addMany([
+          amount('a', new UnixTime(100), 1n),
+          amount('b', new UnixTime(100), 1n),
+          amount('c', new UnixTime(100), 1n),
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+          amount('c', new UnixTime(200), 2n),
+          amount('d', new UnixTime(200), 2n),
+        ])
+
+        const configIds = ['a'.repeat(12), 'b'.repeat(12)]
+        const result = await amountRepository.getByIdsAndTimestamp(
+          configIds,
+          new UnixTime(200),
+        )
+        expect(result).toEqual([
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+        ])
+      })
+    })
+
     describe(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
       it('gets by ids in inclusive range', async () => {
         await amountRepository.addMany([
@@ -43,6 +67,25 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
           amount('b', new UnixTime(200), 100n),
           amount('a', new UnixTime(300), 100n),
           amount('b', new UnixTime(300), 100n),
+        ])
+      })
+    })
+
+    describe(AmountRepository.prototype.findByConfigAndTimestamp.name, () => {
+      it('finds by config and timestamp', async () => {
+        await amountRepository.addMany([
+          amount('a', new UnixTime(100), 1n),
+          amount('b', new UnixTime(100), 1n),
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(200), 2n),
+        ])
+        const result = await amountRepository.findByConfigAndTimestamp([
+          { configId: 'a'.repeat(12), timestamp: new UnixTime(200) },
+          { configId: 'b'.repeat(12), timestamp: new UnixTime(100) },
+        ])
+        expect(result).toEqualUnsorted([
+          amount('a', new UnixTime(200), 2n),
+          amount('b', new UnixTime(100), 1n),
         ])
       })
     })

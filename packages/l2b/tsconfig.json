@@ -1,0 +1,9 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "incremental": true,
+    "noFallthroughCasesInSwitch": false
+  },
+  "include": ["src"]
+}

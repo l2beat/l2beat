@@ -19,13 +19,11 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
-        },
+        proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
           A: true,
           //ignores fields included in ignore in watch mode
           B: 'thisWillChange',
@@ -35,47 +33,42 @@ describe(diffDiscovery.name, () => {
       {
         name: 'B',
         address: ADDRESS_B,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
         },
-        values: {},
       },
       //skips unchanged contracts
       {
         name: 'D',
         address: ADDRESS_D,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
         },
-        values: {},
       },
       {
         name: 'E',
         address: ADDRESS_E,
         unverified: true,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
         },
-        values: {},
       },
     ]
     const discovered: ContractParameters[] = [
       {
         name: 'A',
         address: ADDRESS_A,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
-        },
+        proxyType: 'EIP1967 proxy',
         ignoreInWatchMode: ['B'],
         values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
           A: false,
           B: 'itChanged',
         },
@@ -84,33 +77,30 @@ describe(diffDiscovery.name, () => {
       {
         name: 'C',
         address: ADDRESS_C,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
         },
-        values: {},
       },
       {
         name: 'D',
         address: ADDRESS_D,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
         },
-        values: {},
       },
       {
         name: 'E',
         address: ADDRESS_E,
         unverified: true,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          admin: ADMIN,
-          implementation: IMPLEMENTATION,
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $admin: ADMIN,
+          $implementation: IMPLEMENTATION,
         },
-        values: {},
       },
     ]
 

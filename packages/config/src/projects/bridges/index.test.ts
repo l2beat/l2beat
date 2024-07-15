@@ -1,9 +1,9 @@
-import {
-  UnixTime,
-  gatherAddressesFromUpgradeability,
-} from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { assert } from '@l2beat/backend-tools'
+import { get$Implementations } from '@l2beat/discovery-types'
+import { chains } from '../../chains'
 import {
   NUGGETS,
   ScalingProjectRiskViewEntry,
@@ -11,6 +11,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
+import { tokenList } from '../../tokens'
 import { getReferencedAddresses } from '../layer2s/index.test'
 import { BridgeTechnology, bridges } from './index'
 
@@ -61,9 +62,7 @@ describe('bridges', () => {
 
                   const contractAddresses = [
                     contract.address,
-                    ...gatherAddressesFromUpgradeability(
-                      contract.upgradeability,
-                    ),
+                    ...get$Implementations(contract.values),
                   ]
 
                   expect(
@@ -77,6 +76,34 @@ describe('bridges', () => {
           }
         } catch {
           continue
+        }
+      }
+    })
+  })
+
+  describe('escrows', () => {
+    describe('every escrow can resolve all of its tokens', () => {
+      const chainsMap = new Map<string, ChainId>(
+        chains.map((c) => [c.name, ChainId(c.chainId)]),
+      )
+      for (const bridge of bridges) {
+        for (const escrow of bridge.config.escrows) {
+          const chainId = chainsMap.get(escrow.chain)
+          if (!chainId) continue
+          const tokensOnChain = tokenList.filter((t) => t.chainId === chainId)
+
+          if (escrow.tokens === '*') continue
+          for (const token of escrow.tokens) {
+            it(`${bridge.id.toString()}:${escrow.address.toString()}:${token}`, () => {
+              const foundToken = tokensOnChain.find((t) => t.symbol === token)
+
+              assert(
+                foundToken,
+                `Please add token with symbol ${token} on ${escrow.chain} chain`,
+              )
+              expect(foundToken).not.toBeNullish()
+            })
+          }
         }
       }
     })

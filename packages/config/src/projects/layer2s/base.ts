@@ -5,7 +5,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-
 const discovery = new ProjectDiscovery('base')
 
 const upgradeability = {
@@ -80,7 +79,7 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
-  badges: [Badge.DA.EthereumBlobs, Badge.VM.EVM, Badge.Other.L3HostChain],
+  badges: [Badge.Infra.Superchain, Badge.Other.L3HostChain],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
@@ -96,7 +95,7 @@ export const base: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'BaseMultisig',
-      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimisism Foundation multisig is also required.",
+      "Core multisig of the Base team, it's a member of the AdminMultisig, meaning it can upgrade the bridge implementation potentially gaining access to all funds. Note that the signature of Optimism Foundation multisig is also required.",
     ),
     ...discovery.getMultisigPermission(
       'BaseMultisig2',
@@ -148,6 +147,7 @@ export const base: Layer2 = opStackL2({
   ],
   chainConfig: {
     name: 'base',
+    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
     chainId: 8453,
     explorerUrl: 'https://basescan.org',
     explorerApi: {

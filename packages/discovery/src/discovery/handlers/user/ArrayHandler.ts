@@ -6,7 +6,13 @@ import * as z from 'zod'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { Reference, getReferencedName, resolveReference } from '../reference'
+import {
+  Reference,
+  ScopeVariables,
+  generateScopeVariables,
+  getReferencedName,
+  resolveReference,
+} from '../reference'
 import { callMethod } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 import { valueToNumber } from '../utils/valueToNumber'
@@ -63,7 +69,12 @@ export class ArrayHandler implements Handler {
       'Calling array ',
       this.fragment.name + '(i)',
     ])
-    const resolved = resolveDependencies(this.definition, previousResults)
+    const scopeVariables = generateScopeVariables(provider, address)
+    const resolved = resolveDependencies(
+      this.definition,
+      previousResults,
+      scopeVariables,
+    )
 
     const value: ContractValue[] = []
     const startIndex = resolved.startIndex
@@ -142,6 +153,7 @@ function createCallIndex(
 function resolveDependencies(
   definition: ArrayHandlerDefinition,
   previousResults: Record<string, HandlerResult | undefined>,
+  scopeVariables: ScopeVariables,
 ): {
   method: string | undefined
   length: number | undefined
@@ -152,7 +164,11 @@ function resolveDependencies(
 } {
   let length: number | undefined
   if (definition.length !== undefined) {
-    const resolved = resolveReference(definition.length, previousResults)
+    const resolved = resolveReference(
+      definition.length,
+      previousResults,
+      scopeVariables,
+    )
     length = valueToNumber(resolved)
   }
 
@@ -161,7 +177,11 @@ function resolveDependencies(
     definition.indices !== undefined &&
     typeof definition.indices === 'string'
   ) {
-    const resolved = resolveReference(definition.indices, previousResults)
+    const resolved = resolveReference(
+      definition.indices,
+      previousResults,
+      scopeVariables,
+    )
     if (!Array.isArray(resolved)) {
       throw new Error('Expected array of indices')
     }

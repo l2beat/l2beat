@@ -8,6 +8,7 @@ import {
 
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
@@ -24,10 +25,16 @@ export class OpStackFinalityAnalyzer extends BaseAnalyzer {
     private readonly logger: Logger,
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
     private readonly opts: SpanBatchDecoderOpts,
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
     this.logger = logger.for(this).tag(projectId.toString())
     this.channelBank = new ChannelBank(projectId, this.logger)
   }

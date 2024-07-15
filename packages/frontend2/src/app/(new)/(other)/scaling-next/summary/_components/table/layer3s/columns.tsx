@@ -63,15 +63,12 @@ export const summaryLayer3sColumns = [
       const value = ctx.getValue()
       return value === 'Arbitrum' ? 'Arbitrum Orbit' : value
     },
-    enableSorting: false,
     meta: {
       tooltip: 'The technology stack used.',
     },
   }),
   columnHelper.accessor('hostChainName', {
     header: 'Host chain',
-    enableSorting: false,
-
     meta: {
       tooltip: 'The technology stack used.',
     },

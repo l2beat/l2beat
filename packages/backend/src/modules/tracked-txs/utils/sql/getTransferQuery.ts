@@ -57,7 +57,7 @@ export function getTransferQuery(
       AND txs.hash = traces.transaction_hash
       AND traces.call_type = 'call'
       AND traces.block_timestamp >= TIMESTAMP(?)
-      AND traces.block_timestamp < TIMESTAMP(?)
+      AND traces.block_timestamp <= TIMESTAMP(?)
       AND (
         ${transfersConfig
           .map(() => `(traces.from_address = ? AND traces.to_address = ?)`)
@@ -65,8 +65,8 @@ export function getTransferQuery(
       )
     WHERE
       txs.block_timestamp >= TIMESTAMP(?)
-      AND txs.block_timestamp < TIMESTAMP(?)
+      AND txs.block_timestamp <= TIMESTAMP(?)
   `
 
-  return { query, params, limitInGb: 5 }
+  return { query, params, limitInGb: 10 }
 }

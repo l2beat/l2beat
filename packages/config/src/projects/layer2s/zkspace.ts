@@ -14,6 +14,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 import { zkswap } from './zkswap'
@@ -32,6 +33,11 @@ const upgradeability = {
 export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.EthereumCalldata,
+    Badge.Fork.ZKsyncLiteFork,
+  ],
   display: {
     name: 'ZKSpace',
     slug: 'zkspace',
@@ -92,7 +98,7 @@ export const zkspace: Layer2 = {
           selector: '0x6898e6fc',
           functionSignature:
             'function verifyBlocks(uint32 _blockNumberFrom, uint32 _blockNumberTo, uint256[] _recursiveInput, uint256[] _proof, uint256[] _subProofLimbs)',
-          sinceTimestampInclusive: new UnixTime(1639569183),
+          sinceTimestamp: new UnixTime(1639569183),
         },
       },
     ],

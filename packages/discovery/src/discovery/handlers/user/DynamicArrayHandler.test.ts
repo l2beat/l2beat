@@ -10,6 +10,8 @@ describe(DynamicArrayHandler.name, () => {
     it('can return non-empty address array', async () => {
       const address = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         getStorageAsBigint: mockFn().executesOnce((passedAddress, slot) => {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(85n)
@@ -64,6 +66,8 @@ describe(DynamicArrayHandler.name, () => {
     it('does nothing on empty address array', async () => {
       const address = EthereumAddress.random()
       const provider = mockObject<IProvider>({
+        blockNumber: 123,
+        chain: 'foo',
         getStorageAsBigint: mockFn().executesOnce((passedAddress, slot) => {
           expect(passedAddress).toEqual(address)
           expect(slot).toEqual(85n)
@@ -129,6 +133,8 @@ describe(DynamicArrayHandler.name, () => {
     )
 
     const provider = mockObject<IProvider>({
+      blockNumber: 123,
+      chain: 'foo',
       async getStorageAsBigint() {
         throw new Error('foo bar')
       },

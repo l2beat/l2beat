@@ -1,6 +1,7 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -13,6 +14,7 @@ const upgradeability = {
 
 export const lyra: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
+  badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   discovery,
   display: {

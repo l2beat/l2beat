@@ -36,6 +36,35 @@ describeDatabase(IndexerStateRepository.name, (knex, kysely) => {
       })
     })
 
+    describe(IndexerStateRepository.prototype.getByIndexerIds.name, () => {
+      it('returns indexer matching like statement', async () => {
+        const record = {
+          indexerId: 'a',
+          safeHeight: 12345,
+          minTimestamp: UnixTime.now(),
+          configHash: '0x123456',
+        }
+        await repository.addOrUpdate(record)
+        const record2 = {
+          indexerId: 'b',
+          safeHeight: 12345,
+          minTimestamp: UnixTime.now(),
+          configHash: '0x123456',
+        }
+        await repository.addOrUpdate(record2)
+        const record3 = {
+          indexerId: 'c',
+          safeHeight: 12345,
+          minTimestamp: UnixTime.now(),
+          configHash: '0x123456',
+        }
+        await repository.addOrUpdate(record3)
+
+        const indexerState = await repository.getByIndexerIds(['a', 'b'])
+        expect(indexerState).toEqual([record, record2])
+      })
+    })
+
     describe(IndexerStateRepository.prototype.addOrUpdate.name, () => {
       it('adds a new record', async () => {
         const empty = await repository.getAll()

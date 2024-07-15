@@ -36,6 +36,10 @@ export function getChainDiscoveryConfig(
       `${ENV_NAME}_REORG_SAFE_DEPTH_FOR_DISCOVERY`,
       `${ENV_NAME}_REORG_SAFE_DEPTH`,
     ]),
+    beaconApiUrl: env.optionalString([
+      'ETHEREUM_BEACON_API_URL_FOR_DISCOVERY',
+      'ETHEREUM_BEACON_API_URL',
+    ]),
     multicall: getMulticall3Config(
       multicallV3.sinceBlock,
       multicallV3.address,

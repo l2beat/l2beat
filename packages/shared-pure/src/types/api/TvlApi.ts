@@ -67,6 +67,7 @@ export type TvlApiProject = z.infer<typeof TvlApiProject>
 export const TvlApiResponse = z.object({
   bridges: TvlApiCharts,
   layers2s: TvlApiCharts,
+  /** @deprecated During future API refactoring this can be removed */
   combined: TvlApiCharts,
   projects: z.record(z.string(), TvlApiProject.optional()),
 })

@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -37,16 +40,18 @@ import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import { BadgeId } from '../../badges'
+import { Badge, BadgeId, badges } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING, StageConfig } from '../common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
+import { StageConfig } from '../common/stages/types'
 import {
   type Layer2,
   type Layer2Display,
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { mergeBadges } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
@@ -130,12 +135,24 @@ export function opStackCommon(
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
 
+  let daBadge: BadgeId | undefined = postsToCelestia
+    ? Badge.DA.Celestia
+    : undefined
+
   if (daProvider === undefined) {
     assert(
       templateVars.isNodeAvailable !== undefined,
       'isNodeAvailable must be defined if no DA provider is defined',
     )
+    daBadge = templateVars.usesBlobs
+      ? Badge.DA.EthereumBlobs
+      : Badge.DA.EthereumCalldata
   }
+
+  if (daBadge === undefined) {
+    daBadge = templateVars.badges?.find((b) => badges[b].type === 'DA')
+  }
+  assert(daBadge !== undefined, 'DA badge must be defined')
 
   const portal =
     templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
@@ -326,7 +343,10 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: templateVars.badges,
+    badges: mergeBadges(
+      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
+      templateVars.badges ?? [],
+    ),
   }
 }
 
@@ -375,11 +395,17 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
       'FINALIZATION_PERIOD_SECONDS',
     )
 
+  const architectureImage = templateVars.discovery.hasContract(
+    'SuperchainConfig',
+  )
+    ? 'bedrock-superchain'
+    : 'opstack'
+
   return {
     type: 'layer2',
     ...opStackCommon(templateVars),
     display: {
-      architectureImage: 'bedrock-superchain',
+      architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
@@ -461,7 +487,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   formula: 'transfer',
                   from: sequencerAddress,
                   to: sequencerInbox,
-                  sinceTimestampInclusive: templateVars.genesisTimestamp,
+                  sinceTimestamp: templateVars.genesisTimestamp,
                 },
               },
               {
@@ -475,7 +501,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
                   selector: '0x9aaab648',
                   functionSignature:
                     'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-                  sinceTimestampInclusive: new UnixTime(
+                  sinceTimestamp: new UnixTime(
                     l2OutputOracle.sinceTimestamp ??
                       templateVars.genesisTimestamp.toNumber(),
                   ),
@@ -727,12 +753,18 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
     })
   }
 
+  const architectureImage = templateVars.discovery.hasContract(
+    'SuperchainConfig',
+  )
+    ? 'bedrock-superchain'
+    : 'opstack'
+
   return {
     type: 'layer3',
     ...opStackCommon(templateVars),
     hostChain: templateVars.hostChain,
     display: {
-      architectureImage: 'bedrock-superchain',
+      architectureImage,
       ...templateVars.display,
       provider: 'OP Stack',
       category: daProvider !== undefined ? 'Optimium' : 'Optimistic Rollup',
@@ -800,7 +832,7 @@ export function opStackL3(templateVars: OpStackConfigL3): Layer3 {
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

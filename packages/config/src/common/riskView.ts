@@ -362,11 +362,14 @@ export function SEQUENCER_FORCE_VIA_L1_LOOPRING(
   }
 }
 
-export const SEQUENCER_ENQUEUE_VIA_L1: ScalingProjectRiskViewEntry = {
-  value: 'Enqueue via L1',
-  description:
-    "Users can submit transactions to an L1 queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.",
-  sentiment: 'warning',
+export function SEQUENCER_ENQUEUE_VIA(
+  layer: 'L1' | 'L2',
+): ScalingProjectRiskViewEntry {
+  return {
+    value: `Enqueue via ${layer}`,
+    description: `Users can submit transactions to an ${layer} queue, but can't force them. The sequencer cannot selectively skip transactions but can stop processing the queue entirely. In other words, if the sequencer censors or is down, it is so for everyone.`,
+    sentiment: 'warning',
+  }
 }
 
 export function SEQUENCER_NO_MECHANISM(
@@ -552,7 +555,7 @@ export const RISK_VIEW = {
   SEQUENCER_FORCE_VIA_L1,
   SEQUENCER_FORCE_VIA_L1_STARKEX_PERPETUAL,
   SEQUENCER_FORCE_VIA_L1_LOOPRING,
-  SEQUENCER_ENQUEUE_VIA_L1,
+  SEQUENCER_ENQUEUE_VIA,
   SEQUENCER_NO_MECHANISM,
   PROPOSER_CANNOT_WITHDRAW,
   PROPOSER_USE_ESCAPE_HATCH_ZK,

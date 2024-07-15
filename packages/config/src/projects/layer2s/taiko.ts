@@ -12,6 +12,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -95,6 +96,7 @@ export const taiko: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Taiko',
     slug: 'taiko',
@@ -158,7 +160,7 @@ export const taiko: Layer2 = {
           selector: '0xef16e845',
           functionSignature:
             'function proposeBlock(bytes _params, bytes _txList) payable returns (tuple(bytes32 l1Hash, bytes32 difficulty, bytes32 blobHash, bytes32 extraData, bytes32 depositsHash, address coinbase, uint64 id, uint32 gasLimit, uint64 timestamp, uint64 l1Height, uint16 minTier, bool blobUsed, bytes32 parentMetaHash, address sender) meta_, tuple(address recipient, uint96 amount, uint64 id)[] deposits_)',
-          sinceTimestampInclusive: new UnixTime(1716620627),
+          sinceTimestamp: new UnixTime(1716620627),
         },
       },
       {
@@ -172,7 +174,7 @@ export const taiko: Layer2 = {
           selector: '0x10d008bd',
           functionSignature:
             'function proveBlock(uint64 _blockId, bytes _input)',
-          sinceTimestampInclusive: new UnixTime(1716620627),
+          sinceTimestamp: new UnixTime(1716620627),
         },
       },
     ],

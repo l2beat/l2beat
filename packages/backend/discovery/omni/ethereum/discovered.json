@@ -3,18 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 19532020,
   "configHash": "0x8dca5a8454f5155b660803896348b9646389cfe9609c50a969defa9dbc4817e5",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "BridgeGovernance",
       "address": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "8 of 16 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": [
           "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
@@ -23,9 +18,11 @@
         ]
       },
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1600956399,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "8 of 16 (50%)",
         "domainSeparator": "0x877c70937e5670b3f50eb943a4e9d65fbd9bc8ce060659a7dc0543885a0ca59e",
         "getChainId": 1,
         "getOwners": [
@@ -47,6 +44,7 @@
           "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
         ],
         "getThreshold": 8,
+        "GnosisSafe_modules": [],
         "nonce": 82,
         "VERSION": "1.3.0"
       },
@@ -56,16 +54,13 @@
       "name": "GnosisSafe",
       "address": "0x4b5F5231e2F08Ad49d79Ce5672A8339a63Cfbd43",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "1 of 3 (33%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1686042107,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "1 of 3 (33%)",
         "domainSeparator": "0xaee10730379a3d6df2303789b1843342698bd85d618cdf13a5f75b84e16d88eb",
         "getChainId": 1,
         "getOwners": [
@@ -74,6 +69,7 @@
           "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0"
         ],
         "getThreshold": 1,
+        "GnosisSafe_modules": [],
         "nonce": 9,
         "VERSION": "1.3.0"
       },
@@ -82,24 +78,17 @@
     {
       "name": "ForeignAMB",
       "address": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-      "upgradeability": {
-        "type": "Eternal Storage proxy",
-        "admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-        "implementation": "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"
-      },
-      "implementations": ["0x82B67a43b69914E611710C62e629dAbB2f7AC6AB"],
+      "proxyType": "Eternal Storage proxy",
       "sinceTimestamp": 1579258532,
       "values": {
+        "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB",
         "allowReentrantRequests": false,
         "decimalShift": 0,
         "deployedAtBlock": 9298331,
         "destinationChainId": 100,
         "gasPrice": 10000000000,
-        "getBridgeInterfacesVersion": {
-          "major": 6,
-          "minor": 2,
-          "patch": 0
-        },
+        "getBridgeInterfacesVersion": { "major": 6, "minor": 2, "patch": 0 },
         "getBridgeMode": "0x2544fbb9",
         "implementation": "0x82B67a43b69914E611710C62e629dAbB2f7AC6AB",
         "isInitialized": true,
@@ -121,16 +110,10 @@
     {
       "name": "TokenFactory",
       "address": "0x71d5ba4e37de72415F685490B684538Aae8f0424",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1634280699,
       "values": {
-        "getModuleInterfacesVersion": {
-          "major": 1,
-          "minor": 0,
-          "patch": 0
-        },
+        "$immutable": true,
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
         "owner": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
         "tokenImage": "0x7c24d0061b484B267F286aa2DCe891220Db254b3"
       }
@@ -138,19 +121,13 @@
     {
       "name": "PermittableToken",
       "address": "0x7c24d0061b484B267F286aa2DCe891220Db254b3",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1634280299,
       "values": {
+        "$immutable": true,
         "bridgeContract": "0x0000000000000000000000000000000000000000",
         "decimals": 0,
         "DOMAIN_SEPARATOR": "0xcaa93cb1b6b7dc5661966ae0c34c78b2bb3aea8cc828a3690fdf9dec64932930",
-        "getTokenInterfacesVersion": {
-          "major": 2,
-          "minor": 5,
-          "patch": 0
-        },
+        "getTokenInterfacesVersion": { "major": 2, "minor": 5, "patch": 0 },
         "mintingFinished": false,
         "name": "",
         "owner": "0xBF3d6f830CE263CAE987193982192Cd990442B53",
@@ -164,17 +141,11 @@
     {
       "name": "AAVEInterestERC20",
       "address": "0x87D48c565D0D85770406D248efd7dc3cbd41e729",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1634281216,
       "values": {
+        "$immutable": true,
         "aaveReceiver": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC",
-        "getModuleInterfacesVersion": {
-          "major": 1,
-          "minor": 0,
-          "patch": 0
-        },
+        "getModuleInterfacesVersion": { "major": 1, "minor": 0, "patch": 0 },
         "incentivesController": "0xd784927Ff2f95ba542BfC824c8a8a98F3495f6b5",
         "lendingPool": "0x7d2768dE32b0b80b7a3454c06BdAc94A69DDc7A9",
         "mediator": "0x88ad09518695c6c3712AC10a214bE5109a655671",
@@ -187,20 +158,13 @@
     {
       "name": "MultiTokenMediator",
       "address": "0x88ad09518695c6c3712AC10a214bE5109a655671",
-      "upgradeability": {
-        "type": "Eternal Storage proxy",
-        "admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-        "implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347"
-      },
-      "implementations": ["0x8eB3b7D8498a6716904577b2579e1c313d48E347"],
+      "proxyType": "Eternal Storage proxy",
       "sinceTimestamp": 1596501090,
       "values": {
+        "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "bridgeContract": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-        "getBridgeInterfacesVersion": {
-          "major": 3,
-          "minor": 3,
-          "patch": 1
-        },
+        "getBridgeInterfacesVersion": { "major": 3, "minor": 3, "patch": 1 },
         "getBridgeMode": "0xb1516c26",
         "implementation": "0x8eB3b7D8498a6716904577b2579e1c313d48E347",
         "isInitialized": true,
@@ -216,14 +180,11 @@
     {
       "name": "BridgeValidators",
       "address": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
-      "upgradeability": {
-        "type": "Eternal Storage proxy",
-        "admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
-        "implementation": "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"
-      },
-      "implementations": ["0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218"],
+      "proxyType": "Eternal Storage proxy",
       "sinceTimestamp": 1579258396,
       "values": {
+        "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+        "$implementation": "0xD83893F31AA1B6B9D97C9c70D3492fe38D24d218",
         "deployedAtBlock": 9298321,
         "F_ADDR": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
         "getBridgeValidatorsInterfacesVersion": {
@@ -253,99 +214,37 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x0101016044726994aFd16f4A99f0d960090D35e7"
-    },
-    {
-      "address": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
-    },
-    {
-      "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd"
-    },
-    {
-      "address": "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9"
-    },
-    {
-      "address": "0x2408F8a0475D3823A1F4A4bfD86B2a4B80E6eDB6"
-    },
-    {
-      "address": "0x258667E543C913264388B33328337257aF208a8f"
-    },
-    {
-      "address": "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0"
-    },
-    {
-      "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6"
-    },
-    {
-      "address": "0x456c255A8BC1F33778603A2a48Eb6B0C69F4d48E"
-    },
-    {
-      "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6"
-    },
-    {
-      "address": "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B"
-    },
-    {
-      "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893"
-    },
-    {
-      "address": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC"
-    },
-    {
-      "address": "0x61F4aE313592714f0557E0B4edd1641ACB394422"
-    },
-    {
-      "address": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0"
-    },
-    {
-      "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54"
-    },
-    {
-      "address": "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97"
-    },
-    {
-      "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780"
-    },
-    {
-      "address": "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c"
-    },
-    {
-      "address": "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E"
-    },
-    {
-      "address": "0xb8173f558f75EE263013fd6294177bf75279a21e"
-    },
-    {
-      "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe"
-    },
-    {
-      "address": "0xBF3d6f830CE263CAE987193982192Cd990442B53"
-    },
-    {
-      "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8"
-    },
-    {
-      "address": "0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9"
-    },
-    {
-      "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A"
-    },
-    {
-      "address": "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992"
-    },
-    {
-      "address": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d"
-    },
-    {
-      "address": "0xfA98B60E02A61B6590f073cAD56e68326652d094"
-    },
-    {
-      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0101016044726994aFd16f4A99f0d960090D35e7" },
+    { "address": "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d" },
+    { "address": "0x10DD75875a2a8a284529Ae7223B1aCE410d606bd" },
+    { "address": "0x1685324Bf373670ad5C9c56bd88A1dc1C063b0f9" },
+    { "address": "0x2408F8a0475D3823A1F4A4bfD86B2a4B80E6eDB6" },
+    { "address": "0x258667E543C913264388B33328337257aF208a8f" },
+    { "address": "0x3b3Cd747Ab7bf2BE3b950693deeDe8a0B96C4fF0" },
+    { "address": "0x3e0A20099626F3d4d4Ea7B0cE0330e88d1Fe65D6" },
+    { "address": "0x456c255A8BC1F33778603A2a48Eb6B0C69F4d48E" },
+    { "address": "0x459A3bd49F1ff109bc90b76125533699AaAAf9A6" },
+    { "address": "0x57B11cC8F93f2cfeC4c1C5B95213f17cAD81332B" },
+    { "address": "0x5b10cE4DDD27F57d4D432D409A5321219cbA7893" },
+    { "address": "0x5eD64f02588C8B75582f2f8eFd7A5521e3F897CC" },
+    { "address": "0x61F4aE313592714f0557E0B4edd1641ACB394422" },
+    { "address": "0x674c97db4cE6caC04A124d745979f3E4cBa0E9f0" },
+    { "address": "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54" },
+    { "address": "0x80BA18503a1Fa16Ea22F3ef1Af23e2994EaC1d97" },
+    { "address": "0x839395e20bbB182fa440d08F850E6c7A8f6F0780" },
+    { "address": "0x86Da253817DC599059e3AD5A1F098F7b96aBf34c" },
+    { "address": "0xAC0622953d25e1a6c4e0f32Ffc1A9C1cE350B60E" },
+    { "address": "0xb8173f558f75EE263013fd6294177bf75279a21e" },
+    { "address": "0xbDc141c8D2343f33F40Cb9edD601CcF460CD0dDe" },
+    { "address": "0xBF3d6f830CE263CAE987193982192Cd990442B53" },
+    { "address": "0xc44caeb7F0724A156806664d2361fD6f32a2d2C8" },
+    { "address": "0xd26a3F686D43f2A62BA9eaE2ff77e9f516d945B9" },
+    { "address": "0xd945325557f1FB4374fBf10Ae86D385632Df870A" },
+    { "address": "0xDdf2d07267EAF2cE3E13ee4319bE1F34D55ed992" },
+    { "address": "0xf6A78083ca3e2a662D6dd1703c939c8aCE2e268d" },
+    { "address": "0xfA98B60E02A61B6590f073cAD56e68326652d094" },
+    { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
     "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6": [

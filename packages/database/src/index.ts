@@ -28,7 +28,6 @@ import { StakeRepository } from './stake/repository'
 import { TokenBridgeRepository } from './token-bridge/repository'
 import { TokenMetaRepository } from './token-meta/repository'
 import { TokenRepository } from './token/repository'
-import { TrackedTxsConfigRepository } from './tracked-tx-config/repository'
 import { TvlCleanerRepository } from './tvl-cleaner/repository'
 import { UpdateMonitorRepository } from './update-monitor/repository'
 import { ValueRepository } from './value/repository'
@@ -68,7 +67,6 @@ export function createRepositories(config?: PoolConfig) {
     liveness: new LivenessRepository(db),
     price: new PriceRepository(db),
     sequenceProcessor: new SequenceProcessorRepository(db),
-    trackedTxConfig: new TrackedTxsConfigRepository(db),
     tvlCleaner: new TvlCleanerRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
     value: new ValueRepository(db),
@@ -85,3 +83,8 @@ export type Database = ReturnType<typeof createRepositories>
 
 export type { CurrentPrice } from './current-price'
 export type { Stake } from './stake'
+export type { Value } from './value'
+export type {
+  VerifierStatus,
+  VerifierStatusRepository,
+} from './verifier-status'

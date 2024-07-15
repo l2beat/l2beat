@@ -19,6 +19,7 @@ export interface ScalingFiltersState {
   stack: string | undefined
   stage: string | undefined
   purpose: string | undefined
+  hostChain: string | undefined
 }
 
 interface Props {
@@ -58,6 +59,17 @@ export function ScalingFilters({ items, state, setState }: Props) {
     }))
 
   const purposeOptions = uniq(items.flatMap((item) => item.purposes))
+    .sort()
+    .map((value) => ({
+      label: value,
+      value,
+    }))
+
+  const hostChainOptions = uniq(
+    items.map((item) =>
+      item.type === 'layer3' ? item.hostChainName : 'Ethereum',
+    ),
+  )
     .sort()
     .map((value) => ({
       label: value,
@@ -108,6 +120,14 @@ export function ScalingFilters({ items, state, setState }: Props) {
           value={state.purpose}
           onValueChange={(value) =>
             setState((prev) => ({ ...prev, purpose: value }))
+          }
+        />
+        <TableFilter
+          title="Host Chain"
+          options={hostChainOptions}
+          value={state.hostChain}
+          onValueChange={(value) =>
+            setState((prev) => ({ ...prev, hostChain: value }))
           }
         />
       </div>

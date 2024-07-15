@@ -3,33 +3,29 @@
   "chain": "ethereum",
   "blockNumber": 19532028,
   "configHash": "0xd6335c5406db7a8838e31ff78c6edbbfc4df448e47a48c802e2545aa4064004b",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "HomeUpgradeBeacon",
       "address": "0x101a39eA1143cb252fc8093847399046fc35Db89",
-      "upgradeability": {
-        "type": "immutable"
-      },
+      "proxyType": "immutable",
       "sinceTimestamp": 1637961283,
+      "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
     {
       "name": "ReplicaBeaconProxy",
       "address": "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
-      "upgradeability": {
-        "type": "Optics Beacon proxy",
-        "upgradeBeacon": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
-        "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
-        "implementation": "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"
-      },
+      "proxyType": "Optics Beacon proxy",
       "ignoreInWatchMode": ["committedRoot"],
-      "implementations": ["0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F"],
       "sinceTimestamp": 1637962173,
       "values": {
+        "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
+        "$implementation": "0x8F6b6aDB49cDCa3b9F6947F61a1201242C3d827F",
         "committedRoot": "0xba011cb3ea518ba08a5636100b94371d8088aa494ee57ffbb3115da10b21232a",
         "homeDomainHash": "0x6b881beed7c8ffb30baea620e40be2b61ea2706b341014fb812bc7ff2f75fca1",
         "localDomain": 6648936,
+        "OpticsBeacon_beacon": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
         "optimisticSeconds": 1800,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "PROCESS_GAS": 850000,
@@ -45,16 +41,13 @@
       "name": "RecoveryManager",
       "address": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "4 of 7 (57%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1637291734,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "4 of 7 (57%)",
         "domainSeparator": "0x91e4f1847ce233a59cb33402a728cd2aad575e149d033d1b0d939dc5331af707",
         "getChainId": 1,
         "getOwners": [
@@ -67,6 +60,7 @@
           "0x7519Db53B63d72721470319A5F4462D587Bb3008"
         ],
         "getThreshold": 4,
+        "GnosisSafe_modules": [],
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -75,20 +69,25 @@
     {
       "name": "GovernanceUpgradeBeacon",
       "address": "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c",
-      "upgradeability": {
-        "type": "immutable"
-      },
+      "proxyType": "immutable",
       "sinceTimestamp": 1637961347,
+      "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
     {
       "name": "UpgradeBeaconController",
       "address": "0x4F50a7081792063693F46A6402390b9647562457",
-      "upgradeability": {
-        "type": "immutable"
+      "assignedPermissions": {
+        "admin": [
+          "0x27658c5556A9a57f96E69Bbf6d3B8016f001a785",
+          "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
+          "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
+          "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
+        ]
       },
       "sinceTimestamp": 1637960876,
       "values": {
+        "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94"
       },
       "derivedName": "UpgradeBeaconController"
@@ -96,15 +95,12 @@
     {
       "name": "BridgeRouterBeaconProxy",
       "address": "0x4fc16De11deAc71E8b2Db539d82d93BE4b486892",
-      "upgradeability": {
-        "type": "Optics Beacon proxy",
-        "upgradeBeacon": "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE",
-        "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
-        "implementation": "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"
-      },
-      "implementations": ["0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738"],
+      "proxyType": "Optics Beacon proxy",
       "sinceTimestamp": 1637963549,
       "values": {
+        "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
+        "$implementation": "0x688A54c4b1C5b917154Ea2f61B8A4A4CbDfF4738",
+        "OpticsBeacon_beacon": "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE",
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "PRE_FILL_FEE_DENOMINATOR": 10000,
         "PRE_FILL_FEE_NUMERATOR": 9995,
@@ -116,11 +112,9 @@
     {
       "name": "UpdaterManager",
       "address": "0x81B97dfBB743c343983e9bE7B863dB636DbD7373",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1637961011,
       "values": {
+        "$immutable": true,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "updater": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
       }
@@ -128,11 +122,9 @@
     {
       "name": "XAppConnectionManager",
       "address": "0x8A926cE79f83A5A4C234BeE93feAFCC85b1E40cD",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1637961153,
       "values": {
+        "$immutable": true,
         "home": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
         "localDomain": 6648936,
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
@@ -143,30 +135,26 @@
     {
       "name": "ReplicaUpgradeBeacon",
       "address": "0xA734EDE8229970776e1B68085D579b6b6E97dAd4",
-      "upgradeability": {
-        "type": "immutable"
-      },
+      "proxyType": "immutable",
       "sinceTimestamp": 1637962173,
+      "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
     {
       "name": "HomeBeaconProxy",
       "address": "0xa73a3a74C7044B5411bD61E1990618A1400DA379",
-      "upgradeability": {
-        "type": "Optics Beacon proxy",
-        "upgradeBeacon": "0x101a39eA1143cb252fc8093847399046fc35Db89",
-        "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
-        "implementation": "0xfc6E146384b5c65f372d5b20537F3e8727aD3723"
-      },
+      "proxyType": "Optics Beacon proxy",
       "ignoreInWatchMode": ["committedRoot", "count", "root", "tree"],
-      "implementations": ["0xfc6E146384b5c65f372d5b20537F3e8727aD3723"],
       "sinceTimestamp": 1637961283,
       "values": {
+        "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
+        "$implementation": "0xfc6E146384b5c65f372d5b20537F3e8727aD3723",
         "committedRoot": "0x27a83293af18bc26caa698fd173dcf6be6858d3dd6082b159152f06bcd7b5511",
         "count": 1683,
         "homeDomainHash": "0xae0c02ff12852e3fb80794f3504aa3d7393b3ef3149213ffe623be2cbe67e77c",
         "localDomain": 6648936,
         "MAX_MESSAGE_BODY_BYTES": 2048,
+        "OpticsBeacon_beacon": "0x101a39eA1143cb252fc8093847399046fc35Db89",
         "owner": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
         "queueEnd": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "queueLength": 0,
@@ -186,29 +174,25 @@
     {
       "name": "BridgeUpgradeBeacon",
       "address": "0xB6bB41B1fb8c381b002C405B8abB5D1De0C0abFE",
-      "upgradeability": {
-        "type": "immutable"
-      },
+      "proxyType": "immutable",
       "sinceTimestamp": 1637963549,
+      "values": { "$immutable": true },
       "derivedName": "UpgradeBeacon"
     },
     {
       "name": "GovernanceRouterBeaconProxy",
       "address": "0xcbcF180dbd02460dCFCdD282A0985DdC049a4c94",
-      "upgradeability": {
-        "type": "Optics Beacon proxy",
-        "upgradeBeacon": "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c",
-        "beaconController": "0x4F50a7081792063693F46A6402390b9647562457",
-        "implementation": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"
-      },
-      "implementations": ["0xe552861e90a42ddDC66b508A18a85bCEAbFcB835"],
+      "proxyType": "Optics Beacon proxy",
       "sinceTimestamp": 1637961347,
       "values": {
+        "$admin": "0x4F50a7081792063693F46A6402390b9647562457",
+        "$implementation": "0xe552861e90a42ddDC66b508A18a85bCEAbFcB835",
         "domains": [1667591279, 1886350457, 1635148152, 6648936],
         "governor": "0x0000000000000000000000000000000000000000",
         "governorDomain": 1667591279,
         "inRecovery": false,
         "localDomain": 6648936,
+        "OpticsBeacon_beacon": "0x4d89F34dB307015F8002F97c1d100d84e3AFb76c",
         "recoveryActiveAt": 0,
         "recoveryManager": "0x2bB2a5A724170357cb691841F40d26A950d8C33D",
         "recoveryTimelock": 1209600,
@@ -220,39 +204,17 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0"
-    },
-    {
-      "address": "0x63c079444e07D82d33399DE7D56d6E48740494c7"
-    },
-    {
-      "address": "0x703643995262c92ab013E3CCA810BdcB9239d45a"
-    },
-    {
-      "address": "0x7519Db53B63d72721470319A5F4462D587Bb3008"
-    },
-    {
-      "address": "0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552"
-    },
-    {
-      "address": "0xa725898D6F73C512f803B564A89DFbd96cF298EC"
-    },
-    {
-      "address": "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e"
-    },
-    {
-      "address": "0xd85DC9A21378EF738A248236E970c2e0be89C9c2"
-    },
-    {
-      "address": "0xeE2b1e23e71052860C14f69E84AAF78478606D63"
-    },
-    {
-      "address": "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x5Ef6e0F6A7E1f866612D806041799a9D762b62c0" },
+    { "address": "0x63c079444e07D82d33399DE7D56d6E48740494c7" },
+    { "address": "0x703643995262c92ab013E3CCA810BdcB9239d45a" },
+    { "address": "0x7519Db53B63d72721470319A5F4462D587Bb3008" },
+    { "address": "0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552" },
+    { "address": "0xa725898D6F73C512f803B564A89DFbd96cF298EC" },
+    { "address": "0xD0D09d9CF712ccE87141Dfa22a3aBBDb7B1c296e" },
+    { "address": "0xd85DC9A21378EF738A248236E970c2e0be89C9c2" },
+    { "address": "0xeE2b1e23e71052860C14f69E84AAF78478606D63" },
+    { "address": "0xFCcD3516d6BB62b009088aDae1E349430dDF6e77" }
   ],
   "abis": {
     "0x101a39eA1143cb252fc8093847399046fc35Db89": [

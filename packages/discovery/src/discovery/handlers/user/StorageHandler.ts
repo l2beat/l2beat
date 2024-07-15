@@ -6,7 +6,13 @@ import { getErrorMessage } from '../../../utils/getErrorMessage'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { Handler, HandlerResult } from '../Handler'
-import { Reference, getReferencedName, resolveReference } from '../reference'
+import {
+  Reference,
+  ScopeVariables,
+  generateScopeVariables,
+  getReferencedName,
+  resolveReference,
+} from '../reference'
 import { SingleSlot } from '../storageCommon'
 import { NumberFromString } from '../types'
 import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
@@ -40,7 +46,12 @@ export class StorageHandler implements Handler {
     previousResults: Record<string, HandlerResult | undefined>,
   ): Promise<HandlerResult> {
     this.logger.logExecution(this.field, ['Reading storage'])
-    const resolved = resolveDependencies(this.definition, previousResults)
+    const scopeVariables = generateScopeVariables(provider, address)
+    const resolved = resolveDependencies(
+      this.definition,
+      previousResults,
+      scopeVariables,
+    )
 
     let storage: Bytes
     try {
@@ -75,6 +86,7 @@ type ResolvedDefinition = ReturnType<typeof resolveDependencies>
 function resolveDependencies(
   definition: StorageHandlerDefinition,
   previousResults: Record<string, HandlerResult | undefined>,
+  scopeVariables: ScopeVariables,
 ): {
   slot: bigint | bigint[]
   offset: bigint
@@ -82,18 +94,26 @@ function resolveDependencies(
 } {
   let offset = 0n
   if (definition.offset) {
-    const resolved = resolveReference(definition.offset, previousResults)
+    const resolved = resolveReference(
+      definition.offset,
+      previousResults,
+      scopeVariables,
+    )
     offset = valueToBigInt(resolved)
   }
 
   let slot: bigint | bigint[]
   if (Array.isArray(definition.slot)) {
     slot = definition.slot.map((x) => {
-      const resolved = resolveReference(x, previousResults)
+      const resolved = resolveReference(x, previousResults, scopeVariables)
       return valueToBigInt(resolved)
     })
   } else {
-    const resolved = resolveReference(definition.slot, previousResults)
+    const resolved = resolveReference(
+      definition.slot,
+      previousResults,
+      scopeVariables,
+    )
     slot = valueToBigInt(resolved)
   }
 

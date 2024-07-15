@@ -30,15 +30,14 @@ export class AmountRepository extends BaseRepository {
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }
 
-  async getByConfigIdsAndTimestamp(
+  async getByIdsAndTimestamp(
     configIds: string[],
     timestamp: UnixTime,
   ): Promise<AmountRecord[]> {
     const knex = await this.knex()
     const rows = await knex('amounts')
       .whereIn('configuration_id', configIds)
-      .where('timestamp', timestamp.toDate())
-      .orderBy('configuration_id')
+      .andWhere('timestamp', timestamp.toDate())
     return rows.map(toRecord)
   }
 
@@ -57,12 +56,29 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getDailyByConfigId(configIds: string[]) {
+  async findByConfigAndTimestamp(
+    queries: { configId: string; timestamp: UnixTime }[],
+  ): Promise<AmountRecord[]> {
+    if (queries.length === 0) {
+      return []
+    }
     const knex = await this.knex()
-    const rows = await knex('amounts')
-      .whereIn('configuration_id', configIds)
-      .andWhereRaw(`extract(hour from "timestamp") % 24 = 0`)
-      .orderBy('timestamp')
+    const rows = await knex('amounts').where(function () {
+      // Start the query with the first condition
+      this.where('configuration_id', queries[0].configId).andWhere(
+        'timestamp',
+        queries[0].timestamp.toDate(),
+      )
+
+      for (let i = 1; i < queries.length; i++) {
+        this.orWhere(function () {
+          this.where('configuration_id', queries[i].configId).andWhere(
+            'timestamp',
+            queries[i].timestamp.toDate(),
+          )
+        })
+      }
+    })
 
     return rows.map(toRecord)
   }

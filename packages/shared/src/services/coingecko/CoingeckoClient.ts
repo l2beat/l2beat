@@ -14,6 +14,7 @@ import {
   CoinMarketChartRangeData,
   CoinMarketChartRangeResult,
   CoinMetadata,
+  CoinsMarketResultData,
 } from './model'
 
 const API_URL = 'https://api.coingecko.com/api/v3'
@@ -148,6 +149,18 @@ export class CoingeckoClient {
 
     this.newIds.set(address.toString(), coingeckoSupported.id)
     return coingeckoSupported.id
+  }
+
+  async getCoinsMarket(
+    coinIds: CoingeckoId[],
+    vs_currency: string,
+  ): Promise<CoinsMarketResultData> {
+    const data = await this.query('/coins/markets', {
+      vs_currency: vs_currency.toLowerCase(),
+      ids: coinIds.map((id) => id.toString()).join(','),
+    })
+
+    return CoinsMarketResultData.parse(data)
   }
 
   async query(endpoint: string, params: Record<string, string>) {

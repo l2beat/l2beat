@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { sql } from 'kysely'
 import { PostgresDatabase, Transaction } from '../kysely'
 import {
   CleanDateRange,
@@ -12,10 +11,7 @@ import { selectAmount } from './select'
 export class AmountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async getByConfigIdsAndTimestamp(
-    configIds: string[],
-    timestamp: UnixTime,
-  ): Promise<Amount[]> {
+  async getByIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
@@ -25,7 +21,7 @@ export class AmountRepository {
           eb('timestamp', '=', timestamp.toDate()),
         ]),
       )
-      .orderBy('configuration_id')
+      .orderBy('timestamp')
       .execute()
 
     return rows.map(toRecord)
@@ -52,17 +48,23 @@ export class AmountRepository {
     return rows.map(toRecord)
   }
 
-  async getDailyByConfigId(configIds: string[]) {
+  async findByConfigAndTimestamp(
+    queries: { configId: string; timestamp: UnixTime }[],
+  ) {
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
       .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configIds),
-          eb(sql`extract(hour from "timestamp") % 24`, '=', '0'),
-        ]),
+        eb.or(
+          queries.map((q) =>
+            eb('configuration_id', '=', q.configId).and(
+              'timestamp',
+              '=',
+              q.timestamp.toDate(),
+            ),
+          ),
+        ),
       )
-      .orderBy('timestamp')
       .execute()
 
     return rows.map(toRecord)

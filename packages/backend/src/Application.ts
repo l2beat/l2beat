@@ -34,6 +34,8 @@ export class Application {
     const clock = new Clock(
       config.clock.minBlockTimestamp,
       config.clock.safeTimeOffsetSeconds,
+      config.clock.hourlyCutoffDays,
+      config.clock.sixHourlyCutoffDays,
     )
 
     const http = new HttpClient()
@@ -62,7 +64,7 @@ export class Application {
       ),
       createLzOAppsModule(config, logger),
       createTvlModule(config, logger, peripherals, clock),
-      createVerifiersModule(config, logger, peripherals),
+      createVerifiersModule(config, logger, peripherals, clock),
       createFeaturesModule(config),
       createDaBeatModule(config, logger, peripherals, clock),
     ]

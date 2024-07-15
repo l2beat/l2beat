@@ -18,6 +18,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -48,6 +49,11 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 export const degate: Layer2 = {
   isArchived: true,
   type: 'layer2',
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.EthereumCalldata,
+    Badge.Fork.LoopringFork,
+  ],
   id: ProjectId('degate'),
   display: {
     name: 'DeGate Legacy',
@@ -97,8 +103,8 @@ export const degate: Layer2 = {
           selector: '0x377bb770',
           functionSignature:
             'function submitBlocks(bool isDataCompressed,bytes data)',
-          sinceTimestampInclusive: new UnixTime(1681993655),
-          untilTimestampExclusive: new UnixTime(1695902496),
+          sinceTimestamp: new UnixTime(1681993655),
+          untilTimestamp: new UnixTime(1695902496),
         },
       },
     ],

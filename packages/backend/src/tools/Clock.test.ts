@@ -82,91 +82,96 @@ describe(Clock.name, () => {
     })
   })
 
-  describe(Clock.prototype._TVL_ONLY_onEveryHour.name, () => {
-    it('calls the callback for every hour up to now', () => {
-      setTime('13:05:48')
-      const start = toTimestamp('10:00:00')
-
-      const clock = new Clock(start, 0)
-
-      const calls: UnixTime[] = []
-      const stop = clock._TVL_ONLY_onEveryHour((timestamp) =>
-        calls.push(timestamp),
+  describe(Clock.prototype.getSixHourlyCutoff.name, () => {
+    it('returns correct cutoff', () => {
+      const targetTimestamp = UnixTime.fromDate(
+        new Date(`2022-06-29T13:00:00.000Z`),
       )
-      stop()
+      setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
-      expect(calls).toEqual([
-        toTimestamp('10:00:00'),
-        toTimestamp('11:00:00'),
-        toTimestamp('12:00:00'),
-        toTimestamp('13:00:00'),
-      ])
+      const sixHourlyCutoffDays = 3
+      const clock = new Clock(UnixTime.ZERO, 0, 1, sixHourlyCutoffDays)
+
+      const result = clock.getSixHourlyCutoff(targetTimestamp)
+
+      // 3D before - first possible sixHours entry
+      const expected = UnixTime.fromDate(new Date(`2022-06-26T18:00:00.000Z`))
+      expect(result).toEqual(expected)
     })
+  })
 
-    it('also calls the callback for future hours', async () => {
-      const start = toTimestamp('12:00:00')
-      setTime('13:05:48')
-
-      const clock = new Clock(start, 0, 60 * 1000)
-
-      const calls: UnixTime[] = []
-      const stop = clock._TVL_ONLY_onEveryHour((timestamp) =>
-        calls.push(timestamp),
+  describe(Clock.prototype.getHourlyCutoff.name, () => {
+    it('returns correct cutoff', () => {
+      const targetTimestamp = UnixTime.fromDate(
+        new Date(`2022-06-29T13:00:00.000Z`),
       )
+      setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
-      expect(calls).toEqual([toTimestamp('12:00:00'), toTimestamp('13:00:00')])
+      const hourlyCutoffDays = 1
+      const clock = new Clock(UnixTime.ZERO, 0, hourlyCutoffDays, 3)
 
-      // add two hours
-      time.tick(2 * 60 * 60 * 1000)
+      const result = clock.getHourlyCutoff(targetTimestamp)
 
-      expect(calls).toEqual([
-        toTimestamp('12:00:00'),
-        toTimestamp('13:00:00'),
-        toTimestamp('14:00:00'),
-        toTimestamp('15:00:00'),
-      ])
-      stop()
+      // 3D before - first possible sixHours entry
+      const expected = UnixTime.fromDate(new Date(`2022-06-28T13:00:00.000Z`))
+      expect(result).toEqual(expected)
     })
+  })
 
-    it('ticks six hourly after 7D and daily after 90D', () => {
-      setTime('00:00:00')
-      const now = UnixTime.now()
-
-      const TOTAL_DAYS = 183
-      const DAILY_TICK_START_DAY = 93
-      const SIX_HOURLY_TICK_START_DAY = 10
-
-      const start = now.add(-TOTAL_DAYS, 'days')
-      const clock = new Clock(start, 0)
-
-      const calls: UnixTime[] = []
-      const stop = clock._TVL_ONLY_onEveryHour((timestamp) =>
-        calls.push(timestamp),
+  describe(Clock.prototype.getAllTimestampsForApi.name, () => {
+    it('can return all timestamps for API', () => {
+      const minTimestamp = UnixTime.fromDate(
+        new Date(`2022-06-22T00:00:00.000Z`),
       )
-      stop()
-
-      const DAILY_TICKS = TOTAL_DAYS - DAILY_TICK_START_DAY
-      const dailyCalls = calls.slice(0, DAILY_TICKS)
-      expect(dailyCalls.length).toEqual(DAILY_TICKS)
-      expect(dailyCalls.every((x) => x.isFull('day'))).toEqual(true)
-
-      const SIX_HOURLY_TICKS =
-        (DAILY_TICK_START_DAY - SIX_HOURLY_TICK_START_DAY) * 4
-      const sixHourlyCalls = calls.slice(
-        DAILY_TICKS,
-        DAILY_TICKS + SIX_HOURLY_TICKS,
+      const targetTimestamp = UnixTime.fromDate(
+        new Date(`2022-06-29T13:00:00.000Z`),
       )
-      expect(sixHourlyCalls.length).toEqual(SIX_HOURLY_TICKS)
-      expect(sixHourlyCalls.every((x) => x.isFull('six hours'))).toEqual(true)
+      setTime('13:00:00') // 2022-06-29T13:00:00.000Z
 
-      const HOURLY_TICKS = 10 * 24 + 1
-      const hourlyCalls = calls.slice(DAILY_TICKS + SIX_HOURLY_TICKS)
-      expect(hourlyCalls.length).toEqual(HOURLY_TICKS)
-      for (let i = 0; i < hourlyCalls.length - 1; i++) {
-        const call = hourlyCalls[i]
-        const nextCall = hourlyCalls[i + 1]
-        expect(nextCall).toEqual(call.add(1, 'hours'))
-      }
+      const clock = new Clock(minTimestamp, 0, 1, 3)
+
+      const timestamps = clock.getAllTimestampsForApi(targetTimestamp)
+
+      expect(timestamps).toEqual([
+        minTimestamp, // 22.06
+        minTimestamp.add(1, 'days'),
+        minTimestamp.add(2, 'days'),
+        minTimestamp.add(3, 'days'),
+        minTimestamp.add(4, 'days'),
+        minTimestamp.add(4, 'days').add(18, 'hours'),
+        minTimestamp.add(5, 'days'),
+        minTimestamp.add(5, 'days').add(6, 'hours'),
+        minTimestamp.add(5, 'days').add(12, 'hours'),
+        minTimestamp.add(5, 'days').add(18, 'hours'),
+        minTimestamp.add(6, 'days'),
+        minTimestamp.add(6, 'days').add(6, 'hours'),
+        minTimestamp.add(6, 'days').add(12, 'hours'),
+        minTimestamp.add(6, 'days').add(13, 'hours'),
+        minTimestamp.add(6, 'days').add(14, 'hours'),
+        minTimestamp.add(6, 'days').add(15, 'hours'),
+        minTimestamp.add(6, 'days').add(16, 'hours'),
+        minTimestamp.add(6, 'days').add(17, 'hours'),
+        minTimestamp.add(6, 'days').add(18, 'hours'),
+        minTimestamp.add(6, 'days').add(19, 'hours'),
+        minTimestamp.add(6, 'days').add(20, 'hours'),
+        minTimestamp.add(6, 'days').add(21, 'hours'),
+        minTimestamp.add(6, 'days').add(22, 'hours'),
+        minTimestamp.add(6, 'days').add(23, 'hours'),
+        minTimestamp.add(7, 'days'),
+        minTimestamp.add(7, 'days').add(1, 'hours'),
+        minTimestamp.add(7, 'days').add(2, 'hours'),
+        minTimestamp.add(7, 'days').add(3, 'hours'),
+        minTimestamp.add(7, 'days').add(4, 'hours'),
+        minTimestamp.add(7, 'days').add(5, 'hours'),
+        minTimestamp.add(7, 'days').add(6, 'hours'),
+        minTimestamp.add(7, 'days').add(7, 'hours'),
+        minTimestamp.add(7, 'days').add(8, 'hours'),
+        minTimestamp.add(7, 'days').add(9, 'hours'),
+        minTimestamp.add(7, 'days').add(10, 'hours'),
+        minTimestamp.add(7, 'days').add(11, 'hours'),
+        minTimestamp.add(7, 'days').add(12, 'hours'),
+        minTimestamp.add(7, 'days').add(13, 'hours'),
+      ])
     })
   })
 

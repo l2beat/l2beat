@@ -20,6 +20,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -87,6 +88,12 @@ const validators = () => {
 export const zksyncera: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync2'),
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.ZKStack,
+    Badge.Other.L3HostChain,
+  ],
   display: {
     name: 'ZKsync Era',
     slug: 'zksync-era',
@@ -190,8 +197,8 @@ export const zksyncera: Layer2 = {
           selector: '0x701f58c5',
           functionSignature:
             'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
-          sinceTimestampInclusive: new UnixTime(1701721931),
-          untilTimestampExclusive: new UnixTime(1710169104),
+          sinceTimestamp: new UnixTime(1701721931),
+          untilTimestamp: new UnixTime(1710169104),
         },
       },
       {
@@ -204,8 +211,8 @@ export const zksyncera: Layer2 = {
           selector: '0x701f58c5',
           functionSignature:
             'function commitBatches((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32), (uint64,uint64,uint64,bytes32,uint256,bytes32,bytes32,bytes32,bytes,bytes)[])',
-          sinceTimestampInclusive: new UnixTime(1710169104),
-          untilTimestampExclusive: new UnixTime(1717681823),
+          sinceTimestamp: new UnixTime(1710169104),
+          untilTimestamp: new UnixTime(1717681823),
         },
       },
       {
@@ -218,7 +225,7 @@ export const zksyncera: Layer2 = {
           selector: '0x6edd4f12',
           functionSignature:
             'function commitBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)',
-          sinceTimestampInclusive: new UnixTime(1717681823),
+          sinceTimestamp: new UnixTime(1717681823),
         },
       },
       {
@@ -234,8 +241,8 @@ export const zksyncera: Layer2 = {
           selector: '0x7739cbe7',
           functionSignature:
             'function proveBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32) calldata,(uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata,(uint256[],uint256[]) calldata)',
-          sinceTimestampInclusive: new UnixTime(1679602559),
-          untilTimestampExclusive: new UnixTime(1701718427),
+          sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701718427),
         },
       },
       {
@@ -251,8 +258,8 @@ export const zksyncera: Layer2 = {
           selector: '0x7f61885c',
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-          sinceTimestampInclusive: new UnixTime(1701258299),
-          untilTimestampExclusive: new UnixTime(1710165419),
+          sinceTimestamp: new UnixTime(1701258299),
+          untilTimestamp: new UnixTime(1710165419),
         },
       },
       {
@@ -268,8 +275,8 @@ export const zksyncera: Layer2 = {
           selector: '0x7f61885c',
           functionSignature:
             'function proveBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32), tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[], tuple(uint256[], uint256[]))',
-          sinceTimestampInclusive: new UnixTime(1710165419),
-          untilTimestampExclusive: new UnixTime(1717694375),
+          sinceTimestamp: new UnixTime(1710165419),
+          untilTimestamp: new UnixTime(1717694375),
         },
       },
       {
@@ -285,7 +292,7 @@ export const zksyncera: Layer2 = {
           selector: '0xc37533bb',
           functionSignature:
             'function proveBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], (uint256[] recursiveAggregationInput, uint256[] serializedProof))',
-          sinceTimestampInclusive: new UnixTime(1717694375),
+          sinceTimestamp: new UnixTime(1717694375),
         },
       },
       {
@@ -301,8 +308,8 @@ export const zksyncera: Layer2 = {
           selector: '0xce9dcf16',
           functionSignature:
             'function executeBlocks((uint64,bytes32,uint64,uint256,bytes32,bytes32,uint256,bytes32)[] calldata _newBlocksData)',
-          sinceTimestampInclusive: new UnixTime(1679602559),
-          untilTimestampExclusive: new UnixTime(1701719687),
+          sinceTimestamp: new UnixTime(1679602559),
+          untilTimestamp: new UnixTime(1701719687),
         },
       },
       {
@@ -318,8 +325,8 @@ export const zksyncera: Layer2 = {
           selector: '0xc3d93e7c',
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-          sinceTimestampInclusive: new UnixTime(1701258299),
-          untilTimestampExclusive: new UnixTime(1710167255),
+          sinceTimestamp: new UnixTime(1701258299),
+          untilTimestamp: new UnixTime(1710167255),
         },
       },
       {
@@ -335,8 +342,8 @@ export const zksyncera: Layer2 = {
           selector: '0xc3d93e7c',
           functionSignature:
             'function executeBatches(tuple(uint64, bytes32, uint64, uint256, bytes32, bytes32, uint256, bytes32)[] _newBatchesData)',
-          sinceTimestampInclusive: new UnixTime(1710167255),
-          untilTimestampExclusive: new UnixTime(1717683407),
+          sinceTimestamp: new UnixTime(1710167255),
+          untilTimestamp: new UnixTime(1717683407),
         },
       },
       {
@@ -352,7 +359,7 @@ export const zksyncera: Layer2 = {
           selector: '0x6f497ac6',
           functionSignature:
             'function executeBatchesSharedBridge(uint256 _chainId, (uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)',
-          sinceTimestampInclusive: new UnixTime(1717683407),
+          sinceTimestamp: new UnixTime(1717683407),
         },
       },
     ],
@@ -446,7 +453,7 @@ export const zksyncera: Layer2 = {
       ],
     },
     sequencerFailure: {
-      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+      ...RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L1'),
       sources: [
         {
           contract: 'ZKsync',
@@ -500,22 +507,14 @@ export const zksyncera: Layer2 = {
     },
   ),
   technology: {
-    newCryptography: {
-      ...NEW_CRYPTOGRAPHY.ZK_BOTH,
-    },
-    dataAvailability: {
-      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
-      references: [],
-    },
-    operator: {
-      ...OPERATOR.CENTRALIZED_OPERATOR,
-      references: [],
-    },
+    newCryptography: NEW_CRYPTOGRAPHY.ZK_BOTH,
+    dataAvailability: TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_BLOB_OR_CALLDATA,
+    operator: OPERATOR.CENTRALIZED_OPERATOR,
     forceTransactions: {
       name: 'Users can force any transaction via L1',
       description:
         'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
-        transactions from L1 queue in an L1 block.',
+        transactions from L1 queue in an L2 block.',
       risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [
         {

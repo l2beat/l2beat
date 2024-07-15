@@ -1,4 +1,102 @@
-Generated with discovered.json: 0xb44723559ac564e3c08943732e9a9dfda13bd295
+Generated with discovered.json: 0xe016135302e207e21201065ab78e19edbf886272
+
+# Diff at Mon, 15 Jul 2024 07:22:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c6bae99047cf03487a19e4008cfffabf520bcf2b block: 20262044
+- current block number: 20310388
+
+## Description
+
+This is the [Taiko protocol v1.8.0 upgrade](https://github.com/taikoxyz/taiko-mono/releases/tag/protocol-v1.8.0).
+
+tldr:
+- TAIKO bonds are escrowed in the TaikoL1 contract and only manually withdrawn using `withdrawBond()` by proposers / provers. For efficiency, bonds can be deposited once in the contract and be left there.
+- ring buffer size increased by 36 000 blocks (5 days worth of blocks @ 12 seconds). `getVerifiedBlockProver` can be called on these blocks to get their prover's address.
+- `CalldataTxList` emitted when calldata is used as DA (to be used for derivation)
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.$implementation:
+-        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
++        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
+      values.getConfig.blockRingBufferSize:
+-        324512
++        360000
+      values.impl:
+-        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
++        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      values.$implementation:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+      values.impl:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ProverSetProxy/ProverSet.sol                   |   41 +-
+ .../TaikoL1Contract/TaikoL1.sol                    | 3683 ++++++++++----------
+ 2 files changed, 1924 insertions(+), 1800 deletions(-)
+```
+
+Generated with discovered.json: 0xd7d312e4f6b226cdfb6b99d711a06dfdbe019f7c
+
+# Diff at Mon, 08 Jul 2024 13:19:34 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d3100be6db9452d1d69138aa6310415ece67a66f block: 20232590
+- current block number: 20262044
+
+## Description
+
+New ProverSet implementation: added possibility for authorized admin to call depositBond and withdrawBond on TaikoL1contract. These functions don't exist yet on TaikoL1contract, so this change is probably the beginning of a bigger update.
+
+ProverSet address changed in L1RollupAddressManager, old implementation still in use under ProverSetProxy.
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.prover_set:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ProverSet (0x518845daA8870bE2C59E49620Fc262AD48953C9a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../taiko/ethereum/{.flat@20232590 => .flat}/ProverSet.sol     | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+```
+
+Generated with discovered.json: 0x6ea276c960b8bccf9d9d8ae744307cada936d2e3
 
 # Diff at Wed, 03 Jul 2024 10:37:45 GMT:
 

@@ -10,3 +10,7 @@ node_modules
 .vscode
 .idea
 .*.swp
+
+# Docker
+.dockerignore
+Dockerfile.*

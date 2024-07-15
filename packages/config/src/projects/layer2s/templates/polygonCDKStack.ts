@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -34,9 +37,10 @@ import {
   makeBridgeCompatible,
 } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { BadgeId } from '../../badges'
+import { Badge, BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import { mergeBadges } from './utils'
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -74,6 +78,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
+  if (daProvider !== undefined) {
+    assert(
+      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      'DA badge is required for external DA',
+    )
+  }
 
   const upgradeDelay = shared.getContractValue<number>(
     'Timelock',
@@ -185,8 +195,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x5e9145c9',
                   functionSignature:
                     'function sequenceBatches((bytes,bytes32,uint64,uint64)[] batches,address l2Coinbase)',
-                  sinceTimestampInclusive: new UnixTime(1679653163),
-                  untilTimestampExclusive: new UnixTime(1707824735),
+                  sinceTimestamp: new UnixTime(1679653163),
+                  untilTimestamp: new UnixTime(1707824735),
                 },
               },
               {
@@ -208,8 +218,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x2b0006fa',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] proof)',
-                  sinceTimestampInclusive: new UnixTime(1679653163),
-                  untilTimestampExclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1679653163),
+                  untilTimestamp: new UnixTime(1707822059),
                 },
               },
               {
@@ -231,8 +241,8 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x621dd411',
                   functionSignature:
                     'function verifyBatches(uint64 pendingStateNum,uint64 initNumBatch,uint64 finalNewBatch,bytes32 newLocalExitRoot,bytes32 newStateRoot,bytes32[24] calldata proof) ',
-                  sinceTimestampInclusive: new UnixTime(1679653163),
-                  untilTimestampExclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1679653163),
+                  untilTimestamp: new UnixTime(1707822059),
                 },
               },
               {
@@ -254,7 +264,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x1489ed10',
                   functionSignature:
                     'function verifyBatchesTrustedAggregator(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestampInclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1707822059),
                 },
               },
               {
@@ -276,7 +286,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
                   selector: '0x87c20c01',
                   functionSignature:
                     'function verifyBatches(uint32,uint64,uint64,uint64,bytes32,bytes32,address,bytes32[24])',
-                  sinceTimestampInclusive: new UnixTime(1707822059),
+                  sinceTimestamp: new UnixTime(1707822059),
                 },
               },
             ],
@@ -593,7 +603,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
-    badges: templateVars.badges,
+    badges: mergeBadges(
+      [Badge.Stack.PolygonCDK, Badge.VM.EVM, Badge.DA.EthereumCalldata],
+      templateVars.badges ?? [],
+    ),
   }
 }
 
@@ -619,7 +632,7 @@ function technologyDA(
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

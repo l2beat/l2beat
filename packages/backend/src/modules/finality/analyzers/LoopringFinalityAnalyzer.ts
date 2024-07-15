@@ -9,6 +9,7 @@ import { BigNumber, utils } from 'ethers'
 import { DegateClient } from '../../../peripherals/degate'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
@@ -16,10 +17,16 @@ export class LoopringFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
     livenessRepository: LivenessRepository,
+    indexerConfigurationRepository: IndexerConfigurationRepository,
     projectId: ProjectId,
     private readonly l2Provider: LoopringClient | DegateClient,
   ) {
-    super(provider, livenessRepository, projectId)
+    super(
+      provider,
+      livenessRepository,
+      indexerConfigurationRepository,
+      projectId,
+    )
   }
 
   getTrackedTxSubtype(): TrackedTxsConfigSubtype {

@@ -5,7 +5,10 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   DERIVATION,
   EXITS,
@@ -21,6 +24,7 @@ import { OPERATOR } from '../../common/operator'
 import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
+import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
@@ -29,7 +33,7 @@ const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }
@@ -87,6 +91,14 @@ const livenessInterval = discovery.getContractValue<number>(
 export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
+    Badge.Infra.Superchain,
+    Badge.Other.L3HostChain,
+    Badge.Other.Governance,
+  ],
   display: {
     name: 'OP Mainnet',
     slug: 'optimism',
@@ -200,7 +212,7 @@ export const optimism: Layer2 = {
           formula: 'transfer',
           from: sequencerAddress,
           to: sequencerInbox,
-          sinceTimestampInclusive: genesisTimestamp,
+          sinceTimestamp: genesisTimestamp,
         },
       },
       {
@@ -216,8 +228,8 @@ export const optimism: Layer2 = {
           selector: '0x9aaab648',
           functionSignature:
             'function proposeL2Output(bytes32 _outputRoot, uint256 _l2BlockNumber, bytes32 _l1Blockhash, uint256 _l1BlockNumber)',
-          sinceTimestampInclusive: new UnixTime(1660662182),
-          untilTimestampExclusive: new UnixTime(1718039363),
+          sinceTimestamp: new UnixTime(1660662182),
+          untilTimestamp: new UnixTime(1718039363),
         },
       },
       {
@@ -231,7 +243,7 @@ export const optimism: Layer2 = {
           selector: '0x82ecf2f6',
           functionSignature:
             'function create(uint32 _gameType, bytes32 _rootClaim, bytes _extraData) payable returns (address proxy_)',
-          sinceTimestampInclusive: new UnixTime(1718039363), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
+          sinceTimestamp: new UnixTime(1718039363), // first create() tx after upgrade https://etherscan.io/tx/0x720954e51b8d5a39475666a54b8087e4b11fcab184eab57e51f821ba14b4c014
         },
       },
     ],
@@ -312,7 +324,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0x4146DF64D83acB0DcB0c1a4884a16f090165e122#code',
+          href: 'https://etherscan.io/address/0xf691F8A6d908B58C534B624cF16495b491E633BA#code',
         },
       ],
     },

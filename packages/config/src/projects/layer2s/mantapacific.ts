@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { CELESTIA_DA_PROVIDER, opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -23,7 +24,10 @@ export const mantapacific: Layer2 = opStackL2({
       websites: ['https://pacific.manta.network/'],
       apps: ['https://pacific-bridge.manta.network/'],
       documentation: ['https://docs.manta.network/'],
-      explorers: ['https://pacific-explorer.manta.network/'],
+      explorers: [
+        'https://pacific-explorer.manta.network/',
+        'https://169.routescan.io/',
+      ],
       repositories: ['https://github.com/Manta-Network'],
       socialMedia: [
         'https://discord.gg/mantanetwork',
@@ -42,7 +46,6 @@ export const mantapacific: Layer2 = opStackL2({
     assessCount: subtractOne,
   },
   associatedTokens: ['MANTA'],
-
   chainConfig: {
     name: 'mantapacific',
     chainId: 169,
@@ -55,6 +58,12 @@ export const mantapacific: Layer2 = opStackL2({
     // https://pacific-explorer.manta.network/block/0
     minTimestampForTvl: UnixTime.fromDate(new Date('2023-09-09T01:45:59Z')),
     multicallContracts: [
+      {
+        sinceBlock: 332890,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
       {
         sinceBlock: 54816,
         batchSize: 150,
@@ -86,4 +95,5 @@ export const mantapacific: Layer2 = opStackL2({
       description: 'Manta Pacific is live on mainnet.',
     },
   ],
+  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
 })
