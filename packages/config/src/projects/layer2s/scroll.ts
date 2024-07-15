@@ -606,6 +606,10 @@ export const scroll: Layer2 = {
         description: 'Contract used to bridge WETH from L1 to L2.',
         ...upgradesScrollMultisig,
       }),
+      discovery.getContractDetails('L1BatchBridgeGateway', {
+        description: 'Contract used to efficiently bridge ETH (in batches) from L1 to L2.',
+        ...upgradesScrollMultisig,
+      }),
       discovery.getContractDetails('L1StandardERC20Gateway', {
         description:
           'Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.',
