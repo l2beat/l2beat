@@ -14,10 +14,7 @@ const upgradeability = {
 
 export const karak: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [
-    Badge.DA.Celestia,
-    Badge.RaaS.Caldera,
-  ],
+  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
   discovery,
   display: {
     name: 'Karak',

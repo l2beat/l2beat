@@ -28,10 +28,7 @@ const upgradeability = {
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
-  badges: [
-    Badge.DA.DAC,
-    Badge.RaaS.Gelato,
-  ],
+  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   daProvider: {
     name: 'DAC',
     bridge: {
