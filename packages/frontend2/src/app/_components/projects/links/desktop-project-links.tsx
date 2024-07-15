@@ -29,7 +29,7 @@ export function DesktopProjectLinks({ projectLinks }: Props) {
 function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
   if (projectLink.links.length === 1 && projectLink.name !== 'Social') {
     return (
-      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 font-medium text-xs transition-colors dark:bg-zinc-800 dark:hover:bg-zinc-700 hover:bg-gray-200">
+      <div className="flex cursor-pointer flex-row items-center gap-1.5 rounded-lg bg-gray-100 px-2 py-1.5 font-medium text-xs transition-colors dark:bg-zinc-900 dark:hover:bg-zinc-700 hover:bg-gray-200">
         <PlainLink
           href={projectLink.links[0]}
           className="flex flex-row items-center gap-1.5"
@@ -47,12 +47,12 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <Popover>
-      <PopoverTrigger className="group dark:bg-zinc-800">
+      <PopoverTrigger className="group dark:bg-zinc-900 bg-gray-100 data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-zinc-700 text-xs font-medium">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}{' '}
         <ChevronIcon className="fill-current transition-transform duration-200 ease-out group-data-[state=open]:-rotate-180" />
       </PopoverTrigger>
-      <PopoverContent align="start">
+      <PopoverContent align="start" className="dark:bg-zinc-900 bg-gray-100">
         {projectLink.links.map((link) => {
           return (
             <PlainLink
