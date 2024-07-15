@@ -1,12 +1,15 @@
 import { TrackedTxLivenessConfig } from '@l2beat/shared'
 import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
-import { LivenessRecord, LivenessRepository } from './LivenessRepository'
+import {
+  LivenessRecord,
+  LivenessRepository,
+} from '../repositories/LivenessRepository'
 
 export type LivenessConfig = Pick<TrackedTxLivenessConfig, 'id' | 'subtype'>
 
 export type LivenessRecordWithConfig = LivenessRecord & LivenessConfig
 
-export class LivenessWithConfigRepository {
+export class LivenessWithConfigService {
   constructor(
     private readonly configurations: LivenessConfig[],
     private readonly livenessRepository: LivenessRepository,

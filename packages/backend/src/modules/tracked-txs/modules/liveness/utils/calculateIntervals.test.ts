@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { LivenessRecordWithConfig } from '../repositories/LivenessWithConfigRepository'
+import { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import { calculateIntervals } from './calculateIntervals'
 
 describe(calculateIntervals.name, () => {

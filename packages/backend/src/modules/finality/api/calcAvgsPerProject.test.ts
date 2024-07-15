@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { LivenessRecordWithConfig } from '../../tracked-txs/modules/liveness/repositories/LivenessWithConfigRepository'
+import { LivenessRecordWithConfig } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 
 const NOW = UnixTime.now()

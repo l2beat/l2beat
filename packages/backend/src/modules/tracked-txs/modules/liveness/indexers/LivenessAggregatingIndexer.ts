@@ -17,8 +17,8 @@ import {
 import { LivenessRepository } from '../repositories/LivenessRepository'
 import {
   LivenessRecordWithConfig,
-  LivenessWithConfigRepository,
-} from '../repositories/LivenessWithConfigRepository'
+  LivenessWithConfigService,
+} from '../services/LivenessWithConfigService'
 import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
 import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
@@ -101,7 +101,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         continue
       }
 
-      const livenessWithConfig = new LivenessWithConfigRepository(
+      const livenessWithConfig = new LivenessWithConfigService(
         activeConfigs,
         this.$.livenessRepository,
       )

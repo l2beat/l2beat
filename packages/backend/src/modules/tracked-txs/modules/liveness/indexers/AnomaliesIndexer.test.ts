@@ -13,7 +13,7 @@ import {
   LivenessRecord,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
-import { LivenessRecordWithConfig } from '../repositories/LivenessWithConfigRepository'
+import { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
 import {
   AnomaliesIndexer,
   AnomaliesIndexerIndexerDeps,

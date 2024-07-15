@@ -28,7 +28,7 @@ import {
   AnomaliesRepository,
 } from '../repositories/AnomaliesRepository'
 import { LivenessRepository } from '../repositories/LivenessRepository'
-import { LivenessWithConfigRepository } from '../repositories/LivenessWithConfigRepository'
+import { LivenessWithConfigService } from '../services/LivenessWithConfigService'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
@@ -245,7 +245,7 @@ export class LivenessController {
       )
     }
 
-    const livenessWithConfig = new LivenessWithConfigRepository(
+    const livenessWithConfig = new LivenessWithConfigService(
       activeConfigs,
       this.$.livenessRepository,
     )
@@ -296,7 +296,7 @@ export class LivenessController {
             return
           }
 
-          const livenessWithConfig = new LivenessWithConfigRepository(
+          const livenessWithConfig = new LivenessWithConfigService(
             activeConfigs,
             this.$.livenessRepository,
           )

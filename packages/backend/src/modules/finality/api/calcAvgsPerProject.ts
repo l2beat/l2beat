@@ -1,6 +1,6 @@
 import { FinalityDataPoint, UnixTime } from '@l2beat/shared-pure'
 
-import { LivenessRecordWithConfig } from '../../tracked-txs/modules/liveness/repositories/LivenessWithConfigRepository'
+import { LivenessRecordWithConfig } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 import { calculateIntervals } from '../../tracked-txs/modules/liveness/utils/calculateIntervals'
 import { calculateStats } from '../../tracked-txs/modules/liveness/utils/calculateStats'
 import { filterIntervalsByRange } from '../../tracked-txs/modules/liveness/utils/filterIntervalsByRange'

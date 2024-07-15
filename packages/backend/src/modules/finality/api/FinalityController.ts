@@ -4,7 +4,7 @@ import { keyBy, mapValues, partition } from 'lodash'
 import { FinalityProjectConfig } from '../../../config/features/finality'
 import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { LivenessWithConfigRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessWithConfigRepository'
+import { LivenessWithConfigService } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
@@ -145,7 +145,7 @@ export class FinalityController {
 
         if (!syncedUntil) return
 
-        const livenessWithConfig = new LivenessWithConfigRepository(
+        const livenessWithConfig = new LivenessWithConfigService(
           configsToUse,
           this.$.livenessRepository,
         )

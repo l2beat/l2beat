@@ -9,7 +9,7 @@ import { chunk } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { LivenessWithConfigRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessWithConfigRepository'
+import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 
 export type Transaction = {
   txHash: string
@@ -55,7 +55,7 @@ export abstract class BaseAnalyzer {
       `No configurations found for the project ${this.projectId}`,
     )
 
-    const livenessWithConfig = new LivenessWithConfigRepository(
+    const livenessWithConfig = new LivenessWithConfigService(
       projectConfigs,
       this.livenessRepository,
     )
