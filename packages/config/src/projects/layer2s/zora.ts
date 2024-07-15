@@ -8,21 +8,6 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 
-const upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const superchainUpgradeability = {
-  upgradableBy: ['SuperchainProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
-
-const livenessInterval = discovery.getContractValue<number>(
-  'LivenessModule',
-  'livenessInterval',
-)
-
 export const zora: Layer2 = opStackSmartL2({
   discovery,
   badges: [
@@ -57,7 +42,6 @@ export const zora: Layer2 = opStackSmartL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  upgradeability,
   rpcUrl: 'https://rpc.zora.co',
   finality: {
     type: 'OPStack-blob',
