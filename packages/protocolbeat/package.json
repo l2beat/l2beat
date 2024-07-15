@@ -1,5 +1,5 @@
 {
-  "name": "@protocol-beat/frontend",
+  "name": "@l2beat/protocolbeat",
   "version": "0.1.0",
   "private": true,
   "sideEffects": false,

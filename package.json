@@ -12,20 +12,15 @@
     ]
   },
   "scripts": {
-    "build:backend": "wsrun -p @protocol-beat/backend -recsm build",
-    "build:frontend": "wsrun -p @protocol-beat/frontend -recsm build",
-    "build": "wsrun -ecsm build",
-    "build:dependencies": "wsrun -p @protocol-beat/{types,common,config,update-monitor} -recsm build",
+    "build": "wsrun build",
     "ci:check": "yarn clean && yarn build && yarn format && yarn lint && yarn typecheck && yarn test",
-    "clean": "wsrun -ecam clean",
+    "clean": "wsrun clean",
     "fix": "yarn lint:fix && yarn format:fix",
-    "format:fix": "wsrun -ecam format:fix",
-    "format": "wsrun -ecam format",
-    "heroku-postbuild": "yarn build:backend",
-    "lint:fix": "wsrun -ecam lint:fix",
-    "lint": "wsrun -ecam lint",
-    "start": "cd packages/backend && yarn start",
-    "typecheck": "wsrun -ecam typecheck"
+    "format:fix": "wsrun format:fix",
+    "format": "wsrun format",
+    "lint:fix": "wsrun lint:fix",
+    "lint": "wsrun lint",
+    "typecheck": "wsrun typecheck"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.0",

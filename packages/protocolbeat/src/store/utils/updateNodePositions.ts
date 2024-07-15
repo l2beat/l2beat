@@ -1,5 +1,5 @@
 import type { Box, Connection, State } from '../State'
-import { BORDER_WIDTH, FIELD_HEIGHT, HEADER_HEIGHT } from '../utils/constants'
+import { BORDER_WIDTH, FIELD_HEIGHT, HEADER_HEIGHT } from './constants'
 import { encodeNodeLocations, getLayoutStorageKey } from './storageParsing'
 
 export function updateNodePositions(state: State): State {
