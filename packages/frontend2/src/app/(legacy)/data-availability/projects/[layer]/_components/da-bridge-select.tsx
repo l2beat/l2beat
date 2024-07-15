@@ -32,15 +32,15 @@ export function DaBridgeSelect({ project }: Props) {
               <button
                 key={bridge.id}
                 onClick={() => setOpen(false)}
-                className="flex relative pr-8 items-center w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
+                className="flex relative pr-9 items-center w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
               >
                 {bridge.name}
-                <CheckIcon className="stroke-green-500 absolute right-2.5" />
+                <CheckIcon className="stroke-black dark:stroke-white size-5 absolute right-2.5" />
               </button>
             ) : (
               <Link
                 key={bridge.id}
-                className="w-full pr-8 outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
+                className="w-full pr-9 outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
                 href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
               >
                 {bridge.name}
