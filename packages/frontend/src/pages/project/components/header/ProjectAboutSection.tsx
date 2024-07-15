@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { badgesCompareFn, type BadgeId } from '@l2beat/config'
+import { type BadgeId, badgesCompareFn } from '@l2beat/config'
 import { usePageBuildContext } from '../../../../build/pageBuildContext'
 import { OverflowWrapper } from '../../../../components/OverflowWrapper'
 import { ReadMore } from '../../../../components/ReadMore'
