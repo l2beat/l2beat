@@ -681,6 +681,13 @@ export const scroll: Layer2 = {
   ],
   milestones: [
     {
+      name: 'Curie upgrade',
+      link: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
+      date: '2024-07-03T00:00:00.00Z',
+      description:
+        'Introduces data compression, new opcodes, dymanic blocktime, and new transaction types.',
+    },
+    {
       name: 'Bernoulli upgrade',
       link: 'https://scroll.io/blog/blobs-are-here-scrolls-bernoulli-upgrade',
       date: '2024-04-29T00:00:00.00Z',

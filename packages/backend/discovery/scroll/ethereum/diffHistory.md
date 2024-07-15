@@ -10,6 +10,8 @@ Generated with discovered.json: 0xc91c535b44afb48eb36ccafc1f98ec0e73dd837f
 
 Batches are reverted [in this transaction](https://app.blocksec.com/explorer/tx/eth/0xf58cd0223418a4dd390be63d67c31ccd3b05a82d59461106227664e8fc417ac5). Unclear what justified this action.
 
+Relevant incident page: https://status.scroll.io/incidents/44k6s4qg6kcs
+
 ## Watched changes
 
 ```diff
