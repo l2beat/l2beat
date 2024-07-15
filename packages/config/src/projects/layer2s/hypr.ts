@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('hypr')
 
 export const hypr: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [Badge.VM.EVM, Badge.DA.Celestia, Badge.Stack.OPStack],
+  badges: [Badge.DA.Celestia],
   discovery,
   display: {
     name: 'Hypr',

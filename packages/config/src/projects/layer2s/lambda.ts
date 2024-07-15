@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -14,7 +13,6 @@ const upgradeability = {
 
 export const lambda: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.OPStack],
   display: {
     name: 'Lambda Chain',
     slug: 'lambda',
