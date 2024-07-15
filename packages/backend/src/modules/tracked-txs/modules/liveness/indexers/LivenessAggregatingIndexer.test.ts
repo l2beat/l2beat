@@ -10,7 +10,7 @@ import {
   AggregatedLivenessRepository,
 } from '../repositories/AggregatedLivenessRepository'
 import {
-  LivenessRecordWithSubtype,
+  LivenessRecord,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
 import {
@@ -22,6 +22,7 @@ const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
 
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
+const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
 
 const MOCK_PROJECTS = [
   mockObject<BackendProject>({
@@ -31,7 +32,7 @@ const MOCK_PROJECTS = [
       mockObject<TrackedTxConfigEntry>({
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
-        subtype: 'batchSubmissions',
+        subtype: MOCK_CONFIGURATION_TYPE,
         untilTimestamp: UnixTime.now(),
       }),
     ],
@@ -46,19 +47,19 @@ const MOCK_CONFIGURATIONS = [
   }),
 ]
 
-const MOCK_LIVENESS: LivenessRecordWithSubtype[] = [
-  {
+const MOCK_LIVENESS: LivenessRecord[] = [
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW.add(-1, 'hours'),
-    subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW.add(-3, 'hours'),
-    subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecord>({
+    configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW.add(-7, 'hours'),
-    subtype: 'batchSubmissions',
-  },
+  }),
 ]
 
 describe(LivenessAggregatingIndexer.name, () => {
@@ -161,7 +162,7 @@ describe(LivenessAggregatingIndexer.name, () => {
   describe(LivenessAggregatingIndexer.prototype.generateLiveness.name, () => {
     it('should generate aggregated liveness', async () => {
       const mockLivenessRepository = mockObject<LivenessRepository>({
-        getWithSubtypeByProjectIdsUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
+        getByConfigurationIdUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
       })
 
       const mockIndexerService = mockObject<IndexerService>({
@@ -177,8 +178,8 @@ describe(LivenessAggregatingIndexer.name, () => {
       const result = await indexer.generateLiveness(NOW)
 
       expect(
-        mockLivenessRepository.getWithSubtypeByProjectIdsUpTo,
-      ).toHaveBeenCalledWith(MOCK_PROJECTS[0].projectId, NOW)
+        mockLivenessRepository.getByConfigurationIdUpTo,
+      ).toHaveBeenCalledWith([MOCK_CONFIGURATION_ID], NOW)
 
       expect(result).toEqual([
         {
@@ -219,7 +220,11 @@ describe(LivenessAggregatingIndexer.name, () => {
       const result = indexer.aggregatedRecords(
         MOCK_PROJECTS[0].projectId,
         'batchSubmissions',
-        MOCK_LIVENESS,
+        MOCK_LIVENESS.map((record) => ({
+          ...record,
+          id: MOCK_CONFIGURATION_ID,
+          subtype: MOCK_CONFIGURATION_TYPE,
+        })),
         NOW,
         ['30D'],
       )

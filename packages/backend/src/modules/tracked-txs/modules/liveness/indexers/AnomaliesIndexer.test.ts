@@ -10,9 +10,10 @@ import {
   AnomaliesRepository,
 } from '../repositories/AnomaliesRepository'
 import {
-  LivenessRecordWithSubtype,
+  LivenessRecord,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
+import { LivenessRecordWithConfig } from '../repositories/LivenessWithConfigRepository'
 import {
   AnomaliesIndexer,
   AnomaliesIndexerIndexerDeps,
@@ -22,6 +23,7 @@ const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
 
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
+const MOCK_CONFIGURATION_TYPE = 'batchSubmissions'
 
 const MOCK_PROJECTS = [
   mockObject<BackendProject>({
@@ -31,7 +33,7 @@ const MOCK_PROJECTS = [
       mockObject<TrackedTxConfigEntry>({
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
-        subtype: 'batchSubmissions',
+        subtype: MOCK_CONFIGURATION_TYPE,
         untilTimestamp: UnixTime.now(),
       }),
     ],
@@ -53,15 +55,15 @@ describe(AnomaliesIndexer.name, () => {
         tag: 'update-skip',
       })
 
-      const mockcalculateAnomalies = mockFn().resolvesTo([])
-      indexer.getAnomalies = mockcalculateAnomalies
+      const mockCalculateAnomalies = mockFn().resolvesTo([])
+      indexer.getAnomalies = mockCalculateAnomalies
 
       const from = MIN.toNumber()
       const to = NOW.add(-2, 'days').toNumber()
 
       const result = await indexer.update(from, to)
 
-      expect(mockcalculateAnomalies).not.toHaveBeenCalled()
+      expect(mockCalculateAnomalies).not.toHaveBeenCalled()
 
       expect(result).toEqual(to)
     })
@@ -163,25 +165,22 @@ describe(AnomaliesIndexer.name, () => {
   describe(AnomaliesIndexer.prototype.getAnomalies.name, () => {
     it('should get anomalies', async () => {
       const mockLivenessRecords = [
-        {
-          projectId: MOCK_PROJECTS[0].projectId,
-          subtype: 'batchSubmissions',
-          timestamp: NOW,
-        },
-        {
-          projectId: MOCK_PROJECTS[0].projectId,
-          subtype: 'proofSubmissions',
-          timestamp: NOW,
-        },
-        {
-          projectId: MOCK_PROJECTS[0].projectId,
-          subtype: 'stateUpdates',
-          timestamp: NOW,
-        },
+        mockObject<LivenessRecord>({
+          configurationId: MOCK_CONFIGURATION_ID,
+          timestamp: NOW.add(-1, 'hours'),
+        }),
+        mockObject<LivenessRecord>({
+          configurationId: MOCK_CONFIGURATION_ID,
+          timestamp: NOW.add(-3, 'hours'),
+        }),
+        mockObject<LivenessRecord>({
+          configurationId: MOCK_CONFIGURATION_ID,
+          timestamp: NOW.add(-7, 'hours'),
+        }),
       ]
 
       const mockLivenessRepository = mockObject<LivenessRepository>({
-        getWithSubtypeByProjectIdsWithinTimeRange:
+        getByConfigurationIdWithinTimeRange:
           mockFn().resolvesTo(mockLivenessRecords),
       })
 
@@ -229,18 +228,17 @@ describe(AnomaliesIndexer.name, () => {
       const result = await indexer.getAnomalies(NOW)
 
       expect(
-        mockLivenessRepository.getWithSubtypeByProjectIdsWithinTimeRange,
-      ).toHaveBeenCalledWith(
-        MOCK_PROJECTS[0].projectId,
-        NOW.add(-60, 'days'),
-        NOW,
-      )
+        mockLivenessRepository.getByConfigurationIdWithinTimeRange,
+      ).toHaveBeenCalledWith([MOCK_CONFIGURATION_ID], NOW.add(-60, 'days'), NOW)
 
       expect(mockDetectAnomalies).toHaveBeenNthCalledWith(
         1,
         MOCK_PROJECTS[0].projectId,
         'batchSubmissions',
-        mockLivenessRecords.filter((r) => r.subtype === 'batchSubmissions'),
+        mockLivenessRecords.map((r) => ({
+          ...r,
+          ...MOCK_PROJECTS[0].trackedTxsConfig![0],
+        })),
         NOW,
       )
 
@@ -248,7 +246,7 @@ describe(AnomaliesIndexer.name, () => {
         2,
         MOCK_PROJECTS[0].projectId,
         'stateUpdates',
-        mockLivenessRecords.filter((r) => r.subtype === 'stateUpdates'),
+        [],
         NOW,
       )
 
@@ -256,7 +254,7 @@ describe(AnomaliesIndexer.name, () => {
         3,
         MOCK_PROJECTS[0].projectId,
         'proofSubmissions',
-        mockLivenessRecords.filter((r) => r.subtype === 'proofSubmissions'),
+        [],
         NOW,
       )
 
@@ -282,12 +280,14 @@ describe(AnomaliesIndexer.name, () => {
       const indexer = createIndexer({ tag: 'not-enough-data' })
 
       const lastHour = NOW.toStartOf('hour')
-      const records: LivenessRecordWithSubtype[] = Array.from({
+      const records: LivenessRecordWithConfig[] = Array.from({
         length: 1000,
-      }).map((_, i) => ({
-        timestamp: lastHour.add(-i, 'hours'),
-        subtype: 'batchSubmissions' as const,
-      }))
+      }).map((_, i) =>
+        mockObject<LivenessRecordWithConfig>({
+          timestamp: lastHour.add(-i, 'hours'),
+          subtype: 'batchSubmissions' as const,
+        }),
+      )
 
       const result = indexer.detectAnomalies(
         MOCK_PROJECTS[0].projectId,
@@ -303,12 +303,14 @@ describe(AnomaliesIndexer.name, () => {
       const indexer = createIndexer({ tag: 'no-anomalies' })
 
       const lastHour = NOW.toStartOf('hour')
-      const records: LivenessRecordWithSubtype[] = Array.from({
+      const records: LivenessRecordWithConfig[] = Array.from({
         length: 2000,
-      }).map((_, i) => ({
-        timestamp: lastHour.add(-i, 'hours'),
-        subtype: 'batchSubmissions' as const,
-      }))
+      }).map((_, i) =>
+        mockObject<LivenessRecordWithConfig>({
+          timestamp: lastHour.add(-i, 'hours'),
+          subtype: 'batchSubmissions' as const,
+        }),
+      )
 
       const result = indexer.detectAnomalies(
         MOCK_PROJECTS[0].projectId,
@@ -325,12 +327,14 @@ describe(AnomaliesIndexer.name, () => {
 
       const anomalyDuration = 5
       const lastHour = NOW.toStartOf('hour')
-      const records: LivenessRecordWithSubtype[] = Array.from({
+      const records: LivenessRecordWithConfig[] = Array.from({
         length: 2000,
-      }).map((_, i) => ({
-        timestamp: lastHour.add(-i - anomalyDuration, 'hours'),
-        subtype: 'batchSubmissions' as const,
-      }))
+      }).map((_, i) =>
+        mockObject<LivenessRecordWithConfig>({
+          timestamp: lastHour.add(-i - anomalyDuration, 'hours'),
+          subtype: 'batchSubmissions' as const,
+        }),
+      )
 
       const result = indexer.detectAnomalies(
         MOCK_PROJECTS[0].projectId,

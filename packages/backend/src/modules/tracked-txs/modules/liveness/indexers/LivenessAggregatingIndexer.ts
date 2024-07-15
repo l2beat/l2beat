@@ -14,14 +14,15 @@ import {
   AggregatedLivenessRecord,
   AggregatedLivenessRepository,
 } from '../repositories/AggregatedLivenessRepository'
+import { LivenessRepository } from '../repositories/LivenessRepository'
 import {
-  LivenessRecordWithSubtype,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
+  LivenessRecordWithConfig,
+  LivenessWithConfigRepository,
+} from '../repositories/LivenessWithConfigRepository'
 import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
 import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
-import { getProjectsToSync } from '../utils/getProjectsToSync'
+import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export interface LivenessAggregatingIndexerDeps
@@ -93,14 +94,19 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         'tracked_txs_indexer',
       )
 
-    const projectsToSync = getProjectsToSync(this.$.projects, configurations)
+    for (const project of this.$.projects) {
+      const activeConfigs = getActiveConfigurations(project, configurations)
 
-    for (const project of projectsToSync) {
-      const livenessRecords =
-        await this.$.livenessRepository.getWithSubtypeByProjectIdsUpTo(
-          project.projectId,
-          syncTo,
-        )
+      if (!activeConfigs) {
+        continue
+      }
+
+      const livenessWithConfig = new LivenessWithConfigRepository(
+        activeConfigs,
+        this.$.livenessRepository,
+      )
+
+      const livenessRecords = await livenessWithConfig.getUpTo(syncTo)
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
@@ -152,7 +158,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
   aggregatedRecords(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
-    livenessRecords: LivenessRecordWithSubtype[],
+    livenessRecords: LivenessRecordWithConfig[],
     syncTo: UnixTime,
     ranges: AggregatedLivenessRange[],
   ): AggregatedLivenessRecord[] {

@@ -1,35 +1,35 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
-import { LivenessRecordWithSubtype } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { expect, mockObject } from 'earl'
+import { LivenessRecordWithConfig } from '../../tracked-txs/modules/liveness/repositories/LivenessWithConfigRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 
 const NOW = UnixTime.now()
 
-const RECORDS: LivenessRecordWithSubtype[] = [
-  {
+const RECORDS: LivenessRecordWithConfig[] = [
+  mockObject<LivenessRecordWithConfig>({
     timestamp: NOW,
     subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecordWithConfig>({
     timestamp: NOW.add(-1, 'hours'),
     subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecordWithConfig>({
     timestamp: NOW.add(-3, 'hours'),
     subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecordWithConfig>({
     timestamp: NOW.add(-29, 'days'),
     subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecordWithConfig>({
     timestamp: NOW.add(-30, 'days'),
     subtype: 'batchSubmissions',
-  },
-  {
+  }),
+  mockObject<LivenessRecordWithConfig>({
     timestamp: NOW.add(-31, 'days'),
     subtype: 'batchSubmissions',
-  },
+  }),
 ]
 
 describe(calcAvgsPerProject.name, () => {

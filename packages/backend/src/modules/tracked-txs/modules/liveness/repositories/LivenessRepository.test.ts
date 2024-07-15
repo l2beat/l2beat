@@ -1,33 +1,23 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../../../../test/database'
-import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
-import {
-  LivenessRecord,
-  LivenessRecordWithSubtype,
-  LivenessRepository,
-} from './LivenessRepository'
+import { LivenessRecord, LivenessRepository } from './LivenessRepository'
 
 describeDatabase(LivenessRepository.name, (knex, kysely) => {
   const oldRepo = new LivenessRepository(knex, Logger.SILENT)
-  const oldConfigRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
   const newRepo = kysely.liveness
-  const newConfigRepo = kysely.indexerConfiguration
 
   const txIdA = createTrackedTxId.random()
   const txIdB = createTrackedTxId.random()
   const txIdC = createTrackedTxId.random()
 
-  suite(oldRepo, oldConfigRepo)
-  suite(newRepo, newConfigRepo)
+  suite(oldRepo)
+  suite(newRepo)
 
-  function suite(
-    repository: typeof oldRepo | typeof newRepo,
-    configRepository: typeof oldConfigRepo | typeof newConfigRepo,
-  ) {
+  function suite(repository: typeof oldRepo | typeof newRepo) {
     const START = UnixTime.now()
     const DATA = [
       {
@@ -43,7 +33,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
         configurationId: txIdA,
       },
       {
-        timestamp: START.add(-2, 'hours'),
+        timestamp: START.add(-3, 'hours'),
         blockNumber: 12346,
         txHash: '0xabcdef1234567890',
         configurationId: txIdB,
@@ -56,49 +46,8 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
       },
     ]
 
-    const CONFIGS = [
-      {
-        indexerId: 'indexer',
-        id: DATA[0].configurationId,
-        minHeight: START.toNumber(),
-        maxHeight: null,
-        currentHeight: null,
-        properties: JSON.stringify({
-          projectId: 'project1',
-          type: 'liveness',
-          subtype: 'batchSubmissions',
-        }),
-      },
-      {
-        indexerId: 'indexer',
-        id: DATA[2].configurationId,
-        minHeight: START.toNumber(),
-        maxHeight: null,
-        currentHeight: null,
-        properties: JSON.stringify({
-          projectId: 'project2',
-          type: 'liveness',
-          subtype: 'batchSubmissions',
-        }),
-      },
-      {
-        indexerId: 'indexer',
-        id: DATA[3].configurationId,
-        minHeight: START.toNumber(),
-        maxHeight: null,
-        currentHeight: null,
-        properties: JSON.stringify({
-          projectId: 'project3',
-          type: 'liveness',
-          subtype: 'batchSubmissions',
-        }),
-      },
-    ]
-
     beforeEach(async function () {
       this.timeout(10000)
-      await configRepository.deleteAll()
-      await configRepository.addOrUpdateMany(CONFIGS)
 
       await repository.deleteAll()
       await repository.addMany(DATA)
@@ -161,6 +110,46 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
       })
     })
 
+    describe(
+      LivenessRepository.prototype.getByConfigurationIdSince.name,
+      () => {
+        it('should return rows since given time', async () => {
+          const results = await repository.getByConfigurationIdSince(
+            [txIdA, txIdB],
+            START.add(-2, 'hours'),
+          )
+
+          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+        })
+      },
+    )
+
+    describe(LivenessRepository.prototype.getByConfigurationIdUpTo.name, () => {
+      it('should return rows up to given time', async () => {
+        const results = await repository.getByConfigurationIdUpTo(
+          [txIdA, txIdB],
+          START.add(-1, 'hours'),
+        )
+
+        expect(results).toEqualUnsorted([DATA[1], DATA[2]])
+      })
+    })
+
+    describe(
+      LivenessRepository.prototype.getByConfigurationIdWithinTimeRange.name,
+      () => {
+        it('should return rows within given time range', async () => {
+          const results = await repository.getByConfigurationIdWithinTimeRange(
+            [txIdA, txIdB],
+            START.add(-2, 'hours'),
+            START.add(0, 'hours'),
+          )
+
+          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+        })
+      },
+    )
+
     describe(LivenessRepository.prototype.deleteAll.name, () => {
       it('should delete all rows', async () => {
         await repository.deleteAll()
@@ -210,164 +199,5 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
         expect(result).toEqual([records[0], records[3]])
       })
     })
-
-    describe(LivenessRepository.prototype.getByProjectIdAndType.name, () => {
-      it('should return rows with given project id and type', async () => {
-        const results = await repository.getByProjectIdAndType(
-          ProjectId('project1'),
-          'batchSubmissions',
-          START.add(-1, 'hours'),
-        )
-
-        expect(results).toEqual([
-          {
-            timestamp: DATA[0].timestamp,
-            subtype: 'batchSubmissions',
-          },
-        ])
-      })
-    })
-
-    describe(
-      LivenessRepository.prototype
-        .getTransactionsWithinTimeRangeByConfigurationsIds.name,
-      () => {
-        it('should return rows within given time range', async () => {
-          const results =
-            await repository.getTransactionsWithinTimeRangeByConfigurationsIds(
-              [DATA[0].configurationId, DATA[1].configurationId],
-              START.add(-2, 'hours'),
-              START.add(0, 'hours'),
-            )
-
-          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
-        })
-      },
-    )
-
-    describe(
-      LivenessRepository.prototype.getWithSubtypeDistinctTimestamp.name,
-      () => {
-        it('join and returns data with type', async () => {
-          const result = await repository.getWithSubtypeDistinctTimestamp(
-            ProjectId('project1'),
-          )
-          const expected: LivenessRecordWithSubtype[] = [
-            {
-              timestamp: DATA[0].timestamp,
-              subtype: 'batchSubmissions',
-            },
-            {
-              timestamp: DATA[1].timestamp,
-              subtype: 'batchSubmissions',
-            },
-          ]
-
-          expect(result).toEqual(expected)
-        })
-
-        it('filters out transactions with the same timestamp', async () => {
-          await repository.deleteAll()
-          const NEW_DATA = [
-            {
-              timestamp: START.add(-3, 'hours'),
-              blockNumber: 12347,
-              txHash: '0xabcdef1234567890',
-            },
-            {
-              timestamp: START.add(-3, 'hours'),
-              blockNumber: 12347,
-              txHash: '0xabcdef1234567891',
-            },
-            {
-              timestamp: START.add(-4, 'hours'),
-              blockNumber: 12348,
-              txHash: '0xabcdef1234567892',
-            },
-          ]
-          await repository.addMany(
-            NEW_DATA.map((e) => ({
-              ...e,
-              configurationId: txIdC,
-            })),
-          )
-          const result = await repository.getWithSubtypeDistinctTimestamp(
-            ProjectId('project3'),
-          )
-
-          const expected: LivenessRecordWithSubtype[] = [
-            {
-              timestamp: NEW_DATA[1].timestamp,
-              subtype: 'batchSubmissions',
-            },
-            {
-              timestamp: NEW_DATA[2].timestamp,
-              subtype: 'batchSubmissions',
-            },
-          ]
-          expect(result).toEqualUnsorted(expected)
-        })
-
-        it('returns filtered records', async () => {
-          await repository.deleteAll()
-          const NEW_DATA = [
-            {
-              timestamp: START.add(-4, 'hours'),
-              blockNumber: 12347,
-              txHash: '0xabcdef1234567890',
-            },
-            {
-              timestamp: START.add(-3, 'hours'),
-              blockNumber: 12347,
-              txHash: '0xabcdef1234567891',
-            },
-            {
-              timestamp: START.add(-2, 'hours'),
-              blockNumber: 12348,
-              txHash: '0xabcdef1234567892',
-            },
-            {
-              timestamp: START.add(-5, 'hours'),
-              blockNumber: 12348,
-              txHash: '0xabcdef1234567893',
-            },
-          ]
-
-          await repository.addMany(
-            NEW_DATA.map((e) => ({
-              ...e,
-              configurationId: txIdC,
-            })),
-          )
-
-          const result = await repository.getWithSubtypeDistinctTimestamp(
-            ProjectId('project3'),
-          )
-
-          const subtype = 'batchSubmissions'
-
-          const expected: LivenessRecordWithSubtype[] = [
-            {
-              timestamp: NEW_DATA[2].timestamp,
-              subtype,
-            },
-            {
-              timestamp: NEW_DATA[1].timestamp,
-              subtype,
-            },
-            {
-              timestamp: NEW_DATA[0].timestamp,
-              subtype,
-            },
-            {
-              timestamp: NEW_DATA[3].timestamp,
-              subtype,
-            },
-          ]
-
-          expect(result).toEqual(expected)
-        })
-      },
-    )
   }
 })

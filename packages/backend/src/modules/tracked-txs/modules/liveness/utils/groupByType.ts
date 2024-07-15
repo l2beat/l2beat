@@ -1,15 +1,16 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
-import {
-  LivenessRecordWithSubtype,
-  LivenessTransactionsRecordWithSubtype,
-} from '../repositories/LivenessRepository'
+import { LivenessRecordWithConfig } from '../repositories/LivenessWithConfigRepository'
 
-export function groupByType<
-  T extends LivenessRecordWithSubtype | LivenessTransactionsRecordWithSubtype,
->(records: T[]): [T[], T[], T[]] {
-  const batchSubmissions: T[] = []
-  const stateUpdates: T[] = []
-  const proofSubmissions: T[] = []
+export function groupByType(
+  records: LivenessRecordWithConfig[],
+): [
+  LivenessRecordWithConfig[],
+  LivenessRecordWithConfig[],
+  LivenessRecordWithConfig[],
+] {
+  const batchSubmissions: LivenessRecordWithConfig[] = []
+  const stateUpdates: LivenessRecordWithConfig[] = []
+  const proofSubmissions: LivenessRecordWithConfig[] = []
 
   for (const record of records) {
     switch (record.subtype) {

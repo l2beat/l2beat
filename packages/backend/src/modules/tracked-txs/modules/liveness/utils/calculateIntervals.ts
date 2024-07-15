@@ -1,12 +1,12 @@
-import { LivenessRecordWithSubtype } from '../repositories/LivenessRepository'
+import { LivenessRecordWithConfig } from '../repositories/LivenessWithConfigRepository'
 
 export type Interval = {
-  record: LivenessRecordWithSubtype
+  record: LivenessRecordWithConfig
   duration: number
 }
 
 export function calculateIntervals(
-  records: LivenessRecordWithSubtype[],
+  records: LivenessRecordWithConfig[],
 ): Interval[] {
   const intervals: Interval[] = []
   for (let i = 1; i < records.length; i++) {

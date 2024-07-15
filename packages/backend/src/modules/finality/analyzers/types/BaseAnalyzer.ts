@@ -1,4 +1,5 @@
 import {
+  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
@@ -8,6 +9,7 @@ import { chunk } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { LivenessWithConfigRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessWithConfigRepository'
 
 export type Transaction = {
   txHash: string
@@ -30,21 +32,35 @@ export abstract class BaseAnalyzer {
       await this.indexerConfigurationRepository.getSavedConfigurations(
         'tracked_txs_indexer',
       )
-    const projectConfigs = configs.filter((c) => {
-      const properties = JSON.parse(c.properties)
-      return (
-        properties.projectId === this.projectId.toString() &&
-        properties.subtype === this.getTrackedTxSubtype() &&
-        properties.type === 'liveness'
-      )
-    })
 
-    const transactions =
-      await this.livenessRepository.getTransactionsWithinTimeRangeByConfigurationsIds(
-        projectConfigs.map((c) => c.id),
-        from,
-        to,
+    const projectConfigs = configs
+      .map((c) => {
+        const properties = JSON.parse(c.properties)
+        return {
+          id: c.id,
+          projectId: properties.projectId,
+          type: properties.type,
+          subtype: properties.subtype,
+        }
+      })
+      .filter(
+        (c) =>
+          c.projectId === this.projectId.toString() &&
+          c.subtype === this.getTrackedTxSubtype() &&
+          c.type === 'liveness',
       )
+
+    assert(
+      projectConfigs.length > 0,
+      `No configurations found for the project ${this.projectId}`,
+    )
+
+    const livenessWithConfig = new LivenessWithConfigRepository(
+      projectConfigs,
+      this.livenessRepository,
+    )
+
+    const transactions = await livenessWithConfig.getWithinTimeRange(from, to)
 
     if (!transactions.length) {
       return undefined
@@ -54,7 +70,14 @@ export abstract class BaseAnalyzer {
     const batchedTransactions = chunk(transactions, 10)
 
     for (const batch of batchedTransactions) {
-      const delays = await Promise.all(batch.map((tx) => this.analyze(tx)))
+      const delays = await Promise.all(
+        batch.map((tx) =>
+          this.analyze({
+            txHash: tx.txHash,
+            timestamp: tx.timestamp,
+          }),
+        ),
+      )
       finalityDelays.push(delays.flat())
     }
 
