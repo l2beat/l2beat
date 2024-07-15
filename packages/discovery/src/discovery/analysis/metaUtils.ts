@@ -61,15 +61,32 @@ export function mergePermissions(
   return isEmptyObject(result) ? undefined : result
 }
 
+export function interpolateDescription(
+  description: string,
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+): string {
+  return description.replace(/\{\{\s*(#?\w+)\s*\}\}/g, (_match, key) => {
+    const value = key === '#address' ? analysis.address : analysis.values[key]
+    if (value === undefined) {
+      throw new Error(
+        `Value for variable "{{ ${key} }}" in contract description not found in contract analysis`,
+      )
+    }
+    return String(value)
+  })
+}
+
 export function getSelfMeta(
-  overrides?: ContractOverrides,
+  overrides: ContractOverrides | undefined,
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (overrides?.description === undefined) {
     return undefined
   }
+  const description = interpolateDescription(overrides?.description, analysis)
   return {
     displayName: overrides.displayName ?? undefined,
-    descriptions: [overrides.description],
+    descriptions: [description],
     roles: undefined,
     permissions: undefined,
     categories: undefined,
@@ -82,6 +99,7 @@ export function getTargetsMeta(
   self: EthereumAddress,
   values: Record<string, ContractValue | undefined> = {},
   fields: { [address: string]: DiscoveryContractField } = {},
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): AddressToMetaMap | undefined {
   const result = getMetaFromUpgradeability(self, get$Admins(values))
 
@@ -92,7 +110,7 @@ export function getTargetsMeta(
       for (const address of getAddresses(value)) {
         const meta = mergeContractMeta(
           result[address.toString()],
-          targetConfigToMeta(self, field, target),
+          targetConfigToMeta(self, field, target, analysis),
         )
         if (meta) {
           result[address.toString()] = meta
@@ -132,13 +150,18 @@ export function targetConfigToMeta(
   self: EthereumAddress,
   field: DiscoveryContractField,
   target: DiscoveryContractField['target'],
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (target === undefined) {
     return undefined
   }
+  const descriptions = target.description
+    ? [interpolateDescription(target.description, analysis)]
+    : undefined
+
   const result: ContractMeta = {
     displayName: undefined,
-    descriptions: target.description ? [target.description] : undefined,
+    descriptions,
     roles: toSet(target.role),
     permissions: getTargetPermissions(self, toSet(target.permission)),
     categories: toSet(target.category),

@@ -5,7 +5,7 @@
   "fields": {
     "deputyGuardian": {
       "target": {
-        "description": "Deputy of the DeputyGuardianModule ({{ address }}). It can act on behalf of the Gnosis Safe to which that that module is assigned."
+        "description": "Deputy of {{ #address }}. It can act on behalf of the {{ safe }} Gnosis Safe to which that that module is assigned."
       }
     }
   }

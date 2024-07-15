@@ -6,12 +6,12 @@
   "fields": {
     "fallbackOwner": {
       "target": {
-        "description": "Fallback Owner of the LivenessModule ({{ address }}) - takes ownership of the multisig if the number of members falls below {{ minOwners }}."
+        "description": "Fallback Owner of {{ #address }} - takes ownership of {{ safe }} Gnosis Safe if the number of members falls below {{ minOwners }}."
       }
     },
     "livenessGuard": {
       "target": {
-        "description": "Liveness Guard of the LivenessModule ({{ address }}) - used to remove inactive members."
+        "description": "Liveness Guard of {{ #address }} - used to remove inactive members."
       }
     }
   }

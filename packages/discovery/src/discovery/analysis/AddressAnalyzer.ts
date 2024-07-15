@@ -177,9 +177,10 @@ export class AddressAnalyzer {
       ...(values ?? {}),
     }
 
-    const targetsMeta = getTargetsMeta(address, mergedValues, overrides?.fields)
-
-    return {
+    const analysisWithoutMeta: Omit<
+      AnalyzedContract,
+      'selfMeta' | 'targetsMeta'
+    > = {
       type: 'Contract',
       name: overrides?.name ?? sources.name,
       derivedName: overrides?.name !== undefined ? sources.name : undefined,
@@ -196,10 +197,20 @@ export class AddressAnalyzer {
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives,
-      selfMeta: getSelfMeta(overrides),
-      targetsMeta,
       usedTypes,
     }
+
+    const analysis: AnalyzedContract = {
+      ...analysisWithoutMeta,
+      selfMeta: getSelfMeta(overrides, analysisWithoutMeta),
+      targetsMeta: getTargetsMeta(
+        address,
+        mergedValues,
+        overrides?.fields,
+        analysisWithoutMeta,
+      ),
+    }
+    return analysis
   }
 
   async hasContractChanged(
