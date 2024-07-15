@@ -32,19 +32,35 @@ export type BlockchainDaLayer = CommonDaLayer & {
   /**
    * The consensus algorithm used by the data availability layer.
    */
-  consensusAlgorithm: string
+  consensusAlgorithm: {
+    /**
+     * The name of the consensus algorithm.
+     */
+    name: string
 
-  /**
-   * Consensus finality time.
-   * @unit seconds
-   */
-  consensusFinality: number
+    /**
+     * A description of the consensus algorithm.
+     */
+    description: string
 
-  /**
-   * Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period.
-   * @unit seconds
-   */
-  unbondingPeriod: number
+    /**
+     * The time it takes to produce a new block.
+     * @unit seconds
+     */
+    blockTime: number
+
+    /**
+     * Consensus finality time.
+     * @unit seconds
+     */
+    consensusFinality: number
+
+    /**
+     * Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period.
+     * @unit seconds
+     */
+    unbondingPeriod: number
+  }
 
   /**
    * Economic security configuration.

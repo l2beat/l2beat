@@ -40,9 +40,15 @@ export const celestia: DaLayer = {
     - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-4.md
   */
   pruningWindow: 86400 * 30, // 30 days in seconds
-  consensusAlgorithm: 'Tendermint',
-  consensusFinality: 1, // 1 second for tendermint, time_iota_ms
-  unbondingPeriod: 1814400, // 21 days, staking.UnbondingTime
+  consensusAlgorithm: {
+    name: 'CometBFT',
+    description: `CometBFT is the canonical implementation of the Tendermint consensus algorithm. 
+    CometBFT allows for a state transition machine to be written in any programming language, and it allows for secure replication across many machines.
+    The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
+    blockTime: 15, // seconds
+    consensusFinality: 1, // 1 second for tendermint, time_iota_ms
+    unbondingPeriod: 1814400, // 21 days, staking.UnbondingTime
+  },
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(true),
