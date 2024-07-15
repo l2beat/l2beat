@@ -118,14 +118,11 @@ export function getActiveBridgesSummaryColumnsConfig() {
       getValue: (entry) =>
         entry.tvlBreakdown && (
           <NumberCell>
-            <span data-bridges-only-cell>{entry.bridgesMarketShare}</span>
-            <span data-combined-only-cell className="hidden">
-              {entry.combinedMarketShare?.displayValue}
-            </span>
+            <span>{entry.bridgesMarketShare}</span>
           </NumberCell>
         ),
       sorting: {
-        getOrderValue: (project) => project.combinedMarketShare?.value,
+        getOrderValue: (project) => project.bridgesMarketShare,
         rule: 'numeric',
       },
     },

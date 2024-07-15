@@ -43,7 +43,6 @@ function getMockTvlApiResponse(): TvlApiResponse {
   const result: TvlApiResponse = {
     bridges: getMockTvlApiCharts(),
     layers2s: getMockTvlApiCharts(),
-    combined: getMockTvlApiCharts(),
     projects: {},
   }
   for (const project of allLayer2s) {

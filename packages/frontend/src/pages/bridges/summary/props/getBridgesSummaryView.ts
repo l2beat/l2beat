@@ -25,7 +25,6 @@ export function getBridgesSummaryView(
   const ordered = orderByTvl(included, tvlApiResponse)
 
   const { tvl: bridgesTvl } = getTvlWithChange(tvlApiResponse.bridges)
-  const { tvl: combinedTvl } = getTvlWithChange(tvlApiResponse.combined)
 
   return {
     items: ordered.map((project) =>
@@ -33,7 +32,6 @@ export function getBridgesSummaryView(
         project,
         tvlApiResponse,
         bridgesTvl,
-        combinedTvl,
         verificationStatus,
         implementationChange,
       ),
@@ -45,7 +43,6 @@ export function getBridgesSummaryViewEntry(
   project: Bridge | Layer2,
   tvlApiResponse: TvlApiResponse,
   bridgesTvl: number,
-  combinedTvl: number,
   verificationStatus: VerificationStatus,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): BridgesSummaryViewEntry {
@@ -85,12 +82,6 @@ export function getBridgesSummaryViewEntry(
     sevenDayChange: stats ? stats.sevenDayChange : undefined,
     bridgesMarketShare: stats
       ? formatPercent(stats.latestTvl / bridgesTvl)
-      : undefined,
-    combinedMarketShare: stats
-      ? {
-          displayValue: formatPercent(stats.latestTvl / combinedTvl),
-          value: stats.latestTvl / combinedTvl,
-        }
       : undefined,
     validatedBy: project.riskView?.validatedBy,
     category: project.display.category,

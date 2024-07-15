@@ -19,7 +19,6 @@ export interface BridgesSummaryViewEntry {
   tvlBreakdown?: TokenBreakdownProps
   sevenDayChange?: string
   bridgesMarketShare?: string
-  combinedMarketShare?: ValueWithDisplayValue
   validatedBy?: ScalingProjectRiskViewEntry
   category: string
 }
