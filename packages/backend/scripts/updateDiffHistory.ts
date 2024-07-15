@@ -22,12 +22,15 @@ import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
+const REFRESH_FLAG = '--refresh'
 
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
 async function updateDiffHistoryFile() {
-  if (process.argv.filter((v) => v.startsWith('-')).length > 0) {
+  const argv = process.argv
+  const refreshOnTheSameBlock = argv.includes(REFRESH_FLAG)
+  if (argv.filter((v) => v !== REFRESH_FLAG && v.startsWith('-')).length > 0) {
     console.log(
       'Discovery run with non-default configuration, skipping updating the diff history file...',
     )
@@ -55,21 +58,36 @@ async function updateDiffHistoryFile() {
       ? undefined
       : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
-  const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
-    discoveryFromMainBranch,
-    projectName,
-    chain,
-  )
+  let diff: DiscoveryDiff[] = []
+  let codeDiff
+  let configRelatedDiff
 
-  const diff = diffDiscovery(
-    prevDiscovery?.contracts ?? [],
-    curDiscovery.contracts,
-  )
+  if (!refreshOnTheSameBlock) {
+    const rerun = await performDiscoveryOnPreviousBlock(
+      discoveryFromMainBranch,
+      projectName,
+      chain,
+    )
+    codeDiff = rerun.codeDiff
 
-  let configRelatedDiff = diffDiscovery(
-    discoveryFromMainBranch?.contracts ?? [],
-    prevDiscovery?.contracts ?? [],
-  )
+    diff = diffDiscovery(
+      rerun.prevDiscovery?.contracts ?? [],
+      curDiscovery.contracts,
+    )
+    configRelatedDiff = diffDiscovery(
+      discoveryFromMainBranch?.contracts ?? [],
+      rerun.prevDiscovery?.contracts ?? [],
+    )
+  } else {
+    console.log(
+      'Discovery was already run on the same block (--refresh), skipping rerun...',
+    )
+    configRelatedDiff = diffDiscovery(
+      discoveryFromMainBranch?.contracts ?? [],
+      curDiscovery?.contracts ?? [],
+    )
+  }
+
   removeIgnoredFields(configRelatedDiff)
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
 

@@ -35,8 +35,8 @@ for project in "$BASE_DIR"/*; do
                 chain_name=$(basename "$chain")
 
                 # Run the yarn discover command
-                echo "Running: yarn discover:raw $chain_name $project_name --dev"
-                yarn discover:raw "$chain_name" "$project_name" --dev
+                echo "Running: yarn discover $chain_name $project_name --refresh"
+                yarn discover "$chain_name" "$project_name" --refresh
             fi
         done
     fi
