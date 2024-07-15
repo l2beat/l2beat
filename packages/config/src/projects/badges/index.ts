@@ -148,7 +148,7 @@ export const badges = {
   },
   CairoVM: {
     display: {
-      name: 'Cairo',
+      name: 'CairoVM',
       description:
         'This project uses the Cairo Virtual Machine to run its smart contracts and supports the Cairo programming language',
     },
