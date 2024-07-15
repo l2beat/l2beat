@@ -1,4 +1,4 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import { ContractParameters, get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -817,7 +817,7 @@ export function opStackSmartL3(templateVars: OpStackConfigL3): Layer3 {
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.values?.$implementation
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }
