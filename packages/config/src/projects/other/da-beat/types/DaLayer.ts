@@ -30,6 +30,11 @@ export type BlockchainDaLayer = CommonDaLayer & {
   pruningWindow: number
 
   /**
+   * The consensus algorithm used by the data availability layer.
+   */
+  consensusAlgorithm: string
+
+  /**
    * Consensus finality time.
    * @unit seconds
    */

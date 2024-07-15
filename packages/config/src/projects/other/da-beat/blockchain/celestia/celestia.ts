@@ -13,9 +13,6 @@ import { DaLayer, DaLayerKind } from '../../types/DaLayer'
 import { blobstream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
-/**
- * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
- */
 export const celestia: DaLayer = {
   id: 'celestia',
   kind: DaLayerKind.PublicBlockchain,
@@ -26,7 +23,6 @@ export const celestia: DaLayer = {
   },
   bridges: [noBridge, ...blobstream],
   usedIn: [
-    // can we fetch these from the layer2s and layer3s?
     mantapacific.id,
     karak.id,
     aevo.id,
@@ -36,6 +32,7 @@ export const celestia: DaLayer = {
     ancient.id,
     hypr.id,
     stack.id,
+    // can we fetch these from the layer2s and layer3s?
   ],
   /*
     Node params sources:
@@ -43,13 +40,14 @@ export const celestia: DaLayer = {
     - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-4.md
   */
   pruningWindow: 86400 * 30, // 30 days in seconds
+  consensusAlgorithm: 'Tendermint',
   consensusFinality: 1, // 1 second for tendermint, time_iota_ms
   unbondingPeriod: 1814400, // 21 days, staking.UnbondingTime
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(false),
+    fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(true),
   },
   economicSecurity: {
-    type: 'Ethereum',
+    type: 'Celestia',
   },
 }
