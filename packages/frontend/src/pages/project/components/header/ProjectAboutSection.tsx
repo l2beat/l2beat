@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { type BadgeId } from '@l2beat/config'
+import { badgesCompareFn, type BadgeId } from '@l2beat/config'
 import { usePageBuildContext } from '../../../../build/pageBuildContext'
 import { OverflowWrapper } from '../../../../components/OverflowWrapper'
 import { ReadMore } from '../../../../components/ReadMore'
@@ -23,7 +23,9 @@ export function ProjectAboutSection({
       features: { badges: badgesEnabled },
     },
   } = usePageBuildContext()
-  const badges: BadgeId[] = (badgesEnabled && projectBadges) || []
+  const badges: BadgeId[] = ((badgesEnabled && projectBadges) || []).sort(
+    badgesCompareFn,
+  )
 
   return (
     <div

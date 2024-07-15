@@ -5,18 +5,20 @@
  *
  * In order to add a new badge type, you need to:
  * - add it to the BadgeType object below & that's it
+ *
+ * Badges are ordered first by type, then alphabetically by display name.
+ * Order of types is determined by the order in the BadgeType object.
  */
 
 export const BadgeType = {
-  RaaS: 'RaaS',
-  DA: 'DA',
   VM: 'VM',
-  Token: 'Token',
+  DA: 'DA',
   Stack: 'Stack',
   Fork: 'Fork',
-  L3ParentChain: 'L3ParentChain',
   Infra: 'Infra',
+  L3ParentChain: 'L3ParentChain',
   Other: 'Other',
+  RaaS: 'RaaS',
 } as const
 
 export type BadgeType = (typeof BadgeType)[keyof typeof BadgeType]
@@ -382,3 +384,12 @@ export const Badge: {
 
 export type BadgeId = keyof typeof badges
 export type AnyBadge = (typeof badges)[BadgeId]
+
+export const badgeTypeOrder = Object.values(BadgeType)
+export const badgesCompareFn = (a: BadgeId, b: BadgeId) => {
+  const typeOrder =
+    badgeTypeOrder.indexOf(badges[a].type) -
+    badgeTypeOrder.indexOf(badges[b].type)
+  if (typeOrder !== 0) return typeOrder
+  return badges[a].display.name.localeCompare(badges[b].display.name)
+}
