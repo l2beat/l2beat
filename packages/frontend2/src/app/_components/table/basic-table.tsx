@@ -40,9 +40,6 @@ function getCommonPinningStyles<T>(column: Column<T>): CSSProperties {
   return {
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
     right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-    background: isLastLeftPinnedColumn
-      ? 'linear-gradient(to left, rgb(16, 18, 21, 0), rgb(16, 18, 21, 1) 8px)'
-      : undefined,
     position: isPinned ? 'sticky' : 'relative',
     width: column.getSize(),
     zIndex: isPinned ? 1 : 0,
