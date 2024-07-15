@@ -44,7 +44,12 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
-  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.Nitro],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.DAC,
+    Badge.Stack.Nitro,
+    Badge.Other.Governance,
+  ],
   discovery,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),

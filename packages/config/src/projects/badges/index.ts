@@ -345,8 +345,7 @@ export const badges = {
   Governance: {
     display: {
       name: 'Governance',
-      description:
-        'This project has a decentralized governance system that votes on proposed changes',
+      description: 'This project features token voting.',
     },
     type: BadgeType.Other,
   },
