@@ -1,4 +1,4 @@
-import { daLayers } from '@l2beat/config'
+import { daLayers } from '@l2beat/config/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
 import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { DaHeader } from '../_components/da-header'
@@ -36,7 +36,7 @@ export default async function Page(props: Props) {
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 md:hidden">
+        <div className="sticky top-0 z-100 md:hidden -mx-4">
           <MobileProjectNavigation sections={daProjectEntry.projectDetails} />
         </div>
       )}
