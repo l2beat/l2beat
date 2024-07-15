@@ -9,12 +9,7 @@ const discovery = new ProjectDiscovery('mint')
 
 export const mint: Layer2 = opStackL2({
   discovery,
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.RaaS.Conduit],
   display: {
     name: 'Mint',
     slug: 'mint',

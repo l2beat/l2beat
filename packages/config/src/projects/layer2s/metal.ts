@@ -19,13 +19,7 @@ const livenessInterval = discovery.getContractValue<number>(
 export const metal: Layer2 = opStackL2({
   discovery,
   associatedTokens: ['MTL'],
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Metal',
     slug: 'metal',

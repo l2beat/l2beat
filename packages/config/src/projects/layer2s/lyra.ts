@@ -14,13 +14,7 @@ const upgradeability = {
 
 export const lyra: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.Celestia,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.DA.Celestia, Badge.Infra.Superchain, Badge.RaaS.Conduit],
   associatedTokens: ['LYRA'],
   discovery,
   display: {
