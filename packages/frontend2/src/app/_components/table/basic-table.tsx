@@ -1,8 +1,9 @@
 import {
+  type Column,
   type Table as TanstackTable,
   flexRender,
-  type Column,
 } from '@tanstack/react-table'
+import { type CSSProperties } from 'react'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
@@ -14,7 +15,6 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
-import { type CSSProperties } from 'react'
 
 interface BasicEntry {
   href?: string

@@ -12,14 +12,14 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
+import ActiveIcon from '~/icons/active.svg'
+import ArchivedIcon from '~/icons/archived.svg'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   ScalingFilters,
   type ScalingFiltersState,
 } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './table/columns'
-import ActiveIcon from '~/icons/active.svg'
-import ArchivedIcon from '~/icons/archived.svg'
 
 const DEFAULT_SCALING_FILTERS = {
   rollupsOnly: false,
