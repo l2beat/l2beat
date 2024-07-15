@@ -1,5 +1,11 @@
 'use client'
-import React from 'react'
+import React, {
+  type CSSProperties,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react'
 
 import SummaryIcon from '~/icons/pages/summary.svg'
 import { cn } from '~/utils/cn'
@@ -23,24 +29,34 @@ export function DesktopProjectNavigation({
   project,
   sections,
 }: ProjectNavigationProps) {
+  const headerRef = useRef<HTMLDivElement>(null)
+  const [headerHeight, setHeaderHeight] = useState<number>()
   const currentSection = useCurrentSection()
   const isSummarySection = currentSection && currentSection.id === 'summary'
 
-  const translateClassName = project.showProjectUnderReview
-    ? '-translate-y-[189px]'
-    : '-translate-y-16'
+  useEffect(() => {
+    const header = headerRef.current
+    if (!header) return
+
+    setHeaderHeight(header.getBoundingClientRect().height)
+  }, [headerRef])
+
+  const style = useMemo(() => {
+    if (!headerHeight) return undefined
+    return {
+      transform: `translateY(-${headerHeight + 16}px)`,
+    }
+  }, [headerHeight])
 
   return (
-    <div
-      className="sticky top-8"
-      data-is-under-review={project.showProjectUnderReview ?? false}
-    >
+    <div className="sticky top-8">
       <div
+        ref={headerRef}
         className={cn(
-          '-z-1 opacity-0 duration-300 scale-[0.85] transition-all ease-out',
-          isSummarySection === true && translateClassName,
+          '-z-1 opacity-0 duration-300 transition-all ease-out',
           isSummarySection === false && 'opacity-100 scale-100',
         )}
+        style={isSummarySection ? style : undefined}
       >
         <div className="flex flex-row items-center gap-4">
           {project.icon && (
@@ -61,10 +77,7 @@ export function DesktopProjectNavigation({
 
       <ProjectNavigationList
         sections={sections}
-        className={cn(
-          (isSummarySection === true || isSummarySection === undefined) &&
-            translateClassName,
-        )}
+        style={isSummarySection ? style : undefined}
       />
     </div>
   )
@@ -72,15 +85,13 @@ export function DesktopProjectNavigation({
 
 function ProjectNavigationList({
   sections,
-  className,
-}: Pick<ProjectNavigationProps, 'sections'> & { className?: string }) {
+  style,
+}: Pick<ProjectNavigationProps, 'sections'> & { style?: CSSProperties }) {
   const currentSection = useCurrentSection()
   return (
     <div
-      className={cn(
-        'flex flex-col gap-3 transition-transform duration-300',
-        className,
-      )}
+      className="flex flex-col gap-3 transition-transform duration-300"
+      style={style}
     >
       <a
         href="#"

@@ -39,7 +39,7 @@ export default async function Page(props: Props) {
             project={{
               title: daProjectEntry.name,
               icon: daProjectEntry.iconSrc,
-              // showProjectUnderReview: daProjectEntry.isUnderReview,
+              showProjectUnderReview: daProjectEntry.isUnderReview,
             }}
             sections={daProjectEntry.projectDetails}
           />
