@@ -17,7 +17,7 @@ export interface PizzaRosetteCellProps {
 export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
   const isUnderReview =
     props.isUnderReview ??
-    props.values.every((value) => value.sentiment === 'UnderReview')
+    props.values.some((value) => value.sentiment === 'UnderReview')
 
   return (
     <Tooltip>

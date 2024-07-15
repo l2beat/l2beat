@@ -30,7 +30,7 @@ export interface ContentState {
 export function BigPentagonRosette(props: BigPentagonRosetteProps) {
   const isUnderReview =
     props.isUnderReview ??
-    props.values.every((value) => value.sentiment === 'UnderReview')
+    props.values.some((value) => value.sentiment === 'UnderReview')
 
   if (props.isUpcoming ?? isUnderReview) {
     return (

@@ -39,6 +39,7 @@ export function DaHeader({ project }: Props) {
           <BigPentagonRosette
             className="max-lg:hidden mt-auto"
             values={project.header.rosetteValues}
+            isUnderReview={project.isUnderReview}
           />
         </div>
 

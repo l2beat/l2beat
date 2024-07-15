@@ -22,7 +22,10 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <PentagonRosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
+      <PentagonRosetteCell
+        values={mapRisksToRosetteValues(ctx.getValue())}
+        isUnderReview={ctx.row.original.isUnderReview}
+      />
     ),
     enableSorting: false,
     meta: {

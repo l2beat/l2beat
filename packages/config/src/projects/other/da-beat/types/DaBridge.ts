@@ -80,6 +80,10 @@ type CommonDaBridge = {
     description: string
   }
   /**
+   * Is the DA bridge under review?
+   */
+  isUnderReview?: boolean
+  /**
    * The technology used by the data availability bridge. [MARKDOWN]
    */
   technology: string

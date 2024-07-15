@@ -61,11 +61,11 @@ export function getProjectDetails({
       id: 'risk-analysis',
       title: 'Risk analysis',
       riskValues: rosetteValues,
+      isUnderReview: daLayer.isUnderReview ?? bridge.isUnderReview,
       // TODO: Do we want to add these to DA projects?
       warning: undefined,
       redWarning: undefined,
       isVerified: undefined,
-      isUnderReview: false,
     },
   })
 

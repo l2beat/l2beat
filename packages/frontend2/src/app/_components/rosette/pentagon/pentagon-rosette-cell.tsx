@@ -16,7 +16,7 @@ interface Props {
 export function PentagonRosetteCell(props: Props) {
   const isUnderReview =
     props.isUnderReview ??
-    props.values.every((value) => value.sentiment === 'UnderReview')
+    props.values.some((value) => value.sentiment === 'UnderReview')
 
   return (
     <Tooltip>

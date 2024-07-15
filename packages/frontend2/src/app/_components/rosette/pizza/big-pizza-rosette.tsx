@@ -29,7 +29,7 @@ export interface ContentState {
 export function BigPizzaRosette(props: BigPizzaRosetteProps) {
   const isUnderReview =
     props.isUnderReview ??
-    Object.values(props.values).every(
+    Object.values(props.values).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
 

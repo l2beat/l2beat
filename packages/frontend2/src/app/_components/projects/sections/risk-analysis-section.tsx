@@ -19,29 +19,20 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   isUnderReview?: boolean
 }
 
-export function RiskAnalysisSection({
-  id,
-  title,
-  sectionOrder,
-  riskValues,
-  isVerified,
-  warning,
-  redWarning,
-  isUnderReview,
-}: RiskAnalysisSectionProps) {
-  isUnderReview =
-    isUnderReview ??
-    Object.values(riskValues).every(
+export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
+  const isUnderReview =
+    props.isUnderReview ??
+    Object.values(props.riskValues).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
     <ProjectSection
-      title={title}
-      id={id}
-      sectionOrder={sectionOrder}
+      title={props.title}
+      id={props.id}
+      sectionOrder={props.sectionOrder}
       isUnderReview={isUnderReview}
     >
-      {isVerified === false && (
+      {props.isVerified === false && (
         <WarningBar
           text="This project includes unverified contracts."
           color="red"
@@ -50,27 +41,27 @@ export function RiskAnalysisSection({
           icon={UnverifiedIcon}
         />
       )}
-      {redWarning && (
+      {props.redWarning && (
         <WarningBar
-          text={redWarning}
+          text={props.redWarning}
           color="red"
           className="mt-4"
           icon={ShieldIcon}
         />
       )}
-      {warning && (
+      {props.warning && (
         <WarningBar
-          text={warning}
+          text={props.warning}
           color="yellow"
           isCritical={false}
           className="mt-4"
         />
       )}
       <BigPentagonRosette
-        values={riskValues}
+        values={props.riskValues}
         className="mx-auto my-6 lg:hidden"
       />
-      {Object.values(riskValues).map((value) => (
+      {Object.values(props.riskValues).map((value) => (
         <SingleRisk key={value.name} value={value} />
       ))}
     </ProjectSection>

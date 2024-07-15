@@ -38,7 +38,12 @@ export const scalingArchivedColumns = [
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
   columnHelper.accessor('risks', {
-    cell: (ctx) => <PizzaRosetteCell values={ctx.getValue()} />,
+    cell: (ctx) => (
+      <PizzaRosetteCell
+        values={ctx.getValue()}
+        isUnderReview={ctx.row.original.isUnderReview}
+      />
+    ),
     enableSorting: false,
     meta: {
       cellClassName: 'justify-center',
