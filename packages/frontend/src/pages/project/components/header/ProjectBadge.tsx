@@ -18,7 +18,10 @@ export function ProjectBadge({ id }: { id: BadgeId }) {
           className="h-16 w-auto lg:h-[4.5rem]"
         />
       </TooltipTrigger>
-      <TooltipContent>{meta.display.name}</TooltipContent>
+      <TooltipContent>
+        <span className="mb-2 block font-medium">{meta.display.name}</span>
+        <span className="text-xs">{meta.display.description}</span>
+      </TooltipContent>
     </Tooltip>
   )
 }
