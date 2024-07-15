@@ -62,7 +62,13 @@ async function updateDiffHistoryFile() {
   let codeDiff
   let configRelatedDiff
 
-  if (!refreshingOnTheSameBlock) {
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) > curDiscovery.blockNumber) {
+    throw new Error(
+      `Main branch discovery block number (${discoveryFromMainBranch?.blockNumber}) is higher than current discovery block number (${curDiscovery.blockNumber})`,
+    )
+  }
+
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
     const rerun = await performDiscoveryOnPreviousBlock(
       discoveryFromMainBranch,
       projectName,
@@ -80,7 +86,7 @@ async function updateDiffHistoryFile() {
     )
   } else {
     console.log(
-      'Discovery was already run on the same block (--refresh), skipping rerun...',
+      'Discovery was run on the same block as main branch, skipping rerun.',
     )
     configRelatedDiff = diffDiscovery(
       discoveryFromMainBranch?.contracts ?? [],
@@ -301,9 +307,15 @@ function generateDiffHistoryMarkdown(
     result.push(description)
   } else {
     result.push('')
-    result.push(
-      'Provide description of changes. This section will be preserved.',
-    )
+    if ((blockNumberFromMainBranchDiscovery ?? 0) !== curBlockNumber) {
+      result.push(
+        'Provide description of changes. This section will be preserved.',
+      )
+    } else {
+      result.push(
+        'Discovery rerun on the same block number with only config-related changes.',
+      )
+    }
     result.push('')
   }
 
