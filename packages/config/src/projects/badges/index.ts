@@ -345,8 +345,7 @@ export const badges = {
   Governance: {
     display: {
       name: 'Governance',
-      description:
-        'This project features token voting.',
+      description: 'This project features token voting.',
     },
     type: BadgeType.Other,
   },
