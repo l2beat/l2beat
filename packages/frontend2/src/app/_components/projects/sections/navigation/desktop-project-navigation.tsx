@@ -44,41 +44,44 @@ export function DesktopProjectNavigation({
   const style = useMemo(() => {
     if (!headerHeight) return undefined
     return {
-      transform: `translateY(-${headerHeight + 16}px)`,
+      top: `${headerHeight + 16}px`,
     }
   }, [headerHeight])
 
   return (
     <div className="sticky top-8">
-      <div
-        ref={headerRef}
-        className={cn(
-          '-z-1 opacity-0 duration-300 transition-all ease-out',
-          isSummarySection === false && 'opacity-100 scale-100',
-        )}
-        style={isSummarySection ? style : undefined}
-      >
-        <div className="flex flex-row items-center gap-4">
-          {project.icon && (
-            <Image
-              width={32}
-              height={32}
-              src={project.icon}
-              alt={`${project.title} logo`}
-            />
+      <div className="relative">
+        <div
+          ref={headerRef}
+          className={cn(
+            '-z-1 opacity-0 duration-300 transition-opacity',
+            isSummarySection === false && 'opacity-100',
           )}
-          <span className="font-bold text-xl lg:text-2xl">{project.title}</span>
+        >
+          <div className="flex flex-row items-center gap-4">
+            {project.icon && (
+              <Image
+                width={32}
+                height={32}
+                src={project.icon}
+                alt={`${project.title} logo`}
+              />
+            )}
+            <span className="font-bold text-xl lg:text-2xl">
+              {project.title}
+            </span>
+          </div>
+          {project.showProjectUnderReview && (
+            <UnderReviewCallout small className="mt-2" />
+          )}
+          <HorizontalSeparator className="my-4" />
         </div>
-        {project.showProjectUnderReview && (
-          <UnderReviewCallout small className="mt-2" />
-        )}
-        <HorizontalSeparator className="my-4" />
-      </div>
 
-      <ProjectNavigationList
-        sections={sections}
-        style={isSummarySection ? style : undefined}
-      />
+        <ProjectNavigationList
+          sections={sections}
+          style={isSummarySection === false ? style : undefined}
+        />
+      </div>
     </div>
   )
 }
@@ -90,7 +93,7 @@ function ProjectNavigationList({
   const currentSection = useCurrentSection()
   return (
     <div
-      className="flex flex-col gap-3 transition-transform duration-300"
+      className="absolute top-0 flex flex-col gap-3 transition-[top] duration-300"
       style={style}
     >
       <a
