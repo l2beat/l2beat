@@ -1,12 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { Badge } from '../badges'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const oursong: Layer3 = upcomingL3({
   id: 'oursong',
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     name: 'Oursong',
     slug: 'oursong',

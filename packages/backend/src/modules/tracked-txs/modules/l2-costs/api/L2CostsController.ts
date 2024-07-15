@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   L2CostsApiChart,
@@ -7,7 +8,6 @@ import {
   L2CostsProjectApiCharts,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../../../model/Project'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import {
@@ -39,7 +39,7 @@ export const CHART_TYPES: L2CostsApiChart['types'] = [
 export interface L2CostsControllerDeps {
   indexerService: IndexerService
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
-  projects: Project[]
+  projects: BackendProject[]
   logger?: Logger
 }
 

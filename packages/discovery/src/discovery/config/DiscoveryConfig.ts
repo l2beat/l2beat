@@ -19,9 +19,10 @@ export class DiscoveryConfig {
 
   constructor(
     private readonly config: RawDiscoveryConfig,
+    private readonly commonAddressNames: Record<string, string> = {},
     configReader: ConfigReader = new ConfigReader(),
   ) {
-    this.overrides = new DiscoveryOverrides(config)
+    this.overrides = new DiscoveryOverrides(config, commonAddressNames)
     this.sharedModuleDiscovery = Object.values(config.sharedModules ?? {}).map(
       (projectName) => {
         return configReader.readDiscovery(projectName, config.chain)

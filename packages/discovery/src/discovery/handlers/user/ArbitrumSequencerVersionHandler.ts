@@ -57,6 +57,12 @@ export class ArbitrumSequencerVersionHandler implements Handler {
     assert(lastEvent !== undefined, 'No event found')
 
     const tx = await provider.getTransaction(Hash256(lastEvent.transactionHash))
+    if (!tx) {
+      return {
+        field: this.field,
+        error: 'Transaction not found',
+      }
+    }
 
     const decoded = abi.parseLog(lastEvent)
     assert(decoded.name === 'SequencerBatchDelivered', 'Unexpected event name')
@@ -151,14 +157,19 @@ export class ArbitrumSequencerVersionHandler implements Handler {
           currentBlockNumber - blockStep,
         )}.${currentBlockNumber}`,
         async ({ eventProvider }) => {
-          return await rpcWithRetries(async () => {
-            return await eventProvider.getLogs({
-              address: address.toString(),
-              topics: [abi.getEventTopic('SequencerBatchDelivered')],
-              fromBlock: Math.max(0, currentBlockNumber - blockStep),
-              toBlock: currentBlockNumber,
-            })
-          })
+          const fromBlock = Math.max(0, currentBlockNumber - blockStep)
+          return await rpcWithRetries(
+            async () => {
+              return await eventProvider.getLogs({
+                address: address.toString(),
+                topics: [abi.getEventTopic('SequencerBatchDelivered')],
+                fromBlock,
+                toBlock: currentBlockNumber,
+              })
+            },
+            () =>
+              `getLogs ${address.toString()} ${fromBlock} - ${currentBlockNumber}`,
+          )
         },
       )
       currentBlockNumber -= blockStep

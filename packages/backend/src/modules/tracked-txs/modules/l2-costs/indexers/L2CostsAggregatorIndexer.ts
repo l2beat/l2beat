@@ -5,9 +5,9 @@ import {
   clampRangeToDay,
 } from '@l2beat/shared-pure'
 
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { uniq } from 'lodash'
-import { Project } from '../../../../../model/Project'
 import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
   ManagedChildIndexer,
@@ -36,7 +36,7 @@ export interface L2CostsAggregatorIndexerDeps
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   l2CostsPricesRepository: L2CostsPricesRepository
   indexerConfigurationRepository: IndexerConfigurationRepository
-  projects: Project[]
+  projects: BackendProject[]
 }
 
 export interface TrackedTxMultiplier {

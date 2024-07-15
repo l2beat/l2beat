@@ -3,12 +3,12 @@ import { safeGetTokenByAssetId } from '@l2beat/config'
 import {
   AssetId,
   CanonicalAssetBreakdownData,
+  ChainConverter,
   ExternalAssetBreakdownData,
   NativeAssetBreakdownData,
   ProjectAssetsBreakdownApiResponse,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { ChainConverter } from '../../../../tools/ChainConverter'
 import { ConfigMapping } from '../../utils/ConfigMapping'
 import { asNumber } from '../../utils/asNumber'
 import { CanonicalAssetBreakdown } from '../utils/types'

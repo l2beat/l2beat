@@ -1,10 +1,10 @@
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Project } from '../../../../../model/Project'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
@@ -28,7 +28,7 @@ export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   livenessRepository: LivenessRepository
   aggregatedLivenessRepository: AggregatedLivenessRepository
-  projects: Project[]
+  projects: BackendProject[]
 }
 
 export class LivenessAggregatingIndexer extends ManagedChildIndexer {

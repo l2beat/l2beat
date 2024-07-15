@@ -2,6 +2,7 @@ import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import { ContractSource } from '../../utils/IEtherscanClient'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { IProvider } from '../provider/IProvider'
@@ -30,7 +31,7 @@ export class FunctionSelectorDecoder {
         )
 
         if (proxy) {
-          implementations.push(...proxy.implementations)
+          implementations.push(...get$Implementations(proxy.values))
         }
         this.implementations[address.toString()] = implementations
       }),

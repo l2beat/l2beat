@@ -99,13 +99,11 @@ describe(AddressAnalyzer.name, () => {
       const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
           detectProxy: async () => ({
-            upgradeability: {
-              type: 'EIP1967 proxy',
-              implementation,
-              admin,
+            type: 'EIP1967 proxy',
+            values: {
+              $implementation: implementation,
+              $admin: admin,
             },
-            implementations: [implementation],
-            relatives: [admin],
           }),
         }),
         mockObject<SourceCodeService>({
@@ -141,9 +139,13 @@ describe(AddressAnalyzer.name, () => {
         isVerified: true,
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
-        upgradeability: { type: 'EIP1967 proxy', implementation, admin },
+        proxyType: 'EIP1967 proxy',
         implementations: [implementation],
-        values: { owner: owner.toString() },
+        values: {
+          $implementation: implementation,
+          $admin: admin,
+          owner: owner.toString(),
+        },
         errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
@@ -227,13 +229,11 @@ describe(AddressAnalyzer.name, () => {
       const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
           detectProxy: async () => ({
-            upgradeability: {
-              type: 'EIP1967 proxy',
-              implementation,
-              admin,
+            type: 'EIP1967 proxy',
+            values: {
+              $implementation: implementation,
+              $admin: admin,
             },
-            implementations: [implementation],
-            relatives: [admin],
           }),
         }),
         mockObject<SourceCodeService>({
@@ -269,9 +269,13 @@ describe(AddressAnalyzer.name, () => {
         isVerified: false,
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
-        upgradeability: { type: 'EIP1967 proxy', implementation, admin },
+        proxyType: 'EIP1967 proxy',
         implementations: [implementation],
-        values: { owner: owner.toString() },
+        values: {
+          $implementation: implementation,
+          $admin: admin,
+          owner: owner.toString(),
+        },
         errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
@@ -351,13 +355,11 @@ describe(AddressAnalyzer.name, () => {
       const addressAnalyzer = new AddressAnalyzer(
         mockObject<ProxyDetector>({
           detectProxy: async () => ({
-            upgradeability: {
-              type: 'EIP1967 proxy',
-              implementation,
-              admin,
+            type: 'EIP1967 proxy',
+            values: {
+              $implementation: implementation,
+              $admin: admin,
             },
-            implementations: [implementation],
-            relatives: [admin],
           }),
         }),
         mockObject<SourceCodeService>({
@@ -393,9 +395,13 @@ describe(AddressAnalyzer.name, () => {
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
         isVerified: true,
-        upgradeability: { type: 'EIP1967 proxy', implementation, admin },
+        proxyType: 'EIP1967 proxy',
         implementations: [implementation],
-        values: { owner: owner.toString() },
+        values: {
+          $implementation: implementation,
+          $admin: admin,
+          owner: owner.toString(),
+        },
         errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
@@ -469,7 +475,7 @@ describe(AddressAnalyzer.name, () => {
       const contractParameters: ContractParameters = {
         name: 'name',
         address,
-        upgradeability: { type: 'immutable' },
+        proxyType: 'immutable',
         values,
       }
       const overrides: ContractOverrides = { address }
@@ -544,8 +550,7 @@ describe(AddressAnalyzer.name, () => {
       const contractParameters: ContractParameters = {
         name: 'name',
         address: proxy,
-        upgradeability: { type: 'immutable' },
-        implementations: [implementation],
+        proxyType: 'immutable',
         values,
       }
       const overrides: ContractOverrides = { address: proxy }
@@ -594,7 +599,7 @@ describe(AddressAnalyzer.name, () => {
       const contractParameters: ContractParameters = {
         name: 'name',
         address,
-        upgradeability: { type: 'immutable' },
+        proxyType: 'immutable',
         unverified: true,
       }
       const overrides: ContractOverrides = { address }
@@ -642,12 +647,11 @@ describe(AddressAnalyzer.name, () => {
       const contractParameters: ContractParameters = {
         name: 'name',
         address,
-        upgradeability: {
-          type: 'EIP1967 proxy',
-          implementation,
-          admin: EthereumAddress.random(),
+        proxyType: 'EIP1967 proxy',
+        values: {
+          $implementation: implementation,
+          $admin: EthereumAddress.random(),
         },
-        implementations: [implementation],
         unverified: true,
       }
       const overrides: ContractOverrides = { address }

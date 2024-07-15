@@ -3,22 +3,19 @@
   "chain": "ethereum",
   "blockNumber": 20110229,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
       "address": "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 5 (40%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1704291371,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 5 (40%)",
         "domainSeparator": "0x9bbbe1c3f31b5879894b5efd7e825b6185426f8e8859a7ad70d4d0c32cdde81b",
         "getChainId": 1,
         "getOwners": [
@@ -29,6 +26,7 @@
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 10,
         "VERSION": "1.3.0"
       },
@@ -37,16 +35,12 @@
     {
       "name": "USDC Bridge",
       "address": "0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
-        "upgradeDelay": 0,
-        "isFinal": false,
-        "proxyGovernance": ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"]
-      },
-      "implementations": ["0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77"],
+      "proxyType": "StarkWare proxy",
       "sinceTimestamp": 1692341159,
       "values": {
+        "$admin": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+        "$immutable": false,
+        "$implementation": "0x8A4e51ff0F2a45899519e6049FB2D1F038Be1e77",
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -59,22 +53,10 @@
               "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
             ]
           },
-          "APP_GOVERNOR": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": []
-          },
-          "APP_ROLE_ADMIN": {
-            "adminRole": "GOVERNANCE_ADMIN",
-            "members": []
-          },
-          "OPERATOR": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": []
-          },
-          "TOKEN_ADMIN": {
-            "adminRole": "APP_ROLE_ADMIN",
-            "members": []
-          },
+          "APP_GOVERNOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "APP_ROLE_ADMIN": { "adminRole": "GOVERNANCE_ADMIN", "members": [] },
+          "OPERATOR": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
+          "TOKEN_ADMIN": { "adminRole": "APP_ROLE_ADMIN", "members": [] },
           "UPGRADE_GOVERNOR": {
             "adminRole": "GOVERNANCE_ADMIN",
             "members": []
@@ -86,10 +68,7 @@
               "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
             ]
           },
-          "SECURITY_AGENT": {
-            "adminRole": "SECURITY_ADMIN",
-            "members": []
-          }
+          "SECURITY_AGENT": { "adminRole": "SECURITY_ADMIN", "members": [] }
         },
         "getUpgradeActivationDelay": 0,
         "governors": ["0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"],
@@ -101,6 +80,7 @@
         "maxTotalBalance": 20000000000000,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.1",
+        "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
       },
       "derivedName": "StarknetERC20Bridge"
@@ -108,25 +88,21 @@
     {
       "name": "Paradex",
       "address": "0xF338cad020D506e8e3d9B4854986E0EcE6C23640",
-      "upgradeability": {
-        "type": "StarkWare proxy",
-        "implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
-        "upgradeDelay": 0,
-        "isFinal": false,
-        "proxyGovernance": [
-          "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
-          "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
-        ]
-      },
+      "proxyType": "StarkWare proxy",
       "ignoreInWatchMode": [
         "l1ToL2MessageNonce",
         "stateBlockNumber",
         "stateBlockHash",
         "stateRoot"
       ],
-      "implementations": ["0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24"],
       "sinceTimestamp": 1689850631,
       "values": {
+        "$admin": [
+          "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+          "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93"
+        ],
+        "$immutable": false,
+        "$implementation": "0x6E0aCfDC3cf17A7f99ed34Be56C3DFb93F464e24",
         "configHash": "2741190170141984203224468507008497105532196084369172236871397222510074358631",
         "getMaxL1MsgFee": "1000000000000000000",
         "getUpgradeActivationDelay": 0,
@@ -147,6 +123,7 @@
         "programHash": "3383082961563516565935611087683915026448707331436034043529592588079494402084",
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.2",
+        "StarkWareProxy_upgradeDelay": 0,
         "stateBlockHash": "3372722561140208503383707884949867470565814679749854080304371264014443864033",
         "stateBlockNumber": 65914,
         "stateRoot": "1231722082748889765094455020598024030309426519864872877242410087048957831784",
@@ -157,36 +134,22 @@
     }
   ],
   "eoas": [
+    { "address": "0x0000000000000000000000000000000000000020" },
+    { "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403" },
     {
-      "address": "0x0000000000000000000000000000000000000020"
+      "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
+      "assignedPermissions": { "admin": {} }
     },
+    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
+    { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
+    { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
+    { "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670" },
     {
-      "address": "0x2871B956bC19D25961E9a7519f32D7fDaA21B403"
+      "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f"
-    },
-    {
-      "address": "0x59232aC80E6d403b6381393e52f4665ECA328558"
-    },
-    {
-      "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770"
-    },
-    {
-      "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f"
-    },
-    {
-      "address": "0x8Cef438c3e363e15F9619e32D9b5D04ff777D670"
-    },
-    {
-      "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
-    },
-    {
-      "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6"
-    },
-    {
-      "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"
-    }
+    { "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6" },
+    { "address": "0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2" }
   ],
   "abis": {
     "0x0a64d3D7747549aF6d65C225D56ac8f71e436B93": [

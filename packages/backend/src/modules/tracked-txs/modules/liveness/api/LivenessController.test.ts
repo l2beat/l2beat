@@ -1,8 +1,8 @@
-import { Layer2LivenessConfig } from '@l2beat/config'
-import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { LivenessApiResponse, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Project } from '../../../../../model/Project'
+
+import { BackendProject, Layer2LivenessConfig } from '@l2beat/config'
+import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
@@ -25,7 +25,7 @@ const MOCK_PROJECT_ID = ProjectId('mocked-project')
 const MOCK_CONFIGURATION_ID = createTrackedTxId.random()
 
 const MOCK_PROJECTS = [
-  mockObject<Project>({
+  mockObject<BackendProject>({
     projectId: MOCK_PROJECT_ID,
     isArchived: false,
     trackedTxsConfig: [

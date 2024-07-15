@@ -1,7 +1,7 @@
+import { BackendProject } from '@l2beat/config'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { Project } from '../../../../../model/Project'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getProjectsToSync } from './getProjectsToSync'
 
@@ -10,14 +10,14 @@ describe(getProjectsToSync.name, () => {
     const mockConfigurationId = createTrackedTxId.random()
 
     const mockedProjects = [
-      mockObject<Project>({
+      mockObject<BackendProject>({
         isArchived: true,
       }),
-      mockObject<Project>({
+      mockObject<BackendProject>({
         isArchived: false,
         trackedTxsConfig: undefined,
       }),
-      mockObject<Project>({
+      mockObject<BackendProject>({
         isArchived: false,
         trackedTxsConfig: [
           mockObject<TrackedTxConfigEntry>({

@@ -1,12 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { Badge } from '../badges'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const superposition: Layer3 = upcomingL3({
   id: 'superposition',
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.DA.Celestia],
   display: {
     name: 'Superposition',
     slug: 'superposition',

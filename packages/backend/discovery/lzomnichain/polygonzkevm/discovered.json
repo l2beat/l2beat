@@ -3,37 +3,31 @@
   "chain": "polygonzkevm",
   "blockNumber": 12848751,
   "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "",
       "address": "0x2D61DCDD36F10b22176E0433B86F74567d529aAa",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1679974014
+      "sinceTimestamp": 1679974014,
+      "values": { "$immutable": true }
     },
     {
       "name": "",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1679974014
+      "sinceTimestamp": 1679974014,
+      "values": { "$immutable": true }
     },
     {
       "name": "ProxyAdmin",
       "address": "0x3c2269811836af69497E5F486A85D7316753cf62",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"]
       },
       "sinceTimestamp": 1679974014,
       "values": {
+        "$immutable": true,
         "owner": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
       }
     },
@@ -41,34 +35,27 @@
       "name": "",
       "address": "0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1679974014
+      "sinceTimestamp": 1679974014,
+      "values": { "$immutable": true }
     },
     {
       "name": "",
       "address": "0x6F475642a6e85809B1c36Fa62763669b1b48DD5B",
       "unverified": true,
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1679974072
+      "sinceTimestamp": 1679974072,
+      "values": { "$immutable": true }
     },
     {
       "name": "LayerZeroMultisig_pzkevm",
       "address": "0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "modules": [],
-        "threshold": "2 of 4 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"],
       "sinceTimestamp": 1712271299,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
+        "$multisigThreshold": "2 of 4 (50%)",
         "domainSeparator": "0xe1cb4394c03df39d0d0d616a14a46acd94d4358f3439b1d5bd0d7c60910315b9",
         "getChainId": 1101,
         "getOwners": [
@@ -78,6 +65,7 @@
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 35,
         "VERSION": "1.3.0"
       },
@@ -86,26 +74,22 @@
     {
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"]
       },
       "sinceTimestamp": 1679975850,
       "values": {
+        "$immutable": true,
         "owner": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
       }
     },
     {
       "name": "Endpoint",
       "address": "0x9740FF91F1985D8d2B71494aE1A2f723bb3Ed9E4",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["isReceivingPayload", "isSendingPayload"],
       "sinceTimestamp": 1679974014,
       "values": {
+        "$immutable": true,
         "BLOCK_VERSION": 65535,
         "chainId": 158,
         "DEFAULT_VERSION": 0,
@@ -130,32 +114,27 @@
       "name": "",
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F",
-        "admin": "0x3c2269811836af69497E5F486A85D7316753cf62"
-      },
-      "implementations": ["0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F"],
-      "sinceTimestamp": 1679974072
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1679974072,
+      "values": {
+        "$admin": "0x3c2269811836af69497E5F486A85D7316753cf62",
+        "$implementation": "0xF622DFb40bf7340DBCf1e5147D6CFD95d7c5cF1F"
+      }
     },
     {
       "name": "",
       "address": "0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb",
       "unverified": true,
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f",
-        "admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"
-      },
-      "implementations": ["0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f"],
-      "sinceTimestamp": 1679975953
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1679975953,
+      "values": {
+        "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
+        "$implementation": "0x0cA22b3dB505E13a9F40e6AB6DAf33B37D98Cf2f"
+      }
     },
     {
       "name": "UltraLightNodeV2",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": [
         "chainAddressSizeMap",
         "defaultAppConfig",
@@ -166,6 +145,7 @@
       ],
       "sinceTimestamp": 1679974014,
       "values": {
+        "$immutable": true,
         "chainAddressSizeMap": {
           "101": 20,
           "102": 20,
@@ -1349,27 +1329,13 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD"
-    },
-    {
-      "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e"
-    },
-    {
-      "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5"
-    },
-    {
-      "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8"
-    },
-    {
-      "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"
-    },
-    {
-      "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x67FC8c432448f9a8d541C17579EF7a142378d5aD" },
+    { "address": "0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e" },
+    { "address": "0x76F6d257CEB5736CbcAAb5c48E4225a45F74d6e5" },
+    { "address": "0x7B80f2924E3Ad59a55f4bcC38AB63480599Be6c8" },
+    { "address": "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327" },
+    { "address": "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936" }
   ],
   "abis": {
     "0x3c2269811836af69497E5F486A85D7316753cf62": [

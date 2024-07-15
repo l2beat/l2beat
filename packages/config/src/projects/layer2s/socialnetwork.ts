@@ -1,10 +1,8 @@
-import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const socialnetwork: Layer2 = upcomingL2({
   id: 'socialnetwork',
-  badges: [Badge.VM.EVM, Badge.RaaS.AltLayer, Badge.Stack.Orbit],
   display: {
     name: 'Social Network',
     slug: 'social-network',
