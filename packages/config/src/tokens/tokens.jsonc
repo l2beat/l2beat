@@ -2203,6 +2203,29 @@
   ],
   "lyra": [
     {
+      "symbol": "rsETH",
+      "category": "ether",
+      "address": "0xc47e2E800a9184cFbD274AC1eeCcCDF942715dB7",
+      "source": "external",
+      "supply": "totalSupply",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "symbol": "sUSDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0xb82D12742c3728a14EaA43EBe1C0d32bB62216EB",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0x6879287835A86F50f784313dBEd5E5cCC5bb8481",
       "category": "stablecoin",

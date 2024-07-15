@@ -5932,6 +5932,25 @@
       }
     },
     {
+      "id": "lyra:rseth-rseth",
+      "name": "rsETH",
+      "coingeckoId": "kelp-dao-restaked-eth",
+      "address": "0xc47e2E800a9184cFbD274AC1eeCcCDF942715dB7",
+      "symbol": "rsETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1717721435,
+      "coingeckoListingTimestamp": 1705017600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33800/large/Icon___Dark.png?1702991855",
+      "chainId": 957,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
       "id": "lyra:rsweth-rsweth",
       "name": "rswETH",
       "coingeckoId": "restaked-swell-eth",
@@ -5942,6 +5961,25 @@
       "coingeckoListingTimestamp": 1706572800,
       "category": "ether",
       "iconUrl": "https://assets.coingecko.com/coins/images/34489/large/rswETH_Icon.png?1706865484",
+      "chainId": 957,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Socket",
+        "slug": "socket"
+      }
+    },
+    {
+      "id": "lyra:susde-staked-usde",
+      "name": "Staked USDe",
+      "coingeckoId": "ethena-staked-usde",
+      "address": "0xb82D12742c3728a14EaA43EBe1C0d32bB62216EB",
+      "symbol": "sUSDe",
+      "decimals": 18,
+      "deploymentTimestamp": 1719822895,
+      "coingeckoListingTimestamp": 1710892800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33669/large/sUSDe-Symbol-Color.png?1716307680",
       "chainId": 957,
       "source": "external",
       "supply": "totalSupply",
