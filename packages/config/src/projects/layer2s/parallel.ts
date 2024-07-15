@@ -12,8 +12,8 @@ export const parallel: Layer2 = orbitStackL2({
   discovery,
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.Orbit,
     Badge.DA.EthereumBlobs,
+    Badge.Stack.Orbit,
     Badge.RaaS.Conduit,
   ],
   display: {

@@ -23,7 +23,7 @@ assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')
 
 export const blast: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.OPStack],
   display: {
     name: 'Blast',
     slug: 'blast',

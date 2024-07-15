@@ -27,9 +27,9 @@ export const zora: Layer2 = opStackL2({
   discovery,
   badges: [
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
-    Badge.DA.EthereumBlobs,
     Badge.RaaS.Conduit,
   ],
   display: {

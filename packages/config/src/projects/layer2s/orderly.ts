@@ -18,8 +18,8 @@ export const orderly: Layer2 = opStackL2({
     Badge.VM.EVM,
     Badge.DA.Celestia,
     Badge.Stack.OPStack,
-    Badge.RaaS.Conduit,
     Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
   ],
   discovery,
   display: {

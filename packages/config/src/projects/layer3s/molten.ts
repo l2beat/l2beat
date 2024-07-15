@@ -10,9 +10,9 @@ export const molten: Layer3 = orbitStackL3({
   discovery,
   badges: [
     Badge.VM.EVM,
+    Badge.DA.DAC,
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
-    Badge.DA.DAC,
   ],
   hostChain: ProjectId('arbitrum'),
   display: {

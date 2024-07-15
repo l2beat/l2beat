@@ -56,9 +56,9 @@ export const rhinofi: Layer2 = {
   type: 'layer2',
   badges: [
     Badge.VM.AppChain,
+    Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
-    Badge.DA.DAC,
   ],
   id: ProjectId('deversifi'),
   display: {

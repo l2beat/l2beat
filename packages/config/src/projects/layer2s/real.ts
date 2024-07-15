@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('real')
 
 export const real: Layer2 = orbitStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.DA.DAC, Badge.RaaS.Gelato],
+  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.Orbit, Badge.RaaS.Gelato],
   display: {
     name: 'Re.al',
     slug: 'real',

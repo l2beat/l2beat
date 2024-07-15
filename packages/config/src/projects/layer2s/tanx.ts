@@ -58,9 +58,9 @@ export const tanx: Layer2 = {
   id: ProjectId('brine'),
   badges: [
     Badge.VM.AppChain,
+    Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
-    Badge.DA.DAC,
   ],
   display: {
     name: 'tanX',

@@ -55,7 +55,12 @@ const committee = getCommittee(discovery)
 export const immutablex: Layer2 = {
   type: 'layer2',
   id: ProjectId('immutablex'),
-  badges: [Badge.VM.AppChain, Badge.Infra.SHARP, Badge.DA.DAC],
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.DAC,
+    Badge.Stack.StarkEx,
+    Badge.Infra.SHARP,
+  ],
   display: {
     name: 'Immutable X',
     slug: 'immutablex',

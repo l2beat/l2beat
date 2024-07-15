@@ -11,9 +11,9 @@ export const bob: Layer2 = opStackL2({
   discovery,
   badges: [
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.RaaS.Conduit,
-    Badge.DA.EthereumBlobs,
   ],
   display: {
     name: 'BOB',

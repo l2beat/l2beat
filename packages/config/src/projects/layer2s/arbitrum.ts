@@ -89,8 +89,8 @@ export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
   badges: [
-    Badge.DA.EthereumBlobs,
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
     Badge.Stack.Nitro,
     Badge.Other.L3HostChain,
     Badge.Other.Governance,

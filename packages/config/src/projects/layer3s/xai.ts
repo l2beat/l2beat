@@ -32,9 +32,9 @@ export const xai: Layer3 = orbitStackL3({
   hostChain: ProjectId('arbitrum'),
   badges: [
     Badge.VM.EVM,
+    Badge.DA.DAC,
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
-    Badge.DA.DAC,
   ],
   display: {
     name: 'Xai',

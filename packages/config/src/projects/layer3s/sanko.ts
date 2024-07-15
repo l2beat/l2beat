@@ -10,10 +10,10 @@ export const sanko: Layer3 = orbitStackL3({
   discovery,
   badges: [
     Badge.VM.EVM,
+    Badge.DA.DAC,
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
-    Badge.DA.DAC,
   ],
   hostChain: ProjectId('arbitrum'),
   display: {

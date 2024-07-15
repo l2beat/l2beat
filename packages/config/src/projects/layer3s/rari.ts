@@ -10,10 +10,10 @@ const discovery = new ProjectDiscovery('rari', 'arbitrum')
 export const rari: Layer3 = orbitStackL3({
   badges: [
     Badge.VM.EVM,
+    Badge.DA.DAC,
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Caldera,
-    Badge.DA.DAC,
   ],
   discovery,
   hostChain: ProjectId('arbitrum'),

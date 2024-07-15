@@ -93,11 +93,11 @@ export const optimism: Layer2 = {
   id: ProjectId('optimism'),
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.OPStack,
     Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
-    Badge.Other.Governance,
     Badge.Other.L3HostChain,
+    Badge.Other.Governance,
   ],
   display: {
     name: 'OP Mainnet',

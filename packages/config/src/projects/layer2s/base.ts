@@ -80,11 +80,11 @@ export const base: Layer2 = opStackL2({
     },
   ],
   badges: [
-    Badge.DA.EthereumBlobs,
     Badge.VM.EVM,
-    Badge.Other.L3HostChain,
+    Badge.DA.EthereumBlobs,
     Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.Other.L3HostChain,
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({

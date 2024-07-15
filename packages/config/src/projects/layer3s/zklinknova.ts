@@ -95,7 +95,7 @@ export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
   hostChain: ProjectId('linea'),
-  badges: [Badge.VM.EVM, Badge.L3ParentChain.Linea, Badge.DA.DAC],
+  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {
     name: 'zkLink Nova',
     slug: 'zklinknova',

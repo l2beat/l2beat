@@ -66,8 +66,8 @@ export const paradex: Layer2 = {
   id: ProjectId('paradex'),
   badges: [
     Badge.VM.CairoVM,
-    Badge.Fork.StarknetFork,
     Badge.DA.EthereumBlobs,
+    Badge.Fork.StarknetFork,
     Badge.Infra.SHARP,
   ],
   display: {

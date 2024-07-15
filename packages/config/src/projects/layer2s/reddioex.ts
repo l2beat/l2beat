@@ -53,9 +53,9 @@ export const reddioex: Layer2 = {
   id: ProjectId('reddioex'),
   badges: [
     Badge.VM.AppChain,
+    Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
-    Badge.DA.DAC,
   ],
   display: {
     name: 'ReddioEx',

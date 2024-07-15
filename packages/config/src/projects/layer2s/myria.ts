@@ -59,9 +59,9 @@ export const myria: Layer2 = {
   id: ProjectId('myria'),
   badges: [
     Badge.VM.AppChain,
+    Badge.DA.DAC,
     Badge.Stack.StarkEx,
     Badge.Infra.SHARP,
-    Badge.DA.DAC,
   ],
   display: {
     name: 'Myria',

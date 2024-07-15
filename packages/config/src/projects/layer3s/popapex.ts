@@ -11,10 +11,10 @@ const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 export const popapex: Layer3 = orbitStackL3({
   badges: [
     Badge.VM.EVM,
+    Badge.DA.DAC,
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
     Badge.RaaS.Conduit,
-    Badge.DA.DAC,
   ],
   discovery,
   hostChain: ProjectId('arbitrum'),
