@@ -1,6 +1,6 @@
 import '@total-typescript/ts-reset'
 
-import cx from 'classnames'
+import clsx from 'clsx'
 import { useState } from 'react'
 
 import type { SimpleNode } from './api/SimpleNode'
@@ -119,7 +119,7 @@ export function App() {
       }}
     >
       <div
-        className={cx(
+        className={clsx(
           'grid h-full w-full grid-rows-[_1fr]',
           showSidebar ? 'grid-cols-[1fr,_400px]' : 'grid-cols-[1fr]',
         )}

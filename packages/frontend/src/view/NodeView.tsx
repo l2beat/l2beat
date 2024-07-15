@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { useCallback, useEffect, useRef } from 'react'
 
 import type { Node } from '../store/State'
@@ -63,14 +63,14 @@ export function NodeView(props: NodeViewProps) {
         width: props.node.box.width,
         height: props.node.box.height + RESIZE_HANDLE_SPACING,
       }}
-      className={classNames(
+      className={clsx(
         'absolute rounded-md border-2 border-black bg-white',
         props.selected && 'outline outline-2 outline-blue-400',
         props.discovered ? 'bg-white' : 'bg-yellow-300',
       )}
     >
       <div
-        className={classNames(
+        className={clsx(
           'flex h-[28px] w-full justify-between px-2 leading-[28px]',
           props.node.fields.length > 0 && 'border-black border-b-2',
         )}
@@ -89,7 +89,7 @@ export function NodeView(props: NodeViewProps) {
           </div>
           {connection && (
             <div
-              className={classNames(
+              className={clsx(
                 'absolute h-[12px] w-[12px]',
                 'rounded-full border-2 border-black bg-white',
               )}

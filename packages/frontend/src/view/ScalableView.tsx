@@ -1,4 +1,4 @@
-import classNames from 'classnames'
+import clsx from 'clsx'
 import { type ForwardedRef, type ReactNode, forwardRef } from 'react'
 
 import type { State } from '../store/State'
@@ -20,7 +20,7 @@ export const ScalableView = forwardRef(
       >
         {/* infinite grid */}
         <div
-          className={classNames(
+          className={clsx(
             'absolute h-full w-full',
             props.transform.scale < 0.5 && 'hidden',
           )}
