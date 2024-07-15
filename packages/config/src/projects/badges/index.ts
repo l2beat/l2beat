@@ -26,7 +26,8 @@ export const badges = {
   AltLayer: {
     display: {
       name: 'AltLayer',
-      description: 'Lorem AltLayer dolor sit amet...',
+      description:
+        'This project was deployed via the rollup-as-a-service provider AltLayer',
     },
     type: BadgeType.RaaS,
   },
