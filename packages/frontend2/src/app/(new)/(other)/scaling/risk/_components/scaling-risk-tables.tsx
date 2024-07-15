@@ -92,6 +92,9 @@ export function ScalingRiskTables({
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 
@@ -108,6 +111,9 @@ export function ScalingRiskTables({
           desc: false,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 

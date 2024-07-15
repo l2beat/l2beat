@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 
@@ -16,6 +15,7 @@ export const scalingRiskColumns = [
     meta: {
       headClassName: 'w-0',
     },
+    size: 44.55,
   }),
   columnHelper.display({
     id: 'logo',
@@ -28,9 +28,10 @@ export const scalingRiskColumns = [
         alt={`${ctx.row.original.name} logo`}
       />
     ),
+    size: 26,
     meta: {
       headClassName: 'w-0',
-      cellClassName: '!pr-0',
+      cellClassName: 'lg:!pr-0',
     },
   }),
   columnHelper.accessor('name', {

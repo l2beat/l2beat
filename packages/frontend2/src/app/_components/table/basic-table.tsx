@@ -1,4 +1,8 @@
-import { type Table as TanstackTable, flexRender } from '@tanstack/react-table'
+import {
+  type Table as TanstackTable,
+  flexRender,
+  type Column,
+} from '@tanstack/react-table'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
@@ -10,6 +14,7 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
+import { type CSSProperties } from 'react'
 
 interface BasicEntry {
   href?: string
@@ -23,6 +28,25 @@ interface BasicEntry {
 interface Props<T extends BasicEntry> {
   table: TanstackTable<T>
   onResetFilters: () => void
+}
+
+function getCommonPinningStyles<T>(column: Column<T>): CSSProperties {
+  const isPinned = column.getIsPinned()
+  const isLastLeftPinnedColumn =
+    isPinned === 'left' && column.getIsLastColumn('left')
+  const isFirstRightPinnedColumn =
+    isPinned === 'right' && column.getIsFirstColumn('right')
+
+  return {
+    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+    background: isLastLeftPinnedColumn
+      ? 'linear-gradient(to left, rgb(16, 18, 21, 0), rgb(16, 18, 21, 1) 8px)'
+      : undefined,
+    position: isPinned ? 'sticky' : 'relative',
+    width: column.getSize(),
+    zIndex: isPinned ? 1 : 0,
+  }
 }
 
 export function BasicTable<T extends BasicEntry>({
@@ -44,6 +68,7 @@ export function BasicTable<T extends BasicEntry>({
                 colSpan={header.colSpan}
                 className={header.column.columnDef.meta?.headClassName}
                 tooltip={header.column.columnDef.meta?.tooltip}
+                style={{ ...getCommonPinningStyles(header.column) }}
               >
                 {header.isPlaceholder ? null : header.column.getCanSort() ? (
                   <SortingArrows
@@ -79,6 +104,7 @@ export function BasicTable<T extends BasicEntry>({
                     key={cell.id}
                     href={getHref(row.original.href, meta?.hash)}
                     className={meta?.cellClassName}
+                    style={{ ...getCommonPinningStyles(cell.column) }}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
