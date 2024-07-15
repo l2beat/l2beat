@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "LivenessModule",
-  "description": "used to remove members inactive for {{ livenessInterval }} while making sure that the threshold remains above {{ thresholdPercentage }}%. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig.",
+  "description": "used to remove members inactive for {{ livenessInterval }} while making sure that the threshold remains above {{ thresholdPercentage }}%. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig",
   "ignoreMethods": ["getRequiredThreshold"],
   "fields": {
     "livenessInterval": {
@@ -9,7 +9,7 @@
     },
     "fallbackOwner": {
       "target": {
-        "description": "Fallback Owner of {{ #address }} - takes ownership of {{ safe }} Gnosis Safe if the number of members falls below {{ minOwners }}."
+        "description": "Fallback Owner of {{ #address }} - takes ownership of {{ safe }} if the number of members falls below {{ minOwners }}."
       }
     },
     "livenessGuard": {

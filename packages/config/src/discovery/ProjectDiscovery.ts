@@ -715,6 +715,19 @@ export class ProjectDiscovery {
       .join(' ')
   }
 
+  replaceAddressesWithNames(s: string): string {
+    const ethereumAddressRegex = /\b0x[a-fA-F0-9]{40}\b/g
+    const addresses = s.match(ethereumAddressRegex) ?? []
+
+    for (const address of addresses) {
+      const contract = this.getContractByAddress(address)
+      if (contract !== undefined) {
+        s = s.replace(address, contract.name)
+      }
+    }
+    return s
+  }
+
   getDiscoveredPermissions(): ScalingProjectPermission[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
@@ -747,6 +760,12 @@ export class ProjectDiscovery {
         description,
       })
     }
+
+    result.forEach((permission) => {
+      permission.description = this.replaceAddressesWithNames(
+        permission.description,
+      )
+    })
     return result
   }
 
@@ -757,7 +776,7 @@ export class ProjectDiscovery {
     const gnosisModules = contracts.flatMap((contract) =>
       toAddressArray(contract.values?.GnosisSafe_modules),
     )
-    return contracts
+    const result = contracts
       .filter((contract) => !gnosisModules.includes(contract.address))
       .filter((contracts) => contracts.assignedPermissions === undefined)
       .filter((contracts) => contracts.proxyType !== 'gnosis safe')
@@ -775,6 +794,16 @@ export class ProjectDiscovery {
           ...upgradableBy,
         })
       })
+
+    result.forEach((contract) => {
+      if (contract.description !== undefined) {
+        contract.description = this.replaceAddressesWithNames(
+          contract.description,
+        )
+      }
+    })
+
+    return result
   }
 }
 
