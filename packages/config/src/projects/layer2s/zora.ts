@@ -25,13 +25,7 @@ const livenessInterval = discovery.getContractValue<number>(
 
 export const zora: Layer2 = opStackL2({
   discovery,
-  badges: [
-    Badge.VM.EVM,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.DA.EthereumBlobs,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Zora',
     slug: 'zora',

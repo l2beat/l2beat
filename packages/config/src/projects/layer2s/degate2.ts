@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { Badge } from '../badges'
 
 import {
   EXITS,
@@ -48,6 +49,11 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 export const degate2: Layer2 = {
   isArchived: true,
   type: 'layer2',
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.EthereumCalldata,
+    Badge.Fork.LoopringFork,
+  ],
   id: ProjectId('degate2'),
   display: {
     name: 'DeGate V1 Legacy',

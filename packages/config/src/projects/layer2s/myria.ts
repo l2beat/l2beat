@@ -57,7 +57,12 @@ const committee = getCommittee(discovery)
 export const myria: Layer2 = {
   type: 'layer2',
   id: ProjectId('myria'),
-  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.DAC,
+    Badge.Stack.StarkEx,
+    Badge.Infra.SHARP,
+  ],
   display: {
     name: 'Myria',
     slug: 'myria',

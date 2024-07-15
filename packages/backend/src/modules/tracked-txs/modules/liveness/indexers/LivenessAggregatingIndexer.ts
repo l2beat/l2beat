@@ -4,7 +4,6 @@ import {
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 import {
   ManagedChildIndexer,
@@ -15,12 +14,15 @@ import {
   AggregatedLivenessRecord,
   AggregatedLivenessRepository,
 } from '../repositories/AggregatedLivenessRepository'
+import { LivenessRepository } from '../repositories/LivenessRepository'
 import {
-  LivenessRecordWithSubtype,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
-import { Interval, calculateIntervals } from '../utils/calculateIntervals'
-import { getProjectsToSync } from '../utils/getProjectsToSync'
+  LivenessRecordWithConfig,
+  LivenessWithConfigService,
+} from '../services/LivenessWithConfigService'
+import { calculateIntervals } from '../utils/calculateIntervals'
+import { calculateStats } from '../utils/calculateStats'
+import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
+import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export interface LivenessAggregatingIndexerDeps
@@ -28,12 +30,6 @@ export interface LivenessAggregatingIndexerDeps
   livenessRepository: LivenessRepository
   aggregatedLivenessRepository: AggregatedLivenessRepository
   projects: BackendProject[]
-}
-
-type Stats = {
-  averageInSeconds: number
-  minimumInSeconds: number
-  maximumInSeconds: number
 }
 
 export class LivenessAggregatingIndexer extends ManagedChildIndexer {
@@ -98,14 +94,19 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         'tracked_txs_indexer',
       )
 
-    const projectsToSync = getProjectsToSync(this.$.projects, configurations)
+    for (const project of this.$.projects) {
+      const activeConfigs = getActiveConfigurations(project, configurations)
 
-    for (const project of projectsToSync) {
-      const livenessRecords =
-        await this.$.livenessRepository.getWithSubtypeByProjectIdsUpTo(
-          project.projectId,
-          syncTo,
-        )
+      if (!activeConfigs) {
+        continue
+      }
+
+      const livenessWithConfig = new LivenessWithConfigService(
+        activeConfigs,
+        this.$.livenessRepository,
+      )
+
+      const livenessRecords = await livenessWithConfig.getUpTo(syncTo)
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
@@ -157,7 +158,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
   aggregatedRecords(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
-    livenessRecords: LivenessRecordWithSubtype[],
+    livenessRecords: LivenessRecordWithConfig[],
     syncTo: UnixTime,
     ranges: AggregatedLivenessRange[],
   ): AggregatedLivenessRecord[] {
@@ -166,13 +167,13 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
 
     ranges.forEach((range) => {
-      const filteredIntervals = this.filterByRange(intervals, syncTo, range)
+      const filteredIntervals = filterIntervalsByRange(intervals, syncTo, range)
 
       if (filteredIntervals.length === 0) {
         return
       }
 
-      const stats = this.calculateStats(filteredIntervals)
+      const stats = calculateStats(filteredIntervals)
 
       const record: AggregatedLivenessRecord = {
         projectId: projectId,
@@ -188,52 +189,5 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
     })
 
     return aggregatedRecords
-  }
-
-  filterByRange(
-    intervals: Interval[],
-    syncTo: UnixTime,
-    range: AggregatedLivenessRange,
-  ): Interval[] {
-    switch (range) {
-      case '30D':
-        return intervals.filter((i) =>
-          i.record.timestamp.gt(syncTo.add(-30, 'days')),
-        )
-      case '90D':
-        return intervals.filter((i) =>
-          i.record.timestamp.gt(syncTo.add(-90, 'days')),
-        )
-      case 'MAX':
-        return intervals
-      default:
-        assertUnreachable(range)
-    }
-  }
-
-  calculateStats(intervals: Interval[]): Stats {
-    const result: Stats = {
-      averageInSeconds: 0,
-      minimumInSeconds: Infinity,
-      maximumInSeconds: 0,
-    }
-
-    for (const interval of intervals) {
-      result.averageInSeconds += interval.duration
-      result.minimumInSeconds = Math.min(
-        result.minimumInSeconds,
-        interval.duration,
-      )
-      result.maximumInSeconds = Math.max(
-        result.maximumInSeconds,
-        interval.duration,
-      )
-    }
-
-    result.averageInSeconds = Math.ceil(
-      result.averageInSeconds / intervals.length,
-    )
-
-    return result
   }
 }

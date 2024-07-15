@@ -9,12 +9,7 @@ import { Layer3 } from './types'
 const discovery = new ProjectDiscovery('popapex', 'arbitrum')
 
 export const popapex: Layer3 = orbitStackL3({
-  badges: [
-    Badge.VM.EVM,
-    Badge.Stack.Orbit,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
   discovery,
   hostChain: ProjectId('arbitrum'),
   bridge: discovery.getContract('Bridge'),

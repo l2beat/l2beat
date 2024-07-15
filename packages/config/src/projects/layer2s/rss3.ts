@@ -13,7 +13,7 @@ const upgradeability = {
 }
 
 export const rss3: Layer2 = opStackL2({
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack],
+  badges: [Badge.DA.NearDA],
   daProvider: {
     name: 'NearDA',
     riskView: {

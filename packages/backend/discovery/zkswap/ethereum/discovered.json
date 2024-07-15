@@ -1,8 +1,8 @@
 {
   "name": "zkswap",
   "chain": "ethereum",
-  "blockNumber": 19432103,
-  "configHash": "0x73afccc819928023fc410ec9984703b0c8e2a366353cf570e6f7369a3ce9dbd6",
+  "blockNumber": 20311131,
+  "configHash": "0x651914ce661d79a29f4959d5466bfd8b5c975114bf075b964500a1fc70ee5547",
   "version": 9,
   "contracts": [
     {
@@ -115,7 +115,8 @@
         "firstPendingWithdrawalIndex",
         "numberOfPendingWithdrawals",
         "totalBlocksCommitted",
-        "totalBlocksVerified"
+        "totalBlocksVerified",
+        "firstPriorityRequestId"
       ],
       "sinceTimestamp": 1613135194,
       "values": {
@@ -123,15 +124,15 @@
         "$implementation": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
         "EMPTY_STRING_KECCAK": "0xc5d2460186f7233c927e7db2dcc703c0e500b653ca82273b7bfad8045d85a470",
         "exodusMode": false,
-        "firstPendingWithdrawalIndex": 37161,
-        "firstPriorityRequestId": 22929,
+        "firstPendingWithdrawalIndex": 37174,
+        "firstPriorityRequestId": 22930,
         "getMaster": "0x714B2D10210f2A3a7AA614F949259C87613689aB",
         "getTarget": "0x2F70F6D864F8F597a0ef57aDDf24323DFAb5797f",
         "governance": "0x02ecef526f806f06357659fFD14834fe82Ef4B04",
         "numberOfPendingWithdrawals": 0,
         "pairManager": "0x661121AE41edE3f6FECDed922c59acC19A3ea9B3",
-        "totalBlocksCommitted": 130725,
-        "totalBlocksVerified": 130724,
+        "totalBlocksCommitted": 130738,
+        "totalBlocksVerified": 130738,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "totalPairTokens": 108,

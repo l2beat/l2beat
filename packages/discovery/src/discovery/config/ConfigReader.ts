@@ -44,7 +44,20 @@ export class ConfigReader {
     }
 
     this.templateService.inlineTemplates(rawConfig.data)
-    const config = new DiscoveryConfig(rawConfig.data, this)
+
+    const commonAddressNamesPath = path.join(
+      this.rootPath,
+      'discovery',
+      'commonAddressNames.jsonc',
+    )
+    assert(
+      fileExistsCaseSensitive(commonAddressNamesPath),
+      `${commonAddressNamesPath} not found`,
+    )
+    const commonAddressNames = readJsonc(
+      commonAddressNamesPath,
+    ) as unknown as Record<string, string>
+    const config = new DiscoveryConfig(rawConfig.data, commonAddressNames, this)
 
     assert(config.chain === chain, 'Chain mismatch in config.jsonc')
 

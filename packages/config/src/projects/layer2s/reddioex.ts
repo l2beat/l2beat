@@ -51,12 +51,17 @@ const committee = getCommittee(discovery)
 export const reddioex: Layer2 = {
   type: 'layer2',
   id: ProjectId('reddioex'),
-  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.DAC,
+    Badge.Stack.StarkEx,
+    Badge.Infra.SHARP,
+  ],
   display: {
-    name: 'ReddioEx',
-    slug: 'reddioex',
+    name: 'RedSonic',
+    slug: 'redsonic',
     description:
-      'ReddioEx is a Validium based on the StarkEx technology. Its goal is to power the next generation of web3 apps and games by providing developers with the ability to create digital assets (NFTs) and easily integrate them in-game.',
+      'RedSonic is a Validium based on the StarkEx technology. Its goal is to power the next generation Web3 apps and games by providing developers with the APIs and SDKs to create digital assets and easily integrate them in-app and in-game.',
     purposes: ['Exchange', 'NFT', 'Gaming'],
     provider: 'StarkEx',
     category: 'Validium',
@@ -67,6 +72,7 @@ export const reddioex: Layer2 = {
         'https://dashboard.reddio.com',
         'https://bridge.reddio.com',
         'https://reddio.com/redSonic',
+        'https://points.reddio.com',
       ],
       documentation: ['https://docs.reddio.com/'],
       explorers: ['https://explorer.reddio.com/'],

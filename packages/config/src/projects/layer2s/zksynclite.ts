@@ -55,7 +55,7 @@ const forcedWithdrawalDelay = HARDCODED.ZKSYNC.PRIORITY_EXPIRATION_PERIOD
 export const zksynclite: Layer2 = {
   type: 'layer2',
   id: ProjectId('zksync'),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata],
+  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
     name: 'ZKsync Lite',
     slug: 'zksync-lite',

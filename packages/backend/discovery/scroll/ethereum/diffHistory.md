@@ -1,3 +1,39 @@
+Generated with discovered.json: 0x5081176f152acedc1ae3327f19791d12163a107c
+
+# Diff at Mon, 15 Jul 2024 09:39:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c6bae99047cf03487a19e4008cfffabf520bcf2b block: 20259894
+- current block number: 20311071
+
+## Description
+
+New targets are added to the ScrollOwner accessControl: `updateVerifier` on the MultipleVersionRollupVerifier can now be called via TimelockMid(7d) and `setBatchConfig` on the L1BatchBridgeGateway via TimelockFast(1d).
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B:
++        {"updateVerifier(uint256,uint64,address)":["TIMELOCK_7DAY_DELAY_ROLE"]}
+      values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4:
++        {"setBatchConfig(address,(uint96,uint96,uint16,uint24,uint24))":["TIMELOCK_1DAY_DELAY_TOLE"]}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20259894 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xc91c535b44afb48eb36ccafc1f98ec0e73dd837f
 
 # Diff at Mon, 08 Jul 2024 06:07:38 GMT:
@@ -9,6 +45,8 @@ Generated with discovered.json: 0xc91c535b44afb48eb36ccafc1f98ec0e73dd837f
 ## Description
 
 Batches are reverted [in this transaction](https://app.blocksec.com/explorer/tx/eth/0xf58cd0223418a4dd390be63d67c31ccd3b05a82d59461106227664e8fc417ac5). Unclear what justified this action.
+
+Relevant incident page: https://status.scroll.io/incidents/44k6s4qg6kcs
 
 ## Watched changes
 

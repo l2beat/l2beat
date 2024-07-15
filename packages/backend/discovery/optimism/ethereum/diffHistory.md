@@ -1,3 +1,94 @@
+Generated with discovered.json: 0x6c82d42b433ed39ceb66098f6f19c519b6885edb
+
+# Diff at Fri, 12 Jul 2024 12:08:02 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d6f7bd1c3a10712b93b6891cc6ca39616765a983 block: 20188703
+- current block number: 20290315
+
+## Description
+
+These changes are due to the [OP Mainnet 'Fjord' upgrade](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236) which, on the L1, affects the fault proof related contracts in order to introduce the new op-program pre-state hash (otherwise code-identical).
+
+### Fjord upgrade TLDR
+
+- secp256r1 precompile
+- brotli channel compression
+- FastLZ based DA fee calculation
+- max sequencer drift (time delta between L2 block ts and according epoch ts derived from L1) raised from 10 to 30 minutes
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract FaultDisputeGame (0x4146DF64D83acB0DcB0c1a4884a16f090165e122)
+    +++ description: None
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.gameImpls.1:
+-        "0xE9daD167EF4DE8812C1abD013Ac9570C616599A0"
++        "0xc307e93a7C530a184c98EaDe4545a412b857b62f"
+      values.gameImpls.0:
+-        "0x4146DF64D83acB0DcB0c1a4884a16f090165e122"
++        "0xf691F8A6d908B58C534B624cF16495b491E633BA"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract PermissionedDisputeGame (0xE9daD167EF4DE8812C1abD013Ac9570C616599A0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PermissionedDisputeGame (0xc307e93a7C530a184c98EaDe4545a412b857b62f)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FaultDisputeGame (0xf691F8A6d908B58C534B624cF16495b491E633BA)
+    +++ description: None
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20188703 (main branch discovery), not current.
+
+```diff
+    contract FaultDisputeGame (0x4146DF64D83acB0DcB0c1a4884a16f090165e122) {
+    +++ description: None
+      values.getNumToResolve:
++        [0,0,0,0,0]
+      values.resolutionCheckpoints:
++        [[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"]]
+      values.resolvedSubgames:
++        [false,false,false,false,false]
+      errors:
++        {"getNumToResolve":"Too many values. Update configuration to explore fully","resolutionCheckpoints":"Too many values. Update configuration to explore fully","resolvedSubgames":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+```diff
+    contract PermissionedDisputeGame (0xE9daD167EF4DE8812C1abD013Ac9570C616599A0) {
+    +++ description: None
+      values.getNumToResolve:
++        [0,0,0,0,0]
+      values.resolutionCheckpoints:
++        [[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"],[false,0,0,"0x0000000000000000000000000000000000000000"]]
+      values.resolvedSubgames:
++        [false,false,false,false,false]
+      errors:
++        {"getNumToResolve":"Too many values. Update configuration to explore fully","resolutionCheckpoints":"Too many values. Update configuration to explore fully","resolvedSubgames":"Too many values. Update configuration to explore fully"}
+    }
+```
+
 Generated with discovered.json: 0x30dae19859608d0e7e7778237f60c0357f680e61
 
 # Diff at Fri, 28 Jun 2024 07:31:54 GMT:

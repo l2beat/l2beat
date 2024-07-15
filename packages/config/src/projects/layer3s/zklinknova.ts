@@ -16,6 +16,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer3 } from './types'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
@@ -94,6 +95,7 @@ export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
   hostChain: ProjectId('linea'),
+  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {
     name: 'zkLink Nova',
     slug: 'zklinknova',

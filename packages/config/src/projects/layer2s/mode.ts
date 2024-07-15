@@ -25,13 +25,7 @@ const livenessInterval = discovery.getContractValue<number>(
 
 export const mode: Layer2 = opStackL2({
   discovery,
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.EthereumBlobs,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-    Badge.RaaS.Conduit,
-  ],
+  badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
     name: 'Mode Network',
     slug: 'mode',
