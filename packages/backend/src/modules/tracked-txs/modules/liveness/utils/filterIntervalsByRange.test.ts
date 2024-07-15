@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
+import { LivenessRecordWithConfig } from '../repositories/LivenessWithConfigRepository'
 import { Interval } from './calculateIntervals'
 import { filterIntervalsByRange } from './filterIntervalsByRange'
 
@@ -8,24 +9,24 @@ describe(filterIntervalsByRange.name, () => {
     const NOW = UnixTime.now()
     const MOCK_INTERVALS: Interval[] = [
       {
-        record: {
+        record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
           timestamp: NOW.add(-1, 'days'),
-        },
+        }),
         duration: 10,
       },
       {
-        record: {
+        record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
           timestamp: NOW.add(-10, 'days'),
-        },
+        }),
         duration: 20,
       },
       {
-        record: {
+        record: mockObject<LivenessRecordWithConfig>({
           subtype: 'batchSubmissions',
           timestamp: NOW.add(-40, 'days'),
-        },
+        }),
         duration: 30,
       },
     ]
