@@ -31,7 +31,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       min: 10,
       avg: 10,
       max: 10,
-      updatedAt: START.add(-1, 'hours'),
+      updatedAt: START.add(-2, 'hours'),
     },
   ]
 
@@ -62,23 +62,16 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          updatedAt: START.add(-1, 'hours'),
+          updatedAt: START.add(-4, 'hours'),
         },
       ]
 
       await repository.addOrUpdateMany(newRows)
 
       const results = await repository.getAll()
+
       expect(results).toEqualUnsorted([
-        {
-          projectId: PROJECT_A,
-          subtype: 'batchSubmissions',
-          range: '30D',
-          min: 20,
-          avg: 20,
-          max: 20,
-          updatedAt: START.add(-1, 'hours'),
-        },
+        newRows[0],
         {
           projectId: PROJECT_B,
           subtype: 'stateUpdates',
@@ -86,17 +79,9 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          updatedAt: START.add(-1, 'hours'),
+          updatedAt: START.add(-2, 'hours'),
         },
-        {
-          projectId: PROJECT_B,
-          subtype: 'stateUpdates',
-          range: '90D',
-          min: 10,
-          avg: 10,
-          max: 10,
-          updatedAt: START.add(-1, 'hours'),
-        },
+        newRows[1],
       ])
     })
 
@@ -114,6 +99,14 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           ...e,
         })),
       )
+    })
+  })
+
+  describe(AggregatedLivenessRepository.prototype.getByProject.name, () => {
+    it('should return all rows for project', async () => {
+      const results = await repository.getByProject(PROJECT_B)
+
+      expect(results).toEqualUnsorted(DATA.slice(1, 2))
     })
   })
 

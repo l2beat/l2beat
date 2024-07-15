@@ -12,7 +12,6 @@ import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import { RunningStatistics } from '../api/RollingVariance'
 import {
   AnomaliesRecord,
   AnomaliesRepository,
@@ -21,6 +20,7 @@ import {
   LivenessRecordWithSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
+import { RunningStatistics } from '../utils/RollingVariance'
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { getProjectsToSync } from '../utils/getProjectsToSync'
 import { groupByType } from '../utils/groupByType'

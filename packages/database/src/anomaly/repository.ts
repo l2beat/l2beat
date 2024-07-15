@@ -1,3 +1,4 @@
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
 import { Anomaly, toRecord, toRow } from './entity'
 import { selectAnomaly } from './select'
@@ -39,6 +40,24 @@ export class AnomaliesRepository {
     const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
+      .execute()
+
+    return rows.map(toRecord)
+  }
+
+  async getByProjectFrom(
+    projectId: ProjectId,
+    from: UnixTime,
+  ): Promise<Anomaly[]> {
+    const rows = await this.db
+      .selectFrom('public.anomalies')
+      .select(selectAnomaly)
+      .where((eb) =>
+        eb.and([
+          eb('project_id', '=', projectId),
+          eb('timestamp', '>=', from.toDate()),
+        ]),
+      )
       .execute()
 
     return rows.map(toRecord)

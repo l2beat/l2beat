@@ -13,7 +13,6 @@ import {
   LivenessRecordWithSubtype,
   LivenessRepository,
 } from '../repositories/LivenessRepository'
-import { Interval } from '../utils/calculateIntervals'
 import {
   LivenessAggregatingIndexer,
   LivenessAggregatingIndexerDeps,
@@ -45,30 +44,6 @@ const MOCK_CONFIGURATIONS = [
     maxHeight: null,
     currentHeight: 1,
   }),
-]
-
-const MOCK_INTERVALS: Interval[] = [
-  {
-    record: {
-      subtype: 'batchSubmissions',
-      timestamp: NOW.add(-1, 'days'),
-    },
-    duration: 10,
-  },
-  {
-    record: {
-      subtype: 'batchSubmissions',
-      timestamp: NOW.add(-10, 'days'),
-    },
-    duration: 20,
-  },
-  {
-    record: {
-      subtype: 'batchSubmissions',
-      timestamp: NOW.add(-40, 'days'),
-    },
-    duration: 30,
-  },
 ]
 
 const MOCK_LIVENESS: LivenessRecordWithSubtype[] = [
@@ -260,30 +235,6 @@ describe(LivenessAggregatingIndexer.name, () => {
           updatedAt: NOW,
         },
       ])
-    })
-  })
-
-  describe(LivenessAggregatingIndexer.prototype.filterByRange.name, () => {
-    it('should filter intervals by range', async () => {
-      const indexer = createIndexer({ tag: 'filterByRange' })
-
-      const result = indexer.filterByRange(MOCK_INTERVALS, NOW, '30D')
-
-      expect(result).toEqual([...MOCK_INTERVALS].splice(0, 2))
-    })
-  })
-
-  describe(LivenessAggregatingIndexer.prototype.calculateStats.name, () => {
-    it('should calculate stats', async () => {
-      const indexer = createIndexer({ tag: 'calculateStats' })
-
-      const result = indexer.calculateStats(MOCK_INTERVALS)
-
-      expect(result).toEqual({
-        averageInSeconds: 20,
-        minimumInSeconds: 10,
-        maximumInSeconds: 30,
-      })
     })
   })
 })
