@@ -11,14 +11,8 @@ import {
 } from '~/app/_components/drawer'
 import { useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '~/app/_components/popover'
-import ChevronIcon from '~/icons/chevron.svg'
 import ExpandIcon from '~/icons/expand.svg'
-import { cn } from '~/utils/cn'
+import { Select, SelectContent, SelectItem, SelectTrigger } from '../../select'
 
 interface Option {
   label: string
@@ -83,13 +77,18 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
             <DrawerTitle>{title}</DrawerTitle>
           </DrawerHeader>
           <div className="max-h-[60vh] [@supports(height:100dvh)]:max-h-[60dvh] overflow-y-scroll">
-            <Options
-              options={options}
-              onClick={(option) => {
-                onValueChange(option)
-                setOpen(false)
-              }}
-            />
+            {options.map((option) => (
+              <button
+                key={option.label}
+                className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400"
+                onClick={() => {
+                  onValueChange(option.value)
+                  setOpen(false)
+                }}
+              >
+                {option.label}
+              </button>
+            ))}
           </div>
         </DrawerContent>
       </Drawer>
@@ -97,51 +96,15 @@ export function TableFilter({ title, options, value, onValueChange }: Props) {
   }
 
   return (
-    <Popover open={open} onOpenChange={setOpen}>
-      <PopoverTrigger>
-        {selectedLabel ?? title}
-        <ChevronIcon className="group-data-[state=open]:-rotate-180 ease-out duration-300 hidden transition-transform md:block fill-black dark:fill-white" />
-        <ExpandIcon
-          width={12}
-          height={12}
-          className="md:hidden my-auto fill-black dark:fill-white"
-        />
-      </PopoverTrigger>
-      <PopoverContent className="flex flex-col" align="start">
-        <Options
-          options={options}
-          className="px-2.5"
-          onClick={(option) => {
-            onValueChange(option)
-            setOpen(false)
-          }}
-        />
-      </PopoverContent>
-    </Popover>
-  )
-}
-
-interface OptionsProps {
-  options: Option[]
-  onClick: (option: string | undefined) => void
-  className?: string
-}
-
-function Options({ options, onClick, className }: OptionsProps) {
-  return (
-    <>
-      {options.map((option) => (
-        <button
-          key={option.label}
-          className={cn(
-            'w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400',
-            className,
-          )}
-          onClick={() => onClick(option.value)}
-        >
-          {option.label}
-        </button>
-      ))}
-    </>
+    <Select open={open} onOpenChange={setOpen} onValueChange={onValueChange}>
+      <SelectTrigger>{selectedLabel ?? title}</SelectTrigger>
+      <SelectContent className="flex flex-col" align="start">
+        {options.map((option) => (
+          <SelectItem key={option.label} value={option.value ?? ''}>
+            {option.label}
+          </SelectItem>
+        ))}
+      </SelectContent>
+    </Select>
   )
 }

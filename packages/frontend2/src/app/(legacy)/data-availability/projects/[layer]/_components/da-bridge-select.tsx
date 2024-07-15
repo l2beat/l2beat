@@ -7,6 +7,7 @@ import {
   PopoverTrigger,
 } from '~/app/_components/popover'
 import ChevronIcon from '~/icons/chevron.svg'
+import CheckIcon from '~/icons/check.svg'
 import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 interface Props {
   project: DaProjectEntry
@@ -31,14 +32,15 @@ export function DaBridgeSelect({ project }: Props) {
               <button
                 key={bridge.id}
                 onClick={() => setOpen(false)}
-                className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
+                className="flex relative pr-8 items-center w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
               >
                 {bridge.name}
+                <CheckIcon className="stroke-green-500 absolute right-2.5" />
               </button>
             ) : (
               <Link
                 key={bridge.id}
-                className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
+                className="w-full pr-8 outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
                 href={`/data-availability/projects/${project.slug}/${bridge.slug}`}
               >
                 {bridge.name}
