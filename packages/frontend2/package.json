@@ -11,6 +11,7 @@
     "lint": "next lint",
     "format": "biome check .",
     "format:fix": "biome check --apply .",
+    "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {

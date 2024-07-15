@@ -5,18 +5,20 @@
  *
  * In order to add a new badge type, you need to:
  * - add it to the BadgeType object below & that's it
+ *
+ * Badges are ordered first by type, then alphabetically by display name.
+ * Order of types is determined by the order in the BadgeType object.
  */
 
 export const BadgeType = {
-  RaaS: 'RaaS',
-  DA: 'DA',
   VM: 'VM',
-  Token: 'Token',
+  DA: 'DA',
   Stack: 'Stack',
   Fork: 'Fork',
-  L3ParentChain: 'L3ParentChain',
   Infra: 'Infra',
+  L3ParentChain: 'L3ParentChain',
   Other: 'Other',
+  RaaS: 'RaaS',
 } as const
 
 export type BadgeType = (typeof BadgeType)[keyof typeof BadgeType]
@@ -117,7 +119,7 @@ export const badges = {
   CustomDA: {
     display: {
       name: 'Custom DA solution',
-      description: 'This project is using a custom DA solution.',
+      description: 'This project is using a custom DA solution',
     },
     type: BadgeType.DA,
   },
@@ -125,7 +127,7 @@ export const badges = {
     display: {
       name: 'Data Availability Committee',
       description:
-        'There is a Data Availability Commitee that provides/attests to data availability.',
+        'There is a Data Availability Commitee that provides/attests to data availability',
     },
     type: BadgeType.DA,
   },
@@ -197,7 +199,7 @@ export const badges = {
   AppChain: {
     display: {
       name: 'Application-specific chain',
-      description: 'This project is built to operate a specific application.',
+      description: 'This project is built to operate a specific application',
     },
     type: BadgeType.VM,
   },
@@ -205,21 +207,21 @@ export const badges = {
   Superchain: {
     display: {
       name: 'Part of the Superchain',
-      description: 'The project is part of the Superchain.',
+      description: 'The project is part of the Superchain',
     },
     type: BadgeType.Infra,
   },
   SHARP: {
     display: {
       name: 'Uses SHARP',
-      description: 'The project uses a shared prover - SHARP.',
+      description: 'The project uses a shared prover - SHARP',
     },
     type: BadgeType.Infra,
   },
   AggLayer: {
     display: {
       name: 'Part of the AggLayer',
-      description: 'The project is part of the AggLayer.',
+      description: 'The project is part of the AggLayer',
     },
     type: BadgeType.Infra,
   },
@@ -227,21 +229,21 @@ export const badges = {
   OPStack: {
     display: {
       name: 'Built on OP Stack',
-      description: 'The project is built on the OP Stack.',
+      description: 'The project is built on the OP Stack',
     },
     type: BadgeType.Stack,
   },
   Orbit: {
     display: {
       name: 'Built on Arbitrum Orbit',
-      description: 'The project is built on Arbitrum Orbit.',
+      description: 'The project is built on Arbitrum Orbit',
     },
     type: BadgeType.Stack,
   },
   Nitro: {
     display: {
       name: 'Built on Arbitrum Nitro',
-      description: 'The project is built on Arbitrum Nitro.',
+      description: 'The project is built on Arbitrum Nitro',
     },
     type: BadgeType.Stack,
   },
@@ -256,56 +258,56 @@ export const badges = {
   ZKStack: {
     display: {
       name: 'Built on the ZK Stack',
-      description: 'The project is built on the ZK Stack.',
+      description: 'The project is built on the ZK Stack',
     },
     type: BadgeType.Stack,
   },
   PolygonCDK: {
     display: {
       name: 'Built on the Polygon CDK stack',
-      description: 'The project is built on the Polygon CDK stack.',
+      description: 'The project is built on the Polygon CDK stack',
     },
     type: BadgeType.Stack,
   },
   Cartesi: {
     display: {
       name: 'Built on the Cartesi stack',
-      description: 'The project is built on the Cartesi stack.',
+      description: 'The project is built on the Cartesi stack',
     },
     type: BadgeType.Stack,
   },
   LoopringFork: {
     display: {
       name: 'Fork of Loopring',
-      description: 'The project is fork of Loopring.',
+      description: 'The project is fork of Loopring',
     },
     type: BadgeType.Fork,
   },
   OVM: {
     display: {
       name: 'Fork of OVM',
-      description: 'The project is fork of the Optimistic Virtual Machine.',
+      description: 'The project is fork of the Optimistic Virtual Machine',
     },
     type: BadgeType.Fork,
   },
   ZKsyncLiteFork: {
     display: {
       name: 'Fork of ZKsync Lite',
-      description: 'The project is fork of ZKsync Lite.',
+      description: 'The project is fork of ZKsync Lite',
     },
     type: BadgeType.Fork,
   },
   StarknetFork: {
     display: {
       name: 'Fork of Starknet',
-      description: 'The project is fork of Starknet.',
+      description: 'The project is fork of Starknet',
     },
     type: BadgeType.Fork,
   },
   TaikoFork: {
     display: {
       name: 'Fork of Taiko',
-      description: 'The project is fork of Taiko.',
+      description: 'The project is fork of Taiko',
     },
     type: BadgeType.Fork,
   },
@@ -313,21 +315,21 @@ export const badges = {
   Arbitrum: {
     display: {
       name: 'Built on top of Arbitrum',
-      description: 'The project has Arbitrum as its host chain.',
+      description: 'The project has Arbitrum as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },
   Base: {
     display: {
       name: 'Built on top of Base',
-      description: 'The project has Base as its host chain.',
+      description: 'The project has Base as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },
   Linea: {
     display: {
       name: 'Built on top of Linea',
-      description: 'The project has Linea as its host chain.',
+      description: 'The project has Linea as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },
@@ -343,8 +345,7 @@ export const badges = {
   Governance: {
     display: {
       name: 'Governance',
-      description:
-        'This project has a decentralized governance system that votes on proposed changes',
+      description: 'This project features token voting.',
     },
     type: BadgeType.Other,
   },
@@ -382,3 +383,12 @@ export const Badge: {
 
 export type BadgeId = keyof typeof badges
 export type AnyBadge = (typeof badges)[BadgeId]
+
+export const badgeTypeOrder = Object.values(BadgeType)
+export const badgesCompareFn = (a: BadgeId, b: BadgeId) => {
+  const typeOrder =
+    badgeTypeOrder.indexOf(badges[a].type) -
+    badgeTypeOrder.indexOf(badges[b].type)
+  if (typeOrder !== 0) return typeOrder
+  return badges[a].display.name.localeCompare(badges[b].display.name)
+}

@@ -1,12 +1,12 @@
 import { FinalityDataPoint, UnixTime } from '@l2beat/shared-pure'
 
-import { LivenessRecordWithSubtype } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
+import { LivenessRecordWithConfig } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 import { calculateIntervals } from '../../tracked-txs/modules/liveness/utils/calculateIntervals'
 import { calculateStats } from '../../tracked-txs/modules/liveness/utils/calculateStats'
 import { filterIntervalsByRange } from '../../tracked-txs/modules/liveness/utils/filterIntervalsByRange'
 
 export function calcAvgsPerProject(
-  records: LivenessRecordWithSubtype[],
+  records: LivenessRecordWithConfig[],
 ): FinalityDataPoint | undefined {
   const intervals = calculateIntervals(records)
   const filteredIntervals = filterIntervalsByRange(

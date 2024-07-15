@@ -16,13 +16,14 @@ import {
   AnomaliesRecord,
   AnomaliesRepository,
 } from '../repositories/AnomaliesRepository'
+import { LivenessRepository } from '../repositories/LivenessRepository'
 import {
-  LivenessRecordWithSubtype,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
+  LivenessRecordWithConfig,
+  LivenessWithConfigService,
+} from '../services/LivenessWithConfigService'
 import { RunningStatistics } from '../utils/RollingVariance'
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
-import { getProjectsToSync } from '../utils/getProjectsToSync'
+import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export interface AnomaliesIndexerIndexerDeps
@@ -78,18 +79,25 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
         'tracked_txs_indexer',
       )
 
-    const projectsToSync = getProjectsToSync(this.$.projects, configurations)
-
     // we need data from 2 * SYNC_RANGE past days to calculate standard deviation
     const deviationRange = to.add(-1 * this.SYNC_RANGE * 2, 'days')
 
-    for (const project of projectsToSync) {
-      const livenessRecords =
-        await this.$.livenessRepository.getWithSubtypeByProjectIdsWithinTimeRange(
-          project.projectId,
-          deviationRange,
-          to,
-        )
+    for (const project of this.$.projects) {
+      const activeConfigs = getActiveConfigurations(project, configurations)
+
+      if (!activeConfigs) {
+        continue
+      }
+
+      const livenessWithConfig = new LivenessWithConfigService(
+        activeConfigs,
+        this.$.livenessRepository,
+      )
+
+      const livenessRecords = await livenessWithConfig.getWithinTimeRange(
+        deviationRange,
+        to,
+      )
 
       if (livenessRecords.length === 0) {
         this.logger.debug('No records found for project', {
@@ -140,7 +148,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
   detectAnomalies(
     projectId: ProjectId,
     subtype: TrackedTxsConfigSubtype,
-    livenessRecords: LivenessRecordWithSubtype[],
+    livenessRecords: LivenessRecordWithConfig[],
     to: UnixTime,
   ): AnomaliesRecord[] {
     if (livenessRecords.length === 0) {
@@ -158,7 +166,11 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     // add virtual point to calculate ongoing anomalies
     livenessRecords.unshift({
+      id: '',
       timestamp: to,
+      blockNumber: 0,
+      configurationId: '',
+      txHash: '',
       subtype,
     })
 

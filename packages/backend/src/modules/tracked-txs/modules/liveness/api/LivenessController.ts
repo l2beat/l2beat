@@ -27,11 +27,9 @@ import {
   AnomaliesRecord,
   AnomaliesRepository,
 } from '../repositories/AnomaliesRepository'
-import {
-  LivenessRecordWithSubtype,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
-import { getProjectsToSync } from '../utils/getProjectsToSync'
+import { LivenessRepository } from '../repositories/LivenessRepository'
+import { LivenessWithConfigService } from '../services/LivenessWithConfigService'
+import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
@@ -101,9 +99,13 @@ export class LivenessController {
         'tracked_txs_indexer',
       )
 
-    const livenessProjects = getProjectsToSync(this.$.projects, configurations)
+    for (const project of this.$.projects) {
+      const activeConfigs = getActiveConfigurations(project, configurations)
 
-    for (const project of livenessProjects) {
+      if (!activeConfigs) {
+        continue
+      }
+
       const aggregatedLivenessRecords =
         await this.$.aggregatedLivenessRepository.getByProject(
           project.projectId,
@@ -223,12 +225,35 @@ export class LivenessController {
     data: UnixTime[]
   }> {
     const lastHour = UnixTime.now().toStartOf('hour')
-    const records: LivenessRecordWithSubtype[] =
-      await this.$.livenessRepository.getByProjectIdAndType(
-        projectId,
-        subtype,
-        lastHour.add(-60, 'days'),
+
+    const project = this.$.projects.find((p) => p.projectId === projectId)
+
+    if (project === undefined) {
+      throw new Error(`Project with id ${projectId} not found`)
+    }
+
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
       )
+
+    const activeConfigs = getActiveConfigurations(project, configurations)
+
+    if (!activeConfigs) {
+      throw new Error(
+        `No active liveness configurations found for project ${projectId}`,
+      )
+    }
+
+    const livenessWithConfig = new LivenessWithConfigService(
+      activeConfigs,
+      this.$.livenessRepository,
+    )
+
+    const records = await livenessWithConfig.getByTypeSince(
+      subtype,
+      lastHour.add(-60, 'days'),
+    )
 
     return {
       projectId,
@@ -250,6 +275,11 @@ export class LivenessController {
       return { type: 'error', error: 'DATA_NOT_SYNCED' }
     }
 
+    const configurations =
+      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
+        'tracked_txs_indexer',
+      )
+
     const projects: Record<
       string,
       Record<TrackedTxsConfigSubtype, LivenessTransactionsDetail[]>
@@ -260,14 +290,18 @@ export class LivenessController {
       this.$.projects
         .filter((p) => !p.isArchived)
         .map(async (project) => {
-          if (project.livenessConfig === undefined) {
+          const activeConfigs = getActiveConfigurations(project, configurations)
+
+          if (!activeConfigs) {
             return
           }
-          const records =
-            await this.$.livenessRepository.getTransactionWithSubtypeDistinctTimestamp(
-              project.projectId,
-              last30Days,
-            )
+
+          const livenessWithConfig = new LivenessWithConfigService(
+            activeConfigs,
+            this.$.livenessRepository,
+          )
+
+          const records = await livenessWithConfig.getSince(last30Days)
 
           const [batchSubmissions, stateUpdates, proofSubmissions] =
             groupByType(records)

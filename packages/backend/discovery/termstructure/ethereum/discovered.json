@@ -1,7 +1,7 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20225271,
+  "blockNumber": 20311101,
   "configHash": "0x194537b8435cd3929c23c50ed4f2c1da87d7d6ad8471582b383d61ab38bb697d",
   "version": 9,
   "contracts": [
@@ -234,8 +234,8 @@
           }
         ],
         "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
-        "getAccountNum": 46,
-        "getBlockNum": [95, 95, 95],
+        "getAccountNum": 50,
+        "getBlockNum": [130, 130, 130],
         "getBorrowFeeRate": 10000000,
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
@@ -243,7 +243,7 @@
         "getFundWeight": { "treasury": 0, "insurance": 0, "vault": 10000 },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
-        "getL1RequestNum": [179, 179, 179],
+        "getL1RequestNum": [194, 194, 194],
         "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
         "getTokenNum": 69,
@@ -251,7 +251,7 @@
         "getVaultAddr": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
         "getVerifier": "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE",
         "getWETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-        "isActivatedRoller": true,
+        "isActivatedRoller": false,
         "isEvacuMode": false,
         "nomineeOwner": "0x0000000000000000000000000000000000000000",
         "owner": "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
@@ -368,7 +368,7 @@
         ],
         "getThreshold": 1,
         "GnosisSafe_modules": [],
-        "nonce": 2,
+        "nonce": 3,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"

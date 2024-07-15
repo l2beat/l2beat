@@ -1791,6 +1791,20 @@
   ],
   "optimism": [
     {
+      "symbol": "wstETH",
+      "address": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+    {
+      "symbol": "SNX",
+      "address": "0x8700dAec35aF8Ff88c16BdF0418774CB3D7599B4",
+      "coingeckoId": "havven",
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "symbol": "WETH",
       "address": "0x4200000000000000000000000000000000000006",
       "source": "canonical",
@@ -2199,79 +2213,6 @@
         "bridge": "Layer Zero",
         "slug": "stargate"
       }
-    }
-  ],
-  "lyra": [
-    {
-      "symbol": "USDC",
-      "address": "0x6879287835A86F50f784313dBEd5E5cCC5bb8481",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "usd-coin"
-    },
-    {
-      "symbol": "rswETH",
-      "category": "ether",
-      "address": "0xC419959850d49166C2d5250Ee89ff9910679D8c8",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "restaked-swell-eth"
-    },
-    {
-      "symbol": "weETH",
-      "category": "ether",
-      "address": "0x7B35b4c05a90Ea5f311AeC815BE4148b446a68a2",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "wrapped-eeth"
-    },
-    {
-      "symbol": "wBTC",
-      "address": "0x9b80ab732a6F1030326Af0014f106E12C4Db18EC",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "wrapped-bitcoin"
-    },
-    {
-      "symbol": "wstETH",
-      "category": "ether",
-      "address": "0xdf77b286eDa539CCb6326e9eDB86aa69D83108a5",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "wrapped-steth"
-    },
-    {
-      "symbol": "USDT",
-      "address": "0x954bE1803546150bfd887c9ff70fd221F2F505d3",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Socket",
-        "slug": "socket"
-      },
-      "coingeckoId": "tether"
     }
   ],
   "mantapacific": [
