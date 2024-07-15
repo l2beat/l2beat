@@ -11,7 +11,7 @@ const discovery = new ProjectDiscovery('bobanetwork')
 
 export const bobanetwork: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.EthereumBlobs],
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.OPStack],
   display: {
     name: 'Boba Network',
     shortName: 'Boba',

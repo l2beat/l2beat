@@ -31,7 +31,7 @@ export const metis: Layer2 = {
   isUnderReview: false,
   type: 'layer2',
   id: ProjectId('metis'),
-  badges: [Badge.VM.EVM],
+  badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.Fork.OVM],
   display: {
     name: 'Metis Andromeda',
     shortName: 'Metis',

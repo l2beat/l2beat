@@ -16,10 +16,10 @@ export const lyra: Layer2 = opStackL2({
   daProvider: CELESTIA_DA_PROVIDER,
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.OPStack,
     Badge.DA.Celestia,
-    Badge.RaaS.Conduit,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
   ],
   associatedTokens: ['LYRA'],
   discovery,

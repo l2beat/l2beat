@@ -21,9 +21,10 @@ export const metal: Layer2 = opStackL2({
   associatedTokens: ['MTL'],
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.OPStack,
     Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
   ],
   display: {
     name: 'Metal',

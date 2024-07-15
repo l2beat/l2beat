@@ -11,9 +11,10 @@ export const stack: Layer3 = opStackL3({
   discovery,
   badges: [
     Badge.VM.EVM,
+    Badge.DA.Celestia,
     Badge.Stack.OPStack,
     Badge.L3ParentChain.Base,
-    Badge.DA.Celestia,
+    Badge.RaaS.Conduit,
   ],
   hostChain: ProjectId('base'),
   display: {

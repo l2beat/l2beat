@@ -30,7 +30,12 @@ assert(
 export const xai: Layer3 = orbitStackL3({
   discovery,
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.DAC,
+    Badge.Stack.Orbit,
+    Badge.L3ParentChain.Arbitrum,
+  ],
   display: {
     name: 'Xai',
     slug: 'xai',

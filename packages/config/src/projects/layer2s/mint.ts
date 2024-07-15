@@ -11,8 +11,8 @@ export const mint: Layer2 = opStackL2({
   discovery,
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.OPStack,
     Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
     Badge.RaaS.Conduit,
   ],
   display: {

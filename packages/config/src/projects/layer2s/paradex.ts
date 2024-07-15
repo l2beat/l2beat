@@ -64,7 +64,12 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
-  badges: [Badge.VM.CairoVM, Badge.DA.EthereumBlobs, Badge.Infra.SHARP],
+  badges: [
+    Badge.VM.CairoVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Fork.StarknetFork,
+    Badge.Infra.SHARP,
+  ],
   display: {
     name: 'Paradex',
     slug: 'paradex',

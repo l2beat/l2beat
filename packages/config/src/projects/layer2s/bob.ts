@@ -9,7 +9,12 @@ const discovery = new ProjectDiscovery('bob')
 
 export const bob: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.RaaS.Conduit],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
+    Badge.RaaS.Conduit,
+  ],
   display: {
     name: 'BOB',
     slug: 'bob',

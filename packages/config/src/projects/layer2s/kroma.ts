@@ -71,7 +71,12 @@ const SCThreshold = `${SCNumConfirmationsRequired} / ${SCMembersSize}`
 export const kroma: Layer2 = {
   type: 'layer2',
   id: ProjectId('kroma'),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Stack.OPStack],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
+    Badge.Infra.Superchain,
+  ],
   display: {
     name: 'Kroma',
     slug: 'kroma',

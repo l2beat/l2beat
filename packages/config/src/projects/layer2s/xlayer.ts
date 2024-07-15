@@ -29,7 +29,7 @@ const upgradeability = {
 
 export const xlayer: Layer2 = polygonCDKStack({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Infra.AggLayer],
+  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.PolygonCDK],
   daProvider: {
     name: 'DAC',
     bridge: {
