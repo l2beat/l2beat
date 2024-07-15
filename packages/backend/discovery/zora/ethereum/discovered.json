@@ -10,14 +10,14 @@
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "used to remove inactive (for 8467200) members while making sure that the threshold remains above 75. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig."
+        "used to remove inactive (for 98d) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": 8467200,
+        "livenessInterval": "98d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
