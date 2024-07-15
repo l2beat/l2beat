@@ -1,7 +1,7 @@
 import classNames from 'classnames'
 import { useCallback, useEffect, useRef } from 'react'
 
-import { Node } from '../store/State'
+import type { Node } from '../store/State'
 import { useStore } from '../store/store'
 import { NODE_WIDTH, RESIZE_HANDLE_SPACING } from '../store/utils/constants'
 import { ResizeHandle } from './ResizeHandle'
@@ -72,7 +72,7 @@ export function NodeView(props: NodeViewProps) {
       <div
         className={classNames(
           'flex h-[28px] w-full justify-between px-2 leading-[28px]',
-          props.node.fields.length > 0 && 'border-b-2 border-black',
+          props.node.fields.length > 0 && 'border-black border-b-2',
         )}
       >
         <div className="truncate">{props.node.simpleNode.name}</div>

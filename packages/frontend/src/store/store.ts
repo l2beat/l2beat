@@ -1,7 +1,8 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-import { Actions } from './actions/Actions'
+import type { State } from './State'
+import type { Actions } from './actions/Actions'
 import { onKeyDown } from './actions/onKeyDown'
 import { onKeyUp } from './actions/onKeyUp'
 import { onMouseDown } from './actions/onMouseDown'
@@ -9,7 +10,6 @@ import { onMouseMove } from './actions/onMouseMove'
 import { onMouseUp } from './actions/onMouseUp'
 import { onWheel } from './actions/onWheel'
 import { updateNodeLocations, updateNodes } from './actions/updateNodes'
-import { State } from './State'
 
 export const useStore = create<State & Actions>()(
   persist(

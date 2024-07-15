@@ -1,4 +1,4 @@
-import { MouseEventHandler } from 'react'
+import type { MouseEventHandler } from 'react'
 
 const RESIZE_DATA_HANDLE = 'resize'
 
@@ -13,7 +13,7 @@ export function ResizeHandle(props: {
 
   return (
     <div
-      className="resize-handle group absolute -right-[2px] -bottom-[2px] flex h-[15px] w-[15px] -rotate-45 cursor-nwse-resize flex-col items-center justify-center gap-0.5 bg-clip-padding"
+      className="resize-handle group -right-[2px] -bottom-[2px] -rotate-45 absolute flex h-[15px] w-[15px] cursor-nwse-resize flex-col items-center justify-center gap-0.5 bg-clip-padding"
       data-node-id={props.nodeId}
       data-node-operation={RESIZE_DATA_HANDLE}
       onDoubleClick={handleDoubleClick}

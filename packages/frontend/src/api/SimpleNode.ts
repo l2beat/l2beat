@@ -1,4 +1,4 @@
-import { DiscoveryContract, DiscoveryEoa } from './paseDiscovery'
+import type { DiscoveryContract, DiscoveryEoa } from './paseDiscovery'
 
 interface SimpleNodeShared {
   id: string

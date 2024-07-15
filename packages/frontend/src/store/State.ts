@@ -1,4 +1,4 @@
-import { SimpleNode } from '../api/SimpleNode'
+import type { SimpleNode } from '../api/SimpleNode'
 
 export interface State {
   readonly selectedNodeIds: readonly string[]

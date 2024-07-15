@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 
-import { SimpleNode } from '../api/SimpleNode'
+import type { SimpleNode } from '../api/SimpleNode'
 import { useStore } from '../store/store'
 import { Connection } from './Connection'
 import { NodeView } from './NodeView'

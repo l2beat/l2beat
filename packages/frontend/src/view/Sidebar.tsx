@@ -1,4 +1,4 @@
-import { SimpleNode } from '../api/SimpleNode'
+import type { SimpleNode } from '../api/SimpleNode'
 
 interface SidebarProps {
   selectedNodes: SimpleNode[]
@@ -58,9 +58,14 @@ function SidebarForSingleNode({
 
   return (
     <>
-      <h2 className="text-xl font-bold">{humanReadableName}</h2>
-      <p className="text-sm text-gray-500">
-        <a href={etherscanLink} target="_blank" title="Etherscan">
+      <h2 className="font-bold text-xl">{humanReadableName}</h2>
+      <p className="text-gray-500 text-sm">
+        <a
+          href={etherscanLink}
+          target="_blank"
+          title="Etherscan"
+          rel="noreferrer"
+        >
           {node.data.address}
         </a>{' '}
         {sourceLink ? (
@@ -69,6 +74,7 @@ function SidebarForSingleNode({
             className="font-bold"
             target="_blank"
             title="DethCode"
+            rel="noreferrer"
           >
             📜
           </a>

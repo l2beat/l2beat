@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { State } from '../State'
+import type { State } from '../State'
 
 const NodeLocations = z.record(
   z.string(),

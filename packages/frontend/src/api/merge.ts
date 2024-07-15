@@ -1,4 +1,4 @@
-import { SimpleNode } from './SimpleNode'
+import type { SimpleNode } from './SimpleNode'
 
 export function merge(oldNodes: SimpleNode[], newNodes: SimpleNode[]) {
   const combined = [...newNodes, ...oldNodes].filter(

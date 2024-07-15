@@ -1,5 +1,5 @@
-import { SimpleNode } from '../../api/SimpleNode'
-import { NodeLocations } from '../utils/storageParsing'
+import type { SimpleNode } from '../../api/SimpleNode'
+import type { NodeLocations } from '../utils/storageParsing'
 
 export interface Actions {
   onKeyDown: (event: KeyboardEvent) => void

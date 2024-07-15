@@ -1,4 +1,4 @@
-import { State } from '../State'
+import type { State } from '../State'
 import {
   MAX_ZOOM,
   MIN_ZOOM,

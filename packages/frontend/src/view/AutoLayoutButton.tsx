@@ -1,16 +1,16 @@
 import {
+  type SimulationLinkDatum,
+  type SimulationNodeDatum,
   forceCenter,
   forceLink,
   forceManyBody,
   forceSimulation,
-  SimulationLinkDatum,
-  SimulationNodeDatum,
 } from 'd3-force'
 import { useEffect, useState } from 'react'
 
-import { Node } from '../store/State'
+import type { Node } from '../store/State'
 import { useStore } from '../store/store'
-import { NodeLocations } from '../store/utils/storageParsing'
+import type { NodeLocations } from '../store/utils/storageParsing'
 
 // d3 assumes each node is a single point (no width and height),
 // so we scale the coordinates of the simulation to move the nodes

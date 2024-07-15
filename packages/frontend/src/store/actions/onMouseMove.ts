@@ -1,4 +1,4 @@
-import { Box, State } from '../State'
+import type { Box, State } from '../State'
 import {
   HELD_LEFT_MOUSE_BUTTON_MASK,
   HELD_MIDDLE_MOUSE_BUTTON_MASK,

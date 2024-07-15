@@ -1,4 +1,4 @@
-import { Box, State } from '../State'
+import type { Box, State } from '../State'
 
 export function toContainerCoordinates(
   box: Box,

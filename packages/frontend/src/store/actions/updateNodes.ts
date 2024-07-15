@@ -1,10 +1,10 @@
-import { SimpleNode } from '../../api/SimpleNode'
-import { Connection, Node, State } from '../State'
+import type { SimpleNode } from '../../api/SimpleNode'
+import type { Connection, Node, State } from '../State'
 import { NODE_SPACING, NODE_WIDTH } from '../utils/constants'
 import {
+  type NodeLocations,
   decodeNodeLocations,
   getLayoutStorageKey,
-  NodeLocations,
 } from '../utils/storageParsing'
 import { updateNodePositions } from '../utils/updateNodePositions'
 

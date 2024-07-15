@@ -1,7 +1,7 @@
 import classNames from 'classnames'
-import { ForwardedRef, forwardRef, ReactNode } from 'react'
+import { type ForwardedRef, type ReactNode, forwardRef } from 'react'
 
-import { State } from '../store/State'
+import type { State } from '../store/State'
 
 export interface ScalableViewProps {
   children: ReactNode
@@ -35,7 +35,7 @@ export const ScalableView = forwardRef(
               props.transform.scale,
           }}
         >
-          <div className="pointer-events-none absolute left-[-220%] top-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
+          <div className="pointer-events-none absolute top-[-220%] left-[-220%] h-[440%] w-[440%] bg-[url(/grid.svg)] bg-center" />
         </div>
 
         {props.children}

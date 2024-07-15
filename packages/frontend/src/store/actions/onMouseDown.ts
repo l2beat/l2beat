@@ -1,5 +1,5 @@
 import { isResizeHandle } from '../../view/ResizeHandle'
-import { State } from '../State'
+import type { State } from '../State'
 import {
   CLICKED_LEFT_MOUSE_BUTTON,
   CLICKED_MIDDLE_MOUSE_BUTTON,

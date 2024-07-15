@@ -1,4 +1,4 @@
-import { State } from '../State'
+import type { State } from '../State'
 import { CTRL_KEY, SHIFT_KEY, SPACE_KEY } from '../utils/constants'
 import { updateNodePositions } from '../utils/updateNodePositions'
 

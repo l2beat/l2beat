@@ -1,4 +1,4 @@
-import { SimpleNode } from './SimpleNode'
+import type { SimpleNode } from './SimpleNode'
 
 // prevents removal of the node that is still referenced
 export function deleteNode(
