@@ -122,13 +122,10 @@ function objectWithSetsToArrays<T>(
   if (obj === undefined) {
     return undefined
   }
-  return (
-    obj &&
-    Object.fromEntries(
-      Object.entries(obj).map(([key, value]) => [
-        key,
-        Array.from(value).sort(),
-      ]),
-    )
-  )
+  const asMap: [string, T[]][] = Object.entries(obj).map(([key, value]) => [
+    key,
+    Array.from(value).sort(),
+  ])
+  asMap.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+  return Object.fromEntries(asMap)
 }
