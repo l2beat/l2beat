@@ -40,7 +40,6 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
           props.className,
         )}
       >
-        {/* Move tooltip up to have a all Circumcircle radius intersection exactly at the center of div */}
         <PentagonRosetteIcon
           values={props.values}
           isUnderReview={isUnderReview}

@@ -36,7 +36,7 @@ export function PentagonRosetteIcon({
     setContent?.({
       risk,
       side: side,
-      sideOffset: side === 'top' ? -65 : -60,
+      sideOffset: side === 'top' ? -60 : -55,
     })
   }
 
