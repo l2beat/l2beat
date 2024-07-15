@@ -4,6 +4,7 @@ import { getDaProjectEntry } from '~/server/features/data-availability/get-da-pr
 import { DaHeader } from '../_components/da-header'
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
+import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
 
 interface Props {
   params: {
@@ -30,24 +31,35 @@ export default async function Page(props: Props) {
   if (!bridge) return notFound()
   const daProjectEntry = await getDaProjectEntry(project, bridge)
 
+  const isNavigationEmpty = daProjectEntry.projectDetails.length === 0
+
   return (
     <>
+      {!isNavigationEmpty && (
+        <div className="sticky top-0 z-100 md:hidden">
+          <MobileProjectNavigation sections={daProjectEntry.projectDetails} />
+        </div>
+      )}
       <DaHeader project={daProjectEntry} />
-      <div className="gap-x-12 md:flex">
-        <div className="mt-10 hidden w-[242px] shrink-0 md:block">
-          <DesktopProjectNavigation
-            project={{
-              title: daProjectEntry.name,
-              icon: daProjectEntry.iconSrc,
-              showProjectUnderReview: daProjectEntry.isUnderReview,
-            }}
-            sections={daProjectEntry.projectDetails}
-          />
+      {isNavigationEmpty ? (
+        <ProjectDetails items={daProjectEntry.projectDetails} />
+      ) : (
+        <div className="gap-x-12 md:flex">
+          <div className="mt-10 hidden w-[242px] shrink-0 md:block">
+            <DesktopProjectNavigation
+              project={{
+                title: daProjectEntry.name,
+                icon: daProjectEntry.iconSrc,
+                showProjectUnderReview: daProjectEntry.isUnderReview,
+              }}
+              sections={daProjectEntry.projectDetails}
+            />
+          </div>
+          <div className="w-full">
+            <ProjectDetails items={daProjectEntry.projectDetails} />
+          </div>
         </div>
-        <div className="w-full">
-          <ProjectDetails items={daProjectEntry.projectDetails} />
-        </div>
-      </div>
+      )}
     </>
   )
 }
