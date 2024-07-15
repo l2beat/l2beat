@@ -163,7 +163,7 @@ export function App() {
         </div>
 
         {showSidebar && (
-          <div className="row-span-2 bg-white p-2 drop-shadow-xl">
+          <div className="row-span-2 overflow-y-auto bg-white p-2 drop-shadow-xl">
             <Sidebar
               selectedNodes={selectedNodes}
               onDeleteNodes={deleteNodeAction}
