@@ -18,16 +18,34 @@ export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
   DAC: 'DAC',
 }
 
+export type DataAvailabilitySampling = {
+  supportsDAS: false;
+} | {
+  /**
+   * Whether the data availability layer supports data availability sampling.
+   */
+  supportsDAS: true;
+  /**
+   * The period within which full nodes must store and distribute data.
+   * @unit seconds
+   */
+  pruningWindow: number;
+  /**
+   * The erasure coding scheme used by the data availability layer.
+   */
+  erasureCodingScheme: string;
+  /**
+   * The erasure coding proof type used by the data availability layer.
+   */
+  erasureCodingProof: string;
+}
+
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: typeof DaLayerKind.PublicBlockchain
 
   bridges: (OnChainDaBridge | NoDaBridge)[]
 
-  /**
-   * The period within which full nodes must store and distribute data.
-   * @unit seconds
-   */
-  pruningWindow: number
+  dataAvailabilitySampling: DataAvailabilitySampling
 
   /**
    * The consensus algorithm used by the data availability layer.
