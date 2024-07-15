@@ -56,6 +56,10 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       'BlobstreamXMultisig',
       'This multisig is the admin of the BlobstreamX contract. It holds the power to change the contract state and upgrade the bridge.',
     ),
+    ...discovery.getMultisigPermission(
+      'SuccinctMultisig',
+      'This multisig is the admin of the SuccinctGateway contract. As the manager of the entry point and router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
+    ),
   ],
   risks: {
     attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
