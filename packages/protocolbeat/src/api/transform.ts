@@ -99,8 +99,7 @@ function getAsStringArray(value: unknown): string[] {
     return [value]
   }
   if (Array.isArray(value)) {
-    // TODO: (sz-piotr) upgrade to TS 5.5.2 and remove cast
-    return value.filter((x) => typeof x === 'string') as string[]
+    return value.filter((x) => typeof x === 'string')
   }
   return []
 }
