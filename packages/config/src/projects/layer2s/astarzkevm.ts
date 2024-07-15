@@ -29,6 +29,7 @@ const upgradeability = {
 
 export const astarzkevm: Layer2 = polygonCDKStack({
   badges: [
+    Badge.DA.DAC,
     Badge.VM.EVM,
     Badge.Infra.AggLayer,
     Badge.Stack.PolygonCDK,

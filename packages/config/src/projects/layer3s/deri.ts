@@ -10,9 +10,9 @@ export const deri = orbitStackL3({
   discovery,
   badges: [
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
     Badge.Stack.Orbit,
     Badge.L3ParentChain.Arbitrum,
-    Badge.DA.EthereumBlobs,
   ],
   hostChain: ProjectId('arbitrum'),
   display: {

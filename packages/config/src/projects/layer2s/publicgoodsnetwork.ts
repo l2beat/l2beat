@@ -11,10 +11,10 @@ const discovery = new ProjectDiscovery('publicgoodsnetwork')
 export const publicgoodsnetwork: Layer2 = opStackL2({
   badges: [
     Badge.VM.EVM,
-    Badge.Stack.OPStack,
     Badge.DA.Celestia,
-    Badge.RaaS.Conduit,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.RaaS.Conduit,
   ],
   daProvider: CELESTIA_DA_PROVIDER,
   discovery,

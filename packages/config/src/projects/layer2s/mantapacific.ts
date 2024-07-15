@@ -95,5 +95,10 @@ export const mantapacific: Layer2 = opStackL2({
       description: 'Manta Pacific is live on mainnet.',
     },
   ],
-  badges: [Badge.DA.Celestia, Badge.VM.EVM, Badge.Stack.OPStack],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.Celestia,
+    Badge.Stack.OPStack,
+    Badge.RaaS.Caldera,
+  ],
 })
