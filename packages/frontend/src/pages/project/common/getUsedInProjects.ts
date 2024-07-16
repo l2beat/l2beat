@@ -1,6 +1,6 @@
 import { Bridge, Layer2, Layer3, getCommonContractsIn } from '@l2beat/config'
-import { UsedInProject } from '../components/sections/common/ContractEntry'
 import { uniqBy } from 'lodash'
+import { UsedInProject } from '../components/sections/common/ContractEntry'
 
 export function getUsedInProjects(
   project: Layer2 | Layer3 | Bridge,
