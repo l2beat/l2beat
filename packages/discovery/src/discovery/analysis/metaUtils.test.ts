@@ -129,7 +129,8 @@ describe('metaUtils', () => {
         },
         owner: {
           target: {
-            description: 'The owner of the contract',
+            description:
+              'The owner of the contract (some number {{ numberField }} )',
             role: 'Challenger',
             permission: 'owner',
             category: 'Core',
@@ -139,7 +140,7 @@ describe('metaUtils', () => {
         },
         resourceConfig: {
           target: {
-            description: 'The resource config of the contract',
+            description: 'The resource config of the contract {{ #address }}',
             role: ['Guardian', 'Challenger'],
             permission: ['admin', 'owner'],
             category: ['Gateways&Escrows', 'Core'],
@@ -167,12 +168,17 @@ describe('metaUtils', () => {
       }
 
       const selfAddress = EthereumAddress.from('0x1234')
-      const result = getTargetsMeta(selfAddress, mergedValues, fields)
+      const result = getTargetsMeta(
+        selfAddress,
+        mergedValues,
+        fields,
+        generateFakeAnalysis(selfAddress),
+      )
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
           displayName: undefined,
-          descriptions: ['The owner of the contract'],
+          descriptions: ['The owner of the contract (some number 1122 )'],
           roles: new Set(['Challenger']),
           permissions: {
             admin: new Set([selfAddress]),
@@ -185,7 +191,9 @@ describe('metaUtils', () => {
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: ['The resource config of the contract'],
+          descriptions: [
+            'The resource config of the contract 0x0000000000000000000000000000000000001234',
+          ],
           permissions: {
             owner: new Set([selfAddress]),
             admin: new Set([selfAddress]),
@@ -197,7 +205,9 @@ describe('metaUtils', () => {
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: ['The resource config of the contract'],
+          descriptions: [
+            'The resource config of the contract 0x0000000000000000000000000000000000001234',
+          ],
           permissions: {
             owner: new Set([selfAddress]),
             admin: new Set([selfAddress]),
@@ -348,3 +358,24 @@ describe('metaUtils', () => {
     })
   })
 })
+
+const generateFakeAnalysis = (
+  address: EthereumAddress,
+  extendedTemplate?: ExtendedTemplate,
+  errors?: Record<string, string>,
+): AnalyzedContract => {
+  return {
+    type: 'Contract',
+    address,
+    name: `NameOf${address.toString()}`,
+    derivedName: undefined,
+    isVerified: true,
+    implementations: [],
+    values: { numberField: 1122 },
+    errors: errors ?? {},
+    abis: {},
+    sourceBundles: [],
+    extendedTemplate,
+    relatives: {},
+  }
+}

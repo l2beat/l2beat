@@ -18,14 +18,27 @@ export function toDiscoveryOutput(
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
+    usedTemplates: collectUsedTemplatesWithHashes(results),
   }
+}
+
+export function collectUsedTemplatesWithHashes(
+  results: Analysis[],
+): Record<string, Hash256> | undefined {
+  const entries: [string, Hash256][] = results
+    .filter((a): a is AnalyzedContract => a.type === 'Contract')
+    .map((contract) => contract.extendedTemplate)
+    .filter((t) => t !== undefined)
+    .map((t) => [t.template, t.templateHash])
+  entries.sort((a, b) => a[0].localeCompare(b[0]))
+  return Object.fromEntries(entries)
 }
 
 export function processAnalysis(
   results: Analysis[],
 ): Omit<
   DiscoveryOutput,
-  'name' | 'blockNumber' | 'configHash' | 'version' | 'chain'
+  'name' | 'blockNumber' | 'configHash' | 'version' | 'chain' | 'usedTemplates'
 > {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!

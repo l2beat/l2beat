@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'
@@ -47,6 +47,7 @@ export interface AnalyzedContract {
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
+  templateHash: Hash256
 }
 
 export interface AnalyzedEOA {
@@ -86,7 +87,11 @@ export class AddressAnalyzer {
     let extendedTemplate: ExtendedTemplate | undefined = undefined
 
     if (overrides?.extends !== undefined) {
-      extendedTemplate = { template: overrides.extends, reason: 'byExtends' }
+      extendedTemplate = {
+        template: overrides.extends,
+        reason: 'byExtends',
+        templateHash: this.templateService.getTemplateHash(overrides.extends),
+      }
     } else if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
@@ -95,7 +100,11 @@ export class AddressAnalyzer {
           overrides ?? { address },
           template,
         )
-        extendedTemplate = { template, reason: 'byReferrer' }
+        extendedTemplate = {
+          template,
+          reason: 'byReferrer',
+          templateHash: this.templateService.getTemplateHash(template),
+        }
       }
       if (suggestedTemplates.size > 1) {
         templateErrors['@template'] =
@@ -135,7 +144,11 @@ export class AddressAnalyzer {
           overrides ?? { address },
           template,
         )
-        extendedTemplate = { template, reason: 'byShapeMatch' }
+        extendedTemplate = {
+          template,
+          reason: 'byShapeMatch',
+          templateHash: this.templateService.getTemplateHash(template),
+        }
       }
       if (matchingTemplates.length > 1) {
         templateErrors['@template'] =

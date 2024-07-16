@@ -1,6 +1,8 @@
 import { existsSync, readFileSync, readdirSync } from 'fs'
 import path, { join } from 'path'
 
+import { hashJson } from '@l2beat/shared'
+import { Hash256, json } from '@l2beat/shared-pure'
 import {
   HashedFileContent,
   buildSimilarityHashmap,
@@ -97,6 +99,11 @@ export class TemplateService {
     const parsed = DiscoveryContract.parse(templateJsonc)
     this.loadedTemplates[template] = parsed
     return parsed
+  }
+
+  getTemplateHash(template: string): Hash256 {
+    const templateJson = this.loadContractTemplate(template)
+    return hashJson(templateJson as json)
   }
 
   applyTemplateOnContractOverrides(
