@@ -87,6 +87,10 @@ import {
   StateFromEventTupleHandler,
 } from './StateFromEventTupleHandler'
 import { StorageHandler, StorageHandlerDefinition } from './StorageHandler'
+import {
+  ZKsyncEraScheduledTransactionHandler,
+  ZKsyncEraScheduledTransactionsHandlerDefinition,
+} from './ZKsyncEraScheduledTransactionHandler'
 
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = z.union([
@@ -116,6 +120,7 @@ export const UserHandlerDefinition = z.union([
   ArbitrumSequencerVersionDefinition,
   ArbitrumDACKeysetHandlerDefinition,
   EIP2535FacetHandlerDefinition,
+  ZKsyncEraScheduledTransactionsHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -175,5 +180,7 @@ export function getUserHandler(
       return new ArbitrumDACKeysetHandler(field, definition, logger)
     case 'eip2535Facets':
       return new EIP2535FacetHandler(field, definition, logger)
+    case 'zksynceraScheduledTransactions':
+      return new ZKsyncEraScheduledTransactionHandler(field, abi, logger)
   }
 }
