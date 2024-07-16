@@ -533,5 +533,8 @@
     "0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904": [
       "constructor(address _singleton)"
     ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   }
 }

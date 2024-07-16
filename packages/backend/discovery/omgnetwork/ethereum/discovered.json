@@ -217,5 +217,6 @@
       "event ExitFinalized(uint160 indexed exitId)",
       "event BondReturnFailed(address indexed receiver, uint256 amount)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

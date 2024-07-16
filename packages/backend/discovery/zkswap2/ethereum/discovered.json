@@ -504,5 +504,6 @@
       "function zkSyncCommitBlockAddress() view returns (address)",
       "function zkSyncExitAddress() view returns (address)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

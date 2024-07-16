@@ -283,5 +283,6 @@
       "function setResolver(address _l1Resolver)",
       "function transferOwnership(address newOwner)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

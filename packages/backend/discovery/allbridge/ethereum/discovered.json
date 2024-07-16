@@ -399,5 +399,6 @@
       "function vUsdBalance() view returns (uint256)",
       "function withdraw(uint256 amountLp)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

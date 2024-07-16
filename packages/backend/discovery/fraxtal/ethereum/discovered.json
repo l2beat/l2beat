@@ -1036,5 +1036,15 @@
     "0xe0d7755252873c4eF5788f7f45764E0e17610508": [
       "constructor(address _singleton)"
     ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
+    "opstack/L1CrossDomainMessenger": "0x4a2e6556b8069c3a286940f2a0215dc47ee9f58a2c75d1ae425faac61069f415",
+    "opstack/L1ERC721Bridge": "0x7fee19491f86d056d69182d1039c7f8352fe2acbf5ab203d78ad03264c9e0be7",
+    "opstack/L1StandardBridge": "0x305d40ee18a096f50458dce3466237d53fe288cd2ca7c442c1c95e04897b5c19",
+    "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
+    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
+    "opstack/SystemConfig": "0x6fb4b274a28bb729691594027c6d2f002db5e6940671ab840cdb51b949bcae4e"
   }
 }

@@ -329,5 +329,6 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

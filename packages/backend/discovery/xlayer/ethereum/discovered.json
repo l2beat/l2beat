@@ -360,5 +360,6 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

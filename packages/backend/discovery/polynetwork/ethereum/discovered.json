@@ -435,5 +435,6 @@
       "function transferOwnership(address newOwner)",
       "function unlock(bytes argsBs, bytes fromContractAddr, uint64 fromChainId) returns (bool)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

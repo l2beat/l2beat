@@ -1916,5 +1916,17 @@
       "function vm() view returns (address vm_)",
       "function weth() view returns (address weth_)"
     ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "gnosisSafeModules/DeputyGuardianModule": "0xaf5b0d62e72a14151b44a22d48bafb364c7a48b955581e4d6170558da9355712",
+    "gnosisSafeModules/LivenessModule": "0xd75d1e4e8d40e200f67ee9e7ad3d207c223529d0012960d395b78e88adeef410",
+    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
+    "opstack/L1CrossDomainMessenger": "0x4a2e6556b8069c3a286940f2a0215dc47ee9f58a2c75d1ae425faac61069f415",
+    "opstack/L1ERC721Bridge": "0x7fee19491f86d056d69182d1039c7f8352fe2acbf5ab203d78ad03264c9e0be7",
+    "opstack/L1StandardBridge": "0x305d40ee18a096f50458dce3466237d53fe288cd2ca7c442c1c95e04897b5c19",
+    "opstack/OptimismMintableERC20Factory": "0xe0ba12246393e783ac5412fbd0510f11c70f4953ca9786e064124cc876cab362",
+    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
+    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   }
 }

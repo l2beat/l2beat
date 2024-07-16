@@ -298,5 +298,6 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

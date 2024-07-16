@@ -1099,5 +1099,8 @@
       "function withdrawETH(address to, uint256 amount, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
       "function withdrawErc20(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)"
     ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   }
 }

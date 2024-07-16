@@ -24,7 +24,7 @@ export function toDiscoveryOutput(
 
 export function collectUsedTemplatesWithHashes(
   results: Analysis[],
-): Record<string, Hash256> | undefined {
+): Record<string, Hash256> {
   const entries: [string, Hash256][] = results
     .filter((a): a is AnalyzedContract => a.type === 'Contract')
     .map((contract) => contract.extendedTemplate)

@@ -488,5 +488,6 @@
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

@@ -41,7 +41,7 @@ export interface DiscoveryOutput {
   abis: Record<string, string[]>
   configHash: Hash256
   version: number
-  usedTemplates?: Record<string, Hash256>
+  usedTemplates: Record<string, Hash256>
 }
 
 export interface DiscoveryCustomType {

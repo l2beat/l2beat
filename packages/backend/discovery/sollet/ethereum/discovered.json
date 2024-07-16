@@ -38,5 +38,6 @@
       "function withdrawErc20(address token, address recipient, uint256 amount, uint256 nonce, bytes signature)",
       "function withdrawEth(address recipient, uint256 amount, uint256 nonce, bytes signature)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

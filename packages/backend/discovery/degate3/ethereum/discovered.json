@@ -536,5 +536,6 @@
       "function setDelay(uint256 delay_)",
       "function setPendingAdmin(address pendingAdmin_)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

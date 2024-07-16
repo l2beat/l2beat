@@ -789,5 +789,6 @@
       "function voterPowers(address) view returns (uint256)",
       "function voters(uint256) view returns (address)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

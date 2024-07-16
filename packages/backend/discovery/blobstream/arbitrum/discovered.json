@@ -389,5 +389,8 @@
       "function verify(bytes32 _inputHash, bytes32 _outputHash, bytes _proof) view returns (bool)",
       "function verifyProof(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   }
 }

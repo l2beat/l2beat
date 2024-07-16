@@ -371,5 +371,6 @@
       "function transferOwnership(address newOwner)",
       "function withdraw(address, address to, address token, uint256 amount) payable"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

@@ -405,5 +405,6 @@
       "event RequiredBlockConfirmationChanged(uint256 requiredBlockConfirmations)",
       "event OwnershipTransferred(address previousOwner, address newOwner)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

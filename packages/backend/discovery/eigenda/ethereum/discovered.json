@@ -728,5 +728,8 @@
       "function updateOperatorsForQuorum(address[][] operatorsPerQuorum, bytes quorumNumbers)",
       "function updateSocket(string socket)"
     ]
+  },
+  "usedTemplates": {
+    "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894"
   }
 }

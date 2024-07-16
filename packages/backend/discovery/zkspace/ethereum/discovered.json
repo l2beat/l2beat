@@ -725,5 +725,6 @@
       "function transfer(address recipient, uint256 amount) returns (bool)",
       "function transferFrom(address sender, address recipient, uint256 amount) returns (bool)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

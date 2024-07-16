@@ -644,5 +644,8 @@
     "0xE24f4870Ab85DE8E356C5fC56138587206c70d99": [
       "constructor(address _masterCopy)"
     ]
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   }
 }

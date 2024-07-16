@@ -269,5 +269,6 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

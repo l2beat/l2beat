@@ -1515,5 +1515,6 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

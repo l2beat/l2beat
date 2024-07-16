@@ -429,5 +429,6 @@
       "function withdrawFromDepositRequest(address from, address token)",
       "function withdrawFromMerkleTree(tuple(tuple(uint32 accountID, address owner, uint256 pubKeyX, uint256 pubKeyY, uint32 nonce) accountLeaf, tuple(uint32 tokenID, uint248 balance) balanceLeaf, uint256[48] accountMerkleProof, uint256[48] balanceMerkleProof) merkleProof)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

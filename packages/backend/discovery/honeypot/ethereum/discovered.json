@@ -131,5 +131,6 @@
       "function transferOwnership(address newOwner)",
       "function withdrawERC20Tokens(address _token, address _recipient, uint256 _amount)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }

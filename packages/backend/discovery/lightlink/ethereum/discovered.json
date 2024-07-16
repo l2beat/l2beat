@@ -514,5 +514,6 @@
       "function toDepositTx(bytes rlpTx) pure returns (uint256 chainId, uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)",
       "function toLegacyTx(bytes rlpTx) pure returns (uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)"
     ]
-  }
+  },
+  "usedTemplates": {}
 }
