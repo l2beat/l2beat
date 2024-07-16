@@ -6,13 +6,12 @@ import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-t
 import { Chart } from '~/app/_components/chart/core/chart'
 import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
-import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { type TvlCharts } from '~/server/features/scaling/get-tvl'
-import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
+import { type TvlChartRange } from '~/server/features/tvl/range-utils'
+import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 
@@ -23,31 +22,37 @@ interface TvlChartPointData {
 }
 
 interface Props {
-  data: TvlCharts
   milestones: Milestone[]
   tag?: string
 }
 
-export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
+export function TvlChart({ milestones, tag = 'summary' }: Props) {
+  const [timeRange, setTimeRange] = useLocalStorage<TvlChartRange>(
+    `${tag}-time-range`,
+    '1y',
+  )
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const mappedMilestones = getMilestones(milestones)
-  const dataInRange = getEntriesByDays(toDays(timeRange), data, {
-    trimLeft: true,
+  const { data } = api.tvl.chart.useQuery({
+    range: timeRange,
+    type: 'layer2',
   })
-  const rangeStart = dataInRange[0]?.[0]
-  const rangeEnd = dataInRange[dataInRange.length - 1]?.[0]
+
+  if (!data) return null
+
+  const mappedMilestones = getMilestones(milestones)
+  const rangeStart = data[0]?.[0]
+  const rangeEnd = data[data.length - 1]?.[0]
   assert(
     rangeStart !== undefined && rangeEnd !== undefined,
     'Programmer error: rangeStart and rangeEnd are undefined',
   )
 
-  const columns = dataInRange.map((d) => {
+  const columns = data.map((d) => {
     const timestamp = d[0]
     const usdValue = d[1]
-    const ethValue = d[5]
+    const ethValue = d[1] // TODO: d[5]
 
     return {
       values: [{ value: unit === 'usd' ? usdValue : ethValue }],
@@ -60,7 +65,11 @@ export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
     }
   })
 
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(data, unit)
+  // TODO:
+  const tvl = data.at(-1)?.[1] ?? 0
+  const tvlWeeklyChange = (
+    (data.at(-1)?.[1] ?? 0) - (data.at(0)?.[1] ?? 0)
+  ).toString()
 
   return (
     <ChartProvider

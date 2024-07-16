@@ -24,7 +24,7 @@ export default async function Page() {
 
   return (
     <div className="mb-20">
-      <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
+      <TvlChart milestones={HOMEPAGE_MILESTONES} />
       <HorizontalSeparator className="my-4 md:my-6" />
       <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
       <OtherSites />

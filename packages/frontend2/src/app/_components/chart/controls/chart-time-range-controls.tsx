@@ -3,12 +3,13 @@ import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Skeleton } from '../../skeleton'
 import { useChartContext } from '../core/chart-context'
+import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 
 interface Props {
-  value: string
-  setValue: (range: string) => void
+  value: TvlChartRange
+  setValue: (range: TvlChartRange) => void
   range: readonly [number, number]
-  options: { value: string; label: string }[]
+  options: { value: TvlChartRange; label: string }[]
 }
 
 export function ChartTimeRangeControls({
