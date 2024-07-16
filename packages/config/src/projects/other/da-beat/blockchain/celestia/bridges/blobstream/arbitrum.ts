@@ -21,6 +21,16 @@ const nextHeaderVerifier = discovery.getContractValue<string>(
   'nextHeaderVerifier',
 )
 
+const headerRangeProvers = discovery.getContractValue<string[]>(
+  'SuccinctGateway',
+  'headerRangeProvers',
+)
+
+const nextHeaderProvers = discovery.getContractValue<string[]>(
+  'SuccinctGateway',
+  'nextHeaderProvers',
+)
+
 export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
   chain: 'arbitrum',
   contracts: {
@@ -66,6 +76,22 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
       'SuccinctMultisig',
       'This multisig is the admin of the SuccinctGateway contract. As the manager of the entry point and router for proof verification, it holds the power to affect the liveness and safety of the bridge.',
     ),
+    {
+      name: 'headerRangeProvers',
+      description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the headerRange function ID of BlobstreamX.`,
+      accounts: headerRangeProvers.map((headerRangeProver) => ({
+        address: EthereumAddress(headerRangeProver),
+        type: 'EOA',
+      })),
+    },
+    {
+      name: 'nextHeaderProvers',
+      description: `List of prover (relayer) addresses that are allowed to call fulfillCallback()/fulfillCall() in the SuccinctGateway for the nextHeader function ID of BlobstreamX.`,
+      accounts: nextHeaderProvers.map((nextHeaderProver) => ({
+        address: EthereumAddress(nextHeaderProver),
+        type: 'EOA',
+      })),
+    },
   ],
   usedIn: [
     // no project integrates it for state validation
