@@ -1,6 +1,9 @@
 import { DaAttributes } from './DaAttribute'
 
-export type DasErasureCodingProof = typeof ValidityProofs | typeof FraudProofs
+export type DasErasureCodingProof =
+  | typeof ValidityProofs
+  | typeof FraudProofs
+  | typeof None
 
 const ValidityProofs = {
   type: 'ValidityProofs',
@@ -14,7 +17,14 @@ const FraudProofs = {
   description: 'TODO',
 } as const
 
+const None = {
+  type: 'None',
+  value: 'None',
+  description: 'TODO',
+} as const
+
 export const DasErasureCodingProof = {
   ValidityProofs,
   FraudProofs,
+  None,
 } satisfies DaAttributes
