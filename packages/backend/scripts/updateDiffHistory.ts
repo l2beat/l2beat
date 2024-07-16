@@ -29,7 +29,6 @@ void updateDiffHistoryFile()
 
 async function updateDiffHistoryFile() {
   const argv = process.argv
-  const refreshingOnTheSameBlock = argv.includes(REFRESH_FLAG)
   if (argv.filter((v) => v !== REFRESH_FLAG && v.startsWith('-')).length > 0) {
     console.log(
       'Discovery run with non-default configuration, skipping updating the diff history file...',

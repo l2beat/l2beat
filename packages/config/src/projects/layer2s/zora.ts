@@ -3,12 +3,12 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { DERIVATION } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { opStackSmartL2 } from './templates/opStackSmart'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('zora')
 
-export const zora: Layer2 = opStackSmartL2({
+export const zora: Layer2 = opStackL2({
   discovery,
   badges: [Badge.Infra.Superchain, Badge.RaaS.Conduit],
   display: {
@@ -64,4 +64,5 @@ export const zora: Layer2 = opStackSmartL2({
   ],
   knowledgeNuggets: [],
   usesBlobs: true,
+  useDiscoveryMetaOnly: true,
 })
