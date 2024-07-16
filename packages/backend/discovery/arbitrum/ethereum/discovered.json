@@ -2,7 +2,7 @@
   "name": "arbitrum",
   "chain": "ethereum",
   "blockNumber": 20289738,
-  "configHash": "0x467c187d2529f9943e784af81c8c973d60e52775fe737b6c9f123c498b8d4792",
+  "configHash": "0x2ac02217c20b3c06c45942e47e9f0d2b415b7873b96ce5597eff4619b4d244b0",
   "version": 9,
   "contracts": [
     {
@@ -128,6 +128,7 @@
         "keySetUpdates": 0,
         "maxDataSize": 117964,
         "maxTimeVariation": [5760, 64, 86400, 768],
+        "postsBlobs": true,
         "reader4844": "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097",
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",

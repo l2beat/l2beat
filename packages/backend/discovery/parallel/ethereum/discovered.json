@@ -2,7 +2,7 @@
   "name": "parallel",
   "chain": "ethereum",
   "blockNumber": 20177357,
-  "configHash": "0xfc3051c8fccdcbb0aa711be0d38878336edc2249254205faa12230a8ca9b5ac1",
+  "configHash": "0x77e969d2ff504f705c2b307f6bf8d59063feb96d33730820db728f8fb4d590ac",
   "version": 9,
   "contracts": [
     {
@@ -346,6 +346,7 @@
           "delaySeconds": 86400,
           "futureSeconds": 3600
         },
+        "postsBlobs": true,
         "reader4844": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerVersion": "0x00",

@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 20210980,
-  "configHash": "0x2b6c0fe7fef51dbd870f6f2b10c39952085378daee0bfb80e6613a8362305f0e",
+  "configHash": "0x6a7f3669b7aa1e64175fddd1db9e1e65fef305f7921322c983db02a5f16c155a",
   "version": 9,
   "contracts": [
     {
@@ -418,6 +418,7 @@
           "delaySeconds": 86400,
           "futureSeconds": 3600
         },
+        "postsBlobs": false,
         "reader4844": "0x434345973Ebf8249398E1EeB03A62bE418B48a05",
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
