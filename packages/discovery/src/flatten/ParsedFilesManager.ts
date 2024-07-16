@@ -326,7 +326,7 @@ export class ParsedFilesManager {
 
       const isContract = result.declaration.type === 'contract'
       const isAbstract = result.declaration.type === 'abstract'
-      const isInterface = result.declaration.type === 'contract'
+      const isInterface = result.declaration.type === 'interface'
 
       if (
         (isInterface || isContract || isAbstract) &&
