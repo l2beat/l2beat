@@ -68,9 +68,8 @@ export function ScalingFilters({ items, state, setState }: Props) {
     }))
 
   const hostChainOptions = uniq(
-    items.map(
-      // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-      (item) => (item.type === 'layer3' && item.hostChainName) || 'Ethereum',
+    items.map((item) =>
+      item.type === 'layer3' ? item.hostChainName : 'Ethereum',
     ),
   )
     .sort()
