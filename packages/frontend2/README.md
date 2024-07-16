@@ -28,7 +28,7 @@ Only required variables are listed there. For a complete list check out `src/env
 
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
-*if you're currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
+*if you currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
 
 #### .env boilerplate:
 
