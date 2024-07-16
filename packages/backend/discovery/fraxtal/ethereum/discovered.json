@@ -73,7 +73,6 @@
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
       "assignedPermissions": {
-        "owner": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"],
         "admin": [
           "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
           "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
@@ -82,7 +81,8 @@
           "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
           "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
           "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
-        ]
+        ],
+        "owner": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"]
       },
       "sinceTimestamp": 1706811599,
       "values": {

@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x43afadc24dfdfa1b140d3365fd95a2f87132bafd
+
+# Diff at Tue, 16 Jul 2024 09:20:27 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@279b46bed487542467f3d4a2b81594433712d2c1 block: 20211873
+- current block number: 20211873
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211873 (main branch discovery), not current.
+
+```diff
+    contract rsETH Vault Lyra (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      values.bridgeType:
+-        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      unverified:
++        true
+    }
+```
+
 Generated with discovered.json: 0x77e73d2314cf2a0a4b7229471195a61da7d0de3c
 
 # Diff at Mon, 01 Jul 2024 13:10:28 GMT:

@@ -27,7 +27,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "descriptions": [
-        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions.",
+        "It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions.",
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
       "assignedPermissions": {

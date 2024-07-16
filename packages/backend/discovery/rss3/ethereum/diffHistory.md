@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x379f4ae83e80fb4319b3d8cc6a6fb6df16a629ce
+Generated with discovered.json: 0x605281d7a0e0ca0c97cb17652e9ba50a7c24d589
+
+# Diff at Tue, 16 Jul 2024 09:19:48 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@279b46bed487542467f3d4a2b81594433712d2c1 block: 19918622
+- current block number: 19918622
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19918622 (main branch discovery), not current.
+
+```diff
+    contract RSS3Multisig (0x8AC80fa0993D95C9d6B8Cb494E561E6731038941) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x1075B29e5F7a911128C77F3989702E150C988904, inheriting its permissions."]
+    }
+```
+
+Generated with discovered.json: 0x9963e2a9b04d67dd01372b53ad8c847f8a21bd3e
 
 # Diff at Wed, 03 Apr 2024 08:59:57 GMT:
 

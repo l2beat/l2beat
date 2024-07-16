@@ -137,7 +137,7 @@
       }
     },
     {
-      "name": "Conduit Multisig",
+      "name": "ConduitMultisig",
       "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",

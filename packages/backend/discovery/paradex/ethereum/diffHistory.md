@@ -1,5 +1,31 @@
 Generated with discovered.json: 0xf33477bfe0bd09ed61dbf501be69941d3de09c6c
 
+# Diff at Tue, 16 Jul 2024 09:19:08 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@279b46bed487542467f3d4a2b81594433712d2c1 block: 20110229
+- current block number: 20110229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20110229 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      assignedPermissions:
++        {"admin":["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]}
+    }
+```
+
+Generated with discovered.json: 0x093f5b4f3898a34ecc9a8ea8c23c6863f5bd5dfb
+
 # Diff at Mon, 17 Jun 2024 08:11:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)

@@ -75,7 +75,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "descriptions": [
-        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions."
+        "It can act on behalf of 0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019, inheriting its permissions."
       ],
       "assignedPermissions": {
         "owner": ["0x27ff92b30Cae00dABCF8045cc68fc9dcB67C5019"]

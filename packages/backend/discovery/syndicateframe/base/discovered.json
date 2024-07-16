@@ -174,7 +174,7 @@
     {
       "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
       "descriptions": [
-        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions."
+        "It can act on behalf of 0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E, inheriting its permissions."
       ],
       "assignedPermissions": {
         "owner": ["0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"]

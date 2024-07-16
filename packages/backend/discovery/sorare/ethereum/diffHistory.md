@@ -1,5 +1,31 @@
 Generated with discovered.json: 0x60e7e23e6cf1787dec674a642e567210d50426a8
 
+# Diff at Tue, 16 Jul 2024 09:20:30 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@279b46bed487542467f3d4a2b81594433712d2c1 block: 19825381
+- current block number: 19825381
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825381 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B) {
+    +++ description: None
+      assignedPermissions:
++        {"admin":["0xF5C9F957705bea56a7e806943f98F7777B995826"]}
+    }
+```
+
+Generated with discovered.json: 0xe1e57471108cba8fef54c3e5b37e123b2f2601ae
+
 # Diff at Wed, 08 May 2024 12:36:41 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)

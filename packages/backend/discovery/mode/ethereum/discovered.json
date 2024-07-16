@@ -10,14 +10,14 @@
       "address": "0x0454092516c9A4d636d3CAfA1e82161376C8a748",
       "template": "gnosisSafeModules/LivenessModule",
       "descriptions": [
-        "used to remove inactive (for {{ livenessInterval }}) members while making sure that the threshold remains above {{ thresholdPercentage }}. If the number of members falls below {{ minOwners }}, the {{ fallbackOwner }} takes ownership of the multisig."
+        "used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"
       ],
       "sinceTimestamp": 1717149791,
       "values": {
         "$immutable": true,
         "fallbackOwner": "0x847B5c174615B1B7fDF770882256e2D3E95b9D92",
         "livenessGuard": "0x24424336F04440b1c28685a38303aC33C9D14a25",
-        "livenessInterval": 8467200,
+        "livenessInterval": "98d",
         "minOwners": 8,
         "ownershipTransferredToFallback": false,
         "safe": "0xc2819DC788505Aac350142A7A707BF9D03E3Bd03",
@@ -52,7 +52,7 @@
       "name": "LivenessGuard",
       "address": "0x24424336F04440b1c28685a38303aC33C9D14a25",
       "descriptions": [
-        "Liveness Guard of the LivenessModule ({{ address }}) - used to remove inactive members."
+        "Liveness Guard of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - used to remove members inactive for 98d."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -203,7 +203,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "descriptions": [
-        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions.",
+        "It can act on behalf of 0x470d87b1dae09a454A43D1fD772A561a03276aB7, inheriting its permissions.",
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
       "assignedPermissions": {
@@ -270,7 +270,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "descriptions": [
-        "It can act on behalf of the ProxyAdmin it owns, inheriting all permissions."
+        "It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."
       ],
       "assignedPermissions": {
         "owner": ["0x543bA4AADBAb8f9025686Bd03993043599c6fB04"]
@@ -299,7 +299,7 @@
       "address": "0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8",
       "template": "gnosisSafeModules/DeputyGuardianModule",
       "descriptions": [
-        "allows the 'deputy guardian' {{ deputyGuardian }} to act on behalf of the Gnosis Safe."
+        "allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."
       ],
       "sinceTimestamp": 1717149791,
       "values": {
@@ -412,7 +412,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "descriptions": [
-        "Fallback Owner of the LivenessModule ({{ address }}) - takes ownership of the multisig if the number of members falls below {{ minOwners }}."
+        "Fallback Owner of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 if the number of members falls below 8."
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1707420755,
@@ -530,7 +530,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "descriptions": [
-        "Deputy of the DeputyGuardianModule ({{ address }}). It can act on behalf of the Gnosis Safe to which that that module is assigned."
+        "Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."
       ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1610850364,
