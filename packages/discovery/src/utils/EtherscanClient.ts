@@ -203,23 +203,30 @@ export class EtherscanClient implements IEtherscanClient {
       sort: 'desc',
     })
 
-    const resp = TwentyTransactionListResult.parse(response)
-    assert(resp)
-    const outgoingTxs = resp
-      .filter((tx) => EthereumAddress(tx.from) === address)
-      .slice(0, 10)
+    try {
+      const resp = TwentyTransactionListResult.parse(response)
+      assert(resp)
+      const outgoingTxs = resp
+        .filter((tx) => EthereumAddress(tx.from) === address)
+        .slice(0, 10)
 
-    assert(
-      outgoingTxs.length === 10,
-      'Not enough outgoing transactions, expected 10, received ' +
-        outgoingTxs.length.toString(),
-    )
+      assert(
+        outgoingTxs.length === 10,
+        'Not enough outgoing transactions, expected 10, received ' +
+          outgoingTxs.length.toString(),
+      )
 
-    return outgoingTxs.map((r) => ({
-      input: r.input,
-      to: EthereumAddress(r.to),
-      hash: Hash256(r.hash),
-    }))
+      return outgoingTxs.map((r) => ({
+        input: r.input,
+        to: EthereumAddress(r.to),
+        hash: Hash256(r.hash),
+      }))
+    } catch (e) {
+      this.logger.error(e, {
+        response,
+      })
+      throw e
+    }
   }
 
   async callWithRetries(
