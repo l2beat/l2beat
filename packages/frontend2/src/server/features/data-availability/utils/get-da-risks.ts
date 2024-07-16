@@ -31,12 +31,6 @@ export function getEconomicSecurity(
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,
 ) {
-  console.dir({
-    layer: layer.display.name,
-    slug: layer.display.slug,
-    totalValueSecured,
-    economicSecurity,
-  })
   const shouldCalculate =
     layer.risks.economicSecurity.type === 'OnChainQuantifiable'
   const hasData = economicSecurity?.status === 'Synced' && totalValueSecured > 0
