@@ -1,7 +1,6 @@
 import { configureCharts } from './charts'
 import { configureAccordions } from './configureAccordions'
 import { configureAlphabetSelectors } from './configureAlphabetSelectors'
-import { configureBridgesAndCombinedOnly } from './configureBridgesAndCombinedOnly'
 import { configureCopyButtons } from './configureCopyButtons'
 import { configureCostsControlsWrappers } from './configureCostsControlsWrappers'
 import { configureEtherscanLinks } from './configureEtherscanLinks'
@@ -50,7 +49,6 @@ configureTabs()
 configureUpgradeDescriptions()
 configureMultipleEscrowsButton()
 configureRichSelects()
-configureBridgesAndCombinedOnly()
 configureLivenessTimeRangeControls()
 configureOverflowWrappers()
 configureSorting()

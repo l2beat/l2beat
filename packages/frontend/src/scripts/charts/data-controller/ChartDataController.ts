@@ -149,9 +149,7 @@ export function getChartUrl<T extends ChartType>(chartType: T) {
     case 'scaling-costs':
       return '/api/costs/combined.json'
     case 'bridges-tvl':
-      return chartType.includeCanonical
-        ? '/api/tvl/combined.json'
-        : '/api/tvl/bridges.json'
+      return '/api/tvl/bridges.json'
     case 'project-tvl':
     case 'project-detailed-tvl':
       return `/api/tvl/${chartType.slug}.json`
