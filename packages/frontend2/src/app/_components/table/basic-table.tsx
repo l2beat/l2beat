@@ -30,19 +30,18 @@ interface Props<T extends BasicEntry> {
   onResetFilters: () => void
 }
 
-function getCommonPinningStyles<T>(column: Column<T>): CSSProperties {
+function getCommonPinningStyles<T>(
+  column: Column<T>,
+): CSSProperties | undefined {
   const isPinned = column.getIsPinned()
-  const isLastLeftPinnedColumn =
-    isPinned === 'left' && column.getIsLastColumn('left')
-  const isFirstRightPinnedColumn =
-    isPinned === 'right' && column.getIsFirstColumn('right')
+  if (!isPinned) return undefined
 
   return {
     left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
     right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
-    position: isPinned ? 'sticky' : 'relative',
+    position: 'sticky',
     width: column.getSize(),
-    zIndex: isPinned ? 1 : 0,
+    zIndex: 1,
   }
 }
 
@@ -65,7 +64,7 @@ export function BasicTable<T extends BasicEntry>({
                 colSpan={header.colSpan}
                 className={header.column.columnDef.meta?.headClassName}
                 tooltip={header.column.columnDef.meta?.tooltip}
-                style={{ ...getCommonPinningStyles(header.column) }}
+                style={getCommonPinningStyles(header.column)}
               >
                 {header.isPlaceholder ? null : header.column.getCanSort() ? (
                   <SortingArrows
@@ -101,7 +100,7 @@ export function BasicTable<T extends BasicEntry>({
                     key={cell.id}
                     href={getHref(row.original.href, meta?.hash)}
                     className={meta?.cellClassName}
-                    style={{ ...getCommonPinningStyles(cell.column) }}
+                    style={getCommonPinningStyles(cell.column)}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
