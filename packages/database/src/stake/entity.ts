@@ -6,7 +6,7 @@ export interface StakeRecord {
   thresholdStake: bigint
 }
 
-export function fromEntity(entity: Stake): StakeRecord {
+export function toRecord(entity: Stake): StakeRecord {
   return {
     id: entity.id,
     totalStake: BigInt(entity.totalStake),
@@ -14,7 +14,7 @@ export function fromEntity(entity: Stake): StakeRecord {
   }
 }
 
-export function toEntity(stake: StakeRecord): Stake {
+export function toRow(stake: StakeRecord): Stake {
   return {
     id: stake.id,
     totalStake: stake.totalStake.toString(),

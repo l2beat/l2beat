@@ -12,13 +12,11 @@ export interface UpsertableCurrentPrice {
   priceUsd: number
 }
 
-export function fromEntity(
-  entity: Selectable<CurrentPrice>,
-): CurrentPriceRecord {
+export function toRecord(entity: Selectable<CurrentPrice>): CurrentPriceRecord {
   return entity
 }
 
-export function toEntity(
+export function toRow(
   currentPrice: UpsertableCurrentPrice,
 ): Insertable<CurrentPrice> {
   return {
