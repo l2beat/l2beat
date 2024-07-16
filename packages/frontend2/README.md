@@ -5,7 +5,7 @@ The dynamic Next.js frontend that will be the new face of L2BEAT.
 ## Setup
 
 To run or develop frontend2 you need to install and build its dependencies. You can do it by running the following
-command in the repository root:
+commands in the repository root:
 
 ```
 yarn
