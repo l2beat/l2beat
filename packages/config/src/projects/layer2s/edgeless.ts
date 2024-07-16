@@ -1,6 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-
-import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
@@ -38,19 +36,8 @@ export const edgeless: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  transactionApi: {
-    type: 'rpc',
-    startBlock: 1,
-    defaultUrl: 'https://rpc.edgeless.network/http',
-    defaultCallsPerMinute: 1500,
-    assessCount: subtractOne,
-  },
-  badges: [
-    Badge.VM.EVM,
-    Badge.DA.CustomDA,
-    Badge.Stack.Orbit,
-    Badge.RaaS.Caldera,
-  ],
+  rpcUrl: 'https://rpc.edgeless.network/http',
+  badges: [Badge.VM.EVM, Badge.DA.CustomDA, Badge.RaaS.Caldera],
   nonTemplateEscrows: [
     // this is not the bridge escrow itself but the strategy contract that holds all funds backing the ewETH in the canonical bridge escrow. The normal escrow can be used as soon as we track the ewETH token
     {
