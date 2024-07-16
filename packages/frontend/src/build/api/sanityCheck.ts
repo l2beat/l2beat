@@ -48,7 +48,6 @@ export function tvlSanityCheck(tvlApiResponse: TvlApiResponse) {
   const allProjects = [
     ['bridges', tvlApiResponse.bridges],
     ['layer2s', tvlApiResponse.layers2s],
-    ['combined', tvlApiResponse.combined],
     ...Object.entries(tvlApiResponse.projects)
       .filter(([id]) => ids.includes(id))
       .map(([id, project]) => [id, project?.charts] as const),

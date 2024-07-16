@@ -39,10 +39,6 @@ const meta = {
         },
         sevenDayChange: '-7.73%',
         bridgesMarketShare: '102.12%',
-        combinedMarketShare: {
-          displayValue: '40.30%',
-          value: 40.3,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -74,10 +70,6 @@ const meta = {
         },
         sevenDayChange: '-3.88%',
         bridgesMarketShare: '38.86%',
-        combinedMarketShare: {
-          displayValue: '15.36%',
-          value: 15.36,
-        },
         validatedBy: {
           value: 'Destination Chain',
           description:
@@ -113,10 +105,6 @@ const meta = {
         },
         sevenDayChange: '-10.62%',
         bridgesMarketShare: '1.95%',
-        combinedMarketShare: {
-          displayValue: '0.77%',
-          value: 0.77,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -150,10 +138,6 @@ const meta = {
         },
         sevenDayChange: '-16.94%',
         bridgesMarketShare: '1.30%',
-        combinedMarketShare: {
-          displayValue: '0.51%',
-          value: 0.51,
-        },
         validatedBy: {
           value: 'Third Party',
           description:
@@ -185,10 +169,6 @@ const meta = {
         },
         sevenDayChange: '-5.59%',
         bridgesMarketShare: '1.05%',
-        combinedMarketShare: {
-          displayValue: '0.41%',
-          value: 0.41,
-        },
         validatedBy: {
           value: 'Optimistically',
           description:
@@ -220,10 +200,6 @@ const meta = {
         },
         sevenDayChange: '-2.60%',
         bridgesMarketShare: '1.03%',
-        combinedMarketShare: {
-          displayValue: '0.41%',
-          value: 0.41,
-        },
         validatedBy: {
           value: 'Third Party',
           description: 'Withdraws are validated by EOA.',
@@ -254,10 +230,6 @@ const meta = {
         },
         sevenDayChange: '+14.64%',
         bridgesMarketShare: '0.84%',
-        combinedMarketShare: {
-          displayValue: '0.33%',
-          value: 0.33,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -291,10 +263,6 @@ const meta = {
         },
         sevenDayChange: '-7.23%',
         bridgesMarketShare: '0.83%',
-        combinedMarketShare: {
-          displayValue: '0.33%',
-          value: 0.33,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -327,10 +295,6 @@ const meta = {
         },
         sevenDayChange: '-4.20%',
         bridgesMarketShare: '0.76%',
-        combinedMarketShare: {
-          displayValue: '0.30%',
-          value: 0.3,
-        },
         validatedBy: {
           value: 'Third Party',
           description: '4/6 Validator MultiSig',
@@ -361,10 +325,6 @@ const meta = {
         },
         sevenDayChange: '+2.07%',
         bridgesMarketShare: '0.59%',
-        combinedMarketShare: {
-          displayValue: '0.23%',
-          value: 0.23,
-        },
         validatedBy: {
           value: 'Third Party',
           description: '4/6 Validator MultiSig',
@@ -395,10 +355,6 @@ const meta = {
         },
         sevenDayChange: '-4.98%',
         bridgesMarketShare: '0.35%',
-        combinedMarketShare: {
-          displayValue: '0.14%',
-          value: 0.14,
-        },
         validatedBy: {
           value: 'Third Party',
           description:
@@ -433,10 +389,6 @@ const meta = {
         },
         sevenDayChange: '-6.69%',
         bridgesMarketShare: '0.04%',
-        combinedMarketShare: {
-          displayValue: '0.01%',
-          value: 0.01,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -469,10 +421,6 @@ const meta = {
         },
         sevenDayChange: '-2.40%',
         bridgesMarketShare: '0.01%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -504,10 +452,6 @@ const meta = {
         },
         sevenDayChange: '-6.61%',
         bridgesMarketShare: '0.01%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Third Party',
           description:
@@ -542,10 +486,6 @@ const meta = {
         },
         sevenDayChange: '-4.12%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -579,10 +519,6 @@ const meta = {
         },
         sevenDayChange: '-32.13%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -615,10 +551,6 @@ const meta = {
         },
         sevenDayChange: '-7.42%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -650,10 +582,6 @@ const meta = {
         },
         sevenDayChange: '-0.01%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'User',
           sentiment: 'good',
@@ -685,10 +613,6 @@ const meta = {
         },
         sevenDayChange: '-1.80%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Optimistically',
           description:
@@ -721,10 +645,6 @@ const meta = {
         },
         sevenDayChange: '-2.76%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Ethereum',
           description:
@@ -758,10 +678,6 @@ const meta = {
         },
         sevenDayChange: '-6.96%',
         bridgesMarketShare: '0.00%',
-        combinedMarketShare: {
-          displayValue: '0.00%',
-          value: 0,
-        },
         validatedBy: {
           value: 'Third Party',
           description: 'Withdrawals need to be signed by an EOA account.',
