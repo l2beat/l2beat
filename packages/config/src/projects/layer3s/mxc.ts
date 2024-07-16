@@ -1,5 +1,6 @@
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('mxc', 'arbitrum')
@@ -12,6 +13,7 @@ const discovery_ethereum = new ProjectDiscovery('mxc', 'ethereum')
 export const mxc: Layer3 = {
   id: ProjectId('mxc'),
   type: 'layer3',
+  badges: [Badge.VM.EVM, Badge.Fork.TaikoFork, Badge.L3ParentChain.Arbitrum],
   hostChain: ProjectId('arbitrum'),
   isUnderReview: true,
   display: {

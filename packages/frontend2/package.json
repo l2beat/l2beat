@@ -11,6 +11,7 @@
     "lint": "next lint",
     "format": "biome check .",
     "format:fix": "biome check --apply .",
+    "test": "mocha",
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
@@ -65,7 +66,6 @@
     "pino-pretty": "^11.1.0",
     "postcss": "^8.4.38",
     "tailwindcss": "^3.4.1",
-    "tailwindcss-animate": "^1.0.7",
-    "typescript": "^5.4.5"
+    "tailwindcss-animate": "^1.0.7"
   }
 }

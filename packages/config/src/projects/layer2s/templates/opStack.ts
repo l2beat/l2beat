@@ -40,7 +40,7 @@ import { ChainConfig } from '../../../common/ChainConfig'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../../discovery/values/hardcoded'
-import { BadgeId } from '../../badges'
+import { Badge, BadgeId, badges } from '../../badges'
 import { type Layer3, type Layer3Display } from '../../layer3s/types'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
@@ -51,6 +51,7 @@ import {
   Layer2FinalityConfig,
   Layer2TxConfig,
 } from '../types'
+import { mergeBadges } from './utils'
 
 export const CELESTIA_DA_PROVIDER: DAProvider = {
   name: 'Celestia',
@@ -134,12 +135,24 @@ export function opStackCommon(
     templateVars.daProvider ??
     (postsToCelestia ? CELESTIA_DA_PROVIDER : undefined)
 
+  let daBadge: BadgeId | undefined = postsToCelestia
+    ? Badge.DA.Celestia
+    : undefined
+
   if (daProvider === undefined) {
     assert(
       templateVars.isNodeAvailable !== undefined,
       'isNodeAvailable must be defined if no DA provider is defined',
     )
+    daBadge = templateVars.usesBlobs
+      ? Badge.DA.EthereumBlobs
+      : Badge.DA.EthereumCalldata
   }
+
+  if (daBadge === undefined) {
+    daBadge = templateVars.badges?.find((b) => badges[b].type === 'DA')
+  }
+  assert(daBadge !== undefined, 'DA badge must be defined')
 
   const portal =
     templateVars.portal ?? templateVars.discovery.getContract('OptimismPortal')
@@ -330,7 +343,10 @@ export function opStackCommon(
         thumbnail: NUGGETS.THUMBNAILS.MODULAR_ROLLUP,
       },
     ],
-    badges: templateVars.badges,
+    badges: mergeBadges(
+      [Badge.Stack.OPStack, Badge.VM.EVM, daBadge],
+      templateVars.badges ?? [],
+    ),
   }
 }
 

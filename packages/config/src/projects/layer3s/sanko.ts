@@ -8,12 +8,7 @@ const discovery = new ProjectDiscovery('sanko', 'arbitrum')
 
 export const sanko: Layer3 = orbitStackL3({
   discovery,
-  badges: [
-    Badge.VM.EVM,
-    Badge.Stack.Orbit,
-    Badge.L3ParentChain.Arbitrum,
-    Badge.RaaS.Caldera,
-  ],
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Sanko',

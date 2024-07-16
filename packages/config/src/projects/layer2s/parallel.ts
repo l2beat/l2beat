@@ -10,7 +10,7 @@ const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.DA.EthereumBlobs],
+  badges: [Badge.RaaS.Conduit],
   display: {
     name: 'Parallel',
     slug: 'parallel',

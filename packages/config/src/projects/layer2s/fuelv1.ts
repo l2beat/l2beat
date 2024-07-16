@@ -18,7 +18,7 @@ import { Layer2 } from './types'
 export const fuelv1: Layer2 = {
   type: 'layer2',
   id: ProjectId('fuelv1'),
-  badges: [Badge.DA.EthereumCalldata],
+  badges: [Badge.VM.AppChain, Badge.DA.EthereumCalldata],
   display: {
     name: 'Fuel v1',
     slug: 'fuelv1',

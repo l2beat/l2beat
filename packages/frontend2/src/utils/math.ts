@@ -23,7 +23,8 @@ export function unifyPercentagesAsIntegers(percentages: number[]): number[] {
   const iterations = 100 - sum(intParts)
   for (let i = 0; i < iterations; i++) {
     const largestIndex = indexOf(decimalParts, max(decimalParts))
-    intParts[largestIndex] += 1
+    if (intParts[largestIndex] !== undefined) intParts[largestIndex] += 1
+
     decimalParts[largestIndex] = 0
   }
 
