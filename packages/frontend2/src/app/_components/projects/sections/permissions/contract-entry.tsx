@@ -37,13 +37,13 @@ export interface ContractEntryProps {
 }
 
 export function ContractEntry({ contract, className }: ContractEntryProps) {
-  const sharedProxies = (contract.usedInProjects ?? []).filter(
+  const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
   )
-  const sharedImplementations = (contract.usedInProjects ?? [])
-    .filter((c) => c.type === 'implementation')
-    .filter((c) => !sharedProxies.map((k) => k.id).includes(c.id))
-  const sharedPermissions = (contract.usedInProjects ?? []).filter(
+  const sharedImplementations = contract.usedInProjects
+    ?.filter((c) => c.type === 'implementation')
+    .filter((c) => !sharedProxies?.map((k) => k.id).includes(c.id))
+  const sharedPermissions = contract.usedInProjects?.filter(
     (c) => c.type === 'permission',
   )
 
@@ -94,19 +94,19 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
               {contract.upgradeDelay}
             </p>
           )}
-          {sharedProxies.length !== 0 && (
+          {sharedProxies && sharedProxies.length !== 0 && (
             <UsedInProjectEntry
               label="Proxy used in"
               implementations={sharedProxies}
             />
           )}
-          {sharedImplementations.length !== 0 && (
+          {sharedImplementations && sharedImplementations.length !== 0 && (
             <UsedInProjectEntry
               label="Implementation used in"
               implementations={sharedImplementations}
             />
           )}
-          {sharedPermissions.length !== 0 && (
+          {sharedPermissions && sharedPermissions.length !== 0 && (
             <UsedInProjectEntry
               label="Used in"
               implementations={sharedPermissions}

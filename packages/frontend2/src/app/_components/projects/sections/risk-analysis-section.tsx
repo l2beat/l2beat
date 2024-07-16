@@ -21,7 +21,7 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
 
 export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
   const isUnderReview =
-    props.isUnderReview ??
+    !!props.isUnderReview ||
     Object.values(props.riskValues).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )

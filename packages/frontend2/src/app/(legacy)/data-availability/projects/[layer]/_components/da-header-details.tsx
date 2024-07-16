@@ -42,7 +42,11 @@ export function DaHeaderDetails({ project }: Props) {
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
       <DetailsHeaderStat
         title="Duration of storage"
-        value={`${project.header.durationStorage}s` ?? EM_DASH}
+        value={
+          project.header.durationStorage
+            ? `${project.header.durationStorage}s`
+            : EM_DASH
+        }
       />
       <DetailsHeaderStat
         className="md:col-span-2"

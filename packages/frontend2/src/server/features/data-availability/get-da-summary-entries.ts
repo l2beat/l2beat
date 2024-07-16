@@ -24,7 +24,7 @@ export async function getDaSummaryEntries() {
         daLayer: daLayer.display.name,
         daBridge: toDaBridge(bridge),
         risks: getDaRisks(daLayer, bridge),
-        isUnderReview: daLayer.isUnderReview ?? bridge.isUnderReview,
+        isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
         tvs,
         economicSecurity: economicSecurity[daLayer.id],
         layerType: DaLayerKindDisplay[daLayer.kind],
