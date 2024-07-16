@@ -224,7 +224,7 @@ export const lyra: Layer2 = opStackL2({
     },
     {
       address: EthereumAddress('0x5e027ad442e031424b5a2C0ad6f656662Be32882'),
-      sinceTimestamp: new UnixTime(170471545),
+      sinceTimestamp: new UnixTime(1704715450),
       includeInTotal: false,
       source: 'external',
       bridge: {
