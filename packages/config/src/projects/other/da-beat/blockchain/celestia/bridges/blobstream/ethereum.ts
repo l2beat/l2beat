@@ -50,7 +50,14 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       }),
     ],
     risks: [
-      // Add specific risks to Optimiums/Validiums
+      {
+        category: 'Funds can be lost if',
+        text: 'the bridge contract receives a malicious code upgrade. There is no delay on code upgrades.',
+      },
+      {
+        category: 'Funds can be lost if',
+        text: 'a dishonest majority of Celestia validators post incorrect or malicious data commitments.',
+      },
     ],
   },
   permissions: [
