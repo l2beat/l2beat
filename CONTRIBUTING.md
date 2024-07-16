@@ -35,21 +35,11 @@ We currently have two frontend apps because we're migrating to Next.js, so worki
 
 ### Running the legacy frontend
 
-```
-yarn
-yarn build:frontend
-cd packages/frontend
-yarn start
-```
+Check out the [frontend README.md](./packages/frontend/README.md).
 
 ### Running the new, Next.js frontend
 
-```
-yarn
-yarn build:dependencies
-cd packages/frontend2
-yarn dev
-```
+Check out the [frontend2 README.md](./packages/frontend2/README.md).
 
 ## Add your Layer 2 project to the website
 
