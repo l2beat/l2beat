@@ -32,6 +32,12 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     description: `Celestia with Blobstream bridge on ${capitalize(chain.name)}`,
   }
 
+  const validation = {
+    type: 'zk-proof',
+    relayer: 'SuccinctGateway',
+    proverSource: 'https://hackmd.io/@succinctlabs/HJE7XRrup',
+  }
+
   const risks = {
     accessibility: DaAccessibilityRisk.NotEnshrined,
     ...base.risks,
@@ -43,6 +49,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     display,
     risks,
     chain: chain.name,
+    validation: validation,
     contracts: base.contracts,
     permissions: base.permissions,
     usedIn: base.usedIn,
