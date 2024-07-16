@@ -8142,6 +8142,21 @@
       }
     },
     {
+      "id": "real:rwa-re.al",
+      "name": "re.al",
+      "coingeckoId": "re-al",
+      "address": "0x4644066f535Ead0cde82D209dF78d94572fCbf14",
+      "symbol": "RWA",
+      "decimals": 18,
+      "deploymentTimestamp": 1715799306,
+      "coingeckoListingTimestamp": 1720483200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38626/large/RWA_200x200.png?1718168632",
+      "chainId": 111188,
+      "source": "native",
+      "supply": "totalSupply"
+    },
+    {
       "id": "real:ustb-us-t-bill",
       "name": "US T-Bill",
       "coingeckoId": "real-us-t-bill",
