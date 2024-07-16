@@ -87,28 +87,31 @@ export class AmountsDataService {
       targetTimestamp,
     )
 
-    const uniqueTimestamps = new Set<number>()
-    status.lagging.forEach((l) =>
-      uniqueTimestamps.add(l.latestTimestamp.toNumber()),
-    )
-
-    const data = await this.$.amountRepository.getByTimestamps(
-      Array.from(uniqueTimestamps).map((u) => new UnixTime(u)),
-    )
-    const dataByConfigId = groupBy(data, 'configId')
-
     const lagging = new Map()
-    for (const laggingConfig of status.lagging) {
-      const latestRecord = dataByConfigId[laggingConfig.id]?.find((d) =>
-        d.timestamp.equals(laggingConfig.latestTimestamp),
+
+    if (status.lagging.length > 0) {
+      const uniqueTimestamps = new Set<number>()
+      status.lagging.forEach((l) =>
+        uniqueTimestamps.add(l.latestTimestamp.toNumber()),
       )
 
-      if (latestRecord) {
-        lagging.set(laggingConfig.id, {
-          latestTimestamp: laggingConfig.latestTimestamp,
-          latestValue: latestRecord,
-        })
-        amounts.push({ ...latestRecord, timestamp: targetTimestamp })
+      const data = await this.$.amountRepository.getByTimestamps(
+        Array.from(uniqueTimestamps).map((u) => new UnixTime(u)),
+      )
+      const dataByConfigId = groupBy(data, 'configId')
+
+      for (const laggingConfig of status.lagging) {
+        const latestRecord = dataByConfigId[laggingConfig.id]?.find((d) =>
+          d.timestamp.equals(laggingConfig.latestTimestamp),
+        )
+
+        if (latestRecord) {
+          lagging.set(laggingConfig.id, {
+            latestTimestamp: laggingConfig.latestTimestamp,
+            latestValue: latestRecord,
+          })
+          amounts.push({ ...latestRecord, timestamp: targetTimestamp })
+        }
       }
     }
 
