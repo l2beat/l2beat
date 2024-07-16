@@ -5,7 +5,7 @@ import {
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../utils/deleteArchivedRecords'
-import { Amount, toRecord, toRow } from './entity'
+import { AmountRecord, toRecord, toRow } from './entity'
 import { selectAmount } from './select'
 
 export class AmountRepository {
@@ -31,7 +31,7 @@ export class AmountRepository {
     configIds: string[],
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ): Promise<Amount[]> {
+  ): Promise<AmountRecord[]> {
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
@@ -70,7 +70,7 @@ export class AmountRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: Amount[], trx?: Transaction) {
+  async addMany(records: AmountRecord[], trx?: Transaction) {
     if (records.length === 0) {
       return
     }

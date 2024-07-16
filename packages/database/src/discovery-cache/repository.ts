@@ -1,11 +1,11 @@
 import { PostgresDatabase } from '../kysely'
-import { DiscoveryCache, toRecord, toRow } from './entity'
+import { DiscoveryCacheRecord, toRecord, toRow } from './entity'
 import { selectDiscoveryCache } from './select'
 
 export class DiscoveryCacheRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async addOrUpdate(record: DiscoveryCache): Promise<string> {
+  async addOrUpdate(record: DiscoveryCacheRecord): Promise<string> {
     const row = toRow(record)
     await this.db
       .insertInto('public.discovery_cache')
@@ -16,7 +16,7 @@ export class DiscoveryCacheRepository {
     return row.key
   }
 
-  async findByKey(key: DiscoveryCache['key']) {
+  async findByKey(key: DiscoveryCacheRecord['key']) {
     const row = await this.db
       .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)

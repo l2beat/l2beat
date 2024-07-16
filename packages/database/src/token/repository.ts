@@ -1,12 +1,12 @@
 import { PostgresDatabase } from '../kysely'
-import { Token, toRecord, toRow } from './entity'
+import { TokenRecord, toRecord, toRow } from './entity'
 import { joinDeployment, joinNetwork, joinTokenMeta } from './join'
 import { selectToken } from './select'
 
 export class TokenRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsertMany(tokens: Token[]) {
+  upsertMany(tokens: TokenRecord[]) {
     const rows = tokens.map(toRow)
 
     return this.db
@@ -96,7 +96,7 @@ export class TokenRepository {
     return row ? toRecord(row) : null
   }
 
-  async findById(id: Token['id']) {
+  async findById(id: TokenRecord['id']) {
     const row = await this.db
       .selectFrom('public.Token')
       .select(selectToken)
@@ -107,7 +107,7 @@ export class TokenRepository {
     return row ? toRecord(row) : null
   }
 
-  async findManyByIds(ids: Token['id'][]) {
+  async findManyByIds(ids: TokenRecord['id'][]) {
     const rows = await this.db
       .selectFrom('public.Token')
       .select(selectToken)

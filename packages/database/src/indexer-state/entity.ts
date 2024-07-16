@@ -1,8 +1,8 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { IndexerState as IndexerStateRow } from '../kysely/generated/types'
+import { IndexerState } from '../kysely/generated/types'
 
-export interface IndexerState {
+export interface IndexerStateRecord {
   indexerId: string
   safeHeight: number
   // TODO: make it required in every indexer
@@ -11,7 +11,7 @@ export interface IndexerState {
   minTimestamp?: UnixTime
 }
 
-export function toRow(record: IndexerState): Insertable<IndexerStateRow> {
+export function toRow(record: IndexerStateRecord): Insertable<IndexerState> {
   return {
     indexer_id: record.indexerId,
     safe_height: record.safeHeight,
@@ -20,7 +20,7 @@ export function toRow(record: IndexerState): Insertable<IndexerStateRow> {
   }
 }
 
-export function toRecord(row: Selectable<IndexerStateRow>): IndexerState {
+export function toRecord(row: Selectable<IndexerState>): IndexerStateRecord {
   return {
     indexerId: row.indexer_id,
     safeHeight: row.safe_height,

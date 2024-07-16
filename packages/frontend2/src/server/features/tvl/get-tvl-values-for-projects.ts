@@ -1,4 +1,4 @@
-import { type Value } from '@l2beat/database'
+import { type ValueRecord } from '@l2beat/database'
 import { assert } from '@l2beat/shared-pure'
 import { type Dictionary, groupBy } from 'lodash'
 import { range as lodashRange } from 'lodash'
@@ -21,7 +21,7 @@ export async function getTvlValuesForProjects(
 
   const valuesByProject = groupBy(valueRecords, 'projectId')
 
-  const result: Dictionary<Dictionary<Value[]>> = {}
+  const result: Dictionary<Dictionary<ValueRecord[]>> = {}
   for (const [projectId, projectValues] of Object.entries(valuesByProject)) {
     const project = projects.find((p) => p.id === projectId)
     assert(project, `Project ${projectId.toString()} not found`)
@@ -29,7 +29,7 @@ export async function getTvlValuesForProjects(
     const valuesByTimestamp = groupBy(projectValues, 'timestamp')
     const status = getValuesStatus(project, valuesByTimestamp, target)
 
-    const valuesByTimestampForProject: Dictionary<Value[]> = {}
+    const valuesByTimestampForProject: Dictionary<ValueRecord[]> = {}
 
     let minTimestamp = projectValues[0]?.timestamp
 

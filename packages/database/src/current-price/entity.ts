@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { CurrentPrice as CurrentPriceEntity } from '../kysely/generated/types'
+import { CurrentPrice } from '../kysely/generated/types'
 
-export interface CurrentPrice {
+export interface CurrentPriceRecord {
   coingeckoId: string
   priceUsd: number
   updatedAt: Date
@@ -12,15 +12,13 @@ export interface UpsertableCurrentPrice {
   priceUsd: number
 }
 
-export function fromEntity(
-  entity: Selectable<CurrentPriceEntity>,
-): CurrentPrice {
+export function toRecord(entity: Selectable<CurrentPrice>): CurrentPriceRecord {
   return entity
 }
 
-export function toEntity(
+export function toRow(
   currentPrice: UpsertableCurrentPrice,
-): Insertable<CurrentPriceEntity> {
+): Insertable<CurrentPrice> {
   return {
     ...currentPrice,
     updatedAt: new Date(),

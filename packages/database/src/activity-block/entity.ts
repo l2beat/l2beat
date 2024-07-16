@@ -1,17 +1,15 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { Block as BlockTransactionCountRow } from '../kysely/generated/types'
+import { Block } from '../kysely/generated/types'
 
-export interface BlockTransactionCount {
+export interface BlockTransactionCountRecord {
   projectId: ProjectId
   blockNumber: number
   count: number
   timestamp: UnixTime
 }
 
-export function toRow(
-  record: BlockTransactionCount,
-): Insertable<BlockTransactionCountRow> {
+export function toRow(record: BlockTransactionCountRecord): Insertable<Block> {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
@@ -20,9 +18,7 @@ export function toRow(
   }
 }
 
-export function toRecord(
-  row: Selectable<BlockTransactionCountRow>,
-): BlockTransactionCount {
+export function toRecord(row: Selectable<Block>): BlockTransactionCountRecord {
   return {
     projectId: ProjectId(row.project_id),
     blockNumber: row.block_number,

@@ -2,7 +2,7 @@ import { assert } from '@l2beat/backend-tools'
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { Liveness, toRecord, toRow } from './entity'
+import { LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'
 
 export class LivenessRepository {
@@ -81,7 +81,7 @@ export class LivenessRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: Liveness[]) {
+  async addMany(records: LivenessRecord[]) {
     if (records.length === 0) {
       return 0
     }

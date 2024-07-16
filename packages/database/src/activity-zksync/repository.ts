@@ -1,13 +1,13 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { ZkSyncTransaction, toRecord, toRow } from './entity'
+import { ZkSyncTransactionRecord, toRecord, toRow } from './entity'
 import { selectZksyncTransaction } from './select'
 
 export class ZkSyncTransactionRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdateMany(
-    records: ZkSyncTransaction[],
+    records: ZkSyncTransactionRecord[],
     trx?: Transaction,
   ): Promise<number> {
     for (const record of records) {
@@ -16,7 +16,7 @@ export class ZkSyncTransactionRepository {
     return records.length
   }
 
-  async addOrUpdate(record: ZkSyncTransaction, trx?: Transaction) {
+  async addOrUpdate(record: ZkSyncTransactionRecord, trx?: Transaction) {
     const scope = trx ?? this.db
     const row = toRow(record)
     await scope
@@ -47,7 +47,7 @@ export class ZkSyncTransactionRepository {
     return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
   }
 
-  async getAll(): Promise<ZkSyncTransaction[]> {
+  async getAll(): Promise<ZkSyncTransactionRecord[]> {
     const rows = await this.db
       .selectFrom('activity.zksync')
       .select(selectZksyncTransaction)

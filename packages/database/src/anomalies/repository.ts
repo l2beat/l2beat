@@ -1,13 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { Anomaly, toRecord, toRow } from './entity'
+import { AnomalyRecord, toRecord, toRow } from './entity'
 import { selectAnomaly } from './select'
 
 export class AnomaliesRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdateMany(
-    records: Anomaly[],
+    records: AnomalyRecord[],
     trx?: Transaction,
   ): Promise<number> {
     for (const record of records) {
@@ -16,7 +16,7 @@ export class AnomaliesRepository {
     return records.length
   }
 
-  async addOrUpdate(record: Anomaly, trx?: Transaction): Promise<string> {
+  async addOrUpdate(record: AnomalyRecord, trx?: Transaction): Promise<string> {
     const scope = trx ?? this.db
     const row = toRow(record)
     await scope
@@ -36,7 +36,7 @@ export class AnomaliesRepository {
     await this.db.deleteFrom('public.anomalies').execute()
   }
 
-  async getAll(): Promise<Anomaly[]> {
+  async getAll(): Promise<AnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
@@ -48,7 +48,7 @@ export class AnomaliesRepository {
   async getByProjectFrom(
     projectId: ProjectId,
     from: UnixTime,
-  ): Promise<Anomaly[]> {
+  ): Promise<AnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)

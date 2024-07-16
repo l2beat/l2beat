@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { Value as ValueRow } from '../kysely/generated/types'
+import { Value } from '../kysely/generated/types'
 
-export interface Value {
+export interface ValueRecord {
   projectId: ProjectId
   timestamp: UnixTime
   dataSource: string
@@ -14,7 +14,7 @@ export interface Value {
   nativeForTotal: bigint
 }
 
-export function toRow(record: Value): Insertable<ValueRow> {
+export function toRow(record: ValueRecord): Insertable<Value> {
   return {
     project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
@@ -28,7 +28,7 @@ export function toRow(record: Value): Insertable<ValueRow> {
   }
 }
 
-export function toRecord(row: Selectable<ValueRow>): Value {
+export function toRecord(row: Selectable<Value>): ValueRecord {
   return {
     projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),

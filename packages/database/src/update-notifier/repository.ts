@@ -1,6 +1,6 @@
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { UpdateNotifier, toRecord, toRow } from './entity'
+import { UpdateNotifierRecord, toRecord, toRow } from './entity'
 import { selectUpdateNotifier } from './select'
 
 export class UpdateNotifierRepository {
@@ -17,7 +17,7 @@ export class UpdateNotifierRepository {
   }
 
   async add(
-    record: Omit<UpdateNotifier, 'id' | 'createdAt' | 'updatedAt'>,
+    record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
     trx?: Transaction,
   ) {
     const scope = trx ?? this.db
@@ -32,7 +32,7 @@ export class UpdateNotifierRepository {
     return insertedResult?.id
   }
 
-  async getAll(): Promise<UpdateNotifier[]> {
+  async getAll(): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
@@ -45,7 +45,7 @@ export class UpdateNotifierRepository {
     from: UnixTime,
     projectName: string,
     chainId: ChainId,
-  ): Promise<UpdateNotifier[]> {
+  ): Promise<UpdateNotifierRecord[]> {
     const rows = await this.db
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)

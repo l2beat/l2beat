@@ -1,12 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { AggregatedL2Cost, toRecord, toRow } from './entity'
+import { AggregatedL2CostRecord, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
 
 export class AggregatedL2CostRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async getAll(): Promise<AggregatedL2Cost[]> {
+  async getAll(): Promise<AggregatedL2CostRecord[]> {
     const rows = await this.db
       .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
@@ -16,7 +16,7 @@ export class AggregatedL2CostRepository {
   }
 
   async addMany(
-    records: AggregatedL2Cost[],
+    records: AggregatedL2CostRecord[],
     trx?: Transaction,
   ): Promise<number> {
     const scope = trx ?? this.db
@@ -41,7 +41,7 @@ export class AggregatedL2CostRepository {
   async getByProjectAndTimeRange(
     projectId: ProjectId,
     timeRange: [UnixTime, UnixTime],
-  ): Promise<AggregatedL2Cost[]> {
+  ): Promise<AggregatedL2CostRecord[]> {
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('public.aggregated_l2_costs')

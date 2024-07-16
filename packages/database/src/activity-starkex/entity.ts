@@ -1,16 +1,16 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { Starkex as StarkExTransactionCountRow } from '../kysely/generated/types'
+import { Starkex } from '../kysely/generated/types'
 
-export interface StarkExTransactionCount {
+export interface StarkExTransactionCountRecord {
   timestamp: UnixTime
   projectId: ProjectId
   count: number
 }
 
 export function toRow(
-  record: StarkExTransactionCount,
-): Insertable<StarkExTransactionCountRow> {
+  record: StarkExTransactionCountRecord,
+): Insertable<Starkex> {
   return {
     unix_timestamp: record.timestamp.toDate(),
     project_id: record.projectId.toString(),
@@ -19,8 +19,8 @@ export function toRow(
 }
 
 export function toRecord(
-  row: Selectable<StarkExTransactionCountRow>,
-): StarkExTransactionCount {
+  row: Selectable<Starkex>,
+): StarkExTransactionCountRecord {
   return {
     timestamp: UnixTime.fromDate(row.unix_timestamp),
     projectId: ProjectId(row.project_id),

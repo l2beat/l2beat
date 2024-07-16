@@ -1,4 +1,4 @@
-import { type Value } from '@l2beat/database'
+import { type ValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary } from 'lodash'
 import { type TvlProject } from './get-tvl-projects'
@@ -7,7 +7,7 @@ const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
 export function getValuesStatus(
   project: TvlProject,
-  valuesByTimestamp: Dictionary<Value[]>,
+  valuesByTimestamp: Dictionary<ValueRecord[]>,
   targetTimestamp: UnixTime,
 ) {
   const lagging = []
