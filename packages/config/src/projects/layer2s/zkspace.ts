@@ -33,7 +33,11 @@ const upgradeability = {
 export const zkspace: Layer2 = {
   type: 'layer2',
   id: ProjectId('zkspace'),
-  badges: [Badge.Fork.ZKsyncLite],
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.EthereumCalldata,
+    Badge.Fork.ZKsyncLiteFork,
+  ],
   display: {
     name: 'ZKSpace',
     slug: 'zkspace',

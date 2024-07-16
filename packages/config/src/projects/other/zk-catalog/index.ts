@@ -5,6 +5,7 @@ import { worldcoinsmtb } from './worldcoinsmtb'
 
 export * from './types'
 export * from './common'
+export * from './utils/getVerifiers'
 
 export const zkCatalogProjects: ZkCatalogProject[] = [
   blobstreamx,

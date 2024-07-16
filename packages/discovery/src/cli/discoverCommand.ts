@@ -1,6 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 
-import { getDiscoveryCliConfig } from '../config/config.discovery'
+import {
+  getChainConfigs,
+  getDiscoveryCliConfig,
+} from '../config/config.discovery'
 import {
   DiscoveryChainConfig,
   DiscoveryCliConfig,
@@ -43,7 +46,7 @@ export async function discoverCommand(
 export function discover(
   config: DiscoveryModuleConfig,
   logger: Logger = Logger.DEBUG,
-  chainConfigs = [config.chain],
+  chainConfigs = getChainConfigs(),
 ): Promise<void> {
   const cliConfig = getDiscoveryCliConfig({
     mode: 'discover',

@@ -16,11 +16,9 @@ export async function getCallImplementationProxy(
     return undefined
   }
   return {
-    implementations: [implementation],
-    relatives: [],
-    upgradeability: {
-      type: 'call implementation proxy',
-      implementation,
+    type: 'call implementation proxy',
+    values: {
+      $implementation: implementation,
     },
   }
 }

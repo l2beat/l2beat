@@ -1,0 +1,38 @@
+import { BackendProject } from '@l2beat/config'
+import { TrackedTxConfigEntry, TrackedTxLivenessConfig } from '@l2beat/shared'
+import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
+import { getSyncedUntil } from '../../utils/getSyncedUntil'
+
+export function getActiveConfigurations(
+  project: BackendProject,
+  configurations: Omit<
+    SavedConfiguration<TrackedTxConfigEntry>,
+    'properties'
+  >[],
+): TrackedTxLivenessConfig[] | undefined {
+  if (project.isArchived || !project.trackedTxsConfig) {
+    return undefined
+  }
+
+  const livenessConfigs = project.trackedTxsConfig.filter(
+    (c) => c.type === 'liveness',
+  ) as TrackedTxLivenessConfig[]
+
+  if (!livenessConfigs.length) {
+    return undefined
+  }
+
+  const livenessConfigIds = livenessConfigs.map((c) => c.id)
+
+  const savedConfigs = configurations.filter((c) =>
+    livenessConfigIds.includes(c.id),
+  )
+
+  const syncedUntil = getSyncedUntil(savedConfigs)
+
+  if (!syncedUntil) {
+    return undefined
+  }
+
+  return livenessConfigs
+}

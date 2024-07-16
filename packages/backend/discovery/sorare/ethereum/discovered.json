@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19825381,
   "configHash": "0x9d4f44fb464f4b174f5fc4dac5f0ace6b6fd0aeac99acb870a2ba5686cc52899",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "OrderRegistry",
       "address": "0x518c4A79a1102eEDc987005CA8cE6B87Ca14dDf8",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1626352379,
       "values": {
+        "$immutable": true,
         "hasRegisteredFact": true,
         "identify": "StarkWare_OrderRegistry_2021_1"
       }
@@ -20,11 +18,9 @@
     {
       "name": "Committee",
       "address": "0x879cD57975d596004863D30c59d579ef78BBbe32",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1630836435,
       "values": {
+        "$immutable": true,
         "constructorArgs": [
           [
             "0x6EBCb783E53C072e9b1C8786942aefc145C6Df75",
@@ -43,11 +39,9 @@
     {
       "name": "GpsFactRegistryAdapter",
       "address": "0xbcc17446B99465fF01E6816d9bcb2d8b1D7cEdB1",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1678702991,
       "values": {
+        "$immutable": true,
         "gpsContract": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60",
         "hasRegisteredFact": true,
         "identify": "StarkWare_GpsFactRegistryAdapter_2020_1",
@@ -58,16 +52,13 @@
       "name": "GnosisSafe",
       "address": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 3 (67%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1678893035,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 3 (67%)",
         "domainSeparator": "0x64888abcdd0f52553103448c88733d35152e1c39d91e8df2cc280809053bbf5f",
         "getChainId": 1,
         "getOwners": [
@@ -76,6 +67,7 @@
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 5,
         "VERSION": "1.3.0"
       }
@@ -83,24 +75,7 @@
     {
       "name": "StarkExchange",
       "address": "0xF5C9F957705bea56a7e806943f98F7777B995826",
-      "upgradeability": {
-        "type": "StarkWare diamond",
-        "implementation": "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "upgradeDelay": 1209600,
-        "isFinal": false,
-        "facets": {
-          "StarkWare_AllVerifiers_2022_2": "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-          "StarkWare_TokensAndRamping_2022_2": "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-          "StarkWare_StarkExState_2022_5": "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-          "StarkWare_ForcedActions_2022_3": "0x613ee54C54D5548627064B4D648942bF3648f376",
-          "StarkWare_OnchainVaults_2022_2": "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-          "StarkWare_ProxyUtils_2022_2": "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
-        },
-        "proxyGovernance": [
-          "0x5918481F777dBe437De249492B90AffB4e655de4",
-          "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B"
-        ]
-      },
+      "proxyType": "StarkWare diamond",
       "ignoreInWatchMode": [
         "getLastBatchId",
         "getOrderRoot",
@@ -108,17 +83,22 @@
         "getSequenceNumber",
         "getValidiumVaultRoot"
       ],
-      "implementations": [
-        "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
-        "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
-        "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
-        "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
-        "0x613ee54C54D5548627064B4D648942bF3648f376",
-        "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
-        "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
-      ],
       "sinceTimestamp": 1626352527,
       "values": {
+        "$admin": [
+          "0x5918481F777dBe437De249492B90AffB4e655de4",
+          "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B"
+        ],
+        "$immutable": false,
+        "$implementation": [
+          "0xdF2f24751F7e84ccDCD39e7b49904FAB0Fb0f583",
+          "0xfbea22FeB369DB10C0d3a2aAa8F4939E76815f12",
+          "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb",
+          "0x67e198743BC19fa4757720eDd0e769f8291e1F1D",
+          "0x613ee54C54D5548627064B4D648942bF3648f376",
+          "0xb2ED005D0278179001a49a9969BB22BA8e98f31F",
+          "0xB5353268d8d4D711a92cb838F8fEDFC2A66E50Db"
+        ],
         "defaultVaultWithdrawalLock": 0,
         "DEPOSIT_CANCEL_DELAY": 172800,
         "FREEZE_GRACE_PERIOD": 604800,
@@ -153,6 +133,7 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "STARKEX_MAX_DEFAULT_VAULT_LOCK": 604800,
+        "StarkWareDiamond_upgradeDelay": 1209600,
         "UNFREEZE_DELAY": 31536000,
         "VERIFIER_REMOVAL_DELAY": 2419200,
         "VERSION": "4.5.1"
@@ -161,36 +142,19 @@
     }
   ],
   "eoas": [
+    { "address": "0x0405107a60391Eb51821be373ff978115Ee58488" },
+    { "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" },
     {
-      "address": "0x0405107a60391Eb51821be373ff978115Ee58488"
+      "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
+      "assignedPermissions": { "admin": {} }
     },
-    {
-      "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6"
-    },
-    {
-      "address": "0x5918481F777dBe437De249492B90AffB4e655de4"
-    },
-    {
-      "address": "0x59232aC80E6d403b6381393e52f4665ECA328558"
-    },
-    {
-      "address": "0x63881ac44293E22F3c3183a0C4113586ABb3e653"
-    },
-    {
-      "address": "0x6EBCb783E53C072e9b1C8786942aefc145C6Df75"
-    },
-    {
-      "address": "0x9bC546c5741d31b3510D3B240bDB4c517030E318"
-    },
-    {
-      "address": "0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec"
-    },
-    {
-      "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"
-    },
-    {
-      "address": "0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e"
-    }
+    { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
+    { "address": "0x63881ac44293E22F3c3183a0C4113586ABb3e653" },
+    { "address": "0x6EBCb783E53C072e9b1C8786942aefc145C6Df75" },
+    { "address": "0x9bC546c5741d31b3510D3B240bDB4c517030E318" },
+    { "address": "0xA70A45E56c087A34991A712d437fcFfd79D3a8Ec" },
+    { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
+    { "address": "0xefaaf3A5D0D795C7c1f92cBeDE868C273790026e" }
   ],
   "abis": {
     "0x2Dbc18A3ac126abE1fF90A83Bbc3947ff7912Afb": [

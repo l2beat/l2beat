@@ -102,7 +102,7 @@ function getContract(
     ignoreMethods,
     watched,
     notHandled,
-    proxyType: contract.upgradeability.type,
+    proxyType: contract.proxyType,
     isInitial,
     discoveredBy,
   }

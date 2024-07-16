@@ -89,8 +89,9 @@ export const arbitrum: Layer2 = {
   type: 'layer2',
   id: ProjectId('arbitrum'),
   badges: [
-    Badge.DA.EthereumBlobs,
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.Nitro,
     Badge.Other.L3HostChain,
     Badge.Other.Governance,
   ],
@@ -296,6 +297,7 @@ export const arbitrum: Layer2 = {
   chainConfig: {
     name: 'arbitrum',
     chainId: 42161,
+    blockscoutV2ApiUrl: 'https://arbitrum.blockscout.com/api/v2',
     explorerUrl: 'https://arbiscan.io',
     explorerApi: {
       url: 'https://api.arbiscan.io/api',
@@ -558,11 +560,11 @@ export const arbitrum: Layer2 = {
       'This contract is an admin of SequencerInbox, RollupEventInbox, Bridge, Outbox, Inbox and ChallengeManager contracts. It is owned by the Upgrade Executor.',
     ),
     discovery.contractAsPermissioned(
-      discovery.getContractFromUpgradeability('UpgradeExecutor', 'admin'),
+      discovery.getContractFromValue('UpgradeExecutor', '$admin'),
       "This contract is an admin of the UpgradeExecutor contract, but is also owned by it. Can cancel Timelock's proposals.",
     ),
     discovery.contractAsPermissioned(
-      discovery.getContractFromUpgradeability('L1GatewayRouter', 'admin'),
+      discovery.getContractFromValue('L1GatewayRouter', '$admin'),
       'This is yet another proxy admin for the three gateway contracts. It is owned by the Upgrade Executor.',
     ),
     {

@@ -24,7 +24,10 @@ export const mantapacific: Layer2 = opStackL2({
       websites: ['https://pacific.manta.network/'],
       apps: ['https://pacific-bridge.manta.network/'],
       documentation: ['https://docs.manta.network/'],
-      explorers: ['https://pacific-explorer.manta.network/'],
+      explorers: [
+        'https://pacific-explorer.manta.network/',
+        'https://169.routescan.io/',
+      ],
       repositories: ['https://github.com/Manta-Network'],
       socialMedia: [
         'https://discord.gg/mantanetwork',
@@ -43,7 +46,6 @@ export const mantapacific: Layer2 = opStackL2({
     assessCount: subtractOne,
   },
   associatedTokens: ['MANTA'],
-
   chainConfig: {
     name: 'mantapacific',
     chainId: 169,
@@ -93,5 +95,5 @@ export const mantapacific: Layer2 = opStackL2({
       description: 'Manta Pacific is live on mainnet.',
     },
   ],
-  badges: [Badge.DA.Celestia, Badge.VM.EVM, Badge.Stack.OPStack],
+  badges: [Badge.DA.Celestia, Badge.RaaS.Caldera],
 })

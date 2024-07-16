@@ -1,12 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { Badge } from '../badges'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const mvchain: Layer3 = upcomingL3({
   id: 'mvchain',
   hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.RaaS.Caldera],
   display: {
     name: 'MV Chain',
     slug: 'mvchain',

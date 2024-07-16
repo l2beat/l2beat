@@ -5,7 +5,10 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   DERIVATION,
   EXITS,
@@ -30,7 +33,7 @@ const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }
@@ -89,9 +92,11 @@ export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
   badges: [
-    Badge.DA.EthereumBlobs,
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.Other.L3HostChain,
     Badge.Other.Governance,
   ],
   display: {
@@ -319,7 +324,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0x4146DF64D83acB0DcB0c1a4884a16f090165e122#code',
+          href: 'https://etherscan.io/address/0xf691F8A6d908B58C534B624cF16495b491E633BA#code',
         },
       ],
     },

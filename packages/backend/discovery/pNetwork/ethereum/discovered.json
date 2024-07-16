@@ -3,16 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 19926484,
   "configHash": "0xa0ac3a5ffd7b460eb42b5cc31d11ea09532fb9ae142ca25fa017970859818606",
-  "version": 8,
+  "version": 9,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
       "address": "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1620212602,
       "values": {
+        "$immutable": true,
         "PNETWORK": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
       },
       "derivedName": "Erc20Vault"
@@ -20,15 +18,12 @@
     {
       "name": "pNetworkDAOVoting",
       "address": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"
-      },
+      "proxyType": "EIP897 proxy",
       "ignoreInWatchMode": ["votesLength"],
-      "implementations": ["0x17bFDa688b43245A399200a284F81CA0A0b25Bf4"],
       "sinceTimestamp": 1596180723,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x17bFDa688b43245A399200a284F81CA0A0b25Bf4",
         "appId": "0x9260bf6a9c9e6c72c752ae2148b70a0e01c8aef8647622cc64e7b71a79d1c934",
         "bufferBlocks": 0,
         "canExecute": [true, true, false, true],
@@ -116,14 +111,11 @@
     {
       "name": "Kernel",
       "address": "0x2732fD9fD5F0E84B1b774cf5E6f5c812EAfd455b",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425"
-      },
-      "implementations": ["0x2b33CF282f867A7FF693A66e11B0FcC5552e4425"],
+      "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596177143,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x2b33CF282f867A7FF693A66e11B0FcC5552e4425",
         "acl": "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe",
         "APP_ADDR_NAMESPACE": "0xd6f028ca0e8edb4a8c9757ca4fdccab25fa1e0317da1188108f7d2dee14902fb",
         "APP_BASES_NAMESPACE": "0xf1f3eb40f5bc1ad1344716ced8b8a0431d840b5783aea1fd01786bc26f35ac0f",
@@ -144,14 +136,11 @@
     {
       "name": "EVMScriptRegistry",
       "address": "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": false,
-        "implementation": "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb"
-      },
-      "implementations": ["0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb"],
+      "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596177143,
       "values": {
+        "$immutable": true,
+        "$implementation": "0xBF1Ce0Bc4EdaAD8e576b3b55e19c4C15Cf6999eb",
         "appId": "0xddbcfd564f642ab5627cf68b9b7d374fb4f8a36e941a75d89c87998cef03bd61",
         "getEVMScriptRegistry": "0x47d12498Ed2E9EFA9ECA2EcD05ba857253824478",
         "getInitializationBlock": 10565704,
@@ -170,11 +159,9 @@
     {
       "name": "PNT",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1592411070,
       "values": {
+        "$immutable": true,
         "adminOperator": "0x0000000000000000000000000000000000000000",
         "decimals": 18,
         "defaultOperators": [],
@@ -203,11 +190,9 @@
     {
       "name": "UOS Vault",
       "address": "0x9f8622b11984AfC8f0a42A394928702017c5968D",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1626265622,
       "values": {
+        "$immutable": true,
         "PNETWORK": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
       },
       "derivedName": "Erc20Vault"
@@ -215,25 +200,20 @@
     {
       "name": "MiniMeTokenFactory",
       "address": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
-      "upgradeability": {
-        "type": "immutable"
-      },
-      "sinceTimestamp": 1564624915
+      "sinceTimestamp": 1564624915,
+      "values": { "$immutable": true }
     },
     {
       "name": "pNetwork Multisig",
       "address": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB",
       "template": "GnosisSafe",
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "modules": [],
-        "threshold": "2 of 4 (50%)"
-      },
+      "proxyType": "gnosis safe",
       "ignoreInWatchMode": ["nonce"],
-      "implementations": ["0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552"],
       "sinceTimestamp": 1672744007,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "2 of 4 (50%)",
         "domainSeparator": "0xf76d498488b878a740c7f1971da177216c0beb62c0b78ee3d1406b28757136ce",
         "getChainId": 1,
         "getOwners": [
@@ -243,6 +223,7 @@
           "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
         ],
         "getThreshold": 2,
+        "GnosisSafe_modules": [],
         "nonce": 8,
         "VERSION": "1.3.0"
       },
@@ -251,39 +232,29 @@
     {
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
       },
       "sinceTimestamp": 1664208791,
       "values": {
+        "$immutable": true,
         "owner": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
       }
     },
     {
       "name": "RelayHub",
       "address": "0xD216153c06E857cD7f72665E0aF1d7D82172F494",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "sinceTimestamp": 1565610264,
-      "values": {
-        "version": "1.0.0"
-      }
+      "values": { "$immutable": true, "version": "1.0.0" }
     },
     {
       "name": "TokenManager",
       "address": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0xde3A93028F2283cc28756B3674BD657eaFB992f4"
-      },
-      "implementations": ["0xde3A93028F2283cc28756B3674BD657eaFB992f4"],
+      "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596179040,
       "values": {
+        "$immutable": false,
+        "$implementation": "0xde3A93028F2283cc28756B3674BD657eaFB992f4",
         "appId": "0x6b20a3010614eeebf2138ccec99f028a61c811b3b1a3343b6ff635985c75c91f",
         "ASSIGN_ROLE": "0xf5a08927c847d7a29dc35e105208dbde5ce951392105d712761cc5d17440e2ff",
         "BURN_ROLE": "0xe97b137254058bd94f28d2f3eb79e2d34074ffb488d042e3bc958e0a57d2fa22",
@@ -308,28 +279,23 @@
     {
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
       },
       "sinceTimestamp": 1640866403,
       "values": {
+        "$immutable": true,
         "owner": "0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB"
       }
     },
     {
       "name": "ERC20 Vault V2",
       "address": "0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x34D085516f9D7794192aDB10C995d9c532E335aF",
-        "admin": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a"
-      },
-      "implementations": ["0x34D085516f9D7794192aDB10C995d9c532E335aF"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1640867581,
       "values": {
+        "$admin": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
+        "$implementation": "0x34D085516f9D7794192aDB10C995d9c532E335aF",
         "ETHPNT_TOKEN_ADDRESS": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
         "ORIGIN_CHAIN_ID": "0x005fe7f9",
         "PNETWORK": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b",
@@ -340,12 +306,10 @@
     {
       "name": "MiniMeToken",
       "address": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1596178410,
       "values": {
+        "$immutable": true,
         "controller": "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254",
         "creationBlock": 10565808,
         "decimals": 18,
@@ -363,11 +327,7 @@
     {
       "name": "EthPntv2",
       "address": "0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
-        "admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535"
-      },
+      "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": [
         "currentMonthWithdrawnAmount",
         "currentYearWithdrawnAmount",
@@ -376,9 +336,10 @@
         "currentMonthNumber",
         "currentYearNumber"
       ],
-      "implementations": ["0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b"],
       "sinceTimestamp": 1664208803,
       "values": {
+        "$admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
+        "$implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
         "currentMonthNumber": 4,
         "currentMonthWithdrawnAmount": "1000000000000000000000000",
         "currentYearNumber": 0,
@@ -406,14 +367,11 @@
     {
       "name": "ACL",
       "address": "0xFDcae423E5e92B76FE7D1e2bcabd36fca8a6a8Fe",
-      "upgradeability": {
-        "type": "EIP897 proxy",
-        "isUpgradable": true,
-        "implementation": "0x81F7564e413586f1f99fDe55740Ac52b43cA99c9"
-      },
-      "implementations": ["0x81F7564e413586f1f99fDe55740Ac52b43cA99c9"],
+      "proxyType": "EIP897 proxy",
       "sinceTimestamp": 1596177143,
       "values": {
+        "$immutable": false,
+        "$implementation": "0x81F7564e413586f1f99fDe55740Ac52b43cA99c9",
         "ANY_ENTITY": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF",
         "appId": "0xe3262375f45a6e2026b7e7b18c2b807434f2508fe1a2a3dfb493c7df8f4aad6a",
         "BURN_ENTITY": "0x0000000000000000000000000000000000000001",
@@ -433,45 +391,19 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x0000000000000000000000000000000000000001"
-    },
-    {
-      "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9"
-    },
-    {
-      "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b"
-    },
-    {
-      "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
-    },
-    {
-      "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262"
-    },
-    {
-      "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
-    },
-    {
-      "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45"
-    },
-    {
-      "address": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2"
-    },
-    {
-      "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20"
-    },
-    {
-      "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132"
-    },
-    {
-      "address": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97"
-    },
-    {
-      "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x0000000000000000000000000000000000000001" },
+    { "address": "0x14C4d33549d2A9e17d7dF6Cf180162A575D4cBe9" },
+    { "address": "0x341aA660fD5c280F5a9501E3822bB4a98E816D1b" },
+    { "address": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496" },
+    { "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262" },
+    { "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f" },
+    { "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45" },
+    { "address": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2" },
+    { "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20" },
+    { "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132" },
+    { "address": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97" },
+    { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
     "0x112334f50Cb6efcff4e35Ae51A022dBE41a48135": [

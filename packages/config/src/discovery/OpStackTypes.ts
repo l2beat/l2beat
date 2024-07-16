@@ -52,27 +52,27 @@ export const OP_STACK_PERMISSION_TEMPLATES: StackPermissionTemplate[] = [
     tags: ['owner'],
   },
   {
-    role: { value: 'admin', contract: 'OptimismPortal' },
+    role: { value: '$admin', contract: 'OptimismPortal' },
     tags: ['admin'],
   },
   {
-    role: { value: 'admin', contract: 'SystemConfig' },
+    role: { value: '$admin', contract: 'SystemConfig' },
     tags: ['admin'],
   },
   {
-    role: { value: 'admin', contract: 'L2OutputOracle' },
+    role: { value: '$admin', contract: 'L2OutputOracle' },
     tags: ['admin'],
   },
   {
-    role: { value: 'admin', contract: 'L1ERC721Bridge' },
+    role: { value: '$admin', contract: 'L1ERC721Bridge' },
     tags: ['admin'],
   },
   {
-    role: { value: 'admin', contract: 'OptimismMintableERC20Factory' },
+    role: { value: '$admin', contract: 'OptimismMintableERC20Factory' },
     tags: ['admin'],
   },
   {
-    role: { value: 'admin', contract: 'L1StandardBridge' },
+    role: { value: '$admin', contract: 'L1StandardBridge' },
     tags: ['admin'],
   },
   {

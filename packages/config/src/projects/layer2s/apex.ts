@@ -31,13 +31,13 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('apex')
 
-const upgradeDelaySecondsUSDC = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySecondsUSDC = discovery.getContractValue<number>(
   'StarkExchangeUSDC',
-  'upgradeDelay',
+  'StarkWareDiamond_upgradeDelay',
 )
-const upgradeDelaySecondsUSDT = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySecondsUSDT = discovery.getContractValue<number>(
   'StarkExchangeUSDT',
-  'upgradeDelay',
+  'StarkWareDiamond_upgradeDelay',
 )
 const upgradeDelayUSDC = formatSeconds(upgradeDelaySecondsUSDC)
 const upgradeDelayUSDT = formatSeconds(upgradeDelaySecondsUSDT)
@@ -107,7 +107,12 @@ const dacConfig =
 export const apex: Layer2 = {
   type: 'layer2',
   id: ProjectId('apex'),
-  badges: [Badge.VM.CairoVM, Badge.Infra.SHARP],
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.DAC,
+    Badge.Stack.StarkEx,
+    Badge.Infra.SHARP,
+  ],
   display: {
     name: 'ApeX',
     slug: 'apex',

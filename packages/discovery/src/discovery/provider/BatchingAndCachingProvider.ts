@@ -401,7 +401,7 @@ export class BatchingAndCachingProvider {
 
   async getTransaction(
     transactionHash: Hash256,
-  ): Promise<providers.TransactionResponse> {
+  ): Promise<providers.TransactionResponse | undefined> {
     const entry = await this.cache.entry(
       'getTransaction',
       [transactionHash],
@@ -416,6 +416,9 @@ export class BatchingAndCachingProvider {
     }
 
     const transaction = await this.provider.getTransaction(transactionHash)
+    if (transaction === undefined) {
+      return undefined
+    }
     // We don't want to cache nor return non-mined transactions
     assert(transaction.blockNumber, 'Transaction not mined')
 
@@ -468,7 +471,9 @@ export class BatchingAndCachingProvider {
       return parseCacheEntry(cached)
     }
     const source = await this.provider.getSource(address)
-    entry.write(JSON.stringify(source))
+    if (source.isVerified) {
+      entry.write(JSON.stringify(source))
+    }
     return source
   }
 

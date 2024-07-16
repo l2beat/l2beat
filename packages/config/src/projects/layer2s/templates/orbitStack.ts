@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
 import { unionBy } from 'lodash'
@@ -27,11 +30,12 @@ import {
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { VALUES } from '../../../discovery/values'
-import { BadgeId } from '../../badges'
+import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
-import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common'
+import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
 export const DEFAULT_OTHER_CONSIDERATIONS: ScalingProjectTechnologyChoice[] = [
@@ -110,6 +114,15 @@ export function orbitStackCommon(
     'sequencerVersion',
   )
   const postsToExternalDA = sequencerVersion !== '0x00'
+  if (postsToExternalDA) {
+    assert(
+      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      'DA badge is required for external DA',
+    )
+  }
+  const daBadge = templateVars.usesBlobs
+    ? Badge.DA.EthereumBlobs
+    : Badge.DA.EthereumCalldata
 
   const resolvedTemplates = templateVars.discovery.resolveOrbitStackTemplates()
 
@@ -288,7 +301,10 @@ export function orbitStackCommon(
     ],
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
-    badges: templateVars.badges,
+    badges: mergeBadges(
+      [Badge.Stack.Orbit, Badge.VM.EVM, daBadge],
+      templateVars.badges ?? [],
+    ),
   }
 }
 
@@ -692,7 +708,9 @@ function safeGetImplementation(
   contract: ContractParameters,
   implementationIndex?: number,
 ): string {
-  const implementation = contract.implementations?.[implementationIndex ?? 0]
+  const implementation = get$Implementations(contract.values)[
+    implementationIndex ?? 0
+  ]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

@@ -10,7 +10,7 @@ export function getProductionConfig(): Config {
     },
     backend: {
       apiUrl: 'https://api.l2beat.com',
-      skipCache: false,
+      skipCache: true,
     },
   }
 }

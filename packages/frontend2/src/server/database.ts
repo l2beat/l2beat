@@ -3,6 +3,8 @@ import { env } from '~/env'
 
 export const db = createRepositories({
   connectionString: env.DATABASE_URL,
-  // TODO: Remove this before merging
-  ssl: { rejectUnauthorized: false },
+  ssl:
+    env.NODE_ENV === 'production' || env.DATABASE_URL.includes('amazonaws.com')
+      ? { rejectUnauthorized: false }
+      : undefined,
 })

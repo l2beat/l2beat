@@ -11,12 +11,14 @@ import { RollupsOnlyCheckbox } from './checkboxes/RollupsOnlyCheckbox'
 
 interface Props {
   children?: ReactElement<RichSelectProps>
+  childrenPosition?: 'first' | 'last'
   items: ScalingEntry[]
   hideRollupsOnlyCheckbox?: boolean
 }
 
 export function ScalingFilters({
   children,
+  childrenPosition = 'last',
   items,
   hideRollupsOnlyCheckbox,
 }: Props) {
@@ -55,6 +57,7 @@ export function ScalingFilters({
     <OverflowWrapper>
       <FiltersWrapper>
         {!hideRollupsOnlyCheckbox && <RollupsOnlyCheckbox items={items} />}
+        {childrenPosition === 'first' ? children : null}
         <RichSelect label="Type" id="technology-select">
           {categories.map((category) => (
             <RichSelect.Item
@@ -99,7 +102,7 @@ export function ScalingFilters({
             </RichSelect.Item>
           ))}
         </RichSelect>
-        {children}
+        {childrenPosition === 'last' ? children : null}
       </FiltersWrapper>
     </OverflowWrapper>
   )
