@@ -141,14 +141,4 @@ the data presented should be we also very much welcome PRs.
 
 ## Contribute code
 
-The L2BEAT website repository is a monorepo consisting of many interdependent packages.
-
-1. `packages/shared-pure` - utils and types used by the other packages (does not depend on node APIs)
-2. `packages/shared` - utils and types used by the other packages
-3. `packages/config` - the shared configuration that defines what projects and tokens are tracked by
-   the website
-4. `packages/backend` - a backend server that downloads balances from chain and exposes and API for
-   the frontend
-5. `packages/frontend` - statically generated site which displays data fetched from the backend API
-
-To learn more about each of the projects read their respective README's.
+The L2BEAT website repository is a monorepo consisting of many interdependent packages. To learn more about each of the projects read their respective README's.
