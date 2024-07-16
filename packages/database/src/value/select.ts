@@ -1,4 +1,4 @@
-import { Value as ValueRow } from '../kysely/generated/types'
+import { Value } from '../kysely/generated/types'
 
 export const selectValue = [
   'project_id',
@@ -10,4 +10,4 @@ export const selectValue = [
   'canonical_for_total',
   'native',
   'native_for_total',
-] as const satisfies (keyof ValueRow)[]
+] as const satisfies (keyof Value)[]

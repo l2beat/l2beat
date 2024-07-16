@@ -1,9 +1,9 @@
 import { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { UpdateNotifier as UpdateNotifierRow } from '../kysely/generated/types'
+import { UpdateNotifier } from '../kysely/generated/types'
 
-export interface UpdateNotifier {
+export interface UpdateNotifierRecord {
   id: number
   createdAt: UnixTime
   updatedAt: UnixTime
@@ -14,8 +14,8 @@ export interface UpdateNotifier {
 }
 
 export function toRow(
-  record: Omit<UpdateNotifier, 'id' | 'createdAt' | 'updatedAt'>,
-): Insertable<Omit<UpdateNotifierRow, 'id' | 'created_at' | 'updated_at'>> {
+  record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
+): Insertable<Omit<UpdateNotifier, 'id' | 'created_at' | 'updated_at'>> {
   return {
     project_name: record.projectName,
     block_number: record.blockNumber,
@@ -24,7 +24,9 @@ export function toRow(
   }
 }
 
-export function toRecord(row: Selectable<UpdateNotifierRow>): UpdateNotifier {
+export function toRecord(
+  row: Selectable<UpdateNotifier>,
+): UpdateNotifierRecord {
   return {
     id: row.id,
     createdAt: UnixTime.fromDate(row.created_at),

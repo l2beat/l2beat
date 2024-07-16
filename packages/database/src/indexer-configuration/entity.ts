@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { IndexerConfiguration as IndexerConfigurationRow } from '../kysely/generated/types'
+import { IndexerConfiguration } from '../kysely/generated/types'
 
-export interface IndexerConfiguration {
+export interface IndexerConfigurationRecord {
   id: string
   indexerId: string
   properties: string
@@ -11,8 +11,8 @@ export interface IndexerConfiguration {
 }
 
 export function toRecord(
-  row: Selectable<IndexerConfigurationRow>,
-): IndexerConfiguration {
+  row: Selectable<IndexerConfiguration>,
+): IndexerConfigurationRecord {
   return {
     id: row.id,
     indexerId: row.indexer_id,
@@ -23,8 +23,8 @@ export function toRecord(
   }
 }
 export function toRow(
-  record: IndexerConfiguration,
-): Insertable<IndexerConfigurationRow> {
+  record: IndexerConfigurationRecord,
+): Insertable<IndexerConfiguration> {
   return {
     id: record.id,
     indexer_id: record.indexerId,

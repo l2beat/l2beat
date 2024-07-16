@@ -1,14 +1,16 @@
 import { Insertable, Selectable } from 'kysely'
-import { DiscoveryCache as DiscoveryCacheRow } from '../kysely/generated/types'
+import { DiscoveryCache } from '../kysely/generated/types'
 
-export interface DiscoveryCache {
+export interface DiscoveryCacheRecord {
   key: string
   value: string
   chain: string
   blockNumber: number
 }
 
-export function toRecord(row: Selectable<DiscoveryCacheRow>): DiscoveryCache {
+export function toRecord(
+  row: Selectable<DiscoveryCache>,
+): DiscoveryCacheRecord {
   return {
     key: row.key,
     value: row.value,
@@ -17,7 +19,9 @@ export function toRecord(row: Selectable<DiscoveryCacheRow>): DiscoveryCache {
   }
 }
 
-export function toRow(record: DiscoveryCache): Insertable<DiscoveryCacheRow> {
+export function toRow(
+  record: DiscoveryCacheRecord,
+): Insertable<DiscoveryCache> {
   return {
     key: record.key,
     value: record.value,

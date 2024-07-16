@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { NetworkRpc as NetworkRpcEntity } from '../kysely/generated/types'
+import { NetworkRpc } from '../kysely/generated/types'
 
-export interface NetworkRpc {
+export interface NetworkRpcRecord {
   id: string
   networkId: string
   url: string
@@ -9,10 +9,10 @@ export interface NetworkRpc {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<NetworkRpcEntity>): NetworkRpc {
+export function toRecord(row: Selectable<NetworkRpc>): NetworkRpcRecord {
   return row
 }
 
-export function toRow(record: NetworkRpc): Insertable<NetworkRpcEntity> {
+export function toRow(record: NetworkRpcRecord): Insertable<NetworkRpc> {
   return record
 }

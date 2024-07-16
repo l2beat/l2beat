@@ -1045,7 +1045,6 @@ At present, the StarkNet Foundation hosts voting for STRK token holders (or thei
     Badge.VM.CairoVM,
     Badge.DA.EthereumBlobs,
     Badge.Infra.SHARP,
-    Badge.Other.L3HostChain,
     Badge.Other.Governance,
   ],
   knowledgeNuggets: [...NUGGETS.STARKWARE],

@@ -1,6 +1,6 @@
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase } from '../kysely'
-import { DailyDiscovery, toRecord, toRow } from './entity'
+import { DailyDiscoveryRecord, toRecord, toRow } from './entity'
 import { selectDailyDiscovery } from './select'
 
 export class DailyDiscoveryRepository {
@@ -34,7 +34,7 @@ export class DailyDiscoveryRepository {
     return rows.map((row) => UnixTime.fromDate(row.unix_timestamp))
   }
 
-  async addOrUpdate(record: DailyDiscovery) {
+  async addOrUpdate(record: DailyDiscoveryRecord) {
     const row = toRow(record)
 
     await this.db

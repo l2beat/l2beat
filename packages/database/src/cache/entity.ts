@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { Cache as CacheEntity } from '../kysely/generated/types'
+import { Cache } from '../kysely/generated/types'
 
-export interface Cache {
+export interface CacheRecord {
   key: string
   value: string
   chainId: number
@@ -10,10 +10,10 @@ export interface Cache {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<CacheEntity>): Cache {
+export function toRecord(row: Selectable<Cache>): CacheRecord {
   return row
 }
 
-export function toRow(record: Cache): Insertable<CacheEntity> {
+export function toRow(record: CacheRecord): Insertable<Cache> {
   return record
 }

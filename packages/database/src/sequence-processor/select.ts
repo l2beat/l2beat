@@ -1,4 +1,4 @@
-import { SequenceProcessor as SequenceProcessorRow } from '../kysely/generated/types'
+import { SequenceProcessor } from '../kysely/generated/types'
 
 export const selectSequenceProcessor = [
   'id',
@@ -6,4 +6,4 @@ export const selectSequenceProcessor = [
   'latest',
   'synced_once',
   'updated_at',
-] as const satisfies (keyof SequenceProcessorRow)[]
+] as const satisfies (keyof SequenceProcessor)[]
