@@ -1,8 +1,8 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 20318471,
-  "configHash": "0xe9ead3637cb34e668f6a9cf44a86fcaed3513217938e0cd4dea47f39214f63d7",
+  "blockNumber": 20318530,
+  "configHash": "0x9f3d7c59718fba98137e68b1b2c40662f22e7762835d7316e940ae72aceb7dba",
   "version": 9,
   "contracts": [
     {
@@ -341,6 +341,7 @@
       "name": "RenzoStrategy",
       "address": "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9",
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["underlyingAssetAmount"],
       "sinceTimestamp": 1713942971,
       "values": {
         "$admin": "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281",
@@ -361,6 +362,7 @@
       "name": "EthStrategy",
       "address": "0xbD95aa0f68B95e6C01d02F1a36D8fde29C6C8e7b",
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["underlyingAssetAmount"],
       "sinceTimestamp": 1711060799,
       "values": {
         "$admin": "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281",
@@ -412,6 +414,7 @@
     {
       "name": "WrappedToken",
       "address": "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7",
+      "ignoreInWatchMode": ["totalSupply"],
       "sinceTimestamp": 1711060763,
       "values": {
         "$immutable": true,
@@ -420,7 +423,8 @@
         "name": "Edgeless Wrapped Eth",
         "symbol": "ewEth",
         "totalSupply": "20701900771985588236"
-      }
+      },
+      "derivedName": "WrappedToken"
     },
     {
       "name": "OneStepProver0",

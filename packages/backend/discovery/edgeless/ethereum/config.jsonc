@@ -23,7 +23,8 @@
     "0xBCc1Ceb75De4BBb75918627E7CB301DF9Ccc8aF9": "RenzoStrategy",
     "0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4": "ExecutorMultisig",
     "0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006": "OrbitProxyAdmin",
-    "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281": "StrategiesProxyAdmin"
+    "0xa5f13fbc57f14Bf322C900Cae0F67b4819364281": "StrategiesProxyAdmin",
+    "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7": "WrappedToken"
   },
   "overrides": {
     "StakingManager": {
@@ -49,11 +50,15 @@
         }
       }
     },
+    "WrappedToken": {
+      "ignoreInWatchMode": ["totalSupply"]
+    },
     "EdgelessDeposit": {
       "ignoreMethods": ["proxiableUUID"]
     },
     "EthStrategy": {
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["underlyingAssetAmount"]
     },
     "ChallengeManager": {
       "ignoreMethods": ["challenges"]
@@ -86,7 +91,8 @@
     },
     "RenzoStrategy": {
       "ignoreRelatives": ["renzo", "ezETH"],
-      "ignoreMethods": ["proxiableUUID"]
+      "ignoreMethods": ["proxiableUUID"],
+      "ignoreInWatchMode": ["underlyingAssetAmount"]
     }
   }
 }
