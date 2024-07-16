@@ -38,7 +38,8 @@ export const ethereum: DaLayer = {
   display: {
     name: 'Ethereum',
     slug: 'ethereum',
-    description: 'Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).',
+    description:
+      'Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).',
   },
   bridges: [],
   usedIn: [
@@ -85,7 +86,7 @@ export const ethereum: DaLayer = {
     unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
   },
   dataAvailabilitySampling: {
-    supportsDAS: false
+    supportsDAS: false,
   },
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
