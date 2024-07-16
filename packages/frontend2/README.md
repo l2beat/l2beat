@@ -28,6 +28,8 @@ Only required variables are listed there. For a complete list check out `src/env
 
 - `DATABASE_URL` - database connection url (read-only access is sufficient)
 
+*if you're currently work at L2BEAT: feel free to directly connect to our staging DB* 😉
+
 #### .env boilerplate:
 
 ```bash
@@ -36,7 +38,7 @@ DATABASE_URL=
 
 ### Known issues
 
-`frontend2`, while on production, is still in the early stage of development.
+`frontend2`, while on production, is still in the early stage of development. When running frontend2 locally and trying to navigate to a page that is not migrated yet (main page included), you'll encounter an Internal Server Error.
 
 #### Fully ported pages
 - /donate
@@ -48,4 +50,4 @@ DATABASE_URL=
 ### Work-in-progress pages:
 - /scaling/summary (available at /scaling-next/summary)
 
-The rest of pages are still present in the legacy frontend. When running frontend2 locally and trying to navigate to a page that is not migrated (main page included), you'll encounter an Internal Server Error.
+The rest of pages are still present in the legacy frontend.
