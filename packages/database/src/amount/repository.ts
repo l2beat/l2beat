@@ -48,23 +48,20 @@ export class AmountRepository {
     return rows.map(toRecord)
   }
 
-  async findByConfigAndTimestamp(
-    queries: { configId: string; timestamp: UnixTime }[],
-  ) {
+  async getByTimestamps(timestamps: UnixTime[]) {
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
       .where((eb) =>
-        eb.or(
-          queries.map((q) =>
-            eb('configuration_id', '=', q.configId).and(
-              'timestamp',
-              '=',
-              q.timestamp.toDate(),
-            ),
+        eb.and([
+          eb(
+            'timestamp',
+            'in',
+            timestamps.map((t) => t.toDate()),
           ),
-        ),
+        ]),
       )
+      .orderBy('timestamp')
       .execute()
 
     return rows.map(toRecord)
