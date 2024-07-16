@@ -31,15 +31,7 @@ locally. To install dependencies do the following.
 
 ## Running the website locally
 
-We currently have two frontend apps because we're migrating to Next.js, so working on the website part of L2BEAT may be a bit confusing. Some pages are still in the `frontend` package, while some have been added and/or migrated to `frontend2`. For the list of pages that are present in `frontend2` check [packages/frontend2/README.md](./packages/frontend2/README.md).
-
-### Running the legacy frontend
-
-Check out the [frontend README.md](./packages/frontend/README.md).
-
-### Running the new, Next.js frontend
-
-Check out the [frontend2 README.md](./packages/frontend2/README.md).
+We currently have two frontend apps because we're migrating to Next.js, so working on the website part of L2BEAT may be a bit confusing. Some pages are still in the `frontend` package, while some have been added and/or migrated to `frontend2`. For the list of pages that are present in `frontend2` and instructions on running it, check [packages/frontend2/README.md](./packages/frontend2/README.md). For the instructions how to run the legacy frontend, go to [packages/frontend/README.md](./packages/frontend/README.md).
 
 ## Add your Layer 2 project to the website
 
