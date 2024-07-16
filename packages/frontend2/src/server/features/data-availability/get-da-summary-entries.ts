@@ -18,14 +18,15 @@ export async function getDaSummaryEntries() {
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => {
       const tvs = getSumFor(bridge.usedIn)
+      const economicSecurityData = economicSecurity[daLayer.id]
 
       return {
         slug: daLayer.display.slug,
         daLayer: daLayer.display.name,
         daBridge: toDaBridge(bridge),
-        risks: getDaRisks(daLayer, bridge),
+        risks: getDaRisks(daLayer, bridge, tvs, economicSecurityData),
         tvs,
-        economicSecurity: economicSecurity[daLayer.id],
+        economicSecurity: economicSecurityData,
         layerType: DaLayerKindDisplay[daLayer.kind],
         // TODO: maybe we can specify names in the config instead of projectIds
         usedBy: bridge.usedIn
