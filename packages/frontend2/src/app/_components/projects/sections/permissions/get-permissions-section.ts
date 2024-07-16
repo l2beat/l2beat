@@ -15,6 +15,7 @@ import { type ProjectDetailsPermissionsSection } from '../types'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { concat } from 'lodash'
 import { type UsedInProject } from './used-in-project'
+import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 
 interface ProjectParams {
   permissions: ScalingProjectPermission[] | 'UnderReview'
@@ -75,8 +76,7 @@ export function getPermissionsSection(
       Object.entries(projectParams.nativePermissions ?? {}).map(
         ([slug, permissions]) => {
           return [
-            // TODO: slugToDisplayName(slug),
-            slug,
+            slugToDisplayName(slug),
             permissions.flatMap((p) =>
               toTechnologyContract(
                 projectParams,
