@@ -32,12 +32,6 @@ export class TemplateService {
   ) {}
 
   /**
-   * Lists all available templates and their associated shape files.
-   *
-   * This method scans the templates directory and its subdirectories for valid templates.
-   * A valid template must have a 'template.jsonc' file and a 'shape' folder containing
-   * Solidity files (.sol).
-   *
    * @returns A record where the keys are template IDs (relative paths from the templates
    *          root directory) and the values are arrays of paths to the Solidity shape
    *          files for each template.
