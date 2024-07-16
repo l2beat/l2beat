@@ -15,6 +15,8 @@ const strategiesUpgrades = {
 
 export const edgeless: Layer2 = orbitStackL2({
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Edgeless',
     slug: 'edgeless',
     description:

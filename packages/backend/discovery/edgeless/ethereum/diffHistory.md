@@ -7,7 +7,7 @@ Generated with discovered.json: 0x13ebc1b99bbb6c56e7870eacbb46e9f30b922beb
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Orbit chain with investment strategies baked in the deposit contract.
 
 ## Initial discovery
 
