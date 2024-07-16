@@ -59,10 +59,10 @@ function adjustSentiment(totalValueSecured: number, slashableFunds: number) {
     return 'bad'
   }
 
-  if (slashableFunds >= tvsAtThreshold && tvsAtThreshold < totalValueSecured) {
+  if (slashableFunds >= tvsAtThreshold && slashableFunds <= totalValueSecured) {
     return 'warning'
   }
 
-  // slashableFunds >= totalValueSec
+  // slashableFunds >= tvsAtThreshold
   return 'good'
 }

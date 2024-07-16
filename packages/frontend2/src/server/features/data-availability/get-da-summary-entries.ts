@@ -2,6 +2,7 @@ import { DaLayerKindDisplay, daLayers, layer2s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { toDaBridge } from './utils/get-da-bridge'
 import { getDaEconomicSecurity } from './utils/get-da-economic-security'
+import { getUniqueProjectsInUse } from './utils/get-da-projects'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
@@ -10,7 +11,6 @@ import { getDaRisks } from './utils/get-da-risks'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaEconomicSecurity()
-
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
@@ -43,13 +43,3 @@ export async function getDaSummaryEntries() {
 export type DaSummaryEntry = Awaited<
   ReturnType<typeof getDaSummaryEntries>
 >[number]
-
-function getUniqueProjectsInUse() {
-  return [
-    ...new Set(
-      daLayers
-        .map((daLayer) => daLayer.bridges.map((bridge) => bridge.usedIn))
-        .flat(2),
-    ),
-  ]
-}
