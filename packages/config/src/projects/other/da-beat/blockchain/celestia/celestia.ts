@@ -10,6 +10,8 @@ import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer, DaLayerKind } from '../../types/DaLayer'
+import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
+import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { blobstream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
@@ -50,8 +52,8 @@ export const celestia: DaLayer = {
   },
   dataAvailabilitySampling: {
     supportsDAS: true,
-    erasureCodingScheme: '2D Reed-Solomon',
-    erasureCodingProof: 'Fraud proofs',
+    erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
+    erasureCodingProof: DasErasureCodingProof.FraudProofs,
     pruningWindow: 86400 * 30, // 30 days in seconds
   },
   risks: {

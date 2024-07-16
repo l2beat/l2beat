@@ -1,8 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',
@@ -18,30 +20,6 @@ export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
   DAC: 'DAC',
 }
 
-export type DataAvailabilitySampling =
-  | {
-      supportsDAS: false
-    }
-  | {
-      /**
-       * Whether the data availability layer supports data availability sampling.
-       */
-      supportsDAS: true
-      /**
-       * The period within which full nodes must store and distribute data.
-       * @unit seconds
-       */
-      pruningWindow: number
-      /**
-       * The erasure coding scheme used by the data availability layer.
-       */
-      erasureCodingScheme: string
-      /**
-       * The erasure coding proof type used by the data availability layer.
-       */
-      erasureCodingProof: string
-    }
-
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: typeof DaLayerKind.PublicBlockchain
 
@@ -52,35 +30,7 @@ export type BlockchainDaLayer = CommonDaLayer & {
   /**
    * The consensus algorithm used by the data availability layer.
    */
-  consensusAlgorithm: {
-    /**
-     * The name of the consensus algorithm.
-     */
-    name: string
-
-    /**
-     * A description of the consensus algorithm.
-     */
-    description: string
-
-    /**
-     * The time it takes to produce a new block.
-     * @unit seconds
-     */
-    blockTime: number
-
-    /**
-     * Consensus finality time.
-     * @unit seconds
-     */
-    consensusFinality: number
-
-    /**
-     * Duration of time for unbonding in seconds. Intended to capture the weak subjectivity period.
-     * @unit seconds
-     */
-    unbondingPeriod: number
-  }
+  consensusAlgorithm: DaConsensusAlgorithm
 
   /**
    * Economic security configuration.
