@@ -6,8 +6,11 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
+import { DaProjectEconomicSecurity } from './get-da-project-economic-security'
 
-export async function getDaEconomicSecurity() {
+export async function getDaProjectsEconomicSecurity(): Promise<
+  Record<string, DaProjectEconomicSecurity>
+> {
   noStore()
   return await getCachedEconomicSecurity()
 }
@@ -15,6 +18,7 @@ export async function getDaEconomicSecurity() {
 const getCachedEconomicSecurity = cache(
   async () => {
     // TODO: It's probably better to not fetch all data at once
+    // NOTE (TOMEK): Is it really so bad? We need all of the data anyway.
 
     const stakes = Object.fromEntries(
       (await db.stake.findMany()).map((s) => [s.id, s.thresholdStake]),
@@ -28,7 +32,7 @@ const getCachedEconomicSecurity = cache(
     )
 
     const arr = daLayers.map((daLayer) => {
-      if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+      if (daLayer.kind !== 'public-blockchain' || !daLayer.economicSecurity) {
         return undefined
       }
 

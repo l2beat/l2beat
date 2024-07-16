@@ -1,5 +1,5 @@
 import { layer2s, layer3s, type DaBridge, type DaLayer } from '@l2beat/config'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getDaRisks } from './utils/get-da-risks'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
@@ -8,10 +8,16 @@ import { getVerificationStatus } from '../verification-status/get-verification-s
 import { getManuallyVerifiedContracts } from '../verification-status/get-manually-verified-contracts'
 import { type RosetteValue } from '~/app/_components/rosette/types'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getDaProjectTvl } from './utils/get-da-project-tvl'
+import { kindToType } from './utils/kind-to-layer-type'
+import {
+  DaProjectEconomicSecurity,
+  getDaProjectEconomicSecurity,
+} from './utils/get-da-project-economic-security'
 
 export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
-  // const economicSecurity = await getDaEconomicSecurity()
-  // const tvs = await getDaProjectTvl(bridge.usedIn)
+  const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
+  const tvs = await getDaProjectTvl(bridge.usedIn)
   const verificationStatus = await getVerificationStatus()
   const manuallyVerifiedContracts = getManuallyVerifiedContracts()
   const implementationChangeReport = await getImplementationChangeReport()
@@ -46,7 +52,13 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
       name: bridge.display.name,
       slug: bridge.display.slug,
     })),
-    header: getHeader({ rosetteValues, daLayer, bridge }),
+    header: getHeader({
+      rosetteValues,
+      daLayer,
+      bridge,
+      tvs,
+      economicSecurity,
+    }),
     projectDetails,
   }
 }
@@ -55,33 +67,25 @@ function getHeader({
   rosetteValues,
   daLayer,
   bridge,
-}: { rosetteValues: RosetteValue[]; daLayer: DaLayer; bridge: DaBridge }) {
+  tvs,
+  economicSecurity,
+}: {
+  rosetteValues: RosetteValue[]
+  daLayer: DaLayer
+  bridge: DaBridge
+  tvs: number
+  economicSecurity: DaProjectEconomicSecurity | undefined
+}) {
   return {
     rosetteValues,
     links: getProjectLinks(daLayer.display.links),
-    tvs: 1000,
-    // TODO: economic security for single project
-    economicSecurity: {
-      id: 'noclue',
-      status: 'Synced',
-      economicSecurity: 10,
-    },
+    tvs,
+    economicSecurity,
     durationStorage:
       daLayer.kind === 'public-blockchain'
         ? daLayer.storageDuration
         : undefined,
     usedIn: getUsedIn(bridge),
-  }
-}
-
-function kindToType(kind: DaLayer['kind']) {
-  switch (kind) {
-    case 'public-blockchain':
-      return 'Public blockchain'
-    case 'dac':
-      return 'Data Availability Committee'
-    default:
-      return assertUnreachable(kind)
   }
 }
 

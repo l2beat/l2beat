@@ -1,16 +1,16 @@
-import { DaLayerKindDisplay, daLayers, layer2s } from '@l2beat/config'
+import { daLayers, layer2s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { toDaBridge } from './utils/get-da-bridge'
-import { getDaEconomicSecurity } from './utils/get-da-economic-security'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
 } from './utils/get-da-projects-tvl'
 import { getDaRisks } from './utils/get-da-risks'
+import { kindToType } from './utils/kind-to-layer-type'
+import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
 
 export async function getDaSummaryEntries() {
-  const economicSecurity = await getDaEconomicSecurity()
-
+  const economicSecurity = await getDaProjectsEconomicSecurity()
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
@@ -23,11 +23,11 @@ export async function getDaSummaryEntries() {
         slug: daLayer.display.slug,
         daLayer: daLayer.display.name,
         daBridge: toDaBridge(bridge),
+        layerType: kindToType(daLayer.kind),
         risks: getDaRisks(daLayer, bridge),
         isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
         tvs,
         economicSecurity: economicSecurity[daLayer.id],
-        layerType: DaLayerKindDisplay[daLayer.kind],
         // TODO: maybe we can specify names in the config instead of projectIds
         usedBy: bridge.usedIn
           .map(
