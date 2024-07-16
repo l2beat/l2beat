@@ -10,7 +10,7 @@ import { publicgoodsnetwork } from '../../../../layer2s/publicgoodsnetwork'
 import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer, DaLayerKind } from '../../types/DaLayer'
+import { DaLayer } from '../../types/DaLayer'
 import { blobStream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
@@ -19,7 +19,8 @@ import { noBridge } from './bridges/no-bridge'
  */
 export const celestia: DaLayer = {
   id: ProjectId('celestia'),
-  kind: DaLayerKind.PublicBlockchain,
+  type: 'da-beat',
+  kind: 'public-blockchain',
   display: {
     name: 'Celestia',
     slug: 'celestia',

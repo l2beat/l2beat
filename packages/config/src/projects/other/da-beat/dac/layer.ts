@@ -1,5 +1,5 @@
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
-import { DaLayer, DaLayerKind } from '../types/DaLayer'
+import { DaLayer } from '../types/DaLayer'
 import { immutableXDac } from './bridges/immutablex'
 
 /**
@@ -7,7 +7,8 @@ import { immutableXDac } from './bridges/immutablex'
  */
 export const dac: DaLayer = {
   id: 'dac',
-  kind: DaLayerKind.DAC,
+  type: 'da-beat',
+  kind: 'dac',
   display: {
     name: 'Data Availability Committee (DAC)',
     slug: 'dac',

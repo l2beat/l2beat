@@ -5,22 +5,10 @@ import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DaDisplay } from './DaDisplay'
 
-export const DaLayerKind = {
-  PublicBlockchain: 'PublicBlockchain',
-  DAC: 'DAC',
-} as const
-
-export type DaLayerKind = (typeof DaLayerKind)[keyof typeof DaLayerKind]
-
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
-export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
-  PublicBlockchain: 'Public blockchain',
-  DAC: 'DAC',
-}
-
 export type BlockchainDaLayer = CommonDaLayer & {
-  kind: typeof DaLayerKind.PublicBlockchain
+  kind: 'public-blockchain'
   bridges: (OnChainDaBridge | NoDaBridge)[]
   /**
    * The duration of the data storage.
@@ -44,12 +32,12 @@ export type BlockchainDaLayer = CommonDaLayer & {
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: typeof DaLayerKind.DAC
-
+  kind: 'dac'
   bridges: DacBridge[]
 }
 
 export type CommonDaLayer = {
+  type: 'da-beat'
   /**
    * Unique identifier of the data availability layer
    */

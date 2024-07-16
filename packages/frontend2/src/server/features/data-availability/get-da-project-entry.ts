@@ -67,16 +67,18 @@ function getHeader({
       economicSecurity: 10,
     },
     durationStorage:
-      daLayer.kind === 'PublicBlockchain' ? daLayer.storageDuration : undefined,
+      daLayer.kind === 'public-blockchain'
+        ? daLayer.storageDuration
+        : undefined,
     usedIn: getUsedIn(bridge),
   }
 }
 
 function kindToType(kind: DaLayer['kind']) {
   switch (kind) {
-    case 'PublicBlockchain':
+    case 'public-blockchain':
       return 'Public blockchain'
-    case 'DAC':
+    case 'dac':
       return 'Data Availability Committee'
     default:
       return assertUnreachable(kind)
