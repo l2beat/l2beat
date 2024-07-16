@@ -20,7 +20,8 @@ export const noBridge = {
   display: {
     name: 'No Bridge',
     slug: 'no-bridge',
-    description: 'Celestia with no DA bridge',
+    description:
+      'No bridge dolore occaecat excepteur consectetur sit excepteur et. Laborum ullamco occaecat irure consequat labore tempor sint sit est. Elit laborum incididunt reprehenderit voluptate exercitation cupidatat cupidatat sunt. Dolore fugiat ullamco ipsum ex aute eu incididunt ullamco.',
   },
   technology:
     'Some note about the technology used by the bridge.\n## Markdown supported',

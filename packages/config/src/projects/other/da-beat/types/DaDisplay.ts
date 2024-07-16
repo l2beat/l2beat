@@ -12,7 +12,7 @@ export interface DaDisplay {
   /**
    * A short description of the data availability layer.
    */
-  description?: string
+  description: string
 
   /**
    * Links related to the data availability layer.

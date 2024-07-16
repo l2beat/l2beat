@@ -24,7 +24,8 @@ export const celestia: DaLayer = {
   display: {
     name: 'Celestia',
     slug: 'celestia',
-    description: 'Celestia lorem ipsum',
+    description:
+      'Celestia ullamco pariatur occaecat ut deserunt reprehenderit aute ut mollit. Ut esse aliqua ullamco ipsum ullamco incididunt amet. Laborum cupidatat aute irure cupidatat duis adipisicing consequat.',
     links: {
       websites: ['https://celestia.org/'],
       documentation: ['https://docs.celestia.org/'],

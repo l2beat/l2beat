@@ -11,7 +11,7 @@ import { getImplementationChangeReport } from '../implementation-change-report/g
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { kindToType } from './utils/kind-to-layer-type'
 import {
-  DaProjectEconomicSecurity,
+  type DaProjectEconomicSecurity,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 
@@ -38,8 +38,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
     slug: daLayer.display.slug,
     type: kindToType(daLayer.kind),
     iconSrc: `/icons/${daLayer.display.slug}.png`,
-    // TODO: How to handle description for layer x bridge combination?
-    description: daLayer.display.description,
+    description: `${daLayer.display.description} ${bridge.display.description}`,
     isUnderReview: daLayer.isUnderReview,
     isUpcoming: daLayer.isUpcoming,
     selectedBridge: {

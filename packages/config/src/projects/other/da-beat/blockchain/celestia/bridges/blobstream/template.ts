@@ -28,7 +28,9 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
   const display = {
     name: `Blobstream on ${capitalize(chain.name)}`,
     slug: id,
-    description: `Celestia with Blobstream bridge on ${capitalize(chain.name)}`,
+    description: `Celestia with Blobstream bridge on ${capitalize(
+      chain.name,
+    )}.`,
   }
 
   const risks = {
