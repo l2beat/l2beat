@@ -1,12 +1,12 @@
-import { Stake as StakeEntity } from '../kysely/generated/types'
+import { Stake } from '../kysely/generated/types'
 
-export interface Stake {
+export interface StakeRecord {
   id: string
   totalStake: bigint
   thresholdStake: bigint
 }
 
-export function fromEntity(entity: StakeEntity): Stake {
+export function fromEntity(entity: Stake): StakeRecord {
   return {
     id: entity.id,
     totalStake: BigInt(entity.totalStake),
@@ -14,7 +14,7 @@ export function fromEntity(entity: StakeEntity): Stake {
   }
 }
 
-export function toEntity(stake: Stake): StakeEntity {
+export function toEntity(stake: StakeRecord): Stake {
   return {
     id: stake.id,
     totalStake: stake.totalStake.toString(),

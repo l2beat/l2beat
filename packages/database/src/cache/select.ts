@@ -1,4 +1,4 @@
-import { Cache } from './entity'
+import { CacheRecord } from './entity'
 
 export const selectCache = [
   'key',
@@ -7,4 +7,4 @@ export const selectCache = [
   'blockNumber',
   'updatedAt',
   'createdAt',
-] as const satisfies (keyof Cache)[]
+] as const satisfies (keyof CacheRecord)[]

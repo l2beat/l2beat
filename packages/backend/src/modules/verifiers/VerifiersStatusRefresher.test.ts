@@ -15,7 +15,7 @@ import { install } from '@sinonjs/fake-timers'
 import { expect, mockFn, mockObject } from 'earl'
 import { Peripherals } from '../../peripherals/Peripherals'
 
-import { Database, VerifierStatusRepository } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { Clock } from '../../tools/Clock'
 import {
   VerifiersStatusRefresher,
@@ -87,11 +87,11 @@ describe(VerifiersStatusRefresher.name, () => {
       const time = install()
       time.setSystemTime(lastUpdated.toDate())
 
-      const verifierStatusRepositoryMock = mockObject<VerifierStatusRepository>(
-        {
-          addOrUpdate: mockFn().resolvesTo(''),
-        },
-      )
+      const verifierStatusRepositoryMock = mockObject<
+        Database['verifierStatus']
+      >({
+        addOrUpdate: mockFn().resolvesTo(''),
+      })
 
       const refresher = createVerifierStatusRefresher({
         database: mockDatabase({
@@ -156,7 +156,7 @@ function createVerifierStatusRefresher(
 
 function mockDatabase(repos?: Partial<Database>) {
   return mockObject<Database>({
-    verifierStatus: mockObject<VerifierStatusRepository>(),
+    verifierStatus: mockObject<Database['verifierStatus']>(),
     ...repos,
   })
 }

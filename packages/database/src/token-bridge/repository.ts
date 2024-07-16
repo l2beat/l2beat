@@ -1,10 +1,10 @@
 import { PostgresDatabase } from '../kysely'
-import { TokenBridge, toRow } from './entity'
+import { TokenBridgeRecord, toRow } from './entity'
 
 export class TokenBridgeRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsertMany(tokenBridges: TokenBridge[]) {
+  upsertMany(tokenBridges: TokenBridgeRecord[]) {
     const rows = tokenBridges.map(toRow)
     return this.db
       .insertInto('public.TokenBridge')

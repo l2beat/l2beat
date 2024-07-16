@@ -1,15 +1,17 @@
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { VerifierStatus as VerifierStatusRow } from '../kysely/generated/types'
+import { VerifierStatus } from '../kysely/generated/types'
 
-export interface VerifierStatus {
+export interface VerifierStatusRecord {
   address: string
   chainId: ChainId
   lastUsed: UnixTime
   lastUpdated: UnixTime
 }
 
-export function toRow(record: VerifierStatus): Insertable<VerifierStatusRow> {
+export function toRow(
+  record: VerifierStatusRecord,
+): Insertable<VerifierStatus> {
   return {
     address: record.address,
     chain_id: +record.chainId,
@@ -18,7 +20,9 @@ export function toRow(record: VerifierStatus): Insertable<VerifierStatusRow> {
   }
 }
 
-export function toRecord(row: Selectable<VerifierStatusRow>): VerifierStatus {
+export function toRecord(
+  row: Selectable<VerifierStatus>,
+): VerifierStatusRecord {
   return {
     address: row.address,
     chainId: ChainId(row.chain_id),

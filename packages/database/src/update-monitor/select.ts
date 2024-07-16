@@ -1,4 +1,4 @@
-import { UpdateMonitor as UpdateMonitorRow } from '../kysely/generated/types'
+import { UpdateMonitor } from '../kysely/generated/types'
 
 export const selectUpdateMonitor = [
   'project_name',
@@ -8,4 +8,4 @@ export const selectUpdateMonitor = [
   'discovery_json_blob',
   'config_hash',
   'version',
-] as const satisfies (keyof UpdateMonitorRow)[]
+] as const satisfies (keyof UpdateMonitor)[]

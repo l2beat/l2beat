@@ -1,5 +1,5 @@
 import { PostgresDatabase } from '../kysely'
-import { Stake, fromEntity, toEntity } from './entity'
+import { StakeRecord, fromEntity, toEntity } from './entity'
 import { selectStake } from './select'
 
 export class StakeRepository {
@@ -23,7 +23,7 @@ export class StakeRepository {
     return res ? fromEntity(res) : null
   }
 
-  async upsert(stake: Stake) {
+  async upsert(stake: StakeRecord) {
     const entity = toEntity(stake)
     const { id, ...rest } = entity
     return this.db

@@ -5,7 +5,7 @@ import {
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../utils/deleteArchivedRecords'
-import { Price, toRecord, toRow } from './entity'
+import { PriceRecord, toRecord, toRow } from './entity'
 import { selectPrice } from './select'
 
 export class PriceRepository {
@@ -58,7 +58,7 @@ export class PriceRepository {
     return row ? toRecord(row) : null
   }
 
-  async addMany(records: Price[]) {
+  async addMany(records: PriceRecord[]) {
     if (records.length === 0) {
       return 0
     }

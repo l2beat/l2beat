@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { TokenMeta as TokenMetaEntity } from '../kysely/generated/types'
+import { TokenMeta } from '../kysely/generated/types'
 
-export interface TokenMeta {
+export interface TokenMetaRecord {
   id: string
   tokenId: string
   externalId: string | null
@@ -15,10 +15,10 @@ export interface TokenMeta {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<TokenMetaEntity>): TokenMeta {
+export function toRecord(row: Selectable<TokenMeta>): TokenMetaRecord {
   return row
 }
 
-export function toRow(record: TokenMeta): Insertable<TokenMetaEntity> {
+export function toRow(record: TokenMetaRecord): Insertable<TokenMeta> {
   return record
 }

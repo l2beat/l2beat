@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { Network as NetworkEntity } from '../kysely/generated/types'
+import { Network } from '../kysely/generated/types'
 
-export interface Network {
+export interface NetworkRecord {
   id: string
   chainId: number
   name: string
@@ -15,10 +15,10 @@ export interface Network {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<NetworkEntity>): Network {
+export function toRecord(row: Selectable<Network>): NetworkRecord {
   return row
 }
 
-export function toRow(record: Network): Insertable<NetworkEntity> {
+export function toRow(record: NetworkRecord): Insertable<Network> {
   return record
 }
