@@ -1,12 +1,14 @@
+import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
-import { AnalyzedContract } from './AddressAnalyzer'
+import { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   ContractMeta,
   findHighestSeverity,
   getMetaFromUpgradeability,
   getTargetsMeta,
+  interpolateDescription,
   invertMeta,
   mergeContractMeta,
   mergePermissions,
@@ -357,12 +359,45 @@ describe('metaUtils', () => {
       })
     })
   })
+
+  describe('interpolateDescription', () => {
+    it('should correctly interpolate variables in the description', () => {
+      const description =
+        'Contract with address {{ #address }} and value {{ someValue }}'
+      const analysis = generateFakeAnalysis(
+        EthereumAddress.from('0x1234567890123456789012345678901234567890'),
+        undefined,
+        undefined,
+        {
+          someValue: 42,
+        },
+      )
+
+      const result = interpolateDescription(description, analysis)
+
+      expect(result).toEqual(
+        'Contract with address 0x1234567890123456789012345678901234567890 and value 42',
+      )
+    })
+
+    it('should throw an error if a variable is not found in the analysis', () => {
+      const description = 'Contract with missing {{ missingValue }}'
+      const analysis = generateFakeAnalysis(
+        EthereumAddress.from('0x1234567890123456789012345678901234567890'),
+      )
+
+      expect(() => interpolateDescription(description, analysis)).toThrow(
+        'Value for variable "{{ missingValue }}" in contract description not found in contract analysis',
+      )
+    })
+  })
 })
 
 const generateFakeAnalysis = (
   address: EthereumAddress,
   extendedTemplate?: ExtendedTemplate,
   errors?: Record<string, string>,
+  values?: Record<string, ContractValue | undefined>,
 ): AnalyzedContract => {
   return {
     type: 'Contract',
@@ -371,7 +406,7 @@ const generateFakeAnalysis = (
     derivedName: undefined,
     isVerified: true,
     implementations: [],
-    values: { numberField: 1122 },
+    values: values ?? { numberField: 1122 },
     errors: errors ?? {},
     abis: {},
     sourceBundles: [],
