@@ -551,7 +551,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
     minHeight: 0,
     parents: [],
     aggregatedL2CostsRepository: mockObject<AggregatedL2CostsRepository>({
-      addMany: mockFn().resolvesTo(1),
+      addOrUpdateMany: mockFn().resolvesTo(1),
     }),
     indexerConfigurationRepository:
       mockObject<IndexerConfigurationRepository>(),
