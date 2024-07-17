@@ -478,15 +478,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     stateValidation: templateVars.stateValidation,
     permissions: [
       {
-        name: 'ProxyAdminOwner',
-        accounts: [
-          templateVars.discovery.formatPermissionedAccount(
-            shared.getContractValue('SharedProxyAdmin', 'owner'), // could be EOA or multisig
-          ),
-        ],
-        description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.`,
-      },
-      {
         name: 'Sequencer',
         accounts: [
           templateVars.discovery.getPermissionedAccount(
