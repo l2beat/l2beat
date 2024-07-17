@@ -16,9 +16,13 @@
     "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C": "L1CrossDomainMessenger",
     "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "RollupOwnerMultisig",
     "0x16193e14197c10109F3e81b938153A04A2a00190": "DataAvailabilityChallenge",
-    "0x443164F044D8840479234e00E7aD5bb06b85fC78": "DisputeGameFactory"
+    "0x443164F044D8840479234e00E7aD5bb06b85fC78": "DisputeGameFactory",
+    "0x089A4754538B74Ff63Bc6AbeaD7A95973aB03572": "PreimageOracle"
   },
   "overrides": {
+    "PreimageOracle": {
+      "ignoreMethods": ["zeroHashes"]
+    },
     "DisputeGameFactory": {
       "ignoreMethods": ["gameAtIndex"],
       "fields": {

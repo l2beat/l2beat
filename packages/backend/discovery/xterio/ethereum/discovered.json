@@ -1,8 +1,8 @@
 {
   "name": "xterio",
   "chain": "ethereum",
-  "blockNumber": 20327252,
-  "configHash": "0x95aaf7cb98e23e7e1182d9299ffaffbb25cb63b5b8f3cecd1c8085d159ffa82a",
+  "blockNumber": 20327427,
+  "configHash": "0x42dc8f6aa31921bd75f458fefc2bb481c0ac15058e9653a4386927f511b8a7ab",
   "version": 9,
   "contracts": [
     {
@@ -18,18 +18,9 @@
         "minProposalSize": 10000,
         "proposalCount": 0,
         "proposals": [],
-        "version": "0.1.0",
-        "zeroHashes": [
-          "0x0000000000000000000000000000000000000000000000000000000000000000",
-          "0xad3228b676f7d3cd4284a5443f17f1962b36e491b30a40b2405849e597ba5fb5",
-          "0xb4c11951957c6f8f642c4af61cd6b24640fec6dc7fc607ee8206a99e92410d30",
-          "0x21ddb9a356815c3fac1026b6dec5df3124afbadb485c9ba5a3e3398a04b7ba85",
-          "0xe58769b32a1beaf1ea27375a44095a0d1fb664ce2dd358e7fcbfb78c26a19344"
-        ]
+        "version": "0.1.0"
       },
-      "errors": {
-        "zeroHashes": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "PreimageOracle"
     },
     {
       "name": "DelayedWETH",
