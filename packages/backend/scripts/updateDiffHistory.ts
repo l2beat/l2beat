@@ -58,7 +58,7 @@ async function updateDiffHistoryFile() {
       : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
   const saveSources = process.argv.some((a) => a === '--save-sources')
-  
+
   let diff: DiscoveryDiff[] = []
   let codeDiff
   let configRelatedDiff
@@ -74,7 +74,7 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch,
       projectName,
       chain,
-      saveSources
+      saveSources,
     )
     codeDiff = rerun.codeDiff
 

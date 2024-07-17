@@ -22,7 +22,7 @@ async function main() {
       .readAllChains()
       .flatMap((chain) => configReader.readAllConfigsForChain(chain)),
   )
-  const toRefresh = []
+  const toRefresh: { config: DiscoveryConfig; reason: string }[] = []
   for (const config of chainConfigs) {
     const discovery = await configReader.readDiscovery(
       config.name,
