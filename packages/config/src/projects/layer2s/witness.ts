@@ -17,13 +17,11 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'WitnessValidiumPolygonCDK',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>('WitnessValidium', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
 const upgradeability = {
-  upgradableBy: ['DacProxyAdminOwner'],
+  upgradableBy: ['DACProxyAdminOwner'],
   upgradeDelay: 'No delay',
 }
 
@@ -102,7 +100,7 @@ export const witness: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupModuleContract: discovery.getContract('WitnessValidiumPolygonCDK'),
+  rollupModuleContract: discovery.getContract('WitnessValidium'),
   rollupVerifierContract: discovery.getContract('FflonkVerifier'),
   isForcedBatchDisallowed,
   nonTemplateTechnology: {
@@ -112,10 +110,24 @@ export const witness: Layer2 = polygonCDKStack({
   },
   nonTemplatePermissions: [
     {
-      name: 'DacProxyAdminOwner',
-      accounts: [discovery.getPermissionedAccount('ProxyAdmin', 'owner')],
+      name: 'LocalAdmin',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('WitnessValidium', 'admin'),
+        ),
+      ],
       description:
-        'Admin of the WitnessValidiumPolygonCDK contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+        'Admin of the WitnessValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+    },
+    {
+      name: 'DACProxyAdminOwner',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('ProxyAdmin', 'owner'),
+        ),
+      ],
+      description:
+        "Owner of the PolygonDataCommittee's ProxyAdmin. Can upgrade the contract.",
     },
   ],
   nonTemplateContracts: [

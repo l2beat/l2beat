@@ -1,8 +1,8 @@
 {
   "name": "witness",
   "chain": "ethereum",
-  "blockNumber": 20319632,
-  "configHash": "0xd6a08479e2c69830aaafda26ec49ae37360f0abadc968ab8f04dd50715e7ead0",
+  "blockNumber": 20325237,
+  "configHash": "0xc748524ec076fcbb2cf7c53d0d0fce30db3acf06ffe6f07b7718dbe6326c7e8e",
   "version": 9,
   "contracts": [
     {
@@ -12,7 +12,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "WitnessValidiumPolygonCDK",
+      "name": "WitnessValidium",
       "address": "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238",
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
@@ -39,7 +39,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x1ec649f1ad7d0749dc9fc7aebd296cb46d6b856b1f635978b573edf3761a2377",
+        "lastAccInputHash": "0xe19e54580bdd99fa0369c9248f6d37277e62634c25eb6b65ffe87b59410443e2",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "witnesschain",
