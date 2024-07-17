@@ -1,7 +1,6 @@
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer, DaLayerKind } from '../../types/DaLayer'
-import { linkByDA } from '../../utils/link-by-da'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum: DaLayer = {
@@ -14,10 +13,7 @@ export const ethereum: DaLayer = {
       EIP-4844 allows for blob-carrying transactions containing large amounts of data on the consensus layer, and whose commitment can be accessed by the EVM on the execution layer.`,
   },
   bridges: [enshrinedBridge],
-  usedIn: linkByDA({
-    // To catch both blobs and calldata suffix
-    layer: (layer) => layer?.startsWith('Ethereum'),
-  }),
+  usedIn: enshrinedBridge.usedIn,
   consensusAlgorithm: {
     name: 'Gasper',
     description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
