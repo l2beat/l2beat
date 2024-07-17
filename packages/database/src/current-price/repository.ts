@@ -29,7 +29,7 @@ export class CurrentPriceRepository {
       .select(selectCurrentPrice)
       .where('coingeckoId', 'in', coingeckoIds)
       .execute()
-    return res.map(fromEntity)
+    return res.map(toRecord)
   }
 
   async upsert(currentPrice: UpsertableCurrentPrice) {
