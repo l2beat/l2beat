@@ -1,4 +1,3 @@
-import { createGzip } from 'zlib'
 import { HttpClient } from '@l2beat/shared'
 import { assert, RateLimiter } from '@l2beat/shared-pure'
 import { chain } from 'stream-chain'
@@ -6,6 +5,7 @@ import { parser } from 'stream-json'
 import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
 import { Hex } from 'viem'
+import { createGzip } from 'zlib'
 
 interface QuickNodeClientOpts {
   callsPerMinute?: number
@@ -74,7 +74,8 @@ export class QuickNodeClient {
     let effectiveBalance = 0n
 
     for await (const { value } of pipeline) {
-      effectiveBalance += BigInt(value) / 10n ** 8n
+      // gwei to wei
+      effectiveBalance += BigInt(value) * 10n ** 9n
     }
 
     return {
