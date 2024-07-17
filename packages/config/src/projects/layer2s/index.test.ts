@@ -92,6 +92,25 @@ describe('layer2s', () => {
       }
     })
 
+    describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+      for (const layer2 of layer2s) {
+        for (const escrow of layer2.config.escrows) {
+          const chain = chains.find((c) => c.name === escrow.chain)
+
+          it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
+            assert(
+              chain?.minTimestampForTvl,
+              `Chain ${escrow.chain} does not have minTimestampForTvl`,
+            )
+
+            expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
+              chain?.minTimestampForTvl.toNumber(),
+            )
+          })
+        }
+      }
+    })
+
     describe('every escrow can resolve all of its tokens', () => {
       const chainsMap = new Map<string, ChainId>(
         chains.map((c) => [c.name, ChainId(c.chainId)]),
