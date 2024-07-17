@@ -1,6 +1,10 @@
 import {
   type ScalingProjectReference,
   type ScalingProjectPermission,
+  type Bridge,
+  type DaLayer,
+  type Layer2,
+  type Layer3,
 } from '@l2beat/config'
 import {
   notUndefined,
@@ -16,15 +20,20 @@ import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { concat } from 'lodash'
 import { type UsedInProject } from './used-in-project'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
+import { getUsedInProjects } from './get-used-in-projects'
 
-interface ProjectParams {
+type ProjectParams = {
+  id: string
   permissions: ScalingProjectPermission[] | 'UnderReview'
   nativePermissions:
     | Record<string, ScalingProjectPermission[]>
     | 'UnderReview'
     | undefined
   isUnderReview: boolean
-}
+} & (
+  | { type: (Layer2 | Bridge | DaLayer)['type'] }
+  | { type: Layer3['type']; hostChain: string }
+)
 
 export function getPermissionsSection(
   projectParams: ProjectParams,
@@ -117,15 +126,15 @@ function toTechnologyContract(
   )
 
   let usedInProjects: UsedInProject[] | undefined
-  // if (permission.accounts.length === 1) {
-  //   usedInProjects = getUsedInProjects(bridge, [], addresses)
-  //   if (usedInProjects !== undefined) {
-  //     usedInProjects = usedInProjects.map((p) => ({
-  //       ...p,
-  //       type: 'permission',
-  //     }))
-  //   }
-  // }
+  if (permission.accounts.length === 1) {
+    usedInProjects = getUsedInProjects(projectParams, [], addresses)
+    if (usedInProjects !== undefined) {
+      usedInProjects = usedInProjects.map((p) => ({
+        ...p,
+        type: 'permission',
+      }))
+    }
+  }
 
   const name =
     permission.accounts.length > 1

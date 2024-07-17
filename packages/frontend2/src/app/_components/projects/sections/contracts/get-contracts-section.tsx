@@ -1,5 +1,9 @@
 import {
+  type Bridge,
   CONTRACTS,
+  type DaLayer,
+  type Layer2,
+  type Layer3,
   type ScalingProjectContract,
   type ScalingProjectContracts,
   type ScalingProjectEscrow,
@@ -25,16 +29,24 @@ import { getDiagramImage } from '~/utils/project/get-diagram-image'
 import { type TechnologyReference } from '../permissions/reference-list'
 import { concat } from 'lodash'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
+import { getUsedInProjects } from '../permissions/get-used-in-projects'
 
-interface ProjectParams {
+type ProjectParams = {
   id: string
   slug: string
   isUnderReview?: boolean
-  hostChain?: string
   architectureImage?: string
   contracts: ScalingProjectContracts
   escrows: ScalingProjectEscrow[] | undefined
-}
+} & (
+  | {
+      type: (Layer2 | Bridge | DaLayer)['type']
+    }
+  | {
+      type: Layer3['type']
+      hostChain: string
+    }
+)
 
 export function getContractsSection(
   projectParams: ProjectParams,
@@ -126,9 +138,10 @@ export function getContractsSection(
     return layer2s.find((l2) => l2.id === hostChain)?.display.name ?? 'Unknown'
   }
 
-  const chainName = projectParams.hostChain
-    ? getL3HostChain(projectParams.hostChain)
-    : 'Ethereum'
+  const chainName =
+    projectParams.type === 'layer3'
+      ? getL3HostChain(projectParams.hostChain)
+      : 'Ethereum'
 
   return {
     chainName,
@@ -221,10 +234,6 @@ function makeTechnologyContract(
     }
   }
 
-  const implementationAddresses = addresses
-    .filter((c) => !c.isAdmin)
-    .map((c) => c.address)
-
   let description = item.description
 
   if (isUnverified) {
@@ -285,6 +294,7 @@ function makeTechnologyContract(
       ? Object.values(implementationChange)
       : []
   ).flat()
+
   const implementationHasChanged = changedAddresses.some((ca) =>
     addresses.map((a) => a.address).includes(ca.containingContract.toString()),
   )
@@ -300,18 +310,20 @@ function makeTechnologyContract(
     }
   })
 
-  // const usedInProjects = getUsedInProjects(
-  //   project,
-  //   addresses,
-  //   implementationAddresses,
-  // )
+  const implementationAddresses = addresses.filter((c) => !c.isAdmin)
+
+  const usedInProjects = getUsedInProjects(
+    projectParams,
+    addresses,
+    implementationAddresses,
+  )
 
   if (isSingleAddress(item)) {
     return {
       name: item.name,
       addresses,
       description,
-      usedInProjects: [],
+      usedInProjects,
       references: concat(item.references ?? [], additionalReferences),
       chain,
       implementationHasChanged,

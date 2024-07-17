@@ -19,7 +19,7 @@ import { noBridge } from './bridges/no-bridge'
  */
 export const celestia: DaLayer = {
   id: ProjectId('celestia'),
-  type: 'da-beat',
+  type: 'da-layer',
   kind: 'public-blockchain',
   display: {
     name: 'Celestia',

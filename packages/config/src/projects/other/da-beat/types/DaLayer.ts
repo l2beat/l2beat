@@ -37,7 +37,7 @@ export type DacDaLayer = CommonDaLayer & {
 }
 
 export type CommonDaLayer = {
-  type: 'da-beat'
+  type: 'da-layer'
   /**
    * Unique identifier of the data availability layer
    */

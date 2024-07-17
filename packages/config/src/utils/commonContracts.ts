@@ -13,6 +13,10 @@ import {
 } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
+  Bridge,
+  DaLayer,
+  Layer2,
+  Layer3,
   Project,
   ScalingProjectContract,
   ScalingProjectPermission,
@@ -21,7 +25,16 @@ import {
   layer3s,
 } from '..'
 
-export function getCommonContractsIn(project: Project) {
+type Params =
+  | {
+      type: (Layer2 | Bridge | DaLayer)['type']
+    }
+  | {
+      type: Layer3['type']
+      hostChain: string
+    }
+
+export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer2') {
     return findCommonContractsMemoized(layer2s)
   }
@@ -33,6 +46,10 @@ export function getCommonContractsIn(project: Project) {
   if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
     const projects = layer3s.filter((l3) => l3.hostChain === project.hostChain)
     return findCommonContractsMemoized(projects, project.hostChain as string)
+  }
+
+  if (project.type === 'da-layer') {
+    throw new Error('Not implemented yet')
   }
 
   return {}

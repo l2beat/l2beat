@@ -1,5 +1,6 @@
 import {
   type Bridge,
+  type DaLayer,
   type Layer2,
   type Layer3,
   getCommonContractsIn,
@@ -7,18 +8,33 @@ import {
 import { type TechnologyContractAddress } from './contract-entry'
 import { type UsedInProject } from './used-in-project'
 
+type ProjectParams =
+  | {
+      id: string
+      type: (Layer2 | Bridge | DaLayer)['type']
+    }
+  | {
+      id: string
+      type: Layer3['type']
+      hostChain: string
+    }
+
 export function getUsedInProjects(
-  project: Layer2 | Layer3 | Bridge,
+  projectParams: ProjectParams,
   addresses: TechnologyContractAddress[],
   implementationAddresses: TechnologyContractAddress[],
 ): UsedInProject[] {
-  if (implementationAddresses.length === 0) {
-    return evalUsedInProject(project, addresses, 'implementation')
+  if (projectParams.type === 'da-layer') {
+    return []
   }
 
-  const asProxy = evalUsedInProject(project, addresses, 'proxy')
+  if (implementationAddresses.length === 0) {
+    return evalUsedInProject(projectParams, addresses, 'implementation')
+  }
+
+  const asProxy = evalUsedInProject(projectParams, addresses, 'proxy')
   const asImplementation = evalUsedInProject(
-    project,
+    projectParams,
     implementationAddresses,
     'implementation',
   )
@@ -26,17 +42,17 @@ export function getUsedInProjects(
 }
 
 function evalUsedInProject(
-  project: Layer2 | Layer3 | Bridge,
+  projectParams: ProjectParams,
   addresses: TechnologyContractAddress[],
   type: UsedInProject['type'],
 ) {
-  const commonContracts = getCommonContractsIn(project)
+  const commonContracts = getCommonContractsIn(projectParams)
 
   const usedIn = [
     ...new Set(
       addresses.flatMap((address) => {
         const references = commonContracts[address.address] ?? []
-        return references.filter((ref) => project.id !== ref.id)
+        return references.filter((ref) => projectParams.id !== ref.id)
       }),
     ),
   ]
@@ -49,7 +65,7 @@ function evalUsedInProject(
       slug: ref.slug,
       targetName: ref.targetName,
       iconPath: `/icons/${ref.slug}.png`,
-      hrefRoot: project.type === 'bridge' ? 'bridges' : 'scaling',
+      hrefRoot: projectParams.type === 'bridge' ? 'bridges' : 'scaling',
     }
   })
 }

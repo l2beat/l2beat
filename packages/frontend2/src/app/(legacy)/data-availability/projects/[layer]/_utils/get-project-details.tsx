@@ -29,6 +29,8 @@ export function getProjectDetails({
     bridge.type !== 'NoBridge'
       ? getPermissionsSection(
           {
+            id: daLayer.id,
+            type: daLayer.type,
             isUnderReview: !!daLayer.isUnderReview,
             permissions: bridge.permissions,
             nativePermissions: undefined,
@@ -42,6 +44,7 @@ export function getProjectDetails({
       ? getContractsSection(
           {
             id: bridge.id,
+            type: daLayer.type,
             slug: bridge.display.slug,
             contracts: bridge.contracts,
             isUnderReview: daLayer.isUnderReview,
