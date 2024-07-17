@@ -10,7 +10,7 @@ import { formatCurrency } from '~/utils/format'
 import InfoIcon from '~/icons/info.svg'
 import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { UsedIn } from '~/app/(new)/data-availability/summary/_components/table/used-in'
-import { UnixTime } from '@l2beat/shared-pure'
+import { pluralize, UnixTime } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 
 interface Props {
@@ -47,7 +47,11 @@ export function DaHeaderDetails({ project }: Props) {
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
       <DetailsHeaderStat
         title="Duration of storage"
-        value={durationStorage ? `${durationStorage} days` : 'Not synced'}
+        value={
+          durationStorage
+            ? pluralize(durationStorage, `${durationStorage} day`)
+            : 'Not synced'
+        }
       />
       <DetailsHeaderStat
         className="md:col-span-2"
