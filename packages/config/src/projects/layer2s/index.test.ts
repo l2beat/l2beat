@@ -99,8 +99,14 @@ describe('layer2s', () => {
 
           it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
             assert(
-              chain?.minTimestampForTvl,
-              `Chain ${escrow.chain} does not have minTimestampForTvl`,
+              chain,
+              `Chain not found for escrow ${escrow.address.toString()}`,
+            )
+            assert(
+              chain.minTimestampForTvl,
+              `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+                chain.name
+              }`,
             )
 
             expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
