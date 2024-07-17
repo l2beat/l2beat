@@ -3,11 +3,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer, Retries } from '@l2beat/uif'
 import { mean } from 'lodash'
 
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
-import {
-  FinalityRecord,
-  FinalityRepository,
-} from './repositories/FinalityRepository'
+import { Database, FinalityRecord } from '@l2beat/database'
 import { FinalityConfig } from './types/FinalityConfig'
 
 const UPDATE_RETRY_STRATEGY = Retries.exponentialBackOff({
@@ -21,8 +17,7 @@ export class FinalityIndexer extends ChildIndexer {
   constructor(
     logger: Logger,
     parentIndexer: ChildIndexer,
-    private readonly stateRepository: IndexerStateRepository,
-    private readonly finalityRepository: FinalityRepository,
+    private readonly db: Database,
     private readonly configuration: FinalityConfig,
   ) {
     super(logger.tag(configuration.projectId.toString()), [parentIndexer], {
@@ -71,7 +66,7 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     if (finalityData) {
-      await this.finalityRepository.add(finalityData)
+      await this.db.finality.add(finalityData)
     }
 
     this.logger.info('Update finished', {
@@ -85,7 +80,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   async isConfigurationSynced(targetTimestamp: UnixTime) {
-    const latestSynced = await this.finalityRepository.findLatestByProjectId(
+    const latestSynced = await this.db.finality.findLatestByProjectId(
       this.configuration.projectId,
     )
 
@@ -141,7 +136,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async initialize() {
-    const indexerState = await this.stateRepository.findIndexerState(
+    const indexerState = await this.db.indexerState.findIndexerState(
       this.indexerId,
     )
 
@@ -155,14 +150,14 @@ export class FinalityIndexer extends ChildIndexer {
     safeHeight: number,
     _configHash?: string | undefined,
   ): Promise<void> {
-    await this.stateRepository.addOrUpdate({
+    await this.db.indexerState.addOrUpdate({
       indexerId: this.indexerId,
       safeHeight,
     })
   }
 
   async getSafeHeight(): Promise<number> {
-    const indexerState = await this.stateRepository.findIndexerState(
+    const indexerState = await this.db.indexerState.findIndexerState(
       this.indexerId,
     )
     return (
@@ -171,7 +166,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(safeHeight: number): Promise<void> {
-    await this.stateRepository.setSafeHeight(this.indexerId, safeHeight)
+    await this.db.indexerState.setSafeHeight(this.indexerId, safeHeight)
   }
 
   /**

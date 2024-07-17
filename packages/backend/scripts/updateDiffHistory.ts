@@ -22,12 +22,14 @@ import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
+const ALLOWED_SWITCHES = ['--dev', '--save-sources']
 
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
 async function updateDiffHistoryFile() {
-  if (process.argv.filter((v) => v.startsWith('-')).length > 0) {
+  const filtered = process.argv.filter((v) => !ALLOWED_SWITCHES.includes(v))
+  if (filtered.filter((v) => v.startsWith('-')).length > 0) {
     console.log(
       'Discovery run with non-default configuration, skipping updating the diff history file...',
     )
@@ -45,8 +47,8 @@ async function updateDiffHistoryFile() {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
-  const curDiscovery = await configReader.readDiscovery(projectName, chain)
-  const config = await configReader.readConfig(projectName, chain)
+  const curDiscovery = configReader.readDiscovery(projectName, chain)
+  const config = configReader.readConfig(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -55,10 +57,12 @@ async function updateDiffHistoryFile() {
       ? undefined
       : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
+  const saveSources = process.argv.some((a) => a === '--save-sources')
   const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
     discoveryFromMainBranch,
     projectName,
     chain,
+    saveSources,
   )
 
   const diff = diffDiscovery(
@@ -141,6 +145,7 @@ async function performDiscoveryOnPreviousBlock(
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
   chain: string,
+  saveSources: boolean,
 ) {
   if (discoveryFromMainBranch === undefined) {
     return { prevDiscovery: undefined, codeDiff: undefined }
@@ -162,6 +167,7 @@ async function performDiscoveryOnPreviousBlock(
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+    saveSources,
   })
 
   const prevDiscoveryFile = readFileSync(

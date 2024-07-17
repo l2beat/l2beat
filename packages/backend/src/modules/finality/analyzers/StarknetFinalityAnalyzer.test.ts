@@ -1,10 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { StarknetFinalityAnalyzer } from './StarknetFinalityAnalyzer'
 
 describe(StarknetFinalityAnalyzer.name, () => {
@@ -32,13 +31,10 @@ describe(StarknetFinalityAnalyzer.name, () => {
           data: mockBytesResponse,
         }),
       })
-      const livenessRepository = mockObject<LivenessRepository>({})
 
       const analyzer = new StarknetFinalityAnalyzer(
         rpcClient,
-        livenessRepository,
-        mockObject<IndexerConfigurationRepository>({}),
-
+        mockObject<Database>({}),
         projectId,
         l2Client,
       )

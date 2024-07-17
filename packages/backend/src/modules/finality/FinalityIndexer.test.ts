@@ -4,13 +4,9 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ChildIndexer } from '@l2beat/uif'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
+import { Database, FinalityRecord } from '@l2beat/database'
 import { FinalityIndexer } from './FinalityIndexer'
 import { BaseAnalyzer } from './analyzers/types/BaseAnalyzer'
-import {
-  FinalityRecord,
-  FinalityRepository,
-} from './repositories/FinalityRepository'
 import { FinalityConfig } from './types/FinalityConfig'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
@@ -18,7 +14,7 @@ const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2024-02-07T00:00:00Z'))
 describe(FinalityIndexer.name, () => {
   describe(FinalityIndexer.prototype.update.name, () => {
     it('skips update if to is earlier than minTimestamp', async () => {
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         add: mockFn(),
       })
 
@@ -39,7 +35,7 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('skips update if the project is synced', async () => {
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         add: mockFn(),
       })
 
@@ -62,7 +58,7 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('skips adding to database if finalityData is undefined', async () => {
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         add: mockFn(),
       })
 
@@ -83,7 +79,7 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('skips updates for target in the past', async () => {
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         add: mockFn().resolvesToOnce(1),
       })
       const runtimeConfiguration = getMockFinalityRuntimeConfiguration([2, 4])
@@ -109,7 +105,7 @@ describe(FinalityIndexer.name, () => {
       const from = start.toNumber()
       const to = start.add(1, 'days').toNumber()
 
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         add: mockFn().resolvesToOnce(1),
       })
 
@@ -140,7 +136,7 @@ describe(FinalityIndexer.name, () => {
     it('returns true if project is synced', async () => {
       const syncedTimestamp = new UnixTime(41234123)
 
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         findLatestByProjectId: mockFn().resolvesToOnce({
           projectId: ProjectId('project'),
           timestamp: syncedTimestamp,
@@ -159,7 +155,7 @@ describe(FinalityIndexer.name, () => {
     it('returns false if project is not synced', async () => {
       const syncedTimestamp = new UnixTime(41234123)
 
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         findLatestByProjectId: mockFn().resolvesToOnce({
           projectId: ProjectId('project'),
           timestamp: syncedTimestamp.add(-1, 'seconds'),
@@ -224,7 +220,7 @@ describe(FinalityIndexer.name, () => {
         'analyze',
       )
 
-      const finalityRepository = mockObject<FinalityRepository>({
+      const finalityRepository = mockObject<Database['finality']>({
         add: mockFn().resolvesToOnce(1),
       })
 
@@ -257,7 +253,7 @@ describe(FinalityIndexer.name, () => {
         const from = start.toNumber()
         const to = start.add(1, 'days').toNumber()
 
-        const finalityRepository = mockObject<FinalityRepository>({
+        const finalityRepository = mockObject<Database['finality']>({
           add: mockFn().resolvesToOnce(1),
         })
 
@@ -312,7 +308,7 @@ describe(FinalityIndexer.name, () => {
     })
 
     it('indexer state undefined', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
+      const stateRepository = mockObject<Database['indexerState']>({
         findIndexerState: async () => undefined,
         addOrUpdate: async () => '',
         setSafeHeight: async () => 0,
@@ -334,7 +330,7 @@ describe(FinalityIndexer.name, () => {
   describe(FinalityIndexer.prototype.getSafeHeight.name, () => {
     it('returns safe height from DB', async () => {
       const safeHeightDB = 123
-      const stateRepository = mockObject<IndexerStateRepository>({
+      const stateRepository = mockObject<Database['indexerState']>({
         findIndexerState: async () => ({
           indexerId: 'finality_indexer',
           safeHeight: safeHeightDB,
@@ -351,7 +347,7 @@ describe(FinalityIndexer.name, () => {
       )
     })
     it('returns minTimestamp if indexer state is undefined', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
+      const stateRepository = mockObject<Database['indexerState']>({
         findIndexerState: async () => undefined,
       })
       const finalityIndexer = getMockFinalityIndexer({ stateRepository })
@@ -367,7 +363,7 @@ describe(FinalityIndexer.name, () => {
 
   describe(FinalityIndexer.prototype.setSafeHeight.name, () => {
     it('saves safe height in the database', async () => {
-      const stateRepository = mockObject<IndexerStateRepository>({
+      const stateRepository = mockObject<Database['indexerState']>({
         setSafeHeight: async () => 0, // return value is not important
       })
       const finalityIndexer = getMockFinalityIndexer({ stateRepository })
@@ -395,8 +391,8 @@ describe(FinalityIndexer.name, () => {
 })
 
 function getMockFinalityIndexer(params: {
-  stateRepository?: IndexerStateRepository
-  finalityRepository?: FinalityRepository
+  stateRepository?: Database['indexerState']
+  finalityRepository?: Database['finality']
   runtimeConfiguration?: FinalityConfig
 }) {
   const { stateRepository, finalityRepository, runtimeConfiguration } = params
@@ -408,8 +404,10 @@ function getMockFinalityIndexer(params: {
       tick: async () => 1,
       subscribe: () => {},
     }),
-    stateRepository ?? mockObject<IndexerStateRepository>({}),
-    finalityRepository ?? mockObject<FinalityRepository>({}),
+    mockObject<Database>({
+      indexerState: stateRepository ?? mockObject<Database['indexerState']>({}),
+      finality: finalityRepository ?? mockObject<Database['finality']>({}),
+    }),
     runtimeConfiguration ?? getMockFinalityRuntimeConfiguration(),
   )
 }
@@ -421,12 +419,11 @@ function getMockStateRepository(
     minTimestamp: MIN_TIMESTAMP,
   },
 ) {
-  const stateRepository = mockObject<IndexerStateRepository>({
+  return mockObject<Database['indexerState']>({
     findIndexerState: async () => indexerState,
     addOrUpdate: async () => '',
     setSafeHeight: async () => 0,
   })
-  return stateRepository
 }
 
 function getMockFinalityRuntimeConfiguration(

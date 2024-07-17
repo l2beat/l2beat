@@ -6,10 +6,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { Database } from '@l2beat/database'
 import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'
 import { getRollupData } from './blobToData'
@@ -24,17 +23,11 @@ export class OpStackFinalityAnalyzer extends BaseAnalyzer {
     private readonly blobClient: BlobClient,
     private readonly logger: Logger,
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly opts: SpanBatchDecoderOpts,
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
     this.logger = logger.for(this).tag(projectId.toString())
     this.channelBank = new ChannelBank(projectId, this.logger)
   }

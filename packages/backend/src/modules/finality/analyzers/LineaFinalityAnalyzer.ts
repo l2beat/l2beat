@@ -5,9 +5,8 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 const calldataFnName = 'submitData'
@@ -22,17 +21,11 @@ const iface = new utils.Interface([calldataFn, blobFn])
 export class LineaFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly l2Provider: RpcClient,
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
   }
 
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {

@@ -13,21 +13,14 @@ import {
 } from '@l2beat/shared-pure'
 
 import { BackendProject } from '@l2beat/config'
+import { AggregatedLivenessRecord, Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
-import {
-  AggregatedLivenessRecord,
-  AggregatedLivenessRepository,
-} from '../repositories/AggregatedLivenessRepository'
-import {
-  AnomaliesRecord,
-  AnomaliesRepository,
-} from '../repositories/AnomaliesRepository'
-import { LivenessRepository } from '../repositories/LivenessRepository'
+import { AnomaliesRecord } from '../repositories/AnomaliesRepository'
 import { LivenessWithConfigService } from '../services/LivenessWithConfigService'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
@@ -55,9 +48,7 @@ export type LivenessTransactionsResult = Result<
 
 export interface LivenessControllerDeps {
   indexerService: IndexerService
-  livenessRepository: LivenessRepository
-  aggregatedLivenessRepository: AggregatedLivenessRepository
-  anomaliesRepository: AnomaliesRepository
+  db: Database
   projects: BackendProject[]
   clock: Clock
   logger?: Logger
@@ -107,12 +98,10 @@ export class LivenessController {
       }
 
       const aggregatedLivenessRecords =
-        await this.$.aggregatedLivenessRepository.getByProject(
-          project.projectId,
-        )
+        await this.$.db.aggregatedLiveness.getByProject(project.projectId)
 
       const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
-      const anomalyRecords = await this.$.anomaliesRepository.getByProjectFrom(
+      const anomalyRecords = await this.$.db.anomalies.getByProjectFrom(
         project.projectId,
         last30Days,
       )
@@ -247,7 +236,7 @@ export class LivenessController {
 
     const livenessWithConfig = new LivenessWithConfigService(
       activeConfigs,
-      this.$.livenessRepository,
+      this.$.db,
     )
 
     const records = await livenessWithConfig.getByTypeSince(
@@ -298,7 +287,7 @@ export class LivenessController {
 
           const livenessWithConfig = new LivenessWithConfigService(
             activeConfigs,
-            this.$.livenessRepository,
+            this.$.db,
           )
 
           const records = await livenessWithConfig.getSince(last30Days)
