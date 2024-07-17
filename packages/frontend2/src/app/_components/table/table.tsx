@@ -11,6 +11,8 @@ const Table = React.forwardRef<
     <table
       ref={ref}
       className={cn('w-full text-base text-left border-collapse', className)}
+      cellPadding={0}
+      cellSpacing={0}
       {...props}
     />
   </div>
@@ -51,7 +53,7 @@ const TableHeaderRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      'border-b transition-colors border-b-gray-200 dark:border-b-zinc-700',
+      'border-b border-b-gray-200 dark:border-b-zinc-700',
       className,
     )}
     {...props}
@@ -65,10 +67,7 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TableHeaderRow
     ref={ref}
-    className={cn(
-      'group/row hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
-      className,
-    )}
+    className={cn('group/row hover:shadow-sm', className)}
     {...props}
   />
 ))
@@ -83,7 +82,7 @@ const TableHead = React.forwardRef<
   <th
     ref={ref}
     className={cn(
-      'bg-white dark:bg-neutral-900 group-hover/row:bg-transparent h-10 py-2 first:pl-2 pr-3 last:pr-2 text-left align-bottom uppercase font-medium text-muted-foreground',
+      'h-10 py-2 first:pl-2 pr-3 last:pr-2 text-left align-bottom uppercase font-medium text-muted-foreground',
       className,
     )}
     {...props}
@@ -103,7 +102,7 @@ const TableCell = React.forwardRef<
   <td
     ref={ref}
     className={cn(
-      'bg-white dark:bg-neutral-900 group-hover/row:bg-transparent h-9 md:h-14 align-middle whitespace-pre group',
+      'h-9 md:h-14 align-middle whitespace-pre group',
       !href && 'first:pl-2 pr-3 last:pr-2',
       !href && className,
     )}
