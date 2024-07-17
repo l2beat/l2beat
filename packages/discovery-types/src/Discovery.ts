@@ -42,6 +42,7 @@ export interface DiscoveryOutput {
   configHash: Hash256
   version: number
   usedTemplates: Record<string, Hash256>
+  shapeFilesHash: Hash256
 }
 
 export interface DiscoveryCustomType {

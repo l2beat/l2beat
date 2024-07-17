@@ -6,6 +6,7 @@ import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
 import { HttpClient } from '../utils/HttpClient'
 import { DiscoveryLogger } from './DiscoveryLogger'
 import { Analysis } from './analysis/AddressAnalyzer'
+import { TemplateService } from './analysis/TemplateService'
 import { ConfigReader } from './config/ConfigReader'
 import { DiscoveryConfig } from './config/DiscoveryConfig'
 import { getDiscoveryEngine } from './getDiscoveryEngine'
@@ -34,20 +35,28 @@ export async function runDiscovery(
       : undefined)
 
   const logger = DiscoveryLogger.CLI
-  const { result, blockNumber, providerStats } = await discover(
-    chainConfigs,
-    projectConfig,
-    logger,
-    configuredBlockNumber,
-    http,
-  )
+  const { result, blockNumber, providerStats, templateService } =
+    await discover(
+      chainConfigs,
+      projectConfig,
+      logger,
+      configuredBlockNumber,
+      http,
+    )
 
-  await saveDiscoveryResult(result, projectConfig, blockNumber, logger, {
-    sourcesFolder: config.sourcesFolder,
-    flatSourcesFolder: config.flatSourcesFolder,
-    discoveryFilename: config.discoveryFilename,
-    saveSources: config.saveSources,
-  })
+  await saveDiscoveryResult(
+    result,
+    projectConfig,
+    blockNumber,
+    logger,
+    templateService,
+    {
+      sourcesFolder: config.sourcesFolder,
+      flatSourcesFolder: config.flatSourcesFolder,
+      discoveryFilename: config.discoveryFilename,
+      saveSources: config.saveSources,
+    },
+  )
 
   if (config.project.startsWith('shared-')) {
     const allConfigs = configReader.readAllConfigsForChain(config.chain.name)
@@ -101,7 +110,7 @@ async function justDiscover(
   blockNumber: number,
   http: HttpClient,
 ): Promise<DiscoveryOutput> {
-  const { result } = await discover(
+  const { result, templateService } = await discover(
     chainConfigs,
     config,
     DiscoveryLogger.CLI,
@@ -114,6 +123,7 @@ async function justDiscover(
     config.hash,
     blockNumber,
     result,
+    templateService.getShapeFilesHash(),
   )
 }
 
@@ -127,11 +137,12 @@ export async function discover(
   result: Analysis[]
   blockNumber: number
   providerStats: AllProviderStats
+  templateService: TemplateService
 }> {
   const sqliteCache = new SQLiteCache()
   await sqliteCache.init()
 
-  const { allProviders, discoveryEngine } = getDiscoveryEngine(
+  const { allProviders, discoveryEngine, templateService } = getDiscoveryEngine(
     chainConfigs,
     sqliteCache,
     http,
@@ -144,5 +155,6 @@ export async function discover(
     result: await discoveryEngine.discover(provider, config),
     blockNumber,
     providerStats: allProviders.getStats(config.chain),
+    templateService,
   }
 }

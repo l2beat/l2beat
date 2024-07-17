@@ -10,6 +10,7 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
+  shapeFilesHash: Hash256,
 ): DiscoveryOutput {
   return {
     name,
@@ -19,6 +20,7 @@ export function toDiscoveryOutput(
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
+    shapeFilesHash,
   }
 }
 
@@ -38,7 +40,13 @@ export function processAnalysis(
   results: Analysis[],
 ): Omit<
   DiscoveryOutput,
-  'name' | 'blockNumber' | 'configHash' | 'version' | 'chain' | 'usedTemplates'
+  | 'name'
+  | 'blockNumber'
+  | 'configHash'
+  | 'version'
+  | 'chain'
+  | 'usedTemplates'
+  | 'shapeFilesHash'
 > {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
