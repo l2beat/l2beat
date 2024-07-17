@@ -30,7 +30,7 @@ for project in "$BASE_DIR"/*; do
         # Iterate through each chain folder inside the project folder
         for chain in "$project"/*; do
             # Check if the chain is a directory
-            if [[ -d "$chain" && $(basename "$chain") != "bsc" ]]; then
+            if [[ -d "$chain" ]]; then
                 # Get the chain name
                 chain_name=$(basename "$chain")
 
