@@ -57,10 +57,12 @@ async function updateDiffHistoryFile() {
       ? undefined
       : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
+  const saveSources = process.argv.some((a) => a === '--save-sources')
   const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
     discoveryFromMainBranch,
     projectName,
     chain,
+    saveSources,
   )
 
   const diff = diffDiscovery(
@@ -143,6 +145,7 @@ async function performDiscoveryOnPreviousBlock(
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
   chain: string,
+  saveSources: boolean,
 ) {
   if (discoveryFromMainBranch === undefined) {
     return { prevDiscovery: undefined, codeDiff: undefined }
@@ -164,6 +167,7 @@ async function performDiscoveryOnPreviousBlock(
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+    saveSources,
   })
 
   const prevDiscoveryFile = readFileSync(
