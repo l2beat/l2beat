@@ -248,7 +248,7 @@ function createIndexer(options: {
 }) {
   return new LivenessAggregatingIndexer({
     tag: options.tag,
-    indexerService: mockObject<IndexerService>(),
+    indexerService: options.indexerService ?? mockObject<IndexerService>(),
     logger: Logger.SILENT,
     minHeight: 0,
     parents: [],
