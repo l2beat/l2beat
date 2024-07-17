@@ -21,7 +21,6 @@ export function getProps(
       preloadApis: [
         getChartUrl({
           type: 'bridges-tvl',
-          includeCanonical: false,
         }),
       ],
       metadata: getDefaultPageMetadata({

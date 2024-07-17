@@ -1,16 +1,16 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { BlockTimestamp as BlockTimestampRow } from '../kysely/generated/types'
+import { BlockTimestamp } from '../kysely/generated/types'
 
-export interface BlockTimestamp {
+export interface BlockTimestampRecord {
   chain: string
   timestamp: UnixTime
   blockNumber: number
 }
 
 export function toRecord(
-  entity: Selectable<BlockTimestampRow>,
-): BlockTimestamp {
+  entity: Selectable<BlockTimestamp>,
+): BlockTimestampRecord {
   return {
     chain: entity.chain,
     timestamp: UnixTime.fromDate(entity.timestamp),
@@ -19,8 +19,8 @@ export function toRecord(
 }
 
 export function toRow(
-  blockTimestamp: BlockTimestamp,
-): Insertable<BlockTimestampRow> {
+  blockTimestamp: BlockTimestampRecord,
+): Insertable<BlockTimestamp> {
   return {
     chain: blockTimestamp.chain,
     timestamp: blockTimestamp.timestamp.toDate(),

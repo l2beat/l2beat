@@ -1,10 +1,10 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { DailyDiscovery as DailyDiscoveryRow } from '../kysely/generated/types'
+import { DailyDiscovery } from '../kysely/generated/types'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 
-export interface DailyDiscovery {
+export interface DailyDiscoveryRecord {
   projectName: string
   chainId: ChainId
   blockNumber: number
@@ -15,8 +15,8 @@ export interface DailyDiscovery {
 }
 
 export function toRecord(
-  entity: Selectable<DailyDiscoveryRow>,
-): DailyDiscovery {
+  entity: Selectable<DailyDiscovery>,
+): DailyDiscoveryRecord {
   return {
     projectName: entity.project_name,
     chainId: ChainId(entity.chain_id),
@@ -35,8 +35,8 @@ export function toRecord(
 }
 
 export function toRow(
-  dailyDiscovery: DailyDiscovery,
-): Insertable<DailyDiscoveryRow> {
+  dailyDiscovery: DailyDiscoveryRecord,
+): Insertable<DailyDiscovery> {
   return {
     project_name: dailyDiscovery.projectName,
     chain_id: +dailyDiscovery.chainId,

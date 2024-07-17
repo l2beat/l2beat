@@ -1,10 +1,13 @@
 import { PostgresDatabase, Transaction } from '../kysely'
-import { IndexerState, toRecord, toRow } from './entity'
+import { IndexerStateRecord, toRecord, toRow } from './entity'
 
 export class IndexerStateRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async addOrUpdate(record: IndexerState, trx?: Transaction): Promise<string> {
+  async addOrUpdate(
+    record: IndexerStateRecord,
+    trx?: Transaction,
+  ): Promise<string> {
     const row = toRow(record)
     const scope = trx ?? this.db
     await scope

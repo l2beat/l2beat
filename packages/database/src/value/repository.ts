@@ -5,7 +5,7 @@ import {
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../utils/deleteArchivedRecords'
-import { Value, toRecord, toRow } from './entity'
+import { ValueRecord, toRecord, toRow } from './entity'
 import { selectValue } from './select'
 
 const BATCH_SIZE = 2_000
@@ -13,7 +13,7 @@ const BATCH_SIZE = 2_000
 export class ValueRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async getForProjects(projectIds: ProjectId[]): Promise<Value[]> {
+  async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -31,7 +31,7 @@ export class ValueRepository {
   async getForProjectsInRange(
     projectIds: ProjectId[],
     { from, to = UnixTime.now() }: { from: UnixTime; to?: UnixTime },
-  ): Promise<Value[]> {
+  ): Promise<ValueRecord[]> {
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -48,7 +48,7 @@ export class ValueRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: Value[]): Promise<number> {
+  async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
     await this.db.transaction().execute(async (trx) => {
       for (let i = 0; i < records.length; i += BATCH_SIZE) {
         await this._addOrUpdateMany(records.slice(i, i + BATCH_SIZE), trx)
@@ -58,7 +58,7 @@ export class ValueRepository {
     return records.length
   }
 
-  private async _addOrUpdateMany(records: Value[], trx: Transaction) {
+  private async _addOrUpdateMany(records: ValueRecord[], trx: Transaction) {
     const rows = records.map(toRow)
 
     await trx
@@ -91,7 +91,7 @@ export class ValueRepository {
 
   // #region methods used only in tests
 
-  async getAll(): Promise<Value[]> {
+  async getAll(): Promise<ValueRecord[]> {
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -100,7 +100,7 @@ export class ValueRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: Value[], trx?: Transaction): Promise<number> {
+  async addMany(records: ValueRecord[], trx?: Transaction): Promise<number> {
     const rows = records.map(toRow)
     const scope = trx ?? this.db
 
@@ -133,7 +133,9 @@ export class ValueRepository {
   /**
    * For each projectId x data source pick the latest value according to latest timestamp
    */
-  async getLatestValuesForProjects(projectIds: ProjectId[]): Promise<Value[]> {
+  async getLatestValuesForProjects(
+    projectIds: ProjectId[],
+  ): Promise<ValueRecord[]> {
     const rows = await this.db
       .with('latest_values', (cb) =>
         cb

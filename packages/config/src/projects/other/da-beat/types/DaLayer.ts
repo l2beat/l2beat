@@ -1,8 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',
@@ -23,23 +25,12 @@ export type BlockchainDaLayer = CommonDaLayer & {
 
   bridges: (OnChainDaBridge | NoDaBridge)[]
 
-  /**
-   * The duration of the data storage.
-   * @unit seconds
-   */
-  storageDuration: number
+  dataAvailabilitySampling: DataAvailabilitySampling
 
   /**
-   * Consensus finality time.
-   * @unit seconds
+   * The consensus algorithm used by the data availability layer.
    */
-  consensusFinality: number
-
-  /**
-   * Duration of time for unbonding in seconds
-   * @unit seconds
-   */
-  unbondingPeriod: number
+  consensusAlgorithm: DaConsensusAlgorithm
 
   /**
    * Economic security configuration.

@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('reya')
 
 export const reya: Layer2 = orbitStackL2({
   discovery,
-  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.Stack.Orbit, Badge.RaaS.Gelato],
+  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {
     name: 'Reya',
     slug: 'reya',

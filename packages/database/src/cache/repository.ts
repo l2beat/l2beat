@@ -1,11 +1,11 @@
 import { PostgresDatabase } from '../kysely'
-import { Cache, toRecord, toRow } from './entity'
+import { CacheRecord, toRecord, toRow } from './entity'
 import { selectCache } from './select'
 
 export class CacheRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsert(cache: Cache) {
+  upsert(cache: CacheRecord) {
     const row = toRow(cache)
 
     return this.db
@@ -22,7 +22,7 @@ export class CacheRepository {
       .execute()
   }
 
-  async findByKey(key: Cache['key']) {
+  async findByKey(key: CacheRecord['key']) {
     const row = await this.db
       .selectFrom('public.Cache')
       .select(selectCache)

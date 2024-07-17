@@ -1,10 +1,10 @@
 import { PostgresDatabase } from '../kysely'
-import { TokenMeta, toRow } from './entity'
+import { TokenMetaRecord, toRow } from './entity'
 
 export class TokenMetaRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsertMany(tokenMetas: TokenMeta[]) {
+  upsertMany(tokenMetas: TokenMetaRecord[]) {
     const entities = tokenMetas.map(toRow)
 
     return this.db

@@ -1,3 +1,32 @@
+Generated with discovered.json: 0x3b4b66e7b6233cee4254cd6fba0fc1ce1e701257
+
+# Diff at Tue, 16 Jul 2024 08:31:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4cebc868d0be9a9868d2842c2670f1974594c48e block: 19976249
+- current block number: 20317887
+
+## Description
+
+A new L2OutputOracle implementation is deployed in order to change the constant FINALIZATION_PERIOD_SECONDS (challenge period) from 12 to 7 days.
+
+## Watched changes
+
+```diff
+    contract L2OutputOracle (0x826D1B0D4111Ad9146Eb8941D7Ca2B6a44215c76) {
+    +++ description: None
+      values.$implementation:
+-        "0xaEbA6c3042B463DfAA6A2DFA96486D5A92186cFF"
++        "0x1C90963D451316E3DBFdD5A30354EE56C29016EB"
+      values.FINALIZATION_PERIOD_SECONDS:
+-        1036800
++        604800
+      values.finalizationPeriodSeconds:
+-        1036800
++        604800
+    }
+```
+
 Generated with discovered.json: 0xffe3764813ca09ee3350871b64f6453b893cfed7
 
 # Diff at Wed, 29 May 2024 14:56:01 GMT:

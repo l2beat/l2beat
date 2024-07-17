@@ -1,6 +1,10 @@
 # @l2beat/frontend
 
-The statically generated frontend that is the face of L2BEAT.
+The legacy, statically generated frontend that is the face of L2BEAT.
+
+## Frontend migration
+
+This is the legacy frontend and most of the work is now happening in `../frontend2`. Some pages will return 404, in which case it (probably) means that the page has been migrated to the new Next.js codebase.
 
 ## Setup
 

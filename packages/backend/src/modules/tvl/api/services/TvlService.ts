@@ -242,16 +242,9 @@ export class TvlService {
       daily: sumCharts(layers2s.daily, layer3s.daily),
     }
 
-    const combined = {
-      hourly: sumCharts(bridges.hourly, layer2sTotal.hourly),
-      sixHourly: sumCharts(bridges.sixHourly, layer2sTotal.sixHourly),
-      daily: sumCharts(bridges.daily, layer2sTotal.daily),
-    }
-
     const result: TvlApiResponse = {
       bridges,
       layers2s: layer2sTotal,
-      combined,
       projects: projectData,
     }
     return result
@@ -283,13 +276,6 @@ export class TvlService {
 
     for (const a of associatedTokensCharts) {
       if (a.includeInTotal) {
-        tvl.combined = subtractTokenCharts(
-          tvl.combined,
-          a.data,
-          a.type,
-          ethPrices.prices,
-        )
-
         tvl[a.projectType] = subtractTokenCharts(
           tvl[a.projectType],
           a.data,

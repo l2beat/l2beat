@@ -1,4 +1,4 @@
-import { UpdateNotifier as UpdateNotifierRow } from '../kysely/generated/types'
+import { UpdateNotifier } from '../kysely/generated/types'
 
 export const selectUpdateNotifier = [
   'id',
@@ -8,4 +8,4 @@ export const selectUpdateNotifier = [
   'block_number',
   'diff_json_blob',
   'chain_id',
-] as const satisfies (keyof UpdateNotifierRow)[]
+] as const satisfies (keyof UpdateNotifier)[]

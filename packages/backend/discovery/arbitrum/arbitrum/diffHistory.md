@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xeb3283c9c8474359d32a9f1e49b02e9835ae9ba0
+
+# Diff at Tue, 16 Jul 2024 07:37:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4cebc868d0be9a9868d2842c2670f1974594c48e block: 225188961
+- current block number: 232735844
+
+## Description
+
+Four signers from the SC rotated their keys as planned. [ref](https://forum.arbitrum.foundation/t/non-emergency-actions-to-facilitate-key-rotation-of-security-council-june-2024/25140)
+
+## Watched changes
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.11:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.10:
+-        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.8:
+-        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.7:
+-        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
++++ description: All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)
++++ severity: MEDIUM
+      values.getBothCohorts.6:
+-        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.getSecondCohort.5:
+-        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+      values.getSecondCohort.4:
+-        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
+      values.getSecondCohort.2:
+-        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.getSecondCohort.1:
+-        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.getSecondCohort.0:
+-        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
++        "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae"
+      values.updateNonce:
+-        2
++        6
+    }
+```
+
 Generated with discovered.json: 0x58ed1c3ec6e1eff2baa268268be3987fd746e7dc
 
 # Diff at Mon, 24 Jun 2024 10:18:00 GMT:

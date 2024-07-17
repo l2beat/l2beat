@@ -18,7 +18,7 @@ export function BridgesSummaryPage(props: BridgesSummaryPageProps) {
       <BridgesMvpWarning />
       <Chart
         settingsId="bridges-tvl"
-        initialType={{ type: 'bridges-tvl', includeCanonical: false }}
+        initialType={{ type: 'bridges-tvl' }}
         header="tvl"
       />
       <BridgesSummaryView {...props.tvlView} />

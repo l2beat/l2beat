@@ -1,6 +1,8 @@
-import { L2CostPrice as L2CostPriceRow } from '../kysely/generated/types'
+import { Liveness } from '../kysely/generated/types'
 
-export const selectL2CostPrice = [
-  'price_usd',
+export const selectLiveness = [
+  'configuration_id',
+  'tx_hash',
+  'block_number',
   'timestamp',
-] as const satisfies (keyof L2CostPriceRow)[]
+] as const satisfies (keyof Liveness)[]

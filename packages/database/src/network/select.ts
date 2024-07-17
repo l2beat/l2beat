@@ -1,4 +1,4 @@
-import { Network } from './entity'
+import { NetworkRecord } from './entity'
 
 export const selectNetwork = [
   'id',
@@ -12,4 +12,4 @@ export const selectNetwork = [
   'coingeckoId',
   'axelarGatewayAddress',
   'layerZeroV1EndpointAddress',
-] as const satisfies (keyof Network)[]
+] as const satisfies (keyof NetworkRecord)[]

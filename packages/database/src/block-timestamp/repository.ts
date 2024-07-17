@@ -5,13 +5,13 @@ import {
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../utils/deleteArchivedRecords'
-import { BlockTimestamp, toRecord, toRow } from './entity'
+import { BlockTimestampRecord, toRecord, toRow } from './entity'
 import { selectBlockTimestamp } from './select'
 
 export class BlockTimestampRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async add(record: BlockTimestamp) {
+  async add(record: BlockTimestampRecord) {
     const row = toRow(record)
 
     await this.db.insertInto('public.block_timestamps').values(row).execute()
@@ -65,7 +65,7 @@ export class BlockTimestampRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: BlockTimestamp[], trx?: Transaction) {
+  async addMany(records: BlockTimestampRecord[], trx?: Transaction) {
     const rows = records.map(toRow)
 
     const scope = trx ?? this.db

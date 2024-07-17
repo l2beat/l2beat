@@ -1,4 +1,5 @@
 import {
+  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -436,12 +437,18 @@ export const linea: Layer2 = {
         description:
           'The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2.',
         ...upgradesTimelock,
-        pausable: {
-          pausableBy: discovery
-            .getAccessControlField('zkEVM', 'PAUSE_MANAGER_ROLE')
-            .members.map((a) => a.toString()),
-          paused: isPaused,
-        },
+        pausable: (() => {
+          const addresses = discovery.getAccessControlField(
+            'zkEVM',
+            'PAUSE_MANAGER_ROLE',
+          ).members
+          assert(addresses.length === 1)
+          assert(
+            addresses[0] ===
+              discovery.getPermissionedAccount('ERC20Bridge', 'owner').address,
+          )
+          return { pausableBy: ['AdminMultisig'], paused: isPaused }
+        })(),
         references: [
           {
             text: 'LineaRollup.sol - Etherscan source code, state injections: stateRoot and l2MerkleRoot are part of the validity proof input.',

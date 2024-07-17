@@ -3,6 +3,9 @@ import { ProjectId, TvlApiResponse } from '@l2beat/shared-pure'
 const useTvlFromMap: Record<string, string> = {
   astarzkevm: 'polygonzkevm',
   xlayer: 'polygonzkevm',
+  gpt: 'polygonzkevm',
+  witness: 'polygonzkevm',
+  wirex: 'polygonzkevm',
 }
 
 export function orderByTvl<
