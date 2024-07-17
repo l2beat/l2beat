@@ -29,7 +29,7 @@ export const payy: ZkCatalogProject = {
         ],
       },
       {
-        name: 'Mint Verifier',
+        name: 'Mint verifier',
         description:
           'Allows a note to be created without a corresponding input.',
         contractAddress: EthereumAddress(
@@ -49,7 +49,7 @@ export const payy: ZkCatalogProject = {
         ],
       },
       {
-        name: 'Burn Verifier',
+        name: 'Burn verifier',
         description:
           'Allows a note to be used without a corresponding output, which, when proven, releases funds.',
         contractAddress: EthereumAddress(
