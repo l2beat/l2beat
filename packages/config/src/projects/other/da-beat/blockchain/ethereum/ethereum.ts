@@ -31,7 +31,7 @@ import { deri } from '../../../../layer3s/deri'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer, DaLayerKind } from '../../types/DaLayer'
-import { enshrined } from './bridges/enshrined'
+import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum: DaLayer = {
   id: 'ethereum',
@@ -42,7 +42,7 @@ export const ethereum: DaLayer = {
     description:
       'Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).',
   },
-  bridges: [enshrined],
+  bridges: [enshrinedBridge],
   usedIn: [
     arbitrum.id,
     base.id,
@@ -91,7 +91,7 @@ export const ethereum: DaLayer = {
   },
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
-    fraudDetection: DaFraudDetectionRisk.NoFraudDetection
+    fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
   economicSecurity: {
     type: 'Ethereum',

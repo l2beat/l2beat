@@ -32,9 +32,9 @@ import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
 import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
 
-
 export const enshrinedBridge = {
   id: 'enshrined-bridge',
+  chain: 'ethereum',
   kind: DaBridgeKind.Enshrined,
   display: {
     name: 'Enshrined Bridge',

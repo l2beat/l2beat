@@ -30,10 +30,14 @@ export const DaBridgeKind = {
   OnChainBridge,
   DAC,
   NoBridge,
-  Enshrined
+  Enshrined,
 }
 
-export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge | EnshrinedBridge
+export type DaBridge =
+  | NoDaBridge
+  | OnChainDaBridge
+  | DacBridge
+  | EnshrinedBridge
 
 export type NoDaBridge = CommonDaBridge & {
   kind: typeof NoBridge
