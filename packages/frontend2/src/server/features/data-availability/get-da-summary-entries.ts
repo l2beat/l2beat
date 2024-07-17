@@ -21,7 +21,8 @@ export async function getDaSummaryEntries() {
 
       return {
         slug: daLayer.display.slug,
-        daLayer: daLayer.display.name,
+        name: daLayer.display.name,
+        href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
         daBridge: toDaBridge(bridge),
         layerType: kindToType(daLayer.kind),
         risks: getDaRisks(daLayer, bridge),

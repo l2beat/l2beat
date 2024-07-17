@@ -5,8 +5,9 @@ import { getDaRisks } from './utils/get-da-risks'
 export async function getDaRiskEntries() {
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => ({
+      name: daLayer.display.name,
       slug: daLayer.display.slug,
-      daLayer: daLayer.display.name,
+      href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
       daBridge: toDaBridge(bridge),
       risks: getDaRisks(daLayer, bridge),
     })),

@@ -7,16 +7,40 @@ import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon
 import { UsedIn } from './used-in'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { DaBridgeCell } from './da-bridge-cell'
+import { IndexCell } from '~/app/_components/table/cells/index-cell'
+import Image from 'next/image'
+import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
 export const columns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
-    cell: (ctx) => ctx.row.index + 1,
+    cell: (ctx) => <IndexCell>{indexRecalculatedOnFilter(ctx)}</IndexCell>,
+    meta: {
+      headClassName: 'w-0',
+    },
   }),
-  columnHelper.accessor('daLayer', {
+  columnHelper.display({
+    id: 'logo',
+    cell: (ctx) => (
+      <Image
+        className="min-w-[18px] min-h-[18px]"
+        src={`/icons/${ctx.row.original.slug}.png`}
+        width={18}
+        height={18}
+        alt={`${ctx.row.original.name} logo`}
+      />
+    ),
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: '!pr-0',
+    },
+  }),
+  columnHelper.accessor('name', {
     header: 'DA Layer',
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
