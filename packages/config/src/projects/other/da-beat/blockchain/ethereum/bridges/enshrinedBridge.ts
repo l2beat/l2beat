@@ -80,5 +80,6 @@ export const enshrinedBridge: EnshrinedBridge = {
     accessibility: DaAccessibilityRisk.Enshrined,
     attestations: DaAttestationSecurityRisk.Enshrined,
     exitWindow: DaExitWindowRisk.Immutable,
+    // we should add a note on the frontend that the specific rollup contracts could be upgradable and the security properties of each depend on the single rollup implementation
   },
 } satisfies DaBridge
