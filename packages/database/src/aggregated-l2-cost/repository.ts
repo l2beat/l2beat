@@ -1,7 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../kysely'
+import { PostgresDatabase } from '../kysely'
 import { AggregatedL2CostRecord, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
+
+const BATCH_SIZE = 5_000
 
 export class AggregatedL2CostRepository {
   constructor(private readonly db: PostgresDatabase) {}
@@ -15,16 +17,38 @@ export class AggregatedL2CostRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(
-    records: AggregatedL2CostRecord[],
-    trx?: Transaction,
-  ): Promise<number> {
-    const scope = trx ?? this.db
+  async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await scope.insertInto('public.aggregated_l2_costs').values(rows).execute()
+    await this.db.transaction().execute(async (trx) => {
+      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
+        await trx
+          .insertInto('public.aggregated_l2_costs')
+          .values(rows.slice(i, i + BATCH_SIZE))
+          .onConflict((cb) =>
+            cb.columns(['timestamp', 'project_id']).doUpdateSet({
+              total_gas: (eb) => eb.ref('excluded.total_gas'),
+              total_gas_eth: (eb) => eb.ref('excluded.total_gas_eth'),
+              total_gas_usd: (eb) => eb.ref('excluded.total_gas_usd'),
+              blobs_gas: (eb) => eb.ref('excluded.blobs_gas'),
+              blobs_gas_eth: (eb) => eb.ref('excluded.blobs_gas_eth'),
+              blobs_gas_usd: (eb) => eb.ref('excluded.blobs_gas_usd'),
+              calldata_gas: (eb) => eb.ref('excluded.calldata_gas'),
+              calldata_gas_eth: (eb) => eb.ref('excluded.calldata_gas_eth'),
+              calldata_gas_usd: (eb) => eb.ref('excluded.calldata_gas_usd'),
+              compute_gas: (eb) => eb.ref('excluded.compute_gas'),
+              compute_gas_eth: (eb) => eb.ref('excluded.compute_gas_eth'),
+              compute_gas_usd: (eb) => eb.ref('excluded.compute_gas_usd'),
+              overhead_gas: (eb) => eb.ref('excluded.overhead_gas'),
+              overhead_gas_eth: (eb) => eb.ref('excluded.overhead_gas_eth'),
+              overhead_gas_usd: (eb) => eb.ref('excluded.overhead_gas_usd'),
+            }),
+          )
+          .execute()
+      }
+    })
 
-    return rows.length
+    return records.length
   }
 
   async deleteAfter(from: UnixTime): Promise<void> {
