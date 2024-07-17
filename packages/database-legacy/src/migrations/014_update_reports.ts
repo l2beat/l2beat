@@ -11,22 +11,14 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { layer2s } from '@l2beat/config'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex.schema.alterTable('reports', (table) => {
     table.string('project_id')
   })
-  await Promise.all(
-    layer2s.flatMap(({ id, config: { escrows } }) =>
-      escrows.map(async (escrow) => {
-        await knex('reports')
-          .update({ project_id: id.toString() })
-          .where({ bridge_address: escrow.address })
-      }),
-    ),
-  )
+
+  // This used to update project_ids
 
   await knex.schema.createTable('reports_tmp', (table) => {
     table.bigInteger('unix_timestamp').notNullable()

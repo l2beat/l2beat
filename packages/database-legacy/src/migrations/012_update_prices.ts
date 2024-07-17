@@ -11,7 +11,6 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { tokenList } from '@l2beat/config'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -19,14 +18,7 @@ export async function up(knex: Knex) {
     table.string('asset_id').index()
     table.index('unix_timestamp')
   })
-  await Promise.all(
-    tokenList.map(({ id, coingeckoId }) => {
-      return knex('coingecko_prices')
-        .update({ asset_id: id.toString() })
-        .whereRaw('coingecko_id = ?', [coingeckoId.toString()])
-    }),
-  )
-
+  // this used to update all asset_ids to correct values
   await knex('coingecko_prices').where({ asset_id: null }).delete()
 
   await knex.schema.alterTable('coingecko_prices', (table) => {
@@ -41,13 +33,7 @@ export async function down(knex: Knex) {
   await knex.schema.alterTable('coingecko_prices', (table) => {
     table.string('coingecko_id')
   })
-  await Promise.all(
-    tokenList.map(({ id, coingeckoId }) => {
-      return knex('coingecko_prices')
-        .update({ coingecko_id: coingeckoId.toString() })
-        .where({ asset_id: id.toString() })
-    }),
-  )
+  // this used to update all coingecko_ids to correct values
 
   await knex('coingecko_prices').delete()
 
