@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { StarkExTransactionCountRepository } from './repository'
 import { describeDatabase } from '../test/database'
+import { StarkExTransactionCountRepository } from './repository'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')

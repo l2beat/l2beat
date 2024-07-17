@@ -1,21 +1,18 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { groupBy, mapValues, omit } from 'lodash'
 
-import { BlockTransactionCountRecord } from '@l2beat/database'
-import { describeDatabase } from '../../../test/database'
-import {
-  ActivityViewRepository,
-  DailyTransactionCountRecord,
-} from './ActivityViewRepository'
+import { BlockTransactionCountRecord } from '../activity-block/entity'
+import { describeDatabase } from '../test/database'
+import { DailyTransactionCountRecord } from './entity'
+import { ActivityViewRepository } from './repository'
 
 const PROJECT_A = ProjectId('project-a')
 const PROJECT_B = ProjectId('project-b')
 const PROJECT_C = ProjectId('project-c')
 
-describeDatabase(ActivityViewRepository.name, (knex, db) => {
-  const repository = new ActivityViewRepository(knex, Logger.SILENT)
+describeDatabase(ActivityViewRepository.name, (db) => {
+  const repository = db.activityView
 
   beforeEach(async () => {
     // Delete all rows from all tables that are used in the view

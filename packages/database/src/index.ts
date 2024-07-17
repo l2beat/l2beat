@@ -5,6 +5,7 @@ export { type Transaction } from './kysely'
 
 export type { BlockTransactionCountRecord } from './activity-block/entity'
 export type { StarkExTransactionCountRecord } from './activity-starkex/entity'
+export type { DailyTransactionCountRecord } from './activity-view/entity'
 export type { ZkSyncTransactionRecord } from './activity-zksync/entity'
 export type { AggregatedL2CostRecord } from './aggregated-l2-cost/entity'
 export type {
