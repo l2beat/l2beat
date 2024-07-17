@@ -20,7 +20,6 @@ export interface ZkCatalogViewProps {
   askForVerificationLink: string
 }
 
-// TODO: Add storybook after research team provides the config files
 export function ZkCatalogPage(props: ZkCatalogViewProps) {
   return (
     <Accordion className="space-y-3" type="multiple">
