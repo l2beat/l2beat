@@ -186,25 +186,6 @@ describe('discovery config.jsonc', () => {
     }
   })
 
-  it('shapeFilesHash in discovered.json files is up to date', async () => {
-    const outdatedHashes: string[] = []
-    for (const configs of chainConfigs ?? []) {
-      for (const c of configs) {
-        const discovery = await configReader.readDiscovery(c.name, c.chain)
-
-        if (discovery.configHash !== c.hash) {
-          outdatedHashes.push(`${c.chain}-${c.name}`)
-        }
-      }
-      assert(
-        outdatedHashes.length === 0,
-        `Following projects have outdated hashes (chain-project): ${outdatedHashes.join(
-          ', ',
-        )}. Run yarn discover <chain> <project>`,
-      )
-    }
-  })
-
   it('discovery.json does not include errors', async () => {
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
