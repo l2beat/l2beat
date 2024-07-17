@@ -7,7 +7,7 @@ Generated with discovered.json: 0x502e33f297e8d1be1748feb63692c54a147aedf6
 
 ## Description
 
-Initial discovery: PolygonCDK Validium with identical code compared to AstarZkEVM.
+Initial discovery: PolygonCDK type RollupType 4 Validium with identical code compared to AstarZkEVM. Permissions structure is like XLayer.
 
 ## Initial discovery
 
