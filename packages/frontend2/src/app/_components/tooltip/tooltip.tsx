@@ -29,11 +29,17 @@ const Tooltip = ({
 
 const TooltipTrigger = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
->((props, ref) => {
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger> & {
+    disabledOnMobile?: boolean
+  }
+>(({ disabledOnMobile, ...props }, ref) => {
   const localRef = useRef(null)
   const { setOpen } = useTooltipTriggerContext()
   useOnClickOutside(localRef, () => setOpen(false), 'touchend')
+
+  if (disabledOnMobile) {
+    return <TooltipPrimitive.Trigger ref={ref} {...props} />
+  }
 
   return (
     <TooltipPrimitive.Trigger
