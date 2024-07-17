@@ -2,19 +2,15 @@ import { LivenessApiResponse, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { BackendProject, Layer2LivenessConfig } from '@l2beat/config'
+import {
+  AggregatedLivenessRecord,
+  AnomalyRecord,
+  Database,
+} from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import {
-  AggregatedLivenessRecord,
-  AggregatedLivenessRepository,
-} from '../repositories/AggregatedLivenessRepository'
-import {
-  AnomaliesRecord,
-  AnomaliesRepository,
-} from '../repositories/AnomaliesRepository'
-import { LivenessRepository } from '../repositories/LivenessRepository'
 import {
   LivenessController,
   LivenessControllerDeps,
@@ -56,7 +52,7 @@ const MOCK_AGGREGATED_LIVENESS = [
     avg: 20,
     min: 10,
     max: 30,
-    updatedAt: NOW.add(-1, 'hours'),
+    timestamp: NOW.add(-1, 'hours'),
   },
   {
     projectId: MOCK_PROJECT_ID,
@@ -65,7 +61,7 @@ const MOCK_AGGREGATED_LIVENESS = [
     avg: 60,
     min: 10,
     max: 50,
-    updatedAt: NOW.add(-1, 'hours'),
+    timestamp: NOW.add(-1, 'hours'),
   },
   {
     projectId: MOCK_PROJECT_ID,
@@ -74,7 +70,7 @@ const MOCK_AGGREGATED_LIVENESS = [
     avg: 10,
     min: 40,
     max: 70,
-    updatedAt: NOW.add(-1, 'hours'),
+    timestamp: NOW.add(-1, 'hours'),
   },
 ] as AggregatedLivenessRecord[]
 
@@ -97,7 +93,7 @@ const MOCK_ANOMALIES = [
     subtype: 'batchSubmissions',
     duration: 30,
   },
-] as AnomaliesRecord[]
+] as AnomalyRecord[]
 
 const MOCK_LIVENESS_DATA = {
   last30Days: {
@@ -131,19 +127,22 @@ describe(LivenessController.name, () => {
         getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
       })
 
-      const mockAggregatedLivenessRepository =
-        mockObject<AggregatedLivenessRepository>({
-          getByProject: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
-        })
+      const mockAggregatedLivenessRepository = mockObject<
+        Database['aggregatedLiveness']
+      >({
+        getByProject: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
+      })
 
-      const mockAnomaliesRepository = mockObject<AnomaliesRepository>({
+      const mockAnomaliesRepository = mockObject<Database['anomalies']>({
         getByProjectFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
       })
 
       const controller = createLivenessController({
         indexerService: mockIndexerService,
-        aggregatedLivenessRepository: mockAggregatedLivenessRepository,
-        anomaliesRepository: mockAnomaliesRepository,
+        db: mockObject<Database>({
+          anomalies: mockAnomaliesRepository,
+          aggregatedLiveness: mockAggregatedLivenessRepository,
+        }),
       })
 
       const mockMapAggregatedLivenessRecords =
@@ -221,11 +220,13 @@ describe(LivenessController.name, () => {
         indexerService: mockObject<IndexerService>({
           getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
         }),
-        aggregatedLivenessRepository: mockObject<AggregatedLivenessRepository>({
-          getByProject: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
-        }),
-        anomaliesRepository: mockObject<AnomaliesRepository>({
-          getByProjectFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
+        db: mockObject<Database>({
+          aggregatedLiveness: mockObject<Database['aggregatedLiveness']>({
+            getByProject: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
+          }),
+          anomalies: mockObject<Database['anomalies']>({
+            getByProjectFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
+          }),
         }),
       })
 
@@ -293,9 +294,11 @@ function createLivenessController(deps?: Partial<LivenessControllerDeps>) {
     indexerService: mockObject<IndexerService>({
       getSavedConfigurations: mockFn().resolvesTo(MOCK_CONFIGURATIONS),
     }),
-    aggregatedLivenessRepository: mockObject<AggregatedLivenessRepository>(),
-    anomaliesRepository: mockObject<AnomaliesRepository>(),
-    livenessRepository: mockObject<LivenessRepository>(),
+    db: mockObject<Database>({
+      aggregatedLiveness: mockObject<Database['aggregatedLiveness']>(),
+      anomalies: mockObject<Database['anomalies']>(),
+      liveness: mockObject<Database['liveness']>(),
+    }),
     projects: MOCK_PROJECTS,
     clock: mockObject<Clock>(),
     ...deps,

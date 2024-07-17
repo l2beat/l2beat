@@ -1,8 +1,8 @@
 {
   "name": "astarzkevm",
   "chain": "ethereum",
-  "blockNumber": 20188651,
-  "configHash": "0xf2b3d10827c63ab3d798f45bfb9f8ad5fffc5af1f77d50b964917975d3627e7c",
+  "blockNumber": 20325048,
+  "configHash": "0xa75ac3d3673e70efc5004b51931bfbf779c046e09be2455ba9855c5111382b42",
   "version": 9,
   "contracts": [
     {
@@ -25,7 +25,7 @@
       }
     },
     {
-      "name": "AstarValidiumEtrog",
+      "name": "AstarValidium",
       "address": "0x1E163594e13030244DCAf4cDfC2cd0ba3206DA80",
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
@@ -52,7 +52,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x570e9af1e44fcc05f58c86647913d6697f238af2f9cdd3eec63afca1c95e5b13",
+        "lastAccInputHash": "0x46dbccfee8a6b6c69390347d9379ec493f19310f1453b97b7331f8fd004071fb",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "Astar zkEVM",
@@ -131,7 +131,7 @@
       "derivedName": "PolygonDataCommittee"
     },
     {
-      "name": "ProxyAdminOwner",
+      "name": "LocalAdmin",
       "address": "0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",

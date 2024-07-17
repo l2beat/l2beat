@@ -1,18 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { FinalityApiResponse, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LivenessWithConfigService } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
-import { FinalityRepository } from '../repositories/FinalityRepository'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
 export interface FinalityControllerDeps {
-  livenessRepository: LivenessRepository
-  finalityRepository: FinalityRepository
-  indexerConfigurationRepository: IndexerConfigurationRepository
+  db: Database
   projects: FinalityProjectConfig[]
 }
 
@@ -40,7 +36,7 @@ export class FinalityController {
   ): Promise<FinalityApiResponse['projects']> {
     const projectIds = projects.map((p) => p.projectId)
     const records =
-      await this.$.finalityRepository.getLatestGroupedByProjectId(projectIds)
+      await this.$.db.finality.getLatestGroupedByProjectId(projectIds)
 
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),
@@ -111,7 +107,7 @@ export class FinalityController {
     const result: FinalityApiResponse['projects'] = {}
 
     const configurations = (
-      await this.$.indexerConfigurationRepository.getSavedConfigurations(
+      await this.$.db.indexerConfiguration.getSavedConfigurations(
         'tracked_txs_indexer',
       )
     ).map((c) => ({
@@ -145,9 +141,10 @@ export class FinalityController {
 
         if (!syncedUntil) return
 
+        // TODO: (sz-piotr) Refactor as dependency!
         const livenessWithConfig = new LivenessWithConfigService(
           configsToUse,
-          this.$.livenessRepository,
+          this.$.db,
         )
 
         const records = await livenessWithConfig.getByTypeSince(

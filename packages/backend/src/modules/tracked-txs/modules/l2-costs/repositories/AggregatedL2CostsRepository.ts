@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { AggregatedL2CostsRow } from 'knex/types/tables'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
-import { Database } from '../../../../../peripherals/database/Database'
 
 export interface AggregatedL2CostsRecord {
   timestamp: UnixTime
@@ -31,7 +31,7 @@ export interface AggregatedL2CostsRecord {
 export class AggregatedL2CostsRepository extends BaseRepository {
   private readonly TABLE_NAME = 'aggregated_l2_costs'
 
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<AggregatedL2CostsRepository>>(this)
   }
@@ -42,10 +42,15 @@ export class AggregatedL2CostsRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: AggregatedL2CostsRecord[]) {
+  async addOrUpdateMany(records: AggregatedL2CostsRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex.batchInsert(this.TABLE_NAME, rows, 10_000)
+
+    await knex(this.TABLE_NAME)
+      .insert(rows)
+      .onConflict(['timestamp', 'project_id'])
+      .merge()
+
     return rows.length
   }
 

@@ -224,6 +224,11 @@
     },
     "Governance": {
       "fields": {
+        "scheduledTransactions": {
+          "handler": {
+            "type": "zksynceraScheduledTransactions"
+          }
+        },
         "minDelay": {
           "description": "Minimum delay for scheduled upgrades",
           "severity": "MEDIUM"
