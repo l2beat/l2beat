@@ -1,4 +1,4 @@
-import { NetworkExplorer } from './entity'
+import { NetworkExplorerRecord } from './entity'
 
 export const selectNetworkExplorer = [
   'id',
@@ -8,4 +8,4 @@ export const selectNetworkExplorer = [
   'type',
   'updatedAt',
   'createdAt',
-] as const satisfies (keyof NetworkExplorer)[]
+] as const satisfies (keyof NetworkExplorerRecord)[]

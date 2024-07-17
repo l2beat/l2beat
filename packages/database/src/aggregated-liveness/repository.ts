@@ -1,13 +1,13 @@
 import { ProjectId } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { AggregatedLiveness, toRecord, toRow } from './entity'
+import { AggregatedLivenessRecord, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
 
 export class AggregatedLivenessRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdateMany(
-    records: AggregatedLiveness[],
+    records: AggregatedLivenessRecord[],
     trx?: Transaction,
   ): Promise<number> {
     for (const record of records) {
@@ -17,7 +17,7 @@ export class AggregatedLivenessRepository {
   }
 
   async addOrUpdate(
-    record: AggregatedLiveness,
+    record: AggregatedLivenessRecord,
     trx?: Transaction,
   ): Promise<string> {
     const scope = trx ?? this.db
@@ -42,7 +42,7 @@ export class AggregatedLivenessRepository {
     await this.db.deleteFrom('public.aggregated_liveness').execute()
   }
 
-  async getAll(): Promise<AggregatedLiveness[]> {
+  async getAll(): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
       .selectFrom('public.aggregated_liveness')
       .select(selectAggregatedLiveness)
@@ -51,7 +51,9 @@ export class AggregatedLivenessRepository {
     return rows.map(toRecord)
   }
 
-  async getByProject(projectId: ProjectId): Promise<AggregatedLiveness[]> {
+  async getByProject(
+    projectId: ProjectId,
+  ): Promise<AggregatedLivenessRecord[]> {
     const rows = await this.db
       .selectFrom('public.aggregated_liveness')
       .select(selectAggregatedLiveness)

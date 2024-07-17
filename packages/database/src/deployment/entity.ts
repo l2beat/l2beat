@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { Deployment as DeploymentEntity } from '../kysely/generated/types'
+import { Deployment } from '../kysely/generated/types'
 
-export interface Deployment {
+export interface DeploymentRecord {
   id: string
   tokenId: string
   txHash: string | null
@@ -15,10 +15,10 @@ export interface Deployment {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<DeploymentEntity>): Deployment {
+export function toRecord(row: Selectable<Deployment>): DeploymentRecord {
   return row
 }
 
-export function toRow(record: Deployment): Insertable<DeploymentEntity> {
+export function toRow(record: DeploymentRecord): Insertable<Deployment> {
   return record
 }

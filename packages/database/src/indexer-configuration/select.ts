@@ -1,4 +1,4 @@
-import { IndexerConfiguration as IndexerConfigurationRow } from '../kysely/generated/types'
+import { IndexerConfiguration } from '../kysely/generated/types'
 
 export const selectIndexerConfiguration = [
   'id',
@@ -7,4 +7,4 @@ export const selectIndexerConfiguration = [
   'min_height',
   'current_height',
   'properties',
-] as const satisfies (keyof IndexerConfigurationRow)[]
+] as const satisfies (keyof IndexerConfiguration)[]

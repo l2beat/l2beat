@@ -1,13 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { BlockTransactionCount, toRecord, toRow } from './entity'
+import { BlockTransactionCountRecord, toRecord, toRow } from './entity'
 import { selectBlockTransactionCount } from './select'
 
 export class BlockTransactionCountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdateMany(
-    records: BlockTransactionCount[],
+    records: BlockTransactionCountRecord[],
     trx?: Transaction,
   ): Promise<number> {
     for (const record of records) {
@@ -16,7 +16,7 @@ export class BlockTransactionCountRepository {
     return records.length
   }
 
-  async addOrUpdate(record: BlockTransactionCount, trx?: Transaction) {
+  async addOrUpdate(record: BlockTransactionCountRecord, trx?: Transaction) {
     const scope = trx ?? this.db
     await scope
       .insertInto('activity.block')

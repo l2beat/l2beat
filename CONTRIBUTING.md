@@ -31,16 +31,7 @@ locally. To install dependencies do the following.
 
 ## Running the website locally
 
-If you're planning working only on the frontend part of the website (i.e. you don't care what data
-is actually displayed) then it's quite easy. Just run the following commands after having cloned the
-repository:
-
-```
-yarn
-yarn build:frontend
-cd packages/frontend
-yarn start
-```
+We currently have two frontend apps because we're migrating to Next.js, so working on the website part of L2BEAT may be a bit confusing. Some pages are still in the `frontend` package, while some have been added and/or migrated to `frontend2`. For the list of pages that are present in `frontend2` and instructions on running it, check [packages/frontend2/README.md](./packages/frontend2/README.md). For the instructions how to run the legacy frontend, go to [packages/frontend/README.md](./packages/frontend/README.md).
 
 ## Add your Layer 2 project to the website
 
@@ -132,14 +123,4 @@ the data presented should be we also very much welcome PRs.
 
 ## Contribute code
 
-The L2BEAT website repository is a monorepo consisting of many interdependent packages.
-
-1. `packages/shared-pure` - utils and types used by the other packages (does not depend on node APIs)
-2. `packages/shared` - utils and types used by the other packages
-3. `packages/config` - the shared configuration that defines what projects and tokens are tracked by
-   the website
-4. `packages/backend` - a backend server that downloads balances from chain and exposes and API for
-   the frontend
-5. `packages/frontend` - statically generated site which displays data fetched from the backend API
-
-To learn more about each of the projects read their respective README's.
+The L2BEAT website repository is a monorepo consisting of many interdependent packages. To learn more about each of the projects read their respective README's.

@@ -42,10 +42,15 @@ export class AggregatedL2CostsRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: AggregatedL2CostsRecord[]) {
+  async addOrUpdateMany(records: AggregatedL2CostsRecord[]) {
     const knex = await this.knex()
     const rows = records.map(toRow)
-    await knex.batchInsert(this.TABLE_NAME, rows, 10_000)
+
+    await knex(this.TABLE_NAME)
+      .insert(rows)
+      .onConflict(['timestamp', 'project_id'])
+      .merge()
+
     return rows.length
   }
 

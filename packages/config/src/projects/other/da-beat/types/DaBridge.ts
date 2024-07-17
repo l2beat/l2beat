@@ -19,6 +19,10 @@ export type OnChainDaBridge = CommonDaBridge & {
   chain: string
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
+  /** Data about the validation type of the bridge */
+  validation: {
+    type: string
+  }
   /** Data about the contracts used in the bridge - preferably from discovery. */
   contracts: ScalingProjectContracts
 }

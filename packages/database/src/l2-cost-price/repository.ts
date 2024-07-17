@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase } from '../kysely'
-import { L2CostPrice, toRecord, toRow } from './entity'
+import { L2CostPriceRecord, toRecord, toRow } from './entity'
 import { selectL2CostPrice } from './select'
 
 export class L2CostPriceRepository {
@@ -29,7 +29,7 @@ export class L2CostPriceRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: L2CostPrice[]) {
+  async addMany(records: L2CostPriceRecord[]) {
     const rows = records.map(toRow)
 
     await this.db.insertInto('public.l2_costs_prices').values(rows).execute()

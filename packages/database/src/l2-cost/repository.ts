@@ -1,7 +1,7 @@
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { L2Cost, toRecord, toRow } from './entity'
+import { L2CostRecord, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
 export class L2CostRepository {
@@ -14,7 +14,7 @@ export class L2CostRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: L2Cost[], trx?: Transaction): Promise<number> {
+  async addMany(records: L2CostRecord[], trx?: Transaction): Promise<number> {
     if (records.length === 0) {
       return 0
     }

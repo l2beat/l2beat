@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x93618546968c39430af4032c4649e2b32ca1c446
+
+# Diff at Wed, 17 Jul 2024 07:24:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f46e1b9319335587ca32b6e85f9d2f0c7ab7a729 block: 20210980
+- current block number: 20324731
+
+## Description
+
+Use the new handler to check if it's posting blobs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20210980 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      values.postsBlobs:
++        false
+    }
+```
+
 Generated with discovered.json: 0xbb4b529ff5b280dc70aa4cf09e5651f5f00363fb
 
 # Diff at Mon, 01 Jul 2024 10:10:33 GMT:

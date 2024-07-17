@@ -1,5 +1,5 @@
 import { PostgresDatabase } from '../kysely'
-import { UpsertableCurrentPrice, fromEntity, toEntity } from './entity'
+import { UpsertableCurrentPrice, toRecord, toRow } from './entity'
 import { selectCurrentPrice } from './select'
 
 export class CurrentPriceRepository {
@@ -10,7 +10,7 @@ export class CurrentPriceRepository {
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .execute()
-    return res.map(fromEntity)
+    return res.map(toRecord)
   }
 
   async findOneByAssetId(coingeckoId: string) {
@@ -20,7 +20,7 @@ export class CurrentPriceRepository {
       .where('coingeckoId', '=', coingeckoId)
       .limit(1)
       .executeTakeFirst()
-    return res ? fromEntity(res) : null
+    return res ? toRecord(res) : null
   }
 
   async findByIds(coingeckoIds: string[]) {
@@ -33,7 +33,7 @@ export class CurrentPriceRepository {
   }
 
   async upsert(currentPrice: UpsertableCurrentPrice) {
-    const entity = toEntity(currentPrice)
+    const entity = toRow(currentPrice)
     const { coingeckoId, ...rest } = entity
     return this.db
       .insertInto('public.CurrentPrice')
@@ -43,7 +43,7 @@ export class CurrentPriceRepository {
   }
 
   async upsertMany(currentPrices: UpsertableCurrentPrice[]) {
-    const entities = currentPrices.map(toEntity)
+    const entities = currentPrices.map(toRow)
     return this.db
       .insertInto('public.CurrentPrice')
       .values(entities)

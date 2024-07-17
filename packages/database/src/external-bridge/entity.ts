@@ -1,8 +1,8 @@
 import { Insertable, Selectable } from 'kysely'
 import { ExternalBridgeType } from '../kysely/generated/enums'
-import { ExternalBridge as ExternalBridgeEntity } from '../kysely/generated/types'
+import { ExternalBridge } from '../kysely/generated/types'
 
-export interface ExternalBridge {
+export interface ExternalBridgeRecord {
   id: string
   name: string
   type: ExternalBridgeType
@@ -11,13 +11,13 @@ export interface ExternalBridge {
 }
 
 export function toRecord(
-  row: Selectable<ExternalBridgeEntity>,
-): ExternalBridge {
+  row: Selectable<ExternalBridge>,
+): ExternalBridgeRecord {
   return row
 }
 
 export function toRow(
-  record: ExternalBridge,
-): Insertable<ExternalBridgeEntity> {
+  record: ExternalBridgeRecord,
+): Insertable<ExternalBridge> {
   return record
 }

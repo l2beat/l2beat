@@ -1,5 +1,5 @@
 import { PostgresDatabase } from '../kysely'
-import { Stake, fromEntity, toEntity } from './entity'
+import { StakeRecord, toRecord, toRow } from './entity'
 import { selectStake } from './select'
 
 export class StakeRepository {
@@ -10,7 +10,7 @@ export class StakeRepository {
       .selectFrom('public.Stake')
       .select(selectStake)
       .execute()
-    return res.map(fromEntity)
+    return res.map(toRecord)
   }
 
   async findOneById(id: string) {
@@ -20,7 +20,7 @@ export class StakeRepository {
       .where('id', '=', id)
       .limit(1)
       .executeTakeFirst()
-    return res ? fromEntity(res) : null
+    return res ? toRecord(res) : null
   }
 
   async findByIds(ids: string[]) {
@@ -29,11 +29,11 @@ export class StakeRepository {
       .select(selectStake)
       .where('id', 'in', ids)
       .execute()
-    return res.map(fromEntity)
+    return res.map(toRecord)
   }
 
-  async upsert(stake: Stake) {
-    const entity = toEntity(stake)
+  async upsert(stake: StakeRecord) {
+    const entity = toRow(stake)
     const { id, ...rest } = entity
     return this.db
       .insertInto('public.Stake')

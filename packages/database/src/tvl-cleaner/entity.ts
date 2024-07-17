@@ -1,14 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { TvlCleaner as TvlCleanerRow } from '../kysely/generated/types'
+import { TvlCleaner } from '../kysely/generated/types'
 
-export interface TvlCleaner {
+export interface TvlCleanerRecord {
   repositoryName: string
   hourlyCleanedUntil: UnixTime | null
   sixHourlyCleanedUntil: UnixTime | null
 }
 
-export function toRow(record: TvlCleaner): Insertable<TvlCleanerRow> {
+export function toRow(record: TvlCleanerRecord): Insertable<TvlCleaner> {
   return {
     repository_name: record.repositoryName,
     hourly_cleaned_until: record.hourlyCleanedUntil?.toDate() ?? null,
@@ -16,7 +16,7 @@ export function toRow(record: TvlCleaner): Insertable<TvlCleanerRow> {
   }
 }
 
-export function toRecord(row: Selectable<TvlCleanerRow>): TvlCleaner {
+export function toRecord(row: Selectable<TvlCleaner>): TvlCleanerRecord {
   return {
     repositoryName: row.repository_name,
     hourlyCleanedUntil: row.hourly_cleaned_until

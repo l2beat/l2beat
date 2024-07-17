@@ -1,9 +1,9 @@
 import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { UpdateMonitor as UpdateMonitorRow } from '../kysely/generated/types'
+import { UpdateMonitor } from '../kysely/generated/types'
 
-export interface UpdateMonitor {
+export interface UpdateMonitorRecord {
   projectName: string
   chainId: ChainId
   blockNumber: number
@@ -13,7 +13,7 @@ export interface UpdateMonitor {
   version: number
 }
 
-export function toRow(record: UpdateMonitor): Insertable<UpdateMonitorRow> {
+export function toRow(record: UpdateMonitorRecord): Insertable<UpdateMonitor> {
   return {
     project_name: record.projectName,
     chain_id: +record.chainId,
@@ -25,7 +25,7 @@ export function toRow(record: UpdateMonitor): Insertable<UpdateMonitorRow> {
   }
 }
 
-export function toRecord(row: Selectable<UpdateMonitorRow>): UpdateMonitor {
+export function toRecord(row: Selectable<UpdateMonitor>): UpdateMonitorRecord {
   return {
     projectName: row.project_name,
     chainId: ChainId(row.chain_id),

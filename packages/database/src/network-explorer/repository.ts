@@ -1,10 +1,10 @@
 import { PostgresDatabase } from '../kysely'
-import { NetworkExplorer, toRow } from './entity'
+import { NetworkExplorerRecord, toRow } from './entity'
 
 export class NetworkExplorerRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  insertMany(explorers: NetworkExplorer[]) {
+  insertMany(explorers: NetworkExplorerRecord[]) {
     const rows = explorers.map(toRow)
 
     return this.db.insertInto('public.NetworkExplorer').values(rows).execute()
