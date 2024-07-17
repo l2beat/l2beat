@@ -47,12 +47,12 @@ function toToken(generated: GeneratedToken): Token {
     `Token added for chain without minTimestampForTvl ${chain.name}`,
   )
 
-  const sinceTimestamp = UnixTime.max(
-    UnixTime.max(
-      generated.deploymentTimestamp ?? UnixTime.ZERO,
-      chain.minTimestampForTvl,
+  const sinceTimestamp = new UnixTime(
+    Math.max(
+      generated.deploymentTimestamp.toNumber(),
+      chain.minTimestampForTvl.toNumber(),
+      generated.coingeckoListingTimestamp.toNumber(),
     ),
-    generated.coingeckoListingTimestamp,
   )
 
   return {
