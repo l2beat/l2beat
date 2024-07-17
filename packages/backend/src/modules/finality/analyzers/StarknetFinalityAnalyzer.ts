@@ -7,10 +7,9 @@ import {
 import { BigNumber, utils } from 'ethers'
 import { z } from 'zod'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 const ZBigNumber = z.instanceof(BigNumber).transform((n) => n.toBigInt())
@@ -24,17 +23,11 @@ type StarknetStateUpdate = z.infer<typeof StarknetStateUpdate>
 export class StarknetFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly l2Provider: StarknetClient,
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
   }
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {
     return 'stateUpdates'
