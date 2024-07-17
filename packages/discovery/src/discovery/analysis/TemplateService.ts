@@ -45,15 +45,14 @@ export class TemplateService {
         continue
       }
       const shapePath = join(path, TEMPLATE_SHAPE_FOLDER)
-      if (!existsSync(shapePath)) {
-        continue
-      }
 
-      const solidityShapeFiles = readdirSync(shapePath, {
-        withFileTypes: true,
-      })
-        .filter((x) => x.isFile() && x.name.endsWith('.sol'))
-        .map((x) => join(shapePath, x.name))
+      const solidityShapeFiles = !existsSync(shapePath)
+        ? []
+        : readdirSync(shapePath, {
+            withFileTypes: true,
+          })
+            .filter((x) => x.isFile() && x.name.endsWith('.sol'))
+            .map((x) => join(shapePath, x.name))
 
       const templateId = path.substring(resolvedRootPath.length + 1)
       result[templateId] = solidityShapeFiles
@@ -118,6 +117,15 @@ export class TemplateService {
   getTemplateHash(template: string): Hash256 {
     const templateJson = this.loadContractTemplate(template)
     return hashJson(templateJson as json)
+  }
+
+  getAllTemplateHashes(): Record<string, Hash256> {
+    const result: Record<string, Hash256> = {}
+    const allTemplates = this.listAllTemplates()
+    for (const templateId of Object.keys(allTemplates)) {
+      result[templateId] = this.getTemplateHash(templateId)
+    }
+    return result
   }
 
   getShapeFilesHash(): Hash256 {
