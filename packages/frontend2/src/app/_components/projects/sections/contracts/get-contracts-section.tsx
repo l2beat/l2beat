@@ -13,7 +13,6 @@ import {
   type ImplementationChangeReportProjectData,
   type ManuallyVerifiedContracts,
   type VerificationStatus,
-  assertUnreachable,
 } from '@l2beat/shared-pure'
 import { type ContractsSectionProps } from './contracts-section'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
@@ -195,217 +194,33 @@ function makeTechnologyContract(
       ]
 
   if (isSingleAddress(item)) {
-    if (item.upgradeability?.type) {
-      switch (item.upgradeability.type) {
-        case 'EIP1967 proxy':
-        case 'LightLink proxy':
-        case 'Custom':
-        case 'ZeppelinOS proxy':
-        case 'Eternal Storage proxy':
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          if (item.upgradeability.admin) {
-            addresses.push(
-              getAddress({
-                name: 'Admin',
-                address: item.upgradeability.admin,
-                isAdmin: true,
-              }),
-            )
-          }
-          break
+    const implementations = item.upgradeability?.implementations ?? []
+    for (const [i, implementation] of implementations.entries()) {
+      const upgradable = !item.upgradeability?.immutable
+      const upgradeableText = upgradable ? ' (Upgradable)' : ''
+      addresses.push(
+        getAddress({
+          name:
+            implementations.length > 1
+              ? `Implementation #${i + 1}${upgradeableText}`
+              : `Implementation${upgradeableText}`,
+          address: implementation,
+        }),
+      )
+    }
 
-        case 'StarkWare diamond':
-        case 'resolved delegate proxy':
-        case 'call implementation proxy':
-        case 'EIP897 proxy':
-        case 'CustomWithoutAdmin':
-        case 'Polygon proxy':
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          break
-
-        case 'StarkWare proxy': {
-          const delay = item.upgradeability.upgradeDelay !== 0
-          const days = item.upgradeability.upgradeDelay / (60 * 60 * 24)
-          const implementation =
-            item.upgradeability.callImplementation ??
-            item.upgradeability.implementation
-          addresses.push(
-            getAddress({
-              name: `Implementation (Upgradable${
-                delay ? ` ${days} days delay` : ''
-              })`,
-              address: implementation,
-            }),
-          )
-          break
-        }
-
-        case 'Reference':
-          addresses.push(
-            getAddress({
-              name: 'Code (Upgradable)',
-              address: item.address,
-            }),
-          )
-          break
-
-        case 'new Arbitrum proxy':
-        case 'Arbitrum proxy':
-          addresses.push(
-            getAddress({
-              name: 'Admin',
-              address: item.upgradeability.admin,
-              isAdmin: true,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Admin logic (Upgradable)',
-              address: item.upgradeability.adminImplementation,
-              isAdmin: true,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'User logic (Upgradable)',
-              address: item.upgradeability.userImplementation,
-            }),
-          )
-          break
-
-        case 'Beacon':
-          addresses.push(
-            getAddress({
-              name: 'Beacon',
-              address: item.upgradeability.beacon,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Beacon Admin',
-              address: item.upgradeability.beaconAdmin,
-              isAdmin: true,
-            }),
-          )
-          break
-
-        case 'zkSync Lite proxy':
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Additional implementation (Upgradable)',
-              address: item.upgradeability.additional,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Admin',
-              address: item.upgradeability.admin,
-              isAdmin: true,
-            }),
-          )
-          break
-
-        case 'zkSpace proxy':
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          addresses.push(
-            ...item.upgradeability.additional.map((additional) =>
-              getAddress({
-                name: 'Additional implementation (Upgradable)',
-                address: additional,
-              }),
-            ),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Admin',
-              address: item.upgradeability.admin,
-              isAdmin: true,
-            }),
-          )
-          break
-
-        case 'Polygon Extension proxy':
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          ),
-            addresses.push(
-              getAddress({
-                name: 'Extension (Upgradable)',
-                address: item.upgradeability.extension,
-              }),
-            )
-          break
-        case 'Optics Beacon proxy':
-          addresses.push(
-            getAddress({
-              name: 'Upgrade Beacon',
-              address: item.upgradeability.upgradeBeacon,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          addresses.push(
-            getAddress({
-              name: 'Beacon Controller',
-              address: item.upgradeability.beaconController,
-              isAdmin: true,
-            }),
-          )
-          break
-        case 'Axelar proxy':
-          addresses.push(
-            getAddress({
-              name: 'Implementation (Upgradable)',
-              address: item.upgradeability.implementation,
-            }),
-          )
-          break
-        // Ignore types
-        case 'immutable':
-        case 'gnosis safe':
-        case 'gnosis safe zodiac module':
-        case 'EIP2535 diamond proxy':
-          break
-
-        default:
-          assertUnreachable(item.upgradeability)
-      }
+    const admins = item.upgradeability?.admins ?? []
+    for (const [i, admin] of admins.entries()) {
+      addresses.push(
+        getAddress({
+          name: admins.length > 1 ? `Admin (${i + 1})` : 'Admin',
+          address: admin,
+          isAdmin: true,
+        }),
+      )
     }
   }
+
   const implementationAddresses = addresses
     .filter((c) => !c.isAdmin)
     .map((c) => c.address)
