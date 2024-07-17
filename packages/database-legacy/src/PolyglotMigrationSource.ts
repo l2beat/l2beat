@@ -43,6 +43,6 @@ export class PolyglotMigrationSource
   }
 
   getMigrationName(migration: Record<string, string>): string {
-    return path.parse(migration.file).name
+    return path.parse(migration.file ?? '').name
   }
 }

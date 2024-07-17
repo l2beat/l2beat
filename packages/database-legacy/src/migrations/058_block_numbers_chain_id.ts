@@ -11,20 +11,26 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { assert } from '@l2beat/backend-tools'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  const rows = await knex('indexer_state')
-  assert(rows.length === 0, 'Table should be empty')
+  await knex.schema.alterTable('block_numbers', function (table) {
+    table.integer('chain_id').notNullable().defaultTo(1)
 
-  await knex.schema.table('indexer_state', function (table) {
-    table.dateTime('min_timestamp', { useTz: false }).nullable()
+    table.dropIndex(['unix_timestamp'])
+
+    table.dropPrimary()
+    table.primary(['chain_id', 'unix_timestamp'])
   })
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.table('indexer_state', function (table) {
-    table.dropColumn('min_timestamp')
+  await knex.schema.alterTable('block_numbers', function (table) {
+    table.dropPrimary()
+    table.primary(['block_number'])
+
+    table.index(['unix_timestamp'])
+
+    table.dropColumn('chain_id')
   })
 }

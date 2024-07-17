@@ -11,16 +11,15 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { AssetId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex('balances').delete().where({
-    asset_id: AssetId.ARB.toString(),
+    asset_id: 'arb-arbitrum',
   })
 
   await knex('balances').delete().where({
-    asset_id: AssetId.OP.toString(),
+    asset_id: 'op-optimism',
   })
 }
 

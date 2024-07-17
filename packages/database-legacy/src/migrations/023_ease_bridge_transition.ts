@@ -11,17 +11,19 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ChainId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.alterTable('update_notifier', function (table) {
-    table.integer('chain_id').notNullable().defaultTo(Number(ChainId.ETHEREUM))
-  })
+  const hasLayer2Already = !!(await knex('aggregate_reports')
+    .where('project_id', 'l2beat-layer2s')
+    .first())
+  if (!hasLayer2Already) {
+    await knex('aggregate_reports')
+      .where('project_id', 'l2beat-all')
+      .update('project_id', 'l2beat-layer2s')
+  }
 }
 
-export async function down(knex: Knex) {
-  await knex.schema.alterTable('update_notifier', function (table) {
-    table.dropColumn('chain_id')
-  })
+export async function down() {
+  // intentionally empty as resync actually will fix it automatically
 }

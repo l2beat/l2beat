@@ -11,8 +11,9 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
+
+const ARB_CHAIN_ID = 42161
 
 const NEW_ASSET_ID = 'arbitrum:usdc-usd-coin'
 const OLD_ASSET_ID = 'usdc-usd-coin'
@@ -20,14 +21,14 @@ const OLD_ASSET_ID = 'usdc-usd-coin'
 export async function up(knex: Knex) {
   await knex('total_supplies')
     .update({ asset_id: NEW_ASSET_ID })
-    .where({ chain_id: +ChainId.ARBITRUM, asset_id: OLD_ASSET_ID })
+    .where({ chain_id: +ARB_CHAIN_ID, asset_id: OLD_ASSET_ID })
 
   await knex('reports')
     .update({ asset_id: NEW_ASSET_ID })
     .where({
-      chain_id: +ChainId.ARBITRUM,
+      chain_id: +ARB_CHAIN_ID,
       asset_id: OLD_ASSET_ID,
-      project_id: ProjectId.ARBITRUM.toString(),
+      project_id: 'arbitrum',
     })
     .andWhereRaw(`asset_type = 'EBV'`)
 }
@@ -35,14 +36,14 @@ export async function up(knex: Knex) {
 export async function down(knex: Knex) {
   await knex('total_supplies')
     .update({ asset_id: OLD_ASSET_ID })
-    .where({ chain_id: +ChainId.ARBITRUM, asset_id: NEW_ASSET_ID })
+    .where({ chain_id: +ARB_CHAIN_ID, asset_id: NEW_ASSET_ID })
 
   await knex('reports')
     .update({ asset_id: OLD_ASSET_ID })
     .where({
-      chain_id: +ChainId.ARBITRUM,
+      chain_id: +ARB_CHAIN_ID,
       asset_id: NEW_ASSET_ID,
-      project_id: ProjectId.ARBITRUM.toString(),
+      project_id: 'arbitrum',
     })
     .andWhereRaw(`"asset_type" = 'EBV'`)
 }

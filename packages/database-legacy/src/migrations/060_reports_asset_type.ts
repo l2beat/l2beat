@@ -12,7 +12,6 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { AssetId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
@@ -28,8 +27,8 @@ export async function up(knex: Knex) {
     UPDATE reports
     SET asset_type = 'TVL'
     WHERE asset_id IN (
-      '${AssetId.ARB.toString()}',
-      '${AssetId.OP.toString()}'
+      'arb-arbitrum',
+      'op-optimism'
     )
   `)
 }

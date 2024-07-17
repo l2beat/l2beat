@@ -11,30 +11,21 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { ChainId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.alterTable('reports', function (table) {
-    table.integer('chain_id').notNullable().defaultTo(Number(ChainId.ETHEREUM))
+  await knex.schema.alterTable('update_monitor', function (table) {
+    table.integer('chain_id').notNullable().defaultTo(1)
 
     table.dropPrimary()
-    table.primary([
-      'chain_id',
-      'asset_type',
-      'unix_timestamp',
-      'asset_id',
-      'project_id',
-    ])
+    table.primary(['project_name', 'chain_id'])
   })
-
-  await knex('reports').where('asset_type', 'NMV').update({ chain_id: -1 })
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.alterTable('reports', function (table) {
+  await knex.schema.alterTable('update_monitor', function (table) {
     table.dropPrimary()
-    table.primary(['unix_timestamp', 'project_id', 'asset_id'])
+    table.primary(['project_name'])
 
     table.dropColumn('chain_id')
   })

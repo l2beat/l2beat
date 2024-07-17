@@ -11,7 +11,6 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { AssetId, ChainId, ProjectId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 const NEW_TYPE = 'NMV'
@@ -19,18 +18,18 @@ const OLD_TYPE = 'EBV'
 
 export async function up(knex: Knex) {
   await knex('reports').update({ report_type: NEW_TYPE }).where({
-    chain_id: +ChainId.ARBITRUM,
+    chain_id: 42161,
     report_type: OLD_TYPE,
-    asset_id: AssetId.USDC_ON_ARBITRUM.toString(),
-    project_id: ProjectId.ARBITRUM.toString(),
+    asset_id: 'arbitrum:usdc-usd-coin',
+    project_id: 'arbitrum',
   })
 }
 
 export async function down(knex: Knex) {
   await knex('reports').update({ report_type: OLD_TYPE }).where({
-    chain_id: +ChainId.ARBITRUM,
+    chain_id: 42161,
     report_type: NEW_TYPE,
-    asset_id: AssetId.USDC_ON_ARBITRUM.toString(),
-    project_id: ProjectId.ARBITRUM.toString(),
+    asset_id: 'arbitrum:usdc-usd-coin',
+    project_id: 'arbitrum',
   })
 }

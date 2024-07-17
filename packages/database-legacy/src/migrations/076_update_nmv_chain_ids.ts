@@ -11,25 +11,24 @@ should create a new migration file that fixes the issue.
 
 */
 
-import { AssetId } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
   await knex('reports').update({ chain_id: 42161 }).where({
-    asset_id: AssetId.ARB.toString(),
+    asset_id: 'arb-arbitrum',
   })
 
   await knex('reports').update({ chain_id: 10 }).where({
-    asset_id: AssetId.OP.toString(),
+    asset_id: 'op-optimism',
   })
 }
 
 export async function down(knex: Knex) {
   await knex('reports').update({ chain_id: -1 }).where({
-    asset_id: AssetId.ARB.toString(),
+    asset_id: 'arb-arbitrum',
   })
 
   await knex('reports').update({ chain_id: -1 }).where({
-    asset_id: AssetId.OP.toString(),
+    asset_id: 'op-optimism',
   })
 }

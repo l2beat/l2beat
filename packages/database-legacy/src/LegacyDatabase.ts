@@ -3,9 +3,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
 import KnexConstructor, { Knex } from 'knex'
 
-import { DatabaseConfig } from '../../config/Config'
+import { DatabaseConfig } from './DatabaseConfig'
 import { PolyglotMigrationSource } from './PolyglotMigrationSource'
 import { configureUtc } from './configureUtc'
+
 interface VersionQueryResult {
   rows: {
     server_version: string
@@ -14,7 +15,7 @@ interface VersionQueryResult {
 
 const REQUIRED_MAJOR_VERSION = 14
 
-export class Database {
+export class LegacyDatabase {
   private readonly knex: Knex
   private migrated = false
   private onMigrationsComplete: () => void = () => {}
@@ -96,7 +97,7 @@ export class Database {
       'show server_version',
     )
     const version = result.rows[0]?.server_version
-    const major = Number(version.split('.')[0])
+    const major = Number(version?.split('.')[0])
     assert(
       major === this.requiredMajorVersion,
       `Postgres server major version ${major} different than required ${this.requiredMajorVersion}`,

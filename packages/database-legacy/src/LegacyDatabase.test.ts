@@ -3,20 +3,20 @@ import path from 'path'
 import { expect } from 'earl'
 import { afterEach } from 'mocha'
 
-import { getTestDatabase } from '../../test/database'
-import { Database } from './Database'
+import { getLegacyTestDatabase } from './getLegacyTestDatabase'
+import { LegacyDatabase } from './LegacyDatabase'
 
-describe(Database.name, () => {
+describe(LegacyDatabase.name, () => {
   it('can run and rollback all migrations', async function () {
-    const databases = getTestDatabase()
-    if (!databases) {
+    const database = getLegacyTestDatabase()
+    if (!database) {
       this.skip()
     }
 
-    await databases.legacyDb.migrateToLatest()
-    await databases.legacyDb.rollbackAll()
+    await database.migrateToLatest()
+    await database.rollbackAll()
 
-    const knex = await databases.legacyDb.getKnex()
+    const knex = await database.getKnex()
     const result = await knex.raw(
       'SELECT table_name FROM information_schema.tables WHERE table_schema = current_schema()',
     )
@@ -24,7 +24,7 @@ describe(Database.name, () => {
 
     expect(tables).toEqual(['knex_migrations', 'knex_migrations_lock'])
 
-    await databases.legacyDb.closeConnection()
+    await database.closeConnection()
   })
 
   it('migrations have consecutive numbering except for 20', () => {
@@ -38,15 +38,15 @@ describe(Database.name, () => {
     }
   })
 
-  describe(Database.prototype.assertRequiredServerVersion.name, () => {
-    let database: Database | undefined
+  describe(LegacyDatabase.prototype.assertRequiredServerVersion.name, () => {
+    let database: LegacyDatabase | undefined
 
     afterEach(async () => {
       await database?.closeConnection()
     })
 
     it('throws for mismatching version', async function () {
-      database = getTestDatabase({ requiredMajorVersion: 15 })?.legacyDb
+      database = getLegacyTestDatabase({ requiredMajorVersion: 15 })
       if (!database) {
         this.skip()
       }
@@ -56,7 +56,7 @@ describe(Database.name, () => {
     })
 
     it('does not throw for matching version', async function () {
-      database = getTestDatabase()?.legacyDb
+      database = getLegacyTestDatabase()
       if (!database) {
         this.skip()
       }
