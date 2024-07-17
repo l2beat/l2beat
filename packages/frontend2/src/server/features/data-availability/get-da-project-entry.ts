@@ -15,18 +15,18 @@ import {
 } from './utils/get-da-project-economic-security'
 import { getUsedInProjects } from './utils/get-used-in-projects'
 
-export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
+export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
-  const tvs = await getDaProjectTvl(bridge.usedIn)
+  const tvs = await getDaProjectTvl(daBridge.usedIn)
   const verificationStatus = await getVerificationStatus()
   const manuallyVerifiedContracts = getManuallyVerifiedContracts()
   const implementationChangeReport = await getImplementationChangeReport()
 
-  const rosetteValues = mapRisksToRosetteValues(getDaRisks(daLayer, bridge))
+  const rosetteValues = mapRisksToRosetteValues(getDaRisks(daLayer, daBridge))
 
   const projectDetails = getProjectDetails({
     daLayer,
-    bridge,
+    daBridge: daBridge,
     verificationStatus,
     manuallyVerifiedContracts,
     implementationChangeReport,
@@ -38,13 +38,13 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
     slug: daLayer.display.slug,
     type: kindToType(daLayer.kind),
     iconSrc: `/icons/${daLayer.display.slug}.png`,
-    description: `${daLayer.display.description} ${bridge.display.description}`,
+    description: `${daLayer.display.description} ${daBridge.display.description}`,
     isUnderReview: daLayer.isUnderReview,
     isUpcoming: daLayer.isUpcoming,
     selectedBridge: {
-      id: bridge.id,
-      name: bridge.display.name,
-      slug: bridge.display.slug,
+      id: daBridge.id,
+      name: daBridge.display.name,
+      slug: daBridge.display.slug,
     },
     bridges: daLayer.bridges.map((bridge) => ({
       id: bridge.id,
@@ -54,7 +54,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
     header: getHeader({
       rosetteValues,
       daLayer,
-      bridge,
+      daBridge: daBridge,
       tvs,
       economicSecurity,
     }),
@@ -65,7 +65,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
 interface HeaderParams {
   rosetteValues: RosetteValue[]
   daLayer: DaLayer
-  bridge: DaBridge
+  daBridge: DaBridge
   tvs: number
   economicSecurity: DaProjectEconomicSecurity | undefined
 }
@@ -73,7 +73,7 @@ interface HeaderParams {
 function getHeader({
   rosetteValues,
   daLayer,
-  bridge,
+  daBridge: bridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {

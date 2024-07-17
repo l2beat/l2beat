@@ -6,8 +6,8 @@ export interface UsedInProject {
   slug: string
 }
 
-export function getUsedInProjects(bridge: DaBridge): UsedInProject[] {
-  return bridge.usedIn.map((projectId) => {
+export function getUsedInProjects(daBridge: DaBridge): UsedInProject[] {
+  return daBridge.usedIn.map((projectId) => {
     const project = [...layer2s, ...layer3s].find((p) => p.id === projectId)
     assert(project, `Project not found: ${projectId}`)
     return {

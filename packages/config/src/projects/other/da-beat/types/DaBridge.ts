@@ -47,6 +47,10 @@ type CommonDaBridge = {
     slug: string
     /** Description of the data availability bridge. */
     description: string
+    /** A warning displayed on the table and project page */
+    warning?: string
+    /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
+    redWarning?: string
   }
   /** Is the DA bridge under review? */
   isUnderReview?: boolean

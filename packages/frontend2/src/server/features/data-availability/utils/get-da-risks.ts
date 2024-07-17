@@ -6,21 +6,21 @@ import {
 } from '@l2beat/config'
 
 export function getDaRisks(
-  layer: DaLayer,
-  bridge: DaBridge,
+  daLayer: DaLayer,
+  daBridge: DaBridge,
 ): DaBridgeRisks & DaLayerRisks {
   return {
-    economicSecurity: getEconomicSecurity(layer),
-    fraudDetection: layer.risks.fraudDetection,
-    attestations: bridge.risks.attestations,
-    exitWindow: bridge.risks.exitWindow,
-    accessibility: bridge.risks.accessibility,
+    economicSecurity: getEconomicSecurity(daLayer),
+    fraudDetection: daLayer.risks.fraudDetection,
+    attestations: daBridge.risks.attestations,
+    exitWindow: daBridge.risks.exitWindow,
+    accessibility: daBridge.risks.accessibility,
   }
 }
 
 export function getEconomicSecurity(
-  layer: DaLayer /*, totalValueSecured: bigint, slashableFunds: bigint */,
+  daLayer: DaLayer /*, totalValueSecured: bigint, slashableFunds: bigint */,
 ) {
   // Add checks against TVS and SA here later on once we have tha metrics
-  return layer.risks.economicSecurity
+  return daLayer.risks.economicSecurity
 }

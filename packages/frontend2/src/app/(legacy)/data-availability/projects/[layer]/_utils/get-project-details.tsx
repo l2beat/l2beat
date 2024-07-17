@@ -10,7 +10,7 @@ import { type ProjectDetailsSection } from '~/app/_components/projects/sections/
 import { type RosetteValue } from '~/app/_components/rosette/types'
 interface Params {
   daLayer: DaLayer
-  bridge: DaBridge
+  daBridge: DaBridge
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
@@ -19,34 +19,35 @@ interface Params {
 
 export function getProjectDetails({
   daLayer,
-  bridge,
+  daBridge,
   verificationStatus,
   manuallyVerifiedContracts,
   implementationChangeReport,
   rosetteValues,
 }: Params) {
   const permissionsSection =
-    bridge.type !== 'NoBridge'
+    daBridge.type !== 'NoBridge'
       ? getPermissionsSection(
           {
             id: daLayer.id,
             type: daLayer.type,
             isUnderReview: !!daLayer.isUnderReview,
-            permissions: bridge.permissions,
+            permissions: daBridge.permissions,
             nativePermissions: undefined,
           },
           verificationStatus,
           manuallyVerifiedContracts,
         )
       : undefined
+
   const contractsSection =
-    bridge.type !== 'NoBridge'
+    daBridge.type !== 'NoBridge'
       ? getContractsSection(
           {
-            id: bridge.id,
+            id: daBridge.id,
             type: daLayer.type,
-            slug: bridge.display.slug,
-            contracts: bridge.contracts,
+            slug: daBridge.display.slug,
+            contracts: daBridge.contracts,
             isUnderReview: daLayer.isUnderReview,
             escrows: undefined,
           },
@@ -64,10 +65,10 @@ export function getProjectDetails({
       id: 'risk-analysis',
       title: 'Risk analysis',
       riskValues: rosetteValues,
-      isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
-      // TODO: Do we want to add these to DA projects?
-      warning: undefined,
-      redWarning: undefined,
+      isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
+      warning: daBridge.display.warning,
+      redWarning: daBridge.display.redWarning,
+      // TODO: We need to add this to DA projects
       isVerified: undefined,
     },
   })
@@ -86,7 +87,7 @@ export function getProjectDetails({
     props: {
       id: 'da-bridge-technology',
       title: 'DA Bridge technology',
-      children: bridge.technology,
+      children: daBridge.technology,
     },
   })
 

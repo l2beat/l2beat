@@ -6,6 +6,7 @@ import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-va
 import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
 import { UsedIn } from './used-in'
 import { EM_DASH } from '~/app/_components/nav/consts'
+import { DaBridgeCell } from './da-bridge-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -17,8 +18,9 @@ export const columns = [
   columnHelper.accessor('daLayer', {
     header: 'DA Layer',
   }),
-  columnHelper.accessor('daBridge.name', {
+  columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
+    cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
   }),
   columnHelper.accessor('risks', {
     header: 'Risks',
