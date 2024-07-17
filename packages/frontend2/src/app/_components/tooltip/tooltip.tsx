@@ -37,6 +37,7 @@ const TooltipTrigger = React.forwardRef<
   const { setOpen } = useTooltipTriggerContext()
   useOnClickOutside(localRef, () => setOpen(false), 'touchend')
 
+  // Tooltips do not work on mobile by default
   if (disabledOnMobile) {
     return <TooltipPrimitive.Trigger ref={ref} {...props} />
   }
