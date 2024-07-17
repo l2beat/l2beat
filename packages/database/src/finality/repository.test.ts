@@ -2,8 +2,8 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { describeDatabase } from '../test/database'
-import { FinalityRepository } from './repository'
 import { FinalityRecord } from './entity'
+import { FinalityRepository } from './repository'
 
 describeDatabase(FinalityRepository.name, (db) => {
   const repository = db.finality
