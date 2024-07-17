@@ -2,59 +2,57 @@
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
   "chain": "ethereum",
   "name": "xterio",
-  "initialAddresses": ["0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"],
+  "initialAddresses": [
+    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
+    "0x16193e14197c10109F3e81b938153A04A2a00190",
+    "0x443164F044D8840479234e00E7aD5bb06b85fC78"
+  ],
   "names": {
-    "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C": "SystemConfig",
-    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6": "L1StandardBridge",
     "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A": "OptimismPortal",
+    "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6": "L1StandardBridge",
+    "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b": "L1ERC721Bridge",
     "0x5A0492D20D984eE904E46E6Ff24572bc755abb28": "L2OutputOracle",
+    "0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C": "SystemConfig",
     "0x702dF90E92A6841c9013faE6D724ddFA8F141d5C": "L1CrossDomainMessenger",
-    "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "ProxyAdminOwner", // 1/1 Multisig
-    "0xcbF423525a5471Fc5037a5397F99f6F09fe41379": "SuperchainConfig"
+    "0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "RollupOwnerMultisig",
+    "0x16193e14197c10109F3e81b938153A04A2a00190": "DataAvailabilityChallenge",
+    "0x443164F044D8840479234e00E7aD5bb06b85fC78": "DisputeGameFactory"
   },
   "overrides": {
-    "ProxyAdminOwner": {
-      "ignoreInWatchMode": ["nonce"]
+    "DisputeGameFactory": {
+      "ignoreMethods": ["gameAtIndex"],
+      "fields": {
+        "gameImpls": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        },
+        "initBonds": {
+          "handler": {
+            "type": "array",
+            "length": 5
+          }
+        }
+      }
     },
     "OptimismPortal": {
-      "ignoreMethods": ["isOutputFinalized"],
-      "ignoreInWatchMode": ["params"]
+      "extends": "opstack/OptimismPortal"
+    },
+    "L1StandardBridge": {
+      "extends": "opstack/L1StandardBridge"
+    },
+    "L1ERC721Bridge": {
+      "extends": "opstack/L1ERC721Bridge"
     },
     "L2OutputOracle": {
       "extends": "opstack/L2OutputOracle"
     },
-    "L1CrossDomainMessenger": {
-      "ignoreMethods": ["xDomainMessageSender"],
-      "ignoreInWatchMode": ["messageNonce"]
-    },
     "SystemConfig": {
-      "fields": {
-        // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
-        "batcherHash": {
-          "handler": {
-            "type": "call",
-            "method": "function batcherHash() view returns (address)",
-            "args": []
-          }
-        },
-        "opStackDA": {
-          "handler": {
-            "type": "opStackDA",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "sequencerInbox": {
-          "handler": {
-            "type": "opStackSequencerInbox",
-            "sequencerAddress": "{{ batcherHash }}"
-          }
-        },
-        "gasLimit": {
-          "description": "Gas limit for blocks on L2.",
-          "severity": "LOW"
-        }
-      },
-      "ignoreInWatchMode": ["scalar"]
+      "extends": "opstack/SystemConfig"
+    },
+    "L1CrossDomainMessenger": {
+      "extends": "opstack/L1CrossDomainMessenger"
     }
   }
 }
