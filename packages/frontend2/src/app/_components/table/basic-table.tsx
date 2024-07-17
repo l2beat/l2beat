@@ -167,7 +167,7 @@ export function getRowTypeClassNames(rowType: RowType) {
       return 'bg-[#f7e4e3] dark:bg-[#311413] hover:bg-[#f5dedd] group-hover/row:bg-[#f5dedd] dark:hover:bg-[#391612] dark:group-hover/row:bg-[#391612]'
     case 'under-review':
     case 'implementation-changed':
-      return 'bg-[#faf5e6] dark:bg-[#2a2418] hover:!bg-[#eee5c8] group-hover/row:!bg-[#eee5c8] dark:hover:!bg-[#52482d] dark:group-hover/row:!bg-[#52482d]'
+      return 'bg-[#faf5e6] dark:bg-[#2a2418] hover:!bg-[#eee5c8] group-hover/row:!bg-[#eee5c8] dark:hover:!bg-[#3f351b] dark:group-hover/row:!bg-[#3f351b]'
     default:
       return 'bg-white dark:bg-neutral-900 group-hover/row:shadow-sm hover:bg-[#e3e3e3] group-hover/row:bg-[#e3e3e3] dark:hover:bg-[#2a292c] dark:group-hover/row:bg-[#2a292c]'
   }
