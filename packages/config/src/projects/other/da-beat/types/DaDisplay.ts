@@ -1,23 +1,16 @@
 export interface DaDisplay {
-  /**
-   * The name of the data availability layer.
-   */
+  /** The name of the data availability layer. */
   name: string
-
-  /**
-   * Slug of the data availability bridge
-   */
+  /** Slug of the data availability bridge. */
   slug: string
-
-  /**
-   * A short description of the data availability layer.
-   */
+  /** A short description of the data availability layer. */
   description: string
-
-  /**
-   * Links related to the data availability layer.
-   */
+  /** Links related to the data availability layer. */
   links: DaDisplayLinks
+  /** A warning displayed above the description of the project */
+  warning?: string
+  /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
+  redWarning?: string
 }
 
 interface DaDisplayLinks {

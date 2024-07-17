@@ -7,24 +7,16 @@ export type DaEconomicSecurityType =
   (typeof DaEconomicSecurityType)[keyof typeof DaEconomicSecurityType]
 
 export interface DaEconomicSecurityMeta {
-  /**
-   * Symbol of the token used for economic security
-   */
+  /** Symbol of the token used for economic security. */
   symbol: string
-  /**
-   * Decimals of the token used for economic security
-   */
+  /** Decimals of the token used for economic security. */
   decimals: number
-  /**
-   * CoinGecko id of the token used for economic security
-   */
+  /** CoinGecko id of the token used for economic security. */
   coingeckoId: string
 }
 
 export interface DaEconomicSecurity {
-  /**
-   * The type of the economic security calculation.
-   */
+  /** The type of the economic security calculation. */
   type: DaEconomicSecurityType
 }
 
