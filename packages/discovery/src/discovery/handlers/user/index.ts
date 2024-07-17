@@ -67,6 +67,10 @@ import {
   OpStackSequencerInboxHandlerDefinition,
 } from './OpSequencerInboxHandler'
 import {
+  OrbitPostsBlobsDefinition,
+  OrbitPostsBlobsHandler,
+} from './OrbitPostsBlobsHandler'
+import {
   ScrollAccessControlHandler,
   ScrollAccessControlHandlerDefinition,
 } from './ScrollAccessControlHandler'
@@ -121,6 +125,7 @@ export const UserHandlerDefinition = z.union([
   ArbitrumDACKeysetHandlerDefinition,
   EIP2535FacetHandlerDefinition,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
+  OrbitPostsBlobsDefinition,
 ])
 
 export function getUserHandler(
@@ -182,5 +187,7 @@ export function getUserHandler(
       return new EIP2535FacetHandler(field, definition, logger)
     case 'zksynceraScheduledTransactions':
       return new ZKsyncEraScheduledTransactionHandler(field, abi, logger)
+    case 'orbitPostsBlobs':
+      return new OrbitPostsBlobsHandler(field, definition, logger)
   }
 }
