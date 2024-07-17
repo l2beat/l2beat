@@ -1,8 +1,8 @@
 {
   "name": "xlayer",
   "chain": "ethereum",
-  "blockNumber": 19882097,
-  "configHash": "0x5c2e13725be665937c712e81a269b21125759be2198f03a5b419fed3924fecc0",
+  "blockNumber": 20325087,
+  "configHash": "0x1faa6e35d2bc7ed2a0ebe00bbb2796abcb918b5266d117b92e441acd4aded7bf",
   "version": 9,
   "contracts": [
     {
@@ -51,7 +51,7 @@
       }
     },
     {
-      "name": "XLayerValidiumEtrog",
+      "name": "XLayerValidium",
       "address": "0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507",
       "proxyType": "EIP1967 proxy",
       "ignoreInWatchMode": ["lastAccInputHash"],
@@ -78,7 +78,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0xffc9ae1e7894026765ca2f46a04d7d4ff761eccc812675b0202b89ce77615b14",
+        "lastAccInputHash": "0x2f47fc343d6bd90f3098bf78737782176f902a41f2a0e694333e2207d47ca079",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "X Layer",
