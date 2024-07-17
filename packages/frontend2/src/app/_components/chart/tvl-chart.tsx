@@ -1,7 +1,6 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
 import { useChartContext } from '~/app/_components/chart/core/chart-context'
@@ -39,37 +38,34 @@ export function TvlChart({ milestones, tag = 'summary' }: Props) {
     type: 'layer2',
   })
 
-  if (!data) return null
-
   const mappedMilestones = getMilestones(milestones)
-  const rangeStart = data[0]?.[0]
-  const rangeEnd = data[data.length - 1]?.[0]
-  assert(
-    rangeStart !== undefined && rangeEnd !== undefined,
-    'Programmer error: rangeStart and rangeEnd are undefined',
-  )
+  const rangeStart = data?.[0]?.[0] ?? 0
+  const rangeEnd = data?.[data.length - 1]?.[0] ?? 1
 
-  const columns = data.map((d) => {
-    const timestamp = d[0]
-    const usdValue = d[1]
-    const ethValue = d[1] // TODO: d[5]
+  const columns =
+    data?.map((d) => {
+      const timestamp = d[0]
+      const usdSum = d.slice(1, 4).reduce((a, b) => a + b, 0)
+      const ethPrice = d[4]
+      const usdValue = usdSum / 100
+      const ethValue = usdSum / ethPrice
 
-    return {
-      values: [{ value: unit === 'usd' ? usdValue : ethValue }],
-      data: {
-        timestamp,
-        usdValue,
-        ethValue,
-      },
-      milestone: mappedMilestones[timestamp],
-    }
-  })
+      return {
+        values: [{ value: unit === 'usd' ? usdValue : ethValue }],
+        data: {
+          timestamp,
+          usdValue,
+          ethValue,
+        },
+        milestone: mappedMilestones[timestamp],
+      }
+    }) ?? []
 
-  // TODO:
-  const tvl = data.at(-1)?.[1] ?? 0
-  const tvlWeeklyChange = (
-    (data.at(-1)?.[1] ?? 0) - (data.at(0)?.[1] ?? 0)
-  ).toString()
+  const firstTvlRecord = columns.at(0)?.data ?? { usdValue: 0, ethValue: 0 }
+  const latestTvlRecord = columns.at(-1)?.data ?? { usdValue: 0, ethValue: 0 }
+  const tvl = latestTvlRecord[unit === 'usd' ? 'usdValue' : 'ethValue']
+  const pastTvl = firstTvlRecord[unit === 'usd' ? 'usdValue' : 'ethValue']
+  const tvlChange = Number((((tvl - pastTvl) / pastTvl) * 100).toFixed(2))
 
   return (
     <ChartProvider
@@ -89,7 +85,7 @@ export function TvlChart({ milestones, tag = 'summary' }: Props) {
       renderHoverContents={(data) => <ChartHover data={data} />}
     >
       <section className="flex gap-4 flex-col">
-        <Header unit={unit} value={tvl} weeklyChange={tvlWeeklyChange} />
+        <Header unit={unit} value={tvl} change={tvlChange} range={timeRange} />
         <ChartTimeRangeControls
           value={timeRange}
           setValue={setTimeRange}
@@ -140,11 +136,13 @@ function ChartHover({ data }: { data: TvlChartPointData }) {
 function Header({
   unit,
   value,
-  weeklyChange,
+  change,
+  range,
 }: {
   unit: string
   value: number
-  weeklyChange: string
+  change: number
+  range: TvlChartRange
 }) {
   const { loading } = useChartContext()
 
@@ -171,7 +169,7 @@ function Header({
               })}
             </p>
             <p className="whitespace-nowrap text-right font-bold text-xs md:text-base">
-              <PercentChange value={weeklyChange} /> / 7 days
+              <PercentChange value={change} /> / {tvlRangeToReadable(range)}
             </p>
           </>
         )}
@@ -226,12 +224,17 @@ function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
   return result
 }
 
-function toDays(value: string) {
-  if (value.endsWith('d')) {
-    return parseInt(value.slice(0, -1))
-  } else if (value.endsWith('y')) {
-    return parseInt(value.slice(0, -1)) * 365
-  } else {
-    return Infinity
+function tvlRangeToReadable(range: TvlChartRange) {
+  if (range === 'max') {
+    return 'All time'
   }
+  const number = range.slice(0, -1)
+  const plural = number !== '1'
+  if (range.endsWith('d')) {
+    return `${number} ${plural ? 'days' : 'day'}`
+  }
+  if (range.endsWith('y')) {
+    return `${number} ${plural ? 'years' : 'year'}`
+  }
+  throw new Error('Invalid range')
 }

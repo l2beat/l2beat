@@ -20,5 +20,9 @@ export const tvlRouter = router({
           ]),
         ),
     )
-    .query(({ input }) => getTvlChart(input)),
+    .query(async ({ input }) => {
+      // TODO: Remove before merging
+      await new Promise((resolve) => setTimeout(resolve, 3000))
+      return getTvlChart(input)
+    }),
 })
