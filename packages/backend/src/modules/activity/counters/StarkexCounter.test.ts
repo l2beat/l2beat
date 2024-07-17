@@ -25,7 +25,7 @@ describe(StarkexCounter.name, () => {
       transaction: (cb) => cb(undefined as unknown as Transaction),
       starkExTransactionCount,
       sequenceProcessor: mockObject<Database['sequenceProcessor']>({
-        findById: async () => undefined,
+        findById: async () => null,
         addOrUpdate: async () => '',
       }),
     })

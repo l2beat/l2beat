@@ -1,4 +1,4 @@
-export { type Database, createDatabase } from './Database'
+export { type Database, createDatabase } from './database'
 export { type Transaction } from './kysely'
 
 // Records

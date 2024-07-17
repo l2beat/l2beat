@@ -182,7 +182,7 @@ export abstract class SequenceProcessor extends EventEmitter {
     const state = await this.db.sequenceProcessor.findById(
       this.projectId.toString(),
     )
-    this.state = state
+    this.state = state ?? undefined
   }
 
   private async setState(state: State, trx?: Transaction): Promise<void> {
