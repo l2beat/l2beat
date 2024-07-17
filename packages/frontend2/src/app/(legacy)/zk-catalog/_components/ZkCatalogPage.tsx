@@ -1,13 +1,13 @@
 import React from 'react'
 
-import { AccordionHeader } from '@radix-ui/react-accordion'
 import Image from 'next/image'
 import {
   Accordion,
   AccordionContent,
+  AccordionHeader,
   AccordionItem,
   AccordionTrigger,
-} from '~/app/_components/accordion'
+} from '@radix-ui/react-accordion'
 import ChevronDownIcon from '~/icons/chevron.svg'
 import { VerifiedCountWithDetails } from '../[project]/_components/VerifiedCountWithDetails'
 import { type ZkCatalogViewEntry } from '../types'
