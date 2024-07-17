@@ -15,17 +15,17 @@ export async function getDaRiskEntries() {
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
   return daLayers.flatMap((daLayer) =>
-    daLayer.bridges.map((bridge) => ({
-      slug: daLayer.display.slug,
-      daLayer: daLayer.display.name,
-      daBridge: toDaBridge(bridge),
-      risks: getDaRisks(
-        daLayer,
-        bridge,
-        getSumFor(bridge.usedIn),
-        economicSecurity[daLayer.id],
-      ),
-    })),
+    daLayer.bridges.map((bridge) => {
+      const tvs = getSumFor(bridge.usedIn)
+      const economicSecurityData = economicSecurity[daLayer.id]
+
+      return {
+        slug: daLayer.display.slug,
+        daLayer: daLayer.display.name,
+        daBridge: toDaBridge(bridge),
+        risks: getDaRisks(daLayer, bridge, tvs, economicSecurityData),
+      }
+    }),
   )
 }
 
