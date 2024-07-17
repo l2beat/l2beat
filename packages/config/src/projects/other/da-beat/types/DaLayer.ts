@@ -13,7 +13,7 @@ export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'public-blockchain'
   bridges: (OnChainDaBridge | NoDaBridge)[]
   /** Details about data availability sampling. */
-  dataAvailabilitySampling: DataAvailabilitySampling
+  dataAvailabilitySampling?: DataAvailabilitySampling
   /** The consensus algorithm used by the data availability layer. */
   consensusAlgorithm: DaConsensusAlgorithm
   /** Economic security configuration. */

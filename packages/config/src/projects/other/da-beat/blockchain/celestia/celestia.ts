@@ -60,7 +60,6 @@ export const celestia: DaLayer = {
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
   },
   dataAvailabilitySampling: {
-    supportsDAS: true,
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
     erasureCodingProof: DasErasureCodingProof.FraudProofs,
     pruningWindow: UnixTime.DAY * 30,
