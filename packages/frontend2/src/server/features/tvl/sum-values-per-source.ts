@@ -1,7 +1,7 @@
-import { type Value } from '@l2beat/database'
+import { type ValueRecord } from '@l2beat/database'
 
 export function sumValuesPerSource(
-  values: Value[],
+  values: ValueRecord[],
   forTotal?: boolean,
 ): {
   external: bigint
