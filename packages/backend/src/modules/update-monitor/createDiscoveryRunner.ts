@@ -42,5 +42,11 @@ export function createDiscoveryRunner(
     chain,
   )
 
-  return new DiscoveryRunner(allProviders, discoveryEngine, configReader, chain, templateService)
+  return new DiscoveryRunner(
+    allProviders,
+    discoveryEngine,
+    configReader,
+    chain,
+    templateService,
+  )
 }

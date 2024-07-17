@@ -33,7 +33,7 @@ export class DiscoveryRunner {
     private readonly discoveryEngine: DiscoveryEngine,
     private readonly configReader: ConfigReader,
     readonly chain: string,
-    private readonly templateService: TemplateService
+    private readonly templateService: TemplateService,
   ) {}
 
   async getBlockNumber(): Promise<number> {
@@ -75,7 +75,7 @@ export class DiscoveryRunner {
       config.hash,
       blockNumber,
       result,
-      this.templateService.getShapeFilesHash()
+      this.templateService.getShapeFilesHash(),
     )
   }
 
