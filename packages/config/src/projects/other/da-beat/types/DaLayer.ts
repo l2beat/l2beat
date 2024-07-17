@@ -1,5 +1,5 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import { DacBridge, EnshrinedBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
@@ -23,7 +23,7 @@ export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: typeof DaLayerKind.PublicBlockchain
 
-  bridges: (OnChainDaBridge | NoDaBridge)[]
+  bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
 
   dataAvailabilitySampling: DataAvailabilitySampling
 
