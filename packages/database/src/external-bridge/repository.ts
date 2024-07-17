@@ -1,10 +1,10 @@
 import { PostgresDatabase } from '../kysely'
-import { ExternalBridge, toRow } from './entity'
+import { ExternalBridgeRecord, toRow } from './entity'
 
 export class ExternalBridgeRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsert(externalBridge: ExternalBridge) {
+  upsert(externalBridge: ExternalBridgeRecord) {
     const row = toRow(externalBridge)
 
     return this.db

@@ -1,4 +1,4 @@
-import { type Value } from '@l2beat/database'
+import { type ValueRecord } from '@l2beat/database'
 import { unstable_noStore as noStore } from 'next/cache'
 import { getEthPrices } from './get-eth-prices'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
@@ -36,7 +36,7 @@ export async function getTvlChart({
 
   const timestampValues = Object.values(
     await getTvlValuesForProjects(projects, range),
-  ).reduce<Record<string, Value[]>>((acc, projectValues) => {
+  ).reduce<Record<string, ValueRecord[]>>((acc, projectValues) => {
     for (const [timestamp, values] of Object.entries(projectValues)) {
       const map = acc[timestamp] ?? []
       acc[timestamp] = map.concat(values)

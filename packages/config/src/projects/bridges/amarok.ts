@@ -175,12 +175,16 @@ export const amarok: Bridge = {
         as soon as Optimism state root is recorded on Ethereum w/out waiting for the 7-day fraud proof delay window.',
       ),
       discovery.getContractDetails(
+        'BaseHubConnector',
+        'Contract for sending/receiving messages from mainnet to Base via OP stack AMB.',
+      ),
+      discovery.getContractDetails(
         'MantleHubConnector',
-        'Contract for sending/receiving messages from mainnet to Mantle via Optimism AMB.',
+        'Contract for sending/receiving messages from mainnet to Mantle via OP stack AMB.',
       ),
       discovery.getContractDetails(
         'MetisHubConnector',
-        'Contract for sending/receiving messages from mainnet to pre-bedrock Optimism based projects via Optimism AMB.',
+        'Contract for sending/receiving messages from mainnet to Metis via Optimism AMB.',
       ),
       discovery.getContractDetails(
         'ArbitrumHubConnector',
@@ -200,7 +204,7 @@ export const amarok: Bridge = {
       ),
       discovery.getContractDetails(
         'ModeHubConnector',
-        'Contract for sending/receiving messages from mainnet to Mode Network via Optimism AMB.',
+        'Contract for sending/receiving messages from mainnet to Mode Network via OP stack AMB.',
       ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],

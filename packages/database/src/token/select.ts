@@ -1,4 +1,4 @@
-import { Token } from './entity'
+import { TokenRecord } from './entity'
 
 export const selectToken = [
   'id',
@@ -6,4 +6,4 @@ export const selectToken = [
   'createdAt',
   'networkId',
   'updatedAt',
-] as const satisfies (keyof Token)[]
+] as const satisfies (keyof TokenRecord)[]

@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { TokenBridge as TokenBridgeEntity } from '../kysely/generated/types'
+import { TokenBridge } from '../kysely/generated/types'
 
-export interface TokenBridge {
+export interface TokenBridgeRecord {
   id: string
   sourceTokenId: string
   targetTokenId: string
@@ -10,10 +10,10 @@ export interface TokenBridge {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<TokenBridgeEntity>): TokenBridge {
+export function toRecord(row: Selectable<TokenBridge>): TokenBridgeRecord {
   return row
 }
 
-export function toRow(record: TokenBridge): Insertable<TokenBridgeEntity> {
+export function toRow(record: TokenBridgeRecord): Insertable<TokenBridge> {
   return record
 }

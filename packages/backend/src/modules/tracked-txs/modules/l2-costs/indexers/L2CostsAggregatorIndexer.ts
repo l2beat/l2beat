@@ -68,7 +68,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     )
 
     const aggregated = this.aggregate(costs, ethPrices)
-    await this.$.aggregatedL2CostsRepository.addMany(aggregated)
+    await this.$.aggregatedL2CostsRepository.addOrUpdateMany(aggregated)
     this.logger.info('Aggregated L2 costs', {
       count: aggregated.length,
     })
@@ -77,17 +77,16 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    const unixTargetHeight = new UnixTime(targetHeight)
-    await this.$.aggregatedL2CostsRepository.deleteAfter(unixTargetHeight)
-
-    return targetHeight
+    // no need to remove data
+    // safeHeight will be updated to this value
+    return await Promise.resolve(targetHeight)
   }
 
   shift(from: number, to: number): [UnixTime, UnixTime] {
     // limit time range to one day if greater
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
-    // start from a begining of an hour
+    // start from a beginning of an hour
     // 13:00:01 => 13:00:00
     const shiftedUnixFrom = unixFrom.toStartOf('hour')
 

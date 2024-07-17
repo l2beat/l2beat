@@ -1,4 +1,4 @@
-import { L2Cost as L2CostRow } from '../kysely/generated/types'
+import { L2Cost } from '../kysely/generated/types'
 
 export const selectL2Cost = [
   'blob_gas_price',
@@ -10,4 +10,4 @@ export const selectL2Cost = [
   'timestamp',
   'configuration_id',
   'tx_hash',
-] as const satisfies (keyof L2CostRow)[]
+] as const satisfies (keyof L2Cost)[]

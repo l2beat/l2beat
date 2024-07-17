@@ -1,16 +1,16 @@
 import { PostgresDatabase } from '../kysely'
-import { BridgeEscrow, toRow } from './entity'
+import { BridgeEscrowRecord, toRow } from './entity'
 
 export class BridgeEscrowRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsert(bridgeEscrow: BridgeEscrow) {
+  upsert(bridgeEscrow: BridgeEscrowRecord) {
     const row = toRow(bridgeEscrow)
 
     return this.db.insertInto('public.BridgeEscrow').values(row).execute()
   }
 
-  upsertMany(bridgeEscrows: BridgeEscrow[]) {
+  upsertMany(bridgeEscrows: BridgeEscrowRecord[]) {
     const rows = bridgeEscrows.map(toRow)
 
     return this.db

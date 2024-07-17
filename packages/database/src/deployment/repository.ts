@@ -1,10 +1,10 @@
 import { PostgresDatabase } from '../kysely'
-import { Deployment, toRow } from './entity'
+import { DeploymentRecord, toRow } from './entity'
 
 export class DeploymentRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  upsert(Deployment: Deployment) {
+  upsert(Deployment: DeploymentRecord) {
     const row = toRow(Deployment)
 
     return this.db

@@ -1,11 +1,11 @@
 import { PostgresDatabase, Transaction } from '../kysely'
-import { TvlCleaner, toRecord, toRow } from './entity'
+import { TvlCleanerRecord, toRecord, toRow } from './entity'
 import { selectTvlCleaner } from './select'
 
 export class TvlCleanerRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async addOrUpdate(record: TvlCleaner, trx?: Transaction) {
+  async addOrUpdate(record: TvlCleanerRecord, trx?: Transaction) {
     const scope = trx ?? this.db
 
     const row = toRow(record)

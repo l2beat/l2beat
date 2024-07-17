@@ -56,29 +56,12 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async findByConfigAndTimestamp(
-    queries: { configId: string; timestamp: UnixTime }[],
-  ): Promise<AmountRecord[]> {
-    if (queries.length === 0) {
-      return []
-    }
+  async getByTimestamps(timestamps: UnixTime[]): Promise<AmountRecord[]> {
     const knex = await this.knex()
-    const rows = await knex('amounts').where(function () {
-      // Start the query with the first condition
-      this.where('configuration_id', queries[0].configId).andWhere(
-        'timestamp',
-        queries[0].timestamp.toDate(),
-      )
-
-      for (let i = 1; i < queries.length; i++) {
-        this.orWhere(function () {
-          this.where('configuration_id', queries[i].configId).andWhere(
-            'timestamp',
-            queries[i].timestamp.toDate(),
-          )
-        })
-      }
-    })
+    const rows = await knex('amounts').whereIn(
+      'timestamp',
+      timestamps.map((t) => t.toDate()),
+    )
 
     return rows.map(toRecord)
   }

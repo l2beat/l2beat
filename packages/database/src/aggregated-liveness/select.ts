@@ -1,4 +1,4 @@
-import { AggregatedLiveness as AggregatedLivenessRow } from '../kysely/generated/types'
+import { AggregatedLiveness } from '../kysely/generated/types'
 
 export const selectAggregatedLiveness = [
   'project_id',
@@ -8,4 +8,4 @@ export const selectAggregatedLiveness = [
   'avg',
   'max',
   'updated_at',
-] as const satisfies (keyof AggregatedLivenessRow)[]
+] as const satisfies (keyof AggregatedLiveness)[]

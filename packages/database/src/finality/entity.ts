@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { Finality as FinalityRow } from '../kysely/generated/types'
+import { Finality } from '../kysely/generated/types'
 
-export interface Finality {
+export interface FinalityRecord {
   projectId: ProjectId
   timestamp: UnixTime
   minimumTimeToInclusion: number
@@ -12,13 +12,13 @@ export interface Finality {
   averageStateUpdate: number | null
 }
 
-export interface ProjectFinality {
+export interface ProjectFinalityRecord {
   minimumTimeToInclusion: number
   maximumTimeToInclusion: number
   averageTimeToInclusion: number
 }
 
-export function toRecord(row: Selectable<FinalityRow>): Finality {
+export function toRecord(row: Selectable<Finality>): FinalityRecord {
   return {
     projectId: ProjectId(row.project_id),
     timestamp: UnixTime.fromDate(row.timestamp),
@@ -29,7 +29,7 @@ export function toRecord(row: Selectable<FinalityRow>): Finality {
   }
 }
 
-export function toRow(record: Finality): Insertable<FinalityRow> {
+export function toRow(record: FinalityRecord): Insertable<Finality> {
   return {
     project_id: record.projectId.toString(),
     timestamp: record.timestamp.toDate(),
@@ -41,8 +41,8 @@ export function toRow(record: Finality): Insertable<FinalityRow> {
 }
 
 export function toProjectFinalityRecord(
-  row: Selectable<FinalityRow>,
-): ProjectFinality {
+  row: Selectable<Finality>,
+): ProjectFinalityRecord {
   return {
     minimumTimeToInclusion: row.minimum_time_to_inclusion,
     maximumTimeToInclusion: row.maximum_time_to_inclusion,

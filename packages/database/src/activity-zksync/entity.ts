@@ -1,16 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { ZkSync as ZkSyncTransactionRow } from '../kysely/generated/types'
+import { ZkSync } from '../kysely/generated/types'
 
-export interface ZkSyncTransaction {
+export interface ZkSyncTransactionRecord {
   blockNumber: number
   blockIndex: number
   timestamp: UnixTime
 }
 
-export function toRow(
-  record: ZkSyncTransaction,
-): Insertable<ZkSyncTransactionRow> {
+export function toRow(record: ZkSyncTransactionRecord): Insertable<ZkSync> {
   return {
     unix_timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,
@@ -18,9 +16,7 @@ export function toRow(
   }
 }
 
-export function toRecord(
-  row: Selectable<ZkSyncTransactionRow>,
-): ZkSyncTransaction {
+export function toRecord(row: Selectable<ZkSync>): ZkSyncTransactionRecord {
   return {
     blockNumber: row.block_number,
     blockIndex: row.block_index,

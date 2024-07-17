@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { BridgeEscrow as BridgeEscrowEntity } from '../kysely/generated/types'
+import { BridgeEscrow } from '../kysely/generated/types'
 
-export interface BridgeEscrow {
+export interface BridgeEscrowRecord {
   id: string
   networkId: string
   address: string
@@ -11,10 +11,10 @@ export interface BridgeEscrow {
   createdAt: Date
 }
 
-export function toRecord(row: Selectable<BridgeEscrowEntity>): BridgeEscrow {
+export function toRecord(row: Selectable<BridgeEscrow>): BridgeEscrowRecord {
   return row
 }
 
-export function toRow(record: BridgeEscrow): Insertable<BridgeEscrowEntity> {
+export function toRow(record: BridgeEscrowRecord): Insertable<BridgeEscrow> {
   return record
 }

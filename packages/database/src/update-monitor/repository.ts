@@ -1,6 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { UpdateMonitor, toRecord, toRow } from './entity'
+import { UpdateMonitorRecord, toRecord, toRow } from './entity'
 import { selectUpdateMonitor } from './select'
 
 export class UpdateMonitorRepository {
@@ -9,7 +9,7 @@ export class UpdateMonitorRepository {
   async findLatest(
     name: string,
     chainId: ChainId,
-  ): Promise<UpdateMonitor | undefined> {
+  ): Promise<UpdateMonitorRecord | undefined> {
     const row = await this.db
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
@@ -21,7 +21,10 @@ export class UpdateMonitorRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdate(record: UpdateMonitor, trx?: Transaction): Promise<string> {
+  async addOrUpdate(
+    record: UpdateMonitorRecord,
+    trx?: Transaction,
+  ): Promise<string> {
     const scope = trx ?? this.db
 
     const row = toRow(record)
@@ -43,7 +46,7 @@ export class UpdateMonitorRepository {
     return `${record.projectName} | block_number: ${record.blockNumber}`
   }
 
-  async getAll(): Promise<UpdateMonitor[]> {
+  async getAll(): Promise<UpdateMonitorRecord[]> {
     const rows = await this.db
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)

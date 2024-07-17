@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x2b3a64455484b9e1e583c004393aa200fb53f568
+
+# Diff at Tue, 16 Jul 2024 08:47:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4cebc868d0be9a9868d2842c2670f1974594c48e block: 20310579
+- current block number: 20317972
+
+## Description
+
+The Base connector that was accidentally removed is re-added.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors.13:
++        "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0xa4e473cfb05a7a4dfaac6b579b027ef81b1daf44179b942325dddbba59d5e587"
++        "0xe813f3a6a50b9d0b90ac54107ca8ab16dd7faba907e4de56210c710200c60755"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../amarok/ethereum/.flat/BaseHubConnector.sol     | 1005 ++++++++++++++++++++
+ 1 file changed, 1005 insertions(+)
+```
+
 Generated with discovered.json: 0x32989f7cdc1a82d82ea6c20e509b400658f02e98
 
 # Diff at Mon, 15 Jul 2024 08:01:24 GMT:
