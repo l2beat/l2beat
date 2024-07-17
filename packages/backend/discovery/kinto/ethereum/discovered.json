@@ -1,7 +1,7 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 20210980,
+  "blockNumber": 20324731,
   "configHash": "0x6a7f3669b7aa1e64175fddd1db9e1e65fef305f7921322c983db02a5f16c155a",
   "version": 9,
   "contracts": [
@@ -106,12 +106,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1650,
+        "firstUnresolvedNode": 1715,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1649,
-        "latestNodeCreated": 1676,
+        "latestConfirmed": 1714,
+        "latestNodeCreated": 1739,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -285,11 +285,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 3376,
+        "delayedMessageCount": 3499,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 2720,
-        "sequencerReportedSubMessageCount": 186585
+        "sequencerMessageCount": 2836,
+        "sequencerReportedSubMessageCount": 207386
       },
       "derivedName": "Bridge"
     },
@@ -385,7 +385,7 @@
         ],
         "getThreshold": 3,
         "GnosisSafe_modules": [],
-        "nonce": 135,
+        "nonce": 145,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -399,7 +399,7 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x57411f5BA52531e8199066bC8EC650470A744883",
-        "batchCount": 2720,
+        "batchCount": 2836,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -423,7 +423,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3375,
+        "totalDelayedMessagesRead": 3498,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
