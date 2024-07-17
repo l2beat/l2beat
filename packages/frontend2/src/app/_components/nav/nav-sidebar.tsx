@@ -74,7 +74,7 @@ export async function NavSidebar({
           </NavSmallLink>
           <NavSmallLink
             title="Brand Kit"
-            href="https://drive.google.com/drive/folders/1Il3RqsOm5_sV5NVzXuWRUwWYlptJxD-w?usp=drive_link"
+            href="https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b"
           />
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
