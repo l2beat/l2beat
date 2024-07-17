@@ -36,6 +36,7 @@ import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { fhenix } from './fhenix'
+import { fluent } from './fluent'
 import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
@@ -177,6 +178,7 @@ export const layer2s: Layer2[] = [
   ethernity,
   everclear,
   fhenix,
+  fluent,
   form,
   frame,
   fraxtal,
