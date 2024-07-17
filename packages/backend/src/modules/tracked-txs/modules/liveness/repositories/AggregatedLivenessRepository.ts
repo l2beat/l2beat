@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -9,7 +10,6 @@ import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
-import { Database } from '../../../../../peripherals/database/Database'
 
 export type AggregatedLivenessRange = '30D' | '90D' | 'MAX'
 
@@ -26,7 +26,7 @@ export interface AggregatedLivenessRecord {
 export class AggregatedLivenessRepository extends BaseRepository {
   private readonly TABLE_NAME = 'aggregated_liveness'
 
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<AggregatedLivenessRepository>>(this)
   }

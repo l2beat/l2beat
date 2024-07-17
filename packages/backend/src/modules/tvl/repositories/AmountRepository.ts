@@ -1,12 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -25,7 +25,7 @@ export interface AmountRecord {
 }
 
 export class AmountRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<AmountRepository>>(this)
   }

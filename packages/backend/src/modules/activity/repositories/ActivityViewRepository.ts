@@ -5,11 +5,11 @@ import {
   ProjectsAggregatedDailyCountRow,
 } from 'knex/types/tables'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
 
 export interface DailyTransactionCountRecord {
   projectId: ProjectId
@@ -23,7 +23,7 @@ export type ProjectsAggregatedDailyTransactionCounts = Pick<
 >
 
 export class ActivityViewRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.refresh = this.wrapAny(this.refresh)
     this.autoWrap<CheckConvention<ActivityViewRepository>>(this)

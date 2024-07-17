@@ -3,8 +3,8 @@ import path from 'path'
 import { expect } from 'earl'
 import { afterEach } from 'mocha'
 
-import { getLegacyTestDatabase } from './getLegacyTestDatabase'
 import { LegacyDatabase } from './LegacyDatabase'
+import { getLegacyTestDatabase } from './getLegacyTestDatabase'
 
 describe(LegacyDatabase.name, () => {
   it('can run and rollback all migrations', async function () {
