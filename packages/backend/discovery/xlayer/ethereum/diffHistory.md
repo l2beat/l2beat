@@ -8,7 +8,7 @@ Generated with discovered.json: 0x459a4296a728dd54469b94dcfd86df1667462957
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Introduced a new LocalAdmin, not handled by the shared template, which mainContract admin (not the upgradeabilityAdmin) and who can change local system configs. This role was wrongly given to the SharedProxyAdminOwner before.
 
 ## Config/verification related changes
 
