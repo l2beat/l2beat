@@ -28,9 +28,8 @@ export function UsedInProjectEntry({
       </p>
       <div className="flex flex-row items-center">
         {implementations.map((project, i) => (
-          // TODO: disabledOnMobile - see source
           <Tooltip key={i}>
-            <TooltipTrigger>
+            <TooltipTrigger disabledOnMobile>
               <Link
                 href={`/${project.hrefRoot}/projects/${project.slug}/#${project.targetName}`}
               >
