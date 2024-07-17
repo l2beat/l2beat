@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xfbb0f0e87d4e322c32730ad7195662eccd8ac493
+Generated with discovered.json: 0xc120720e1695ffdf3fb731a335ac850f57829f78
 
-# Diff at Wed, 17 Jul 2024 14:08:45 GMT:
+# Diff at Wed, 17 Jul 2024 20:15:18 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@9916d4da5ec6a86bec108b3daa1ca189b3086b1a block: 20224230
@@ -43,7 +43,7 @@ discovery. Values are for block 20224230 (main branch discovery), not current.
       template:
 +        "opstack/OptimismMintableERC20Factory"
       descriptions:
-+        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."]
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
     }
 ```
 
@@ -65,9 +65,21 @@ discovery. Values are for block 20224230 (main branch discovery), not current.
 
 ```diff
     contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
-    +++ description: The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token.
+      descriptions.0:
+-        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."
       categories:
 +        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: None
+      descriptions.0:
+-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
     }
 ```
 
@@ -91,10 +103,19 @@ discovery. Values are for block 20224230 (main branch discovery), not current.
 
 ```diff
     contract L1ERC721Bridge (0x608d94945A64503E642E6370Ec598e519a2C1E53) {
-    +++ description: Used to bridge ERC-721 tokens from L1 to L2.
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
       descriptions.0:
 -        "Used to bridge ERC-721 tokens from L1 to L2"
-+        "Used to bridge ERC-721 tokens from L1 to L2."
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      descriptions.0:
+-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
     }
 ```
 
@@ -111,6 +132,15 @@ discovery. Values are for block 20224230 (main branch discovery), not current.
     +++ description: None
       descriptions:
 +        ["Fallback Owner of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 if the number of members falls below 8."]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: None
+      descriptions.0:
+-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
     }
 ```
 

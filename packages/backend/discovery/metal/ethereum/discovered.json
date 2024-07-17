@@ -54,7 +54,7 @@
       "template": "opstack/L1CrossDomainMessenger",
       "proxyType": "resolved delegate proxy",
       "descriptions": [
-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
+        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
       ],
       "categories": ["Core"],
       "ignoreInWatchMode": ["messageNonce"],
@@ -89,7 +89,7 @@
       "template": "opstack/OptimismMintableERC20Factory",
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
+        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
       ],
       "sinceTimestamp": 1711563695,
       "values": {
@@ -184,7 +184,7 @@
       "template": "opstack/OptimismPortal",
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
+        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
       ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1711563611,
@@ -272,7 +272,9 @@
       "address": "0x50D700e97967F9115e3f999bDB263d69F6704680",
       "template": "opstack/L1ERC721Bridge",
       "proxyType": "EIP1967 proxy",
-      "descriptions": ["Used to bridge ERC-721 tokens from L1 to L2."],
+      "descriptions": [
+        "Used to bridge ERC-721 tokens from host chain to this chain."
+      ],
       "sinceTimestamp": 1711563707,
       "values": {
         "$admin": "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99",
@@ -355,7 +357,7 @@
       "template": "opstack/L1StandardBridge",
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
+        "The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."
       ],
       "categories": ["Gateways&Escrows"],
       "sinceTimestamp": 1711563659,
@@ -378,7 +380,7 @@
       "template": "opstack/SystemConfig",
       "proxyType": "EIP1967 proxy",
       "descriptions": [
-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
+        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
       ],
       "ignoreInWatchMode": ["scalar"],
       "sinceTimestamp": 1711563647,
@@ -1111,15 +1113,15 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xaf5b0d62e72a14151b44a22d48bafb364c7a48b955581e4d6170558da9355712",
     "gnosisSafeModules/LivenessModule": "0xd75d1e4e8d40e200f67ee9e7ad3d207c223529d0012960d395b78e88adeef410",
     "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/L1CrossDomainMessenger": "0x4a2e6556b8069c3a286940f2a0215dc47ee9f58a2c75d1ae425faac61069f415",
-    "opstack/L1ERC721Bridge": "0x7fee19491f86d056d69182d1039c7f8352fe2acbf5ab203d78ad03264c9e0be7",
-    "opstack/L1StandardBridge": "0x305d40ee18a096f50458dce3466237d53fe288cd2ca7c442c1c95e04897b5c19",
+    "opstack/L1CrossDomainMessenger": "0x41bd900739c252a9cbc05cef0fa2a1a2e0075816453fae09031f4b4055ce1b90",
+    "opstack/L1ERC721Bridge": "0xa4ae7e768b1b7b82f1f094037136f28410f672050a4d57802af1b825f84ce765",
+    "opstack/L1StandardBridge": "0x1ab0ea7b3c4bb5039881f7366f2579cbdb6cf14c3c29d73517d75d32e5b1c47e",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
-    "opstack/OptimismMintableERC20Factory": "0xe0ba12246393e783ac5412fbd0510f11c70f4953ca9786e064124cc876cab362",
-    "opstack/OptimismPortal": "0x605916ac6f6e556c5067d4cea28e268bba6e3725387ac0c78352f2cf1f5d67dd",
+    "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
+    "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
     "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0x6fb4b274a28bb729691594027c6d2f002db5e6940671ab840cdb51b949bcae4e"
+    "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
   },
   "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

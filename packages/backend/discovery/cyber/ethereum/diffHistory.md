@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xde72e84599fea2223efd16baf42b8a4dc054da8e
+Generated with discovered.json: 0xfa0628725ddb9381c77412cd05690d67b74b2869
 
-# Diff at Wed, 17 Jul 2024 14:09:13 GMT:
+# Diff at Wed, 17 Jul 2024 20:15:22 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@9916d4da5ec6a86bec108b3daa1ca189b3086b1a block: 20032828
@@ -22,7 +22,7 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
       template:
 +        "opstack/L1StandardBridge"
       descriptions:
-+        ["The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."]
++        ["The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."]
       categories:
 +        ["Gateways&Escrows"]
     }
@@ -46,7 +46,7 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
       template:
 +        "opstack/OptimismPortal"
       descriptions:
-+        ["The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."]
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
     }
 ```
 
@@ -56,7 +56,7 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
       template:
 +        "opstack/L1CrossDomainMessenger"
       descriptions:
-+        ["Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."]
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
       categories:
 +        ["Core"]
     }
@@ -68,7 +68,7 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
       template:
 +        "opstack/L1ERC721Bridge"
       descriptions:
-+        ["Used to bridge ERC-721 tokens from L1 to L2."]
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
     }
 ```
 
@@ -78,7 +78,7 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
       template:
 +        "opstack/OptimismMintableERC20Factory"
       descriptions:
-+        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."]
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
     }
 ```
 
@@ -88,7 +88,7 @@ discovery. Values are for block 20032828 (main branch discovery), not current.
       template:
 +        "opstack/SystemConfig"
       descriptions:
-+        ["Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."]
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
     }
 ```
 

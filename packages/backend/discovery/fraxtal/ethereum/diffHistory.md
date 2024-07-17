@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8dd86f9fa42092e167084d72e30cf07980d277ab
+Generated with discovered.json: 0x30aafd56f596aeb22b7603d9c82ded2513272ef2
 
-# Diff at Wed, 17 Jul 2024 14:09:41 GMT:
+# Diff at Wed, 17 Jul 2024 20:15:25 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@9916d4da5ec6a86bec108b3daa1ca189b3086b1a block: 20032836
@@ -22,7 +22,7 @@ discovery. Values are for block 20032836 (main branch discovery), not current.
       template:
 +        "opstack/L1CrossDomainMessenger"
       descriptions:
-+        ["Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."]
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
       categories:
 +        ["Core"]
     }
@@ -37,12 +37,21 @@ discovery. Values are for block 20032836 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions.0:
+-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
     contract L1StandardBridge (0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2) {
     +++ description: None
       template:
 +        "opstack/L1StandardBridge"
       descriptions:
-+        ["The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."]
++        ["The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."]
     }
 ```
 
@@ -74,7 +83,7 @@ discovery. Values are for block 20032836 (main branch discovery), not current.
       template:
 +        "opstack/L1ERC721Bridge"
       descriptions:
-+        ["Used to bridge ERC-721 tokens from L1 to L2."]
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
     }
 ```
 

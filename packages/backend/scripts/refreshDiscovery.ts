@@ -44,7 +44,9 @@ async function main() {
     for (const { config, reason } of toRefresh) {
       console.log(`- ${config.chain}/${config.name} (${reason})`)
     }
-    console.log(`Overall ${toRefresh.length} projects need discovery refresh.`)
+    console.log(
+      `\nOverall ${toRefresh.length} projects need discovery refresh.`,
+    )
     if (keyInYN('Do you want to continue?')) {
       for (const { config } of toRefresh) {
         execSync(`yarn discover "${config.chain}" "${config.name}" --refresh`, {

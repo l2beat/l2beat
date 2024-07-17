@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x753bd8fcbe6fb4e44219cf21b1c282f931b912a5
+Generated with discovered.json: 0xc182a2fb2c25e835b0fe493aacd8b2235984294b
 
-# Diff at Wed, 17 Jul 2024 14:14:11 GMT:
+# Diff at Wed, 17 Jul 2024 20:15:42 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@9916d4da5ec6a86bec108b3daa1ca189b3086b1a block: 20276973
@@ -39,10 +39,28 @@ discovery. Values are for block 20276973 (main branch discovery), not current.
 ```
 
 ```diff
+    contract OptimismPortal (0x1a0ad011913A150f69f6A19DF447A0CfD9551054) {
+    +++ description: None
+      descriptions.0:
+-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
     contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
     +++ description: None
       descriptions:
 +        ["Liveness Guard of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - used to remove members inactive for 98d."]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3e2Ea9B92B7E48A52296fD261dc26fd995284631) {
+    +++ description: None
+      descriptions.0:
+-        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."
     }
 ```
 
@@ -77,7 +95,7 @@ discovery. Values are for block 20276973 (main branch discovery), not current.
     +++ description: None
       descriptions.0:
 -        "Used to bridge ERC-721 tokens from L1 to L2"
-+        "Used to bridge ERC-721 tokens from L1 to L2."
++        "Used to bridge ERC-721 tokens from host chain to this chain."
     }
 ```
 
@@ -98,6 +116,24 @@ discovery. Values are for block 20276973 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SystemConfig (0xA3cAB0126d5F504B071b81a3e8A2BBBF17930d86) {
+    +++ description: None
+      descriptions.0:
+-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf) {
+    +++ description: None
+      descriptions.0:
+-        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."
++        "A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."
+    }
+```
+
+```diff
     contract ZoraMultisig (0xC72aE5c7cc9a332699305E29F68Be66c73b60542) {
     +++ description: None
       descriptions:
@@ -110,6 +146,15 @@ discovery. Values are for block 20276973 (main branch discovery), not current.
     +++ description: None
       descriptions:
 +        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xdC40a14d9abd6F410226f1E6de71aE03441ca506) {
+    +++ description: None
+      descriptions.0:
+-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
     }
 ```
 

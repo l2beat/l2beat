@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x7677174f42b208d0957ac6c4be11f8152284eaf7
+Generated with discovered.json: 0xecbc681717dae63a89a46c5e6b19376140c41207
 
-# Diff at Wed, 17 Jul 2024 14:10:53 GMT:
+# Diff at Wed, 17 Jul 2024 20:15:34 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@9916d4da5ec6a86bec108b3daa1ca189b3086b1a block: 20211472
@@ -42,7 +42,7 @@ discovery. Values are for block 20211472 (main branch discovery), not current.
     +++ description: None
       descriptions.0:
 -        "Used to bridge ERC-721 tokens from L1 to L2"
-+        "Used to bridge ERC-721 tokens from L1 to L2."
++        "Used to bridge ERC-721 tokens from host chain to this chain."
     }
 ```
 
@@ -81,18 +81,30 @@ discovery. Values are for block 20211472 (main branch discovery), not current.
 ```
 
 ```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: None
+      descriptions.0:
+-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
     contract OptimismMintableERC20Factory (0x69216395A62dFb243C05EF4F1C27AF8655096a95) {
     +++ description: None
       template:
 +        "opstack/OptimismMintableERC20Factory"
       descriptions:
-+        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."]
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
     }
 ```
 
 ```diff
     contract L1StandardBridge (0x735aDBbE72226BD52e818E7181953f42E3b0FF21) {
     +++ description: None
+      descriptions.0:
+-        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."
       categories:
 +        ["Gateways&Escrows"]
     }
@@ -103,6 +115,24 @@ discovery. Values are for block 20211472 (main branch discovery), not current.
     +++ description: None
       descriptions:
 +        ["Fallback Owner of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 if the number of members falls below 8."]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x8B34b14c7c7123459Cf3076b8Cb929BE097d0C07) {
+    +++ description: None
+      descriptions.0:
+-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x95bDCA6c8EdEB69C98Bd5bd17660BaCef1298A6f) {
+    +++ description: None
+      descriptions.0:
+-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
     }
 ```
 

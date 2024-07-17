@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x17724d237708613bf04a0a3a41a9733e1355572b
+Generated with discovered.json: 0xe567d8e1edc1a9346a7ebff53c952dd545933f9c
 
-# Diff at Wed, 17 Jul 2024 14:09:00 GMT:
+# Diff at Wed, 17 Jul 2024 20:15:20 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@9916d4da5ec6a86bec108b3daa1ca189b3086b1a block: 19960612
@@ -30,7 +30,7 @@ discovery. Values are for block 19960612 (main branch discovery), not current.
       template:
 +        "opstack/OptimismMintableERC20Factory"
       descriptions:
-+        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as the L2 representation of an L1 token, or vice-versa."]
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
     }
 ```
 
@@ -58,7 +58,7 @@ discovery. Values are for block 19960612 (main branch discovery), not current.
       template:
 +        "opstack/OptimismPortal"
       descriptions:
-+        ["The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."]
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
     }
 ```
 
@@ -80,7 +80,7 @@ discovery. Values are for block 19960612 (main branch discovery), not current.
       template:
 +        "opstack/L1ERC721Bridge"
       descriptions:
-+        ["Used to bridge ERC-721 tokens from L1 to L2."]
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
     }
 ```
 
