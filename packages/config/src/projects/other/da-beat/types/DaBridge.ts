@@ -1,8 +1,9 @@
-import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ScalingProjectContracts } from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
+import { DaProjectReference } from './DaProjectReference'
 
 export type DaBridgeKind = (typeof DaBridgeKind)[keyof typeof DaBridgeKind]
 
@@ -115,9 +116,9 @@ type CommonDaBridge = {
   }
 
   /**
-   * List of projects given bridge is being used in
+   * List of projects' references given bridge is being used in
    */
-  usedIn: ProjectId[]
+  usedIn: DaProjectReference[]
 
   /**
    * Risks related to given data availability bridge
