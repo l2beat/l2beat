@@ -21,16 +21,26 @@ const NoBridge = {
   display: 'No bridge',
 } as const
 
+const Enshrined = {
+  type: 'Enshrined',
+  display: 'Enshrined',
+} as const
+
 export const DaBridgeKind = {
   OnChainBridge,
   DAC,
   NoBridge,
+  Enshrined
 }
 
-export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
+export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge | EnshrinedBridge
 
 export type NoDaBridge = CommonDaBridge & {
   kind: typeof NoBridge
+}
+
+export type EnshrinedBridge = CommonDaBridge & {
+  kind: typeof Enshrined
 }
 
 export type OnChainDaBridge = CommonDaBridge & {
