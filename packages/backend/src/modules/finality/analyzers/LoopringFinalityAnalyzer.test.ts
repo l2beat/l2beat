@@ -1,10 +1,9 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Database } from '@l2beat/database'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LoopringFinalityAnalyzer } from './LoopringFinalityAnalyzer'
 
 describe(LoopringFinalityAnalyzer.name, () => {
@@ -18,7 +17,6 @@ describe(LoopringFinalityAnalyzer.name, () => {
           }),
         }),
       })
-      const livenessRepository = mockObject<LivenessRepository>({})
       const loopringClient = mockObject<LoopringClient>({
         getBlock: mockFn().resolvesTo({
           createdAt: new UnixTime(MOCK_DATA.blockCreatedAt),
@@ -27,8 +25,7 @@ describe(LoopringFinalityAnalyzer.name, () => {
 
       const analyzer = new LoopringFinalityAnalyzer(
         rpcClient,
-        livenessRepository,
-        mockObject<IndexerConfigurationRepository>({}),
+        mockObject<Database>(),
         projectId,
         loopringClient,
       )

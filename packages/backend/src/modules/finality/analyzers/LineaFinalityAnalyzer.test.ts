@@ -2,15 +2,13 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LineaFinalityAnalyzer } from './LineaFinalityAnalyzer'
 
 describe(LineaFinalityAnalyzer.name, () => {
   describe(LineaFinalityAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data for calldata example', async () => {
-      const livenessRepository = mockObject<LivenessRepository>()
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: mockCallData(2371262, 2371336),
@@ -21,8 +19,7 @@ describe(LineaFinalityAnalyzer.name, () => {
 
       const calculator = new LineaFinalityAnalyzer(
         provider,
-        livenessRepository,
-        mockObject<IndexerConfigurationRepository>({}),
+        mockObject<Database>(),
         ProjectId('linea'),
         l2provider,
       )
@@ -38,7 +35,6 @@ describe(LineaFinalityAnalyzer.name, () => {
     })
 
     it('correctly decode and returns correct data for blob example', async () => {
-      const livenessRepository = mockObject<LivenessRepository>()
       const provider = mockObject<RpcClient>({
         getTransaction: mockFn().resolvesTo({
           data: mockBlobCalldata(2371262, 2371336),
@@ -49,9 +45,7 @@ describe(LineaFinalityAnalyzer.name, () => {
 
       const calculator = new LineaFinalityAnalyzer(
         provider,
-        livenessRepository,
-        mockObject<IndexerConfigurationRepository>({}),
-
+        mockObject<Database>(),
         ProjectId('linea'),
         l2provider,
       )

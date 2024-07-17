@@ -1,23 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
+import { AnomalyRecord, Database, LivenessRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import {
-  AnomaliesRecord,
-  AnomaliesRepository,
-} from '../repositories/AnomaliesRepository'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
 import { LivenessRecordWithConfig } from '../services/LivenessWithConfigService'
-import {
-  AnomaliesIndexer,
-  AnomaliesIndexerIndexerDeps,
-} from './AnomaliesIndexer'
+import { AnomaliesIndexer } from './AnomaliesIndexer'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
@@ -69,7 +59,7 @@ describe(AnomaliesIndexer.name, () => {
     })
 
     it('should update', async () => {
-      const mockAnomaliesRepository = mockObject<AnomaliesRepository>({
+      const mockAnomaliesRepository = mockObject<Database['anomalies']>({
         addOrUpdateMany: mockFn().resolvesTo(1),
       })
 
@@ -78,7 +68,7 @@ describe(AnomaliesIndexer.name, () => {
         anomaliesRepository: mockAnomaliesRepository,
       })
 
-      const mockAnomalies: AnomaliesRecord[] = [
+      const mockAnomalies: AnomalyRecord[] = [
         {
           timestamp: NOW.add(-1, 'days'),
           projectId: MOCK_PROJECTS[0].projectId,
@@ -105,7 +95,7 @@ describe(AnomaliesIndexer.name, () => {
     })
 
     it('should adjust and update', async () => {
-      const mockAnomaliesRepository = mockObject<AnomaliesRepository>({
+      const mockAnomaliesRepository = mockObject<Database['anomalies']>({
         addOrUpdateMany: mockFn().resolvesTo(1),
       })
 
@@ -114,7 +104,7 @@ describe(AnomaliesIndexer.name, () => {
         anomaliesRepository: mockAnomaliesRepository,
       })
 
-      const mockAnomalies: AnomaliesRecord[] = [
+      const mockAnomalies: AnomalyRecord[] = [
         {
           timestamp: NOW.add(-1, 'days'),
           projectId: MOCK_PROJECTS[0].projectId,
@@ -143,7 +133,7 @@ describe(AnomaliesIndexer.name, () => {
 
   describe(AnomaliesIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeigh and not delete data', async () => {
-      const livenessRepositoryMock = mockObject<LivenessRepository>({
+      const livenessRepositoryMock = mockObject<Database['liveness']>({
         deleteAll: mockFn().resolvesTo(1),
       })
 
@@ -179,7 +169,7 @@ describe(AnomaliesIndexer.name, () => {
         }),
       ]
 
-      const mockLivenessRepository = mockObject<LivenessRepository>({
+      const mockLivenessRepository = mockObject<Database['liveness']>({
         getByConfigurationIdWithinTimeRange:
           mockFn().resolvesTo(mockLivenessRecords),
       })
@@ -194,7 +184,7 @@ describe(AnomaliesIndexer.name, () => {
         indexerService: mockIndexerService,
       })
 
-      const mockAnomalies: AnomaliesRecord[] = [
+      const mockAnomalies: AnomalyRecord[] = [
         {
           projectId: MOCK_PROJECTS[0].projectId,
           subtype: 'batchSubmissions',
@@ -355,17 +345,27 @@ describe(AnomaliesIndexer.name, () => {
   })
 })
 
-function createIndexer(deps?: Partial<AnomaliesIndexerIndexerDeps>) {
+function createIndexer(options: {
+  tag?: string
+  livenessRepository?: Database['liveness']
+  anomaliesRepository?: Database['anomalies']
+  indexerService?: IndexerService
+}) {
   return new AnomaliesIndexer({
-    indexerService: mockObject<IndexerService>(),
+    tag: options.tag,
+    indexerService: options.indexerService ?? mockObject<IndexerService>(),
     logger: Logger.SILENT,
     minHeight: 0,
     parents: [],
-    livenessRepository: mockObject<LivenessRepository>(),
-    anomaliesRepository: mockObject<AnomaliesRepository>({
-      addOrUpdateMany: mockFn().resolvesTo(1),
+    db: mockObject<Database>({
+      liveness:
+        options.livenessRepository ?? mockObject<Database['liveness']>(),
+      anomalies:
+        options.anomaliesRepository ??
+        mockObject<Database['anomalies']>({
+          addOrUpdateMany: mockFn().resolvesTo(1),
+        }),
     }),
     projects: MOCK_PROJECTS,
-    ...deps,
   })
 }

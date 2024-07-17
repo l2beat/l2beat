@@ -27,8 +27,6 @@ import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsReposi
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { AnomaliesIndexer } from './modules/liveness/indexers/AnomaliesIndexer'
 import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
-import { AggregatedLivenessRepository } from './modules/liveness/repositories/AggregatedLivenessRepository'
-import { AnomaliesRepository } from './modules/liveness/repositories/AnomaliesRepository'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 
 export function createTrackedTxsModule(
@@ -148,10 +146,7 @@ export function createTrackedTxsModule(
 
   if (config.trackedTxsConfig.uses.liveness) {
     livenessAggregatingIndexer = new LivenessAggregatingIndexer({
-      livenessRepository: peripherals.getRepository(LivenessRepository),
-      aggregatedLivenessRepository: peripherals.getRepository(
-        AggregatedLivenessRepository,
-      ),
+      db: peripherals.database,
       projects: config.projects,
       parents: [trackedTxsIndexer],
       indexerService,
@@ -160,8 +155,7 @@ export function createTrackedTxsModule(
     })
 
     anomaliesIndexer = new AnomaliesIndexer({
-      livenessRepository: peripherals.getRepository(LivenessRepository),
-      anomaliesRepository: peripherals.getRepository(AnomaliesRepository),
+      db: peripherals.database,
       projects: config.projects,
       parents: [trackedTxsIndexer],
       indexerService,

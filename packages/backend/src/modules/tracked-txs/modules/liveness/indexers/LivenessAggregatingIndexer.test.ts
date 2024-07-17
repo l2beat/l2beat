@@ -1,22 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
+import {
+  AggregatedLivenessRecord,
+  Database,
+  LivenessRecord,
+} from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import {
-  AggregatedLivenessRecord,
-  AggregatedLivenessRepository,
-} from '../repositories/AggregatedLivenessRepository'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
-import {
-  LivenessAggregatingIndexer,
-  LivenessAggregatingIndexerDeps,
-} from './LivenessAggregatingIndexer'
+import { LivenessAggregatingIndexer } from './LivenessAggregatingIndexer'
 
 const NOW = UnixTime.now()
 const MIN = NOW.add(-100, 'days')
@@ -95,9 +89,11 @@ describe(LivenessAggregatingIndexer.name, () => {
     })
 
     it('should adjust target height and generate liveness data', async () => {
-      const mockLivenessRepository = mockObject<AggregatedLivenessRepository>({
-        addOrUpdateMany: mockFn().resolvesTo(1),
-      })
+      const mockLivenessRepository = mockObject<Database['aggregatedLiveness']>(
+        {
+          addOrUpdateMany: mockFn().resolvesTo(1),
+        },
+      )
 
       const indexer = createIndexer({
         tag: 'update',
@@ -111,7 +107,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           min: 10,
           avg: 20,
           max: 30,
-          updatedAt: NOW,
+          timestamp: NOW,
         },
       ]
 
@@ -140,7 +136,7 @@ describe(LivenessAggregatingIndexer.name, () => {
 
   describe(LivenessAggregatingIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeigh and not delete data', async () => {
-      const livenessRepositoryMock = mockObject<LivenessRepository>({
+      const livenessRepositoryMock = mockObject<Database['liveness']>({
         deleteAll: mockFn().resolvesTo(1),
       })
 
@@ -161,7 +157,7 @@ describe(LivenessAggregatingIndexer.name, () => {
 
   describe(LivenessAggregatingIndexer.prototype.generateLiveness.name, () => {
     it('should generate aggregated liveness', async () => {
-      const mockLivenessRepository = mockObject<LivenessRepository>({
+      const mockLivenessRepository = mockObject<Database['liveness']>({
         getByConfigurationIdUpTo: mockFn().resolvesTo(MOCK_LIVENESS),
       })
 
@@ -189,7 +185,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '30D',
           subtype: 'batchSubmissions',
-          updatedAt: NOW,
+          timestamp: NOW,
         },
         {
           avg: 10800,
@@ -198,7 +194,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '90D',
           subtype: 'batchSubmissions',
-          updatedAt: NOW,
+          timestamp: NOW,
         },
         {
           avg: 10800,
@@ -207,7 +203,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: 'MAX',
           subtype: 'batchSubmissions',
-          updatedAt: NOW,
+          timestamp: NOW,
         },
       ])
     })
@@ -237,24 +233,34 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '30D',
           subtype: 'batchSubmissions',
-          updatedAt: NOW,
+          timestamp: NOW,
         },
       ])
     })
   })
 })
 
-function createIndexer(deps?: Partial<LivenessAggregatingIndexerDeps>) {
+function createIndexer(options: {
+  tag?: string
+  livenessRepository?: Database['liveness']
+  aggregatedLivenessRepository?: Database['aggregatedLiveness']
+  indexerService?: IndexerService
+}) {
   return new LivenessAggregatingIndexer({
-    indexerService: mockObject<IndexerService>(),
+    tag: options.tag,
+    indexerService: options.indexerService ?? mockObject<IndexerService>(),
     logger: Logger.SILENT,
     minHeight: 0,
     parents: [],
-    livenessRepository: mockObject<LivenessRepository>(),
-    aggregatedLivenessRepository: mockObject<AggregatedLivenessRepository>({
-      addOrUpdateMany: mockFn().resolvesTo(1),
+    db: mockObject<Database>({
+      liveness:
+        options.livenessRepository ?? mockObject<Database['liveness']>(),
+      aggregatedLiveness:
+        options.aggregatedLivenessRepository ??
+        mockObject<Database['aggregatedLiveness']>({
+          addOrUpdateMany: mockFn().resolvesTo(1),
+        }),
     }),
     projects: MOCK_PROJECTS,
-    ...deps,
   })
 }

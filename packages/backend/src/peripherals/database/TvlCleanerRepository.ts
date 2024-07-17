@@ -3,8 +3,8 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { TvlCleanerRow } from 'knex/types/tables'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { BaseRepository, CheckConvention } from './BaseRepository'
-import { Database } from './Database'
 
 export interface TvlCleanerRecord {
   repositoryName: string
@@ -13,7 +13,7 @@ export interface TvlCleanerRecord {
 }
 
 export class TvlCleanerRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<TvlCleanerRepository>>(this)
   }

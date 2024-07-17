@@ -3,7 +3,7 @@ import { wrapAndMeasure } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { Histogram } from 'prom-client'
 
-import { Database } from './Database'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 
 // biome-ignore lint/complexity/noBannedTypes: we need to use these types
 type IdType = number | string | String | Number
@@ -103,7 +103,7 @@ export abstract class BaseRepository {
   protected histogram: RepositoryHistogram
 
   constructor(
-    protected readonly database: Database,
+    protected readonly database: LegacyDatabase,
     protected readonly logger: Logger,
   ) {
     this.logger = logger.for(this)

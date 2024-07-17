@@ -2,23 +2,20 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { utils } from 'ethers'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { zkSyncEraFinalityAnalyzer } from './zkSyncEraFinalityAnalyzer'
 
 describe(zkSyncEraFinalityAnalyzer.name, () => {
   describe(zkSyncEraFinalityAnalyzer.prototype.analyze.name, () => {
     it('correctly decode and returns correct data', async () => {
-      const mockRepo = mockObject<LivenessRepository>()
       const provider = getMockRpcClient()
 
       const l1Timestamp = 1705407431
 
       const calculator = new zkSyncEraFinalityAnalyzer(
         provider,
-        mockRepo,
-        mockObject<IndexerConfigurationRepository>({}),
+        mockObject<Database>(),
         ProjectId('zksync2'),
       )
       const results = await calculator.analyze({

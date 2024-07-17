@@ -21,10 +21,6 @@ import { StarkexCounter } from './counters/StarkexCounter'
 import { StarknetCounter } from './counters/StarknetCounter'
 import { ZksyncCounter } from './counters/ZksyncCounter'
 import { getBatchSizeFromCallsPerMinute } from './getBatchSizeFromCallsPerMinute'
-import { BlockTransactionCountRepository } from './repositories/BlockTransactionCountRepository'
-import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
-import { StarkexTransactionCountRepository } from './repositories/StarkexCountRepository'
-import { ZksyncTransactionRepository } from './repositories/ZksyncTransactionRepository'
 
 export function createSequenceProcessors(
   config: Config,
@@ -62,8 +58,7 @@ export function createSequenceProcessors(
           return new StarkexCounter(
             id,
             config.product,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(StarkexTransactionCountRepository),
+            peripherals.database,
             starkexClient,
             clock,
             taggedLogger,
@@ -80,8 +75,7 @@ export function createSequenceProcessors(
           })
           return new AztecCounter(
             id,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(BlockTransactionCountRepository),
+            peripherals.database,
             aztecClient,
             taggedLogger,
             getBatchSizeFromCallsPerMinute(config.callsPerMinute),
@@ -95,8 +89,7 @@ export function createSequenceProcessors(
           })
           return new StarknetCounter(
             id,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(BlockTransactionCountRepository),
+            peripherals.database,
             starknetClient,
             clock,
             taggedLogger,
@@ -111,8 +104,7 @@ export function createSequenceProcessors(
           })
           return new ZksyncCounter(
             id,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(ZksyncTransactionRepository),
+            peripherals.database,
             zksyncClient,
             taggedLogger,
             getBatchSizeFromCallsPerMinute(config.callsPerMinute),
@@ -126,8 +118,7 @@ export function createSequenceProcessors(
           })
           return new LoopringCounter(
             id,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(BlockTransactionCountRepository),
+            peripherals.database,
             loopringClient,
             taggedLogger,
             getBatchSizeFromCallsPerMinute(config.callsPerMinute),
@@ -141,8 +132,7 @@ export function createSequenceProcessors(
           })
           return new DegateCounter(
             id,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(BlockTransactionCountRepository),
+            peripherals.database,
             degateClient,
             taggedLogger,
             getBatchSizeFromCallsPerMinute(config.callsPerMinute),
@@ -156,8 +146,7 @@ export function createSequenceProcessors(
           })
           return new RpcCounter(
             id,
-            peripherals.getRepository(SequenceProcessorRepository),
-            peripherals.getRepository(BlockTransactionCountRepository),
+            peripherals.database,
             rpcClient,
             clock,
             taggedLogger,

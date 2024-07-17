@@ -1,4 +1,9 @@
 import { BackendProject } from '@l2beat/config'
+import {
+  AggregatedLivenessRange,
+  AggregatedLivenessRecord,
+  Database,
+} from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
@@ -9,12 +14,6 @@ import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import {
-  AggregatedLivenessRange,
-  AggregatedLivenessRecord,
-  AggregatedLivenessRepository,
-} from '../repositories/AggregatedLivenessRepository'
-import { LivenessRepository } from '../repositories/LivenessRepository'
 import {
   LivenessRecordWithConfig,
   LivenessWithConfigService,
@@ -27,8 +26,7 @@ import { groupByType } from '../utils/groupByType'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
-  livenessRepository: LivenessRepository
-  aggregatedLivenessRepository: AggregatedLivenessRepository
+  db: Database
   projects: BackendProject[]
 }
 
@@ -71,9 +69,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
     const updatedLivenessRecords = await this.generateLiveness(targetHeight)
 
-    await this.$.aggregatedLivenessRepository.addOrUpdateMany(
-      updatedLivenessRecords,
-    )
+    await this.$.db.aggregatedLiveness.addOrUpdateMany(updatedLivenessRecords)
 
     return parentSafeHeight
   }
@@ -103,7 +99,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
       const livenessWithConfig = new LivenessWithConfigService(
         activeConfigs,
-        this.$.livenessRepository,
+        this.$.db,
       )
 
       const livenessRecords = await livenessWithConfig.getUpTo(syncTo)
@@ -182,7 +178,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         min: stats.minimumInSeconds,
         avg: stats.averageInSeconds,
         max: stats.maximumInSeconds,
-        updatedAt: syncTo,
+        timestamp: syncTo,
       }
 
       aggregatedRecords.push(record)

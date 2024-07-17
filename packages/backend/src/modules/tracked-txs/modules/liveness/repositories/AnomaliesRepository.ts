@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -9,7 +10,6 @@ import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
-import { Database } from '../../../../../peripherals/database/Database'
 
 export interface AnomaliesRecord {
   timestamp: UnixTime
@@ -21,7 +21,7 @@ export interface AnomaliesRecord {
 export class AnomaliesRepository extends BaseRepository {
   private readonly TABLE_NAME = 'anomalies'
 
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<AnomaliesRepository>>(this)
   }
