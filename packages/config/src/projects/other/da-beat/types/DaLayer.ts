@@ -31,7 +31,11 @@ export type BlockchainDaLayer = CommonDaLayer & {
   bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
 
   dataAvailabilitySampling: DataAvailabilitySampling
-
+  /**
+   * The period within which full nodes must store and distribute data.
+   * @unit seconds
+   */
+  pruningWindow: number
   /**
    * The consensus algorithm used by the data availability layer.
    */

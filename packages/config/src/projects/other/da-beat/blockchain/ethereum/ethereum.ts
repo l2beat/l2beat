@@ -37,7 +37,7 @@ export const ethereum: DaLayer = {
   id: 'ethereum',
   kind: DaLayerKind.PublicBlockchain,
   display: {
-    name: 'Ethereum',
+    name: 'Ethereum (EIP-4844)',
     slug: 'ethereum',
     description:
       'Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).',
@@ -89,6 +89,7 @@ export const ethereum: DaLayer = {
   dataAvailabilitySampling: {
     supportsDAS: false,
   },
+  pruningWindow: 86400 * 18, // 18 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
