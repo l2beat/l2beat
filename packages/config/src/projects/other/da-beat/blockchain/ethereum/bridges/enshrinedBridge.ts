@@ -30,7 +30,11 @@ import { zora } from '../../../../../layer2s/zora'
 import { deri } from '../../../../../layer3s/deri'
 import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
-import { DaBridge, DaBridgeKind, EnshrinedBridge } from '../../../types/DaBridge'
+import {
+  DaBridge,
+  DaBridgeKind,
+  EnshrinedBridge,
+} from '../../../types/DaBridge'
 
 export const enshrinedBridge: EnshrinedBridge = {
   id: 'enshrined-bridge',

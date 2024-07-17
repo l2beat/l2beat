@@ -1,5 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { DacBridge, EnshrinedBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import {
+  DacBridge,
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+} from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
