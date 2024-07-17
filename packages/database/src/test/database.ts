@@ -1,7 +1,6 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { PoolConfig } from 'pg'
 
-import { Database, createRepositories } from '..'
+import { Database, createDatabase } from '../Database'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {
   const database = getTestDatabase()
@@ -21,7 +20,7 @@ export function describeDatabase(name: string, suite: (db: Database) => void) {
   })
 }
 
-export function getTestDatabase(opts?: Partial<PoolConfig>) {
+function getTestDatabase() {
   const env = getEnv()
   const connection = env.optionalString('TEST_DB_URL')
   if (!connection) {
@@ -31,10 +30,9 @@ export function getTestDatabase(opts?: Partial<PoolConfig>) {
     return
   }
 
-  const database = createRepositories({
+  const database = createDatabase({
     connectionString: connection,
     application_name: 'Backend/Test',
-    ...opts,
   })
 
   return database

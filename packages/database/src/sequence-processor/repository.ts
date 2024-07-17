@@ -24,7 +24,7 @@ export class SequenceProcessorRepository {
       .where('id', '=', id)
       .executeTakeFirst()
 
-    return row ? toRecord(row) : null
+    return row ? toRecord(row) : undefined
   }
 
   deleteAll() {

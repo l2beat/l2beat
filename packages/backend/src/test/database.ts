@@ -1,6 +1,6 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
 
-import { Database, createRepositories } from '@l2beat/database'
+import { Database, createDatabase } from '@l2beat/database'
 import { LegacyDatabase } from '@l2beat/database-legacy'
 import { DatabaseConfig } from '../config/Config'
 
@@ -58,8 +58,9 @@ export function getTestDatabase(opts?: Partial<DatabaseConfig>) {
     Logger.SILENT,
     'Backend/Test',
   )
-  const newDb = createRepositories({
+  const newDb = createDatabase({
     connectionString: connection,
+    application_name: 'Backend/Test',
   })
 
   return { newDb, legacyDb }

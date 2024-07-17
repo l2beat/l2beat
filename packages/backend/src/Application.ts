@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
-import { createRepositories } from '@l2beat/database'
+import { createDatabase } from '@l2beat/database'
 import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
@@ -29,7 +29,7 @@ export class Application {
   constructor(config: Config, logger: Logger) {
     const database = new LegacyDatabase(config.database, logger, config.name)
 
-    const kyselyDatabase = createRepositories(config.database.connection)
+    const kyselyDatabase = createDatabase(config.database.connection)
 
     const clock = new Clock(
       config.clock.minBlockTimestamp,
