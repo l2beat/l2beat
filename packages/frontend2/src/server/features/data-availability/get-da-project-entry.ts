@@ -1,5 +1,4 @@
-import { layer2s, layer3s, type DaBridge, type DaLayer } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { type DaBridge, type DaLayer } from '@l2beat/config'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getDaRisks } from './utils/get-da-risks'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
@@ -14,6 +13,7 @@ import {
   type DaProjectEconomicSecurity,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
+import { getUsedInProjects } from './utils/get-used-in-projects'
 
 export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
@@ -62,19 +62,21 @@ export async function getDaProjectEntry(daLayer: DaLayer, bridge: DaBridge) {
   }
 }
 
+interface HeaderParams {
+  rosetteValues: RosetteValue[]
+  daLayer: DaLayer
+  bridge: DaBridge
+  tvs: number
+  economicSecurity: DaProjectEconomicSecurity | undefined
+}
+
 function getHeader({
   rosetteValues,
   daLayer,
   bridge,
   tvs,
   economicSecurity,
-}: {
-  rosetteValues: RosetteValue[]
-  daLayer: DaLayer
-  bridge: DaBridge
-  tvs: number
-  economicSecurity: DaProjectEconomicSecurity | undefined
-}) {
+}: HeaderParams) {
   return {
     rosetteValues,
     links: getProjectLinks(daLayer.display.links),
@@ -84,19 +86,8 @@ function getHeader({
       daLayer.kind === 'public-blockchain'
         ? daLayer.storageDuration
         : undefined,
-    usedIn: getUsedIn(bridge),
+    usedIn: getUsedInProjects(bridge),
   }
-}
-
-function getUsedIn(bridge: DaBridge) {
-  return bridge.usedIn.map((projectId) => {
-    const project = [...layer2s, ...layer3s].find((p) => p.id === projectId)
-    assert(project, `Project not found: ${projectId}`)
-    return {
-      id: project.id,
-      name: project.display.name,
-    }
-  })
 }
 
 export type DaProjectEntry = Awaited<ReturnType<typeof getDaProjectEntry>>

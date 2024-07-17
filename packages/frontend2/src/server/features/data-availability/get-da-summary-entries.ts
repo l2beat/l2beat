@@ -1,5 +1,4 @@
-import { daLayers, layer2s } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { daLayers } from '@l2beat/config'
 import { toDaBridge } from './utils/get-da-bridge'
 import {
   getDaProjectsTvl,
@@ -8,6 +7,7 @@ import {
 import { getDaRisks } from './utils/get-da-risks'
 import { kindToType } from './utils/kind-to-layer-type'
 import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
+import { getUsedInProjects } from './utils/get-used-in-projects'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()
@@ -29,12 +29,7 @@ export async function getDaSummaryEntries() {
         tvs,
         economicSecurity: economicSecurity[daLayer.id],
         // TODO: maybe we can specify names in the config instead of projectIds
-        usedBy: bridge.usedIn
-          .map(
-            (projectId) =>
-              layer2s.find((l2) => l2.id === projectId)?.display.name,
-          )
-          .filter(notUndefined),
+        usedIn: getUsedInProjects(bridge),
       }
     }),
   )

@@ -10,6 +10,7 @@ import { formatCurrency } from '~/utils/format'
 import InfoIcon from '~/icons/info.svg'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
+import { UsedIn } from '~/app/(new)/data-availability/summary/_components/table/used-in'
 
 interface Props {
   project: DaProjectEntry
@@ -53,22 +54,7 @@ export function DaHeaderDetails({ project }: Props) {
         title="Used in"
         value={
           project.header.usedIn.length !== 0 ? (
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <div className="truncate max-w-[250px] md:max-w-[440px]">
-                  {project.header.usedIn
-                    .map((project) => project.name)
-                    .join(', ')}
-                </div>
-              </TooltipTrigger>
-              <TooltipContent>
-                <span>
-                  {project.header.usedIn
-                    .map((project) => project.name)
-                    .join(', ')}
-                </span>
-              </TooltipContent>
-            </Tooltip>
+            <UsedIn usedIn={project.header.usedIn} />
           ) : (
             'None'
           )

@@ -1,10 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
+import { UsedIn } from './used-in'
+import { EM_DASH } from '~/app/_components/nav/consts'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -43,11 +44,11 @@ export const columns = [
     header: 'Economic security',
     cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   }),
-  columnHelper.accessor('usedBy', {
-    header: 'Used by',
+  columnHelper.accessor('usedIn', {
+    header: 'Used in',
     cell: (ctx) => {
       const value = ctx.getValue()
-      return value.length > 0 ? value.join(', ') : EM_DASH
+      return value.length > 0 ? <UsedIn usedIn={value} /> : EM_DASH
     },
     enableSorting: false,
   }),
