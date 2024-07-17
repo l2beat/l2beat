@@ -1,5 +1,9 @@
 import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
-import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  TemplateService,
+} from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
@@ -7,6 +11,9 @@ import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
+  const templateService = new TemplateService()
+  const shapeFilesHash = templateService.getShapeFilesHash()
+
   let chainConfigs: DiscoveryConfig[][] | undefined
 
   const projectIds = layer2s
@@ -134,7 +141,30 @@ describe('discovery config.jsonc', () => {
     )
   })
 
-  it('committed discovery config hash matches committed config hash', async () => {
+  it('committed discovery config hash matches committed config hash and shapeFilesHash is up to date', async () => {
+    const outdatedHashes: string[] = []
+    for (const configs of chainConfigs ?? []) {
+      for (const c of configs) {
+        const discovery = await configReader.readDiscovery(c.name, c.chain)
+
+        assert(
+          discovery.shapeFilesHash === shapeFilesHash,
+          `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "yarn refresh-discovery"`,
+        )
+        if (discovery.configHash !== c.hash) {
+          outdatedHashes.push(`${c.chain}-${c.name}`)
+        }
+      }
+      assert(
+        outdatedHashes.length === 0,
+        `Following projects have outdated hashes (chain-project): ${outdatedHashes.join(
+          ', ',
+        )}. Run yarn discover <chain> <project>`,
+      )
+    }
+  })
+
+  it('shapeFilesHash in discovered.json files is up to date', async () => {
     const outdatedHashes: string[] = []
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
