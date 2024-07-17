@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { RootIndexer } from '@l2beat/uif'
-import { Gauge } from 'prom-client'
 import { Clock } from '../../../tools/Clock'
 import { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
 
@@ -23,7 +22,6 @@ export class BlockTargetIndexer extends RootIndexer {
 
   async tick(): Promise<number> {
     const time = this.clock.getLastHour().toNumber()
-    targetTimestamp.set(time)
     const blockNumber =
       await this.blockTimestampProvider.getBlockNumberAtOrBefore(
         new UnixTime(time),
@@ -32,8 +30,3 @@ export class BlockTargetIndexer extends RootIndexer {
     return blockNumber
   }
 }
-
-const targetTimestamp = new Gauge({
-  name: 'activity_target_timestamp',
-  help: 'Value showing the target timestamp of the system',
-})
