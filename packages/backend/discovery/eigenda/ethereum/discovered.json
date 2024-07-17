@@ -731,5 +731,6 @@
   },
   "usedTemplates": {
     "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894"
-  }
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

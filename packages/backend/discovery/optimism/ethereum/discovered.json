@@ -1928,5 +1928,6 @@
     "opstack/OptimismMintableERC20Factory": "0xe0ba12246393e783ac5412fbd0510f11c70f4953ca9786e064124cc876cab362",
     "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
-  }
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }
