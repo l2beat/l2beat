@@ -16,13 +16,14 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@l2beat/discovery": "*",
     "@l2beat/shared-pure": "*",
     "@l2beat/shared": "*",
-    "@l2beat/discovery": "*",
-    "kysely": "^0.27.3",
-    "prisma": "^5.15.0"
+    "kysely": "^0.27.3"
   },
   "devDependencies": {
+    "@l2beat/database-legacy": "*",
+    "prisma": "^5.15.0",
     "prisma-kysely": "^1.8.0",
     "type-fest": "^4.20.0"
   }
