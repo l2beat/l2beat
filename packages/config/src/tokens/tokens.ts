@@ -12,10 +12,10 @@ You can check the detailed steps on how to add new tokens in the tvl.md file in 
 
 import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 
-import { tokens } from './generated.json'
+import generated from './generated.json'
 import { GeneratedToken } from './types'
 
-export const tokenList: Token[] = tokens
+export const tokenList: Token[] = generated.tokens
   .map((t) => GeneratedToken.parse(t))
   .map(toToken)
 

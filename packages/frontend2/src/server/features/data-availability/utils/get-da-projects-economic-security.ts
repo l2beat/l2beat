@@ -18,7 +18,6 @@ export async function getDaProjectsEconomicSecurity(): Promise<
 const getCachedEconomicSecurity = cache(
   async () => {
     // TODO: It's probably better to not fetch all data at once
-    // NOTE (TOMEK): Is it really so bad? We need all of the data anyway.
 
     const stakes = Object.fromEntries(
       (await db.stake.findMany()).map((s) => [s.id, s.thresholdStake]),
