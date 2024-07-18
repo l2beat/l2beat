@@ -1,15 +1,7 @@
-import { aevo } from '../../../../../layer2s/aevo'
-import { ancient } from '../../../../../layer2s/ancient'
-import { hypr } from '../../../../../layer2s/hypr'
-import { karak } from '../../../../../layer2s/karak'
-import { lyra } from '../../../../../layer2s/lyra'
-import { mantapacific } from '../../../../../layer2s/mantapacific'
-import { orderly } from '../../../../../layer2s/orderly'
-import { publicgoodsnetwork } from '../../../../../layer2s/publicgoodsnetwork'
-import { stack } from '../../../../../layer3s/stack'
 import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
 import { DaBridge, DaBridgeKind } from '../../../types/DaBridge'
+import { linkByDA } from '../../../utils/link-by-da'
 
 export const noBridge = {
   id: 'no-bridge',
@@ -19,17 +11,10 @@ export const noBridge = {
     slug: 'no-bridge',
     description: 'Celestia with no DA bridge',
   },
-  usedIn: [
-    mantapacific.id,
-    karak.id,
-    aevo.id,
-    lyra.id,
-    publicgoodsnetwork.id,
-    orderly.id,
-    ancient.id,
-    hypr.id,
-    stack.id,
-  ],
+  usedIn: linkByDA({
+    layer: (layer) => layer === 'Celestia',
+    bridge: (bridge) => bridge === 'None',
+  }),
   risks: {
     accessibility: DaAccessibilityRisk.NotEnshrined,
     attestations: DaAttestationSecurityRisk.NoBridge,
