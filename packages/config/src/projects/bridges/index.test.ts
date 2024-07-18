@@ -127,7 +127,7 @@ describe('bridges', () => {
           )
 
           expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain?.minTimestampForTvl.toNumber(),
+            chain.minTimestampForTvl.toNumber(),
           )
         })
       }

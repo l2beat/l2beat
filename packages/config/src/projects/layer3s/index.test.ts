@@ -108,7 +108,7 @@ describe('layer3s', () => {
           )
 
           expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
-            chain?.minTimestampForTvl.toNumber(),
+            chain.minTimestampForTvl.toNumber(),
           )
         })
       }
