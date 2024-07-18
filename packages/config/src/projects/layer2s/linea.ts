@@ -234,6 +234,29 @@ export const linea: Layer2 = {
           functionSignature:
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
           sinceTimestamp: new UnixTime(1707831168),
+          untilTimestamp: new UnixTime(1717508999),
+        },
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0xd630280f',
+          functionSignature:
+            'function finalizeBlocksWithProof(bytes,uint256,(bytes32,bytes32,uint256,(bytes32,bytes32,bytes32,bytes32,bytes32),uint256,uint256,bytes32,bytes32,uint256,uint256,uint256,bytes32[],bytes))',
+          sinceTimestamp: new UnixTime(1717508999),
         },
       },
     ],
