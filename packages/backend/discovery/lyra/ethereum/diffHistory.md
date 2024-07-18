@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xea71ccb52a7fbc8dc15a42c895b9a0c73ce801e5
+
+# Diff at Thu, 18 Jul 2024 07:25:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14a8b2e13da16d68d776511f98207e5360accba3 block: 19927699
+- current block number: 20331900
+
+## Description
+
+Lyra bumps gas limit by 4x to 120M. This is in the ballpark of what base is also running.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: None
+      values.gasLimit:
+-        30000000
++        120000000
+    }
+```
+
 Generated with discovered.json: 0x0eea8969d66cf8d703d845a3102f84b758742fa1
 
 # Diff at Wed, 22 May 2024 20:07:21 GMT:
