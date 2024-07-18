@@ -257,27 +257,6 @@ describe(MultiIndexer.name, () => {
       ).toHaveBeenCalledTimes(0)
     })
 
-    it('calls multiUpdate with a matching configuration with data', async () => {
-      const testIndexer = new TestMultiIndexer(
-        [actual('a', 100, 200), actual('b', 100, 400)],
-        [saved('a', 100, 200, 200)],
-      )
-      await testIndexer.initialize()
-
-      const newHeight = await testIndexer.update(100, 500)
-
-      expect(newHeight).toEqual(200)
-      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(
-        100,
-        200,
-        [actual('a', 100, 200), actual('b', 100, 400)],
-        mockDbMiddleware,
-      )
-      expect(
-        testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
-    })
-
     it('multiple update calls', async () => {
       const testIndexer = new TestMultiIndexer(
         [actual('a', 100, 200), actual('b', 100, 400)],
@@ -290,7 +269,7 @@ describe(MultiIndexer.name, () => {
         1,
         100,
         200,
-        [actual('a', 100, 200), actual('b', 100, 400)],
+        [actual('b', 100, 400)],
         mockDbMiddleware,
       )
       expect(
@@ -342,7 +321,7 @@ describe(MultiIndexer.name, () => {
         1,
         100,
         250,
-        [actual('a', 100, 500), actual('b', 100, 500), actual('c', 100, 500)],
+        [actual('a', 100, 500)],
         mockDbMiddleware,
       )
       expect(
@@ -354,7 +333,7 @@ describe(MultiIndexer.name, () => {
         2,
         251,
         500,
-        [actual('a', 100, 500), actual('b', 100, 500), actual('c', 100, 500)],
+        [actual('a', 100, 500), actual('b', 100, 500)],
         mockDbMiddleware,
       )
       expect(
@@ -382,32 +361,22 @@ describe(MultiIndexer.name, () => {
     })
 
     it('returns the targetHeight', async () => {
-      const testIndexer = new TestMultiIndexer(
-        [actual('a', 100, 300), actual('b', 100, 400)],
-        [saved('a', 100, 300, 200), saved('b', 100, 400, 200)],
-      )
+      const testIndexer = new TestMultiIndexer([], [])
       await testIndexer.initialize()
 
       testIndexer.multiUpdate.resolvesTo({
         safeHeight: 300,
-        updatedConfigurations: [
-          saved('a', 100, 300, 300),
-          saved('b', 100, 400, 300),
-        ],
+        updatedConfigurations: [],
       })
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(300)
-      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
-        saved('a', 100, 300, 300),
-        saved('b', 100, 400, 300),
-      ])
     })
 
     it('returns something in between', async () => {
       const testIndexer = new TestMultiIndexer(
         [actual('a', 100, 300), actual('b', 100, 400)],
-        [saved('a', 100, 300, 200), saved('b', 100, 400, 200)],
+        [saved('a', 100, 300, null), saved('b', 100, 400, null)],
       )
       await testIndexer.initialize()
 
@@ -430,7 +399,7 @@ describe(MultiIndexer.name, () => {
     it('cannot return less than currentHeight', async () => {
       const testIndexer = new TestMultiIndexer(
         [actual('a', 100, 300), actual('b', 100, 400)],
-        [saved('a', 100, 300, 200), saved('b', 100, 400, 200)],
+        [saved('a', 100, 300, null), saved('b', 100, 400, null)],
       )
       await testIndexer.initialize()
 
@@ -447,7 +416,7 @@ describe(MultiIndexer.name, () => {
     it('cannot return more than targetHeight', async () => {
       const testIndexer = new TestMultiIndexer(
         [actual('a', 100, 300), actual('b', 100, 400)],
-        [saved('a', 100, 300, 200), saved('b', 100, 400, 200)],
+        [saved('a', 100, 300, null), saved('b', 100, 400, null)],
       )
       await testIndexer.initialize()
 

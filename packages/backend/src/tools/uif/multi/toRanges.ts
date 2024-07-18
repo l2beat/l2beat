@@ -1,9 +1,9 @@
-import { Configuration, ConfigurationRange } from './types'
+import { Configuration, ConfigurationRange, SavedConfiguration } from './types'
 
 export function toRanges<T>(
-  configurations: Configuration<T>[],
+  configurations: SavedConfiguration<T>[],
 ): ConfigurationRange<T>[] {
-  const minHeights = configurations.map((c) => c.minHeight)
+  const minHeights = configurations.map(getConfigurationMin)
   const maxHeights = configurations
     .map((c) => c.maxHeight)
     .filter((height): height is number => height !== null)
@@ -30,15 +30,34 @@ export function toRanges<T>(
   }
 
   for (const configuration of configurations) {
-    const min = configuration.minHeight
+    const min = getConfigurationMin(configuration)
     const max = configuration.maxHeight ?? Infinity
 
     for (const range of ranges) {
       if (!(max < range.from || min > range.to)) {
-        range.configurations.push(configuration)
+        range.configurations.push(toPureConfiguration(configuration))
       }
     }
   }
 
   return ranges
+}
+
+function getConfigurationMin<T>(configuration: SavedConfiguration<T>) {
+  return configuration.currentHeight !== null
+    ? // if there is current height it means this point was synced, so we exclude this
+      configuration.currentHeight + 1
+    : // if there is no current height it means that is the first sync, so we include minHeight
+      configuration.minHeight
+}
+
+function toPureConfiguration<T>(
+  configuration: SavedConfiguration<T>,
+): Configuration<T> {
+  return {
+    id: configuration.id,
+    properties: configuration.properties,
+    minHeight: configuration.minHeight,
+    maxHeight: configuration.maxHeight,
+  }
 }

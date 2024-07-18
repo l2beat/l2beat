@@ -119,7 +119,9 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   async initialize() {
     const previouslySaved = await this.multiInitialize()
 
-    this.ranges = toRanges(this.configurations)
+    this.ranges = toRanges(
+      toConfigurationsWithPreviousState(this.configurations, previouslySaved),
+    )
 
     const { toRemove, toSave, safeHeight } = diffConfigurations(
       this.configurations,
@@ -145,13 +147,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       return Math.min(range.to, to)
     }
 
-    const minCurrentHeight = getMinCurrentHeight(
-      configurationsInRange,
-      this.saved,
-      from,
-    )
-
-    const adjustedTo = Math.min(range.to, to, minCurrentHeight)
+    const adjustedTo = Math.min(range.to, to)
 
     this.logger.info('Calling multiUpdate', {
       from,
@@ -213,24 +209,18 @@ function findRange<T>(
   return range
 }
 
-// TODO: rename
-function getMinCurrentHeight<T>(
+function toConfigurationsWithPreviousState<T>(
   configurations: Configuration<T>[],
-  savedConfigurations: Map<string, SavedConfiguration<T>>,
-  currentHeight: number,
-): number {
-  let minCurrentHeight = Infinity
+  previouslySaved: Omit<SavedConfiguration<T>, 'properties'>[],
+): SavedConfiguration<T>[] {
+  const previousStateMapping = new Map(previouslySaved.map((p) => [p.id, p]))
 
-  configurations.forEach((configuration) => {
-    const saved = savedConfigurations.get(configuration.id)
-    if (
-      saved &&
-      saved.currentHeight !== null &&
-      saved.currentHeight > currentHeight
-    ) {
-      minCurrentHeight = Math.min(minCurrentHeight, saved.currentHeight)
+  return configurations.map((c) => {
+    const config = previousStateMapping.get(c.id)
+
+    return {
+      ...c,
+      currentHeight: config?.currentHeight ?? null,
     }
   })
-
-  return minCurrentHeight
 }

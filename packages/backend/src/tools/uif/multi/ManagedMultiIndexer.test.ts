@@ -193,28 +193,28 @@ describe(ManagedMultiIndexer.name, () => {
         1,
         100,
         199,
-        [actual('a', 100, 300), actual('d', 100, null)],
+        [actual('a', 100, 300)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         2,
         200,
         300,
-        [actual('a', 100, 300), actual('b', 200, 500), actual('d', 100, null)],
+        [actual('a', 100, 300), actual('b', 200, 500)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         3,
         301,
         399,
-        [actual('b', 200, 500), actual('d', 100, null)],
+        [actual('b', 200, 500)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         4,
         400,
         500,
-        [actual('b', 200, 500), actual('c', 400, null), actual('d', 100, null)],
+        [actual('b', 200, 500), actual('c', 400, null)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
@@ -279,11 +279,12 @@ class TestIndexer extends ManagedMultiIndexer<null> {
   constructor(override readonly options: ManagedMultiIndexerOptions<null>) {
     super(options)
   }
-  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
-    Promise.resolve({
-      safeHeight: targetHeight,
-      updatedConfigurations: [],
-    }),
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
+    (_, targetHeight, configurations) =>
+      Promise.resolve({
+        safeHeight: targetHeight,
+        updatedConfigurations: configurations,
+      }),
   )
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 }
