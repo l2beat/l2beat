@@ -62,6 +62,7 @@ export class IndexerConfigurationRepository {
       .set({ current_height: currentHeight })
 
       .where('indexer_id', '=', indexerId)
+      .where('min_height', '<=', currentHeight)
       .where((eb) =>
         eb.or([
           eb('current_height', 'is', null),

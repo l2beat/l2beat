@@ -85,6 +85,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     return knex('indexer_configurations')
       .where('indexer_id', indexerId)
+      .andWhere('min_height', '<=', currentHeight)
       .andWhere((builder) => {
         builder
           .whereNull('current_height')
