@@ -55,12 +55,6 @@ function SelectedValue({ options, value, onValueChange }: Props) {
   return (
     <button
       onClick={() => onValueChange(undefined)}
-      // TODO: Fix keyboard interactions
-      onKeyDown={(e) => {
-        if (e.key === 'Escape') {
-          onValueChange(undefined)
-        }
-      }}
       className="cursor-pointer outline-none select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:hover:bg-slate-600 hover:bg-gray-400"
     >
       <div className="w-max items-center gap-1.5 rounded-md bg-white px-2 inline-flex dark:bg-black dark:group-hover:bg-gray-950">
