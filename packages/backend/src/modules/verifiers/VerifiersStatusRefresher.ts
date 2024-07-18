@@ -9,7 +9,7 @@ import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 export type VerifiersStatusRefresherDeps = {
-  database: Database
+  db: Database
   peripherals: Peripherals
   clock: Clock
   logger: Logger
@@ -57,7 +57,7 @@ export class VerifiersStatusRefresher {
 
         const lastUsed = transactions[0].timestamp
 
-        await this.$.database.verifierStatus.addOrUpdate({
+        await this.$.db.verifierStatus.addOrUpdate({
           address: verifier.contractAddress.toString(),
           chainId: verifier.chainId,
           lastUsed,

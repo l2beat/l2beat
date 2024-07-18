@@ -2,8 +2,8 @@ import { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { UpdateNotifierRecord } from '@l2beat/database'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
-import { UpdateNotifierRecord } from './repositories/UpdateNotifierRepository'
 
 describe(fieldThrottleDiff.name, () => {
   const OCCURRENCE_LIMIT = 2
