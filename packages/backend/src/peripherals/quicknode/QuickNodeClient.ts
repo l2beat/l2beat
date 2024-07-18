@@ -1,3 +1,4 @@
+import { createGzip } from 'zlib'
 import { HttpClient } from '@l2beat/shared'
 import { assert, RateLimiter } from '@l2beat/shared-pure'
 import { chain } from 'stream-chain'
@@ -5,7 +6,6 @@ import { parser } from 'stream-json'
 import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
 import { Hex } from 'viem'
-import { createGzip } from 'zlib'
 
 interface QuickNodeClientOpts {
   callsPerMinute?: number
