@@ -6,7 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 
 import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
-import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
+import { Database } from '@l2beat/database'
 
 export class ImplementationChangeController {
   private readonly onDiskChains: string[] = []
@@ -17,7 +17,7 @@ export class ImplementationChangeController {
   > = {}
 
   constructor(
-    private readonly updateMonitorRepository: UpdateMonitorRepository,
+    private readonly db: Database,
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
   ) {
@@ -44,7 +44,7 @@ export class ImplementationChangeController {
       for (const project of this.onDiskProjects[chain]) {
         const discovery = this.onDiskDiscoveries[chain][project]
         const chainId = this.chainConverter.toChainId(chain)
-        const newDiscovery = await this.updateMonitorRepository.findLatest(
+        const newDiscovery = await this.db.updateMonitor.findLatest(
           project,
           chainId,
         )

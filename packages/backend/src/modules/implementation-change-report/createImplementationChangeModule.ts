@@ -5,7 +5,6 @@ import { ChainConverter } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { ApplicationModule } from '../ApplicationModule'
-import { UpdateMonitorRepository } from '../update-monitor/repositories/UpdateMonitorRepository'
 import { ImplementationChangeController } from './api/ImplementationChangeController'
 import { createImplementationChangeRouter } from './api/createImplementationChangeRouter'
 
@@ -23,7 +22,7 @@ export function createImplementationChangeModule(
   const chainConverter = new ChainConverter(config.chains)
 
   const controller = new ImplementationChangeController(
-    peripherals.getRepository(UpdateMonitorRepository),
+    peripherals.database,
     configReader,
     chainConverter,
   )

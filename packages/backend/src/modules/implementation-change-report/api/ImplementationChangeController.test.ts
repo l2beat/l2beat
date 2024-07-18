@@ -3,11 +3,8 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainConverter, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import {
-  UpdateMonitorRecord,
-  UpdateMonitorRepository,
-} from '../../update-monitor/repositories/UpdateMonitorRepository'
 import { ImplementationChangeController } from './ImplementationChangeController'
+import { Database, UpdateMonitorRecord } from '@l2beat/database'
 
 describe(ImplementationChangeController.name, () => {
   const CONTRACT_A = EthereumAddress.random()
@@ -15,7 +12,7 @@ describe(ImplementationChangeController.name, () => {
   const IMPLEMENTATION_A_AFTER = EthereumAddress.random()
 
   it('returns empty for nothing returned', async () => {
-    const repository = mockObject<UpdateMonitorRepository>({
+    const repository = mockObject<Database['updateMonitor']>({
       findLatest: async () => {
         return {
           discovery: {
@@ -65,7 +62,7 @@ describe(ImplementationChangeController.name, () => {
     ])
 
     const controller = new ImplementationChangeController(
-      repository,
+      mockObject<Database>({ updateMonitor: repository }),
       configReader,
       chainConverter,
     )
@@ -86,7 +83,7 @@ describe(ImplementationChangeController.name, () => {
   })
 
   it('returns empty for nothing returned', async () => {
-    const repository = mockObject<UpdateMonitorRepository>({
+    const repository = mockObject<Database['updateMonitor']>({
       findLatest: async () => {
         return {} as UpdateMonitorRecord
       },
@@ -111,7 +108,7 @@ describe(ImplementationChangeController.name, () => {
     ])
 
     const controller = new ImplementationChangeController(
-      repository,
+      mockObject<Database>({ updateMonitor: repository }),
       configReader,
       chainConverter,
     )
