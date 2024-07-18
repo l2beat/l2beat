@@ -1,14 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../../test/database'
-import {
-  DiscoveryCacheRecord,
-  DiscoveryCacheRepository,
-} from './DiscoveryCacheRepository'
+import { describeDatabase } from '../test/database'
+import { DiscoveryCacheRecord } from './entity'
+import { DiscoveryCacheRepository } from './repository'
 
-describeDatabase(DiscoveryCacheRepository.name, (database) => {
-  const repository = new DiscoveryCacheRepository(database, Logger.SILENT)
+describeDatabase(DiscoveryCacheRepository.name, (db) => {
+  const repository = db.discoveryCache
 
   before(() => repository.deleteAll())
   afterEach(() => repository.deleteAll())

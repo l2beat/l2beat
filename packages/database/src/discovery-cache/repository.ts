@@ -10,7 +10,14 @@ export class DiscoveryCacheRepository {
     await this.db
       .insertInto('public.discovery_cache')
       .values(row)
-      .onConflict((cb) => cb.doUpdateSet(row))
+      .onConflict((cb) =>
+        cb.column('key').doUpdateSet((eb) => ({
+          key: eb.ref('excluded.key'),
+          value: eb.ref('excluded.value'),
+          chain: eb.ref('excluded.chain'),
+          block_number: eb.ref('excluded.block_number'),
+        })),
+      )
       .execute()
 
     return row.key
