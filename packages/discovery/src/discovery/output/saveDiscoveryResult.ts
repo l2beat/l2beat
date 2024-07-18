@@ -10,7 +10,6 @@ import { flattenStartingFrom } from '../../flatten/flatten'
 import { formatSI, getThroughput, timed } from '../../utils/timing'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { Analysis } from '../analysis/AddressAnalyzer'
-import { TemplateService } from '../analysis/TemplateService'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { PerContractSource } from '../source/SourceCodeService'
 import { removeSharedNesting } from '../source/removeSharedNesting'
@@ -31,7 +30,7 @@ export async function saveDiscoveryResult(
   config: DiscoveryConfig,
   blockNumber: number,
   logger: DiscoveryLogger,
-  templateService: TemplateService,
+  shapeFilesHash: Hash256,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const root =
@@ -44,7 +43,7 @@ export async function saveDiscoveryResult(
     config,
     blockNumber,
     options,
-    templateService.getShapeFilesHash(),
+    shapeFilesHash,
   )
   await saveFlatSources(root, results, logger, options)
   if (options.saveSources) {

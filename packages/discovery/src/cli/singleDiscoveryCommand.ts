@@ -35,7 +35,7 @@ export async function singleDiscoveryCommand(
   logger = logger.for('SingleDiscovery')
   logger.info('Starting')
 
-  const { result, blockNumber, templateService } = await discover(
+  const { result, blockNumber, shapeFilesHash } = await discover(
     chainConfigs,
     projectConfig,
     DiscoveryLogger.CLI,
@@ -51,7 +51,7 @@ export async function singleDiscoveryCommand(
     projectConfig,
     blockNumber,
     DiscoveryLogger.CLI,
-    templateService,
+    shapeFilesHash,
     { rootFolder },
   )
 
