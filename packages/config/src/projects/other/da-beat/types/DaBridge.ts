@@ -7,35 +7,6 @@ import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 
-export type DaBridgeKind = (typeof DaBridgeKind)[keyof typeof DaBridgeKind]
-
-const OnChainBridge = {
-  type: 'OnChainBridge',
-  display: 'On-chain bridge',
-} as const
-
-const DAC = {
-  type: 'DAC',
-  display: 'DAC',
-} as const
-
-const NoBridge = {
-  type: 'NoBridge',
-  display: 'No bridge',
-} as const
-
-export const DaBridgeKind = {
-  OnChainBridge,
-  DAC,
-  NoBridge,
-}
-
-export type DaBridge =
-  | NoDaBridge
-  | OnChainDaBridge
-  | DacBridge
-  | EnshrinedBridge
-
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
 }
