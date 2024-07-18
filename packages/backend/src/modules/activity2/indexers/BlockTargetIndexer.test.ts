@@ -45,9 +45,10 @@ describe(BlockTargetIndexer.name, () => {
       const result = await indexer.tick()
 
       expect(result).toEqual(BLOCK_NUMBER)
+      expect(clock.getLastHour).toHaveBeenCalledTimes(1)
       expect(
         blockTimestampProvider.getBlockNumberAtOrBefore,
-      ).toHaveBeenNthCalledWith(1, new UnixTime(LAST_HOUR.toNumber()))
+      ).toHaveBeenNthCalledWith(1, LAST_HOUR)
     })
   })
 })
