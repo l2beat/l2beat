@@ -1,7 +1,7 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 19976298,
+  "blockNumber": 20333216,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
   "version": 9,
   "contracts": [
@@ -93,7 +93,7 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
-        "latestRoot": "12290218578513226318496115698682033493786153258767482115805005589514196608124",
+        "latestRoot": "7081283386301511767935364731659021958542716398673254653908348104586013398861",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -117,9 +117,7 @@
     { "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA" },
     {
       "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
-      "assignedPermissions": {
-        "admin": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"]
-      }
+      "assignedPermissions": { "admin": {} }
     }
   ],
   "abis": {
@@ -269,7 +267,5 @@
       "function verifyCompressedProof(uint256[4] compressedProof, uint256[1] input) view",
       "function verifyProof(uint256[8] proof, uint256[1] input) view"
     ]
-  },
-  "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  }
 }
