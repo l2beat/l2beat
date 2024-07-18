@@ -1,11 +1,11 @@
 import { PostgresDatabase, Transaction } from '../kysely'
-import { SequenceProcessor, toRecord, toRow } from './entity'
+import { SequenceProcessorRecord, toRecord, toRow } from './entity'
 import { selectSequenceProcessor } from './select'
 
 export class SequenceProcessorRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async addOrUpdate(record: SequenceProcessor, trx?: Transaction) {
+  async addOrUpdate(record: SequenceProcessorRecord, trx?: Transaction) {
     const scope = trx ?? this.db
     const row = toRow(record)
     const { id, ...rest } = row

@@ -78,28 +78,41 @@ export class AmountsDataService {
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const [amounts, status] = await Promise.all([
-      this.$.amountRepository.getByIdsAndTimestamp(
-        configurations.map((c) => c.configId),
-        targetTimestamp,
-      ),
-      this.$.indexerService.getAmountsStatus(configurations, targetTimestamp),
-    ])
-
-    const lagged = await this.$.amountRepository.findByConfigAndTimestamp(
-      status.lagging.map((l) => ({
-        configId: l.id,
-        timestamp: l.latestTimestamp,
-      })),
+    const amounts = await this.$.amountRepository.getByIdsAndTimestamp(
+      configurations.map((c) => c.configId),
+      targetTimestamp,
+    )
+    const status = await this.$.indexerService.getAmountsStatus(
+      configurations,
+      targetTimestamp,
     )
 
     const lagging = new Map()
-    for (const l of lagged) {
-      lagging.set(l.configId, {
-        latestTimestamp: l.timestamp,
-        latestValue: l,
-      })
-      amounts.push({ ...l, timestamp: targetTimestamp })
+
+    if (status.lagging.length > 0) {
+      const uniqueTimestamps = new Set<number>()
+      status.lagging.forEach((l) =>
+        uniqueTimestamps.add(l.latestTimestamp.toNumber()),
+      )
+
+      const data = await this.$.amountRepository.getByTimestamps(
+        Array.from(uniqueTimestamps).map((u) => new UnixTime(u)),
+      )
+      const dataByConfigId = groupBy(data, 'configId')
+
+      for (const laggingConfig of status.lagging) {
+        const latestRecord = dataByConfigId[laggingConfig.id]?.find((d) =>
+          d.timestamp.equals(laggingConfig.latestTimestamp),
+        )
+
+        if (latestRecord) {
+          lagging.set(laggingConfig.id, {
+            latestTimestamp: laggingConfig.latestTimestamp,
+            latestValue: latestRecord,
+          })
+          amounts.push({ ...latestRecord, timestamp: targetTimestamp })
+        }
+      }
     }
 
     return {

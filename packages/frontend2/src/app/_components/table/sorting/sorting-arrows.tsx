@@ -19,10 +19,10 @@ export function SortingArrows({
 }: Props) {
   return (
     <div
-      className="group/sorting-arrows w-max cursor-pointer select-none flex items-center gap-1.5"
+      className="group/sorting-arrows w-max cursor-pointer select-none flex items-end gap-1.5"
       onClick={onClick}
     >
-      <div className="flex flex-col items-end gap-0.5">
+      <div className="flex flex-col items-end gap-0.5 mb-px">
         <SortingArrowIcon
           width={10}
           height={6}

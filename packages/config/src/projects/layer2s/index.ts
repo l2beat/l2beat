@@ -36,6 +36,7 @@ import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { fhenix } from './fhenix'
+import { fluent } from './fluent'
 import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
@@ -125,6 +126,7 @@ import { xchain } from './xchain'
 import { xlayer } from './xlayer'
 import { xpla } from './xpla'
 import { zentachain } from './zentachain'
+import { zeronetwork } from './zeronetwork'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
@@ -177,6 +179,7 @@ export const layer2s: Layer2[] = [
   ethernity,
   everclear,
   fhenix,
+  fluent,
   form,
   frame,
   fraxtal,
@@ -264,6 +267,7 @@ export const layer2s: Layer2[] = [
   xlayer,
   xpla,
   zentachain,
+  zeronetwork,
   zircuit,
   zkcandy,
   zkfair,

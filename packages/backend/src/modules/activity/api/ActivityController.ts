@@ -10,9 +10,9 @@ import {
   json,
 } from '@l2beat/shared-pure'
 
+import { Database } from '@l2beat/database'
 import { Clock } from '../../../tools/Clock'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { ActivityViewRepository } from '../repositories/ActivityViewRepository'
 import { formatActivityChart } from './formatActivityChart'
 import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
@@ -40,7 +40,7 @@ export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
     private readonly processors: SequenceProcessor[],
-    private readonly viewRepository: ActivityViewRepository,
+    private readonly db: Database,
     private readonly clock: Clock,
   ) {}
 
@@ -104,8 +104,8 @@ export class ActivityController {
     projects: ProjectId[],
   ): Promise<AggregatedActivityResult> {
     const [aggregatedDailyCounts, ethereumCounts] = await Promise.all([
-      await this.viewRepository.getProjectsAggregatedDailyCount(projects),
-      await this.viewRepository.getDailyCountsPerProject(ProjectId.ETHEREUM),
+      await this.db.activityView.getProjectsAggregatedDailyCount(projects),
+      await this.db.activityView.getDailyCountsPerProject(ProjectId.ETHEREUM),
     ])
     const now = this.clock.getLastHour()
 
@@ -220,7 +220,7 @@ export class ActivityController {
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
-    const counts = await this.viewRepository.getDailyCounts()
+    const counts = await this.db.activityView.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
     const now = this.clock.getLastHour()
     for (const processor of this.processors) {

@@ -1,4 +1,4 @@
-import { AggregatedL2Cost as AggregatedL2CostRow } from '../kysely/generated/types'
+import { AggregatedL2Cost } from '../kysely/generated/types'
 
 export const selectAggregatedL2Costs = [
   'timestamp',
@@ -18,4 +18,4 @@ export const selectAggregatedL2Costs = [
   'overhead_gas',
   'overhead_gas_eth',
   'overhead_gas_usd',
-] as const satisfies (keyof AggregatedL2CostRow)[]
+] as const satisfies (keyof AggregatedL2Cost)[]

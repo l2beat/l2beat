@@ -8,9 +8,8 @@ import {
 import { utils } from 'ethers'
 import { z } from 'zod'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { byteArrFromHexStr } from '../opStack/utils'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import { decodeBatch } from './batch'
@@ -19,17 +18,11 @@ import { toTransactionHash } from './hash'
 export class PolygonZkEvmFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly l2Provider: RpcClient,
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
   }
 
   override getTrackedTxSubtype(): TrackedTxsConfigSubtype {

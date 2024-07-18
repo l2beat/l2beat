@@ -7,6 +7,10 @@ import {
 } from 'next/cache'
 import { db } from '~/server/database'
 
+export type EconomicSecurityData = Awaited<
+  ReturnType<typeof getCachedEconomicSecurity>
+>[number]
+
 export async function getDaEconomicSecurity() {
   noStore()
   return await getCachedEconomicSecurity()
@@ -62,5 +66,5 @@ const getCachedEconomicSecurity = cache(
     return keyBy(compact(arr), 'id')
   },
   ['daEconomicSecurity'],
-  { revalidate: 60 * 60 },
+  { revalidate: 60 * 10 },
 )

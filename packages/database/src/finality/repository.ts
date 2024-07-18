@@ -1,6 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { Finality, toProjectFinalityRecord, toRecord, toRow } from './entity'
+import {
+  FinalityRecord,
+  toProjectFinalityRecord,
+  toRecord,
+  toRow,
+} from './entity'
 import { selectFinality } from './select'
 
 export class FinalityRepository {
@@ -67,7 +72,7 @@ export class FinalityRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: Finality[], trx?: Transaction) {
+  async addMany(records: FinalityRecord[], trx?: Transaction) {
     if (records.length === 0) {
       return 0
     }
@@ -79,7 +84,7 @@ export class FinalityRepository {
     return rows.length
   }
 
-  async add(record: Finality, trx?: Transaction) {
+  async add(record: FinalityRecord, trx?: Transaction) {
     const scope = trx ?? this.db
     const row = toRow(record)
 

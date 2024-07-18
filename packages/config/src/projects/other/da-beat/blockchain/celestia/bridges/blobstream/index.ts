@@ -1,9 +1,9 @@
-import { blobStreamArbitrum } from './arbitrum'
-import { blobStreamBase } from './base'
-import { blobStreamEthereum } from './ethereum'
+import { blobstreamArbitrum } from './arbitrum'
+import { blobstreamBase } from './base'
+import { blobstreamEthereum } from './ethereum'
 
-export const blobStream = [
-  blobStreamArbitrum,
-  blobStreamBase,
-  blobStreamEthereum,
+export const blobstream = [
+  blobstreamArbitrum,
+  blobstreamBase,
+  blobstreamEthereum,
 ]

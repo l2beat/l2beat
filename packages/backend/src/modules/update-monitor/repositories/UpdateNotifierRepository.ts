@@ -3,11 +3,11 @@ import { DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { UpdateNotifierRow } from 'knex/types/tables'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
 
 export interface UpdateNotifierRecord {
   id: number
@@ -20,7 +20,7 @@ export interface UpdateNotifierRecord {
 }
 
 export class UpdateNotifierRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
 
     this.autoWrap<CheckConvention<UpdateNotifierRepository>>(this)

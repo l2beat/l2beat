@@ -1,7 +1,7 @@
 import { Insertable, Selectable } from 'kysely'
-import { SequenceProcessor as SequenceProcessorRow } from '../kysely/generated/types'
+import { SequenceProcessor } from '../kysely/generated/types'
 
-export interface SequenceProcessor {
+export interface SequenceProcessorRecord {
   id: string
   lastProcessed: number
   latest: number
@@ -9,8 +9,8 @@ export interface SequenceProcessor {
 }
 
 export function toRow(
-  record: SequenceProcessor,
-): Insertable<SequenceProcessorRow> {
+  record: SequenceProcessorRecord,
+): Insertable<SequenceProcessor> {
   return {
     id: record.id,
     last_processed: record.lastProcessed,
@@ -21,8 +21,8 @@ export function toRow(
 }
 
 export function toRecord(
-  row: Selectable<SequenceProcessorRow>,
-): SequenceProcessor {
+  row: Selectable<SequenceProcessor>,
+): SequenceProcessorRecord {
   return {
     id: row.id,
     lastProcessed: row.last_processed,

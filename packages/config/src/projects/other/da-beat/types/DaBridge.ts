@@ -1,5 +1,5 @@
 import { ChainId, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
-import { ScalingProjectContractSingleAddress } from '../../../../common'
+import { ScalingProjectContracts } from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
@@ -21,16 +21,30 @@ const NoBridge = {
   display: 'No bridge',
 } as const
 
+const Enshrined = {
+  type: 'Enshrined',
+  display: 'Enshrined',
+} as const
+
 export const DaBridgeKind = {
   OnChainBridge,
   DAC,
   NoBridge,
+  Enshrined,
 }
 
-export type DaBridge = NoDaBridge | OnChainDaBridge | DacBridge
+export type DaBridge =
+  | NoDaBridge
+  | OnChainDaBridge
+  | DacBridge
+  | EnshrinedBridge
 
 export type NoDaBridge = CommonDaBridge & {
   kind: typeof NoBridge
+}
+
+export type EnshrinedBridge = CommonDaBridge & {
+  kind: typeof Enshrined
 }
 
 export type OnChainDaBridge = CommonDaBridge & {
@@ -47,9 +61,15 @@ export type OnChainDaBridge = CommonDaBridge & {
   permissions: Permissions[]
 
   /**
+   * Data about the validation type of the bridge
+   */
+  validation: {
+    type: string
+  }
+  /**
    * Data about the contracts used in the bridge - preferably from discovery
    */
-  contracts: ScalingProjectContractSingleAddress[]
+  contracts: ScalingProjectContracts
 }
 
 export type DacBridge = CommonDaBridge & {

@@ -1,13 +1,13 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
-import { VerifierStatus, toRecord, toRow } from './entity'
+import { VerifierStatusRecord, toRecord, toRow } from './entity'
 import { selectVerifierStatus } from './select'
 
 export class VerifierStatusRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdate(
-    record: VerifierStatus,
+    record: VerifierStatusRecord,
     trx?: Transaction,
   ): Promise<string> {
     const scope = trx ?? this.db
@@ -29,7 +29,7 @@ export class VerifierStatusRepository {
   async findVerifierStatus(
     address: string,
     chainId: ChainId,
-  ): Promise<VerifierStatus | undefined> {
+  ): Promise<VerifierStatusRecord | undefined> {
     const row = await this.db
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
@@ -41,7 +41,7 @@ export class VerifierStatusRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getAll(): Promise<VerifierStatus[]> {
+  async getAll(): Promise<VerifierStatusRecord[]> {
     const rows = await this.db
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)

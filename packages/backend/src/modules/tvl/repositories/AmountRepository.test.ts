@@ -71,21 +71,20 @@ describeDatabase(AmountRepository.name, (knex, kysely) => {
       })
     })
 
-    describe(AmountRepository.prototype.findByConfigAndTimestamp.name, () => {
+    describe(AmountRepository.prototype.getByTimestamps.name, () => {
       it('finds by config and timestamp', async () => {
         await amountRepository.addMany([
           amount('a', new UnixTime(100), 1n),
-          amount('b', new UnixTime(100), 1n),
           amount('a', new UnixTime(200), 2n),
-          amount('b', new UnixTime(200), 2n),
+          amount('a', new UnixTime(300), 3n),
         ])
-        const result = await amountRepository.findByConfigAndTimestamp([
-          { configId: 'a'.repeat(12), timestamp: new UnixTime(200) },
-          { configId: 'b'.repeat(12), timestamp: new UnixTime(100) },
+        const result = await amountRepository.getByTimestamps([
+          new UnixTime(100),
+          new UnixTime(200),
         ])
         expect(result).toEqualUnsorted([
+          amount('a', new UnixTime(100), 1n),
           amount('a', new UnixTime(200), 2n),
-          amount('b', new UnixTime(100), 1n),
         ])
       })
     })

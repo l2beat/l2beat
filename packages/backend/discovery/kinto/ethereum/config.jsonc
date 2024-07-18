@@ -81,6 +81,11 @@
             "type": "arbitrumSequencerVersion"
           }
         },
+        "postsBlobs": {
+          "handler": {
+            "type": "orbitPostsBlobs"
+          }
+        },
         // when this changes, it means the sequencers have changed
         "setIsBatchPosterCount": {
           "handler": {

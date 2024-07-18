@@ -1,5 +1,5 @@
 import { PostgresDatabase, Transaction } from '../kysely'
-import { IndexerConfiguration, toRecord, toRow } from './entity'
+import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
 import { selectIndexerConfiguration } from './select'
 
 const BATCH_SIZE = 5_000
@@ -7,7 +7,7 @@ const BATCH_SIZE = 5_000
 export class IndexerConfigurationRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
-  async addOrUpdateMany(record: IndexerConfiguration[]) {
+  async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
     await this.db.transaction().execute(async (trx) => {

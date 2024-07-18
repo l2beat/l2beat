@@ -1,16 +1,16 @@
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Insertable, Selectable } from 'kysely'
-import { Liveness as LivenessRow } from '../kysely/generated/types'
+import { Liveness } from '../kysely/generated/types'
 
-export interface Liveness {
+export interface LivenessRecord {
   timestamp: UnixTime
   blockNumber: number
   txHash: string
   configurationId: TrackedTxId
 }
 
-export function toRecord(row: Selectable<LivenessRow>): Liveness {
+export function toRecord(row: Selectable<Liveness>): LivenessRecord {
   return {
     timestamp: UnixTime.fromDate(row.timestamp),
     blockNumber: row.block_number,
@@ -19,7 +19,7 @@ export function toRecord(row: Selectable<LivenessRow>): Liveness {
   }
 }
 
-export function toRow(record: Liveness): Insertable<LivenessRow> {
+export function toRow(record: LivenessRecord): Insertable<Liveness> {
   return {
     timestamp: record.timestamp.toDate(),
     block_number: record.blockNumber,

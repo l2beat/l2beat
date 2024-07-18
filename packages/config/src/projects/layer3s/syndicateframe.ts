@@ -9,7 +9,7 @@ const discovery = new ProjectDiscovery('syndicateframe', 'base')
 
 export const syndicateframe: Layer3 = opStackL3({
   discovery,
-  badges: [Badge.L3ParentChain.Base, Badge.RaaS.Conduit],
+  badges: [Badge.L3ParentChain.Base, Badge.RaaS.Caldera],
   hostChain: ProjectId('base'),
   display: {
     name: 'Syndicate Frame Chain',

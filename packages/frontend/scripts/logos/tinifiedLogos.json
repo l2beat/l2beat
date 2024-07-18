@@ -210,7 +210,7 @@
   "syndr.png": "6755eaa647d5c39018b828df68c384a8",
   "gpt.png": "4f1f5fc3a4360ff0a56606f5c76efa23",
   "wirex.png": "d4a5dfca3b3d2d88ee7999a8450b28f0",
-  "witness.png": "eb40d8224ed874a11e83f05b8197c10e",
+  "witness.png": "c3c00460efca01baa599701bbfa93140",
   "invm.png": "01af1efc3a9bbc9f07d67f6aa5fd08c7",
   "aiechain.png": "8ac2c63b441947f8350698804d37df18",
   "aleph-zero.png": "b9c47b9a47c4114077d5584820b162b7",
@@ -226,5 +226,7 @@
   "winr.png": "c9a752194a38b8950c41013b17a30f8c",
   "playblock.png": "a0f927dc19c6d403b1023d57fee37ebd",
   "song-protocol.png": "904d5a6ad4e4b0480e8e3e4cabcf4478",
-  "aie-chain.png": "eb7c4d14046b890b278ba0ad8f0f2545"
+  "aie-chain.png": "eb7c4d14046b890b278ba0ad8f0f2545",
+  "fluent.png": "c536a5ae04e085c9504697c52914338a",
+  "zeronetwork.png": "bdb5af1ce69a399611cbabd2080ab990"
 }

@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { VerifierStatusRow } from 'knex/types/tables'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../peripherals/database/BaseRepository'
-import { Database } from '../../../peripherals/database/Database'
 
 export interface VerifierStatusRecord {
   address: string
@@ -17,7 +17,7 @@ export interface VerifierStatusRecord {
 export class VerifierStatusRepository extends BaseRepository {
   private readonly TABLE_NAME = 'verifier_status'
 
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<VerifierStatusRepository>>(this)
   }
