@@ -40,4 +40,8 @@ export const getCachedLatestTvlUsd = cache(
       }),
     )
   },
+  ['latestTvlUsd'],
+  {
+    revalidate: 60 * 10,
+  },
 )
