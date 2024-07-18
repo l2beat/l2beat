@@ -26,7 +26,7 @@ export function getProjectDetails({
   rosetteValues,
 }: Params) {
   const permissionsSection =
-    daBridge.type !== 'NoBridge'
+    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
       ? getPermissionsSection(
           {
             id: daLayer.id,
@@ -41,7 +41,7 @@ export function getProjectDetails({
       : undefined
 
   const contractsSection =
-    daBridge.type !== 'NoBridge'
+    daBridge.type !== 'NoBridge' && daBridge.type !== 'Enshrined'
       ? getContractsSection(
           {
             id: daBridge.id,

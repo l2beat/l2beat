@@ -30,20 +30,18 @@ import { zora } from '../../../../../layer2s/zora'
 import { deri } from '../../../../../layer3s/deri'
 import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
-import {
-  DaBridge,
-  DaBridgeKind,
-  EnshrinedBridge,
-} from '../../../types/DaBridge'
+import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
 
 export const enshrinedBridge: EnshrinedBridge = {
   id: 'enshrined-bridge',
-  kind: DaBridgeKind.Enshrined,
+  type: 'Enshrined',
   display: {
     name: 'Enshrined Bridge',
     slug: 'enshrined-bridge',
     description: 'Enshrined bridge on Ethereum',
   },
+  technology:
+    'Do enim fugiat id tempor consequat pariatur eu eiusmod. Esse veniam ipsum irure sunt nulla est reprehenderit eiusmod et qui fugiat. Commodo pariatur cupidatat commodo ipsum minim tempor consequat dolor nostrud occaecat sit excepteur fugiat. Ut laboris in dolor est ut. Labore quis nulla incididunt enim aute minim in mollit.',
   usedIn: [
     arbitrum.id,
     base.id,
