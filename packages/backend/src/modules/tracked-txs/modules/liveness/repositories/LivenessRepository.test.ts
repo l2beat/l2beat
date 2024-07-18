@@ -72,7 +72,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
         await repository.addMany(newRows)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
+        expect(results).toEqual([
           ...DATA.map((e) => ({
             ...e,
           })),
@@ -102,7 +102,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
       it('should return all rows', async () => {
         const results = await repository.getAll()
 
-        expect(results).toEqualUnsorted(
+        expect(results).toEqual(
           DATA.map((e) => ({
             ...e,
           })),
@@ -119,7 +119,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             START.add(-2, 'hours'),
           )
 
-          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+          expect(results).toEqual([DATA[0], DATA[1]])
         })
       },
     )
@@ -131,7 +131,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
           START.add(-1, 'hours'),
         )
 
-        expect(results).toEqualUnsorted([DATA[1], DATA[2]])
+        expect(results).toEqual([DATA[1], DATA[2]])
       })
     })
 
@@ -145,7 +145,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             START.add(0, 'hours'),
           )
 
-          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+          expect(results).toEqual([DATA[0], DATA[1]])
         })
       },
     )
