@@ -17,14 +17,9 @@ export function linkByDA(where: {
       : where.layer(dataAvailability?.layer.value)
   }
 
-  const ignoreArchivedFilter = (layer: Layer2 | Layer3) => !layer.isArchived
-
-  const l2s = toDaProjectReference(
-    layer2s.filter(filterFn).filter(ignoreArchivedFilter),
+  return toDaProjectReference(
+    [...layer2s, ...layer3s]
+      .filter(filterFn)
+      .filter((project) => !project.isArchived),
   )
-  const l3s = toDaProjectReference(
-    layer3s.filter(filterFn).filter(ignoreArchivedFilter),
-  )
-
-  return [...l2s, ...l3s]
 }
