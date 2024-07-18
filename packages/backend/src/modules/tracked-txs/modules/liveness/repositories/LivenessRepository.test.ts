@@ -119,7 +119,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             START.add(-2, 'hours'),
           )
 
-          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+          expect(results).toEqual([DATA[0], DATA[1]])
         })
       },
     )
@@ -131,7 +131,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
           START.add(-1, 'hours'),
         )
 
-        expect(results).toEqualUnsorted([DATA[1], DATA[2]])
+        expect(results).toEqual([DATA[1], DATA[2]])
       })
     })
 
@@ -145,7 +145,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
             START.add(0, 'hours'),
           )
 
-          expect(results).toEqualUnsorted([DATA[0], DATA[1]])
+          expect(results).toEqual([DATA[0], DATA[1]])
         })
       },
     )
