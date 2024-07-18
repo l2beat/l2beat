@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x690899e8443bc5fa40d5b840b7bdd28d1d64236e
+Generated with discovered.json: 0x408ac4318abf1e3f3f6ac58f375e47a0e10016cd
 
-# Diff at Wed, 17 Jul 2024 16:25:52 GMT:
+# Diff at Thu, 18 Jul 2024 14:50:59 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Luca Donno (<donnoh99@gmail.com>)
 - current block number: 20327427
 
 ## Description
@@ -44,13 +44,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1ERC721Bridge (0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b)
-    +++ description: Used to bridge ERC-721 tokens from L1 to L2
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
 ```
 
 ```diff
 +   Status: CREATED
     contract L1StandardBridge (0x2AD84AbD52050956AcC9c490D024b821A59e3FB6)
-    +++ description: The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token.
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
 ```
 
 ```diff
@@ -80,13 +80,13 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract SystemConfig (0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C)
-    +++ description: Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
 ```
 
 ```diff
 +   Status: CREATED
     contract L1CrossDomainMessenger (0x702dF90E92A6841c9013faE6D724ddFA8F141d5C)
-    +++ description: Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function.
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
 ```
 
 ```diff
@@ -98,7 +98,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract OptimismPortal (0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A)
-    +++ description: The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
 ```
 
 ```diff
