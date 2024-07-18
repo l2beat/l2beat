@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xecbc681717dae63a89a46c5e6b19376140c41207
+Generated with discovered.json: 0x8b699b8c889c7f74f8931bd192aa598bd1a0f2c6
 
-# Diff at Wed, 17 Jul 2024 20:32:13 GMT:
+# Diff at Thu, 18 Jul 2024 08:40:36 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@97f0849e4cfff8abf019db26fe41212f50a733ed block: 20211472
@@ -104,7 +104,7 @@ discovery. Values are for block 20211472 (main branch discovery), not current.
     +++ description: None
       descriptions.0:
 -        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
-+        "The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       categories:
 +        ["Gateways&Escrows"]
     }

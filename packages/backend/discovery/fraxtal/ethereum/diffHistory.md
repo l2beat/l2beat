@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x30aafd56f596aeb22b7603d9c82ded2513272ef2
+Generated with discovered.json: 0x6002e87a118db1246bf48b3a23039cc57a2034cb
 
-# Diff at Wed, 17 Jul 2024 20:31:14 GMT:
+# Diff at Thu, 18 Jul 2024 08:40:28 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@97f0849e4cfff8abf019db26fe41212f50a733ed block: 20032836
@@ -51,7 +51,7 @@ discovery. Values are for block 20032836 (main branch discovery), not current.
       template:
 +        "opstack/L1StandardBridge"
       descriptions:
-+        ["The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."]
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
     }
 ```
 

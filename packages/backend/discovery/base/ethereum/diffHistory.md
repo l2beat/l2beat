@@ -1,6 +1,6 @@
-Generated with discovered.json: 0xc120720e1695ffdf3fb731a335ac850f57829f78
+Generated with discovered.json: 0x3110c4e18d94f4557d7ef1e0bf6c263ffc3c7760
 
-# Diff at Wed, 17 Jul 2024 20:30:26 GMT:
+# Diff at Thu, 18 Jul 2024 08:40:23 GMT:
 
 - author: Adrian Adamiak (<adrian@adamiak.net>)
 - comparing to: main@97f0849e4cfff8abf019db26fe41212f50a733ed block: 20224230
@@ -65,10 +65,10 @@ discovery. Values are for block 20224230 (main branch discovery), not current.
 
 ```diff
     contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
-    +++ description: The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token.
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
       descriptions.0:
 -        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
-+        "The main entry point to deposit ERC20 tokens from host chain to this. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       categories:
 +        ["Gateways&Escrows"]
     }
