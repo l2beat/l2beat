@@ -58,10 +58,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       })
     })
 
-    return {
-      safeHeight: unixTo.toNumber(),
-      updatedConfigurations: configurations,
-    }
+    return unixTo.toNumber()
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

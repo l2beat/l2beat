@@ -48,10 +48,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         to,
         optimizedTimestamp: timestamp.toNumber(),
       })
-      return {
-        safeHeight: to,
-        updatedConfigurations: [],
-      }
+      return to
     }
 
     const blockNumber = await this.getBlockNumber(timestamp)
@@ -80,10 +77,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 
-    return {
-      safeHeight: timestamp.toNumber(),
-      updatedConfigurations: configurations,
-    }
+    return timestamp.toNumber()
   }
 
   private async getBlockNumber(timestamp: UnixTime) {

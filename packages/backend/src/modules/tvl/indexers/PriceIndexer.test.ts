@@ -107,10 +107,7 @@ describe(PriceIndexer.name, () => {
         undefined,
       )
 
-      expect(safeHeight).toEqual({
-        safeHeight: adjustedTo,
-        updatedConfigurations: configurations,
-      })
+      expect(safeHeight).toEqual(adjustedTo)
     })
   })
 

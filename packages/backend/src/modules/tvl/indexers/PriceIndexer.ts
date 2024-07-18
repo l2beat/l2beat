@@ -72,10 +72,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 
-    return {
-      safeHeight: adjustedTo.toNumber(),
-      updatedConfigurations: configurations,
-    }
+    return adjustedTo.toNumber()
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

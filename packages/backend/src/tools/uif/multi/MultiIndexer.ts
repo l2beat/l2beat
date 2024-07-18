@@ -72,10 +72,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     to: number,
     configurations: Configuration<T>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<{
-    safeHeight: number
-    updatedConfigurations: Configuration<T>[]
-  }>
+  ): Promise<number>
 
   /**
    * Removes data that was previously synced but because configurations changed
@@ -156,7 +153,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     })
 
     const dbMiddleware = await this.createDatabaseMiddleware()
-    const { safeHeight, updatedConfigurations } = await this.multiUpdate(
+    const safeHeight = await this.multiUpdate(
       from,
       adjustedTo,
       configurationsInRange,
@@ -168,11 +165,8 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       )
     }
 
-    this.updateSavedConfigurations(updatedConfigurations, safeHeight)
-
-    if (updatedConfigurations.length > 0) {
-      await this.updateConfigurationsCurrentHeight(safeHeight, dbMiddleware)
-    }
+    this.updateSavedConfigurations(configurationsInRange, safeHeight)
+    await this.updateConfigurationsCurrentHeight(safeHeight, dbMiddleware)
 
     await dbMiddleware.execute()
 

@@ -81,10 +81,7 @@ describe(TrackedTxsIndexer.name, () => {
         trackedTxResults.filter((tx) => tx.type === 'l2costs'),
         undefined,
       )
-      expect(safeHeight).toEqual({
-        safeHeight: to,
-        updatedConfigurations: configurations,
-      })
+      expect(safeHeight).toEqual(to)
     })
 
     it('correctly clamps FROM and TO to day', async () => {
@@ -121,10 +118,7 @@ describe(TrackedTxsIndexer.name, () => {
         from,
         expected,
       )
-      expect(safeHeight).toEqual({
-        safeHeight: expected.toNumber(),
-        updatedConfigurations: [configurations[0]],
-      })
+      expect(safeHeight).toEqual(expected.toNumber())
     })
   })
 

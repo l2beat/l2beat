@@ -350,10 +350,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo({
-        safeHeight: 200,
-        updatedConfigurations: [],
-      })
+      testIndexer.multiUpdate.resolvesTo(200)
 
       const newHeight = await testIndexer.update(200, 500)
       expect(newHeight).toEqual(200)
@@ -364,10 +361,7 @@ describe(MultiIndexer.name, () => {
       const testIndexer = new TestMultiIndexer([], [])
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo({
-        safeHeight: 300,
-        updatedConfigurations: [],
-      })
+      testIndexer.multiUpdate.resolvesTo(200)
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(300)
@@ -380,13 +374,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo({
-        safeHeight: 250,
-        updatedConfigurations: [
-          saved('a', 100, 300, 250),
-          saved('b', 100, 400, 250),
-        ],
-      })
+      testIndexer.multiUpdate.resolvesTo(250)
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(250)
@@ -403,10 +391,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo({
-        safeHeight: 150,
-        updatedConfigurations: [],
-      })
+      testIndexer.multiUpdate.resolvesTo(150)
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -420,10 +405,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo({
-        safeHeight: 350,
-        updatedConfigurations: [],
-      })
+      testIndexer.multiUpdate.resolvesTo(350)
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -458,12 +440,8 @@ class TestMultiIndexer extends MultiIndexer<null> {
     return Promise.resolve(this._saved)
   }
 
-  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
-    (_, targetHeight, configurations) =>
-      Promise.resolve({
-        safeHeight: targetHeight,
-        updatedConfigurations: configurations,
-      }),
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
+    Promise.resolve(targetHeight),
   )
 
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
