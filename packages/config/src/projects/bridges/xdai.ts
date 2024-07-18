@@ -39,7 +39,7 @@ export const xdai: Bridge = {
     escrows: [
       {
         address: EthereumAddress('0x4aa42145Aa6Ebf72e164C9bBC74fbD3788045016'),
-        sinceTimestamp: new UnixTime(1539028166),
+        sinceTimestamp: new UnixTime(1573776000),
         tokens: ['cDAI', 'DAI'],
         chain: 'ethereum',
       },
