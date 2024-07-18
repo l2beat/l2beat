@@ -21,6 +21,7 @@ export type DataAvailabilityLayer =
   | 'MantleDA'
   | 'FraxtalDA'
   | 'RedstoneDA'
+  | 'XterioDA'
   | 'EigenDA'
   | 'NearDA'
 

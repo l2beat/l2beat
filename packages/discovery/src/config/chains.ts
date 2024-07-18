@@ -194,9 +194,6 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'blockscout',
       url: 'https://pacific-explorer.manta.network/api',
-      unsupported: {
-        getContractCreation: true,
-      },
     },
   },
   {

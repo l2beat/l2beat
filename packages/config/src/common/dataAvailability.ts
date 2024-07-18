@@ -38,6 +38,7 @@ const MAIN_LAYER_SENTIMENT: Record<DataAvailabilityLayer, Sentiment> = {
   MantleDA: 'warning',
   FraxtalDA: 'warning',
   RedstoneDA: 'warning',
+  XterioDA: 'warning',
   EigenDA: 'warning',
   NearDA: 'warning',
 }
@@ -70,11 +71,15 @@ const LAYER_DESCRIPTION: Record<
     null,
   ],
   FraxtalDA: [
-    'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data is published on an on chain inbox.',
+    'The data is posted to FraxtalDA which is a separate data availability module developed by the Frax Core Team. Data is posted off chain, and only hashes of blob data are published on an on chain inbox.',
     null,
   ],
   RedstoneDA: [
-    'The data is posted to RedstoneDA which is a separate data availability module developed by the Redstone team. Data is posted off chain, and only hashes of data is published on an on chain inbox.',
+    'The data is posted to RedstoneDA which is a separate data availability module developed by the Redstone team. Data is posted off chain, and only hashes of data are published on an on chain inbox.',
+    null,
+  ],
+  XterioDA: [
+    'The data is posted to XterioDA which is a separate data availability module developed by the Xterio team. Data is posted off chain, and only hashes of data are published on an on chain inbox.',
     null,
   ],
   EigenDA: [
