@@ -31,7 +31,7 @@ export class LivenessRepository {
         ]),
       )
       .distinctOn(['timestamp', 'configuration_id'])
-      .orderBy('timestamp', 'asc')
+      .orderBy('timestamp', 'desc')
       .execute()
 
     return rows.map(toRecord)
@@ -51,7 +51,7 @@ export class LivenessRepository {
         ]),
       )
       .distinctOn(['timestamp', 'configuration_id'])
-      .orderBy('timestamp', 'asc')
+      .orderBy('timestamp', 'desc')
       .execute()
 
     return rows.map(toRecord)
@@ -75,7 +75,7 @@ export class LivenessRepository {
         ]),
       )
       .distinctOn(['timestamp', 'configuration_id'])
-      .orderBy('timestamp', 'asc')
+      .orderBy('timestamp', 'desc')
       .execute()
 
     return rows.map(toRecord)
