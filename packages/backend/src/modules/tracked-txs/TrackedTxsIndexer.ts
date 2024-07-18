@@ -37,7 +37,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     to: number,
     configurations: UpdateConfiguration<TrackedTxConfigEntry>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<number> {
+  ) {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
     if (configurationsToSync.length !== configurations.length) {
@@ -55,7 +55,10 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
         from,
         to,
       })
-      return to
+      return {
+        safeHeight: to,
+        updatedConfigurations: [],
+      }
     }
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
@@ -77,12 +80,13 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       })
     })
 
-    return unixTo.toNumber()
+    return {
+      safeHeight: unixTo.toNumber(),
+      updatedConfigurations: configurationsToSync,
+    }
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
-  ): Promise<void> {
+  override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
       const [livenessDeletedRecords, l2CostsDeletedRecords] = await Promise.all(
         [

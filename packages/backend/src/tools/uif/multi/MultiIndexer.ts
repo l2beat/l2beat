@@ -73,7 +73,10 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     to: number,
     configurations: UpdateConfiguration<T>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<number>
+  ): Promise<{
+    safeHeight: number
+    updatedConfigurations: Configuration<T>[]
+  }>
 
   /**
    * Removes data that was previously synced but because configurations changed
@@ -98,8 +101,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     configurations: SavedConfiguration<T>[],
   ): Promise<void>
 
-  abstract updateCurrentHeight(
-    configurationIds: string[],
+  abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
     dbMiddleware?: DatabaseMiddleware,
   ): Promise<void>
@@ -142,63 +144,52 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       return Math.min(range.to, to)
     }
 
-    const { configurations, minCurrentHeight } = getConfigurationsInRange(
-      range,
-      this.saved,
-      from,
-    )
+    const { configurationsInRange, minCurrentHeight } =
+      getConfigurationsInRange(range, this.saved, from)
     const adjustedTo = Math.min(range.to, to, minCurrentHeight)
 
     this.logger.info('Calling multiUpdate', {
       from,
       to: adjustedTo,
-      configurations: configurations.length,
+      configurations: configurationsInRange.length,
     })
 
     const dbMiddleware = await this.createDatabaseMiddleware()
-    const newHeight = await this.multiUpdate(
+    const { safeHeight, updatedConfigurations } = await this.multiUpdate(
       from,
       adjustedTo,
-      configurations,
+      configurationsInRange,
       dbMiddleware,
     )
-    if (newHeight < from || newHeight > adjustedTo) {
+    if (safeHeight < from || safeHeight > adjustedTo) {
       throw new Error(
         'Programmer error, returned height must be between from and to (both inclusive).',
       )
     }
 
-    if (newHeight >= from) {
-      const updatedIds = this.updateSavedConfigurations(
-        configurations,
-        newHeight,
-      )
-      if (updatedIds.length > 0) {
-        await this.updateCurrentHeight(updatedIds, newHeight, dbMiddleware)
-      }
+    this.updateSavedConfigurations(updatedConfigurations, safeHeight)
+
+    if (updatedConfigurations.length > 0) {
+      await this.updateConfigurationsCurrentHeight(safeHeight, dbMiddleware)
     }
 
     await dbMiddleware.execute()
 
-    return newHeight
+    return safeHeight
   }
 
   private updateSavedConfigurations(
-    updatedConfigurations: UpdateConfiguration<T>[],
+    updatedConfigurations: Configuration<T>[],
     newHeight: number,
-  ): string[] {
-    const touched: string[] = []
+  ) {
     for (const updated of updatedConfigurations) {
       const saved = this.saved.get(updated.id)
       if (!saved) {
         throw new Error('Programmer error, saved configuration not found')
       }
-      if (saved.currentHeight === null || saved.currentHeight < newHeight) {
-        saved.currentHeight = newHeight
-        touched.push(saved.id)
-      }
+
+      saved.currentHeight = newHeight
     }
-    return touched
   }
 
   async invalidate(targetHeight: number): Promise<number> {
@@ -221,9 +212,12 @@ function getConfigurationsInRange<T>(
   range: ConfigurationRange<T>,
   savedConfigurations: Map<string, SavedConfiguration<T>>,
   currentHeight: number,
-): { configurations: UpdateConfiguration<T>[]; minCurrentHeight: number } {
+): {
+  configurationsInRange: UpdateConfiguration<T>[]
+  minCurrentHeight: number
+} {
   let minCurrentHeight = Infinity
-  const configurations = range.configurations.map(
+  const configurationsInRange = range.configurations.map(
     (configuration): UpdateConfiguration<T> => {
       const saved = savedConfigurations.get(configuration.id)
       if (
@@ -238,5 +232,5 @@ function getConfigurationsInRange<T>(
       }
     },
   )
-  return { configurations, minCurrentHeight }
+  return { configurationsInRange, minCurrentHeight }
 }

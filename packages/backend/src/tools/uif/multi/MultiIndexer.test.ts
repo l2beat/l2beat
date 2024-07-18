@@ -142,11 +142,9 @@ describe(MultiIndexer.name, () => {
         [update('a', 100, 200, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['a'],
-        200,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
     })
 
     it('calls multiUpdate with a late matching configuration', async () => {
@@ -165,11 +163,9 @@ describe(MultiIndexer.name, () => {
         [update('b', 300, 400, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['b'],
-        400,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(400, mockDbMiddleware)
     })
 
     it('calls multiUpdate with two matching configurations', async () => {
@@ -188,11 +184,9 @@ describe(MultiIndexer.name, () => {
         [update('a', 100, 200, false), update('b', 100, 400, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['a', 'b'],
-        200,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
     })
 
     it('calls multiUpdate with two middle matching configurations', async () => {
@@ -211,11 +205,9 @@ describe(MultiIndexer.name, () => {
         [update('a', 100, 400, false), update('b', 200, 500, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['a', 'b'],
-        400,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(400, mockDbMiddleware)
     })
 
     it('skips calling multiUpdate if we are too early', async () => {
@@ -229,7 +221,9 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(99)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenCalledTimes(0)
     })
 
     it('skips calling multiUpdate if we are too late', async () => {
@@ -243,7 +237,9 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(500)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenCalledTimes(0)
     })
 
     it('skips calling multiUpdate between configs', async () => {
@@ -257,7 +253,9 @@ describe(MultiIndexer.name, () => {
 
       expect(newHeight).toEqual(299)
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(0)
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenCalledTimes(0)
     })
 
     it('calls multiUpdate with a matching configuration with data', async () => {
@@ -276,11 +274,9 @@ describe(MultiIndexer.name, () => {
         [update('a', 100, 200, true), update('b', 100, 400, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['b'],
-        200,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
     })
 
     it('multiple update calls', async () => {
@@ -298,11 +294,9 @@ describe(MultiIndexer.name, () => {
         [update('a', 100, 200, true), update('b', 100, 400, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['b'],
-        200,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
 
       // The same range. In real life might be a result of a parent reorg
       // Invalidate is a no-op so we don't need to call it
@@ -314,7 +308,9 @@ describe(MultiIndexer.name, () => {
         [update('a', 100, 200, true), update('b', 100, 400, true)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenCalledTimes(1)
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenCalledTimes(1)
 
       // Next range
       expect(await testIndexer.update(201, 500)).toEqual(400)
@@ -325,12 +321,9 @@ describe(MultiIndexer.name, () => {
         [update('b', 100, 400, false)],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
-        ['b'],
-        400,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenNthCalledWith(2, 400, mockDbMiddleware)
     })
 
     it('correctly updates currentHeight in saved configurations', async () => {
@@ -356,11 +349,9 @@ describe(MultiIndexer.name, () => {
         ],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenOnlyCalledWith(
-        ['a'],
-        250,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(250, mockDbMiddleware)
 
       expect(await testIndexer.update(251, 500)).toEqual(500)
       expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
@@ -374,12 +365,9 @@ describe(MultiIndexer.name, () => {
         ],
         mockDbMiddleware,
       )
-      expect(testIndexer.updateCurrentHeight).toHaveBeenNthCalledWith(
-        2,
-        ['a', 'b'],
-        500,
-        mockDbMiddleware,
-      )
+      expect(
+        testIndexer.updateConfigurationsCurrentHeight,
+      ).toHaveBeenNthCalledWith(2, 500, mockDbMiddleware)
     })
   })
 
@@ -391,7 +379,10 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(200)
+      testIndexer.multiUpdate.resolvesTo({
+        safeHeight: 200,
+        updatedConfigurations: [],
+      })
 
       const newHeight = await testIndexer.update(200, 500)
       expect(newHeight).toEqual(200)
@@ -405,7 +396,13 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(300)
+      testIndexer.multiUpdate.resolvesTo({
+        safeHeight: 300,
+        updatedConfigurations: [
+          saved('a', 100, 300, 300),
+          saved('b', 100, 400, 300),
+        ],
+      })
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(300)
@@ -422,7 +419,13 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(250)
+      testIndexer.multiUpdate.resolvesTo({
+        safeHeight: 250,
+        updatedConfigurations: [
+          saved('a', 100, 300, 250),
+          saved('b', 100, 400, 250),
+        ],
+      })
 
       const newHeight = await testIndexer.update(200, 300)
       expect(newHeight).toEqual(250)
@@ -439,7 +442,10 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(150)
+      testIndexer.multiUpdate.resolvesTo({
+        safeHeight: 150,
+        updatedConfigurations: [],
+      })
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -453,7 +459,10 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(350)
+      testIndexer.multiUpdate.resolvesTo({
+        safeHeight: 350,
+        updatedConfigurations: [],
+      })
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -488,8 +497,12 @@ class TestMultiIndexer extends MultiIndexer<null> {
     return Promise.resolve(this._saved)
   }
 
-  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
-    Promise.resolve(targetHeight),
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
+    (_, targetHeight, configurations) =>
+      Promise.resolve({
+        safeHeight: targetHeight,
+        updatedConfigurations: configurations,
+      }),
   )
 
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
@@ -497,8 +510,10 @@ class TestMultiIndexer extends MultiIndexer<null> {
   setSavedConfigurations =
     mockFn<MultiIndexer<null>['setSavedConfigurations']>().resolvesTo(undefined)
 
-  updateCurrentHeight =
-    mockFn<MultiIndexer<null>['updateCurrentHeight']>().resolvesTo(undefined)
+  updateConfigurationsCurrentHeight =
+    mockFn<
+      MultiIndexer<null>['updateConfigurationsCurrentHeight']
+    >().resolvesTo(undefined)
 }
 
 function actual(

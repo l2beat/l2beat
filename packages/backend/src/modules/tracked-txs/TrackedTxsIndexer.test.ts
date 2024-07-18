@@ -81,7 +81,10 @@ describe(TrackedTxsIndexer.name, () => {
         trackedTxResults.filter((tx) => tx.type === 'l2costs'),
         undefined,
       )
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toEqual({
+        safeHeight: to,
+        updatedConfigurations: [configurations[0], configurations[1]],
+      })
     })
 
     it('correctly clamps FROM and TO to day', async () => {
@@ -118,7 +121,10 @@ describe(TrackedTxsIndexer.name, () => {
         from,
         expected,
       )
-      expect(safeHeight).toEqual(expected.toNumber())
+      expect(safeHeight).toEqual({
+        safeHeight: expected.toNumber(),
+        updatedConfigurations: [configurations[0]],
+      })
     })
 
     it('returns to if no configurations to sync', async () => {
@@ -142,7 +148,10 @@ describe(TrackedTxsIndexer.name, () => {
         mockDbMiddleware,
       )
 
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toEqual({
+        safeHeight: to,
+        updatedConfigurations: [],
+      })
     })
   })
 

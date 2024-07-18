@@ -99,13 +99,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
         const records = CONFIGURATIONS
 
         await repository.addOrUpdateMany(records)
-        await repository.updateSavedConfigurations(
-          'indexer-1',
-          records
-            .slice(0, 3)
-            .map((r) => r.id), // test .whereIn clause
-          123,
-        )
+        await repository.updateSavedConfigurations('indexer-1', 123)
 
         const result = await repository.getAll()
 

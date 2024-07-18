@@ -88,7 +88,10 @@ describe(ChainAmountIndexer.name, () => {
         undefined,
       )
 
-      expect(safeHeight).toEqual(timestampToSync.toNumber())
+      expect(safeHeight).toEqual({
+        safeHeight: timestampToSync.toNumber(),
+        updatedConfigurations: toUpdate.slice(0, 2),
+      })
     })
 
     it('returns if no configurations to sync', async () => {
@@ -122,7 +125,10 @@ describe(ChainAmountIndexer.name, () => {
         mockDbMiddleware,
       )
 
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toEqual({
+        safeHeight: to,
+        updatedConfigurations: [],
+      })
     })
 
     it('returns if optimized timestamp later than to', async () => {
@@ -159,7 +165,10 @@ describe(ChainAmountIndexer.name, () => {
       )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toEqual({
+        safeHeight: to,
+        updatedConfigurations: [],
+      })
     })
 
     it('returns if optimized timestamp later than to', async () => {
@@ -193,7 +202,10 @@ describe(ChainAmountIndexer.name, () => {
         mockDbMiddleware,
       )
 
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toEqual({
+        safeHeight: to,
+        updatedConfigurations: [],
+      })
     })
   })
 

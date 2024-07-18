@@ -40,7 +40,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     to: number,
     configurations: UpdateConfiguration<ChainAmountConfig>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<number> {
+  ) {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
     if (configurationsToSync.length !== configurations.length) {
@@ -58,7 +58,10 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         from,
         to,
       })
-      return to
+      return {
+        safeHeight: to,
+        updatedConfigurations: [],
+      }
     }
 
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
@@ -68,7 +71,10 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         to,
         optimizedTimestamp: timestamp.toNumber(),
       })
-      return to
+      return {
+        safeHeight: to,
+        updatedConfigurations: [],
+      }
     }
 
     const blockNumber = await this.getBlockNumber(timestamp)
@@ -97,7 +103,10 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       await this.$.amountRepository.addMany(nonZeroAmounts, trx)
     })
 
-    return timestamp.toNumber()
+    return {
+      safeHeight: timestamp.toNumber(),
+      updatedConfigurations: configurationsToSync,
+    }
   }
 
   private async getBlockNumber(timestamp: UnixTime) {
@@ -113,9 +122,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     return blockNumber
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
-  ): Promise<void> {
+  override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
       const deletedRecords =
         await this.$.amountRepository.deleteByConfigInTimeRange(

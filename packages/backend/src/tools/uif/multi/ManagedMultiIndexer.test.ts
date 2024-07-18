@@ -132,25 +132,27 @@ describe(ManagedMultiIndexer.name, () => {
     )
   })
 
-  it(ManagedMultiIndexer.prototype.updateCurrentHeight.name, async () => {
-    const indexerService = mockObject<IndexerService>({
-      upsertConfigurations: async () => {},
-      updateSavedConfigurations: async () => {},
-      persistOnlyUsedConfigurations: async () => {},
-    })
+  it(
+    ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
+    async () => {
+      const indexerService = mockObject<IndexerService>({
+        upsertConfigurations: async () => {},
+        updateSavedConfigurations: async () => {},
+        persistOnlyUsedConfigurations: async () => {},
+      })
 
-    const indexer = await initializeMockIndexer(indexerService, [], [])
+      const indexer = await initializeMockIndexer(indexerService, [], [])
 
-    await indexer.updateCurrentHeight(['a', 'b', 'c'], 1, mockDbMiddleware)
+      await indexer.updateConfigurationsCurrentHeight(1, mockDbMiddleware)
 
-    expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
-      1,
-      'indexer',
-      ['a', 'b', 'c'],
-      1,
-      mockDbMiddleware,
-    )
-  })
+      expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
+        1,
+        'indexer',
+        1,
+        mockDbMiddleware,
+      )
+    },
+  )
 
   describeDatabase('e2e', (database) => {
     const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
@@ -287,7 +289,10 @@ class TestIndexer extends ManagedMultiIndexer<null> {
     super(options)
   }
   multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
-    Promise.resolve(targetHeight),
+    Promise.resolve({
+      safeHeight: targetHeight,
+      updatedConfigurations: [],
+    }),
   )
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 }

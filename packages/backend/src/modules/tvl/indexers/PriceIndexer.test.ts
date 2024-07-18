@@ -108,7 +108,10 @@ describe(PriceIndexer.name, () => {
         undefined,
       )
 
-      expect(safeHeight).toEqual(adjustedTo)
+      expect(safeHeight).toEqual({
+        safeHeight: adjustedTo,
+        updatedConfigurations: configurations.slice(0, 2),
+      })
     })
 
     it('returns to if no configurations to sync', async () => {
@@ -144,7 +147,10 @@ describe(PriceIndexer.name, () => {
         mockDbMiddleware,
       )
 
-      expect(safeHeight).toEqual(to)
+      expect(safeHeight).toEqual({
+        safeHeight: to,
+        updatedConfigurations: [],
+      })
     })
   })
 

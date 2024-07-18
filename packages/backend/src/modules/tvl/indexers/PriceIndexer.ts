@@ -40,7 +40,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     to: number,
     configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<number> {
+  ) {
     const configurationsToSync = configurations.filter((c) => !c.hasData)
 
     if (configurationsToSync.length !== configurations.length) {
@@ -58,7 +58,10 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
         from,
         to,
       })
-      return to
+      return {
+        safeHeight: to,
+        updatedConfigurations: [],
+      }
     }
 
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
@@ -92,12 +95,13 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       await this.$.priceRepository.addMany(optimizedPrices, trx)
     })
 
-    return adjustedTo.toNumber()
+    return {
+      safeHeight: adjustedTo.toNumber(),
+      updatedConfigurations: configurationsToSync,
+    }
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
-  ): Promise<void> {
+  override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
       const deletedRecords =
         await this.$.priceRepository.deleteByConfigInTimeRange(
