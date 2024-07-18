@@ -5,8 +5,8 @@ import {
   ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
 
-import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
 import { Database } from '@l2beat/database'
+import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
 
 export class ImplementationChangeController {
   private readonly onDiskChains: string[] = []

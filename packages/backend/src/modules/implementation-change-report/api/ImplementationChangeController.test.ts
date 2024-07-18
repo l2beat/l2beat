@@ -3,8 +3,8 @@ import { DiscoveryOutput } from '@l2beat/discovery-types'
 import { ChainConverter, ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { ImplementationChangeController } from './ImplementationChangeController'
 import { Database, UpdateMonitorRecord } from '@l2beat/database'
+import { ImplementationChangeController } from './ImplementationChangeController'
 
 describe(ImplementationChangeController.name, () => {
   const CONTRACT_A = EthereumAddress.random()
