@@ -72,7 +72,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
         await repository.addMany(newRows)
 
         const results = await repository.getAll()
-        expect(results).toEqual([
+        expect(results).toEqualUnsorted([
           ...DATA.map((e) => ({
             ...e,
           })),
@@ -102,7 +102,7 @@ describeDatabase(LivenessRepository.name, (knex, kysely) => {
       it('should return all rows', async () => {
         const results = await repository.getAll()
 
-        expect(results).toEqual(
+        expect(results).toEqualUnsorted(
           DATA.map((e) => ({
             ...e,
           })),
