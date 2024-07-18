@@ -85,7 +85,14 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     return knex('indexer_configurations')
       .where('indexer_id', indexerId)
-      .update({ current_height: currentHeight })
+      .andWhere((builder) => {
+        builder
+          .whereNull('current_height')
+          .orWhere('current_height', '<', currentHeight)
+      })
+      .update({
+        current_height: currentHeight,
+      })
   }
 
   async deleteConfigurationsExcluding(

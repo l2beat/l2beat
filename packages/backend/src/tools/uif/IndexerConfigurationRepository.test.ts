@@ -96,17 +96,36 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     it(
       IndexerConfigurationRepository.prototype.updateSavedConfigurations.name,
       async () => {
-        const records = CONFIGURATIONS
+        const records = [
+          mock({
+            id: 'a'.repeat(12),
+            indexerId: 'indexer-1',
+            currentHeight: 1,
+          }),
+          mock({
+            id: 'b'.repeat(12),
+            indexerId: 'indexer-1',
+            currentHeight: null,
+          }),
+          mock({
+            id: 'c'.repeat(12),
+            indexerId: 'indexer-1',
+            currentHeight: 100_000,
+          }),
+          mock({ id: 'd'.repeat(12), indexerId: 'indexer-2' }),
+        ]
 
         await repository.addOrUpdateMany(records)
-        await repository.updateSavedConfigurations('indexer-1', 123)
+
+        await repository.updateSavedConfigurations('indexer-1', 100)
 
         const result = await repository.getAll()
 
         expect(result).toEqualUnsorted([
-          ...records.slice(0, 2).map((r) => ({ ...r, currentHeight: 123 })),
-          CONFIGURATIONS[2],
-          CONFIGURATIONS[3],
+          { ...records[0], currentHeight: 100 },
+          { ...records[1], currentHeight: 100 },
+          records[2],
+          records[3],
         ])
       },
     )
