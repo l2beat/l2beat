@@ -253,7 +253,7 @@ export const linea: Layer2 = {
           address: EthereumAddress(
             '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
           ),
-          selector: '0xd630280f',
+          selector: '0xabffac32',
           functionSignature:
             'function finalizeBlocksWithProof(bytes,uint256,(bytes32,bytes32,uint256,(bytes32,bytes32,bytes32,bytes32,bytes32),uint256,uint256,bytes32,bytes32,uint256,uint256,uint256,bytes32[],bytes))',
           sinceTimestamp: new UnixTime(1717508999),
