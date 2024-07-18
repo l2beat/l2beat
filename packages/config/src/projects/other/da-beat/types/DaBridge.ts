@@ -7,6 +7,12 @@ import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 
+export type DaBridge =
+  | NoDaBridge
+  | OnChainDaBridge
+  | DacBridge
+  | EnshrinedBridge
+
 export type NoDaBridge = CommonDaBridge & {
   type: 'NoBridge'
 }
