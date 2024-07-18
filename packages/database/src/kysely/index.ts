@@ -4,7 +4,14 @@ import {
   PostgresDialect,
 } from 'kysely'
 import { Pool, PoolConfig, defaults, types } from 'pg'
-import { DB } from './generated/types'
+import { DB as GeneratedDB } from './generated/types'
+
+import { DailyTransactionCountRow } from '../activity-view/entity'
+
+export type DB = GeneratedDB & {
+  // TODO: (sz-piotr) This is temporary!
+  'activity.daily_count_view': DailyTransactionCountRow
+}
 
 // Interpret `timestamp without time zone` as UTC
 defaults.parseInputDatesAsUTC = true

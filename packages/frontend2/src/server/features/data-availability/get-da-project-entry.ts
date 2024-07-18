@@ -10,7 +10,7 @@ import { getImplementationChangeReport } from '../implementation-change-report/g
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { kindToType } from './utils/kind-to-layer-type'
 import {
-  type DaProjectEconomicSecurity,
+  type EconomicSecurityData,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 import { getUsedInProjects } from './utils/get-used-in-projects'
@@ -22,7 +22,9 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const manuallyVerifiedContracts = getManuallyVerifiedContracts()
   const implementationChangeReport = await getImplementationChangeReport()
 
-  const rosetteValues = mapRisksToRosetteValues(getDaRisks(daLayer, daBridge))
+  const rosetteValues = mapRisksToRosetteValues(
+    getDaRisks(daLayer, daBridge, tvs, economicSecurity),
+  )
 
   const projectDetails = getProjectDetails({
     daLayer,
@@ -67,7 +69,7 @@ interface HeaderParams {
   daLayer: DaLayer
   daBridge: DaBridge
   tvs: number
-  economicSecurity: DaProjectEconomicSecurity | undefined
+  economicSecurity: EconomicSecurityData | undefined
 }
 
 function getHeader({

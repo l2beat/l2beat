@@ -1,9 +1,6 @@
+import { Database, LivenessRecord } from '@l2beat/database'
 import { TrackedTxLivenessConfig } from '@l2beat/shared'
 import { TrackedTxsConfigSubtype, UnixTime } from '@l2beat/shared-pure'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from '../repositories/LivenessRepository'
 
 export type LivenessConfig = Pick<TrackedTxLivenessConfig, 'id' | 'subtype'>
 
@@ -12,13 +9,13 @@ export type LivenessRecordWithConfig = LivenessRecord & LivenessConfig
 export class LivenessWithConfigService {
   constructor(
     private readonly configurations: LivenessConfig[],
-    private readonly livenessRepository: LivenessRepository,
+    private readonly db: Database,
   ) {}
 
   async getSince(since: UnixTime) {
     const configurationIds = this.configurations.map((c) => c.id)
 
-    const records = await this.livenessRepository.getByConfigurationIdSince(
+    const records = await this.db.liveness.getByConfigurationIdSince(
       configurationIds,
       since,
     )
@@ -29,7 +26,7 @@ export class LivenessWithConfigService {
   async getUpTo(to: UnixTime) {
     const configurationIds = this.configurations.map((c) => c.id)
 
-    const records = await this.livenessRepository.getByConfigurationIdUpTo(
+    const records = await this.db.liveness.getByConfigurationIdUpTo(
       configurationIds,
       to,
     )
@@ -40,12 +37,11 @@ export class LivenessWithConfigService {
   async getWithinTimeRange(from: UnixTime, to: UnixTime) {
     const configurationIds = this.configurations.map((c) => c.id)
 
-    const records =
-      await this.livenessRepository.getByConfigurationIdWithinTimeRange(
-        configurationIds,
-        from,
-        to,
-      )
+    const records = await this.db.liveness.getByConfigurationIdWithinTimeRange(
+      configurationIds,
+      from,
+      to,
+    )
 
     return records.map((record) => this.toRecordWithConfiguration(record))
   }
@@ -55,7 +51,7 @@ export class LivenessWithConfigService {
       .filter((c) => c.subtype === subtype)
       .map((c) => c.id)
 
-    const records = await this.livenessRepository.getByConfigurationIdSince(
+    const records = await this.db.liveness.getByConfigurationIdSince(
       configurationIds,
       since,
     )

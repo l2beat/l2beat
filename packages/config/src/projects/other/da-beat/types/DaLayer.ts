@@ -1,5 +1,10 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import {
+  DacBridge,
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+} from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
@@ -11,7 +16,9 @@ export type DaLayer = BlockchainDaLayer | DacDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: 'public-blockchain'
-  bridges: (OnChainDaBridge | NoDaBridge)[]
+  bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow: number
   /** Details about data availability sampling. */
   dataAvailabilitySampling?: DataAvailabilitySampling
   /** The consensus algorithm used by the data availability layer. */

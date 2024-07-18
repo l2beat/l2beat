@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { Knex } from 'knex'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../peripherals/database/BaseRepository'
-import { Database } from '../../peripherals/database/Database'
 
 export interface IndexerConfigurationRow {
   id: string
@@ -28,7 +28,7 @@ export interface IndexerConfigurationRecord {
 const BATCH_SIZE = 5_000
 
 export class IndexerConfigurationRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<IndexerConfigurationRepository>>(this)
   }

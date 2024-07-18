@@ -6,10 +6,10 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
-import { type DaProjectEconomicSecurity } from './get-da-project-economic-security'
+import { type EconomicSecurityData } from './get-da-project-economic-security'
 
 export async function getDaProjectsEconomicSecurity(): Promise<
-  Record<string, DaProjectEconomicSecurity>
+  Record<string, EconomicSecurityData>
 > {
   noStore()
   return await getCachedEconomicSecurity()

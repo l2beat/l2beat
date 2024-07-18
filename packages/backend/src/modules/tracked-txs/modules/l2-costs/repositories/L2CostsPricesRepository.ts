@@ -2,11 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { L2CostsPricesRow } from 'knex/types/tables'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
-import { Database } from '../../../../../peripherals/database/Database'
 
 export interface L2CostsPricesRecord {
   timestamp: UnixTime
@@ -16,7 +16,7 @@ export interface L2CostsPricesRecord {
 export class L2CostsPricesRepository extends BaseRepository {
   private readonly TABLE_NAME = 'l2_costs_prices'
 
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<L2CostsPricesRepository>>(this)
   }

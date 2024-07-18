@@ -6,27 +6,20 @@ import {
 } from '@l2beat/shared-pure'
 import { BigNumber, utils } from 'ethers'
 
+import { Database } from '@l2beat/database'
 import { DegateClient } from '../../../peripherals/degate'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer } from './types/BaseAnalyzer'
 
 export class LoopringFinalityAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly l2Provider: LoopringClient | DegateClient,
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
   }
 
   getTrackedTxSubtype(): TrackedTxsConfigSubtype {

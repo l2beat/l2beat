@@ -1,16 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import {
+  Database,
+  IndexerConfigurationRecord,
+  LivenessRecord,
+} from '@l2beat/database'
 import { createTrackedTxId } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import {
-  IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from '../../../../tools/uif/IndexerConfigurationRepository'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer, Transaction } from './BaseAnalyzer'
 
 describe(BaseAnalyzer.name, () => {
@@ -45,20 +42,23 @@ describe(BaseAnalyzer.name, () => {
       })
 
       const mockProvider = mockObject<RpcClient>({})
-      const mockLivenessRepository = mockObject<LivenessRepository>({
+      const mockLivenessRepository = mockObject<Database['liveness']>({
         getByConfigurationIdWithinTimeRange:
           mockFn().resolvesTo(mockLivenessRecords),
       })
-      const mockIndexerConfigurationRepository =
-        mockObject<IndexerConfigurationRepository>({
-          getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
-        })
+      const mockIndexerConfigurationRepository = mockObject<
+        Database['indexerConfiguration']
+      >({
+        getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
+      })
 
       const getFinalitySpy = mockFn((_tx: Transaction) => {})
       const mockAnalyzer = new MockAnalyzer(
         mockProvider,
-        mockLivenessRepository,
-        mockIndexerConfigurationRepository,
+        mockObject<Database>({
+          indexerConfiguration: mockIndexerConfigurationRepository,
+          liveness: mockLivenessRepository,
+        }),
         mockProjectId,
         getFinalitySpy,
         mockTxSubtype,
@@ -86,8 +86,7 @@ describe(BaseAnalyzer.name, () => {
 class MockAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly getFinalitySpy: (tx: Transaction) => void,
     private readonly txSubtype:
@@ -95,12 +94,7 @@ class MockAnalyzer extends BaseAnalyzer {
       | 'stateUpdates'
       | 'proofSubmissions',
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
   }
 
   async analyze(tx: Transaction) {

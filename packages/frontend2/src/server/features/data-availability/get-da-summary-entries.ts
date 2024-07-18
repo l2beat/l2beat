@@ -1,5 +1,6 @@
 import { daLayers } from '@l2beat/config'
 import { toDaBridge } from './utils/get-da-bridge'
+import { getUniqueProjectsInUse } from './utils/get-da-projects'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
@@ -18,6 +19,7 @@ export async function getDaSummaryEntries() {
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => {
       const tvs = getSumFor(bridge.usedIn)
+      const projectEconomicSecurity = economicSecurity[daLayer.id]
 
       return {
         slug: daLayer.display.slug,
@@ -25,10 +27,10 @@ export async function getDaSummaryEntries() {
         href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
         daBridge: toDaBridge(bridge),
         layerType: kindToType(daLayer.kind),
-        risks: getDaRisks(daLayer, bridge),
+        risks: getDaRisks(daLayer, bridge, tvs, projectEconomicSecurity),
         isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
         tvs,
-        economicSecurity: economicSecurity[daLayer.id],
+        economicSecurity: projectEconomicSecurity,
         // TODO: maybe we can specify names in the config instead of projectIds
         usedIn: getUsedInProjects(bridge),
       }
@@ -39,13 +41,3 @@ export async function getDaSummaryEntries() {
 export type DaSummaryEntry = Awaited<
   ReturnType<typeof getDaSummaryEntries>
 >[number]
-
-function getUniqueProjectsInUse() {
-  return [
-    ...new Set(
-      daLayers
-        .map((daLayer) => daLayer.bridges.map((bridge) => bridge.usedIn))
-        .flat(2),
-    ),
-  ]
-}

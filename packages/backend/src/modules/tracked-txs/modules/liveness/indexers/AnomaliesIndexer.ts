@@ -1,4 +1,5 @@
 import { BackendProject } from '@l2beat/config'
+import { AnomalyRecord, Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   assert,
@@ -13,11 +14,6 @@ import {
   ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
 import {
-  AnomaliesRecord,
-  AnomaliesRepository,
-} from '../repositories/AnomaliesRepository'
-import { LivenessRepository } from '../repositories/LivenessRepository'
-import {
   LivenessRecordWithConfig,
   LivenessWithConfigService,
 } from '../services/LivenessWithConfigService'
@@ -28,8 +24,7 @@ import { groupByType } from '../utils/groupByType'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
-  livenessRepository: LivenessRepository
-  anomaliesRepository: AnomaliesRepository
+  db: Database
   projects: BackendProject[]
 }
 
@@ -60,7 +55,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
     const anomalies = await this.getAnomalies(unixTo)
 
-    await this.$.anomaliesRepository.addOrUpdateMany(anomalies)
+    await this.$.db.anomalies.addOrUpdateMany(anomalies)
 
     return unixTo.toNumber()
   }
@@ -72,7 +67,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
   }
 
   async getAnomalies(to: UnixTime) {
-    const anomalies: AnomaliesRecord[] = []
+    const anomalies: AnomalyRecord[] = []
 
     const configurations =
       await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
@@ -91,7 +86,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
 
       const livenessWithConfig = new LivenessWithConfigService(
         activeConfigs,
-        this.$.livenessRepository,
+        this.$.db,
       )
 
       const livenessRecords = await livenessWithConfig.getWithinTimeRange(
@@ -150,7 +145,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     subtype: TrackedTxsConfigSubtype,
     livenessRecords: LivenessRecordWithConfig[],
     to: UnixTime,
-  ): AnomaliesRecord[] {
+  ): AnomalyRecord[] {
     if (livenessRecords.length === 0) {
       return []
     }
@@ -162,7 +157,7 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
     )
       return []
 
-    const anomalies: AnomaliesRecord[] = []
+    const anomalies: AnomalyRecord[] = []
 
     // add virtual point to calculate ongoing anomalies
     livenessRecords.unshift({

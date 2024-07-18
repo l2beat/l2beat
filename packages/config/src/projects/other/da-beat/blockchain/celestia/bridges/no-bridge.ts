@@ -11,9 +11,6 @@ import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
 import { DaBridge } from '../../../types/DaBridge'
 
-/**
- * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
- */
 export const noBridge = {
   id: 'no-bridge',
   type: 'NoBridge',

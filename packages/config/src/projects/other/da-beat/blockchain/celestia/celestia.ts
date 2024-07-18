@@ -62,8 +62,8 @@ export const celestia: DaLayer = {
   dataAvailabilitySampling: {
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
     erasureCodingProof: DasErasureCodingProof.FraudProofs,
-    pruningWindow: UnixTime.DAY * 30,
   },
+  pruningWindow: 86400 * 30, // 30 days in seconds
   risks: {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.DasWithBlobsReconstruction(true),

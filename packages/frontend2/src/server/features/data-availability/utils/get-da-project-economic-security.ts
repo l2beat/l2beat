@@ -6,7 +6,7 @@ import {
 } from 'next/cache'
 import { db } from '~/server/database'
 
-export type DaProjectEconomicSecurity =
+export type EconomicSecurityData =
   | {
       status: 'Synced'
       economicSecurity: number
@@ -17,7 +17,7 @@ export type DaProjectEconomicSecurity =
 
 export async function getDaProjectEconomicSecurity(
   daLayer: DaLayer,
-): Promise<DaProjectEconomicSecurity | undefined> {
+): Promise<EconomicSecurityData | undefined> {
   noStore()
   return getCachedEconomicSecurity(daLayer)
 }
