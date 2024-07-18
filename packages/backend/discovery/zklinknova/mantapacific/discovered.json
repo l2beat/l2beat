@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantapacific",
-  "blockNumber": 2681347,
+  "blockNumber": 2708488,
   "configHash": "0x47105bb307ede9b31b7f4dff4a5ccbc362ced0d066f6eb8da52c0753e64b3f8a",
   "version": 9,
   "contracts": [
@@ -11,6 +11,7 @@
       "assignedPermissions": {
         "admin": ["0x44a65dc12865A1e5249b45b4868f32b0E37168FF"]
       },
+      "sinceTimestamp": 1709295839,
       "values": {
         "$immutable": true,
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
@@ -22,6 +23,7 @@
       "name": "L1ERC20Bridge",
       "address": "0x44a65dc12865A1e5249b45b4868f32b0E37168FF",
       "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1709295839,
       "values": {
         "$admin": "0x01aFbE3D5DC8A0C8271de9bCB091224f037EfE05",
         "$implementation": "0x5f58BcCE409CDaFBbD705e720743b1EfF9fef28c",
@@ -42,6 +44,7 @@
           "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         ]
       },
+      "sinceTimestamp": 1710253339,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
@@ -63,6 +66,7 @@
         "totalSyncedPriorityTxs",
         "totalValidatorForwardFee"
       ],
+      "sinceTimestamp": 1709279099,
       "values": {
         "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "$implementation": "0xfB0Ad0B3C2605A7CA33d6badd0C685E11b8F5585",
@@ -80,15 +84,15 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 16683,
-        "getTotalPriorityTxs": 6510,
+        "getTotalBatchesExecuted": 16983,
+        "getTotalPriorityTxs": 6515,
         "IS_ETH_GAS_TOKEN": true,
         "owner": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "paused": false,
-        "totalBatchesExecuted": 16683,
-        "totalPriorityTxs": 6510,
-        "totalSyncedPriorityTxs": 6504,
-        "totalValidatorForwardFee": "3219738495794699561",
+        "totalBatchesExecuted": 16983,
+        "totalPriorityTxs": 6515,
+        "totalSyncedPriorityTxs": 6515,
+        "totalValidatorForwardFee": "3222291832328704825",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 40000000000
       },
@@ -99,6 +103,7 @@
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "template": "zklinknova/secondaryGateway",
       "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1709279189,
       "values": {
         "$admin": "0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3",
         "$implementation": "0x50efC7f1290479cb879473512D89fDC80B726211",
