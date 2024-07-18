@@ -614,7 +614,13 @@
     { "address": "0x7B3225ADc5D908668FaA050246680CBE4e75A93f" },
     {
       "address": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x9841bC06C8284095824e9397AC818aD1114C444C",
+          "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4",
+          "0xd26F4195B147b988E7497779f7DED22ba130204d"
+        ]
+      }
     },
     { "address": "0x8898EF6f9838A0Ec088F174A77F8a094fB788C4e" },
     { "address": "0x8ECF028Cd647379E580DaA6701A11154750fcd3c" },
@@ -1509,5 +1515,7 @@
       "function upgradeTo(address _implementation)",
       "function upgradeToAndCall(address _implementation, bytes _data) payable returns (bytes)"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

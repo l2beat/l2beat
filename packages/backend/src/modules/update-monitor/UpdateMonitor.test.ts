@@ -62,6 +62,8 @@ const DISCOVERY_RESULT: DiscoveryOutput = {
   eoas: [],
   abis: {},
   version: 0,
+  usedTemplates: {},
+  shapeFilesHash: Hash256.random(),
 }
 
 const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
@@ -79,6 +81,8 @@ const DISCOVERY_RESULT_ETH_2: DiscoveryOutput = {
   eoas: [],
   abis: {},
   version: 0,
+  usedTemplates: {},
+  shapeFilesHash: Hash256.random(),
 }
 
 const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
@@ -96,6 +100,8 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   eoas: [],
   abis: {},
   version: 0,
+  usedTemplates: {},
+  shapeFilesHash: Hash256.random(),
 }
 
 describe(UpdateMonitor.name, () => {
@@ -851,6 +857,8 @@ const mockProject: DiscoveryOutput = {
   eoas: [],
   abis: {},
   version: 0,
+  usedTemplates: {},
+  shapeFilesHash: Hash256.random(),
 }
 
 function mockContract(

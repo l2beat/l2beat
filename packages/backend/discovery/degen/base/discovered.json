@@ -2,7 +2,7 @@
   "name": "degen",
   "chain": "base",
   "blockNumber": 16561766,
-  "configHash": "0x6079c8ba931ed5b6ee8c22464df1630d88b6f7785b10eb0c5d0de65067372efb",
+  "configHash": "0x70ed7eed88e27304ac55e4b99893ad867e55a5cd4973f10754619dd8d3bf116f",
   "version": 9,
   "contracts": [
     {
@@ -1022,5 +1022,10 @@
       "function upgrade(address proxy, address implementation)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

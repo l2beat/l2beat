@@ -1,3 +1,225 @@
+Generated with discovered.json: 0x942f30327f95f9cafe897c7cddc575a78c3c6558
+
+# Diff at Thu, 18 Jul 2024 10:35:18 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 37363085
+- current block number: 37363085
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 37363085 (main branch discovery), not current.
+
+```diff
+    contract FPValidator (0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract Endpoint (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract  (0x5a54fe5234E811466D5366846283323c954310B2) {
+    +++ description: None
+      upgradeability:
+-        {"type":"EIP1967 proxy","implementation":"0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583","admin":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"}
+      implementations:
+-        ["0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"]
+      proxyType:
++        "EIP1967 proxy"
+      values:
++        {"$admin":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","$implementation":"0x47bc8fb02aA30f7ec413f60aFD2C90D8ee96B583"}
+    }
+```
+
+```diff
+    contract  (0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values:
++        {"$immutable":true}
+    }
+```
+
+```diff
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract  (0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D) {
+    +++ description: None
+      upgradeability:
+-        {"type":"EIP1967 proxy","implementation":"0xc9A227D0319f42e8C5997BD639a5286642474849","admin":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8"}
+      implementations:
+-        ["0xc9A227D0319f42e8C5997BD639a5286642474849"]
+      proxyType:
++        "EIP1967 proxy"
+      values:
++        {"$admin":"0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8","$implementation":"0xc9A227D0319f42e8C5997BD639a5286642474849"}
+    }
+```
+
+```diff
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b) {
+    +++ description: None
+      upgradeability:
+-        {"type":"EIP1967 proxy","implementation":"0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F","admin":"0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C"}
+      implementations:
+-        ["0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"]
+      proxyType:
++        "EIP1967 proxy"
+      values:
++        {"$admin":"0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C","$implementation":"0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"}
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0x8D452629c5FfCDDE407069da48c096e1F8beF22c) {
+    +++ description: None
+      upgradeability:
+-        {"type":"gnosis safe","masterCopy":"0x3E5c63644E683549055b9Be8653de26E0B4CD36E","modules":[],"threshold":"2 of 6 (33%)"}
+      implementations:
+-        ["0x3E5c63644E683549055b9Be8653de26E0B4CD36E"]
+      values.$immutable:
++        false
+      values.$implementation:
++        "0x3E5c63644E683549055b9Be8653de26E0B4CD36E"
+      values.$multisigThreshold:
++        "2 of 6 (33%)"
+      values.GnosisSafe_modules:
++        []
+      proxyType:
++        "gnosis safe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract RelayerV2 (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182) {
+    +++ description: None
+      upgradeability:
+-        {"type":"EIP1967 proxy","implementation":"0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0","admin":"0x38dE71124f7a447a01D67945a51eDcE9FF491251"}
+      implementations:
+-        ["0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"]
+      values.$admin:
++        "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
+      values.$implementation:
++        "0x7701C12D268847dB94bbF37A4C4af53Bb6bAF8B0"
+      proxyType:
++        "EIP1967 proxy"
+    }
+```
+
+```diff
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values.$immutable:
++        true
+    }
+```
+
+```diff
+    contract RelayerV2Radar (0xde19274c009A22921E3966a1Ec868cEba40A5DaC) {
+    +++ description: None
+      upgradeability:
+-        {"type":"EIP1967 proxy","implementation":"0x8363302080e711E0CAb978C081b9e69308d49808","admin":"0x38dE71124f7a447a01D67945a51eDcE9FF491251"}
+      implementations:
+-        ["0x8363302080e711E0CAb978C081b9e69308d49808"]
+      values.$admin:
++        "0x38dE71124f7a447a01D67945a51eDcE9FF491251"
+      values.$implementation:
++        "0x8363302080e711E0CAb978C081b9e69308d49808"
+      proxyType:
++        "EIP1967 proxy"
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      upgradeability:
+-        {"type":"immutable"}
+      values:
++        {"$immutable":true}
+    }
+```
+
 Generated with discovered.json: 0x87eaeae369ba3b1cc410a44f0cce5b34424f3cfa
 
 # Diff at Thu, 28 Mar 2024 12:03:36 GMT:

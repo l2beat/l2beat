@@ -2,7 +2,7 @@
   "name": "real",
   "chain": "ethereum",
   "blockNumber": 20177361,
-  "configHash": "0xeae5137c5dc041fed05dd5f940e33132f79c6732c109e778462087e2c24a39cd",
+  "configHash": "0xbb0b8a73029a722b0bb56e9231f731131f48b31292a92e42cf304119122592b1",
   "version": 9,
   "contracts": [
     {
@@ -577,7 +577,9 @@
     { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
     {
       "address": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8"]
+      }
     },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
     { "address": "0xF0b66c2d7Abb3CbbD26463a971BF62d6c4eaDE34" },
@@ -1551,5 +1553,11 @@
       "event BeaconUpgraded(address indexed beacon)",
       "event Upgraded(address indexed implementation)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704",
+    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

@@ -39,6 +39,8 @@ describe(shouldSkip.name, () => {
         abis: {},
         configHash: Hash256.random(),
         version: 123,
+        usedTemplates: {},
+        shapeFilesHash: Hash256.random(),
       }),
     })
 

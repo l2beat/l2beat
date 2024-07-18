@@ -123,7 +123,9 @@
     { "address": "0x4a11078a99b118BbFee78a5c187D98D264360433" },
     {
       "address": "0x4A164CA582D169f7caad471250991Dd861ddA981",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0x75231F58b43240C9718Dd58B4967c5114342a86c"]
+      }
     },
     { "address": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634" },
     { "address": "0xa40D5f56745a118D0906a34E69aeC8C0Db1cB8fA" },
@@ -358,5 +360,7 @@
       "function transferOwnership(address newOwner)",
       "function verifyMessage(bytes32 signedHash, bytes signaturesAndAddrs) view"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

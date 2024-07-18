@@ -22,7 +22,7 @@ import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
-const ALLOWED_SWITCHES = ['--dev', '--save-sources']
+const ALLOWED_SWITCHES = ['--dev', '--save-sources', '--refresh']
 
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
@@ -58,22 +58,44 @@ async function updateDiffHistoryFile() {
       : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
   const saveSources = process.argv.some((a) => a === '--save-sources')
-  const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
-    discoveryFromMainBranch,
-    projectName,
-    chain,
-    saveSources,
-  )
 
-  const diff = diffDiscovery(
-    prevDiscovery?.contracts ?? [],
-    curDiscovery.contracts,
-  )
+  let diff: DiscoveryDiff[] = []
+  let codeDiff
+  let configRelatedDiff
 
-  let configRelatedDiff = diffDiscovery(
-    discoveryFromMainBranch?.contracts ?? [],
-    prevDiscovery?.contracts ?? [],
-  )
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) > curDiscovery.blockNumber) {
+    throw new Error(
+      `Main branch discovery block number (${discoveryFromMainBranch?.blockNumber}) is higher than current discovery block number (${curDiscovery.blockNumber})`,
+    )
+  }
+
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
+    const rerun = await performDiscoveryOnPreviousBlock(
+      discoveryFromMainBranch,
+      projectName,
+      chain,
+      saveSources,
+    )
+    codeDiff = rerun.codeDiff
+
+    diff = diffDiscovery(
+      rerun.prevDiscovery?.contracts ?? [],
+      curDiscovery.contracts,
+    )
+    configRelatedDiff = diffDiscovery(
+      discoveryFromMainBranch?.contracts ?? [],
+      rerun.prevDiscovery?.contracts ?? [],
+    )
+  } else {
+    console.log(
+      'Discovery was run on the same block as main branch, skipping rerun.',
+    )
+    configRelatedDiff = diffDiscovery(
+      discoveryFromMainBranch?.contracts ?? [],
+      curDiscovery?.contracts ?? [],
+    )
+  }
+
   removeIgnoredFields(configRelatedDiff)
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
 
@@ -289,9 +311,15 @@ function generateDiffHistoryMarkdown(
     result.push(description)
   } else {
     result.push('')
-    result.push(
-      'Provide description of changes. This section will be preserved.',
-    )
+    if ((blockNumberFromMainBranchDiscovery ?? 0) !== curBlockNumber) {
+      result.push(
+        'Provide description of changes. This section will be preserved.',
+      )
+    } else {
+      result.push(
+        'Discovery rerun on the same block number with only config-related changes.',
+      )
+    }
     result.push('')
   }
 

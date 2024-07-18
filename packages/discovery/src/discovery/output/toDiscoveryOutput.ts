@@ -10,6 +10,7 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
+  shapeFilesHash: Hash256,
 ): DiscoveryOutput {
   return {
     name,
@@ -18,14 +19,34 @@ export function toDiscoveryOutput(
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
+    usedTemplates: collectUsedTemplatesWithHashes(results),
+    shapeFilesHash,
   }
+}
+
+export function collectUsedTemplatesWithHashes(
+  results: Analysis[],
+): Record<string, Hash256> {
+  const entries: [string, Hash256][] = results
+    .filter((a): a is AnalyzedContract => a.type === 'Contract')
+    .map((contract) => contract.extendedTemplate)
+    .filter((t) => t !== undefined)
+    .map((t) => [t.template, t.templateHash])
+  entries.sort((a, b) => a[0].localeCompare(b[0]))
+  return Object.fromEntries(entries)
 }
 
 export function processAnalysis(
   results: Analysis[],
 ): Omit<
   DiscoveryOutput,
-  'name' | 'blockNumber' | 'configHash' | 'version' | 'chain'
+  | 'name'
+  | 'blockNumber'
+  | 'configHash'
+  | 'version'
+  | 'chain'
+  | 'usedTemplates'
+  | 'shapeFilesHash'
 > {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
@@ -73,10 +94,12 @@ export function processAnalysis(
         address: x.address,
         descriptions: x.combinedMeta?.descriptions,
         roles: setToSortedArray(x.combinedMeta?.roles),
-        categories: x.combinedMeta?.categories,
-        types: x.combinedMeta?.types,
+        categories: setToSortedArray(x.combinedMeta?.categories),
+        types: setToSortedArray(x.combinedMeta?.types),
         severity: x.combinedMeta?.severity,
-        assignedPermissions: x.combinedMeta?.permissions,
+        assignedPermissions: objectWithSetsToArrays(
+          x.combinedMeta?.permissions,
+        ),
       })),
     abis,
   }
@@ -110,9 +133,7 @@ export function sortByKeys<T extends object>(obj: T): T {
   ) as T
 }
 
-function setToSortedArray(
-  value: Set<string> | undefined,
-): string[] | undefined {
+function setToSortedArray<T>(value: Set<T> | undefined): T[] | undefined {
   return value && Array.from(value).sort()
 }
 
@@ -122,7 +143,10 @@ function objectWithSetsToArrays<T>(
   if (obj === undefined) {
     return undefined
   }
-  return Object.fromEntries(
-    Object.entries(obj).map(([key, value]) => [key, Array.from(value).sort()]),
-  )
+  const asMap: [string, T[]][] = Object.entries(obj).map(([key, value]) => [
+    key,
+    Array.from(value).sort(),
+  ])
+  asMap.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+  return Object.fromEntries(asMap)
 }
