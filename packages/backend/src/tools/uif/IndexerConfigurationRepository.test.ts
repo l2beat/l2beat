@@ -118,7 +118,13 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
             currentHeight: null,
             minHeight: 120,
           }),
-          mock({ id: 'e'.repeat(12), indexerId: 'indexer-2' }),
+          mock({
+            id: 'e'.repeat(12),
+            indexerId: 'indexer-1',
+            currentHeight: null,
+            maxHeight: 1,
+          }),
+          mock({ id: 'f'.repeat(12), indexerId: 'indexer-2' }),
         ]
 
         await repository.addOrUpdateMany(records)
@@ -133,6 +139,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
           records[2],
           records[3],
           records[4],
+          records[5],
         ])
       },
     )

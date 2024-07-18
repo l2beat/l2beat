@@ -65,6 +65,12 @@ export class IndexerConfigurationRepository {
       .where('min_height', '<=', currentHeight)
       .where((eb) =>
         eb.or([
+          eb('max_height', 'is', null),
+          eb('max_height', '>=', currentHeight),
+        ]),
+      )
+      .where((eb) =>
+        eb.or([
           eb('current_height', 'is', null),
           eb('current_height', '<', currentHeight),
         ]),

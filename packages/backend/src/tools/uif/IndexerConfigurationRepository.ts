@@ -88,6 +88,11 @@ export class IndexerConfigurationRepository extends BaseRepository {
       .andWhere('min_height', '<=', currentHeight)
       .andWhere((builder) => {
         builder
+          .whereNull('max_height')
+          .orWhere('max_height', '>=', currentHeight)
+      })
+      .andWhere((builder) => {
+        builder
           .whereNull('current_height')
           .orWhere('current_height', '<', currentHeight)
       })
