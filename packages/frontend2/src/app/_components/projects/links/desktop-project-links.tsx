@@ -6,11 +6,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/app/_components/popover'
+import ChevronIcon from '~/icons/chevron.svg'
+import OutlinkIcon from '~/icons/outlink.svg'
+import { formatLink } from '~/utils/format-link'
 import { ProjectLinkIcon } from './project-link-icon'
 import { type ProjectLink } from './types'
-import OutlinkIcon from '~/icons/outlink.svg'
-import ChevronIcon from '~/icons/chevron.svg'
-import { formatLink } from '~/utils/format-link'
 
 interface Props {
   projectLinks: ProjectLink[]

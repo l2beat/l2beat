@@ -1,7 +1,7 @@
 import assert from 'assert'
 import { cn } from '~/utils/cn'
-import { type RosetteValue } from '../types'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
+import { type RosetteValue } from '../types'
 
 interface Props {
   values: RosetteValue[]

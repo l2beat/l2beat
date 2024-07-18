@@ -1,12 +1,12 @@
 import React from 'react'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { cn } from '~/utils/cn'
+import { sentimentToFillColor } from '~/utils/sentiment'
+import { UnderReviewBadge } from '../../badge/under-review-badge'
+import { SentimentText } from '../../sentiment-text'
 import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
 import { type RosetteValue } from '../types'
 import { PizzaRosetteIcon } from './pizza-rosette-icon'
-import { UnderReviewBadge } from '../../badge/under-review-badge'
-import { SentimentText } from '../../sentiment-text'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { sentimentToFillColor } from '~/utils/sentiment'
-import { cn } from '~/utils/cn'
 import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
 export interface PizzaRosetteCellProps {

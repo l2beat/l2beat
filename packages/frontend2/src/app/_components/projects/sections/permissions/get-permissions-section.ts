@@ -1,26 +1,26 @@
 import {
-  type ScalingProjectReference,
-  type ScalingProjectPermission,
   type Bridge,
   type DaLayer,
   type Layer2,
   type Layer3,
+  type ScalingProjectPermission,
+  type ScalingProjectReference,
 } from '@l2beat/config'
 import {
-  notUndefined,
   type ManuallyVerifiedContracts,
   type VerificationStatus,
+  notUndefined,
 } from '@l2beat/shared-pure'
-import {
-  type TechnologyContractAddress,
-  type TechnologyContract,
-} from './contract-entry'
-import { type ProjectDetailsPermissionsSection } from '../types'
-import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { concat } from 'lodash'
-import { type UsedInProject } from './used-in-project'
+import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
+import { type ProjectDetailsPermissionsSection } from '../types'
+import {
+  type TechnologyContract,
+  type TechnologyContractAddress,
+} from './contract-entry'
 import { getUsedInProjects } from './get-used-in-projects'
+import { type UsedInProject } from './used-in-project'
 
 type ProjectParams = {
   id: string

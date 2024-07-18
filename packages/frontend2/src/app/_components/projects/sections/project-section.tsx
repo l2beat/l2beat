@@ -1,8 +1,8 @@
 import React, { type ReactNode } from 'react'
 
-import { type ProjectSectionId } from './types'
 import { cn } from '~/utils/cn'
 import { UnderReviewCallout } from '../under-review-callout'
+import { type ProjectSectionId } from './types'
 
 interface Props {
   title: string

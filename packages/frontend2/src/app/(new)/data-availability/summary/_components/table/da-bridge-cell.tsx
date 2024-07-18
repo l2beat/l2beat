@@ -3,8 +3,8 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { type DaSummaryEntryBridge } from '~/server/features/data-availability/utils/get-da-bridge'
 import ShieldIcon from '~/icons/shield.svg'
+import { type DaSummaryEntryBridge } from '~/server/features/data-availability/utils/get-da-bridge'
 
 export function DaBridgeCell({ daBridge }: { daBridge: DaSummaryEntryBridge }) {
   if (!daBridge.warning && !daBridge.redWarning) {

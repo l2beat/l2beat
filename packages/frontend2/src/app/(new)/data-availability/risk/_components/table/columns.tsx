@@ -1,11 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
+import Image from 'next/image'
+import { IndexCell } from '~/app/_components/table/cells/index-cell'
+import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
+import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
-import { IndexCell } from '~/app/_components/table/cells/index-cell'
-import Image from 'next/image'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 import { DaBridgeCell } from '../../../summary/_components/table/da-bridge-cell'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()

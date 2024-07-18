@@ -1,18 +1,18 @@
 import partition from 'lodash/partition'
 import React from 'react'
 import {
-  type TechnologyContract,
   ContractEntry,
+  type TechnologyContract,
 } from '../permissions/contract-entry'
 import {
-  type TechnologyReference,
   ReferenceList,
+  type TechnologyReference,
 } from '../permissions/reference-list'
 import { ProjectSection } from '../project-section'
+import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
-import { type TechnologyRisk, RiskList } from '../risk-list'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId

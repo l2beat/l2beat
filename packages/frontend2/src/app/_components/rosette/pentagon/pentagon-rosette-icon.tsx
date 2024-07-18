@@ -1,11 +1,11 @@
-import { useOnClickOutside } from '~/hooks/use-on-click-outside'
+import { assert } from '@l2beat/shared-pure'
 import { useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
-import { assert } from '@l2beat/shared-pure'
-import { type RosetteValue } from '../types'
-import { sentimentToFillColor } from '~/utils/sentiment'
+import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
+import { sentimentToFillColor } from '~/utils/sentiment'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
+import { type RosetteValue } from '../types'
 
 interface Props {
   values: RosetteValue[]

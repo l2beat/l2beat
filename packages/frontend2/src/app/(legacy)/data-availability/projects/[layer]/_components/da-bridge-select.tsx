@@ -6,8 +6,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '~/app/_components/popover'
-import ChevronIcon from '~/icons/chevron.svg'
 import CheckIcon from '~/icons/check.svg'
+import ChevronIcon from '~/icons/chevron.svg'
 import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 interface Props {
   project: DaProjectEntry

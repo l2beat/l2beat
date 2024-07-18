@@ -1,17 +1,17 @@
+import { UnixTime, pluralize } from '@l2beat/shared-pure'
+import round from 'lodash/round'
 import { type ReactNode } from 'react'
+import { UsedIn } from '~/app/(new)/data-availability/summary/_components/table/used-in'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { cn } from '~/utils/cn'
-import { formatCurrency } from '~/utils/format'
 import InfoIcon from '~/icons/info.svg'
 import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
-import { UsedIn } from '~/app/(new)/data-availability/summary/_components/table/used-in'
-import { pluralize, UnixTime } from '@l2beat/shared-pure'
-import round from 'lodash/round'
+import { cn } from '~/utils/cn'
+import { formatCurrency } from '~/utils/format'
 
 interface Props {
   project: DaProjectEntry

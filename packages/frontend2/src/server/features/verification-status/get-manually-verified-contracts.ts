@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import {
   bridges,
   getChainNames,
@@ -6,8 +8,6 @@ import {
   parseManuallyVerifiedContracts,
 } from '@l2beat/config'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
-import { existsSync, readFileSync } from 'fs'
-import path from 'path'
 
 export function getManuallyVerifiedContracts(): ManuallyVerifiedContracts {
   const chainNames = getChainNames([...layer2s, ...layer3s, ...bridges])

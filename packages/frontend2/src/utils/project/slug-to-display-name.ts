@@ -1,4 +1,4 @@
-import { layer2s, layer3s, bridges } from '@l2beat/config'
+import { bridges, layer2s, layer3s } from '@l2beat/config'
 
 export function slugToDisplayName(slug: string): string {
   if (slug === 'ethereum') {

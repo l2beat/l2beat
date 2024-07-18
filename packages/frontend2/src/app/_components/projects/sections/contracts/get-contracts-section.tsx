@@ -18,18 +18,18 @@ import {
   type ManuallyVerifiedContracts,
   type VerificationStatus,
 } from '@l2beat/shared-pure'
-import { type ContractsSectionProps } from './contracts-section'
+import { concat } from 'lodash'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
+import { languageJoin } from '~/utils/language-join'
+import { getDiagramImage } from '~/utils/project/get-diagram-image'
+import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
 } from '../permissions/contract-entry'
-import { languageJoin } from '~/utils/language-join'
-import { getDiagramImage } from '~/utils/project/get-diagram-image'
-import { type TechnologyReference } from '../permissions/reference-list'
-import { concat } from 'lodash'
-import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import { getUsedInProjects } from '../permissions/get-used-in-projects'
+import { type TechnologyReference } from '../permissions/reference-list'
+import { type ContractsSectionProps } from './contracts-section'
 
 type ProjectParams = {
   id: string

@@ -1,11 +1,11 @@
 import assert from 'assert'
+import { useRef } from 'react'
+import { useEventListener } from '~/hooks/use-event-listener'
+import { useOnClickOutside } from '~/hooks/use-on-click-outside'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { type RosetteValue } from '../types'
-import { useRef } from 'react'
-import { useOnClickOutside } from '~/hooks/use-on-click-outside'
-import { useEventListener } from '~/hooks/use-event-listener'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
+import { type RosetteValue } from '../types'
 
 interface Props {
   values: RosetteValue[]

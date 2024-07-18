@@ -1,14 +1,15 @@
 'use client'
-import CloseIcon from '~/icons/close.svg'
+import { assert } from '@l2beat/shared-pure'
+import { type Dispatch, type SetStateAction, useState } from 'react'
 import {
   Drawer,
   DrawerContent,
-  DrawerTrigger,
   DrawerHeader,
   DrawerTitle,
+  DrawerTrigger,
 } from '~/app/_components/drawer'
-import { type Dispatch, type SetStateAction, useState } from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
+import CloseIcon from '~/icons/close.svg'
 import ExpandIcon from '~/icons/expand.svg'
 import {
   Select,
@@ -17,7 +18,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from '../../select'
-import { assert } from '@l2beat/shared-pure'
 
 const UNDEFINED_VALUE = 'undefined-value'
 

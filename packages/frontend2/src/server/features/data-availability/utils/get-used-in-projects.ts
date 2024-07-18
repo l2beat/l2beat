@@ -1,5 +1,5 @@
-import { type DaBridge, layer2s, layer3s } from '@l2beat/config'
 import assert from 'assert'
+import { type DaBridge, layer2s, layer3s } from '@l2beat/config'
 
 export interface UsedInProject {
   name: string

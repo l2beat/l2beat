@@ -1,13 +1,13 @@
-import { cn } from '~/utils/cn'
-import { type ProjectLink } from './types'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '~/app/_components/accordion'
-import { CustomLink } from '../../custom-link'
+import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
+import { CustomLink } from '../../custom-link'
+import { type ProjectLink } from './types'
 
 export function MobileProjectLinks({
   projectLinks,

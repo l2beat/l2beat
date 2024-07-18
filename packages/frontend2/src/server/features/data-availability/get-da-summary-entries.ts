@@ -1,14 +1,14 @@
 import { daLayers } from '@l2beat/config'
 import { toDaBridge } from './utils/get-da-bridge'
 import { getUniqueProjectsInUse } from './utils/get-da-projects'
+import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
 } from './utils/get-da-projects-tvl'
 import { getDaRisks } from './utils/get-da-risks'
-import { kindToType } from './utils/kind-to-layer-type'
-import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
 import { getUsedInProjects } from './utils/get-used-in-projects'
+import { kindToType } from './utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()

@@ -1,12 +1,12 @@
-import { ProjectHeader } from '~/app/_components/projects/project-header'
-import { DaBridgeSelect } from './da-bridge-select'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
-import { DaHeaderDetails } from './da-header-details'
-import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
-import { AboutSection } from '~/app/_components/projects/sections/about-section'
 import { MobileProjectLinks } from '~/app/_components/projects/links/mobile-project-links'
+import { ProjectHeader } from '~/app/_components/projects/project-header'
+import { AboutSection } from '~/app/_components/projects/sections/about-section'
 import { BigPentagonRosette } from '~/app/_components/rosette/pentagon/big-pentagon-rosette'
+import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
+import { DaBridgeSelect } from './da-bridge-select'
+import { DaHeaderDetails } from './da-header-details'
 
 interface Props {
   project: DaProjectEntry

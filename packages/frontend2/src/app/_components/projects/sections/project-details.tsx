@@ -1,11 +1,11 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { type ProjectDetailsSection } from './types'
-import { RiskAnalysisSection } from './risk-analysis-section'
+import { ContractsSection } from './contracts/contracts-section'
 import { MarkdownSection } from './markdown-section'
 import { PermissionsSection } from './permissions/permissions-section'
-import { ContractsSection } from './contracts/contracts-section'
+import { RiskAnalysisSection } from './risk-analysis-section'
+import { type ProjectDetailsSection } from './types'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]

@@ -1,17 +1,17 @@
 'use client'
-import { cn } from '~/utils/cn'
-import { type RosetteValue } from '../types'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
-import { SentimentText } from '../../sentiment-text'
-import { WarningBar } from '../../warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { PizzaRosetteIcon } from './pizza-rosette-icon'
+import { cn } from '~/utils/cn'
 import { UpcomingBadge } from '../../badge/upcoming-badge'
-import { PizzaRosetteLabels } from './pizza-rosette-labels'
+import { SentimentText } from '../../sentiment-text'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
+import { WarningBar } from '../../warning-bar'
 import {
   RosetteTooltipContextProvider,
   useRosetteTooltipContext,
 } from '../rosette-tooltip-context'
+import { type RosetteValue } from '../types'
+import { PizzaRosetteIcon } from './pizza-rosette-icon'
+import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
 export interface BigPizzaRosetteProps {
   values: RosetteValue[]

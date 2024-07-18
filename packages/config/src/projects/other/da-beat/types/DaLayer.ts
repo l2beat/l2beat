@@ -6,11 +6,11 @@ import {
   OnChainDaBridge,
 } from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
+import { DaDisplay } from './DaDisplay'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
-import { DaDisplay } from './DaDisplay'
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 

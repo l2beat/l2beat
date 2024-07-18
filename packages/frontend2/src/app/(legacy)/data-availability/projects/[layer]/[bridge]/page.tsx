@@ -1,10 +1,10 @@
 import { daLayers } from '@l2beat/config/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
+import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
+import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
+import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { DaHeader } from '../_components/da-header'
-import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
-import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
-import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
 
 interface Props {
   params: {

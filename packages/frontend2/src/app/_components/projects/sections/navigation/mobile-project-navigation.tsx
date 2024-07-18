@@ -1,12 +1,12 @@
 'use client'
 
+import debounce from 'lodash/debounce'
 import React, { useEffect, useMemo, useRef } from 'react'
-import { type ProjectDetailsSection } from '../types'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { useCurrentSection } from '~/hooks/use-current-section'
 import { cn } from '~/utils/cn'
-import debounce from 'lodash/debounce'
 import { scrollHorizontallyToItem } from '~/utils/scroll-to-item'
+import { type ProjectDetailsSection } from '../types'
 
 interface Props {
   sections: ProjectDetailsSection[]

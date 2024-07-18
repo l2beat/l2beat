@@ -1,11 +1,11 @@
+import { type ProjectId } from '@l2beat/shared-pure'
+import Image from 'next/image'
+import Link from 'next/link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import Link from 'next/link'
-import Image from 'next/image'
-import { type ProjectId } from '@l2beat/shared-pure'
 
 export interface UsedInProject {
   id: ProjectId

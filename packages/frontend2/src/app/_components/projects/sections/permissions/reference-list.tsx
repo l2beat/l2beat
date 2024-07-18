@@ -1,7 +1,7 @@
 import React from 'react'
 
-import { cn } from '../../../../../utils/cn'
 import { CustomLink } from '~/app/_components/custom-link'
+import { cn } from '../../../../../utils/cn'
 
 export interface ReferenceListProps {
   references: TechnologyReference[]
