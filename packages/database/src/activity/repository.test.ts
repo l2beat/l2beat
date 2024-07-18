@@ -10,60 +10,34 @@ describeDatabase(ActivityRepository.name, (db) => {
 
   const START = UnixTime.now()
 
-  const DATA: ActivityRecord[] = [
-    {
-      projectId: ProjectId('project-a'),
-      timestamp: START,
-      count: 1,
-    },
-    {
-      projectId: ProjectId('project-a'),
-      timestamp: START.add(1, 'days'),
-      count: 2,
-    },
-    {
-      projectId: ProjectId('project-a'),
-      timestamp: START.add(2, 'days'),
-      count: 4,
-    },
-    {
-      projectId: ProjectId('project-a'),
-      timestamp: START.add(3, 'days'),
-      count: 2,
-    },
-  ]
-
-  beforeEach(async function () {
-    this.timeout(10000)
-    await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
-  })
-
   describe(ActivityRepository.prototype.addOrUpdateMany.name, () => {
-    it('adds new row', async () => {
-      const newRecord: ActivityRecord = {
-        projectId: ProjectId('project-c'),
-        timestamp: UnixTime.fromDate(new Date('2021-01-01T03:00:00Z')),
-        count: 1,
-      }
-
-      await repository.addOrUpdateMany([newRecord])
+    it('adds new rows', async () => {
+      await repository.addOrUpdateMany([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+        count('a', START.add(2, 'days'), 4),
+      ])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, newRecord])
+      expect(results).toEqualUnsorted([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+        count('a', START.add(2, 'days'), 4),
+      ])
     })
 
     it('merges on conflict', async () => {
-      const mockRecord: ActivityRecord = {
-        projectId: ProjectId('project-a'),
-        timestamp: START,
-        count: 3,
-      }
-
-      await repository.addOrUpdateMany([mockRecord])
+      await repository.addOrUpdateMany([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+      ])
+      await repository.addOrUpdateMany([count('a', START, 3)])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([mockRecord, ...DATA.slice(1)])
+      expect(results).toEqualUnsorted([
+        count('a', START, 3),
+        count('a', START.add(1, 'days'), 2),
+      ])
     })
   })
 
@@ -79,22 +53,59 @@ describeDatabase(ActivityRepository.name, (db) => {
 
   describe(ActivityRepository.prototype.deleteAfter.name, () => {
     it('should delete all rows after a given timestamp', async () => {
+      await repository.addOrUpdateMany([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+        count('a', START.add(2, 'days'), 4),
+        count('a', START.add(3, 'days'), 2),
+      ])
+
       await repository.deleteAfter(START.add(1, 'days'))
 
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(DATA.slice(0, 2))
+      expect(results).toEqualUnsorted([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+      ])
     })
   })
 
   describe(ActivityRepository.prototype.getByProjectAndTimeRange.name, () => {
     it('should return all rows in a given time range', async () => {
+      await repository.addOrUpdateMany([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+        count('a', START.add(2, 'days'), 4),
+        count('a', START.add(3, 'days'), 2),
+      ])
+
       const results = await repository.getByProjectAndTimeRange(
-        ProjectId('project-a'),
+        ProjectId('a'),
         [START, START.add(2, 'days')],
       )
 
-      expect(results).toEqual(DATA.slice(0, 3))
+      expect(results).toEqual([
+        count('a', START, 1),
+        count('a', START.add(1, 'days'), 2),
+        count('a', START.add(2, 'days'), 4),
+      ])
     })
   })
+
+  afterEach(async function () {
+    await repository.deleteAll()
+  })
 })
+
+function count(
+  projectId: string,
+  timestamp: UnixTime,
+  count: number,
+): ActivityRecord {
+  return {
+    projectId: ProjectId(projectId),
+    timestamp,
+    count,
+  }
+}
