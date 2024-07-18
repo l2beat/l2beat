@@ -1,7 +1,7 @@
 import { ProjectId } from '@l2beat/shared-pure'
 
-export type DaProjectReference = {
+export type UsedInProject = {
   id: ProjectId
-  display: string
+  name: string
   slug: string
 }

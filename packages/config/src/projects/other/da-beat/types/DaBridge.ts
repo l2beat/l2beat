@@ -3,7 +3,7 @@ import { ScalingProjectContracts } from '../../../../common'
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
-import { DaProjectReference } from './DaProjectReference'
+import { UsedInProject } from './UsedInProject'
 
 export type DaBridgeKind = (typeof DaBridgeKind)[keyof typeof DaBridgeKind]
 
@@ -116,9 +116,9 @@ type CommonDaBridge = {
   }
 
   /**
-   * List of projects' references given bridge is being used in
+   * List of projects given bridge is being used in
    */
-  usedIn: DaProjectReference[]
+  usedIn: UsedInProject[]
 
   /**
    * Risks related to given data availability bridge

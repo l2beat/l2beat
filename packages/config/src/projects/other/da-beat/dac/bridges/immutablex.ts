@@ -6,7 +6,7 @@ import {
   DaExitWindowRisk,
 } from '../../types'
 import { DaBridge, DaBridgeKind } from '../../types/DaBridge'
-import { toDaProjectReference } from '../../utils/to-da-project-reference'
+import { toUsedInProject } from '../../utils/to-used-in-project'
 
 /**
  * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
@@ -22,7 +22,7 @@ export const immutableXDac = {
   chain: ChainId.ETHEREUM,
   requiredMembers: 5,
   totalMembers: 7,
-  usedIn: toDaProjectReference([immutablex]),
+  usedIn: toUsedInProject([immutablex]),
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,
     accessibility: DaAccessibilityRisk.NotEnshrined,

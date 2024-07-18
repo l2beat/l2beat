@@ -8,8 +8,8 @@ import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
-import { DaProjectReference } from './DaProjectReference'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import { UsedInProject } from './UsedInProject'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',
@@ -77,9 +77,9 @@ export type CommonDaLayer = {
   }
 
   /**
-   * List of projects' references given da layer is being used in
+   * List of projects given da layer is being used in
    */
-  usedIn: DaProjectReference[]
+  usedIn: UsedInProject[]
 
   /**
    * Risks associated with the data availability layer.

@@ -27,7 +27,7 @@ export async function getDaSummaryEntries() {
         tvs,
         economicSecurity: economicSecurityData,
         layerType: DaLayerKindDisplay[daLayer.kind],
-        usedBy: bridge.usedIn.map((project) => project.display),
+        usedBy: bridge.usedIn.map((project) => project.name),
       }
     }),
   )

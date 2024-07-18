@@ -1,6 +1,6 @@
 import { Layer2, layer2s } from '../../../layer2s'
 import { Layer3, layer3s } from '../../../layer3s'
-import { toDaProjectReference } from './to-da-project-reference'
+import { toUsedInProject } from './to-used-in-project'
 
 /**
  * Helper function to select the layer2s and layer3s that use a specific layer and bridge
@@ -17,7 +17,7 @@ export function linkByDA(where: {
       : where.layer(dataAvailability?.layer.value)
   }
 
-  return toDaProjectReference(
+  return toUsedInProject(
     [...layer2s, ...layer3s]
       .filter(filterFn)
       .filter((project) => !project.isArchived),
