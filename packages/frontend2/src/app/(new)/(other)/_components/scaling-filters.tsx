@@ -4,6 +4,7 @@ import React from 'react'
 import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
@@ -12,6 +13,7 @@ import {
 type ScalingFiltersEntry =
   | ScalingSummaryLayer2sEntry
   | ScalingSummaryLayer3sEntry
+  | ScalingRiskEntry
 
 export interface ScalingFiltersState {
   rollupsOnly: boolean | undefined
@@ -47,7 +49,7 @@ export function ScalingFilters({ items, state, setState }: Props) {
     compact(
       items.map((item) => {
         if ('stage' in item) {
-          return item.stage.stage
+          return item.stage?.stage
         }
       }),
     ),
@@ -122,14 +124,16 @@ export function ScalingFilters({ items, state, setState }: Props) {
             setState((prev) => ({ ...prev, purpose: value }))
           }
         />
-        <TableFilter
-          title="Host Chain"
-          options={hostChainOptions}
-          value={state.hostChain}
-          onValueChange={(value) =>
-            setState((prev) => ({ ...prev, hostChain: value }))
-          }
-        />
+        {hostChainOptions.length > 1 && (
+          <TableFilter
+            title="Host Chain"
+            options={hostChainOptions}
+            value={state.hostChain}
+            onValueChange={(value) =>
+              setState((prev) => ({ ...prev, hostChain: value }))
+            }
+          />
+        )}
       </div>
     </OverflowWrapper>
   )
