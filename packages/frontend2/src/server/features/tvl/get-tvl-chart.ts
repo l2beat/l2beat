@@ -4,6 +4,7 @@ import { getEthPrices } from './get-eth-prices'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range-utils'
+import { sumValuesPerSource } from './sum-values-per-source'
 
 export async function getTvlChart({
   range,
@@ -53,23 +54,4 @@ export async function getTvlChart({
       ethPrices[+timestamp]!,
     ] as const
   })
-}
-
-export function sumValuesPerSource(
-  values: ValueRecord[],
-  forTotal?: boolean,
-): {
-  external: bigint
-  canonical: bigint
-  native: bigint
-} {
-  return values.reduce(
-    (acc, curr) => {
-      acc.canonical += forTotal ? curr.canonicalForTotal : curr.canonical
-      acc.external += forTotal ? curr.externalForTotal : curr.external
-      acc.native += forTotal ? curr.nativeForTotal : curr.native
-      return acc
-    },
-    { canonical: 0n, external: 0n, native: 0n },
-  )
 }

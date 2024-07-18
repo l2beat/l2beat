@@ -22,10 +22,10 @@ export class BlockTransactionCountRepository {
       .insertInto('activity.block')
       .values(toRow(record))
       .onConflict((cb) =>
-        cb.columns(['project_id', 'block_number']).doUpdateSet({
-          unix_timestamp: record.timestamp.toDate(),
-          count: record.count,
-        }),
+        cb.columns(['project_id', 'block_number']).doUpdateSet((eb) => ({
+          unix_timestamp: eb.ref('excluded.unix_timestamp'),
+          count: eb.ref('excluded.count'),
+        })),
       )
       .execute()
 

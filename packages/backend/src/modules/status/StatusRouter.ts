@@ -3,17 +3,12 @@ import { EscrowEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { z } from 'zod'
 
+import { Database } from '@l2beat/database'
 import { withTypedContext } from '../../api/types'
 import { Config } from '../../config'
-import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { renderStatusPagesLinksPage } from './StatusPagesLinksPage'
 
-export function createStatusRouter(
-  config: Config,
-  indexerStateRepository: IndexerStateRepository,
-  indexerConfigurations: IndexerConfigurationRepository,
-) {
+export function createStatusRouter(config: Config, db: Database) {
   const router = new Router()
 
   router.get(
@@ -26,10 +21,10 @@ export function createStatusRouter(
       }),
       async (ctx) => {
         const configurations = ctx.query.indexer
-          ? await indexerConfigurations.getSavedConfigurations(
+          ? await db.indexerConfiguration.getSavedConfigurations(
               ctx.query.indexer,
             )
-          : await indexerConfigurations.getAll()
+          : await db.indexerConfiguration.getAll()
 
         ctx.body = {
           configurations: configurations.map((c) => ({
@@ -45,7 +40,7 @@ export function createStatusRouter(
   )
 
   router.get('/status/indexers', async (ctx) => {
-    const indexers = await indexerStateRepository.getAll()
+    const indexers = await db.indexerState.getAll()
 
     ctx.body = {
       ...Object.fromEntries(

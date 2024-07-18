@@ -80,7 +80,7 @@ export function createDatabase(config?: PoolConfig) {
     sequenceProcessor: new SequenceProcessorRepository(db),
     tvlCleaner: new TvlCleanerRepository(db),
     updateMonitor: new UpdateMonitorRepository(db),
-    updateNotifierRepository: new UpdateNotifierRepository(db),
+    updateNotifier: new UpdateNotifierRepository(db),
     value: new ValueRepository(db),
     verifierStatus: new VerifierStatusRepository(db),
 

@@ -1,14 +1,56 @@
-Generated with discovered.json: 0x24b65d8a4d4f4706fc09ca4c06d96818578029bd
+Generated with discovered.json: 0x90fba44cf4829e7a1da58c1599313d5a692e456f
 
-# Diff at Wed, 17 Jul 2024 20:33:46 GMT:
+# Diff at Thu, 18 Jul 2024 08:28:17 GMT:
 
-- author: Adrian Adamiak (<adrian@adamiak.net>)
-- comparing to: main@97f0849e4cfff8abf019db26fe41212f50a733ed block: 20211873
-- current block number: 20211873
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14a8b2e13da16d68d776511f98207e5360accba3 block: 20211873
+- current block number: 20332210
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+New plugs are added. Some new vaults were discovered and are added to the socket.ts. (Lyra and Kinto projects already have these escrows)
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.68:
++        "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.67:
++        "0x4a43eD818411585fEAaf667a2D3E2605962084e0"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.66:
++        "0x6B3614474eE19FA9A2d6D2079a2D73c04E567310"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.65:
++        "0x54bd887d31A5119Bbc91426eD6289b8ACD2b7349"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.64:
++        "0xBF3233Ef07B9552578987e2A2d25F760fBf192e5"
+    }
+```
+
+```diff
+    contract sUSDe Vault Lyra (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      values.owner:
+-        "0xA82994cc5e9D94FED2916f762e03245FcBE79f23"
++        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+    }
+```
 
 ## Config/verification related changes
 
@@ -28,6 +70,18 @@ discovery. Values are for block 20211873 (main branch discovery), not current.
       unverified:
 +        true
     }
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Lyra (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf)
+    +++ description: None
 ```
 
 Generated with discovered.json: 0x77e73d2314cf2a0a4b7229471195a61da7d0de3c

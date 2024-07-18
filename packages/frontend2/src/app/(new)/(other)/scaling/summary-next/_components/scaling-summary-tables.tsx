@@ -16,7 +16,10 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
-import { ScalingFilters, type ScalingFiltersState } from './scaling-filters'
+import {
+  ScalingFilters,
+  type ScalingFiltersState,
+} from '../../../_components/scaling-filters'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'

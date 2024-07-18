@@ -94,7 +94,7 @@ describe(VerifiersStatusRefresher.name, () => {
       })
 
       const refresher = createVerifierStatusRefresher({
-        database: mockDatabase({
+        db: mockDatabase({
           verifierStatus: verifierStatusRepositoryMock,
         }),
         verifiersListProvider: mockFn(
@@ -144,7 +144,7 @@ function createVerifierStatusRefresher(
   deps?: Partial<VerifiersStatusRefresherDeps>,
 ) {
   return new VerifiersStatusRefresher({
-    database: mockDatabase(),
+    db: mockDatabase(),
     peripherals: mockObject<Peripherals>(),
     clock: mockObject<Clock>(),
     logger: Logger.SILENT,

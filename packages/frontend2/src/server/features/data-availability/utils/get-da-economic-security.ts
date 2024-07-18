@@ -66,5 +66,5 @@ const getCachedEconomicSecurity = cache(
     return keyBy(compact(arr), 'id')
   },
   ['daEconomicSecurity'],
-  { revalidate: 60 * 60 },
+  { revalidate: 60 * 10 },
 )

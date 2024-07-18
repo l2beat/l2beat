@@ -1,5 +1,4 @@
-import { type ProjectId } from '@l2beat/shared-pure'
-import { type TvlResponse } from '../get-tvl'
+import { ProjectId } from '@l2beat/shared-pure'
 
 const useTvlFromMap: Record<string, string> = {
   astarzkevm: 'polygonzkevm',
@@ -8,7 +7,7 @@ const useTvlFromMap: Record<string, string> = {
 
 export function orderByTvl<
   T extends { id: ProjectId; isArchived?: boolean; isUpcoming?: boolean },
->(projects: T[], tvlResponse: TvlResponse['projects']): T[] {
+>(projects: T[], tvls: Record<ProjectId, number>): T[] {
   const active = projects.filter(
     (project) => !project.isArchived && !project.isUpcoming,
   )
@@ -16,8 +15,7 @@ export function orderByTvl<
   const upcoming = projects.filter((project) => project.isUpcoming)
 
   const getTvl = (project: T) => {
-    const tvl =
-      tvlResponse[project.id.toString()]?.charts.hourly.data.at(-1)?.[1]
+    const tvl = tvls[project.id]
 
     if (tvl) {
       return tvl ?? 0
@@ -25,8 +23,7 @@ export function orderByTvl<
 
     const useTvlFrom = useTvlFromMap[project.id.toString()]
     if (!useTvlFrom) return 0
-    const useTvlFromValue =
-      tvlResponse[useTvlFrom]?.charts.hourly.data.at(-1)?.[1]
+    const useTvlFromValue = tvls[ProjectId(useTvlFrom)]
     return useTvlFromValue ? useTvlFromValue - 1 : 0
   }
 
