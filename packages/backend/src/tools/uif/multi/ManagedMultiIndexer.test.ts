@@ -17,7 +17,6 @@ import {
   Configuration,
   RemovalConfiguration,
   SavedConfiguration,
-  UpdateConfiguration,
 } from './types'
 
 describe(ManagedMultiIndexer.name, () => {
@@ -194,42 +193,34 @@ describe(ManagedMultiIndexer.name, () => {
         1,
         100,
         199,
-        [update('a', 100, 300, false), update('d', 100, null, true)],
+        [actual('a', 100, 300), actual('d', 100, null)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         2,
         200,
         300,
-        [
-          update('a', 100, 300, false),
-          update('b', 200, 500, false),
-          update('d', 100, null, true),
-        ],
+        [actual('a', 100, 300), actual('b', 200, 500), actual('d', 100, null)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         3,
         301,
         399,
-        [update('b', 200, 500, false), update('d', 100, null, true)],
+        [actual('b', 200, 500), actual('d', 100, null)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         4,
         400,
         500,
-        [
-          update('b', 200, 500, false),
-          update('c', 400, null, false),
-          update('d', 100, null, true),
-        ],
+        [actual('b', 200, 500), actual('c', 400, null), actual('d', 100, null)],
         mockDbMiddleware,
       )
       expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
         551,
         600,
-        [update('c', 400, null, false), update('d', 100, null, false)],
+        [actual('c', 400, null), actual('d', 100, null)],
         mockDbMiddleware,
       )
 
@@ -358,15 +349,6 @@ function savedWithoutProperties(
     maxHeight,
     currentHeight,
   }
-}
-
-function update(
-  id: string,
-  minHeight: number,
-  maxHeight: number | null,
-  hasData: boolean,
-): UpdateConfiguration<null> {
-  return { id: id.repeat(12), properties: null, minHeight, maxHeight, hasData }
 }
 
 function removal(id: string, from: number, to: number): RemovalConfiguration {

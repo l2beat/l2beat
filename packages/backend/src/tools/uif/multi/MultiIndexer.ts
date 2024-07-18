@@ -9,7 +9,6 @@ import {
   ConfigurationRange,
   RemovalConfiguration,
   SavedConfiguration,
-  UpdateConfiguration,
 } from './types'
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
@@ -71,7 +70,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<T>[],
+    configurations: Configuration<T>[],
     dbMiddleware: DatabaseMiddleware,
   ): Promise<{
     safeHeight: number
@@ -140,12 +139,18 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
   async update(from: number, to: number): Promise<number> {
     const range = findRange(this.ranges, from)
-    if (range.configurations.length === 0) {
+    const configurationsInRange = range.configurations
+
+    if (configurationsInRange.length === 0) {
       return Math.min(range.to, to)
     }
 
-    const { configurationsInRange, minCurrentHeight } =
-      getConfigurationsInRange(range, this.saved, from)
+    const minCurrentHeight = getMinCurrentHeight(
+      configurationsInRange,
+      this.saved,
+      from,
+    )
+
     const adjustedTo = Math.min(range.to, to, minCurrentHeight)
 
     this.logger.info('Calling multiUpdate', {
@@ -208,29 +213,24 @@ function findRange<T>(
   return range
 }
 
-function getConfigurationsInRange<T>(
-  range: ConfigurationRange<T>,
+// TODO: rename
+function getMinCurrentHeight<T>(
+  configurations: Configuration<T>[],
   savedConfigurations: Map<string, SavedConfiguration<T>>,
   currentHeight: number,
-): {
-  configurationsInRange: UpdateConfiguration<T>[]
-  minCurrentHeight: number
-} {
+): number {
   let minCurrentHeight = Infinity
-  const configurationsInRange = range.configurations.map(
-    (configuration): UpdateConfiguration<T> => {
-      const saved = savedConfigurations.get(configuration.id)
-      if (
-        saved &&
-        saved.currentHeight !== null &&
-        saved.currentHeight > currentHeight
-      ) {
-        minCurrentHeight = Math.min(minCurrentHeight, saved.currentHeight)
-        return { ...configuration, hasData: true }
-      } else {
-        return { ...configuration, hasData: false }
-      }
-    },
-  )
-  return { configurationsInRange, minCurrentHeight }
+
+  configurations.forEach((configuration) => {
+    const saved = savedConfigurations.get(configuration.id)
+    if (
+      saved &&
+      saved.currentHeight !== null &&
+      saved.currentHeight > currentHeight
+    ) {
+      minCurrentHeight = Math.min(minCurrentHeight, saved.currentHeight)
+    }
+  })
+
+  return minCurrentHeight
 }

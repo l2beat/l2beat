@@ -10,8 +10,8 @@ import {
   ManagedMultiIndexerOptions,
 } from '../../tools/uif/multi/ManagedMultiIndexer'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
@@ -35,35 +35,13 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<TrackedTxConfigEntry>[],
+    configurations: Configuration<TrackedTxConfigEntry>[],
     dbMiddleware: DatabaseMiddleware,
   ) {
-    const configurationsToSync = configurations.filter((c) => !c.hasData)
-
-    if (configurationsToSync.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with data', {
-        skippedConfigurations:
-          configurations.length - configurationsToSync.length,
-        configurationsToSync: configurationsToSync.length,
-        from,
-        to,
-      })
-    }
-
-    if (configurationsToSync.length === 0) {
-      this.logger.info('No configurations to sync', {
-        from,
-        to,
-      })
-      return {
-        safeHeight: to,
-        updatedConfigurations: [],
-      }
-    }
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
     const txs = await this.$.trackedTxsClient.getData(
-      configurationsToSync,
+      configurations,
       unixFrom,
       unixTo,
     )
@@ -76,13 +54,13 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       this.logger.info('Saved txs into DB', {
         from,
         to: unixTo.toNumber(),
-        configurationsToSync: configurationsToSync.length,
+        configurationsToSync: configurations.length,
       })
     })
 
     return {
       safeHeight: unixTo.toNumber(),
-      updatedConfigurations: configurationsToSync,
+      updatedConfigurations: configurations,
     }
   }
 
