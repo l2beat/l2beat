@@ -28,7 +28,7 @@ const getCachedVerificationStatus = cache(
     return VerificationStatus.parse(data)
   },
   ['verificationStatus', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 60 * 60 },
+  { revalidate: false },
 )
 
 function getProjectVerificationStatus(): unknown {
