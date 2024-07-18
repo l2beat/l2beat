@@ -1,4 +1,4 @@
-import { daLayers } from '@l2beat/config/src/projects/other/da-beat/index'
+import { daLayers } from '@l2beat/config/build/src/projects/other/da-beat/index'
 import { notFound } from 'next/navigation'
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
