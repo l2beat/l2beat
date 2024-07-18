@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
 import { RootIndexer } from '@l2beat/uif'
 import { Clock } from '../../../tools/Clock'
 import { BlockTimestampProvider } from '../../tvl/services/BlockTimestampProvider'
@@ -19,11 +18,9 @@ export class BlockTargetIndexer extends RootIndexer {
   }
 
   async tick(): Promise<number> {
-    const time = this.clock.getLastHour().toNumber()
+    const timestamp = this.clock.getLastHour()
     const blockNumber =
-      await this.blockTimestampProvider.getBlockNumberAtOrBefore(
-        new UnixTime(time),
-      )
+      await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 
     return blockNumber
   }
