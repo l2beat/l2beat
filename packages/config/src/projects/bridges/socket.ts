@@ -102,6 +102,13 @@ export const socket: Bridge = {
         tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0xE3E96892D30E0ee1a8131BAf87c891201F7137bf'),
+        name: 'sUSDe Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['sUSDe'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x8180EcCC825b692ef65FF099a0A387743788bf78'),
         name: 'weETH Vault Lyra',
         description:
@@ -109,18 +116,18 @@ export const socket: Bridge = {
         tokens: ['weETH'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
-        name: 'rswETH Vault Lyra',
-        description:
-          'Socket Vault associated with Lyra and owned by LyraMultisig.',
-        tokens: ['rswETH'],
-      }),
-      discovery.getEscrowDetails({
         address: EthereumAddress('0x35d4D9bc79B0a543934b1769304B90d752691caD'),
         name: 'rsETH Vault Lyra',
         description:
           'Socket Vault associated with Lyra and owned by LyraMultisig.',
         tokens: ['rsETH'],
+      }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x4BB4C3CDc7562f08e9910A0C7D8bB7e108861eB4'),
+        name: 'rswETH Vault Lyra',
+        description:
+          'Socket Vault associated with Lyra and owned by LyraMultisig.',
+        tokens: ['rswETH'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xeBB5D642aA8ccDeE98373D6aC3ee0602b63824b3'),
@@ -181,6 +188,13 @@ export const socket: Bridge = {
         tokens: ['sDAI'],
       }),
       discovery.getEscrowDetails({
+        address: EthereumAddress('0xdf34E61B6e7B9e348713d528fEB019d504d38c1e'),
+        name: 'USDe Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by KintoMultisig.',
+        tokens: ['USDe'],
+      }),
+      discovery.getEscrowDetails({
         address: EthereumAddress('0x351d8894fB8bfa1b0eFF77bFD9Aab18eA2da8fDd'),
         name: 'ENA Vault Kinto',
         description:
@@ -188,11 +202,11 @@ export const socket: Bridge = {
         tokens: ['ENA'],
       }),
       discovery.getEscrowDetails({
-        address: EthereumAddress('0xdf34E61B6e7B9e348713d528fEB019d504d38c1e'),
-        name: 'USDe Vault Kinto',
+        address: EthereumAddress('0x755cD5d147036E11c76F1EeffDd94794fC265f0d'),
+        name: 'USDC Vault Kinto',
         description:
           'Socket Vault associated with Kinto and owned by KintoMultisig.',
-        tokens: ['USDe'],
+        tokens: ['USDC'],
       }),
       discovery.getEscrowDetails({
         address: EthereumAddress('0xeB66259d2eBC3ed1d3a98148f6298927d8A36397'),
@@ -234,7 +248,7 @@ export const socket: Bridge = {
         address: EthereumAddress('0xa83B4006c16DAeAb2718294696c0122519195137'),
         name: 'LOOKS Vault Blast',
         description:
-          'Socket Vault associated with Blast and owned by Unknown Owner.',
+          'Socket Vault associated with Blast and owned by LooksRareMultisig.',
         tokens: ['LOOKS'],
       }),
       // Reya
