@@ -1,17 +1,14 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ChainId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { describeDatabase } from '../../../test/database'
-import {
-  UpdateNotifierRecord,
-  UpdateNotifierRepository,
-} from './UpdateNotifierRepository'
+import { describeDatabase } from '../test/database'
+import { UpdateNotifierRecord } from './entity'
+import { UpdateNotifierRepository } from './repository'
 
 const PROJECT1 = 'project1'
 
-describeDatabase(UpdateNotifierRepository.name, (database) => {
-  const repository = new UpdateNotifierRepository(database, Logger.SILENT)
+describeDatabase(UpdateNotifierRepository.name, (db) => {
+  const repository = db.updateNotifier
   const NOW = UnixTime.now()
 
   beforeEach(async () => {

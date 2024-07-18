@@ -18,7 +18,7 @@ export function createVerifiersModule(
   }
 
   const refresher = new VerifiersStatusRefresher({
-    database: peripherals.database,
+    db: peripherals.database,
     peripherals,
     clock,
     logger,
