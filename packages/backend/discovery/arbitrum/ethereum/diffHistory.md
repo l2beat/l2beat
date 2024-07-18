@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xca087030986b84eaa6187e19a893177de662c04d
+
+# Diff at Thu, 18 Jul 2024 15:28:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@8df10626d2a29b09ab4d4aaefa4b407f07c14b4a block: 20324730
+- current block number: 20334300
+
+## Description
+
+Rename bridge to fit the naming of other orbitstack chains.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20324730 (main branch discovery), not current.
+
+```diff
+    contract OutboxV2 (0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840) {
+    +++ description: None
+      name:
+-        "OutboxV2"
++        "Outbox"
+    }
+```
+
+```diff
+    contract ArbitrumOneBridge (0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a) {
+    +++ description: None
+      name:
+-        "ArbitrumOneBridge"
++        "Bridge"
+    }
+```
+
 Generated with discovered.json: 0x124394f90189b0bf956954b217f601a07a5265db
 
 # Diff at Wed, 17 Jul 2024 07:23:47 GMT:

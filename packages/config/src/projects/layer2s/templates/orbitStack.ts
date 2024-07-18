@@ -97,6 +97,30 @@ export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   nativeToken?: string
 }
 
+function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
+  // some orbit chains represent maxTimeVariation as an array, others an object
+  const result = discovery.getContractValue<
+    | {
+        delayBlocks: number
+        futureBlocks: number
+        delaySeconds: number
+        futureSeconds: number
+      }
+    | number[]
+  >('SequencerInbox', 'maxTimeVariation')
+
+  if (Array.isArray(result)) {
+    return {
+      delayBlocks: result[0],
+      futureBlocks: result[1],
+      delaySeconds: result[2],
+      futureSeconds: result[3],
+    }
+  } else {
+    return result
+  }
+}
+
 export function orbitStackCommon(
   templateVars: OrbitStackConfigCommon,
   explorerLinkFormat: string,
@@ -317,12 +341,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   )
   const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 
-  const maxTimeVariation = templateVars.discovery.getContractValue<{
-    delayBlocks: number
-    futureBlocks: number
-    delaySeconds: number
-    futureSeconds: number
-  }>('SequencerInbox', 'maxTimeVariation')
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
 
   const selfSequencingDelay = maxTimeVariation.delaySeconds
 
@@ -509,12 +530,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 
-  const maxTimeVariation = templateVars.discovery.getContractValue<{
-    delayBlocks: number
-    futureBlocks: number
-    delaySeconds: number
-    futureSeconds: number
-  }>('SequencerInbox', 'maxTimeVariation')
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
 
   const selfSequencingDelay = maxTimeVariation.delaySeconds
 
@@ -550,7 +568,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       },
       liveness: postsToExternalDA
         ? undefined
-        : {
+        : templateVars.display.liveness ?? {
             warnings: {
               stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
             },
