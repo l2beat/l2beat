@@ -1,3 +1,72 @@
+Generated with discovered.json: 0x8fe45198b647c38683f2c74bf8414b652634a968
+
+# Diff at Fri, 19 Jul 2024 11:57:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 37363085
+- current block number: 40608530
+
+## Description
+
+Upgrade to an unverified implementation.
+
+## Watched changes
+
+```diff
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b) {
+    +++ description: None
+      values.$implementation:
+-        "0xa79dE9B3409361Cd3367856b5Fa9BC258C1f9F0F"
++        "0x893BB42a352CA8Ee8bCb58348455DD3966368737"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 37363085 (main branch discovery), not current.
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      sinceTimestamp:
+-        1661528751
+    }
+```
+
+```diff
+    contract  (0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D) {
+    +++ description: None
+      sinceTimestamp:
+-        1669425920
+    }
+```
+
+```diff
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b) {
+    +++ description: None
+      sinceTimestamp:
+-        1687808660
+    }
+```
+
+```diff
+    contract RelayerV2Radar (0xde19274c009A22921E3966a1Ec868cEba40A5DaC) {
+    +++ description: None
+      sinceTimestamp:
+-        1669420588
+    }
+```
+
+```diff
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49) {
+    +++ description: None
+      sinceTimestamp:
+-        1694218841
+    }
+```
+
 Generated with discovered.json: 0x942f30327f95f9cafe897c7cddc575a78c3c6558
 
 # Diff at Thu, 18 Jul 2024 10:35:18 GMT:

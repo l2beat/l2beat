@@ -25,6 +25,9 @@
     "0xa59BA433ac34D2927232918Ef5B2eaAfcF130BA5": "Nethermind Verifier"
   },
   "overrides": {
+    "StargateMultiRewarder": {
+      "ignoreRelatives": ["rewardTokens", "staking"]
+    },
     "Nethermind Verifier": {
       "ignoreRelatives": ["workerFeeLib", "priceFeed"]
     },
