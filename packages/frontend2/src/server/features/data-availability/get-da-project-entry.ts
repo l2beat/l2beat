@@ -12,12 +12,12 @@ import {
 } from './utils/get-da-project-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { getDaRisks } from './utils/get-da-risks'
-import { getUsedInProjects } from './utils/get-used-in-projects'
 import { kindToType } from './utils/kind-to-layer-type'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
-  const tvs = await getDaProjectTvl(daBridge.usedIn)
+  const usedInIds = daBridge.usedIn.map((p) => p.id)
+  const tvs = await getDaProjectTvl(usedInIds)
   const verificationStatus = await getVerificationStatus()
   const manuallyVerifiedContracts = getManuallyVerifiedContracts()
   const implementationChangeReport = await getImplementationChangeReport()
@@ -86,7 +86,7 @@ function getHeader({
     economicSecurity,
     durationStorage:
       daLayer.kind === 'public-blockchain' ? daLayer.pruningWindow : undefined,
-    usedIn: getUsedInProjects(bridge),
+    usedIn: bridge.usedIn,
   }
 }
 

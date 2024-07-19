@@ -30,7 +30,7 @@ export async function getDaSummaryEntries() {
         isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
         tvs,
         economicSecurity: projectEconomicSecurity,
-        usedBy: bridge.usedIn.map((project) => project.name),
+        usedIn: bridge.usedIn,
       }
     }),
   )

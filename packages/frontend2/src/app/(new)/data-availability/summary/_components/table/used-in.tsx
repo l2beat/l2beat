@@ -1,18 +1,20 @@
+import { type UsedInProject } from '@l2beat/config/build/src/projects/other/da-beat/types/UsedInProject'
 import Image from 'next/image'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { type UsedInProject } from '~/server/features/data-availability/utils/get-used-in-projects'
+import { cn } from '~/utils/cn'
 
 interface Props {
   usedIn: UsedInProject[]
+  className?: string
 }
 
-export function UsedIn({ usedIn }: Props) {
+export function UsedIn({ usedIn, className }: Props) {
   return (
-    <div className="flex gap-1.5">
+    <div className={cn('flex gap-1.5', className)}>
       {usedIn.map((project) => {
         return (
           <Tooltip key={project.slug}>

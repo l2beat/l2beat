@@ -58,7 +58,7 @@ export function DaProjectStats({ project }: Props) {
         title="Used in"
         value={
           project.header.usedIn.length !== 0 ? (
-            <UsedIn usedIn={project.header.usedIn} />
+            <UsedIn usedIn={project.header.usedIn} className="flex-wrap" />
           ) : (
             'None'
           )
