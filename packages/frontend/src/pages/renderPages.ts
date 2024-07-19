@@ -11,7 +11,6 @@ import { getL3sProjectPages } from './project/layer3'
 import { getActivityPage } from './scaling/activity'
 import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
 import { getCostsPage } from './scaling/costs'
-import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
@@ -85,13 +84,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
       }),
     )
   }
-
-  pages.push(
-    getScalingDataAvailabilityPage(config, {
-      tvlApiResponse,
-      implementationChange,
-    }),
-  )
 
   if (config.features.costsPage && l2CostsApiResponse) {
     pages.push(
