@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import { daLayers } from '.'
 
-describe.only('da-beat', () => {
+describe('da-beat', () => {
   daLayers.forEach((layer) => {
     describe(layer.display.name, () => {
       it('should contain description with dot at the end', () => {
