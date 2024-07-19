@@ -1,8 +1,12 @@
 import React, { SVGAttributes } from 'react'
 
 import { Icon } from '../Icon'
+import { cn } from '../../../utils/cn'
 
-export function TriangleWarningIcon(props: SVGAttributes<SVGElement>) {
+export function TriangleWarningIcon({
+  className,
+  ...props
+}: SVGAttributes<SVGElement>) {
   return (
     <Icon
       aria-label="Sun icon"
@@ -10,6 +14,7 @@ export function TriangleWarningIcon(props: SVGAttributes<SVGElement>) {
       height="41"
       viewBox="0 0 41 41"
       fill="yellow"
+      className={cn('fill-yellow-700 dark:fill-yellow-200', className)}
       {...props}
     >
       <path d="M36.5 36.5H4.5C3.783 36.5 3.123 36.117 2.766 35.496C2.41 34.875 2.412 34.111 2.773 33.492L18.773 5.492C19.131 4.878 19.789 4.5 20.5 4.5C21.211 4.5 21.869 4.878 22.228 5.492L38.228 33.492C38.589 34.111 38.591 34.875 38.235 35.496C37.879 36.117 37.216 36.5 36.5 36.5Z" />
