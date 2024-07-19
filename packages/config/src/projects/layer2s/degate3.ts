@@ -81,8 +81,8 @@ export const degate3: Layer2 = {
     category: 'ZK Rollup',
 
     links: {
-      websites: ['https://degate.com/'],
-      apps: ['https://app.degate.com/'],
+      websites: ['https://degate.com/?utm_source=L2Beat'],
+      apps: ['https://app.degate.com/?utm_source=L2Beat'],
       documentation: ['https://docs.degate.com/'],
       explorers: [],
       repositories: ['https://github.com/degatedev/protocols'],
