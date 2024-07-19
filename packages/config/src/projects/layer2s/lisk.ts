@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('lisk')
 
