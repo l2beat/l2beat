@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 20059600,
+  "blockNumber": 20340278,
   "configHash": "0x914e7bb1f1ef535a617569b498719e4412dee0e0bbee7d24f7b7f76066dae93b",
   "version": 9,
   "contracts": [
@@ -70,7 +70,7 @@
       "values": {
         "$admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
         "$implementation": "0x0eC393209674090368C592A591B25811e490BF36",
-        "balance": 34358781371190,
+        "balance": 46642883610567,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -104,7 +104,7 @@
         ],
         "getThreshold": 4,
         "GnosisSafe_modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
-        "nonce": 44,
+        "nonce": 46,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -130,6 +130,12 @@
       "name": "MultiSend",
       "address": "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761",
       "sinceTimestamp": 1621955912,
+      "values": { "$immutable": true }
+    },
+    {
+      "name": "PlonkVerifierForMultiTypeDataAggregation",
+      "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
+      "sinceTimestamp": 1721038943,
       "values": { "$immutable": true }
     },
     {
@@ -172,11 +178,11 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentFinalizedShnarf": "0xdecd5bbfe1ad27cee6a833de214574fed9c2a93f0a10580b66c18eb7d855c822",
-        "currentFinalizedState": "0x6fe36a585ff3224e865ba0c92bfc544cd1218718c20249a303e5eb2283e651ad",
+        "currentFinalizedShnarf": "0x65383e8427802265c101d95bd702803289c94cf519c093271f5d72ded8073392",
+        "currentFinalizedState": "0xbc950901da6bb3775a3a3d75d8bcd4e1b0faf0edee504dbc51790286793c9019",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "15664856200000000000",
+        "currentPeriodAmountInWei": "3940590000000000000",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
@@ -205,7 +211,7 @@
           "0x1111111111111111111111111111111111111111",
           "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4",
           "0x0000000000000000000000000000000000000000",
-          "0x1111111111111111111111111111111111111111",
+          "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
           "0x1111111111111111111111111111111111111111",
           "0x0000000000000000000000000000000000000000",
           "0x1111111111111111111111111111111111111111",
@@ -606,6 +612,9 @@
     "0xA238CBeb142c10Ef7Ad8442C6D1f9E89e07e7761": [
       "constructor()",
       "function multiSend(bytes transactions) payable"
+    ],
+    "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "0xd19d4B5d358258f05D7B411E21A1460D11B0876F": [
       "constructor(address _logic, address admin_, bytes _data) payable",
