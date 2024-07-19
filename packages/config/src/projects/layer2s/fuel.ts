@@ -11,7 +11,6 @@ export const fuel: Layer2 = upcomingL2({
       'At Fuel we are building the fastest execution layer for the modular blockchain stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
     links: {
       websites: ['https://fuel.network/'],
       apps: ['https://alpha.fuel.network/ecosystem/'],
@@ -25,4 +24,5 @@ export const fuel: Layer2 = upcomingL2({
       ],
     },
   },
+  badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
 })
