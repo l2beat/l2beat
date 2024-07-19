@@ -38,6 +38,14 @@ export const lisk: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  finality: {
+    type: 'OPStack-blob',
+    genesisTimestamp: new UnixTime(1714728793),
+    minTimestamp: new UnixTime(1714746983), // first blob
+    l2BlockTimeSeconds: 2,
+    lag: 0,
+    stateUpdate: 'disabled',
+  },
   usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.api.lisk.com',
