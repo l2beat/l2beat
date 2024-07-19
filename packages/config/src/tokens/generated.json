@@ -2341,6 +2341,21 @@
       "supply": "zero"
     },
     {
+      "id": "lsk-lisk",
+      "name": "Lisk",
+      "coingeckoId": "lisk",
+      "address": "0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+      "symbol": "LSK",
+      "decimals": 18,
+      "deploymentTimestamp": 1715865407,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "lpt-livepeer-token",
       "name": "Livepeer Token",
       "coingeckoId": "livepeer",

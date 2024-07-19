@@ -685,6 +685,10 @@
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD"
     },
     {
+      "symbol": "LSK",
+      "address": "0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f"
+    },
+    {
       "symbol": "LUSD",
       "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
       "category": "stablecoin"
