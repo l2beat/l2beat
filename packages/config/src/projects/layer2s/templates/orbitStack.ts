@@ -4,7 +4,7 @@ import {
 } from '@l2beat/discovery-types'
 import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
-import { unionBy } from 'lodash'
+import { template, unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
@@ -91,6 +91,8 @@ export interface OrbitStackConfigCommon {
   stateDerivation?: ScalingProjectStateDerivation
   upgradesAndGovernance?: string
   nonTemplateContractRisks?: ScalingProjectRisk[]
+  nativeAddresses?: Record<string, ScalingProjectContract[]>
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -193,6 +195,7 @@ export function orbitStackCommon(
         ],
         'address',
       ),
+      nativeAddresses: templateVars.nativeAddresses,
       risks: templateVars.nonTemplateContractRisks ?? [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     chainConfig: templateVars.chainConfig,
@@ -331,6 +334,7 @@ export function orbitStackCommon(
       ...resolvedTemplates.permissions,
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
+    nativePermissions: templateVars.nativePermissions,
     stateDerivation: templateVars.stateDerivation,
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
