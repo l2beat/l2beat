@@ -8,6 +8,7 @@ const discovery = new ProjectDiscovery('lisk')
 export const lisk: Layer2 = opStackL2({
   discovery,
   genesisTimestamp: new UnixTime(1714728793),
+  associatedTokens: ['LSK'],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
