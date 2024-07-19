@@ -15,7 +15,10 @@ export interface ChainConfig {
   multicall: MulticallConfig
 }
 
-export const chains: ChainConfig[] = [
+export type ChainName = (typeof chains)[number]['name']
+export type ChainId = (typeof chains)[number]['chainId']
+
+export const chains = [
   {
     name: 'ethereum',
     chainId: 1,
@@ -24,7 +27,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.etherscan.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'arbitrum',
     chainId: 42161,
@@ -33,7 +36,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.arbiscan.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'nova',
     chainId: 42170,
@@ -42,7 +45,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api-nova.arbiscan.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'optimism',
     chainId: 10,
@@ -51,7 +54,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api-optimistic.etherscan.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'polygonpos',
     chainId: 137,
@@ -60,7 +63,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.polygonscan.com/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'bsc',
     chainId: 56,
@@ -69,7 +72,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.bscscan.com/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'avalanche',
     chainId: 43114,
@@ -78,7 +81,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.snowtrace.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'celo',
     chainId: 42220,
@@ -90,7 +93,7 @@ export const chains: ChainConfig[] = [
         getContractCreation: true,
       },
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'linea',
     chainId: 59144,
@@ -99,7 +102,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.lineascan.build/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'base',
     chainId: 8453,
@@ -108,7 +111,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.basescan.org/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'polygonzkevm',
     chainId: 1101,
@@ -117,7 +120,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api-zkevm.polygonscan.com/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'gnosis',
     chainId: 100,
@@ -129,7 +132,7 @@ export const chains: ChainConfig[] = [
         getContractCreation: true,
       },
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'zksync2',
     chainId: 324,
@@ -141,7 +144,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api-era.zksync.network/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'sepolia',
     chainId: 11155111,
@@ -150,7 +153,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api-sepolia.etherscan.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'scroll',
     chainId: 534352,
@@ -159,7 +162,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.scrollscan.com/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'mantle',
     chainId: 5000,
@@ -168,7 +171,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'metis',
     chainId: 1088,
@@ -177,7 +180,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'bobanetwork',
     chainId: 288,
@@ -186,7 +189,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'mode',
     chainId: 34443,
@@ -195,7 +198,7 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'mantapacific',
     chainId: 169,
@@ -204,7 +207,7 @@ export const chains: ChainConfig[] = [
       type: 'blockscout',
       url: 'https://pacific-explorer.manta.network/api',
     },
-  },
+  } as const satisfies ChainConfig,
   {
     name: 'blast',
     chainId: 81457,
@@ -213,5 +216,5 @@ export const chains: ChainConfig[] = [
       type: 'etherscan',
       url: 'https://api.blastscan.io/api',
     },
-  },
+  } as const satisfies ChainConfig,
 ]
