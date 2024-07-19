@@ -30,13 +30,18 @@ export function getUniqueContractsForProject(
     .map((c) => c.upgradeability)
     .filter((u): u is ScalingProjectUpgradeability => !!u) // remove undefined
     .flatMap((u) => u.implementations)
+  const permissionedAddresses = getPermissionedAddressesForChain(project, chain)
 
-  return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
+  return withoutDuplicates([
+    ...mainAddresses,
+    ...upgradeabilityAddresses,
+    ...permissionedAddresses,
+  ])
 }
 
 function getProjectContractsForChain(project: Project, chain: string) {
   const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract, chain),
+    isContractOnChain(contract.chain, chain),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
@@ -45,17 +50,27 @@ function getProjectContractsForChain(project: Project, chain: string) {
       }
       return { address: escrow.address, ...escrow.contract }
     })
-    .filter((escrowContract) => isContractOnChain(escrowContract, chain))
+    .filter((escrowContract) => isContractOnChain(escrowContract.chain, chain))
 
   return [...contracts, ...escrows]
 }
 
-function isContractOnChain(contract: ScalingProjectContract, chain: string) {
+function getPermissionedAddressesForChain(project: Project, chain: string) {
+  const permissions =
+    project.permissions === 'UnderReview' ? [] : project.permissions ?? []
+  return permissions
+    .filter((p) => isContractOnChain(p.chain, chain))
+    .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
+    .filter((p) => p.type !== 'EOA')
+    .map((p) => p.address)
+}
+
+function isContractOnChain(contractChain: string | undefined, chain: string) {
   // For backwards compatibility, we assume that contracts without chain are for ethereum
-  if (contract.chain === undefined && chain === 'ethereum') {
+  if (contractChain === undefined && chain === 'ethereum') {
     return true
   }
-  return contract.chain === chain
+  return contractChain === chain
 }
 
 export function areAllProjectContractsVerified(
