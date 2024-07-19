@@ -74,7 +74,8 @@ export class QuickNodeClient {
     let effectiveBalance = 0n
 
     for await (const { value } of pipeline) {
-      effectiveBalance += BigInt(value) / 10n ** 8n
+      // gwei to wei
+      effectiveBalance += BigInt(value) * 10n ** 9n
     }
 
     return {

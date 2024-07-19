@@ -79,7 +79,7 @@ export function getCliParameters(args = process.argv.slice(2)): CliParameters {
       remaining.splice(remaining.indexOf('--dry-run'), 1)
     }
 
-    if (remaining.includes('--dev')) {
+    if (remaining.includes('--dev') || remaining.includes('--refresh')) {
       dev = true
       remaining.splice(remaining.indexOf('--dev'), 1)
     }

@@ -1,18 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { aevo } from '../../../../layer2s/aevo'
-import { ancient } from '../../../../layer2s/ancient'
-import { hypr } from '../../../../layer2s/hypr'
-import { karak } from '../../../../layer2s/karak'
-import { lyra } from '../../../../layer2s/lyra'
-import { mantapacific } from '../../../../layer2s/mantapacific'
-import { orderly } from '../../../../layer2s/orderly'
-import { publicgoodsnetwork } from '../../../../layer2s/publicgoodsnetwork'
-import { stack } from '../../../../layer3s/stack'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
+import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
 import { noBridge } from './bridges/no-bridge'
 
@@ -33,18 +25,9 @@ export const celestia: DaLayer = {
   technology:
     'Some note about the technology used by the data availability layer.\n## Markdown supported',
   bridges: [noBridge, ...blobstream],
-  usedIn: [
-    // can we fetch these from the layer2s and layer3s?
-    mantapacific.id,
-    karak.id,
-    aevo.id,
-    lyra.id,
-    publicgoodsnetwork.id,
-    orderly.id,
-    ancient.id,
-    hypr.id,
-    stack.id,
-  ],
+  usedIn: linkByDA({
+    layer: (layer) => layer === 'Celestia',
+  }),
   /*
     Node params sources:
     - unbondingPeriod, block times (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html

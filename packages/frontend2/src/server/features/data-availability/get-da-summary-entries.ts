@@ -7,7 +7,6 @@ import {
   pickTvlForProjects,
 } from './utils/get-da-projects-tvl'
 import { getDaRisks } from './utils/get-da-risks'
-import { getUsedInProjects } from './utils/get-used-in-projects'
 import { kindToType } from './utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
@@ -18,8 +17,8 @@ export async function getDaSummaryEntries() {
 
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => {
-      const tvs = getSumFor(bridge.usedIn)
       const projectEconomicSecurity = economicSecurity[daLayer.id]
+      const tvs = getSumFor(bridge.usedIn.map((project) => project.id))
 
       return {
         slug: daLayer.display.slug,
@@ -31,8 +30,7 @@ export async function getDaSummaryEntries() {
         isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
         tvs,
         economicSecurity: projectEconomicSecurity,
-        // TODO: maybe we can specify names in the config instead of projectIds
-        usedIn: getUsedInProjects(bridge),
+        usedBy: bridge.usedIn.map((project) => project.name),
       }
     }),
   )

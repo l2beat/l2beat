@@ -1,9 +1,9 @@
 import { assert } from '@l2beat/backend-tools'
 import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
-import { get$Admins, get$Implementations } from '@l2beat/discovery-types'
+import { get$Implementations } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
@@ -47,6 +47,7 @@ export interface AnalyzedContract {
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
+  templateHash: Hash256
 }
 
 export interface AnalyzedEOA {
@@ -86,7 +87,11 @@ export class AddressAnalyzer {
     let extendedTemplate: ExtendedTemplate | undefined = undefined
 
     if (overrides?.extends !== undefined) {
-      extendedTemplate = { template: overrides.extends, reason: 'byExtends' }
+      extendedTemplate = {
+        template: overrides.extends,
+        reason: 'byExtends',
+        templateHash: this.templateService.getTemplateHash(overrides.extends),
+      }
     } else if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
@@ -95,7 +100,11 @@ export class AddressAnalyzer {
           overrides ?? { address },
           template,
         )
-        extendedTemplate = { template, reason: 'byReferrer' }
+        extendedTemplate = {
+          template,
+          reason: 'byReferrer',
+          templateHash: this.templateService.getTemplateHash(template),
+        }
       }
       if (suggestedTemplates.size > 1) {
         templateErrors['@template'] =
@@ -135,7 +144,11 @@ export class AddressAnalyzer {
           overrides ?? { address },
           template,
         )
-        extendedTemplate = { template, reason: 'byShapeMatch' }
+        extendedTemplate = {
+          template,
+          reason: 'byShapeMatch',
+          templateHash: this.templateService.getTemplateHash(template),
+        }
       }
       if (matchingTemplates.length > 1) {
         templateErrors['@template'] =
@@ -171,14 +184,16 @@ export class AddressAnalyzer {
       overrides?.fields,
     )
 
-    const targetsMeta = getTargetsMeta(
-      address,
-      get$Admins(proxy?.values),
-      results,
-      overrides?.fields,
-    )
+    const mergedValues = {
+      ...(!proxy ? { $immutable: true } : {}),
+      ...(proxy?.values ?? {}),
+      ...(values ?? {}),
+    }
 
-    return {
+    const analysisWithoutMeta: Omit<
+      AnalyzedContract,
+      'selfMeta' | 'targetsMeta'
+    > = {
       type: 'Contract',
       name: overrides?.name ?? sources.name,
       derivedName: overrides?.name !== undefined ? sources.name : undefined,
@@ -188,21 +203,27 @@ export class AddressAnalyzer {
       deploymentBlockNumber: deployment?.blockNumber,
       implementations: implementations,
       proxyType: proxy?.type,
-      values: {
-        ...(!proxy ? { $immutable: true } : {}),
-        ...(proxy?.values ?? {}),
-        ...(values ?? {}),
-      },
+      values: mergedValues,
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,
       sourceBundles: sources.sources,
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives,
-      selfMeta: getSelfMeta(overrides),
-      targetsMeta,
       usedTypes,
     }
+
+    const analysis: AnalyzedContract = {
+      ...analysisWithoutMeta,
+      selfMeta: getSelfMeta(overrides, analysisWithoutMeta),
+      targetsMeta: getTargetsMeta(
+        address,
+        mergedValues,
+        overrides?.fields,
+        analysisWithoutMeta,
+      ),
+    }
+    return analysis
   }
 
   async hasContractChanged(

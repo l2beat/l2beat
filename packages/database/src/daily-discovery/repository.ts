@@ -43,7 +43,12 @@ export class DailyDiscoveryRepository {
       .onConflict((cb) =>
         cb
           .columns(['project_name', 'chain_id', 'unix_timestamp'])
-          .doUpdateSet(row),
+          .doUpdateSet((eb) => ({
+            version: eb.ref('excluded.version'),
+            block_number: eb.ref('excluded.block_number'),
+            config_hash: eb.ref('excluded.config_hash'),
+            discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
+          })),
       )
       .execute()
 

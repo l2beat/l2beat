@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xd342b46f2bccca873feae0ef331a522f8c37c94b
+
+# Diff at Thu, 18 Jul 2024 10:33:51 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20124846
+- current block number: 20124846
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20124846 (main branch discovery), not current.
+
+```diff
+    contract BridgeMultisig (0x015277f49d5dD035A5F3Ce34aD5eBfDBaCA0C6Ec) {
+    +++ description: None
+      assignedPermissions.admin.9:
++        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
+      assignedPermissions.admin.8:
+-        "0xd8E8531fdD446DF5298819d3Bc9189a5D8948Ee8"
++        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
+      assignedPermissions.admin.7:
+-        "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2"
++        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
+      assignedPermissions.admin.6:
+-        "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4"
++        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
+      assignedPermissions.admin.5:
+-        "0xbb3400F107804DFB482565FF1Ec8D8aE66747605"
++        "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"
+    }
+```
+
+```diff
+    contract ProxyMultisig (0x83C0A700114101D1283D1405E2c8f21D3F03e988) {
+    +++ description: None
+      assignedPermissions:
++        {"admin":["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]}
+    }
+```
+
 Generated with discovered.json: 0xa90897d43ca0bbceb292a749f278c3e3834553c3
 
 # Diff at Wed, 19 Jun 2024 09:19:35 GMT:

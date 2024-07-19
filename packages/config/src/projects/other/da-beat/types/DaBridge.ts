@@ -1,4 +1,4 @@
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import {
   ScalingProjectContracts,
   ScalingProjectPermission,
@@ -6,6 +6,7 @@ import {
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
+import { UsedInProject } from './UsedInProject'
 
 export type DaBridge =
   | NoDaBridge
@@ -69,7 +70,7 @@ type CommonDaBridge = {
   /** The technology used by the data availability bridge. [MARKDOWN] */
   technology: string
   /** List of projects given bridge is being used in. */
-  usedIn: ProjectId[]
+  usedIn: UsedInProject[]
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
 }

@@ -2,7 +2,7 @@
   "name": "kinto",
   "chain": "ethereum",
   "blockNumber": 20324731,
-  "configHash": "0x6a7f3669b7aa1e64175fddd1db9e1e65fef305f7921322c983db02a5f16c155a",
+  "configHash": "0x360ec92051dacc39cf8c9c2063f9bc398aaa7a009e889238f7b66e03378bd982",
   "version": 9,
   "contracts": [
     {
@@ -1203,5 +1203,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

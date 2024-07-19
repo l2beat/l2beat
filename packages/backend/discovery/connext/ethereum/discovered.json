@@ -101,5 +101,7 @@
       "function execute(bytes32 transactionId, address callTo, address assetId, address fallbackAddress, uint256 amount, bytes callData) payable returns (bool, bool, bytes)",
       "function getTransactionManager() view returns (address)"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

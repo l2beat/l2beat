@@ -100,7 +100,12 @@
     { "address": "0x0000000000000000000000000000000000000000" },
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x119B9459D9119D07c23aD06778AeaBec804Fd1a2",
+          "0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"
+        ]
+      }
     },
     { "address": "0x3bb708D3Bdd0C997f56E9dDb11f98dc2b37423A4" },
     { "address": "0xC97c5E43c14D4F524347795410C299db1FA331b3" }
@@ -262,5 +267,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
+    "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

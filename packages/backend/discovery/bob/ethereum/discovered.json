@@ -205,6 +205,9 @@
       "address": "0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of 0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0, inheriting its permissions."
+      ],
       "assignedPermissions": {
         "owner": ["0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0"]
       },
@@ -696,5 +699,11 @@
       "function setAddress(string _name, address _address)",
       "function transferOwnership(address newOwner)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
+    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

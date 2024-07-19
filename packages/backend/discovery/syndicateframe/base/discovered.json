@@ -173,7 +173,12 @@
     { "address": "0xADE1F8C181934052fD1958F06B63Ef0D875803C5" },
     {
       "address": "0xdC545dDC657A1E2EDA8F6cBBE382927E3C9aA6E4",
-      "assignedPermissions": { "owner": {} }
+      "descriptions": [
+        "It can act on behalf of 0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E, inheriting its permissions."
+      ],
+      "assignedPermissions": {
+        "owner": ["0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"]
+      }
     },
     { "address": "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c" }
   ],
@@ -382,5 +387,10 @@
       "function messenger() view returns (address)",
       "function version() view returns (string)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
+    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }
