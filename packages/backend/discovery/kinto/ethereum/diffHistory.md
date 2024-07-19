@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xa154074a7d8dcdd47b39e7ad6a0a66aed45fbc7d
+
+# Diff at Fri, 19 Jul 2024 11:23:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 20324731
+- current block number: 20340252
+
+## Description
+
+wasmModuleRoot updated. Like before, this is not a root that we have seen before. Related to the [HF 5 Mainnet](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/6) and [HF 6 Mainnet](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/9).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x89e305433a6403ac5e73b659b16ccaa2ed796cf6cd6fcb46e72c7d865a8ec6ae"
++        "0x2ca63ffd73f314d60f8d672954389881918100435f27fd4193becb12310d7faa"
+    }
+```
+
 Generated with discovered.json: 0xf35de91de6d8a18812a6d9c106abeff0880f2aef
 
 # Diff at Wed, 17 Jul 2024 07:24:08 GMT:
