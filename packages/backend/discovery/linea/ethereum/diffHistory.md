@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xaa7d90a5821c8ef9e4a98beb8f8473f9368b0152
+Generated with discovered.json: 0x20793d968ee199aa8b0f9d4a9b43b9aaff803dfe
 
-# Diff at Fri, 19 Jul 2024 11:28:42 GMT:
+# Diff at Fri, 19 Jul 2024 12:26:54 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 20059600
-- current block number: 20340278
+- current block number: 20340569
 
 ## Description
 
@@ -24,16 +24,30 @@ A new verifier is added for proofType 3 with almost no code diff to the old one 
 
 ```diff
 +   Status: CREATED
-    contract PlonkVerifierForMultiTypeDataAggregation (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F)
+    contract VerifierProofType3 (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-...0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4.sol} |    0
- ...-0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F.sol | 1347 ++++++++++++++++++++
- 2 files changed, 1347 insertions(+)
+.../linea/ethereum/.flat/VerifierProofType3.sol    | 1347 ++++++++++++++++++++
+ 1 file changed, 1347 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059600 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierForMultiTypeDataAggregation (0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4) {
+    +++ description: None
+      name:
+-        "PlonkVerifierForMultiTypeDataAggregation"
++        "VerifierProofType1"
+    }
 ```
 
 Generated with discovered.json: 0x7dd5879afdba65078bc0f42d885728316075d9e7

@@ -483,6 +483,14 @@ export const linea: Layer2 = {
         'Timelock',
         `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
       ),
+      discovery.getContractDetails('VerifierProofType1', {
+        description:
+          'Smart contract verifying the the proofs for the Linea zkEVM.',
+      }),
+      discovery.getContractDetails('VerifierProofType3', {
+        description:
+          'Currently used smart contract verifying the proofs for the the Linea zkEVM.',
+      }),
       discovery.getContractDetails('ERC20Bridge', {
         description: 'Contract used to bridge ERC20 tokens.',
         ...upgrades,

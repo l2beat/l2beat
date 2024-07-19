@@ -1,8 +1,8 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 20340278,
-  "configHash": "0x914e7bb1f1ef535a617569b498719e4412dee0e0bbee7d24f7b7f76066dae93b",
+  "blockNumber": 20340569,
+  "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
   "version": 9,
   "contracts": [
     {
@@ -70,7 +70,7 @@
       "values": {
         "$admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
         "$implementation": "0x0eC393209674090368C592A591B25811e490BF36",
-        "balance": 46642883610567,
+        "balance": 46589993741254,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -110,10 +110,11 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "PlonkVerifierForMultiTypeDataAggregation",
+      "name": "VerifierProofType1",
       "address": "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4",
       "sinceTimestamp": 1711105859,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
     },
     {
       "name": "ERC20UpgradableBeacon",
@@ -133,10 +134,11 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "PlonkVerifierForMultiTypeDataAggregation",
+      "name": "VerifierProofType3",
       "address": "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
       "sinceTimestamp": 1721038943,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
     },
     {
       "name": "zkEVM",
@@ -178,8 +180,8 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentFinalizedShnarf": "0x65383e8427802265c101d95bd702803289c94cf519c093271f5d72ded8073392",
-        "currentFinalizedState": "0xbc950901da6bb3775a3a3d75d8bcd4e1b0faf0edee504dbc51790286793c9019",
+        "currentFinalizedShnarf": "0x19551fb7101d9abf4e1ea224682a8349aab3496a104bd9addd7143417f5edce8",
+        "currentFinalizedState": "0xfe58da4d5d6fc18915e1ba63cbcbf1d5242d803abe7a7f088418c9a54d12ee74",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
         "currentPeriodAmountInWei": "3940590000000000000",
