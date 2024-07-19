@@ -1,3 +1,4 @@
+import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
@@ -10,6 +11,7 @@ export const fuel: Layer2 = upcomingL2({
       'At Fuel we are building the fastest execution layer for the modular blockchain stack.',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
+    badges: [Badge.VM.FuelVM, Badge.DA.EthereumBlobs],
     links: {
       websites: ['https://fuel.network/'],
       apps: ['https://alpha.fuel.network/ecosystem/'],
