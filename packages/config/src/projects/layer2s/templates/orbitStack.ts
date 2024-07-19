@@ -4,7 +4,7 @@ import {
 } from '@l2beat/discovery-types'
 import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
-import { template, unionBy } from 'lodash'
+import { unionBy } from 'lodash'
 import {
   CONTRACTS,
   ChainConfig,
@@ -196,7 +196,9 @@ export function orbitStackCommon(
         'address',
       ),
       nativeAddresses: templateVars.nativeAddresses,
-      risks: templateVars.nonTemplateContractRisks ?? [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+      risks: templateVars.nonTemplateContractRisks ?? [
+        CONTRACTS.UPGRADE_NO_DELAY_RISK,
+      ],
     },
     chainConfig: templateVars.chainConfig,
     technology: {
@@ -596,7 +598,8 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           },
     },
     stage:
-      templateVars.stage ?? (postsToExternalDA
+      templateVars.stage ??
+      (postsToExternalDA
         ? {
             stage: 'NotApplicable',
           }

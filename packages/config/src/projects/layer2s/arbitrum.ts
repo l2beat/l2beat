@@ -1,6 +1,12 @@
 import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
-import { CONTRACTS, MILESTONES, NUGGETS, RISK_VIEW, UPGRADE_MECHANISM } from '../../common'
+import {
+  CONTRACTS,
+  MILESTONES,
+  NUGGETS,
+  RISK_VIEW,
+  UPGRADE_MECHANISM,
+} from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { VALUES } from '../../discovery/values'
 import { Badge } from '../badges'
@@ -275,9 +281,9 @@ export const arbitrum: Layer2 = orbitStackL2({
     }),
   ],
   nonTemplateContractRisks: [
-      CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC(
-        Math.round(totalDelay / 86400).toString(), // delay in days
-      ),
+    CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC(
+      Math.round(totalDelay / 86400).toString(), // delay in days
+    ),
   ],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
