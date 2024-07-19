@@ -527,7 +527,7 @@ export const linea: Layer2 = {
       requiredTools: [],
       verifiers: [
         {
-          name: 'LineaVerifier(ProofType 1)',
+          name: 'LineaVerifier (ProofType 1)',
           description:
             'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
           verified: 'failed',
