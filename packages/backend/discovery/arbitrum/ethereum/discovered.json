@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "ethereum",
-  "blockNumber": 20334300,
+  "blockNumber": 20339507,
   "configHash": "0x469770848bd7c92d7b3c21c78851c86d781254664e21520da3919e127d008f00",
   "version": 9,
   "contracts": [
@@ -111,7 +111,7 @@
       "values": {
         "$admin": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
         "$implementation": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
-        "batchCount": 650269,
+        "batchCount": 651033,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -133,7 +133,7 @@
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 3,
-        "totalDelayedMessagesRead": 1616658,
+        "totalDelayedMessagesRead": 1617724,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -328,12 +328,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 15451,
+        "firstUnresolvedNode": 15468,
         "inbox": "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
         "isERC20Enabled": false,
         "lastStakeBlock": 15447818,
-        "latestConfirmed": 15450,
-        "latestNodeCreated": 15602,
+        "latestConfirmed": 15467,
+        "latestNodeCreated": 15620,
         "loserStakeEscrow": "0x5b11BDC6eF32cE261A39f58122E301D59FC05677",
         "minimumAssertionPeriod": 75,
         "outbox": "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
@@ -491,11 +491,11 @@
           "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
           "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ],
-        "delayedMessageCount": 1616671,
+        "delayedMessageCount": 1617730,
         "rollup": "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35",
         "sequencerInbox": "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
-        "sequencerMessageCount": 650269,
-        "sequencerReportedSubMessageCount": 211325758
+        "sequencerMessageCount": 651033,
+        "sequencerReportedSubMessageCount": 211576004
       },
       "derivedName": "Bridge"
     },
@@ -2873,5 +2873,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

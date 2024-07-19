@@ -1,4 +1,28 @@
-Generated with discovered.json: 0xd2195756712b6aedf18ae4cea4ddff613c01a85a
+Generated with discovered.json: 0xad8d0f1f6d6b88a070e478339d9ec06b40604739
+
+# Diff at Fri, 19 Jul 2024 08:55:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e818aac724e8e67da6b05262134684a79d6fb217 block: 20324731
+- current block number: 20339515
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x89e305433a6403ac5e73b659b16ccaa2ed796cf6cd6fcb46e72c7d865a8ec6ae"
++        "0x2ca63ffd73f314d60f8d672954389881918100435f27fd4193becb12310d7faa"
+    }
+```
+
+Generated with discovered.json: 0xf35de91de6d8a18812a6d9c106abeff0880f2aef
 
 # Diff at Wed, 17 Jul 2024 07:24:08 GMT:
 
