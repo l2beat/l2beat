@@ -8,7 +8,7 @@ Generated with discovered.json: 0xad8d0f1f6d6b88a070e478339d9ec06b40604739
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+wasmModuleRoot updated. Like before, this is not a root that we have seen before. Related to the [HF 5 Mainnet](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/6) and [HF 6 Mainnet](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/9).
 
 ## Watched changes
 
