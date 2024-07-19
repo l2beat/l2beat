@@ -124,16 +124,14 @@ export function ScalingFilters({ items, state, setState }: Props) {
             setState((prev) => ({ ...prev, purpose: value }))
           }
         />
-        {hostChainOptions.length > 1 && (
-          <TableFilter
-            title="Host Chain"
-            options={hostChainOptions}
-            value={state.hostChain}
-            onValueChange={(value) =>
-              setState((prev) => ({ ...prev, hostChain: value }))
-            }
-          />
-        )}
+        <TableFilter
+          title="Host Chain"
+          options={hostChainOptions}
+          value={state.hostChain}
+          onValueChange={(value) =>
+            setState((prev) => ({ ...prev, hostChain: value }))
+          }
+        />
       </div>
     </OverflowWrapper>
   )
