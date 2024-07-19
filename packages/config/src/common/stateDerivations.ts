@@ -1,28 +1,38 @@
 import { ScalingProjectStateDerivation } from './ScalingProjectStateDerivation'
 
-type SupportedOPStackChains = 'OP_MAINNET' | 'BASE' | 'ZORA' | 'PGN' | 'MODE'
+type SupportedOPStackChains =
+  | 'OP_MAINNET'
+  | 'BASE'
+  | 'ZORA'
+  | 'PGN'
+  | 'MODE'
+  | 'LISK'
 type OPStackInfo = [string, string] // [config, genesis file]
 
 const OPStackInfos: Record<SupportedOPStackChains, OPStackInfo> = {
   OP_MAINNET: [
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/op.yaml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/op.toml',
     'https://community.optimism.io/docs/useful-tools/networks/#parameters-for-node-operators',
   ],
   ZORA: [
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/zora.yaml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/zora.toml',
     'https://github.com/ethereum-optimism/superchain-registry/tree/main/superchain/extra/genesis/mainnet',
   ],
   PGN: [
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/pgn.yaml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/pgn.toml',
     'https://github.com/ethereum-optimism/superchain-registry/tree/main/superchain/extra/genesis/mainnet',
   ],
   BASE: [
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/base.yaml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/base.toml',
     'https://raw.githubusercontent.com/base-org/node/main/mainnet/genesis-l2.json ',
   ],
   MODE: [
-    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/mode.yaml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/mode.toml',
     'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/mode.json.gz',
+  ],
+  LISK: [
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/configs/mainnet/lisk.toml',
+    'https://github.com/ethereum-optimism/superchain-registry/blob/main/superchain/extra/genesis/mainnet/lisk.json.gz',
   ],
 }
 
