@@ -40,15 +40,15 @@ export class ImplementationChangeController {
       projects: {},
     }
 
+    const newDiscoveries = await this.db.updateMonitor.getAll()
     for (const chain of this.onDiskChains) {
       for (const project of this.onDiskProjects[chain]) {
         const discovery = this.onDiskDiscoveries[chain][project]
         const chainId = this.chainConverter.toChainId(chain)
-        const newDiscovery = await this.db.updateMonitor.findLatest(
-          project,
-          chainId,
-        )
 
+        const newDiscovery = newDiscoveries.find(
+          (d) => d.chainId === chainId && d.projectName === project,
+        )
         const latestContracts = newDiscovery?.discovery?.contracts
         const diffs = latestContracts
           ? diffDiscovery(discovery.contracts, latestContracts)
