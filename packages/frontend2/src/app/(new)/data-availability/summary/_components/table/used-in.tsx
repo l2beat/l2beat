@@ -1,5 +1,4 @@
 import Image from 'next/image'
-import Link from 'next/link'
 import {
   Tooltip,
   TooltipContent,
@@ -18,15 +17,13 @@ export function UsedIn({ usedIn }: Props) {
         return (
           <Tooltip key={project.slug}>
             <TooltipTrigger>
-              <Link href={`/scaling/projects/${project.slug}`}>
-                <Image
-                  width={20}
-                  height={20}
-                  className="min-h-5 min-w-5"
-                  src={`/icons/${project.slug}.png`}
-                  alt={`${project.name} logo`}
-                />
-              </Link>
+              <Image
+                width={20}
+                height={20}
+                className="min-h-5 min-w-5"
+                src={`/icons/${project.slug}.png`}
+                alt={`${project.name} logo`}
+              />
             </TooltipTrigger>
             <TooltipContent>{project.name}</TooltipContent>
           </Tooltip>
