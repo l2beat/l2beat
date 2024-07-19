@@ -17,7 +17,9 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectRisk,
   ScalingProjectRiskView,
+  ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -32,6 +34,7 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { VALUES } from '../../../discovery/values'
 import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
+import { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
@@ -62,6 +65,7 @@ export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
+  nodeSourceLink?: string
   nonTemplateEscrows?: ScalingProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
@@ -83,6 +87,10 @@ export interface OrbitStackConfigCommon {
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   badges?: BadgeId[]
+  stage?: StageConfig
+  stateDerivation?: ScalingProjectStateDerivation
+  upgradesAndGovernance?: string
+  nonTemplateContractRisks?: ScalingProjectRisk[]
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -185,7 +193,7 @@ export function orbitStackCommon(
         ],
         'address',
       ),
-      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+      risks: templateVars.nonTemplateContractRisks ?? [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     },
     chainConfig: templateVars.chainConfig,
     technology: {
@@ -323,6 +331,8 @@ export function orbitStackCommon(
       ...resolvedTemplates.permissions,
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
+    stateDerivation: templateVars.stateDerivation,
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
@@ -581,31 +591,37 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             )} after it has been posted.`,
           },
     },
-    stage: postsToExternalDA
-      ? {
-          stage: 'NotApplicable',
-        }
-      : getStage({
-          stage0: {
-            callsItselfRollup: true,
-            stateRootsPostedToL1: true,
-            dataAvailabilityOnL1: true,
-            rollupNodeSourceAvailable:
-              templateVars.isNodeAvailable ?? 'UnderReview',
-          },
-          stage1: {
-            stateVerificationOnL1: true,
-            fraudProofSystemAtLeast5Outsiders: false,
-            usersHave7DaysToExit: false,
-            usersCanExitWithoutCooperation: true,
-            securityCouncilProperlySetUp: false,
-          },
-          stage2: {
-            proofSystemOverriddenOnlyInCaseOfABug: false,
-            fraudProofSystemIsPermissionless: false,
-            delayWith30DExitWindow: false,
-          },
-        }),
+    stage:
+      templateVars.stage ?? (postsToExternalDA
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable:
+                  templateVars.isNodeAvailable ?? 'UnderReview',
+              },
+              stage1: {
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: false,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: true,
+                securityCouncilProperlySetUp: false,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: false,
+                fraudProofSystemIsPermissionless: false,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink: templateVars.nodeSourceLink,
+            },
+          )),
     dataAvailability: postsToExternalDA
       ? (() => {
           const DAC = templateVars.discovery.getContractValue<{
