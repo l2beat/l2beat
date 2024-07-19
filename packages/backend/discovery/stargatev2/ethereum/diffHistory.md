@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x458094cf56fc38fb2390760322c8ca83de43a199
+
+# Diff at Fri, 19 Jul 2024 11:18:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 20240871
+- current block number: 20340229
+
+## Description
+
+Ignore relatives of the StargateMultiRewarder. (STG token and such)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240871 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x17BBC9BD51A52aAf4d2CC6652630DaF4fdB358F7)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract TreasuryV2 (0x3773E1E9Deb273fCdf9f80bc88bB387B1e6Ce34d)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract NonceContract (0x5B905fE05F81F3a8ad8B28C6E17779CFAbf76068)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x5DaAee9EF143faFF495B581e9863570e83F99d31)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Endpoint (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargateToken (0xAf5191B0De278C7286d6C7CC6ab6BB8A73bA2Cd6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xfcb42A0e352a08AbD50b8EE68d01f581B6Dfd80A)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StargateStaking (0xFF551fEDdbeDC0AeE764139cCD9Cb644Bb04A6BD)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x28e8b5fbe4a5a8454398768047251d4caccd20af
 
 # Diff at Fri, 05 Jul 2024 14:22:47 GMT:
