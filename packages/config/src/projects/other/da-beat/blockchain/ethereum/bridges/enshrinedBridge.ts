@@ -9,7 +9,7 @@ export const enshrinedBridge: EnshrinedBridge = {
   display: {
     name: 'Enshrined Bridge',
     slug: 'enshrined-bridge',
-    description: 'Enshrined bridge on Ethereum',
+    description: 'Enshrined bridge on Ethereum.',
   },
   technology:
     'Do enim fugiat id tempor consequat pariatur eu eiusmod. Esse veniam ipsum irure sunt nulla est reprehenderit eiusmod et qui fugiat. Commodo pariatur cupidatat commodo ipsum minim tempor consequat dolor nostrud occaecat sit excepteur fugiat. Ut laboris in dolor est ut. Labore quis nulla incididunt enim aute minim in mollit.',
