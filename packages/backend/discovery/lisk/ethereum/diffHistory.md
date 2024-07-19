@@ -7,7 +7,7 @@ Generated with discovered.json: 0xbbda4273693b98590b45a10179daf316b84586ba
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: OP stack rollup on the latest superchain (fork) contracts. EOA-governed without being in the Superchain governance.
 
 ## Initial discovery
 
