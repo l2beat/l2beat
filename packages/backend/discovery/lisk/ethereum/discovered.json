@@ -1,8 +1,8 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 20339732,
-  "configHash": "0x0b1e3fa57516bafa05db51e7a957d15ad8596e01574d0a45bd0f22afe8f0e2ca",
+  "blockNumber": 20339917,
+  "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
   "version": 9,
   "contracts": [
     {
@@ -280,7 +280,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "LiskRollupOwnerMultisig",
       "address": "0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -303,7 +303,8 @@
         "GnosisSafe_modules": [],
         "nonce": 12,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
