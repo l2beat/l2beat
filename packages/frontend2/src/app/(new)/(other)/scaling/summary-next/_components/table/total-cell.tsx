@@ -38,10 +38,8 @@ export function TotalCell({ data }: TotalCellProps) {
             <span className="text-base md:text-lg font-bold">
               ${formatNumber(data.tvl)}
             </span>
-            <PercentChange
-              value={data.sevenDayChange}
-              className="!text-base ml-1 font-medium"
-            />
+            {/* TODO: Percent change value */}
+            <PercentChange value={0} className="!text-base ml-1 font-medium" />
           </div>
           <TokenBreakdown
             {...data.tvlBreakdown}

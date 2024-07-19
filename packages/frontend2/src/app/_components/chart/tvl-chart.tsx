@@ -13,6 +13,7 @@ import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { useChartLoading } from './core/chart-loading-context'
+import { useIsClient } from '~/hooks/use-is-client'
 
 interface TvlChartPointData {
   timestamp: number
@@ -190,9 +191,9 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const loading = useChartLoading()
+  const isClient = useIsClient()
 
-  if (loading) {
+  if (!isClient) {
     return (
       <div className="flex justify-between gap-2 items-center">
         <Skeleton className="h-8 w-[104.82px]" />
@@ -200,7 +201,6 @@ function UnitAndScaleControls({
       </div>
     )
   }
-
   return (
     <div className="flex justify-between gap-2 items-center">
       <RadioGroup value={unit} onValueChange={setUnit}>
