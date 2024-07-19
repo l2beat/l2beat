@@ -10,6 +10,7 @@ import { getBridgeProjectPages } from './project/bridge'
 import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
 import { getActivityPage } from './scaling/activity'
+import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
 import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getFinalityPage } from './scaling/finality'
@@ -51,6 +52,8 @@ export function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
+  } else {
+    pages.push(getMaintenanceActivityPage(config))
   }
 
   pages.push(getTvlPage(config, pagesData))
