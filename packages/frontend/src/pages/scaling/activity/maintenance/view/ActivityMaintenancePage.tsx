@@ -1,7 +1,7 @@
 import React from 'react'
-import { DashboardLayout } from '../../../../../layouts/DashboardLayout'
 import { SimplePageHeader } from '../../../../../components/header/SimplePageHeader'
 import { TriangleWarningIcon } from '../../../../../components/icons/symbols/TriangleWarningIcon'
+import { DashboardLayout } from '../../../../../layouts/DashboardLayout'
 
 export function ActivityMaintenancePage() {
   return (

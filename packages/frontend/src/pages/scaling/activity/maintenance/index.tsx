@@ -1,6 +1,6 @@
 import React from 'react'
-import { PageWrapper } from '../../../../components'
 import { Config } from '../../../../build/config'
+import { PageWrapper } from '../../../../components'
 import { ACTIVITY_PAGE_METADATA } from '../props'
 import { ActivityMaintenancePage } from './view/ActivityMaintenancePage'
 
