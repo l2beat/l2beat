@@ -17,20 +17,20 @@ interface Props {
   project: DaProjectEntry
 }
 
-export function DaHeaderDetails({ project }: Props) {
+export function DaProjectStats({ project }: Props) {
   const durationStorage = project.header.durationStorage
     ? round(project.header.durationStorage / UnixTime.DAY, 2)
     : undefined
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-3 bg-gray-100 dark:bg-zinc-900 rounded-lg md:px-6 md:py-5">
-      <DetailsHeaderStat title="Type" value={project.type} />
-      <DetailsHeaderStat
+      <ProjectStat title="Type" value={project.type} />
+      <ProjectStat
         title="Total value secured"
         value={formatCurrency(project.header.tvs, 'usd', {
           showLessThanMinimum: false,
         })}
       />
-      <DetailsHeaderStat
+      <ProjectStat
         title="Economic security"
         value={
           project.header.economicSecurity?.status === 'Synced'
@@ -45,7 +45,7 @@ export function DaHeaderDetails({ project }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
-      <DetailsHeaderStat
+      <ProjectStat
         title="Duration of storage"
         value={
           durationStorage
@@ -53,7 +53,7 @@ export function DaHeaderDetails({ project }: Props) {
             : 'Not synced'
         }
       />
-      <DetailsHeaderStat
+      <ProjectStat
         className="md:col-span-2"
         title="Used in"
         value={
@@ -68,14 +68,14 @@ export function DaHeaderDetails({ project }: Props) {
   )
 }
 
-export interface ProjectSummaryStat {
+export interface ProjectStat {
   title: string
   value: ReactNode
   tooltip?: string
   className?: string
 }
 
-function DetailsHeaderStat(props: ProjectSummaryStat) {
+function ProjectStat(props: ProjectStat) {
   return (
     <li
       className={cn(

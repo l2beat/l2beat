@@ -28,7 +28,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const projectDetails = getProjectDetails({
     daLayer,
-    daBridge: daBridge,
+    daBridge,
     verificationStatus,
     manuallyVerifiedContracts,
     implementationChangeReport,
