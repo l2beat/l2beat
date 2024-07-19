@@ -4,6 +4,7 @@ import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Skeleton } from '../../skeleton'
 import { useChartContext } from '../core/chart-context'
 import { type TvlChartRange } from '~/server/features/tvl/range-utils'
+import { useChartLoading } from '../core/chart-loading-context'
 
 interface Props {
   value: TvlChartRange
@@ -18,7 +19,7 @@ export function ChartTimeRangeControls({
   range,
   options,
 }: Props) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (

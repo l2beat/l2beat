@@ -3,7 +3,6 @@
 import { type Milestone } from '@l2beat/config'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
-import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
@@ -13,6 +12,7 @@ import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { useChartLoading } from './core/chart-loading-context'
 
 interface TvlChartPointData {
   timestamp: number
@@ -144,7 +144,7 @@ function Header({
   change: number
   range: TvlChartRange
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
@@ -190,7 +190,7 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (

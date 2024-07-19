@@ -1,9 +1,9 @@
 import React from 'react'
 import { cn } from '~/utils/cn'
-import { useChartContext } from './chart-context'
+import { useChartLoading } from './chart-loading-context'
 
 export function ChartLoader() {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   return (
     <svg
