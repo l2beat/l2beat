@@ -3,9 +3,9 @@ import { type DaBridge } from '@l2beat/config'
 import { useParams, useRouter } from 'next/navigation'
 import {
   Select,
-  SelectTrigger,
   SelectContent,
   SelectItem,
+  SelectTrigger,
   SelectValue,
 } from '~/app/_components/select'
 interface Props {
