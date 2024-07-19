@@ -17,6 +17,7 @@ void main().catch((e) => {
 })
 
 async function main() {
+  const refreshAll = process.argv.includes('--all')
   const chainConfigs = await Promise.all(
     configReader
       .readAllChains()
@@ -28,7 +29,9 @@ async function main() {
       config.name,
       config.chain,
     )
-    const needsRefreshReason = discoveryNeedsRefresh(discovery, config)
+    const needsRefreshReason = refreshAll
+      ? '--all flag was provided'
+      : discoveryNeedsRefresh(discovery, config)
     if (needsRefreshReason !== undefined) {
       toRefresh.push({
         config,
@@ -38,7 +41,9 @@ async function main() {
   }
 
   if (toRefresh.length === 0) {
-    console.log('All projects are up to date.')
+    console.log(
+      'All projects are up to date. Pass --all flag to refresh anyway.',
+    )
   } else {
     console.log('Found projects that need discovery refresh:')
     for (const { config, reason } of toRefresh) {

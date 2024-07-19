@@ -5,5 +5,8 @@ export function mergeBadges(
   inherentBadges: BadgeId[],
   definedBadges: BadgeId[],
 ): BadgeId[] {
-  return unionBy(definedBadges.concat(inherentBadges), (b) => badges[b].type)
+  const all = definedBadges.concat(inherentBadges)
+  const other = all.filter((b) => badges[b].type === 'Other')
+  const rest = all.filter((b) => badges[b].type !== 'Other')
+  return unionBy(rest, (b) => badges[b].type).concat(other)
 }

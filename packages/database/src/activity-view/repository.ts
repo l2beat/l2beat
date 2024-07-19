@@ -9,7 +9,7 @@ export class ActivityViewRepository {
 
   async refresh(): Promise<void> {
     await sql`
-      REFRESH MATERIALIZED VIEW activity.daily_count_view
+      REFRESH MATERIALIZED VIEW CONCURRENTLY activity.daily_count_view
     `.execute(this.db)
   }
 
