@@ -1,16 +1,21 @@
-import { upcomingL2 } from './templates/upcoming'
+import { UnixTime } from '@l2beat/shared-pure'
+import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
-export const lisk: Layer2 = upcomingL2({
-  id: 'lisk',
+const discovery = new ProjectDiscovery('lisk')
+
+export const lisk: Layer2 = opStackL2({
+  discovery,
+  genesisTimestamp: new UnixTime(1714728793),
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Lisk',
     slug: 'lisk',
     description:
       'Lisk announced a strategic move to integrate with the Ethereum ecosystem as an OP Stack L2.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
-    provider: 'OP Stack',
     links: {
       websites: ['https://lisk.com/'],
       apps: [],
@@ -23,5 +28,9 @@ export const lisk: Layer2 = upcomingL2({
         'https://t.me/Lisk_HQ',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
+  isNodeAvailable: true,
+  rpcUrl: 'https://rpc.api.lisk.com',
+  useDiscoveryMetaOnly: true,
 })

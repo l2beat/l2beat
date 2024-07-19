@@ -1,0 +1,9 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "lisk",
+  "initialAddresses": [
+    "0x2658723Bf70c7667De6B25F99fcce13A16D25d08" // bridge
+  ],
+  "names": {}
+}
