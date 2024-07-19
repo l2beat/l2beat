@@ -6,7 +6,7 @@ import {
 } from '~/app/_components/accordion'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
-import { CustomLink } from '../../custom-link'
+import { CustomLink } from '../../link/custom-link'
 import { type ProjectLink } from './types'
 
 export function MobileProjectLinks({

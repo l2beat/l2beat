@@ -1,6 +1,5 @@
 import React from 'react'
 import { Callout } from '~/app/_components/callout'
-import { CustomLink } from '~/app/_components/custom-link'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import BulletIcon from '~/icons/bullet.svg'
 import ShieldIcon from '~/icons/shield.svg'
@@ -9,6 +8,8 @@ import { cn } from '~/utils/cn'
 import { ReferenceList, type TechnologyReference } from './reference-list'
 import { UpgradeConsiderations } from './upgrade-considerations'
 import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
+import { HighlightableLink } from '~/app/_components/link/highlightable/highlightable-link'
+import { CustomLink } from '~/app/_components/link/custom-link'
 
 export interface TechnologyContract {
   name: string
@@ -59,8 +60,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
           <div className="flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
-              <CustomLink
-                data-role="etherscan-link"
+              <HighlightableLink
                 key={i}
                 variant={
                   !address.verified && !address.isAdmin ? 'danger' : 'primary'
@@ -68,7 +68,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
                 href={address.href}
               >
                 {address.name}
-              </CustomLink>
+              </HighlightableLink>
             ))}
           </div>
           {contract.description && (

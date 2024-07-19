@@ -7,6 +7,7 @@ import { MobileProjectNavigation } from '~/app/_components/projects/sections/nav
 import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
+import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 
 interface Props {
   header: React.ReactNode
@@ -43,7 +44,9 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
             />
           </div>
           <div className="w-full">
-            <ProjectDetails items={daProjectEntry.projectDetails} />
+            <HighlightableLinkContextProvider>
+              <ProjectDetails items={daProjectEntry.projectDetails} />
+            </HighlightableLinkContextProvider>
           </div>
         </div>
       )}
