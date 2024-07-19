@@ -11,7 +11,6 @@ export const eclipse: Layer2 = upcomingL2({
       'Eclipse is a Layer 2 powered by the Solana Virtual Machine (SVM).',
     purposes: ['Universal'],
     category: 'Optimistic Rollup',
-    badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
     links: {
       websites: ['https://eclipse.builders/'],
       apps: ['https://bridge.eclipse.builders/'],
@@ -25,4 +24,5 @@ export const eclipse: Layer2 = upcomingL2({
       ],
     },
   },
+  badges: [Badge.VM.SolanaVM, Badge.DA.Celestia],
 })
