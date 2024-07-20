@@ -109,6 +109,31 @@ describe('bridges', () => {
     })
   })
 
+  describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+    for (const bridge of bridges) {
+      for (const escrow of bridge.config.escrows) {
+        const chain = chains.find((c) => c.name === escrow.chain)
+
+        it(`${bridge.id.toString()} : ${escrow.address.toString()}`, () => {
+          assert(
+            chain,
+            `Chain not found for escrow ${escrow.address.toString()}`,
+          )
+          assert(
+            chain.minTimestampForTvl,
+            `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+              chain.name
+            }`,
+          )
+
+          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
+            chain.minTimestampForTvl.toNumber(),
+          )
+        })
+      }
+    }
+  })
+
   describe('technology', () => {
     for (const bridge of bridges) {
       describe(bridge.display.name, () => {

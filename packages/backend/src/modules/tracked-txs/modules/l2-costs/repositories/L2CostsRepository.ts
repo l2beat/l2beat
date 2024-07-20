@@ -3,12 +3,12 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
 import { L2CostsRow } from 'knex/types/tables'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { TrackedTxId } from '@l2beat/shared'
 import {
   BaseRepository,
   CheckConvention,
 } from '../../../../../peripherals/database/BaseRepository'
-import { Database } from '../../../../../peripherals/database/Database'
 
 export interface L2CostsRecord {
   timestamp: UnixTime
@@ -27,7 +27,7 @@ export interface L2CostsRecordWithProjectId extends L2CostsRecord {
 }
 
 export class L2CostsRepository extends BaseRepository {
-  constructor(database: Database, logger: Logger) {
+  constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
     this.autoWrap<CheckConvention<L2CostsRepository>>(this)
   }

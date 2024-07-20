@@ -1,3 +1,113 @@
+Generated with discovered.json: 0xe7dd9477f228d06317c8bfc69e1bb5c7b7d1cc28
+
+# Diff at Thu, 18 Jul 2024 10:30:30 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20032828
+- current block number: 20032828
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032828 (main branch discovery), not current.
+
+```diff
+    contract L1StandardBridge (0x12a580c05466eefb2c467C6b115844cDaF55B255) {
+    +++ description: None
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+      categories:
++        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D) {
+    +++ description: None
+      template:
++        "opstack/SuperchainConfig"
+      descriptions:
++        ["Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."]
+      categories:
++        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x1d59bc9fcE6B8E2B1bf86D4777289FFd83D24C99) {
+    +++ description: None
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x3c01ebF22e9c111528c1E027D68944eDaB08Dfc9) {
+    +++ description: None
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x4F4B716627D2Ba0439327Ce8B563b4443aF47Dbd) {
+    +++ description: None
+      template:
++        "opstack/L1ERC721Bridge"
+      descriptions:
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x51A00470Eb50D758EcFF3B96DB0bF4A8e86268F4) {
+    +++ description: None
+      template:
++        "opstack/OptimismMintableERC20Factory"
+      descriptions:
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
+    }
+```
+
+```diff
+    contract SystemConfig (0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055) {
+    +++ description: None
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x7E54107731EC43e78DA678DFa5fB6222Ad036e03) {
+    +++ description: None
+      descriptions:
++        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+    }
+```
+
+```diff
+    contract ProxyAdminOwner (0xc2259E7Fb719411f97aBdCdf449f6Ba3B9D75398) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x7E54107731EC43e78DA678DFa5fB6222Ad036e03, inheriting its permissions."]
+    }
+```
+
 Generated with discovered.json: 0x51efc218ab04b3da7821488a55fc4c9bbad2a919
 
 # Diff at Thu, 06 Jun 2024 12:37:16 GMT:

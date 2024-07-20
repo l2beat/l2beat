@@ -1,9 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { ScrollFinalityAnalyzer } from './ScrollFinalityAnalyzer'
 
 describe(ScrollFinalityAnalyzer.name, () => {
@@ -20,13 +19,10 @@ describe(ScrollFinalityAnalyzer.name, () => {
           data: mockBytesResponse,
         }),
       })
-      const livenessRepository = mockObject<LivenessRepository>({})
 
       const analyzer = new ScrollFinalityAnalyzer(
         rpcClient,
-        livenessRepository,
-        mockObject<IndexerConfigurationRepository>({}),
-
+        mockObject<Database>(),
         projectId,
       )
 

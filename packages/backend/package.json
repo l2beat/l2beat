@@ -24,7 +24,8 @@
     "test": "mocha --timeout 10000",
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
-    "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts"
+    "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
+    "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",
@@ -34,6 +35,7 @@
     "@l2beat/backend-tools": "*",
     "@l2beat/config": "*",
     "@l2beat/database": "*",
+    "@l2beat/database-legacy": "*",
     "@l2beat/discovery": "*",
     "@l2beat/discovery-types": "*",
     "@l2beat/shared": "*",

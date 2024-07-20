@@ -8,23 +8,17 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import {
+  Database,
+  FinalityRecord,
+  IndexerConfigurationRecord,
+  LivenessRecord,
+} from '@l2beat/database'
 import { createTrackedTxId } from '@l2beat/shared'
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import {
-  IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from '../../../tools/uif/IndexerConfigurationRepository'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { calculateIntervals } from '../../tracked-txs/modules/liveness/utils/calculateIntervals'
 import { calculateStats } from '../../tracked-txs/modules/liveness/utils/calculateStats'
 import { filterIntervalsByRange } from '../../tracked-txs/modules/liveness/utils/filterIntervalsByRange'
-import {
-  FinalityRecord,
-  FinalityRepository,
-} from '../repositories/FinalityRepository'
 import { FinalityController } from './FinalityController'
 
 const START = UnixTime.now()
@@ -34,12 +28,13 @@ describe(FinalityController.name, () => {
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController({
         projects: [],
-        finalityRepository: getMockFinalityRepository([]),
-        livenessRepository: getMockLivenessRepository([]),
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({
+        db: mockObject<Database>({
+          finality: getMockFinalityRepository([]),
+          liveness: getMockLivenessRepository([]),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
             getSavedConfigurations: mockFn().resolvesTo([]),
           }),
+        }),
       })
 
       const result = await finalityController.getFinality()
@@ -85,8 +80,13 @@ describe(FinalityController.name, () => {
         maximumStateUpdate: 4,
       }
       const finalityController = new FinalityController({
-        finalityRepository: getMockFinalityRepository([project2Result]),
-        livenessRepository: getMockLivenessRepository(RECORDS),
+        db: mockObject<Database>({
+          finality: getMockFinalityRepository([project2Result]),
+          liveness: getMockLivenessRepository(RECORDS),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
+            getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
+          }),
+        }),
         projects: mockProjectConfig([
           {
             projectId: ProjectId('project1'),
@@ -101,11 +101,6 @@ describe(FinalityController.name, () => {
             stateUpdate: 'analyze',
           },
         ]),
-
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({
-            getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
-          }),
       })
 
       const recordsWithConfig = RECORDS.map((r) => ({
@@ -214,15 +209,16 @@ describe(FinalityController.name, () => {
       ])
       const finalityController = new FinalityController({
         projects,
-        finalityRepository: getMockFinalityRepository([]),
-        livenessRepository: getMockLivenessRepository(RECORDS),
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({
+        db: mockObject<Database>({
+          finality: getMockFinalityRepository([]),
+          liveness: getMockLivenessRepository(RECORDS),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
             getSavedConfigurations: mockFn().resolvesTo([
               mockConfiguration1,
               mockConfiguration2,
             ]),
           }),
+        }),
       })
 
       const project1LivenessWithConfig = RECORDS.filter(
@@ -286,36 +282,39 @@ describe(FinalityController.name, () => {
         },
       ])
       const finalityController = new FinalityController({
-        livenessRepository: getMockLivenessRepository([]),
-        finalityRepository: getMockFinalityRepository([
-          {
-            projectId: ProjectId('project1'),
-            timestamp: new UnixTime(1000),
-            minimumTimeToInclusion: 1,
-            averageTimeToInclusion: 2,
-            maximumTimeToInclusion: 3,
-            averageStateUpdate: 3,
-          },
-          {
-            projectId: ProjectId('project2'),
-            timestamp: new UnixTime(1000),
-            minimumTimeToInclusion: 4,
-            averageTimeToInclusion: 5,
-            maximumTimeToInclusion: 6,
-            averageStateUpdate: null,
-          },
-          {
-            projectId: ProjectId('project3'),
-            timestamp: new UnixTime(12000),
-            minimumTimeToInclusion: 7,
-            averageTimeToInclusion: 8,
-            maximumTimeToInclusion: 9,
-            averageStateUpdate: null,
-          },
-        ]),
+        db: mockObject<Database>({
+          liveness: getMockLivenessRepository([]),
+          finality: getMockFinalityRepository([
+            {
+              projectId: ProjectId('project1'),
+              timestamp: new UnixTime(1000),
+              minimumTimeToInclusion: 1,
+              averageTimeToInclusion: 2,
+              maximumTimeToInclusion: 3,
+              averageStateUpdate: 3,
+            },
+            {
+              projectId: ProjectId('project2'),
+              timestamp: new UnixTime(1000),
+              minimumTimeToInclusion: 4,
+              averageTimeToInclusion: 5,
+              maximumTimeToInclusion: 6,
+              averageStateUpdate: null,
+            },
+            {
+              projectId: ProjectId('project3'),
+              timestamp: new UnixTime(12000),
+              minimumTimeToInclusion: 7,
+              averageTimeToInclusion: 8,
+              maximumTimeToInclusion: 9,
+              averageStateUpdate: null,
+            },
+          ]),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>(
+            {},
+          ),
+        }),
         projects,
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({}),
       })
 
       const result = await finalityController.getProjectsFinality(projects)
@@ -359,19 +358,19 @@ describe(FinalityController.name, () => {
 })
 
 function getMockFinalityRepository(records: FinalityRecord[]) {
-  return mockObject<FinalityRepository>({
+  return mockObject<Database['finality']>({
     getLatestGroupedByProjectId: mockFn().resolvesTo(records),
     addMany() {
       return Promise.resolve(1)
     },
     deleteAll() {
-      return Promise.resolve(1)
+      return Promise.resolve([])
     },
   })
 }
 
 function getMockLivenessRepository(records: LivenessRecord[]) {
-  return mockObject<LivenessRepository>({
+  return mockObject<Database['liveness']>({
     getByConfigurationIdSince(configurationIds: string[]) {
       return Promise.resolve(
         records
@@ -383,7 +382,7 @@ function getMockLivenessRepository(records: LivenessRecord[]) {
       return Promise.resolve(1)
     },
     deleteAll() {
-      return Promise.resolve(1)
+      return Promise.resolve([])
     },
   })
 }

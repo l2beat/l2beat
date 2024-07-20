@@ -11,7 +11,6 @@ import { SequenceProcessor } from './SequenceProcessor'
 import { ActivityController } from './api/ActivityController'
 import { createActivityRouter } from './api/ActivityRouter'
 import { createSequenceProcessors } from './createSequenceProcessors'
-import { ActivityViewRepository } from './repositories/ActivityViewRepository'
 
 export function createActivityModule(
   config: Config,
@@ -33,7 +32,7 @@ export function createActivityModule(
 
   const viewRefresher = new ActivityViewRefresher(
     processors,
-    peripherals.getRepository(ActivityViewRepository),
+    peripherals.database,
     clock,
     logger,
   )
@@ -46,7 +45,7 @@ export function createActivityModule(
   const activityController = new ActivityController(
     includedInApiProjectIds,
     processors,
-    peripherals.getRepository(ActivityViewRepository),
+    peripherals.database,
     clock,
   )
   const activityV2Router = createActivityRouter(activityController)

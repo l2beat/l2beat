@@ -1,15 +1,15 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { Database } from '@l2beat/database'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { SequenceProcessor } from './SequenceProcessor'
-import { ActivityViewRepository } from './repositories/ActivityViewRepository'
 
 export class ActivityViewRefresher {
   private readonly refreshQueue: TaskQueue<void>
   constructor(
     private readonly processors: SequenceProcessor[],
-    private readonly viewRepository: ActivityViewRepository,
+    private readonly db: Database,
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
@@ -17,7 +17,7 @@ export class ActivityViewRefresher {
     this.refreshQueue = new TaskQueue<void>(
       async () => {
         this.logger.info('Refresh started')
-        await this.viewRepository.refresh()
+        await this.db.activityView.refresh()
         this.logger.info('Refresh finished')
       },
       this.logger.for('refreshQueue'),

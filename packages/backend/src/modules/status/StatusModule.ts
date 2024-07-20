@@ -5,8 +5,6 @@ import { Gauge } from 'prom-client'
 import { Config } from '../../config/Config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { createStatusRouter } from './StatusRouter'
 
@@ -20,13 +18,7 @@ export function createStatusModule(
     return
   }
 
-  const routers: Router[] = [
-    createStatusRouter(
-      config,
-      peripherals.getRepository(IndexerStateRepository),
-      peripherals.getRepository(IndexerConfigurationRepository),
-    ),
-  ]
+  const routers: Router[] = [createStatusRouter(config, peripherals.database)]
 
   const taskQueue = new TaskQueue(
     () => setIndexerGauges(),
@@ -38,9 +30,7 @@ export function createStatusModule(
 
   const gauges = new Map<string, Gauge>()
   const setIndexerGauges = async () => {
-    const indexers = await peripherals
-      .getRepository(IndexerStateRepository)
-      .getAll()
+    const indexers = await peripherals.database.indexerState.getAll()
 
     for (const i of indexers) {
       const parts = i.indexerId.split('::')

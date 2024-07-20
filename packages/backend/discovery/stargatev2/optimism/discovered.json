@@ -519,5 +519,7 @@
       "function taxi(tuple(address sender, uint32 dstEid, bytes32 receiver, uint64 amountSD, bytes composeMsg, bytes extraOptions) _params, tuple(uint256 nativeFee, uint256 lzTokenFee) _messagingFee, address _refundAddress) payable returns (tuple(bytes32 guid, uint64 nonce, tuple(uint256 nativeFee, uint256 lzTokenFee) fee) receipt)",
       "function transferOwnership(address newOwner)"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

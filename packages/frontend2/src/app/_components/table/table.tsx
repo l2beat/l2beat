@@ -11,6 +11,8 @@ const Table = React.forwardRef<
     <table
       ref={ref}
       className={cn('w-full text-base text-left border-collapse', className)}
+      cellPadding={0}
+      cellSpacing={0}
       {...props}
     />
   </div>
@@ -51,7 +53,7 @@ const TableHeaderRow = React.forwardRef<
   <tr
     ref={ref}
     className={cn(
-      'border-b transition-colors border-b-gray-200 dark:border-b-zinc-700',
+      'border-b border-b-gray-200 dark:border-b-zinc-700',
       className,
     )}
     {...props}
@@ -65,10 +67,7 @@ const TableRow = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <TableHeaderRow
     ref={ref}
-    className={cn(
-      'hover:bg-black/[0.05] hover:shadow-sm dark:hover:bg-white/[0.1]',
-      className,
-    )}
+    className={cn('group/row hover:shadow-sm', className)}
     {...props}
   />
 ))
@@ -88,7 +87,7 @@ const TableHead = React.forwardRef<
     )}
     {...props}
   >
-    <div className="flex items-center gap-1.5 leading-none">
+    <div className="flex items-end gap-1.5 leading-none">
       {children}
       {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
     </div>

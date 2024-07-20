@@ -22,9 +22,9 @@ export class StarkExTransactionCountRepository {
       .insertInto('activity.starkex')
       .values(toRow(record))
       .onConflict((cb) =>
-        cb.columns(['project_id', 'unix_timestamp']).doUpdateSet({
-          count: record.count,
-        }),
+        cb.columns(['project_id', 'unix_timestamp']).doUpdateSet((eb) => ({
+          count: eb.ref('excluded.count'),
+        })),
       )
       .execute()
 

@@ -2,15 +2,15 @@ import { Logger } from '@l2beat/backend-tools'
 import { expect } from 'earl'
 import { describe } from 'mocha'
 
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { describeDatabase } from '../../test/database'
 import { BaseRepository, CheckConvention } from './BaseRepository'
-import { Database } from './Database'
 
 describeDatabase(BaseRepository.name, (database) => {
   describe(BaseRepository.prototype.autoWrap.name, () => {
     it('should wrap all methods', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger) {
+        constructor(database: LegacyDatabase, logger: Logger) {
           super(database, logger)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
         }
@@ -41,7 +41,7 @@ describeDatabase(BaseRepository.name, (database) => {
 
     it('should throw error', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger) {
+        constructor(database: LegacyDatabase, logger: Logger) {
           super(database, logger)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
         }
@@ -65,7 +65,7 @@ describeDatabase(BaseRepository.name, (database) => {
 
     it('should not wrap the function if it is prefixed with _', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger) {
+        constructor(database: LegacyDatabase, logger: Logger) {
           super(database, logger)
           this.autoWrap<CheckConvention<DummyRepository>>(this)
         }
@@ -86,7 +86,7 @@ describeDatabase(BaseRepository.name, (database) => {
 
     it('should not wrap the function if it is wrapped manually', () => {
       class DummyRepository extends BaseRepository {
-        constructor(database: Database, logger: Logger) {
+        constructor(database: LegacyDatabase, logger: Logger) {
           super(database, logger)
 
           this.refresh = this.wrapAny(this.refresh)
@@ -113,7 +113,7 @@ describeDatabase(BaseRepository.name, (database) => {
         it('should show error if returning wrong type', () => {
           // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
+            constructor(database: LegacyDatabase, logger: Logger) {
               super(database, logger)
               // @ts-expect-error get method should return array
               this.autoWrap<CheckConvention<DummyRepository>>(this)
@@ -130,7 +130,7 @@ describeDatabase(BaseRepository.name, (database) => {
         it('should show error if return type is wrong', () => {
           // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
+            constructor(database: LegacyDatabase, logger: Logger) {
               super(database, logger)
               // @ts-expect-error addMany method should return array or number
               this.autoWrap<CheckConvention<DummyRepository>>(this)
@@ -145,7 +145,7 @@ describeDatabase(BaseRepository.name, (database) => {
         it('should show error if argument is of wrong type', () => {
           // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
+            constructor(database: LegacyDatabase, logger: Logger) {
               super(database, logger)
               // @ts-expect-error addMany method should take array as argument
               this.autoWrap<CheckConvention<DummyRepository>>(this)
@@ -162,7 +162,7 @@ describeDatabase(BaseRepository.name, (database) => {
         it('should show error if return type is wrong', () => {
           // biome-ignore lint/correctness/noUnusedVariables: it's used
           class DummyRepository extends BaseRepository {
-            constructor(database: Database, logger: Logger) {
+            constructor(database: LegacyDatabase, logger: Logger) {
               super(database, logger)
               // @ts-expect-error delete method should return number
               this.autoWrap<CheckConvention<DummyRepository>>(this)

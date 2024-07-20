@@ -3,8 +3,8 @@ import { HttpClient } from '@l2beat/shared'
 import { isEqual } from 'lodash'
 
 import { Database } from '@l2beat/database'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { BaseRepository } from './database/BaseRepository'
-import { Database as LegacyDatabase } from './database/Database'
 
 interface RepositoryClass<T extends BaseRepository> {
   new (database: LegacyDatabase, logger: Logger): T

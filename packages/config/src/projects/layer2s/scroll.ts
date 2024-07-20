@@ -690,7 +690,7 @@ export const scroll: Layer2 = {
       link: 'https://scroll.io/blog/compressing-the-gas-scrolls-curie-upgrade',
       date: '2024-07-03T00:00:00.00Z',
       description:
-        'Introduces data compression, new opcodes, dymanic blocktime, and new transaction types.',
+        'Introduces data compression, new opcodes, dynamic block time, and new transaction types.',
     },
     {
       name: 'Bernoulli upgrade',

@@ -33,13 +33,13 @@ export class UpdateMonitorRepository {
       .insertInto('public.update_monitor')
       .values(row)
       .onConflict((cb) =>
-        cb.columns(['project_name', 'chain_id']).doUpdateSet({
-          block_number: row.block_number,
-          unix_timestamp: row.unix_timestamp,
-          discovery_json_blob: row.discovery_json_blob,
-          config_hash: row.config_hash,
-          version: row.version,
-        }),
+        cb.columns(['project_name', 'chain_id']).doUpdateSet((eb) => ({
+          block_number: eb.ref('excluded.block_number'),
+          unix_timestamp: eb.ref('excluded.unix_timestamp'),
+          discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
+          config_hash: eb.ref('excluded.config_hash'),
+          version: eb.ref('excluded.version'),
+        })),
       )
       .execute()
 

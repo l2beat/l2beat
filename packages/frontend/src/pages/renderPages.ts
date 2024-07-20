@@ -10,12 +10,12 @@ import { getBridgeProjectPages } from './project/bridge'
 import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
 import { getActivityPage } from './scaling/activity'
+import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
 import { getCostsPage } from './scaling/costs'
 import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
-import { getRiskPage } from './scaling/risk'
 import { getSummaryPage } from './scaling/summary'
 import { getTvlPage } from './scaling/tvl'
 
@@ -33,7 +33,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     implementationChange,
   } = pagesData
 
-  pages.push(getRiskPage(config, pagesData))
   pages.push(getDARiskPage())
   pages.push(getSummaryPage(config, pagesData))
   pages.push(...getProjectPages(config, pagesData))
@@ -53,6 +52,8 @@ export function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
+  } else {
+    pages.push(getMaintenanceActivityPage(config))
   }
 
   pages.push(getTvlPage(config, pagesData))

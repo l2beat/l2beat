@@ -1,10 +1,15 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import {
+  DacBridge,
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+} from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import { UsedInProject } from './UsedInProject'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',
@@ -23,10 +28,14 @@ export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
 export type BlockchainDaLayer = CommonDaLayer & {
   kind: typeof DaLayerKind.PublicBlockchain
 
-  bridges: (OnChainDaBridge | NoDaBridge)[]
+  bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
 
   dataAvailabilitySampling: DataAvailabilitySampling
-
+  /**
+   * The period within which full nodes must store and distribute data.
+   * @unit seconds
+   */
+  pruningWindow: number
   /**
    * The consensus algorithm used by the data availability layer.
    */
@@ -70,7 +79,7 @@ export type CommonDaLayer = {
   /**
    * List of projects given da layer is being used in
    */
-  usedIn: ProjectId[]
+  usedIn: UsedInProject[]
 
   /**
    * Risks associated with the data availability layer.

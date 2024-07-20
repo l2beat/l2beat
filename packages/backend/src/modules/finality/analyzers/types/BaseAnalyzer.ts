@@ -6,9 +6,8 @@ import {
 } from '@l2beat/shared-pure'
 import { chunk } from 'lodash'
 
+import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 
 export type Transaction = {
@@ -19,8 +18,7 @@ export type Transaction = {
 export abstract class BaseAnalyzer {
   constructor(
     protected readonly provider: RpcClient,
-    protected readonly livenessRepository: LivenessRepository,
-    protected readonly indexerConfigurationRepository: IndexerConfigurationRepository,
+    protected readonly db: Database,
     protected readonly projectId: ProjectId,
   ) {}
 
@@ -28,10 +26,9 @@ export abstract class BaseAnalyzer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<number[] | undefined> {
-    const configs =
-      await this.indexerConfigurationRepository.getSavedConfigurations(
-        'tracked_txs_indexer',
-      )
+    const configs = await this.db.indexerConfiguration.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     const projectConfigs = configs
       .map((c) => {
@@ -57,7 +54,7 @@ export abstract class BaseAnalyzer {
 
     const livenessWithConfig = new LivenessWithConfigService(
       projectConfigs,
-      this.livenessRepository,
+      this.db,
     )
 
     const transactions = await livenessWithConfig.getWithinTimeRange(from, to)
