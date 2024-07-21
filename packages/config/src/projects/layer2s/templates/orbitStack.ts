@@ -37,7 +37,12 @@ import { Layer3, Layer3Display } from '../../layer3s/types'
 import { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+} from '../types'
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
@@ -72,6 +77,7 @@ export interface OrbitStackConfigCommon {
     upgradeDelay: string | undefined
   }
   bridge: ContractParameters
+  finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
@@ -717,7 +723,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: 'coming soon',
+      finality: templateVars.finality ?? 'coming soon',
     },
   }
 }
