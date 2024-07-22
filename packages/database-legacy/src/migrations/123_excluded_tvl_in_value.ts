@@ -10,7 +10,7 @@ should create a new migration file that fixes the issue.
 import { Knex } from 'knex'
 
 export async function up(knex: Knex) {
-  await knex.schema.alterTable('value', function (table) {
+  await knex.schema.alterTable('values', function (table) {
     table.bigint('canonical_associated').notNullable().defaultTo(0)
     table.bigint('canonical_associated_for_total').notNullable().defaultTo(0)
     table.bigint('external_associated').notNullable().defaultTo(0)
@@ -21,7 +21,7 @@ export async function up(knex: Knex) {
 }
 
 export async function down(knex: Knex) {
-  await knex.schema.alterTable('value', function (table) {
+  await knex.schema.alterTable('values', function (table) {
     table.dropColumn('canonical_associated')
     table.dropColumn('canonical_associated_for_total')
     table.dropColumn('external_associated')
