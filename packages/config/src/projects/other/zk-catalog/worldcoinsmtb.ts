@@ -9,6 +9,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
   },
   proofVerification: {
     aggregation: false,
+    shortDescription: "testing the short desc",
     verifiers: [
       {
         name: 'Size 100 Register',
