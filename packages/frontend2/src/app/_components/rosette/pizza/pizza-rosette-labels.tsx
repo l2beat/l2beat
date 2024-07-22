@@ -2,20 +2,35 @@ import assert from 'assert'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import { type RosetteValue } from '../types'
+import { cva, type VariantProps } from 'class-variance-authority'
 
-interface Props {
+interface Props extends VariantProps<typeof rosetteVariants> {
   values: RosetteValue[]
   containerSize: number
   textRadius: number
-  size?: 'small' | 'regular'
   textClassName?: string
 }
+
+const rosetteVariants = cva(
+  'text-center font-medium uppercase leading-tight whitespace-pre select-none',
+  {
+    variants: {
+      size: {
+        small: 'text-3xs',
+        regular: 'text-xs',
+      },
+    },
+    defaultVariants: {
+      size: 'regular',
+    },
+  },
+)
 
 export function PizzaRosetteLabels({
   values,
   containerSize,
   textRadius,
-  size = 'regular',
+  size,
   textClassName,
 }: Props) {
   const context = useRosetteTooltipContext()
@@ -24,12 +39,7 @@ export function PizzaRosetteLabels({
   const content = context?.content
 
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
-  const sharedClassName = cn(
-    size === 'small' && 'text-3xs',
-    size === 'regular' && 'text-xs',
-    'text-center font-medium uppercase leading-tight whitespace-pre select-none',
-    textClassName,
-  )
+
   const containerCenter = containerSize / 2
 
   return (
@@ -41,7 +51,7 @@ export function PizzaRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[36deg]',
-          sharedClassName,
+          rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== first.name && 'opacity-20',
         )}
       >
@@ -54,7 +64,7 @@ export function PizzaRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-72deg]',
-          sharedClassName,
+          rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== second.name && 'opacity-20',
         )}
       >
@@ -67,7 +77,7 @@ export function PizzaRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full',
-          sharedClassName,
+          rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== third.name && 'opacity-20',
         )}
       >
@@ -80,7 +90,7 @@ export function PizzaRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[72deg]',
-          sharedClassName,
+          rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== fourth.name && 'opacity-20',
         )}
       >
@@ -93,7 +103,7 @@ export function PizzaRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[-36deg]',
-          sharedClassName,
+          rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== fifth.name && 'opacity-20',
         )}
       >

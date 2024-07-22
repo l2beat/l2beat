@@ -2,28 +2,38 @@ import assert from 'assert'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import { type RosetteValue } from '../types'
+import { cva, type VariantProps } from 'class-variance-authority'
 
-interface Props {
+interface Props extends VariantProps<typeof rosetteVariants> {
   values: RosetteValue[]
   containerSize: number
   textRadius: number
-  size?: 'small' | 'regular'
 }
+
+const rosetteVariants = cva(
+  'text-center font-medium uppercase leading-tight whitespace-pre select-none',
+  {
+    variants: {
+      size: {
+        small: 'text-3xs',
+        regular: 'text-xs',
+      },
+    },
+    defaultVariants: {
+      size: 'regular',
+    },
+  },
+)
 
 export function PentagonRosetteLabels({
   values,
   containerSize,
   textRadius,
-  size = 'regular',
+  size,
 }: Props) {
   const context = useRosetteTooltipContext()
   const [first, second, third, fourth, fifth] = values
   assert(first && second && third && fourth && fifth, 'Invalid number of risks')
-  const sharedClassName = cn(
-    size === 'small' && 'text-3xs',
-    size === 'regular' && 'text-xs',
-    'text-center font-medium uppercase leading-tight whitespace-pre select-none',
-  )
 
   const containerCenter = containerSize / 2
 
@@ -36,7 +46,7 @@ export function PentagonRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[36deg]',
-          sharedClassName,
+          rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== first.name &&
             'opacity-20',
@@ -51,7 +61,7 @@ export function PentagonRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[-72deg]',
-          sharedClassName,
+          rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== second.name &&
             'opacity-20',
@@ -66,7 +76,7 @@ export function PentagonRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2',
-          sharedClassName,
+          rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== third.name &&
             'opacity-20',
@@ -81,7 +91,7 @@ export function PentagonRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 origin-top rotate-[72deg]',
-          sharedClassName,
+          rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== fourth.name &&
             'opacity-20',
@@ -96,7 +106,7 @@ export function PentagonRosetteLabels({
         }}
         className={cn(
           'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-36deg]',
-          sharedClassName,
+          rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== fifth.name &&
             'opacity-20',
