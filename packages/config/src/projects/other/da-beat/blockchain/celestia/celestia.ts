@@ -17,12 +17,12 @@ export const celestia: DaLayer = {
     slug: 'celestia',
     description: 'Celestia is a modular data availability network.',
     links: {
-      websites: ['https://immutablex.xyz/'],
-      documentation: ['https://docs.immutablex.xyz/'],
-      repositories: ['https://github.com/Immutablex/immutablex'],
-      apps: ['https://app.immutable.com/'],
-      explorers: ['https://explorer.immutable.com/'],
-      socialMedia: ['https://twitter.com/Immutable'],
+      websites: ['https://celestia.org/'],
+      documentation: ['https://docs.celestia.org/'],
+      repositories: ['https://github.com/celestiaorg'],
+      apps: [''],
+      explorers: ['https://celenium.io/'],
+      socialMedia: ['https://x.com/CelestiaOrg', 'https://discord.com/invite/YsnTPcSfWQ','https://t.me/CelestiaCommunity' ],
     },
   },
   technology:
