@@ -1,6 +1,8 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
+  DaLayer,
+  OnChainDaBridge,
   ScalingProjectContract,
   ScalingProjectUpgradeability,
   isSingleAddress,
@@ -19,13 +21,29 @@ export function getUniqueContractsForAllProjects(
   return withoutDuplicates(addresses)
 }
 
+export function getUniqueContractsForAllDaLayers(
+  daLayers: DaLayer[],
+  chain: string,
+): EthereumAddress[] {
+  const addresses = daLayers.flatMap((daLayer) =>
+    getUniqueContractsFromList(getDaLayerContractsForChain(daLayer, chain)),
+  )
+  return withoutDuplicates(addresses)
+}
+
 export function getUniqueContractsForProject(
   project: Project,
   chain: string,
 ): EthereumAddress[] {
   const projectContracts = getProjectContractsForChain(project, chain)
-  const mainAddresses = projectContracts.flatMap((c) => getAddresses(c))
-  const upgradeabilityAddresses = projectContracts
+  return getUniqueContractsFromList(projectContracts)
+}
+
+export function getUniqueContractsFromList(
+  contracts: ScalingProjectContract[],
+): EthereumAddress[] {
+  const mainAddresses = contracts.flatMap((c) => getAddresses(c))
+  const upgradeabilityAddresses = contracts
     .filter(isSingleAddress)
     .map((c) => c.upgradeability)
     .filter((u): u is ScalingProjectUpgradeability => !!u) // remove undefined
@@ -48,6 +66,13 @@ function getProjectContractsForChain(project: Project, chain: string) {
     .filter((escrowContract) => isContractOnChain(escrowContract, chain))
 
   return [...contracts, ...escrows]
+}
+
+export function getDaLayerContractsForChain(daLayer: DaLayer, chain: string) {
+  const contracts = daLayer.bridges
+    .filter((b): b is OnChainDaBridge => b.type === 'OnChainBridge')
+    .flatMap((b) => b.contracts.addresses)
+  return contracts.filter((a) => isContractOnChain(a, chain))
 }
 
 function isContractOnChain(contract: ScalingProjectContract, chain: string) {
@@ -73,7 +98,24 @@ export function areAllProjectContractsVerified(
   return true
 }
 
-function areAllAddressesVerified(
+export function areAllDaLayersContractsVerified(
+  daLayer: DaLayer,
+  addressVerificationMapPerChain: VerificationMapPerChain,
+): boolean {
+  for (const [chain, addressVerificationMap] of Object.entries(
+    addressVerificationMapPerChain,
+  )) {
+    const daLayerAddresses = getUniqueContractsFromList(
+      getDaLayerContractsForChain(daLayer, chain),
+    )
+    if (!areAllAddressesVerified(daLayerAddresses, addressVerificationMap)) {
+      return false
+    }
+  }
+  return true
+}
+
+export function areAllAddressesVerified(
   addresses: EthereumAddress[],
   addressVerificationMap: Record<string, boolean>,
 ): boolean {
