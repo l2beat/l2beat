@@ -1,7 +1,6 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import {
-  CONTRACTS,
   FORCE_TRANSACTIONS,
   NEW_CRYPTOGRAPHY,
   RISK_VIEW,
@@ -47,7 +46,7 @@ export const aztecV1: Layer2 = {
     warning:
       'EOL: Ownership of the rollup contract is irrevocably renounced and Aztec is not running a rollup processor (operator). Users or third parties have to [run the rollup system by themselves](https://github.com/AztecProtocol/aztec-v2-ejector/) to withdraw or transact.',
     description:
-      'Aztec Connect is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
+      'Zk.Money v1 is an open source layer 2 network that aims to enable affordable, private crypto payments via zero-knowledge proofs.',
     purposes: ['Private payments'],
     category: 'ZK Rollup',
     links: {
@@ -293,7 +292,7 @@ export const aztecV1: Layer2 = {
         description: 'Turbo Plonk zkSNARK Verifier.',
       }),
     ],
-    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+    risks: [],
   },
   permissions: [
     {
