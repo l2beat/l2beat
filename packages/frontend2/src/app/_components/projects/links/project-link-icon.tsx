@@ -1,13 +1,13 @@
 import React from 'react'
 
+import { assertUnreachable } from '@l2beat/shared-pure'
 import AppIcon from '~/icons/app.svg'
 import CodeIcon from '~/icons/code.svg'
 import DocumentIcon from '~/icons/document.svg'
 import GlobeIcon from '~/icons/globe.svg'
+import RollupCodesIcon from '~/icons/products/rollup-codes.svg'
 import SearchIcon from '~/icons/search.svg'
 import UserIcon from '~/icons/user.svg'
-import RollupCodesIcon from '~/icons/products/rollup-codes.svg'
-import { assertUnreachable } from '@l2beat/shared-pure'
 import { type LinkName } from './types'
 
 export interface LinkNameIconProps {

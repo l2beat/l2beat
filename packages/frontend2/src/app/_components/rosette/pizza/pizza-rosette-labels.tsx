@@ -1,8 +1,8 @@
 import assert from 'assert'
+import { type VariantProps, cva } from 'class-variance-authority'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
 import { type RosetteValue } from '../types'
-import { cva, type VariantProps } from 'class-variance-authority'
 
 interface Props extends VariantProps<typeof rosetteVariants> {
   values: RosetteValue[]

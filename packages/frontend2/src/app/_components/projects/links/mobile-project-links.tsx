@@ -4,12 +4,12 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '~/app/_components/accordion'
+import { ProductIcon } from '~/icons/products/SocialIcon'
 import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { CustomLink } from '../../link/custom-link'
-import { type ProjectLink } from './types'
-import { ProductIcon } from '~/icons/products/SocialIcon'
 import { parseSocial } from './parse-social'
+import { type ProjectLink } from './types'
 
 export function MobileProjectLinks({
   projectLinks,

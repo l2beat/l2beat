@@ -6,8 +6,8 @@ import {
 import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
-import { UsedInProject } from './UsedInProject'
 import { DaLinks } from './DaLinks'
+import { UsedInProject } from './UsedInProject'
 
 export type DaBridge =
   | NoDaBridge

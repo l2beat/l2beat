@@ -8,11 +8,11 @@ import {
 } from '~/app/_components/popover'
 import ChevronIcon from '~/icons/chevron.svg'
 import OutlinkIcon from '~/icons/outlink.svg'
+import { ProductIcon } from '~/icons/products/SocialIcon'
 import { formatLink } from '~/utils/format-link'
+import { parseSocial } from './parse-social'
 import { ProjectLinkIcon } from './project-link-icon'
 import { type ProjectLink } from './types'
-import { ProductIcon } from '~/icons/products/SocialIcon'
-import { parseSocial } from './parse-social'
 
 interface Props {
   projectLinks: ProjectLink[]
