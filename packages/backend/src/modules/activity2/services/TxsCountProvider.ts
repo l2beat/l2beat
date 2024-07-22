@@ -15,7 +15,7 @@ interface TxsCountProviderDeps {
 
 export class TxsCountProvider {
   constructor(private readonly $: TxsCountProviderDeps) {
-    this.$.logger = $.logger.for(this)
+    this.$.logger = $.logger.for(this).tag($.projectId.toString())
   }
 
   async getTxsCount(from: number, to: number): Promise<Map<number, number>> {
@@ -29,25 +29,26 @@ export class TxsCountProvider {
   }
 
   async getRpcTxsCount(from: number, to: number): Promise<Map<number, number>> {
-    assert(this.$.projectConfig.type === 'rpc')
+    const projectConfig = this.$.projectConfig
+    assert(
+      projectConfig.type === 'rpc',
+      'Method not supported for projects other than rpc',
+    )
 
     const rpcClient = this.$.peripherals.getClient(RpcClient, {
-      url: this.$.projectConfig.defaultUrl,
-      callsPerMinute: this.$.projectConfig.defaultCallsPerMinute,
+      url: projectConfig.defaultUrl,
+      callsPerMinute: projectConfig.defaultCallsPerMinute,
     })
 
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const block = await rpcClient.getBlock(blockNumber)
       const timestamp = new UnixTime(block.timestamp)
-      assert(this.$.projectConfig.type === 'rpc')
 
       return {
         timestamp,
         count:
-          this.$.projectConfig.assessCount?.(
-            block.transactions.length,
-            blockNumber,
-          ) ?? block.transactions.length,
+          projectConfig.assessCount?.(block.transactions.length, blockNumber) ??
+          block.transactions.length,
       }
     })
 
