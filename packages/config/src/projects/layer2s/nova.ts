@@ -49,6 +49,7 @@ export const nova: Layer2 = orbitStackL2({
     Badge.DA.DAC,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
+    Badge.Other.L3HostChain,
   ],
   discovery,
   associatedTokens: ['ARB'],
