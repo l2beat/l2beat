@@ -1,4 +1,4 @@
-Generated with discovered.json: 0xd342b46f2bccca873feae0ef331a522f8c37c94b
+Generated with discovered.json: 0x11244fe284c19d4642f60d9cf293f1b9bf2169a3
 
 # Diff at Thu, 18 Jul 2024 10:33:51 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd342b46f2bccca873feae0ef331a522f8c37c94b
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Config related.
 
 ## Config/verification related changes
 
