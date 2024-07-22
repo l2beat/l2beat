@@ -2,11 +2,13 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('playblock', 'nova')
 
 export const playblock: Layer3 = orbitStackL3({
-  hostChain: ProjectId('arbitrum'),
+  discovery,
+  hostChain: ProjectId('nova'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
   display: {
     name: 'PlayBlock',
