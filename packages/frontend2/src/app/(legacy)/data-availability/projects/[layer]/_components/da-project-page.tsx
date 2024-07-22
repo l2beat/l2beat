@@ -2,12 +2,12 @@ import {
   type DaBridge,
   type DaLayer,
 } from '@l2beat/config/build/src/projects/other/da-beat'
+import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
 import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
-import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 
 interface Props {
   header: React.ReactNode

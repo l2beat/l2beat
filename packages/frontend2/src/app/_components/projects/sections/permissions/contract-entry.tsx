@@ -1,5 +1,7 @@
 import React from 'react'
 import { Callout } from '~/app/_components/callout'
+import { CustomLink } from '~/app/_components/link/custom-link'
+import { HighlightableLink } from '~/app/_components/link/highlightable/highlightable-link'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import BulletIcon from '~/icons/bullet.svg'
 import ShieldIcon from '~/icons/shield.svg'
@@ -8,8 +10,6 @@ import { cn } from '~/utils/cn'
 import { ReferenceList, type TechnologyReference } from './reference-list'
 import { UpgradeConsiderations } from './upgrade-considerations'
 import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
-import { HighlightableLink } from '~/app/_components/link/highlightable/highlightable-link'
-import { CustomLink } from '~/app/_components/link/custom-link'
 
 export interface TechnologyContract {
   name: string
