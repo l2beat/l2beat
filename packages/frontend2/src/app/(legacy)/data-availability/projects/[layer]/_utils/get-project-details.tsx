@@ -76,7 +76,7 @@ export function getProjectDetails({
   items.push({
     type: 'MarkdownSection',
     props: {
-      id: 'da-layer-technology',
+      id: 'DaLayer-technology',
       title: 'DA Layer technology',
       children: daLayer.technology,
     },

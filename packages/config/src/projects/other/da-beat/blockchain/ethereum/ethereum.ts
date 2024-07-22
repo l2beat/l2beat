@@ -5,8 +5,8 @@ import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum: DaLayer = {
   id: 'ethereum',
-  type: 'da-layer',
-  kind: 'public-blockchain',
+  type: 'DaLayer',
+  kind: 'PublicBlockchain',
   display: {
     name: 'Ethereum (EIP-4844)',
     slug: 'ethereum',

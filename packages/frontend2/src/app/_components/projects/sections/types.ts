@@ -5,7 +5,7 @@ import { type RiskAnalysisSectionProps } from './risk-analysis-section'
 
 export type ProjectSectionId =
   | 'risk-analysis'
-  | 'da-layer-technology'
+  | 'DaLayer-technology'
   | 'da-bridge-technology'
   | 'da-bridge-permissions'
   | 'da-bridge-contracts'

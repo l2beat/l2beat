@@ -37,7 +37,7 @@ export function ScalingDataAvailabilityView({
   return (
     <section className="mt-4 flex flex-col gap-y-2 sm:mt-8">
       <ScalingFilters items={items}>
-        <RichSelect label="DA Layer" id="da-layer-select">
+        <RichSelect label="DA Layer" id="DaLayer-select">
           {daLayers.map((category) => (
             <RichSelect.Item
               selectedLabel={category.label}
