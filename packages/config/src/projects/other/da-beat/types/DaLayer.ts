@@ -5,10 +5,10 @@ import {
   OnChainDaBridge,
 } from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
-import { DaDisplayLinks } from './DaDisplayLinks'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import { DaLinks } from './DaLinks'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { UsedInProject } from './UsedInProject'
 
@@ -63,5 +63,5 @@ interface DaLayerDisplay {
   /** A short description of the data availability layer. */
   description: string
   /** Links related to the data availability layer. */
-  links: DaDisplayLinks
+  links: DaLinks
 }

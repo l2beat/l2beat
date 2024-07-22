@@ -22,6 +22,9 @@ export const immutableXDac = {
       websites: ['https://immutablex.xyz/'],
       documentation: ['https://docs.immutablex.xyz/'],
       repositories: ['https://github.com/Immutablex/immutablex'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
     },
   },
   contracts: {

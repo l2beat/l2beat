@@ -6,7 +6,7 @@ import {
   DaBridgeRisks,
   OnChainDaBridge,
 } from '../../../../types'
-import { DaDisplayLinks } from '../../../../types/DaDisplayLinks'
+import { DaLinks } from '../../../../types/DaLinks'
 
 type TemplateRisks = Omit<DaBridgeRisks, 'accessibility'>
 
@@ -16,7 +16,7 @@ type TemplateVars = Pick<
 > & {
   risks: TemplateRisks
   display: {
-    links: DaDisplayLinks
+    links: DaLinks
   }
 }
 

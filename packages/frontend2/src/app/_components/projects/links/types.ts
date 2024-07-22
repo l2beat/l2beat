@@ -1,4 +1,13 @@
+export type LinkName =
+  | 'Website'
+  | 'App'
+  | 'Docs'
+  | 'Explorer'
+  | 'Repository'
+  | 'Social'
+  | 'rollup.codes'
+
 export interface ProjectLink {
-  name: string
+  name: LinkName
   links: string[]
 }

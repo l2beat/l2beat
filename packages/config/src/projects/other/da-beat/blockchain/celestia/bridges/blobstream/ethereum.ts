@@ -38,9 +38,12 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   ],
   display: {
     links: {
-      websites: ['https://blobstream.xyz/'],
-      documentation: ['https://docs.blobstream.xyz/'],
-      repositories: ['https://github.com/BlobStream/blobstream'],
+      websites: ['https://immutablex.xyz/'],
+      documentation: ['https://docs.immutablex.xyz/'],
+      repositories: ['https://github.com/Immutablex/immutablex'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
     },
   },
   technology:

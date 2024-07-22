@@ -8,6 +8,8 @@ import { cn } from '~/utils/cn'
 import { formatLink } from '~/utils/format-link'
 import { CustomLink } from '../../link/custom-link'
 import { type ProjectLink } from './types'
+import { ProductIcon } from '~/icons/products/SocialIcon'
+import { parseSocial } from './parse-social'
 
 export function MobileProjectLinks({
   projectLinks,
@@ -40,15 +42,35 @@ export function MobileProjectLinks({
                     {name}
                   </th>
                   <td className={cn('py-3', i === 0 && 'pt-0')}>
-                    {links.map((link, i) => (
-                      <CustomLink
-                        className="block truncate"
-                        href={link}
-                        key={i}
-                      >
-                        {formatLink(link)}
-                      </CustomLink>
-                    ))}
+                    {links.map((link) => {
+                      if (name === 'Social') {
+                        const parsed = parseSocial(link)
+                        return (
+                          <CustomLink
+                            key={link}
+                            className="mt-1 flex items-center gap-1.5 first:mt-0"
+                            href={link}
+                          >
+                            {parsed.platform ? (
+                              <ProductIcon
+                                className="size-[1em] shrink-0 fill-current"
+                                product={parsed.platform}
+                              />
+                            ) : null}
+                            <span className="truncate">{parsed.text}</span>
+                          </CustomLink>
+                        )
+                      }
+                      return (
+                        <CustomLink
+                          key={link}
+                          className="block truncate"
+                          href={link}
+                        >
+                          {formatLink(link)}
+                        </CustomLink>
+                      )
+                    })}
                   </td>
                 </tr>
               ))}

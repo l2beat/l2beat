@@ -7,7 +7,7 @@ import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 import { UsedInProject } from './UsedInProject'
-import { DaDisplayLinks } from './DaDisplayLinks'
+import { DaLinks } from './DaLinks'
 
 export type DaBridge =
   | NoDaBridge
@@ -77,7 +77,7 @@ interface DaBridgeDisplay {
   /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
   redWarning?: string
   /** Links related to the data availability bridge. */
-  links: DaDisplayLinks
+  links: DaLinks
 }
 
 export type DaBridgeRisks = {

@@ -1,22 +1,36 @@
 import React from 'react'
 
+import AppIcon from '~/icons/app.svg'
 import CodeIcon from '~/icons/code.svg'
 import DocumentIcon from '~/icons/document.svg'
 import GlobeIcon from '~/icons/globe.svg'
+import SearchIcon from '~/icons/search.svg'
+import UserIcon from '~/icons/user.svg'
+import RollupCodesIcon from '~/icons/products/rollup-codes.svg'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { type LinkName } from './types'
 
 export interface LinkNameIconProps {
-  name: string
+  name: LinkName
 }
 
 export function ProjectLinkIcon({ name }: LinkNameIconProps) {
   switch (name) {
     case 'Website':
-      return <GlobeIcon className="stroke-black dark:stroke-white" />
+      return <GlobeIcon />
+    case 'App':
+      return <AppIcon />
     case 'Docs':
-      return <DocumentIcon className="fill-black dark:fill-white" />
+      return <DocumentIcon />
+    case 'Explorer':
+      return <SearchIcon />
     case 'Repository':
-      return <CodeIcon className="stroke-black dark:stroke-white" />
+      return <CodeIcon />
+    case 'Social':
+      return <UserIcon />
+    case 'rollup.codes':
+      return <RollupCodesIcon />
     default:
-      return null
+      assertUnreachable(name)
   }
 }

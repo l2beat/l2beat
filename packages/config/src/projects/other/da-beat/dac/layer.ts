@@ -22,6 +22,9 @@ export const dac: DaLayer = {
         'https://docs.dac.com',
       ],
       repositories: ['https://github.com/data-availability-committee'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
     },
   },
   technology:

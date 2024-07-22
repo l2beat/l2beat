@@ -1,41 +1,5 @@
-import React from 'react'
-
-import { Link } from '../../../components/Link'
-import {
-  GlobeIcon,
-  ProductIcon,
-  ProductIconType,
-} from '../../../components/icons'
-import { formatLink } from '../../../utils/formatLink'
-
-interface Props {
-  name: string
-  href: string
-}
-
-export function LinkSectionLink({ href, name }: Props) {
-  if (name === 'Social') {
-    const parsed = parseSocial(href)
-    return (
-      <Link className="mt-1 flex items-center gap-1.5 first:mt-0" href={href}>
-        {parsed.platform ? (
-          <ProductIcon
-            className="size-[1em] shrink-0 fill-current"
-            product={parsed.platform}
-          />
-        ) : (
-          <GlobeIcon className="size-[1em] shrink-0 fill-current" />
-        )}
-        <span className="truncate">{parsed.text}</span>
-      </Link>
-    )
-  }
-  return (
-    <Link className="block truncate" href={href}>
-      {formatLink(href)}
-    </Link>
-  )
-}
+import { type ProductIconType } from '~/icons/products/SocialIcon'
+import { formatLink } from '~/utils/format-link'
 
 interface SocialDetails {
   platform?: ProductIconType

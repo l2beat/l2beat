@@ -14,9 +14,12 @@ export const noBridge = {
     warning: 'This has no bridge.',
     redWarning: 'This really has no bridge.',
     links: {
-      websites: ['https://nobridge.xyz/'],
-      documentation: ['https://docs.nobridge.xyz/'],
-      repositories: ['https://github.com/Nobridge/nobridge'],
+      websites: ['https://immutablex.xyz/'],
+      documentation: ['https://docs.immutablex.xyz/'],
+      repositories: ['https://github.com/Immutablex/immutablex'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
     },
   },
   technology:

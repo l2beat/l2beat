@@ -11,6 +11,8 @@ import OutlinkIcon from '~/icons/outlink.svg'
 import { formatLink } from '~/utils/format-link'
 import { ProjectLinkIcon } from './project-link-icon'
 import { type ProjectLink } from './types'
+import { ProductIcon } from '~/icons/products/SocialIcon'
+import { parseSocial } from './parse-social'
 
 interface Props {
   projectLinks: ProjectLink[]
@@ -54,13 +56,23 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
       </PopoverTrigger>
       <PopoverContent align="start" className="dark:bg-zinc-900 bg-gray-100">
         {projectLink.links.map((link) => {
+          const parsedSocial =
+            projectLink.name === 'Social' ? parseSocial(link) : undefined
           return (
             <PlainLink
               key={link}
               href={link}
               className="flex items-center gap-1.5 rounded-lg px-3 py-1.5 font-medium text-xs transition-colors dark:hover:bg-zinc-700 hover:bg-gray-200"
             >
-              {formatLink(link)} <OutlinkIcon className="fill-current" />
+              {parsedSocial?.platform && (
+                <ProductIcon
+                  product={parsedSocial.platform}
+                  width={16}
+                  height={16}
+                />
+              )}
+              {parsedSocial ? parsedSocial.text : formatLink(link)}
+              <OutlinkIcon className="fill-current" />
             </PlainLink>
           )
         })}
