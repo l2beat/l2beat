@@ -138,9 +138,9 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
   async update(from: number, to: number): Promise<number> {
     const range = findRange(this.ranges, from)
-    const configurationsInRange = range.configurations
+    const configurations = range.configurations
 
-    if (configurationsInRange.length === 0) {
+    if (configurations.length === 0) {
       return Math.min(range.to, to)
     }
 
@@ -149,14 +149,14 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     this.logger.info('Calling multiUpdate', {
       from,
       to: adjustedTo,
-      configurations: configurationsInRange.length,
+      configurations: configurations.length,
     })
 
     const dbMiddleware = await this.createDatabaseMiddleware()
     const safeHeight = await this.multiUpdate(
       from,
       adjustedTo,
-      configurationsInRange,
+      configurations,
       dbMiddleware,
     )
     if (safeHeight < from || safeHeight > adjustedTo) {
@@ -165,7 +165,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       )
     }
 
-    this.updateSavedConfigurations(configurationsInRange, safeHeight)
+    this.updateSavedConfigurations(configurations, safeHeight)
     await this.updateConfigurationsCurrentHeight(safeHeight, dbMiddleware)
 
     await dbMiddleware.execute()
