@@ -1,27 +1,4 @@
-Generated with discovered.json: 0x2f3a2b9b552e7923b827e3484614d636b5dfd595
-
-# Diff at Mon, 22 Jul 2024 14:01:46 GMT:
-
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20339515
-- current block number: 20362531
-
-## Description
-
-The Bridger (a gateway and swapper contract) is paused. This does not affect the bridge nor the escrows.
-
-## Watched changes
-
-```diff
-    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
-    +++ description: None
-      values.paused:
--        false
-+        true
-    }
-```
-
-Generated with discovered.json: 0xad8d0f1f6d6b88a070e478339d9ec06b40604739
+Generated with discovered.json: 0x87c5c2e00532cf5609ebd2a87ccf20e1d7afef8c
 
 # Diff at Fri, 19 Jul 2024 08:55:45 GMT:
 
