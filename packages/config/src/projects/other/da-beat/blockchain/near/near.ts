@@ -13,11 +13,19 @@ export const near: DaLayer = {
     description: `NEAR's Data Availability Layer (NEAR DA) leverages the sharded architecture of the NEAR Protocol to provide a modular data availability layer for layer 2 solutions.`,
     links: {
       websites: ['https://near.org/', 'https://nuff.tech/'],
-      documentation: ['https://docs.near.org/build/chain-abstraction/data-availability'],
-      repositories: ['https://github.com/near', 'https://github.com/Nuffle-Labs/data-availability'],
+      documentation: [
+        'https://docs.near.org/build/chain-abstraction/data-availability',
+      ],
+      repositories: [
+        'https://github.com/near',
+        'https://github.com/Nuffle-Labs/data-availability',
+      ],
       apps: [''],
       explorers: ['https://nearblocks.io/'],
-      socialMedia: ['https://x.com/NEARProtocol','https://discord.com/invite/zfhfRpaM4m'],
+      socialMedia: [
+        'https://x.com/NEARProtocol',
+        'https://discord.com/invite/zfhfRpaM4m',
+      ],
     },
   },
   technology: '',
