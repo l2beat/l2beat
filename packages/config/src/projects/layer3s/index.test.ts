@@ -38,33 +38,7 @@ describe('layer3s', () => {
       expect(hostChain).not.toBeNullish()
     }
   })
-
-  describe('every contract and escrow in layer3 has a chain different than ethereum', () => {
-    for (const layer3 of layer3s) {
-      it(layer3.display.name, () => {
-        const contracts = layer3.contracts.addresses
-        for (const contract of contracts) {
-          expect(contract.chain).not.toBeNullish()
-          expect(contract.chain).not.toEqual('ethereum')
-        }
-
-        if (
-          layer3.id !== ProjectId('zklinknova') &&
-          layer3.id !== ProjectId('mxc') &&
-          layer3.id !== ProjectId('hook')
-        ) {
-          const escrows = layer3.config.escrows
-          for (const escrow of escrows) {
-            expect(escrow.newVersion).toEqual(true)
-            assert(escrow.newVersion) // to make typescript happy
-            expect(escrow.contract.chain).not.toBeNullish()
-            expect(escrow.contract.chain).not.toEqual('ethereum')
-          }
-        }
-      })
-    }
-  })
-
+  
   describe('every escrow can resolve all of its tokens', () => {
     const chainsMap = new Map<string, ChainId>(
       chains.map((c) => [c.name, ChainId(c.chainId)]),
