@@ -1,8 +1,7 @@
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
 import { selectIndexerConfiguration } from './select'
-
-const BATCH_SIZE = 5_000
 
 export class IndexerConfigurationRepository {
   constructor(private readonly db: PostgresDatabase) {}
@@ -10,23 +9,21 @@ export class IndexerConfigurationRepository {
   async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
-    await this.db.transaction().execute(async (trx) => {
-      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-        await trx
-          .insertInto('public.indexer_configurations')
-          .values(rows.slice(i, i + BATCH_SIZE))
-          .onConflict((cb) =>
-            cb.column('id').doUpdateSet((eb) => ({
-              id: eb.ref('excluded.id'),
-              indexer_id: eb.ref('excluded.indexer_id'),
-              properties: eb.ref('excluded.properties'),
-              current_height: eb.ref('excluded.current_height'),
-              min_height: eb.ref('excluded.min_height'),
-              max_height: eb.ref('excluded.max_height'),
-            })),
-          )
-          .execute()
-      }
+    await batchExecute(this.db, rows, 5_000, async (trx, batch) => {
+      await trx
+        .insertInto('public.indexer_configurations')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.column('id').doUpdateSet((eb) => ({
+            id: eb.ref('excluded.id'),
+            indexer_id: eb.ref('excluded.indexer_id'),
+            properties: eb.ref('excluded.properties'),
+            current_height: eb.ref('excluded.current_height'),
+            min_height: eb.ref('excluded.min_height'),
+            max_height: eb.ref('excluded.max_height'),
+          })),
+        )
+        .execute()
     })
   }
 

@@ -1,9 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import { ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
-
-const BATCH_SIZE = 5_000
 
 export class ActivityRepository {
   constructor(private readonly db: PostgresDatabase) {}
@@ -20,18 +19,16 @@ export class ActivityRepository {
   async addOrUpdateMany(records: ActivityRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await this.db.transaction().execute(async (trx) => {
-      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-        await trx
-          .insertInto('public.activity')
-          .values(rows.slice(i, i + BATCH_SIZE))
-          .onConflict((cb) =>
-            cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
-              count: eb.ref('excluded.count'),
-            })),
-          )
-          .execute()
-      }
+    await batchExecute(this.db, rows, 5_000, async (trx, batch) => {
+      await trx
+        .insertInto('public.activity')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
+            count: eb.ref('excluded.count'),
+          })),
+        )
+        .execute()
     })
 
     return records.length
