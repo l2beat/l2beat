@@ -16,7 +16,7 @@ interface Props {
 
 export function HighlightableLinkContextProvider({ children }: Props) {
   const [current, setCurrent] = useState<string | undefined>()
-  console.log(current)
+
   return (
     <HighlightableLinkContext.Provider
       value={{
