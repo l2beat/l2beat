@@ -9,8 +9,6 @@ import {
 import { ValueRecord, toRecord, toRow } from './entity'
 import { selectValue } from './select'
 
-const BATCH_SIZE = 2_000
-
 export class ValueRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
@@ -52,7 +50,7 @@ export class ValueRepository {
   async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await batchExecute(this.db, rows, BATCH_SIZE, async (trx, batch) => {
+    await batchExecute(this.db, rows, 2_000, async (trx, batch) => {
       await trx
         .insertInto('public.values')
         .values(batch)

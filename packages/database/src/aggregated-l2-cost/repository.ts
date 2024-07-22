@@ -19,7 +19,6 @@ export class AggregatedL2CostRepository {
   async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    // NOTE: This used to be 10_000, but was changed. (sz-piotr): No idea why
     await batchExecute(this.db, rows, 5_000, async (trx, batch) => {
       await trx
         .insertInto('public.aggregated_l2_costs')
