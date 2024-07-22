@@ -229,7 +229,7 @@ function getConfigurationsInRange<T>(
       if (
         saved &&
         saved.currentHeight !== null &&
-        saved.currentHeight > currentHeight
+        saved.currentHeight >= currentHeight
       ) {
         minCurrentHeight = Math.min(minCurrentHeight, saved.currentHeight)
         return { ...configuration, hasData: true }
