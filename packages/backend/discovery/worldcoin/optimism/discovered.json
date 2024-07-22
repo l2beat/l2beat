@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 123028945,
-  "configHash": "0x5def1b5565f1247f6622afd0605cb640f85241299993c9ecd062fa3ca528931e",
+  "blockNumber": 123030782,
+  "configHash": "0x05a1900991df3df10a37ebd71e873555e21afbe60a2f0e26ecc4b3aef5f8863a",
   "version": 9,
   "contracts": [
     {
@@ -180,7 +180,7 @@
       }
     },
     {
-      "name": "WorldIDIdentityManagerImplV2",
+      "name": "WorldIDIdentityManagerV2",
       "address": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
       "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1721036137,
@@ -200,19 +200,9 @@
           "isValid": false
         },
         "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "queryRoot": [
-          [0, 0, false],
-          [0, 0, false],
-          [0, 0, false],
-          [0, 0, false],
-          [0, 0, false]
-        ]
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
       },
-      "errors": {
-        "proxiableUUID": "Execution reverted",
-        "queryRoot": "Too many values. Update configuration to explore fully"
-      }
+      "derivedName": "WorldIDIdentityManagerImplV2"
     },
     {
       "name": "VerifierLookupTable",

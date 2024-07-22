@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x68705d54345eaa7eebac28b79f9f3e6d9d44df40
+Generated with discovered.json: 0x3472af4426f87029fd6eda4633eb11b0babd99b6
 
-# Diff at Mon, 22 Jul 2024 13:58:23 GMT:
+# Diff at Mon, 22 Jul 2024 14:59:13 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 120698212
-- current block number: 123028945
+- current block number: 123030782
 
 ## Description
 
@@ -20,7 +20,7 @@ The WorldIDIdentityManager is upgraded to a new implementation. 6 new SMTB verif
 
 ```diff
 +   Status: CREATED
-    contract WorldIDIdentityManagerImplV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a)
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a)
     +++ description: None
 ```
 
