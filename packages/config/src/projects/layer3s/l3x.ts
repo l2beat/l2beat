@@ -14,7 +14,7 @@ const upgradeability = {
 export const l3x: Layer3 = orbitStackL3({
   hostChain: ProjectId('arbitrum'),
   discovery,
-  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Conduit],
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum],
   display: {
     redWarning:
       'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
