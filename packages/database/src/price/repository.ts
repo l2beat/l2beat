@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -19,13 +20,9 @@ export class PriceRepository {
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configIds),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configIds)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .orderBy('timestamp')
       .execute()
 
@@ -36,7 +33,7 @@ export class PriceRepository {
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where((eb) => eb.and([eb('timestamp', '=', timestamp.toDate())]))
+      .where('timestamp', '=', timestamp.toDate())
       .orderBy('timestamp')
       .execute()
 
@@ -47,12 +44,8 @@ export class PriceRepository {
     const row = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '=', timestamp.toDate()),
-        ]),
-      )
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '=', timestamp.toDate())
       .executeTakeFirst()
 
     return row ? toRecord(row) : null
@@ -65,7 +58,9 @@ export class PriceRepository {
 
     const rows = records.map(toRow)
 
-    await this.db.insertInto('public.prices').values(rows).execute()
+    await batchExecute(this.db, rows, 10_000, async (trx, batch) => {
+      await trx.insertInto('public.prices').values(batch).execute()
+    })
 
     return rows.length
   }
@@ -75,15 +70,11 @@ export class PriceRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ) {
-    return this.db
+    return await this.db
       .deleteFrom('public.prices')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .execute()
   }
 

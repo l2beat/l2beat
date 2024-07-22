@@ -49,13 +49,9 @@ export class UpdateNotifierRepository {
     const rows = await this.db
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
-      .where((eb) =>
-        eb.and([
-          eb('created_at', '>=', from.toDate()),
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-        ]),
-      )
+      .where('created_at', '>=', from.toDate())
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
       .execute()
 
     return rows.map(toRecord)

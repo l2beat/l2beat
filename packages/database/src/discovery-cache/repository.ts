@@ -43,11 +43,10 @@ export class DiscoveryCacheRepository {
   }
 
   async deleteAfter(blockNumber: number, chain: string) {
-    return this.db
+    return await this.db
       .deleteFrom('public.discovery_cache')
-      .where((eb) =>
-        eb.and([eb('block_number', '>', blockNumber), eb('chain', '=', chain)]),
-      )
+      .where('block_number', '>', blockNumber)
+      .where('chain', '=', chain)
       .execute()
   }
 

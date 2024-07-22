@@ -66,14 +66,12 @@ export class TokenRepository {
       .innerJoin(...joinTokenMeta)
       .innerJoin(...joinNetwork)
       .where((eb) =>
-        eb.and([
-          eb.or(
-            constraints.to.map((to) => eb('public.Deployment.to', 'ilike', to)),
-          ),
-          eb('public.TokenMeta.contractName', '=', constraints.contractName),
-          eb('public.Network.id', '=', constraints.networkId),
-        ]),
+        eb.or(
+          constraints.to.map((to) => eb('public.Deployment.to', 'ilike', to)),
+        ),
       )
+      .where('public.TokenMeta.contractName', '=', constraints.contractName)
+      .where('public.Network.id', '=', constraints.networkId)
       .execute()
 
     return rows.map(toRecord)
@@ -84,12 +82,8 @@ export class TokenRepository {
       .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
-      .where((eb) =>
-        eb.and([
-          eb('public.Network.name', '=', constraints.network),
-          eb('public.Token.address', 'ilike', constraints.address),
-        ]),
-      )
+      .where('public.Network.name', '=', constraints.network)
+      .where('public.Token.address', 'ilike', constraints.address)
       .limit(1)
       .executeTakeFirst()
 
