@@ -1,4 +1,4 @@
-export interface DaDisplay {
+export interface DaLayerDisplay {
   /** The name of the data availability layer. */
   name: string
   /** Slug of the data availability bridge. */
@@ -9,7 +9,7 @@ export interface DaDisplay {
   links: DaDisplayLinks
 }
 
-interface DaDisplayLinks {
+export interface DaDisplayLinks {
   /** Links to marketing landing pages. */
   websites: string[]
   /** Links to documentation pages. */

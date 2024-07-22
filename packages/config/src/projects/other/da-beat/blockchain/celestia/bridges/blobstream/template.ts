@@ -6,6 +6,7 @@ import {
   DaBridgeRisks,
   OnChainDaBridge,
 } from '../../../../types'
+import { DaDisplayLinks } from '../../../../types/DaDisplayLinks'
 
 type TemplateRisks = Omit<DaBridgeRisks, 'accessibility'>
 
@@ -14,6 +15,9 @@ type TemplateVars = Pick<
   'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology'
 > & {
   risks: TemplateRisks
+  display: {
+    links: DaDisplayLinks
+  }
 }
 
 export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
@@ -31,6 +35,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
     description: `Celestia with Blobstream bridge on ${capitalize(
       chain.name,
     )}.`,
+    links: base.display.links,
   }
 
   const validation = {

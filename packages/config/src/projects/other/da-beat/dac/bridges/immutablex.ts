@@ -18,6 +18,11 @@ export const immutableXDac = {
     name: 'ImmutableX DAC',
     slug: 'immutablex-dac',
     description: 'ImmutableX DAC on Ethereum.',
+    links: {
+      websites: ['https://immutablex.xyz/'],
+      documentation: ['https://docs.immutablex.xyz/'],
+      repositories: ['https://github.com/Immutablex/immutablex'],
+    },
   },
   contracts: {
     addresses: [],

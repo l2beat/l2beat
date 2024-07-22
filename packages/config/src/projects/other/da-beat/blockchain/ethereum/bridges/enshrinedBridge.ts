@@ -10,6 +10,11 @@ export const enshrinedBridge: EnshrinedBridge = {
     name: 'Enshrined Bridge',
     slug: 'enshrined-bridge',
     description: 'Enshrined bridge on Ethereum.',
+    links: {
+      websites: ['https://blobstream.xyz/'],
+      documentation: ['https://docs.blobstream.xyz/'],
+      repositories: ['https://github.com/BlobStream/blobstream'],
+    },
   },
   technology:
     'Do enim fugiat id tempor consequat pariatur eu eiusmod. Esse veniam ipsum irure sunt nulla est reprehenderit eiusmod et qui fugiat. Commodo pariatur cupidatat commodo ipsum minim tempor consequat dolor nostrud occaecat sit excepteur fugiat. Ut laboris in dolor est ut. Labore quis nulla incididunt enim aute minim in mollit.',

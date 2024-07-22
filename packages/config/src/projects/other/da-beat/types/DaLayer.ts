@@ -5,7 +5,7 @@ import {
   OnChainDaBridge,
 } from './DaBridge'
 import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
-import { DaDisplay } from './DaDisplay'
+import { DaDisplayLinks } from './DaDisplayLinks'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
@@ -37,7 +37,7 @@ export type CommonDaLayer = {
   /** Unique identifier of the data availability layer. */
   id: string
   /** Display information for the data availability layer. */
-  display: DaDisplay
+  display: DaLayerDisplay
   /** Is the DA layer upcoming? */
   isUpcoming?: boolean
   /** Is the DA layer under review? */
@@ -53,4 +53,15 @@ export type CommonDaLayer = {
 export type DaLayerRisks = {
   economicSecurity: DaEconomicSecurityRisk
   fraudDetection: DaFraudDetectionRisk
+}
+
+interface DaLayerDisplay {
+  /** The name of the data availability layer. */
+  name: string
+  /** Slug of the data availability bridge. */
+  slug: string
+  /** A short description of the data availability layer. */
+  description: string
+  /** Links related to the data availability layer. */
+  links: DaDisplayLinks
 }

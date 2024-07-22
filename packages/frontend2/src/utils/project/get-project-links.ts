@@ -1,19 +1,33 @@
-import { type DaLayer } from '@l2beat/config'
+import { type DaBridge, type DaLayer } from '@l2beat/config'
 import { compact } from 'lodash'
 import { type ProjectLink } from '~/app/_components/projects/links/types'
 
 export function getProjectLinks(
-  links: DaLayer['display']['links'],
+  daLayerLinks: DaLayer['display']['links'],
+  daBridgeLinks: DaBridge['display']['links'],
 ): ProjectLink[] {
+  const websites = [...daLayerLinks.websites, ...daBridgeLinks.websites]
+  const documentation = [
+    ...daLayerLinks.documentation,
+    ...daBridgeLinks.documentation,
+  ]
+  const repositories = [
+    ...daLayerLinks.repositories,
+    ...daBridgeLinks.repositories,
+  ]
+
   return compact([
-    links.websites.length !== 0 && { name: 'Website', links: links.websites },
-    links.documentation.length !== 0 && {
-      name: 'Docs',
-      links: links.documentation,
+    websites.length !== 0 && {
+      name: 'Website',
+      links: websites,
     },
-    links.repositories.length !== 0 && {
+    documentation.length !== 0 && {
+      name: 'Docs',
+      links: documentation,
+    },
+    repositories.length !== 0 && {
       name: 'Repository',
-      links: links.repositories,
+      links: repositories,
     },
   ])
 }

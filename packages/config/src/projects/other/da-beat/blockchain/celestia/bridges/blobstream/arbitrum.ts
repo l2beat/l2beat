@@ -33,6 +33,13 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 
 export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
   chain: 'arbitrum',
+  display: {
+    links: {
+      websites: ['https://blobstream.xyz/'],
+      documentation: ['https://docs.blobstream.xyz/'],
+      repositories: ['https://github.com/BlobStream/blobstream'],
+    },
+  },
   technology:
     'Some note about the technology used by the bridge.\n## Markdown supported',
   contracts: {

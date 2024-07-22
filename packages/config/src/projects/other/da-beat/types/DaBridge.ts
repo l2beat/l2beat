@@ -7,6 +7,7 @@ import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 import { UsedInProject } from './UsedInProject'
+import { DaDisplayLinks } from './DaDisplayLinks'
 
 export type DaBridge =
   | NoDaBridge
@@ -53,18 +54,7 @@ export type DacBridge = CommonDaBridge & {
 type CommonDaBridge = {
   /** Unique identifier of the data availability bridge. */
   id: string
-  display: {
-    /** The name of the data availability bridge. */
-    name: string
-    /** Slug of the data availability bridge. */
-    slug: string
-    /** Description of the data availability bridge. */
-    description: string
-    /** A warning displayed on the table and project page */
-    warning?: string
-    /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
-    redWarning?: string
-  }
+  display: DaBridgeDisplay
   /** Is the DA bridge under review? */
   isUnderReview?: boolean
   /** The technology used by the data availability bridge. [MARKDOWN] */
@@ -73,6 +63,21 @@ type CommonDaBridge = {
   usedIn: UsedInProject[]
   /** Risks related to given data availability bridge. */
   risks: DaBridgeRisks
+}
+
+interface DaBridgeDisplay {
+  /** The name of the data availability bridge. */
+  name: string
+  /** Slug of the data availability bridge. */
+  slug: string
+  /** Description of the data availability bridge. */
+  description: string
+  /** A warning displayed on the table and project page */
+  warning?: string
+  /** Project raw with red warning will turn into red, and there will be red warning icon with this message */
+  redWarning?: string
+  /** Links related to the data availability bridge. */
+  links: DaDisplayLinks
 }
 
 export type DaBridgeRisks = {

@@ -75,18 +75,18 @@ interface HeaderParams {
 function getHeader({
   rosetteValues,
   daLayer,
-  daBridge: bridge,
+  daBridge,
   tvs,
   economicSecurity,
 }: HeaderParams) {
   return {
     rosetteValues,
-    links: getProjectLinks(daLayer.display.links),
+    links: getProjectLinks(daLayer.display.links, daBridge.display.links),
     tvs,
     economicSecurity,
     durationStorage:
       daLayer.kind === 'public-blockchain' ? daLayer.pruningWindow : undefined,
-    usedIn: bridge.usedIn,
+    usedIn: daBridge.usedIn,
   }
 }
 
