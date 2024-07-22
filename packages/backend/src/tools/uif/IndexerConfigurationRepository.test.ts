@@ -97,39 +97,17 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
       IndexerConfigurationRepository.prototype.updateSavedConfigurations.name,
       async () => {
         const records = [
-          mock({
-            id: 'a'.repeat(12),
-            indexerId: 'indexer-1',
-            currentHeight: 1,
-          }),
-          mock({
-            id: 'b'.repeat(12),
-            indexerId: 'indexer-1',
-            currentHeight: null,
-          }),
-          mock({
-            id: 'c'.repeat(12),
-            indexerId: 'indexer-1',
-            currentHeight: 100_000,
-          }),
-          mock({
-            id: 'd'.repeat(12),
-            indexerId: 'indexer-1',
-            currentHeight: null,
-            minHeight: 120,
-          }),
-          mock({
-            id: 'e'.repeat(12),
-            indexerId: 'indexer-1',
-            currentHeight: null,
-            maxHeight: 1,
-          }),
-          mock({ id: 'f'.repeat(12), indexerId: 'indexer-2' }),
+          config('a', 1, null, 10), // update: current < toUpdate
+          config('b', 1, null, null), // update: current == null
+          config('c', 1, null, 1_000), // do not update: current > toUpdate
+          config('d', 1_000, null, null), // do  not update: min > toUpdate
+          config('e', 1, 10, null), // do not update: max < toUpdate
+          { ...config('f', 1, null, null), indexerId: 'other' }, // do not update: other indexer
         ]
 
         await repository.addOrUpdateMany(records)
 
-        await repository.updateSavedConfigurations('indexer-1', 100)
+        await repository.updateSavedConfigurations('indexer', 100)
 
         const result = await repository.getAll()
 
@@ -181,4 +159,18 @@ function mock(
     properties: 'properties',
     ...record,
   }
+}
+
+function config(
+  id: string,
+  minHeight: number,
+  maxHeight: number | null,
+  currentHeight: number | null,
+) {
+  return mock({
+    id: id.repeat(12),
+    minHeight,
+    maxHeight,
+    currentHeight,
+  })
 }
