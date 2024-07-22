@@ -15,11 +15,11 @@ import {
 } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
+import { Database } from '@l2beat/database'
 import { Clock } from '../../tools/Clock'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { DiscoveryRunner } from './DiscoveryRunner'
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
-import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
 import { sanitizeDiscoveryOutput } from './sanitizeDiscoveryOutput'
 import { findDependents } from './utils/findDependents'
 import { findUnknownContracts } from './utils/findUnknownContracts'
@@ -32,7 +32,7 @@ export class UpdateMonitor {
     private readonly discoveryRunners: DiscoveryRunner[],
     private readonly updateNotifier: UpdateNotifier,
     private readonly configReader: ConfigReader,
-    private readonly repository: UpdateMonitorRepository,
+    private readonly db: Database,
     private readonly clock: Clock,
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
@@ -215,7 +215,7 @@ export class UpdateMonitor {
       runner.chain,
     )
 
-    await this.repository.addOrUpdate({
+    await this.db.updateMonitor.addOrUpdate({
       projectName: projectConfig.name,
       chainId: this.chainConverter.toChainId(runner.chain),
       timestamp,
@@ -246,7 +246,7 @@ export class UpdateMonitor {
     runner: DiscoveryRunner,
     projectConfig: DiscoveryConfig,
   ): Promise<DiscoveryOutput | undefined> {
-    const databaseEntry = await this.repository.findLatest(
+    const databaseEntry = await this.db.updateMonitor.findLatest(
       projectConfig.name,
       this.chainConverter.toChainId(runner.chain),
     )

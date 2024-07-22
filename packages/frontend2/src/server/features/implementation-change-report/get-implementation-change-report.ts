@@ -102,7 +102,7 @@ const getCachedImplementationChangeReport = cache(
     return result
   },
   ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 60 * 60 },
+  { revalidate: 60 * 10 },
 )
 
 function chainNameToId(chainName: string): ChainId {

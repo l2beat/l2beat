@@ -1,4 +1,10 @@
-import { type Table as TanstackTable, flexRender } from '@tanstack/react-table'
+import {
+  type Column,
+  type Table as TanstackTable,
+  flexRender,
+} from '@tanstack/react-table'
+import { type CSSProperties } from 'react'
+import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
   Table,
@@ -12,17 +18,42 @@ import {
 import { TableEmptyState } from './table-empty-state'
 
 interface BasicEntry {
-  href?: string
   slug: string
-  isVerified: boolean
-  redWarning: string | undefined
-  showProjectUnderReview: boolean
-  hasImplementationChanged: boolean
+  href: string
+  isVerified?: boolean
+  redWarning?: string | undefined
+  showProjectUnderReview?: boolean
+  hasImplementationChanged?: boolean
 }
 
 interface Props<T extends BasicEntry> {
   table: TanstackTable<T>
   onResetFilters: () => void
+}
+
+function getCommonPinningStyles<T>(
+  column: Column<T>,
+): CSSProperties | undefined {
+  const isPinned = column.getIsPinned()
+  if (!isPinned) return undefined
+  const isLastPinned = column.getIsLastColumn('left')
+    ? 'left'
+    : column.getIsLastColumn('right')
+      ? 'right'
+      : undefined
+
+  return {
+    left: isPinned === 'left' ? `${column.getStart('left')}px` : undefined,
+    right: isPinned === 'right' ? `${column.getAfter('right')}px` : undefined,
+    position: 'sticky',
+    width: column.getSize(),
+    maskImage:
+      isLastPinned &&
+      `linear-gradient(to ${
+        isLastPinned === 'left' ? 'right' : 'left'
+      }, transparent 0, black 0px, black calc(100% - 10px), transparent 100%)`,
+    zIndex: 1,
+  }
 }
 
 export function BasicTable<T extends BasicEntry>({
@@ -42,8 +73,12 @@ export function BasicTable<T extends BasicEntry>({
               <TableHead
                 key={header.id}
                 colSpan={header.colSpan}
-                className={header.column.columnDef.meta?.headClassName}
+                className={cn(
+                  'bg-white dark:bg-neutral-900',
+                  header.column.columnDef.meta?.headClassName,
+                )}
                 tooltip={header.column.columnDef.meta?.tooltip}
+                style={getCommonPinningStyles(header.column)}
               >
                 {header.isPlaceholder ? null : header.column.getCanSort() ? (
                   <SortingArrows
@@ -78,7 +113,11 @@ export function BasicTable<T extends BasicEntry>({
                   <TableCell
                     key={cell.id}
                     href={getHref(row.original.href, meta?.hash)}
-                    className={meta?.cellClassName}
+                    className={cn(
+                      getRowTypeClassNames(rowType),
+                      meta?.cellClassName,
+                    )}
+                    style={getCommonPinningStyles(cell.column)}
                   >
                     {flexRender(cell.column.columnDef.cell, cell.getContext())}
                   </TableCell>
@@ -93,10 +132,6 @@ export function BasicTable<T extends BasicEntry>({
 }
 
 function getHref(href: string | undefined, hash: string | undefined) {
-  if (!href) {
-    return undefined
-  }
-
   if (!hash) {
     return href
   }
@@ -123,11 +158,13 @@ function getRowType(entry: BasicEntry) {
 export function getRowTypeClassNames(rowType: RowType) {
   switch (rowType) {
     case 'ethereum':
-      return 'bg-blue-400 hover:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900'
+      return 'bg-blue-400 hover:bg-blue-400 group-hover/row:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900 dark:group-hover/row:bg-blue-900'
     case 'unverified':
-      return 'bg-red-100/70 dark:bg-red-900/70 hover:bg-red-100/90 dark:hover:bg-red-900/90'
+      return 'bg-[#f7e4e3] dark:bg-[#311413] hover:bg-[#f5dedd] group-hover/row:bg-[#f5dedd] dark:hover:bg-[#391612] dark:group-hover/row:bg-[#391612]'
     case 'under-review':
     case 'implementation-changed':
-      return 'bg-yellow-200/10 hover:!bg-yellow-200/20'
+      return 'bg-[#faf5e6] dark:bg-[#2a2418] hover:!bg-[#eee5c8] group-hover/row:!bg-[#eee5c8] dark:hover:!bg-[#3f351b] dark:group-hover/row:!bg-[#3f351b]'
+    default:
+      return 'bg-white dark:bg-neutral-900 group-hover/row:shadow-sm hover:bg-[#e3e3e3] group-hover/row:bg-[#e3e3e3] dark:hover:bg-[#2a292c] dark:group-hover/row:bg-[#2a292c]'
   }
 }

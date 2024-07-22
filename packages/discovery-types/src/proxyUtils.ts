@@ -13,7 +13,7 @@ export function get$Admins(
   return toAddressArray(values?.$admin)
 }
 
-function toAddressArray(value: ContractValue | undefined) {
+export function toAddressArray(value: ContractValue | undefined) {
   if (typeof value === 'string') {
     return [value as unknown as EthereumAddress]
   }

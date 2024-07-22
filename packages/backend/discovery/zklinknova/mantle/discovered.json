@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 66453544,
+  "blockNumber": 66630033,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
   "version": 9,
   "contracts": [
@@ -70,14 +70,14 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 16683,
-        "getTotalPriorityTxs": 833,
+        "getTotalBatchesExecuted": 17393,
+        "getTotalPriorityTxs": 837,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": false,
-        "totalBatchesExecuted": 16683,
-        "totalPriorityTxs": 833,
-        "totalSyncedPriorityTxs": 833,
-        "totalValidatorForwardFee": "1046420602385740679510",
+        "totalBatchesExecuted": 17393,
+        "totalPriorityTxs": 837,
+        "totalSyncedPriorityTxs": 837,
+        "totalValidatorForwardFee": "1053502905585741744518",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 140000000000000
       },
@@ -278,5 +278,10 @@
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
+    "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

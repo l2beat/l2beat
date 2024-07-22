@@ -234,6 +234,29 @@ export const linea: Layer2 = {
           functionSignature:
             'function finalizeCompressedBlocksWithProof(bytes,uint256,(bytes32,bytes32[],bytes32,uint256,uint256,uint256,bytes32,uint256,bytes32[],uint256,bytes))',
           sinceTimestamp: new UnixTime(1707831168),
+          untilTimestamp: new UnixTime(1717508999),
+        },
+      },
+      {
+        uses: [
+          {
+            type: 'liveness',
+            subtype: 'stateUpdates',
+          },
+          {
+            type: 'l2costs',
+            subtype: 'stateUpdates',
+          },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0xd19d4B5d358258f05D7B411E21A1460D11B0876F',
+          ),
+          selector: '0xabffac32',
+          functionSignature:
+            'function finalizeBlocksWithProof(bytes,uint256,(bytes32,bytes32,uint256,(bytes32,bytes32,bytes32,bytes32,bytes32),uint256,uint256,bytes32,bytes32,uint256,uint256,uint256,bytes32[],bytes))',
+          sinceTimestamp: new UnixTime(1717508999),
         },
       },
     ],
@@ -460,6 +483,14 @@ export const linea: Layer2 = {
         'Timelock',
         `Owner of the ProxyAdmin and Verifier Setter. The current delay is ${timelockDelayString}.`,
       ),
+      discovery.getContractDetails('VerifierProofType1', {
+        description:
+          'Smart contract verifying the the proofs for the Linea zkEVM.',
+      }),
+      discovery.getContractDetails('VerifierProofType3', {
+        description:
+          'Currently used smart contract verifying the proofs for the the Linea zkEVM.',
+      }),
       discovery.getContractDetails('ERC20Bridge', {
         description: 'Contract used to bridge ERC20 tokens.',
         ...upgrades,
@@ -504,13 +535,31 @@ export const linea: Layer2 = {
       requiredTools: [],
       verifiers: [
         {
-          name: 'LineaVerifier',
+          name: 'LineaVerifier (ProofType 1)',
           description:
             'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
           verified: 'failed',
           performedBy: PERFORMED_BY.l2beat,
           contractAddress: EthereumAddress(
             '0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4',
+          ),
+          chainId: ChainId.ETHEREUM,
+          subVerifiers: [
+            {
+              name: 'Main circuit',
+              proofSystem: '?',
+              mainArithmetization: '?',
+              mainPCS: '?',
+            },
+          ],
+        },
+        {
+          name: 'LineaVerifier (ProofType 3)',
+          description:
+            'The smart contract verifying the computational integrity of the Linea zkEVM. Since the circuit behind it is not public, we are not able to verify any claim about the proof system.',
+          verified: 'no',
+          contractAddress: EthereumAddress(
+            '0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [

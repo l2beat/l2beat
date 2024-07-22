@@ -5,38 +5,38 @@ import {
   type DaLayer,
   type DaLayerRisks,
 } from '@l2beat/config'
-import { type EconomicSecurityData } from './get-da-economic-security'
+import { type EconomicSecurityData } from './get-da-project-economic-security'
 
 export function getDaRisks(
-  layer: DaLayer,
-  bridge: DaBridge,
+  daLayer: DaLayer,
+  daBridge: DaBridge,
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,
 ): DaBridgeRisks & DaLayerRisks {
   return {
     economicSecurity: getEconomicSecurity(
-      layer,
+      daLayer,
       totalValueSecured,
       economicSecurity,
     ),
-    fraudDetection: layer.risks.fraudDetection,
-    attestations: bridge.risks.attestations,
-    exitWindow: bridge.risks.exitWindow,
-    accessibility: bridge.risks.accessibility,
+    fraudDetection: daLayer.risks.fraudDetection,
+    attestations: daBridge.risks.attestations,
+    exitWindow: daBridge.risks.exitWindow,
+    accessibility: daBridge.risks.accessibility,
   }
 }
 
 export function getEconomicSecurity(
-  layer: DaLayer,
+  daLayer: DaLayer,
   totalValueSecured: number,
   economicSecurity?: EconomicSecurityData,
 ) {
   const shouldCalculate =
-    layer.risks.economicSecurity.type === 'OnChainQuantifiable'
+    daLayer.risks.economicSecurity.type === 'OnChainQuantifiable'
   const hasData = economicSecurity?.status === 'Synced' && totalValueSecured > 0
 
   if (!shouldCalculate || !hasData) {
-    return layer.risks.economicSecurity
+    return daLayer.risks.economicSecurity
   }
 
   const sentiment = adjustSentiment(
@@ -45,7 +45,7 @@ export function getEconomicSecurity(
   )
 
   return {
-    ...layer.risks.economicSecurity,
+    ...daLayer.risks.economicSecurity,
     sentiment,
   } as DaEconomicSecurityRisk
 }

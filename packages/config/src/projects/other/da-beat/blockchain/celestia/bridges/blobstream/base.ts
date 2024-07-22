@@ -33,6 +33,18 @@ const nextHeaderProvers = discovery.getContractValue<string[]>(
 
 export const blobstreamBase = CELESTIA_BLOBSTREAM({
   chain: 'base',
+  display: {
+    links: {
+      websites: ['https://immutablex.xyz/'],
+      documentation: ['https://docs.immutablex.xyz/'],
+      repositories: ['https://github.com/Immutablex/immutablex'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
+    },
+  },
+  technology:
+    'Some note about the technology used by the bridge.\n## Markdown supported',
   contracts: {
     addresses: [
       discovery.getContractDetails('BlobstreamX', {
@@ -98,6 +110,6 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
   ],
   risks: {
     attestations: DaAttestationSecurityRisk.SigVerifiedZK(true),
-    exitWindow: DaExitWindowRisk.SecurityCouncil(30 * 24 * 60 * 60),
+    exitWindow: DaExitWindowRisk.SecurityCouncil(0), // TIMELOCK_ROLE is 4/6 multisig
   },
 })

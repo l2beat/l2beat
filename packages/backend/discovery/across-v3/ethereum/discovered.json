@@ -1119,5 +1119,10 @@
       "function syncUmaParams(bytes32 identifier, address currency)",
       "function transferOwnership(address newOwner)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "acrossv3/adapter": "0x5569b88156f06c2eba79d503434fe24edd8bd4a48f4ea18f0443e9846c8e91aa",
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

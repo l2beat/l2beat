@@ -201,7 +201,13 @@
     { "address": "0xc8225cA10F570d4d7aD6cdb6F0bfEb683dc7C938" },
     {
       "address": "0xcc90c738acfc1695D19336Bc3E392a46234112BF",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x1c1271bEE8556918092dA9238FcC77ee8be4b5Cd",
+          "0x2fbD45A4B57379492450c3D5a8fdcaD68336DB04",
+          "0x65E325A22c0F519041db69F5693EbAc3b4AE71bE"
+        ]
+      }
     },
     { "address": "0xdE2552948aacb82dCa7a04AffbcB1B8e3C97D590" }
   ],
@@ -508,5 +514,7 @@
       "function toDepositTx(bytes rlpTx) pure returns (uint256 chainId, uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)",
       "function toLegacyTx(bytes rlpTx) pure returns (uint256 nonce, uint256 gasPrice, uint256 gasLimit, address to, uint256 value, bytes data, uint256 v, uint256 r, uint256 s)"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

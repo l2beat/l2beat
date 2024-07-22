@@ -24,7 +24,9 @@
     "test": "mocha --timeout 10000",
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
-    "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts"
+    "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
+    "refresh-discovery": "ts-node --transpile-only scripts/refreshDiscovery.ts",
+    "analyze-project": "ts-node --transpile-only scripts/analyzeProject.ts"
   },
   "dependencies": {
     "@bugsnag/js": "^7.22.3",

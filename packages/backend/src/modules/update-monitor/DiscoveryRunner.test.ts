@@ -5,8 +5,9 @@ import {
   DiscoveryConfig,
   DiscoveryEngine,
   IProvider,
+  TemplateService,
 } from '@l2beat/discovery'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { getZeroStats } from '@l2beat/discovery/dist/discovery/provider/Stats'
@@ -16,6 +17,9 @@ const ADDRESS = EthereumAddress.random()
 
 describe(DiscoveryRunner.name, () => {
   const MOCK_PROVIDER = mockObject<IProvider>({})
+  const MOCK_TEMPLATE_SERVICE = mockObject<TemplateService>({
+    getShapeFilesHash: mockFn().returns(Hash256.random()),
+  })
 
   describe(DiscoveryRunner.prototype.run.name, () => {
     it('injects initial addresses', async () => {
@@ -37,6 +41,7 @@ describe(DiscoveryRunner.name, () => {
         engine,
         configReader,
         'ethereum',
+        MOCK_TEMPLATE_SERVICE,
       )
 
       await runner.run(getMockConfig(), 1, {
@@ -78,6 +83,7 @@ describe(DiscoveryRunner.name, () => {
         engine,
         configReader,
         'ethereum',
+        MOCK_TEMPLATE_SERVICE,
       )
       await runner.run(sourceConfig, 1, {
         logger: Logger.SILENT,
@@ -107,6 +113,7 @@ describe(DiscoveryRunner.name, () => {
           engine,
           mockObject<ConfigReader>({}),
           'ethereum',
+          MOCK_TEMPLATE_SERVICE,
         )
 
         await runner.run(getMockConfig(), 1, {
@@ -138,6 +145,7 @@ describe(DiscoveryRunner.name, () => {
           engine,
           mockObject<ConfigReader>({}),
           'ethereum',
+          MOCK_TEMPLATE_SERVICE,
         )
 
         await expect(
