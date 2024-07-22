@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import {
   FinalityRecord,
   toProjectFinalityRecord,
@@ -35,12 +36,8 @@ export class FinalityRepository {
     const row = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
-      .where((eb) =>
-        eb.and([
-          eb('timestamp', '=', timestamp.toDate()),
-          eb('project_id', '=', projectId.toString()),
-        ]),
-      )
+      .where('timestamp', '=', timestamp.toDate())
+      .where('project_id', '=', projectId.toString())
       .limit(1)
       .executeTakeFirst()
 
@@ -79,7 +76,10 @@ export class FinalityRepository {
 
     const scope = trx ?? this.db
     const rows = records.map(toRow)
-    await scope.insertInto('public.finality').values(rows).execute()
+
+    await batchExecute(scope, rows, 10_000, async (trx, batch) => {
+      await trx.insertInto('public.finality').values(batch).execute()
+    })
 
     return rows.length
   }
