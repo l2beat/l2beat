@@ -67,11 +67,20 @@ export class ValueRepository {
       .onConflict((cb) =>
         cb.columns(['project_id', 'timestamp', 'data_source']).doUpdateSet({
           external: (eb) => eb.ref('excluded.external'),
+          external_associated: (eb) => eb.ref('excluded.external_associated'),
           external_for_total: (eb) => eb.ref('excluded.external_for_total'),
+          external_associated_for_total: (eb) =>
+            eb.ref('excluded.external_associated_for_total'),
           canonical: (eb) => eb.ref('excluded.canonical'),
+          canonical_associated: (eb) => eb.ref('excluded.canonical_associated'),
           canonical_for_total: (eb) => eb.ref('excluded.canonical_for_total'),
+          canonical_associated_for_total: (eb) =>
+            eb.ref('excluded.canonical_associated_for_total'),
           native: (eb) => eb.ref('excluded.native'),
+          native_associated: (eb) => eb.ref('excluded.native_associated'),
           native_for_total: (eb) => eb.ref('excluded.native_for_total'),
+          native_associated_for_total: (eb) =>
+            eb.ref('excluded.native_associated_for_total'),
         }),
       )
       .execute()
@@ -110,11 +119,20 @@ export class ValueRepository {
       .onConflict((cb) =>
         cb.columns(['project_id', 'timestamp', 'data_source']).doUpdateSet({
           external: (eb) => eb.ref('excluded.external'),
+          external_associated: (eb) => eb.ref('excluded.external_associated'),
           external_for_total: (eb) => eb.ref('excluded.external_for_total'),
+          external_associated_for_total: (eb) =>
+            eb.ref('excluded.external_associated_for_total'),
           canonical: (eb) => eb.ref('excluded.canonical'),
+          canonical_associated: (eb) => eb.ref('excluded.canonical_associated'),
           canonical_for_total: (eb) => eb.ref('excluded.canonical_for_total'),
+          canonical_associated_for_total: (eb) =>
+            eb.ref('excluded.canonical_associated_for_total'),
           native: (eb) => eb.ref('excluded.native'),
+          native_associated: (eb) => eb.ref('excluded.native_associated'),
           native_for_total: (eb) => eb.ref('excluded.native_for_total'),
+          native_associated_for_total: (eb) =>
+            eb.ref('excluded.native_associated_for_total'),
         }),
       )
       .execute()
