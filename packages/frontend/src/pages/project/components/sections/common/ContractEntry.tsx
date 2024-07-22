@@ -71,24 +71,22 @@ export function ContractEntry({
   const manuallyVerifiedContractsForChain =
     manuallyVerifiedContracts[contract.chain] ?? {}
 
-  const isAnyLinkUnverified = contract.links
-    .filter((c) => !c.isAdmin)
-    .map((c) => verificationStatusForChain[c.address])
-    .some((c) => c === false)
-
   const addresses = contract.addresses
   const references = contract.references ?? []
 
-  const isAnyAddressUnverified = addresses
-    .map((c) => verificationStatusForChain[c])
-    .some((c) => c === false)
+  const isAnyLinkUnverified = contract.links
+    .filter((c) => !c.isAdmin)
+    .some((c) => verificationStatusForChain[c.address] === false)
+  const isAnyAddressUnverified = addresses.some(
+    (c) => verificationStatusForChain[c] === false,
+  )
 
-  const isEveryAddressUnverified = addresses
-    .map((c) => verificationStatusForChain[c])
-    .every((c) => c === false)
-  const isEveryLinkUnverified = contract.links
-    .map((c) => verificationStatusForChain[c.address])
-    .every((c) => c === false)
+  const isEveryAddressUnverified = addresses.some(
+    (c) => verificationStatusForChain[c] === false,
+  )
+  const isEveryLinkUnverified = contract.links.some(
+    (c) => verificationStatusForChain[c.address] === false,
+  )
 
   let color: CalloutProps['color'] = undefined
 
