@@ -2,6 +2,7 @@ import { assert } from '@l2beat/backend-tools'
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import { LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'
 
@@ -24,12 +25,8 @@ export class LivenessRepository {
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configurationIds),
-          eb('timestamp', '>=', since.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configurationIds)
+      .where('timestamp', '>=', since.toDate())
       .distinctOn(['timestamp', 'configuration_id'])
       .orderBy('timestamp', 'desc')
       .execute()
@@ -44,12 +41,8 @@ export class LivenessRepository {
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configurationIds),
-          eb('timestamp', '<', to.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configurationIds)
+      .where('timestamp', '<', to.toDate())
       .distinctOn(['timestamp', 'configuration_id'])
       .orderBy('timestamp', 'desc')
       .execute()
@@ -67,13 +60,9 @@ export class LivenessRepository {
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configurationIds),
-          eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<', to.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configurationIds)
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
       .distinctOn(['timestamp', 'configuration_id'])
       .orderBy('timestamp', 'desc')
       .execute()
@@ -88,7 +77,9 @@ export class LivenessRepository {
 
     const rows = records.map(toRow)
 
-    await this.db.insertInto('public.liveness').values(rows).execute()
+    await batchExecute(this.db, rows, 10_000, async (trx, batch) => {
+      await trx.insertInto('public.liveness').values(batch).execute()
+    })
 
     return rows.length
   }
@@ -99,15 +90,10 @@ export class LivenessRepository {
     trx?: Transaction,
   ) {
     const scope = trx ?? this.db
-
-    return scope
+    return await scope
       .deleteFrom('public.liveness')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', id.toString()),
-          eb('timestamp', '>=', deleteFromInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', '=', id.toString())
+      .where('timestamp', '>=', deleteFromInclusive.toDate())
       .execute()
   }
 
