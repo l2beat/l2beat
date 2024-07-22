@@ -2353,6 +2353,16 @@
       "supply": "zero"
     },
     {
+      "symbol": "FBTC",
+      "coingeckoId": "ignition-fbtc",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Fire Bridge"
+      }
+    },
+    {
       "symbol": "mETH",
       "category": "ether",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
@@ -2402,7 +2412,19 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
-    }
+    },
+    {
+      "symbol": "MOE",
+      "address": "0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "LEND",
+      "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
   ],
   "linea": [
     {
