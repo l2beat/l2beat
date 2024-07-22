@@ -1824,6 +1824,14 @@
       "category": "ether"
     }
   ],
+  "nova": [
+    {
+      "symbol": "ETH",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    },
+  ],
   "optimism": [
     {
       "symbol": "ezETH",

@@ -11,40 +11,44 @@ export const playblock: Layer3 = orbitStackL3({
   hostChain: ProjectId('nova'),
   badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'PlayBlock',
     slug: 'playblock',
     description:
-      'PlayBlock is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is built by the team behind Playnance, and is focused on gasless gaming.',
+      'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
     purposes: ['Gaming'],
     links: {
       websites: ['https://playnance.com/'],
       apps: [],
       documentation: [],
-      explorers: [],
-      repositories: [],
+      explorers: ['https://explorer.playblock.io/'],
+      repositories: ['https://github.com/playnance-games/PlayBlock'],
       socialMedia: ['https://twitter.com/Playnancetech'],
     },
   },
   // not on coingecko
   // nativeToken: 'PBG',
   // associatedTokens: ['PBG'],
-  rpcUrl: 'https://mainnet.sanko.xyz',
+  rpcUrl: 'https://playnance.drpc.org/',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),
   sequencerInbox: discovery.getContract('SequencerInbox'),
-  nonTemplateEscrows: [
-    discovery.getEscrowDetails({
-      includeInTotal: false,
-      address: EthereumAddress('0xb4951c0C41CFceB0D195A95FE66280457A80a990'),
-      tokens: '*',
-      description:
-        'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, "wrapped" token will be minted.',
-    }),
-  ],
   nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'Caldera Multisig',
-      'Rollup Owner: Can execute upgrades for the entire rollup system via the UpgradeExecutor.',
-    ),
+    {
+      name: 'RollupOwnerEOA',
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
+      description:
+        'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
+    },
+  ],
+  nonTemplateContracts: [
+    discovery.getContractDetails('ProxyAdmin', {
+      description:
+        'This contract can upgrade the implementations of the rollup proxies.',
+    }),
   ],
 })
