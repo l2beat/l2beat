@@ -19,6 +19,7 @@ export const columns = [
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
       headClassName: 'w-0',
+      cellClassName: 'flex items-center',
     },
   }),
   columnHelper.display({
@@ -34,7 +35,7 @@ export const columns = [
     ),
     meta: {
       headClassName: 'w-0',
-      cellClassName: '!pr-0',
+      cellClassName: '!pr-0 md:pl-1',
     },
   }),
 
