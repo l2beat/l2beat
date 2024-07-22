@@ -95,10 +95,16 @@ function saved(
     timestamp,
     dataSource,
     canonical: BigInt(canonical),
+    canonicalAssociated: BigInt(canonical),
     canonicalForTotal: BigInt(canonical),
+    canonicalAssociatedForTotal: BigInt(canonical),
     external: BigInt(external),
+    externalAssociated: BigInt(external),
     externalForTotal: BigInt(external),
+    externalAssociatedForTotal: BigInt(external),
     native: BigInt(native),
+    nativeAssociated: BigInt(native),
     nativeForTotal: BigInt(native),
+    nativeAssociatedForTotal: BigInt(native),
   }
 }
