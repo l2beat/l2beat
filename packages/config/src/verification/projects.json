@@ -200,7 +200,7 @@
   "witness": true,
   "world": true,
   "wormholeV1": true,
-  "xai": false,
+  "xai": true,
   "xchain": true,
   "xdai": true,
   "xlayer": true,

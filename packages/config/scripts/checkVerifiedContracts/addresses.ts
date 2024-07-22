@@ -41,7 +41,7 @@ export function getUniqueContractsForProject(
 
 function getProjectContractsForChain(project: Project, chain: string) {
   const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract.chain, chain),
+    isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
@@ -50,7 +50,9 @@ function getProjectContractsForChain(project: Project, chain: string) {
       }
       return { address: escrow.address, ...escrow.contract }
     })
-    .filter((escrowContract) => isContractOnChain(escrowContract.chain, chain))
+    .filter((escrowContract) =>
+      isContractOnChain(escrowContract.chain, chain, project),
+    )
 
   return [...contracts, ...escrows]
 }
@@ -59,16 +61,20 @@ function getPermissionedAddressesForChain(project: Project, chain: string) {
   const permissions =
     project.permissions === 'UnderReview' ? [] : project.permissions ?? []
   return permissions
-    .filter((p) => isContractOnChain(p.chain, chain))
+    .filter((p) => isContractOnChain(p.chain, chain, project))
     .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
     .filter((p) => p.type !== 'EOA')
     .map((p) => p.address)
 }
 
-function isContractOnChain(contractChain: string | undefined, chain: string) {
-  // For backwards compatibility, we assume that contracts without chain are for ethereum
-  if (contractChain === undefined && chain === 'ethereum') {
-    return true
+function isContractOnChain(
+  contractChain: string | undefined,
+  chain: string,
+  project: Project,
+) {
+  if (contractChain === undefined) {
+    // For backwards compatibility, we assume that L2 contracts without chain are for ethereum
+    contractChain = project.type === 'layer3' ? project.hostChain : 'ethereum'
   }
   return contractChain === chain
 }
