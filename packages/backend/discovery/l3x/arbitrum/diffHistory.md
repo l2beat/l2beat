@@ -7,7 +7,7 @@ Generated with discovered.json: 0xd37664082f460fc8558e6d56b77f4c2fe7e01081
 
 ## Description
 
-Initial discovery: 
+Initial discovery: Orbit stack L3 on Arbitrum with 1/1 DAC and EOA Admin. Prelaunch escrows (multichain) added. 
 
 ## Initial discovery
 
