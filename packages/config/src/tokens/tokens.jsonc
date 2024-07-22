@@ -1372,6 +1372,17 @@
   ],
   "arbitrum": [
     {
+      "symbol": "ETHFI",
+      "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+      "coingeckoId": "ether-fi",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
       "symbol": "weETH",
       "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
       "category": "ether",
@@ -2424,7 +2435,7 @@
       "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
       "source": "native",
       "supply": "circulatingSupply"
-    },
+    }
   ],
   "linea": [
     {

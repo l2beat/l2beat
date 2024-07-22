@@ -6992,6 +6992,25 @@
       "supply": "zero"
     },
     {
+      "id": "arbitrum:ethfi-ether.fi-governance-token",
+      "name": "ether.fi governance token",
+      "coingeckoId": "ether-fi",
+      "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+      "symbol": "ETHFI",
+      "decimals": 18,
+      "deploymentTimestamp": 1718638923,
+      "coingeckoListingTimestamp": 1710720000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
       "id": "arbitrum:frax-frax",
       "name": "Frax",
       "coingeckoId": "frax",
