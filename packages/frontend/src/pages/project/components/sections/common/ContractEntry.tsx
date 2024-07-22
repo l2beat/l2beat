@@ -55,6 +55,7 @@ export interface ContractEntryProps {
   contract: TechnologyContract
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
+  type: 'permission' | 'contract'
   className?: string
 }
 
@@ -62,6 +63,7 @@ export function ContractEntry({
   contract,
   verificationStatus,
   manuallyVerifiedContracts,
+  type,
   className,
 }: ContractEntryProps) {
   const verificationStatusForChain =
@@ -69,7 +71,7 @@ export function ContractEntry({
   const manuallyVerifiedContractsForChain =
     manuallyVerifiedContracts[contract.chain] ?? {}
 
-  const areLinksUnverified = contract.links
+  const isAnyLinkUnverified = contract.links
     .filter((c) => !c.isAdmin)
     .map((c) => verificationStatusForChain[c.address])
     .some((c) => c === false)
@@ -77,13 +79,24 @@ export function ContractEntry({
   const addresses = contract.addresses
   const references = contract.references ?? []
 
-  const areAddressesUnverified = addresses
+  const isAnyAddressUnverified = addresses
     .map((c) => verificationStatusForChain[c])
     .some((c) => c === false)
 
+  const isEveryAddressUnverified = addresses
+    .map((c) => verificationStatusForChain[c])
+    .every((c) => c === false)
+  const isEveryLinkUnverified = contract.links
+    .map((c) => verificationStatusForChain[c.address])
+    .every((c) => c === false)
+
   let color: CalloutProps['color'] = undefined
 
-  if (areAddressesUnverified || areLinksUnverified) {
+  const showRedBackground =
+    (type === 'contract' && (isAnyAddressUnverified || isAnyLinkUnverified)) ||
+    (type === 'permission' && isEveryAddressUnverified && isEveryLinkUnverified)
+
+  if (showRedBackground) {
     color = 'red'
   }
 
@@ -91,7 +104,7 @@ export function ContractEntry({
   if (contract.implementationHasChanged) {
     icon = <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
   }
-  if (areAddressesUnverified || areLinksUnverified) {
+  if (showRedBackground) {
     icon = <UnverifiedIcon className="fill-red-300" />
   }
 
@@ -124,32 +137,56 @@ export function ContractEntry({
         <>
           <div className="flex flex-wrap items-center gap-x-2">
             <strong id={contract.name}>{contract.name}</strong>{' '}
-            {contract.addresses.map((address, i) => (
-              <EtherscanLink
-                address={address}
-                etherscanUrl={contract.etherscanUrl}
-                key={i}
-                className={cn(
-                  verificationStatusForChain[address] === false
-                    ? 'text-red-300'
-                    : '',
-                )}
-              />
-            ))}
-            {contract.links.map((x, i) => (
-              <Link
-                data-role="etherscan-link"
-                key={i}
-                className={cn(
-                  verificationStatusForChain[x.address] === false &&
-                    !x.isAdmin &&
-                    'text-red-300',
-                )}
-                href={x.href}
-              >
-                {x.name}
-              </Link>
-            ))}
+            {contract.addresses.map((address, i) => {
+              const isUnverified = verificationStatusForChain[address] === false
+
+              return (
+                <EtherscanLink
+                  key={i}
+                  address={address}
+                  etherscanUrl={contract.etherscanUrl}
+                  type={isUnverified ? 'danger' : undefined}
+                  className="flex items-center gap-0.5"
+                >
+                  {isUnverified && !showRedBackground ? (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnverifiedIcon className="fill-red-300" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        This contract is not verified
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : null}
+                </EtherscanLink>
+              )
+            })}
+            {contract.links.map((contract, i) => {
+              const isUnverified =
+                verificationStatusForChain[contract.address] === false
+
+              return (
+                <Link
+                  key={i}
+                  data-role="etherscan-link"
+                  type={isUnverified ? 'danger' : undefined}
+                  href={contract.href}
+                  className="flex items-center gap-0.5"
+                >
+                  {isUnverified && !showRedBackground ? (
+                    <Tooltip>
+                      <TooltipTrigger>
+                        <UnverifiedIcon className="fill-red-300" />
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        This contract is not verified
+                      </TooltipContent>
+                    </Tooltip>
+                  ) : null}
+                  {contract.name}
+                </Link>
+              )
+            })}
           </div>
           {contract.description && (
             <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400">
