@@ -26,9 +26,9 @@ export class ActivityRepository {
           .insertInto('public.activity')
           .values(rows.slice(i, i + BATCH_SIZE))
           .onConflict((cb) =>
-            cb.columns(['timestamp', 'project_id']).doUpdateSet({
-              count: (eb) => eb.ref('excluded.count'),
-            }),
+            cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
+              count: eb.ref('excluded.count'),
+            })),
           )
           .execute()
       }
@@ -56,13 +56,9 @@ export class ActivityRepository {
     const rows = await this.db
       .selectFrom('public.activity')
       .select(selectActivity)
-      .where((eb) =>
-        eb.and([
-          eb('project_id', '=', projectId.toString()),
-          eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<', to.toDate()),
-        ]),
-      )
+      .where('project_id', '=', projectId.toString())
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
 

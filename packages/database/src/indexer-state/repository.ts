@@ -14,11 +14,11 @@ export class IndexerStateRepository {
       .insertInto('public.indexer_state')
       .values(row)
       .onConflict((cb) =>
-        cb.column('indexer_id').doUpdateSet({
-          safe_height: (eb) => eb.ref('excluded.safe_height'),
-          config_hash: (eb) => eb.ref('excluded.config_hash'),
-          min_timestamp: (eb) => eb.ref('excluded.min_timestamp'),
-        }),
+        cb.column('indexer_id').doUpdateSet((eb) => ({
+          safe_height: eb.ref('excluded.safe_height'),
+          config_hash: eb.ref('excluded.config_hash'),
+          min_timestamp: eb.ref('excluded.min_timestamp'),
+        })),
       )
       .execute()
 

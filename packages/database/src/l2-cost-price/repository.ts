@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import { L2CostPriceRecord, toRecord, toRow } from './entity'
 import { selectL2CostPrice } from './select'
 
@@ -18,12 +19,8 @@ export class L2CostPriceRepository {
     const rows = await this.db
       .selectFrom('public.l2_costs_prices')
       .select(selectL2CostPrice)
-      .where((eb) =>
-        eb.and([
-          eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<=', to.toDate()),
-        ]),
-      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
       .execute()
 
     return rows.map(toRecord)
@@ -32,7 +29,9 @@ export class L2CostPriceRepository {
   async addMany(records: L2CostPriceRecord[]) {
     const rows = records.map(toRow)
 
-    await this.db.insertInto('public.l2_costs_prices').values(rows).execute()
+    await batchExecute(this.db, rows, 10_000, async (trx, batch) => {
+      await trx.insertInto('public.l2_costs_prices').values(batch).execute()
+    })
 
     return rows.length
   }

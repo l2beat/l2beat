@@ -16,14 +16,14 @@ export class IndexerConfigurationRepository {
           .insertInto('public.indexer_configurations')
           .values(rows.slice(i, i + BATCH_SIZE))
           .onConflict((cb) =>
-            cb.column('id').doUpdateSet({
-              id: (eb) => eb.ref('excluded.id'),
-              indexer_id: (eb) => eb.ref('excluded.indexer_id'),
-              properties: (eb) => eb.ref('excluded.properties'),
-              current_height: (eb) => eb.ref('excluded.current_height'),
-              min_height: (eb) => eb.ref('excluded.min_height'),
-              max_height: (eb) => eb.ref('excluded.max_height'),
-            }),
+            cb.column('id').doUpdateSet((eb) => ({
+              id: eb.ref('excluded.id'),
+              indexer_id: eb.ref('excluded.indexer_id'),
+              properties: eb.ref('excluded.properties'),
+              current_height: eb.ref('excluded.current_height'),
+              min_height: eb.ref('excluded.min_height'),
+              max_height: eb.ref('excluded.max_height'),
+            })),
           )
           .execute()
       }
@@ -60,12 +60,8 @@ export class IndexerConfigurationRepository {
 
     return scope
       .updateTable('public.indexer_configurations')
-      .where((eb) =>
-        eb.and([
-          eb('indexer_id', '=', indexerId),
-          eb('id', 'in', configurationsIds),
-        ]),
-      )
+      .where('indexer_id', '=', indexerId)
+      .where('id', 'in', configurationsIds)
       .set('current_height', currentHeight)
       .execute()
   }
@@ -74,14 +70,10 @@ export class IndexerConfigurationRepository {
     indexerId: string,
     configurationIds: string[],
   ) {
-    return this.db
+    return await this.db
       .deleteFrom('public.indexer_configurations')
-      .where((eb) =>
-        eb.and([
-          eb('indexer_id', '=', indexerId),
-          eb('id', 'not in', configurationIds),
-        ]),
-      )
+      .where('indexer_id', '=', indexerId)
+      .where('id', 'not in', configurationIds)
       .execute()
   }
 
