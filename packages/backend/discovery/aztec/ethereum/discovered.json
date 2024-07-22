@@ -1,7 +1,7 @@
 {
   "name": "aztec",
   "chain": "ethereum",
-  "blockNumber": 19811607,
+  "blockNumber": 20361394,
   "configHash": "0x9eb1a3eb20decdb8382eb8b7f5f17850cb57d755c28eb61bdabb00d662d70212",
   "version": 9,
   "contracts": [
@@ -18,7 +18,7 @@
         "reimburseConstant": 0,
         "rollupProcessor": "0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba",
         "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
-        "txFeeBalance": ["5509405460290161018", 0, 59000],
+        "txFeeBalance": ["5456566547832096188", 0, 59000],
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
       },
       "derivedName": "AztecFeeDistributor"
@@ -51,16 +51,16 @@
       "sinceTimestamp": 1614799636,
       "values": {
         "$immutable": true,
-        "dataRoot": "0x06d9b18d3023d526f333fa8e0f74262f66262743b724c43369978cfe024932ef",
-        "dataSize": 937868,
+        "dataRoot": "0x083ecee54fcc326b21db7d770e5f518dce0fa992eeab8a73fd9cd426a568d7b3",
+        "dataSize": 937908,
         "escapeBlockLowerBound": 4560,
         "escapeBlockUpperBound": 4800,
         "ethAssetId": 0,
         "feeDistributor": "0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734",
         "getAssetPermitSupport": [false, false, false],
-        "getEscapeHatchStatus": [false, 2553],
+        "getEscapeHatchStatus": [true, 206],
         "getTotalDeposited": [
-          "35761624133451296404343",
+          "35761664133451296404343",
           "19481078867265097315675826",
           6576737691
         ],
@@ -75,12 +75,12 @@
           300
         ],
         "getTotalWithdrawn": [
-          "34347168048720911319526",
+          "34348701308720911319526",
           "19283912609776049374020383",
           6525215174
         ],
-        "nextRollupId": 4425,
-        "nullRoot": "0x0ca7721c0c6b2b3911f382de433cb7259cf29359e79a4a91fdbbbe5e9ff632d1",
+        "nextRollupId": 4435,
+        "nullRoot": "0x016cb6d32e678e9dc52dd7e9f69b8d18a9ab786af0e741923af2bd16e979d9ac",
         "numberOfAssets": 4,
         "owner": "0x0000000000000000000000000000000000000000",
         "paused": false,
@@ -88,9 +88,9 @@
         "rollupNumPubInputs": 14,
         "rollupProviders": ["0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"],
         "rollupPubInputLength": 448,
-        "rootRoot": "0x2392b471d60567c5e13413f29f881cd2806256b8e703e56b7d025dd1ac003642",
+        "rootRoot": "0x0181e288c3ae27b2a7a1cb495d34f464999ebd5da7345a23bdc51c6df11225e9",
         "totalDeposited": [
-          "35761624133451296404343",
+          "35761664133451296404343",
           "19481078867265097315675826",
           6576737691
         ],
@@ -105,7 +105,7 @@
           300
         ],
         "totalWithdrawn": [
-          "34347168048720911319526",
+          "34348701308720911319526",
           "19283912609776049374020383",
           6525215174
         ],
@@ -141,7 +141,7 @@
         ],
         "getThreshold": 1,
         "GnosisSafe_modules": [],
-        "nonce": 284,
+        "nonce": 285,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
