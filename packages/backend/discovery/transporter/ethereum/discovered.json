@@ -13367,5 +13367,18 @@
       "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32)",
       "function typeAndVersion() view returns (string)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "transporter/CommitStore": "0x5f3a4e0ca3cdb6df2ea9efc3df3e6bd1b257cacf0761b1ba4e2f60bc3d63bc4c",
+    "transporter/ManyChainMultiSig": "0xd420005fec6c7ed116556a77ecb7d6b4eadeacd367e3bee473ca908e54a1a9b2",
+    "transporter/OffRamp": "0x4aae395969df8684ccf394aa684f624dcc0fc327e43216552830fd160809ccc6",
+    "transporter/OnRamp": "0xa5376976fffe27808560ea6d23b45c5effb721e67e4c78f02507eed487f7c957",
+    "transporter/OnRampV2": "0x9af6c41016bebdf41fbf731cb07cc091bcfaa2e81d2b0a5bc4b90c76e5dbee0b",
+    "transporter/PriceRegistry": "0x9c75f4fc2eef32dfabd4130ed50dc7540945124bd16fa7b71a437b00001eca19",
+    "transporter/Router": "0x9af57228a513b194c9f72d70b5c34817732341d7c81589c01329f02515c95b89",
+    "transporter/RouterV2": "0xee15dacd73fd23851cb4d8631874857a1d737e026d068f579f57f95a53c6df64",
+    "transporter/TokenPool": "0x2e81a3f9299ca0620790b11a5985d7d9152d63f0e8b609092c48cd1774d159b3"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

@@ -41,7 +41,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 20039153.779214
+          "tvl": 20211098.941858
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -56,7 +56,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 20039153.779214
+          "tvl": 20211098.941858
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -78,21 +78,6 @@
       "tags": []
     },
     {
-      "address": "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3",
-      "hubOrBridge": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
-          "tokenName": "Wrapped eETH",
-          "tokenSymbol": "weETH",
-          "tvl": 2907.252418508652
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": []
-    },
-    {
       "address": "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87",
       "hubOrBridge": "0x35d4D9bc79B0a543934b1769304B90d752691caD",
       "siblingChainSlug": 957,
@@ -101,7 +86,7 @@
           "token": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
           "tokenName": "rsETH",
           "tokenSymbol": "rsETH",
-          "tvl": 2244.2234799264593
+          "tvl": 2248.240582832715
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -116,7 +101,22 @@
           "token": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
           "tokenName": "rswETH",
           "tokenSymbol": "rswETH",
-          "tvl": 2213.129656538196
+          "tvl": 2163.9869280880675
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": []
+    },
+    {
+      "address": "0xCc958F84DaF36d3eC20BcBee7E99C073B882efc3",
+      "hubOrBridge": "0x8180EcCC825b692ef65FF099a0A387743788bf78",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
+          "tokenName": "Wrapped eETH",
+          "tokenSymbol": "weETH",
+          "tvl": 1313.9328495296652
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -191,7 +191,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 51.384382173872396
+          "tvl": 53.4843821738724
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -206,7 +206,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 51.384382173872396
+          "tvl": 53.4843821738724
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -221,7 +221,7 @@
           "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
           "tokenName": "Wrapped BTC",
           "tokenSymbol": "WBTC",
-          "tvl": 8.08297778
+          "tvl": 12.12012778
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -236,7 +236,7 @@
           "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
           "tokenName": "Wrapped BTC",
           "tokenSymbol": "WBTC",
-          "tvl": 0
+          "tvl": 12.12012778
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -388,7 +388,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 38.89734518392493
+          "tvl": 37.92734518392493
         }
       ],
       "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
@@ -405,10 +405,25 @@
           "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
           "tokenName": "Staked USDe",
           "tokenSymbol": "sUSDe",
-          "tvl": 1896534.2813430426
+          "tvl": 1902759.1695430425
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "tags": []
+    },
+    {
+      "address": "0xA7384185a6428e6B0D33199256fE67b6fA5D8e40",
+      "hubOrBridge": "0x2f87464d5F5356dB350dcb302FE28040986783a7",
+      "siblingChainSlug": 7887,
+      "tokens": [
+        {
+          "token": "0x2367C8395a283f0285c6E312D5aA15826f1fEA25",
+          "tokenName": "Kinto Token",
+          "tokenSymbol": "KINTO",
+          "tvl": 1074722.2222222222
+        }
+      ],
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "tags": []
     },
     {
@@ -457,6 +472,21 @@
       "tags": []
     },
     {
+      "address": "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2",
+      "hubOrBridge": "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
+      "siblingChainSlug": 7887,
+      "tokens": [
+        {
+          "token": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
+          "tokenName": "ether.fi governance token",
+          "tokenSymbol": "ETHFI",
+          "tvl": 9897.822999999999
+        }
+      ],
+      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
+      "tags": []
+    },
+    {
       "address": "0x935f1C29Db1155c3E0f39F644DF78DDDBD4757Ff",
       "hubOrBridge": "0x755cD5d147036E11c76F1EeffDd94794fC265f0d",
       "siblingChainSlug": 7887,
@@ -480,7 +510,7 @@
           "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
           "tokenName": "Wrapped eETH",
           "tokenSymbol": "weETH",
-          "tvl": 1871.4559917280405
+          "tvl": 1874.3794917280404
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -510,7 +540,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 841.6296497174519
+          "tvl": 842.272809717452
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -526,21 +556,6 @@
           "tokenName": "Dai Stablecoin",
           "tokenSymbol": "DAI",
           "tvl": 1.1
-        }
-      ],
-      "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-      "tags": []
-    },
-    {
-      "address": "0xdE9D8c2d465669c661672d7945D4d4f5407d22E2",
-      "hubOrBridge": "0x95d60E34aB2E626407d98dF8C240e6174e5D37E5",
-      "siblingChainSlug": 7887,
-      "tokens": [
-        {
-          "token": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
-          "tokenName": "ether.fi governance token",
-          "tokenSymbol": "ETHFI",
-          "tvl": 0.1
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -604,21 +619,6 @@
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-      "tags": []
-    },
-    {
-      "address": "0xA7384185a6428e6B0D33199256fE67b6fA5D8e40",
-      "hubOrBridge": "0x2f87464d5F5356dB350dcb302FE28040986783a7",
-      "siblingChainSlug": 7887,
-      "tokens": [
-        {
-          "token": "0x2367C8395a283f0285c6E312D5aA15826f1fEA25",
-          "tokenName": "Kinto Token",
-          "tokenSymbol": "KINTO",
-          "tvl": 0
-        }
-      ],
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "tags": []
     },
     {
@@ -692,6 +692,21 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
+          "tvl": 0
+        }
+      ],
+      "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
+      "tags": []
+    },
+    {
+      "address": "0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe",
+      "hubOrBridge": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
+      "siblingChainSlug": 8008,
+      "tokens": [
+        {
+          "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+          "tokenName": "Staked USDe",
+          "tokenSymbol": "sUSDe",
           "tvl": 0
         }
       ],
@@ -857,6 +872,21 @@
       "tags": []
     },
     {
+      "address": "0x2B93891dc80ab9696814615f553fd15a3b98d3a2",
+      "hubOrBridge": "0x4Dfa9966457EE49dCa3407f8DD484B739C048670",
+      "siblingChainSlug": 81457,
+      "tokens": [
+        {
+          "token": "0xF90b959ae8dfBa2DD793AD05176209835658362b",
+          "tokenName": "rsETH Covered Call",
+          "tokenSymbol": "rsETHC",
+          "tvl": 0
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": ["multiplug", "multiproject"]
+    },
+    {
       "address": "0xDBa83C0C654DB1cd914FA2710bA743e925B53086",
       "hubOrBridge": "0xe7cD9370CdE6C9b5eAbCe8f86d01822d3de205A0",
       "siblingChainSlug": 81457,
@@ -897,7 +927,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 22809440.878292
+          "tvl": 22849401.017644
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
@@ -998,21 +1028,6 @@
       "siblingChainSlug": "unknown",
       "tokens": [],
       "owner": "0x4cAC359ab2A020CF212D82C1b66fC8abF81b1Dd0"
-    },
-    {
-      "address": "0x2B93891dc80ab9696814615f553fd15a3b98d3a2",
-      "hubOrBridge": "0x4Dfa9966457EE49dCa3407f8DD484B739C048670",
-      "siblingChainSlug": "unknown",
-      "tokens": [
-        {
-          "token": "0xF90b959ae8dfBa2DD793AD05176209835658362b",
-          "tokenName": "rsETH Covered Call",
-          "tokenSymbol": "rsETHC",
-          "tvl": 0
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
     },
     {
       "address": "0xb40FdECfCa4EF29CACc37222Ce4dB1fd0f561a00",

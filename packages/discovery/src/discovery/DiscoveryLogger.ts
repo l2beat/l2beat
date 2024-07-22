@@ -109,7 +109,7 @@ export class DiscoveryLogger {
   }
 
   logProxyDetected(type: string): void {
-    this.log(`  Proxy detected: ${chalk.bgRed.whiteBright(` ${type} `)}`)
+    this.log(`  Proxy detected: ${chalk.blue.bold(` ${type} `)}`)
   }
 
   logProxyDetectionFailed(type: string): void {

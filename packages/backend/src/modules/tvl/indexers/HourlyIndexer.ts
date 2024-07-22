@@ -13,8 +13,6 @@ export class HourlyIndexer extends RootIndexer {
   }
 
   override async initialize() {
-    this.logger.info('Starting...')
-
     this.clock.onNewHour(() => this.requestTick())
     return { safeHeight: await this.tick() }
   }

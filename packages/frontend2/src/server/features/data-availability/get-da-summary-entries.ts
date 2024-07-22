@@ -1,5 +1,4 @@
-import { DaLayerKindDisplay, daLayers, layer2s } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { DaLayerKindDisplay, daLayers } from '@l2beat/config'
 import { toDaBridge } from './utils/get-da-bridge'
 import { getDaEconomicSecurity } from './utils/get-da-economic-security'
 import { getUniqueProjectsInUse } from './utils/get-da-projects'
@@ -17,8 +16,8 @@ export async function getDaSummaryEntries() {
 
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => {
-      const tvs = getSumFor(bridge.usedIn)
       const economicSecurityData = economicSecurity[daLayer.id]
+      const tvs = getSumFor(bridge.usedIn.map((project) => project.id))
 
       return {
         slug: daLayer.display.slug,
@@ -28,13 +27,7 @@ export async function getDaSummaryEntries() {
         tvs,
         economicSecurity: economicSecurityData,
         layerType: DaLayerKindDisplay[daLayer.kind],
-        // TODO: maybe we can specify names in the config instead of projectIds
-        usedBy: bridge.usedIn
-          .map(
-            (projectId) =>
-              layer2s.find((l2) => l2.id === projectId)?.display.name,
-          )
-          .filter(notUndefined),
+        usedBy: bridge.usedIn.map((project) => project.name),
       }
     }),
   )

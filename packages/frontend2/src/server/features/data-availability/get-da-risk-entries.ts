@@ -16,7 +16,7 @@ export async function getDaRiskEntries() {
 
   return daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => {
-      const tvs = getSumFor(bridge.usedIn)
+      const tvs = getSumFor(bridge.usedIn.map((project) => project.id))
       const economicSecurityData = economicSecurity[daLayer.id]
 
       return {

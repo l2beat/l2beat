@@ -1,4 +1,3 @@
-import { ProjectId } from '@l2beat/shared-pure'
 import {
   DacBridge,
   EnshrinedBridge,
@@ -10,6 +9,7 @@ import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import { UsedInProject } from './UsedInProject'
 
 export const DaLayerKind = {
   PublicBlockchain: 'PublicBlockchain',
@@ -79,7 +79,7 @@ export type CommonDaLayer = {
   /**
    * List of projects given da layer is being used in
    */
-  usedIn: ProjectId[]
+  usedIn: UsedInProject[]
 
   /**
    * Risks associated with the data availability layer.

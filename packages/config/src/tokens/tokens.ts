@@ -12,6 +12,8 @@ You can check the detailed steps on how to add new tokens in the tvl.md file in 
 
 import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
+import { chains } from '../chains'
 import { tokens } from './generated.json'
 import { GeneratedToken } from './types'
 
@@ -38,9 +40,17 @@ export function getTokenByAssetId(assetId: AssetId) {
 }
 
 function toToken(generated: GeneratedToken): Token {
+  const chain = chains.find((c) => c.chainId === +generated.chainId)
+  assert(chain, `Chain nor found for ${generated.symbol}`)
+  assert(
+    chain.minTimestampForTvl,
+    `Token added for chain without minTimestampForTvl ${chain.name}`,
+  )
+
   const sinceTimestamp = new UnixTime(
     Math.max(
       generated.deploymentTimestamp.toNumber(),
+      chain.minTimestampForTvl.toNumber(),
       generated.coingeckoListingTimestamp.toNumber(),
     ),
   )

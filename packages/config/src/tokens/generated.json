@@ -2341,6 +2341,21 @@
       "supply": "zero"
     },
     {
+      "id": "lsk-lisk",
+      "name": "Lisk",
+      "coingeckoId": "lisk",
+      "address": "0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f",
+      "symbol": "LSK",
+      "decimals": 18,
+      "deploymentTimestamp": 1715865407,
+      "coingeckoListingTimestamp": 1573689600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "lpt-livepeer-token",
       "name": "Livepeer Token",
       "coingeckoId": "livepeer",
@@ -5132,6 +5147,24 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "optimism:ezeth-renzo-restaked-eth",
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1718371339,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 10,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Hyperlane (xERC20)"
+      }
+    },
+    {
       "id": "optimism:sfrax-staked-frax",
       "name": "Staked FRAX",
       "coingeckoId": "staked-frax",
@@ -5551,6 +5584,24 @@
       "chainId": 169,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "id": "fraxtal:ezeth-renzo-restaked-eth",
+      "name": "Renzo Restaked ETH",
+      "coingeckoId": "renzo-restaked-eth",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "symbol": "ezETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1720099543,
+      "coingeckoListingTimestamp": 1706140800,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
+      "chainId": 252,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Hyperlane (xERC20)"
+      }
     },
     {
       "id": "fraxtal:susde-staked-usde",
@@ -6486,7 +6537,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -6670,7 +6721,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -7272,7 +7323,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -7753,7 +7804,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -8005,7 +8056,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },

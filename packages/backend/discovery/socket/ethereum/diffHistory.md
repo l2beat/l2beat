@@ -1,4 +1,49 @@
-Generated with discovered.json: 0x90fba44cf4829e7a1da58c1599313d5a692e456f
+Generated with discovered.json: 0x0e8508e83cd4c4229d0609413a4b05430f644a65
+
+# Diff at Fri, 19 Jul 2024 11:10:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 20332210
+- current block number: 20340184
+
+## Description
+
+New plug, no new vaults.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.69:
++        "0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20332210 (main branch discovery), not current.
+
+```diff
+    contract rsETH Vault Lyra (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+    }
+```
+
+Generated with discovered.json: 0xcc11fb16443328f87fc9461c33c6a81fd8d17ed9
 
 # Diff at Thu, 18 Jul 2024 08:28:17 GMT:
 

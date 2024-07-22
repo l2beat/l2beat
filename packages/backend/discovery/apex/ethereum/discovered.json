@@ -216,6 +216,9 @@
       "address": "0xC532d2976209A56DdF4a99B844130f7c0daCa7B6",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "assignedPermissions": {
+        "admin": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672216439,
       "values": {
@@ -352,7 +355,9 @@
     { "address": "0x4F753A937318A64b2867b16a55f5aea83A4C44dB" },
     {
       "address": "0x53c6Ec9640761c669B800088F097E01A8207Ac8b",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xe53A6eD882Eb3f90cCe0390DDB04c876C5482E6b"]
+      }
     },
     { "address": "0x552aA2EBA4B0c5b9B8b4b22507189a7af4198169" },
     { "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A" },
@@ -366,7 +371,9 @@
     { "address": "0xb557219DC53Af7Da9777540426DEe9c196842420" },
     {
       "address": "0xef75e1199B0599BA823b7770AcE8eb34864a1D55",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
+      }
     },
     { "address": "0xfA85BEA9B0F2D9540040118BeacbaD7258f45d81" }
   ],
@@ -1092,5 +1099,9 @@
       "function withdrawETH(address to, uint256 amount, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)",
       "function withdrawErc20(address to, uint256 amount, address token, uint256 expireTime, uint256 orderId, address[] allSigners, bytes[] signatures)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

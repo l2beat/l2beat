@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc10d10d73f1b37c04aa0913bdcecc7b373653261
+
+# Diff at Thu, 18 Jul 2024 10:31:06 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 19927696
+- current block number: 19927696
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19927696 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x20D697b63d7747cF78C94ad9ee75C1436781E27E, inheriting its permissions."]
+    }
+```
+
 Generated with discovered.json: 0x06e5f348d2fefeede00ea48b514332c748ab92d8
 
 # Diff at Wed, 22 May 2024 20:06:37 GMT:

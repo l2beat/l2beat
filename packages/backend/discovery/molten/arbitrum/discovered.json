@@ -2,7 +2,7 @@
   "name": "molten",
   "chain": "arbitrum",
   "blockNumber": 225981159,
-  "configHash": "0x4f4d37e96efba8766ddc98d02a438c59212f6a56ff12c12e34c5144c5ca15137",
+  "configHash": "0x4bcc4ab1c1d8dceb270855fb93c856f1a041e875b0b0614026083a0039ba110a",
   "version": 9,
   "contracts": [
     {
@@ -1148,5 +1148,10 @@
       "function rollupInitialized(uint256 chainId, string chainConfig)",
       "function updateRollupAddress()"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }
