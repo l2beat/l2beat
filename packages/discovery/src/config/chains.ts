@@ -35,6 +35,15 @@ export const chains: ChainConfig[] = [
     },
   },
   {
+    name: 'nova',
+    chainId: 42170,
+    multicall: getMulticall3Config(1746963),
+    explorer: {
+      type: 'etherscan',
+      url: 'https://api-nova.arbiscan.io/api',
+    },
+  },
+  {
     name: 'optimism',
     chainId: 10,
     multicall: getMulticall3Config(4286263),
