@@ -13,8 +13,8 @@ import {
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
 import { PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
@@ -38,42 +38,22 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+    configurations: Configuration<CoingeckoPriceConfigEntry>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<number> {
-    const configurationsToSync = configurations.filter((c) => !c.hasData)
-
-    if (configurationsToSync.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with data', {
-        skippedConfigurations:
-          configurations.length - configurationsToSync.length,
-        configurationsToSync: configurationsToSync.length,
-        from,
-        to,
-      })
-    }
-
-    if (configurationsToSync.length === 0) {
-      this.logger.info('No configurations to sync', {
-        from,
-        to,
-      })
-      return to
-    }
-
+  ) {
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
     const prices = await this.$.priceService.fetchPrices(
       new UnixTime(from),
       adjustedTo,
       this.$.coingeckoId,
-      configurationsToSync,
+      configurations,
     )
 
     this.logger.info('Fetched prices in range', {
       from,
       to: adjustedTo.toNumber(),
-      configurationsToSync: configurationsToSync.length,
+      configurationsToSync: configurations.length,
       prices: prices.length,
     })
 
@@ -85,7 +65,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.logger.info('Saving prices into DB', {
         from,
         to: adjustedTo.toNumber(),
-        configurationsToSync: configurationsToSync.length,
+        configurationsToSync: configurations.length,
         prices: optimizedPrices.length,
       })
 
@@ -95,9 +75,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     return adjustedTo.toNumber()
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
-  ): Promise<void> {
+  override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
       const deletedRecords =
         await this.$.priceRepository.deleteByConfigInTimeRange(

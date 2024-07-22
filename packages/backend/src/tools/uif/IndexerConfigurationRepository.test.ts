@@ -96,23 +96,28 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     it(
       IndexerConfigurationRepository.prototype.updateSavedConfigurations.name,
       async () => {
-        const records = CONFIGURATIONS
+        const records = [
+          config('a', 1, null, 10), // update: current < toUpdate
+          config('b', 1, null, null), // update: current == null
+          config('c', 1, null, 1_000), // do not update: current > toUpdate
+          config('d', 1_000, null, null), // do  not update: min > toUpdate
+          config('e', 1, 10, null), // do not update: max < toUpdate
+          { ...config('f', 1, null, null), indexerId: 'other' }, // do not update: other indexer
+        ]
 
         await repository.addOrUpdateMany(records)
-        await repository.updateSavedConfigurations(
-          'indexer-1',
-          records
-            .slice(0, 3)
-            .map((r) => r.id), // test .whereIn clause
-          123,
-        )
+
+        await repository.updateSavedConfigurations('indexer', 100)
 
         const result = await repository.getAll()
 
         expect(result).toEqualUnsorted([
-          ...records.slice(0, 2).map((r) => ({ ...r, currentHeight: 123 })),
-          CONFIGURATIONS[2],
-          CONFIGURATIONS[3],
+          { ...records[0], currentHeight: 100 },
+          { ...records[1], currentHeight: 100 },
+          records[2],
+          records[3],
+          records[4],
+          records[5],
         ])
       },
     )
@@ -154,4 +159,18 @@ function mock(
     properties: 'properties',
     ...record,
   }
+}
+
+function config(
+  id: string,
+  minHeight: number,
+  maxHeight: number | null,
+  currentHeight: number | null,
+) {
+  return mock({
+    id: id.repeat(12),
+    minHeight,
+    maxHeight,
+    currentHeight,
+  })
 }

@@ -7,10 +7,10 @@ import { DatabaseMiddleware } from '../../peripherals/database/DatabaseMiddlewar
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import { mockDbMiddleware } from '../../tools/uif/multi/MultiIndexer.test'
-import { removal, update } from '../../tools/uif/multi/test/mockConfigurations'
+import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
 import { TrackedTxsIndexer } from './TrackedTxsIndexer'
@@ -52,10 +52,10 @@ describe(TrackedTxsIndexer.name, () => {
         projectId: ProjectId('test'),
       }
 
-      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
-        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
-        update<TrackedTxConfigEntry>('b', 100, null, false, parameters),
-        update<TrackedTxConfigEntry>('c', 100, null, true, parameters),
+      const configurations: Configuration<TrackedTxConfigEntry>[] = [
+        actual<TrackedTxConfigEntry>('a', 100, null, parameters),
+        actual<TrackedTxConfigEntry>('b', 100, null, parameters),
+        actual<TrackedTxConfigEntry>('c', 100, null, parameters),
       ]
 
       const safeHeight = await indexer.multiUpdate(
@@ -67,7 +67,7 @@ describe(TrackedTxsIndexer.name, () => {
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
         1,
-        [configurations[0], configurations[1]],
+        configurations,
         new UnixTime(from),
         new UnixTime(to),
       )
@@ -101,8 +101,8 @@ describe(TrackedTxsIndexer.name, () => {
         projectId: ProjectId('test'),
       }
 
-      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
-        update<TrackedTxConfigEntry>('a', 100, null, false, parameters),
+      const configurations: Configuration<TrackedTxConfigEntry>[] = [
+        actual<TrackedTxConfigEntry>('a', 100, null, parameters),
       ]
 
       const safeHeight = await indexer.multiUpdate(
@@ -119,30 +119,6 @@ describe(TrackedTxsIndexer.name, () => {
         expected,
       )
       expect(safeHeight).toEqual(expected.toNumber())
-    })
-
-    it('returns to if no configurations to sync', async () => {
-      const from = 100
-      const to = 300
-
-      const indexer = getMockTrackedTxsIndexer({})
-
-      const parameters: Partial<TrackedTxConfigEntry> = {
-        projectId: ProjectId('test'),
-      }
-      const configurations: UpdateConfiguration<TrackedTxConfigEntry>[] = [
-        update<TrackedTxConfigEntry>('a', 100, null, true, parameters),
-        update<TrackedTxConfigEntry>('c', 100, null, true, parameters),
-      ]
-
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        mockDbMiddleware,
-      )
-
-      expect(safeHeight).toEqual(to)
     })
   })
 
@@ -186,7 +162,7 @@ describe(TrackedTxsIndexer.name, () => {
 
 function getMockTrackedTxsIndexer(params: {
   indexerService?: IndexerService
-  configurations?: UpdateConfiguration<TrackedTxConfigEntry>[]
+  configurations?: Configuration<TrackedTxConfigEntry>[]
   trackedTxsClient?: TrackedTxsClient
   updaters?: TxUpdaterInterface[]
   createDatabaseMiddleware?: () => Promise<DatabaseMiddleware>
