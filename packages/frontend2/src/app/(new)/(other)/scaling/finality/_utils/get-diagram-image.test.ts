@@ -1,10 +1,10 @@
 import { expect } from 'earl'
 import { it } from 'mocha'
-
 import {
   type DiagramType,
   getDiagramImage,
   getDiagramImageOrThrow,
+  getDiagramPath,
 } from './get-diagram-image'
 
 const fileName = 'random-file-name-that-does-not-exist'
@@ -22,7 +22,8 @@ describe(getDiagramImage.name, () => {
         const result = getDiagramImage(type, fileName, {
           existsSync: () => true,
         })
-        expect(result).toEqual(`/images/${type}/${fileName}.png`)
+
+        expect(result).toEqual(getDiagramPath(type, fileName))
       })
 
       it('returns undefined if the file does not exist', () => {
@@ -42,7 +43,7 @@ describe(getDiagramImageOrThrow.name, () => {
         const result = getDiagramImageOrThrow(type, fileName, {
           existsSync: () => true,
         })
-        expect(result).toEqual(`/images/${type}/${fileName}.png`)
+        expect(result).toEqual(getDiagramPath(type, fileName))
       })
 
       it('throws an error if the file does not exist', () => {

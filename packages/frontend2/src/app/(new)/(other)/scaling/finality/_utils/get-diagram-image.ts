@@ -12,7 +12,7 @@ export function getDiagramImage(
   fileName: string,
   _fs = { existsSync: fs.existsSync },
 ): string | undefined {
-  const path = join(process.cwd(), 'public', 'images', type, `${fileName}.png`)
+  const path = getDiagramPath(type, fileName)
 
   const exists = _fs.existsSync(path)
 
@@ -27,8 +27,13 @@ export function getDiagramImageOrThrow(
   const filePath = getDiagramImage(type, fileName, _fs)
 
   if (!filePath) {
-    throw new Error(`Diagram image not found: /images/${type}/${fileName}.png`)
+    const expectedPath = getDiagramPath(type, fileName)
+    throw new Error(`Diagram image not found: ${expectedPath}`)
   }
 
   return filePath
+}
+
+export function getDiagramPath(type: DiagramType, fileName: string): string {
+  return join(process.cwd(), 'public', 'images', type, `${fileName}.png`)
 }
