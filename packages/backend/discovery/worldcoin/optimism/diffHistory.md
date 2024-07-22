@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x94983d2c39991c36e7b57d14634768687500ec69
+Generated with discovered.json: 0x68705d54345eaa7eebac28b79f9f3e6d9d44df40
 
-# Diff at Thu, 18 Jul 2024 11:51:10 GMT:
+# Diff at Mon, 22 Jul 2024 13:58:23 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@8df10626d2a29b09ab4d4aaefa4b407f07c14b4a block: 120698212
-- current block number: 122852338
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 120698212
+- current block number: 123028945
 
 ## Description
 
-The WorldIDIdentityManager is upgraded to a new implementation. 6 new SMTB verifiers and a new Semaphore verifier are deployed.
+The WorldIDIdentityManager is upgraded to a new implementation. 6 new SMTB verifiers and a new Semaphore verifier are deployed. The worldcoin team confirmed that this is a staging deployment which is not currently used.
 
 ## Watched changes
 

@@ -1,7 +1,7 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 122852338,
+  "blockNumber": 123028945,
   "configHash": "0x5def1b5565f1247f6622afd0605cb640f85241299993c9ecd062fa3ca528931e",
   "version": 9,
   "contracts": [
@@ -175,7 +175,7 @@
         ],
         "getThreshold": 2,
         "GnosisSafe_modules": [],
-        "nonce": 14,
+        "nonce": 15,
         "VERSION": "1.3.0"
       }
     },
@@ -308,7 +308,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "233126950827075537414520431",
+        "totalSupply": "233128611801668313547822370",
         "version": "1.0.0"
       },
       "derivedName": "OptimismMintableERC20"
@@ -386,7 +386,12 @@
     { "address": "0x79b998ded1f4503CE3A0A76993c72a65449f4590" },
     {
       "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
+          "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+        ]
+      }
     },
     { "address": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F" },
     { "address": "0xB6d1621B770A088C16bfec22bAd00F77D874d011" },
@@ -817,5 +822,9 @@
       "function transferOwnership(address newOwner)",
       "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }
