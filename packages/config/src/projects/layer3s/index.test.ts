@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { assert } from '@l2beat/backend-tools'
-import { ChainId, } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
 import { tokenList } from '../../tokens'
