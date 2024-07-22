@@ -3,6 +3,11 @@ import { Callout } from '~/app/_components/callout'
 import { CustomLink } from '~/app/_components/link/custom-link'
 import { HighlightableLink } from '~/app/_components/link/highlightable/highlightable-link'
 import { Markdown } from '~/app/_components/markdown/markdown'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
 import BulletIcon from '~/icons/bullet.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
@@ -10,11 +15,6 @@ import { cn } from '~/utils/cn'
 import { ReferenceList, type TechnologyReference } from './reference-list'
 import { UpgradeConsiderations } from './upgrade-considerations'
 import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '~/app/_components/tooltip/tooltip'
 
 export interface TechnologyContract {
   name: string
