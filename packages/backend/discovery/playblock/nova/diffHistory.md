@@ -7,7 +7,7 @@ Generated with discovered.json: 0xb202839bf951a0726b981784616a7c5858e89925
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: First L3 Optimium with an Optimium as host chain (nova). Admin EOA, unverified contracts, native token not on coingecko (TVL will be zero).
 
 ## Initial discovery
 
