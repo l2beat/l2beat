@@ -14,27 +14,22 @@ interface ProjectChain {
 }
 
 async function main() {
-  try {
-    const { chain, project } = parseCliArguments()
-    const configReader = new ConfigReader()
+  const { chain, project } = parseCliArguments()
+  const configReader = new ConfigReader()
 
-    const allDiscoveries = await getAllDiscoveriesExcept(configReader, {
-      chain,
-      project,
-    })
-    const relations = buildKnowledgeBase(allDiscoveries)
+  const allDiscoveries = await getAllDiscoveriesExcept(configReader, {
+    chain,
+    project,
+  })
+  const relations = buildKnowledgeBase(allDiscoveries)
 
-    const targetDiscovery = await configReader.readDiscovery(project, chain)
-    const suggestions = generateSuggestions(targetDiscovery, relations)
+  const targetDiscovery = await configReader.readDiscovery(project, chain)
+  const suggestions = generateSuggestions(targetDiscovery, relations)
 
-    outputSuggestions(suggestions, project, chain)
-  } catch (error) {
-    console.error('An error occurred:', error)
-    process.exit(1)
-  }
+  outputSuggestions(suggestions, project, chain)
 }
 
-function parseCliArguments(): { chain: string; project: string } {
+function parseCliArguments(): ProjectChain {
   const [chain, project] = process.argv.slice(2)
   if (!chain || !project) {
     console.log('Usage: yarn analyze-project <chain> <project>')
@@ -45,7 +40,7 @@ function parseCliArguments(): { chain: string; project: string } {
 
 async function getAllDiscoveriesExcept(
   configReader: ConfigReader,
-  toExclude: { chain: string; project: string },
+  toExclude: ProjectChain,
 ): Promise<DiscoveryOutput[]> {
   const allProjects = configReader
     .readAllChains()
@@ -59,11 +54,13 @@ async function getAllDiscoveriesExcept(
         chain !== toExclude.chain || project !== toExclude.project,
     )
 
-  return Promise.all(
-    allProjects.map(({ chain, project }) =>
-      configReader.readDiscovery(project, chain),
-    ),
-  )
+  const discoveries: DiscoveryOutput[] = []
+  for (const { chain, project } of allProjects) {
+    const discovery = await configReader.readDiscovery(project, chain)
+    discoveries.push(discovery)
+  }
+
+  return discoveries
 }
 
 function buildKnowledgeBase(
@@ -166,7 +163,7 @@ function generateMissingContractSuggestion(
 ): string {
   let suggestion = `\nContract ${contract.name} (${contract.address}, template: ${contract.template}):\n`
   suggestion += `  - field "${relation.sourceField}" is not pointing to a contract,\n`
-  suggestion += `  - but in these projects points to a contract with template ${relation.targetTemplate}. Please investigate.\n`
+  suggestion += `  - but in these projects points at a contract with template ${relation.targetTemplate}. Please investigate.\n`
   suggestion += relation.foundIn
     .map(({ project, chain }) => `    - ${project} on ${chain}`)
     .join('\n')
@@ -180,7 +177,7 @@ function generateMismatchedTemplateSuggestion(
 ): string {
   let suggestion = `\nContract ${contract.name} (${contract.address}, template: ${contract.template}):\n`
   suggestion += `  - field "${relation.sourceField}" points at ${targetContract.name} with template ${targetContract.template}\n`
-  suggestion += `  - but in these projects it points to a contract with template ${relation.targetTemplate}. Please investigate.\n`
+  suggestion += `  - but in these projects it points at a contract with template ${relation.targetTemplate}. Please investigate.\n`
   suggestion += relation.foundIn
     .map(({ project, chain }) => `    - ${project} on ${chain}`)
     .join('\n')
