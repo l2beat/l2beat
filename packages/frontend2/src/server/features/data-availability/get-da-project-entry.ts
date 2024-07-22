@@ -56,7 +56,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     header: getHeader({
       rosetteValues,
       daLayer,
-      daBridge: daBridge,
+      daBridge,
       tvs,
       economicSecurity,
     }),
