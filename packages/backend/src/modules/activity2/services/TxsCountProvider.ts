@@ -29,11 +29,11 @@ export class TxsCountProvider {
   }
 
   async getRpcTxsCount(from: number, to: number): Promise<Map<number, number>> {
-    const projectConfig = this.$.projectConfig
     assert(
-      projectConfig.type === 'rpc',
+      this.$.projectConfig.type === 'rpc',
       'Method not supported for projects other than rpc',
     )
+    const projectConfig = this.$.projectConfig
 
     const rpcClient = this.$.peripherals.getClient(RpcClient, {
       url: projectConfig.defaultUrl,
