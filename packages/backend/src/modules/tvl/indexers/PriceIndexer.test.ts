@@ -10,12 +10,12 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
+  actual,
   removal,
-  update,
 } from '../../../tools/uif/multi/test/mockConfigurations'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
 import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
@@ -70,10 +70,9 @@ describe(PriceIndexer.name, () => {
       const parameters = {
         coingeckoId: CoingeckoId('id'),
       }
-      const configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[] = [
-        update<CoingeckoPriceConfigEntry>('a', 100, null, false, parameters),
-        update<CoingeckoPriceConfigEntry>('b', 100, null, false, parameters),
-        update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
+      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
+        actual<CoingeckoPriceConfigEntry>('a', 100, null, parameters),
+        actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
       ]
 
       const safeHeight = await indexer.multiUpdate(
@@ -89,7 +88,7 @@ describe(PriceIndexer.name, () => {
         new UnixTime(from),
         new UnixTime(adjustedTo),
         parameters.coingeckoId,
-        configurations.slice(0, 2),
+        configurations,
       )
 
       expect(
@@ -109,42 +108,6 @@ describe(PriceIndexer.name, () => {
       )
 
       expect(safeHeight).toEqual(adjustedTo)
-    })
-
-    it('returns to if no configurations to sync', async () => {
-      const from = 100
-      const to = 300
-
-      const indexer = new PriceIndexer({
-        priceRepository: mockObject<PriceRepository>({}),
-        parents: [],
-        priceService: mockObject<PriceService>({}),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        coingeckoId: CoingeckoId('id'),
-        indexerService: mockObject<IndexerService>({}),
-        configurations: [],
-        logger: Logger.SILENT,
-        serializeConfiguration: () => '',
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
-      })
-
-      const parameters = {
-        coingeckoId: CoingeckoId('id'),
-      }
-      const configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[] = [
-        update<CoingeckoPriceConfigEntry>('a', 100, null, true, parameters),
-        update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
-      ]
-
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        mockDbMiddleware,
-      )
-
-      expect(safeHeight).toEqual(to)
     })
   })
 

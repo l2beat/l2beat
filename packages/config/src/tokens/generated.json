@@ -4876,6 +4876,36 @@
       "supply": "zero"
     },
     {
+      "id": "zuneth-zunami-eth",
+      "name": "Zunami ETH",
+      "coingeckoId": "zunami-eth-2",
+      "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222",
+      "symbol": "zunETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1710656291,
+      "coingeckoListingTimestamp": 1715731200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37835/large/zunETH_200x200.png?1715741123",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "zunusd-zunami-usd",
+      "name": "Zunami USD",
+      "coingeckoId": "zunami-usd",
+      "address": "0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6",
+      "symbol": "zunUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1708409447,
+      "coingeckoListingTimestamp": 1715558400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37809/large/zunUSD_200x200.png?1715591997",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
@@ -6239,6 +6269,39 @@
       "supply": "zero"
     },
     {
+      "id": "mantle:fbtc-fire-bitcoin",
+      "name": "Fire Bitcoin",
+      "coingeckoId": "ignition-fbtc",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "symbol": "FBTC",
+      "decimals": 8,
+      "deploymentTimestamp": 1717042584,
+      "coingeckoListingTimestamp": 1720828800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39182/large/FBTC_LOGO.png?1720850455",
+      "chainId": 5000,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Fire Bridge"
+      }
+    },
+    {
+      "id": "mantle:lend-lendle-protocol-token",
+      "name": "Lendle Protocol Token",
+      "coingeckoId": "lendle",
+      "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
+      "symbol": "LEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1689944989,
+      "coingeckoListingTimestamp": 1693958400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31588/large/lendle_logo_200_200_cg.png?1696530405",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "mantle:mnt-mantle",
       "name": "Mantle",
       "coingeckoId": "mantle",
@@ -6266,6 +6329,21 @@
       "chainId": 5000,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "id": "mantle:moe-moe-token",
+      "name": "Moe Token",
+      "coingeckoId": "moe-3",
+      "address": "0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
+      "symbol": "MOE",
+      "decimals": 18,
+      "deploymentTimestamp": 1703037192,
+      "coingeckoListingTimestamp": 1704844800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34422/large/MOE.png?1704821927",
+      "chainId": 5000,
+      "source": "native",
+      "supply": "circulatingSupply"
     },
     {
       "id": "mantle:susde-staked-usde",
@@ -6944,6 +7022,25 @@
       "supply": "zero"
     },
     {
+      "id": "arbitrum:ethfi-ether.fi-governance-token",
+      "name": "ether.fi governance token",
+      "coingeckoId": "ether-fi",
+      "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+      "symbol": "ETHFI",
+      "decimals": 18,
+      "deploymentTimestamp": 1718638923,
+      "coingeckoListingTimestamp": 1710720000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35958/large/etherfi.jpeg?1710254562",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
       "id": "arbitrum:frax-frax",
       "name": "Frax",
       "coingeckoId": "frax",
@@ -7450,6 +7547,25 @@
       "bridgedUsing": {
         "bridge": "Stargate",
         "slug": "stargate"
+      }
+    },
+    {
+      "id": "arbitrum:tap-taptoken",
+      "name": "TapToken",
+      "coingeckoId": "tapioca-dao-token",
+      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
+      "symbol": "TAP",
+      "decimals": 18,
+      "deploymentTimestamp": 1718405557,
+      "coingeckoListingTimestamp": 1718668800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38756/large/TAPP.png?1718729124",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "circulatingSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
       }
     },
     {

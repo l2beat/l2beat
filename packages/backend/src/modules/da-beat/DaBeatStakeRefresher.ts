@@ -108,6 +108,6 @@ export class DaBeatStakeRefresher {
   }
 
   private isBlockchainDaLayer(layer: DaLayer): layer is BlockchainDaLayer {
-    return layer.kind === 'PublicBlockchain'
+    return layer.kind === 'public-blockchain'
   }
 }

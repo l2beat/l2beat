@@ -3,7 +3,6 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { UpdateConfiguration } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
 
 import {
@@ -12,6 +11,7 @@ import {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
@@ -30,7 +30,7 @@ describe(TrackedTxsClient.name, () => {
       const trackedTxsClient = new TrackedTxsClient(bigquery)
 
       const data = await trackedTxsClient.getData(
-        CONFIGURATIONS as unknown as UpdateConfiguration<TrackedTxConfigEntry>[],
+        CONFIGURATIONS as unknown as Configuration<TrackedTxConfigEntry>[],
         FROM,
         TO,
       )
@@ -99,7 +99,7 @@ const CONFIGURATIONS = [
         to: ADDRESS_2,
       },
     },
-  } as UpdateConfiguration<
+  } as Configuration<
     TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
   >,
   {
@@ -119,7 +119,7 @@ const CONFIGURATIONS = [
         selector: '0x9aaab648',
       },
     },
-  } as UpdateConfiguration<
+  } as Configuration<
     TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
   >,
   {
@@ -140,7 +140,7 @@ const CONFIGURATIONS = [
         programHashes: [paradexProgramHash] as string[],
       },
     },
-  } as UpdateConfiguration<
+  } as Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
   >,
 ] as const
@@ -214,7 +214,7 @@ const TRANSFERS_SQL = getTransferQuery(
 )
 const FUNCTIONS_SQL = getFunctionCallQuery(
   (
-    CONFIGURATIONS.slice(1) as UpdateConfiguration<
+    CONFIGURATIONS.slice(1) as Configuration<
       TrackedTxConfigEntry & {
         params: TrackedTxSharpSubmissionConfig | TrackedTxFunctionCallConfig
       }

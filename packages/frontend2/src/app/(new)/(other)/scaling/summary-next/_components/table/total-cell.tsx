@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,

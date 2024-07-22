@@ -24,6 +24,7 @@ export interface ScalingSummaryLayer2sEntry {
   hasImplementationChanged: boolean
   isUpcoming: boolean
   isArchived: boolean
+  isUnderReview: boolean
   purposes: ScalingProjectPurpose[]
   risks: RosetteValue[]
   tvlData: L2TvlData | undefined

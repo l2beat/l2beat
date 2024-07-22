@@ -6,13 +6,12 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { UpdateConfiguration } from '../../../tools/uif/multi/types'
-
 import {
   TrackedTxConfigEntry,
   TrackedTxId,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { Configuration } from '../../../tools/uif/multi/types'
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'
 import { transformTransfersQueryResult } from './transformTransfersQueryResult'
 
@@ -28,7 +27,7 @@ const RESULT_TIMESTAMP = UnixTime.fromDate(new Date('2022-01-01T01:00:00Z'))
 
 describe(transformTransfersQueryResult.name, () => {
   it('should transform results', () => {
-    const config: UpdateConfiguration<
+    const config: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
     >[] = [
       mock({
@@ -241,12 +240,9 @@ function mock({
   from: EthereumAddress
   to: EthereumAddress
   sinceTimestamp: UnixTime
-}): UpdateConfiguration<
-  TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
-> {
+}): Configuration<TrackedTxConfigEntry & { params: TrackedTxTransferConfig }> {
   return {
     id,
-    hasData: true,
     minHeight: 0,
     maxHeight: 0,
     properties: {

@@ -1,5 +1,5 @@
 export const externalLinks = {
-  twitter: 'https://twitter.com/l2beat',
+  x: 'https://x.com/l2beat',
   discord: 'https://discord.gg/eaVKXPmtWk',
   github: 'https://github.com/l2beat/l2beat',
   linkedin: 'https://www.linkedin.com/company/l2beat/',

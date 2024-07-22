@@ -196,6 +196,18 @@ model Cache {
   @@schema("public")
 }
 
+model Activity {
+  projectId String   @map("project_id") @db.VarChar(255)
+  timestamp DateTime @map("timestamp") @db.Timestamp(6)
+  count     Int      @map("count")
+
+  @@id([projectId, timestamp])
+  @@index([projectId], map: "activity_project_id_index")
+  @@index([timestamp], map: "activity_timestamp_index")
+  @@map("activity")
+  @@schema("public")
+}
+
 model AggregatedL2Cost {
   timestamp      DateTime @map("timestamp") @db.Timestamp(6)
   projectId      String   @map("project_id") @db.VarChar(255)

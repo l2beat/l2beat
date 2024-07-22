@@ -10,9 +10,8 @@ export class DailyDiscoveryRepository {
     const row = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
-      .where((eb) =>
-        eb.and([eb('project_name', '=', name), eb('chain_id', '=', +chainId)]),
-      )
+      .where('project_name', '=', name)
+      .where('chain_id', '=', +chainId)
       .orderBy('unix_timestamp', 'desc')
       .executeTakeFirst()
 
@@ -23,12 +22,8 @@ export class DailyDiscoveryRepository {
     const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select('unix_timestamp')
-      .where((eb) =>
-        eb.and([
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-        ]),
-      )
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
       .execute()
 
     return rows.map((row) => UnixTime.fromDate(row.unix_timestamp))
@@ -75,15 +70,11 @@ export class DailyDiscoveryRepository {
     chainId: ChainId,
     configHash: Hash256,
   ) {
-    return this.db
+    return await this.db
       .deleteFrom('public.daily_discovery')
-      .where((eb) =>
-        eb.and([
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-          eb('config_hash', '!=', configHash.toString()),
-        ]),
-      )
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
+      .where('config_hash', '!=', configHash.toString())
       .execute()
   }
 
@@ -91,12 +82,8 @@ export class DailyDiscoveryRepository {
     const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
-      .where((eb) =>
-        eb.and([
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-        ]),
-      )
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
       .execute()
 
     return rows.map(toRecord)
