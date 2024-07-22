@@ -7,10 +7,12 @@ import {
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { toUsedInProject } from '../../utils/to-used-in-project'
+import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../../discovery/starkware'
 
-/**
- * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
- */
+const discovery = new ProjectDiscovery('immutablex')
+const committee = getCommittee(discovery)
+
 export const immutableXDac = {
   id: 'immutablex-dac',
   type: 'DAC',
@@ -32,11 +34,11 @@ export const immutableXDac = {
     risks: [],
   },
   technology:
-    'Some note about the technology used by the bridge.\n## Markdown supported',
+    '## Simple Committee',
   permissions: [],
   chain: ChainId.ETHEREUM,
-  requiredMembers: 5,
-  totalMembers: 7,
+  requiredMembers: committee.minSigners,
+  totalMembers: committee.accounts.length,
   usedIn: toUsedInProject([immutablex]),
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,
