@@ -49,7 +49,6 @@ export class IndexerConfigurationRepository {
 
   updateSavedConfigurations(
     indexerId: string,
-    configurationsIds: string[],
     currentHeight: number | null,
     trx?: Transaction,
   ) {
@@ -57,9 +56,21 @@ export class IndexerConfigurationRepository {
 
     return scope
       .updateTable('public.indexer_configurations')
-      .where('indexer_id', '=', indexerId)
-      .where('id', 'in', configurationsIds)
       .set('current_height', currentHeight)
+      .where('indexer_id', '=', indexerId)
+      .where('min_height', '<=', currentHeight)
+      .where((eb) =>
+        eb.or([
+          eb('max_height', 'is', null),
+          eb('max_height', '>=', currentHeight),
+        ]),
+      )
+      .where((eb) =>
+        eb.or([
+          eb('current_height', 'is', null),
+          eb('current_height', '<', currentHeight),
+        ]),
+      )
       .execute()
   }
 

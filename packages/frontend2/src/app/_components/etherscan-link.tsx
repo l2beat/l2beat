@@ -1,4 +1,4 @@
-import { CustomLink } from './custom-link'
+import { CustomLink } from './link/custom-link'
 
 interface EtherscanLinkProps {
   address: string

@@ -6,12 +6,11 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
+import { type EconomicSecurityData } from './get-da-project-economic-security'
 
-export type EconomicSecurityData = Awaited<
-  ReturnType<typeof getCachedEconomicSecurity>
->[number]
-
-export async function getDaEconomicSecurity() {
+export async function getDaProjectsEconomicSecurity(): Promise<
+  Record<string, EconomicSecurityData>
+> {
   noStore()
   return await getCachedEconomicSecurity()
 }
@@ -32,7 +31,7 @@ const getCachedEconomicSecurity = cache(
     )
 
     const arr = daLayers.map((daLayer) => {
-      if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
+      if (daLayer.kind !== 'public-blockchain' || !daLayer.economicSecurity) {
         return undefined
       }
 
