@@ -10,7 +10,7 @@ import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaBridgeCell } from './da-bridge-cell'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
-import { UsedIn } from './used-in'
+import { ProjectsUsedIn } from './projects-used-in'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -74,7 +74,7 @@ export const columns = [
     header: 'Used in',
     cell: (ctx) => {
       const value = ctx.getValue()
-      return value.length > 0 ? <UsedIn usedIn={value} /> : EM_DASH
+      return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
     },
     enableSorting: false,
   }),

@@ -12,7 +12,7 @@ interface Props {
   className?: string
 }
 
-export function UsedIn({ usedIn, className }: Props) {
+export function ProjectsUsedIn({ usedIn, className }: Props) {
   return (
     <div className={cn('flex gap-1.5', className)}>
       {usedIn.map((project) => {

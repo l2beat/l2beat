@@ -1,7 +1,7 @@
 import { UnixTime, pluralize } from '@l2beat/shared-pure'
 import round from 'lodash/round'
 import { type ReactNode } from 'react'
-import { UsedIn } from '~/app/(new)/data-availability/summary/_components/table/used-in'
+import { ProjectsUsedIn } from '~/app/(new)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import {
   Tooltip,
@@ -58,7 +58,10 @@ export function DaProjectStats({ project }: Props) {
         title="Used in"
         value={
           project.header.usedIn.length !== 0 ? (
-            <UsedIn usedIn={project.header.usedIn} className="flex-wrap" />
+            <ProjectsUsedIn
+              usedIn={project.header.usedIn}
+              className="flex-wrap"
+            />
           ) : (
             'None'
           )
