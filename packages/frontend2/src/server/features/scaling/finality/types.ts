@@ -9,17 +9,20 @@ import {
   type FinalityDataPoint,
   type WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
+import { type SyncStatus } from '~/types/SyncStatus'
 
 export interface ScalingFinalityEntry {
+  slug: string
   name: string
   shortName: string | undefined
-  slug: string
   category: ScalingProjectCategory
+  type: 'layer2' | 'layer3'
   dataAvailabilityMode: DataAvailabilityMode | undefined
   provider: Layer2Provider | undefined
   warning: string | undefined
+  showProjectUnderReview?: boolean
   hasImplementationChanged?: boolean
-  redWarning: string | undefined
+  redWarning?: string | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
   data: ScalingFinalityEntryData | undefined
@@ -34,8 +37,5 @@ export interface ScalingFinalityEntryData {
     warning?: WarningValueWithSentiment
     averageInSeconds: number
   }
-  syncStatus: {
-    isSynced: boolean
-    displaySyncedUntil?: string
-  }
+  syncStatus: SyncStatus
 }

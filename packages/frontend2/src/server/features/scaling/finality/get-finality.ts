@@ -12,7 +12,7 @@ import { LivenessWithConfigService } from './LivenessWithConfigService'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
-type FinalityProjectConfig = {
+export type FinalityProjectConfig = {
   projectId: ProjectId
 } & Layer2FinalityConfig
 
@@ -21,7 +21,9 @@ export interface FinalityControllerDeps {
   projects: FinalityProjectConfig[]
 }
 
-export async function getFinality(projects: FinalityProjectConfig[]) {
+export async function getFinality(
+  projects: FinalityProjectConfig[],
+): Promise<FinalityApiResponse> {
   const result: FinalityApiResponse['projects'] = {}
 
   const [OPStackProjects, otherProjects] = partition(
@@ -29,12 +31,14 @@ export async function getFinality(projects: FinalityProjectConfig[]) {
     (p) => p.type === 'OPStack',
   )
   const OPStackFinality = await getOPStackFinality(OPStackProjects)
-  Object.assign(projects, OPStackFinality)
+  Object.assign(result, OPStackFinality)
 
   const projectsFinality = await getProjectsFinality(otherProjects)
-  Object.assign(projects, projectsFinality)
+  Object.assign(result, projectsFinality)
 
-  return result
+  return {
+    projects: result,
+  }
 }
 
 async function getProjectsFinality(

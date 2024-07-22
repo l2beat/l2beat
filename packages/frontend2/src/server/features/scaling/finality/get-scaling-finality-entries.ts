@@ -7,7 +7,6 @@ import {
   formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { formatTimestamp } from '~/utils/dates'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../../tvl/order-by-tvl'
 import {
@@ -25,19 +24,17 @@ export async function getScalingFinalityEntries(
 
   const implementationChangeReport = await getImplementationChangeReport()
 
-  return {
-    items: orderedProjects
-      .map((project) => {
-        const hasImplementationChanged =
-          !!implementationChangeReport?.projects[project.id.toString()]
-        return getScalingFinalityEntry(
-          project,
-          finality.projects[project.id.toString()],
-          hasImplementationChanged,
-        )
-      })
-      .filter(notUndefined),
-  }
+  return orderedProjects
+    .map((project) => {
+      const hasImplementationChanged =
+        !!implementationChangeReport?.projects[project.id.toString()]
+      return getScalingFinalityEntry(
+        project,
+        finality.projects[project.id.toString()],
+        hasImplementationChanged,
+      )
+    })
+    .filter(notUndefined)
 }
 
 function getFinalityData(
@@ -61,13 +58,7 @@ function getFinalityData(
       : undefined,
     syncStatus: {
       isSynced: isSynced(finalityProjectData.syncedUntil),
-      displaySyncedUntil: formatTimestamp(
-        finalityProjectData.syncedUntil.toNumber(),
-        {
-          mode: 'datetime',
-          longMonthName: true,
-        },
-      ),
+      syncedUntil: finalityProjectData.syncedUntil.toNumber(),
     },
   }
 
@@ -97,6 +88,7 @@ function getScalingFinalityEntry(
   hasImplementationChanged?: boolean,
 ): ScalingFinalityEntry {
   return {
+    type: project.type,
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,
