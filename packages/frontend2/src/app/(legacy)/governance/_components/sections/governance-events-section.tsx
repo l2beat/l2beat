@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { CustomLink } from '~/app/_components/custom-link'
+import { CustomLink } from '~/app/_components/link/custom-link'
 import OutLinkIcon from '~/icons/outlink.svg'
 import { cn } from '~/utils/cn'
 import { type GovernanceEventEntry } from '../../_utils/get-governance-event-entries'

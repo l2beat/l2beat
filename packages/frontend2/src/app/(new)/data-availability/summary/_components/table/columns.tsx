@@ -1,57 +1,46 @@
-import { type DaBridgeRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaBridge'
-import { type DaLayerRisks } from '@l2beat/config/build/src/projects/other/da-beat/types/DaLayer'
 import { createColumnHelper } from '@tanstack/react-table'
+import Image from 'next/image'
 import { EM_DASH } from '~/app/_components/nav/consts'
-import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
-import { type RosetteValue } from '~/app/_components/rosette/types'
+import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
+import { IndexCell } from '~/app/_components/table/cells/index-cell'
+import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
+import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
+import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaBridgeCell } from './da-bridge-cell'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
+import { ProjectsUsedIn } from './projects-used-in'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
-
-export function mapRisksToRosetteValues(
-  risks: DaBridgeRisks & DaLayerRisks,
-): RosetteValue[] {
-  const values: RosetteValue[] = [
-    {
-      name: 'Economic security',
-      value: risks.economicSecurity.value,
-      sentiment: risks.economicSecurity.sentiment,
-    },
-    {
-      name: 'Fraud detection',
-      value: risks.fraudDetection.value,
-      sentiment: risks.fraudDetection.sentiment,
-    },
-    {
-      name: 'Attestations',
-      value: risks.attestations.value,
-      sentiment: risks.attestations.sentiment,
-    },
-    {
-      name: 'Exit window',
-      value: risks.exitWindow.value,
-      sentiment: risks.exitWindow.sentiment,
-    },
-    {
-      name: 'Accessibility',
-      value: risks.accessibility.value,
-      sentiment: risks.accessibility.sentiment,
-    },
-  ]
-
-  return values
-}
 
 export const columns = [
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
-    cell: (ctx) => ctx.row.index + 1,
+    cell: (ctx) => <IndexCell>{indexRecalculatedOnFilter(ctx)}</IndexCell>,
+    meta: {
+      headClassName: 'w-0',
+    },
   }),
-  columnHelper.accessor('daLayer', {
+  columnHelper.display({
+    id: 'logo',
+    cell: (ctx) => (
+      <Image
+        className="min-w-[18px] min-h-[18px]"
+        src={`/icons/${ctx.row.original.slug}.png`}
+        width={18}
+        height={18}
+        alt={`${ctx.row.original.name} logo`}
+      />
+    ),
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: '!pr-0',
+    },
+  }),
+  columnHelper.accessor('name', {
     header: 'DA Layer',
+    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
@@ -60,7 +49,10 @@ export const columns = [
   columnHelper.accessor('risks', {
     header: 'Risks',
     cell: (ctx) => (
-      <RosetteCell values={mapRisksToRosetteValues(ctx.getValue())} />
+      <PentagonRosetteCell
+        values={mapRisksToRosetteValues(ctx.getValue())}
+        isUnderReview={ctx.row.original.isUnderReview}
+      />
     ),
     enableSorting: false,
     meta: {
@@ -78,11 +70,11 @@ export const columns = [
     header: 'Economic security',
     cell: (ctx) => <DaEconomicSecurityCell value={ctx.getValue()} />,
   }),
-  columnHelper.accessor('usedBy', {
-    header: 'Used by',
+  columnHelper.accessor('usedIn', {
+    header: 'Used in',
     cell: (ctx) => {
       const value = ctx.getValue()
-      return value.length > 0 ? value.join(', ') : EM_DASH
+      return value.length > 0 ? <ProjectsUsedIn usedIn={value} /> : EM_DASH
     },
     enableSorting: false,
   }),

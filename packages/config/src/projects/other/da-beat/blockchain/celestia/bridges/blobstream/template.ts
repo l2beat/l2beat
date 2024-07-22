@@ -1,20 +1,23 @@
 import { assert } from '@l2beat/backend-tools'
-import { capitalize } from 'lodash'
+import capitalize from 'lodash/capitalize'
 import { chains } from '../../../../../../../'
 import {
   DaAccessibilityRisk,
-  DaBridgeKind,
   DaBridgeRisks,
   OnChainDaBridge,
 } from '../../../../types'
+import { DaLinks } from '../../../../types/DaLinks'
 
 type TemplateRisks = Omit<DaBridgeRisks, 'accessibility'>
 
 type TemplateVars = Pick<
   OnChainDaBridge,
-  'chain' | 'contracts' | 'permissions' | 'usedIn'
+  'chain' | 'contracts' | 'permissions' | 'usedIn' | 'technology'
 > & {
   risks: TemplateRisks
+  display: {
+    links: DaLinks
+  }
 }
 
 export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
@@ -27,9 +30,12 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
 
   const id = `blobstream-${chain.name}`
   const display = {
-    name: 'Blobstream',
+    name: `Blobstream on ${capitalize(chain.name)}`,
     slug: id,
-    description: `Celestia with Blobstream bridge on ${capitalize(chain.name)}`,
+    description: `Celestia with Blobstream bridge on ${capitalize(
+      chain.name,
+    )}.`,
+    links: base.display.links,
   }
 
   const validation = {
@@ -44,13 +50,14 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
   } satisfies DaBridgeRisks
 
   return {
-    kind: DaBridgeKind.OnChainBridge,
+    type: 'OnChainBridge',
     id,
     display,
     risks,
     chain: chain.name,
     validation: validation,
     contracts: base.contracts,
+    technology: base.technology,
     permissions: base.permissions,
     usedIn: base.usedIn,
   }

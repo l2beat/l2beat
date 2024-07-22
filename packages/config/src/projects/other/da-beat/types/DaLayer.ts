@@ -8,87 +8,60 @@ import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
+import { DaLinks } from './DaLinks'
 import { DataAvailabilitySampling } from './DataAvailabilitySampling'
 import { UsedInProject } from './UsedInProject'
 
-export const DaLayerKind = {
-  PublicBlockchain: 'PublicBlockchain',
-  DAC: 'DAC',
-} as const
-
-export type DaLayerKind = (typeof DaLayerKind)[keyof typeof DaLayerKind]
-
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
-export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
-  PublicBlockchain: 'Public blockchain',
-  DAC: 'DAC',
-}
-
 export type BlockchainDaLayer = CommonDaLayer & {
-  kind: typeof DaLayerKind.PublicBlockchain
-
+  kind: 'public-blockchain'
   bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
-
-  dataAvailabilitySampling: DataAvailabilitySampling
-  /**
-   * The period within which full nodes must store and distribute data.
-   * @unit seconds
-   */
+  /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
-  /**
-   * The consensus algorithm used by the data availability layer.
-   */
+  /** Details about data availability sampling. */
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  /** The consensus algorithm used by the data availability layer. */
   consensusAlgorithm: DaConsensusAlgorithm
-
-  /**
-   * Economic security configuration.
-   */
+  /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: typeof DaLayerKind.DAC
-
+  kind: 'dac'
   bridges: DacBridge[]
 }
 
 export type CommonDaLayer = {
-  /**
-   * Unique identifier of the data availability layer
-   */
+  type: 'da-layer'
+  /** Unique identifier of the data availability layer. */
   id: string
-
-  display: {
-    /**
-     * The name of the data availability layer.
-     */
-    name: string
-
-    /**
-     * Slug of the data availability bridge
-     */
-    slug: string
-
-    /**
-     * A short description of the data availability layer.
-     */
-    description?: string
-  }
-
-  /**
-   * List of projects given da layer is being used in
-   */
+  /** Display information for the data availability layer. */
+  display: DaLayerDisplay
+  /** Is the DA layer upcoming? */
+  isUpcoming?: boolean
+  /** Is the DA layer under review? */
+  isUnderReview?: boolean
+  /** The technology used by the data availability layer. [MARKDOWN] */
+  technology: string
+  /** List of projects given da layer is being used in. */
   usedIn: UsedInProject[]
-
-  /**
-   * Risks associated with the data availability layer.
-   * @see DaLayerRisks
-   */
+  /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
 }
 
 export type DaLayerRisks = {
   economicSecurity: DaEconomicSecurityRisk
   fraudDetection: DaFraudDetectionRisk
+}
+
+interface DaLayerDisplay {
+  /** The name of the data availability layer. */
+  name: string
+  /** Slug of the data availability bridge. */
+  slug: string
+  /** A short description of the data availability layer. */
+  description: string
+  /** Links related to the data availability layer. */
+  links: DaLinks
 }

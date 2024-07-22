@@ -1,18 +1,45 @@
 import React from 'react'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { sentimentToFillColor } from '~/utils/sentiment'
-import { UnderReviewBadge } from '../badge/under-review-badge'
-import { SentimentText } from '../sentiment-text'
-import { MediumRosette } from './rosette'
-import { type RosetteValue } from './types'
+import { UnderReviewBadge } from '../../badge/under-review-badge'
+import { SentimentText } from '../../sentiment-text'
+import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
+import { type RosetteValue } from '../types'
+import { PizzaRosetteIcon } from './pizza-rosette-icon'
+import { PizzaRosetteLabels } from './pizza-rosette-labels'
 
-export interface RosetteTooltipProps {
+export interface PizzaRosetteCellProps {
   values: RosetteValue[]
-  isUnderReview: boolean
+  isUnderReview?: boolean
 }
 
-export function RosetteTooltip({ values, isUnderReview }: RosetteTooltipProps) {
+export function PizzaRosetteCell(props: PizzaRosetteCellProps) {
+  const isUnderReview =
+    !!props.isUnderReview ||
+    props.values.some((value) => value.sentiment === 'UnderReview')
+
+  return (
+    <Tooltip>
+      <TooltipTrigger className="flex items-center justify-center size-full">
+        <PizzaRosetteIcon
+          values={props.values}
+          className="size-6 md:size-8"
+          isUnderReview={isUnderReview}
+          background={false}
+        />
+      </TooltipTrigger>
+      <TooltipContent fitContent>
+        <PizzaRosetteTooltip
+          values={props.values}
+          isUnderReview={isUnderReview}
+        />
+      </TooltipContent>
+    </Tooltip>
+  )
+}
+
+function PizzaRosetteTooltip({ values, isUnderReview }: PizzaRosetteCellProps) {
   if (isUnderReview) {
     return (
       <div className="w-[300px]">
@@ -37,8 +64,18 @@ export function RosetteTooltip({ values, isUnderReview }: RosetteTooltipProps) {
         <span className="mr-2">Risk analysis</span>
       </span>
       <div className="flex items-center gap-6">
-        <div>
-          <MediumRosette values={values} />
+        <div className="relative size-[200px] flex items-center justify-center">
+          <PizzaRosetteIcon
+            values={values}
+            className="scale-75"
+            isUnderReview={isUnderReview}
+          />
+          <PizzaRosetteLabels
+            values={values}
+            containerSize={200}
+            textRadius={76}
+            size="small"
+          />
         </div>
         <div className="flex flex-col gap-4">
           {values.map((value) => (

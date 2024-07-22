@@ -6,7 +6,7 @@ type ElementProps<T extends React.ElementType> = T extends undefined
   ? React.ComponentPropsWithoutRef<typeof NextLink>
   : React.ComponentPropsWithoutRef<T>
 
-type LinkProps<T extends React.ElementType> = ElementProps<T> &
+export type CustomLinkProps<T extends React.ElementType> = ElementProps<T> &
   VariantProps<typeof linkVariants> & {
     children: React.ReactNode
     className?: string
@@ -42,7 +42,7 @@ export function CustomLink<T extends React.ElementType>({
   className,
   as,
   ...rest
-}: LinkProps<T>) {
+}: CustomLinkProps<T>) {
   const Comp: React.ElementType = as === 'a' ? NextLink : as ?? NextLink
 
   return (

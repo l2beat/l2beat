@@ -407,7 +407,7 @@ describe(MultiIndexer.name, () => {
 
       testIndexer.multiUpdate.resolvesTo(300)
 
-      const newHeight = await testIndexer.update(200, 300)
+      const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(300)
       expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 300),
@@ -424,7 +424,7 @@ describe(MultiIndexer.name, () => {
 
       testIndexer.multiUpdate.resolvesTo(250)
 
-      const newHeight = await testIndexer.update(200, 300)
+      const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(250)
       expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 250),

@@ -1,7 +1,7 @@
 import { daLayers } from '@l2beat/config'
 import { toDaBridge } from './utils/get-da-bridge'
-import { getDaEconomicSecurity } from './utils/get-da-economic-security'
 import { getUniqueProjectsInUse } from './utils/get-da-projects'
+import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
@@ -9,7 +9,7 @@ import {
 import { getDaRisks } from './utils/get-da-risks'
 
 export async function getDaRiskEntries() {
-  const economicSecurity = await getDaEconomicSecurity()
+  const economicSecurity = await getDaProjectsEconomicSecurity()
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
@@ -20,8 +20,9 @@ export async function getDaRiskEntries() {
       const economicSecurityData = economicSecurity[daLayer.id]
 
       return {
+        name: daLayer.display.name,
         slug: daLayer.display.slug,
-        daLayer: daLayer.display.name,
+        href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
         daBridge: toDaBridge(bridge),
         risks: getDaRisks(daLayer, bridge, tvs, economicSecurityData),
       }

@@ -92,6 +92,7 @@ function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
       hasImplementationChanged,
       isUpcoming: !!layer2.isUpcoming,
       isArchived: !!layer2.isArchived,
+      isUnderReview: !!layer2.isUnderReview,
       purposes: layer2.display.purposes,
       risks: getL2Risks(layer2.riskView),
       tvlData:
