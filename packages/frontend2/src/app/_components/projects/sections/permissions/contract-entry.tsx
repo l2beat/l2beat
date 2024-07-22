@@ -150,6 +150,6 @@ function getCalloutProps(contract: TechnologyContract) {
 
   return {
     color,
-    icon: <BulletIcon className="h-[1em]" />,
+    icon: <BulletIcon />,
   }
 }
