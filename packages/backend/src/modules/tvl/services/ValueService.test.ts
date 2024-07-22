@@ -45,6 +45,7 @@ describe(ValueService.name, () => {
       includeInTotal: true,
       decimals: DECIMALS,
       source: 'canonical',
+      isAssociated: false,
     })
     const CONFIG_B = mockObject<AmountConfigEntry>({
       sinceTimestamp: new UnixTime(300),
@@ -53,6 +54,7 @@ describe(ValueService.name, () => {
       includeInTotal: false,
       decimals: DECIMALS,
       source: 'external',
+      isAssociated: false,
     })
     const amountConfigs: Map<AmountId, AmountConfigEntry> = new Map([
       ['a', CONFIG_A],

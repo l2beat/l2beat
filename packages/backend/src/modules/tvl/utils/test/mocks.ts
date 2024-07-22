@@ -44,6 +44,7 @@ function amountConfiguration(v: Partial<TotalSupplyEntry>) {
     includeInTotal: true,
     decimals: DECIMALS,
     symbol: 'SYMBOL',
+    isAssociated: false,
     ...v,
   })
 }
