@@ -50,7 +50,8 @@ export function PentagonRosetteIcon({
       ref={svgRef}
       onMouseLeave={() => setContent?.(undefined)}
       // Easiest way to move the center of the pentagon to the center of the div
-      // If any issues arise, we can think about other ways to do it
+      // It's basically percentage diff between r and R
+      // See: https://uploads-cdn.omnicalculator.com/images//geometry/area/pentagon-calc-fixed.svg
       className={cn(className, '-translate-y-[5.28%]')}
     >
       {background ? (
