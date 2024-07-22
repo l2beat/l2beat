@@ -1366,6 +1366,16 @@
       "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2"
     },
     {
+      "symbol": "zunETH",
+      "category": "ether",
+      "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222"
+    },
+    {
+      "symbol": "zunUSD",
+      "category": "stablecoin",
+      "address": "0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6"
+    },
+    {
       "symbol": "ZRX",
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
     }
