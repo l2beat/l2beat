@@ -22,7 +22,11 @@ export const celestia: DaLayer = {
       repositories: ['https://github.com/celestiaorg'],
       apps: [''],
       explorers: ['https://celenium.io/'],
-      socialMedia: ['https://x.com/CelestiaOrg', 'https://discord.com/invite/YsnTPcSfWQ','https://t.me/CelestiaCommunity' ],
+      socialMedia: [
+        'https://x.com/CelestiaOrg',
+        'https://discord.com/invite/YsnTPcSfWQ',
+        'https://t.me/CelestiaCommunity',
+      ],
     },
   },
   technology:

@@ -15,9 +15,16 @@ export const ethereum: DaLayer = {
     links: {
       websites: ['https://ethereum.org/en/'],
       documentation: ['https://ethereum.org/en/developers/docs/'],
-      repositories: ['https://ethereum.org/en/developers/docs/nodes-and-clients/#execution-clients','https://ethereum.org/en/developers/docs/nodes-and-clients/#consensus-clients',],
+      repositories: [
+        'https://ethereum.org/en/developers/docs/nodes-and-clients/#execution-clients',
+        'https://ethereum.org/en/developers/docs/nodes-and-clients/#consensus-clients',
+      ],
       apps: [''],
-      explorers: ['https://etherscan.io/', 'https://eth.blockscout.com/', 'https://beaconcha.in/' ],
+      explorers: [
+        'https://etherscan.io/',
+        'https://eth.blockscout.com/',
+        'https://beaconcha.in/',
+      ],
       socialMedia: ['https://x.com/ethereum'],
     },
   },
