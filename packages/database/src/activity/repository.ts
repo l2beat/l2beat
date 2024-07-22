@@ -37,10 +37,15 @@ export class ActivityRepository {
     return records.length
   }
 
-  async deleteAfter(from: UnixTime): Promise<void> {
+  async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<void> {
     await this.db
       .deleteFrom('public.activity')
-      .where('timestamp', '>', from.toDate())
+      .where((eb) =>
+        eb.and([
+          eb('project_id', '=', projectId.toString()),
+          eb('timestamp', '>', from.toDate()),
+        ]),
+      )
       .execute()
   }
 

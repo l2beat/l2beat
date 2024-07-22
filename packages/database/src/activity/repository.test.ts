@@ -52,7 +52,7 @@ describeDatabase(ActivityRepository.name, (db) => {
   })
 
   describe(ActivityRepository.prototype.deleteAfter.name, () => {
-    it('should delete all rows after a given timestamp', async () => {
+    it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.addOrUpdateMany([
         count('a', START, 1),
         count('a', START.add(1, 'days'), 2),
@@ -60,7 +60,7 @@ describeDatabase(ActivityRepository.name, (db) => {
         count('a', START.add(3, 'days'), 2),
       ])
 
-      await repository.deleteAfter(START.add(1, 'days'))
+      await repository.deleteAfter(START.add(1, 'days'), ProjectId('a'))
 
       const results = await repository.getAll()
 
