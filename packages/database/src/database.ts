@@ -3,6 +3,7 @@ import { BlockTransactionCountRepository } from './activity-block/repository'
 import { StarkExTransactionCountRepository } from './activity-starkex/repository'
 import { ActivityViewRepository } from './activity-view/repository'
 import { ZkSyncTransactionRepository } from './activity-zksync/repository'
+import { ActivityRepository } from './activity/repository'
 import { AggregatedL2CostRepository } from './aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './aggregated-liveness/repository'
 import { AmountRepository } from './amount/repository'
@@ -85,6 +86,7 @@ export function createDatabase(config?: PoolConfig) {
     verifierStatus: new VerifierStatusRepository(db),
 
     // L2BEAT - activity
+    activity: new ActivityRepository(db),
     activityView: new ActivityViewRepository(db),
     blockTransactionCount: new BlockTransactionCountRepository(db),
     starkExTransactionCount: new StarkExTransactionCountRepository(db),

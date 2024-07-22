@@ -3,13 +3,12 @@ import React from 'react'
 import { UnderReviewIcon } from '../../../components/icons'
 import { cn } from '../../../utils/cn'
 
-export function UnderReviewCallout({
-  small,
-  className,
-}: {
+interface Props {
   small?: boolean
   className?: string
-}) {
+}
+
+export function UnderReviewCallout({ small, className }: Props) {
   return (
     <div
       className={cn(

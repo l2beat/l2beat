@@ -685,6 +685,10 @@
       "address": "0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD"
     },
     {
+      "symbol": "LSK",
+      "address": "0x6033F7f88332B8db6ad452B7C6D5bB643990aE3f"
+    },
+    {
       "symbol": "LUSD",
       "address": "0x5f98805A4E8be255a32880FDeC7F6728C6568bA0",
       "category": "stablecoin"
@@ -1368,6 +1372,17 @@
   ],
   "arbitrum": [
     {
+      "symbol": "ETHFI",
+      "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
+      "coingeckoId": "ether-fi",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
       "symbol": "weETH",
       "address": "0x35751007a407ca6FEFfE80b3cB397736D2cf4dbe",
       "category": "ether",
@@ -1597,7 +1612,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -1790,6 +1805,17 @@
     }
   ],
   "optimism": [
+    {
+      "symbol": "ezETH",
+      "category": "ether",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Hyperlane (xERC20)"
+      }
+    },
     {
       "symbol": "wstETH",
       "address": "0x1F32b1c2345538c0c6f582fCB022739c4A194Ebb",
@@ -2108,7 +2134,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -2191,6 +2217,17 @@
     }
   ],
   "fraxtal": [
+    {
+      "symbol": "ezETH",
+      "category": "ether",
+      "address": "0x2416092f143378750bb29b79eD961ab195CcEea5",
+      "coingeckoId": "renzo-restaked-eth",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Hyperlane (xERC20)"
+      }
+    },
     {
       "symbol": "USDe",
       "coingeckoId": "ethena-usde",
@@ -2327,6 +2364,16 @@
       "supply": "zero"
     },
     {
+      "symbol": "FBTC",
+      "coingeckoId": "ignition-fbtc",
+      "address": "0xC96dE26018A54D51c097160568752c4E3BD6C364",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Fire Bridge"
+      }
+    },
+    {
       "symbol": "mETH",
       "category": "ether",
       "address": "0xcDA86A272531e8640cD7F1a92c01839911B90bb0",
@@ -2376,6 +2423,18 @@
         "bridge": "Layer Zero",
         "slug": "omnichain"
       }
+    },
+    {
+      "symbol": "MOE",
+      "address": "0x4515A45337F461A11Ff0FE8aBF3c606AE5dC00c9",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "LEND",
+      "address": "0x25356aeca4210eF7553140edb9b8026089E49396",
+      "source": "native",
+      "supply": "circulatingSupply"
     }
   ],
   "linea": [
@@ -2414,7 +2473,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -2611,7 +2670,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },
@@ -2702,7 +2761,7 @@
       "source": "external",
       "supply": "totalSupply",
       "bridgedUsing": {
-        "bridge": "Connext",
+        "bridge": "Connext (xERC20)",
         "slug": "connext"
       }
     },

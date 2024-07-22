@@ -17,7 +17,9 @@ import {
   ScalingProjectContract,
   ScalingProjectEscrow,
   ScalingProjectPermission,
+  ScalingProjectRisk,
   ScalingProjectRiskView,
+  ScalingProjectStateDerivation,
   ScalingProjectTechnology,
   ScalingProjectTechnologyChoice,
   ScalingProjectTransactionApi,
@@ -32,9 +34,15 @@ import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
 import { VALUES } from '../../../discovery/values'
 import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
+import { StageConfig } from '../common'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from '../common/liveness'
 import { getStage } from '../common/stages/getStage'
-import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import {
+  Layer2,
+  Layer2Display,
+  Layer2FinalityConfig,
+  Layer2TxConfig,
+} from '../types'
 import { mergeBadges } from './utils'
 
 const ETHEREUM_EXPLORER_URL = 'https://etherscan.io/address/{0}#code'
@@ -62,12 +70,14 @@ export interface OrbitStackConfigCommon {
   discovery: ProjectDiscovery
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
+  nodeSourceLink?: string
   nonTemplateEscrows?: ScalingProjectEscrow[]
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
   }
   bridge: ContractParameters
+  finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
   nonTemplatePermissions?: ScalingProjectPermission[]
@@ -83,6 +93,12 @@ export interface OrbitStackConfigCommon {
   chainConfig?: ChainConfig
   usesBlobs?: boolean
   badges?: BadgeId[]
+  stage?: StageConfig
+  stateDerivation?: ScalingProjectStateDerivation
+  upgradesAndGovernance?: string
+  nonTemplateContractRisks?: ScalingProjectRisk[]
+  nativeAddresses?: Record<string, ScalingProjectContract[]>
+  nativePermissions?: Record<string, ScalingProjectPermission[]> | 'UnderReview'
 }
 
 export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
@@ -95,6 +111,30 @@ export interface OrbitStackConfigL3 extends OrbitStackConfigCommon {
 export interface OrbitStackConfigL2 extends OrbitStackConfigCommon {
   display: Omit<Layer2Display, 'provider' | 'category' | 'dataAvailabilityMode'>
   nativeToken?: string
+}
+
+function ensureMaxTimeVariationObjectFormat(discovery: ProjectDiscovery) {
+  // some orbit chains represent maxTimeVariation as an array, others an object
+  const result = discovery.getContractValue<
+    | {
+        delayBlocks: number
+        futureBlocks: number
+        delaySeconds: number
+        futureSeconds: number
+      }
+    | number[]
+  >('SequencerInbox', 'maxTimeVariation')
+
+  if (Array.isArray(result)) {
+    return {
+      delayBlocks: result[0],
+      futureBlocks: result[1],
+      delaySeconds: result[2],
+      futureSeconds: result[3],
+    }
+  } else {
+    return result
+  }
 }
 
 export function orbitStackCommon(
@@ -161,7 +201,10 @@ export function orbitStackCommon(
         ],
         'address',
       ),
-      risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
+      nativeAddresses: templateVars.nativeAddresses,
+      risks: templateVars.nonTemplateContractRisks ?? [
+        CONTRACTS.UPGRADE_NO_DELAY_RISK,
+      ],
     },
     chainConfig: templateVars.chainConfig,
     technology: {
@@ -299,6 +342,9 @@ export function orbitStackCommon(
       ...resolvedTemplates.permissions,
       ...(templateVars.nonTemplatePermissions ?? []),
     ],
+    nativePermissions: templateVars.nativePermissions,
+    stateDerivation: templateVars.stateDerivation,
+    upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
     badges: mergeBadges(
@@ -317,12 +363,9 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   )
   const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 
-  const maxTimeVariation = templateVars.discovery.getContractValue<{
-    delayBlocks: number
-    futureBlocks: number
-    delaySeconds: number
-    futureSeconds: number
-  }>('SequencerInbox', 'maxTimeVariation')
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
 
   const selfSequencingDelay = maxTimeVariation.delaySeconds
 
@@ -509,12 +552,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   )
   const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
 
-  const maxTimeVariation = templateVars.discovery.getContractValue<{
-    delayBlocks: number
-    futureBlocks: number
-    delaySeconds: number
-    futureSeconds: number
-  }>('SequencerInbox', 'maxTimeVariation')
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
+  )
 
   const selfSequencingDelay = maxTimeVariation.delaySeconds
 
@@ -550,7 +590,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       },
       liveness: postsToExternalDA
         ? undefined
-        : {
+        : templateVars.display.liveness ?? {
             warnings: {
               stateUpdates: OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING,
             },
@@ -563,31 +603,38 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             )} after it has been posted.`,
           },
     },
-    stage: postsToExternalDA
-      ? {
-          stage: 'NotApplicable',
-        }
-      : getStage({
-          stage0: {
-            callsItselfRollup: true,
-            stateRootsPostedToL1: true,
-            dataAvailabilityOnL1: true,
-            rollupNodeSourceAvailable:
-              templateVars.isNodeAvailable ?? 'UnderReview',
-          },
-          stage1: {
-            stateVerificationOnL1: true,
-            fraudProofSystemAtLeast5Outsiders: false,
-            usersHave7DaysToExit: false,
-            usersCanExitWithoutCooperation: true,
-            securityCouncilProperlySetUp: false,
-          },
-          stage2: {
-            proofSystemOverriddenOnlyInCaseOfABug: false,
-            fraudProofSystemIsPermissionless: false,
-            delayWith30DExitWindow: false,
-          },
-        }),
+    stage:
+      templateVars.stage ??
+      (postsToExternalDA
+        ? {
+            stage: 'NotApplicable',
+          }
+        : getStage(
+            {
+              stage0: {
+                callsItselfRollup: true,
+                stateRootsPostedToL1: true,
+                dataAvailabilityOnL1: true,
+                rollupNodeSourceAvailable:
+                  templateVars.isNodeAvailable ?? 'UnderReview',
+              },
+              stage1: {
+                stateVerificationOnL1: true,
+                fraudProofSystemAtLeast5Outsiders: false,
+                usersHave7DaysToExit: false,
+                usersCanExitWithoutCooperation: true,
+                securityCouncilProperlySetUp: false,
+              },
+              stage2: {
+                proofSystemOverriddenOnlyInCaseOfABug: false,
+                fraudProofSystemIsPermissionless: false,
+                delayWith30DExitWindow: false,
+              },
+            },
+            {
+              rollupNodeLink: templateVars.nodeSourceLink,
+            },
+          )),
     dataAvailability: postsToExternalDA
       ? (() => {
           const DAC = templateVars.discovery.getContractValue<{
@@ -676,7 +723,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             }
           : undefined),
       trackedTxs: templateVars.trackedTxs,
-      finality: 'coming soon',
+      finality: templateVars.finality ?? 'coming soon',
     },
   }
 }

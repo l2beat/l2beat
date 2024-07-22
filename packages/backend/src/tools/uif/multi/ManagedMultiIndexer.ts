@@ -85,14 +85,12 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
-  override async updateCurrentHeight(
-    configurationIds: string[],
+  override async updateConfigurationsCurrentHeight(
     currentHeight: number,
     dbMiddleware: DatabaseMiddleware,
   ): Promise<void> {
     await this.options.indexerService.updateSavedConfigurations(
       this.indexerId,
-      configurationIds,
       currentHeight,
       dbMiddleware,
     )

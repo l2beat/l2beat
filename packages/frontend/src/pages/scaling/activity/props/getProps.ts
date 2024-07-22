@@ -6,6 +6,11 @@ import { ActivityPagesData } from '../types'
 import { ActivityPageProps } from '../view/ScalingActivityPage'
 import { getScalingActivityView } from './getScalingActivityView'
 
+export const ACTIVITY_PAGE_METADATA = getDefaultPageMetadata({
+  image: 'https://l2beat.com/meta-images/pages/og-scaling-activity.png',
+  url: 'https://l2beat.com/scaling/activity',
+})
+
 export function getProps(
   config: Config,
   pagesData: ActivityPagesData,
@@ -19,10 +24,7 @@ export function getProps(
       milestones: config.milestones,
     },
     wrapper: {
-      metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/pages/og-scaling-activity.png',
-        url: 'https://l2beat.com/scaling/activity',
-      }),
+      metadata: ACTIVITY_PAGE_METADATA,
       preloadApis: [getChartUrl({ type: 'scaling-activity' })],
       banner: config.features.banner,
     },

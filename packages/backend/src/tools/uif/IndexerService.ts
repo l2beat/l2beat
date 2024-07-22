@@ -96,14 +96,12 @@ export class IndexerService {
 
   async updateSavedConfigurations(
     indexerId: string,
-    configurationIds: string[],
     currentHeight: number | null,
     dbMiddleware: DatabaseMiddleware,
   ): Promise<void> {
     await dbMiddleware.add(async (trx?: DatabaseTransaction) => {
       await this.indexerConfigurationRepository.updateSavedConfigurations(
         indexerId,
-        configurationIds,
         currentHeight,
         trx,
       )

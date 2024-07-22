@@ -1,24 +1,39 @@
-import React from 'react'
-import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
+import ShieldIcon from '~/icons/shield.svg'
+import { type DaSummaryEntryBridge } from '~/server/features/data-availability/utils/get-da-bridge'
 
-interface Props {
-  daBridge: DaSummaryEntry['daBridge']
-}
-export function DaBridgeCell({ daBridge }: Props) {
-  if (!daBridge) return 'No bridge'
-
-  if (daBridge.type === 'OnChain') {
-    return (
-      <div>
-        {daBridge.name} on{' '}
-        <span className="capitalize">{daBridge.network}</span>
-      </div>
-    )
+export function DaBridgeCell({ daBridge }: { daBridge: DaSummaryEntryBridge }) {
+  if (!daBridge.warning && !daBridge.redWarning) {
+    return daBridge.name
   }
 
   return (
     <div>
-      {daBridge.name} {daBridge.requiredMembers}/{daBridge.totalMembers}
+      <span>{daBridge.name}</span>
+      {daBridge.warning && (
+        <span className="pl-1.5">
+          <Tooltip>
+            <TooltipTrigger>
+              <ShieldIcon className="relative top-px size-4 fill-yellow-700 dark:fill-yellow-300" />
+            </TooltipTrigger>
+            <TooltipContent>{daBridge.warning}</TooltipContent>
+          </Tooltip>
+        </span>
+      )}
+      {daBridge.redWarning && (
+        <span className="pl-1.5">
+          <Tooltip>
+            <TooltipTrigger>
+              <ShieldIcon className="relative top-px size-4 fill-red-300" />
+            </TooltipTrigger>
+            <TooltipContent>{daBridge.redWarning}</TooltipContent>
+          </Tooltip>
+        </span>
+      )}
     </div>
   )
 }

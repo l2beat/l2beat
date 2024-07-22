@@ -754,7 +754,7 @@ export class ProjectDiscovery {
       }
       const description = this.describeContractOrEoa(eoa)
       result.push({
-        name: eoa.address.toString(),
+        name: 'EOA',
         accounts: [this.formatPermissionedAccount(eoa.address)],
         chain: this.chain,
         description,
