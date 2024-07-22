@@ -51,7 +51,7 @@ describe(getDiagramImageOrThrow.name, () => {
           getDiagramImageOrThrow(type, fileName, {
             existsSync: () => false,
           })
-        }).toThrow(`Diagram image not found: /images/${type}/${fileName}.png`)
+        }).toThrow(`Diagram image not found: ${getDiagramPath(type, fileName)}`)
       })
     })
   }
