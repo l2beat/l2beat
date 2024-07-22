@@ -4,6 +4,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
+import { sumValuesPerSource } from '../../tvl/sum-values-per-source'
 
 export async function getDaProjectTvl(projectIds: ProjectId[]) {
   noStore()
@@ -15,16 +16,7 @@ const getCachedDaProjectTvl = cache(async (projectIds: ProjectId[]) => {
 
   const values = await db.value.getLatestValuesForProjects(projectIds)
 
-  const { canonical, external, native } = values.reduce(
-    (acc, value) => {
-      acc.canonical += value.canonical
-      acc.external += value.external
-      acc.native += value.native
-
-      return acc
-    },
-    { canonical: 0n, external: 0n, native: 0n },
-  )
+  const { canonical, external, native } = sumValuesPerSource(values)
 
   const tvl = canonical + external + native
 
