@@ -510,7 +510,7 @@ export function NavWrapper({
           title: 'Activity',
           icon: ActivityIcon,
           href: '/scaling/activity',
-          enabled: config.features.activity,
+          enabled: true,
         },
         {
           title: 'Costs',
