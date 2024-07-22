@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { assert } from '@l2beat/backend-tools'
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { ChainId, } from '@l2beat/shared-pure'
 import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
 import { tokenList } from '../../tokens'
@@ -38,7 +38,7 @@ describe('layer3s', () => {
       expect(hostChain).not.toBeNullish()
     }
   })
-  
+
   describe('every escrow can resolve all of its tokens', () => {
     const chainsMap = new Map<string, ChainId>(
       chains.map((c) => [c.name, ChainId(c.chainId)]),
