@@ -1,20 +1,26 @@
 import { DaAccessibilityRisk, DaExitWindowRisk } from '../../../types'
 import { DaAttestationSecurityRisk } from '../../../types/DaAttestationSecurityRisk'
-import {
-  DaBridge,
-  DaBridgeKind,
-  EnshrinedBridge,
-} from '../../../types/DaBridge'
+import { DaBridge, EnshrinedBridge } from '../../../types/DaBridge'
 import { linkByDA } from '../../../utils/link-by-da'
 
 export const enshrinedBridge: EnshrinedBridge = {
   id: 'enshrined-bridge',
-  kind: DaBridgeKind.Enshrined,
+  type: 'Enshrined',
   display: {
     name: 'Enshrined Bridge',
     slug: 'enshrined-bridge',
-    description: 'Enshrined bridge on Ethereum',
+    description: 'Enshrined bridge on Ethereum.',
+    links: {
+      websites: ['https://immutablex.xyz/'],
+      documentation: ['https://docs.immutablex.xyz/'],
+      repositories: ['https://github.com/Immutablex/immutablex'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
+    },
   },
+  technology:
+    'Do enim fugiat id tempor consequat pariatur eu eiusmod. Esse veniam ipsum irure sunt nulla est reprehenderit eiusmod et qui fugiat. Commodo pariatur cupidatat commodo ipsum minim tempor consequat dolor nostrud occaecat sit excepteur fugiat. Ut laboris in dolor est ut. Labore quis nulla incididunt enim aute minim in mollit.',
   usedIn: linkByDA({
     // To catch both blobs and calldata suffix
     layer: (layer) => layer?.startsWith('Ethereum'),

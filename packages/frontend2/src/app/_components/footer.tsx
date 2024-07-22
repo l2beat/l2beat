@@ -1,4 +1,4 @@
-import { CustomLink } from './custom-link'
+import { CustomLink } from './link/custom-link'
 import { SocialLinks } from './social-links'
 
 export function Footer() {

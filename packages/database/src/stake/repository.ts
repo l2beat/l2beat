@@ -23,6 +23,15 @@ export class StakeRepository {
     return res ? toRecord(res) : null
   }
 
+  async findByIds(ids: string[]) {
+    const res = await this.db
+      .selectFrom('public.Stake')
+      .select(selectStake)
+      .where('id', 'in', ids)
+      .execute()
+    return res.map(toRecord)
+  }
+
   async upsert(stake: StakeRecord) {
     const entity = toRow(stake)
     const { id, ...rest } = entity
@@ -31,5 +40,9 @@ export class StakeRepository {
       .values(entity)
       .onConflict((oc) => oc.columns(['id']).doUpdateSet(rest))
       .execute()
+  }
+
+  deleteAll() {
+    return this.db.deleteFrom('public.Stake').execute()
   }
 }

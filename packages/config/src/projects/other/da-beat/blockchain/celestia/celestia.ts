@@ -1,6 +1,7 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer, DaLayerKind } from '../../types/DaLayer'
+import { DaLayer } from '../../types/DaLayer'
 import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { linkByDA } from '../../utils/link-by-da'
@@ -9,12 +10,23 @@ import { noBridge } from './bridges/no-bridge'
 
 export const celestia: DaLayer = {
   id: 'celestia',
-  kind: DaLayerKind.PublicBlockchain,
+  type: 'da-layer',
+  kind: 'public-blockchain',
   display: {
     name: 'Celestia',
     slug: 'celestia',
     description: 'Celestia is a modular data availability network.',
+    links: {
+      websites: ['https://immutablex.xyz/'],
+      documentation: ['https://docs.immutablex.xyz/'],
+      repositories: ['https://github.com/Immutablex/immutablex'],
+      apps: ['https://app.immutable.com/'],
+      explorers: ['https://explorer.immutable.com/'],
+      socialMedia: ['https://twitter.com/Immutable'],
+    },
   },
+  technology:
+    'Some note about the technology used by the data availability layer.\n## Markdown supported',
   bridges: [noBridge, ...blobstream],
   usedIn: linkByDA({
     layer: (layer) => layer === 'Celestia',
@@ -26,15 +38,14 @@ export const celestia: DaLayer = {
   */
   consensusAlgorithm: {
     name: 'CometBFT',
-    description: `CometBFT is the canonical implementation of the Tendermint consensus algorithm. 
+    description: `CometBFT is the canonical implementation of the Tendermint consensus algorithm.
     CometBFT allows for a state transition machine to be written in any programming language, and it allows for secure replication across many machines.
     The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
     blockTime: 15, // seconds
     consensusFinality: 1, // 1 second for tendermint, time_iota_ms
-    unbondingPeriod: 1814400, // 21 days, staking.UnbondingTime
+    unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
   },
   dataAvailabilitySampling: {
-    supportsDAS: true,
     erasureCodingScheme: DasErasureCodingScheme.TwoDReedSolomon,
     erasureCodingProof: DasErasureCodingProof.FraudProofs,
   },
