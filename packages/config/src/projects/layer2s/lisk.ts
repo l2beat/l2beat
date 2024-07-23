@@ -12,8 +12,6 @@ export const lisk: Layer2 = opStackL2({
   associatedTokens: ['LSK'],
   badges: [Badge.RaaS.Gelato],
   display: {
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'Lisk',
     slug: 'lisk',
     description:

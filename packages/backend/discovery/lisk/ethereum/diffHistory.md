@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x8d4557f91adb07eed80d7b422ffce2b174c2270e
+
+# Diff at Tue, 23 Jul 2024 10:36:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@490aaec1a76ba293d442449146dd7c8335f4b7a1 block: 20367772
+- current block number: 20368673
+
+## Description
+
+EOA signer removed, the LiskRollupOwnerMultisig is now just a transparent MS for Gelato MS. Warning removed from FE.
+
+## Watched changes
+
+```diff
+    contract LiskRollupOwnerMultisig (0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "1 of 1 (100%)"
+      values.getOwners.1:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
 Generated with discovered.json: 0x4ea5b8947e58d62a04b241936e836cfc4c567bba
 
 # Diff at Tue, 23 Jul 2024 07:36:01 GMT:

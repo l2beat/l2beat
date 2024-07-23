@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 20367772,
+  "blockNumber": 20368673,
   "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
   "version": 9,
   "contracts": [
@@ -84,10 +84,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3488400,
-        "latestOutputIndex": 322,
-        "nextBlockNumber": 3499200,
-        "nextOutputIndex": 323,
+        "latestBlockNumber": 3499200,
+        "latestOutputIndex": 323,
+        "nextBlockNumber": 3510000,
+        "nextOutputIndex": 324,
         "proposer": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "PROPOSER": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "startingBlockNumber": 0,
@@ -160,8 +160,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 490798,
-          "prevBlockNum": 20367022
+          "prevBoughtGas": 491310,
+          "prevBlockNum": 20368647
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -195,7 +195,7 @@
         "$immutable": false,
         "$implementation": "0x0318A37e2662507789a6E17E85A506709F89488b",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620312",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620314",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -269,7 +269,7 @@
         ],
         "getThreshold": 6,
         "GnosisSafe_modules": [],
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -334,16 +334,13 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 2 (50%)",
+        "$multisigThreshold": "1 of 1 (100%)",
         "domainSeparator": "0xbfe3444f912520bcc5fe7e088aab063f311d4b2af5167cb98fcb13c2cb5722ec",
         "getChainId": 1,
-        "getOwners": [
-          "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
-          "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
-        ],
+        "getOwners": ["0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"],
         "getThreshold": 1,
         "GnosisSafe_modules": [],
-        "nonce": 15,
+        "nonce": 16,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -372,7 +369,6 @@
     { "address": "0xb9DE90a90c5E441C483e754FE7341100D5fbaEcA" },
     { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
     { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
-    { "address": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185" },
     { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
     { "address": "0xFf00000000000000000000000000000000001135" }
   ],
