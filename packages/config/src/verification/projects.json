@@ -167,7 +167,7 @@
   "scroll": true,
   "skale-ima": true,
   "socialnetwork": true,
-  "socket": true,
+  "socket": false,
   "sollet": true,
   "songprotocol": true,
   "sophon": true,

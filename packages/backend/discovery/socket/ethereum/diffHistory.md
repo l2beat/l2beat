@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xfd9ab15e534e235c2f2fa153c616bce6aa885f9e
+Generated with discovered.json: 0x2c461957d8f8868c07c9e18fb14107df551ac1e5
 
-# Diff at Tue, 23 Jul 2024 06:32:30 GMT:
+# Diff at Tue, 23 Jul 2024 07:23:28 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20340184
-- current block number: 20367456
+- current block number: 20367709
 
 ## Description
 
@@ -35,7 +35,7 @@ New (unverified) plug, and executionManager is pointed to a new (unverified) con
 
 ```diff
 +   Status: CREATED
-    contract  (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
     +++ description: None
 ```
 
@@ -44,6 +44,20 @@ New (unverified) plug, and executionManager is pointed to a new (unverified) con
 ```diff
 .../ExecutionManager.sol => /dev/null              | 1289 --------------------
  1 file changed, 1289 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340184 (main branch discovery), not current.
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
 ```
 
 Generated with discovered.json: 0x0e8508e83cd4c4229d0609413a4b05430f644a65

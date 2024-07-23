@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 20367456,
-  "configHash": "0x98b8e9ccebe3f6f87d974a81a955b5c927fc3d26ce3d2bbc0c287f4d1a2d11a9",
+  "blockNumber": 20367709,
+  "configHash": "0x05ca08a304de4c311e8c2264ab5ba113af1c1b0ccb0aa75283eddb4a08cabde6",
   "version": 9,
   "contracts": [
     {
@@ -297,7 +297,7 @@
         "capacitorFactory__": "0x11Fbb9116801DB54bB51fF4dF423e34E8b45fc9a",
         "chainSlug": 1,
         "executionManager__": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
-        "globalMessageCount": 4783,
+        "globalMessageCount": 4784,
         "hasher__": "0x5C71beE4a6b0D617D8c3d107D331292741789E27",
         "inboundSwitchboards": [
           "0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287",
@@ -406,11 +406,12 @@
       "derivedName": "Vault"
     },
     {
-      "name": "",
+      "name": "ExecutionManager",
       "address": "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C",
       "unverified": true,
       "sinceTimestamp": 1721659427,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": ""
     },
     {
       "name": "LOOKS Vault Blast",
@@ -596,12 +597,19 @@
       "sinceTimestamp": 1700128943,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "chainSlug": 1,
         "nominee": "0x0000000000000000000000000000000000000000",
         "owner": "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836",
         "signatureVerifier__": "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98",
         "socket__": "0x943AC2775928318653e91d350574436A1b9b16f9"
-      }
+      },
+      "derivedName": "TransmitManager"
     },
     {
       "name": "KintoMultisig",
