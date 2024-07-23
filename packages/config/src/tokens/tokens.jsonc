@@ -1433,13 +1433,6 @@
       "source": "native"
     },
     {
-      "symbol": "SolvBTC",
-      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
-      "supply": "totalSupply",
-      "coingeckoId": "solv-btc",
-      "source": "native"
-    },
-    {
       "symbol": "GHO",
       "address": "0x7dfF72693f6A4149b17e7C6314655f6A9F7c8B33",
       "category": "stablecoin",
