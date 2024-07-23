@@ -44,7 +44,15 @@ export function getUniqueContractsForProject(
   chain: string,
 ): EthereumAddress[] {
   const projectContracts = getProjectContractsForChain(project, chain)
-  return getUniqueContractsFromList(projectContracts).map((c) => c.address)
+  const uniqueProjectContracts = getUniqueContractsFromList(
+    projectContracts,
+  ).map((c) => c.address)
+  const permissionedAddresses = getPermissionedAddressesForChain(project, chain)
+
+  return withoutDuplicates([
+    ...uniqueProjectContracts,
+    ...permissionedAddresses,
+  ])
 }
 
 export function getUniqueContractsFromList(
@@ -62,13 +70,7 @@ export function getUniqueContractsFromList(
         chain: c.chain ?? 'ethereum',
       })),
     )
-  const permissionedAddresses = getPermissionedAddressesForChain(project, chain)
-
-  return withoutDuplicates([
-    ...mainAddresses,
-    ...upgradeabilityAddresses,
-    ...permissionedAddresses,
-  ])
+  return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
 function getProjectContractsForChain(project: Project, chain: string) {
