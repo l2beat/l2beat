@@ -38,12 +38,12 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   ],
   display: {
     links: {
-      websites: [''],
+      websites: [],
       documentation: ['https://docs.celestia.org/developers/blobstream'],
       repositories: ['https://github.com/succinctlabs/blobstreamx'],
-      apps: [''],
+      apps: [],
       explorers: ['https://etherscan.io/'],
-      socialMedia: [''],
+      socialMedia: [],
     },
   },
   technology:

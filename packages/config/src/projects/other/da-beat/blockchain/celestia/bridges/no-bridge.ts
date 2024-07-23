@@ -14,12 +14,12 @@ export const noBridge = {
     warning: 'This has no bridge.',
     redWarning: 'This really has no bridge.',
     links: {
-      websites: [''],
-      documentation: [''],
-      repositories: [''],
-      apps: [''],
-      explorers: [''],
-      socialMedia: [''],
+      websites: [],
+      documentation: [],
+      repositories: [],
+      apps: [],
+      explorers: [],
+      socialMedia: [],
     },
   },
   technology:

@@ -35,12 +35,12 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
   chain: 'arbitrum',
   display: {
     links: {
-      websites: [''],
+      websites: [],
       documentation: ['https://docs.celestia.org/developers/blobstream'],
       repositories: ['https://github.com/succinctlabs/blobstreamx'],
-      apps: [''],
+      apps: [],
       explorers: ['https://arbiscan.io/'],
-      socialMedia: [''],
+      socialMedia: [],
     },
   },
   technology:

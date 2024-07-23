@@ -20,7 +20,7 @@ export const celestia: DaLayer = {
       websites: ['https://celestia.org/'],
       documentation: ['https://docs.celestia.org/'],
       repositories: ['https://github.com/celestiaorg'],
-      apps: [''],
+      apps: [],
       explorers: ['https://celenium.io/'],
       socialMedia: [
         'https://x.com/CelestiaOrg',
