@@ -1,13 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn } from 'earl'
-
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 import { MultiIndexer } from './MultiIndexer'
 import {
   Configuration,
   RemovalConfiguration,
   SavedConfiguration,
 } from './types'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 
 describe(MultiIndexer.name, () => {
   describe(MultiIndexer.prototype.initialize.name, () => {

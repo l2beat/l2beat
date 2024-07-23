@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
@@ -19,7 +20,6 @@ import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PriceIndexer } from './PriceIndexer'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 
 describe(PriceIndexer.name, () => {
   beforeEach(() => {

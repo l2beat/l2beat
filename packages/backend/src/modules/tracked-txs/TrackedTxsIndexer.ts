@@ -1,5 +1,6 @@
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -13,7 +14,6 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
-import { Knex } from 'knex'
 
 interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {

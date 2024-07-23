@@ -6,13 +6,13 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import {
   IndexerStateRecord,
   IndexerStateRepository,
 } from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'
-import { Knex } from 'knex'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 

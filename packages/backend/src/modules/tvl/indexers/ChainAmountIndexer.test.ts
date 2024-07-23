@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
@@ -15,7 +16,6 @@ import { BlockTimestampRepository } from '../repositories/BlockTimestampReposito
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { ChainAmountIndexer } from './ChainAmountIndexer'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 
 describe(ChainAmountIndexer.name, () => {
   beforeEach(() => {

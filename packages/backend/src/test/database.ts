@@ -1,10 +1,9 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
-
 import { Database, createDatabase } from '@l2beat/database'
 import { LegacyDatabase } from '@l2beat/database-legacy'
-import { DatabaseConfig } from '../config/Config'
 import { mockObject } from 'earl'
 import { Knex } from 'knex'
+import { DatabaseConfig } from '../config/Config'
 
 export function describeDatabase(
   name: string,

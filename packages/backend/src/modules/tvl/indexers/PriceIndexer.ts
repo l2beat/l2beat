@@ -3,6 +3,7 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -15,7 +16,6 @@ import {
 import { PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { Knex } from 'knex'
 
 export interface PriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<CoingeckoPriceConfigEntry>, 'name'> {

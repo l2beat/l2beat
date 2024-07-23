@@ -3,6 +3,7 @@ import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../test/database'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
@@ -18,7 +19,6 @@ import { LivenessUpdater } from './modules/liveness/LivenessUpdater'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 import { TrackedTxResult } from './types/model'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../test/database'
 
 describe(TrackedTxsIndexer.name, () => {
   beforeEach(() => {

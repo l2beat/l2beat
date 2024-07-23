@@ -1,6 +1,6 @@
-import { UnixTime } from '@l2beat/shared-pure'
-
 import { assert } from '@l2beat/backend-tools'
+import { UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -14,7 +14,6 @@ import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
-import { Knex } from 'knex'
 
 export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {

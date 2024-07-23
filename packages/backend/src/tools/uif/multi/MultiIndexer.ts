@@ -1,6 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
-
+import { Knex } from 'knex'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
 import {
@@ -9,8 +10,6 @@ import {
   RemovalConfiguration,
   SavedConfiguration,
 } from './types'
-import { LegacyDatabase } from '@l2beat/database-legacy'
-import { Knex } from 'knex'
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []

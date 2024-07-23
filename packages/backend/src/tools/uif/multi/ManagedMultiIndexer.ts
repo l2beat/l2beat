@@ -1,11 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
+import { Knex } from 'knex'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
 import { Configuration, SavedConfiguration } from './types'
-import { LegacyDatabase } from '@l2beat/database-legacy'
-import { Knex } from 'knex'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]

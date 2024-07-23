@@ -5,7 +5,7 @@ import {
   json,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-
+import { MOCK_TRANSACTION } from '../../test/database'
 import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
@@ -15,7 +15,6 @@ import {
   IndexerStateRecord,
   IndexerStateRepository,
 } from './IndexerStateRepository'
-import { MOCK_TRANSACTION } from '../../test/database'
 
 describe(IndexerService.name, () => {
   it(IndexerService.prototype.getSafeHeight.name, async () => {

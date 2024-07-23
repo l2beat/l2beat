@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { expect, mockFn, mockObject } from 'earl'
-
 import {
-  describeDatabase,
   MOCK_TRANSACTION,
+  describeDatabase,
   mockLegacyDatabase,
 } from '../../../test/database'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
@@ -20,7 +20,6 @@ import {
   RemovalConfiguration,
   SavedConfiguration,
 } from './types'
-import { LegacyDatabase } from '@l2beat/database-legacy'
 
 describe(ManagedMultiIndexer.name, () => {
   afterEach(() => {
