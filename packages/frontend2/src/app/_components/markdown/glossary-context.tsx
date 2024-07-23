@@ -23,7 +23,9 @@ export function GlossaryContextProvider({ children, terms }: Props) {
 export function useGlossaryContext() {
   const context = useContext(GlossaryContext)
   if (!context) {
-    throw new Error('useGlossaryContext must be used within a GlossaryContextProvider')
+    throw new Error(
+      'useGlossaryContext must be used within a GlossaryContextProvider',
+    )
   }
   return context
 }
