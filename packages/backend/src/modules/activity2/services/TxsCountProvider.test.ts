@@ -2,8 +2,14 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
+import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import {
+  RpcActivityTransactionConfig,
+  StarkexActivityTransactionConfig,
+} from '../../activity/ActivityTransactionConfig'
 import { TxsCountProvider } from './TxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
@@ -15,11 +21,10 @@ describe(TxsCountProvider.name, () => {
         logger: Logger.SILENT,
         peripherals: mockPeripherals({}),
         projectId: ProjectId('a'),
-        projectConfig: {
+        projectConfig: mockObject<RpcActivityTransactionConfig>({
           type: 'rpc',
-          url: 'url',
-          callsPerMinute: 1,
-        },
+        }),
+        activityConfig: mockObject<ActivityConfig>(),
       })
 
       const expected = [activityRecord('a', START, 1)]
@@ -29,16 +34,44 @@ describe(TxsCountProvider.name, () => {
       const result = await txsCountProvider.getTxsCount(0, 2)
       expect(result).toEqual(expected)
     })
+
+    it('should get txs count for Starkex', async () => {
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals: mockPeripherals({}),
+        projectId: ProjectId('a'),
+        projectConfig: mockObject<StarkexActivityTransactionConfig>({
+          type: 'starkex',
+        }),
+        activityConfig: mockObject<ActivityConfig>(),
+      })
+
+      const expected = [activityRecord('a', START, 1)]
+      txsCountProvider.getStarkexTxsCount = mockFn().resolvesTo(expected)
+
+      // if this will return expected, then it means that getRpcTxsCount was called
+      const result = await txsCountProvider.getTxsCount(0, 2)
+
+      expect(result).toEqual(expected)
+    })
   })
+
   describe(TxsCountProvider.prototype.getRpcTxsCount.name, () => {
     it('should return txs count', async () => {
-      const rpcClient = mockRpcClient([
+      const client = mockRpcClient([
         count(START, 1),
         count(START.add(1, 'hours'), 2),
         count(START.add(2, 'days'), 5),
       ])
+
       const peripherals = mockPeripherals({
-        mockRpcClient: rpcClient,
+        rpc: {
+          client,
+          options: {
+            url: 'url',
+            callsPerMinute: 1,
+          },
+        },
       })
 
       const txsCountProvider = new TxsCountProvider({
@@ -50,6 +83,7 @@ describe(TxsCountProvider.name, () => {
           url: 'url',
           callsPerMinute: 1,
         },
+        activityConfig: mockObject<ActivityConfig>(),
       })
       const result = await txsCountProvider.getRpcTxsCount(0, 2)
 
@@ -62,16 +96,23 @@ describe(TxsCountProvider.name, () => {
         url: 'url',
         callsPerMinute: 1,
       })
-      expect(rpcClient.getBlock).toHaveBeenCalledTimes(3)
+      expect(client.getBlock).toHaveBeenCalledTimes(3)
     })
 
     it('should return txs count and use assessCount', async () => {
-      const rpcClient = mockRpcClient([
+      const client = mockRpcClient([
         count(START, 1),
         count(START.add(1, 'hours'), 2),
       ])
+
       const peripherals = mockPeripherals({
-        mockRpcClient: rpcClient,
+        rpc: {
+          client,
+          options: {
+            url: 'url',
+            callsPerMinute: 1,
+          },
+        },
       })
 
       const assessCount = mockFn((count) => count - 1)
@@ -86,6 +127,7 @@ describe(TxsCountProvider.name, () => {
           callsPerMinute: 1,
           assessCount,
         },
+        activityConfig: mockObject<ActivityConfig>(),
       })
       const result = await txsCountProvider.getRpcTxsCount(0, 1)
 
@@ -95,7 +137,47 @@ describe(TxsCountProvider.name, () => {
         callsPerMinute: 1,
       })
       expect(assessCount).toHaveBeenCalledTimes(2)
-      expect(rpcClient.getBlock).toHaveBeenCalledTimes(2)
+      expect(client.getBlock).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe(TxsCountProvider.prototype.getStarkexTxsCount.name, () => {
+    it('should return txs count', async () => {
+      const client = mockStarkexClient([2, 3, 4, 5])
+      const options = { apiKey: 'key', callsPerMinute: 1, timeout: undefined }
+
+      const peripherals = mockPeripherals({
+        starkex: { client, options },
+      })
+
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals,
+        projectId: ProjectId('a'),
+        projectConfig: mockObject<StarkexActivityTransactionConfig>({
+          type: 'starkex',
+          product: ['a', 'b'],
+        }),
+        activityConfig: mockObject<ActivityConfig>({
+          starkexApiKey: 'key',
+          starkexCallsPerMinute: 1,
+        }),
+      })
+
+      const result = await txsCountProvider.getStarkexTxsCount(0, 1)
+
+      expect(result).toEqual([
+        activityRecord('a', UnixTime.fromDays(0), 5),
+        activityRecord('a', UnixTime.fromDays(1), 9),
+      ])
+
+      expect(peripherals.getClient).toHaveBeenNthCalledWith(
+        1,
+        StarkexClient,
+        options,
+      )
+
+      expect(client.getDailyCount).toHaveBeenCalledTimes(4)
     })
   })
 })
@@ -109,14 +191,18 @@ function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
 }
 
 function mockPeripherals({
-  mockRpcClient,
+  rpc,
+  starkex,
 }: {
-  mockRpcClient?: RpcClient
+  rpc?: { client: RpcClient; options: any }
+  starkex?: { client: StarkexClient; options: any }
 }) {
   return mockObject<Peripherals>({
     getClient: mockFn()
-      .given(RpcClient, { url: 'url', callsPerMinute: 1 })
-      .returnsOnce(mockRpcClient),
+      .given(RpcClient, rpc?.options)
+      .returnsOnce(rpc?.client)
+      .given(StarkexClient, starkex?.options)
+      .returnsOnce(starkex?.client),
   })
 }
 
@@ -133,6 +219,15 @@ function mockRpcClient(
 
   return mockObject<RpcClient>({
     getBlock: mockGetBlock,
+  })
+}
+
+function mockStarkexClient(counts: number[]) {
+  const mockGetDailyCount = mockFn()
+  counts.forEach((count) => mockGetDailyCount.resolvesToOnce(count))
+
+  return mockObject<StarkexClient>({
+    getDailyCount: mockGetDailyCount,
   })
 }
 
