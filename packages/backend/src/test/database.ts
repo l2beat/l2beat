@@ -1,5 +1,5 @@
 import { Logger, getEnv } from '@l2beat/backend-tools'
-import { Database, createDatabase } from '@l2beat/database'
+import { Database, Transaction, createDatabase } from '@l2beat/database'
 import { LegacyDatabase } from '@l2beat/database-legacy'
 import { mockObject } from 'earl'
 import { Knex } from 'knex'
@@ -73,5 +73,15 @@ export function mockLegacyDatabase() {
     transaction: async (fun) => {
       return await fun(MOCK_TRANSACTION)
     },
+  })
+}
+
+export const MOCK_TRX = mockObject<Transaction>()
+export function mockDatabase(overrides: Partial<Database> = {}) {
+  return mockObject<Database>({
+    transaction: async (fun) => {
+      return await fun(MOCK_TRX)
+    },
+    ...overrides,
   })
 }

@@ -49,7 +49,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const costs = await this.getL2CostsRecordsWithProjectId([
+    const costs = await this.getL2CostRecordsWithProjectId([
       shiftedFrom,
       shiftedTo,
     ])
@@ -102,7 +102,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     return [shiftedUnixFrom, shiftedUnixTo]
   }
 
-  async getL2CostsRecordsWithProjectId(
+  async getL2CostRecordsWithProjectId(
     timeRange: [UnixTime, UnixTime],
   ): Promise<ProjectL2Cost[]> {
     const [shiftedFrom, shiftedTo] = timeRange

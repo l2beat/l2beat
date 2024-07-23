@@ -2,13 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { LegacyDatabase } from '@l2beat/database-legacy'
 import { expect, mockFn, mockObject } from 'earl'
 import {
-  MOCK_TRANSACTION,
+  MOCK_TRX,
   describeDatabase,
-  mockLegacyDatabase,
+  mockDatabase,
 } from '../../../test/database'
-import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'
-import { IndexerStateRepository } from '../IndexerStateRepository'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   ManagedMultiIndexer,
@@ -34,7 +32,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
         serializeConfiguration: (v: null) => JSON.stringify(v),
-        db: mockLegacyDatabase(),
+        db: mockDatabase(),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -48,7 +46,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
         serializeConfiguration: (v: null) => JSON.stringify(v),
-        db: mockLegacyDatabase(),
+        db: mockDatabase(),
       }
       new TestIndexer({
         ...common,
@@ -142,13 +140,13 @@ describe(ManagedMultiIndexer.name, () => {
 
       const indexer = await initializeMockIndexer(indexerService, [], [])
 
-      await indexer.updateConfigurationsCurrentHeight(1, MOCK_TRANSACTION)
+      await indexer.updateConfigurationsCurrentHeight(1, MOCK_TRX)
 
       expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
         1,
         'indexer',
         1,
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
     },
   )
@@ -308,7 +306,7 @@ async function initializeMockIndexer(
     configurations,
     logger: Logger.SILENT,
     serializeConfiguration: (v) => JSON.stringify(v),
-    db: database ?? mockLegacyDatabase(),
+    db: database ?? mockDatabase(),
   })
   return indexer
 }
