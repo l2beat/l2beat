@@ -25,15 +25,15 @@ export function getUniqueContractsForAllProjects(
   return withoutDuplicates(addresses)
 }
 
-export function getUniqueAddressesForDaLayer(
-  daLayer: DaLayer,
+export function getUniqueAddressesForDaBridge(
+  bridge: DaLayer['bridges'][0],
   chain: string,
 ): EthereumAddress[] {
   const addresses = withoutDuplicates(
-    getDaLayerContractsForChain(daLayer, chain).map((c) => c.address),
+    getDaBridgeContractsForChain(bridge, chain).map((c) => c.address),
   )
   const permissions = withoutDuplicates(
-    getDaLayerPermissionsForChain(daLayer, chain).map((p) => p.address),
+    getDaBridgePermissionsForChain(bridge, chain).map((p) => p.address),
   )
 
   return [...addresses, ...permissions]
@@ -82,11 +82,11 @@ function getProjectContractsForChain(project: Project, chain: string) {
   return [...contracts, ...escrows]
 }
 
-function getDaLayerContractsForChain(
-  daLayer: DaLayer,
+function getDaBridgeContractsForChain(
+  bridge: DaLayer['bridges'][0],
   chain: string,
 ): AddressOnChain[] {
-  const contracts = daLayer.bridges
+  const contracts = [bridge]
     .filter(
       (b): b is OnChainDaBridge | DacBridge =>
         b.type === 'OnChainBridge' || b.type === 'DAC',
@@ -96,11 +96,11 @@ function getDaLayerContractsForChain(
   return addresses.filter((a) => a.chain === chain)
 }
 
-function getDaLayerPermissionsForChain(
-  daLayer: DaLayer,
+function getDaBridgePermissionsForChain(
+  bridge: DaLayer['bridges'][0],
   chain: string,
 ): AddressOnChain[] {
-  const permissions: AddressOnChain[] = daLayer.bridges
+  const permissions: AddressOnChain[] = [bridge]
     .filter(
       (b): b is OnChainDaBridge | DacBridge =>
         b.type === 'OnChainBridge' || b.type === 'DAC',
