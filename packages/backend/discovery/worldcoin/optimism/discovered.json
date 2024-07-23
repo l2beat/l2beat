@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 120698212,
-  "configHash": "0x5def1b5565f1247f6622afd0605cb640f85241299993c9ecd062fa3ca528931e",
+  "blockNumber": 123030782,
+  "configHash": "0x05a1900991df3df10a37ebd71e873555e21afbe60a2f0e26ecc4b3aef5f8863a",
   "version": 9,
   "contracts": [
     {
@@ -44,6 +44,12 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "SemaphoreVerifier",
+      "address": "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
+      "sinceTimestamp": 1721036137,
+      "values": { "$immutable": true }
     },
     {
       "name": "SemaphoreVerifier",
@@ -169,8 +175,44 @@
         ],
         "getThreshold": 2,
         "GnosisSafe_modules": [],
-        "nonce": 13,
+        "nonce": 15,
         "VERSION": "1.3.0"
+      }
+    },
+    {
+      "name": "WorldIDIdentityManagerV2",
+      "address": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
+      "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1721036137,
+      "values": {
+        "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "$implementation": "0xa3d93B74214B80760288091675688E1EaD7838F2",
+        "getDeleteIdentitiesVerifierLookupTableAddress": "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86",
+        "getRegisterIdentitiesVerifierLookupTableAddress": "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb",
+        "getRootHistoryExpiry": 3600,
+        "getSemaphoreVerifierAddress": "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
+        "getTreeDepth": 30,
+        "identityOperator": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "latestRoot": "4114686047564160449611603615418567457008101555090703535405891656262658644463",
+        "NO_SUCH_ROOT": {
+          "root": 0,
+          "supersededTimestamp": 0,
+          "isValid": false
+        },
+        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      },
+      "derivedName": "WorldIDIdentityManagerImplV2"
+    },
+    {
+      "name": "VerifierLookupTable",
+      "address": "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb",
+      "sinceTimestamp": 1721036135,
+      "values": {
+        "$immutable": true,
+        "getVerifierFor": [],
+        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
     },
     {
@@ -256,7 +298,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "194003922314449735300556168",
+        "totalSupply": "233128611801668313547822370",
         "version": "1.0.0"
       },
       "derivedName": "OptimismMintableERC20"
@@ -266,7 +308,7 @@
       "address": "0xe11CEfF5034278dC62318e74aF6efBA57D54f3be",
       "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1710076379,
-      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 34 },
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 38 },
       "derivedName": "WLDGrant"
     },
     {
@@ -308,6 +350,17 @@
         "nonce": 0,
         "VERSION": "1.3.0"
       }
+    },
+    {
+      "name": "VerifierLookupTable",
+      "address": "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86",
+      "sinceTimestamp": 1721036135,
+      "values": {
+        "$immutable": true,
+        "getVerifierFor": [],
+        "owner": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
+      }
     }
   ],
   "eoas": [
@@ -321,11 +374,13 @@
     { "address": "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421" },
     { "address": "0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde" },
     { "address": "0x79b998ded1f4503CE3A0A76993c72a65449f4590" },
-    { "address": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a" },
     {
       "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "assignedPermissions": {
-        "admin": ["0x57f928158C3EE7CDad1e4D8642503c4D0201f611"]
+        "admin": [
+          "0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
+          "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
+        ]
       }
     },
     { "address": "0xa6d85F3b3bE6Ff6DC52C3aaBe9A35d0ce252b79F" },
@@ -372,6 +427,13 @@
     ],
     "0x140C0227Cbe493A56868DDF4ea582E92ef3e9744": [
       "constructor(address _singleton)"
+    ],
+    "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c": [
+      "error ProofInvalid()",
+      "error PublicInputNotInField()",
+      "function compressProof(uint256[8] proof) view returns (uint256[4] compressed)",
+      "function verifyCompressedProof(uint256[4] compressedProof, uint256[4] input) view",
+      "function verifyProof(uint256[8] proof, uint256[4] input) view"
     ],
     "0x3D40F9b177aFb9BF7e41999FFaF5aBA6cb3847eF": [
       "function verifyProof(uint256 merkleTreeRoot, uint256 nullifierHash, uint256 signal, uint256 externalNullifier, uint256[8] proof, uint256 merkleTreeDepth) view"
@@ -469,6 +531,94 @@
     ],
     "0x7f26A7572E8B877654eeDcBc4E573657619FA3CE": [
       "constructor(address _singleton)"
+    ],
+    "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a": [
+      "constructor(address _logic, bytes _data) payable",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Upgraded(address indexed implementation)"
+    ],
+    "0xa3d93B74214B80760288091675688E1EaD7838F2": [
+      "error CannotRenounceOwnership()",
+      "error ExpiredRoot()",
+      "error ImplementationNotInitialized()",
+      "error InvalidCommitment(uint256 index)",
+      "error InvalidDeletionIndices()",
+      "error InvalidStateBridgeAddress()",
+      "error InvalidVerifier()",
+      "error InvalidVerifierLUT()",
+      "error MismatchedInputLengths()",
+      "error NonExistentRoot()",
+      "error NotLatestRoot(uint256 providedRoot, uint256 latestRoot)",
+      "error ProofValidationFailure()",
+      "error StateBridgeAlreadyDisabled()",
+      "error StateBridgeAlreadyEnabled()",
+      "error Unauthorized(address user)",
+      "error UnreducedElement(uint8 elementType, uint256 element)",
+      "error UnsupportedTreeDepth(uint8 depth)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event DependencyUpdated(uint8 indexed kind, address indexed oldAddress, address indexed newAddress)",
+      "event IdentityOperatorChanged(address indexed oldOperator, address indexed newOperator)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event RootHistoryExpirySet(uint256 indexed oldExpiryTime, uint256 indexed newExpiryTime)",
+      "event StateBridgeStateChange(bool indexed isEnabled)",
+      "event TreeChanged(uint256 indexed preRoot, uint8 indexed kind, uint256 indexed postRoot)",
+      "event Upgraded(address indexed implementation)",
+      "event WorldIDIdentityManagerImplInitialized(uint8 _treeDepth, uint256 initialRoot)",
+      "event WorldIDIdentityManagerImplV2Initialized()",
+      "function NO_SUCH_ROOT() pure returns (tuple(uint256 root, uint128 supersededTimestamp, bool isValid) rootInfo)",
+      "function acceptOwnership()",
+      "function calculateIdentityDeletionInputHash(bytes packedDeletionIndices, uint256 preRoot, uint256 postRoot, uint32 batchSize) view returns (bytes32 hash)",
+      "function calculateIdentityRegistrationInputHash(uint32 startIndex, uint256 preRoot, uint256 postRoot, uint256[] identityCommitments) view returns (bytes32 hash)",
+      "function deleteIdentities(uint256[8] deletionProof, bytes packedDeletionIndices, uint256 preRoot, uint256 postRoot)",
+      "function getDeleteIdentitiesVerifierLookupTableAddress() view returns (address)",
+      "function getRegisterIdentitiesVerifierLookupTableAddress() view returns (address)",
+      "function getRootHistoryExpiry() view returns (uint256)",
+      "function getSemaphoreVerifierAddress() view returns (address)",
+      "function getTreeDepth() view returns (uint8)",
+      "function identityOperator() view returns (address)",
+      "function initialize(uint8 _treeDepth, uint256 initialRoot, address _batchInsertionVerifiers, address _batchUpdateVerifiers, address _semaphoreVerifier)",
+      "function initializeV2(address _batchDeletionVerifiers)",
+      "function latestRoot() view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function queryRoot(uint256 root) view returns (tuple(uint256 root, uint128 supersededTimestamp, bool isValid))",
+      "function registerIdentities(uint256[8] insertionProof, uint256 preRoot, uint32 startIndex, uint256[] identityCommitments, uint256 postRoot)",
+      "function renounceOwnership() view",
+      "function requireValidRoot(uint256 root) view",
+      "function setDeleteIdentitiesVerifierLookupTable(address newTable)",
+      "function setIdentityOperator(address newIdentityOperator) returns (address)",
+      "function setRegisterIdentitiesVerifierLookupTable(address newTable)",
+      "function setRootHistoryExpiry(uint256 newExpiryTime)",
+      "function setSemaphoreVerifier(address newVerifier)",
+      "function transferOwnership(address newOwner)",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function verifyProof(uint256 root, uint256 signalHash, uint256 nullifierHash, uint256 externalNullifierHash, uint256[8] proof) view"
+    ],
+    "0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error NoSuchVerifier()",
+      "error VerifierExists()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+      "event VerifierDisabled(uint256 indexed batchSize)",
+      "event VerifierUpdated(uint256 indexed batchSize, address indexed oldVerifierAddress, address indexed newVerifierAddress)",
+      "function acceptOwnership()",
+      "function addVerifier(uint256 batchSize, address verifier)",
+      "function disableVerifier(uint256 batchSize) returns (address oldVerifier)",
+      "function getVerifierFor(uint256 batchSize) view returns (address verifier)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
     ],
     "0xB3E7771a6e2d7DD8C0666042B7a07C39b938eb7d": [
       "constructor(uint8 _treeDepth)",
@@ -641,6 +791,26 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86": [
+      "constructor()",
+      "error CannotRenounceOwnership()",
+      "error NoSuchVerifier()",
+      "error VerifierExists()",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event VerifierAdded(uint256 indexed batchSize, address indexed verifierAddress)",
+      "event VerifierDisabled(uint256 indexed batchSize)",
+      "event VerifierUpdated(uint256 indexed batchSize, address indexed oldVerifierAddress, address indexed newVerifierAddress)",
+      "function acceptOwnership()",
+      "function addVerifier(uint256 batchSize, address verifier)",
+      "function disableVerifier(uint256 batchSize) returns (address oldVerifier)",
+      "function getVerifierFor(uint256 batchSize) view returns (address verifier)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function renounceOwnership() view",
+      "function transferOwnership(address newOwner)",
+      "function updateVerifier(uint256 batchSize, address verifier) returns (address oldVerifier)"
     ]
   },
   "usedTemplates": {

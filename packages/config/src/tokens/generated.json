@@ -4876,6 +4876,36 @@
       "supply": "zero"
     },
     {
+      "id": "zuneth-zunami-eth",
+      "name": "Zunami ETH",
+      "coingeckoId": "zunami-eth-2",
+      "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222",
+      "symbol": "zunETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1710656291,
+      "coingeckoListingTimestamp": 1715731200,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37835/large/zunETH_200x200.png?1715741123",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "zunusd-zunami-usd",
+      "name": "Zunami USD",
+      "coingeckoId": "zunami-usd",
+      "address": "0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6",
+      "symbol": "zunUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1708409447,
+      "coingeckoListingTimestamp": 1715558400,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37809/large/zunUSD_200x200.png?1715591997",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "optimism:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",
