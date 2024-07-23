@@ -156,8 +156,12 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
-      - name: Build packages
-        run: yarn build:dependencies
+      # We only need backend-tools and shared-pure for the `getConfig`
+      - name: Build backend-tools
+        run: cd packages/backend-tools && yarn build
+
+      - name: Build shared-pure
+        run: cd packages/shared-pure && yarn build
 
       - name: Instal Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
