@@ -6,8 +6,8 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
 import {
   AmountRecord,
@@ -62,11 +62,7 @@ describe(ChainAmountIndexer.name, () => {
           mockObject<DatabaseMiddleware>({}),
       })
 
-      const toUpdate = [
-        update('a', 100, null, false),
-        update('b', 100, null, false),
-        update('c', 100, null, true), // configuration with data should not be fetched
-      ]
+      const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
       const safeHeight = await indexer.multiUpdate(
         from,
@@ -80,7 +76,7 @@ describe(ChainAmountIndexer.name, () => {
       expect(amountService.fetchAmounts).toHaveBeenOnlyCalledWith(
         timestampToSync,
         blockNumber,
-        toUpdate.slice(0, 2),
+        toUpdate,
       )
 
       expect(amountRepository.addMany).toHaveBeenOnlyCalledWith(
@@ -89,40 +85,6 @@ describe(ChainAmountIndexer.name, () => {
       )
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
-    })
-
-    it('returns if no configurations to sync', async () => {
-      const from = 100
-      const to = 1000
-
-      const indexer = new ChainAmountIndexer({
-        amountService: mockObject<AmountService>({}),
-        amountRepository: mockObject<AmountRepository>({}),
-        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        chain: 'chain',
-        parents: [],
-        indexerService: mockObject<IndexerService>({}),
-        logger: Logger.SILENT,
-        serializeConfiguration: () => '',
-        configurations: [],
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
-      })
-
-      const toUpdate = [
-        update('a', 100, null, true),
-        update('b', 100, null, true),
-      ]
-
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        toUpdate,
-        mockDbMiddleware,
-      )
-
-      expect(safeHeight).toEqual(to)
     })
 
     it('returns if optimized timestamp later than to', async () => {
@@ -149,7 +111,7 @@ describe(ChainAmountIndexer.name, () => {
           mockObject<DatabaseMiddleware>({}),
       })
 
-      const toUpdate = [update('a', 100, null, false)]
+      const toUpdate = [actual('a', 100, null)]
 
       const safeHeight = await indexer.multiUpdate(
         from,
@@ -170,7 +132,9 @@ describe(ChainAmountIndexer.name, () => {
         amountService: mockObject<AmountService>({}),
         amountRepository: mockObject<AmountRepository>({}),
         blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
+        syncOptimizer: mockObject<SyncOptimizer>({
+          getTimestampToSync: () => new UnixTime(1001),
+        }),
         chain: 'chain',
         parents: [],
         indexerService: mockObject<IndexerService>({}),
@@ -181,10 +145,7 @@ describe(ChainAmountIndexer.name, () => {
           mockObject<DatabaseMiddleware>({}),
       })
 
-      const toUpdate = [
-        update('a', 100, null, true),
-        update('b', 100, null, true),
-      ]
+      const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
       const safeHeight = await indexer.multiUpdate(
         from,
@@ -254,17 +215,15 @@ function removal(id: string, from: number, to: number): RemovalConfiguration {
   }
 }
 
-function update(
+function actual(
   id: string,
   minHeight: number,
   maxHeight: number | null,
-  hasData: boolean,
-): UpdateConfiguration<ChainAmountConfig> {
+): Configuration<ChainAmountConfig> {
   return {
     id,
     properties: mockObject<ChainAmountConfig>({}),
     minHeight,
     maxHeight,
-    hasData,
   }
 }

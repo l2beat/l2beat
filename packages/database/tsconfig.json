@@ -6,6 +6,5 @@
     "noUncheckedIndexedAccess": true,
     "noFallthroughCasesInSwitch": false
   },
-  "include": ["src/*"],
-  "exclude": ["**/test/*", "**/*.test.ts"]
+  "include": ["src"]
 }

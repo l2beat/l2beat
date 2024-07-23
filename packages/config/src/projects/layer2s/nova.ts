@@ -49,6 +49,7 @@ export const nova: Layer2 = orbitStackL2({
     Badge.DA.DAC,
     Badge.Stack.Nitro,
     Badge.Other.Governance,
+    Badge.Other.L3HostChain,
   ],
   discovery,
   associatedTokens: ['ARB'],
@@ -90,6 +91,25 @@ export const nova: Layer2 = orbitStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+  },
+  chainConfig: {
+    name: 'nova',
+    chainId: 42170,
+    explorerUrl: 'https://nova.arbiscan.io/',
+    explorerApi: {
+      url: 'https://api-nova.arbiscan.io/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1656122488),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1746963,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'arbitrum-nova',
   },
   rpcUrl: 'https://nova.arbitrum.io/rpc',
   nonTemplatePermissions: [

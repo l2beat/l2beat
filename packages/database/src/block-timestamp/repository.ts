@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -23,26 +24,18 @@ export class BlockTimestampRepository {
     const row = await this.db
       .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
-      .where((eb) =>
-        eb.and([
-          eb('chain', '=', chain),
-          eb('timestamp', '=', timestamp.toDate()),
-        ]),
-      )
+      .where('chain', '=', chain)
+      .where('timestamp', '=', timestamp.toDate())
       .executeTakeFirst()
 
     return row ? toRecord(row).blockNumber : null
   }
 
   async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
-    await this.db
+    return await this.db
       .deleteFrom('public.block_timestamps')
-      .where((eb) =>
-        eb.and([
-          eb('chain', '=', chain),
-          eb('timestamp', '>', timestamp.toDate()),
-        ]),
-      )
+      .where('chain', '=', chain)
+      .where('timestamp', '>', timestamp.toDate())
       .execute()
   }
 
@@ -66,11 +59,16 @@ export class BlockTimestampRepository {
   }
 
   async addMany(records: BlockTimestampRecord[], trx?: Transaction) {
-    const rows = records.map(toRow)
+    if (records.length === 0) {
+      return 0
+    }
 
     const scope = trx ?? this.db
+    const rows = records.map(toRow)
 
-    await scope.insertInto('public.block_timestamps').values(rows).execute()
+    await batchExecute(scope, rows, 2_000, async (trx, batch) => {
+      await trx.insertInto('public.block_timestamps').values(batch).execute()
+    })
 
     return rows.length
   }

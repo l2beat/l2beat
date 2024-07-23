@@ -204,14 +204,13 @@ describe(IndexerService.name, () => {
 
     await indexerService.updateSavedConfigurations(
       'indexer',
-      ['a', 'b'],
       123,
       mockDbMiddleware,
     )
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'], 123, undefined)
+    ).toHaveBeenOnlyCalledWith('indexer', 123, undefined)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {

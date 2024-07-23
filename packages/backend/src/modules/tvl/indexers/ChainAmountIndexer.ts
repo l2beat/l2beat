@@ -11,8 +11,8 @@ import {
   ManagedMultiIndexerOptions,
 } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
 import { AmountRepository } from '../repositories/AmountRepository'
 import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
@@ -38,29 +38,9 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   override async multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<ChainAmountConfig>[],
+    configurations: Configuration<ChainAmountConfig>[],
     dbMiddleware: DatabaseMiddleware,
-  ): Promise<number> {
-    const configurationsToSync = configurations.filter((c) => !c.hasData)
-
-    if (configurationsToSync.length !== configurations.length) {
-      this.logger.info('Filtered out configurations with data', {
-        from,
-        to,
-        skippedConfigurations:
-          configurations.length - configurationsToSync.length,
-        configurationsToSync: configurationsToSync.length,
-      })
-    }
-
-    if (configurationsToSync.length === 0) {
-      this.logger.info('No configurations to sync', {
-        from,
-        to,
-      })
-      return to
-    }
-
+  ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp.toNumber() > to) {
       this.logger.info('Skipping update due to sync optimization', {
@@ -76,7 +56,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     const amounts = await this.$.amountService.fetchAmounts(
       timestamp,
       blockNumber,
-      configurationsToSync,
+      configurations,
     )
 
     this.logger.info('Fetched amounts for timestamp', {
@@ -113,9 +93,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     return blockNumber
   }
 
-  override async removeData(
-    configurations: RemovalConfiguration[],
-  ): Promise<void> {
+  override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
       const deletedRecords =
         await this.$.amountRepository.deleteByConfigInTimeRange(

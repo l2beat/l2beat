@@ -1,11 +1,13 @@
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import { L2CostRecord, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
 export class L2CostRepository {
   constructor(private readonly db: PostgresDatabase) {}
+
   async getAll() {
     const rows = await this.db
       .selectFrom('public.l2_costs')
@@ -20,7 +22,11 @@ export class L2CostRepository {
     }
     const scope = trx ?? this.db
     const rows = records.map(toRow)
-    await scope.insertInto('public.l2_costs').values(rows).execute()
+
+    await batchExecute(scope, rows, 1_000, async (trx, batch) => {
+      await trx.insertInto('public.l2_costs').values(batch).execute()
+    })
+
     return rows.length
   }
 
@@ -29,12 +35,8 @@ export class L2CostRepository {
 
     const rows = await this.db
       .selectFrom('public.l2_costs')
-      .where((eb) =>
-        eb.and([
-          eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<=', to.toDate()),
-        ]),
-      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
       .select([
         ...selectL2Cost.map((column) => `public.l2_costs.${column}` as const),
       ])
@@ -52,14 +54,10 @@ export class L2CostRepository {
     trx?: Transaction,
   ) {
     const scope = trx ?? this.db
-    return scope
+    return await scope
       .deleteFrom('public.l2_costs')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', id),
-          eb('timestamp', '>=', deleteFromInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', '=', id)
+      .where('timestamp', '>=', deleteFromInclusive.toDate())
       .execute()
   }
 
@@ -70,13 +68,9 @@ export class L2CostRepository {
   ) {
     return await this.db
       .deleteFrom('public.l2_costs')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .execute()
   }
 

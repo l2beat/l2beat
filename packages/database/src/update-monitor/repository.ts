@@ -13,9 +13,8 @@ export class UpdateMonitorRepository {
     const row = await this.db
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
-      .where((eb) =>
-        eb.and([eb('project_name', '=', name), eb('chain_id', '=', +chainId)]),
-      )
+      .where('project_name', '=', name)
+      .where('chain_id', '=', +chainId)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
