@@ -150,7 +150,7 @@ export const risczero: ZkCatalogProject = {
         ],
       },
       {
-        name: 'RiscZeroVerifier (Optimism)',
+        name: 'RiscZeroVerifier (OP Mainnet)',
         description: 'Verifies the computation of a RISC-V program.',
         contractAddress: EthereumAddress(
           '0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319',
@@ -185,7 +185,7 @@ export const risczero: ZkCatalogProject = {
         ],
       },
       {
-        name: 'RiscZeroVerifier (Polugon zkEVM)',
+        name: 'RiscZeroVerifier (Polygon zkEVM)',
         description: 'Verifies the computation of a RISC-V program.',
         contractAddress: EthereumAddress(
           '0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319',
