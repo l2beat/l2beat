@@ -5,7 +5,7 @@ import {
   json,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-
+import { MOCK_TRANSACTION } from '../../test/database'
 import {
   IndexerConfigurationRecord,
   IndexerConfigurationRepository,
@@ -15,7 +15,6 @@ import {
   IndexerStateRecord,
   IndexerStateRepository,
 } from './IndexerStateRepository'
-import { mockDbMiddleware } from './multi/MultiIndexer.test'
 
 describe(IndexerService.name, () => {
   it(IndexerService.prototype.getSafeHeight.name, async () => {
@@ -205,12 +204,12 @@ describe(IndexerService.name, () => {
     await indexerService.updateSavedConfigurations(
       'indexer',
       123,
-      mockDbMiddleware,
+      MOCK_TRANSACTION,
     )
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', 123, undefined)
+    ).toHaveBeenOnlyCalledWith('indexer', 123, MOCK_TRANSACTION)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {

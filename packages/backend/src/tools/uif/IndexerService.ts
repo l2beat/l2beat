@@ -6,10 +6,7 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  DatabaseMiddleware,
-  DatabaseTransaction,
-} from '../../peripherals/database/DatabaseMiddleware'
+import { Knex } from 'knex'
 import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
 import {
   IndexerStateRecord,
@@ -97,15 +94,13 @@ export class IndexerService {
   async updateSavedConfigurations(
     indexerId: string,
     currentHeight: number | null,
-    dbMiddleware: DatabaseMiddleware,
+    trx: Knex.Transaction,
   ): Promise<void> {
-    await dbMiddleware.add(async (trx?: DatabaseTransaction) => {
-      await this.indexerConfigurationRepository.updateSavedConfigurations(
-        indexerId,
-        currentHeight,
-        trx,
-      )
-    })
+    await this.indexerConfigurationRepository.updateSavedConfigurations(
+      indexerId,
+      currentHeight,
+      trx,
+    )
   }
 
   async persistOnlyUsedConfigurations(

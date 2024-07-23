@@ -1,8 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
-import { describeDatabase } from '../../../test/database'
+import {
+  MOCK_TRANSACTION,
+  describeDatabase,
+  mockLegacyDatabase,
+} from '../../../test/database'
 import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
 import { IndexerService } from '../IndexerService'
 import { IndexerStateRepository } from '../IndexerStateRepository'
@@ -12,7 +15,6 @@ import {
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 import { MultiIndexer } from './MultiIndexer'
-import { mockDbMiddleware } from './MultiIndexer.test'
 import {
   Configuration,
   RemovalConfiguration,
@@ -32,8 +34,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
         serializeConfiguration: (v: null) => JSON.stringify(v),
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -47,8 +48,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
         serializeConfiguration: (v: null) => JSON.stringify(v),
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       }
       new TestIndexer({
         ...common,
@@ -142,13 +142,13 @@ describe(ManagedMultiIndexer.name, () => {
 
       const indexer = await initializeMockIndexer(indexerService, [], [])
 
-      await indexer.updateConfigurationsCurrentHeight(1, mockDbMiddleware)
+      await indexer.updateConfigurationsCurrentHeight(1, MOCK_TRANSACTION)
 
       expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
         1,
         'indexer',
         1,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
     },
   )
@@ -179,6 +179,7 @@ describe(ManagedMultiIndexer.name, () => {
           actual('c', 400, null),
           actual('d', 100, null),
         ],
+        database,
       )
       await indexer.start()
 
@@ -194,34 +195,34 @@ describe(ManagedMultiIndexer.name, () => {
         100,
         199,
         [actual('a', 100, 300)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         2,
         200,
         300,
         [actual('a', 100, 300), actual('b', 200, 500)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         3,
         301,
         399,
         [actual('b', 200, 500)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         4,
         400,
         500,
         [actual('b', 200, 500), actual('c', 400, null)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
         551,
         600,
         [actual('c', 400, null), actual('d', 100, null)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
 
       const configurations = await getSavedConfigurations(indexerService)
@@ -293,6 +294,7 @@ async function initializeMockIndexer(
   indexerService: IndexerService,
   saved: SavedConfiguration<null>[],
   configurations: Configuration<null>[],
+  database?: LegacyDatabase,
 ) {
   if (saved.length > 0) {
     await indexerService.upsertConfigurations('indexer', saved, (v) =>
@@ -306,7 +308,7 @@ async function initializeMockIndexer(
     configurations,
     logger: Logger.SILENT,
     serializeConfiguration: (v) => JSON.stringify(v),
-    createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
+    db: database ?? mockLegacyDatabase(),
   })
   return indexer
 }

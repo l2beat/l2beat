@@ -734,7 +734,9 @@ function getExplorerLinkFormat(hostChain: ProjectId): string {
   } else if (hostChain === ProjectId('arbitrum')) {
     return 'https://arbiscan.io/address/{0}#code'
   } else if (hostChain === ProjectId('base')) {
-    return 'https://explorer.degen.tips/address/{0}?tab=contract'
+    return 'https://basescan.org/address/{0}#code'
+  } else if (hostChain === ProjectId('nova')) {
+    return 'https://nova.arbiscan.io/address/{0}#code'
   }
 
   assert(false, `Host chain ${hostChain.toString()} is not supported`)

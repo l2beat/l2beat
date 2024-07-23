@@ -17,12 +17,12 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
         },
       })
 
-      const expected = new Map([[1, 1]])
+      const expected = [activityRecord('a', START, 1)]
       txsCountProvider.getRpcTxsCount = mockFn().resolvesTo(expected)
 
       // if this will return expected, then it means that getRpcTxsCount was called
@@ -47,18 +47,17 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
         },
       })
       const result = await txsCountProvider.getRpcTxsCount(0, 2)
 
-      expect(result).toEqual(
-        new Map([
-          [START.toStartOf('day').toNumber(), 3],
-          [START.add(2, 'days').toStartOf('day').toNumber(), 5],
-        ]),
-      )
+      expect(result).toEqual([
+        activityRecord('a', START.toStartOf('day'), 3),
+        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5),
+      ])
+
       expect(peripherals.getClient).toHaveBeenNthCalledWith(1, RpcClient, {
         url: 'url',
         callsPerMinute: 1,
@@ -83,14 +82,14 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
           assessCount,
         },
       })
       const result = await txsCountProvider.getRpcTxsCount(0, 1)
 
-      expect(result).toEqual(new Map([[START.toStartOf('day').toNumber(), 1]]))
+      expect(result).toEqual([activityRecord('a', START.toStartOf('day'), 1)])
       expect(peripherals.getClient).toHaveBeenNthCalledWith(1, RpcClient, {
         url: 'url',
         callsPerMinute: 1,
@@ -100,6 +99,14 @@ describe(TxsCountProvider.name, () => {
     })
   })
 })
+
+function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
+  return {
+    projectId: ProjectId(projectId),
+    timestamp,
+    count,
+  }
+}
 
 function mockPeripherals({
   mockRpcClient,

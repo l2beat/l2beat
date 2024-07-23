@@ -1,5 +1,0 @@
-{
-  "term": "Sequencer",
-  "definition": "A party responsible for ordering and executing transactions on the rollup. The sequencer verifies transactions, compresses the data into a block, and submits the data related to it to enable state reconstruction to Ethereum L1 as a single transaction. The data can be either transaction data or state diffs.",
-  "isSpicy": false
-}

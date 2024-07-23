@@ -1,10 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
   Configuration,
   RemovalConfiguration,
@@ -58,8 +57,7 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       })
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
@@ -68,7 +66,7 @@ describe(ChainAmountIndexer.name, () => {
         from,
         to,
         toUpdate,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
@@ -81,7 +79,7 @@ describe(ChainAmountIndexer.name, () => {
 
       expect(amountRepository.addMany).toHaveBeenOnlyCalledWith(
         [amount('a', 200, 123)],
-        undefined,
+        MOCK_TRANSACTION,
       )
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
@@ -107,8 +105,7 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       })
 
       const toUpdate = [actual('a', 100, null)]
@@ -117,7 +114,7 @@ describe(ChainAmountIndexer.name, () => {
         from,
         to,
         toUpdate,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
@@ -141,8 +138,7 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       })
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
@@ -151,7 +147,7 @@ describe(ChainAmountIndexer.name, () => {
         from,
         to,
         toUpdate,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
 
       expect(safeHeight).toEqual(to)
@@ -175,8 +171,7 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       })
 
       const toRemove = [removal('a', 100, 200), removal('b', 200, 300)]

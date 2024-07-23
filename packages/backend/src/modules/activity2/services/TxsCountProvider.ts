@@ -1,16 +1,16 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ScalingProjectTransactionApi } from '@l2beat/config'
+import { ActivityRecord } from '@l2beat/database/src/activity/entity'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
+import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
 
 interface TxsCountProviderDeps {
   logger: Logger
   peripherals: Peripherals
   projectId: ProjectId
-  projectConfig: ScalingProjectTransactionApi
+  projectConfig: ActivityTransactionConfig
 }
 
 export class TxsCountProvider {
@@ -18,7 +18,7 @@ export class TxsCountProvider {
     this.$.logger = $.logger.for(this).tag($.projectId.toString())
   }
 
-  async getTxsCount(from: number, to: number): Promise<Map<number, number>> {
+  async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     switch (this.$.projectConfig.type) {
       case 'rpc': {
         return await this.getRpcTxsCount(from, to)
@@ -28,7 +28,7 @@ export class TxsCountProvider {
     }
   }
 
-  async getRpcTxsCount(from: number, to: number): Promise<Map<number, number>> {
+  async getRpcTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     assert(
       this.$.projectConfig.type === 'rpc',
       'Method not supported for projects other than rpc',
@@ -36,11 +36,11 @@ export class TxsCountProvider {
     const projectConfig = this.$.projectConfig
 
     const rpcClient = this.$.peripherals.getClient(RpcClient, {
-      url: projectConfig.defaultUrl,
-      callsPerMinute: projectConfig.defaultCallsPerMinute,
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
     })
 
-    const queries = range(from, to + 1).map((blockNumber) => async () => {
+    const queries = range(from, to + 1).map(async (blockNumber) => {
       const block = await rpcClient.getBlock(blockNumber)
       const timestamp = new UnixTime(block.timestamp)
 
@@ -52,22 +52,26 @@ export class TxsCountProvider {
       }
     })
 
-    const blocks = await promiseAllPlus(queries, this.$.logger, {
-      metricsId: `RpcBlockCounter_${this.$.projectId.toString()}`,
-    })
+    const blocks = await Promise.all(queries)
 
-    const sumsMap = new Map<number, number>()
+    const result: ActivityRecord[] = []
 
     for (const block of blocks) {
       const timestamp = block.timestamp.toStartOf('day')
+      const currentCount = result.find(
+        (r) => r.timestamp.toNumber() === timestamp.toNumber(),
+      )
 
-      const existing = sumsMap.get(timestamp.toNumber())
-      if (existing) {
-        sumsMap.set(timestamp.toNumber(), existing + block.count)
+      if (currentCount) {
+        currentCount.count += block.count
       } else {
-        sumsMap.set(timestamp.toNumber(), block.count)
+        result.push({
+          projectId: this.$.projectId,
+          timestamp,
+          count: block.count,
+        })
       }
     }
-    return sumsMap
+    return result
   }
 }

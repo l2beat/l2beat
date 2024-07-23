@@ -5,10 +5,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
   actual,
   removal,
@@ -63,8 +62,7 @@ describe(PriceIndexer.name, () => {
         configurations: [],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       })
 
       const parameters = {
@@ -79,7 +77,7 @@ describe(PriceIndexer.name, () => {
         from,
         to,
         configurations,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
@@ -104,7 +102,7 @@ describe(PriceIndexer.name, () => {
 
       expect(priceRepository.addMany).toHaveBeenOnlyCalledWith(
         [price('a', 100), price('a', 200), price('b', 100), price('b', 200)],
-        undefined,
+        MOCK_TRANSACTION,
       )
 
       expect(safeHeight).toEqual(adjustedTo)
@@ -127,8 +125,7 @@ describe(PriceIndexer.name, () => {
         configurations: [],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockLegacyDatabase(),
       })
 
       const configurations: RemovalConfiguration[] = [

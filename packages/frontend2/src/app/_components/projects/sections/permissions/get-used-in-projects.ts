@@ -24,7 +24,7 @@ export function getUsedInProjects(
   addresses: TechnologyContractAddress[],
   implementationAddresses: TechnologyContractAddress[],
 ): UsedInProject[] {
-  if (projectParams.type === 'da-layer') {
+  if (projectParams.type === 'DaLayer') {
     return []
   }
 

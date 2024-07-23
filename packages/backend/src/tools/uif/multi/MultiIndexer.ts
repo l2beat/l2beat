@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
-
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
+import { Knex } from 'knex'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
 import {
@@ -18,7 +18,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
-    private readonly createDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
+    private readonly db: LegacyDatabase,
     private readonly configurations: Configuration<T>[],
     options?: IndexerOptions,
   ) {
@@ -71,7 +71,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: Configuration<T>[],
-    dbMiddleware: DatabaseMiddleware,
+    trx: Knex.Transaction,
   ): Promise<number>
 
   /**
@@ -99,7 +99,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
   abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
-    dbMiddleware?: DatabaseMiddleware,
+    trx: Knex.Transaction,
   ): Promise<void>
 
   /**
@@ -152,25 +152,25 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const dbMiddleware = await this.createDatabaseMiddleware()
-    const safeHeight = await this.multiUpdate(
-      from,
-      adjustedTo,
-      configurations,
-      dbMiddleware,
-    )
-    if (safeHeight < from || safeHeight > adjustedTo) {
-      throw new Error(
-        'Programmer error, returned height must be between from and to (both inclusive).',
+    return await this.db.transaction(async (trx) => {
+      const safeHeight = await this.multiUpdate(
+        from,
+        adjustedTo,
+        configurations,
+        trx,
       )
-    }
 
-    this.updateSavedConfigurations(configurations, safeHeight)
-    await this.updateConfigurationsCurrentHeight(safeHeight, dbMiddleware)
+      if (safeHeight < from || safeHeight > adjustedTo) {
+        throw new Error(
+          'Programmer error, returned height must be between from and to (both inclusive).',
+        )
+      }
 
-    await dbMiddleware.execute()
+      this.updateSavedConfigurations(configurations, safeHeight)
+      await this.updateConfigurationsCurrentHeight(safeHeight, trx)
 
-    return safeHeight
+      return safeHeight
+    })
   }
 
   private updateSavedConfigurations(

@@ -36,6 +36,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
         eoas: [],
         abis: {},
         version: 0,
+        usedTemplates: {},
+        shapeFilesHash: Hash256.random(),
       },
       configHash: CONFIG_HASH,
       version: 0,
@@ -55,6 +57,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
         eoas: [],
         abis: {},
         version: 0,
+        usedTemplates: {},
+        shapeFilesHash: Hash256.random(),
       },
       configHash: CONFIG_HASH,
       version: 0,
@@ -74,6 +78,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
         eoas: [],
         abis: {},
         version: 0,
+        usedTemplates: {},
+        shapeFilesHash: Hash256.random(),
       },
       configHash: CONFIG_HASH,
       version: 0,
@@ -107,6 +113,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
         eoas: [],
         abis: {},
         version: 0,
+        usedTemplates: {},
+        shapeFilesHash: Hash256.random(),
       },
       configHash: CONFIG_HASH,
       version: 0,
@@ -160,6 +168,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
           eoas: [],
           abis: {},
           version: 0,
+          usedTemplates: {},
+          shapeFilesHash: Hash256.random(),
         },
         configHash: CONFIG_HASH,
         version: 0,
@@ -169,7 +179,7 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
 
       const result = await repository.getProject(projectName, ChainId.ETHEREUM)
       expect(result.length).toEqual(1)
-      expect(result[0].discovery.contracts).toEqual([
+      expect(result[0]!.discovery.contracts).toEqual([
         mockContractWithoutError,
         {
           ...mockContractWithError,
@@ -209,6 +219,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
             eoas: [],
             abis: {},
             version: 0,
+            usedTemplates: {},
+            shapeFilesHash: Hash256.random(),
           },
           configHash: CONFIG_HASH,
           version: 0,
