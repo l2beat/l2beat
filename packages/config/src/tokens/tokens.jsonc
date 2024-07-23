@@ -2894,6 +2894,28 @@
   ],
   "scroll": [
     {
+      "symbol": "SolvBTC",
+      "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
+      "supply": "totalSupply",
+      "coingeckoId": "solv-btc",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      },
+      "source": "external"
+    },
+    {
+      "symbol": "weETH",
+      "category": "ether",
+      "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
+      "source": "external",
+      "coingeckoId": "wrapped-eeth",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0x06eFdBFf2a14a7c8E15944D1F4A48F9F95F663A4",
       "category": "stablecoin",
