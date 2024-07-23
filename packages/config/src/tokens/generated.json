@@ -7444,6 +7444,21 @@
       }
     },
     {
+      "id": "arbitrum:solvbtc-solv-btc",
+      "name": "Solv BTC",
+      "coingeckoId": "solv-btc",
+      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1711710476,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 42161,
+      "source": "native",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:sparta-sparta",
       "name": "SPARTA",
       "coingeckoId": "spartadex",

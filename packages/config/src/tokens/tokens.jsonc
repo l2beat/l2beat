@@ -1382,6 +1382,13 @@
   ],
   "arbitrum": [
     {
+      "symbol": "SolvBTC",
+      "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
+      "supply": "zero", // the collateral is WBTC on arbitrum
+      "coingeckoId": "solv-btc",
+      "source": "native"
+    },
+    {
       "symbol": "TAP",
       "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
       "source": "native",
