@@ -1,4 +1,5 @@
 import { daLayers, getDaProjectKey } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from './utils/get-da-bridge'
 import { getUniqueProjectsInUse } from './utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
@@ -8,7 +9,6 @@ import {
 } from './utils/get-da-projects-tvl'
 import { getDaRisks } from './utils/get-da-risks'
 import { kindToType } from './utils/kind-to-layer-type'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()

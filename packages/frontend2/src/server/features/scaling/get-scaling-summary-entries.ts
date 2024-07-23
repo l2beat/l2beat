@@ -6,13 +6,14 @@ import {
 } from '@l2beat/config'
 import {
   assert,
-  type ProjectsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
+  type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { type TvlResponse } from './get-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
@@ -22,7 +23,6 @@ import { getTvlStats } from './utils/get-tvl-stats'
 import { getTvlWarnings } from './utils/get-tvl-warnings'
 import { getTvlWithChange } from './utils/get-tvl-with-change'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getScalingSummaryEntries(tvl: TvlResponse) {
   // NOTE: This is a temporary solution to keep the current behavior & will be removed in L2B-6115.

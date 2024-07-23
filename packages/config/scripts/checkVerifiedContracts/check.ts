@@ -10,6 +10,7 @@ import {
   layer2s,
   layer3s,
 } from '../../src'
+import { getDaProjectKey } from '../../src/utils/getDaProjectKey'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllAddressesVerified,
@@ -26,7 +27,6 @@ import {
 } from './output'
 import { verifyContracts } from './tasks'
 import { withoutDuplicates } from './utils'
-import { getDaProjectKey } from '../../src/utils/getDaProjectKey'
 
 interface CheckResult {
   verificationMap: Record<string, VerificationMap>

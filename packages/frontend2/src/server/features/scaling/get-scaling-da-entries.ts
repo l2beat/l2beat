@@ -2,9 +2,9 @@ import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { type ScalingDataAvailabilityEntry } from './types'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getScalingDaEntries(
   tvl: Record<ProjectId, number>,

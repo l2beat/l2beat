@@ -3,10 +3,10 @@ import path from 'path'
 import {
   type Bridge,
   type DaLayer,
-  getChainNames,
-  getChainNamesForDA,
   type Layer2,
   type Layer3,
+  getChainNames,
+  getChainNamesForDA,
 } from '@l2beat/config'
 import { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import {

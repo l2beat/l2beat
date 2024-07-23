@@ -1,11 +1,12 @@
-import { getDaProjectKey, type DaBridge, type DaLayer } from '@l2beat/config'
+import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
 import { getProjectDetails } from '~/app/(legacy)/data-availability/projects/[layer]/_utils/get-project-details'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/app/_components/rosette/types'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { getManuallyVerifiedContracts } from '../verification-status/get-manually-verified-contracts'
 import { getContractsVerificationStatuses } from '../verification-status/get-contracts-verification-statuses'
+import { getManuallyVerifiedContracts } from '../verification-status/get-manually-verified-contracts'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
@@ -13,7 +14,6 @@ import {
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { getDaRisks } from './utils/get-da-risks'
 import { kindToType } from './utils/kind-to-layer-type'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
