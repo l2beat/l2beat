@@ -138,7 +138,7 @@ jobs:
         run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
 
   config-smoke-test:
-    name: Test configuration before deployments
+    name: Config smoke test
     runs-on: ubuntu-latest
     env:
       HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
