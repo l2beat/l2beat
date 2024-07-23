@@ -65,7 +65,7 @@ export class ActivityRepository {
         eb.and([
           eb('project_id', '=', projectId.toString()),
           eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<', to.toDate()),
+          eb('timestamp', '<=', to.toDate()),
         ]),
       )
       .orderBy('timestamp', 'asc')

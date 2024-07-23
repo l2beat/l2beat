@@ -81,7 +81,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const results = await repository.getByProjectAndTimeRange(
         ProjectId('a'),
-        [START, START.add(2, 'days')],
+        [START, START.add(1, 'days')],
       )
 
       expect(results).toEqual([
