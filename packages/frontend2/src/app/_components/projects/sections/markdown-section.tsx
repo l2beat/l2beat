@@ -1,6 +1,6 @@
 import {
-  getDiagramParams,
   type DiagramType,
+  getDiagramParams,
 } from '~/utils/project/get-diagram-params'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'

@@ -1,5 +1,6 @@
 import partition from 'lodash/partition'
 import React from 'react'
+import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import {
   ContractEntry,
   type TechnologyContract,
@@ -13,7 +14,6 @@ import { RiskList, type TechnologyRisk } from '../risk-list'
 import { type ProjectSectionId } from '../types'
 import { ContractsUpdated } from './contracts-updated'
 import { TechnologyIncompleteNote } from './technology-incomplete-note'
-import { type DiagramParams } from '~/utils/project/get-diagram-params'
 
 export interface ContractsSectionProps {
   id: ProjectSectionId
