@@ -85,6 +85,9 @@
     "Socket": {
       "ignoreInWatchMode": ["globalMessageCount"],
       "fields": {
+        "executionManager__": {
+          "description": "Manages crosschain execution and -fees."
+        },
         "plugs": {
           "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
           "severity": "LOW",

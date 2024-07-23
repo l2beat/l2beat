@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xfd9ab15e534e235c2f2fa153c616bce6aa885f9e
+
+# Diff at Tue, 23 Jul 2024 06:32:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20340184
+- current block number: 20367456
+
+## Description
+
+New (unverified) plug, and executionManager is pointed to a new (unverified) contract. The old executionManager was used for crosschain execution and -fees.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Manages crosschain execution and -fees.
+      values.executionManager__:
+-        "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0"
++        "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.70:
++        "0x83D8e248cAb7c6074dCc07EA25892F8022244c50"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionManager (0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract  (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ExecutionManager.sol => /dev/null              | 1289 --------------------
+ 1 file changed, 1289 deletions(-)
+```
+
 Generated with discovered.json: 0x0e8508e83cd4c4229d0609413a4b05430f644a65
 
 # Diff at Fri, 19 Jul 2024 11:10:17 GMT:
