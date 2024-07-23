@@ -3,6 +3,8 @@ import { Logger, getEnv } from '@l2beat/backend-tools'
 import { Database, createDatabase } from '@l2beat/database'
 import { LegacyDatabase } from '@l2beat/database-legacy'
 import { DatabaseConfig } from '../config/Config'
+import { mockObject } from 'earl'
+import { Knex } from 'knex'
 
 export function describeDatabase(
   name: string,
@@ -64,4 +66,13 @@ export function getTestDatabase(opts?: Partial<DatabaseConfig>) {
   })
 
   return { newDb, legacyDb }
+}
+
+export const MOCK_TRANSACTION = mockObject<Knex.Transaction>()
+export function mockLegacyDatabase() {
+  return mockObject<LegacyDatabase>({
+    transaction: async (fun) => {
+      return await fun(MOCK_TRANSACTION)
+    },
+  })
 }

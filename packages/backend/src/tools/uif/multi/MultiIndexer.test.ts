@@ -7,6 +7,7 @@ import {
   RemovalConfiguration,
   SavedConfiguration,
 } from './types'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
 
 describe(MultiIndexer.name, () => {
   describe(MultiIndexer.prototype.initialize.name, () => {
@@ -139,11 +140,11 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [actual('a', 100, 200)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
+      ).toHaveBeenOnlyCalledWith(200, MOCK_TRANSACTION)
     })
 
     it('calls multiUpdate with a late matching configuration', async () => {
@@ -160,11 +161,11 @@ describe(MultiIndexer.name, () => {
         300,
         400,
         [actual('b', 300, 400)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(400, mockDbMiddleware)
+      ).toHaveBeenOnlyCalledWith(400, MOCK_TRANSACTION)
     })
 
     it('calls multiUpdate with two matching configurations', async () => {
@@ -181,11 +182,11 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [actual('a', 100, 200), actual('b', 100, 400)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
+      ).toHaveBeenOnlyCalledWith(200, MOCK_TRANSACTION)
     })
 
     it('calls multiUpdate with two middle matching configurations', async () => {
@@ -202,11 +203,11 @@ describe(MultiIndexer.name, () => {
         301,
         400,
         [actual('a', 100, 400), actual('b', 200, 500)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(400, mockDbMiddleware)
+      ).toHaveBeenOnlyCalledWith(400, MOCK_TRANSACTION)
     })
 
     it('skips calling multiUpdate if we are too early', async () => {
@@ -270,11 +271,11 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [actual('b', 100, 400)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, mockDbMiddleware)
+      ).toHaveBeenOnlyCalledWith(200, MOCK_TRANSACTION)
 
       // TODO: what was the idea behind this test?
       // The same range. In real life might be a result of a parent reorg
@@ -285,7 +286,7 @@ describe(MultiIndexer.name, () => {
       //   100,
       //   200,
       //   [actual('a', 100, 200), actual('b', 100, 400)],
-      //   mockDbMiddleware,
+      //   MOCK_TRANSACTION,
       // )
       // expect(
       //   testIndexer.updateConfigurationsCurrentHeight,
@@ -298,11 +299,11 @@ describe(MultiIndexer.name, () => {
         201,
         400,
         [actual('b', 100, 400)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(2, 400, mockDbMiddleware)
+      ).toHaveBeenNthCalledWith(2, 400, MOCK_TRANSACTION)
     })
 
     it('correctly updates currentHeight in saved configurations', async () => {
@@ -322,11 +323,11 @@ describe(MultiIndexer.name, () => {
         100,
         250,
         [actual('a', 100, 500)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(250, mockDbMiddleware)
+      ).toHaveBeenOnlyCalledWith(250, MOCK_TRANSACTION)
 
       expect(await testIndexer.update(251, 500)).toEqual(500)
       expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
@@ -334,11 +335,11 @@ describe(MultiIndexer.name, () => {
         251,
         500,
         [actual('a', 100, 500), actual('b', 100, 500)],
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(2, 500, mockDbMiddleware)
+      ).toHaveBeenNthCalledWith(2, 500, MOCK_TRANSACTION)
     })
   })
 
@@ -419,12 +420,7 @@ class TestMultiIndexer extends MultiIndexer<null> {
     configurations: Configuration<null>[],
     private readonly _saved: SavedConfiguration<null>[],
   ) {
-    super(
-      Logger.SILENT,
-      [],
-      async () => Promise.resolve(mockDbMiddleware),
-      configurations,
-    )
+    super(Logger.SILENT, [], mockLegacyDatabase(), configurations)
   }
 
   getSafeHeight =
@@ -474,13 +470,4 @@ function saved(
 
 function removal(id: string, from: number, to: number): RemovalConfiguration {
   return { id, from, to }
-}
-
-export const mockDbMiddleware = {
-  async add(cb: () => Promise<void>) {
-    await cb()
-  },
-  async execute() {
-    // noop
-  },
 }

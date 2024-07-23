@@ -5,7 +5,6 @@ import { groupBy } from 'lodash'
 
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
-import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
@@ -57,8 +56,7 @@ export function createPriceModule(
         priceRepository: peripherals.getRepository(PriceRepository),
         serializeConfiguration,
         syncOptimizer,
-        createDatabaseMiddleware: async () =>
-          new KnexMiddleware(peripherals.getRepository(PriceRepository)),
+        db: peripherals.legacyDatabase,
       }),
   )
 

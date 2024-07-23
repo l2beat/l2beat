@@ -5,7 +5,6 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { KnexMiddleware } from '../../peripherals/database/KnexMiddleware'
 import { Clock } from '../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
@@ -91,8 +90,7 @@ export function createTrackedTxsModule(
       id: c.id,
     })),
     updaters,
-    createDatabaseMiddleware: async () =>
-      new KnexMiddleware(peripherals.getRepository(LivenessRepository)),
+    db: peripherals.legacyDatabase,
     serializeConfiguration: (config) => JSON.stringify(config),
     livenessRepository: peripherals.getRepository(LivenessRepository),
     l2CostsRepository: peripherals.getRepository(L2CostsRepository),

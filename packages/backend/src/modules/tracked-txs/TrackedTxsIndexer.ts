@@ -1,9 +1,5 @@
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
-import {
-  DatabaseMiddleware,
-  DatabaseTransaction,
-} from '../../peripherals/database/DatabaseMiddleware'
 import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -17,6 +13,7 @@ import { TrackedTxsClient } from './TrackedTxsClient'
 import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
+import { Knex } from 'knex'
 
 interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
@@ -36,7 +33,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<TrackedTxConfigEntry>[],
-    dbMiddleware: DatabaseMiddleware,
+    trx: Knex.Transaction,
   ) {
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
@@ -46,16 +43,14 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       unixTo,
     )
 
-    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
-      for (const updater of this.$.updaters) {
-        const filteredTxs = txs.filter((tx) => tx.type === updater.type)
-        await updater.update(filteredTxs, trx)
-      }
-      this.logger.info('Saved txs into DB', {
-        from,
-        to: unixTo.toNumber(),
-        configurationsToSync: configurations.length,
-      })
+    for (const updater of this.$.updaters) {
+      const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+      await updater.update(filteredTxs, trx)
+    }
+    this.logger.info('Saved txs into DB', {
+      from,
+      to: unixTo.toNumber(),
+      configurationsToSync: configurations.length,
     })
 
     return unixTo.toNumber()
