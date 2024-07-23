@@ -87,8 +87,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  pages.push(getGlossaryPage(config))
-
   pages.push(
     getScalingDataAvailabilityPage(config, {
       tvlApiResponse,
