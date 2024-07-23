@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 import MarkdownIt from 'markdown-it'
-import { glossaryPlugin, linkGlossaryTerms } from './glossaryPlugin'
 import { CollectionEntry } from '../../content/getCollection'
+import { glossaryPlugin, linkGlossaryTerms } from './glossaryPlugin'
 
 describe(linkGlossaryTerms.name, () => {
   const glossary: CollectionEntry<'glossary'>[] = [
