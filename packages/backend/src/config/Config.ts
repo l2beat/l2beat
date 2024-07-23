@@ -28,6 +28,7 @@ export interface Config {
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
+  readonly activity2: ActivityConfig | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
   readonly lzOAppsEnabled: boolean

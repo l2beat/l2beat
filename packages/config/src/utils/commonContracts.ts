@@ -48,7 +48,7 @@ export function getCommonContractsIn(project: Params) {
     return findCommonContractsMemoized(projects, project.hostChain as string)
   }
 
-  if (project.type === 'da-layer') {
+  if (project.type === 'DaLayer') {
     throw new Error('Not implemented yet')
   }
 

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   Accordion,
   AccordionContent,
@@ -28,7 +26,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
           <AccordionHeader asChild>
             <AccordionTrigger
               asChild
-              className="relative w-full z-10 flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900 cursor-pointer"
+              className="group relative w-full z-10 flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900 cursor-pointer"
             >
               <div className="grid md:grid-cols-[4fr,4fr,4fr,4fr,4fr,1fr]">
                 <div className="mb-3 flex items-center gap-2 md:hidden">
@@ -83,9 +81,9 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
                 <div className="flex items-center">
                   <div className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
                     <span className="font-bold text-base">Verifiers</span>
-                    <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
+                    <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
                   </div>
-                  <ChevronDownIcon className='fill-current hidden transition-transform duration-300 ease-out md:block group-data-[state="open"]/accordion-item:rotate-180' />
+                  <ChevronDownIcon className="fill-current hidden transition-transform duration-300 ease-out md:block group-data-[state=open]:-rotate-180" />
                 </div>
               </div>
             </AccordionTrigger>
