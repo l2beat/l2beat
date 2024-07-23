@@ -70,14 +70,15 @@ export class LivenessRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: LivenessRecord[]) {
+  async addMany(records: LivenessRecord[], trx?: Transaction) {
     if (records.length === 0) {
       return 0
     }
 
+    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(this.db, rows, 10_000, async (trx, batch) => {
+    await batchExecute(scope, rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.liveness').values(batch).execute()
     })
 
@@ -94,6 +95,20 @@ export class LivenessRepository {
       .deleteFrom('public.liveness')
       .where('configuration_id', '=', id.toString())
       .where('timestamp', '>=', deleteFromInclusive.toDate())
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async deleteByConfigInTimeRange(
+    id: TrackedTxId,
+    fromInclusive: UnixTime,
+    toInclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.liveness')
+      .where('configuration_id', '=', id)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }

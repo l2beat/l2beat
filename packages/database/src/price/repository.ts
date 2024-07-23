@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase } from '../kysely'
+import { PostgresDatabase, Transaction } from '../kysely'
 import { batchExecute } from '../utils/batchExecute'
 import {
   CleanDateRange,
@@ -51,14 +51,15 @@ export class PriceRepository {
     return row ? toRecord(row) : null
   }
 
-  async addMany(records: PriceRecord[]) {
+  async addMany(records: PriceRecord[], trx?: Transaction) {
     if (records.length === 0) {
       return 0
     }
 
+    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(this.db, rows, 10_000, async (trx, batch) => {
+    await batchExecute(scope, rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.prices').values(batch).execute()
     })
 

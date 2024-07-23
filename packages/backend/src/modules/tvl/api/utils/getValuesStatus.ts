@@ -1,7 +1,7 @@
+import { ValueRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { CONSIDER_EXCLUDED_AFTER_DAYS } from '../../../../tools/uif/IndexerService'
-import { ValueRecord } from '../../repositories/ValueRepository'
 import { ApiProject } from './types'
 
 export function getValuesStatus(
