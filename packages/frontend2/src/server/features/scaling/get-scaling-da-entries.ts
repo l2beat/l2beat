@@ -33,6 +33,7 @@ function getScalingDataAvailabilityEntry(
 
   return {
     name: project.display.name,
+    href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,

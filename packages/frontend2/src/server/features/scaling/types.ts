@@ -59,6 +59,7 @@ export interface ScalingSummaryLayer3sEntry {
 export interface ScalingDataAvailabilityEntry {
   slug: string
   name: string
+  href: string
   shortName: string | undefined
   type: 'layer2' | 'layer3'
   category: ScalingProjectCategory
