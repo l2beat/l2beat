@@ -43,7 +43,7 @@ export default async function RootLayout({
               disableTransitionOnChange
             >
               <TooltipProvider delayDuration={300}>
-                <GlossaryContextProvider value={{ terms }}>
+                <GlossaryContextProvider terms={terms}>
                   {children}
                 </GlossaryContextProvider>
               </TooltipProvider>
