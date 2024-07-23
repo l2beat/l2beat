@@ -1,6 +1,6 @@
 import { ActivityRecord } from '@l2beat/database/src/activity/entity'
 import { ActivityRepository } from '@l2beat/database/src/activity/repository'
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
@@ -24,6 +24,10 @@ export class ActivityIndexer extends ManagedChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     const fromWithBatchSize = from + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
+    this.logger.info('Getting txs', {
+      from,
+      to: adjustedTo,
+    })
     const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
 
     const currentMap = await this.getDatabaseEntries(counts)
@@ -63,17 +67,8 @@ export class ActivityIndexer extends ManagedChildIndexer {
     return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v.count]))
   }
 
-  override async invalidate(targetHeight: number): Promise<number> {
-    await this.$.activityRepository.deleteAfter(
-      new UnixTime(targetHeight),
-      this.$.projectId,
-    )
-
-    this.logger.info('Deleted activity timestamps after height', {
-      targetHeight,
-      projectId: this.$.projectId,
-    })
-
-    return targetHeight
+  override invalidate(targetHeight: number): Promise<number> {
+    assert(targetHeight === this.safeHeight, 'Invalidating is not allowed')
+    return Promise.resolve(targetHeight)
   }
 }
