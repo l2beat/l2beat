@@ -11,7 +11,6 @@ import {
 import { groupBy } from 'lodash'
 import { ChainTvlConfig, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
-import { KnexMiddleware } from '../../../peripherals/database/KnexMiddleware'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -173,8 +172,7 @@ function createChainModule(
     ),
     serializeConfiguration,
     syncOptimizer,
-    createDatabaseMiddleware: async () =>
-      new KnexMiddleware(peripherals.getRepository(AmountRepository)),
+    db: peripherals.legacyDatabase,
   })
 
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')

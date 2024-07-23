@@ -3,10 +3,9 @@ import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { DatabaseMiddleware } from '../../peripherals/database/DatabaseMiddleware'
+import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../test/database'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
-import { mockDbMiddleware } from '../../tools/uif/multi/MultiIndexer.test'
 import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
 import {
   Configuration,
@@ -62,7 +61,7 @@ describe(TrackedTxsIndexer.name, () => {
         from,
         to,
         configurations,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
@@ -74,12 +73,12 @@ describe(TrackedTxsIndexer.name, () => {
       expect(livenessUpdater.update).toHaveBeenNthCalledWith(
         1,
         trackedTxResults.filter((tx) => tx.type === 'liveness'),
-        undefined,
+        MOCK_TRANSACTION,
       )
       expect(l2costsUpdater.update).toHaveBeenNthCalledWith(
         1,
         trackedTxResults.filter((tx) => tx.type === 'l2costs'),
-        undefined,
+        MOCK_TRANSACTION,
       )
       expect(safeHeight).toEqual(to)
     })
@@ -109,7 +108,7 @@ describe(TrackedTxsIndexer.name, () => {
         from.toNumber(),
         to.toNumber(),
         configurations,
-        mockDbMiddleware,
+        MOCK_TRANSACTION,
       )
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
@@ -165,7 +164,6 @@ function getMockTrackedTxsIndexer(params: {
   configurations?: Configuration<TrackedTxConfigEntry>[]
   trackedTxsClient?: TrackedTxsClient
   updaters?: TxUpdaterInterface[]
-  createDatabaseMiddleware?: () => Promise<DatabaseMiddleware>
   livenessRepository?: LivenessRepository
   l2CostsRepository?: L2CostsRepository
 }) {
@@ -174,21 +172,24 @@ function getMockTrackedTxsIndexer(params: {
     configurations,
     trackedTxsClient,
     updaters,
-    createDatabaseMiddleware,
     l2CostsRepository,
     livenessRepository,
   } = params
 
   return new TrackedTxsIndexer({
     configurations: configurations ?? [],
-    createDatabaseMiddleware:
-      createDatabaseMiddleware ??
-      (async () => mockObject<DatabaseMiddleware>({})),
+    db: mockLegacyDatabase(),
     indexerService: indexerService ?? mockObject<IndexerService>({}),
     trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
     updaters: updaters ?? [
-      mockObject<TxUpdaterInterface>({ type: 'liveness' }),
-      mockObject<TxUpdaterInterface>({ type: 'l2costs' }),
+      mockObject<TxUpdaterInterface>({
+        type: 'liveness',
+        update: async () => {},
+      }),
+      mockObject<TxUpdaterInterface>({
+        type: 'l2costs',
+        update: async () => {},
+      }),
     ],
     l2CostsRepository: l2CostsRepository ?? mockObject<L2CostsRepository>({}),
     livenessRepository:

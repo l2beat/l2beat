@@ -30,7 +30,7 @@ export class Peripherals {
   > = new Map()
 
   constructor(
-    private readonly legacyDatabase: LegacyDatabase,
+    public readonly legacyDatabase: LegacyDatabase,
     public readonly database: Database,
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,

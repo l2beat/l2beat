@@ -3,10 +3,7 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import {
-  DatabaseMiddleware,
-  DatabaseTransaction,
-} from '../../../peripherals/database/DatabaseMiddleware'
+import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -39,7 +36,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
-    dbMiddleware: DatabaseMiddleware,
+    trx: Knex.Transaction,
   ) {
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
@@ -61,16 +58,14 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    dbMiddleware.add(async (trx?: DatabaseTransaction) => {
-      this.logger.info('Saving prices into DB', {
-        from,
-        to: adjustedTo.toNumber(),
-        configurationsToSync: configurations.length,
-        prices: optimizedPrices.length,
-      })
-
-      await this.$.priceRepository.addMany(optimizedPrices, trx)
+    this.logger.info('Saving prices into DB', {
+      from,
+      to: adjustedTo.toNumber(),
+      configurationsToSync: configurations.length,
+      prices: optimizedPrices.length,
     })
+
+    await this.$.priceRepository.addMany(optimizedPrices, trx)
 
     return adjustedTo.toNumber()
   }
