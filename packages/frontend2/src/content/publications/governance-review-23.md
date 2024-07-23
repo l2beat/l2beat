@@ -95,7 +95,7 @@ The total ballpark cost for the proposal is $75,000-125,000 to cover event plann
 
 ### **[ARDC] Recent Deliverables**
 
-The Arbitrum Research and Development Collective (ARDC) has worked on and published the following: \
+The Arbitrum Research and Development Collective (ARDC) has worked on and published the following:
 
 * [ETH Staking Options and Risks for the DAO](https://forum.arbitrum.foundation/t/eth-staking-options-and-risks-for-the-dao/25762)
 * [Event Horizon Franchiser Contract Audit](https://forum.arbitrum.foundation/t/event-horizon-franchiser-contract-audit/25738/1)
