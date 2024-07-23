@@ -74,6 +74,7 @@ export function ContractsSection(props: ContractsSectionProps) {
       {props.isIncomplete && <TechnologyIncompleteNote />}
       {props.architectureImage && (
         <figure className="mt-4 mb-8 text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={props.architectureImage}

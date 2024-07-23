@@ -10,6 +10,8 @@ import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
 import { TooltipProvider } from './_components/tooltip/tooltip'
+import { GlossaryContextProvider } from './_components/markdown/glossary-context'
+import { getCollection } from '~/content/get-collection'
 
 export const metadata: Metadata = getDefaultMetadata()
 
@@ -18,6 +20,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const terms = getCollection('glossary')
   const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
@@ -39,7 +42,11 @@ export default async function RootLayout({
               storageKey="l2beat-theme"
               disableTransitionOnChange
             >
-              <TooltipProvider delayDuration={300}>{children}</TooltipProvider>
+              <TooltipProvider delayDuration={300}>
+                <GlossaryContextProvider value={{ terms }}>
+                  {children}
+                </GlossaryContextProvider>
+              </TooltipProvider>
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>
