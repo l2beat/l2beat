@@ -155,29 +155,37 @@ jobs:
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
+        working-directory: packages/backend
 
       - name: Build packages
         run: yarn build:dependencies
+        working-directory: packages/backend
 
-      - name: Instal Heroku CLI
+      - name: Install Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
       - name: Pull staging configuration
-        run: cd packages/backend && heroku config -a l2beat-staging --shell > .env
+        run: heroku config -a l2beat-staging --shell > .env
+        working-directory: packages/backend
 
       # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
       - name: Fill PORT variable
-        run: cd packages/backend && echo "PORT=3000" >> .env
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
 
       - name: Run staging smoke test
-        run: cd packages/backend && yarn test:config
+        run: yarn test:config
+        working-directory: packages/backend
 
       - name: Pull production configuration
-        run: cd packages/backend && heroku config -a l2beat-production --shell > .env
+        run: heroku config -a l2beat-production --shell > .env
+        working-directory: packages/backend
 
       # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
       - name: Fill PORT variable
-        run: cd packages/backend && echo "PORT=3000" >> .env
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
 
       - name: Run production smoke test
-        run: cd packages/backend && yarn test:config
+        run: yarn test:config
+        working-directory: packages/backend
