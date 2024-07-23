@@ -3,12 +3,16 @@ import { ActivityRepository } from '@l2beat/database/src/activity/repository'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
+import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { TxsCountProvider } from '../services/TxsCountProvider'
 import { ActivityIndexer } from './ActivityIndexer'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
 describe(ActivityIndexer.name, () => {
+  beforeEach(() => {
+    _TEST_ONLY_resetUniqueIds()
+  })
   describe(ActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
       const activityRepository = mockObject<ActivityRepository>({
