@@ -1,4 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../../discovery/starkware'
 import { immutablex } from '../../../../layer2s/immutablex'
 import {
   DaAccessibilityRisk,
@@ -7,8 +9,6 @@ import {
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { toUsedInProject } from '../../utils/to-used-in-project'
-import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { getCommittee } from '../../../../../discovery/starkware'
 
 const discovery = new ProjectDiscovery('immutablex')
 const committee = getCommittee(discovery)
@@ -33,8 +33,9 @@ export const immutableXDac = {
     addresses: [],
     risks: [],
   },
-  technology:
-    '## Simple Committee',
+  technology: `## Simple Bridge
+    The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
+  `,
   permissions: [],
   chain: ChainId.ETHEREUM,
   requiredMembers: committee.minSigners,

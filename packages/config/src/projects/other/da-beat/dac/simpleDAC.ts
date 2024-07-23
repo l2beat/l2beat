@@ -2,9 +2,6 @@ import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
 import { immutableXDac } from './bridges/immutablex'
 
-/**
- * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
- */
 export const dac: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
@@ -15,20 +12,19 @@ export const dac: DaLayer = {
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',
     links: {
-      websites: ['https://dac.com'],
-      documentation: [
-        'https://docs.dac.com',
-        'https://docs.dac.com',
-        'https://docs.dac.com',
-      ],
-      repositories: ['https://github.com/data-availability-committee'],
-      apps: ['https://app.immutable.com/'],
-      explorers: ['https://explorer.immutable.com/'],
-      socialMedia: ['https://twitter.com/Immutable'],
+      websites: [],
+      documentation: [],
+      repositories: [],
+      apps: [],
+      explorers: [],
+      socialMedia: [],
     },
   },
-  technology:
-    'Some note about the technology used by the data availability layer.\n## Markdown supported',
+  technology: `## Simple Committee
+  The Data Availability Committee (DAC) is a set of trusted parties responsible for storing data off-chain and serving it upon demand. 
+  The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
+  their operational transparency, and the mechanisms in place to handle disputes and failures.
+  `,
   bridges: [immutableXDac],
   usedIn: [...immutableXDac.usedIn],
   risks: {
