@@ -20,7 +20,7 @@ export const near: DaLayer = {
         'https://github.com/near',
         'https://github.com/Nuffle-Labs/data-availability',
       ],
-      apps: [''],
+      apps: [],
       explorers: ['https://nearblocks.io/'],
       socialMedia: [
         'https://x.com/NEARProtocol',
