@@ -21,7 +21,7 @@ import {
 import { concat } from 'lodash'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { languageJoin } from '~/utils/language-join'
-import { getDiagramImage } from '~/utils/project/get-diagram-image'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
@@ -149,7 +149,7 @@ export function getContractsSection(
     contracts,
     escrows,
     risks,
-    architectureImage: getDiagramImage(
+    diagram: getDiagramParams(
       'architecture',
       projectParams.architectureImage ?? projectParams.slug,
     ),
