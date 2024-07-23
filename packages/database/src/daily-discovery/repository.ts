@@ -69,13 +69,14 @@ export class DailyDiscoveryRepository {
     projectName: string,
     chainId: ChainId,
     configHash: Hash256,
-  ) {
-    return await this.db
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.daily_discovery')
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
       .where('config_hash', '!=', configHash.toString())
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getProject(projectName: string, chainId: ChainId) {
@@ -98,7 +99,10 @@ export class DailyDiscoveryRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.daily_discovery').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.daily_discovery')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

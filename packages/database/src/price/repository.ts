@@ -69,13 +69,14 @@ export class PriceRepository {
     configId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ) {
-    return await this.db
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.prices')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
       .where('timestamp', '<=', toInclusive.toDate())
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
@@ -85,13 +86,14 @@ export class PriceRepository {
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
     return deleteSixHourlyUntil(this.db, 'public.prices', dateRange)
   }
+
   async getAll() {
     const rows = await this.db.selectFrom('public.prices').selectAll().execute()
-
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.prices').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('public.prices').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

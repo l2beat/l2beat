@@ -88,16 +88,29 @@ export class LivenessRepository {
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
     trx?: Transaction,
-  ) {
+  ): Promise<number> {
     const scope = trx ?? this.db
-    return await scope
+    const result = await scope
       .deleteFrom('public.liveness')
       .where('configuration_id', '=', id.toString())
       .where('timestamp', '>=', deleteFromInclusive.toDate())
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  async deleteAll() {
-    return await this.db.deleteFrom('public.liveness').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.liveness')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
+  }
+
+  async getUsedConfigsIds(): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('public.liveness')
+      .select('configuration_id')
+      .distinctOn('configuration_id')
+      .execute()
+    return rows.map((row) => row.configuration_id)
   }
 }

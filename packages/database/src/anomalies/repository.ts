@@ -34,8 +34,11 @@ export class AnomaliesRepository {
     return `[${record.timestamp}, ${record.projectId}, ${record.subtype}]: ${record.duration}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('public.anomalies').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.anomalies')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AnomalyRecord[]> {

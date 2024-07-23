@@ -69,7 +69,10 @@ export class IndexerStateRepository {
     return rows.map(toRecord)
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('public.indexer_state').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.indexer_state')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

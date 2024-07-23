@@ -33,7 +33,10 @@ export class TvlCleanerRepository {
     return row ? toRecord(row) : undefined
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.tvl_cleaner').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.tvl_cleaner')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }
