@@ -83,7 +83,11 @@ export function ScalingDataAvailabilityTable({ items }: Props) {
 
   return (
     <section className="space-y-6">
-      <ScalingDaFilters items={items} state={filters} setState={setFilters} />
+      <ScalingDaFilters
+        items={projects}
+        state={filters}
+        setState={setFilters}
+      />
       <BasicTable
         table={table}
         onResetFilters={() => setFilters(DEFAULT_DA_SCALING_FILTERS)}
