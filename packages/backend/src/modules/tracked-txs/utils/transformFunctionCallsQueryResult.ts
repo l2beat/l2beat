@@ -1,12 +1,11 @@
 import { assert } from '@l2beat/shared-pure'
 
-import { UpdateConfiguration } from '../../../tools/uif/multi/types'
-
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
   TrackedTxSharpSubmissionConfig,
 } from '@l2beat/shared'
+import { Configuration } from '../../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
@@ -14,10 +13,10 @@ import {
 import { isProgramHashProven } from './isProgramHashProven'
 
 export function transformFunctionCallsQueryResult(
-  functionCalls: UpdateConfiguration<
+  functionCalls: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
   >[],
-  sharpSubmissions: UpdateConfiguration<
+  sharpSubmissions: Configuration<
     TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
   >[],
   queryResults: BigQueryFunctionCallResult[],

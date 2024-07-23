@@ -290,8 +290,14 @@ export const socket: Bridge = {
         'ArbitrumL1Switchboard',
         'Switchboard using native Arbitrum message passing.',
       ),
-      discovery.getContractDetails('ExecutionManager', ''),
-      discovery.getContractDetails('TransmitManager', ''),
+      discovery.getContractDetails(
+        'ExecutionManager',
+        'Manages crosschain execution and fees.',
+      ),
+      discovery.getContractDetails(
+        'TransmitManager',
+        'Manages and verifies transmitters: Permissioned actors who are allowed to send messages via socket.',
+      ),
     ],
     risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
     isIncomplete: true,

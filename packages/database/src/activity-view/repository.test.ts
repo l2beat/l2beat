@@ -46,15 +46,11 @@ describeDatabase(ActivityViewRepository.name, (db) => {
       await repository.refresh()
 
       const result = await repository.getDailyCounts()
-      expect(result).toEqual(
-        [
-          [0, 1],
-          [1, 2],
-          [2, 7],
-        ].map(([day, count]) =>
-          getDailyTransactionCountRecord(PROJECT_A, day, count),
-        ),
-      )
+      expect(result).toEqual([
+        getDailyTransactionCountRecord(PROJECT_A, 0, 1),
+        getDailyTransactionCountRecord(PROJECT_A, 1, 2),
+        getDailyTransactionCountRecord(PROJECT_A, 2, 7),
+      ])
     })
 
     it('should return correct response for multiple projects', async () => {
@@ -93,30 +89,18 @@ describeDatabase(ActivityViewRepository.name, (db) => {
       await db.starkExTransactionCount.addOrUpdateMany(starkExMockRecords)
 
       const blockRelatedValues: DailyTransactionCountRecord[] = [
-        [PROJECT_A, 0, 1],
-        [PROJECT_A, 1, 2],
-        [PROJECT_B, 1, 3],
-        [PROJECT_A, 2, 9],
-      ].map(([projectId, day, count]) =>
-        getDailyTransactionCountRecord(
-          projectId as unknown as string,
-          day as number,
-          count as number,
-        ),
-      )
+        getDailyTransactionCountRecord(PROJECT_A, 0, 1),
+        getDailyTransactionCountRecord(PROJECT_A, 1, 2),
+        getDailyTransactionCountRecord(PROJECT_B, 1, 3),
+        getDailyTransactionCountRecord(PROJECT_A, 2, 9),
+      ]
 
       await repository.refresh()
 
       const zkSyncRelatedValues: DailyTransactionCountRecord[] = [
-        ['zksync', 1, 2],
-        ['zksync', 2, 3],
-      ].map(([projectId, day, count]) =>
-        getDailyTransactionCountRecord(
-          projectId as unknown as string,
-          day as number,
-          count as number,
-        ),
-      )
+        getDailyTransactionCountRecord('zksync', 1, 2),
+        getDailyTransactionCountRecord('zksync', 2, 3),
+      ]
 
       const result = await repository.getDailyCounts()
 
@@ -151,11 +135,9 @@ describeDatabase(ActivityViewRepository.name, (db) => {
         await repository.refresh()
 
         const result = await repository.getDailyCountsPerProject(PROJECT_A)
-        expect(result).toEqual(
-          [[0, 1]].map(([day, count]) =>
-            getDailyTransactionCountRecord(PROJECT_A, day, count),
-          ),
-        )
+        expect(result).toEqual([
+          getDailyTransactionCountRecord(PROJECT_A, 0, 1),
+        ])
       })
     },
   )
@@ -184,13 +166,9 @@ describeDatabase(ActivityViewRepository.name, (db) => {
         ])
         expect(result).toEqual(
           [
-            [0, 1],
-            [2, 3],
-          ]
-            .map(([day, count]) =>
-              getDailyTransactionCountRecord(PROJECT_A, day, count),
-            )
-            .map((i) => omit(i, 'projectId')),
+            getDailyTransactionCountRecord(PROJECT_A, 0, 1),
+            getDailyTransactionCountRecord(PROJECT_A, 2, 3),
+          ].map((i) => omit(i, 'projectId')),
         )
       })
 
@@ -225,18 +203,14 @@ describeDatabase(ActivityViewRepository.name, (db) => {
           PROJECT_A,
           PROJECT_B,
         ])
-        expect(result).toEqual(
-          [
-            [0, 2],
-            [1, 2],
-            [2, 7],
-            [3, 2],
-            [5, 2],
-          ].map(([day, count]) => ({
-            timestamp: new UnixTime(UnixTime.DAY * day),
-            count,
-          })),
-        )
+        const day = (day: number) => new UnixTime(UnixTime.DAY * day)
+        expect(result).toEqual([
+          { timestamp: day(0), count: 2 },
+          { timestamp: day(1), count: 2 },
+          { timestamp: day(2), count: 7 },
+          { timestamp: day(3), count: 2 },
+          { timestamp: day(5), count: 2 },
+        ])
       })
     },
   )

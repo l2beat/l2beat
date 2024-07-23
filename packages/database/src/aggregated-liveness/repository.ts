@@ -26,12 +26,12 @@ export class AggregatedLivenessRepository {
       .insertInto('public.aggregated_liveness')
       .values(row)
       .onConflict((cb) =>
-        cb.columns(['project_id', 'subtype', 'range']).doUpdateSet({
-          min: (eb) => eb.ref('excluded.min'),
-          avg: (eb) => eb.ref('excluded.avg'),
-          max: (eb) => eb.ref('excluded.max'),
-          updated_at: (eb) => eb.ref('excluded.updated_at'),
-        }),
+        cb.columns(['project_id', 'subtype', 'range']).doUpdateSet((eb) => ({
+          min: eb.ref('excluded.min'),
+          avg: eb.ref('excluded.avg'),
+          max: eb.ref('excluded.max'),
+          updated_at: eb.ref('excluded.updated_at'),
+        })),
       )
       .execute()
 
@@ -57,7 +57,7 @@ export class AggregatedLivenessRepository {
     const rows = await this.db
       .selectFrom('public.aggregated_liveness')
       .select(selectAggregatedLiveness)
-      .where((eb) => eb('project_id', '=', projectId))
+      .where('project_id', '=', projectId)
       .execute()
 
     return rows.map(toRecord)

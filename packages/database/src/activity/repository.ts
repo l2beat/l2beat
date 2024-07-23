@@ -1,9 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import { ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
-
-const BATCH_SIZE = 5_000
 
 export class ActivityRepository {
   constructor(private readonly db: PostgresDatabase) {}
@@ -20,27 +19,30 @@ export class ActivityRepository {
   async addOrUpdateMany(records: ActivityRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await this.db.transaction().execute(async (trx) => {
-      for (let i = 0; i < rows.length; i += BATCH_SIZE) {
-        await trx
-          .insertInto('public.activity')
-          .values(rows.slice(i, i + BATCH_SIZE))
-          .onConflict((cb) =>
-            cb.columns(['timestamp', 'project_id']).doUpdateSet({
-              count: (eb) => eb.ref('excluded.count'),
-            }),
-          )
-          .execute()
-      }
+    await batchExecute(this.db, rows, 5_000, async (trx, batch) => {
+      await trx
+        .insertInto('public.activity')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
+            count: eb.ref('excluded.count'),
+          })),
+        )
+        .execute()
     })
 
     return records.length
   }
 
-  async deleteAfter(from: UnixTime): Promise<void> {
+  async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<void> {
     await this.db
       .deleteFrom('public.activity')
-      .where('timestamp', '>', from.toDate())
+      .where((eb) =>
+        eb.and([
+          eb('project_id', '=', projectId.toString()),
+          eb('timestamp', '>', from.toDate()),
+        ]),
+      )
       .execute()
   }
 
@@ -56,13 +58,9 @@ export class ActivityRepository {
     const rows = await this.db
       .selectFrom('public.activity')
       .select(selectActivity)
-      .where((eb) =>
-        eb.and([
-          eb('project_id', '=', projectId.toString()),
-          eb('timestamp', '>=', from.toDate()),
-          eb('timestamp', '<', to.toDate()),
-        ]),
-      )
+      .where('project_id', '=', projectId.toString())
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
 

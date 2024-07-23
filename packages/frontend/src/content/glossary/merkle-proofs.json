@@ -1,5 +1,0 @@
-{
-  "term": "Merkle proofs",
-  "definition": "Hashing the pairs of values at each level and climbing up the (Merkle) Tree until you obtain the root hash. Merkle proofs help check if the data belongs to a set without having to store the entire set.",
-  "isSpicy": false
-}

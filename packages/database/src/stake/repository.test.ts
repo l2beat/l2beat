@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { Stake } from './entity'
+import { StakeRecord } from './entity'
 import { StakeRepository } from './repository'
 
 describeDatabase(StakeRepository.name, (database) => {
@@ -53,7 +53,11 @@ describeDatabase(StakeRepository.name, (database) => {
   })
 })
 
-function saved(id: string, totalStake: bigint, thresholdStake: bigint): Stake {
+function saved(
+  id: string,
+  totalStake: bigint,
+  thresholdStake: bigint,
+): StakeRecord {
   return {
     id,
     totalStake,

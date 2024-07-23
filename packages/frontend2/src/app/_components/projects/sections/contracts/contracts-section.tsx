@@ -1,5 +1,6 @@
 import partition from 'lodash/partition'
 import React from 'react'
+import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import {
   ContractEntry,
   type TechnologyContract,
@@ -24,7 +25,7 @@ export interface ContractsSectionProps {
   escrows: TechnologyContract[]
   risks: TechnologyRisk[]
   references: TechnologyReference[]
-  architectureImage?: string
+  diagram?: DiagramParams
   isIncomplete?: boolean
   isUnderReview?: boolean
 }
@@ -72,15 +73,16 @@ export function ContractsSection(props: ContractsSectionProps) {
     >
       {hasContractsImplementationChanged && <ContractsUpdated />}
       {props.isIncomplete && <TechnologyIncompleteNote />}
-      {props.architectureImage && (
+      {props.diagram && (
         <figure className="mt-4 mb-8 text-center">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="inline max-w-full align-[unset] dark:invert"
-            src={props.architectureImage}
-            alt="A diagram of the smart contract architecture"
+            src={props.diagram.src}
+            alt={props.diagram.caption}
           />
           <figcaption className="text-gray-500 text-xs dark:text-gray-600">
-            A diagram of the smart contract architecture
+            {props.diagram.caption}
           </figcaption>
         </figure>
       )}

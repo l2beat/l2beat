@@ -33,9 +33,8 @@ export class VerifierStatusRepository {
     const row = await this.db
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
-      .where((eb) =>
-        eb.and([eb('address', '=', address), eb('chain_id', '=', +chainId)]),
-      )
+      .where('address', '=', address)
+      .where('chain_id', '=', +chainId)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined

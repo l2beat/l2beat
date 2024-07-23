@@ -43,7 +43,7 @@ DATABASE_URL=
 #### Fully ported pages
 - /donate
 - /faq
-- /glossary (temporarily disabled, still served from legacy frontend)
+- /glossary
 - /governance
 - /zk-catalog
 

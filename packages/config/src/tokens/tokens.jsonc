@@ -1366,11 +1366,31 @@
       "address": "0xaa602dE53347579f86b996D2Add74bb6F79462b2"
     },
     {
+      "symbol": "zunETH",
+      "category": "ether",
+      "address": "0xc2e660C62F72c2ad35AcE6DB78a616215E2F2222"
+    },
+    {
+      "symbol": "zunUSD",
+      "category": "stablecoin",
+      "address": "0x8C0D76C9B18779665475F3E212D9Ca1Ed6A1A0e6"
+    },
+    {
       "symbol": "ZRX",
       "address": "0xE41d2489571d322189246DaFA5ebDe1F4699F498"
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "TAP",
+      "address": "0x2C650dAb03A59332e2E0C0C4A7F726913e5028C1",
+      "source": "native",
+      "supply": "circulatingSupply", // not totalSupply since the vesting contracts are on arbitrum (would dilute the supply) and the governance token is native to arbitrum (this will only be wrong if totalSupply(arb) < circulatingSupply (coingecko) which is unlikely to happen)
+      "bridgedUsing": {
+        "bridge": "Layer Zero v2 OFT",
+        "slug": "layerzerov2oft"
+      }
+    },
     {
       "symbol": "ETHFI",
       "address": "0x7189fb5B6504bbfF6a852B13B7B82a3c118fDc27",
@@ -1797,6 +1817,14 @@
       "source": "native",
       "supply": "circulatingSupply"
     },
+    {
+      "symbol": "ETH",
+      "source": "canonical",
+      "supply": "zero",
+      "category": "ether"
+    }
+  ],
+  "nova": [
     {
       "symbol": "ETH",
       "source": "canonical",

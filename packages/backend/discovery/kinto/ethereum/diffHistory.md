@@ -1,4 +1,42 @@
-Generated with discovered.json: 0xad8d0f1f6d6b88a070e478339d9ec06b40604739
+Generated with discovered.json: 0x9590eb8caf62006f1a01c0e27a62734ce8c11f6c
+
+# Diff at Tue, 23 Jul 2024 08:16:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7fe674fdf7aafe1f69f1463836cac0d7e337d34 block: 20362833
+- current block number: 20367973
+
+## Description
+
+The bridger (gateway) is upgraded to support a new asset (solvBTC) which can be wrapped from WBTC.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      values.$implementation:
+-        "0xEEe82E92bA40A694409B4BDa3D7426188c61163e"
++        "0x23559eB4Ad22c31940a929958B104821126F35b7"
+      values.SOLV_BTC:
++        "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0"
+      values.SOLV_BTC_POOL_ID:
++        "0x488def4a346b409d5d57985a160cd216d29d4f555e1b716df4e04e2374d2d9f6"
+      values.SOLV_SFT_WRAP_ROUTER:
++        "0x6Ea88D4D0c4bC06F6A51f427eF295c93e10D0b36"
+      values.WBTC:
++        "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20362833 => .flat}/Bridger/Bridger.sol  | 54 +++++++++++++++++-----
+ 1 file changed, 42 insertions(+), 12 deletions(-)
+```
+
+Generated with discovered.json: 0x87c5c2e00532cf5609ebd2a87ccf20e1d7afef8c
 
 # Diff at Fri, 19 Jul 2024 08:55:45 GMT:
 
