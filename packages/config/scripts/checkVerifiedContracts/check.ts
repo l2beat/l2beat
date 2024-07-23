@@ -17,7 +17,7 @@ import {
   getUniqueContractsForProject,
 } from './addresses'
 import { getChainNames, getChainNamesForDA } from './chains'
-import { getEtherscanClient } from './etherscan'
+import { getEtherscanClient, getProvider } from './etherscan'
 import {
   PROJECTS_OUTPUT_PATH,
   VerificationMap,
@@ -116,11 +116,13 @@ async function checkL2BEAT(
     const manuallyVerified = getManuallyVerifiedContracts(chain)
     const previouslyVerified = await loadPreviouslyVerifiedContracts(chain)
     const etherscanClient = getEtherscanClient(chain)
+    const provider = getProvider(chain)
     const addressVerificationMap = await verifyContracts(
       addresses,
       previouslyVerified,
       manuallyVerified,
       etherscanClient,
+      provider,
       workersCount,
       logger,
     )
@@ -155,11 +157,13 @@ async function checkDABEAT(
     const manuallyVerified = getManuallyVerifiedContracts(chain)
     const previouslyVerified = await loadPreviouslyVerifiedContracts(chain)
     const etherscanClient = getEtherscanClient(chain)
+    const provider = getProvider(chain)
     const addressVerificationMap = await verifyContracts(
       addresses,
       previouslyVerified,
       manuallyVerified,
       etherscanClient,
+      provider,
       workersCount,
       logger,
     )

@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { BlockExplorerClient } from '@l2beat/shared'
 import { EthereumAddress, toBatches } from '@l2beat/shared-pure'
 
+import { providers } from 'ethers'
 import { isContractVerified } from './etherscan'
 import { VerificationMap } from './output'
 
@@ -10,6 +11,7 @@ export async function verifyContracts(
   previouslyVerified: Set<EthereumAddress>,
   manuallyVerified: Record<string, string>,
   etherscanClient: BlockExplorerClient,
+  provider: providers.JsonRpcProvider,
   workersCount: number,
   logger: Logger,
 ): Promise<VerificationMap> {
@@ -25,7 +27,11 @@ export async function verifyContracts(
       }
 
       logger.info(`Checking ${address.toString()}...`)
-      const isVerified = await isContractVerified(etherscanClient, address)
+      const isVerified = await isContractVerified(
+        etherscanClient,
+        provider,
+        address,
+      )
       return [address.toString(), isVerified]
     })
 

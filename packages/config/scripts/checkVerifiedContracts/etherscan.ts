@@ -1,12 +1,14 @@
 import { getEnv } from '@l2beat/backend-tools'
 import { BlockExplorerClient, HttpClient } from '@l2beat/shared'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { providers } from 'ethers'
 
 import { chains } from '../../src'
 import { ContractSourceResult } from './types'
 
 export async function isContractVerified(
   etherscanClient: BlockExplorerClient,
+  provider: providers.JsonRpcProvider,
   address: EthereumAddress,
 ): Promise<boolean> {
   const response = await etherscanClient.call('contract', 'getsourcecode', {
@@ -15,7 +17,17 @@ export async function isContractVerified(
 
   const parsed = ContractSourceResult.parse(response)[0]
 
-  return parsed.SourceCode !== ''
+  if (parsed.SourceCode === '') {
+    // Return true if it's an EOA because otherwise
+    // we say project has unverified contracts while
+    // those are actually EOAs. That's because
+    // EOA addresses that were ignored via e.g. 'ignoreDiscovery'
+    // don't appear in DiscoveryOutput.eoas
+    const code = await provider.getCode(address.toString())
+    const isEOA = Bytes.fromHex(code).length === 0
+    return isEOA
+  }
+  return true
 }
 
 export function getEtherscanClient(chain: string): BlockExplorerClient {
@@ -37,4 +49,17 @@ export function getEtherscanClient(chain: string): BlockExplorerClient {
     url: chainConfig.explorerApi.url,
     maximumCallsForBlockTimestamp: 1, // not important here
   })
+}
+
+export function getProvider(chain: string): providers.JsonRpcProvider {
+  const env = getEnv()
+  const ENV_NAME = chain.toUpperCase()
+  const chainConfig = chains.find((c) => c.name === chain)
+  const rpcUrl = env.string([
+    `${ENV_NAME}_RPC_URL_FOR_DISCOVERY`,
+    `${ENV_NAME}_RPC_URL`,
+    //support for legacy local configs
+    `DISCOVERY_${ENV_NAME}_RPC_URL`,
+  ])
+  return new providers.StaticJsonRpcProvider(rpcUrl, chainConfig?.chainId)
 }
