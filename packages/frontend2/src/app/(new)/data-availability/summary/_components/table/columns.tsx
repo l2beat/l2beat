@@ -3,14 +3,13 @@ import Image from 'next/image'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
-import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
-import { DaBridgeCell } from './da-bridge-cell'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
+import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 
 const columnHelper = createColumnHelper<DaSummaryEntry>()
 
@@ -40,11 +39,26 @@ export const columns = [
   }),
   columnHelper.accessor('name', {
     header: 'DA Layer',
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        project={{
+          name: ctx.getValue(),
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
-    cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        className="!pl-0"
+        project={{
+          ...ctx.row.original,
+          name: ctx.getValue().name,
+          shortName: undefined,
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('risks', {
     header: 'Risks',

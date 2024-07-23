@@ -2,14 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import {
-  DaBridge,
-  DaLayer,
-  bridges,
-  daLayers,
-  layer2s,
-  layer3s,
-} from '../../src'
+import { bridges, daLayers, layer2s, layer3s } from '../../src'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllAddressesVerified,
@@ -27,14 +20,11 @@ import {
 } from './output'
 import { verifyContracts } from './tasks'
 import { withoutDuplicates } from './utils'
+import { getDaProjectKey } from '../../src/utils/getDaProjectKey'
 
 interface CheckResult {
   verificationMap: Record<string, VerificationMap>
   uniqueAddresses: Record<string, EthereumAddress[]>
-}
-
-export function getDaProjectKey(daLayer: DaLayer, bridge: DaBridge): string {
-  return `${daLayer.id}-${bridge.id}`
 }
 
 function encodeKey(id: string, chain: string): string {
