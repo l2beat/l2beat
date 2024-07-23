@@ -2,15 +2,15 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
+import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { TxsCountProvider } from './TxsCountProvider'
-import { ActivityConfig } from '../../../config/Config'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import {
   RpcActivityTransactionConfig,
   StarkexActivityTransactionConfig,
 } from '../../activity/ActivityTransactionConfig'
+import { TxsCountProvider } from './TxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 

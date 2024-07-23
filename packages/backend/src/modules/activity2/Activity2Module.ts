@@ -78,6 +78,7 @@ function createActivityIndexers(
         peripherals,
         projectId: project.id,
         projectConfig: project.config,
+        activityConfig,
       })
 
       switch (project.config.type) {

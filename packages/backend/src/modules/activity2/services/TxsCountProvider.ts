@@ -2,10 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { ActivityRecord } from '@l2beat/database/src/activity/entity'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
+import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
-import { ActivityConfig } from '../../../config/Config'
 import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
 
 interface TxsCountProviderDeps {
