@@ -25,7 +25,7 @@ const markdown = MarkdownIt({
   .use(glossaryPlugin)
 
 export function Markdown(props: MarkdownProps) {
-  const { terms } = useGlossaryContext()
+  const terms = useGlossaryContext()
   const Comp = props.inline ? 'span' : 'div'
   const render = (text: string) =>
     props.inline ? markdown.renderInline(text) : markdown.render(text)

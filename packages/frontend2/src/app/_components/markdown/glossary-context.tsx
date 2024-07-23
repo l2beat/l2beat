@@ -3,20 +3,18 @@
 import { createContext, useContext } from 'react'
 import { type CollectionEntry } from '~/content/get-collection'
 
-type GlossaryContextValue = {
-  terms: CollectionEntry<'glossary'>[]
-}
-
-const GlossaryContext = createContext<GlossaryContextValue | null>(null)
+const GlossaryContext = createContext<CollectionEntry<'glossary'>[] | null>(
+  null,
+)
 
 interface Props {
-  value: GlossaryContextValue
+  terms: CollectionEntry<'glossary'>[]
   children: React.ReactNode
 }
 
-export function GlossaryContextProvider({ children, value }: Props) {
+export function GlossaryContextProvider({ children, terms }: Props) {
   return (
-    <GlossaryContext.Provider value={value}>
+    <GlossaryContext.Provider value={terms}>
       {children}
     </GlossaryContext.Provider>
   )
