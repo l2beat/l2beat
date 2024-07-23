@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { Value } from './entity'
+import { ValueRecord } from './entity'
 import { ValueRepository } from './repository'
 
 describeDatabase(ValueRepository.name, (database) => {
@@ -49,7 +49,7 @@ function saved(
   canonical: number,
   external: number,
   native: number,
-): Value {
+): ValueRecord {
   return {
     projectId: ProjectId(id),
     timestamp,

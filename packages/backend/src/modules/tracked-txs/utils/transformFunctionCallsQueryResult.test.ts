@@ -7,8 +7,6 @@ import {
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { UpdateConfiguration } from '../../../tools/uif/multi/types'
-
 import {
   TrackedTxConfigEntry,
   TrackedTxFunctionCallConfig,
@@ -16,6 +14,7 @@ import {
   TrackedTxSharpSubmissionConfig,
   createTrackedTxId,
 } from '@l2beat/shared'
+import { Configuration } from '../../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   TrackedTxFunctionCallResult,
@@ -304,14 +303,13 @@ function mockFunctionCall({
   selector: string
   sinceTimestamp: UnixTime
   formula: TrackedTxFunctionCallConfig['formula']
-}): UpdateConfiguration<
+}): Configuration<
   TrackedTxConfigEntry & {
     params: TrackedTxFunctionCallConfig
   }
 > {
   return {
     id,
-    hasData: true,
     minHeight: 0,
     maxHeight: 0,
     properties: {
@@ -347,14 +345,13 @@ function mockSharpSubmission({
   sinceTimestamp: UnixTime
   formula: TrackedTxSharpSubmissionConfig['formula']
   programHashes: string[]
-}): UpdateConfiguration<
+}): Configuration<
   TrackedTxConfigEntry & {
     params: TrackedTxSharpSubmissionConfig
   }
 > {
   return {
     id,
-    hasData: true,
     minHeight: 0,
     maxHeight: 0,
     properties: {

@@ -78,6 +78,10 @@ export function getProjectDetails({
     props: {
       id: 'da-layer-technology',
       title: 'DA Layer technology',
+      diagram: {
+        type: 'da-layer-technology',
+        slug: daLayer.display.slug,
+      },
       children: daLayer.technology,
     },
   })
@@ -87,6 +91,10 @@ export function getProjectDetails({
     props: {
       id: 'da-bridge-technology',
       title: 'DA Bridge technology',
+      diagram: {
+        type: 'da-bridge-technology',
+        slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+      },
       children: daBridge.technology,
     },
   })

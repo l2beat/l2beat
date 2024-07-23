@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xb2a593359c71ae5bfd7af8acf5a2c646669ae3c5
+
+# Diff at Tue, 23 Jul 2024 06:40:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20325786
+- current block number: 20367491
+
+## Description
+
+Small upgrade, no functional changes.
+
+## Watched changes
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$implementation:
+-        "0xEE5F6648307319263FFBaE91f68ac700b188fF24"
++        "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3"
+      values.impl:
+-        "0xEE5F6648307319263FFBaE91f68ac700b188fF24"
++        "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SgxVerifier/MainnetSgxVerifier.sol              | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
+```
+
 Generated with discovered.json: 0x4d8acd4949ddb9e86b59f0e29b2718147f570d2d
 
 # Diff at Wed, 17 Jul 2024 10:56:00 GMT:

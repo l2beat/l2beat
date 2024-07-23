@@ -31,7 +31,7 @@ const getCachedEconomicSecurity = cache(
     )
 
     const arr = daLayers.map((daLayer) => {
-      if (daLayer.kind !== 'public-blockchain' || !daLayer.economicSecurity) {
+      if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
         return undefined
       }
 

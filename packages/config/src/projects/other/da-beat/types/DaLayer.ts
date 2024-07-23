@@ -15,7 +15,7 @@ import { UsedInProject } from './UsedInProject'
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
 export type BlockchainDaLayer = CommonDaLayer & {
-  kind: 'public-blockchain'
+  kind: 'PublicBlockchain'
   bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
   /** The period within which full nodes must store and distribute data. @unit seconds */
   pruningWindow: number
@@ -28,12 +28,12 @@ export type BlockchainDaLayer = CommonDaLayer & {
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: 'dac'
+  kind: 'DAC'
   bridges: DacBridge[]
 }
 
 export type CommonDaLayer = {
-  type: 'da-layer'
+  type: 'DaLayer'
   /** Unique identifier of the data availability layer. */
   id: string
   /** Display information for the data availability layer. */

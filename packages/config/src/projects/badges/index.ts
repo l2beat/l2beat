@@ -333,6 +333,13 @@ export const badges = {
     },
     type: BadgeType.L3ParentChain,
   },
+  Nova: {
+    display: {
+      name: 'Built on top of Arbitrum Nova',
+      description: 'The project has Arbitrum Nova as its host chain',
+    },
+    type: BadgeType.L3ParentChain,
+  },
   // Other
   AccountAbstraction: {
     display: {

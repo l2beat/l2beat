@@ -55,6 +55,10 @@ export class LegacyDatabase {
     this.isReadonly = config.isReadonly
   }
 
+  async transaction<T>(fun: (trx: Knex.Transaction) => Promise<T>) {
+    return await this.knex.transaction(fun)
+  }
+
   async getKnex(trx?: Knex.Transaction) {
     if (!this.isReadonly && !this.migrated) {
       await this.migrationsComplete

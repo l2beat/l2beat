@@ -7,10 +7,6 @@ export interface Configuration<T> {
   maxHeight: number | null
 }
 
-export interface UpdateConfiguration<T> extends Configuration<T> {
-  hasData: boolean
-}
-
 export interface SavedConfiguration<T> extends Configuration<T> {
   currentHeight: number | null
 }

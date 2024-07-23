@@ -6,7 +6,7 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { UpdateConfiguration } from '../../../tools/uif/multi/types'
+import { Configuration } from '../../../tools/uif/multi/types'
 import { PriceRecord } from '../repositories/PriceRepository'
 
 export interface PriceServiceDependencies {
@@ -20,7 +20,7 @@ export class PriceService {
     from: UnixTime,
     to: UnixTime,
     coingeckoId: CoingeckoId,
-    configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[],
+    configurations: Configuration<CoingeckoPriceConfigEntry>[],
   ): Promise<PriceRecord[]> {
     assert(
       configurations.every((c) => c.properties.coingeckoId === coingeckoId),

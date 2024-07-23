@@ -147,4 +147,10 @@ export const faqItems: FaqItem[] = [
       '🔍 Here is also a visual step-by-step guide for creating a Pull Request - [link](https://www.notion.so/l2beat/How-to-add-milestones-0e8684a83c3c48ce8bc7b605d9c9a1bf)',
     ],
   },
+  {
+    question: 'Which third-party services do you use?',
+    answer: [
+      'We use Alchemy, QuickNode, Blast API, Google BigQuery, CoinGecko, Etherscan, and Blockscout for different types of data.',
+    ],
+  },
 ]

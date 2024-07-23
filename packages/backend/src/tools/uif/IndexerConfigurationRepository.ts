@@ -78,7 +78,6 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
   async updateSavedConfigurations(
     indexerId: string,
-    configurationIds: string[],
     currentHeight: number | null,
     trx?: Knex.Transaction,
   ) {
@@ -86,8 +85,20 @@ export class IndexerConfigurationRepository extends BaseRepository {
 
     return knex('indexer_configurations')
       .where('indexer_id', indexerId)
-      .whereIn('id', configurationIds)
-      .update({ current_height: currentHeight })
+      .andWhere('min_height', '<=', currentHeight)
+      .andWhere((builder) => {
+        builder
+          .whereNull('max_height')
+          .orWhere('max_height', '>=', currentHeight)
+      })
+      .andWhere((builder) => {
+        builder
+          .whereNull('current_height')
+          .orWhere('current_height', '<', currentHeight)
+      })
+      .update({
+        current_height: currentHeight,
+      })
   }
 
   async deleteConfigurationsExcluding(
