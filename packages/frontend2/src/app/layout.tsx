@@ -6,12 +6,12 @@ import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
+import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
-import { TooltipProvider } from './_components/tooltip/tooltip'
 import { GlossaryContextProvider } from './_components/markdown/glossary-context'
-import { getCollection } from '~/content/get-collection'
+import { TooltipProvider } from './_components/tooltip/tooltip'
 
 export const metadata: Metadata = getDefaultMetadata()
 
