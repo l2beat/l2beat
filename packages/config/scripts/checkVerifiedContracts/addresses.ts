@@ -15,6 +15,16 @@ export interface AddressOnChain {
   address: EthereumAddress
 }
 
+export function getUniqueContractsForAllProjects(
+  projects: Project[],
+  chain: string,
+): EthereumAddress[] {
+  const addresses = projects.flatMap((project) =>
+    getUniqueContractsForProject(project, chain),
+  )
+  return withoutDuplicates(addresses)
+}
+
 export function getUniqueAddressesForDaLayer(
   daLayer: DaLayer,
   chain: string,
