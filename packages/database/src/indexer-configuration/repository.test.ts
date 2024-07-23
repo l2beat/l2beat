@@ -114,25 +114,40 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     },
   )
 
-  it(
+  describe(
     IndexerConfigurationRepository.prototype.deleteConfigurationsExcluding.name,
-    async () => {
-      const records = CONFIGURATIONS
+    () => {
+      it('excluding 1 2 3', async () => {
+        const records = CONFIGURATIONS
 
-      await repository.addOrUpdateMany(records)
-      await repository.deleteConfigurationsExcluding('indexer-1', [
-        CONFIGURATIONS[1]!.id,
-        CONFIGURATIONS[2]!.id,
-        CONFIGURATIONS[3]!.id,
-      ])
+        await repository.addOrUpdateMany(records)
+        await repository.deleteConfigurationsExcluding('indexer-1', [
+          CONFIGURATIONS[1]!.id,
+          CONFIGURATIONS[2]!.id,
+          CONFIGURATIONS[3]!.id,
+        ])
 
-      const result = await repository.getAll()
+        const result = await repository.getAll()
 
-      expect(result).toEqualUnsorted([
-        CONFIGURATIONS[1]!,
-        CONFIGURATIONS[2]!,
-        CONFIGURATIONS[3]!,
-      ])
+        expect(result).toEqualUnsorted([
+          CONFIGURATIONS[1]!,
+          CONFIGURATIONS[2]!,
+          CONFIGURATIONS[3]!,
+        ])
+      })
+
+      it('excluding nothing', async () => {
+        const records = CONFIGURATIONS
+
+        await repository.addOrUpdateMany(records)
+        await repository.deleteConfigurationsExcluding('indexer-1', [])
+
+        const result = await repository.getAll()
+
+        expect(result).toEqualUnsorted(
+          CONFIGURATIONS.filter((x) => x.indexerId !== 'indexer-1'),
+        )
+      })
     },
   )
 })
