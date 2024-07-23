@@ -35,7 +35,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -57,7 +57,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -79,7 +79,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -116,7 +116,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -136,3 +136,28 @@ jobs:
 
       - name: Run Biome
         run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
+
+  config-smoke-test:
+    name: Test configuration before deployments
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Instal Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Pull staging configuration
+        run: heroku config -a l2beat-staging --shell > ./packages/backend/.env
+
+      - name: Run staging smoke test
+        run: cd packages/backend && yarn test:config
+
+      - name: Pull production configuration
+        run: heroku config -a l2beat-production --shell > ./packages/backend/.env
+
+      - name: Run production smoke test
+        run: cd packages/backend && yarn test:config
