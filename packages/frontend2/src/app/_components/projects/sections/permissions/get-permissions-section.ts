@@ -120,7 +120,7 @@ function toTechnologyContract(
         address,
         href: `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
-        verified: !!verificationStatusForChain[address],
+        verified: verificationStatusForChain[address],
       }
     },
   )
@@ -209,7 +209,7 @@ function toTechnologyContract(
           address,
           href: `${etherscanUrl}/address/${account.address.toString()}#code`,
           isAdmin: false,
-          verified: !!verificationStatusForChain[address],
+          verified: verificationStatusForChain[address],
         }
       },
     )

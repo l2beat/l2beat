@@ -34,7 +34,7 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   isAdmin: boolean
-  verified: boolean
+  verified: boolean | undefined
 }
 
 export interface ContractEntryProps {

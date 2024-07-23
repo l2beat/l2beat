@@ -186,7 +186,7 @@ function makeTechnologyContract(
     return {
       name: name,
       address: opts.address.toString(),
-      verified: !!verificationStatusForChain[opts.address.toString()],
+      verified: verificationStatusForChain[opts.address.toString()],
       href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
       isAdmin: !!opts.isAdmin,
     }
