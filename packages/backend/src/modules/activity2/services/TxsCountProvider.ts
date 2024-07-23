@@ -5,12 +5,15 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import { ActivityConfig } from '../../../config/Config'
 
 interface TxsCountProviderDeps {
   logger: Logger
   peripherals: Peripherals
   projectId: ProjectId
   projectConfig: ScalingProjectTransactionApi
+  activityConfig: ActivityConfig
 }
 
 export class TxsCountProvider {
@@ -22,6 +25,9 @@ export class TxsCountProvider {
     switch (this.$.projectConfig.type) {
       case 'rpc': {
         return await this.getRpcTxsCount(from, to)
+      }
+      case 'starkex': {
+        return await this.getStarkexTxsCount(from, to)
       }
       default:
         throw new Error(`${this.$.projectConfig.type} type not implemented`)
@@ -73,5 +79,44 @@ export class TxsCountProvider {
       }
     }
     return result
+  }
+
+  async getStarkexTxsCount(
+    from: number,
+    to: number,
+  ): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'starkex',
+      'Method not supported for projects other than starkex',
+    )
+
+    const projectConfig = this.$.projectConfig
+
+    const starkexClient = this.$.peripherals.getClient(StarkexClient, {
+      apiKey: this.$.activityConfig.starkexApiKey,
+      callsPerMinute: this.$.activityConfig.starkexCallsPerMinute,
+      timeout: undefined,
+    })
+
+    const queries = range(from, to + 1).map(async (day) => {
+      const productCounts = await Promise.all(
+        projectConfig.product.map(
+          async (instance) => await starkexClient.getDailyCount(day, instance),
+        ),
+      )
+
+      return {
+        count: productCounts.reduce((a, b) => a + b, 0),
+        timestamp: UnixTime.fromDays(day),
+      }
+    })
+
+    const counts = await Promise.all(queries)
+
+    return counts.map((c) => ({
+      projectId: this.$.projectId,
+      timestamp: c.timestamp,
+      count: c.count,
+    }))
   }
 }
