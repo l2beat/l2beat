@@ -11,12 +11,12 @@ export const enshrinedBridge: EnshrinedBridge = {
     slug: 'enshrined-bridge',
     description: 'Enshrined bridge on Ethereum.',
     links: {
-      websites: [''],
-      documentation: [''],
-      repositories: [''],
-      apps: [''],
-      explorers: [''],
-      socialMedia: [''],
+      websites: [],
+      documentation: [],
+      repositories: [],
+      apps: [],
+      explorers: [],
+      socialMedia: [],
     },
   },
   technology:
