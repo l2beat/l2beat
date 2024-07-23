@@ -2,7 +2,14 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
-import { DaLayer, bridges, daLayers, layer2s, layer3s } from '../../src'
+import {
+  DaBridge,
+  DaLayer,
+  bridges,
+  daLayers,
+  layer2s,
+  layer3s,
+} from '../../src'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllAddressesVerified,
@@ -26,10 +33,7 @@ interface CheckResult {
   uniqueAddresses: Record<string, EthereumAddress[]>
 }
 
-function encodeDaBridgeKey(
-  daLayer: DaLayer,
-  bridge: DaLayer['bridges'][0],
-): string {
+export function getDaProjectKey(daLayer: DaLayer, bridge: DaBridge): string {
   return `${daLayer.id}-${bridge.id}`
 }
 
@@ -140,7 +144,7 @@ async function checkDABEAT(
     let addresses = []
     for (const daLayer of daLayers) {
       for (const bridge of daLayer.bridges) {
-        const key = encodeKey(encodeDaBridgeKey(daLayer, bridge), chain)
+        const key = encodeKey(getDaProjectKey(daLayer, bridge), chain)
         const addressesOnChain = getUniqueAddressesForDaBridge(bridge, chain)
         uniqueAddresses[key] = addressesOnChain
         addresses.push(...addressesOnChain)

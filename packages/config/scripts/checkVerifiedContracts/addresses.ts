@@ -1,7 +1,7 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  DaLayer,
+  DaBridge,
   DacBridge,
   OnChainDaBridge,
   ScalingProjectContract,
@@ -26,7 +26,7 @@ export function getUniqueContractsForAllProjects(
 }
 
 export function getUniqueAddressesForDaBridge(
-  bridge: DaLayer['bridges'][0],
+  bridge: DaBridge,
   chain: string,
 ): EthereumAddress[] {
   const addresses = withoutDuplicates(
@@ -83,7 +83,7 @@ function getProjectContractsForChain(project: Project, chain: string) {
 }
 
 function getDaBridgeContractsForChain(
-  bridge: DaLayer['bridges'][0],
+  bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
   const contracts = [bridge]
@@ -97,7 +97,7 @@ function getDaBridgeContractsForChain(
 }
 
 function getDaBridgePermissionsForChain(
-  bridge: DaLayer['bridges'][0],
+  bridge: DaBridge,
   chain: string,
 ): AddressOnChain[] {
   const permissions: AddressOnChain[] = [bridge]
