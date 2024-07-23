@@ -4,8 +4,8 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
 
-import { verifyContracts } from './tasks'
 import { providers } from 'ethers'
+import { verifyContracts } from './tasks'
 
 const MockProvider = mockObject<providers.JsonRpcProvider>({
   getCode: async (address: string) => {
