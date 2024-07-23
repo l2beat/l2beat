@@ -1,7 +1,7 @@
 {
   "name": "lisk",
   "chain": "ethereum",
-  "blockNumber": 20339917,
+  "blockNumber": 20367772,
   "configHash": "0x54b600f138a147f390a890b238a88a803b26d43d59f30b55edf592f85fcc7e87",
   "version": 9,
   "contracts": [
@@ -40,7 +40,7 @@
         "optimismMintableERC20Factory": "0xc1dA06CC5DD5cE23bABa924463de7F762039252d",
         "optimismPortal": "0x26dB93F8b8b4f7016240af62F7730979d353f9A7",
         "overhead": 0,
-        "owner": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
+        "owner": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "resourceConfig": {
           "maxResourceLimit": 20000000,
           "elasticityMultiplier": 10,
@@ -77,17 +77,17 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xe8912070277Dd5D9473904b7F4e6C71290F2AE90",
-        "challenger": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
-        "CHALLENGER": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
+        "challenger": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+        "CHALLENGER": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 3315600,
-        "latestOutputIndex": 306,
-        "nextBlockNumber": 3326400,
-        "nextOutputIndex": 307,
+        "latestBlockNumber": 3488400,
+        "latestOutputIndex": 322,
+        "nextBlockNumber": 3499200,
+        "nextOutputIndex": 323,
         "proposer": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "PROPOSER": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
         "startingBlockNumber": 0,
@@ -133,7 +133,7 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0xd637dc6d7DA9151b5069a4bFB74a12E67a532CC3",
-        "guardian": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
+        "guardian": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "GUARDIAN_SLOT": "0xd30e835d3f35624761057ff5b27d558f97bd5be034621e62240e5c0b784abe68",
         "paused": false,
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
@@ -153,15 +153,15 @@
       "values": {
         "$admin": "0xeC432c4F1d0E12737f3a42a459B84848Af979b2d",
         "$implementation": "0x3Ff11Cde41a5f7c791eFfcd6AeEA05dd2df5e21e",
-        "guardian": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
-        "GUARDIAN": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
+        "guardian": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+        "GUARDIAN": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
         "L2_ORACLE": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
         "l2Oracle": "0x113cB99283AF242Da0A0C54347667edF531Aa7d6",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 491310,
-          "prevBlockNum": 20338943
+          "prevBoughtGas": 490798,
+          "prevBlockNum": 20367022
         },
         "paused": false,
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
@@ -195,7 +195,7 @@
         "$immutable": false,
         "$implementation": "0x0318A37e2662507789a6E17E85A506709F89488b",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620296",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620312",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -234,6 +234,45 @@
         "superchainConfig": "0x26C7bFB430d68Bf74d2d52497836d4336b555dE7",
         "version": "2.1.0"
       }
+    },
+    {
+      "name": "GelatoMultisig",
+      "address": "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      ],
+      "roles": ["Challenger", "Guardian"],
+      "assignedPermissions": {
+        "owner": ["0x05f23282FFDCA8286E4738C1aF79079f3d843750"]
+      },
+      "ignoreInWatchMode": ["nonce"],
+      "sinceTimestamp": 1711489163,
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
+        "$multisigThreshold": "6 of 10 (60%)",
+        "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
+        "getChainId": 1,
+        "getOwners": [
+          "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
+          "0x28bB9385A588EF4747264D19B9A9F1603591680c",
+          "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
+          "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d",
+          "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d",
+          "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849",
+          "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3",
+          "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e",
+          "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
+          "0x547D0F472309e4239b296D01e03bEDc101241a26"
+        ],
+        "getThreshold": 6,
+        "GnosisSafe_modules": [],
+        "nonce": 4,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -295,13 +334,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$multisigThreshold": "1 of 2 (50%)",
         "domainSeparator": "0xbfe3444f912520bcc5fe7e088aab063f311d4b2af5167cb98fcb13c2cb5722ec",
         "getChainId": 1,
-        "getOwners": ["0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"],
+        "getOwners": [
+          "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb",
+          "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+        ],
         "getThreshold": 1,
         "GnosisSafe_modules": [],
-        "nonce": 12,
+        "nonce": 15,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -309,28 +351,29 @@
   ],
   "eoas": [
     { "address": "0x000000000000000000000000000000000000dEaD" },
+    { "address": "0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e" },
     {
       "address": "0x0AbD6da1cE10D1cD6c7C9C14b905786D20f3EB23",
       "roles": ["Proposer"]
     },
+    { "address": "0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3" },
+    { "address": "0x28bB9385A588EF4747264D19B9A9F1603591680c" },
     { "address": "0x4200000000000000000000000000000000000007" },
     { "address": "0x4200000000000000000000000000000000000010" },
     { "address": "0x4200000000000000000000000000000000000014" },
+    { "address": "0x547D0F472309e4239b296D01e03bEDc101241a26" },
+    { "address": "0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d" },
+    { "address": "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2" },
     {
       "address": "0xa6Ea2f3299b63c53143c993d2d5E60A69Cd6Fe24",
       "roles": ["Sequencer"]
     },
+    { "address": "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621" },
     { "address": "0xb9DE90a90c5E441C483e754FE7341100D5fbaEcA" },
-    {
-      "address": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185",
-      "descriptions": [
-        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
-      ],
-      "roles": ["Challenger", "Guardian"],
-      "assignedPermissions": {
-        "owner": ["0x05f23282FFDCA8286E4738C1aF79079f3d843750"]
-      }
-    },
+    { "address": "0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d" },
+    { "address": "0xc85aC6d2fdC376F335455D4cCA30c45ED1080849" },
+    { "address": "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185" },
+    { "address": "0xf83bC4688979b13Da02CB94c76cEB169540760b5" },
     { "address": "0xFf00000000000000000000000000000000001135" }
   ],
   "abis": {
@@ -495,6 +538,9 @@
       "function paused() view returns (bool)",
       "function superchainConfig() view returns (address)",
       "function version() view returns (string)"
+    ],
+    "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb": [
+      "constructor(address _singleton)"
     ],
     "0xc1dA06CC5DD5cE23bABa924463de7F762039252d": [
       "constructor(address _admin)",
