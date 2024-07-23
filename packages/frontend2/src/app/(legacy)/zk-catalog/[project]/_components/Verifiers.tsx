@@ -49,8 +49,8 @@ export function Verifiers(props: Props) {
       <Accordion type="multiple" className="w-full">
         {props.items.map((item) => (
           <AccordionItem
-            key={item.contractAddress.toString()}
-            value={item.contractAddress.toString()}
+            key={`${item.contractAddress.toString()}-${+item.chainId}`}
+            value={`${item.contractAddress.toString()}-${+item.chainId}`}
             className={cn(
               'hover:!bg-zinc-100 dark:hover:!bg-neutral-800 transition-colors dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-gray-100 w-full',
             )}
