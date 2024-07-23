@@ -162,25 +162,22 @@ jobs:
       - name: Instal Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Navigate to the backend directory
-        run: cd packages/backend
-
       - name: Pull staging configuration
-        run: heroku config -a l2beat-staging --shell > .env
+        run: cd packages/backend && heroku config -a l2beat-staging --shell > .env
 
       # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
       - name: Fill PORT variable
-        run: echo "PORT=3000" >> .env
+        run: cd packages/backend && echo "PORT=3000" >> .env
 
       - name: Run staging smoke test
-        run: yarn test:config
+        run: cd packages/backend && yarn test:config
 
       - name: Pull production configuration
-        run: heroku config -a l2beat-production --shell > .env
+        run: cd packages/backend && heroku config -a l2beat-production --shell > .env
 
       # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
       - name: Fill PORT variable
-        run: echo "PORT=3000" >> .env
+        run: cd packages/backend && echo "PORT=3000" >> .env
 
       - name: Run production smoke test
-        run: yarn test:config
+        run: cd packages/backend && yarn test:config
