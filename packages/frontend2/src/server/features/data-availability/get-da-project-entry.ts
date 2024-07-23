@@ -20,8 +20,9 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const usedInIds = daBridge.usedIn.map((p) => p.id)
   const tvs = await getDaProjectTvl(usedInIds)
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const contractsVerificationStatuses = await getContractsVerificationStatuses()
-  const manuallyVerifiedContracts = await getManuallyVerifiedContracts()
+  const contractsVerificationStatuses =
+    await getContractsVerificationStatuses(daLayer)
+  const manuallyVerifiedContracts = await getManuallyVerifiedContracts(daLayer)
   const implementationChangeReport = await getImplementationChangeReport()
 
   const isVerified =

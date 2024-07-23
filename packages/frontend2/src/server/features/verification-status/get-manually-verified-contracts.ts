@@ -1,10 +1,12 @@
 import { existsSync, readFileSync } from 'fs'
 import path from 'path'
 import {
-  bridges,
+  type Bridge,
+  type DaLayer,
   getChainNames,
-  layer2s,
-  layer3s,
+  getChainNamesForDA,
+  type Layer2,
+  type Layer3,
   parseManuallyVerifiedContracts,
 } from '@l2beat/config'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
@@ -14,14 +16,19 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 
-export function getManuallyVerifiedContracts() {
+type Project = Layer2 | Layer3 | Bridge | DaLayer
+
+export function getManuallyVerifiedContracts(project: Project) {
   noStore()
-  return getCachedManuallyVerifiedContracts()
+  return getCachedManuallyVerifiedContracts(project)
 }
 
 export const getCachedManuallyVerifiedContracts = cache(
-  async () => {
-    const chainNames = getChainNames([...layer2s, ...layer3s, ...bridges])
+  async (project: Project) => {
+    const chainNames =
+      project.type === 'da-layer'
+        ? getChainNamesForDA(project)
+        : getChainNames(project)
     const contracts: ManuallyVerifiedContracts = {}
     for (const chain of chainNames) {
       const filePath = path.join(

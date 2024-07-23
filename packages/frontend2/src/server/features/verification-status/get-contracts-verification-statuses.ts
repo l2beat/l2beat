@@ -1,6 +1,16 @@
 import { readFileSync } from 'fs'
 import path from 'path'
-import { bridges, getChainNames, layer2s, layer3s } from '@l2beat/config'
+import {
+  type Bridge,
+  bridges,
+  type DaLayer,
+  getChainNames,
+  getChainNamesForDA,
+  type Layer2,
+  layer2s,
+  type Layer3,
+  layer3s,
+} from '@l2beat/config'
 import { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -8,14 +18,19 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 
-export function getContractsVerificationStatuses() {
+type Project = Layer2 | Layer3 | Bridge | DaLayer
+
+export function getContractsVerificationStatuses(project: Project) {
   noStore()
-  return getCachedContractsVerificationStatuses()
+  return getCachedContractsVerificationStatuses(project)
 }
 
 const getCachedContractsVerificationStatuses = cache(
-  async () => {
-    const chainNames = getChainNames([...layer2s, ...layer3s, ...bridges])
+  async (project: Project) => {
+    const chainNames =
+      project.type === 'da-layer'
+        ? getChainNamesForDA(project)
+        : getChainNames(project)
     const contracts = Object.fromEntries(
       chainNames.map((chain) => [chain, readContractVerificationStatus(chain)]),
     )
