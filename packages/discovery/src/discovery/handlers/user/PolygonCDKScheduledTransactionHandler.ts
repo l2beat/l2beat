@@ -1,4 +1,4 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import * as z from 'zod'
 
@@ -35,6 +35,40 @@ interface DecodedCall {
   inputs: { [key: string]: ContractValue }
   predecessor: string
   delay: string
+}
+
+const additionalDecodeMap: Record<
+  string,
+  (
+    provider: IProvider,
+    params: { [key: string]: ContractValue },
+  ) => Promise<{ [key: string]: ContractValue }>
+> = {
+  upgradeAndCall: async (
+    provider: IProvider,
+    params: { [key: string]: ContractValue },
+  ): Promise<{ [key: string]: ContractValue }> => {
+    const { implementation, data } = params
+    assert(implementation !== undefined)
+    assert(data !== undefined)
+
+    const metadata = await provider.getSource(
+      EthereumAddress(implementation.toString()),
+    )
+    const contractInterface = new utils.Interface(metadata.abi)
+    const tx = contractInterface.parseTransaction({ data: data.toString() })
+    const decodedData = tx.functionFragment.inputs.reduce(
+      (acc, v) => {
+        acc[v.name] = toContractValue(tx.args[v.name])
+        return acc
+      },
+      {} as { [key: string]: ContractValue },
+    )
+    return {
+      ...params,
+      data: decodedData,
+    }
+  },
 }
 
 export class PolygonCDKScheduledTransactionHandler implements Handler {
@@ -122,8 +156,11 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
     const contractInterface = new utils.Interface([
       ...new Set(metadatas.flatMap((m) => m.abi)),
     ])
-    console.log(provider.blockNumber)
-    const decodedCalldata = this.decodeCalldata(contractInterface, entry.data)
+    const decodedCalldata = await this.decodeCalldata(
+      provider,
+      contractInterface,
+      entry.data,
+    )
 
     return {
       ...entry,
@@ -131,19 +168,20 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
     }
   }
 
-  decodeCalldata(
+  async decodeCalldata(
+    provider: IProvider,
     iface: utils.Interface,
     calldata: string,
-  ): {
+  ): Promise<{
     function: string
     inputs: { [key: string]: ContractValue }
-  } {
+  }> {
     try {
       const r = iface.parseTransaction({
         data: calldata,
       })
 
-      return {
+      const result = {
         function: r.functionFragment.name,
         inputs: r.functionFragment.inputs.reduce(
           (acc, v) => {
@@ -153,6 +191,14 @@ export class PolygonCDKScheduledTransactionHandler implements Handler {
           {} as { [key: string]: ContractValue },
         ),
       }
+
+      const decodeFn = additionalDecodeMap[r.functionFragment.name]
+      return decodeFn !== undefined
+        ? {
+            ...result,
+            inputs: await decodeFn(provider, result.inputs),
+          }
+        : result
     } catch {
       // NOTE(radomski): There is a possibility that a scheduled transaction
       // will use a function selector that is not present at the time of
