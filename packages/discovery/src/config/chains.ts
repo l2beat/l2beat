@@ -156,8 +156,8 @@ export const chains: ChainConfig[] = [
     chainId: 5000,
     multicall: getMulticall3Config(304717),
     explorer: {
-      type: 'blockscout',
-      url: 'https://explorer.mantle.xyz/api',
+      type: 'etherscan',
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
     },
   },
   {
