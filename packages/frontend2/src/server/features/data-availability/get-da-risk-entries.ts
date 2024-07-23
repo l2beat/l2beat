@@ -7,11 +7,11 @@ import {
   pickTvlForProjects,
 } from './utils/get-da-projects-tvl'
 import { getDaRisks } from './utils/get-da-risks'
-import { getVerificationStatus } from '../verification-status/get-verification-status'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getDaRiskEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()
-  const verificationStatus = await getVerificationStatus()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
@@ -20,10 +20,7 @@ export async function getDaRiskEntries() {
     daLayer.bridges.map((daBridge) => {
       const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
       const economicSecurityData = economicSecurity[daLayer.id]
-      console.log(
-        daBridge.id,
-        verificationStatus.projects[getDaProjectKey(daLayer, daBridge)],
-      )
+
       return {
         name: daLayer.display.name,
         slug: daLayer.display.slug,
@@ -32,7 +29,7 @@ export async function getDaRiskEntries() {
         warning: daBridge.display.warning,
         redWarning: daBridge.display.redWarning,
         isVerified:
-          verificationStatus.projects[getDaProjectKey(daLayer, daBridge)],
+          projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
         risks: getDaRisks(daLayer, daBridge, tvs, economicSecurityData),
       }
     }),

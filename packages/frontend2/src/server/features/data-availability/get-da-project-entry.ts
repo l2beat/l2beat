@@ -1,11 +1,11 @@
-import { type DaBridge, type DaLayer } from '@l2beat/config'
+import { getDaProjectKey, type DaBridge, type DaLayer } from '@l2beat/config'
 import { getProjectDetails } from '~/app/(legacy)/data-availability/projects/[layer]/_utils/get-project-details'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/app/_components/rosette/types'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getManuallyVerifiedContracts } from '../verification-status/get-manually-verified-contracts'
-import { getVerificationStatus } from '../verification-status/get-verification-status'
+import { getContractsVerificationStatuses } from '../verification-status/get-contracts-verification-statuses'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
@@ -13,15 +13,19 @@ import {
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
 import { getDaRisks } from './utils/get-da-risks'
 import { kindToType } from './utils/kind-to-layer-type'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
   const usedInIds = daBridge.usedIn.map((p) => p.id)
   const tvs = await getDaProjectTvl(usedInIds)
-  const verificationStatus = await getVerificationStatus()
-  const manuallyVerifiedContracts = getManuallyVerifiedContracts()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
+  const contractsVerificationStatuses = await getContractsVerificationStatuses()
+  const manuallyVerifiedContracts = await getManuallyVerifiedContracts()
   const implementationChangeReport = await getImplementationChangeReport()
 
+  const isVerified =
+    !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
   const rosetteValues = mapRisksToRosetteValues(
     getDaRisks(daLayer, daBridge, tvs, economicSecurity),
   )
@@ -29,7 +33,8 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const projectDetails = getProjectDetails({
     daLayer,
     daBridge,
-    verificationStatus,
+    isVerified,
+    contractsVerificationStatuses,
     manuallyVerifiedContracts,
     implementationChangeReport,
     rosetteValues,

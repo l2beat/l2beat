@@ -65,6 +65,7 @@ export interface ScalingDataAvailabilityEntry {
   category: ScalingProjectCategory
   provider: Layer2Provider | Layer3Provider | undefined
   warning: string | undefined
+  isVerified: boolean
   purposes: ScalingProjectPurpose[]
   stage: StageConfig | undefined
   dataAvailability: DataAvailability

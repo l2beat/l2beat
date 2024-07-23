@@ -8,11 +8,11 @@ import {
 } from './utils/get-da-projects-tvl'
 import { getDaRisks } from './utils/get-da-risks'
 import { kindToType } from './utils/kind-to-layer-type'
-import { getVerificationStatus } from '../verification-status/get-verification-status'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()
-  const verificationStatus = await getVerificationStatus()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
@@ -31,7 +31,7 @@ export async function getDaSummaryEntries() {
         risks: getDaRisks(daLayer, daBridge, tvs, projectEconomicSecurity),
         isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
         isVerified:
-          verificationStatus.projects[getDaProjectKey(daLayer, daBridge)],
+          !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
         warning: daBridge.display.warning,
         redWarning: daBridge.display.redWarning,
         tvs,
