@@ -139,7 +139,7 @@
   "paradex": true,
   "parallel": true,
   "payy": true,
-  "playblock": true,
+  "playblock": false,
   "playchain": true,
   "plumenetwork": true,
   "pNetwork": true,
