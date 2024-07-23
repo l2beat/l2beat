@@ -33,7 +33,7 @@ export interface ProjectCellProps {
 export function ProjectNameCell({ project, showIsL3, type }: ProjectCellProps) {
   return (
     <div className="pl-2 2xl:pl-3">
-      <span className="font-bold text-base md:text-lg">
+      <span className="text-base font-bold md:text-lg">
         {project.shortName ?? project.name}
       </span>
       {showIsL3 && type === 'layer3' && (

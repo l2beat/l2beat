@@ -29,7 +29,7 @@ function ChartLabel({ children }: { children?: ReactNode }) {
   return (
     <div className="relative">
       {!loading ? (
-        <span className="absolute bottom-0 left-0 pb-0.5 text-gray-500 text-sm text-opacity-50 dark:text-white dark:text-opacity-50">
+        <span className="absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50">
           {children}
         </span>
       ) : null}

@@ -14,7 +14,7 @@ export function DaProjectSummary({ project }: Props) {
   return (
     <section
       id="summary"
-      className="max-md:bg-gray-100 max-md:dark:bg-zinc-900 max-md:-mx-4 max-md:px-4"
+      className="max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
       <div className="flex gap-10">
         <div className="w-full space-y-4">
@@ -30,13 +30,13 @@ export function DaProjectSummary({ project }: Props) {
           <DaProjectStats project={project} />
         </div>
         <BigPentagonRosette
-          className="max-lg:hidden mt-auto"
+          className="mt-auto max-lg:hidden"
           values={project.header.rosetteValues}
           isUnderReview={project.isUnderReview}
         />
       </div>
 
-      <HorizontalSeparator className="mt-6 md:mb-6 max-md:-mx-4 max-md:w-screen" />
+      <HorizontalSeparator className="mt-6 max-md:-mx-4 max-md:w-screen md:mb-6" />
       <div className="md:hidden">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>

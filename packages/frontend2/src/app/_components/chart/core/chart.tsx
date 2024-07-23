@@ -27,7 +27,7 @@ export function Chart({ className }: Props) {
       <ChartMilestones />
       <Logo
         animated={false}
-        className="absolute right-2 bottom-2 z-30 h-[25px] w-[60px] opacity-20"
+        className="absolute bottom-2 right-2 z-30 h-[25px] w-[60px] opacity-20"
       />
     </div>
   )

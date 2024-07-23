@@ -126,7 +126,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
       <Callout
         color="blue"
         body="Please mind, stages do not reflect rollup security"
-        icon={<InfoIcon className="fill-blue-500 size-4" />}
+        icon={<InfoIcon className="size-4 fill-blue-500" />}
         className="p-4 font-medium"
       />
     </div>

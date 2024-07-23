@@ -31,7 +31,7 @@ export function MobileNavLink({
       >
         {title}
         {active && (
-          <div className="absolute bottom-0 w-full h-[3px] left-0 bg-pink-900" />
+          <div className="absolute bottom-0 left-0 h-[3px] w-full bg-pink-900" />
         )}
       </Link>
     </li>

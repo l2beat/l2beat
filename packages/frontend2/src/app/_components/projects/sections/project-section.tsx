@@ -64,11 +64,11 @@ export function ProjectDetailsSectionHeader(
       )}
     >
       {props.sectionOrder && (
-        <div className="hidden size-10 items-center justify-center rounded bg-gray-200 font-bold text-[26px] text-gray-700 tabular-nums md:flex dark:bg-zinc-700 dark:text-zinc-500">
+        <div className="hidden size-10 items-center justify-center rounded bg-gray-200 text-[26px] font-bold tabular-nums text-gray-700 dark:bg-zinc-700 dark:text-zinc-500 md:flex">
           {props.sectionOrder}
         </div>
       )}
-      <span className="font-bold text-2xl md:text-4xl">{props.title}</span>
+      <span className="text-2xl font-bold md:text-4xl">{props.title}</span>
     </a>
   )
 }

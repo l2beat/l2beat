@@ -26,22 +26,22 @@ export async function NavSidebar({
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
   return (
     <NavSideBarWrapper legacyNav={legacyNav}>
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row items-center justify-between">
         <Link href={logoLink}>
-          <Logo className="h-8 w-auto block xl:sidenav-collapsed:hidden" />
+          <Logo className="block h-8 w-auto xl:sidenav-collapsed:hidden" />
           <Logo
             small
-            className="h-8 w-auto hidden xl:sidenav-collapsed:block"
+            className="hidden h-8 w-auto xl:sidenav-collapsed:block"
           />
         </Link>
-        <div className="xl:sidenav-collapsed:hidden flex flex-row gap-4 items-center">
+        <div className="flex flex-row items-center gap-4 xl:sidenav-collapsed:hidden">
           <DarkThemeToggle />
-          <div className="xl:hidden h-6 w-6">
+          <div className="size-6 xl:hidden">
             <MobileNavTriggerClose />
           </div>
         </div>
       </div>
-      <nav className="flex flex-col gap-6 flex-1">
+      <nav className="flex flex-1 flex-col gap-6">
         {groups.map((group) => (
           <NavLinkGroup key={group.title} title={group.title}>
             {group.links.map(
@@ -79,7 +79,7 @@ export async function NavSidebar({
           <NavSmallLink title="FAQ" href="/faq" />
         </NavSmallLinkGroup>
         <NavDivider />
-        <ul className="flex xl:justify-between gap-2 sidenav-collapsed:hidden text-2xl">
+        <ul className="flex gap-2 text-2xl sidenav-collapsed:hidden xl:justify-between">
           <SocialLinks />
         </ul>
       </nav>
