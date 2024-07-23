@@ -15,9 +15,9 @@ import {
   UsedInProject,
 } from '../components/sections/common/ContractEntry'
 import { ProjectDetailsPermissionsSection } from '../components/sections/types'
+import { getChain } from './getChain'
 import { slugToDisplayName } from './getContractSection'
 import { getUsedInProjects } from './getUsedInProjects'
-import { getChain } from './getChain'
 
 export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,

@@ -27,8 +27,8 @@ import {
   TechnologyContract,
   TechnologyContractLinks,
 } from '../components/sections/common/ContractEntry'
-import { getDiagramImage } from './getDiagramImage'
 import { getChain } from './getChain'
+import { getDiagramImage } from './getDiagramImage'
 
 export function getContractSection(
   project: Layer2 | Layer3 | Bridge,
