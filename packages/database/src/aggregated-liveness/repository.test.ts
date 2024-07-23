@@ -1,14 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { describeDatabase } from '../../../../../test/database'
-import {
-  AggregatedLivenessRecord,
-  AggregatedLivenessRepository,
-} from './AggregatedLivenessRepository'
+import { describeDatabase } from '../test/database'
+import { AggregatedLivenessRecord } from './entity'
+import { AggregatedLivenessRepository } from './repository'
 
-describeDatabase(AggregatedLivenessRepository.name, (database) => {
-  const repository = new AggregatedLivenessRepository(database, Logger.SILENT)
+describeDatabase(AggregatedLivenessRepository.name, (db) => {
+  const repository = db.aggregatedLiveness
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -22,7 +19,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       min: 10,
       avg: 10,
       max: 10,
-      updatedAt: START.add(-1, 'hours'),
+      timestamp: START.add(-1, 'hours'),
     },
     {
       projectId: PROJECT_B,
@@ -31,7 +28,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       min: 10,
       avg: 10,
       max: 10,
-      updatedAt: START.add(-2, 'hours'),
+      timestamp: START.add(-2, 'hours'),
     },
   ]
 
@@ -52,7 +49,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 20,
           avg: 20,
           max: 20,
-          updatedAt: START.add(-1, 'hours'),
+          timestamp: START.add(-1, 'hours'),
         },
         // to add
         {
@@ -62,7 +59,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          updatedAt: START.add(-4, 'hours'),
+          timestamp: START.add(-4, 'hours'),
         },
       ]
 
@@ -71,7 +68,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       const results = await repository.getAll()
 
       expect(results).toEqualUnsorted([
-        newRows[0],
+        newRows[0]!,
         {
           projectId: PROJECT_B,
           subtype: 'stateUpdates',
@@ -79,9 +76,9 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           min: 10,
           avg: 10,
           max: 10,
-          updatedAt: START.add(-2, 'hours'),
+          timestamp: START.add(-2, 'hours'),
         },
-        newRows[1],
+        newRows[1]!,
       ])
     })
 
