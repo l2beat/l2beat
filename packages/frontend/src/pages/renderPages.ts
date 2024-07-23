@@ -3,7 +3,6 @@ import { Page, PagesData } from './Page'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
 import { getDARiskPage } from './da-risk'
-import { getGlossaryPage } from './glossary'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { getBridgeProjectPages } from './project/bridge'
@@ -86,8 +85,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
       }),
     )
   }
-
-  pages.push(getGlossaryPage(config))
 
   pages.push(
     getScalingDataAvailabilityPage(config, {

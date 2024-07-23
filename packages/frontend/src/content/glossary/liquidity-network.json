@@ -1,5 +1,0 @@
-{
-  "term": "Liquidity network",
-  "definition": "A category of token bridge that makes use of liquidity providers on the destination chain to facilitate the transfer of tokens.",
-  "isSpicy": false
-}

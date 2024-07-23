@@ -1,5 +1,0 @@
-{
-  "term": "Blind signature",
-  "definition": "A type of digital signature where the signer signs a message without knowing its content, allowing the signer to remain anonymous.",
-  "isSpicy": false
-}

@@ -1,8 +1,8 @@
 import MarkdownIt from 'markdown-it'
-import { GlossaryEntry } from '../../pages/glossary/props/getGlossaryEntry'
+import { CollectionEntry } from '../../content/getCollection'
 
 export function linkGlossaryTerms(
-  glossary: GlossaryEntry[],
+  glossary: CollectionEntry<'glossary'>[],
   ignoreDelimiter = ':',
 ) {
   const ignorePattern = new RegExp(
@@ -12,8 +12,8 @@ export function linkGlossaryTerms(
 
   const termToId = new Map(
     glossary.flatMap((entry) =>
-      [entry.term]
-        .concat(entry.match ?? [])
+      [entry.data.term]
+        .concat(entry.data.match ?? [])
         .map((term) => [term.toLowerCase(), entry.id]),
     ),
   )
