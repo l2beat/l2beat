@@ -17,8 +17,8 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
         },
       })
 
@@ -47,8 +47,8 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
         },
       })
       const result = await txsCountProvider.getRpcTxsCount(0, 2)
@@ -82,8 +82,8 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
           assessCount,
         },
       })
