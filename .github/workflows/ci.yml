@@ -156,6 +156,9 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
+      - name: Build packages
+        run: yarn build:dependencies
+
       - name: Instal Heroku CLI
         run: curl https://cli-assets.heroku.com/install.sh | sh
 
