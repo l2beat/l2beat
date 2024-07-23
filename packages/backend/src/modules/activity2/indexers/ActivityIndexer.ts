@@ -24,12 +24,8 @@ export class ActivityIndexer extends ManagedChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     const fromWithBatchSize = from + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
-    this.logger.info('Getting txs', {
-      from,
-      to: adjustedTo,
-    })
-    const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
 
+    const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
     const currentMap = await this.getDatabaseEntries(counts)
 
     const dataToSave = counts.map(({ timestamp, count, projectId }) => {
