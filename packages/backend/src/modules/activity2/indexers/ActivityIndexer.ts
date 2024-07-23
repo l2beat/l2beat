@@ -1,3 +1,4 @@
+import { ActivityRecord } from '@l2beat/database/src/activity/entity'
 import { ActivityRepository } from '@l2beat/database/src/activity/repository'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
@@ -11,7 +12,7 @@ export interface ActivityIndexerDeps
   projectId: ProjectId
   txsCountProvider: TxsCountProvider
   activityRepository: ActivityRepository
-  batchSize?: number
+  batchSize: number
 }
 
 export class ActivityIndexer extends ManagedChildIndexer {
@@ -21,36 +22,45 @@ export class ActivityIndexer extends ManagedChildIndexer {
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const batchSize = this.$.batchSize ?? 100
-
-    const adjustedTo = from + batchSize < to ? from + batchSize : to
+    const fromWithBatchSize = from + this.$.batchSize
+    const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
     const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
 
-    const timestamps = Array.from(counts.keys())
+    const currentMap = await this.getDatabaseEntries(counts)
 
-    const currentValues =
-      await this.$.activityRepository.getByProjectAndTimeRange(
-        this.$.projectId,
-        [
-          new UnixTime(Math.min(...timestamps)),
-          new UnixTime(Math.max(...timestamps)),
-        ],
-      )
-    const currentMap = new Map(
-      currentValues.map((v) => [v.timestamp.toNumber(), v.count]),
-    )
-
-    const dataToSave = Array.from(counts).map(([timestamp, count]) => {
-      const currentCount = currentMap.get(timestamp)
+    const dataToSave = counts.map(({ timestamp, count, projectId }) => {
+      const currentCount = currentMap.get(timestamp.toNumber())
       return {
-        timestamp: new UnixTime(timestamp),
+        timestamp: timestamp,
         count: currentCount ? currentCount + count : count,
-        projectId: this.$.projectId,
+        projectId,
       }
     })
     await this.$.activityRepository.addOrUpdateMany(dataToSave)
 
     return adjustedTo
+  }
+
+  async getDatabaseEntries(
+    activityRecords: ActivityRecord[],
+  ): Promise<Map<number, number>> {
+    if (activityRecords.length === 0) return new Map()
+
+    let min = activityRecords[0].timestamp.toNumber()
+    let max = min
+
+    for (const record of activityRecords) {
+      const timestamp = record.timestamp.toNumber()
+      if (timestamp < min) min = timestamp
+      if (timestamp > max) max = timestamp
+    }
+
+    const currentValues =
+      await this.$.activityRepository.getByProjectAndTimeRange(
+        this.$.projectId,
+        [new UnixTime(min), new UnixTime(max)],
+      )
+    return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v.count]))
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
