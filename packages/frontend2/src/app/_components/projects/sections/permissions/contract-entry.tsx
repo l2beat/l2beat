@@ -72,7 +72,7 @@ export function ContractEntry({
             {contract.addresses.map((address, i) => (
               <HighlightableLink
                 key={i}
-                variant={!address.verified ? 'danger' : undefined}
+                variant={address.verified === false ? 'danger' : undefined}
                 href={address.href}
                 className="flex items-center gap-0.5"
               >
