@@ -2,14 +2,11 @@ import { readFileSync } from 'fs'
 import path from 'path'
 import {
   type Bridge,
-  bridges,
   type DaLayer,
   getChainNames,
   getChainNamesForDA,
   type Layer2,
-  layer2s,
   type Layer3,
-  layer3s,
 } from '@l2beat/config'
 import { ContractsVerificationStatuses } from '@l2beat/shared-pure'
 import {
