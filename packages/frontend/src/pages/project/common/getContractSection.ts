@@ -28,6 +28,7 @@ import {
   TechnologyContractLinks,
 } from '../components/sections/common/ContractEntry'
 import { getDiagramImage } from './getDiagramImage'
+import { getChain } from './getChain'
 
 export function getContractSection(
   project: Layer2 | Layer3 | Bridge,
@@ -147,7 +148,7 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
-  const chain = item.chain ?? 'ethereum'
+  const chain = getChain(project, item)
   const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
 

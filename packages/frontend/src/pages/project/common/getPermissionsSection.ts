@@ -17,6 +17,7 @@ import {
 import { ProjectDetailsPermissionsSection } from '../components/sections/types'
 import { slugToDisplayName } from './getContractSection'
 import { getUsedInProjects } from './getUsedInProjects'
+import { getChain } from './getChain'
 
 export function getPermissionsSection(
   project: Layer2 | Layer3 | Bridge,
@@ -67,7 +68,7 @@ function toTechnologyContract(
   project: Layer2 | Layer3 | Bridge,
   permission: ScalingProjectPermission,
 ): TechnologyContract[] {
-  const chain = permission.chain ?? 'ethereum'
+  const chain = getChain(project, permission)
   const etherscanUrl = getExplorerUrl(chain)
   const links = permission.accounts.slice(1).map((account) => {
     return {
