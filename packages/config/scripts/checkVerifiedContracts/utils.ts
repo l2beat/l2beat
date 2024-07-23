@@ -1,3 +1,5 @@
+import { uniqBy } from "lodash";
+
 export function withoutDuplicates<T>(arr: T[]): T[] {
-  return [...new Set(arr)]
+  return uniqBy(arr, JSON.stringify)
 }
