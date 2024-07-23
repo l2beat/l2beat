@@ -1,5 +1,6 @@
 'use client'
 import { useState } from 'react'
+import { Markdown } from '~/app/_components/markdown/markdown'
 
 interface Props {
   children: string
@@ -17,9 +18,9 @@ export function UpgradeConsiderations({ children }: Props) {
       </button>
       {/* TODO: remove leading once line heights are fixed for all text on the page */}
       {show ? (
-        <span className="mt-2 text-gray-850 text-sm leading-snug dark:text-gray-400">
+        <Markdown className="mt-2 text-gray-850 text-sm leading-snug dark:text-gray-400">
           {children}
-        </span>
+        </Markdown>
       ) : null}
     </div>
   )
