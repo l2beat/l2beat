@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LegacyDatabase } from '@l2beat/database-legacy'
+import { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
 import {
   MOCK_TRX,
@@ -151,20 +151,12 @@ describe(ManagedMultiIndexer.name, () => {
     },
   )
 
-  describeDatabase('e2e', (database) => {
-    const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
-    const configurationsRepository = new IndexerConfigurationRepository(
-      database,
-      Logger.SILENT,
-    )
-    const indexerService = new IndexerService(
-      stateRepository,
-      configurationsRepository,
-    )
+  describeDatabase('e2e', (db) => {
+    const indexerService = new IndexerService(db)
     afterEach(async () => {
       _TEST_ONLY_resetUniqueIds()
-      await stateRepository.deleteAll()
-      await configurationsRepository.deleteAll()
+      await db.indexerState.deleteAll()
+      await db.indexerConfiguration.deleteAll()
     })
 
     it('update', async () => {
@@ -177,7 +169,7 @@ describe(ManagedMultiIndexer.name, () => {
           actual('c', 400, null),
           actual('d', 100, null),
         ],
-        database,
+        db,
       )
       await indexer.start()
 
@@ -292,7 +284,7 @@ async function initializeMockIndexer(
   indexerService: IndexerService,
   saved: SavedConfiguration<null>[],
   configurations: Configuration<null>[],
-  database?: LegacyDatabase,
+  database?: Database,
 ) {
   if (saved.length > 0) {
     await indexerService.upsertConfigurations('indexer', saved, (v) =>
