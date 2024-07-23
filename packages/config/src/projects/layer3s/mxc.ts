@@ -11,7 +11,7 @@ export const mxc: Layer3 = upcomingL3({
     slug: 'mxc',
     provider: 'Taiko',
     description:
-      'The MXC Moonchain zkEVM is an IoT-centric L3 on Arbitrum forked from the Taiko codebase. The review of this chain is delayed, see https://github.com/l2beat/l2beat/issues/4560 for more information',
+      'The MXC Moonchain zkEVM is an IoT-centric L3 on Arbitrum forked from the Taiko codebase. The review of this chain is delayed, see https://github.com/l2beat/l2beat/issues/4560 for more information.',
     purposes: ['Universal', 'IoT'],
     category: 'ZK Rollup',
     links: {
