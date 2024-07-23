@@ -4,8 +4,8 @@ import {
   type ManuallyVerifiedContracts,
   type VerificationStatus,
 } from '@l2beat/shared-pure'
-import { getContractsSection } from '~/app/_components/projects/sections/contracts/get-contracts-section'
-import { getPermissionsSection } from '~/app/_components/projects/sections/permissions/get-permissions-section'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
 import { type RosetteValue } from '~/app/_components/rosette/types'
 interface Params {

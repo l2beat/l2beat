@@ -14,13 +14,15 @@ import {
 import { concat } from 'lodash'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import { type ProjectDetailsPermissionsSection } from '../types'
+import { type ProjectDetailsPermissionsSection } from '../../../app/_components/projects/sections/types'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from './contract-entry'
+} from '../../../app/_components/projects/sections/permissions/contract-entry'
 import { getUsedInProjects } from './get-used-in-projects'
-import { type UsedInProject } from './used-in-project'
+import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
+import { getChain } from './get-chain'
+import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   id: string
@@ -107,7 +109,7 @@ function toTechnologyContract(
   verificationStatus: VerificationStatus,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): TechnologyContract[] {
-  const chain = permission.chain ?? 'ethereum'
+  const chain = getChain(projectParams, permission)
   const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
   const manuallyVerifiedContractsForChain =
     manuallyVerifiedContracts[chain] ?? {}
@@ -120,7 +122,9 @@ function toTechnologyContract(
         address,
         href: `${etherscanUrl}/address/${address}#code`,
         isAdmin: false,
-        verified: verificationStatusForChain[address],
+        verificationStatus: toVerificationStatus(
+          verificationStatusForChain[address],
+        ),
       }
     },
   )
@@ -209,7 +213,9 @@ function toTechnologyContract(
           address,
           href: `${etherscanUrl}/address/${account.address.toString()}#code`,
           isAdmin: false,
-          verified: verificationStatusForChain[address],
+          verificationStatus: toVerificationStatus(
+            verificationStatusForChain[account.address.toString()],
+          ),
         }
       },
     )

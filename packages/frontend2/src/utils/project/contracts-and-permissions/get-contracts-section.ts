@@ -26,10 +26,12 @@ import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
-} from '../permissions/contract-entry'
-import { getUsedInProjects } from '../permissions/get-used-in-projects'
-import { type TechnologyReference } from '../permissions/reference-list'
-import { type ContractsSectionProps } from './contracts-section'
+} from '../../../app/_components/projects/sections/permissions/contract-entry'
+import { type TechnologyReference } from '../../../app/_components/projects/sections/permissions/reference-list'
+import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
+import { getChain } from './get-chain'
+import { getUsedInProjects } from './get-used-in-projects'
+import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
   id: string
@@ -169,7 +171,7 @@ function makeTechnologyContract(
   implementationChange: ImplementationChangeReportProjectData | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
-  const chain = item.chain ?? 'ethereum'
+  const chain = getChain(projectParams, item)
   const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
   const manuallyVerifiedContractsForChain =
     manuallyVerifiedContracts[chain] ?? {}
@@ -186,7 +188,9 @@ function makeTechnologyContract(
     return {
       name: name,
       address: opts.address.toString(),
-      verified: verificationStatusForChain[opts.address.toString()],
+      verificationStatus: toVerificationStatus(
+        verificationStatusForChain[opts.address.toString()],
+      ),
       href: `${etherscanUrl}/address/${opts.address.toString()}#code`,
       isAdmin: !!opts.isAdmin,
     }

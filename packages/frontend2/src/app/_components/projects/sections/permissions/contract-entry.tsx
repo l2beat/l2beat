@@ -15,6 +15,7 @@ import { cn } from '~/utils/cn'
 import { ReferenceList, type TechnologyReference } from './reference-list'
 import { UpgradeConsiderations } from './upgrade-considerations'
 import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
+import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
 
 export interface TechnologyContract {
   name: string
@@ -34,7 +35,7 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   isAdmin: boolean
-  verified: boolean | undefined
+  verificationStatus: VerificationStatus
 }
 
 export interface ContractEntryProps {
@@ -72,11 +73,16 @@ export function ContractEntry({
             {contract.addresses.map((address, i) => (
               <HighlightableLink
                 key={i}
-                variant={address.verified === false ? 'danger' : undefined}
+                variant={
+                  address.verificationStatus === 'unverified'
+                    ? 'danger'
+                    : undefined
+                }
                 href={address.href}
                 className="flex items-center gap-0.5"
               >
-                {!address.verified && color !== 'red' ? (
+                {address.verificationStatus === 'unverified' &&
+                color !== 'red' ? (
                   <Tooltip>
                     <TooltipTrigger>
                       <UnverifiedIcon className="fill-red-300" />
@@ -150,10 +156,11 @@ function getCalloutProps(
   type: 'permission' | 'contract',
 ) {
   const isAnyAddressUnverified = contract.addresses.some(
-    (c) => !c.verified && !c.isAdmin,
+    (c) => c.verificationStatus === 'unverified' && !c.isAdmin,
   )
-  const isEveryAddressUnverified = contract.addresses.every((c) => !c.verified)
-
+  const isEveryAddressUnverified = contract.addresses.every(
+    (c) => c.verificationStatus === 'unverified',
+  )
   const showRedBackground =
     (type === 'contract' && isAnyAddressUnverified) ||
     (type === 'permission' && isEveryAddressUnverified)

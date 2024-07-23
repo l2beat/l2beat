@@ -5,8 +5,8 @@ import {
   type Layer3,
   getCommonContractsIn,
 } from '@l2beat/config'
-import { type TechnologyContractAddress } from './contract-entry'
-import { type UsedInProject } from './used-in-project'
+import { type TechnologyContractAddress } from '../../../app/_components/projects/sections/permissions/contract-entry'
+import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
 
 type ProjectParams =
   | {
