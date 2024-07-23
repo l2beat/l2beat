@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x05d83305fe1c40c5c2cf587bf217e12ddbcfd697
+Generated with discovered.json: 0x9590eb8caf62006f1a01c0e27a62734ce8c11f6c
 
-# Diff at Tue, 23 Jul 2024 06:38:41 GMT:
+# Diff at Tue, 23 Jul 2024 08:16:34 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20339515
-- current block number: 20367487
+- comparing to: main@a7fe674fdf7aafe1f69f1463836cac0d7e337d34 block: 20362833
+- current block number: 20367973
 
 ## Description
 
@@ -32,11 +32,11 @@ The bridger (gateway) is upgraded to support a new asset (solvBTC) which can be 
 ## Source code changes
 
 ```diff
-.../{.flat@20339515 => .flat}/Bridger/Bridger.sol  | 54 +++++++++++++++++-----
+.../{.flat@20362833 => .flat}/Bridger/Bridger.sol  | 54 +++++++++++++++++-----
  1 file changed, 42 insertions(+), 12 deletions(-)
 ```
 
-Generated with discovered.json: 0xad8d0f1f6d6b88a070e478339d9ec06b40604739
+Generated with discovered.json: 0x87c5c2e00532cf5609ebd2a87ccf20e1d7afef8c
 
 # Diff at Fri, 19 Jul 2024 08:55:45 GMT:
 
