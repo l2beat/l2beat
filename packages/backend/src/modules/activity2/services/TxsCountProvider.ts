@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ScalingProjectTransactionApi } from '@l2beat/config'
 import { ActivityRecord } from '@l2beat/database/src/activity/entity'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
@@ -7,12 +6,13 @@ import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { ActivityConfig } from '../../../config/Config'
+import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
 
 interface TxsCountProviderDeps {
   logger: Logger
   peripherals: Peripherals
   projectId: ProjectId
-  projectConfig: ScalingProjectTransactionApi
+  projectConfig: ActivityTransactionConfig
   activityConfig: ActivityConfig
 }
 
@@ -42,8 +42,8 @@ export class TxsCountProvider {
     const projectConfig = this.$.projectConfig
 
     const rpcClient = this.$.peripherals.getClient(RpcClient, {
-      url: projectConfig.defaultUrl,
-      callsPerMinute: projectConfig.defaultCallsPerMinute,
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
     })
 
     const queries = range(from, to + 1).map(async (blockNumber) => {

@@ -6,8 +6,11 @@ import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { TxsCountProvider } from './TxsCountProvider'
 import { ActivityConfig } from '../../../config/Config'
-import { RpcTransactionApi, StarkexTransactionApi } from '@l2beat/config'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import {
+  RpcActivityTransactionConfig,
+  StarkexActivityTransactionConfig,
+} from '../../activity/ActivityTransactionConfig'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -18,7 +21,7 @@ describe(TxsCountProvider.name, () => {
         logger: Logger.SILENT,
         peripherals: mockPeripherals({}),
         projectId: ProjectId('a'),
-        projectConfig: mockObject<RpcTransactionApi>({
+        projectConfig: mockObject<RpcActivityTransactionConfig>({
           type: 'rpc',
         }),
         activityConfig: mockObject<ActivityConfig>(),
@@ -37,7 +40,7 @@ describe(TxsCountProvider.name, () => {
         logger: Logger.SILENT,
         peripherals: mockPeripherals({}),
         projectId: ProjectId('a'),
-        projectConfig: mockObject<StarkexTransactionApi>({
+        projectConfig: mockObject<StarkexActivityTransactionConfig>({
           type: 'starkex',
         }),
         activityConfig: mockObject<ActivityConfig>(),
@@ -77,8 +80,8 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
         },
         activityConfig: mockObject<ActivityConfig>(),
       })
@@ -120,8 +123,8 @@ describe(TxsCountProvider.name, () => {
         projectId: ProjectId('a'),
         projectConfig: {
           type: 'rpc',
-          defaultUrl: 'url',
-          defaultCallsPerMinute: 1,
+          url: 'url',
+          callsPerMinute: 1,
           assessCount,
         },
         activityConfig: mockObject<ActivityConfig>(),
@@ -151,7 +154,7 @@ describe(TxsCountProvider.name, () => {
         logger: Logger.SILENT,
         peripherals,
         projectId: ProjectId('a'),
-        projectConfig: mockObject<StarkexTransactionApi>({
+        projectConfig: mockObject<StarkexActivityTransactionConfig>({
           type: 'starkex',
           product: ['a', 'b'],
         }),
