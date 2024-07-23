@@ -2,33 +2,31 @@ import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
   DaLayer,
+  DacBridge,
   OnChainDaBridge,
   ScalingProjectContract,
-  ScalingProjectUpgradeability,
   isSingleAddress,
 } from '../../src'
-import { VerificationMapPerChain } from './output'
 import { Project } from './types'
 import { withoutDuplicates } from './utils'
 
-export function getUniqueContractsForAllProjects(
-  projects: Project[],
-  chain: string,
-): EthereumAddress[] {
-  const addresses = projects.flatMap((project) =>
-    getUniqueContractsForProject(project, chain),
-  )
-  return withoutDuplicates(addresses)
+export interface AddressOnChain {
+  chain: string
+  address: EthereumAddress
 }
 
-export function getUniqueContractsForAllDaLayers(
-  daLayers: DaLayer[],
+export function getUniqueAddressesForDaLayer(
+  daLayer: DaLayer,
   chain: string,
 ): EthereumAddress[] {
-  const addresses = daLayers.flatMap((daLayer) =>
-    getUniqueContractsFromList(getDaLayerContractsForChain(daLayer, chain)),
+  const addresses = withoutDuplicates(
+    getDaLayerContractsForChain(daLayer, chain).map((c) => c.address),
   )
-  return withoutDuplicates(addresses)
+  const permissions = withoutDuplicates(
+    getDaLayerPermissionsForChain(daLayer, chain).map((p) => p.address),
+  )
+
+  return [...addresses, ...permissions]
 }
 
 export function getUniqueContractsForProject(
@@ -36,18 +34,24 @@ export function getUniqueContractsForProject(
   chain: string,
 ): EthereumAddress[] {
   const projectContracts = getProjectContractsForChain(project, chain)
-  return getUniqueContractsFromList(projectContracts)
+  return getUniqueContractsFromList(projectContracts).map((c) => c.address)
 }
 
 export function getUniqueContractsFromList(
   contracts: ScalingProjectContract[],
-): EthereumAddress[] {
-  const mainAddresses = contracts.flatMap((c) => getAddresses(c))
+): AddressOnChain[] {
+  const mainAddresses = contracts.flatMap((c) =>
+    getAddresses(c).map((a) => ({ address: a, chain: c.chain ?? 'ethereum' })),
+  )
   const upgradeabilityAddresses = contracts
     .filter(isSingleAddress)
-    .map((c) => c.upgradeability)
-    .filter((u): u is ScalingProjectUpgradeability => !!u) // remove undefined
-    .flatMap((u) => u.implementations)
+    .filter((c) => !!c.upgradeability) // remove undefined
+    .flatMap((c) =>
+      (c.upgradeability?.implementations ?? []).flatMap((a) => ({
+        address: a,
+        chain: c.chain ?? 'ethereum',
+      })),
+    )
 
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
@@ -68,11 +72,39 @@ function getProjectContractsForChain(project: Project, chain: string) {
   return [...contracts, ...escrows]
 }
 
-export function getDaLayerContractsForChain(daLayer: DaLayer, chain: string) {
+function getDaLayerContractsForChain(
+  daLayer: DaLayer,
+  chain: string,
+): AddressOnChain[] {
   const contracts = daLayer.bridges
-    .filter((b): b is OnChainDaBridge => b.type === 'OnChainBridge')
+    .filter(
+      (b): b is OnChainDaBridge | DacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'DAC',
+    )
     .flatMap((b) => b.contracts.addresses)
-  return contracts.filter((a) => isContractOnChain(a, chain))
+  const addresses = getUniqueContractsFromList(contracts)
+  return addresses.filter((a) => a.chain === chain)
+}
+
+function getDaLayerPermissionsForChain(
+  daLayer: DaLayer,
+  chain: string,
+): AddressOnChain[] {
+  const permissions: AddressOnChain[] = daLayer.bridges
+    .filter(
+      (b): b is OnChainDaBridge | DacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'DAC',
+    )
+    .flatMap((b) =>
+      b.permissions.flatMap((p) => {
+        return p.accounts.flatMap((a) => ({
+          chain: b.chain.toString(),
+          address: a.address,
+        }))
+      }),
+    )
+
+  return permissions.filter((p) => p.chain === chain)
 }
 
 function isContractOnChain(contract: ScalingProjectContract, chain: string) {
@@ -81,38 +113,6 @@ function isContractOnChain(contract: ScalingProjectContract, chain: string) {
     return true
   }
   return contract.chain === chain
-}
-
-export function areAllProjectContractsVerified(
-  project: Project,
-  addressVerificationMapPerChain: VerificationMapPerChain,
-): boolean {
-  for (const [chain, addressVerificationMap] of Object.entries(
-    addressVerificationMapPerChain,
-  )) {
-    const projectAddresses = getUniqueContractsForProject(project, chain)
-    if (!areAllAddressesVerified(projectAddresses, addressVerificationMap)) {
-      return false
-    }
-  }
-  return true
-}
-
-export function areAllDaLayersContractsVerified(
-  daLayer: DaLayer,
-  addressVerificationMapPerChain: VerificationMapPerChain,
-): boolean {
-  for (const [chain, addressVerificationMap] of Object.entries(
-    addressVerificationMapPerChain,
-  )) {
-    const daLayerAddresses = getUniqueContractsFromList(
-      getDaLayerContractsForChain(daLayer, chain),
-    )
-    if (!areAllAddressesVerified(daLayerAddresses, addressVerificationMap)) {
-      return false
-    }
-  }
-  return true
 }
 
 export function areAllAddressesVerified(

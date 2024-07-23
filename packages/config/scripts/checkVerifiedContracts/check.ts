@@ -6,11 +6,8 @@ import { bridges, daLayers, layer2s, layer3s } from '../../src'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllAddressesVerified,
-  getDaLayerContractsForChain,
-  getUniqueContractsForAllDaLayers,
-  getUniqueContractsForAllProjects,
+  getUniqueAddressesForDaLayer,
   getUniqueContractsForProject,
-  getUniqueContractsFromList,
 } from './addresses'
 import { getChainNames, getChainNamesForDA } from './chains'
 import { getEtherscanClient } from './etherscan'
@@ -22,6 +19,7 @@ import {
   saveResult,
 } from './output'
 import { verifyContracts } from './tasks'
+import { withoutDuplicates } from './utils'
 
 interface CheckResult {
   verificationMap: Record<string, VerificationMap>
@@ -69,6 +67,7 @@ export async function check(workersCount: number, logger: Logger) {
       mergedVerficationMap[chain],
     )
   })
+
   Object.entries(DABEAT.uniqueAddresses).forEach(([key, addresses]) => {
     const { id, chain } = decodeKey(key)
 
@@ -93,10 +92,18 @@ async function checkL2BEAT(
   const chains = getChainNames(projects)
   for (const chain of chains) {
     console.log(`Checking on chain ${chain}...`)
-    const manuallyVerified = getManuallyVerifiedContracts(chain)
 
+    let addresses = []
+    for (const project of projects) {
+      const key = encodeKey(project.id, chain)
+      const addressesOnChain = getUniqueContractsForProject(project, chain)
+      uniqueAddresses[key] = addressesOnChain
+      addresses.push(...addressesOnChain)
+    }
+    addresses = withoutDuplicates(addresses)
+
+    const manuallyVerified = getManuallyVerifiedContracts(chain)
     const previouslyVerified = await loadPreviouslyVerifiedContracts(chain)
-    const addresses = getUniqueContractsForAllProjects(projects, chain)
     const etherscanClient = getEtherscanClient(chain)
     const addressVerificationMap = await verifyContracts(
       addresses,
@@ -107,11 +114,6 @@ async function checkL2BEAT(
       logger,
     )
     verificationMap[chain] = addressVerificationMap
-
-    for (const project of projects) {
-      const key = encodeKey(project.id, chain)
-      uniqueAddresses[key] = getUniqueContractsForProject(project, chain)
-    }
   }
 
   return { verificationMap, uniqueAddresses }
@@ -127,10 +129,18 @@ async function checkDABEAT(
   const chains = getChainNamesForDA(daLayers)
   for (const chain of chains) {
     console.log(`Checking on chain ${chain}...`)
-    const manuallyVerified = getManuallyVerifiedContracts(chain)
 
+    let addresses = []
+    for (const daLayer of daLayers) {
+      const key = encodeKey(daLayer.id, chain)
+      const addressesOnChain = getUniqueAddressesForDaLayer(daLayer, chain)
+      uniqueAddresses[key] = addressesOnChain
+      addresses.push(...addressesOnChain)
+    }
+    addresses = withoutDuplicates(addresses)
+
+    const manuallyVerified = getManuallyVerifiedContracts(chain)
     const previouslyVerified = await loadPreviouslyVerifiedContracts(chain)
-    const addresses = getUniqueContractsForAllDaLayers(daLayers, chain)
     const etherscanClient = getEtherscanClient(chain)
     const addressVerificationMap = await verifyContracts(
       addresses,
@@ -141,13 +151,6 @@ async function checkDABEAT(
       logger,
     )
     verificationMap[chain] = addressVerificationMap
-
-    for (const daLayer of daLayers) {
-      const key = encodeKey(daLayer.id, chain)
-      uniqueAddresses[key] = getUniqueContractsFromList(
-        getDaLayerContractsForChain(daLayer, chain),
-      )
-    }
   }
 
   return { verificationMap, uniqueAddresses }

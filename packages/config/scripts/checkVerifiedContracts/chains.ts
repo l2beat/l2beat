@@ -1,4 +1,9 @@
-import { DaLayer, OnChainDaBridge, getProjectDevIds } from '../../src'
+import {
+  DaLayer,
+  DacBridge,
+  OnChainDaBridge,
+  getProjectDevIds,
+} from '../../src'
 import { Project } from './types'
 
 export function getChainNames(projects: Project[]): string[] {
@@ -15,7 +20,10 @@ export function getChainNamesForDA(daLayers: DaLayer[]): string[] {
 
 export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
   const addresses = daLayer.bridges
-    .filter((b): b is OnChainDaBridge => b.type === 'OnChainBridge')
+    .filter(
+      (b): b is OnChainDaBridge | DacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'DAC',
+    )
     .flatMap((b) => b.contracts.addresses)
   const devIds = addresses.map((c) => c.chain ?? 'ethereum')
 
