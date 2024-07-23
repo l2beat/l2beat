@@ -111,7 +111,7 @@
           "description": "Manages crosschain execution and -fees."
         },
         "plugs": {
-          "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
+          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
           "severity": "LOW",
           "type": "CODE_CHANGE",
           "handler": {

@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x2c461957d8f8868c07c9e18fb14107df551ac1e5
+Generated with discovered.json: 0x204b6b2c286321984245ecd7b47aa438ff7a60e3
 
-# Diff at Tue, 23 Jul 2024 07:23:28 GMT:
+# Diff at Tue, 23 Jul 2024 08:10:01 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20340184
-- current block number: 20367709
+- comparing to: main@a7fe674fdf7aafe1f69f1463836cac0d7e337d34 block: 20340184
+- current block number: 20367941
 
 ## Description
 
@@ -19,7 +19,7 @@ New (unverified) plug, and executionManager is pointed to a new (unverified) con
       values.executionManager__:
 -        "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0"
 +        "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
-+++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
 +++ type: CODE_CHANGE
 +++ severity: LOW
       values.plugs.70:

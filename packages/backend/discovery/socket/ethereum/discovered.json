@@ -1,8 +1,8 @@
 {
   "name": "socket",
   "chain": "ethereum",
-  "blockNumber": 20367709,
-  "configHash": "0x05ca08a304de4c311e8c2264ab5ba113af1c1b0ccb0aa75283eddb4a08cabde6",
+  "blockNumber": 20367941,
+  "configHash": "0x27bfab16dd0ceaf696f0356939f464c87886cd6db47c1c724df08bafb2f89b7b",
   "version": 9,
   "contracts": [
     {
