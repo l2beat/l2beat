@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 20339517,
+  "blockNumber": 20377214,
   "configHash": "0xe383c8ac50c19d8e1aa6ab2fe3d308835f13015b8436c6c3fa5f693885cadb07",
   "version": 9,
   "contracts": [
@@ -26,7 +26,7 @@
       "values": {
         "$admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
         "$implementation": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
-        "batchCount": 91267,
+        "batchCount": 93711,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -46,7 +46,7 @@
         "reader4844": "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
-        "totalDelayedMessagesRead": 336079,
+        "totalDelayedMessagesRead": 338555,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -385,11 +385,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 336081,
+        "delayedMessageCount": 338557,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 91267,
-        "sequencerReportedSubMessageCount": 74373346
+        "sequencerMessageCount": 93711,
+        "sequencerReportedSubMessageCount": 74535046
       }
     },
     {
@@ -415,7 +415,7 @@
         ],
         "getThreshold": 4,
         "GnosisSafe_modules": [],
-        "nonce": 190,
+        "nonce": 191,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -664,12 +664,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 17570,
+        "firstUnresolvedNode": 17696,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 17569,
-        "latestNodeCreated": 17722,
+        "latestConfirmed": 17695,
+        "latestNodeCreated": 17847,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",

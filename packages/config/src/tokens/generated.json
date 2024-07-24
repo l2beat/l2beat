@@ -317,6 +317,21 @@
       "supply": "zero"
     },
     {
+      "id": "arb-arbitrum",
+      "name": "Arbitrum",
+      "coingeckoId": "arbitrum",
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "symbol": "ARB",
+      "decimals": 18,
+      "deploymentTimestamp": 1678968467,
+      "coingeckoListingTimestamp": 1679529600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arpa-arpa-token",
       "name": "ARPA Token",
       "coingeckoId": "arpa",
@@ -6880,7 +6895,7 @@
       }
     },
     {
-      "id": "arb-arbitrum",
+      "id": "arbitrum:arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -6889,7 +6904,7 @@
       "deploymentTimestamp": 1678968508,
       "coingeckoListingTimestamp": 1679529600,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
