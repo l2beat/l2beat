@@ -159,7 +159,7 @@ export function TableColumnHeader({
     <th
       className={cn(
         'whitespace-pre py-2 pl-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
-        'pr-3 last:pr-0 md:pr-4',
+        'pr-3 md:pr-4',
         'first:pl-[18px] last:pr-[18px]',
         column.className,
       )}

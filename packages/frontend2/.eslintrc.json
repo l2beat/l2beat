@@ -24,6 +24,36 @@
     "@typescript-eslint/no-misused-promises": [
       "error",
       { "checksVoidReturn": { "attributes": false } }
+    ],
+    "tailwindcss/classnames-order": [
+      "error",
+      {
+        "callees": ["className", "cn", "cva"]
+      }
+    ],
+    "tailwindcss/enforces-negative-arbitrary-values": [
+      "error",
+      {
+        "callees": ["className", "cn", "cva"]
+      }
+    ],
+    "tailwindcss/enforces-shorthand": [
+      "error",
+      {
+        "callees": ["className", "cn", "cva"]
+      }
+    ],
+    "tailwindcss/no-contradicting-classname": [
+      "error",
+      {
+        "callees": ["className", "cn", "cva"]
+      }
+    ],
+    "tailwindcss/no-unnecessary-arbitrary-value": [
+      "error",
+      {
+        "callees": ["className", "cn", "cva"]
+      }
     ]
   }
 }

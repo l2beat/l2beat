@@ -54,7 +54,7 @@ export function DesktopProjectNavigation({
         <div
           ref={headerRef}
           className={cn(
-            '-z-1 opacity-0 duration-300 transition-opacity',
+            '-z-1 opacity-0 transition-opacity duration-300',
             isSummarySection === false && 'opacity-100',
           )}
         >
@@ -133,7 +133,7 @@ function NavigationListIndex(props: { index: number; selected: boolean }) {
   return (
     <div
       className={cn(
-        'flex size-6 shrink-0 items-center justify-center rounded-lg text-center font-bold text-xs',
+        'flex size-6 shrink-0 items-center justify-center rounded-lg text-center text-xs font-bold',
         props.selected
           ? 'bg-gradient-to-r from-purple-100 to-pink-100 text-white'
           : 'bg-gray-100 dark:bg-neutral-700',

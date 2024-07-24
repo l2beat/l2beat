@@ -45,7 +45,7 @@ export function PentagonRosetteLabels({
           left: containerCenter + Math.sin(Math.PI / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[36deg]',
+          'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[36deg]',
           rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== first.name &&
@@ -60,7 +60,7 @@ export function PentagonRosetteLabels({
           left: containerCenter + Math.sin((3 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 origin-top rotate-[-72deg]',
+          'absolute origin-top -translate-x-1/2 rotate-[-72deg]',
           rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== second.name &&
@@ -90,7 +90,7 @@ export function PentagonRosetteLabels({
           left: containerCenter + Math.sin((-3 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 origin-top rotate-[72deg]',
+          'absolute origin-top -translate-x-1/2 rotate-[72deg]',
           rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== fourth.name &&
@@ -105,7 +105,7 @@ export function PentagonRosetteLabels({
           left: containerCenter + Math.sin((-1 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-36deg]',
+          'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[-36deg]',
           rosetteVariants({ size }),
           context?.content &&
             context?.content.risk.name !== fifth.name &&

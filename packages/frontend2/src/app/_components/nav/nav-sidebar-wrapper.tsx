@@ -18,7 +18,7 @@ export const NavSideBarWrapper = ({
   const [overflows, setOverflows] = useState(false)
 
   const sharedSizeClasses = cn(
-    'w-full xl:w-[240px] 2xl:w-[280px] h-screen [@supports(height:100dvh)]:h-dvh',
+    'h-screen w-full xl:w-[240px] 2xl:w-[280px] [@supports(height:100dvh)]:h-dvh',
     legacyNav && 'xl:hidden xl:sidenav-collapsed:hidden',
   )
 
@@ -36,7 +36,7 @@ export const NavSideBarWrapper = ({
   return (
     <div
       className={cn(
-        'flex-shrink-0 xl:static absolute flex flex-col items-stretch translate-x-full duration-300 xl:transform-none xl:sidenav-collapsed:w-20 z-999 transition-all ease-out',
+        'absolute z-999 flex flex-shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out xl:static xl:transform-none xl:sidenav-collapsed:w-20',
         sharedSizeClasses,
         open && 'translate-x-0',
         resizing && 'transition-none',
@@ -44,14 +44,14 @@ export const NavSideBarWrapper = ({
     >
       <div
         className={cn(
-          'custom-scrollbar bg-[#E6E7EC] dark:bg-[#1E1C21] xl:dark:border-r dark:border-gray-850 dark:border-r-0 flex flex-col xl:fixed xl:sidenav-collapsed:w-20 overflow-x-clip transition-all ease-out duration-300',
+          'custom-scrollbar flex flex-col overflow-x-clip bg-[#E6E7EC] transition-all duration-300 ease-out dark:border-r-0 dark:border-gray-850 dark:bg-[#1E1C21] xl:fixed xl:sidenav-collapsed:w-20 xl:dark:border-r',
           sharedSizeClasses,
           resizing && 'transition-none',
         )}
       >
         <div
           className={cn(
-            'xl:px-6 px-3.5 py-4 xl:py-[1.125rem] overflow-y-auto overflow-x-clip flex-1 flex flex-col gap-8',
+            'flex flex-1 flex-col gap-8 overflow-y-auto overflow-x-clip px-3.5 py-4 xl:px-6 xl:py-[1.125rem]',
             sharedSizeClasses,
           )}
           ref={ref}
@@ -61,7 +61,7 @@ export const NavSideBarWrapper = ({
 
         <div
           className={cn(
-            'p-6 border-t border-transparent hidden xl:block xl:sidenav-collapsed:ml-1 transition-colors duration-300 ease-out',
+            'hidden border-t border-transparent p-6 transition-colors duration-300 ease-out xl:block xl:sidenav-collapsed:ml-1',
             overflows && 'border-gray-300 dark:border-gray-850',
           )}
         >

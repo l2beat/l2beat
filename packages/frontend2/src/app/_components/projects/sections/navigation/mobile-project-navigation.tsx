@@ -48,7 +48,7 @@ export function MobileProjectNavigation({ sections }: Props) {
           className={cn(
             'whitespace-nowrap p-4 text-xs transition-colors',
             isSummarySection &&
-              'border-current border-b-2 dark:text-pink-200 text-pink-900',
+              'border-b-2 border-current text-pink-900 dark:text-pink-200',
           )}
         >
           Summary
@@ -67,7 +67,7 @@ export function MobileProjectNavigation({ sections }: Props) {
               className={cn(
                 'whitespace-nowrap p-4 text-xs transition-colors',
                 selected &&
-                  'border-current border-b-2 dark:text-pink-200 text-pink-900',
+                  'border-b-2 border-current text-pink-900 dark:text-pink-200',
               )}
             >
               {section.props.title}

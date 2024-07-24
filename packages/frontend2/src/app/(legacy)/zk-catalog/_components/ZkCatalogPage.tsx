@@ -26,7 +26,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
           <AccordionHeader asChild>
             <AccordionTrigger
               asChild
-              className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900"
+              className="group relative z-10 w-full cursor-pointer flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 dark:border-gray-800 dark:bg-zinc-900 md:flex-row"
             >
               <div className="grid md:grid-cols-[4fr,4fr,4fr,4fr,4fr,1fr]">
                 <div className="mb-3 flex items-center gap-2 md:hidden">
@@ -79,7 +79,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
                   className="self-center justify-self-center"
                 />
                 <div className="flex items-center">
-                  <div className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-black md:hidden dark:border-white">
+                  <div className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
                     <span className="text-base font-bold">Verifiers</span>
                     <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
                   </div>
@@ -88,7 +88,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
               </div>
             </AccordionTrigger>
           </AccordionHeader>
-          <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-gray-300 pt-3 md:space-y-2 md:px-6 md:pb-6 dark:border-gray-800">
+          <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-gray-300 pt-3 dark:border-gray-800 md:space-y-2 md:px-6 md:pb-6">
             {item.shortDescription ? (
               <div className="my-7 px-5">
                 <DetailsItem title="Description">
