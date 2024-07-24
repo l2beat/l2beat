@@ -6,7 +6,7 @@ import {
 import { Pool, PoolConfig, defaults, types } from 'pg'
 import { DB as GeneratedDB } from './generated/types'
 
-import { DailyTransactionCountRow } from '../activity-view/entity'
+import { DailyTransactionCountRow } from '../activity/activity-view/entity'
 
 export type DB = GeneratedDB & {
   // TODO: (sz-piotr) This is temporary!
