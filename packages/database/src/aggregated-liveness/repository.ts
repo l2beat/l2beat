@@ -35,7 +35,7 @@ export class AggregatedLivenessRepository {
       )
       .execute()
 
-    return `[${record.projectId}, ${record.subtype}, ${record.range}]: ${record.timestamp}`
+    return `[${record.projectId}, ${record.subtype}, ${record.range}]: ${record.updatedAt}`
   }
 
   async deleteAll(): Promise<number> {
