@@ -93,12 +93,15 @@ export class IndexerConfigurationRepository {
   ): Promise<number> {
     if (ids.length === 0) return 0
 
-    const result = await this.db
-      .deleteFrom('public.indexer_configurations')
-      .where('indexer_id', '=', indexerId)
-      .where('id', 'in', ids)
-      .executeTakeFirst()
-    return Number(result.numDeletedRows)
+    await batchExecute(this.db, ids, 10_000, async (trx, batch) => {
+      await trx
+        .deleteFrom('public.indexer_configurations')
+        .where('indexer_id', '=', indexerId)
+        .where('id', 'in', batch)
+        .executeTakeFirst()
+    })
+
+    return Number(ids.length)
   }
 
   async getAll() {

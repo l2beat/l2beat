@@ -152,6 +152,17 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
           config('d', 1, null, 10),
         ])
       })
+
+      it('works for bigger query', async () => {
+        await repository.deleteConfigurations(
+          'indexer',
+          [...Array(100_000)].map((_) => 'a'.repeat(12)),
+        )
+
+        const result = await repository.getAll()
+
+        expect(result).toEqualUnsorted([])
+      })
     },
   )
 })
