@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
-import { LegacyDatabase } from '@l2beat/database-legacy'
+import { Database, Transaction } from '@l2beat/database'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
-import { Knex } from 'knex'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
 import {
@@ -18,7 +17,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
-    private readonly db: LegacyDatabase,
+    private readonly db: Database,
     private readonly configurations: Configuration<T>[],
     options?: IndexerOptions,
   ) {
@@ -71,7 +70,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: Configuration<T>[],
-    trx: Knex.Transaction,
+    trx: Transaction,
   ): Promise<number>
 
   /**
@@ -99,7 +98,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
   abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
-    trx: Knex.Transaction,
+    trx: Transaction,
   ): Promise<void>
 
   /**

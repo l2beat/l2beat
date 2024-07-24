@@ -34,8 +34,8 @@ export class ActivityRepository {
     return records.length
   }
 
-  async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<void> {
-    await this.db
+  async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.activity')
       .where((eb) =>
         eb.and([
@@ -43,11 +43,15 @@ export class ActivityRepository {
           eb('timestamp', '>', from.toDate()),
         ]),
       )
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  async deleteAll(): Promise<void> {
-    await this.db.deleteFrom('public.activity').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.activity')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getByProjectAndTimeRange(

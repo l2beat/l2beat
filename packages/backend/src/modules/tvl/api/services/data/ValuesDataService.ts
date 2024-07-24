@@ -1,18 +1,15 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Database, ValueRecord } from '@l2beat/database'
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import {
-  ValueRecord,
-  ValueRepository,
-} from '../../../repositories/ValueRepository'
 import { getValuesStatus } from '../../utils/getValuesStatus'
 import { ApiProject } from '../../utils/types'
 
 interface Dependencies {
-  readonly valueRepository: ValueRepository
+  readonly db: Database
   readonly indexerService: IndexerService
   readonly clock: Clock
   logger: Logger
@@ -27,7 +24,7 @@ export class ValuesDataService {
     projects: ApiProject[],
     targetTimestamp: UnixTime,
   ) {
-    const valueRecords = await this.$.valueRepository.getForProjects(
+    const valueRecords = await this.$.db.value.getForProjects(
       projects.map((p) => p.id),
     )
 

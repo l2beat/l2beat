@@ -97,7 +97,10 @@ export class FinalityRepository {
     return inserted?.project_id
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.finality').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.finality')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

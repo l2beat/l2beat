@@ -1,38 +1,40 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { Knex } from 'knex'
 
+import { Database, LivenessRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
+import { MOCK_TRX, mockDatabase } from '../../../../test/database'
 import { TrackedTxResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from './repositories/LivenessRepository'
 
 const MIN_TIMESTAMP = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
-const TRX = mockObject<Knex.Transaction>({})
 
 describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.update.name, () => {
     it('skips update if no transactions', async () => {
       const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
+      const updater = new LivenessUpdater(
+        mockDatabase({ liveness: livenessRepo }),
+        Logger.SILENT,
+      )
 
       const transactions: TrackedTxResult[] = []
 
-      await updater.update(transactions, TRX)
+      await updater.update(transactions, MOCK_TRX)
 
       expect(livenessRepo.addMany).not.toHaveBeenCalled()
     })
 
     it('calls liveness repo with correct parameters', async () => {
       const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
+      const updater = new LivenessUpdater(
+        mockDatabase({ liveness: livenessRepo }),
+        Logger.SILENT,
+      )
 
       const transactions: TrackedTxResult[] = getMockTrackedTxResults()
-      await updater.update(transactions, TRX)
+      await updater.update(transactions, MOCK_TRX)
 
       expect(livenessRepo.addMany).toHaveBeenNthCalledWith(
         1,
@@ -50,7 +52,7 @@ describe(LivenessUpdater.name, () => {
             configurationId: transactions[1].id,
           },
         ],
-        TRX,
+        MOCK_TRX,
       )
     })
   })
@@ -58,16 +60,19 @@ describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.deleteFromById.name, () => {
     it('calls liveness repo with correct parameters', async () => {
       const livenessRepo = getMockLivenessRepository()
-      const updater = new LivenessUpdater(livenessRepo, Logger.SILENT)
+      const updater = new LivenessUpdater(
+        mockDatabase({ liveness: livenessRepo }),
+        Logger.SILENT,
+      )
 
       const id = createTrackedTxId.random()
-      await updater.deleteFromById(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFromById(id, MIN_TIMESTAMP, MOCK_TRX)
 
       expect(livenessRepo.deleteFromById).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
-        TRX,
+        MOCK_TRX,
       )
     })
   })
@@ -75,7 +80,7 @@ describe(LivenessUpdater.name, () => {
   describe(LivenessUpdater.prototype.transformTransactions.name, () => {
     it('it correctly transforms records to livenessRow', () => {
       const updater = new LivenessUpdater(
-        getMockLivenessRepository(),
+        mockDatabase({ liveness: getMockLivenessRepository() }),
         Logger.SILENT,
       )
 
@@ -102,9 +107,8 @@ describe(LivenessUpdater.name, () => {
 })
 
 function getMockLivenessRepository() {
-  return mockObject<LivenessRepository>({
+  return mockObject<Database['liveness']>({
     deleteFromById: async () => 0,
-    runInTransaction: async (fn) => fn(TRX),
     addMany: async () => 0,
   })
 }

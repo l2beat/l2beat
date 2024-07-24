@@ -1,9 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { L2CostsPricesRepository } from '../repositories/L2CostsPricesRepository'
 import {
   ETHEREUM_COINGECKO_ID,
   L2CostsPricesIndexer,
@@ -18,12 +18,14 @@ describe(L2CostsPricesIndexer.name, () => {
       const from = NOW.add(-1, 'hours')
       const to = NOW
 
-      const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
+      const repository = mockObject<Database['l2CostPrice']>({
         addMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
-        l2CostsPricesRepository: l2CostsPricesRepositoryMock,
+        db: mockObject<Database>({
+          l2CostPrice: repository,
+        }),
       })
 
       const prices = [{ timestamp: from, priceUsd: 3000 }]
@@ -34,7 +36,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(fetchPricesMock).toHaveBeenCalledWith(from, to)
 
-      expect(l2CostsPricesRepositoryMock.addMany).toHaveBeenCalledWith(prices)
+      expect(repository.addMany).toHaveBeenCalledWith(prices)
 
       expect(result).toEqual(to.toNumber())
     })
@@ -43,13 +45,15 @@ describe(L2CostsPricesIndexer.name, () => {
       const from = NOW.add(-1, 'hours')
       const to = NOW
 
-      const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
+      const repository = mockObject<Database['l2CostPrice']>({
         addMany: mockFn().resolvesTo(0),
       })
 
       const indexer = createIndexer({
         tag: 'update-nothing-to-save',
-        l2CostsPricesRepository: l2CostsPricesRepositoryMock,
+        db: mockObject<Database>({
+          l2CostPrice: repository,
+        }),
       })
 
       const fetchPricesMock = mockFn().resolvesTo([])
@@ -59,7 +63,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(fetchPricesMock).toHaveBeenCalledWith(from, to)
 
-      expect(l2CostsPricesRepositoryMock.addMany).not.toHaveBeenCalled()
+      expect(repository.addMany).not.toHaveBeenCalled()
 
       expect(result).toEqual(to.toNumber())
     })
@@ -75,13 +79,15 @@ describe(L2CostsPricesIndexer.name, () => {
         'days',
       )
 
-      const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
+      const repository = mockObject<Database['l2CostPrice']>({
         addMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
         tag: 'update-max-rane',
-        l2CostsPricesRepository: l2CostsPricesRepositoryMock,
+        db: mockObject<Database>({
+          l2CostPrice: repository,
+        }),
       })
 
       const prices = [{ timestamp: from, priceUsd: 3000 }]
@@ -128,18 +134,20 @@ describe(L2CostsPricesIndexer.name, () => {
 
   describe(L2CostsPricesIndexer.prototype.invalidate.name, () => {
     it('deletes records', async () => {
-      const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
+      const repository = mockObject<Database['l2CostPrice']>({
         deleteAfter: mockFn().resolvesTo(NOW.toNumber()),
       })
 
       const indexer = createIndexer({
         tag: 'invalidate',
-        l2CostsPricesRepository: l2CostsPricesRepositoryMock,
+        db: mockObject<Database>({
+          l2CostPrice: repository,
+        }),
       })
 
       const result = await indexer.invalidate(NOW.toNumber())
 
-      expect(l2CostsPricesRepositoryMock.deleteAfter).toHaveBeenCalledWith(NOW)
+      expect(repository.deleteAfter).toHaveBeenCalledWith(NOW)
 
       expect(result).toEqual(NOW.toNumber())
     })
@@ -152,8 +160,10 @@ function createIndexer(deps?: Partial<L2CostsPricesIndexerDeps>) {
     logger: Logger.SILENT,
     minHeight: 0,
     parents: [],
-    l2CostsPricesRepository: mockObject<L2CostsPricesRepository>({
-      addMany: mockFn().resolvesTo(1),
+    db: mockObject<Database>({
+      l2CostPrice: mockObject<Database['l2CostPrice']>({
+        addMany: mockFn().resolvesTo(1),
+      }),
     }),
     coingeckoQueryService: mockObject<CoingeckoQueryService>({
       getUsdPriceHistoryHourly: mockFn().resolvesTo([]),

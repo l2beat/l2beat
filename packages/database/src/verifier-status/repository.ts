@@ -49,7 +49,10 @@ export class VerifierStatusRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.verifier_status').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.verifier_status')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

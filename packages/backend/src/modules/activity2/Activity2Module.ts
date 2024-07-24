@@ -5,9 +5,7 @@ import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
 import { ActivityIndexer } from './indexers/ActivityIndexer'
@@ -66,10 +64,7 @@ function createActivityIndexers(
     return []
   }
   const activityRepository = db.activity
-  const indexerService = new IndexerService(
-    peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(IndexerConfigurationRepository),
-  )
+  const indexerService = new IndexerService(db)
 
   return activityConfig.projects
     .flatMap((project) => {

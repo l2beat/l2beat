@@ -1,6 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
+import { Database, Transaction } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -10,16 +10,13 @@ import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { AmountRepository } from '../repositories/AmountRepository'
-import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
   amountService: AmountService
-  amountRepository: AmountRepository
-  blockTimestampRepository: BlockTimestampRepository
+  db: Database
   syncOptimizer: SyncOptimizer
   chain: string
 }
@@ -35,7 +32,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     from: number,
     to: number,
     configurations: Configuration<ChainAmountConfig>[],
-    trx: Knex.Transaction,
+    trx: Transaction,
   ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp.toNumber() > to) {
@@ -69,17 +66,16 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
         .length,
     })
-    await this.$.amountRepository.addMany(nonZeroAmounts, trx)
+    await this.$.db.amount.addMany(nonZeroAmounts, trx)
 
     return timestamp.toNumber()
   }
 
   private async getBlockNumber(timestamp: UnixTime) {
-    const blockNumber =
-      await this.$.blockTimestampRepository.findByChainAndTimestamp(
-        this.$.chain,
-        timestamp,
-      )
+    const blockNumber = await this.$.db.blockTimestamp.findByChainAndTimestamp(
+      this.$.chain,
+      timestamp,
+    )
     assert(
       blockNumber,
       `Block number not found for timestamp: ${timestamp.toNumber()}`,
@@ -89,12 +85,11 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
 
   override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
-      const deletedRecords =
-        await this.$.amountRepository.deleteByConfigInTimeRange(
-          configuration.id,
-          new UnixTime(configuration.from),
-          new UnixTime(configuration.to),
-        )
+      const deletedRecords = await this.$.db.amount.deleteByConfigInTimeRange(
+        configuration.id,
+        new UnixTime(configuration.from),
+        new UnixTime(configuration.to),
+      )
 
       if (deletedRecords > 0) {
         this.logger.info('Deleted amounts for configuration', {
