@@ -7,12 +7,11 @@ import { SubVerifiersTable } from './SubVerifiersTable'
 import { VerifiedCell } from './VerifiedCell'
 import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
 
-import { AccordionHeader } from '@radix-ui/react-accordion'
+import { AccordionHeader, AccordionTrigger } from '@radix-ui/react-accordion'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
-  AccordionTrigger,
 } from '~/app/_components/accordion'
 import { OutLink } from '~/app/_components/out-link'
 import { cn } from '~/utils/cn'
@@ -50,8 +49,8 @@ export function Verifiers(props: Props) {
       <Accordion type="multiple" className="w-full">
         {props.items.map((item) => (
           <AccordionItem
-            key={item.contractAddress.toString()}
-            value={item.contractAddress.toString()}
+            key={`${item.contractAddress.toString()}-${+item.chainId}`}
+            value={`${item.contractAddress.toString()}-${+item.chainId}`}
             className={cn(
               'hover:!bg-zinc-100 dark:hover:!bg-neutral-800 transition-colors dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-gray-100 w-full',
             )}
@@ -60,7 +59,7 @@ export function Verifiers(props: Props) {
               <AccordionTrigger asChild>
                 <div
                   className={cn(
-                    'md:h-14 cursor-pointer border-gray-200 border-b dark:border-zinc-700 group-data-[state="open"]/accordion-item:border-none text-left flex w-full items-center justify-between',
+                    'group md:h-14 cursor-pointer border-gray-200 border-b dark:border-zinc-700 data-[state=open]:border-none text-left flex w-full items-center justify-between',
                     grid,
                   )}
                 >
@@ -86,7 +85,7 @@ export function Verifiers(props: Props) {
                     <LastUsedCell days={item.lastUsedDaysAgo} />
                   </div>
                   <div className="flex items-center px-1.5 md:p-0">
-                    <ChevronDownIcon className='fill-current transition-transform duration-300 ease-out group-data-[state="open"]/accordion-item:rotate-180' />
+                    <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
                   </div>
                 </div>
               </AccordionTrigger>

@@ -6,9 +6,11 @@ import { env } from '~/env'
 import { TRPCReactProvider } from '~/trpc/react'
 import { restoreCollapsibleNavStateScript } from './_components/nav/consts'
 
+import { getCollection } from '~/content/get-collection'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { roboto } from '../fonts'
 import '../styles/globals.css'
+import { GlossaryContextProvider } from './_components/markdown/glossary-context'
 import { TooltipProvider } from './_components/tooltip/tooltip'
 
 export const metadata: Metadata = getDefaultMetadata()
@@ -18,6 +20,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode
 }>) {
+  const terms = getCollection('glossary')
   const shouldInjectToolbar = process.env.NODE_ENV === 'development'
 
   return (
@@ -39,7 +42,11 @@ export default async function RootLayout({
               storageKey="l2beat-theme"
               disableTransitionOnChange
             >
-              <TooltipProvider delayDuration={300}>{children}</TooltipProvider>
+              <TooltipProvider delayDuration={300}>
+                <GlossaryContextProvider terms={terms}>
+                  {children}
+                </GlossaryContextProvider>
+              </TooltipProvider>
             </ThemeProvider>
           </TRPCReactProvider>
         </PlausibleProvider>

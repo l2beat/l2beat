@@ -11,7 +11,8 @@
     "0x7AC440cAe8EB6328de4fA621163a792c1EA9D4fE",
     "0x6260aF48e8948617b8FA17F4e5CEa2d21D21554B",
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504",
-    "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4" // batch bridge
+    "0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4", // batch bridge
+    "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a" // custom pufETH escrow
   ],
   "names": {
     "0xF8B1378579659D8F7EE5f3C929c2f3E332E41Fd6": "L1GatewayRouter",
@@ -52,7 +53,9 @@
     "0x63FB51C55d9605a75F8872C80De260a00fACfaA2": "ZkEvmVerifierV1-1",
     "0x03a72B00D036C479105fF98A1953b15d9c510110": "PlonkVerifierV2",
     "0x6625C6332c9F91F2D27c304E729B86db87A3f504": "wstETHescrowLido",
-    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": "wstETHescrowLidoProxyAdmin"
+    "0xCC2C53556Bc75217cf698721b29071d6f12628A9": "wstETHescrowLidoProxyAdmin",
+    "0xA033Ff09f2da45f0e9ae495f525363722Df42b2a": "pufEthEscrow",
+    "0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d": "PufferFinanceOpsMultisig"
   },
   "overrides": {
     "wstETHescrowLidoProxyAdmin": {

@@ -178,6 +178,12 @@ export const scroll: Layer2 = {
         upgradableBy: ['Lido (Lido Agent)'],
         upgradeDelay: 'No delay',
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xA033Ff09f2da45f0e9ae495f525363722Df42b2a'),
+        tokens: ['pufETH'],
+        upgradableBy: ['PufferFinanceOpsMultisig'],
+        upgradeDelay: 'No delay',
+      }),
     ],
     transactionApi: {
       type: 'rpc',
@@ -672,6 +678,17 @@ export const scroll: Layer2 = {
       'EmergencyMultisig',
       'Can revert batches, remove sequencers and provers, and pause contracts.',
     ),
+    ...discovery.getMultisigPermission(
+      'PufferFinanceOpsMultisig',
+      'Can upgrade the pufETH custom escrow.',
+    ),
+    {
+      name: 'Lido (Lido Agent)',
+      accounts: [
+        discovery.getPermissionedAccount('wstETHescrowLidoProxyAdmin', 'owner'),
+      ],
+      description: 'Can upgrade the wstETH custom escrow.',
+    },
     {
       name: 'Sequencers',
       accounts: discovery.getPermissionedAccounts('ScrollChain', 'sequencers'),
