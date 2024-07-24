@@ -1,9 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
-
-import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 import { TvlCleaner } from './TvlCleaner'
@@ -18,12 +17,12 @@ describe(TvlCleaner.name, () => {
         hourlyCutOffWithGracePeriod: UnixTime.ZERO,
         sixHourlyCutOffWithGracePeriod: UnixTime.ZERO,
       })
-      const mockRepository = mockObject<TvlCleanerRepository>()
+      const mockRepository = mockObject<Database['tvlCleaner']>()
       const tvlCleaner = new TvlCleaner(
         clock,
         Logger.SILENT,
         mockSyncOptimizer,
-        mockRepository,
+        mockObject<Database>({ tvlCleaner: mockRepository }),
         [],
       )
 
@@ -76,7 +75,7 @@ describe(TvlCleaner.name, () => {
       const firstTableSixHourlyCleanedUntil = UnixTime.fromDate(
         new Date('2024-01-03T06:00:00Z'),
       )
-      const repository = mockObject<TvlCleanerRepository>({
+      const repository = mockObject<Database['tvlCleaner']>({
         find: mockFn()
           .given(firstTable.constructor.name)
           .resolvesToOnce({
@@ -93,7 +92,7 @@ describe(TvlCleaner.name, () => {
         clock,
         Logger.SILENT,
         mockSyncOptimizer,
-        repository,
+        mockObject<Database>({ tvlCleaner: repository }),
         [firstTable, secondTable],
       )
 
@@ -152,7 +151,7 @@ describe(TvlCleaner.name, () => {
         deleteSixHourlyUntil: mockFn(),
       })
 
-      const repository = mockObject<TvlCleanerRepository>({
+      const repository = mockObject<Database['tvlCleaner']>({
         find: mockFn().resolvesTo({
           repositoryName: firstTable.constructor.name,
           hourlyCleanedUntil: hourlyDeletionBoundary,
@@ -165,7 +164,7 @@ describe(TvlCleaner.name, () => {
         clock,
         Logger.SILENT,
         mockSyncOptimizer,
-        repository,
+        mockObject<Database>({ tvlCleaner: repository }),
         [firstTable],
       )
 

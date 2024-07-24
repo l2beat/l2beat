@@ -71,7 +71,7 @@ function Header() {
         <div className="w-full">
           <div className="flex flex-col items-start gap-6 lg:flex-row lg:justify-between">
             <h1 className="text-6xl font-bold">FAQ</h1>
-            <p className="font-light w-full text-lg lg:w-2/3">
+            <p className="w-full text-lg font-light lg:w-2/3">
               Hi! We are glad you&apos;ve made it here. Below you will find
               answers to most frequently asked questions about L2BEAT.
             </p>

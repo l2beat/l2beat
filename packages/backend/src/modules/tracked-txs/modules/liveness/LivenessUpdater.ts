@@ -1,42 +1,37 @@
 import { Logger } from '@l2beat/backend-tools'
-import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
-
+import { Database, LivenessRecord, Transaction } from '@l2beat/database'
 import { TrackedTxId } from '@l2beat/shared'
+import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
 import { TrackedTxResult } from '../../types/model'
-import {
-  LivenessRecord,
-  LivenessRepository,
-} from './repositories/LivenessRepository'
 
 export class LivenessUpdater implements TxUpdaterInterface {
   type: TrackedTxsConfigType = 'liveness'
 
   constructor(
-    private readonly livenessRepository: LivenessRepository,
+    private readonly db: Database,
     private readonly logger: Logger,
   ) {
     this.logger = this.logger.for(this)
   }
 
-  async update(transactions: TrackedTxResult[], knexTx?: Knex.Transaction) {
+  async update(transactions: TrackedTxResult[], trx?: Transaction) {
     if (transactions.length === 0) {
       this.logger.info('Update skipped - no transactions to process')
       return
     }
 
     const transformedTransactions = this.transformTransactions(transactions)
-    await this.livenessRepository.addMany(transformedTransactions, knexTx)
+    await this.db.liveness.addMany(transformedTransactions, trx)
     this.logger.info('Updated liveness', { count: transactions.length })
   }
 
   async deleteFromById(
     id: TrackedTxId,
     fromInclusive: UnixTime,
-    knexTrx: Knex.Transaction,
+    trx: Transaction,
   ) {
-    await this.livenessRepository.deleteFromById(id, fromInclusive, knexTrx)
+    await this.db.liveness.deleteFromById(id, fromInclusive, trx)
   }
 
   transformTransactions(transactions: TrackedTxResult[]): LivenessRecord[] {

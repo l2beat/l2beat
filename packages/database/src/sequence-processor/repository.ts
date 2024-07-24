@@ -27,7 +27,10 @@ export class SequenceProcessorRepository {
     return row ? toRecord(row) : null
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.sequence_processor').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.sequence_processor')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

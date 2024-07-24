@@ -8,9 +8,9 @@ export function WalletDrawer({ children }: { children: React.ReactNode }) {
     <Drawer>
       {children}
       <DrawerContent>
-        <div className="py-8 px-4 flex flex-col gap-8">
+        <div className="flex flex-col gap-8 px-4 py-8">
           <AddressForm />
-          <DrawerClose className="text-zinc-800 font-medium text-sm underline">
+          <DrawerClose className="text-sm font-medium text-zinc-800 underline">
             Close overlay
           </DrawerClose>
         </div>

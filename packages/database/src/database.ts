@@ -46,6 +46,7 @@ export function createDatabase(config?: PoolConfig) {
     transaction: <T>(cb: (trx: Transaction) => Promise<T>): Promise<T> => {
       return db.transaction().execute(cb)
     },
+    close: () => db.destroy(),
 
     // DA-BEAT
     currentPrice: new CurrentPriceRepository(db),

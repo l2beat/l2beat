@@ -12,6 +12,10 @@ export function describeDatabase(name: string, suite: (db: Database) => void) {
       }
     })
 
+    after(async function () {
+      await database?.close()
+    })
+
     if (database) {
       suite(database)
     } else {

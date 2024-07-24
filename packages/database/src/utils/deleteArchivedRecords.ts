@@ -15,12 +15,12 @@ type TablesWithTimestamp = {
 /**
  * WARNING: this method requires table to have timestamp column
  */
-export function deleteHourlyUntil(
+export async function deleteHourlyUntil(
   db: PostgresDatabase,
   tableName: TablesWithTimestamp,
   dateRange: CleanDateRange,
-) {
-  return db
+): Promise<number> {
+  const result = await db
     .deleteFrom(tableName)
     .where((eb) =>
       eb.and(
@@ -32,18 +32,19 @@ export function deleteHourlyUntil(
         ].filter(notUndefined),
       ),
     )
-    .execute()
+    .executeTakeFirst()
+  return Number(result.numDeletedRows)
 }
 
 /**
  * WARNING: this method requires table to have timestamp column
  */
-export function deleteSixHourlyUntil(
+export async function deleteSixHourlyUntil(
   db: PostgresDatabase,
   tableName: TablesWithTimestamp,
   dateRange: CleanDateRange,
-) {
-  return db
+): Promise<number> {
+  const result = await db
     .deleteFrom(tableName)
     .where((eb) =>
       eb.and(
@@ -57,5 +58,6 @@ export function deleteSixHourlyUntil(
         ].filter(notUndefined),
       ),
     )
-    .execute()
+    .executeTakeFirst()
+  return Number(result.numDeletedRows)
 }

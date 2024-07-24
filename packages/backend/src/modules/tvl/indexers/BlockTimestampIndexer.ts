@@ -1,18 +1,18 @@
 import {} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 
+import { Database } from '@l2beat/database'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
-import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
   blockTimestampProvider: BlockTimestampProvider
-  blockTimestampRepository: BlockTimestampRepository
+  db: Database
   chain: string
   syncOptimizer: SyncOptimizer
 }
@@ -49,7 +49,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       blockNumber,
     })
 
-    await this.$.blockTimestampRepository.add({
+    await this.$.db.blockTimestamp.add({
       chain: this.$.chain,
       timestamp,
       blockNumber,
@@ -64,11 +64,10 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    const deletedRecords =
-      await this.$.blockTimestampRepository.deleteAfterExclusive(
-        this.$.chain,
-        new UnixTime(targetHeight),
-      )
+    const deletedRecords = await this.$.db.blockTimestamp.deleteAfterExclusive(
+      this.$.chain,
+      new UnixTime(targetHeight),
+    )
 
     if (deletedRecords > 0) {
       this.logger.info('Deleted block timestamps after height', {

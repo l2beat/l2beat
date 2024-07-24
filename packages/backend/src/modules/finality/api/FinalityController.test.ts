@@ -364,7 +364,7 @@ function getMockFinalityRepository(records: FinalityRecord[]) {
       return Promise.resolve(1)
     },
     deleteAll() {
-      return Promise.resolve([])
+      return Promise.resolve(1)
     },
   })
 }
@@ -382,7 +382,7 @@ function getMockLivenessRepository(records: LivenessRecord[]) {
       return Promise.resolve(1)
     },
     deleteAll() {
-      return Promise.resolve([])
+      return Promise.resolve(1)
     },
   })
 }

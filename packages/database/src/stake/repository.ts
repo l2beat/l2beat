@@ -24,6 +24,9 @@ export class StakeRepository {
   }
 
   async findByIds(ids: string[]) {
+    if (ids.length === 0) {
+      return []
+    }
     const res = await this.db
       .selectFrom('public.Stake')
       .select(selectStake)
@@ -42,7 +45,8 @@ export class StakeRepository {
       .execute()
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.Stake').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('public.Stake').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

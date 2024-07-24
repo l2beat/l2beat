@@ -97,7 +97,7 @@ export function ContractEntry({
             ))}
           </div>
           {contract.description && (
-            <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400">
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {contract.description}
             </Markdown>
           )}

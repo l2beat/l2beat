@@ -17,7 +17,7 @@ import {
 
 export default function Loading() {
   return (
-    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto py-10">
+    <main className="mx-auto w-screen max-w-[1176px] px-0 py-10 sm:px-4 md:px-12">
       <div className="flex flex-col gap-6">
         <SkeletonHeader />
         <SkeletonTable />
@@ -30,16 +30,16 @@ export default function Loading() {
 function SkeletonHeader() {
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
-      <h1 className="font-bold text-3xl">Assets&apos; Risks</h1>
-      <Skeleton className="w-full h-3" />
-      <Skeleton className="w-3/4 h-3" />
-      <div className="grid grid-cols-1 md:gap-2 gap-3 md:grid-cols-4">
-        <div className="flex flex-col gap-[5px] col-span-2">
-          <span className="text-zinc-500 font-bold text-xs">Value</span>
+      <h1 className="text-3xl font-bold">Assets&apos; Risks</h1>
+      <Skeleton className="h-3 w-full" />
+      <Skeleton className="h-3 w-3/4" />
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-4 md:gap-2">
+        <div className="col-span-2 flex flex-col gap-[5px]">
+          <span className="text-xs font-bold text-zinc-500">Value</span>
           <Skeleton className="w-40" />
         </div>
-        <div className="flex flex-col gap-[5px] col-span-2">
-          <span className="text-zinc-500 font-bold text-xs">Wallet</span>
+        <div className="col-span-2 flex flex-col gap-[5px]">
+          <span className="text-xs font-bold text-zinc-500">Wallet</span>
           <Skeleton className="w-40" />
         </div>
       </div>
@@ -49,8 +49,8 @@ function SkeletonHeader() {
 
 function SkeletonTable() {
   return (
-    <Card className="rounded-none sm:rounded-xl overflow-x-auto">
-      <div className="flex justify-between items-center">
+    <Card className="overflow-x-auto rounded-none sm:rounded-xl">
+      <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">Assets</h2>
         <FilterInput />
       </div>
@@ -84,7 +84,7 @@ function SkeletonColumn({ column }: { column: SingleColumnConfig }) {
     <th
       className={cn(
         'whitespace-pre py-2 pl-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
-        'pr-3 last:pr-0 md:pr-4',
+        'pr-3 md:pr-4',
         'first:pl-[18px] last:pr-[18px]',
         column.className,
       )}
@@ -133,22 +133,22 @@ function SkeletonRow() {
     >
       <Cell>
         <div className="flex flex-col gap-2">
-          <Skeleton className="w-28 h-4" />
-          <Skeleton className="w-24 h-3" />
+          <Skeleton className="h-4 w-28" />
+          <Skeleton className="h-3 w-24" />
         </div>
       </Cell>
       <Cell className="flex items-center gap-2">
         <Skeleton className="size-8" />
         <div className="flex flex-col gap-2">
           <Skeleton className="h-4 w-28" />
-          <Skeleton className="w-60 h-3" />
+          <Skeleton className="h-3 w-60" />
         </div>
       </Cell>
       <Cell>
-        <Skeleton className="w-20 h-4" />
+        <Skeleton className="h-4 w-20" />
       </Cell>
       <Cell>
-        <Skeleton className="w-24 h-4" />
+        <Skeleton className="h-4 w-24" />
       </Cell>
     </tr>
   )
@@ -158,7 +158,7 @@ function Skeleton({ className }: { className?: ClassNameValue }) {
   return (
     <div
       className={cn(
-        'bg-zinc-300 h-6 rounded min-w-max animate-pulse',
+        'h-6 min-w-max animate-pulse rounded bg-zinc-300',
         className,
       )}
     />

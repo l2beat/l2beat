@@ -31,12 +31,16 @@ export class BlockTimestampRepository {
     return row ? toRecord(row).blockNumber : null
   }
 
-  async deleteAfterExclusive(chain: string, timestamp: UnixTime) {
-    return await this.db
+  async deleteAfterExclusive(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.block_timestamps')
       .where('chain', '=', chain)
       .where('timestamp', '>', timestamp.toDate())
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   // #region methods used only in TvlCleaner
@@ -73,7 +77,10 @@ export class BlockTimestampRepository {
     return rows.length
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.block_timestamps').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.block_timestamps')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

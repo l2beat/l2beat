@@ -15,7 +15,7 @@ export async function getDaSummaryEntries() {
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  return daLayers.flatMap((daLayer) =>
+  const entries = daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((bridge) => {
       const projectEconomicSecurity = economicSecurity[daLayer.id]
       const tvs = getSumFor(bridge.usedIn.map((project) => project.id))
@@ -34,6 +34,8 @@ export async function getDaSummaryEntries() {
       }
     }),
   )
+
+  return entries.sort((a, b) => b.tvs - a.tvs)
 }
 
 export type DaSummaryEntry = Awaited<
