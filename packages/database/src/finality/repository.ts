@@ -45,6 +45,9 @@ export class FinalityRepository {
   }
 
   async getLatestGroupedByProjectId(projectIds: string[]) {
+    if (projectIds.length === 0) {
+      return []
+    }
     const maxTimestampSubquery = this.db
       .selectFrom('public.finality')
       .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])

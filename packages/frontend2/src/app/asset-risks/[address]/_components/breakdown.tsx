@@ -48,7 +48,7 @@ export function Breakdown() {
     <div className="mt-1 flex flex-col">
       <div
         className={cn(
-          'h-[14px] md:h-[56px] w-full max-w-full md:my-0 relative',
+          'relative h-[14px] w-full max-w-full md:my-0 md:h-[56px]',
         )}
       >
         {groups.map((g, i) => {
@@ -80,7 +80,7 @@ export function Breakdown() {
             <div className="flex items-center gap-1">
               <div
                 className={cn(
-                  'size-4 bg-gradient-to-r border rounded',
+                  'size-4 rounded border bg-gradient-to-r',
                   g.className,
                 )}
               />
@@ -142,10 +142,10 @@ function BreakdownItem({
     <div
       ref={parentRef}
       className={cn(
-        'rounded-lg h-full last:mr-0 bg-gradient-to-r border',
+        'h-full rounded-lg border bg-gradient-to-r last:mr-0',
         'flex flex-col items-end justify-end',
-        'absolute overflow-hidden overflow-ellipsis',
-        'py-0 md:py-[10px] px-0 md:px-3',
+        'absolute overflow-hidden text-ellipsis',
+        'p-0 md:px-3 md:py-[10px]',
         group.className,
       )}
       style={{
@@ -156,7 +156,7 @@ function BreakdownItem({
     >
       <span
         ref={valueRef}
-        className={cn('text-sm hidden md:inline-block', group.valueClassName)}
+        className={cn('hidden text-sm md:inline-block', group.valueClassName)}
       >
         ${formatNumberWithCommas(group.value)}
       </span>

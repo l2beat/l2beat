@@ -9,6 +9,11 @@
     "plugin:@typescript-eslint/stylistic-type-checked",
     "plugin:tailwindcss/recommended"
   ],
+  "settings": {
+    "tailwindcss": {
+      "callees": ["cn", "cva"]
+    }
+  },
   "rules": {
     "@typescript-eslint/array-type": "off",
     "@typescript-eslint/consistent-type-definitions": "off",
@@ -24,6 +29,11 @@
     "@typescript-eslint/no-misused-promises": [
       "error",
       { "checksVoidReturn": { "attributes": false } }
-    ]
+    ],
+    "tailwindcss/classnames-order": ["error"],
+    "tailwindcss/enforces-negative-arbitrary-values": ["error"],
+    "tailwindcss/enforces-shorthand": ["error"],
+    "tailwindcss/no-contradicting-classname": ["error"],
+    "tailwindcss/no-unnecessary-arbitrary-value": ["error"]
   }
 }

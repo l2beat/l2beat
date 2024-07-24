@@ -10,7 +10,7 @@ export function IndexCell({ children, className }: IndexCellProps) {
   return (
     <span
       className={cn(
-        'ml-auto tabular-nums font-medium text-gray-50 text-xs dark:font-normal dark:text-gray-600',
+        'ml-auto text-xs font-medium tabular-nums text-gray-50 dark:font-normal dark:text-gray-600',
         className,
       )}
     >

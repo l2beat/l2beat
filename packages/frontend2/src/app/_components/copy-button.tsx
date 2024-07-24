@@ -39,13 +39,13 @@ export function CopyButton(props: Props) {
         <div className="relative size-6">
           <CopyIcon
             className={cn(
-              'absolute inset-0 size-6 fill-blue-700 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550 transition-opacity duration-200',
+              'absolute inset-0 size-6 fill-blue-700 transition-opacity duration-200 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550',
               copied ? 'opacity-0' : 'opacity-100',
             )}
           />
           <SatisfiedIcon
             className={cn(
-              'absolute inset-0 size-6 fill-green-700 dark:fill-green-450 transition-opacity duration-200',
+              'absolute inset-0 size-6 fill-green-700 transition-opacity duration-200 dark:fill-green-450',
               copied ? 'opacity-100' : 'opacity-0',
             )}
           />

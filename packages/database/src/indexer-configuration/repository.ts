@@ -38,6 +38,9 @@ export class IndexerConfigurationRepository {
   }
 
   async getSavedConfigurationsByIds(configurationIds: string[]) {
+    if (configurationIds.length === 0) {
+      return []
+    }
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
