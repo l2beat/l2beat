@@ -19,8 +19,8 @@ export class L2CostRepository extends BaseRepository {
     }
     const rows = records.map(toRow)
 
-    await this.batch(rows, 1_000, async (trx, batch) => {
-      await trx.insertInto('public.l2_costs').values(batch).execute()
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db.insertInto('public.l2_costs').values(batch).execute()
     })
 
     return rows.length

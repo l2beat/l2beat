@@ -1,31 +1,24 @@
-import { AsyncLocalStorage } from 'node:async_hooks'
-import { PostgresDatabase, Transaction } from './kysely'
-
-export const transactionContext = new AsyncLocalStorage<Transaction>()
+import { DatabaseClient, QueryBuilder } from './kysely'
 
 export class BaseRepository {
-  constructor(private readonly database: PostgresDatabase) {}
+  protected transaction: DatabaseClient['transaction']
 
-  protected get db(): PostgresDatabase | Transaction {
-    const transaction = transactionContext.getStore()
-    return transaction ?? this.database
+  constructor(private readonly client: DatabaseClient) {
+    this.transaction = this.client.transaction.bind(this.client)
   }
 
-  protected async batch<T>(
+  protected get db(): QueryBuilder {
+    return this.client.db
+  }
+
+  protected batch<T>(
     rows: T[],
     batchSize: number,
-    execute: (trx: Transaction, batch: T[]) => Promise<void>,
+    execute: (batch: T[]) => Promise<void>,
   ): Promise<void> {
-    const db = this.db
-    if (db.isTransaction) {
+    return this.transaction(async () => {
       for (let i = 0; i < rows.length; i += batchSize) {
-        await execute(db as Transaction, rows.slice(i, i + batchSize))
-      }
-      return
-    }
-    return db.transaction().execute(async (trx) => {
-      for (let i = 0; i < rows.length; i += batchSize) {
-        await execute(trx, rows.slice(i, i + batchSize))
+        await execute(rows.slice(i, i + batchSize))
       }
     })
   }

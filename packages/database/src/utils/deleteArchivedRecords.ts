@@ -1,6 +1,6 @@
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
-import { PostgresDatabase, Transaction } from '../kysely'
+import { QueryBuilder } from '../kysely'
 import { DB } from '../kysely/generated/types'
 
 export interface CleanDateRange {
@@ -16,7 +16,7 @@ type TablesWithTimestamp = {
  * WARNING: this method requires table to have timestamp column
  */
 export async function deleteHourlyUntil(
-  db: PostgresDatabase | Transaction,
+  db: QueryBuilder,
   tableName: TablesWithTimestamp,
   dateRange: CleanDateRange,
 ): Promise<number> {
@@ -40,7 +40,7 @@ export async function deleteHourlyUntil(
  * WARNING: this method requires table to have timestamp column
  */
 export async function deleteSixHourlyUntil(
-  db: PostgresDatabase | Transaction,
+  db: QueryBuilder,
   tableName: TablesWithTimestamp,
   dateRange: CleanDateRange,
 ): Promise<number> {

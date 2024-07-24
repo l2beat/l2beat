@@ -16,8 +16,8 @@ export class AggregatedL2CostRepository extends BaseRepository {
   async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await this.batch(rows, 5_000, async (trx, batch) => {
-      await trx
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
         .insertInto('public.aggregated_l2_costs')
         .values(batch)
         .onConflict((cb) =>

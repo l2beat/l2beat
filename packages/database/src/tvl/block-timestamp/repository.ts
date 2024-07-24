@@ -66,8 +66,11 @@ export class BlockTimestampRepository extends BaseRepository {
 
     const rows = records.map(toRow)
 
-    await this.batch(rows, 2_000, async (trx, batch) => {
-      await trx.insertInto('public.block_timestamps').values(batch).execute()
+    await this.batch(rows, 2_000, async (batch) => {
+      await this.db
+        .insertInto('public.block_timestamps')
+        .values(batch)
+        .execute()
     })
 
     return rows.length

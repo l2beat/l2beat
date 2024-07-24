@@ -72,8 +72,8 @@ export class AmountRepository extends BaseRepository {
 
     const rows = records.map(toRow)
 
-    await this.batch(rows, 1_000, async (trx, batch) => {
-      await trx.insertInto('public.amounts').values(batch).execute()
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db.insertInto('public.amounts').values(batch).execute()
     })
 
     return rows.length

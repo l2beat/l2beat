@@ -22,8 +22,11 @@ class TestRepository extends BaseRepository {
   }
 
   async batchInsert(values: number[]) {
-    await this.batch(values, 2, async (trx, values) => {
-      await trx.insertInto('public.prices').values(values.map(toRow)).execute()
+    await this.batch(values, 2, async (values) => {
+      await this.db
+        .insertInto('public.prices')
+        .values(values.map(toRow))
+        .execute()
     })
   }
 
@@ -42,7 +45,7 @@ class TestRepository extends BaseRepository {
 }
 
 function createTestRepository(db: Database) {
-  const pgDb = db.activity['database']
+  const pgDb = db.activity['client']
   return new TestRepository(pgDb)
 }
 

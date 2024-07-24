@@ -86,8 +86,8 @@ export class LivenessRepository extends BaseRepository {
 
     const rows = records.map(toRow)
 
-    await this.batch(rows, 10_000, async (trx, batch) => {
-      await trx.insertInto('public.liveness').values(batch).execute()
+    await this.batch(rows, 10_000, async (batch) => {
+      await this.db.insertInto('public.liveness').values(batch).execute()
     })
 
     return rows.length

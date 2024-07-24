@@ -55,8 +55,8 @@ export class ValueRepository extends BaseRepository {
   async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await this.batch(rows, 2_000, async (trx, batch) => {
-      await trx
+    await this.batch(rows, 2_000, async (batch) => {
+      await this.db
         .insertInto('public.values')
         .values(batch)
         .onConflict((cb) =>

@@ -6,8 +6,8 @@ export class IndexerConfigurationRepository extends BaseRepository {
   async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
-    await this.batch(rows, 5_000, async (trx, batch) => {
-      await trx
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
         .insertInto('public.indexer_configurations')
         .values(batch)
         .onConflict((cb) =>

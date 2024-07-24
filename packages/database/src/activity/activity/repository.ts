@@ -16,8 +16,8 @@ export class ActivityRepository extends BaseRepository {
   async addOrUpdateMany(records: ActivityRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await this.batch(rows, 5_000, async (trx, batch) => {
-      await trx
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
         .insertInto('public.activity')
         .values(batch)
         .onConflict((cb) =>

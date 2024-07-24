@@ -76,8 +76,8 @@ export class FinalityRepository extends BaseRepository {
 
     const rows = records.map(toRow)
 
-    await this.batch(rows, 10_000, async (trx, batch) => {
-      await trx.insertInto('public.finality').values(batch).execute()
+    await this.batch(rows, 10_000, async (batch) => {
+      await this.db.insertInto('public.finality').values(batch).execute()
     })
 
     return rows.length
