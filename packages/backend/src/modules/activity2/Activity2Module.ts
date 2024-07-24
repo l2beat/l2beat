@@ -4,6 +4,7 @@ import { notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { ZksyncClient } from '../../peripherals/zksync/ZksyncClient'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
@@ -79,7 +80,7 @@ function createActivityIndexers(
       switch (project.config.type) {
         case 'rpc': {
           const blockTimestampProvider = new BlockTimestampProvider({
-            rpcClient: peripherals.getClient(RpcClient, {
+            client: peripherals.getClient(RpcClient, {
               url: project.config.url,
               callsPerMinute: project.config.callsPerMinute,
             }),
@@ -96,7 +97,35 @@ function createActivityIndexers(
             projectId: project.id,
             // TODO: add batchSize to config
             batchSize: 100,
-            minHeight: project.config.startBlock ?? 0,
+            minHeight: project.config.startBlock ?? 1,
+            parents: [blockTargetIndexer],
+            txsCountProvider,
+            indexerService,
+            activityRepository,
+          })
+
+          return { blockTargetIndexer, activityIndexer }
+        }
+        case 'zksync': {
+          const blockTimestampProvider = new BlockTimestampProvider({
+            client: peripherals.getClient(ZksyncClient, {
+              url: project.config.url,
+              callsPerMinute: project.config.callsPerMinute,
+            }),
+            logger,
+          })
+          const blockTargetIndexer = new BlockTargetIndexer(
+            logger,
+            clock,
+            blockTimestampProvider,
+          )
+
+          const activityIndexer = new ActivityIndexer({
+            logger,
+            projectId: project.id,
+            // TODO: add batchSize to config
+            batchSize: 100,
+            minHeight: 1,
             parents: [blockTargetIndexer],
             txsCountProvider,
             indexerService,

@@ -7,6 +7,7 @@ import {
   getErrorMessage,
 } from '@l2beat/shared-pure'
 
+import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import {
   ZksyncBlocksResultSchema,
   ZksyncResponse,
@@ -58,6 +59,24 @@ export class ZksyncClient {
     }
 
     return parsed.data.blockNumber
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
+    const end = await this.getLatestBlock()
+
+    return await getBlockNumberAtOrBefore(
+      timestamp,
+      start,
+      end,
+      async (blockNumber) => {
+        const transactions = await this.getTransactionsInBlock(blockNumber)
+        return {
+          timestamp: Math.min(
+            ...transactions.map((t) => t.createdAt.toNumber()),
+          ),
+        }
+      },
+    )
   }
 
   async getTransactionsInBlock(blockNumber: number) {
