@@ -74,7 +74,6 @@ function Breadcrumbs(props: { icon: string; title: string }) {
           src={props.icon}
           className="inline size-4"
         />
-        {/* TODO: LINEAR AND DESCRIPTION FONT SIZE */}
         <span>{props.title}</span>
       </span>
     </nav>
