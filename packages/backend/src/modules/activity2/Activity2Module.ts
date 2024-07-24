@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
-import { assert, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -117,7 +117,8 @@ function createActivityIndexers(
           batchSize: getBatchSizeFromCallsPerMinute(
             activityConfig.starkexCallsPerMinute,
           ),
-          minHeight: UnixTime.now().toStartOf('day').add(-3, 'days').toDays(), //project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
+          minHeight:
+            project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
           parents: [dayTargetIndexer],
           txsCountProvider,
           indexerService,
