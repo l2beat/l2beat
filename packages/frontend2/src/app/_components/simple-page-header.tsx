@@ -10,7 +10,7 @@ interface PageHeaderProps {
 export function SimplePageHeader({ children, className }: PageHeaderProps) {
   return (
     <header className={cn('mt-4 md:mt-12', className)}>
-      <h1 className="mb-1 font-bold text-3xl">{children}</h1>
+      <h1 className="mb-1 text-3xl font-bold">{children}</h1>
       <HorizontalSeparator className="mt-2 md:hidden" />
     </header>
   )

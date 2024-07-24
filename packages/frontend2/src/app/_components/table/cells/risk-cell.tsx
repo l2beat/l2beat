@@ -54,7 +54,7 @@ export function RiskCell({ risk }: Props) {
         ) : (
           <span
             className={
-              '-mt-1 mb-1 text-2xs text-gray-550 md:m-0 dark:text-gray-500 md:text-xs md:leading-none'
+              '-mt-1 mb-1 text-2xs text-gray-550 dark:text-gray-500 md:m-0 md:text-xs md:leading-none'
             }
           >
             {risk.secondLine}
