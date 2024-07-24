@@ -13,13 +13,15 @@ export const network3: Layer2 = upcomingL2({
     links: {
       websites: ['https://network3.io/'],
       apps: [],
-      documentation: ['https://litepaper.network3.ai/~/changes/0jJxEcDKtGZ0s8Ew29KS'],
+      documentation: [
+        'https://litepaper.network3.ai/~/changes/0jJxEcDKtGZ0s8Ew29KS',
+      ],
       explorers: [],
       repositories: [],
       socialMedia: [
         'https://x.com/network3_ai',
         'https://discord.gg/q4cHgxZUCH',
-        'https://t.me/network3official'
+        'https://t.me/network3official',
       ],
     },
   },
