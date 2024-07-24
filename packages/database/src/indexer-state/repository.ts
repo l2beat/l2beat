@@ -26,6 +26,10 @@ export class IndexerStateRepository {
   }
 
   async getByIndexerIds(ids: string[]) {
+    if (ids.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.indexer_state')
       .selectAll()

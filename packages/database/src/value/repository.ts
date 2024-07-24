@@ -13,6 +13,10 @@ export class ValueRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -31,6 +35,10 @@ export class ValueRepository {
     projectIds: ProjectId[],
     { from, to = UnixTime.now() }: { from: UnixTime; to?: UnixTime },
   ): Promise<ValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -134,6 +142,10 @@ export class ValueRepository {
   async getLatestValuesForProjects(
     projectIds: ProjectId[],
   ): Promise<ValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .with('latest_values', (cb) =>
         cb
