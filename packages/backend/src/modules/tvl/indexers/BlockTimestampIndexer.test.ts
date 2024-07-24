@@ -2,9 +2,10 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import { Database } from '@l2beat/database'
+import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { BlockTimestampIndexer } from './BlockTimestampIndexer'
@@ -26,7 +27,7 @@ describe(BlockTimestampIndexer.name, () => {
       const blockTimestampProvider = mockObject<BlockTimestampProvider>({
         getBlockNumberAtOrBefore: async () => 666,
       })
-      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
+      const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
         add: async () => '',
       })
 
@@ -36,7 +37,7 @@ describe(BlockTimestampIndexer.name, () => {
         parents: [],
         blockTimestampProvider,
         indexerService: mockObject<IndexerService>({}),
-        blockTimestampRepository,
+        db: mockDatabase({ blockTimestamp: blockTimestampRepository }),
         chain,
         minHeight: 0,
         syncOptimizer,
@@ -72,7 +73,7 @@ describe(BlockTimestampIndexer.name, () => {
         parents: [],
         blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
         indexerService: mockObject<IndexerService>({}),
-        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
+        db: mockDatabase({ blockTimestamp: mockObject() }),
         chain: 'chain',
         minHeight: 0,
         syncOptimizer,
@@ -88,7 +89,7 @@ describe(BlockTimestampIndexer.name, () => {
 
   describe(BlockTimestampIndexer.prototype.invalidate.name, () => {
     it('deletes records before targetHeight and returns the new safe height', async () => {
-      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
+      const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
         deleteAfterExclusive: async () => 1,
       })
 
@@ -97,7 +98,7 @@ describe(BlockTimestampIndexer.name, () => {
         parents: [],
         blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
         indexerService: mockObject<IndexerService>({}),
-        blockTimestampRepository,
+        db: mockDatabase({ blockTimestamp: blockTimestampRepository }),
         chain: 'ethereum',
         minHeight: 0,
         syncOptimizer: mockObject<SyncOptimizer>({}),

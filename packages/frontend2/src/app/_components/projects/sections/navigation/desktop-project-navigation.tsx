@@ -67,7 +67,7 @@ export function DesktopProjectNavigation({
                 alt={`${project.title} logo`}
               />
             )}
-            <span className="font-bold text-xl lg:text-2xl">
+            <span className="text-xl font-bold lg:text-2xl">
               {project.title}
             </span>
           </div>

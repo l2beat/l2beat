@@ -11,13 +11,10 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range, times } from 'lodash'
 
 import { BackendProject } from '@l2beat/config'
+import { AggregatedL2CostRecord, Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import {
-  AggregatedL2CostsRecord,
-  AggregatedL2CostsRepository,
-} from '../repositories/AggregatedL2CostsRepository'
 import {
   CHART_TYPES,
   L2CostsController,
@@ -42,10 +39,11 @@ describe(L2CostsController.name, () => {
 
   describe(L2CostsController.prototype.getL2Costs.name, () => {
     it('correctly calculates l2costs', async () => {
-      const aggregatedL2CostsRepository =
-        mockObject<AggregatedL2CostsRepository>({
-          getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        })
+      const aggregatedL2CostsRepository = mockObject<
+        Database['aggregatedL2Cost']
+      >({
+        getByProjectAndTimeRange: mockFn().resolvesTo([]),
+      })
       const indexerService = mockObject<IndexerService>({
         getSavedConfigurations: mockFn().resolvesTo([
           mockObject<
@@ -187,15 +185,17 @@ describe(L2CostsController.name, () => {
   }
 
   function getMockL2CostsController(params: {
-    aggregatedL2CostsRepository?: AggregatedL2CostsRepository
+    aggregatedL2CostsRepository?: Database['aggregatedL2Cost']
     indexerService?: IndexerService
     projects?: BackendProject[]
   }) {
     const { aggregatedL2CostsRepository, indexerService, projects } = params
     const deps: L2CostsControllerDeps = {
-      aggregatedL2CostsRepository:
-        aggregatedL2CostsRepository ??
-        mockObject<AggregatedL2CostsRepository>({}),
+      db: mockObject<Database>({
+        aggregatedL2Cost:
+          aggregatedL2CostsRepository ??
+          mockObject<Database['aggregatedL2Cost']>({}),
+      }),
       indexerService: indexerService ?? mockObject<IndexerService>({}),
       projects: projects ?? [],
     }
@@ -285,8 +285,8 @@ describe(L2CostsController.name, () => {
     ]
   }
 
-  function getMockAggregatedRecords(amount: number): AggregatedL2CostsRecord[] {
-    return range(amount).map((i: number): AggregatedL2CostsRecord => {
+  function getMockAggregatedRecords(amount: number): AggregatedL2CostRecord[] {
+    return range(amount).map((i: number): AggregatedL2CostRecord => {
       const base = {
         timestamp: START_OF_HOUR.add(-i * 30, 'minutes'),
         projectId: ProjectId('random'),

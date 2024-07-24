@@ -178,6 +178,25 @@ export function makeConfig(
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
+    activity2: flags.isEnabled('activity2') && {
+      starkexApiKey: env.string([
+        'STARKEX_API_KEY_FOR_ACTIVITY',
+        'STARKEX_API_KEY',
+      ]),
+      starkexCallsPerMinute: env.integer(
+        [
+          'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
+          'STARKEX_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      projectsExcludedFromAPI:
+        env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
+        [],
+      projects: getProjectsWithActivity()
+        .filter((x) => flags.isEnabled('activity2', x.id.toString()))
+        .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
+    },
     verifiers: flags.isEnabled('verifiers'),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),
     statusEnabled: flags.isEnabled('status'),

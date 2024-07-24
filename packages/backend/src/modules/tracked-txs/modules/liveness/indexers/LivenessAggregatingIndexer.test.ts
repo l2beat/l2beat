@@ -107,7 +107,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           min: 10,
           avg: 20,
           max: 30,
-          timestamp: NOW,
+          updatedAt: NOW,
         },
       ]
 
@@ -185,7 +185,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '30D',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
         {
           avg: 10800,
@@ -194,7 +194,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '90D',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
         {
           avg: 10800,
@@ -203,7 +203,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: 'MAX',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
       ])
     })
@@ -233,7 +233,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '30D',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
       ])
     })

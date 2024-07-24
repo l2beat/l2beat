@@ -44,12 +44,12 @@ export function AddressForm() {
   }
 
   return (
-    <div className="flex flex-col w-full gap-2">
+    <div className="flex w-full flex-col gap-2">
       <ConnectKitButton.Custom>
         {({ isConnected, show, truncatedAddress, address, ensName }) => {
           return isConnected ? (
-            <div className="w-full flex flex-col sm:flex-row gap-2">
-              <div className="rounded-lg border border-pink-900 bg-purple-300 px-5 py-[14px] text-zinc-800 w-full sm:w-3/5 flex justify-between items-center h-14">
+            <div className="flex w-full flex-col gap-2 sm:flex-row">
+              <div className="flex h-14 w-full items-center justify-between rounded-lg border border-pink-900 bg-purple-300 px-5 py-[14px] text-zinc-800 sm:w-3/5">
                 <div className="flex flex-col">
                   <span className="text-3xs font-medium uppercase leading-[10px]">
                     Connected wallet
@@ -64,7 +64,7 @@ export function AddressForm() {
               </div>
               <Link
                 href={`/asset-risks/${address}`}
-                className="w-full sm:w-2/5 bg-pink-900 text-white font-bold text-base px-4 rounded-lg transition-colors flex items-center justify-center  h-14"
+                className="flex h-14 w-full items-center justify-center rounded-lg bg-pink-900 px-4 text-base font-bold text-white transition-colors  sm:w-2/5"
               >
                 View report
               </Link>
@@ -72,17 +72,17 @@ export function AddressForm() {
           ) : (
             <button
               onClick={show}
-              className="w-full bg-pink-900 text-white font-medium text-base h-14 px-4 rounded-lg transition-colors"
+              className="h-14 w-full rounded-lg bg-pink-900 px-4 text-base font-medium text-white transition-colors"
             >
               Connect a wallet
             </button>
           )
         }}
       </ConnectKitButton.Custom>
-      <div className="flex flex-row w-full items-center">
-        <div className="bg-gray-50 h-px flex-1" />
-        <div className="text-xs text-gray-50 px-2">OR</div>
-        <div className="bg-gray-50 h-px flex-1" />
+      <div className="flex w-full flex-row items-center">
+        <div className="h-px flex-1 bg-gray-50" />
+        <div className="px-2 text-xs text-gray-50">OR</div>
+        <div className="h-px flex-1 bg-gray-50" />
       </div>
       <div className="relative">
         <input
@@ -109,7 +109,7 @@ export function AddressForm() {
           <LensIcon className="fill-gray-50" />
         </div>
         {error && (
-          <span className="text-red-600 text-xs font-medium">{error}</span>
+          <span className="text-xs font-medium text-red-600">{error}</span>
         )}
       </div>
     </div>

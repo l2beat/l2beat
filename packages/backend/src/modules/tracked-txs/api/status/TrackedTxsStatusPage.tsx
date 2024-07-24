@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 
+import { IndexerConfigurationRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
-import { IndexerConfigurationRecord } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { TableData, TableHead } from '../../../status/Components'
 import { Page } from '../../../status/Page'
 import { reactToHtml } from '../../../status/reactToHtml'

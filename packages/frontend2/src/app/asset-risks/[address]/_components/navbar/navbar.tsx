@@ -11,12 +11,12 @@ import { WalletInfo } from './wallet-info'
 export function Navbar() {
   return (
     <>
-      <div className="h-14 sticky top-0 z-30 bg-[#E6E7EC] border-b border-[#272A3133] min-w-fit text-base dark:border-gray-850 lg:h-16">
+      <div className="sticky top-0 z-30 h-14 min-w-fit border-b border-[#272A3133] bg-[#E6E7EC] text-base dark:border-gray-850 lg:h-16">
         <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-4 lg:px-8">
           <ul className="flex h-full items-center">
             <li className="mr-4 lg:mr-8">
               <Link href="/asset-risks">
-                <div className="flex flex-row gap-2 items-center">
+                <div className="flex flex-row items-center gap-2">
                   <Image
                     src={SmallLogo}
                     alt="logo"
@@ -29,7 +29,7 @@ export function Navbar() {
               </Link>
             </li>
           </ul>
-          <div className="items-center gap-3 hidden md:flex">
+          <div className="hidden items-center gap-3 md:flex">
             <InputWallet />
             <WalletInfo />
           </div>

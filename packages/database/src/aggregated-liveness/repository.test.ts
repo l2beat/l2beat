@@ -1,14 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { describeDatabase } from '../../../../../test/database'
-import {
-  AggregatedLivenessRecord,
-  AggregatedLivenessRepository,
-} from './AggregatedLivenessRepository'
+import { describeDatabase } from '../test/database'
+import { AggregatedLivenessRecord } from './entity'
+import { AggregatedLivenessRepository } from './repository'
 
-describeDatabase(AggregatedLivenessRepository.name, (database) => {
-  const repository = new AggregatedLivenessRepository(database, Logger.SILENT)
+describeDatabase(AggregatedLivenessRepository.name, (db) => {
+  const repository = db.aggregatedLiveness
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
@@ -71,7 +68,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
       const results = await repository.getAll()
 
       expect(results).toEqualUnsorted([
-        newRows[0],
+        newRows[0]!,
         {
           projectId: PROJECT_B,
           subtype: 'stateUpdates',
@@ -81,7 +78,7 @@ describeDatabase(AggregatedLivenessRepository.name, (database) => {
           max: 10,
           updatedAt: START.add(-2, 'hours'),
         },
-        newRows[1],
+        newRows[1]!,
       ])
     })
 

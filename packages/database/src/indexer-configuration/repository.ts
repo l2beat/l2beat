@@ -80,12 +80,20 @@ export class IndexerConfigurationRepository {
   async deleteConfigurationsExcluding(
     indexerId: string,
     configurationIds: string[],
-  ) {
-    return await this.db
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.indexer_configurations')
       .where('indexer_id', '=', indexerId)
-      .where('id', 'not in', configurationIds)
-      .execute()
+      .where((eb) => {
+        // Somehow kysely cannot handle empty array in `not in` clause
+        if (configurationIds.length === 0) {
+          return eb.and([])
+        } else {
+          return eb('id', 'not in', configurationIds)
+        }
+      })
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getAll() {
@@ -97,7 +105,10 @@ export class IndexerConfigurationRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.indexer_configurations').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.indexer_configurations')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

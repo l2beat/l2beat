@@ -35,11 +35,14 @@ export class AggregatedLivenessRepository {
       )
       .execute()
 
-    return `[${record.projectId}, ${record.subtype}, ${record.range}]: ${record.timestamp}`
+    return `[${record.projectId}, ${record.subtype}, ${record.range}]: ${record.updatedAt}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('public.aggregated_liveness').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.aggregated_liveness')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AggregatedLivenessRecord[]> {

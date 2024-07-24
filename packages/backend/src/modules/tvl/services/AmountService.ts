@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
+import { AmountRecord } from '@l2beat/database'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import {
   erc20Codec,
@@ -18,7 +19,6 @@ import {
 } from '../../../peripherals/multicall/types'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { Configuration } from '../../../tools/uif/multi/types'
-import { AmountRecord } from '../repositories/AmountRepository'
 
 export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 
