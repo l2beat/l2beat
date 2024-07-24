@@ -107,7 +107,7 @@ export async function NavLayout({
     <MobileNavProvider>
       <div
         className={cn(
-          'flex flex-col xl:flex-row relative overflow-x-clip',
+          'relative flex flex-col overflow-x-clip xl:flex-row',
           legacyNav && 'xl:flex-col',
         )}
       >

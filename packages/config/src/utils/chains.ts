@@ -1,4 +1,4 @@
-import { Bridge, Layer2, Layer3 } from '../projects'
+import { Bridge, DaLayer, Layer2, Layer3 } from '../projects'
 
 export type Project = Layer2 | Layer3 | Bridge
 
@@ -9,9 +9,7 @@ export type Project = Layer2 | Layer3 | Bridge
  * @param projects
  * @returns chain names of all the contracts and escrows in the provided projects.
  */
-export function getChainNames(
-  projects: (Layer2 | Layer3 | Bridge)[],
-): string[] {
+export function getChainNames(...projects: Project[]): string[] {
   return projects
     .flatMap(getProjectDevIds)
     .filter((x, i, a) => a.indexOf(x) === i)
@@ -24,11 +22,45 @@ export function getProjectDevIds(project: Project): string[] {
     }
     return { address: escrow.address, ...escrow.contract }
   })
+  const permissions =
+    project.permissions !== 'UnderReview'
+      ? project.permissions?.filter((p) => {
+          const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+          return nonEoaAddresses.length > 0
+        })
+      : undefined
+
   const allContracts = [
     ...escrowContracts,
     ...(project.contracts?.addresses ?? []),
+    ...(permissions ?? []),
   ]
   const devIds = allContracts.map((c) => c.chain ?? 'ethereum')
+
+  return devIds
+}
+
+export function getChainNamesForDA(...daLayers: DaLayer[]): string[] {
+  return daLayers
+    .flatMap(getProjectDevIdsForDA)
+    .filter((x, i, a) => a.indexOf(x) === i)
+}
+
+export function getProjectDevIdsForDA(daLayer: DaLayer): string[] {
+  const bridges = daLayer.bridges.filter(
+    (b) => b.type === 'OnChainBridge' || b.type === 'DAC',
+  )
+  const addresses = bridges.flatMap((b) => b.contracts.addresses)
+  const permissions = bridges.flatMap((b) =>
+    b.permissions.filter((p) => {
+      const nonEoaAddresses = p.accounts.filter((a) => a.type !== 'EOA')
+      return nonEoaAddresses.length > 0
+    }),
+  )
+
+  const devIds = [...addresses, ...permissions].map(
+    (c) => c.chain ?? 'ethereum',
+  )
 
   return devIds
 }

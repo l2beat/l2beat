@@ -19,7 +19,7 @@ export function ProjectSection(props: Props) {
     <section
       id={props.id}
       className={cn(
-        'mt-10 md:rounded-lg md:bg-gray-100 md:dark:bg-zinc-900 md:p-8',
+        'mt-10 md:rounded-lg md:bg-gray-100 md:p-8 md:dark:bg-zinc-900',
         props.className,
       )}
     >

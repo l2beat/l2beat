@@ -13,7 +13,7 @@ export function ChartLabels({
   return (
     <div
       className={cn(
-        'pointer-events-none relative z-25 flex h-full justify-between flex-col-reverse pt-5',
+        'pointer-events-none relative z-25 flex h-full flex-col-reverse justify-between pt-5',
         className,
       )}
     >

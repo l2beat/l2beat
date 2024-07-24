@@ -10,7 +10,7 @@ export function ChartLoader() {
       data-role="chart-loader"
       className={cn(
         'pointer-events-none absolute inset-0 z-40 m-auto select-none opacity-40 duration-500',
-        !loading && 'animate-out fade-out-0 zoom-out-75 opacity-0',
+        !loading && 'opacity-0 animate-out fade-out-0 zoom-out-75',
       )}
       width="50px"
       height="50px"

@@ -24,6 +24,9 @@ export class StakeRepository {
   }
 
   async findByIds(ids: string[]) {
+    if (ids.length === 0) {
+      return []
+    }
     const res = await this.db
       .selectFrom('public.Stake')
       .select(selectStake)

@@ -15,7 +15,7 @@ interface Props {
 export function Chart({ className }: Props) {
   return (
     <div
-      className={cn('relative h-[160px] sm:h-[260px] xs:h-[200px]', className)}
+      className={cn('relative h-[160px] xs:h-[200px] sm:h-[260px]', className)}
       role="img"
       aria-label="chart"
     >

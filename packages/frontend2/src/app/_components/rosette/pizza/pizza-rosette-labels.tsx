@@ -50,7 +50,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((-4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 origin-top rotate-[36deg]',
+          'absolute origin-top -translate-x-1/2 rotate-[36deg]',
           rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== first.name && 'opacity-20',
         )}
@@ -63,7 +63,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((-2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[-72deg]',
+          'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[-72deg]',
           rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== second.name && 'opacity-20',
         )}
@@ -89,7 +89,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((2 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 -translate-y-full origin-bottom rotate-[72deg]',
+          'absolute origin-bottom -translate-x-1/2 -translate-y-full rotate-[72deg]',
           rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== fourth.name && 'opacity-20',
         )}
@@ -102,7 +102,7 @@ export function PizzaRosetteLabels({
           left: containerCenter + Math.sin((4 * Math.PI) / 5) * textRadius,
         }}
         className={cn(
-          'absolute -translate-x-1/2 origin-top rotate-[-36deg]',
+          'absolute origin-top -translate-x-1/2 rotate-[-36deg]',
           rosetteVariants({ size, className: textClassName }),
           content && content.risk.name !== fifth.name && 'opacity-20',
         )}

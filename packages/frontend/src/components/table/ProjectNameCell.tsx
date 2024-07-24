@@ -11,10 +11,7 @@ export interface ProjectCellProps {
   project: {
     name: string
     shortName?: string
-    slug: string
     isVerified?: boolean
-    isUpcoming?: boolean
-    isArchived?: boolean
     redWarning?: string
     type?: 'layer2' | 'layer3' | 'bridge' | undefined
     showProjectUnderReview?: boolean
