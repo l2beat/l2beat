@@ -7,11 +7,11 @@ import {
 } from '@radix-ui/react-accordion'
 import Image from 'next/image'
 import ChevronDownIcon from '~/icons/chevron.svg'
-import { VerifiedCountWithDetails } from '../[project]/_components/VerifiedCountWithDetails'
+import { VerifiedCountWithDetails } from '../[project]/_components/verified-count-with-details'
 import { type ZkCatalogViewEntry } from '../types'
-import { DetailsItem } from './DetailsItem'
-import { DetailsLink } from './DetailsLink'
-import { VerifierCard } from './VerifierCard'
+import { DetailsItem } from './details-item'
+import { DetailsLink } from './details-link'
+import { VerifierCard } from './verifier-card'
 
 export interface ZkCatalogViewProps {
   items: ZkCatalogViewEntry[]
@@ -79,7 +79,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
                   className="self-center justify-self-center"
                 />
                 <div className="flex items-center">
-                  <div className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
+                  <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
                     <span className="text-base font-bold">Verifiers</span>
                     <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
                   </div>
@@ -90,10 +90,13 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
           </AccordionHeader>
           <AccordionContent className="relative -top-3 rounded-b-xl border border-t-0 border-gray-300 pt-3 dark:border-gray-800 md:space-y-2 md:px-6 md:pb-6">
             {item.shortDescription ? (
-              <div className="my-7 px-5">
-                <DetailsItem title="Description">
+              <div className="my-7 flex flex-col gap-0.5 px-5">
+                <div className="text-2xs font-semibold uppercase text-gray-500">
+                  Description
+                </div>
+                <div className="text-sm font-medium">
                   {item.shortDescription}
-                </DetailsItem>
+                </div>
               </div>
             ) : null}
             {item.verifiers.map((verifier) => (

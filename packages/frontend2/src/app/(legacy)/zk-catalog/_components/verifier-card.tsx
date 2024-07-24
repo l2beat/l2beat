@@ -1,10 +1,10 @@
 import { EtherscanLink } from '~/app/_components/etherscan-link'
-import { LastUsedCell } from '../[project]/_components/LastUsedCell'
-import { SubVerifiersTable } from '../[project]/_components/SubVerifiersTable'
-import { VerifiedCell } from '../[project]/_components/VerifiedCell'
-import { getExplorerUrlByChainId } from '../_utils/getExplorerUrl'
+import { LastUsedCell } from '../[project]/_components/last-used-cell'
+import { SubVerifiersTable } from '../[project]/_components/sub-verifiers-table'
+import { VerifiedCell } from '../[project]/_components/verified-cell'
+import { getExplorerUrlByChainId } from '../_utils/get-explorer-url'
 import { type ZkCatalogViewEntry } from '../types'
-import { DetailsItem } from './DetailsItem'
+import { DetailsItem } from './details-item'
 
 export function VerifierCard({
   verifier,
@@ -14,7 +14,7 @@ export function VerifierCard({
   askForVerificationLink: string
 }) {
   return (
-    <div className="border-t border-gray-300 px-5 py-4 dark:border-gray-800 md:rounded-lg md:border md:first:mt-7">
+    <div className="border-t border-gray-300 px-5 py-4 dark:border-gray-800 max-md:first:border-t-0 md:rounded-lg md:border md:first:mt-7">
       <div className="grid space-y-2 lg:grid-cols-4 lg:space-y-0">
         <DetailsItem title="Name">{verifier.name}</DetailsItem>
         <DetailsItem title="Verifier">

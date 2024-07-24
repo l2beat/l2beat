@@ -7,7 +7,7 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
 import { cn } from '~/utils/cn'
-import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
+import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
 interface Props {
   verifier: ZkCatalogProjectDetails['verifiers'][number]

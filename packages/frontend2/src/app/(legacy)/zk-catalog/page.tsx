@@ -2,8 +2,8 @@ import { type Metadata } from 'next'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { ZkCatalogPage } from './_components/ZkCatalogPage'
-import { getZkCatalogView } from './_utils/getZkCatalogView'
+import { ZkCatalogPage } from './_components/zk-catalog-page'
+import { getZkCatalogView } from './_utils/get-zk-catalog-view'
 import { projects } from './_utils/projects'
 
 export const metadata: Metadata = getDefaultMetadata({

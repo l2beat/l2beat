@@ -1,9 +1,9 @@
 import { getCollectionEntry } from '~/content/get-collection'
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
-import { getProofVerification } from '../../_utils/getProofVerification'
-import { getTrustedSetup } from '../../_utils/getTrustedSetup'
+import { getProofVerification } from '../../_utils/get-proof-verification'
+import { getTrustedSetup } from '../../_utils/get-trusted-setup'
 import { type Project } from '../../_utils/types'
-import { type ZkCatalogProjectDetails } from '../_components/ZkCatalogProjectPage'
+import { type ZkCatalogProjectDetails } from '../_components/zk-catalog-project-page'
 
 export function getZkCatalogProjectDetails(
   project: Project,

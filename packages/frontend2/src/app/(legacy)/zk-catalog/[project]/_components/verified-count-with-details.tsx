@@ -3,7 +3,7 @@ import CircleQuestionMark from '~/icons/circle-question-mark.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import VerifiedIcon from '~/icons/verified.svg'
 
-import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
+import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
 interface Props {
   verifiers: ZkCatalogProjectDetails['verifiers']
@@ -33,7 +33,7 @@ export function VerifiedCountWithDetails(props: Props) {
     assert(status, 'status should be defined')
     const { count, Icon } = status
     return (
-      <div className="flex items-center">
+      <div className="flex items-center gap-0.5">
         <span>{count}</span>
         {<Icon />}
       </div>

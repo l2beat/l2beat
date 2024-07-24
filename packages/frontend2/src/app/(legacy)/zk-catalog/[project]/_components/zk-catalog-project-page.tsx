@@ -13,10 +13,10 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
-import { ProjectHeader } from './ProjectHeader'
-import { RequiredTools } from './RequiredTools'
-import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
-import { Verifiers } from './Verifiers'
+import { ProjectHeader } from './project-header'
+import { RequiredTools } from './required-tools'
+import { VerifiedCountWithDetails } from './verified-count-with-details'
+import { Verifiers } from './verifiers'
 
 export interface ZkCatalogProjectPageProps {
   details: ZkCatalogProjectDetails
@@ -46,7 +46,10 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           />
         </Section>
         <Section title="Description">
-          <Markdown>{props.details.description}</Markdown>
+          <p className="mb-2">{props.details.shortDescription}</p>
+          <Markdown className="zk-description">
+            {props.details.description}
+          </Markdown>
         </Section>
         {props.details.requiredTools.length > 0 && (
           <Section title="List of required tools">
@@ -63,13 +66,13 @@ function Breadcrumbs(props: { icon: string; title: string }) {
     <nav className="flex select-none gap-1 space-x-1 font-medium dark:text-gray-50">
       <Link href="/zk-catalog">ZK Catalog</Link>
       <span>/</span>
-      <span>
+      <span className="flex items-center gap-1.5">
         <Image
           alt={`Icon for the ${props.title}`}
           width={16}
           height={16}
           src={props.icon}
-          className="mr-1.5 inline size-4"
+          className="inline size-4"
         />
         <span>{props.title}</span>
       </span>
