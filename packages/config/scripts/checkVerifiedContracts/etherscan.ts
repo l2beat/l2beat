@@ -6,11 +6,13 @@ import { providers } from 'ethers'
 import { chains } from '../../src'
 import { ContractSourceResult } from './types'
 
+export type AddressVerificationStatus = 'verified' | 'unverified' | 'EOA'
+
 export async function isContractVerified(
   etherscanClient: BlockExplorerClient,
   provider: providers.JsonRpcProvider,
   address: EthereumAddress,
-): Promise<boolean> {
+): Promise<AddressVerificationStatus> {
   const response = await etherscanClient.call('contract', 'getsourcecode', {
     address: address.toString(),
   })
@@ -18,16 +20,11 @@ export async function isContractVerified(
   const parsed = ContractSourceResult.parse(response)[0]
 
   if (parsed.SourceCode === '') {
-    // Return true if it's an EOA because otherwise
-    // we say project has unverified contracts while
-    // those are actually EOAs. That's because
-    // EOA addresses that were ignored via e.g. 'ignoreDiscovery'
-    // don't appear in DiscoveryOutput.eoas
     const code = await provider.getCode(address.toString())
     const isEOA = Bytes.fromHex(code).length === 0
-    return isEOA
+    return isEOA ? 'EOA' : 'unverified'
   }
-  return true
+  return 'verified'
 }
 
 export function getEtherscanClient(chain: string): BlockExplorerClient {
