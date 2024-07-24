@@ -53,7 +53,11 @@ const upgradeExecutorUpgradeability = {
 }
 const l2Upgradability = {
   // same as on L1, but messages from L1 must be sent to L2
-  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
+  upgradableBy: [
+    'SecurityCouncilEmergency',
+    'SecurityCouncilPropose',
+    'L1ArbitrumTimelock',
+  ],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by the Security Council`,
