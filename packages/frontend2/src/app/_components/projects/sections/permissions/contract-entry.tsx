@@ -22,7 +22,7 @@ export interface TechnologyContract {
   addresses: TechnologyContractAddress[]
   chain: string
   description?: string
-  upgradeableBy?: string
+  upgradeableBy?: string[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
   upgradeConsiderations?: string
@@ -101,15 +101,19 @@ export function ContractEntry({
               {contract.description}
             </Markdown>
           )}
-          {contract.upgradeableBy && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
+          {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
+            <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
-              </strong>{' '}
-              <CustomLink href={`#${contract.upgradeableBy}`}>
-                {contract.upgradeableBy}
-              </CustomLink>
-            </p>
+              </strong>
+              <div className="ml-1.5 space-x-1.5">
+                {contract.upgradeableBy.map((name) => (
+                  <CustomLink key={name} href={`#${name}`}>
+                    {name}
+                  </CustomLink>
+                ))}
+              </div>
+            </div>
           )}
           {contract.upgradeDelay && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">

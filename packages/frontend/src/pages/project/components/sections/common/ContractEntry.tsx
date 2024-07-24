@@ -37,7 +37,7 @@ export interface TechnologyContract {
   etherscanUrl: string
   description?: string
   links: TechnologyContractLinks[]
-  upgradeableBy?: string
+  upgradeableBy?: string[]
   upgradeDelay?: string
   usedInProjects?: UsedInProject[]
   upgradeConsiderations?: string
@@ -191,15 +191,19 @@ export function ContractEntry({
               {contract.description}
             </Markdown>
           )}
-          {contract.upgradeableBy && (
-            <p className="mt-2 text-gray-850 dark:text-gray-400">
-              <strong className="text-black dark:text-white">
+          {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
+            <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
+              <strong className="mr-1.5 text-black dark:text-white">
                 Can be upgraded by:
-              </strong>{' '}
-              <Link href={`#${contract.upgradeableBy}`}>
-                {contract.upgradeableBy}
-              </Link>
-            </p>
+              </strong>
+              <div className="flex flex-wrap gap-x-1.5">
+                {contract.upgradeableBy.map((name) => (
+                  <Link key={name} href={`#${name}`}>
+                    {name}
+                  </Link>
+                ))}
+              </div>
+            </div>
           )}
           {contract.upgradeDelay && (
             <p className="mt-2 text-gray-850 dark:text-gray-400">

@@ -7,8 +7,8 @@ import {
   type ScalingProjectReference,
 } from '@l2beat/config'
 import {
+  type ContractsVerificationStatuses,
   type ManuallyVerifiedContracts,
-  type VerificationStatus,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
@@ -39,7 +39,7 @@ type ProjectParams = {
 
 export function getPermissionsSection(
   projectParams: ProjectParams,
-  verificationStatus: VerificationStatus,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): ProjectDetailsPermissionsSection['props'] | undefined {
   if (
@@ -79,7 +79,7 @@ export function getPermissionsSection(
         toTechnologyContract(
           projectParams,
           permission,
-          verificationStatus,
+          contractsVerificationStatuses,
           manuallyVerifiedContracts,
         ),
       ) ?? [],
@@ -92,7 +92,7 @@ export function getPermissionsSection(
               toTechnologyContract(
                 projectParams,
                 p,
-                verificationStatus,
+                contractsVerificationStatuses,
                 manuallyVerifiedContracts,
               ),
             ),
@@ -106,11 +106,11 @@ export function getPermissionsSection(
 function toTechnologyContract(
   projectParams: ProjectParams,
   permission: ScalingProjectPermission,
-  verificationStatus: VerificationStatus,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
 ): TechnologyContract[] {
   const chain = getChain(projectParams, permission)
-  const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
+  const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
   const manuallyVerifiedContractsForChain =
     manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)

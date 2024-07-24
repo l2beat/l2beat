@@ -6,7 +6,6 @@ import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
-import { DaBridgeCell } from '../../../summary/_components/table/da-bridge-cell'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 
@@ -36,11 +35,26 @@ export const columns = [
   }),
   columnHelper.accessor('name', {
     header: 'DA Layer',
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        project={{
+          name: ctx.getValue(),
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
-    cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        className="!pl-0"
+        project={{
+          ...ctx.row.original,
+          name: ctx.getValue().name,
+          shortName: undefined,
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('risks.economicSecurity', {
     header: 'Economic security',

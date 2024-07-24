@@ -20,7 +20,6 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
-import { languageJoin } from '../../../utils/utils'
 import { getUsedInProjects } from '../common/getUsedInProjects'
 import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import {
@@ -268,7 +267,7 @@ function makeTechnologyContract(
   }
 
   if (isSingleAddress(item)) {
-    result.upgradeableBy = languageJoin(item.upgradableBy)
+    result.upgradeableBy = item.upgradableBy
     result.upgradeDelay = item.upgradeDelay
     result.upgradeConsiderations = item.upgradeConsiderations
     result.references = item.references
