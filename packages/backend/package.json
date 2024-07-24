@@ -22,6 +22,7 @@
     "start:dev": "ts-node-dev --respawn --transpile-only src/index.ts",
     "start:profile": "node --inspect -r esbuild-register src/index.ts",
     "test": "mocha --timeout 10000",
+    "test:config": "mocha --config .mocharc-smoke.json",
     "typecheck": "tsc --noEmit",
     "find-common-contracts": "ts-node --transpile-only scripts/findCommonContracts.ts",
     "update-diff-history": "ts-node --transpile-only scripts/updateDiffHistory.ts",
