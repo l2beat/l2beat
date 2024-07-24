@@ -19,8 +19,9 @@ export async function getTvlChart(
 export const getCachedTvlChart = cache(
   async ({
     range,
+    excludeAssociatedTokens,
     ...rest
-  }: { range: TvlChartRange } & (
+  }: { range: TvlChartRange; excludeAssociatedTokens?: boolean } & (
     | { type: 'all' | TvlProject['type'] }
     | { type: 'projects'; projectIds: string[] }
   )) => {
@@ -55,7 +56,10 @@ export const getCachedTvlChart = cache(
     }, {})
 
     return Object.entries(timestampValues).map(([timestamp, values]) => {
-      const summed = sumValuesPerSource(values, true)
+      const summed = sumValuesPerSource(values, {
+        forTotal: true,
+        excludeAssociatedTokens: !!excludeAssociatedTokens,
+      })
       return [
         +timestamp,
         Number(summed.native),
