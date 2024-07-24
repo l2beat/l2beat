@@ -1,8 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { DayTargetIndexer } from './DayTargetIndexer'
 import { Clock } from '../../../tools/Clock'
+import { DayTargetIndexer } from './DayTargetIndexer'
 
 const LAST_HOUR = UnixTime.now().add(-1, 'hours')
 
