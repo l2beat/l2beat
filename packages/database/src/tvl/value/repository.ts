@@ -1,5 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import {
   CleanDateRange,
@@ -9,15 +9,13 @@ import {
 import { ValueRecord, toRecord, toRow } from './entity'
 import { selectValue } from './select'
 
-export class ValueRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
     if (projectIds.length === 0) {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.values')
       .select(selectValue)
       .where(
@@ -39,7 +37,7 @@ export class ValueRepository {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.values')
       .select(selectValue)
       .where(
@@ -58,7 +56,7 @@ export class ValueRepository {
   async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await batchExecute(this.db, rows, 2_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 2_000, async (trx, batch) => {
       await trx
         .insertInto('public.values')
         .values(batch)
@@ -83,11 +81,11 @@ export class ValueRepository {
   // #region methods used only in TvlCleaner
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'public.values', dateRange)
+    return deleteHourlyUntil(this.getDb(), 'public.values', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'public.values', dateRange)
+    return deleteSixHourlyUntil(this.getDb(), 'public.values', dateRange)
   }
 
   // #endregion
@@ -95,7 +93,7 @@ export class ValueRepository {
   // #region methods used only in tests
 
   async getAll(): Promise<ValueRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.values')
       .select(selectValue)
       .execute()
@@ -103,11 +101,9 @@ export class ValueRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: ValueRecord[], trx?: Transaction): Promise<number> {
+  async addMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
-    const scope = trx ?? this.db
-
-    await scope
+    await this.getDb()
       .insertInto('public.values')
       .values(rows)
       .onConflict((cb) =>
@@ -128,7 +124,9 @@ export class ValueRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('public.values').executeTakeFirst()
+    const result = await this.getDb()
+      .deleteFrom('public.values')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
@@ -146,14 +144,14 @@ export class ValueRepository {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .with('latest_values', (cb) =>
         cb
           .selectFrom('public.values')
           .select([
             ...selectValue,
-            this.db.fn
-              .agg('ROW_NUMBER')
+            this.getDb()
+              .fn.agg('ROW_NUMBER')
               .over((over) =>
                 over
                   .partitionBy(['project_id', 'data_source'])

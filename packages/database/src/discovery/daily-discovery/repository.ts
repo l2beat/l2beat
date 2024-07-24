@@ -1,13 +1,11 @@
 import { ChainId, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { DailyDiscoveryRecord, toRecord, toRow } from './entity'
 import { selectDailyDiscovery } from './select'
 
-export class DailyDiscoveryRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class DailyDiscoveryRepository extends BaseRepository {
   async findLatest(name: string, chainId: ChainId) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .where('project_name', '=', name)
@@ -19,7 +17,7 @@ export class DailyDiscoveryRepository {
   }
 
   async getTimestamps(projectName: string, chainId: ChainId) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.daily_discovery')
       .select('unix_timestamp')
       .where('project_name', '=', projectName)
@@ -32,7 +30,7 @@ export class DailyDiscoveryRepository {
   async addOrUpdate(record: DailyDiscoveryRecord) {
     const row = toRow(record)
 
-    await this.db
+    await this.getDb()
       .insertInto('public.daily_discovery')
       .values(row)
       .onConflict((cb) =>
@@ -53,7 +51,7 @@ export class DailyDiscoveryRepository {
   }
 
   async getAvailableProjects() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.daily_discovery')
       .select(['project_name', 'chain_id'])
       .groupBy(['project_name', 'chain_id'])
@@ -70,7 +68,7 @@ export class DailyDiscoveryRepository {
     chainId: ChainId,
     configHash: Hash256,
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.daily_discovery')
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
@@ -80,7 +78,7 @@ export class DailyDiscoveryRepository {
   }
 
   async getProject(projectName: string, chainId: ChainId) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .where('project_name', '=', projectName)
@@ -91,7 +89,7 @@ export class DailyDiscoveryRepository {
   }
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .execute()
@@ -100,7 +98,7 @@ export class DailyDiscoveryRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.daily_discovery')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

@@ -1,4 +1,5 @@
 import { PoolConfig } from 'pg'
+import { transactionContext } from './BaseRepository'
 import { BlockTransactionCountRepository } from './activity/activity-block/repository'
 import { StarkExTransactionCountRepository } from './activity/activity-starkex/repository'
 import { ActivityViewRepository } from './activity/activity-view/repository'
@@ -10,7 +11,7 @@ import { DailyDiscoveryRepository } from './discovery/daily-discovery/repository
 import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
 import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
 import { UpdateNotifierRepository } from './discovery/update-notifier/repository'
-import { PostgresDatabase, Transaction } from './kysely'
+import { PostgresDatabase } from './kysely'
 import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
 import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
 import { AnomaliesRepository } from './other/anomalies/repository'
@@ -43,8 +44,8 @@ export function createDatabase(config?: PoolConfig) {
   const db = new PostgresDatabase({ ...config })
 
   return {
-    transaction: <T>(cb: (trx: Transaction) => Promise<T>): Promise<T> => {
-      return db.transaction().execute(cb)
+    transaction: <T>(cb: () => Promise<T>): Promise<T> => {
+      return db.transaction().execute((trx) => transactionContext.run(trx, cb))
     },
     close: () => db.destroy(),
 

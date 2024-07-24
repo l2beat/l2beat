@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import {
   CleanDateRange,
@@ -9,19 +9,20 @@ import {
 import { BlockTimestampRecord, toRecord, toRow } from './entity'
 import { selectBlockTimestamp } from './select'
 
-export class BlockTimestampRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class BlockTimestampRepository extends BaseRepository {
   async add(record: BlockTimestampRecord) {
     const row = toRow(record)
 
-    await this.db.insertInto('public.block_timestamps').values(row).execute()
+    await this.getDb()
+      .insertInto('public.block_timestamps')
+      .values(row)
+      .execute()
 
     return `${record.chain}-${record.timestamp.toNumber()}`
   }
 
   async findByChainAndTimestamp(chain: string, timestamp: UnixTime) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .where('chain', '=', chain)
@@ -35,7 +36,7 @@ export class BlockTimestampRepository {
     chain: string,
     timestamp: UnixTime,
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.block_timestamps')
       .where('chain', '=', chain)
       .where('timestamp', '>', timestamp.toDate())
@@ -45,16 +46,20 @@ export class BlockTimestampRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'public.block_timestamps', dateRange)
+    return deleteHourlyUntil(this.getDb(), 'public.block_timestamps', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'public.block_timestamps', dateRange)
+    return deleteSixHourlyUntil(
+      this.getDb(),
+      'public.block_timestamps',
+      dateRange,
+    )
   }
   // #endregion
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .execute()
@@ -62,15 +67,14 @@ export class BlockTimestampRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: BlockTimestampRecord[], trx?: Transaction) {
+  async addMany(records: BlockTimestampRecord[]) {
     if (records.length === 0) {
       return 0
     }
 
-    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(scope, rows, 2_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 2_000, async (trx, batch) => {
       await trx.insertInto('public.block_timestamps').values(batch).execute()
     })
 
@@ -78,7 +82,7 @@ export class BlockTimestampRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.block_timestamps')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

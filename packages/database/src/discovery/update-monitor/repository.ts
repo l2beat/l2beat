@@ -1,16 +1,14 @@
 import { ChainId } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { UpdateMonitorRecord, toRecord, toRow } from './entity'
 import { selectUpdateMonitor } from './select'
 
-export class UpdateMonitorRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class UpdateMonitorRepository extends BaseRepository {
   async findLatest(
     name: string,
     chainId: ChainId,
   ): Promise<UpdateMonitorRecord | undefined> {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
       .where('project_name', '=', name)
@@ -20,15 +18,10 @@ export class UpdateMonitorRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdate(
-    record: UpdateMonitorRecord,
-    trx?: Transaction,
-  ): Promise<string> {
-    const scope = trx ?? this.db
-
+  async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
     const row = toRow(record)
 
-    await scope
+    await this.getDb()
       .insertInto('public.update_monitor')
       .values(row)
       .onConflict((cb) =>
@@ -46,7 +39,7 @@ export class UpdateMonitorRepository {
   }
 
   async getAll(): Promise<UpdateMonitorRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
       .execute()
@@ -55,7 +48,7 @@ export class UpdateMonitorRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.update_monitor')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

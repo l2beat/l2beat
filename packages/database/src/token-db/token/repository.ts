@@ -1,15 +1,13 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { TokenRecord, toRecord, toRow } from './entity'
 import { joinDeployment, joinNetwork, joinTokenMeta } from './join'
 import { selectToken } from './select'
 
-export class TokenRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class TokenRepository extends BaseRepository {
   upsertMany(tokens: TokenRecord[]) {
     const rows = tokens.map(toRow)
 
-    return this.db
+    return this.getDb()
       .insertInto('public.Token')
       .values(rows)
       .onConflict((conflict) =>
@@ -23,7 +21,7 @@ export class TokenRepository {
   }
 
   async findManyByChain(chainId: number) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
@@ -36,7 +34,7 @@ export class TokenRepository {
   async findManyByNetworkData(
     constraints: { address: string; networkId: string }[],
   ) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.Token')
       .select(selectToken)
       .where((eb) =>
@@ -59,7 +57,7 @@ export class TokenRepository {
     networkId: string
     contractName: string
   }) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.Token')
       .select(selectToken)
       .innerJoin(...joinDeployment)
@@ -78,7 +76,7 @@ export class TokenRepository {
   }
 
   async findByNetworkData(constraints: { network: string; address: string }) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
@@ -91,7 +89,7 @@ export class TokenRepository {
   }
 
   async findById(id: TokenRecord['id']) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.Token')
       .select(selectToken)
       .where('public.Token.id', '=', id)
@@ -105,7 +103,7 @@ export class TokenRepository {
     if (ids.length === 0) {
       return []
     }
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.Token')
       .select(selectToken)
       .where('public.Token.id', 'in', ids)

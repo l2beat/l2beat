@@ -1,13 +1,11 @@
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { UpdateNotifierRecord, toRecord, toRow } from './entity'
 import { selectUpdateNotifier } from './select'
 
-export class UpdateNotifierRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class UpdateNotifierRepository extends BaseRepository {
   async findLatestId(): Promise<number | undefined> {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.update_notifier')
       .select(['id'])
       .orderBy('id', 'desc')
@@ -18,22 +16,20 @@ export class UpdateNotifierRepository {
 
   async add(
     record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
-    trx?: Transaction,
   ) {
-    const scope = trx ?? this.db
     const row = toRow(record)
 
-    const [insertedResult] = await scope
+    const insertedResult = await this.getDb()
       .insertInto('public.update_notifier')
       .values(row)
       .returning('id')
-      .execute()
+      .executeTakeFirst()
 
     return insertedResult?.id
   }
 
   async getAll(): Promise<UpdateNotifierRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
       .execute()
@@ -46,7 +42,7 @@ export class UpdateNotifierRepository {
     projectName: string,
     chainId: ChainId,
   ): Promise<UpdateNotifierRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
       .where('created_at', '>=', from.toDate())
@@ -58,7 +54,7 @@ export class UpdateNotifierRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.update_notifier')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

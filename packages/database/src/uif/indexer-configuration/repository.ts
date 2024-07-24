@@ -1,15 +1,13 @@
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
 import { selectIndexerConfiguration } from './select'
 
-export class IndexerConfigurationRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class IndexerConfigurationRepository extends BaseRepository {
   async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
-    await batchExecute(this.db, rows, 5_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 5_000, async (trx, batch) => {
       await trx
         .insertInto('public.indexer_configurations')
         .values(batch)
@@ -28,7 +26,7 @@ export class IndexerConfigurationRepository {
   }
 
   async getSavedConfigurations(indexerId: string) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('indexer_id', '=', indexerId)
@@ -41,7 +39,7 @@ export class IndexerConfigurationRepository {
     if (configurationIds.length === 0) {
       return []
     }
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('id', 'in', configurationIds)
@@ -50,14 +48,8 @@ export class IndexerConfigurationRepository {
     return rows.map(toRecord)
   }
 
-  updateSavedConfigurations(
-    indexerId: string,
-    currentHeight: number | null,
-    trx?: Transaction,
-  ) {
-    const scope = trx ?? this.db
-
-    return scope
+  updateSavedConfigurations(indexerId: string, currentHeight: number | null) {
+    return this.getDb()
       .updateTable('public.indexer_configurations')
       .set('current_height', currentHeight)
       .where('indexer_id', '=', indexerId)
@@ -81,7 +73,7 @@ export class IndexerConfigurationRepository {
     indexerId: string,
     configurationIds: string[],
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.indexer_configurations')
       .where('indexer_id', '=', indexerId)
       .where((eb) => {
@@ -97,7 +89,7 @@ export class IndexerConfigurationRepository {
   }
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .execute()
@@ -106,7 +98,7 @@ export class IndexerConfigurationRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.indexer_configurations')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

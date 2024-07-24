@@ -1,20 +1,18 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { sql } from 'kysely'
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { DailyTransactionCountRecord, toRecord } from './entity'
 
-export class ActivityViewRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class ActivityViewRepository extends BaseRepository {
   async refresh(): Promise<void> {
     await sql`
       REFRESH MATERIALIZED VIEW CONCURRENTLY activity.daily_count_view
-    `.execute(this.db)
+    `.execute(this.getDb())
   }
 
   async getDailyCounts(): Promise<DailyTransactionCountRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('activity.daily_count_view')
       .select(['project_id', 'count', 'unix_timestamp'])
       .orderBy('unix_timestamp', 'asc')
@@ -25,7 +23,7 @@ export class ActivityViewRepository {
   async getDailyCountsPerProject(
     projectId: ProjectId,
   ): Promise<DailyTransactionCountRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('activity.daily_count_view')
       .select(['project_id', 'count', 'unix_timestamp'])
       .where('project_id', '=', projectId.toString())
@@ -41,7 +39,7 @@ export class ActivityViewRepository {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('activity.daily_count_view')
       .where(
         'project_id',

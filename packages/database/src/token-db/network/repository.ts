@@ -1,15 +1,14 @@
 import { type SetRequired } from 'type-fest'
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { toRecord as toNetworkExplorerRecord } from '../network-explorer/entity'
 import { selectNetworkExplorer } from '../network-explorer/select'
 import { selectNetworkRpc } from '../network-rpc/select'
 import { NetworkRecord, toRecord, toRow } from './entity'
 import { selectNetwork } from './select'
-export class NetworkRepository {
-  constructor(private readonly db: PostgresDatabase) {}
 
+export class NetworkRepository extends BaseRepository {
   async findMany() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.Network')
       .select(selectNetwork)
       .execute()
@@ -18,7 +17,7 @@ export class NetworkRepository {
   }
 
   async findManyWithConfigs() {
-    const allNetworks = await this.db
+    const allNetworks = await this.getDb()
       .selectFrom('public.Network')
       .select([...selectNetwork])
       .execute()
@@ -26,12 +25,12 @@ export class NetworkRepository {
     const networkIds = allNetworks.map((network) => network.id)
 
     const [explorers, rpcs] = await Promise.all([
-      this.db
+      this.getDb()
         .selectFrom('public.NetworkExplorer')
         .select(selectNetworkExplorer)
         .where('public.NetworkExplorer.networkId', 'in', networkIds)
         .execute(),
-      this.db
+      this.getDb()
         .selectFrom('public.NetworkRpc')
         .select(selectNetworkRpc)
         .where('public.NetworkRpc.networkId', 'in', networkIds)
@@ -48,7 +47,7 @@ export class NetworkRepository {
   }
 
   async findWithCoingecko() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.Network')
       .where('public.Network.coingeckoId', 'is not', null)
       .select(selectNetwork)
@@ -61,7 +60,7 @@ export class NetworkRepository {
   upsertMany(networks: NetworkRecord[]) {
     const row = networks.map(toRow)
 
-    return this.db
+    return this.getDb()
       .insertInto('public.Network')
       .values(row)
       .onConflict((conflict) =>
@@ -75,7 +74,7 @@ export class NetworkRepository {
   updateWhereCoinGeckoId(coingeckoId: string, Network: NetworkRecord) {
     const row = toRow(Network)
 
-    return this.db
+    return this.getDb()
       .updateTable('public.Network')
       .set(row)
       .where('public.Network.coingeckoId', '=', coingeckoId)

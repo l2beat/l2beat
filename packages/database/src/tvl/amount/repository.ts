@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import {
   CleanDateRange,
@@ -9,15 +9,13 @@ import {
 import { AmountRecord, toRecord, toRow } from './entity'
 import { selectAmount } from './select'
 
-export class AmountRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class AmountRepository extends BaseRepository {
   async getByIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
     if (configIds.length === 0) {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.amounts')
       .select(selectAmount)
       .where('configuration_id', 'in', configIds)
@@ -37,7 +35,7 @@ export class AmountRepository {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.amounts')
       .select(selectAmount)
       .where('configuration_id', 'in', configIds)
@@ -54,7 +52,7 @@ export class AmountRepository {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.amounts')
       .select(selectAmount)
       .where(
@@ -68,15 +66,14 @@ export class AmountRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: AmountRecord[], trx?: Transaction) {
+  async addMany(records: AmountRecord[]) {
     if (records.length === 0) {
       return
     }
 
-    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(scope, rows, 1_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 1_000, async (trx, batch) => {
       await trx.insertInto('public.amounts').values(batch).execute()
     })
 
@@ -88,7 +85,7 @@ export class AmountRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.amounts')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -101,7 +98,7 @@ export class AmountRepository {
     configId: string,
     fromExclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.amounts')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>', fromExclusive.toDate())
@@ -111,15 +108,15 @@ export class AmountRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'public.amounts', dateRange)
+    return deleteHourlyUntil(this.getDb(), 'public.amounts', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'public.amounts', dateRange)
+    return deleteSixHourlyUntil(this.getDb(), 'public.amounts', dateRange)
   }
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.amounts')
       .select(selectAmount)
       .execute()
@@ -128,7 +125,9 @@ export class AmountRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('public.amounts').executeTakeFirst()
+    const result = await this.getDb()
+      .deleteFrom('public.amounts')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

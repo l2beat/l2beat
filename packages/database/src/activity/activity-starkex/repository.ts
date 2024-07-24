@@ -1,24 +1,18 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { StarkExTransactionCountRecord, toRecord, toRow } from './entity'
 import { selectStarkExTransactionCount } from './select'
 
-export class StarkExTransactionCountRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdateMany(
-    records: StarkExTransactionCountRecord[],
-    trx?: Transaction,
-  ) {
+export class StarkExTransactionCountRepository extends BaseRepository {
+  async addOrUpdateMany(records: StarkExTransactionCountRecord[]) {
     for (const record of records) {
-      await this.addOrUpdate(record, trx)
+      await this.addOrUpdate(record)
     }
     return records.length
   }
 
-  async addOrUpdate(record: StarkExTransactionCountRecord, trx?: Transaction) {
-    const scope = trx ?? this.db
-    await scope
+  async addOrUpdate(record: StarkExTransactionCountRecord) {
+    await this.getDb()
       .insertInto('activity.starkex')
       .values(toRow(record))
       .onConflict((cb) =>
@@ -32,14 +26,14 @@ export class StarkExTransactionCountRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('activity.starkex')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('activity.starkex')
       .select('unix_timestamp')
       .where('project_id', '=', projectId.toString())
@@ -51,7 +45,7 @@ export class StarkExTransactionCountRepository {
   }
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('activity.starkex')
       .select(selectStarkExTransactionCount)
       .execute()

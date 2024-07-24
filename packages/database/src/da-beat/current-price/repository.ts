@@ -1,12 +1,10 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { UpsertableCurrentPrice, toRecord, toRow } from './entity'
 import { selectCurrentPrice } from './select'
 
-export class CurrentPriceRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class CurrentPriceRepository extends BaseRepository {
   async findMany() {
-    const res = await this.db
+    const res = await this.getDb()
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .execute()
@@ -14,7 +12,7 @@ export class CurrentPriceRepository {
   }
 
   async findOneByAssetId(coingeckoId: string) {
-    const res = await this.db
+    const res = await this.getDb()
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', '=', coingeckoId)
@@ -28,7 +26,7 @@ export class CurrentPriceRepository {
       return []
     }
 
-    const res = await this.db
+    const res = await this.getDb()
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', 'in', coingeckoIds)
@@ -39,7 +37,7 @@ export class CurrentPriceRepository {
   async upsert(currentPrice: UpsertableCurrentPrice) {
     const entity = toRow(currentPrice)
     const { coingeckoId, ...rest } = entity
-    return this.db
+    return this.getDb()
       .insertInto('public.CurrentPrice')
       .values(entity)
       .onConflict((oc) => oc.column('coingeckoId').doUpdateSet(rest))
@@ -48,7 +46,7 @@ export class CurrentPriceRepository {
 
   async upsertMany(currentPrices: UpsertableCurrentPrice[]) {
     const entities = currentPrices.map(toRow)
-    return this.db
+    return this.getDb()
       .insertInto('public.CurrentPrice')
       .values(entities)
       .onConflict((oc) =>
@@ -61,7 +59,7 @@ export class CurrentPriceRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.CurrentPrice')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

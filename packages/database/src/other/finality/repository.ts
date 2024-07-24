@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import {
   FinalityRecord,
@@ -9,11 +9,9 @@ import {
 } from './entity'
 import { selectFinality } from './select'
 
-export class FinalityRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class FinalityRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.finality')
       .select(selectFinality)
       .execute()
@@ -22,7 +20,7 @@ export class FinalityRepository {
   }
 
   async findLatestByProjectId(projectId: string) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.finality')
       .select(selectFinality)
       .where('project_id', '=', projectId)
@@ -33,7 +31,7 @@ export class FinalityRepository {
   }
 
   async findProjectFinalityOnTimestamp(projectId: string, timestamp: UnixTime) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.finality')
       .select(selectFinality)
       .where('timestamp', '=', timestamp.toDate())
@@ -48,9 +46,12 @@ export class FinalityRepository {
     if (projectIds.length === 0) {
       return []
     }
-    const maxTimestampSubquery = this.db
+    const maxTimestampSubquery = this.getDb()
       .selectFrom('public.finality')
-      .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
+      .select([
+        'project_id',
+        this.getDb().fn.max('timestamp').as('max_timestamp'),
+      ])
       .where(
         'project_id',
         'in',
@@ -59,7 +60,7 @@ export class FinalityRepository {
       .groupBy('project_id')
       .as('max_f')
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.finality as f')
       .innerJoin(maxTimestampSubquery, (join) =>
         join
@@ -72,36 +73,34 @@ export class FinalityRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: FinalityRecord[], trx?: Transaction) {
+  async addMany(records: FinalityRecord[]) {
     if (records.length === 0) {
       return 0
     }
 
-    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(scope, rows, 10_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.finality').values(batch).execute()
     })
 
     return rows.length
   }
 
-  async add(record: FinalityRecord, trx?: Transaction) {
-    const scope = trx ?? this.db
+  async add(record: FinalityRecord) {
     const row = toRow(record)
 
-    const [inserted] = await scope
+    const result = await this.getDb()
       .insertInto('public.finality')
       .values(row)
       .returning('project_id')
-      .execute()
+      .executeTakeFirst()
 
-    return inserted?.project_id
+    return result?.project_id
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.finality')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

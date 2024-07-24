@@ -1,18 +1,12 @@
 import { ChainId } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { VerifierStatusRecord, toRecord, toRow } from './entity'
 import { selectVerifierStatus } from './select'
 
-export class VerifierStatusRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdate(
-    record: VerifierStatusRecord,
-    trx?: Transaction,
-  ): Promise<string> {
-    const scope = trx ?? this.db
+export class VerifierStatusRepository extends BaseRepository {
+  async addOrUpdate(record: VerifierStatusRecord): Promise<string> {
     const row = toRow(record)
-    await scope
+    await this.getDb()
       .insertInto('public.verifier_status')
       .values(row)
       .onConflict((cb) =>
@@ -30,7 +24,7 @@ export class VerifierStatusRepository {
     address: string,
     chainId: ChainId,
   ): Promise<VerifierStatusRecord | undefined> {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .where('address', '=', address)
@@ -41,7 +35,7 @@ export class VerifierStatusRepository {
   }
 
   async getAll(): Promise<VerifierStatusRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .execute()
@@ -50,7 +44,7 @@ export class VerifierStatusRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.verifier_status')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

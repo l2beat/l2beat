@@ -1,12 +1,10 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { StakeRecord, toRecord, toRow } from './entity'
 import { selectStake } from './select'
 
-export class StakeRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class StakeRepository extends BaseRepository {
   async findMany() {
-    const res = await this.db
+    const res = await this.getDb()
       .selectFrom('public.Stake')
       .select(selectStake)
       .execute()
@@ -14,7 +12,7 @@ export class StakeRepository {
   }
 
   async findOneById(id: string) {
-    const res = await this.db
+    const res = await this.getDb()
       .selectFrom('public.Stake')
       .select(selectStake)
       .where('id', '=', id)
@@ -27,7 +25,7 @@ export class StakeRepository {
     if (ids.length === 0) {
       return []
     }
-    const res = await this.db
+    const res = await this.getDb()
       .selectFrom('public.Stake')
       .select(selectStake)
       .where('id', 'in', ids)
@@ -38,7 +36,7 @@ export class StakeRepository {
   async upsert(stake: StakeRecord) {
     const entity = toRow(stake)
     const { id, ...rest } = entity
-    return this.db
+    return this.getDb()
       .insertInto('public.Stake')
       .values(entity)
       .onConflict((oc) => oc.columns(['id']).doUpdateSet(rest))
@@ -46,7 +44,9 @@ export class StakeRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('public.Stake').executeTakeFirst()
+    const result = await this.getDb()
+      .deleteFrom('public.Stake')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

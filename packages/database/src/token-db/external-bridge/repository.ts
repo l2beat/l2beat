@@ -1,13 +1,11 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { ExternalBridgeRecord, toRow } from './entity'
 
-export class ExternalBridgeRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class ExternalBridgeRepository extends BaseRepository {
   upsert(externalBridge: ExternalBridgeRecord) {
     const row = toRow(externalBridge)
 
-    return this.db
+    return this.getDb()
       .insertInto('public.ExternalBridge')
       .values(row)
       .onConflict((conflict) => conflict.doNothing())

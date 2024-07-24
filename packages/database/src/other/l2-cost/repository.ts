@@ -1,29 +1,26 @@
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import { L2CostRecord, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
-export class L2CostRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class L2CostRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.l2_costs')
       .selectAll()
       .execute()
     return rows.map(toRecord)
   }
 
-  async addMany(records: L2CostRecord[], trx?: Transaction): Promise<number> {
+  async addMany(records: L2CostRecord[]): Promise<number> {
     if (records.length === 0) {
       return 0
     }
-    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(scope, rows, 1_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 1_000, async (trx, batch) => {
       await trx.insertInto('public.l2_costs').values(batch).execute()
     })
 
@@ -33,7 +30,7 @@ export class L2CostRepository {
   async getByTimeRange(timeRange: [UnixTime, UnixTime]) {
     const [from, to] = timeRange
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.l2_costs')
       .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
@@ -51,10 +48,8 @@ export class L2CostRepository {
   async deleteFromById(
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
-    trx?: Transaction,
   ): Promise<number> {
-    const scope = trx ?? this.db
-    const result = await scope
+    const result = await this.getDb()
       .deleteFrom('public.l2_costs')
       .where('configuration_id', '=', id)
       .where('timestamp', '>=', deleteFromInclusive.toDate())
@@ -67,7 +62,7 @@ export class L2CostRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.l2_costs')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -79,7 +74,7 @@ export class L2CostRepository {
   // #region Status page
 
   async getUsedConfigsIds(): Promise<string[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.l2_costs')
       .select(['configuration_id'])
       .distinctOn('configuration_id')
@@ -90,7 +85,7 @@ export class L2CostRepository {
   // #endregion
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.l2_costs')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

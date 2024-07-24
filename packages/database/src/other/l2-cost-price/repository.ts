@@ -1,13 +1,12 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import { L2CostPriceRecord, toRecord, toRow } from './entity'
 import { selectL2CostPrice } from './select'
 
-export class L2CostPriceRepository {
-  constructor(private readonly db: PostgresDatabase) {}
+export class L2CostPriceRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.l2_costs_prices')
       .selectAll()
       .execute()
@@ -16,7 +15,7 @@ export class L2CostPriceRepository {
   }
 
   async getByTimestampRange(from: UnixTime, to: UnixTime) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.l2_costs_prices')
       .select(selectL2CostPrice)
       .where('timestamp', '>=', from.toDate())
@@ -29,7 +28,7 @@ export class L2CostPriceRepository {
   async addMany(records: L2CostPriceRecord[]) {
     const rows = records.map(toRow)
 
-    await batchExecute(this.db, rows, 10_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.l2_costs_prices').values(batch).execute()
     })
 
@@ -37,7 +36,7 @@ export class L2CostPriceRepository {
   }
 
   async deleteAfter(from: UnixTime): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.l2_costs_prices')
       .where('timestamp', '>', from.toDate())
       .executeTakeFirst()
@@ -45,7 +44,7 @@ export class L2CostPriceRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.l2_costs_prices')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

@@ -1,25 +1,19 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { ZkSyncTransactionRecord, toRecord, toRow } from './entity'
 import { selectZksyncTransaction } from './select'
 
-export class ZkSyncTransactionRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdateMany(
-    records: ZkSyncTransactionRecord[],
-    trx?: Transaction,
-  ): Promise<number> {
+export class ZkSyncTransactionRepository extends BaseRepository {
+  async addOrUpdateMany(records: ZkSyncTransactionRecord[]): Promise<number> {
     for (const record of records) {
-      await this.addOrUpdate(record, trx)
+      await this.addOrUpdate(record)
     }
     return records.length
   }
 
-  async addOrUpdate(record: ZkSyncTransactionRecord, trx?: Transaction) {
-    const scope = trx ?? this.db
+  async addOrUpdate(record: ZkSyncTransactionRecord) {
     const row = toRow(record)
-    await scope
+    await this.getDb()
       .insertInto('activity.zksync')
       .values(row)
       .onConflict((cb) =>
@@ -33,14 +27,14 @@ export class ZkSyncTransactionRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('activity.zksync')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async findLastTimestamp(): Promise<UnixTime | undefined> {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('activity.zksync')
       .select(['unix_timestamp'])
       .orderBy('block_number', 'desc')
@@ -51,7 +45,7 @@ export class ZkSyncTransactionRepository {
   }
 
   async getAll(): Promise<ZkSyncTransactionRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('activity.zksync')
       .select(selectZksyncTransaction)
       .execute()

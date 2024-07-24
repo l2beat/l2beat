@@ -1,12 +1,13 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { NetworkRpcRecord, toRow } from './entity'
 
-export class NetworkRpcRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class NetworkRpcRepository extends BaseRepository {
   insertMany(rpcs: NetworkRpcRecord[]) {
     const entities = rpcs.map(toRow)
 
-    return this.db.insertInto('public.NetworkRpc').values(entities).execute()
+    return this.getDb()
+      .insertInto('public.NetworkRpc')
+      .values(entities)
+      .execute()
   }
 }

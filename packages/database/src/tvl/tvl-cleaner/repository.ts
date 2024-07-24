@@ -1,15 +1,11 @@
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { TvlCleanerRecord, toRecord, toRow } from './entity'
 import { selectTvlCleaner } from './select'
 
-export class TvlCleanerRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdate(record: TvlCleanerRecord, trx?: Transaction) {
-    const scope = trx ?? this.db
-
+export class TvlCleanerRepository extends BaseRepository {
+  async addOrUpdate(record: TvlCleanerRecord) {
     const row = toRow(record)
-    await scope
+    await this.getDb()
       .insertInto('public.tvl_cleaner')
       .values(row)
       .onConflict((cb) =>
@@ -24,7 +20,7 @@ export class TvlCleanerRepository {
   }
 
   async find(repositoryName: string) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.tvl_cleaner')
       .select(selectTvlCleaner)
       .where('repository_name', '=', repositoryName)
@@ -34,7 +30,7 @@ export class TvlCleanerRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.tvl_cleaner')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

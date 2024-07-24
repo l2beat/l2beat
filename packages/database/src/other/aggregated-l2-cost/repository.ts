@@ -1,14 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import { AggregatedL2CostRecord, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
 
-export class AggregatedL2CostRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class AggregatedL2CostRepository extends BaseRepository {
   async getAll(): Promise<AggregatedL2CostRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .execute()
@@ -19,7 +17,7 @@ export class AggregatedL2CostRepository {
   async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await batchExecute(this.db, rows, 5_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 5_000, async (trx, batch) => {
       await trx
         .insertInto('public.aggregated_l2_costs')
         .values(batch)
@@ -49,7 +47,7 @@ export class AggregatedL2CostRepository {
   }
 
   async deleteAfter(from: UnixTime): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.aggregated_l2_costs')
       .where('timestamp', '>', from.toDate())
       .executeTakeFirst()
@@ -57,7 +55,7 @@ export class AggregatedL2CostRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.aggregated_l2_costs')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
@@ -68,7 +66,7 @@ export class AggregatedL2CostRepository {
     timeRange: [UnixTime, UnixTime],
   ): Promise<AggregatedL2CostRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .where('project_id', '=', projectId.toString())

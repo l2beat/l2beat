@@ -1,16 +1,10 @@
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { IndexerStateRecord, toRecord, toRow } from './entity'
 
-export class IndexerStateRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdate(
-    record: IndexerStateRecord,
-    trx?: Transaction,
-  ): Promise<string> {
+export class IndexerStateRepository extends BaseRepository {
+  async addOrUpdate(record: IndexerStateRecord): Promise<string> {
     const row = toRow(record)
-    const scope = trx ?? this.db
-    await scope
+    await this.getDb()
       .insertInto('public.indexer_state')
       .values(row)
       .onConflict((cb) =>
@@ -30,7 +24,7 @@ export class IndexerStateRepository {
       return []
     }
 
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.indexer_state')
       .selectAll()
       .where('indexer_id', 'in', ids)
@@ -40,7 +34,7 @@ export class IndexerStateRepository {
   }
 
   async findIndexerState(indexerId: string) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.indexer_state')
       .selectAll()
       .where('indexer_id', '=', indexerId)
@@ -49,14 +43,8 @@ export class IndexerStateRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async setSafeHeight(
-    indexerId: string,
-    safeHeight: number,
-    trx?: Transaction,
-  ) {
-    const scope = trx ?? this.db
-
-    const [result] = await scope
+  async setSafeHeight(indexerId: string, safeHeight: number) {
+    const [result] = await this.getDb()
       .updateTable('public.indexer_state')
       .set({ safe_height: safeHeight })
       .where('indexer_id', '=', indexerId)
@@ -66,7 +54,7 @@ export class IndexerStateRepository {
   }
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.indexer_state')
       .selectAll()
       .execute()
@@ -74,7 +62,7 @@ export class IndexerStateRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.indexer_state')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

@@ -1,14 +1,12 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { CacheRecord, toRecord, toRow } from './entity'
 import { selectCache } from './select'
 
-export class CacheRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class CacheRepository extends BaseRepository {
   upsert(cache: CacheRecord) {
     const row = toRow(cache)
 
-    return this.db
+    return this.getDb()
       .insertInto('public.Cache')
       .values(row)
       .onConflict((conflict) =>
@@ -23,7 +21,7 @@ export class CacheRepository {
   }
 
   async findByKey(key: CacheRecord['key']) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.Cache')
       .select(selectCache)
       .where('public.Cache.key', '=', key)

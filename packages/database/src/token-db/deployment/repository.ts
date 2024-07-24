@@ -1,13 +1,11 @@
-import { PostgresDatabase } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { DeploymentRecord, toRow } from './entity'
 
-export class DeploymentRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class DeploymentRepository extends BaseRepository {
   upsert(Deployment: DeploymentRecord) {
     const row = toRow(Deployment)
 
-    return this.db
+    return this.getDb()
       .insertInto('public.Deployment')
       .values(row)
       .onConflict((conflict) =>

@@ -1,28 +1,19 @@
 import { ProjectId } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { AggregatedLivenessRecord, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
 
-export class AggregatedLivenessRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdateMany(
-    records: AggregatedLivenessRecord[],
-    trx?: Transaction,
-  ): Promise<number> {
+export class AggregatedLivenessRepository extends BaseRepository {
+  async addOrUpdateMany(records: AggregatedLivenessRecord[]): Promise<number> {
     for (const record of records) {
-      await this.addOrUpdate(record, trx)
+      await this.addOrUpdate(record)
     }
     return records.length
   }
 
-  async addOrUpdate(
-    record: AggregatedLivenessRecord,
-    trx?: Transaction,
-  ): Promise<string> {
-    const scope = trx ?? this.db
+  async addOrUpdate(record: AggregatedLivenessRecord): Promise<string> {
     const row = toRow(record)
-    await scope
+    await this.getDb()
       .insertInto('public.aggregated_liveness')
       .values(row)
       .onConflict((cb) =>
@@ -39,14 +30,14 @@ export class AggregatedLivenessRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.aggregated_liveness')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AggregatedLivenessRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.aggregated_liveness')
       .select(selectAggregatedLiveness)
       .execute()
@@ -57,7 +48,7 @@ export class AggregatedLivenessRepository {
   async getByProject(
     projectId: ProjectId,
   ): Promise<AggregatedLivenessRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.aggregated_liveness')
       .select(selectAggregatedLiveness)
       .where('project_id', '=', projectId)

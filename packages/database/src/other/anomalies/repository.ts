@@ -1,25 +1,19 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { AnomalyRecord, toRecord, toRow } from './entity'
 import { selectAnomaly } from './select'
 
-export class AnomaliesRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
-  async addOrUpdateMany(
-    records: AnomalyRecord[],
-    trx?: Transaction,
-  ): Promise<number> {
+export class AnomaliesRepository extends BaseRepository {
+  async addOrUpdateMany(records: AnomalyRecord[]): Promise<number> {
     for (const record of records) {
-      await this.addOrUpdate(record, trx)
+      await this.addOrUpdate(record)
     }
     return records.length
   }
 
-  async addOrUpdate(record: AnomalyRecord, trx?: Transaction): Promise<string> {
-    const scope = trx ?? this.db
+  async addOrUpdate(record: AnomalyRecord): Promise<string> {
     const row = toRow(record)
-    await scope
+    await this.getDb()
       .insertInto('public.anomalies')
       .values(row)
       .onConflict((cb) =>
@@ -35,14 +29,14 @@ export class AnomaliesRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.anomalies')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AnomalyRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
       .execute()
@@ -54,7 +48,7 @@ export class AnomaliesRepository {
     projectId: ProjectId,
     from: UnixTime,
   ): Promise<AnomalyRecord[]> {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
       .where('project_id', '=', projectId)

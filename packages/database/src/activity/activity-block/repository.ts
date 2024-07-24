@@ -1,24 +1,20 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { BlockTransactionCountRecord, toRecord, toRow } from './entity'
 import { selectBlockTransactionCount } from './select'
 
-export class BlockTransactionCountRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class BlockTransactionCountRepository extends BaseRepository {
   async addOrUpdateMany(
     records: BlockTransactionCountRecord[],
-    trx?: Transaction,
   ): Promise<number> {
     for (const record of records) {
-      await this.addOrUpdate(record, trx)
+      await this.addOrUpdate(record)
     }
     return records.length
   }
 
-  async addOrUpdate(record: BlockTransactionCountRecord, trx?: Transaction) {
-    const scope = trx ?? this.db
-    await scope
+  async addOrUpdate(record: BlockTransactionCountRecord) {
+    await this.getDb()
       .insertInto('activity.block')
       .values(toRow(record))
       .onConflict((cb) =>
@@ -33,12 +29,14 @@ export class BlockTransactionCountRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('activity.block').executeTakeFirst()
+    const result = await this.getDb()
+      .deleteFrom('activity.block')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('activity.block')
       .select('unix_timestamp')
       .where('project_id', '=', projectId.toString())
@@ -49,7 +47,7 @@ export class BlockTransactionCountRepository {
   }
 
   async getAll() {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('activity.block')
       .select(selectBlockTransactionCount)
       .execute()

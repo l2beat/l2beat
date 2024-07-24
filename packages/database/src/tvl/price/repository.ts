@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase, Transaction } from '../../kysely'
+import { BaseRepository } from '../../BaseRepository'
 import { batchExecute } from '../../utils/batchExecute'
 import {
   CleanDateRange,
@@ -9,9 +9,7 @@ import {
 import { PriceRecord, toRecord, toRow } from './entity'
 import { selectPrice } from './select'
 
-export class PriceRepository {
-  constructor(private readonly db: PostgresDatabase) {}
-
+export class PriceRepository extends BaseRepository {
   async getByConfigIdsInRange(
     configIds: string[],
     fromInclusive: UnixTime,
@@ -20,7 +18,7 @@ export class PriceRepository {
     if (configIds.length === 0) {
       return []
     }
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('configuration_id', 'in', configIds)
@@ -33,7 +31,7 @@ export class PriceRepository {
   }
 
   async getByTimestamp(timestamp: UnixTime) {
-    const rows = await this.db
+    const rows = await this.getDb()
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('timestamp', '=', timestamp.toDate())
@@ -44,7 +42,7 @@ export class PriceRepository {
   }
 
   async findByConfigAndTimestamp(configId: string, timestamp: UnixTime) {
-    const row = await this.db
+    const row = await this.getDb()
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('configuration_id', '=', configId)
@@ -54,15 +52,14 @@ export class PriceRepository {
     return row ? toRecord(row) : null
   }
 
-  async addMany(records: PriceRecord[], trx?: Transaction) {
+  async addMany(records: PriceRecord[]) {
     if (records.length === 0) {
       return 0
     }
 
-    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await batchExecute(scope, rows, 10_000, async (trx, batch) => {
+    await batchExecute(this.getDb(), rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.prices').values(batch).execute()
     })
 
@@ -74,7 +71,7 @@ export class PriceRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.db
+    const result = await this.getDb()
       .deleteFrom('public.prices')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -84,20 +81,25 @@ export class PriceRepository {
   }
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.db, 'public.prices', dateRange)
+    return deleteHourlyUntil(this.getDb(), 'public.prices', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.db, 'public.prices', dateRange)
+    return deleteSixHourlyUntil(this.getDb(), 'public.prices', dateRange)
   }
 
   async getAll() {
-    const rows = await this.db.selectFrom('public.prices').selectAll().execute()
+    const rows = await this.getDb()
+      .selectFrom('public.prices')
+      .selectAll()
+      .execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.db.deleteFrom('public.prices').executeTakeFirst()
+    const result = await this.getDb()
+      .deleteFrom('public.prices')
+      .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }
