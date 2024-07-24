@@ -13,6 +13,10 @@ export class AmountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async getByIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
+    if (configIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
@@ -29,6 +33,10 @@ export class AmountRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<AmountRecord[]> {
+    if (configIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)

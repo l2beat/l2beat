@@ -24,6 +24,10 @@ export class CurrentPriceRepository {
   }
 
   async findByIds(coingeckoIds: string[]) {
+    if (coingeckoIds.length === 0) {
+      return []
+    }
+
     const res = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)

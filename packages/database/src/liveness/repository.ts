@@ -22,6 +22,10 @@ export class LivenessRepository {
     configurationIds: TrackedTxId[],
     since: UnixTime,
   ) {
+    if (configurationIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
@@ -38,6 +42,10 @@ export class LivenessRepository {
     configurationIds: TrackedTxId[],
     to: UnixTime,
   ) {
+    if (configurationIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
@@ -55,6 +63,10 @@ export class LivenessRepository {
     from: UnixTime,
     to: UnixTime,
   ) {
+    if (configurationIds.length === 0) {
+      return []
+    }
+
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
 
     const rows = await this.db

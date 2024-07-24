@@ -17,6 +17,9 @@ export class PriceRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ) {
+    if (configIds.length === 0) {
+      return []
+    }
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)

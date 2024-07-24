@@ -102,6 +102,9 @@ export class TokenRepository {
   }
 
   async findManyByIds(ids: TokenRecord['id'][]) {
+    if (ids.length === 0) {
+      return []
+    }
     const rows = await this.db
       .selectFrom('public.Token')
       .select(selectToken)
