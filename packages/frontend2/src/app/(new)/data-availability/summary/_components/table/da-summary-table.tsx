@@ -26,6 +26,14 @@ export function DaSummaryTable({ items }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    initialState: {
+      sorting: [
+        {
+          id: 'tvs',
+          desc: true,
+        },
+      ],
+    },
   })
 
   return (
