@@ -1,11 +1,3 @@
-import { EtherscanLink } from '~/app/_components/etherscan-link'
-import { Markdown } from '~/app/_components/markdown/markdown'
-import ChevronDownIcon from '~/icons/chevron.svg'
-import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
-import { LastUsedCell } from './last-used-cell'
-import { SubVerifiersTable } from './sub-verifiers-table'
-import { VerifiedCell } from './verified-cell'
-import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 import {
   Accordion,
   AccordionContent,
@@ -13,7 +5,15 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from '@radix-ui/react-accordion'
+import { EtherscanLink } from '~/app/_components/etherscan-link'
 import { CustomLink } from '~/app/_components/link/custom-link'
+import { Markdown } from '~/app/_components/markdown/markdown'
+import ChevronDownIcon from '~/icons/chevron.svg'
+import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
+import { LastUsedCell } from './last-used-cell'
+import { SubVerifiersTable } from './sub-verifiers-table'
+import { VerifiedCell } from './verified-cell'
+import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
 interface Props {
   items: ZkCatalogProjectDetails['verifiers']

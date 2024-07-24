@@ -1,5 +1,5 @@
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { CustomLink } from '~/app/_components/link/custom-link'
+import { EM_DASH } from '~/app/_components/nav/consts'
 import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
 interface Props {
