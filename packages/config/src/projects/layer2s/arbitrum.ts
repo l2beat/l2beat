@@ -20,10 +20,7 @@ import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('arbitrum')
 const l2Discovery = new ProjectDiscovery('arbitrum', 'arbitrum')
-const l2Upgradability = {
-  upgradableBy: ['L2ProxyAdmin'],
-  upgradeDelay: 'No delay',
-}
+
 const discovery_arbitrum = new ProjectDiscovery('arbitrum', 'arbitrum')
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 const validatorAfkBlocks = discovery.getContractValue<number>(
@@ -44,16 +41,45 @@ const l2TimelockDelay = discovery_arbitrum.getContractValue<number>(
   'L2CoreTimelock',
   'getMinDelay',
 ) // 3 days
-const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
+const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
 
 const upgradeExecutorUpgradeability = {
   upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
-  )} or 0 if overridden by Security Council`,
+  )} or 0 if overridden by the Security Council`,
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
+const l2Upgradability = {
+  // same as on L1, but messages from L1 must be sent to L2
+  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by the Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const l2CoreQuorumPercent =
+  (l2Discovery.getContractValue<number>('CoreGovernor', 'quorumNumerator') /
+    l2Discovery.getContractValue<number>('CoreGovernor', 'quorumDenominator')) *
+  100
+const l2TreasuryQuorumPercent =
+  (l2Discovery.getContractValue<number>('TreasuryGovernor', 'quorumNumerator') /
+    l2Discovery.getContractValue<number>(
+      'TreasuryGovernor',
+      'quorumDenominator',
+    )) *
+  100
+const l2CoreTimelockDelay = l2Discovery.getContractValue<number>(
+  'L2CoreTimelock',
+  'getMinDelay',
+)
+const l2TreasuryTimelockDelay = l2Discovery.getContractValue<number>(
+  'L2TreasuryTimelock',
+  'getMinDelay',
+)
 
 const maxTimeVariation = discovery.getContractValue<number[]>(
   'SequencerInbox',
@@ -222,7 +248,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
-      'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions, upgrade bridge implementation potentially gaining access to all funds stored in a bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
+      'The admin of all contracts in the system, capable of issuing upgrades without notice and delay. This allows it to censor transactions and to upgrade the bridge implementation, potentially gaining access to all funds stored in the bridge and change the sequencer or any other system component (unlimited upgrade power). It is also the admin of the special purpose smart contracts used by validators.',
       [
         {
           text: 'Security Council members - Arbitrum Foundation Docs',
@@ -285,87 +311,106 @@ export const arbitrum: Layer2 = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
   ],
+  nativePermissions: {
+    arbitrum: [
+      ...l2Discovery.getMultisigPermission(
+        'L2SecurityCouncilEmergency',
+        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+      ),
+      ...l2Discovery.getMultisigPermission(
+        'L2SecurityCouncilPropose',
+        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2CoreTimelock (e.g. upgrade proposals).',
+      ),
+    ],
+  },
   nativeAddresses: {
     arbitrum: [
-      l2Discovery.getContractDetails(
-        'L2ArbitrumToken',
-        'The ARB token contract. It is owned by the MintManager and can inflate the token supply by 2% annually.',
-      ),
-      l2Discovery.getContractDetails(
-        'MintManager',
-        'Controls the OP inflation rate, which is currently hardcoded to 2% annually. It is controlled by the MintManagerOwner multisig, which can also change the OP token owner and therefore the inflation rate.',
-      ),
-      l2Discovery.getContractDetails('L2CrossDomainMessenger', {
-        description:
-          'The L2CrossDomainMessenger (L2xDM) contract sends messages from L2 to L1, and relays messages from L1 onto L2 with a system tx. In the event that a message sent from L2 to L1 is rejected for exceeding the L1 gas limit, it can be resubmitted via this contract’s replay function.',
+      l2Discovery.getContractDetails('CoreGovernor', {
+        description: `Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the ${l2CoreQuorumPercent} % quorum for proposals.`,
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('GasPriceOracle', {
-        description:
-          'Contracts that provide L1 and L2 gas price information, which is derived permissionlessly from the L1 chain.',
+      l2Discovery.getContractDetails('L2CoreTimelock', {
+        description: `Delays constitutional AIPs from the CoreGovernor by ${formatSeconds(
+          l2CoreTimelockDelay,
+        )}.`,
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L2StandardBridge', {
-        description:
-          'The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.',
+      l2Discovery.getContractDetails('TreasuryGovernor', {
+        description: `Governance contract used for creating non-constitutional AIPs, or "treasury proposals", e.g., transferring founds out of the DAO Treasury. Also enforces the ${l2TreasuryQuorumPercent} % quorum for proposals.`,
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('OptimismMintableERC20Factory', {
-        description:
-          'Factory contract to create bridge compliant ERC20 IOU token representations of bridged L1 ERC20 tokens.',
+      l2Discovery.getContractDetails('L2TreasuryTimelock', {
+        description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
+          l2TreasuryTimelockDelay,
+        )}.`,
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('OptimismMintableERC721Factory', {
+      l2Discovery.getContractDetails('L2UpgradeExecutor', {
         description:
-          'Factory contract to create bridge compliant ERC721 IOU token representations of bridged L1 ERC721 tokens.',
+          "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock (via its alias on L2).",
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L1BlockNumber', {
-        description: 'Simple contract that returns the latest L1 block number.',
+      l2Discovery.getContractDetails('SecurityCouncilManager', {
+        description:
+          'This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to ethereum and Arbitrum Nova to keep the configuration in sync.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L2ERC721Bridge', {
+      l2Discovery.getContractDetails('ConstitutionHash', {
         description:
-          'The L2ERC721Bridge contract is the main entry point to deposit or withdraw ERC721 tokens from L2 to L1. This contract can store any token.',
+          'Keeps the current hash of the ArbitrumDAO Constitution. Settable by the owner.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L1Block', {
+      l2Discovery.getContractDetails('L2ProxyAdmin', {
         description:
-          'Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.',
+          "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract.",
+      }),
+      l2Discovery.getContractDetails('L2GatewaysProxyAdmin', {
+        description:
+          "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 bridging gateway contracts through this contract.",
+      }),
+      l2Discovery.getContractDetails('L2BaseFee', {
+        description:
+          'This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.',
+      }),
+      l2Discovery.getContractDetails('L2SurplusFee', {
+        description:
+          'This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.',
+      }),
+      l2Discovery.getContractDetails('L2ArbitrumToken', {
+        description:
+          'The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L2ToL1MessagePasser', {
-        description:
-          'Contract used internally by the L2CrossDomainMessenger to send messages to L1, including withdrawals. It can also be used directly as a low-level interface.',
+      l2Discovery.getContractDetails('L2GatewayRouter', {
+        description: 'Router managing token <--> gateway mapping on L2.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('BaseFeeVault', {
+      l2Discovery.getContractDetails('L2ERC20Gateway', {
         description:
-          'Contract collecting base fees, which are withdrawable to the FeesCollector on L1.',
+          'Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L1FeeVault', {
+      l2Discovery.getContractDetails('L2WethGateway', {
         description:
-          'Contract collecting L1 fees, which are withdrawable to the FeesCollector on L1.',
+          'Counterpart to the Bridge on L1. Mints and burns WETH on L2.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('SequencerFeeVault', {
+      l2Discovery.getContractDetails('L2ARBGateway', {
         description:
-          'Contract collecting sequencer fees, which are withdrawable to the FeesCollector on L1.',
+          'ARB sent from L2 to L1 is escrowed in this contract and minted on L1.',
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('SchemaRegistry', {
+      l2Discovery.getContractDetails('L2DAIGateway', {
         description:
-          'Contracts to register schemas for the Ethereum Attestation Service (EAS).',
-        ...l2Upgradability,
+          'Counterpart to the L1DaiGateway. Can mint (deposit to L2) and burn (withdraw to L1) DAI tokens on L2',
       }),
-      l2Discovery.getContractDetails('EAS', {
+      l2Discovery.getContractDetails('L2LPTGateway', {
         description:
-          'Contract containing the main logic for the Ethereum Attestation Service (EAS).',
-        ...l2Upgradability,
+          'Counterpart to the L1LPTGateway. Can mint (deposit to L2) and burn (withdraw to L1) LPT on L2',
       }),
     ],
   },
+
   nonTemplateContractRisks: [
     CONTRACTS.UPGRADE_WITH_DELAY_RISK_WITH_SC(
       Math.round(totalDelay / 86400).toString(), // delay in days
