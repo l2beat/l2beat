@@ -50,6 +50,16 @@ export class IndexerConfigurationRepository {
     return rows.map(toRecord)
   }
 
+  async getIdsByIndexer(indexerId: string): Promise<string[]> {
+    const rows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .select('id')
+      .where('indexer_id', '=', indexerId)
+      .execute()
+
+    return rows.map((r) => r.id)
+  }
+
   updateSavedConfigurations(
     indexerId: string,
     currentHeight: number | null,
@@ -77,21 +87,16 @@ export class IndexerConfigurationRepository {
       .execute()
   }
 
-  async deleteConfigurationsExcluding(
+  async deleteConfigurations(
     indexerId: string,
-    configurationIds: string[],
+    ids: string[],
   ): Promise<number> {
+    if (ids.length === 0) return 0
+
     const result = await this.db
       .deleteFrom('public.indexer_configurations')
       .where('indexer_id', '=', indexerId)
-      .where((eb) => {
-        // Somehow kysely cannot handle empty array in `not in` clause
-        if (configurationIds.length === 0) {
-          return eb.and([])
-        } else {
-          return eb('id', 'not in', configurationIds)
-        }
-      })
+      .where('id', 'in', ids)
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
