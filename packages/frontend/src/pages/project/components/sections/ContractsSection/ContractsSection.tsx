@@ -99,6 +99,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="my-4"
+                  type="contract"
                 />
               </React.Fragment>
             ))}
@@ -131,6 +132,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                           props.manuallyVerifiedContracts
                         }
                         className="my-4"
+                        type="contract"
                       />
                     </React.Fragment>
                   ))}
@@ -163,6 +165,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                   verificationStatus={props.verificationStatus}
                   manuallyVerifiedContracts={props.manuallyVerifiedContracts}
                   className="my-4"
+                  type="contract"
                 />
               </React.Fragment>
             ))}
@@ -207,6 +210,7 @@ function ImplementationHasChangedContracts(props: {
             verificationStatus={props.verificationStatus}
             manuallyVerifiedContracts={props.manuallyVerifiedContracts}
             className="my-4 p-0"
+            type="contract"
           />
         </React.Fragment>
       ))}
