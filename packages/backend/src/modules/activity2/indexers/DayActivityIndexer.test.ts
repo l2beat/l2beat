@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ActivityRepository } from '@l2beat/database/src/activity/repository'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -7,6 +6,8 @@ import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { TxsCountProvider } from '../services/TxsCountProvider'
 import { DayActivityIndexer } from './DayActivityIndexer'
 import { DayActivityIndexerDeps } from './types'
+import { mockDatabase } from '../../../test/database'
+import { Database } from '@l2beat/database'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -50,7 +51,7 @@ describe(DayActivityIndexer.name, () => {
     })
 
     it('gets blocks counts and saves to db', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
+      const activityRepository = mockObject<Database['activity']>({
         addOrUpdateMany: mockFn().resolvesTo(undefined),
       })
 
@@ -66,7 +67,7 @@ describe(DayActivityIndexer.name, () => {
 
       const indexer = createIndexer({
         txsCountProvider,
-        activityRepository,
+        db: mockDatabase({ activity: activityRepository }),
         batchSize: 100,
       })
 
@@ -109,9 +110,11 @@ function createIndexer(
     txsCountProvider: mockObject<TxsCountProvider>({
       getTxsCount: mockFn().resolvesTo([]),
     }),
-    activityRepository: mockObject<ActivityRepository>({
-      getByProjectAndTimeRange: mockFn().resolvesTo([]),
-      addOrUpdateMany: mockFn().resolvesTo(undefined),
+    db: mockDatabase({
+      activity: mockObject<Database['activity']>({
+        getByProjectAndTimeRange: mockFn().resolvesTo([]),
+        addOrUpdateMany: mockFn().resolvesTo(undefined),
+      }),
     }),
     projectId: ProjectId('a'),
     indexerService: mockObject<IndexerService>({}),
