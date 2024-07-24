@@ -3,20 +3,20 @@ import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
-  DaBridge,
-  DaLayer,
   bridges,
   daLayers,
+  getChainNames,
+  getChainNamesForDA,
   layer2s,
   layer3s,
 } from '../../src'
+import { getDaProjectKey } from '../../src/utils/getDaProjectKey'
 import { getManuallyVerifiedContracts } from '../../src/verification/manuallyVerifiedContracts'
 import {
   areAllAddressesVerified,
   getUniqueAddressesForDaBridge,
   getUniqueContractsForProject,
 } from './addresses'
-import { getChainNames, getChainNamesForDA } from './chains'
 import { getEtherscanClient } from './etherscan'
 import {
   PROJECTS_OUTPUT_PATH,
@@ -31,10 +31,6 @@ import { withoutDuplicates } from './utils'
 interface CheckResult {
   verificationMap: Record<string, VerificationMap>
   uniqueAddresses: Record<string, EthereumAddress[]>
-}
-
-export function getDaProjectKey(daLayer: DaLayer, bridge: DaBridge): string {
-  return `${daLayer.id}-${bridge.id}`
 }
 
 function encodeKey(id: string, chain: string): string {
@@ -100,7 +96,7 @@ async function checkL2BEAT(
   const uniqueAddresses: Record<string, EthereumAddress[]> = {}
 
   const projects = [...layer2s, ...bridges, ...layer3s]
-  const chains = getChainNames(projects)
+  const chains = getChainNames(...projects)
   for (const chain of chains) {
     console.log(`Checking on chain ${chain}...`)
 
@@ -137,7 +133,7 @@ async function checkDABEAT(
   const verificationMap: Record<string, VerificationMap> = {}
   const uniqueAddresses: Record<string, EthereumAddress[]> = {}
 
-  const chains = getChainNamesForDA(daLayers)
+  const chains = getChainNamesForDA(...daLayers)
   for (const chain of chains) {
     console.log(`Checking on chain ${chain}...`)
 

@@ -1,21 +1,9 @@
 import { ActivityRecord } from '@l2beat/database/src/activity/entity'
-import { ActivityRepository } from '@l2beat/database/src/activity/repository'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import {
-  ManagedChildIndexer,
-  ManagedChildIndexerOptions,
-} from '../../../tools/uif/ManagedChildIndexer'
-import { TxsCountProvider } from '../services/TxsCountProvider'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
+import { ActivityIndexerDeps } from './types'
 
-export interface ActivityIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
-  projectId: ProjectId
-  txsCountProvider: TxsCountProvider
-  activityRepository: ActivityRepository
-  batchSize: number
-}
-
-export class ActivityIndexer extends ManagedChildIndexer {
+export class BlockActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ActivityIndexerDeps) {
     const logger = $.logger.tag($.projectId)
     super({ ...$, logger, name: `activity_indexer_${$.projectId}` })

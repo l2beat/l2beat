@@ -18,9 +18,9 @@ export function FilterInput(props: FilterInputProps) {
         }
         placeholder="Search for asset"
         className={cn(
-          'text-xs text-zinc-500 bg-white dark:bg-zinc-900 dark:text-white placeholder:text-zinc-500',
+          'bg-white text-xs text-zinc-500 placeholder:text-zinc-500 dark:bg-zinc-900 dark:text-white',
           'rounded-lg px-3 py-2',
-          'border border-[#C0C1C7] focus:border-gray-500 outline-none',
+          'border border-[#C0C1C7] outline-none focus:border-gray-500',
           'transition-colors duration-100',
           'w-[min(50vw,250px)]',
         )}

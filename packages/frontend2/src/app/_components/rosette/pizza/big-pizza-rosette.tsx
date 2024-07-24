@@ -38,7 +38,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
       <div
         data-role="rosette"
         className={cn(
-          'relative w-[272px] p-12 text-center font-medium text-xs uppercase leading-tight whitespace-pre',
+          'relative w-[272px] whitespace-pre p-12 text-center text-xs font-medium uppercase leading-tight',
           props.className,
         )}
       >

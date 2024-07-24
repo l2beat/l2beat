@@ -25,9 +25,9 @@ export function NavSmallLink({
     <Link href={href} target={href.startsWith('http') ? '_blank' : undefined}>
       <li
         className={cn(
-          'font-medium text-xs leading-none text-zinc-800 dark:text-white hover:text-zinc-500 dark:hover:text-gray-400 transition-colors duration-300',
+          'text-xs font-medium leading-none text-zinc-800 transition-colors duration-300 hover:text-zinc-500 dark:text-white dark:hover:text-gray-400',
           active &&
-            'hover:text-pink-900 text-pink-900 dark:text-pink-200 dark:hover:text-pink-200',
+            'text-pink-900 hover:text-pink-900 dark:text-pink-200 dark:hover:text-pink-200',
         )}
       >
         {children ?? title}

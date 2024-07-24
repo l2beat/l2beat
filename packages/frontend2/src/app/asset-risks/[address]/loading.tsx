@@ -84,7 +84,7 @@ function SkeletonColumn({ column }: { column: SingleColumnConfig }) {
     <th
       className={cn(
         'whitespace-pre py-2 pl-2 align-bottom text-sm font-medium uppercase text-gray-500 dark:text-gray-50',
-        'pr-3 last:pr-0 md:pr-4',
+        'pr-3 md:pr-4',
         'first:pl-[18px] last:pr-[18px]',
         column.className,
       )}
@@ -158,7 +158,7 @@ function Skeleton({ className }: { className?: ClassNameValue }) {
   return (
     <div
       className={cn(
-        'bg-zinc-300 h-6 rounded min-w-max animate-pulse',
+        'h-6 min-w-max animate-pulse rounded bg-zinc-300',
         className,
       )}
     />

@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
-import { notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -9,8 +8,11 @@ import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
 import { BlockTimestampProvider } from '../tvl/services/BlockTimestampProvider'
-import { ActivityIndexer } from './indexers/ActivityIndexer'
+import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
+import { DayActivityIndexer } from './indexers/DayActivityIndexer'
+import { DayTargetIndexer } from './indexers/DayTargetIndexer'
+import { ActivityIndexer } from './indexers/types'
 import { TxsCountProvider } from './services/TxsCountProvider'
 
 export function createActivity2Module(
@@ -37,9 +39,8 @@ export function createActivity2Module(
     logger = logger.for('Activity2Module')
     logger.info('Starting')
     await Promise.all(
-      indexers.map(async (p) => {
-        await p.blockTargetIndexer.start()
-        await p.activityIndexer.start()
+      indexers.map(async (indexer) => {
+        await indexer.start()
       }),
     )
     logger.info('Started')
@@ -57,84 +58,105 @@ function createActivityIndexers(
   logger: Logger,
   clock: Clock,
   db: Database,
-): {
-  blockTargetIndexer: BlockTargetIndexer
-  activityIndexer: ActivityIndexer
-}[] {
+): ActivityIndexer[] {
   if (!activityConfig) {
     return []
   }
+
+  const indexers: ActivityIndexer[] = []
+
   const activityRepository = db.activity
   const indexerService = new IndexerService(db)
 
-  return activityConfig.projects
-    .flatMap((project) => {
-      const txsCountProvider = new TxsCountProvider({
-        logger,
-        peripherals,
-        projectId: project.id,
-        projectConfig: project.config,
-        activityConfig,
-      })
+  const dayTargetIndexer = new DayTargetIndexer(logger, clock)
+  indexers.push(dayTargetIndexer)
 
-      switch (project.config.type) {
-        case 'rpc': {
-          const blockTimestampProvider = new BlockTimestampProvider({
-            client: peripherals.getClient(RpcClient, {
-              url: project.config.url,
-              callsPerMinute: project.config.callsPerMinute,
-            }),
-            logger,
-          })
-          const blockTargetIndexer = new BlockTargetIndexer(
-            logger,
-            clock,
-            blockTimestampProvider,
-          )
-
-          const activityIndexer = new ActivityIndexer({
-            logger,
-            projectId: project.id,
-            // TODO: add batchSize to config
-            batchSize: 100,
-            minHeight: project.config.startBlock ?? 1,
-            parents: [blockTargetIndexer],
-            txsCountProvider,
-            indexerService,
-            activityRepository,
-          })
-
-          return { blockTargetIndexer, activityIndexer }
-        }
-        case 'zksync': {
-          const blockTimestampProvider = new BlockTimestampProvider({
-            client: peripherals.getClient(ZksyncClient, {
-              url: project.config.url,
-              callsPerMinute: project.config.callsPerMinute,
-            }),
-            logger,
-          })
-          const blockTargetIndexer = new BlockTargetIndexer(
-            logger,
-            clock,
-            blockTimestampProvider,
-          )
-
-          const activityIndexer = new ActivityIndexer({
-            logger,
-            projectId: project.id,
-            // TODO: add batchSize to config
-            batchSize: 100,
-            minHeight: 1,
-            parents: [blockTargetIndexer],
-            txsCountProvider,
-            indexerService,
-            activityRepository,
-          })
-
-          return { blockTargetIndexer, activityIndexer }
-        }
-      }
+  activityConfig.projects.forEach((project) => {
+    const txsCountProvider = new TxsCountProvider({
+      logger,
+      peripherals,
+      projectId: project.id,
+      projectConfig: project.config,
+      activityConfig,
     })
-    .filter(notUndefined)
+
+    switch (project.config.type) {
+      case 'rpc': {
+        const blockTimestampProvider = new BlockTimestampProvider({
+          client: peripherals.getClient(RpcClient, {
+            url: project.config.url,
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          logger,
+        })
+        const blockTargetIndexer = new BlockTargetIndexer(
+          logger,
+          clock,
+          blockTimestampProvider,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: project.config.startBlock ?? 0,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          activityRepository,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+      case 'starkex': {
+        const activityIndexer = new DayActivityIndexer({
+          logger,
+          projectId: project.id,
+          batchSize: 10,
+          minHeight:
+            project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
+          uncertaintyBuffer: project.config.resyncLastDays,
+          parents: [dayTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          activityRepository,
+        })
+
+        indexers.push(activityIndexer)
+        break
+      }
+      case 'zksync': {
+        const blockTimestampProvider = new BlockTimestampProvider({
+          client: peripherals.getClient(ZksyncClient, {
+            url: project.config.url,
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          logger,
+        })
+        const blockTargetIndexer = new BlockTargetIndexer(
+          logger,
+          clock,
+          blockTimestampProvider,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          activityRepository,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+    }
+  })
+  return indexers
 }
