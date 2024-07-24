@@ -1,7 +1,7 @@
 {
   "name": "arbitrum",
   "chain": "arbitrum",
-  "blockNumber": 235551758,
+  "blockNumber": 235552250,
   "configHash": "0x6c64b68845b3ceebbdf866091543494aa42acecbc493005d2783b6864fd04702",
   "version": 9,
   "contracts": [
