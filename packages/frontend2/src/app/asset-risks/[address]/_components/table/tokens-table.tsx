@@ -88,8 +88,8 @@ export function TokensTable(props: TokensTableProps) {
   }
 
   return (
-    <Card className="rounded-none sm:rounded-xl overflow-x-auto">
-      <div className="flex justify-between items-center">
+    <Card className="overflow-x-auto rounded-none sm:rounded-xl">
+      <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold">Assets</h2>
         <FilterInput filter={filter} setFilter={setFilter} />
       </div>

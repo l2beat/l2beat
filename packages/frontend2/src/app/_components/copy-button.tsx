@@ -36,7 +36,7 @@ export function CopyButton(props: Props) {
           copyToClipboard()
         }}
       >
-        <div className="size-6 relative">
+        <div className="relative size-6">
           <CopyIcon
             className={cn(
               'absolute inset-0 size-6 fill-blue-700 hover:fill-blue-600 dark:fill-blue-500 dark:hover:fill-blue-550 transition-opacity duration-200',

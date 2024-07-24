@@ -26,14 +26,14 @@ export function MarkdownSection({
   return (
     <ProjectSection {...projectSectionProps}>
       {diagramParams ? (
-        <figure className="mt-4 mb-8 text-center">
+        <figure className="mb-8 mt-4 text-center">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
             className="inline max-w-full align-[unset] dark:invert"
             src={diagramParams.src}
             alt={diagramParams.caption}
           />
-          <figcaption className="text-gray-500 text-xs dark:text-gray-600">
+          <figcaption className="text-xs text-gray-500 dark:text-gray-600">
             {diagramParams.caption}
           </figcaption>
         </figure>

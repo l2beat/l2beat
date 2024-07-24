@@ -28,7 +28,7 @@ const SelectTrigger = React.forwardRef<
   >
     {children}
     <SelectPrimitive.Icon asChild>
-      <ChevronIcon className="h-4 w-4 fill-current group-data-[state=open]/trigger:rotate-180 transition-transform" />
+      <ChevronIcon className="size-4 fill-current transition-transform group-data-[state=open]/trigger:rotate-180" />
     </SelectPrimitive.Icon>
   </SelectPrimitive.Trigger>
 ))
@@ -46,7 +46,7 @@ const SelectScrollUpButton = React.forwardRef<
     )}
     {...props}
   >
-    <ChevronIcon className="rotate-180 size-3 fill-black dark:fill-white" />
+    <ChevronIcon className="size-3 rotate-180 fill-black dark:fill-white" />
   </SelectPrimitive.ScrollUpButton>
 ))
 SelectScrollUpButton.displayName = SelectPrimitive.ScrollUpButton.displayName
@@ -113,9 +113,9 @@ const SelectItem = React.forwardRef<
     )}
     {...props}
   >
-    <span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
+    <span className="absolute right-2 flex size-3.5 items-center justify-center">
       <SelectPrimitive.ItemIndicator>
-        <CheckIcon className="h-5 w-5 stroke-[1.6px] stroke-black dark:stroke-white" />
+        <CheckIcon className="size-5 stroke-black stroke-[1.6px] dark:stroke-white" />
       </SelectPrimitive.ItemIndicator>
     </span>
     <SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

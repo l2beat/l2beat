@@ -25,10 +25,10 @@ export function NavLink({ icon, title, href, activeBehavior }: NavLinkProps) {
           active && 'bg-[#d3d5d9] dark:bg-[#393C43]',
         )}
       >
-        <span className="text-xl leading-none flex flex-row items-center">
+        <span className="flex flex-row items-center text-xl leading-none">
           {icon}
         </span>
-        <span className="font-semibold text-base leading-none xl:sidenav-collapsed:hidden">
+        <span className="text-base font-semibold leading-none xl:sidenav-collapsed:hidden">
           {title}
         </span>
       </li>
