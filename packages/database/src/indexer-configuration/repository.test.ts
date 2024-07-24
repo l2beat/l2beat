@@ -86,7 +86,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   )
 
   it(
-    IndexerConfigurationRepository.prototype.getSavedConfigurations.name,
+    IndexerConfigurationRepository.prototype.getIdsByIndexer.name,
     async () => {
       const records = CONFIGURATIONS
 
