@@ -36,7 +36,7 @@ export const NavSideBarWrapper = ({
   return (
     <div
       className={cn(
-        'absolute z-999 flex flex-shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out xl:static xl:transform-none xl:sidenav-collapsed:w-20',
+        'absolute z-999 flex shrink-0 translate-x-full flex-col items-stretch transition-all duration-300 ease-out xl:static xl:transform-none xl:sidenav-collapsed:w-20',
         sharedSizeClasses,
         open && 'translate-x-0',
         resizing && 'transition-none',

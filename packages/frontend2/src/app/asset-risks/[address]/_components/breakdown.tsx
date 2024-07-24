@@ -144,7 +144,7 @@ function BreakdownItem({
       className={cn(
         'h-full rounded-lg border bg-gradient-to-r last:mr-0',
         'flex flex-col items-end justify-end',
-        'absolute overflow-hidden overflow-ellipsis',
+        'absolute overflow-hidden text-ellipsis',
         'p-0 md:px-3 md:py-[10px]',
         group.className,
       )}
