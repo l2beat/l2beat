@@ -31,7 +31,7 @@ describe(FinalityController.name, () => {
         db: mockObject<Database>({
           finality: getMockFinalityRepository([]),
           liveness: getMockLivenessRepository([]),
-          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
+          indexerConfigurations: mockObject<Database['indexerConfigurations']>({
             getSavedConfigurations: mockFn().resolvesTo([]),
           }),
         }),
@@ -83,7 +83,7 @@ describe(FinalityController.name, () => {
         db: mockObject<Database>({
           finality: getMockFinalityRepository([project2Result]),
           liveness: getMockLivenessRepository(RECORDS),
-          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
+          indexerConfigurations: mockObject<Database['indexerConfigurations']>({
             getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
           }),
         }),
@@ -212,7 +212,7 @@ describe(FinalityController.name, () => {
         db: mockObject<Database>({
           finality: getMockFinalityRepository([]),
           liveness: getMockLivenessRepository(RECORDS),
-          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
+          indexerConfigurations: mockObject<Database['indexerConfigurations']>({
             getSavedConfigurations: mockFn().resolvesTo([
               mockConfiguration1,
               mockConfiguration2,
@@ -310,7 +310,7 @@ describe(FinalityController.name, () => {
               averageStateUpdate: null,
             },
           ]),
-          indexerConfiguration: mockObject<Database['indexerConfiguration']>(
+          indexerConfigurations: mockObject<Database['indexerConfigurations']>(
             {},
           ),
         }),

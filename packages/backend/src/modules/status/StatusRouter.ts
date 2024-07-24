@@ -21,10 +21,10 @@ export function createStatusRouter(config: Config, db: Database) {
       }),
       async (ctx) => {
         const configurations = ctx.query.indexer
-          ? await db.indexerConfiguration.getSavedConfigurations(
+          ? await db.indexerConfigurations.getSavedConfigurations(
               ctx.query.indexer,
             )
-          : await db.indexerConfiguration.getAll()
+          : await db.indexerConfigurations.getAll()
 
         ctx.body = {
           configurations: configurations.map((c) => ({

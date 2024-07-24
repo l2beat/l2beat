@@ -110,7 +110,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     const indexerService = mockObject<IndexerService>({
       upsertConfigurations: async () => {},
-      updateSavedConfigurations: async () => {},
+      updateConfigurationsCurrentHeight: async () => {},
       persistOnlyUsedConfigurations: async () => {},
     })
 
@@ -136,7 +136,7 @@ describe(ManagedMultiIndexer.name, () => {
     async () => {
       const indexerService = mockObject<IndexerService>({
         upsertConfigurations: async () => {},
-        updateSavedConfigurations: async () => {},
+        updateConfigurationsCurrentHeight: async () => {},
         persistOnlyUsedConfigurations: async () => {},
       })
 
@@ -144,12 +144,9 @@ describe(ManagedMultiIndexer.name, () => {
 
       await indexer.updateConfigurationsCurrentHeight(1, MOCK_TRANSACTION)
 
-      expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
-        1,
-        'indexer',
-        1,
-        MOCK_TRANSACTION,
-      )
+      expect(
+        indexerService.updateConfigurationsCurrentHeight,
+      ).toHaveBeenNthCalledWith(1, 'indexer', 1, MOCK_TRANSACTION)
     },
   )
 

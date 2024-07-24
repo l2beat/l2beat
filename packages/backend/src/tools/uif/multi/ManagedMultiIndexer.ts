@@ -90,7 +90,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     currentHeight: number,
     trx: Knex.Transaction,
   ): Promise<void> {
-    await this.options.indexerService.updateSavedConfigurations(
+    await this.options.indexerService.updateConfigurationsCurrentHeight(
       this.indexerId,
       currentHeight,
       trx,

@@ -107,7 +107,7 @@ export class FinalityController {
     const result: FinalityApiResponse['projects'] = {}
 
     const configurations = (
-      await this.$.db.indexerConfiguration.getSavedConfigurations(
+      await this.$.db.indexerConfigurations.getSavedConfigurations(
         'tracked_txs_indexer',
       )
     ).map((c) => ({

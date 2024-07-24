@@ -47,7 +47,7 @@ describe(BaseAnalyzer.name, () => {
           mockFn().resolvesTo(mockLivenessRecords),
       })
       const mockIndexerConfigurationRepository = mockObject<
-        Database['indexerConfiguration']
+        Database['indexerConfigurations']
       >({
         getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
       })
@@ -56,7 +56,7 @@ describe(BaseAnalyzer.name, () => {
       const mockAnalyzer = new MockAnalyzer(
         mockProvider,
         mockObject<Database>({
-          indexerConfiguration: mockIndexerConfigurationRepository,
+          indexerConfigurations: mockIndexerConfigurationRepository,
           liveness: mockLivenessRepository,
         }),
         mockProjectId,

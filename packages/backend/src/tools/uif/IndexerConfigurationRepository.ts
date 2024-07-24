@@ -76,7 +76,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async updateSavedConfigurations(
+  async updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
     trx?: Knex.Transaction,

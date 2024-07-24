@@ -12,7 +12,7 @@ describeDatabase(L2CostsRepository.name, (knex, kysely) => {
   const oldRepo = new L2CostsRepository(knex, Logger.SILENT)
   const oldConfigRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
   const newRepo = kysely.l2Cost
-  const newConfigRepo = kysely.indexerConfiguration
+  const newConfigRepo = kysely.indexerConfigurations
 
   // Extracted since we have single describe and two running contexts
   // in tandem with database constraints and data integrity

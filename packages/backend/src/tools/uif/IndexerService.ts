@@ -91,12 +91,12 @@ export class IndexerService {
     return configurations
   }
 
-  async updateSavedConfigurations(
+  async updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
     trx: Knex.Transaction,
   ): Promise<void> {
-    await this.indexerConfigurationRepository.updateSavedConfigurations(
+    await this.indexerConfigurationRepository.updateConfigurationsCurrentHeight(
       indexerId,
       currentHeight,
       trx,

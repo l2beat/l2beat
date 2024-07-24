@@ -9,7 +9,7 @@ import {
 
 describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
   const oldRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
-  const newRepo = kysely.indexerConfiguration
+  const newRepo = kysely.indexerConfigurations
 
   suite(oldRepo)
   suite(newRepo)
@@ -94,7 +94,8 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     )
 
     it(
-      IndexerConfigurationRepository.prototype.updateSavedConfigurations.name,
+      IndexerConfigurationRepository.prototype.updateConfigurationsCurrentHeight
+        .name,
       async () => {
         const records = [
           config('a', 1, null, 10), // update: current < toUpdate
@@ -107,7 +108,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
 
         await repository.addOrUpdateMany(records)
 
-        await repository.updateSavedConfigurations('indexer', 100)
+        await repository.updateConfigurationsCurrentHeight('indexer', 100)
 
         const result = await repository.getAll()
 
