@@ -96,6 +96,11 @@ import {
   ZKsyncEraScheduledTransactionsHandlerDefinition,
 } from './ZKsyncEraScheduledTransactionHandler'
 
+import {
+  PolygonCDKScheduledTransactionHandler,
+  PolygonCDKScheduledTransactionsHandlerDefinition,
+} from './PolygonCDKScheduledTransactionHandler'
+
 export type UserHandlerDefinition = z.infer<typeof UserHandlerDefinition>
 export const UserHandlerDefinition = z.union([
   StorageHandlerDefinition,
@@ -126,6 +131,7 @@ export const UserHandlerDefinition = z.union([
   EIP2535FacetHandlerDefinition,
   ZKsyncEraScheduledTransactionsHandlerDefinition,
   OrbitPostsBlobsDefinition,
+  PolygonCDKScheduledTransactionsHandlerDefinition,
 ])
 
 export function getUserHandler(
@@ -189,5 +195,7 @@ export function getUserHandler(
       return new ZKsyncEraScheduledTransactionHandler(field, abi, logger)
     case 'orbitPostsBlobs':
       return new OrbitPostsBlobsHandler(field, definition, logger)
+    case 'polygoncdkScheduledTransactions':
+      return new PolygonCDKScheduledTransactionHandler(field, abi, logger)
   }
 }
