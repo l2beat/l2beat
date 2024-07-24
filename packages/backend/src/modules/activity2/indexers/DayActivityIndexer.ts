@@ -10,7 +10,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
   override async update(from: number, to: number): Promise<number> {
     // TODO: confirm if this logic is still needed
     // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
-    const fromWithUncertainty = from - (this.$.uncertaintyBuffer ?? 0)
+    const fromWithUncertainty = from - this.$.uncertaintyBuffer
     const adjustedFrom =
       fromWithUncertainty < this.$.minHeight
         ? this.$.minHeight

@@ -18,7 +18,7 @@ export interface ActivityIndexerDeps
 export interface DayActivityIndexerDeps extends ActivityIndexerDeps {
   // TODO: confirm if this logic is still needed
   // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
-  uncertaintyBuffer?: number
+  uncertaintyBuffer: number
 }
 
 export type ActivityIndexer =
