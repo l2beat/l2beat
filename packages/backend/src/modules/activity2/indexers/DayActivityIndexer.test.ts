@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { TxsCountProvider } from '../services/TxsCountProvider'
 import { DayActivityIndexer } from './DayActivityIndexer'
 import { DayActivityIndexerDeps } from './types'
-import { mockDatabase } from '../../../test/database'
-import { Database } from '@l2beat/database'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
