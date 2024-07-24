@@ -63,7 +63,6 @@ function createActivityIndexers(
   if (!activityConfig) {
     return []
   }
-  const activityRepository = db.activity
   const indexerService = new IndexerService(db)
 
   return activityConfig.projects
@@ -100,7 +99,7 @@ function createActivityIndexers(
             parents: [blockTargetIndexer],
             txsCountProvider,
             indexerService,
-            activityRepository,
+            db,
           })
 
           return { blockTargetIndexer, activityIndexer }

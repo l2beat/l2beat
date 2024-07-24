@@ -1,5 +1,5 @@
 import { getEnv } from '@l2beat/backend-tools'
-import { Database, Transaction, createDatabase } from '@l2beat/database'
+import { Database, createDatabase } from '@l2beat/database'
 import { mockObject } from 'earl'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {
@@ -39,11 +39,10 @@ export function getTestDatabase() {
   })
 }
 
-export const MOCK_TRX = mockObject<Transaction>()
 export function mockDatabase(overrides: Partial<Database> = {}) {
   return mockObject<Database>({
     transaction: async (fun) => {
-      return await fun(MOCK_TRX)
+      return await fun()
     },
     ...overrides,
   })

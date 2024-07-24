@@ -4,7 +4,7 @@ import { expect, mockObject } from 'earl'
 
 import { Database, LivenessRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
-import { MOCK_TRX, mockDatabase } from '../../../../test/database'
+import { mockDatabase } from '../../../../test/database'
 import { TrackedTxResult } from '../../types/model'
 import { LivenessUpdater } from './LivenessUpdater'
 
@@ -21,7 +21,7 @@ describe(LivenessUpdater.name, () => {
 
       const transactions: TrackedTxResult[] = []
 
-      await updater.update(transactions, MOCK_TRX)
+      await updater.update(transactions)
 
       expect(livenessRepo.addMany).not.toHaveBeenCalled()
     })
@@ -34,26 +34,22 @@ describe(LivenessUpdater.name, () => {
       )
 
       const transactions: TrackedTxResult[] = getMockTrackedTxResults()
-      await updater.update(transactions, MOCK_TRX)
+      await updater.update(transactions)
 
-      expect(livenessRepo.addMany).toHaveBeenNthCalledWith(
-        1,
-        [
-          {
-            txHash: transactions[0].hash,
-            blockNumber: transactions[0].blockNumber,
-            timestamp: transactions[0].blockTimestamp,
-            configurationId: transactions[0].id,
-          },
-          {
-            txHash: transactions[1].hash,
-            blockNumber: transactions[1].blockNumber,
-            timestamp: transactions[1].blockTimestamp,
-            configurationId: transactions[1].id,
-          },
-        ],
-        MOCK_TRX,
-      )
+      expect(livenessRepo.addMany).toHaveBeenNthCalledWith(1, [
+        {
+          txHash: transactions[0].hash,
+          blockNumber: transactions[0].blockNumber,
+          timestamp: transactions[0].blockTimestamp,
+          configurationId: transactions[0].id,
+        },
+        {
+          txHash: transactions[1].hash,
+          blockNumber: transactions[1].blockNumber,
+          timestamp: transactions[1].blockTimestamp,
+          configurationId: transactions[1].id,
+        },
+      ])
     })
   })
 
@@ -66,13 +62,12 @@ describe(LivenessUpdater.name, () => {
       )
 
       const id = createTrackedTxId.random()
-      await updater.deleteFromById(id, MIN_TIMESTAMP, MOCK_TRX)
+      await updater.deleteFromById(id, MIN_TIMESTAMP)
 
       expect(livenessRepo.deleteFromById).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
-        MOCK_TRX,
       )
     })
   })

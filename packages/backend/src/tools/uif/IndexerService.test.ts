@@ -10,7 +10,7 @@ import {
   json,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { MOCK_TRX, mockDatabase } from '../../test/database'
+import { mockDatabase } from '../../test/database'
 import { IndexerService } from './IndexerService'
 
 describe(IndexerService.name, () => {
@@ -215,11 +215,11 @@ describe(IndexerService.name, () => {
       }),
     )
 
-    await indexerService.updateSavedConfigurations('indexer', 123, MOCK_TRX)
+    await indexerService.updateSavedConfigurations('indexer', 123)
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', 123, MOCK_TRX)
+    ).toHaveBeenOnlyCalledWith('indexer', 123)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {

@@ -1,5 +1,4 @@
-import { ActivityRecord } from '@l2beat/database/src/activity/entity'
-import { ActivityRepository } from '@l2beat/database/src/activity/repository'
+import { ActivityRecord, Database } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import {
   ManagedChildIndexer,
@@ -11,7 +10,7 @@ export interface ActivityIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   projectId: ProjectId
   txsCountProvider: TxsCountProvider
-  activityRepository: ActivityRepository
+  db: Database
   batchSize: number
 }
 
@@ -36,7 +35,7 @@ export class ActivityIndexer extends ManagedChildIndexer {
         projectId,
       }
     })
-    await this.$.activityRepository.addOrUpdateMany(dataToSave)
+    await this.$.db.activity.addOrUpdateMany(dataToSave)
 
     return adjustedTo
   }
@@ -55,11 +54,10 @@ export class ActivityIndexer extends ManagedChildIndexer {
       if (timestamp > max) max = timestamp
     }
 
-    const currentValues =
-      await this.$.activityRepository.getByProjectAndTimeRange(
-        this.$.projectId,
-        [new UnixTime(min), new UnixTime(max)],
-      )
+    const currentValues = await this.$.db.activity.getByProjectAndTimeRange(
+      this.$.projectId,
+      [new UnixTime(min), new UnixTime(max)],
+    )
     return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v.count]))
   }
 

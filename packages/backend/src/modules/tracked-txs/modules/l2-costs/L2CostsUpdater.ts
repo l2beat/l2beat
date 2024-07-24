@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database, L2CostRecord, Transaction } from '@l2beat/database'
+import { Database, L2CostRecord } from '@l2beat/database'
 import { TrackedTxId } from '@l2beat/shared'
 import { TrackedTxsConfigType, UnixTime } from '@l2beat/shared-pure'
 import { TxUpdaterInterface } from '../../types/TxUpdaterInterface'
@@ -15,23 +15,19 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     this.logger = this.logger.for(this)
   }
 
-  async update(transactions: TrackedTxResult[], trx?: Transaction) {
+  async update(transactions: TrackedTxResult[]) {
     if (transactions.length === 0) {
       this.logger.info('Update skipped - no transactions to process')
       return
     }
 
     const transformed = await this.transform(transactions)
-    await this.db.l2Cost.addMany(transformed, trx)
+    await this.db.l2Cost.addMany(transformed)
     this.logger.info('Updated L2 costs', { count: transactions.length })
   }
 
-  async deleteFromById(
-    id: TrackedTxId,
-    fromInclusive: UnixTime,
-    trx: Transaction,
-  ) {
-    await this.db.l2Cost.deleteFromById(id, fromInclusive, trx)
+  async deleteFromById(id: TrackedTxId, fromInclusive: UnixTime) {
+    await this.db.l2Cost.deleteFromById(id, fromInclusive)
   }
 
   async transform(transactions: TrackedTxResult[]): Promise<L2CostRecord[]> {

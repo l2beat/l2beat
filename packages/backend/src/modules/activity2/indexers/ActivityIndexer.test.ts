@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ActivityRepository } from '@l2beat/database/src/activity/repository'
+import { Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
+import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { TxsCountProvider } from '../services/TxsCountProvider'
@@ -15,7 +16,7 @@ describe(ActivityIndexer.name, () => {
   })
   describe(ActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
+      const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
         addOrUpdateMany: mockFn().resolvesTo(undefined),
       })
@@ -28,7 +29,7 @@ describe(ActivityIndexer.name, () => {
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider,
-        activityRepository,
+        db: mockDatabase({ activity: activityRepository }),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,
@@ -41,7 +42,7 @@ describe(ActivityIndexer.name, () => {
       expect(newSafeHeight).toEqual(50)
     })
     it('gets blocks counts, sum with current counts and saves to db', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
+      const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
           activityRecord('a', START, 7),
           activityRecord('a', START.add(1, 'days'), 3),
@@ -61,7 +62,7 @@ describe(ActivityIndexer.name, () => {
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider,
-        activityRepository,
+        db: mockDatabase({ activity: activityRepository }),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,
@@ -82,7 +83,7 @@ describe(ActivityIndexer.name, () => {
 
   describe(ActivityIndexer.prototype.getDatabaseEntries.name, () => {
     it('return an empty map if there are no records', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
+      const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
       })
 
@@ -90,7 +91,7 @@ describe(ActivityIndexer.name, () => {
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider: mockObject<TxsCountProvider>({}),
-        activityRepository,
+        db: mockDatabase({ activity: activityRepository }),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,
@@ -103,7 +104,7 @@ describe(ActivityIndexer.name, () => {
     })
 
     it('returns a map of timestamps to counts', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
+      const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
           activityRecord('a', START, 1),
           activityRecord('a', START.add(1, 'days'), 2),
@@ -115,7 +116,7 @@ describe(ActivityIndexer.name, () => {
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider: mockObject<TxsCountProvider>({}),
-        activityRepository,
+        db: mockDatabase({ activity: activityRepository }),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,
@@ -153,7 +154,7 @@ describe(ActivityIndexer.name, () => {
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider: mockObject<TxsCountProvider>({}),
-        activityRepository: mockObject<ActivityRepository>({}),
+        db: mockDatabase({ activity: mockObject() }),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,
@@ -171,7 +172,7 @@ describe(ActivityIndexer.name, () => {
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider: mockObject<TxsCountProvider>({}),
-        activityRepository: mockObject<ActivityRepository>({}),
+        db: mockDatabase({ activity: mockObject() }),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,

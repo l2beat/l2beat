@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
@@ -70,7 +70,6 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: Configuration<T>[],
-    trx: Transaction,
   ): Promise<number>
 
   /**
@@ -98,7 +97,6 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
   abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
-    trx: Transaction,
   ): Promise<void>
 
   /**
@@ -151,12 +149,11 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    return await this.db.transaction(async (trx) => {
+    return await this.db.transaction(async () => {
       const safeHeight = await this.multiUpdate(
         from,
         adjustedTo,
         configurations,
-        trx,
       )
 
       if (safeHeight < from || safeHeight > adjustedTo) {
@@ -166,7 +163,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       }
 
       this.updateSavedConfigurations(configurations, safeHeight)
-      await this.updateConfigurationsCurrentHeight(safeHeight, trx)
+      await this.updateConfigurationsCurrentHeight(safeHeight)
 
       return safeHeight
     })
