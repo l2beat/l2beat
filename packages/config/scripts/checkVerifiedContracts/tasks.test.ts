@@ -2,9 +2,17 @@ import { Logger } from '@l2beat/backend-tools'
 import { BlockExplorerClient } from '@l2beat/shared'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
-import { expect } from 'earl'
+import { expect, mockObject } from 'earl'
 
+import { providers } from 'ethers'
 import { verifyContracts } from './tasks'
+
+const MockProvider = mockObject<providers.JsonRpcProvider>({
+  getCode: async (address: string) => {
+    // Return '' (EOA) for address 0x666....
+    return address[2] === '6' ? '' : '1234'
+  },
+})
 
 describe('checkVerifiedContracts:tasks', () => {
   describe('verifyContracts()', () => {
@@ -26,6 +34,7 @@ describe('checkVerifiedContracts:tasks', () => {
           '0x3333333333333333333333333333333333333333',
           '0x4444444444444444444444444444444444444444',
           '0x5555555555555555555555555555555555555555',
+          '0x6666666666666666666666666666666666666666',
         ].map(EthereumAddress),
         // previously verified:
         new Set([
@@ -36,17 +45,19 @@ describe('checkVerifiedContracts:tasks', () => {
           '0x5555555555555555555555555555555555555555': 'https://example.com',
         },
         EthereumClientMock as unknown as BlockExplorerClient,
+        MockProvider,
         2,
         Logger.SILENT,
       )
 
-      expect(etherscanCalls).toEqual(3)
+      expect(etherscanCalls).toEqual(4)
       expect(addressVerificationMap).toEqual({
         '0x1111111111111111111111111111111111111111': true,
         '0x2222222222222222222222222222222222222222': false,
         '0x3333333333333333333333333333333333333333': true,
         '0x4444444444444444444444444444444444444444': false,
         '0x5555555555555555555555555555555555555555': true,
+        '0x6666666666666666666666666666666666666666': true,
       })
     })
 
@@ -70,6 +81,7 @@ describe('checkVerifiedContracts:tasks', () => {
         new Set(),
         {},
         EthereumClientMock as unknown as BlockExplorerClient,
+        MockProvider,
         2,
         Logger.SILENT,
       )

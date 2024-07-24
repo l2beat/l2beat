@@ -1,15 +1,17 @@
 import { UnixTime, stringAs } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
-export type ZksyncSuccessResponse = z.infer<typeof ZksyncSuccessResponse>
-const ZksyncSuccessResponse = z.object({
+export type ZksyncLiteSuccessResponse = z.infer<
+  typeof ZksyncLiteSuccessResponse
+>
+const ZksyncLiteSuccessResponse = z.object({
   status: z.literal('success'),
   error: z.null(),
   result: z.unknown(),
 })
 
-export type ZksyncErrorResponse = z.infer<typeof ZksyncErrorResponse>
-const ZksyncErrorResponse = z.object({
+export type ZksyncLiteErrorResponse = z.infer<typeof ZksyncLiteErrorResponse>
+const ZksyncLiteErrorResponse = z.object({
   status: z.literal('error'),
   error: z.object({
     errorType: z.string(),
@@ -19,11 +21,11 @@ const ZksyncErrorResponse = z.object({
   result: z.null(),
 })
 
-export const ZksyncBlocksResultSchema = z.object({
+export const ZksyncLiteBlocksResultSchema = z.object({
   blockNumber: z.number(),
 })
 
-export const ZksyncTransactionResultSchema = z.object({
+export const ZksyncLiteTransactionResultSchema = z.object({
   list: z.array(
     z.object({
       txHash: z.string(),
@@ -34,8 +36,8 @@ export const ZksyncTransactionResultSchema = z.object({
   pagination: z.object({ count: z.number() }),
 })
 
-export type ZksyncResponse = z.infer<typeof ZksyncResponse>
-export const ZksyncResponse = z.union([
-  ZksyncSuccessResponse,
-  ZksyncErrorResponse,
+export type ZksyncLiteResponse = z.infer<typeof ZksyncLiteResponse>
+export const ZksyncLiteResponse = z.union([
+  ZksyncLiteSuccessResponse,
+  ZksyncLiteErrorResponse,
 ])

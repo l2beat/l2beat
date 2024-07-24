@@ -1,30 +1,44 @@
 import React, { ReactNode } from 'react'
 
+import { VariantProps, cva } from 'class-variance-authority'
 import { cn } from '../utils/cn'
 import { isOutLink } from '../utils/isOutLink'
 import { ArrowRightIcon } from './icons'
 
-type LinkProps = {
+export type LinkProps = {
   children: ReactNode
   href?: string
-  type?: LinkType
   showArrow?: boolean
   className?: string
-  underline?: boolean
   'data-role'?: string
   'data-state'?: string
-}
-type LinkType = 'primary' | 'danger' | 'plain'
+} & VariantProps<typeof linkVariants>
 
 // Make sure this is compatible with markdown.css
-const textClassesByType: Record<LinkType, string> = {
-  primary: 'text-blue-700 hover:!text-blue-550 dark:text-blue-500',
-  danger: 'text-red-300 hover:!text-red-700',
-  plain: 'text-black dark:text-white',
-}
+const linkVariants = cva(
+  'font-medium transition-colors duration-300 ease-out',
+  {
+    variants: {
+      type: {
+        primary:
+          'text-blue-700 dark:hover:text-blue-550 dark:text-blue-500 hover:text-blue-550',
+        danger: 'text-red-300 hover:text-red-700',
+        plain: 'text-black dark:text-white',
+      },
+      underline: {
+        true: 'underline',
+        false: 'no-underline',
+      },
+    },
+    defaultVariants: {
+      type: 'primary',
+      underline: true,
+    },
+  },
+)
 
 export function Link({
-  type = 'primary',
+  type,
   className,
   children,
   underline = true,
@@ -39,7 +53,7 @@ export function Link({
         'group cursor-pointer font-medium transition-colors',
         isEtherscanLink && etherscanLinkClassnames,
         underline && 'underline',
-        textClassesByType[type],
+        linkVariants({ type, underline }),
         className,
       )}
       target={'href' in rest && isOutLink(rest.href) ? '_blank' : undefined}

@@ -3,6 +3,7 @@ import { Database } from '@l2beat/database'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
@@ -81,7 +82,7 @@ function createActivityIndexers(
     switch (project.config.type) {
       case 'rpc': {
         const blockTimestampProvider = new BlockTimestampProvider({
-          rpcClient: peripherals.getClient(RpcClient, {
+          client: peripherals.getClient(RpcClient, {
             url: project.config.url,
             callsPerMinute: project.config.callsPerMinute,
           }),
@@ -125,8 +126,36 @@ function createActivityIndexers(
         indexers.push(activityIndexer)
         break
       }
+      case 'zksync': {
+        const blockTimestampProvider = new BlockTimestampProvider({
+          client: peripherals.getClient(ZksyncLiteClient, {
+            url: project.config.url,
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          logger,
+        })
+        const blockTargetIndexer = new BlockTargetIndexer(
+          logger,
+          clock,
+          blockTimestampProvider,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          db,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
     }
   })
-
   return indexers
 }
