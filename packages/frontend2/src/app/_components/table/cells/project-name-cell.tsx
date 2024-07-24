@@ -37,7 +37,7 @@ export function ProjectNameCell({
 }: ProjectCellProps) {
   return (
     <div className={cn('pl-2 2xl:pl-3', className)}>
-      <span className="font-bold text-base md:text-lg">
+      <span className="text-base font-bold md:text-lg">
         {project.shortName ?? project.name}
       </span>
       {showIsL3 && type === 'layer3' && (

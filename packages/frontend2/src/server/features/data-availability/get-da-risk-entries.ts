@@ -16,7 +16,7 @@ export async function getDaRiskEntries() {
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  return daLayers.flatMap((daLayer) =>
+  const entries = daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((daBridge) => {
       const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
       const economicSecurityData = economicSecurity[daLayer.id]
@@ -31,9 +31,12 @@ export async function getDaRiskEntries() {
         isVerified:
           projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
         risks: getDaRisks(daLayer, daBridge, tvs, economicSecurityData),
+        tvs,
       }
     }),
   )
+
+  return entries.sort((a, b) => b.tvs - a.tvs)
 }
 
 export type DaRiskEntry = Awaited<ReturnType<typeof getDaRiskEntries>>[number]

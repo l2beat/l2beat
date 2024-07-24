@@ -1,31 +1,30 @@
 import {
+  Database,
+  IndexerConfigurationRecord,
+  IndexerStateRecord,
+} from '@l2beat/database'
+import {
   AmountConfigEntry,
   CoingeckoId,
   UnixTime,
   json,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { MOCK_TRANSACTION } from '../../test/database'
-import {
-  IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from './IndexerConfigurationRepository'
+import { MOCK_TRX, mockDatabase } from '../../test/database'
 import { IndexerService } from './IndexerService'
-import {
-  IndexerStateRecord,
-  IndexerStateRepository,
-} from './IndexerStateRepository'
 
 describe(IndexerService.name, () => {
   it(IndexerService.prototype.getSafeHeight.name, async () => {
     const safeHeight = 123
-    const indexerStateRepository = mockObject<IndexerStateRepository>({
+    const indexerStateRepository = mockObject<Database['indexerState']>({
       findIndexerState: async () => mock({ safeHeight }),
     })
 
     const indexerService = new IndexerService(
-      indexerStateRepository,
-      mockObject<IndexerConfigurationRepository>({}),
+      mockDatabase({
+        indexerState: indexerStateRepository,
+        indexerConfiguration: mockObject(),
+      }),
     )
 
     const result = await indexerService.getSafeHeight('indexer')
@@ -38,13 +37,15 @@ describe(IndexerService.name, () => {
 
   it(IndexerService.prototype.getIndexerState.name, async () => {
     const configHash = '0x123456'
-    const indexerStateRepository = mockObject<IndexerStateRepository>({
+    const indexerStateRepository = mockObject<Database['indexerState']>({
       findIndexerState: async () => mock({ configHash }),
     })
 
     const indexerService = new IndexerService(
-      indexerStateRepository,
-      mockObject<IndexerConfigurationRepository>({}),
+      mockDatabase({
+        indexerState: indexerStateRepository,
+        indexerConfiguration: mockObject(),
+      }),
     )
 
     const result = await indexerService.getIndexerState('indexer')
@@ -56,13 +57,15 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.setSafeHeight.name, async () => {
-    const indexerStateRepository = mockObject<IndexerStateRepository>({
+    const indexerStateRepository = mockObject<Database['indexerState']>({
       setSafeHeight: async () => 1,
     })
 
     const indexerService = new IndexerService(
-      indexerStateRepository,
-      mockObject<IndexerConfigurationRepository>({}),
+      mockDatabase({
+        indexerState: indexerStateRepository,
+        indexerConfiguration: mockObject(),
+      }),
     )
 
     await indexerService.setSafeHeight('indexer', 123)
@@ -73,13 +76,15 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.setInitialState.name, async () => {
-    const indexerStateRepository = mockObject<IndexerStateRepository>({
+    const indexerStateRepository = mockObject<Database['indexerState']>({
       addOrUpdate: async () => '',
     })
 
     const indexerService = new IndexerService(
-      indexerStateRepository,
-      mockObject<IndexerConfigurationRepository>({}),
+      mockDatabase({
+        indexerState: indexerStateRepository,
+        indexerConfiguration: mockObject(),
+      }),
     )
 
     await indexerService.setInitialState('indexer', 123, 'hash')
@@ -91,14 +96,17 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.upsertConfigurations.name, async () => {
-    const indexerConfigurationsRepository =
-      mockObject<IndexerConfigurationRepository>({
-        addOrUpdateMany: async () => -1,
-      })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      addOrUpdateMany: async () => {},
+    })
 
     const indexerService = new IndexerService(
-      mockObject<IndexerStateRepository>({}),
-      indexerConfigurationsRepository,
+      mockDatabase({
+        indexerState: mockObject(),
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
     )
 
     await indexerService.upsertConfigurations(
@@ -145,31 +153,34 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.getSavedConfigurations.name, async () => {
-    const indexerConfigurationsRepository =
-      mockObject<IndexerConfigurationRepository>({
-        getSavedConfigurations: async () => [
-          {
-            id: 'a',
-            currentHeight: null,
-            minHeight: 0,
-            maxHeight: null,
-            properties: JSON.stringify({ a: 1 }),
-            indexerId: 'indexer',
-          },
-          {
-            id: 'b',
-            currentHeight: null,
-            minHeight: 0,
-            maxHeight: null,
-            properties: JSON.stringify({ b: 1 }),
-            indexerId: 'indexer',
-          },
-        ],
-      })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      getSavedConfigurations: async () => [
+        {
+          id: 'a',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ a: 1 }),
+          indexerId: 'indexer',
+        },
+        {
+          id: 'b',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ b: 1 }),
+          indexerId: 'indexer',
+        },
+      ],
+    })
 
     const indexerService = new IndexerService(
-      mockObject<IndexerStateRepository>({}),
-      indexerConfigurationsRepository,
+      mockDatabase({
+        indexerState: mockObject(),
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
     )
 
     const result = await indexerService.getSavedConfigurations('indexer')
@@ -191,36 +202,38 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.updateSavedConfigurations.name, async () => {
-    const indexerConfigurationsRepository =
-      mockObject<IndexerConfigurationRepository>({
-        updateSavedConfigurations: async () => -1,
-      })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      updateSavedConfigurations: async () => [],
+    })
 
     const indexerService = new IndexerService(
-      mockObject<IndexerStateRepository>({}),
-      indexerConfigurationsRepository,
+      mockDatabase({
+        indexerState: mockObject(),
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
     )
 
-    await indexerService.updateSavedConfigurations(
-      'indexer',
-      123,
-      MOCK_TRANSACTION,
-    )
+    await indexerService.updateSavedConfigurations('indexer', 123, MOCK_TRX)
 
     expect(
       indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', 123, MOCK_TRANSACTION)
+    ).toHaveBeenOnlyCalledWith('indexer', 123, MOCK_TRX)
   })
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
-    const indexerConfigurationsRepository =
-      mockObject<IndexerConfigurationRepository>({
-        deleteConfigurationsExcluding: async () => -1,
-      })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      deleteConfigurationsExcluding: async () => -1,
+    })
 
     const indexerService = new IndexerService(
-      mockObject<IndexerStateRepository>({}),
-      indexerConfigurationsRepository,
+      mockDatabase({
+        indexerState: mockObject(),
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
     )
 
     await indexerService.persistOnlyUsedConfigurations('indexer', ['a', 'b'])
@@ -233,18 +246,19 @@ describe(IndexerService.name, () => {
   it(IndexerService.prototype.getAmountsStatus.name, async () => {
     const targetTimestamp = UnixTime.now()
 
-    const indexerConfigurationsRepository =
-      mockObject<IndexerConfigurationRepository>({
-        getSavedConfigurationsByIds: async () => [
-          config('a', 0, null, null),
-          config('b', 0, null, targetTimestamp.toNumber()),
-          config('c', 0, 100, 100),
-          config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
-          config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
-        ],
-      })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      getSavedConfigurationsByIds: async () => [
+        config('a', 0, null, null),
+        config('b', 0, null, targetTimestamp.toNumber()),
+        config('c', 0, 100, 100),
+        config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+        config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+      ],
+    })
 
-    const indexerStateRepository = mockObject<IndexerStateRepository>({
+    const indexerStateRepository = mockObject<Database['indexerState']>({
       getByIndexerIds: async () => [
         mock({
           indexerId: 'circulating_supply_indexer::g',
@@ -262,8 +276,10 @@ describe(IndexerService.name, () => {
     })
 
     const indexerService = new IndexerService(
-      indexerStateRepository,
-      indexerConfigurationsRepository,
+      mockDatabase({
+        indexerState: indexerStateRepository,
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
     )
 
     const result = await indexerService.getAmountsStatus(
@@ -311,20 +327,23 @@ describe(IndexerService.name, () => {
   it(IndexerService.prototype.getConfigurationsStatus.name, async () => {
     const targetTimestamp = UnixTime.now()
 
-    const indexerConfigurationsRepository =
-      mockObject<IndexerConfigurationRepository>({
-        getSavedConfigurationsByIds: async () => [
-          config('a', 0, null, null),
-          config('b', 0, null, targetTimestamp.toNumber()),
-          config('c', 0, 100, 100),
-          config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
-          config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
-        ],
-      })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      getSavedConfigurationsByIds: async () => [
+        config('a', 0, null, null),
+        config('b', 0, null, targetTimestamp.toNumber()),
+        config('c', 0, 100, 100),
+        config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+        config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+      ],
+    })
 
     const indexerService = new IndexerService(
-      mockObject<IndexerStateRepository>({}),
-      indexerConfigurationsRepository,
+      mockDatabase({
+        indexerState: mockObject(),
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
     )
 
     const result = await indexerService.getConfigurationsStatus(

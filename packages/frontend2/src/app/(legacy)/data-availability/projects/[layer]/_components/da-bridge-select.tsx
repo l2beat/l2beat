@@ -31,12 +31,12 @@ export function DaBridgeSelect({ bridges }: Props) {
       >
         <SelectTrigger
           autoFocus
-          className="bg-zinc-300 dark:bg-zinc-800 md:dark:bg-zinc-900 md:bg-gray-100 data-[state=open]:bg-gray-200 dark:data-[state=open]:bg-zinc-700"
+          className="bg-zinc-300 data-[state=open]:bg-gray-200 dark:bg-zinc-800 dark:data-[state=open]:bg-zinc-700 md:bg-gray-100 md:dark:bg-zinc-900"
         >
           <SelectValue />
         </SelectTrigger>
         <SelectContent
-          className="bg-zinc-300 dark:bg-zinc-800 md:dark:bg-zinc-900 md:bg-gray-100 z-110"
+          className="z-110 bg-zinc-300 dark:bg-zinc-800 md:bg-gray-100 md:dark:bg-zinc-900"
           align="start"
         >
           {bridges.map((bridge) => (

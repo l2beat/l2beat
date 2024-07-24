@@ -1,18 +1,14 @@
 import { Logger } from '@l2beat/backend-tools'
+import { AmountRecord, Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
+import { MOCK_TRX, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import {
-  AmountRecord,
-  AmountRepository,
-} from '../repositories/AmountRepository'
-import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { ChainAmountIndexer } from './ChainAmountIndexer'
@@ -31,7 +27,7 @@ describe(ChainAmountIndexer.name, () => {
         getTimestampToSync: () => timestampToSync,
       })
 
-      const amountRepository = mockObject<AmountRepository>({
+      const amountRepository = mockObject<Database['amount']>({
         addMany: async () => 1,
       })
       const amountService = mockObject<AmountService>({
@@ -42,14 +38,12 @@ describe(ChainAmountIndexer.name, () => {
       })
 
       const blockNumber = 666
-      const blockTimestampRepository = mockObject<BlockTimestampRepository>({
+      const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
         findByChainAndTimestamp: async () => blockNumber,
       })
 
       const indexer = new ChainAmountIndexer({
         amountService,
-        amountRepository,
-        blockTimestampRepository,
         syncOptimizer,
         chain: 'chain',
         parents: [],
@@ -57,17 +51,15 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        db: mockLegacyDatabase(),
+        db: mockDatabase({
+          amount: amountRepository,
+          blockTimestamp: blockTimestampRepository,
+        }),
       })
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        toUpdate,
-        MOCK_TRANSACTION,
-      )
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate, MOCK_TRX)
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
@@ -79,7 +71,7 @@ describe(ChainAmountIndexer.name, () => {
 
       expect(amountRepository.addMany).toHaveBeenOnlyCalledWith(
         [amount('a', 200, 123)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
@@ -96,8 +88,6 @@ describe(ChainAmountIndexer.name, () => {
 
       const indexer = new ChainAmountIndexer({
         amountService: mockObject<AmountService>({}),
-        amountRepository: mockObject<AmountRepository>({}),
-        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
         syncOptimizer,
         chain: 'chain',
         parents: [],
@@ -105,17 +95,15 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        db: mockLegacyDatabase(),
+        db: mockDatabase({
+          amount: mockObject(),
+          blockTimestamp: mockObject(),
+        }),
       })
 
       const toUpdate = [actual('a', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        toUpdate,
-        MOCK_TRANSACTION,
-      )
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate, MOCK_TRX)
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
       expect(safeHeight).toEqual(to)
@@ -127,8 +115,6 @@ describe(ChainAmountIndexer.name, () => {
 
       const indexer = new ChainAmountIndexer({
         amountService: mockObject<AmountService>({}),
-        amountRepository: mockObject<AmountRepository>({}),
-        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
         syncOptimizer: mockObject<SyncOptimizer>({
           getTimestampToSync: () => new UnixTime(1001),
         }),
@@ -138,17 +124,15 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        db: mockLegacyDatabase(),
+        db: mockDatabase({
+          amount: mockObject(),
+          blockTimestamp: mockObject(),
+        }),
       })
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        toUpdate,
-        MOCK_TRANSACTION,
-      )
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate, MOCK_TRX)
 
       expect(safeHeight).toEqual(to)
     })
@@ -156,14 +140,12 @@ describe(ChainAmountIndexer.name, () => {
 
   describe(ChainAmountIndexer.prototype.removeData.name, () => {
     it('deletes data for given configurations', async () => {
-      const amountRepository = mockObject<AmountRepository>({
+      const amountRepository = mockObject<Database['amount']>({
         deleteByConfigInTimeRange: async () => 1,
       })
 
       const indexer = new ChainAmountIndexer({
         amountService: mockObject<AmountService>({}),
-        amountRepository,
-        blockTimestampRepository: mockObject<BlockTimestampRepository>({}),
         syncOptimizer: mockObject<SyncOptimizer>({}),
         chain: 'chain',
         parents: [],
@@ -171,7 +153,10 @@ describe(ChainAmountIndexer.name, () => {
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         configurations: [],
-        db: mockLegacyDatabase(),
+        db: mockDatabase({
+          amount: amountRepository,
+          blockTimestamp: mockObject(),
+        }),
       })
 
       const toRemove = [removal('a', 100, 200), removal('b', 200, 300)]

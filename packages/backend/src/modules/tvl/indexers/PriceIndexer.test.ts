@@ -1,11 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database, PriceRecord } from '@l2beat/database'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
+import { MOCK_TRX, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
@@ -16,7 +17,6 @@ import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PriceIndexer } from './PriceIndexer'
@@ -44,7 +44,7 @@ describe(PriceIndexer.name, () => {
         ],
       })
 
-      const priceRepository = mockObject<PriceRepository>({
+      const priceRepository = mockObject<Database['price']>({
         addMany: async () => 1,
       })
 
@@ -53,7 +53,6 @@ describe(PriceIndexer.name, () => {
       })
 
       const indexer = new PriceIndexer({
-        priceRepository,
         parents: [],
         priceService,
         syncOptimizer,
@@ -62,7 +61,7 @@ describe(PriceIndexer.name, () => {
         configurations: [],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        db: mockLegacyDatabase(),
+        db: mockDatabase({ price: priceRepository }),
       })
 
       const parameters = {
@@ -77,7 +76,7 @@ describe(PriceIndexer.name, () => {
         from,
         to,
         configurations,
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
@@ -102,7 +101,7 @@ describe(PriceIndexer.name, () => {
 
       expect(priceRepository.addMany).toHaveBeenOnlyCalledWith(
         [price('a', 100), price('a', 200), price('b', 100), price('b', 200)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
 
       expect(safeHeight).toEqual(adjustedTo)
@@ -111,12 +110,11 @@ describe(PriceIndexer.name, () => {
 
   describe(PriceIndexer.prototype.removeData.name, () => {
     it('removes data for configurations', async () => {
-      const priceRepository = mockObject<PriceRepository>({
+      const priceRepository = mockObject<Database['price']>({
         deleteByConfigInTimeRange: async () => 1,
       })
 
       const indexer = new PriceIndexer({
-        priceRepository,
         parents: [],
         priceService: mockObject<PriceService>({}),
         syncOptimizer: mockObject<SyncOptimizer>({}),
@@ -125,7 +123,7 @@ describe(PriceIndexer.name, () => {
         configurations: [],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        db: mockLegacyDatabase(),
+        db: mockDatabase({ price: priceRepository }),
       })
 
       const configurations: RemovalConfiguration[] = [

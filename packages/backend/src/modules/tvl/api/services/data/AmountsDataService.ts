@@ -1,13 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 
+import { Database } from '@l2beat/database'
 import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { AmountRepository } from '../../../repositories/AmountRepository'
 
 interface Dependencies {
-  readonly amountRepository: AmountRepository
+  readonly db: Database
   readonly indexerService: IndexerService
   readonly clock: Clock
   logger: Logger
@@ -27,7 +27,7 @@ export class AmountsDataService {
       UnixTime.now(),
     )
 
-    const amountRecords = await this.$.amountRepository.getByConfigIdsInRange(
+    const amountRecords = await this.$.db.amount.getByConfigIdsInRange(
       configurations.map((c) => c.configId),
       minTimestamp,
       targetTimestamp,
@@ -78,7 +78,7 @@ export class AmountsDataService {
     configurations: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const amounts = await this.$.amountRepository.getByIdsAndTimestamp(
+    const amounts = await this.$.db.amount.getByIdsAndTimestamp(
       configurations.map((c) => c.configId),
       targetTimestamp,
     )
@@ -95,7 +95,7 @@ export class AmountsDataService {
         uniqueTimestamps.add(l.latestTimestamp.toNumber()),
       )
 
-      const data = await this.$.amountRepository.getByTimestamps(
+      const data = await this.$.db.amount.getByTimestamps(
         Array.from(uniqueTimestamps).map((u) => new UnixTime(u)),
       )
       const dataByConfigId = groupBy(data, 'configId')

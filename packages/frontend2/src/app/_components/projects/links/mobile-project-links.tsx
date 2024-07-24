@@ -30,7 +30,7 @@ export function MobileProjectLinks({
             <tbody>
               {projectLinks.map(({ name, links }, i) => (
                 <tr
-                  className="border-gray-300 border-t dark:border-gray-850 first:border-none"
+                  className="border-t border-gray-300 first:border-none dark:border-gray-850"
                   key={i}
                 >
                   <th

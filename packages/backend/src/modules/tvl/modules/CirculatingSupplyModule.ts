@@ -10,9 +10,6 @@ import { CirculatingSupplyIndexer } from '../indexers/CirculatingSupplyIndexer'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { AmountRepository } from '../repositories/AmountRepository'
-import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { ConfigMapping } from '../utils/ConfigMapping'
@@ -57,7 +54,7 @@ export function createCirculatingSupplyModule(
       indexerService,
       configuration: circulatingSupply,
       circulatingSupplyService,
-      amountRepository: peripherals.getRepository(AmountRepository),
+      db: peripherals.database,
       syncOptimizer,
     })
     indexersMap.set(createAmountId(circulatingSupply), indexer)
@@ -81,10 +78,7 @@ export function createCirculatingSupplyModule(
 
     const parents = [priceModule.descendant, ...csIndexers]
 
-    const valueService = new ValueService({
-      amountRepository: peripherals.getRepository(AmountRepository),
-      priceRepository: peripherals.getRepository(PriceRepository),
-    })
+    const valueService = new ValueService(peripherals.database)
 
     const minHeight = Math.min(
       ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
@@ -95,7 +89,7 @@ export function createCirculatingSupplyModule(
 
     const indexer = new ValueIndexer({
       valueService,
-      valueRepository: peripherals.getRepository(ValueRepository),
+      db: peripherals.database,
       priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),

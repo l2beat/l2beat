@@ -20,7 +20,7 @@ export function PentagonRosetteCell(props: Props) {
 
   return (
     <Tooltip>
-      <TooltipTrigger className="flex items-center justify-center size-full">
+      <TooltipTrigger className="flex size-full items-center justify-center">
         <PentagonRosetteIcon
           values={props.values}
           className="size-6 md:size-8"
@@ -42,7 +42,7 @@ function PentagonRosetteTooltip({ values, isUnderReview }: Props) {
     return (
       <div className="w-[300px]">
         <div className="mb-4">
-          <span className="font-bold text-base">Risk analysis</span> is{' '}
+          <span className="text-base font-bold">Risk analysis</span> is{' '}
           <UnderReviewBadge />
         </div>
 
@@ -58,11 +58,11 @@ function PentagonRosetteTooltip({ values, isUnderReview }: Props) {
 
   return (
     <div className="flex flex-col">
-      <span className="font-bold text-base">
+      <span className="text-base font-bold">
         <span className="mr-2">Risk analysis</span>
       </span>
       <div className="flex items-center gap-6">
-        <div className="relative h-[200px] w-[200px] flex items-center justify-center">
+        <div className="relative flex size-[200px] items-center justify-center">
           <PentagonRosetteIcon
             className="scale-75"
             values={values}

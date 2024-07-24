@@ -40,7 +40,7 @@ export function InputWallet() {
           }
         }}
         placeholder="Input address or ENS name"
-        className="border bg-gray-100 dark:bg-zinc-900 border-[#C0C1C7] rounded-md pl-4 pr-10 py-2 w-[min(45vw,450px)] outline-none placeholder:text-zinc-500 dark:placeholder:text-white/50 focus:border-gray-500 dark:focus:border-white duration-100 transition-colors"
+        className="w-[min(45vw,450px)] rounded-md border border-[#C0C1C7] bg-gray-100 py-2 pl-4 pr-10 outline-none transition-colors duration-100 placeholder:text-zinc-500 focus:border-gray-500 dark:bg-zinc-900 dark:placeholder:text-white/50 dark:focus:border-white"
       />
       <div
         className="absolute right-2.5 top-3 cursor-pointer"

@@ -2,14 +2,12 @@ import { Logger } from '@l2beat/backend-tools'
 import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { CoingeckoId, CoingeckoPriceConfigEntry } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-
 import { TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { DescendantIndexer } from '../indexers/DescendantIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { PriceIndexer } from '../indexers/PriceIndexer'
-import { PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createPriceId } from '../utils/createPriceId'
@@ -53,10 +51,9 @@ export function createPriceModule(
           id: createPriceId(price),
         })),
         priceService,
-        priceRepository: peripherals.getRepository(PriceRepository),
         serializeConfiguration,
         syncOptimizer,
-        db: peripherals.legacyDatabase,
+        db: peripherals.database,
       }),
   )
 

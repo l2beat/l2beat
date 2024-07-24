@@ -1,34 +1,24 @@
 import Router from '@koa/router'
 
+import { Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Clock } from '../../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { L2CostsRepository } from '../modules/l2-costs/repositories/L2CostsRepository'
-import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
 import { findUnusedConfigs } from '../utils/findUnusedConfigs'
 import { renderTrackedTxsStatusPage } from './status/TrackedTxsStatusPage'
 
 export function createTrackedTxsStatusRouter({
   clock,
-  indexerConfigurationRepository,
-  l2CostsRepository,
-  livenessRepository,
+  db,
 }: {
   clock: Clock
-  indexerConfigurationRepository: IndexerConfigurationRepository
-  l2CostsRepository: L2CostsRepository
-  livenessRepository: LivenessRepository
+  db: Database
 }) {
   const router = new Router()
 
   router.get('/status/tracked-txs', async (ctx) => {
-    const allConfigs = await indexerConfigurationRepository.getAll()
-    const unusedIds = await findUnusedConfigs(
-      indexerConfigurationRepository,
-      l2CostsRepository,
-      livenessRepository,
-    )
+    const allConfigs = await db.indexerConfiguration.getAll()
+    const unusedIds = await findUnusedConfigs(db)
     // const unusedIds = await repository.findUnusedConfigurationsIds()
     ctx.body = renderTrackedTxsStatusPage({
       data: allConfigs.map((config) => {

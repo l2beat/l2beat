@@ -45,6 +45,9 @@ export class FinalityRepository {
   }
 
   async getLatestGroupedByProjectId(projectIds: string[]) {
+    if (projectIds.length === 0) {
+      return []
+    }
     const maxTimestampSubquery = this.db
       .selectFrom('public.finality')
       .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
@@ -97,7 +100,10 @@ export class FinalityRepository {
     return inserted?.project_id
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.finality').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.finality')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

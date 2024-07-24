@@ -25,7 +25,7 @@ export const columns = [
     id: 'logo',
     cell: (ctx) => (
       <Image
-        className="min-w-[18px] min-h-[18px]"
+        className="min-h-[18px] min-w-[18px]"
         src={`/icons/${ctx.row.original.slug}.png`}
         width={18}
         height={18}

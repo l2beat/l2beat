@@ -48,7 +48,7 @@ function Desktop({ children }: { children: React.ReactNode }) {
       </div>
 
       <div className="gap-x-12 md:flex">
-        <div className="mt-10 w-[242px] shrink-0 flex flex-col gap-3">
+        <div className="mt-10 flex w-[242px] shrink-0 flex-col gap-3">
           {range(5).map((i) => (
             <div key={i} className="flex gap-3">
               <Skeleton className={classes('size-6')} />
@@ -65,7 +65,7 @@ function Desktop({ children }: { children: React.ReactNode }) {
 function Mobile({ children }: { children: React.ReactNode }) {
   return (
     <div>
-      <div className="flex items-center space-x-3 h-[54px] flex-nowrap">
+      <div className="flex h-[54px] flex-nowrap items-center space-x-3">
         {range(6).map((i) => (
           <Skeleton
             key={i}
@@ -73,7 +73,7 @@ function Mobile({ children }: { children: React.ReactNode }) {
           />
         ))}
       </div>
-      <div className="bg-gray-100 dark:bg-zinc-900 -mx-4 px-4">
+      <div className="-mx-4 bg-gray-100 px-4 dark:bg-zinc-900">
         {children}
         <div className="w-full space-y-4">
           <AboutSectionLoading lines={5} />
@@ -88,8 +88,8 @@ function Mobile({ children }: { children: React.ReactNode }) {
           </div>
         </div>
 
-        <HorizontalSeparator className="mt-6 -mx-4 w-screen" />
-        <div className="h-[54px] flex items-center">
+        <HorizontalSeparator className="-mx-4 mt-6 w-screen" />
+        <div className="flex h-[54px] items-center">
           <Skeleton className={classes('w-[180px] h-[22px]')} />
         </div>
       </div>

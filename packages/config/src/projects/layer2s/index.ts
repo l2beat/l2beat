@@ -76,6 +76,7 @@ import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
+import { network3 } from './network3'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -220,6 +221,7 @@ export const layer2s: Layer2[] = [
   myria,
   myshell,
   nil,
+  network3,
   nova,
   oev,
   ola,

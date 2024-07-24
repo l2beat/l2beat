@@ -30,7 +30,7 @@ export function VerifiedCell({
         <div className="flex w-max flex-col gap-1">
           <Tooltip>
             <TooltipTrigger className="w-max">
-              <span className="flex items-center text-green-700 text-sm dark:text-green-450 md:text-base">
+              <span className="flex items-center text-sm text-green-700 dark:text-green-450 md:text-base">
                 <VerifiedIcon className="mr-1.5 dark:fill-green-450" />
                 <span>Successful</span>
               </span>
@@ -40,7 +40,7 @@ export function VerifiedCell({
               able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap font-medium text-xs text-zinc-500">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500">
             (performed by{' '}
             {
               <OutLink className="underline" href={performedBy?.link}>
@@ -73,7 +73,7 @@ export function VerifiedCell({
         <div className="flex w-max flex-col gap-1">
           <Tooltip>
             <TooltipTrigger className="w-max">
-              <span className="flex items-center text-red-700 text-sm dark:text-red-300 md:text-base">
+              <span className="flex items-center text-sm text-red-700 dark:text-red-300 md:text-base">
                 <UnverifiedIcon className="mr-1.5" />
                 Unsuccessful
               </span>
@@ -83,7 +83,7 @@ export function VerifiedCell({
               wasn&apos;t able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap font-medium text-xs text-zinc-500">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500">
             (performed by{' '}
             {
               <OutLink className="underline" href={performedBy?.link}>

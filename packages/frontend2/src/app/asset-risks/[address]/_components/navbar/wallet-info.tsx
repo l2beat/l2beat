@@ -15,7 +15,7 @@ export function WalletInfo() {
               <Jazzicon diameter={28} seed={jsNumberForAddress(address)} />
             )}
             <Link
-              className="font-medium text-sm text-black"
+              className="text-sm font-medium text-black"
               href={`/asset-risks/${address}`}
             >
               {ensName ?? (address && formatAddress(address))}
@@ -25,7 +25,7 @@ export function WalletInfo() {
         ) : (
           <button
             onClick={show}
-            className="w-full h-10 bg-pink-900 text-white font-bold text-xs px-8 rounded-lg"
+            className="h-10 w-full rounded-lg bg-pink-900 px-8 text-xs font-bold text-white"
           >
             Connect a wallet
           </button>

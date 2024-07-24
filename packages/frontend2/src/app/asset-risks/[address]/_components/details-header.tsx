@@ -25,28 +25,28 @@ export function DetailsHeader(props: DetailsHeaderProps) {
 
   return (
     <Card className="flex flex-col gap-4 rounded-none sm:rounded-xl">
-      <h1 className="font-bold text-3xl">Assets&apos; Risks</h1>
-      <p className="text-zinc-500 dark:text-gray-50 font-medium text-sm">
+      <h1 className="text-3xl font-bold">Assets&apos; Risks</h1>
+      <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
         {`A total of ${risksCount} issues were found with an average of ${averageIssuesPerToken} issues per token. Your most valuable token has ${leastIssues} issues.`}
       </p>
-      <p className="text-zinc-500 dark:text-gray-50 font-medium text-sm">
+      <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">
         You can check the risks associated with specific tokens by expanding the
         rows.
       </p>
-      <div className="grid grid-cols-1 md:gap-2 gap-3 md:grid-cols-4">
-        <div className="flex flex-col gap-[5px] col-span-2">
-          <span className="text-zinc-500 font-bold text-xs dark:text-gray-50">
+      <div className="grid grid-cols-1 gap-3 md:grid-cols-4 md:gap-2">
+        <div className="col-span-2 flex flex-col gap-[5px]">
+          <span className="text-xs font-bold text-zinc-500 dark:text-gray-50">
             Value
           </span>
-          <span className=" text-pink-900 dark:text-pink-200 font-extrabold text-xl">
+          <span className=" text-xl font-extrabold text-pink-900 dark:text-pink-200">
             ${formatNumberWithCommas(props.dolarValue)}
           </span>
         </div>
-        <div className="flex flex-col gap-[5px] col-span-2">
-          <span className="text-zinc-500 font-bold text-xs dark:text-gray-50">
+        <div className="col-span-2 flex flex-col gap-[5px]">
+          <span className="text-xs font-bold text-zinc-500 dark:text-gray-50">
             Wallet
           </span>
-          <span className="flex items-center gap-2 font-semibold text-xl">
+          <span className="flex items-center gap-2 text-xl font-semibold">
             {isAddress(props.walletAddress)
               ? formatAddress(props.walletAddress)
               : props.walletAddress}
@@ -55,7 +55,7 @@ export function DetailsHeader(props: DetailsHeaderProps) {
         </div>
       </div>
       <div>
-        <span className="text-zinc-500 text-xs font-bold">
+        <span className="text-xs font-bold text-zinc-500">
           Breakdown of assets by stages
         </span>
         <Breakdown />

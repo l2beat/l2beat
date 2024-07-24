@@ -178,7 +178,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         min: stats.minimumInSeconds,
         avg: stats.averageInSeconds,
         max: stats.maximumInSeconds,
-        timestamp: syncTo,
+        updatedAt: syncTo,
       }
 
       aggregatedRecords.push(record)
