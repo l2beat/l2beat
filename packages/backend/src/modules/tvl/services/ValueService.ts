@@ -9,11 +9,17 @@ import { PriceId } from '../utils/createPriceId'
 
 interface Values {
   canonical: bigint
+  canonicalAssociated: bigint
   canonicalForTotal: bigint
+  canonicalAssociatedForTotal: bigint
   external: bigint
+  externalAssociated: bigint
   externalForTotal: bigint
+  externalAssociatedForTotal: bigint
   native: bigint
+  nativeAssociated: bigint
   nativeForTotal: bigint
+  nativeAssociatedForTotal: bigint
 }
 
 export class ValueService {
@@ -91,6 +97,16 @@ export class ValueService {
           const forTotalKey = `${amountConfig.source}ForTotal` as const
           result[forTotalKey] += value
         }
+
+        if (amountConfig.isAssociated) {
+          const key = `${amountConfig.source}Associated` as const
+          result[key] += value
+          if (amountConfig.includeInTotal) {
+            const forTotalKey =
+              `${amountConfig.source}AssociatedForTotal` as const
+            result[forTotalKey] += value
+          }
+        }
       }
 
       results.set(timestamp, result)
@@ -103,11 +119,17 @@ export class ValueService {
 function createEmptyResult() {
   return {
     canonical: 0n,
+    canonicalAssociated: 0n,
     canonicalForTotal: 0n,
+    canonicalAssociatedForTotal: 0n,
     external: 0n,
+    externalAssociated: 0n,
     externalForTotal: 0n,
+    externalAssociatedForTotal: 0n,
     native: 0n,
+    nativeAssociated: 0n,
     nativeForTotal: 0n,
+    nativeAssociatedForTotal: 0n,
   }
 }
 
@@ -116,15 +138,24 @@ function toValueRecords(
   project: ProjectId,
   source: string,
 ): ValueRecord[] | PromiseLike<ValueRecord[]> {
-  return Array.from(results.entries()).map(([timestamp, value]) => ({
-    projectId: project,
-    timestamp: new UnixTime(timestamp),
-    dataSource: source,
-    native: value.native,
-    nativeForTotal: value.nativeForTotal,
-    canonical: value.canonical,
-    canonicalForTotal: value.canonicalForTotal,
-    external: value.external,
-    externalForTotal: value.externalForTotal,
-  }))
+  return Array.from(results.entries()).map(
+    ([timestamp, value]) =>
+      ({
+        projectId: project,
+        timestamp: new UnixTime(timestamp),
+        dataSource: source,
+        native: value.native,
+        nativeAssociated: value.nativeAssociated,
+        nativeForTotal: value.nativeForTotal,
+        nativeAssociatedForTotal: value.nativeAssociatedForTotal,
+        canonical: value.canonical,
+        canonicalAssociated: value.canonicalAssociated,
+        canonicalForTotal: value.canonicalForTotal,
+        canonicalAssociatedForTotal: value.canonicalAssociated,
+        external: value.external,
+        externalAssociated: value.externalAssociated,
+        externalForTotal: value.externalForTotal,
+        externalAssociatedForTotal: value.externalAssociatedForTotal,
+      }) satisfies ValueRecord,
+  )
 }

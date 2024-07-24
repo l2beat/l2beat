@@ -47,7 +47,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  updateSavedConfigurations(indexerId: string, currentHeight: number | null) {
+  updateCurrentHeights(indexerId: string, currentHeight: number | null) {
     return this.getDb()
       .updateTable('public.indexer_configurations')
       .set('current_height', currentHeight)

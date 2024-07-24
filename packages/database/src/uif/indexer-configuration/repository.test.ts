@@ -86,7 +86,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   )
 
   it(
-    IndexerConfigurationRepository.prototype.updateSavedConfigurations.name,
+    IndexerConfigurationRepository.prototype.updateCurrentHeights.name,
     async () => {
       const records = [
         config('a', 1, null, 10), // update: current < toUpdate
@@ -99,7 +99,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
       await repository.addOrUpdateMany(records)
 
-      await repository.updateSavedConfigurations('indexer', 100)
+      await repository.updateCurrentHeights('indexer', 100)
 
       const result = await repository.getAll()
 

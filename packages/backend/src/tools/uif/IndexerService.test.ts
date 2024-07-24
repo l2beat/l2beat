@@ -201,26 +201,29 @@ describe(IndexerService.name, () => {
     ])
   })
 
-  it(IndexerService.prototype.updateSavedConfigurations.name, async () => {
-    const indexerConfigurationsRepository = mockObject<
-      Database['indexerConfiguration']
-    >({
-      updateSavedConfigurations: async () => [],
-    })
+  it(
+    IndexerService.prototype.updateConfigurationsCurrentHeight.name,
+    async () => {
+      const indexerConfigurationsRepository = mockObject<
+        Database['indexerConfiguration']
+      >({
+        updateCurrentHeights: async () => [],
+      })
 
-    const indexerService = new IndexerService(
-      mockDatabase({
-        indexerState: mockObject(),
-        indexerConfiguration: indexerConfigurationsRepository,
-      }),
-    )
+      const indexerService = new IndexerService(
+        mockDatabase({
+          indexerState: mockObject(),
+          indexerConfiguration: indexerConfigurationsRepository,
+        }),
+      )
 
-    await indexerService.updateSavedConfigurations('indexer', 123)
+      await indexerService.updateConfigurationsCurrentHeight('indexer', 123)
 
-    expect(
-      indexerConfigurationsRepository.updateSavedConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', 123)
-  })
+      expect(
+        indexerConfigurationsRepository.updateCurrentHeights,
+      ).toHaveBeenOnlyCalledWith('indexer', 123)
+    },
+  )
 
   it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
     const indexerConfigurationsRepository = mockObject<

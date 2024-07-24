@@ -1,6 +1,6 @@
 'use client'
 import { type DaBridge } from '@l2beat/config'
-import { useParams, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import {
   Select,
   SelectContent,
@@ -9,24 +9,21 @@ import {
   SelectValue,
 } from '~/app/_components/select'
 interface Props {
+  layerSlug: string
   bridges: DaBridge[]
+  defaultValue: string
 }
 
-export function DaBridgeSelect({ bridges }: Props) {
+export function DaBridgeSelect({ layerSlug, bridges, defaultValue }: Props) {
   const router = useRouter()
-  const params = useParams<{ layer: string; bridge: string }>()
-  const selectedBridge = bridges.find(
-    (bridge) => bridge.display.slug === params.bridge,
-  )
-  if (!selectedBridge) return null
 
   return (
     <div className="flex items-center gap-2">
       <span>DA Bridge:</span>
       <Select
-        defaultValue={selectedBridge.display.slug} // TODO: defaultValue - find a way to pass it here and not mess up the loading state of select
+        defaultValue={defaultValue}
         onValueChange={(bridge) =>
-          router.push(`/data-availability/projects/${params.layer}/${bridge}`)
+          router.push(`/data-availability/projects/${layerSlug}/${bridge}`)
         }
       >
         <SelectTrigger
