@@ -1,9 +1,9 @@
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../../tools/uif/IndexerConfigurationsRepository'
 import { L2CostsRepository } from '../modules/l2-costs/repositories/L2CostsRepository'
 import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
 
 export async function findUnusedConfigs(
-  indexerConfigurationRepository: IndexerConfigurationRepository,
+  indexerConfigurationRepository: IndexerConfigurationsRepository,
   l2CostsRepository: L2CostsRepository,
   livenessRepository: LivenessRepository,
 ): Promise<string[]> {

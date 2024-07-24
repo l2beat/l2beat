@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 
 import { Config } from '../../../../config'
 import { Peripherals } from '../../../../peripherals/Peripherals'
-import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../../../tools/uif/IndexerConfigurationsRepository'
 import { IndexerService } from '../../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../../tools/uif/IndexerStateRepository'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
@@ -26,7 +26,7 @@ export function createL2CostsModule(
     IndexerStateRepository,
   )
   const configurationsRepository = peripherals.getRepository(
-    IndexerConfigurationRepository,
+    IndexerConfigurationsRepository,
   )
   const indexerService = new IndexerService(
     indexerStateRepository,

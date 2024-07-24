@@ -7,7 +7,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Knex } from 'knex'
-import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from './IndexerConfigurationsRepository'
 import {
   IndexerStateRecord,
   IndexerStateRepository,
@@ -19,7 +19,7 @@ export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 export class IndexerService {
   constructor(
     private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly indexerConfigurationRepository: IndexerConfigurationRepository,
+    private readonly indexerConfigurationRepository: IndexerConfigurationsRepository,
   ) {}
 
   // #region ManagedChildIndexer & ManagedMultiIndexer

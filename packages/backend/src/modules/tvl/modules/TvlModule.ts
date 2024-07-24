@@ -6,7 +6,7 @@ import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../../tools/uif/IndexerConfigurationsRepository'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
@@ -47,7 +47,7 @@ export function createTvlModule(
     IndexerStateRepository,
   )
   const configurationsRepository = peripherals.getRepository(
-    IndexerConfigurationRepository,
+    IndexerConfigurationsRepository,
   )
   const indexerService = new IndexerService(
     indexerStateRepository,

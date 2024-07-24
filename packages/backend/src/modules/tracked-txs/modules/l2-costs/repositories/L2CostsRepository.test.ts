@@ -5,12 +5,12 @@ import { describe } from 'mocha'
 
 import { createTrackedTxId } from '@l2beat/shared'
 import { describeDatabase } from '../../../../../test/database'
-import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../../../../tools/uif/IndexerConfigurationsRepository'
 import { L2CostsRecord, L2CostsRepository } from './L2CostsRepository'
 
 describeDatabase(L2CostsRepository.name, (knex, kysely) => {
   const oldRepo = new L2CostsRepository(knex, Logger.SILENT)
-  const oldConfigRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
+  const oldConfigRepo = new IndexerConfigurationsRepository(knex, Logger.SILENT)
   const newRepo = kysely.l2Cost
   const newConfigRepo = kysely.indexerConfigurations
 

@@ -1,6 +1,6 @@
 import { createTrackedTxId } from '@l2beat/shared'
 import { expect, mockFn, mockObject } from 'earl'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../../tools/uif/IndexerConfigurationsRepository'
 import { L2CostsRepository } from '../modules/l2-costs/repositories/L2CostsRepository'
 import { LivenessRepository } from '../modules/liveness/repositories/LivenessRepository'
 import { findUnusedConfigs } from './findUnusedConfigs'
@@ -31,7 +31,7 @@ describe(findUnusedConfigs.name, () => {
 })
 
 function mockIndexerConfigurationRepository(ids: string[]) {
-  return mockObject<IndexerConfigurationRepository>({
+  return mockObject<IndexerConfigurationsRepository>({
     getSavedConfigurations: mockFn().resolvesTo(ids.map((id) => ({ id }))),
   })
 }

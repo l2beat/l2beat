@@ -6,7 +6,7 @@ import {
   describeDatabase,
   mockLegacyDatabase,
 } from '../../../test/database'
-import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../IndexerConfigurationsRepository'
 import { IndexerService } from '../IndexerService'
 import { IndexerStateRepository } from '../IndexerStateRepository'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
@@ -152,7 +152,7 @@ describe(ManagedMultiIndexer.name, () => {
 
   describeDatabase('e2e', (database) => {
     const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
-    const configurationsRepository = new IndexerConfigurationRepository(
+    const configurationsRepository = new IndexerConfigurationsRepository(
       database,
       Logger.SILENT,
     )

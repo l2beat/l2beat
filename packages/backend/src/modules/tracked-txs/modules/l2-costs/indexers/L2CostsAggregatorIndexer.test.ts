@@ -11,8 +11,8 @@ import { BackendProject } from '@l2beat/config'
 import { TrackedTxId, createTrackedTxId } from '@l2beat/shared'
 import {
   IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from '../../../../../tools/uif/IndexerConfigurationRepository'
+  IndexerConfigurationsRepository,
+} from '../../../../../tools/uif/IndexerConfigurationsRepository'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {
@@ -124,7 +124,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       })
 
       const indexerConfigurationRepositoryMock =
-        mockObject<IndexerConfigurationRepository>({
+        mockObject<IndexerConfigurationsRepository>({
           getSavedConfigurationsByIds: mockFn().resolvesTo([
             mockObject<IndexerConfigurationRecord>({
               id: txs[0].configurationId,
@@ -363,7 +363,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           getByTimeRange: mockFn().resolvesTo(txs),
         })
         const indexerConfigurationRepositoryMock =
-          mockObject<IndexerConfigurationRepository>({
+          mockObject<IndexerConfigurationsRepository>({
             getSavedConfigurationsByIds: mockFn().resolvesTo([
               mockObject<IndexerConfigurationRecord>({
                 id: id1,
@@ -554,7 +554,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
       addOrUpdateMany: mockFn().resolvesTo(1),
     }),
     indexerConfigurationRepository:
-      mockObject<IndexerConfigurationRepository>(),
+      mockObject<IndexerConfigurationsRepository>(),
     l2CostsRepository: mockObject<L2CostsRepository>(),
     l2CostsPricesRepository: mockObject<L2CostsPricesRepository>(),
     projects: MOCK_PROJECTS,

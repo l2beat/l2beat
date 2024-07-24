@@ -27,10 +27,10 @@ export interface IndexerConfigurationRecord {
 
 const BATCH_SIZE = 5_000
 
-export class IndexerConfigurationRepository extends BaseRepository {
+export class IndexerConfigurationsRepository extends BaseRepository {
   constructor(database: LegacyDatabase, logger: Logger) {
     super(database, logger)
-    this.autoWrap<CheckConvention<IndexerConfigurationRepository>>(this)
+    this.autoWrap<CheckConvention<IndexerConfigurationsRepository>>(this)
   }
 
   async addOrUpdateMany(configurations: IndexerConfigurationRecord[]) {

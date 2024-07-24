@@ -4,11 +4,11 @@ import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
 import {
   IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from './IndexerConfigurationRepository'
+  IndexerConfigurationsRepository,
+} from './IndexerConfigurationsRepository'
 
-describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
-  const oldRepo = new IndexerConfigurationRepository(knex, Logger.SILENT)
+describeDatabase(IndexerConfigurationsRepository.name, (knex, kysely) => {
+  const oldRepo = new IndexerConfigurationsRepository(knex, Logger.SILENT)
   const newRepo = kysely.indexerConfigurations
 
   suite(oldRepo)
@@ -27,7 +27,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     })
 
     describe(
-      IndexerConfigurationRepository.prototype.addOrUpdateMany.name,
+      IndexerConfigurationsRepository.prototype.addOrUpdateMany.name,
       () => {
         it('adds new records', async () => {
           const newRecords = [CONFIGURATIONS[0], CONFIGURATIONS[1]]
@@ -66,7 +66,8 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     )
 
     describe(
-      IndexerConfigurationRepository.prototype.getSavedConfigurationsByIds.name,
+      IndexerConfigurationsRepository.prototype.getSavedConfigurationsByIds
+        .name,
       () => {
         it('returns configurations by ids', async () => {
           await repository.addOrUpdateMany(CONFIGURATIONS)
@@ -81,7 +82,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     )
 
     it(
-      IndexerConfigurationRepository.prototype.getSavedConfigurations.name,
+      IndexerConfigurationsRepository.prototype.getSavedConfigurations.name,
       async () => {
         const records = CONFIGURATIONS
 
@@ -94,8 +95,8 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     )
 
     it(
-      IndexerConfigurationRepository.prototype.updateConfigurationsCurrentHeight
-        .name,
+      IndexerConfigurationsRepository.prototype
+        .updateConfigurationsCurrentHeight.name,
       async () => {
         const records = [
           config('a', 1, null, 10), // update: current < toUpdate
@@ -124,7 +125,7 @@ describeDatabase(IndexerConfigurationRepository.name, (knex, kysely) => {
     )
 
     it(
-      IndexerConfigurationRepository.prototype.deleteConfigurationsExcluding
+      IndexerConfigurationsRepository.prototype.deleteConfigurationsExcluding
         .name,
       async () => {
         const records = CONFIGURATIONS

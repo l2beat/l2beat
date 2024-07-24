@@ -6,7 +6,7 @@ import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
 import { Clock } from '../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../tools/uif/IndexerConfigurationsRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
@@ -41,7 +41,7 @@ export function createTrackedTxsModule(
 
   const indexerService = new IndexerService(
     peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(IndexerConfigurationRepository),
+    peripherals.getRepository(IndexerConfigurationsRepository),
   )
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
@@ -129,7 +129,7 @@ export function createTrackedTxsModule(
         L2CostsPricesRepository,
       ),
       indexerConfigurationRepository: peripherals.getRepository(
-        IndexerConfigurationRepository,
+        IndexerConfigurationsRepository,
       ),
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
@@ -184,7 +184,7 @@ export function createTrackedTxsModule(
       createTrackedTxsStatusRouter({
         clock,
         indexerConfigurationRepository: peripherals.getRepository(
-          IndexerConfigurationRepository,
+          IndexerConfigurationsRepository,
         ),
         l2CostsRepository: peripherals.getRepository(L2CostsRepository),
         livenessRepository: peripherals.getRepository(LivenessRepository),

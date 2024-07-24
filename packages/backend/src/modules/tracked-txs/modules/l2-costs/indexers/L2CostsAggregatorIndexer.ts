@@ -8,7 +8,7 @@ import {
 import { BackendProject } from '@l2beat/config'
 import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { uniq } from 'lodash'
-import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../../../../tools/uif/IndexerConfigurationsRepository'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
@@ -35,7 +35,7 @@ export interface L2CostsAggregatorIndexerDeps
   l2CostsRepository: L2CostsRepository
   aggregatedL2CostsRepository: AggregatedL2CostsRepository
   l2CostsPricesRepository: L2CostsPricesRepository
-  indexerConfigurationRepository: IndexerConfigurationRepository
+  indexerConfigurationRepository: IndexerConfigurationsRepository
   projects: BackendProject[]
 }
 

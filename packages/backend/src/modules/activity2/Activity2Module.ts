@@ -5,7 +5,7 @@ import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
+import { IndexerConfigurationsRepository } from '../../tools/uif/IndexerConfigurationsRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../ApplicationModule'
@@ -68,7 +68,7 @@ function createActivityIndexers(
   const activityRepository = db.activity
   const indexerService = new IndexerService(
     peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(IndexerConfigurationRepository),
+    peripherals.getRepository(IndexerConfigurationsRepository),
   )
 
   return activityConfig.projects
