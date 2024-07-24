@@ -119,6 +119,7 @@ function createActivityIndexers(
           ),
           minHeight:
             project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
+          uncertaintyBuffer: project.config.resyncLastDays,
           parents: [dayTargetIndexer],
           txsCountProvider,
           indexerService,
