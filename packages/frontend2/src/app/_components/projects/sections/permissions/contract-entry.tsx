@@ -12,10 +12,10 @@ import BulletIcon from '~/icons/bullet.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import { cn } from '~/utils/cn'
+import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
 import { ReferenceList, type TechnologyReference } from './reference-list'
 import { UpgradeConsiderations } from './upgrade-considerations'
 import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
-import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
 
 export interface TechnologyContract {
   name: string
@@ -168,7 +168,7 @@ function getCalloutProps(
   if (showRedBackground) {
     return {
       color: 'red',
-      icon: <UnverifiedIcon className="fill-red-300 size-5" />,
+      icon: <UnverifiedIcon className="size-5 fill-red-300" />,
     } as const
   }
 
@@ -176,7 +176,7 @@ function getCalloutProps(
     return {
       color: undefined,
       icon: (
-        <ShieldIcon className="fill-yellow-700 dark:fill-yellow-300 size-5" />
+        <ShieldIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
       ),
     }
   }

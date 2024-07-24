@@ -23,12 +23,12 @@ import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { languageJoin } from '~/utils/language-join'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
+import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
 } from '../../../app/_components/projects/sections/permissions/contract-entry'
 import { type TechnologyReference } from '../../../app/_components/projects/sections/permissions/reference-list'
-import { type ContractsSectionProps } from '../../../app/_components/projects/sections/contracts/contracts-section'
 import { getChain } from './get-chain'
 import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'

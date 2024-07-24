@@ -20,7 +20,7 @@ const linkVariants = cva(
     variants: {
       variant: {
         primary:
-          'text-blue-700 hover:text-blue-550 dark:hover:text-blue-550 dark:text-blue-500',
+          'text-blue-700 hover:text-blue-550 dark:text-blue-500 dark:hover:text-blue-550',
         danger: 'text-red-300 hover:text-red-700',
         plain: 'text-black dark:text-white',
       },

@@ -14,14 +14,14 @@ import {
 import { concat } from 'lodash'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
-import { type ProjectDetailsPermissionsSection } from '../../../app/_components/projects/sections/types'
 import {
   type TechnologyContract,
   type TechnologyContractAddress,
 } from '../../../app/_components/projects/sections/permissions/contract-entry'
-import { getUsedInProjects } from './get-used-in-projects'
 import { type UsedInProject } from '../../../app/_components/projects/sections/permissions/used-in-project'
+import { type ProjectDetailsPermissionsSection } from '../../../app/_components/projects/sections/types'
 import { getChain } from './get-chain'
+import { getUsedInProjects } from './get-used-in-projects'
 import { toVerificationStatus } from './to-verification-status'
 
 type ProjectParams = {
