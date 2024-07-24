@@ -26,7 +26,7 @@ export function getManuallyVerifiedContracts(project: Project) {
 export const getCachedManuallyVerifiedContracts = cache(
   async (project: Project) => {
     const chainNames =
-      project.type === 'da-layer'
+      project.type === 'DaLayer'
         ? getChainNamesForDA(project)
         : getChainNames(project)
     const contracts: ManuallyVerifiedContracts = {}

@@ -25,7 +25,7 @@ export function getContractsVerificationStatuses(project: Project) {
 const getCachedContractsVerificationStatuses = cache(
   async (project: Project) => {
     const chainNames =
-      project.type === 'da-layer'
+      project.type === 'DaLayer'
         ? getChainNamesForDA(project)
         : getChainNames(project)
     const contracts = Object.fromEntries(
