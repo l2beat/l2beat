@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -12,15 +13,15 @@ export class AmountRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async getByIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
+    if (configIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configIds),
-          eb('timestamp', '=', timestamp.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configIds)
+      .where('timestamp', '=', timestamp.toDate())
       .orderBy('timestamp')
       .execute()
 
@@ -32,16 +33,16 @@ export class AmountRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<AmountRecord[]> {
+    if (configIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configIds),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configIds)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .orderBy('timestamp')
       .execute()
 
@@ -49,17 +50,17 @@ export class AmountRepository {
   }
 
   async getByTimestamps(timestamps: UnixTime[]) {
+    if (timestamps.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
-      .where((eb) =>
-        eb.and([
-          eb(
-            'timestamp',
-            'in',
-            timestamps.map((t) => t.toDate()),
-          ),
-        ]),
+      .where(
+        'timestamp',
+        'in',
+        timestamps.map((t) => t.toDate()),
       )
       .orderBy('timestamp')
       .execute()
@@ -71,40 +72,41 @@ export class AmountRepository {
     if (records.length === 0) {
       return
     }
-    const scope = trx ?? this.db
 
+    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await scope.insertInto('public.amounts').values(rows).execute()
+    await batchExecute(scope, rows, 1_000, async (trx, batch) => {
+      await trx.insertInto('public.amounts').values(batch).execute()
+    })
+
+    return rows.length
   }
 
   async deleteByConfigInTimeRange(
     configId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ) {
-    return this.db
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.amounts')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
-      .execute()
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  async deleteByConfigAfter(configId: string, fromExclusive: UnixTime) {
-    return this.db
+  async deleteByConfigAfter(
+    configId: string,
+    fromExclusive: UnixTime,
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.amounts')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '>', fromExclusive.toDate()),
-        ]),
-      )
-      .execute()
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '>', fromExclusive.toDate())
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   // #region methods used only in TvlCleaner
@@ -125,7 +127,8 @@ export class AmountRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.amounts').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('public.amounts').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

@@ -13,9 +13,8 @@ export class UpdateMonitorRepository {
     const row = await this.db
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
-      .where((eb) =>
-        eb.and([eb('project_name', '=', name), eb('chain_id', '=', +chainId)]),
-      )
+      .where('project_name', '=', name)
+      .where('chain_id', '=', +chainId)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
@@ -33,13 +32,13 @@ export class UpdateMonitorRepository {
       .insertInto('public.update_monitor')
       .values(row)
       .onConflict((cb) =>
-        cb.columns(['project_name', 'chain_id']).doUpdateSet({
-          block_number: row.block_number,
-          unix_timestamp: row.unix_timestamp,
-          discovery_json_blob: row.discovery_json_blob,
-          config_hash: row.config_hash,
-          version: row.version,
-        }),
+        cb.columns(['project_name', 'chain_id']).doUpdateSet((eb) => ({
+          block_number: eb.ref('excluded.block_number'),
+          unix_timestamp: eb.ref('excluded.unix_timestamp'),
+          discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
+          config_hash: eb.ref('excluded.config_hash'),
+          version: eb.ref('excluded.version'),
+        })),
       )
       .execute()
 
@@ -55,7 +54,10 @@ export class UpdateMonitorRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.update_monitor').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.update_monitor')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

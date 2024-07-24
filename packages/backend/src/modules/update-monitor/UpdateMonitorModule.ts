@@ -17,8 +17,6 @@ import { UpdateNotifier } from './UpdateNotifier'
 import { UpdateMonitorController } from './api/UpdateMonitorController'
 import { createUpdateMonitorRouter } from './api/UpdateMonitorRouter'
 import { createDiscoveryRunner } from './createDiscoveryRunner'
-import { UpdateMonitorRepository } from './repositories/UpdateMonitorRepository'
-import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 
 export function createUpdateMonitorModule(
   config: Config,
@@ -39,7 +37,7 @@ export function createUpdateMonitorModule(
 
   const chainConverter = new ChainConverter(config.chains)
   const updateNotifier = new UpdateNotifier(
-    peripherals.getRepository(UpdateNotifierRepository),
+    peripherals.database,
     discordClient,
     chainConverter,
     logger,
@@ -65,7 +63,7 @@ export function createUpdateMonitorModule(
     runners,
     updateNotifier,
     configReader,
-    peripherals.getRepository(UpdateMonitorRepository),
+    peripherals.database,
     clock,
     chainConverter,
     logger,
@@ -74,7 +72,7 @@ export function createUpdateMonitorModule(
   )
 
   const updateMonitorController = new UpdateMonitorController(
-    peripherals.getRepository(UpdateMonitorRepository),
+    peripherals.database,
     config.projects,
     configReader,
     chainConverter,

@@ -1,4 +1,56 @@
-Generated with discovered.json: 0x31ded288fa16ef86f0aba44606e738f10c1af3d6
+Generated with discovered.json: 0x20793d968ee199aa8b0f9d4a9b43b9aaff803dfe
+
+# Diff at Fri, 19 Jul 2024 12:26:54 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 20059600
+- current block number: 20340569
+
+## Description
+
+A new verifier is added for proofType 3 with almost no code diff to the old one (4 constants), probably related to [this PR](https://github.com/Consensys/linea-contracts/pull/20). Already [used in prod](https://app.blocksec.com/explorer/tx/eth/0x0f5c3d308947356409e0f048db7c8f4d5414840be0281c5368147fb6c8b758ab).
+
+## Watched changes
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
++++ description: Mapping of proof type to ZK Plonk Verifier contract
+      values.verifiers.3:
+-        "0x1111111111111111111111111111111111111111"
++        "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract VerifierProofType3 (0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../linea/ethereum/.flat/VerifierProofType3.sol    | 1347 ++++++++++++++++++++
+ 1 file changed, 1347 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059600 (main branch discovery), not current.
+
+```diff
+    contract PlonkVerifierForMultiTypeDataAggregation (0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4) {
+    +++ description: None
+      name:
+-        "PlonkVerifierForMultiTypeDataAggregation"
++        "VerifierProofType1"
+    }
+```
+
+Generated with discovered.json: 0x7dd5879afdba65078bc0f42d885728316075d9e7
 
 # Diff at Wed, 05 Jun 2024 13:36:11 GMT:
 

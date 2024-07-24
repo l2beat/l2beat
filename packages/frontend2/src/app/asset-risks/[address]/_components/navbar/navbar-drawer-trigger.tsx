@@ -13,7 +13,7 @@ export function NavbarDrawerTrigger() {
         return isConnected ? (
           <div className="flex items-center gap-3">
             <Link
-              className="font-medium text-sm text-black"
+              className="text-sm font-medium text-black"
               href={`/asset-risks/${address}`}
             >
               {ensName ?? (address && formatAddress(address))}
@@ -24,7 +24,7 @@ export function NavbarDrawerTrigger() {
           </div>
         ) : (
           <DrawerTrigger>
-            <button className="px-6 py-2 bg-pink-900 text-white text-xs font-bold rounded">
+            <button className="rounded bg-pink-900 px-6 py-2 text-xs font-bold text-white">
               Scan assets
             </button>
           </DrawerTrigger>

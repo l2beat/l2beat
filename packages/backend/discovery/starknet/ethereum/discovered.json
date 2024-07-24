@@ -1,7 +1,7 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 20124846,
+  "blockNumber": 20362649,
   "configHash": "0x4a6dee94c48f0cf4ea217c31df605cd6023014e20cb1ee8319789662abbce8fd",
   "version": 9,
   "contracts": [
@@ -17,6 +17,7 @@
           "0xBf67F59D2988A46FBFF7ed79A621778a3Cd3985B",
           "0xDc687e1E0B85CB589b2da3C47c933De9Db3d1ebb",
           "0xF6080D9fbEEbcd44D89aFfBFd42F098cbFf92816",
+          "0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419",
           "0xbb3400F107804DFB482565FF1Ec8D8aE66747605",
           "0xcE5485Cfb26914C5dcE00B9BAF0580364daFC7a4",
           "0xcf58536D6Fab5E59B654228a5a4ed89b13A876C2",
@@ -283,6 +284,9 @@
       "address": "0x83C0A700114101D1283D1405E2c8f21D3F03e988",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "assignedPermissions": {
+        "admin": ["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1672587635,
       "values": {
@@ -534,7 +538,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1653625,
+        "l1ToL2MessageNonce": 1657788,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
@@ -544,9 +548,9 @@
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "2769353383032934876490944289399192387798332404385948409882999719661657005740",
-        "stateBlockNumber": 650531,
-        "stateRoot": "1062872185831795783443598703559800187524586982558367676551378562376997474253",
+        "stateBlockHash": "1613200401092076787070681810088773606083904755777988852545039152422313799991",
+        "stateBlockNumber": 660651,
+        "stateRoot": "1981163098886121801762536895055907481299073032269674384841658605834362485766",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
@@ -968,25 +972,38 @@
     { "address": "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7" },
     {
       "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": [
+          "0x0c5aE94f8939182F2D06097025324D1E537d5B60",
+          "0x1268cc171c54F2000402DfF20E93E60DF4c96812",
+          "0xF3F62F23dF9C1D2C7C63D9ea6B90E8d24c7E3DF5",
+          "0xF5b6Ee2CAEb6769659f6C091D209DfdCaF3F69Eb"
+        ]
+      }
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x64F4396bb0669C72858Cc50C779b48EB25F45770" },
     { "address": "0x804d60CB1ade94511f7915A2062948685Ca8C81f" },
     {
       "address": "0xC91EC49Ad0843E5Cca55b4c4e5f68de54F6cB2Ae",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xae0Ee0A63A2cE6BaeEFFE56e7714FB4EFE48D419"]
+      }
     },
     { "address": "0xCe958D997F4a5824D4d503A128216322C6C223a0" },
     { "address": "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8" },
     { "address": "0xd4C972C4e0A9946bEF9dabF4EF84EDa8EF542b82" },
     {
       "address": "0xD5fB66CaEE881367Df4409B17Fd53a2Ef0D9B263",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4"]
+      }
     },
     {
       "address": "0xF689688640E88160c07C6FC5cc63039F29EDe86b",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xf76e6bF9e2df09D0f854F045A3B724074dA1236B"]
+      }
     },
     { "address": "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591" }
   ],
@@ -2022,5 +2039,9 @@
       "function revokeUpgradeGovernor(address account)",
       "function upgradeTo(address newImplementation, bytes data, bool finalize) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

@@ -247,11 +247,22 @@ function isServerError(e: unknown): boolean {
   const parsed = ethersError.safeParse(e)
   return (
     parsed.success &&
-    ((parsed.data.status ?? 200) >= 400 || parsed.data.code === 'SERVER_ERROR')
+    ((parsed.data.error.status ?? 200) >= 400 ||
+      (parsed.data.error.code === 'SERVER_ERROR' &&
+        parsed.data.error.error.message !== 'out of gas' &&
+        parsed.data.error.error.message !== 'execution reverted' &&
+        parsed.data.error.error.message !== 'gas uint64 overflow' &&
+        parsed.data.error.error.message !== 'invalid opcode: INVALID'))
   )
 }
 
 const ethersError = z.object({
-  code: z.string(),
-  status: z.number().optional(),
+  error: z.object({
+    code: z.string(),
+    status: z.number().optional(),
+    error: z.object({
+      code: z.number(),
+      message: z.string(),
+    }),
+  }),
 })

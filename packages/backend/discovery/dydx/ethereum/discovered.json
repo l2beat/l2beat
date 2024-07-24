@@ -798,6 +798,9 @@
     {
       "name": "PriorityExecutor",
       "address": "0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE",
+      "assignedPermissions": {
+        "admin": ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]
+      },
       "sinceTimestamp": 1627710079,
       "values": {
         "$immutable": true,
@@ -2152,5 +2155,7 @@
       "function unpauseRootUpdates()",
       "function updateRoot()"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

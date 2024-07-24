@@ -1,5 +1,9 @@
 import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
-import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
+import {
+  ConfigReader,
+  DiscoveryConfig,
+  TemplateService,
+} from '@l2beat/discovery'
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
@@ -7,6 +11,10 @@ import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'
 
 describe('discovery config.jsonc', () => {
   const configReader = new ConfigReader()
+  const templateService = new TemplateService()
+  const shapeFilesHash = templateService.getShapeFilesHash()
+  const allTemplateHashes = templateService.getAllTemplateHashes()
+
   let chainConfigs: DiscoveryConfig[][] | undefined
 
   const projectIds = layer2s
@@ -134,21 +142,46 @@ describe('discovery config.jsonc', () => {
     )
   })
 
-  it('committed discovery config hash matches committed config hash', async () => {
-    const outdatedHashes: string[] = []
+  it('committed discovery config hash, template hashes and shapeFilesHash are up to date', async () => {
+    const outdatedConfigHashes: string[] = []
+    const outdatedTemplateHashes: string[] = []
     for (const configs of chainConfigs ?? []) {
       for (const c of configs) {
         const discovery = await configReader.readDiscovery(c.name, c.chain)
 
+        assert(
+          discovery.shapeFilesHash === shapeFilesHash,
+          `Looks like you have added/moved/removed/modified shape files. This requires refreshing discovery of all projects. Run "yarn refresh-discovery"`,
+        )
+
+        const outdatedTemplates = []
+        for (const [templateId, templateHash] of Object.entries(
+          discovery.usedTemplates,
+        )) {
+          if (templateHash !== allTemplateHashes[templateId]) {
+            outdatedTemplates.push(templateId)
+          }
+        }
+        if (outdatedTemplates.length > 0) {
+          outdatedTemplateHashes.push(
+            `${c.chain}-${c.name} (${outdatedTemplates.join(', ')})`,
+          )
+        }
         if (discovery.configHash !== c.hash) {
-          outdatedHashes.push(`${c.chain}-${c.name}`)
+          outdatedConfigHashes.push(`${c.chain}-${c.name}`)
         }
       }
       assert(
-        outdatedHashes.length === 0,
-        `Following projects have outdated hashes (chain-project): ${outdatedHashes.join(
+        outdatedConfigHashes.length === 0,
+        `Following projects have outdated hashes (chain-project): ${outdatedConfigHashes.join(
           ', ',
-        )}. Run yarn discover <chain> <project>`,
+        )}. Run "yarn refresh-discovery"`,
+      )
+      assert(
+        outdatedTemplateHashes.length === 0,
+        `Following projects use outdated templates: ${outdatedTemplateHashes.join(
+          ', ',
+        )}. Run "yarn refresh-discovery"`,
       )
     }
   })

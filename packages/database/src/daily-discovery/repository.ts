@@ -10,9 +10,8 @@ export class DailyDiscoveryRepository {
     const row = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
-      .where((eb) =>
-        eb.and([eb('project_name', '=', name), eb('chain_id', '=', +chainId)]),
-      )
+      .where('project_name', '=', name)
+      .where('chain_id', '=', +chainId)
       .orderBy('unix_timestamp', 'desc')
       .executeTakeFirst()
 
@@ -23,12 +22,8 @@ export class DailyDiscoveryRepository {
     const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select('unix_timestamp')
-      .where((eb) =>
-        eb.and([
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-        ]),
-      )
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
       .execute()
 
     return rows.map((row) => UnixTime.fromDate(row.unix_timestamp))
@@ -43,7 +38,12 @@ export class DailyDiscoveryRepository {
       .onConflict((cb) =>
         cb
           .columns(['project_name', 'chain_id', 'unix_timestamp'])
-          .doUpdateSet(row),
+          .doUpdateSet((eb) => ({
+            version: eb.ref('excluded.version'),
+            block_number: eb.ref('excluded.block_number'),
+            config_hash: eb.ref('excluded.config_hash'),
+            discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
+          })),
       )
       .execute()
 
@@ -69,29 +69,22 @@ export class DailyDiscoveryRepository {
     projectName: string,
     chainId: ChainId,
     configHash: Hash256,
-  ) {
-    return this.db
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.daily_discovery')
-      .where((eb) =>
-        eb.and([
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-          eb('config_hash', '!=', configHash.toString()),
-        ]),
-      )
-      .execute()
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
+      .where('config_hash', '!=', configHash.toString())
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getProject(projectName: string, chainId: ChainId) {
     const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
-      .where((eb) =>
-        eb.and([
-          eb('project_name', '=', projectName),
-          eb('chain_id', '=', +chainId),
-        ]),
-      )
+      .where('project_name', '=', projectName)
+      .where('chain_id', '=', +chainId)
       .execute()
 
     return rows.map(toRecord)
@@ -106,7 +99,10 @@ export class DailyDiscoveryRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.daily_discovery').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.daily_discovery')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

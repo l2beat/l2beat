@@ -1,3 +1,4 @@
+import { ValueRecord } from '@l2beat/database'
 import {
   assert,
   ProjectId,
@@ -8,7 +9,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
-import { ValueRecord } from '../../repositories/ValueRepository'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
 

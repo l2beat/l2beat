@@ -19,7 +19,7 @@ export function DetailsItem({
 }) {
   return (
     <div className={cn('flex flex-col gap-0.5', className)}>
-      <div className="flex items-center gap-1.5 font-semibold text-2xs text-gray-500 uppercase">
+      <div className="flex items-center gap-1.5 text-2xs font-semibold uppercase text-gray-500">
         {title}
         {tooltip ? (
           <Tooltip>
@@ -30,7 +30,7 @@ export function DetailsItem({
           </Tooltip>
         ) : null}
       </div>
-      <div className="font-bold text-lg">{children}</div>
+      <div className="text-lg font-bold">{children}</div>
     </div>
   )
 }

@@ -1,5 +1,0 @@
-{
-  "term": "State update",
-  "definition": "A mechanism that allows to update the claimed state of a project. It usually involves verifying a state transition proof, but it can also be done in a trusted manner by a permissioned actor.",
-  "isSpicy": false
-}

@@ -36,6 +36,18 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
   usedIn: [
     // no project integrates it for state validation
   ],
+  display: {
+    links: {
+      websites: [],
+      documentation: ['https://docs.celestia.org/developers/blobstream'],
+      repositories: ['https://github.com/succinctlabs/blobstreamx'],
+      apps: [],
+      explorers: ['https://etherscan.io/'],
+      socialMedia: [],
+    },
+  },
+  technology:
+    'Dolore dolore est culpa id incididunt aliquip consectetur commodo commodo. Aliquip consectetur duis in exercitation ad sint magna labore veniam consequat aliqua excepteur sit incididunt. Sint id officia non amet incididunt dolore qui ad cillum sunt ad. Tempor officia nostrud commodo exercitation commodo sit et veniam ea sit ad. Nostrud cillum nulla irure consequat irure occaecat id esse occaecat voluptate pariatur consequat nostrud. Est irure quis eiusmod ipsum ea ex deserunt incididunt dolore nisi laborum.',
   contracts: {
     addresses: [
       discovery.getContractDetails('BlobstreamX', {

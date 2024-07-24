@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xe0aa22d0f3fcab285c4391dcd2a21a8035e2fdae
+Generated with discovered.json: 0x5013f11878fa492b43f258c666a94f5851309e6a
+
+# Diff at Mon, 22 Jul 2024 14:42:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20289773
+- current block number: 20362731
+
+## Description
+
+Two new token pools are added related to Zunami protocol: zunETH and zunUSD. Tokens are added to Ethereum (in case these escrows are used in the future).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD)
+    +++ description: None
+```
+
+```diff
+    contract LockReleaseTokenPool (0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4) {
+    +++ description: None
+      values.getOffRamps.6:
++        "0xCe6364dBe64D2789D916180131fAda2ABFF702E8"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xf5224EfD7Ea9edFa6b6e06964084b92426DCdE99) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "15971525489660198786"
+      values.getSupportedChains.1:
++        "3734403246176062136"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xa96787DCe9Df7BF7bB033E39777bd108E29D349b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xF84Bf7D614F3138D805186C497995d4eD315fA72)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0xF84Bf7D614F3138D805186C497995d4eD315fA72.sol} |  461 ++++++-
+ ...-0xa96787DCe9Df7BF7bB033E39777bd108E29D349b.sol | 1407 ++++++++++++++++++++
+ 2 files changed, 1842 insertions(+), 26 deletions(-)
+```
+
+Generated with discovered.json: 0x51df07c0d84720ff6c68455e3bcd515e7859dba9
 
 # Diff at Fri, 12 Jul 2024 10:19:04 GMT:
 

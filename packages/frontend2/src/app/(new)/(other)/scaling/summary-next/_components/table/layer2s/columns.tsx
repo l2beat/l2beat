@@ -2,7 +2,7 @@ import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { EM_DASH } from '~/app/_components/nav/consts'
-import { RosetteCell } from '~/app/_components/rosette/rosette-cell'
+import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
@@ -26,7 +26,7 @@ export const scalingLayer2sColumns = [
     id: 'logo',
     cell: (ctx) => (
       <Image
-        className="min-w-[18px] min-h-[18px]"
+        className="min-h-[18px] min-w-[18px]"
         src={`/icons/${ctx.row.original.slug}.png`}
         width={18}
         height={18}
@@ -42,7 +42,12 @@ export const scalingLayer2sColumns = [
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
   columnHelper.accessor('risks', {
-    cell: (ctx) => <RosetteCell values={ctx.getValue()} />,
+    cell: (ctx) => (
+      <PizzaRosetteCell
+        values={ctx.getValue()}
+        isUnderReview={ctx.row.original.isUnderReview}
+      />
+    ),
     enableSorting: false,
     meta: {
       cellClassName: 'justify-center',

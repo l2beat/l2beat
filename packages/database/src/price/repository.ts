@@ -1,5 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { PostgresDatabase } from '../kysely'
+import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -16,16 +17,15 @@ export class PriceRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ) {
+    if (configIds.length === 0) {
+      return []
+    }
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', 'in', configIds),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
+      .where('configuration_id', 'in', configIds)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
       .orderBy('timestamp')
       .execute()
 
@@ -36,7 +36,7 @@ export class PriceRepository {
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where((eb) => eb.and([eb('timestamp', '=', timestamp.toDate())]))
+      .where('timestamp', '=', timestamp.toDate())
       .orderBy('timestamp')
       .execute()
 
@@ -47,25 +47,24 @@ export class PriceRepository {
     const row = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '=', timestamp.toDate()),
-        ]),
-      )
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '=', timestamp.toDate())
       .executeTakeFirst()
 
     return row ? toRecord(row) : null
   }
 
-  async addMany(records: PriceRecord[]) {
+  async addMany(records: PriceRecord[], trx?: Transaction) {
     if (records.length === 0) {
       return 0
     }
 
+    const scope = trx ?? this.db
     const rows = records.map(toRow)
 
-    await this.db.insertInto('public.prices').values(rows).execute()
+    await batchExecute(scope, rows, 10_000, async (trx, batch) => {
+      await trx.insertInto('public.prices').values(batch).execute()
+    })
 
     return rows.length
   }
@@ -74,17 +73,14 @@ export class PriceRepository {
     configId: string,
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ) {
-    return this.db
+  ): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.prices')
-      .where((eb) =>
-        eb.and([
-          eb('configuration_id', '=', configId),
-          eb('timestamp', '>=', fromInclusive.toDate()),
-          eb('timestamp', '<=', toInclusive.toDate()),
-        ]),
-      )
-      .execute()
+      .where('configuration_id', '=', configId)
+      .where('timestamp', '>=', fromInclusive.toDate())
+      .where('timestamp', '<=', toInclusive.toDate())
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
@@ -94,13 +90,14 @@ export class PriceRepository {
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
     return deleteSixHourlyUntil(this.db, 'public.prices', dateRange)
   }
+
   async getAll() {
     const rows = await this.db.selectFrom('public.prices').selectAll().execute()
-
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.prices').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('public.prices').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

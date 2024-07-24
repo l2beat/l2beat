@@ -33,9 +33,8 @@ export class VerifierStatusRepository {
     const row = await this.db
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
-      .where((eb) =>
-        eb.and([eb('address', '=', address), eb('chain_id', '=', +chainId)]),
-      )
+      .where('address', '=', address)
+      .where('chain_id', '=', +chainId)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
@@ -50,7 +49,10 @@ export class VerifierStatusRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.verifier_status').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.verifier_status')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

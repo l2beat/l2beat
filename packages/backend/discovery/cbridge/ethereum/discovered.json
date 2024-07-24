@@ -1,7 +1,7 @@
 {
   "name": "cbridge",
   "chain": "ethereum",
-  "blockNumber": 20310613,
+  "blockNumber": 20331848,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
   "version": 9,
   "contracts": [
@@ -70,7 +70,7 @@
       "sinceTimestamp": 1638346811,
       "values": {
         "$immutable": true,
-        "addseq": 5283,
+        "addseq": 5287,
         "delayPeriod": 1800,
         "epochLength": 1800,
         "governors": [
@@ -92,8 +92,8 @@
           "0xF140024969F6c76494a78518D9a99c8776B55f70"
         ],
         "resetTime": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "ssHash": "0xd3bb89cde9a0625c80c9baab10f26b49bec100c251f2479345e8664b07abeb6a",
-        "triggerTime": 1720754935
+        "ssHash": "0x94319effe5d53b6a21748e30324d24035207892b7295aca27e27a261035fe823",
+        "triggerTime": 1721052330
       },
       "derivedName": "Bridge"
     },
@@ -206,7 +206,7 @@
         "numGovernors": 4,
         "numGuards": 2,
         "numPausers": 6,
-        "numRelaxedGuards": 2,
+        "numRelaxedGuards": 0,
         "owner": "0x1b9dFC56e38b0F92448659C114e2347Bd803911c",
         "pausersFull": [],
         "pausersPauseOnly": [
@@ -217,7 +217,7 @@
           "0x2FB8783C14A71C08bFC1dE8Fc3D715Dd93039BF2",
           "0xE45CB56CEe56Dd1A94F7E5fBDFaa5BaFB3C053d3"
         ],
-        "relaxed": true,
+        "relaxed": false,
         "relaxThreshold": 2
       },
       "derivedName": "Sentinel"
@@ -789,5 +789,7 @@
       "function voterPowers(address) view returns (uint256)",
       "function voters(uint256) view returns (address)"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

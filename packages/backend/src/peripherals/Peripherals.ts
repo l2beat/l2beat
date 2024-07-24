@@ -4,11 +4,6 @@ import { isEqual } from 'lodash'
 
 import { Database } from '@l2beat/database'
 import { LegacyDatabase } from '@l2beat/database-legacy'
-import { BaseRepository } from './database/BaseRepository'
-
-interface RepositoryClass<T extends BaseRepository> {
-  new (database: LegacyDatabase, logger: Logger): T
-}
 
 export interface ClientClass<T, O> {
   create(services: { httpClient: HttpClient; logger: Logger }, options: O): T
@@ -19,35 +14,17 @@ export interface ClientClass<T, O> {
  * It is only intended to be used by modules. No services should depend on it!
  */
 export class Peripherals {
-  private readonly repositories: Map<
-    RepositoryClass<BaseRepository>,
-    BaseRepository
-  > = new Map()
-
   private readonly clients: Map<
     ClientClass<unknown, unknown>,
     { client: unknown; clientOptions: unknown }[]
   > = new Map()
 
   constructor(
-    private readonly legacyDatabase: LegacyDatabase,
+    public readonly legacyDatabase: LegacyDatabase,
     public readonly database: Database,
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
   ) {}
-
-  /**
-   * Returns a repository of the given class. If the repository has already been
-   * created, it will be reused.
-   */
-  getRepository<T extends BaseRepository>(clazz: RepositoryClass<T>): T {
-    let repository = this.repositories.get(clazz)
-    if (!repository) {
-      repository = new clazz(this.legacyDatabase, this.logger)
-      this.repositories.set(clazz, repository)
-    }
-    return repository as T
-  }
 
   /**
    * Returns a client of the given class. If the client has already been

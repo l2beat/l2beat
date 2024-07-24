@@ -1,4 +1,47 @@
-Generated with discovered.json: 0x465d7b6162d4208832d32ae531853a2ba4c83fef
+Generated with discovered.json: 0x91684e58959b4d6b2f34fc48ef10d4839aa81ab5
+
+# Diff at Mon, 22 Jul 2024 14:15:23 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20132375
+- current block number: 20362600
+
+## Description
+
+The bridge contract governors are changed (one is removed, six are changed to different addresses) and the taxReceiver (not used so far) is changed.
+
+## Watched changes
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      values.getOwners.9:
+-        "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2"
+      values.getOwners.8:
+-        "0xa6dc28CbcB2f8060a00b4FA67F9b67775AC5a3a1"
++        "0x1e3B165817b0f2935E1599eD5449a28f67D399EC"
+      values.getOwners.7:
+-        "0x6013f0B3ffE1fFdcA3Fc6A8cd705b1Af048F7437"
++        "0xE1A22D823bDb4A9Ed2Bdd1743628533Fa0C7f704"
+      values.getOwners.6:
+-        "0x1c0Cd56F1c3E2cF13B9B44dBE5529104bade543E"
++        "0xDF91c9BF46DD6f214AAB47F7AC9d64c22596d930"
+      values.getOwners.4:
+-        "0x3924Ac70075078A7713f543b72e3F8817ecEc646"
++        "0x8257E89eaBAFb01589351e431EB328E0dDc51fcD"
+      values.getOwners.3:
+-        "0x3b6590Ff12Ba188e465395E1610D8368613054B0"
++        "0x501A0F1436555E124c14ad9c1E48742F734B5179"
+      values.getOwners.2:
+-        "0x34EBf4f74a881eB63F666E63ce1Ff2F287CA5a8b"
++        "0x86cec292d5d5DB6bA16722F0B01291426C4b61E2"
+      values.taxReceiver:
+-        "0xE9f3604B85c9672728eEecf689cf1F0cF7Dd03F2"
++        "0xE93FEeE21009C3578C43A1F8487E3B2a5a731c6E"
+    }
+```
+
+Generated with discovered.json: 0x1339f85b0b6761a29ed86b8f5a6b7e0ccf4c653a
 
 # Diff at Thu, 20 Jun 2024 10:35:13 GMT:
 

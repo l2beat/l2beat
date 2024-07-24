@@ -22,17 +22,20 @@ export class StarkExTransactionCountRepository {
       .insertInto('activity.starkex')
       .values(toRow(record))
       .onConflict((cb) =>
-        cb.columns(['project_id', 'unix_timestamp']).doUpdateSet({
-          count: record.count,
-        }),
+        cb.columns(['project_id', 'unix_timestamp']).doUpdateSet((eb) => ({
+          count: eb.ref('excluded.count'),
+        })),
       )
       .execute()
 
     return `${record.projectId.toString()}-${record.timestamp.toString()}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('activity.starkex').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('activity.starkex')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {

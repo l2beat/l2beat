@@ -1,7 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { describeDatabase } from '../test/database'
-import { Value } from './entity'
+import { testDeletingArchivedRecords } from '../utils/deleteArchivedRecords.test'
+import { ValueRecord } from './entity'
 import { ValueRepository } from './repository'
 
 describeDatabase(ValueRepository.name, (database) => {
@@ -40,6 +41,68 @@ describeDatabase(ValueRepository.name, (database) => {
       })
     },
   )
+
+  describe(ValueRepository.prototype.addOrUpdateMany.name, () => {
+    it('adds new rows', async () => {
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
+      ])
+    })
+
+    it('upserts rows', async () => {
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+        saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
+      ])
+
+      await repository.addOrUpdateMany([
+        saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
+        saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
+      ])
+
+      const results = await repository.getAll()
+      expect(results).toEqualUnsorted([
+        saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
+        saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
+      ])
+    })
+
+    it('empty array', async () => {
+      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+    })
+
+    it('performs batch insert with many records', async () => {
+      const records: ValueRecord[] = []
+      for (let i = 5; i < 5_000; i++) {
+        records.push(saved('a', new UnixTime(i), 'data_src', i, i * 2, i + 1))
+      }
+      await expect(repository.addOrUpdateMany(records)).not.toBeRejected()
+    })
+  })
+
+  it(ValueRepository.prototype.deleteAll.name, async () => {
+    await repository.addOrUpdateMany([
+      saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
+    ])
+
+    await repository.deleteAll()
+
+    const results = await repository.getAll()
+
+    expect(results).toEqual([])
+  })
+
+  // TvlCleaner test
+  testDeletingArchivedRecords(repository, (timestamp) =>
+    saved('a', timestamp, 'data_src', 1, 2, 3),
+  )
 })
 
 function saved(
@@ -49,16 +112,22 @@ function saved(
   canonical: number,
   external: number,
   native: number,
-): Value {
+): ValueRecord {
   return {
     projectId: ProjectId(id),
     timestamp,
     dataSource,
     canonical: BigInt(canonical),
+    canonicalAssociated: BigInt(canonical),
     canonicalForTotal: BigInt(canonical),
+    canonicalAssociatedForTotal: BigInt(canonical),
     external: BigInt(external),
+    externalAssociated: BigInt(external),
     externalForTotal: BigInt(external),
+    externalAssociatedForTotal: BigInt(external),
     native: BigInt(native),
+    nativeAssociated: BigInt(native),
     nativeForTotal: BigInt(native),
+    nativeAssociatedForTotal: BigInt(native),
   }
 }

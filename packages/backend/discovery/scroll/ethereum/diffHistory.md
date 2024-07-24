@@ -1,4 +1,74 @@
-Generated with discovered.json: 0x5081176f152acedc1ae3327f19791d12163a107c
+Generated with discovered.json: 0x74483202a2abf595fbdc6afc5fe3b6ad0a90017a
+
+# Diff at Tue, 23 Jul 2024 13:16:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f8d5c0ccc8d74a077f85a8dca4038e175812c389 block: 20311071
+- current block number: 20369470
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PufferFinanceOpsMultisig (0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+      values.getOwners.7:
++        "0x206846dE1F372A9a603e672ba97A5238cC89aeAA"
+      values.getOwners.6:
+-        "0x206846dE1F372A9a603e672ba97A5238cC89aeAA"
++        "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D"
+      values.getOwners.5:
+-        "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D"
++        "0x8F97Bf67182122D2f1745216a81724143db97E43"
+      values.getOwners.4:
+-        "0x8F97Bf67182122D2f1745216a81724143db97E43"
++        "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94"
+      values.getOwners.3:
+-        "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94"
++        "0xD6475ce37d964d4816715FdafFEeAAf2958948bE"
+      values.getOwners.2:
+-        "0xD6475ce37d964d4816715FdafFEeAAf2958948bE"
++        "0xf09c25681090C5F9408c6D3CD24baa8721870dc5"
+      values.getOwners.1:
+-        "0xf09c25681090C5F9408c6D3CD24baa8721870dc5"
++        "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA"
+      values.getOwners.0:
+-        "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA"
++        "0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311071 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9eBf2f33526CD571f8b2ad312492cb650870CFd6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pufEthEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PufferFinanceOpsMultisig (0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xddd7a815a741e8c748b9f47145b520ee367f47b5
 
 # Diff at Mon, 15 Jul 2024 09:39:11 GMT:
 

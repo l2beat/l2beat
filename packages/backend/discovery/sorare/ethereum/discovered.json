@@ -53,6 +53,9 @@
       "address": "0xCc928977e4a75d25099e7DA7B6Fd79Dac2f9fD2B",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "assignedPermissions": {
+        "admin": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
+      },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678893035,
       "values": {
@@ -146,7 +149,9 @@
     { "address": "0x3DE55343499f59CEB3f1dE47F2Cd7Eab28F2F5C6" },
     {
       "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
+      }
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
     { "address": "0x63881ac44293E22F3c3183a0C4113586ABb3e653" },
@@ -558,5 +563,9 @@
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

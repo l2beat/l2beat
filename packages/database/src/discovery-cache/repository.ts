@@ -10,7 +10,14 @@ export class DiscoveryCacheRepository {
     await this.db
       .insertInto('public.discovery_cache')
       .values(row)
-      .onConflict((cb) => cb.doUpdateSet(row))
+      .onConflict((cb) =>
+        cb.column('key').doUpdateSet((eb) => ({
+          key: eb.ref('excluded.key'),
+          value: eb.ref('excluded.value'),
+          chain: eb.ref('excluded.chain'),
+          block_number: eb.ref('excluded.block_number'),
+        })),
+      )
       .execute()
 
     return row.key
@@ -35,16 +42,19 @@ export class DiscoveryCacheRepository {
     return rows.map(toRecord)
   }
 
-  async deleteAfter(blockNumber: number, chain: string) {
-    return this.db
+  async deleteAfter(blockNumber: number, chain: string): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.discovery_cache')
-      .where((eb) =>
-        eb.and([eb('block_number', '>', blockNumber), eb('chain', '=', chain)]),
-      )
-      .execute()
+      .where('block_number', '>', blockNumber)
+      .where('chain', '=', chain)
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.discovery_cache').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.discovery_cache')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

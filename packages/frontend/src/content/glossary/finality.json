@@ -1,5 +1,0 @@
-{
-  "term": "Finality",
-  "definition": "Strongest confirmation rule that can be given on the ordering of transactions. On Ethereum, a transaction is finalized when the corresponding epoch becomes final, which currently takes around 15 mins from transaction inclusion. A rollup transaction can be said to be final when the corresponding data is published to L1 and its ordering cannot be reverted. If outputs, i.e. state diffs are published, then also a proof proving their correctness must be verified to consider the transaction final.",
-  "isSpicy": true
-}

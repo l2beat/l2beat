@@ -22,18 +22,19 @@ export class BlockTransactionCountRepository {
       .insertInto('activity.block')
       .values(toRow(record))
       .onConflict((cb) =>
-        cb.columns(['project_id', 'block_number']).doUpdateSet({
-          unix_timestamp: record.timestamp.toDate(),
-          count: record.count,
-        }),
+        cb.columns(['project_id', 'block_number']).doUpdateSet((eb) => ({
+          unix_timestamp: eb.ref('excluded.unix_timestamp'),
+          count: eb.ref('excluded.count'),
+        })),
       )
       .execute()
 
     return `${record.projectId.toString()}-${record.blockNumber}`
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('activity.block').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('activity.block').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {

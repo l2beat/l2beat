@@ -27,7 +27,9 @@ export function TooltipTriggerContextProvider({ children, value }: Props) {
 export function useTooltipTriggerContext() {
   const context = useContext(TooltipTriggerContext)
   if (!context) {
-    throw new Error('useChartContext must be used within a Chart')
+    throw new Error(
+      'useTooltipTriggerContext must be used within a TooltipTriggerContextProvider',
+    )
   }
   return context
 }

@@ -33,10 +33,10 @@ export function TableRow({
       >
         <Cell>
           {/* TODO: add dolar value */}
-          <div className="text-black dark:text-white font-bold text-lg">
+          <div className="text-lg font-bold text-black dark:text-white">
             $0.00
           </div>
-          <div className="text-gray-500 dark:text-gray-50 font-medium text-sm">
+          <div className="text-sm font-medium text-gray-500 dark:text-gray-50">
             {token.balance && formatUnits(token.balance, token.token.decimals)}
             &nbsp;
             {token.token.symbol}
@@ -53,8 +53,8 @@ export function TableRow({
             />
           )}
           <div className="flex flex-col">
-            <span className="font-bold text-lg">{token.token.name}</span>
-            <div className="font-normal flex items-center text-sm text-gray-500 dark:text-gray-50">
+            <span className="text-lg font-bold">{token.token.name}</span>
+            <div className="flex items-center text-sm font-normal text-gray-500 dark:text-gray-50">
               on <span className="font-medium">{token.chain.name}</span>
               &nbsp;
               {token.chain.stage && <StageBadge stage={token.chain.stage} />}

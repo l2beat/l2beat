@@ -5,11 +5,8 @@ import { CoingeckoClient, CoingeckoQueryService } from '@l2beat/shared'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { KnexMiddleware } from '../../peripherals/database/KnexMiddleware'
 import { Clock } from '../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../tools/uif/IndexerStateRepository'
 import {
   ApplicationModule,
   ApplicationModuleWithIndexer,
@@ -21,13 +18,9 @@ import { createTrackedTxsStatusRouter } from './api/TrackedTxsStatusRouter'
 import { createL2CostsModule } from './modules/l2-costs/L2CostsModule'
 import { L2CostsAggregatorIndexer } from './modules/l2-costs/indexers/L2CostsAggregatorIndexer'
 import { L2CostsPricesIndexer } from './modules/l2-costs/indexers/L2CostsPricesIndexer'
-import { AggregatedL2CostsRepository } from './modules/l2-costs/repositories/AggregatedL2CostsRepository'
-import { L2CostsPricesRepository } from './modules/l2-costs/repositories/L2CostsPricesRepository'
-import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
 import { createLivenessModule } from './modules/liveness/LivenessModule'
 import { AnomaliesIndexer } from './modules/liveness/indexers/AnomaliesIndexer'
 import { LivenessAggregatingIndexer } from './modules/liveness/indexers/LivenessAggregatingIndexer'
-import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 
 export function createTrackedTxsModule(
   config: Config,
@@ -40,10 +33,7 @@ export function createTrackedTxsModule(
     return
   }
 
-  const indexerService = new IndexerService(
-    peripherals.getRepository(IndexerStateRepository),
-    peripherals.getRepository(IndexerConfigurationRepository),
-  )
+  const indexerService = new IndexerService(peripherals.database)
 
   const hourlyIndexer = new HourlyIndexer(logger, clock, 'tracked-txs')
   const bigQueryClient = peripherals.getClient(
@@ -91,11 +81,8 @@ export function createTrackedTxsModule(
       id: c.id,
     })),
     updaters,
-    createDatabaseMiddleware: async () =>
-      new KnexMiddleware(peripherals.getRepository(LivenessRepository)),
+    db: peripherals.database,
     serializeConfiguration: (config) => JSON.stringify(config),
-    livenessRepository: peripherals.getRepository(LivenessRepository),
-    l2CostsRepository: peripherals.getRepository(L2CostsRepository),
   })
 
   let l2CostPricesIndexer: L2CostsPricesIndexer | undefined
@@ -113,9 +100,7 @@ export function createTrackedTxsModule(
 
     l2CostPricesIndexer = new L2CostsPricesIndexer({
       coingeckoQueryService,
-      l2CostsPricesRepository: peripherals.getRepository(
-        L2CostsPricesRepository,
-      ),
+      db: peripherals.database,
       parents: [hourlyIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
@@ -123,16 +108,7 @@ export function createTrackedTxsModule(
     })
 
     l2CostsAggregatorIndexer = new L2CostsAggregatorIndexer({
-      l2CostsRepository: peripherals.getRepository(L2CostsRepository),
-      aggregatedL2CostsRepository: peripherals.getRepository(
-        AggregatedL2CostsRepository,
-      ),
-      l2CostsPricesRepository: peripherals.getRepository(
-        L2CostsPricesRepository,
-      ),
-      indexerConfigurationRepository: peripherals.getRepository(
-        IndexerConfigurationRepository,
-      ),
+      db: peripherals.database,
       parents: [trackedTxsIndexer, l2CostPricesIndexer],
       indexerService,
       minHeight: config.trackedTxsConfig.minTimestamp.toNumber(),
@@ -183,14 +159,7 @@ export function createTrackedTxsModule(
     start,
     routers: [
       ...subModules.flatMap((m) => m?.routers ?? []),
-      createTrackedTxsStatusRouter({
-        clock,
-        indexerConfigurationRepository: peripherals.getRepository(
-          IndexerConfigurationRepository,
-        ),
-        l2CostsRepository: peripherals.getRepository(L2CostsRepository),
-        livenessRepository: peripherals.getRepository(LivenessRepository),
-      }),
+      createTrackedTxsStatusRouter({ clock, db: peripherals.database }),
     ],
     indexer: trackedTxsIndexer,
   }

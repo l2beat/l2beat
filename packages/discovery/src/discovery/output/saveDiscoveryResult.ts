@@ -1,6 +1,6 @@
 import { dirname, posix } from 'path'
 import { assert } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { writeFile } from 'fs/promises'
 import { mkdirp } from 'mkdirp'
 import { rimraf } from 'rimraf'
@@ -30,13 +30,21 @@ export async function saveDiscoveryResult(
   config: DiscoveryConfig,
   blockNumber: number,
   logger: DiscoveryLogger,
+  shapeFilesHash: Hash256,
   options: SaveDiscoveryResultOptions,
 ): Promise<void> {
   const root =
     options.rootFolder ?? posix.join('discovery', config.name, config.chain)
   await mkdirp(root)
 
-  await saveDiscoveredJson(root, results, config, blockNumber, options)
+  await saveDiscoveredJson(
+    root,
+    results,
+    config,
+    blockNumber,
+    options,
+    shapeFilesHash,
+  )
   await saveFlatSources(root, results, logger, options)
   if (options.saveSources) {
     await saveSources(root, results, options)
@@ -49,6 +57,7 @@ async function saveDiscoveredJson(
   config: DiscoveryConfig,
   blockNumber: number,
   options: SaveDiscoveryResultOptions,
+  shapeFilesHash: Hash256,
 ): Promise<void> {
   const project = toDiscoveryOutput(
     config.name,
@@ -56,6 +65,7 @@ async function saveDiscoveredJson(
     config.hash,
     blockNumber,
     results,
+    shapeFilesHash,
   )
   const json = await toPrettyJson(project)
   const discoveryFilename = options.discoveryFilename ?? 'discovered.json'

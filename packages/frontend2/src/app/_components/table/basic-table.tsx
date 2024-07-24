@@ -18,12 +18,12 @@ import {
 import { TableEmptyState } from './table-empty-state'
 
 interface BasicEntry {
-  href?: string
   slug: string
-  isVerified: boolean
-  redWarning: string | undefined
-  showProjectUnderReview: boolean
-  hasImplementationChanged: boolean
+  isVerified?: boolean
+  redWarning?: string | undefined
+  showProjectUnderReview?: boolean
+  hasImplementationChanged?: boolean
+  href?: string
 }
 
 interface Props<T extends BasicEntry> {
@@ -132,10 +132,6 @@ export function BasicTable<T extends BasicEntry>({
 }
 
 function getHref(href: string | undefined, hash: string | undefined) {
-  if (!href) {
-    return undefined
-  }
-
   if (!hash) {
     return href
   }

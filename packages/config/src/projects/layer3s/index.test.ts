@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { assert } from '@l2beat/backend-tools'
-import { ChainId, ProjectId } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { chains } from '../../chains'
 import { NUGGETS } from '../../common'
 import { tokenList } from '../../tokens'
@@ -39,32 +39,6 @@ describe('layer3s', () => {
     }
   })
 
-  describe('every contract and escrow in layer3 has a chain different than ethereum', () => {
-    for (const layer3 of layer3s) {
-      it(layer3.display.name, () => {
-        const contracts = layer3.contracts.addresses
-        for (const contract of contracts) {
-          expect(contract.chain).not.toBeNullish()
-          expect(contract.chain).not.toEqual('ethereum')
-        }
-
-        if (
-          layer3.id !== ProjectId('zklinknova') &&
-          layer3.id !== ProjectId('mxc') &&
-          layer3.id !== ProjectId('hook')
-        ) {
-          const escrows = layer3.config.escrows
-          for (const escrow of escrows) {
-            expect(escrow.newVersion).toEqual(true)
-            assert(escrow.newVersion) // to make typescript happy
-            expect(escrow.contract.chain).not.toBeNullish()
-            expect(escrow.contract.chain).not.toEqual('ethereum')
-          }
-        }
-      })
-    }
-  })
-
   describe('every escrow can resolve all of its tokens', () => {
     const chainsMap = new Map<string, ChainId>(
       chains.map((c) => [c.name, ChainId(c.chainId)]),
@@ -86,6 +60,31 @@ describe('layer3s', () => {
             expect(foundToken).not.toBeNullish()
           })
         }
+      }
+    }
+  })
+
+  describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+    for (const layer3 of layer3s) {
+      for (const escrow of layer3.config.escrows) {
+        const chain = chains.find((c) => c.name === escrow.chain)
+
+        it(`${layer3.id.toString()} : ${escrow.address.toString()}`, () => {
+          assert(
+            chain,
+            `Chain not found for escrow ${escrow.address.toString()}`,
+          )
+          assert(
+            chain.minTimestampForTvl,
+            `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+              chain.name
+            }`,
+          )
+
+          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
+            chain.minTimestampForTvl.toNumber(),
+          )
+        })
       }
     }
   })

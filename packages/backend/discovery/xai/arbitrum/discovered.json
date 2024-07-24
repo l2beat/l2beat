@@ -2,7 +2,7 @@
   "name": "xai",
   "chain": "arbitrum",
   "blockNumber": 229959335,
-  "configHash": "0x3fee7bf5bcf369adef21f7b4a76b445a92772bd9b06b6beee9c5ec2ae2e06111",
+  "configHash": "0xe38e1d366aded9704f1e4a02d314bb4ce09bc4d1c5f07edbe0c6980f3a69a8c4",
   "version": 9,
   "contracts": [
     {
@@ -1791,5 +1791,11 @@
       "function whitelistAmounts(address) view returns (uint16)",
       "function withdrawFunds()"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704",
+    "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

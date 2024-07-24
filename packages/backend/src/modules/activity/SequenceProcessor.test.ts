@@ -11,7 +11,7 @@ import { MockFunction, expect, mockFn } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
 
-describeDatabase(SequenceProcessor.name, (_, db) => {
+describeDatabase(SequenceProcessor.name, (db) => {
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 

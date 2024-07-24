@@ -286,6 +286,9 @@
       "address": "0x4e59e778a0fb77fBb305637435C62FaeD9aED40f",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
+      "descriptions": [
+        "It can act on behalf of 0xca35F8338054739D138884685e08b39EE2217794, inheriting its permissions."
+      ],
       "assignedPermissions": {
         "admin": ["0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"],
         "owner": ["0xca35F8338054739D138884685e08b39EE2217794"]
@@ -1711,5 +1714,10 @@
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

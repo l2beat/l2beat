@@ -23,17 +23,20 @@ export class ZkSyncTransactionRepository {
       .insertInto('activity.zksync')
       .values(row)
       .onConflict((cb) =>
-        cb.columns(['block_number', 'block_index']).doUpdateSet({
-          unix_timestamp: row.unix_timestamp,
-        }),
+        cb.columns(['block_number', 'block_index']).doUpdateSet((eb) => ({
+          unix_timestamp: eb.ref('excluded.unix_timestamp'),
+        })),
       )
       .execute()
 
     return `zksync-${record.blockNumber}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('activity.zksync').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('activity.zksync')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async findLastTimestamp(): Promise<UnixTime | undefined> {

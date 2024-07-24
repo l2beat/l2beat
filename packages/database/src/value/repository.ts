@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PostgresDatabase, Transaction } from '../kysely'
+import { batchExecute } from '../utils/batchExecute'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -8,12 +9,14 @@ import {
 import { ValueRecord, toRecord, toRow } from './entity'
 import { selectValue } from './select'
 
-const BATCH_SIZE = 2_000
-
 export class ValueRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -32,6 +35,10 @@ export class ValueRepository {
     projectIds: ProjectId[],
     { from, to = UnixTime.now() }: { from: UnixTime; to?: UnixTime },
   ): Promise<ValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
@@ -49,32 +56,40 @@ export class ValueRepository {
   }
 
   async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
-    await this.db.transaction().execute(async (trx) => {
-      for (let i = 0; i < records.length; i += BATCH_SIZE) {
-        await this._addOrUpdateMany(records.slice(i, i + BATCH_SIZE), trx)
-      }
+    const rows = records.map(toRow)
+
+    await batchExecute(this.db, rows, 2_000, async (trx, batch) => {
+      await trx
+        .insertInto('public.values')
+        .values(batch)
+        .onConflict((cb) =>
+          cb
+            .columns(['project_id', 'timestamp', 'data_source'])
+            .doUpdateSet((eb) => ({
+              external: eb.ref('excluded.external'),
+              external_associated: eb.ref('excluded.external_associated'),
+              external_for_total: eb.ref('excluded.external_for_total'),
+              external_associated_for_total: eb.ref(
+                'excluded.external_associated_for_total',
+              ),
+              canonical: eb.ref('excluded.canonical'),
+              canonical_associated: eb.ref('excluded.canonical_associated'),
+              canonical_for_total: eb.ref('excluded.canonical_for_total'),
+              canonical_associated_for_total: eb.ref(
+                'excluded.canonical_associated_for_total',
+              ),
+              native: eb.ref('excluded.native'),
+              native_associated: eb.ref('excluded.native_associated'),
+              native_for_total: eb.ref('excluded.native_for_total'),
+              native_associated_for_total: eb.ref(
+                'excluded.native_associated_for_total',
+              ),
+            })),
+        )
+        .execute()
     })
 
     return records.length
-  }
-
-  private async _addOrUpdateMany(records: ValueRecord[], trx: Transaction) {
-    const rows = records.map(toRow)
-
-    await trx
-      .insertInto('public.values')
-      .values(rows)
-      .onConflict((cb) =>
-        cb.columns(['project_id', 'timestamp', 'data_source']).doUpdateSet({
-          external: (eb) => eb.ref('excluded.external'),
-          external_for_total: (eb) => eb.ref('excluded.external_for_total'),
-          canonical: (eb) => eb.ref('excluded.canonical'),
-          canonical_for_total: (eb) => eb.ref('excluded.canonical_for_total'),
-          native: (eb) => eb.ref('excluded.native'),
-          native_for_total: (eb) => eb.ref('excluded.native_for_total'),
-        }),
-      )
-      .execute()
   }
 
   // #region methods used only in TvlCleaner
@@ -108,22 +123,37 @@ export class ValueRepository {
       .insertInto('public.values')
       .values(rows)
       .onConflict((cb) =>
-        cb.columns(['project_id', 'timestamp', 'data_source']).doUpdateSet({
-          external: (eb) => eb.ref('excluded.external'),
-          external_for_total: (eb) => eb.ref('excluded.external_for_total'),
-          canonical: (eb) => eb.ref('excluded.canonical'),
-          canonical_for_total: (eb) => eb.ref('excluded.canonical_for_total'),
-          native: (eb) => eb.ref('excluded.native'),
-          native_for_total: (eb) => eb.ref('excluded.native_for_total'),
-        }),
+        cb
+          .columns(['project_id', 'timestamp', 'data_source'])
+          .doUpdateSet((eb) => ({
+            external: eb.ref('excluded.external'),
+            external_associated: eb.ref('excluded.external_associated'),
+            external_for_total: eb.ref('excluded.external_for_total'),
+            external_associated_for_total: eb.ref(
+              'excluded.external_associated_for_total',
+            ),
+            canonical: eb.ref('excluded.canonical'),
+            canonical_associated: eb.ref('excluded.canonical_associated'),
+            canonical_for_total: eb.ref('excluded.canonical_for_total'),
+            canonical_associated_for_total: eb.ref(
+              'excluded.canonical_associated_for_total',
+            ),
+            native: eb.ref('excluded.native'),
+            native_associated: eb.ref('excluded.native_associated'),
+            native_for_total: eb.ref('excluded.native_for_total'),
+            native_associated_for_total: eb.ref(
+              'excluded.native_associated_for_total',
+            ),
+          })),
       )
       .execute()
 
     return rows.length
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.values').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('public.values').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   // #endregion
@@ -136,6 +166,10 @@ export class ValueRepository {
   async getLatestValuesForProjects(
     projectIds: ProjectId[],
   ): Promise<ValueRecord[]> {
+    if (projectIds.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .with('latest_values', (cb) =>
         cb

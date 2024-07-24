@@ -17,6 +17,7 @@ import { meliora } from './meliora'
 import { molten } from './molten'
 import { muster } from './muster'
 import { mvchain } from './mvchain'
+import { mxc } from './mxc'
 import { orb3 } from './orb3'
 import { oursong } from './oursong'
 import { playblock } from './playblock'
@@ -64,6 +65,7 @@ export const layer3s: Layer3[] = [
   molten,
   muster,
   mvchain,
+  mxc,
   l3x,
   oursong,
   playblock,

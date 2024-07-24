@@ -119,7 +119,9 @@
     { "address": "0x5751a83170BeA11fE7CdA5D599B04153C021f21A" },
     {
       "address": "0x6b7763b749073e892c83E674c1EC4799D6f339Ef",
-      "assignedPermissions": { "admin": {} }
+      "assignedPermissions": {
+        "admin": ["0xB62BcD40A24985f560b5a9745d478791d8F1945C"]
+      }
     },
     { "address": "0x81165b6504520416487E5b4935865b4D3eeaa6e5" },
     { "address": "0x9eA52Cf33f7e52D24E205EF5fc5Fc425e9BeB8a0" }
@@ -486,5 +488,7 @@
       "function unFreeze()",
       "function validatedSelectors() pure returns (bytes4[] selectors)"
     ]
-  }
+  },
+  "usedTemplates": {},
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

@@ -105,6 +105,7 @@ export interface OpStackConfigCommon {
   isUnderReview?: boolean
   stage?: StageConfig
   badges?: BadgeId[]
+  useDiscoveryMetaOnly?: boolean
 }
 
 export interface OpStackConfigL2 extends OpStackConfigCommon {
@@ -305,22 +306,33 @@ export function opStackCommon(
         },
       ],
     },
-    permissions: [
-      ...templateVars.discovery.getOpStackPermissions({
-        batcherHash: 'Sequencer',
-        PROPOSER: 'Proposer',
-        GUARDIAN: 'Guardian',
-        CHALLENGER: 'Challenger',
-        ...(templateVars.roleOverrides ?? {}),
-      }),
-      ...(templateVars.nonTemplatePermissions ?? []),
-    ],
+    permissions:
+      templateVars.useDiscoveryMetaOnly === true
+        ? [
+            ...templateVars.discovery.getDiscoveredRoles(),
+            ...templateVars.discovery.getDiscoveredPermissions(),
+          ]
+        : [
+            ...templateVars.discovery.getOpStackPermissions({
+              batcherHash: 'Sequencer',
+              PROPOSER: 'Proposer',
+              GUARDIAN: 'Guardian',
+              CHALLENGER: 'Challenger',
+              ...(templateVars.roleOverrides ?? {}),
+            }),
+            ...(templateVars.nonTemplatePermissions ?? []),
+          ],
     nativePermissions: templateVars.nonTemplateNativePermissions,
     contracts: {
-      addresses: [
-        ...templateVars.discovery.getOpStackContractDetails(upgradeability),
-        ...(templateVars.nonTemplateContracts ?? []),
-      ],
+      addresses:
+        templateVars.useDiscoveryMetaOnly === true
+          ? [...templateVars.discovery.getDiscoveredContracts()]
+          : [
+              ...templateVars.discovery.getOpStackContractDetails(
+                upgradeability,
+              ),
+              ...(templateVars.nonTemplateContracts ?? []),
+            ],
       risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
       nativeAddresses: templateVars.nonTemplateNativeContracts,
     },

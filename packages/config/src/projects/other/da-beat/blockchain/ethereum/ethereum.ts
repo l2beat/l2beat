@@ -1,80 +1,37 @@
-import { arbitrum } from '../../../../layer2s/arbitrum'
-import { base } from '../../../../layer2s/base'
-import { blast } from '../../../../layer2s/blast'
-import { bob } from '../../../../layer2s/bob'
-import { bobanetwork } from '../../../../layer2s/bobanetwork'
-import { degate } from '../../../../layer2s/degate'
-import { dydx } from '../../../../layer2s/dydx'
-import { frame } from '../../../../layer2s/frame'
-import { fuelv1 } from '../../../../layer2s/fuelv1'
-import { honeypot } from '../../../../layer2s/honeypot'
-import { kinto } from '../../../../layer2s/kinto'
-import { kroma } from '../../../../layer2s/kroma'
-import { lambda } from '../../../../layer2s/lambda'
-import { linea } from '../../../../layer2s/linea'
-import { loopring } from '../../../../layer2s/loopring'
-import { metal } from '../../../../layer2s/metal'
-import { mint } from '../../../../layer2s/mint'
-import { mode } from '../../../../layer2s/mode'
-import { optimism } from '../../../../layer2s/optimism'
-import { paradex } from '../../../../layer2s/paradex'
-import { parallel } from '../../../../layer2s/parallel'
-import { polygonzkevm } from '../../../../layer2s/polygonzkevm'
-import { scroll } from '../../../../layer2s/scroll'
-import { starknet } from '../../../../layer2s/starknet'
-import { taiko } from '../../../../layer2s/taiko'
-import { zkspace } from '../../../../layer2s/zkspace'
-import { zksyncera } from '../../../../layer2s/zksyncera'
-import { zksynclite } from '../../../../layer2s/zksynclite'
-import { zora } from '../../../../layer2s/zora'
-import { deri } from '../../../../layer3s/deri'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
-import { DaLayer, DaLayerKind } from '../../types/DaLayer'
+import { DaLayer } from '../../types/DaLayer'
 import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum: DaLayer = {
   id: 'ethereum',
-  kind: DaLayerKind.PublicBlockchain,
+  type: 'DaLayer',
+  kind: 'PublicBlockchain',
   display: {
     name: 'Ethereum (EIP-4844)',
     slug: 'ethereum',
     description: `Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).
       EIP-4844 allows for blob-carrying transactions containing large amounts of data on the consensus layer, and whose commitment can be accessed by the EVM on the execution layer.`,
+    links: {
+      websites: ['https://ethereum.org/en/'],
+      documentation: ['https://ethereum.org/en/developers/docs/'],
+      repositories: [
+        'https://ethereum.org/en/developers/docs/nodes-and-clients/#execution-clients',
+        'https://ethereum.org/en/developers/docs/nodes-and-clients/#consensus-clients',
+      ],
+      apps: [],
+      explorers: [
+        'https://etherscan.io/',
+        'https://eth.blockscout.com/',
+        'https://beaconcha.in/',
+      ],
+      socialMedia: ['https://x.com/ethereum'],
+    },
   },
+  technology:
+    'Minim quis labore minim fugiat ullamco ipsum eiusmod occaecat occaecat. Incididunt esse veniam duis sunt non anim proident. Nostrud dolore irure Lorem culpa ut incididunt et elit pariatur ullamco adipisicing magna duis. Duis sunt do aliqua et. Tempor mollit non cupidatat magna est labore qui culpa consectetur voluptate quis.',
   bridges: [enshrinedBridge],
-  usedIn: [
-    arbitrum.id,
-    base.id,
-    optimism.id,
-    blast.id,
-    linea.id,
-    zksyncera.id,
-    scroll.id,
-    starknet.id,
-    mode.id,
-    taiko.id,
-    bob.id,
-    kroma.id,
-    zora.id,
-    paradex.id,
-    bobanetwork.id,
-    mint.id,
-    metal.id,
-    parallel.id,
-    lambda.id,
-    frame.id,
-    deri.id,
-    dydx.id,
-    polygonzkevm.id,
-    zksynclite.id,
-    loopring.id,
-    degate.id,
-    kinto.id,
-    zkspace.id,
-    honeypot.id,
-    fuelv1.id,
-  ],
+  usedIn: enshrinedBridge.usedIn,
   consensusAlgorithm: {
     name: 'Gasper',
     description: `Ethereum's consensus protocol combines two separate consensus protocols, LMD GHOST and Casper FFG.
@@ -85,9 +42,6 @@ export const ethereum: DaLayer = {
     blockTime: 12, // seconds per slot
     consensusFinality: 768, // seconds, two epochs of 32 slots each
     unbondingPeriod: 777600, // current value from validatorqueue.com. Technically it is the sum of 1) Exit Queue (variable) 2) fixed waiting time (27.3 hours), 3) Validator Sweep (variable).
-  },
-  dataAvailabilitySampling: {
-    supportsDAS: false,
   },
   pruningWindow: 86400 * 18, // 18 days in seconds
   risks: {

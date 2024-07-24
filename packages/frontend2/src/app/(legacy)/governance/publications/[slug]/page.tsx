@@ -50,7 +50,7 @@ export default function Page({ params }: Props) {
       <ContentWrapper
         className={cn(
           roboto_serif.variable,
-          'mt-12 md:mt-16 lg:mt-20 max-w-[816px]',
+          'mt-12 max-w-[816px] md:mt-16 lg:mt-20',
         )}
         as="main"
       >

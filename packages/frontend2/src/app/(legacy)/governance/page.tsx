@@ -3,8 +3,8 @@ import { type Metadata } from 'next'
 import Image from 'next/image'
 import React from 'react'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
-import { CustomLink } from '~/app/_components/custom-link'
 import { FullPageHeader } from '~/app/_components/full-page-header'
+import { CustomLink } from '~/app/_components/link/custom-link'
 import { getCollection } from '~/content/get-collection'
 import OutLinkIcon from '~/icons/outlink.svg'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
@@ -70,7 +70,7 @@ function Header() {
 
   return (
     <FullPageHeader>
-      <div className="flex justify-between w-full gap-10">
+      <div className="flex w-full justify-between gap-10">
         <div className="leading-normal lg:max-w-[585px]">
           <h1 className="text-5xl font-bold md:text-6xl">Governance</h1>
           <p className="mt-6 text-lg md:text-base">
@@ -93,7 +93,7 @@ function Header() {
                   {projects.map((delegatedProject) => (
                     <CustomLink
                       key={delegatedProject.id}
-                      className="flex items-center text-sm font-medium justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
+                      className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 text-sm font-medium transition-colors hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:w-max md:px-3 md:py-1"
                       href={delegatedProject.data.delegateTokensUrl}
                       underline={false}
                     >

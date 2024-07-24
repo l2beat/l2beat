@@ -23,17 +23,22 @@ export class AnomaliesRepository {
       .insertInto('public.anomalies')
       .values(row)
       .onConflict((cb) =>
-        cb.columns(['timestamp', 'project_id', 'subtype']).doUpdateSet({
-          duration: (eb) => eb.ref('excluded.duration'),
-        }),
+        cb
+          .columns(['timestamp', 'project_id', 'subtype'])
+          .doUpdateSet((eb) => ({
+            duration: eb.ref('excluded.duration'),
+          })),
       )
       .execute()
 
     return `[${record.timestamp}, ${record.projectId}, ${record.subtype}]: ${record.duration}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('public.anomalies').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.anomalies')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AnomalyRecord[]> {
@@ -52,12 +57,8 @@ export class AnomaliesRepository {
     const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
-      .where((eb) =>
-        eb.and([
-          eb('project_id', '=', projectId),
-          eb('timestamp', '>=', from.toDate()),
-        ]),
-      )
+      .where('project_id', '=', projectId)
+      .where('timestamp', '>=', from.toDate())
       .execute()
 
     return rows.map(toRecord)

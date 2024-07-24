@@ -2,7 +2,7 @@ import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { RISK_VIEW } from './common'
-import * as config from './multichain-config.json'
+import config from './multichain-config.json'
 import { Bridge } from './types'
 
 export const multichain: Bridge = {

@@ -1,12 +1,12 @@
 import { DiscoveryCache as DiscoveryCacheInterface } from '@l2beat/discovery'
 
-import { DiscoveryCacheRepository } from './repositories/DiscoveryCacheRepository'
+import { Database } from '@l2beat/database'
 
 export class DiscoveryCache implements DiscoveryCacheInterface {
-  constructor(private readonly repository: DiscoveryCacheRepository) {}
+  constructor(private readonly db: Database) {}
 
   async get(key: string): Promise<string | undefined> {
-    const record = await this.repository.findByKey(key)
+    const record = await this.db.discoveryCache.findByKey(key)
     return record?.value
   }
 
@@ -16,6 +16,6 @@ export class DiscoveryCache implements DiscoveryCacheInterface {
     chain: string,
     blockNumber: number,
   ): Promise<void> {
-    await this.repository.addOrUpdate({ key, value, chain, blockNumber })
+    await this.db.discoveryCache.addOrUpdate({ key, value, chain, blockNumber })
   }
 }

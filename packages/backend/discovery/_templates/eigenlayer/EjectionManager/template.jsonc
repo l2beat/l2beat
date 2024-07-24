@@ -19,7 +19,7 @@
       }
     },
     "ejectableStakePercent": {
-      "description": "Max stake to be ejectable per time delta",
+      "description": "Max stake to be ejectable per time delta.",
       "handler": {
         "type": "arrayFromOneEvent",
         "event": "QuorumEjectionParams",

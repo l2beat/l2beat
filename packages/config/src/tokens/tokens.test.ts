@@ -3,6 +3,8 @@ import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
+import { assert } from '@l2beat/backend-tools'
+import { chains } from '../chains'
 import { bridges } from '../projects'
 import { config } from '../test/config'
 import { canonicalTokenList, tokenList } from './tokens'
@@ -23,6 +25,17 @@ describe('tokens', () => {
     const ids = tokenList.map((x) => x.id)
     const everyUnique = ids.every((x, i) => ids.indexOf(x) === i)
     expect(everyUnique).toEqual(true)
+  })
+
+  it('every token has a chain with minTimestampForTvl', () => {
+    for (const token of tokenList) {
+      const chain = chains.find((c) => c.chainId === +token.chainId)
+      assert(chain, `Chain not found for token ${token.symbol}`)
+      assert(
+        chain.minTimestampForTvl,
+        `Token ${token.symbol} added for chain without minTimestampForTvl ${chain.name}`,
+      )
+    }
   })
 
   describe('canonical', () => {

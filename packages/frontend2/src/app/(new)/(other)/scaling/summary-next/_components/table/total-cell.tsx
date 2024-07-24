@@ -7,7 +7,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
@@ -35,11 +35,11 @@ export function TotalCell({ data }: TotalCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base md:text-lg font-bold">
+            <span className="text-base font-bold md:text-lg">
               ${formatNumber(data.tvl)}
             </span>
             {/* TODO: Percent change value */}
-            <PercentChange value={0} className="!text-base ml-1 font-medium" />
+            <PercentChange value={0} className="ml-1 !text-base font-medium" />
           </div>
           <TokenBreakdown
             {...data.tvlBreakdown}

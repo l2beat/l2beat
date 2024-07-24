@@ -23,6 +23,19 @@ export class CurrentPriceRepository {
     return res ? toRecord(res) : null
   }
 
+  async findByIds(coingeckoIds: string[]) {
+    if (coingeckoIds.length === 0) {
+      return []
+    }
+
+    const res = await this.db
+      .selectFrom('public.CurrentPrice')
+      .select(selectCurrentPrice)
+      .where('coingeckoId', 'in', coingeckoIds)
+      .execute()
+    return res.map(toRecord)
+  }
+
   async upsert(currentPrice: UpsertableCurrentPrice) {
     const entity = toRow(currentPrice)
     const { coingeckoId, ...rest } = entity
@@ -45,5 +58,12 @@ export class CurrentPriceRepository {
         })),
       )
       .execute()
+  }
+
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.CurrentPrice')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

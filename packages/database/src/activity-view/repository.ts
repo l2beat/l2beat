@@ -9,7 +9,7 @@ export class ActivityViewRepository {
 
   async refresh(): Promise<void> {
     await sql`
-      REFRESH MATERIALIZED VIEW activity.daily_count_view
+      REFRESH MATERIALIZED VIEW CONCURRENTLY activity.daily_count_view
     `.execute(this.db)
   }
 
@@ -37,6 +37,10 @@ export class ActivityViewRepository {
   async getProjectsAggregatedDailyCount(
     projectIdsFilter: ProjectId[],
   ): Promise<Omit<DailyTransactionCountRecord, 'projectId'>[]> {
+    if (projectIdsFilter.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('activity.daily_count_view')
       .where(

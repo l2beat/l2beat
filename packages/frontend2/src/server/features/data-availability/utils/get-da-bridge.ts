@@ -1,45 +1,20 @@
-import {
-  type DaBridge,
-  chains,
-  isDacBridge,
-  isOnChainBridge,
-} from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { type DaBridge } from '@l2beat/config'
 
-interface OnChainBridge {
-  type: 'OnChain'
+export type DaSummaryEntryBridge = {
   name: string
-  network: string
+  slug: string
 }
 
-interface DACBridge {
-  type: 'DAC'
-  name: string
-  requiredMembers: number
-  totalMembers: number
-}
-
-export type DaSummaryEntryBridge = OnChainBridge | DACBridge
-
-export function toDaBridge(bridge: DaBridge): DaSummaryEntryBridge | null {
-  if (isDacBridge(bridge)) {
+export function toDaBridge(daBridge: DaBridge): DaSummaryEntryBridge {
+  if (daBridge.type === 'DAC') {
     return {
-      type: 'DAC',
-      name: bridge.display.name,
-      requiredMembers: bridge.requiredMembers,
-      totalMembers: bridge.totalMembers,
+      name: `${daBridge.display.name} ${daBridge.requiredMembers}/${daBridge.totalMembers}`,
+      slug: daBridge.display.slug,
     }
   }
 
-  if (isOnChainBridge(bridge)) {
-    const chain = chains.find((c) => c.name === bridge.chain)
-    assert(chain !== undefined, 'Chain not found')
-    return {
-      type: 'OnChain',
-      name: bridge.display.name,
-      network: chain.name,
-    }
+  return {
+    name: daBridge.display.name,
+    slug: daBridge.display.slug,
   }
-
-  return null
 }

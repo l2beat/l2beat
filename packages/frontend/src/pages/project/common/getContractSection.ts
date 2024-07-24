@@ -20,13 +20,13 @@ import {
 } from '@l2beat/shared-pure'
 
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
-import { languageJoin } from '../../../utils/utils'
 import { getUsedInProjects } from '../common/getUsedInProjects'
 import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
 import {
   TechnologyContract,
   TechnologyContractLinks,
 } from '../components/sections/common/ContractEntry'
+import { getChain } from './getChain'
 import { getDiagramImage } from './getDiagramImage'
 
 export function getContractSection(
@@ -147,7 +147,7 @@ function makeTechnologyContract(
   isEscrow?: boolean,
 ): TechnologyContract {
   const links: TechnologyContractLinks[] = []
-  const chain = item.chain ?? 'ethereum'
+  const chain = getChain(project, item)
   const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
 
@@ -267,7 +267,7 @@ function makeTechnologyContract(
   }
 
   if (isSingleAddress(item)) {
-    result.upgradeableBy = languageJoin(item.upgradableBy)
+    result.upgradeableBy = item.upgradableBy
     result.upgradeDelay = item.upgradeDelay
     result.upgradeConsiderations = item.upgradeConsiderations
     result.references = item.references

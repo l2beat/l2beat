@@ -41,7 +41,7 @@ function safeGetImplementation(contract: ContractParameters): string {
 }
 
 const l1Upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
+  upgradableBy: ['SuperchainProxyAdmin'],
   upgradeDelay: 'No delay',
 }
 
@@ -460,12 +460,12 @@ export const optimism: Layer2 = {
       description: 'Central actor allowed to submit transaction batches to L1.',
     },
     discovery.contractAsPermissioned(
-      discovery.getContract('ProxyAdmin'),
+      discovery.getContract('SuperchainProxyAdmin'),
       'Admin of OptimismPortal, L1StandardBridge, L1ERC721Bridge, OptimismMintableERC20Factory, SuperchainConfig, DelayedWETH, DisputeGameFactory, AnchorStateRegistry and SystemConfig contracts.',
     ),
     ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
-      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
+      'SuperchainProxyAdminOwner',
+      'Owner of the SuperchainProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',
@@ -473,11 +473,11 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
-      'Member of the ProxyAdminOwner.',
+      'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
+      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
         livenessInterval,
       )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
       [
@@ -565,7 +565,7 @@ export const optimism: Layer2 = {
       }),
       discovery.getContractDetails('DelayedWETH', {
         description:
-          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the ProxyAdminOwner multisig.',
+          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('SuperchainConfig', {
@@ -664,7 +664,7 @@ export const optimism: Layer2 = {
     ],
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The ProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
       name: 'OP Mainnet becomes Stage 1',

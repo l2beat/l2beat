@@ -17,7 +17,7 @@ export function LinkSectionLink({ href, name }: Props) {
   if (name === 'Social') {
     const parsed = parseSocial(href)
     return (
-      <Link className="mt-1 block first:mt-0" href={href}>
+      <Link className="mt-1 flex items-center gap-1.5 first:mt-0" href={href}>
         {parsed.platform ? (
           <ProductIcon
             className="size-[1em] shrink-0 fill-current"
