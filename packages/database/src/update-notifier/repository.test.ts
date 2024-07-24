@@ -53,8 +53,8 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
       )
 
       expect(result.length).toEqual(2)
-      expect(result[0]).toHaveSubset({ id: secondId, ...arbRecord1 })
-      expect(result[1]).toHaveSubset({ id: thirdId, ...arbRecord2 })
+      expect(result[0]!).toHaveSubset({ id: secondId, ...arbRecord1 })
+      expect(result[1]!).toHaveSubset({ id: thirdId, ...arbRecord2 })
     })
 
     it('does not return if does not match the range', async () => {

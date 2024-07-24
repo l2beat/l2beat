@@ -24,6 +24,10 @@ export class CurrentPriceRepository {
   }
 
   async findByIds(coingeckoIds: string[]) {
+    if (coingeckoIds.length === 0) {
+      return []
+    }
+
     const res = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
@@ -56,7 +60,10 @@ export class CurrentPriceRepository {
       .execute()
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.CurrentPrice').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.CurrentPrice')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

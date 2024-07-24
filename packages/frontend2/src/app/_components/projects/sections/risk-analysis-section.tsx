@@ -75,7 +75,7 @@ function SingleRisk({
 }) {
   return (
     <div>
-      <h3 className="mt-6 font-bold text-sm uppercase md:text-lg">
+      <h3 className="mt-6 text-sm font-bold uppercase md:text-lg">
         {value.name}
       </h3>
       {value.sentiment === 'UnderReview' ? (
@@ -86,7 +86,7 @@ function SingleRisk({
         <>
           <SentimentText
             sentiment={value.sentiment}
-            className="mt-2 block font-bold text-xl md:text-2xl"
+            className="mt-2 block text-xl font-bold md:text-2xl"
           >
             {value.value}
           </SentimentText>
@@ -99,7 +99,7 @@ function SingleRisk({
             />
           )}
           {value.description && (
-            <Markdown className="mt-2 text-gray-850 leading-snug dark:text-gray-400">
+            <Markdown className="mt-2 leading-snug text-gray-850 dark:text-gray-400">
               {value.description}
             </Markdown>
           )}

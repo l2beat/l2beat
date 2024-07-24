@@ -81,13 +81,6 @@ export const HOMEPAGE_MILESTONES: Milestone[] = [
       'Starknet Alpha is live, bringing first universal rollup based on ZK Rollup technology.',
   },
   {
-    name: 'Hybrid Computation introduced',
-    link: 'https://boba.network/turing-hybrid-compute/',
-    date: '2022-03-05T00:00:00Z',
-    description:
-      'Hybrid Compute is live on Boba Network, bringing off-chain computation to smart contracts.',
-  },
-  {
     name: 'First Optimium (universal)',
     link: 'https://metisdao.medium.com/decentralized-storage-goes-live-da876dc6eb70',
     date: '2022-04-12T00:00:00Z',

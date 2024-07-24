@@ -27,4 +27,4 @@ export class PostgresDatabase extends Kysely<DB> {
   }
 }
 
-export type Transaction = KyselyTransaction<DB>
+export type Transaction = Omit<KyselyTransaction<DB>, 'transaction'>

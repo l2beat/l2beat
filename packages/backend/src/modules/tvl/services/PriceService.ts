@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 
+import { PriceRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import {
   CoingeckoId,
@@ -7,7 +8,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { Configuration } from '../../../tools/uif/multi/types'
-import { PriceRecord } from '../repositories/PriceRepository'
 
 export interface PriceServiceDependencies {
   readonly coingeckoQueryService: CoingeckoQueryService

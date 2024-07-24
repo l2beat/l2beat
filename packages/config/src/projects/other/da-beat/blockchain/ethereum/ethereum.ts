@@ -5,20 +5,27 @@ import { enshrinedBridge } from './bridges/enshrinedBridge'
 
 export const ethereum: DaLayer = {
   id: 'ethereum',
-  type: 'da-layer',
-  kind: 'public-blockchain',
+  type: 'DaLayer',
+  kind: 'PublicBlockchain',
   display: {
     name: 'Ethereum (EIP-4844)',
     slug: 'ethereum',
     description: `Ethereum is a Proof of Stake (PoS) network that enables the creation and execution of smart contracts and decentralized applications (dApps) using its native cryptocurrency, Ether (ETH).
       EIP-4844 allows for blob-carrying transactions containing large amounts of data on the consensus layer, and whose commitment can be accessed by the EVM on the execution layer.`,
     links: {
-      websites: ['https://immutablex.xyz/'],
-      documentation: ['https://docs.immutablex.xyz/'],
-      repositories: ['https://github.com/Immutablex/immutablex'],
-      apps: ['https://app.immutable.com/'],
-      explorers: ['https://explorer.immutable.com/'],
-      socialMedia: ['https://twitter.com/Immutable'],
+      websites: ['https://ethereum.org/en/'],
+      documentation: ['https://ethereum.org/en/developers/docs/'],
+      repositories: [
+        'https://ethereum.org/en/developers/docs/nodes-and-clients/#execution-clients',
+        'https://ethereum.org/en/developers/docs/nodes-and-clients/#consensus-clients',
+      ],
+      apps: [],
+      explorers: [
+        'https://etherscan.io/',
+        'https://eth.blockscout.com/',
+        'https://beaconcha.in/',
+      ],
+      socialMedia: ['https://x.com/ethereum'],
     },
   },
   technology:

@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x204b6b2c286321984245ecd7b47aa438ff7a60e3
+
+# Diff at Tue, 23 Jul 2024 08:10:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7fe674fdf7aafe1f69f1463836cac0d7e337d34 block: 20340184
+- current block number: 20367941
+
+## Description
+
+New (unverified) plug, and executionManager is pointed to a new (unverified) contract. The old executionManager was used for crosschain execution and -fees.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Manages crosschain execution and -fees.
+      values.executionManager__:
+-        "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0"
++        "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.70:
++        "0x83D8e248cAb7c6074dCc07EA25892F8022244c50"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionManager (0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ExecutionManager.sol => /dev/null              | 1289 --------------------
+ 1 file changed, 1289 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340184 (main branch discovery), not current.
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
 Generated with discovered.json: 0x0e8508e83cd4c4229d0609413a4b05430f644a65
 
 # Diff at Fri, 19 Jul 2024 11:10:17 GMT:

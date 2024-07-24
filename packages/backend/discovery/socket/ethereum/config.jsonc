@@ -49,6 +49,8 @@
     "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF": "HookOwnerEOA",
     "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34": "socketadmin.eth EOA",
     "0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13": "LooksRareMultisig",
+    "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C": "ExecutionManager",
+    "0xeD037aFBffC65a94E9CC592947E851FB2f730341": "TransmitManager",
     // SOCKET SCRIPT OUTPUT FROM HERE ------------V
     // Lyra
     "0x6D303CEE7959f814042D31E0624fB88Ec6fbcC1d": "USDC Vault Lyra",
@@ -82,11 +84,34 @@
     // TO HERE ----------------------------------^
   },
   "overrides": {
+    "TransmitManager": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl", // handler cannot handle since the event is different ('grantBatchRole')
+            "roleNames": {
+              "0xc4c453d647953c0fd35db5a34ee76e60fb4abc3a8fb891a25936b70b38f29253": "RESCUE_ROLE",
+              "0x5d8e12c39142ff96d79d04d15d1ba1269e4fe57bb9d26f43523628b34ba108ec": "WITHDRAW_ROLE",
+              "0xd66a896d5b3e8cd31bfd557e6ebdb5bba4561c7ce6573d5c6716876cbc83dbdd": "TRIP_ROLE",
+              "0xb0a81253fa41a5cd7c5885c220c30d519a0d552984e0d69edda03449f69fa6db": "UN_TRIP_ROLE",
+              "0xd6a0f92c822ccba0fa91b30f08f085e68bc8eb3bb140aa16f8dc33ea47eb6cf2": "TRANSMITTER_ROLE",
+              "0x2125d1e225cadc5c8296e2cc1f96ee607770bf4a4a16131e62f6819937437c89": "WATCHER_ROLE",
+              "0x429672025b2dcb8754ca4b57943f34ac66900598787cb1f1e857291dedbf34d3": "FEES__UPDATER_ROLE",
+              "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63": "EXECUTOR_ROLE",
+              "0x71840dc4906352362b0cdaf79870196c8e42acafade72d5d5a6d59291253ceb1": "GOVERNANCE_ROLE"
+            }
+          }
+        }
+      }
+    },
     "Socket": {
       "ignoreInWatchMode": ["globalMessageCount"],
       "fields": {
+        "executionManager__": {
+          "description": "Manages crosschain execution and -fees."
+        },
         "plugs": {
-          "description": "ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.",
+          "description": "ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.",
           "severity": "LOW",
           "type": "CODE_CHANGE",
           "handler": {

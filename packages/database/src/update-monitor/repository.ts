@@ -54,7 +54,10 @@ export class UpdateMonitorRepository {
     return rows.map(toRecord)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.update_monitor').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.update_monitor')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

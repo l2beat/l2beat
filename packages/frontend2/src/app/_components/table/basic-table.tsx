@@ -19,11 +19,11 @@ import { TableEmptyState } from './table-empty-state'
 
 interface BasicEntry {
   slug: string
-  href: string
   isVerified?: boolean
   redWarning?: string | undefined
   showProjectUnderReview?: boolean
   hasImplementationChanged?: boolean
+  href?: string
 }
 
 interface Props<T extends BasicEntry> {

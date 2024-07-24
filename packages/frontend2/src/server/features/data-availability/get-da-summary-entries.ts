@@ -1,4 +1,5 @@
-import { daLayers } from '@l2beat/config'
+import { daLayers, getDaProjectKey } from '@l2beat/config'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { toDaBridge } from './utils/get-da-bridge'
 import { getUniqueProjectsInUse } from './utils/get-da-projects'
 import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
@@ -11,29 +12,36 @@ import { kindToType } from './utils/kind-to-layer-type'
 
 export async function getDaSummaryEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const uniqueProjectsInUse = getUniqueProjectsInUse()
   const tvlPerProject = await getDaProjectsTvl(uniqueProjectsInUse)
   const getSumFor = pickTvlForProjects(tvlPerProject)
 
-  return daLayers.flatMap((daLayer) =>
-    daLayer.bridges.map((bridge) => {
+  const entries = daLayers.flatMap((daLayer) =>
+    daLayer.bridges.map((daBridge) => {
       const projectEconomicSecurity = economicSecurity[daLayer.id]
-      const tvs = getSumFor(bridge.usedIn.map((project) => project.id))
+      const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
 
       return {
         slug: daLayer.display.slug,
         name: daLayer.display.name,
-        href: `/data-availability/projects/${daLayer.display.slug}/${bridge.display.slug}`,
-        daBridge: toDaBridge(bridge),
+        href: `/data-availability/projects/${daLayer.display.slug}/${daBridge.display.slug}`,
+        daBridge: toDaBridge(daBridge),
         layerType: kindToType(daLayer.kind),
-        risks: getDaRisks(daLayer, bridge, tvs, projectEconomicSecurity),
-        isUnderReview: !!daLayer.isUnderReview || bridge.isUnderReview,
+        risks: getDaRisks(daLayer, daBridge, tvs, projectEconomicSecurity),
+        isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
+        isVerified:
+          !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)],
+        warning: daBridge.display.warning,
+        redWarning: daBridge.display.redWarning,
         tvs,
         economicSecurity: projectEconomicSecurity,
-        usedIn: bridge.usedIn,
+        usedIn: daBridge.usedIn,
       }
     }),
   )
+
+  return entries.sort((a, b) => b.tvs - a.tvs)
 }
 
 export type DaSummaryEntry = Awaited<

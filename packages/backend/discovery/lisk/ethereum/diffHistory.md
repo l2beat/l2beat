@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x8d4557f91adb07eed80d7b422ffce2b174c2270e
+
+# Diff at Tue, 23 Jul 2024 10:36:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@490aaec1a76ba293d442449146dd7c8335f4b7a1 block: 20367772
+- current block number: 20368673
+
+## Description
+
+EOA signer removed, the LiskRollupOwnerMultisig is now just a transparent MS for Gelato MS. Warning removed from FE.
+
+## Watched changes
+
+```diff
+    contract LiskRollupOwnerMultisig (0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "1 of 1 (100%)"
+      values.getOwners.1:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+    }
+```
+
+Generated with discovered.json: 0x4ea5b8947e58d62a04b241936e836cfc4c567bba
+
+# Diff at Tue, 23 Jul 2024 07:36:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20339917
+- current block number: 20367772
+
+## Description
+
+Challenger and Guardian are changed to the GelatoMultisig. Rollup Upgrade owner is still an EOA (and additionally GelatoMS).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: None
+      values.owner:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x113cB99283AF242Da0A0C54347667edF531Aa7d6) {
+    +++ description: None
+      values.challenger:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.CHALLENGER:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x26C7bFB430d68Bf74d2d52497836d4336b555dE7) {
+    +++ description: None
+      values.guardian:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract OptimismPortal (0x26dB93F8b8b4f7016240af62F7730979d353f9A7) {
+    +++ description: None
+      values.guardian:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+      values.GUARDIAN:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
+    contract LiskRollupOwnerMultisig (0xECd4150ABbb1EBff13f74e42Fb43C3d78B4E0b45) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
++        "1 of 2 (50%)"
+      values.getOwners.1:
++        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
+      values.getOwners.0:
+-        "0xdA6e5640aFB2ED212Ba3a6fd83076e2ad3daD185"
++        "0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GelatoMultisig/GnosisSafe.sol   | 952 +++++++++++++++++++++
+ .../.flat/GelatoMultisig/GnosisSafeProxy.p.sol     |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
 Generated with discovered.json: 0xbbda4273693b98590b45a10179daf316b84586ba
 
 # Diff at Fri, 19 Jul 2024 10:16:12 GMT:

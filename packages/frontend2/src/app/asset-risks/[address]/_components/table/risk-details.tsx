@@ -10,10 +10,10 @@ import { type Token } from './tokens-table'
 
 export function RiskDetails({ token }: { token: Token }) {
   return (
-    <div className="flex flex-col border-t gap-5 pb-4 border-t-gray-400">
+    <div className="flex flex-col gap-5 border-t border-t-gray-400 pb-4">
       <div className="grid grid-cols-4 pt-4">
         <div className="flex flex-col">
-          <span className="text-zinc-500 text-xs font-bold">Token</span>
+          <span className="text-xs font-bold text-zinc-500">Token</span>
           <div className="flex items-center gap-1 font-semibold">
             {token.token.iconUrl && (
               <Image
@@ -26,14 +26,14 @@ export function RiskDetails({ token }: { token: Token }) {
             )}
             <div className="text-base text-zinc-800">
               {token.token.name}&nbsp;
-              <span className="uppercase text-[13px] text-gray-500">
+              <span className="text-[13px] uppercase text-gray-500">
                 {token.token.symbol}
               </span>
             </div>
           </div>
         </div>
         <div className="flex flex-col">
-          <span className="text-zinc-500 text-xs font-bold">
+          <span className="text-xs font-bold text-zinc-500">
             Block explorer
           </span>
           {token.token.address ? (
@@ -49,12 +49,12 @@ export function RiskDetails({ token }: { token: Token }) {
           )}
         </div>
         <div className="flex flex-col">
-          <span className="text-zinc-500 text-xs font-bold">Chain</span>
+          <span className="text-xs font-bold text-zinc-500">Chain</span>
           <div className="flex items-center gap-1 font-semibold">
             {/* TODO: Add link to block explorer when we start fetching from DB */}
             <Link
               href={'/'}
-              className="text-base text-blue-700 font-semibold underline"
+              className="text-base font-semibold text-blue-700 underline"
             >
               {/* TODO: add link to chain icon */}
               {/* <Image
@@ -69,12 +69,12 @@ export function RiskDetails({ token }: { token: Token }) {
           </div>
         </div>
         <div className="flex flex-col">
-          <span className="text-zinc-500 text-xs font-bold">Bridge</span>
+          <span className="text-xs font-bold text-zinc-500">Bridge</span>
           <div className="flex items-center gap-1 font-semibold">
             {/* TODO: Add link to block explorer when we start fetching from DB */}
             <Link
               href={'/'}
-              className="text-base text-blue-700 font-semibold underline"
+              className="text-base font-semibold text-blue-700 underline"
             >
               {/* TODO: add link to bridge icon */}
               {/* <Image
@@ -104,20 +104,20 @@ function CategoryRisks({ title, risks }: { title: string; risks: Risk[] }) {
   }
 
   return (
-    <div className="border border-gray-400 rounded-lg p-4 flex flex-col gap-[8px]">
-      <span className="text-[13px] text-zinc-500 font-semibold uppercase">
+    <div className="flex flex-col gap-[8px] rounded-lg border border-gray-400 p-4">
+      <span className="text-[13px] font-semibold uppercase text-zinc-500">
         {title}
       </span>
       <div className="flex flex-col gap-3 pl-4">
         {risks.map((risk, i) => (
           <div key={i}>
-            <div className="flex gap-2 items-center">
+            <div className="flex items-center gap-2">
               <div className="size-5">
                 {risk.isCritical ? <CriticalIcon /> : <WarningIcon />}
               </div>
               <span
                 className={cn(
-                  'font-semibold text-sm whitespace-normal',
+                  'whitespace-normal text-sm font-semibold',
                   risk.isCritical ? 'text-red-700' : 'text-zinc-800',
                 )}
               >

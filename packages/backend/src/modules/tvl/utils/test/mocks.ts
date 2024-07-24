@@ -1,3 +1,4 @@
+import { AmountRecord, PriceRecord, ValueRecord } from '@l2beat/database'
 import {
   AssetId,
   CoingeckoId,
@@ -8,9 +9,6 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { mockObject } from 'earl'
-import { AmountRecord } from '../../repositories/AmountRepository'
-import { PriceRecord } from '../../repositories/PriceRepository'
-import { ValueRecord } from '../../repositories/ValueRepository'
 
 const DECIMALS = 18
 const USD_DECIMALS = 2

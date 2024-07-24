@@ -32,8 +32,11 @@ export class ZkSyncTransactionRepository {
     return `zksync-${record.blockNumber}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('activity.zksync').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('activity.zksync')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async findLastTimestamp(): Promise<UnixTime | undefined> {

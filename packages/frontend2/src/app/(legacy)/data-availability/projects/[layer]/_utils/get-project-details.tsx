@@ -1,8 +1,8 @@
 import { type DaBridge, type DaLayer } from '@l2beat/config'
 import {
+  type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
-  type VerificationStatus,
 } from '@l2beat/shared-pure'
 import { getContractsSection } from '~/app/_components/projects/sections/contracts/get-contracts-section'
 import { getPermissionsSection } from '~/app/_components/projects/sections/permissions/get-permissions-section'
@@ -11,7 +11,8 @@ import { type RosetteValue } from '~/app/_components/rosette/types'
 interface Params {
   daLayer: DaLayer
   daBridge: DaBridge
-  verificationStatus: VerificationStatus
+  isVerified: boolean
+  contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   implementationChangeReport: ImplementationChangeReportApiResponse
   rosetteValues: RosetteValue[]
@@ -20,7 +21,8 @@ interface Params {
 export function getProjectDetails({
   daLayer,
   daBridge,
-  verificationStatus,
+  isVerified,
+  contractsVerificationStatuses,
   manuallyVerifiedContracts,
   implementationChangeReport,
   rosetteValues,
@@ -35,7 +37,7 @@ export function getProjectDetails({
             permissions: daBridge.permissions,
             nativePermissions: undefined,
           },
-          verificationStatus,
+          contractsVerificationStatuses,
           manuallyVerifiedContracts,
         )
       : undefined
@@ -46,12 +48,13 @@ export function getProjectDetails({
           {
             id: daBridge.id,
             type: daLayer.type,
+            isVerified,
             slug: daBridge.display.slug,
             contracts: daBridge.contracts,
             isUnderReview: daLayer.isUnderReview,
             escrows: undefined,
           },
-          verificationStatus,
+          contractsVerificationStatuses,
           manuallyVerifiedContracts,
           implementationChangeReport,
         )
@@ -68,8 +71,7 @@ export function getProjectDetails({
       isUnderReview: !!daLayer.isUnderReview || daBridge.isUnderReview,
       warning: daBridge.display.warning,
       redWarning: daBridge.display.redWarning,
-      // TODO: We need to add this to DA projects
-      isVerified: undefined,
+      isVerified,
     },
   })
 
@@ -78,6 +80,10 @@ export function getProjectDetails({
     props: {
       id: 'da-layer-technology',
       title: 'DA Layer technology',
+      diagram: {
+        type: 'da-layer-technology',
+        slug: daLayer.display.slug,
+      },
       children: daLayer.technology,
     },
   })
@@ -87,6 +93,10 @@ export function getProjectDetails({
     props: {
       id: 'da-bridge-technology',
       title: 'DA Bridge technology',
+      diagram: {
+        type: 'da-bridge-technology',
+        slug: `${daLayer.display.slug}-${daBridge.display.slug}`,
+      },
       children: daBridge.technology,
     },
   })

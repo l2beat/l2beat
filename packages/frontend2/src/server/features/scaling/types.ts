@@ -6,6 +6,7 @@ import {
   type StageConfig,
   type WarningWithSentiment,
 } from '@l2beat/config'
+import { type ValueWithSentiment } from '@l2beat/shared-pure'
 import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 import { type RosetteValue } from '~/app/_components/rosette/types'
 
@@ -53,6 +54,30 @@ export interface ScalingSummaryLayer3sEntry {
   tvlData: L3TvlData | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never
+}
+
+export interface ScalingDataAvailabilityEntry {
+  slug: string
+  name: string
+  href: string
+  shortName: string | undefined
+  type: 'layer2' | 'layer3'
+  category: ScalingProjectCategory
+  provider: Layer2Provider | Layer3Provider | undefined
+  warning: string | undefined
+  isVerified: boolean
+  purposes: ScalingProjectPurpose[]
+  stage: StageConfig | undefined
+  dataAvailability: DataAvailability
+  redWarning: string | undefined
+  showProjectUnderReview: boolean
+  hasImplementationChanged: boolean
+}
+
+type DataAvailability = {
+  layer: ValueWithSentiment<string>
+  bridge: ValueWithSentiment<string>
+  mode: string
 }
 
 interface L2TvlData {

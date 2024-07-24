@@ -11,7 +11,7 @@ export interface AggregatedLivenessRecord {
   min: number
   avg: number
   max: number
-  timestamp: UnixTime
+  updatedAt: UnixTime
 }
 
 export function toRow(
@@ -24,7 +24,7 @@ export function toRow(
     min: record.min,
     avg: record.avg,
     max: record.max,
-    updated_at: record.timestamp.toDate(),
+    updated_at: record.updatedAt.toDate(),
   }
 }
 
@@ -38,6 +38,6 @@ export function toRecord(
     min: row.min,
     avg: row.avg,
     max: row.max,
-    timestamp: UnixTime.fromDate(row.updated_at),
+    updatedAt: UnixTime.fromDate(row.updated_at),
   }
 }

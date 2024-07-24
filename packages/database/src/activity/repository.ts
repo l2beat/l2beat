@@ -34,15 +34,24 @@ export class ActivityRepository {
     return records.length
   }
 
-  async deleteAfter(from: UnixTime): Promise<void> {
-    await this.db
+  async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.activity')
-      .where('timestamp', '>', from.toDate())
-      .execute()
+      .where((eb) =>
+        eb.and([
+          eb('project_id', '=', projectId.toString()),
+          eb('timestamp', '>', from.toDate()),
+        ]),
+      )
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  async deleteAll(): Promise<void> {
-    await this.db.deleteFrom('public.activity').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.activity')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getByProjectAndTimeRange(
@@ -55,7 +64,7 @@ export class ActivityRepository {
       .select(selectActivity)
       .where('project_id', '=', projectId.toString())
       .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
 

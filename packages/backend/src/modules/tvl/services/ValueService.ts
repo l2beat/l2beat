@@ -1,9 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
+import { Database, ValueRecord } from '@l2beat/database'
 import { AmountConfigEntry, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { AmountRepository } from '../repositories/AmountRepository'
-import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRecord } from '../repositories/ValueRepository'
 import { calculateValue } from '../utils/calculateValue'
 import { AmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
@@ -24,13 +22,8 @@ interface Values {
   nativeAssociatedForTotal: bigint
 }
 
-export interface ValueServiceDependencies {
-  priceRepository: PriceRepository
-  amountRepository: AmountRepository
-}
-
 export class ValueService {
-  constructor(private readonly $: ValueServiceDependencies) {}
+  constructor(private readonly db: Database) {}
 
   async calculateTvlForTimestamps(
     project: ProjectId,
@@ -43,7 +36,7 @@ export class ValueService {
     assert(amountConfigs.size > 0, 'Configs should not be empty')
     assert(priceConfigIds.size > 0, 'Price configs should not be empty')
 
-    const amounts = await this.$.amountRepository.getByConfigIdsInRange(
+    const amounts = await this.db.amount.getByConfigIdsInRange(
       Array.from(amountConfigs.keys()),
       timestamps[0],
       timestamps[timestamps.length - 1],
@@ -60,7 +53,7 @@ export class ValueService {
       'timestamp',
     )
 
-    const prices = await this.$.priceRepository.getByConfigIdsInRange(
+    const prices = await this.db.price.getByConfigIdsInRange(
       Array.from(priceConfigIds.values()),
       timestamps[0],
       timestamps[timestamps.length - 1],

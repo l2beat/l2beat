@@ -32,8 +32,9 @@ export class BlockTransactionCountRepository {
     return `${record.projectId.toString()}-${record.blockNumber}`
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('activity.block').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('activity.block').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {

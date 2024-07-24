@@ -36,7 +36,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
     return (
       <div
         className={cn(
-          'relative flex items-center justify-center size-[272px] shrink-0',
+          'relative flex size-[272px] shrink-0 items-center justify-center',
           props.className,
         )}
       >
@@ -46,7 +46,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
           className={cn(props.isUpcoming && 'opacity-30')}
         />
         {props.isUpcoming && (
-          <UpcomingBadge className="absolute top-1/2 -translate-y-1/2 left-1/2 -translate-x-1/2" />
+          <UpcomingBadge className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2" />
         )}
         <PentagonRosetteLabels
           values={props.values}
@@ -62,7 +62,7 @@ export function BigPentagonRosette(props: BigPentagonRosetteProps) {
       <Tooltip>
         <div
           className={cn(
-            'relative flex items-center justify-center size-[272px] shrink-0',
+            'relative flex size-[272px] shrink-0 items-center justify-center',
             props.className,
           )}
         >

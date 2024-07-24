@@ -3,6 +3,5 @@
   "require": "esbuild-register",
   "watchExtensions": "ts",
   "extension": "ts",
-  "file": "src/test/setup.ts",
-  "exit": true
+  "file": "src/test/setup.ts"
 }

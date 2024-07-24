@@ -1,18 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
-
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
-import { describeDatabase } from '../../../test/database'
-import { IndexerConfigurationRepository } from '../IndexerConfigurationRepository'
+import {
+  MOCK_TRX,
+  describeDatabase,
+  mockDatabase,
+} from '../../../test/database'
 import { IndexerService } from '../IndexerService'
-import { IndexerStateRepository } from '../IndexerStateRepository'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
   ManagedMultiIndexer,
   ManagedMultiIndexerOptions,
 } from './ManagedMultiIndexer'
 import { MultiIndexer } from './MultiIndexer'
-import { mockDbMiddleware } from './MultiIndexer.test'
 import {
   Configuration,
   RemovalConfiguration,
@@ -32,8 +32,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
         serializeConfiguration: (v: null) => JSON.stringify(v),
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockDatabase(),
       }
       new TestIndexer({ ...common, name: 'a' })
       expect(() => {
@@ -47,8 +46,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService: mockObject<IndexerService>(),
         logger: Logger.SILENT,
         serializeConfiguration: (v: null) => JSON.stringify(v),
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockDatabase(),
       }
       new TestIndexer({
         ...common,
@@ -142,31 +140,23 @@ describe(ManagedMultiIndexer.name, () => {
 
       const indexer = await initializeMockIndexer(indexerService, [], [])
 
-      await indexer.updateConfigurationsCurrentHeight(1, mockDbMiddleware)
+      await indexer.updateConfigurationsCurrentHeight(1, MOCK_TRX)
 
       expect(indexerService.updateSavedConfigurations).toHaveBeenNthCalledWith(
         1,
         'indexer',
         1,
-        mockDbMiddleware,
+        MOCK_TRX,
       )
     },
   )
 
-  describeDatabase('e2e', (database) => {
-    const stateRepository = new IndexerStateRepository(database, Logger.SILENT)
-    const configurationsRepository = new IndexerConfigurationRepository(
-      database,
-      Logger.SILENT,
-    )
-    const indexerService = new IndexerService(
-      stateRepository,
-      configurationsRepository,
-    )
+  describeDatabase('e2e', (db) => {
+    const indexerService = new IndexerService(db)
     afterEach(async () => {
       _TEST_ONLY_resetUniqueIds()
-      await stateRepository.deleteAll()
-      await configurationsRepository.deleteAll()
+      await db.indexerState.deleteAll()
+      await db.indexerConfiguration.deleteAll()
     })
 
     it('update', async () => {
@@ -179,6 +169,7 @@ describe(ManagedMultiIndexer.name, () => {
           actual('c', 400, null),
           actual('d', 100, null),
         ],
+        db,
       )
       await indexer.start()
 
@@ -194,34 +185,34 @@ describe(ManagedMultiIndexer.name, () => {
         100,
         199,
         [actual('a', 100, 300)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         2,
         200,
         300,
         [actual('a', 100, 300), actual('b', 200, 500)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         3,
         301,
         399,
         [actual('b', 200, 500)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
         4,
         400,
         500,
         [actual('b', 200, 500), actual('c', 400, null)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
       expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
         551,
         600,
         [actual('c', 400, null), actual('d', 100, null)],
-        mockDbMiddleware,
+        expect.anything(), // Knex transaction,
       )
 
       const configurations = await getSavedConfigurations(indexerService)
@@ -293,6 +284,7 @@ async function initializeMockIndexer(
   indexerService: IndexerService,
   saved: SavedConfiguration<null>[],
   configurations: Configuration<null>[],
+  database?: Database,
 ) {
   if (saved.length > 0) {
     await indexerService.upsertConfigurations('indexer', saved, (v) =>
@@ -306,7 +298,7 @@ async function initializeMockIndexer(
     configurations,
     logger: Logger.SILENT,
     serializeConfiguration: (v) => JSON.stringify(v),
-    createDatabaseMiddleware: () => Promise.resolve(mockDbMiddleware),
+    db: database ?? mockDatabase(),
   })
   return indexer
 }
