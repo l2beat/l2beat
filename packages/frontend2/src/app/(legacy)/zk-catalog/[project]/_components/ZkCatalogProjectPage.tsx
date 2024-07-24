@@ -46,7 +46,9 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           />
         </Section>
         <Section title="Description">
-          <Markdown>{props.details.description}</Markdown>
+          <Markdown className="zk-description">
+            {props.details.description}
+          </Markdown>
         </Section>
         {props.details.requiredTools.length > 0 && (
           <Section title="List of required tools">
@@ -63,14 +65,15 @@ function Breadcrumbs(props: { icon: string; title: string }) {
     <nav className="flex select-none gap-1 space-x-1 font-medium dark:text-gray-50">
       <Link href="/zk-catalog">ZK Catalog</Link>
       <span>/</span>
-      <span>
+      <span className="flex items-center gap-1.5">
         <Image
           alt={`Icon for the ${props.title}`}
           width={16}
           height={16}
           src={props.icon}
-          className="mr-1.5 inline size-4"
+          className="inline size-4"
         />
+        {/* TODO: LINEAR AND DESCRIPTION FONT SIZE */}
         <span>{props.title}</span>
       </span>
     </nav>

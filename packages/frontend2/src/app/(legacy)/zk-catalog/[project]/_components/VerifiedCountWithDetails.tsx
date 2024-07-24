@@ -33,7 +33,7 @@ export function VerifiedCountWithDetails(props: Props) {
     assert(status, 'status should be defined')
     const { count, Icon } = status
     return (
-      <div className="flex items-center">
+      <div className="flex items-center gap-0.5">
         <span>{count}</span>
         {<Icon />}
       </div>

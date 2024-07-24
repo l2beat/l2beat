@@ -79,7 +79,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
                   className="self-center justify-self-center"
                 />
                 <div className="flex items-center">
-                  <div className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
+                  <div className="mt-2 flex h-10 w-full items-center justify-center gap-1.5 rounded-lg border border-black dark:border-white md:hidden">
                     <span className="text-base font-bold">Verifiers</span>
                     <ChevronDownIcon className="fill-current transition-transform duration-300 ease-out group-data-[state=open]:-rotate-180" />
                   </div>

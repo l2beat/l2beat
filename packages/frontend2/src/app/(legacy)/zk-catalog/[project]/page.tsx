@@ -44,7 +44,7 @@ export default async function Page(props: Props) {
 
   return (
     <ContentWrapper>
-      <main className="mt-4 md:mt-12">
+      <main className="max-md:-mx-4 md:mt-12">
         <ZkCatalogProjectPage {...projectDetails} />
       </main>
     </ContentWrapper>

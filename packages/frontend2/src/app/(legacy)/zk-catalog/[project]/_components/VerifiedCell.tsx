@@ -27,11 +27,11 @@ export function VerifiedCell({
   switch (verified) {
     case 'yes':
       return (
-        <div className="flex w-max flex-col gap-1">
+        <div className="flex w-max flex-col">
           <Tooltip>
             <TooltipTrigger className="w-max">
               <span className="flex items-center text-sm text-green-700 dark:text-green-450 md:text-base">
-                <VerifiedIcon className="mr-1.5 dark:fill-green-450" />
+                <VerifiedIcon className="mr-1.5 size-5 dark:fill-green-450" />
                 <span>Successful</span>
               </span>
             </TooltipTrigger>
@@ -56,25 +56,28 @@ export function VerifiedCell({
         <span className="flex flex-col items-start text-sm md:text-base">
           <Tooltip>
             <TooltipTrigger className="flex w-max items-center text-sm md:text-base">
-              <CircleQuestionMark className="mr-1.5" />
+              <CircleQuestionMark className="mr-1.5 size-5" />
               Not verified
             </TooltipTrigger>
             <TooltipContent>
               Verification was not performed for this verifier.
             </TooltipContent>
           </Tooltip>
-          <OutLink className="ml-[21px] text-xs" href={askForVerificationLink}>
+          <OutLink
+            className="ml-[26px] text-xs max-md:hidden"
+            href={askForVerificationLink}
+          >
             Submit or ask for verification
           </OutLink>
         </span>
       )
     case 'failed':
       return (
-        <div className="flex w-max flex-col gap-1">
+        <div className="flex w-max flex-col">
           <Tooltip>
             <TooltipTrigger className="w-max">
               <span className="flex items-center text-sm text-red-700 dark:text-red-300 md:text-base">
-                <UnverifiedIcon className="mr-1.5" />
+                <UnverifiedIcon className="mr-1.5 size-5" />
                 Unsuccessful
               </span>
             </TooltipTrigger>
@@ -83,7 +86,7 @@ export function VerifiedCell({
               wasn&apos;t able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500 max-md:hidden">
             (performed by{' '}
             {
               <OutLink className="underline" href={performedBy?.link}>

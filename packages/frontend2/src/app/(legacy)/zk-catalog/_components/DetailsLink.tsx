@@ -16,7 +16,8 @@ export function DetailsLink({
         className,
       )}
     >
-      Details
+      <span className="max-md:hidden">Details</span>
+      <span className="md:hidden">Details page</span>
     </Link>
   )
 }

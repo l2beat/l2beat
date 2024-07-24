@@ -1,6 +1,6 @@
-import Link from 'next/link'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
+import { CustomLink } from '~/app/_components/link/custom-link'
 
 interface Props {
   items: ZkCatalogProjectDetails['requiredTools']
@@ -28,10 +28,10 @@ export function RequiredTools(props: Props) {
             <td className="pr-4 text-sm md:text-base">{item.version}</td>
             <td className="pr-4">
               {item.link ? (
-                <Link href={item.link} className="text-sm md:text-base">
+                <CustomLink href={item.link} className="text-sm md:text-base">
                   <span className="hidden md:block">More information</span>
                   <span className="md:hidden">More info</span>
-                </Link>
+                </CustomLink>
               ) : (
                 EM_DASH
               )}
