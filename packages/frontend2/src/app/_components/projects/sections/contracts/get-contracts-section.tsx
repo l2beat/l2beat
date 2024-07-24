@@ -20,7 +20,6 @@ import {
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
-import { languageJoin } from '~/utils/language-join'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 import { slugToDisplayName } from '~/utils/project/slug-to-display-name'
 import {
@@ -327,7 +326,7 @@ function makeTechnologyContract(
       references: concat(item.references ?? [], additionalReferences),
       chain,
       implementationHasChanged,
-      upgradeableBy: languageJoin(item.upgradableBy),
+      upgradeableBy: item.upgradableBy,
       upgradeDelay: item.upgradeDelay,
       upgradeConsiderations: item.upgradeConsiderations,
     }
