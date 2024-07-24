@@ -12,6 +12,7 @@ export interface ActivityIndexerDeps
   projectId: ProjectId
   txsCountProvider: TxsCountProvider
   activityRepository: ActivityRepository
+  /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
 }
 

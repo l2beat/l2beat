@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -114,9 +113,7 @@ function createActivityIndexers(
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
-          batchSize: getBatchSizeFromCallsPerMinute(
-            activityConfig.starkexCallsPerMinute,
-          ),
+          batchSize: 10,
           minHeight:
             project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
           uncertaintyBuffer: project.config.resyncLastDays,
@@ -133,15 +130,4 @@ function createActivityIndexers(
   })
 
   return indexers
-}
-
-function getBatchSizeFromCallsPerMinute(
-  callsPerMinute: number,
-  batchDurationSeconds = 60,
-): number {
-  assert(
-    callsPerMinute >= batchDurationSeconds,
-    `callsPerMinute=${callsPerMinute} must be greater or equal to batchDurationSeconds=${batchDurationSeconds}`,
-  )
-  return Math.floor(callsPerMinute / batchDurationSeconds)
 }
