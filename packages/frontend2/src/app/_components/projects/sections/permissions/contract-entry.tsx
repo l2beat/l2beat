@@ -77,7 +77,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
             </Markdown>
           )}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex text-gray-850 dark:text-gray-400">
+            <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
               <strong className="text-black dark:text-white">
                 Can be upgraded by:
               </strong>

@@ -157,11 +157,11 @@ export function ContractEntry({
             </Markdown>
           )}
           {contract.upgradeableBy && contract.upgradeableBy.length > 0 && (
-            <div className="mt-2 flex text-gray-850 dark:text-gray-400">
-              <strong className="text-black dark:text-white">
+            <div className="mt-2 flex flex-wrap text-gray-850 dark:text-gray-400">
+              <strong className="mr-1.5 text-black dark:text-white">
                 Can be upgraded by:
               </strong>
-              <div className="ml-1.5 space-x-1.5">
+              <div className="flex flex-wrap gap-x-1.5">
                 {contract.upgradeableBy.map((name) => (
                   <Link key={name} href={`#${name}`}>
                     {name}
