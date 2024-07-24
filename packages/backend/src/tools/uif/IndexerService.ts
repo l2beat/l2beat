@@ -96,10 +96,13 @@ export class IndexerService {
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    await this.db.indexerConfiguration.deleteConfigurationsExcluding(
-      indexerId,
-      configurationIds,
-    )
+    const db = await this.db.indexerConfiguration.getIdsByIndexer(indexerId)
+
+    const runtimeConfigurations = new Set(configurationIds)
+
+    const unused = db.filter((c) => !runtimeConfigurations.has(c))
+
+    await this.db.indexerConfiguration.deleteConfigurations(indexerId, unused)
   }
 
   // #endregion
