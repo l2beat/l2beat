@@ -14,7 +14,7 @@ function toRow(value: number) {
 
 class TestRepository extends BaseRepository {
   async insert(value: number) {
-    await this.getDb()
+    await this.db
       // We use prices because it is one of the simpler tables
       .insertInto('public.prices')
       .values(toRow(value))
@@ -28,7 +28,7 @@ class TestRepository extends BaseRepository {
   }
 
   async getAll() {
-    const results = await this.getDb()
+    const results = await this.db
       .selectFrom('public.prices')
       .select(['price_usd'])
       .orderBy('price_usd', 'asc')
@@ -37,12 +37,12 @@ class TestRepository extends BaseRepository {
   }
 
   async deleteAll() {
-    await this.getDb().deleteFrom('public.prices').execute()
+    await this.db.deleteFrom('public.prices').execute()
   }
 }
 
 function createTestRepository(db: Database) {
-  const pgDb = db.activity['db']
+  const pgDb = db.activity['database']
   return new TestRepository(pgDb)
 }
 

@@ -5,13 +5,13 @@ export class BridgeEscrowRepository extends BaseRepository {
   upsert(bridgeEscrow: BridgeEscrowRecord) {
     const row = toRow(bridgeEscrow)
 
-    return this.getDb().insertInto('public.BridgeEscrow').values(row).execute()
+    return this.db.insertInto('public.BridgeEscrow').values(row).execute()
   }
 
   upsertMany(bridgeEscrows: BridgeEscrowRecord[]) {
     const rows = bridgeEscrows.map(toRow)
 
-    return this.getDb()
+    return this.db
       .insertInto('public.BridgeEscrow')
       .values(rows)
       .onConflict((conflict) =>

@@ -25,7 +25,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   }
 
   async getSavedConfigurations(indexerId: string) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('indexer_id', '=', indexerId)
@@ -38,7 +38,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     if (configurationIds.length === 0) {
       return []
     }
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('id', 'in', configurationIds)
@@ -48,7 +48,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   }
 
   updateCurrentHeights(indexerId: string, currentHeight: number | null) {
-    return this.getDb()
+    return this.db
       .updateTable('public.indexer_configurations')
       .set('current_height', currentHeight)
       .where('indexer_id', '=', indexerId)
@@ -72,7 +72,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     indexerId: string,
     configurationIds: string[],
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.indexer_configurations')
       .where('indexer_id', '=', indexerId)
       .where((eb) => {
@@ -88,7 +88,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   }
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .execute()
@@ -97,7 +97,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.indexer_configurations')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

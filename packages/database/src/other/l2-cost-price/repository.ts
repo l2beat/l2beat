@@ -5,7 +5,7 @@ import { selectL2CostPrice } from './select'
 
 export class L2CostPriceRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.l2_costs_prices')
       .selectAll()
       .execute()
@@ -14,7 +14,7 @@ export class L2CostPriceRepository extends BaseRepository {
   }
 
   async getByTimestampRange(from: UnixTime, to: UnixTime) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.l2_costs_prices')
       .select(selectL2CostPrice)
       .where('timestamp', '>=', from.toDate())
@@ -35,7 +35,7 @@ export class L2CostPriceRepository extends BaseRepository {
   }
 
   async deleteAfter(from: UnixTime): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.l2_costs_prices')
       .where('timestamp', '>', from.toDate())
       .executeTakeFirst()
@@ -43,7 +43,7 @@ export class L2CostPriceRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.l2_costs_prices')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

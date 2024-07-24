@@ -6,7 +6,7 @@ export class CacheRepository extends BaseRepository {
   upsert(cache: CacheRecord) {
     const row = toRow(cache)
 
-    return this.getDb()
+    return this.db
       .insertInto('public.Cache')
       .values(row)
       .onConflict((conflict) =>
@@ -21,7 +21,7 @@ export class CacheRepository extends BaseRepository {
   }
 
   async findByKey(key: CacheRecord['key']) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.Cache')
       .select(selectCache)
       .where('public.Cache.key', '=', key)

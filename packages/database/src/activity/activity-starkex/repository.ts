@@ -12,7 +12,7 @@ export class StarkExTransactionCountRepository extends BaseRepository {
   }
 
   async addOrUpdate(record: StarkExTransactionCountRecord) {
-    await this.getDb()
+    await this.db
       .insertInto('activity.starkex')
       .values(toRow(record))
       .onConflict((cb) =>
@@ -26,14 +26,14 @@ export class StarkExTransactionCountRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('activity.starkex')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('activity.starkex')
       .select('unix_timestamp')
       .where('project_id', '=', projectId.toString())
@@ -45,7 +45,7 @@ export class StarkExTransactionCountRepository extends BaseRepository {
   }
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('activity.starkex')
       .select(selectStarkExTransactionCount)
       .execute()

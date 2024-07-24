@@ -7,7 +7,7 @@ export class TokenRepository extends BaseRepository {
   upsertMany(tokens: TokenRecord[]) {
     const rows = tokens.map(toRow)
 
-    return this.getDb()
+    return this.db
       .insertInto('public.Token')
       .values(rows)
       .onConflict((conflict) =>
@@ -21,7 +21,7 @@ export class TokenRepository extends BaseRepository {
   }
 
   async findManyByChain(chainId: number) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
@@ -34,7 +34,7 @@ export class TokenRepository extends BaseRepository {
   async findManyByNetworkData(
     constraints: { address: string; networkId: string }[],
   ) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.Token')
       .select(selectToken)
       .where((eb) =>
@@ -57,7 +57,7 @@ export class TokenRepository extends BaseRepository {
     networkId: string
     contractName: string
   }) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.Token')
       .select(selectToken)
       .innerJoin(...joinDeployment)
@@ -76,7 +76,7 @@ export class TokenRepository extends BaseRepository {
   }
 
   async findByNetworkData(constraints: { network: string; address: string }) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.Token')
       .innerJoin(...joinNetwork)
       .select(selectToken)
@@ -89,7 +89,7 @@ export class TokenRepository extends BaseRepository {
   }
 
   async findById(id: TokenRecord['id']) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.Token')
       .select(selectToken)
       .where('public.Token.id', '=', id)
@@ -103,7 +103,7 @@ export class TokenRepository extends BaseRepository {
     if (ids.length === 0) {
       return []
     }
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.Token')
       .select(selectToken)
       .where('public.Token.id', 'in', ids)

@@ -8,7 +8,7 @@ export class UpdateMonitorRepository extends BaseRepository {
     name: string,
     chainId: ChainId,
   ): Promise<UpdateMonitorRecord | undefined> {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
       .where('project_name', '=', name)
@@ -21,7 +21,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
     const row = toRow(record)
 
-    await this.getDb()
+    await this.db
       .insertInto('public.update_monitor')
       .values(row)
       .onConflict((cb) =>
@@ -39,7 +39,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   }
 
   async getAll(): Promise<UpdateMonitorRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.update_monitor')
       .select(selectUpdateMonitor)
       .execute()
@@ -48,7 +48,7 @@ export class UpdateMonitorRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.update_monitor')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

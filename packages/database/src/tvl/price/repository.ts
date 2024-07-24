@@ -17,7 +17,7 @@ export class PriceRepository extends BaseRepository {
     if (configIds.length === 0) {
       return []
     }
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('configuration_id', 'in', configIds)
@@ -30,7 +30,7 @@ export class PriceRepository extends BaseRepository {
   }
 
   async getByTimestamp(timestamp: UnixTime) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('timestamp', '=', timestamp.toDate())
@@ -41,7 +41,7 @@ export class PriceRepository extends BaseRepository {
   }
 
   async findByConfigAndTimestamp(configId: string, timestamp: UnixTime) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('configuration_id', '=', configId)
@@ -70,7 +70,7 @@ export class PriceRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.prices')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -80,25 +80,20 @@ export class PriceRepository extends BaseRepository {
   }
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.getDb(), 'public.prices', dateRange)
+    return deleteHourlyUntil(this.db, 'public.prices', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.getDb(), 'public.prices', dateRange)
+    return deleteSixHourlyUntil(this.db, 'public.prices', dateRange)
   }
 
   async getAll() {
-    const rows = await this.getDb()
-      .selectFrom('public.prices')
-      .selectAll()
-      .execute()
+    const rows = await this.db.selectFrom('public.prices').selectAll().execute()
     return rows.map(toRecord)
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
-      .deleteFrom('public.prices')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('public.prices').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 }

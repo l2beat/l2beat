@@ -5,7 +5,7 @@ export class TokenMetaRepository extends BaseRepository {
   upsertMany(tokenMetas: TokenMetaRecord[]) {
     const entities = tokenMetas.map(toRow)
 
-    return this.getDb()
+    return this.db
       .insertInto('public.TokenMeta')
       .values(entities)
       .onConflict((conflict) =>

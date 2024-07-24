@@ -4,11 +4,11 @@ import { PostgresDatabase, Transaction } from './kysely'
 export const transactionContext = new AsyncLocalStorage<Transaction>()
 
 export class BaseRepository {
-  constructor(private readonly db: PostgresDatabase) {}
+  constructor(private readonly database: PostgresDatabase) {}
 
-  protected getDb(): PostgresDatabase | Transaction {
+  protected get db(): PostgresDatabase | Transaction {
     const transaction = transactionContext.getStore()
-    return transaction ?? this.db
+    return transaction ?? this.database
   }
 
   protected async batch<T>(
@@ -16,7 +16,7 @@ export class BaseRepository {
     batchSize: number,
     execute: (trx: Transaction, batch: T[]) => Promise<void>,
   ): Promise<void> {
-    const db = this.getDb()
+    const db = this.db
     if (db.isTransaction) {
       for (let i = 0; i < rows.length; i += batchSize) {
         await execute(db as Transaction, rows.slice(i, i + batchSize))

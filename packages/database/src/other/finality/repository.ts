@@ -10,7 +10,7 @@ import { selectFinality } from './select'
 
 export class FinalityRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
       .execute()
@@ -19,7 +19,7 @@ export class FinalityRepository extends BaseRepository {
   }
 
   async findLatestByProjectId(projectId: string) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
       .where('project_id', '=', projectId)
@@ -30,7 +30,7 @@ export class FinalityRepository extends BaseRepository {
   }
 
   async findProjectFinalityOnTimestamp(projectId: string, timestamp: UnixTime) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
       .where('timestamp', '=', timestamp.toDate())
@@ -45,12 +45,9 @@ export class FinalityRepository extends BaseRepository {
     if (projectIds.length === 0) {
       return []
     }
-    const maxTimestampSubquery = this.getDb()
+    const maxTimestampSubquery = this.db
       .selectFrom('public.finality')
-      .select([
-        'project_id',
-        this.getDb().fn.max('timestamp').as('max_timestamp'),
-      ])
+      .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
       .where(
         'project_id',
         'in',
@@ -59,7 +56,7 @@ export class FinalityRepository extends BaseRepository {
       .groupBy('project_id')
       .as('max_f')
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.finality as f')
       .innerJoin(maxTimestampSubquery, (join) =>
         join
@@ -89,7 +86,7 @@ export class FinalityRepository extends BaseRepository {
   async add(record: FinalityRecord) {
     const row = toRow(record)
 
-    const result = await this.getDb()
+    const result = await this.db
       .insertInto('public.finality')
       .values(row)
       .returning('project_id')
@@ -99,7 +96,7 @@ export class FinalityRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.finality')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

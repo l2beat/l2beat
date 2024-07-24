@@ -5,7 +5,7 @@ export class DeploymentRepository extends BaseRepository {
   upsert(Deployment: DeploymentRecord) {
     const row = toRow(Deployment)
 
-    return this.getDb()
+    return this.db
       .insertInto('public.Deployment')
       .values(row)
       .onConflict((conflict) =>

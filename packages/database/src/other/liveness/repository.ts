@@ -7,7 +7,7 @@ import { selectLiveness } from './select'
 
 export class LivenessRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.liveness')
       .selectAll()
       .execute()
@@ -23,7 +23,7 @@ export class LivenessRepository extends BaseRepository {
       return []
     }
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
       .where('configuration_id', 'in', configurationIds)
@@ -43,7 +43,7 @@ export class LivenessRepository extends BaseRepository {
       return []
     }
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
       .where('configuration_id', 'in', configurationIds)
@@ -66,7 +66,7 @@ export class LivenessRepository extends BaseRepository {
 
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
       .where('configuration_id', 'in', configurationIds)
@@ -97,7 +97,7 @@ export class LivenessRepository extends BaseRepository {
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.liveness')
       .where('configuration_id', '=', id.toString())
       .where('timestamp', '>=', deleteFromInclusive.toDate())
@@ -110,7 +110,7 @@ export class LivenessRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.liveness')
       .where('configuration_id', '=', id)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -120,14 +120,14 @@ export class LivenessRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.liveness')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getUsedConfigsIds(): Promise<string[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.liveness')
       .select('configuration_id')
       .distinctOn('configuration_id')

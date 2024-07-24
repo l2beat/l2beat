@@ -5,7 +5,7 @@ import { selectUpdateNotifier } from './select'
 
 export class UpdateNotifierRepository extends BaseRepository {
   async findLatestId(): Promise<number | undefined> {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.update_notifier')
       .select(['id'])
       .orderBy('id', 'desc')
@@ -19,7 +19,7 @@ export class UpdateNotifierRepository extends BaseRepository {
   ) {
     const row = toRow(record)
 
-    const insertedResult = await this.getDb()
+    const insertedResult = await this.db
       .insertInto('public.update_notifier')
       .values(row)
       .returning('id')
@@ -29,7 +29,7 @@ export class UpdateNotifierRepository extends BaseRepository {
   }
 
   async getAll(): Promise<UpdateNotifierRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
       .execute()
@@ -42,7 +42,7 @@ export class UpdateNotifierRepository extends BaseRepository {
     projectName: string,
     chainId: ChainId,
   ): Promise<UpdateNotifierRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.update_notifier')
       .select(selectUpdateNotifier)
       .where('created_at', '>=', from.toDate())
@@ -54,7 +54,7 @@ export class UpdateNotifierRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.update_notifier')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

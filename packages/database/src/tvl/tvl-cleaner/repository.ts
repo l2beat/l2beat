@@ -5,7 +5,7 @@ import { selectTvlCleaner } from './select'
 export class TvlCleanerRepository extends BaseRepository {
   async addOrUpdate(record: TvlCleanerRecord) {
     const row = toRow(record)
-    await this.getDb()
+    await this.db
       .insertInto('public.tvl_cleaner')
       .values(row)
       .onConflict((cb) =>
@@ -20,7 +20,7 @@ export class TvlCleanerRepository extends BaseRepository {
   }
 
   async find(repositoryName: string) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.tvl_cleaner')
       .select(selectTvlCleaner)
       .where('repository_name', '=', repositoryName)
@@ -30,7 +30,7 @@ export class TvlCleanerRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.tvl_cleaner')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

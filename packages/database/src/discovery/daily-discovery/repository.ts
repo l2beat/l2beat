@@ -5,7 +5,7 @@ import { selectDailyDiscovery } from './select'
 
 export class DailyDiscoveryRepository extends BaseRepository {
   async findLatest(name: string, chainId: ChainId) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .where('project_name', '=', name)
@@ -17,7 +17,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
   }
 
   async getTimestamps(projectName: string, chainId: ChainId) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select('unix_timestamp')
       .where('project_name', '=', projectName)
@@ -30,7 +30,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
   async addOrUpdate(record: DailyDiscoveryRecord) {
     const row = toRow(record)
 
-    await this.getDb()
+    await this.db
       .insertInto('public.daily_discovery')
       .values(row)
       .onConflict((cb) =>
@@ -51,7 +51,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
   }
 
   async getAvailableProjects() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select(['project_name', 'chain_id'])
       .groupBy(['project_name', 'chain_id'])
@@ -68,7 +68,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     chainId: ChainId,
     configHash: Hash256,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.daily_discovery')
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
@@ -78,7 +78,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
   }
 
   async getProject(projectName: string, chainId: ChainId) {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .where('project_name', '=', projectName)
@@ -89,7 +89,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
   }
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.daily_discovery')
       .select(selectDailyDiscovery)
       .execute()
@@ -98,7 +98,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.daily_discovery')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

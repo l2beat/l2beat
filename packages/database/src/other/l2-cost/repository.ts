@@ -6,7 +6,7 @@ import { selectL2Cost } from './select'
 
 export class L2CostRepository extends BaseRepository {
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.l2_costs')
       .selectAll()
       .execute()
@@ -29,7 +29,7 @@ export class L2CostRepository extends BaseRepository {
   async getByTimeRange(timeRange: [UnixTime, UnixTime]) {
     const [from, to] = timeRange
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.l2_costs')
       .where('timestamp', '>=', from.toDate())
       .where('timestamp', '<=', to.toDate())
@@ -48,7 +48,7 @@ export class L2CostRepository extends BaseRepository {
     id: TrackedTxId,
     deleteFromInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.l2_costs')
       .where('configuration_id', '=', id)
       .where('timestamp', '>=', deleteFromInclusive.toDate())
@@ -61,7 +61,7 @@ export class L2CostRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.l2_costs')
       .where('configuration_id', '=', configId)
       .where('timestamp', '>=', fromInclusive.toDate())
@@ -73,7 +73,7 @@ export class L2CostRepository extends BaseRepository {
   // #region Status page
 
   async getUsedConfigsIds(): Promise<string[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.l2_costs')
       .select(['configuration_id'])
       .distinctOn('configuration_id')
@@ -84,7 +84,7 @@ export class L2CostRepository extends BaseRepository {
   // #endregion
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.l2_costs')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

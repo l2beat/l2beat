@@ -13,7 +13,7 @@ export class ZkSyncTransactionRepository extends BaseRepository {
 
   async addOrUpdate(record: ZkSyncTransactionRecord) {
     const row = toRow(record)
-    await this.getDb()
+    await this.db
       .insertInto('activity.zksync')
       .values(row)
       .onConflict((cb) =>
@@ -27,14 +27,14 @@ export class ZkSyncTransactionRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('activity.zksync')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async findLastTimestamp(): Promise<UnixTime | undefined> {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('activity.zksync')
       .select(['unix_timestamp'])
       .orderBy('block_number', 'desc')
@@ -45,7 +45,7 @@ export class ZkSyncTransactionRepository extends BaseRepository {
   }
 
   async getAll(): Promise<ZkSyncTransactionRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('activity.zksync')
       .select(selectZksyncTransaction)
       .execute()

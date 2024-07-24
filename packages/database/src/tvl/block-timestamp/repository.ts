@@ -12,16 +12,13 @@ export class BlockTimestampRepository extends BaseRepository {
   async add(record: BlockTimestampRecord) {
     const row = toRow(record)
 
-    await this.getDb()
-      .insertInto('public.block_timestamps')
-      .values(row)
-      .execute()
+    await this.db.insertInto('public.block_timestamps').values(row).execute()
 
     return `${record.chain}-${record.timestamp.toNumber()}`
   }
 
   async findByChainAndTimestamp(chain: string, timestamp: UnixTime) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .where('chain', '=', chain)
@@ -35,7 +32,7 @@ export class BlockTimestampRepository extends BaseRepository {
     chain: string,
     timestamp: UnixTime,
   ): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.block_timestamps')
       .where('chain', '=', chain)
       .where('timestamp', '>', timestamp.toDate())
@@ -45,20 +42,16 @@ export class BlockTimestampRepository extends BaseRepository {
 
   // #region methods used only in TvlCleaner
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.getDb(), 'public.block_timestamps', dateRange)
+    return deleteHourlyUntil(this.db, 'public.block_timestamps', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(
-      this.getDb(),
-      'public.block_timestamps',
-      dateRange,
-    )
+    return deleteSixHourlyUntil(this.db, 'public.block_timestamps', dateRange)
   }
   // #endregion
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .execute()
@@ -81,7 +74,7 @@ export class BlockTimestampRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.block_timestamps')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

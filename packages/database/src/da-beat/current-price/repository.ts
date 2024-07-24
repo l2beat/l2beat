@@ -4,7 +4,7 @@ import { selectCurrentPrice } from './select'
 
 export class CurrentPriceRepository extends BaseRepository {
   async findMany() {
-    const res = await this.getDb()
+    const res = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .execute()
@@ -12,7 +12,7 @@ export class CurrentPriceRepository extends BaseRepository {
   }
 
   async findOneByAssetId(coingeckoId: string) {
-    const res = await this.getDb()
+    const res = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', '=', coingeckoId)
@@ -26,7 +26,7 @@ export class CurrentPriceRepository extends BaseRepository {
       return []
     }
 
-    const res = await this.getDb()
+    const res = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', 'in', coingeckoIds)
@@ -37,7 +37,7 @@ export class CurrentPriceRepository extends BaseRepository {
   async upsert(currentPrice: UpsertableCurrentPrice) {
     const entity = toRow(currentPrice)
     const { coingeckoId, ...rest } = entity
-    return this.getDb()
+    return this.db
       .insertInto('public.CurrentPrice')
       .values(entity)
       .onConflict((oc) => oc.column('coingeckoId').doUpdateSet(rest))
@@ -46,7 +46,7 @@ export class CurrentPriceRepository extends BaseRepository {
 
   async upsertMany(currentPrices: UpsertableCurrentPrice[]) {
     const entities = currentPrices.map(toRow)
-    return this.getDb()
+    return this.db
       .insertInto('public.CurrentPrice')
       .values(entities)
       .onConflict((oc) =>
@@ -59,7 +59,7 @@ export class CurrentPriceRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.CurrentPrice')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

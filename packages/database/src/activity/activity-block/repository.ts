@@ -14,7 +14,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
   }
 
   async addOrUpdate(record: BlockTransactionCountRecord) {
-    await this.getDb()
+    await this.db
       .insertInto('activity.block')
       .values(toRow(record))
       .onConflict((cb) =>
@@ -29,14 +29,12 @@ export class BlockTransactionCountRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
-      .deleteFrom('activity.block')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('activity.block').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('activity.block')
       .select('unix_timestamp')
       .where('project_id', '=', projectId.toString())
@@ -47,7 +45,7 @@ export class BlockTransactionCountRepository extends BaseRepository {
   }
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('activity.block')
       .select(selectBlockTransactionCount)
       .execute()

@@ -5,7 +5,7 @@ import { selectActivity } from './select'
 
 export class ActivityRepository extends BaseRepository {
   async getAll(): Promise<ActivityRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.activity')
       .select(selectActivity)
       .execute()
@@ -32,7 +32,7 @@ export class ActivityRepository extends BaseRepository {
   }
 
   async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.activity')
       .where((eb) =>
         eb.and([
@@ -45,7 +45,7 @@ export class ActivityRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.activity')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
@@ -56,7 +56,7 @@ export class ActivityRepository extends BaseRepository {
     timeRange: [UnixTime, UnixTime],
   ): Promise<ActivityRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.activity')
       .select(selectActivity)
       .where('project_id', '=', projectId.toString())

@@ -4,7 +4,7 @@ import { IndexerStateRecord, toRecord, toRow } from './entity'
 export class IndexerStateRepository extends BaseRepository {
   async addOrUpdate(record: IndexerStateRecord): Promise<string> {
     const row = toRow(record)
-    await this.getDb()
+    await this.db
       .insertInto('public.indexer_state')
       .values(row)
       .onConflict((cb) =>
@@ -24,7 +24,7 @@ export class IndexerStateRepository extends BaseRepository {
       return []
     }
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.indexer_state')
       .selectAll()
       .where('indexer_id', 'in', ids)
@@ -34,7 +34,7 @@ export class IndexerStateRepository extends BaseRepository {
   }
 
   async findIndexerState(indexerId: string) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.indexer_state')
       .selectAll()
       .where('indexer_id', '=', indexerId)
@@ -44,7 +44,7 @@ export class IndexerStateRepository extends BaseRepository {
   }
 
   async setSafeHeight(indexerId: string, safeHeight: number) {
-    const [result] = await this.getDb()
+    const [result] = await this.db
       .updateTable('public.indexer_state')
       .set({ safe_height: safeHeight })
       .where('indexer_id', '=', indexerId)
@@ -54,7 +54,7 @@ export class IndexerStateRepository extends BaseRepository {
   }
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.indexer_state')
       .selectAll()
       .execute()
@@ -62,7 +62,7 @@ export class IndexerStateRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.indexer_state')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

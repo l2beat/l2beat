@@ -5,7 +5,7 @@ import { selectDiscoveryCache } from './select'
 export class DiscoveryCacheRepository extends BaseRepository {
   async addOrUpdate(record: DiscoveryCacheRecord): Promise<string> {
     const row = toRow(record)
-    await this.getDb()
+    await this.db
       .insertInto('public.discovery_cache')
       .values(row)
       .onConflict((cb) =>
@@ -22,7 +22,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
   }
 
   async findByKey(key: DiscoveryCacheRecord['key']) {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)
       .where('key', '=', key)
@@ -32,7 +32,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
   }
 
   async getAll() {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)
       .execute()
@@ -41,7 +41,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
   }
 
   async deleteAfter(blockNumber: number, chain: string): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.discovery_cache')
       .where('block_number', '>', blockNumber)
       .where('chain', '=', chain)
@@ -50,7 +50,7 @@ export class DiscoveryCacheRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.discovery_cache')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

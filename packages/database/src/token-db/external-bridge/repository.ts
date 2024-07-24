@@ -5,7 +5,7 @@ export class ExternalBridgeRepository extends BaseRepository {
   upsert(externalBridge: ExternalBridgeRecord) {
     const row = toRow(externalBridge)
 
-    return this.getDb()
+    return this.db
       .insertInto('public.ExternalBridge')
       .values(row)
       .onConflict((conflict) => conflict.doNothing())

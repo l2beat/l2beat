@@ -6,7 +6,7 @@ import { selectVerifierStatus } from './select'
 export class VerifierStatusRepository extends BaseRepository {
   async addOrUpdate(record: VerifierStatusRecord): Promise<string> {
     const row = toRow(record)
-    await this.getDb()
+    await this.db
       .insertInto('public.verifier_status')
       .values(row)
       .onConflict((cb) =>
@@ -24,7 +24,7 @@ export class VerifierStatusRepository extends BaseRepository {
     address: string,
     chainId: ChainId,
   ): Promise<VerifierStatusRecord | undefined> {
-    const row = await this.getDb()
+    const row = await this.db
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .where('address', '=', address)
@@ -35,7 +35,7 @@ export class VerifierStatusRepository extends BaseRepository {
   }
 
   async getAll(): Promise<VerifierStatusRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .execute()
@@ -44,7 +44,7 @@ export class VerifierStatusRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.verifier_status')
       .executeTakeFirst()
     return Number(result.numDeletedRows)

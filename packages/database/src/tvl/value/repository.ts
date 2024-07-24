@@ -14,7 +14,7 @@ export class ValueRepository extends BaseRepository {
       return []
     }
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
       .where(
@@ -36,7 +36,7 @@ export class ValueRepository extends BaseRepository {
       return []
     }
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
       .where(
@@ -92,11 +92,11 @@ export class ValueRepository extends BaseRepository {
   // #region methods used only in TvlCleaner
 
   deleteHourlyUntil(dateRange: CleanDateRange) {
-    return deleteHourlyUntil(this.getDb(), 'public.values', dateRange)
+    return deleteHourlyUntil(this.db, 'public.values', dateRange)
   }
 
   deleteSixHourlyUntil(dateRange: CleanDateRange) {
-    return deleteSixHourlyUntil(this.getDb(), 'public.values', dateRange)
+    return deleteSixHourlyUntil(this.db, 'public.values', dateRange)
   }
 
   // #endregion
@@ -104,7 +104,7 @@ export class ValueRepository extends BaseRepository {
   // #region methods used only in tests
 
   async getAll(): Promise<ValueRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.values')
       .select(selectValue)
       .execute()
@@ -114,7 +114,7 @@ export class ValueRepository extends BaseRepository {
 
   async addMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
-    await this.getDb()
+    await this.db
       .insertInto('public.values')
       .values(rows)
       .onConflict((cb) =>
@@ -147,9 +147,7 @@ export class ValueRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
-      .deleteFrom('public.values')
-      .executeTakeFirst()
+    const result = await this.db.deleteFrom('public.values').executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
@@ -167,14 +165,14 @@ export class ValueRepository extends BaseRepository {
       return []
     }
 
-    const rows = await this.getDb()
+    const rows = await this.db
       .with('latest_values', (cb) =>
         cb
           .selectFrom('public.values')
           .select([
             ...selectValue,
-            this.getDb()
-              .fn.agg('ROW_NUMBER')
+            this.db.fn
+              .agg('ROW_NUMBER')
               .over((over) =>
                 over
                   .partitionBy(['project_id', 'data_source'])

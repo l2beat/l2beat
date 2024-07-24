@@ -13,7 +13,7 @@ export class AnomaliesRepository extends BaseRepository {
 
   async addOrUpdate(record: AnomalyRecord): Promise<string> {
     const row = toRow(record)
-    await this.getDb()
+    await this.db
       .insertInto('public.anomalies')
       .values(row)
       .onConflict((cb) =>
@@ -29,14 +29,14 @@ export class AnomaliesRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.anomalies')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
   }
 
   async getAll(): Promise<AnomalyRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
       .execute()
@@ -48,7 +48,7 @@ export class AnomaliesRepository extends BaseRepository {
     projectId: ProjectId,
     from: UnixTime,
   ): Promise<AnomalyRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
       .where('project_id', '=', projectId)

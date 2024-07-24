@@ -4,7 +4,7 @@ import { TokenBridgeRecord, toRow } from './entity'
 export class TokenBridgeRepository extends BaseRepository {
   upsertMany(tokenBridges: TokenBridgeRecord[]) {
     const rows = tokenBridges.map(toRow)
-    return this.getDb()
+    return this.db
       .insertInto('public.TokenBridge')
       .values(rows)
       .onConflict((conflict) =>

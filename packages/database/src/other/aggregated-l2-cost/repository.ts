@@ -5,7 +5,7 @@ import { selectAggregatedL2Costs } from './select'
 
 export class AggregatedL2CostRepository extends BaseRepository {
   async getAll(): Promise<AggregatedL2CostRecord[]> {
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .execute()
@@ -46,7 +46,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
   }
 
   async deleteAfter(from: UnixTime): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.aggregated_l2_costs')
       .where('timestamp', '>', from.toDate())
       .executeTakeFirst()
@@ -54,7 +54,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
   }
 
   async deleteAll(): Promise<number> {
-    const result = await this.getDb()
+    const result = await this.db
       .deleteFrom('public.aggregated_l2_costs')
       .executeTakeFirst()
     return Number(result.numDeletedRows)
@@ -65,7 +65,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
     timeRange: [UnixTime, UnixTime],
   ): Promise<AggregatedL2CostRecord[]> {
     const [from, to] = timeRange
-    const rows = await this.getDb()
+    const rows = await this.db
       .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .where('project_id', '=', projectId.toString())
