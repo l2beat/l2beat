@@ -1,8 +1,9 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
-import { notUndefined } from '@l2beat/shared-pure'
+import { ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { AztecClient } from '../../peripherals/aztec/AztecClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { Clock } from '../../tools/Clock'
 import { IndexerConfigurationRepository } from '../../tools/uif/IndexerConfigurationRepository'
@@ -70,8 +71,9 @@ function createActivityIndexers(
     peripherals.getRepository(IndexerStateRepository),
     peripherals.getRepository(IndexerConfigurationRepository),
   )
-
+  console.log(activityConfig.projects)
   return activityConfig.projects
+    .filter((p) => p.id === ProjectId('aztec'))
     .flatMap((project) => {
       const txsCountProvider = new TxsCountProvider({
         logger,
@@ -84,7 +86,7 @@ function createActivityIndexers(
       switch (project.config.type) {
         case 'rpc': {
           const blockTimestampProvider = new BlockTimestampProvider({
-            rpcClient: peripherals.getClient(RpcClient, {
+            client: peripherals.getClient(RpcClient, {
               url: project.config.url,
               callsPerMinute: project.config.callsPerMinute,
             }),
@@ -102,6 +104,34 @@ function createActivityIndexers(
             // TODO: add batchSize to config
             batchSize: 100,
             minHeight: project.config.startBlock ?? 0,
+            parents: [blockTargetIndexer],
+            txsCountProvider,
+            indexerService,
+            activityRepository,
+          })
+
+          return { blockTargetIndexer, activityIndexer }
+        }
+        case 'aztec': {
+          const blockTimestampProvider = new BlockTimestampProvider({
+            client: peripherals.getClient(AztecClient, {
+              url: project.config.url,
+              callsPerMinute: project.config.callsPerMinute,
+            }),
+            logger,
+          })
+          const blockTargetIndexer = new BlockTargetIndexer(
+            logger,
+            clock,
+            blockTimestampProvider,
+          )
+
+          const activityIndexer = new ActivityIndexer({
+            logger,
+            projectId: project.id,
+            // TODO: add batchSize to config
+            batchSize: 100,
+            minHeight: 0,
             parents: [blockTargetIndexer],
             txsCountProvider,
             indexerService,

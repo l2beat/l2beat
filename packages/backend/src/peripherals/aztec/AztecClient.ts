@@ -1,6 +1,7 @@
 import { HttpClient } from '@l2beat/shared'
-import { assert, RateLimiter } from '@l2beat/shared-pure'
+import { assert, RateLimiter, UnixTime } from '@l2beat/shared-pure'
 
+import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { findMinedBlockOrThrow } from './findMinedBlockOrThrow'
 import {
   AztecGetRollupResponseBody,
@@ -42,6 +43,20 @@ export class AztecClient {
     } = parseWithSchema(data, AztecGetRollupsResponseBody)
 
     return findMinedBlockOrThrow(rollups)
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
+    const end = await this.getLatestBlock()
+
+    return await getBlockNumberAtOrBefore(
+      timestamp,
+      start,
+      end.number,
+      async (number: number) => {
+        const block = await this.getBlock(number)
+        return { timestamp: block.timestamp.toNumber() }
+      },
+    )
   }
 
   async getBlock(number: number): Promise<Block> {
