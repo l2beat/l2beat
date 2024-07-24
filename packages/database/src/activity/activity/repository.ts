@@ -1,6 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { batchExecute } from '../../utils/batchExecute'
 import { ActivityRecord, toRecord, toRow } from './entity'
 import { selectActivity } from './select'
 
@@ -17,7 +16,7 @@ export class ActivityRepository extends BaseRepository {
   async addOrUpdateMany(records: ActivityRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await batchExecute(this.getDb(), rows, 5_000, async (trx, batch) => {
+    await this.batch(rows, 5_000, async (trx, batch) => {
       await trx
         .insertInto('public.activity')
         .values(batch)

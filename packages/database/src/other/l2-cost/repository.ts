@@ -1,7 +1,6 @@
 import { TrackedTxId } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { batchExecute } from '../../utils/batchExecute'
 import { L2CostRecord, toRecord, toRow } from './entity'
 import { selectL2Cost } from './select'
 
@@ -20,7 +19,7 @@ export class L2CostRepository extends BaseRepository {
     }
     const rows = records.map(toRow)
 
-    await batchExecute(this.getDb(), rows, 1_000, async (trx, batch) => {
+    await this.batch(rows, 1_000, async (trx, batch) => {
       await trx.insertInto('public.l2_costs').values(batch).execute()
     })
 

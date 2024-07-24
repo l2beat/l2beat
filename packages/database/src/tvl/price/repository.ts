@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { batchExecute } from '../../utils/batchExecute'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -59,7 +58,7 @@ export class PriceRepository extends BaseRepository {
 
     const rows = records.map(toRow)
 
-    await batchExecute(this.getDb(), rows, 10_000, async (trx, batch) => {
+    await this.batch(rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.prices').values(batch).execute()
     })
 

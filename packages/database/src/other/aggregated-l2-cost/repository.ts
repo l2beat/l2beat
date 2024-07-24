@@ -1,6 +1,5 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { batchExecute } from '../../utils/batchExecute'
 import { AggregatedL2CostRecord, toRecord, toRow } from './entity'
 import { selectAggregatedL2Costs } from './select'
 
@@ -17,7 +16,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
   async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
-    await batchExecute(this.getDb(), rows, 5_000, async (trx, batch) => {
+    await this.batch(rows, 5_000, async (trx, batch) => {
       await trx
         .insertInto('public.aggregated_l2_costs')
         .values(batch)

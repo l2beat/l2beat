@@ -1,6 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
-import { batchExecute } from '../../utils/batchExecute'
 import { L2CostPriceRecord, toRecord, toRow } from './entity'
 import { selectL2CostPrice } from './select'
 
@@ -28,7 +27,7 @@ export class L2CostPriceRepository extends BaseRepository {
   async addMany(records: L2CostPriceRecord[]) {
     const rows = records.map(toRow)
 
-    await batchExecute(this.getDb(), rows, 10_000, async (trx, batch) => {
+    await this.batch(rows, 10_000, async (trx, batch) => {
       await trx.insertInto('public.l2_costs_prices').values(batch).execute()
     })
 

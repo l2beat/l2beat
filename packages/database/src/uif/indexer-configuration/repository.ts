@@ -1,5 +1,4 @@
 import { BaseRepository } from '../../BaseRepository'
-import { batchExecute } from '../../utils/batchExecute'
 import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
 import { selectIndexerConfiguration } from './select'
 
@@ -7,7 +6,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
   async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
-    await batchExecute(this.getDb(), rows, 5_000, async (trx, batch) => {
+    await this.batch(rows, 5_000, async (trx, batch) => {
       await trx
         .insertInto('public.indexer_configurations')
         .values(batch)
