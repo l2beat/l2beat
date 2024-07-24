@@ -24,7 +24,7 @@ export async function getDaProjectEconomicSecurity(
 
 const getCachedEconomicSecurity = cache(
   async (daLayer: DaLayer) => {
-    if (daLayer.kind !== 'public-blockchain' || !daLayer.economicSecurity) {
+    if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
       return undefined
     }
 

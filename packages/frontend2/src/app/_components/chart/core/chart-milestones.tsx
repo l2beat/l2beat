@@ -89,7 +89,7 @@ function ChartMilestone({ x, milestone }: Props) {
   return (
     <div
       ref={ref}
-      className="absolute select-none scale-75 md:scale-100"
+      className="absolute scale-75 select-none md:scale-100"
       style={style}
     >
       <a

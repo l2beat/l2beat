@@ -10,8 +10,8 @@ import { noBridge } from './bridges/no-bridge'
 
 export const celestia: DaLayer = {
   id: 'celestia',
-  type: 'da-layer',
-  kind: 'public-blockchain',
+  type: 'DaLayer',
+  kind: 'PublicBlockchain',
   display: {
     name: 'Celestia',
     slug: 'celestia',

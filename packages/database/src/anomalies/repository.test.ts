@@ -1,17 +1,17 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { describeDatabase } from '../../../../../test/database'
-import { AnomaliesRecord, AnomaliesRepository } from './AnomaliesRepository'
+import { describeDatabase } from '../test/database'
+import { AnomalyRecord } from './entity'
+import { AnomaliesRepository } from './repository'
 
-describeDatabase(AnomaliesRepository.name, (database) => {
-  const repository = new AnomaliesRepository(database, Logger.SILENT)
+describeDatabase(AnomaliesRepository.name, (db) => {
+  const repository = db.anomalies
 
   const PROJECT_A = ProjectId('project-a')
   const PROJECT_B = ProjectId('project-b')
 
   const START = UnixTime.now()
-  const DATA: AnomaliesRecord[] = [
+  const DATA: AnomalyRecord[] = [
     {
       timestamp: START.add(-1, 'hours'),
       projectId: PROJECT_A,
@@ -40,7 +40,7 @@ describeDatabase(AnomaliesRepository.name, (database) => {
 
   describe(AnomaliesRepository.prototype.addOrUpdateMany.name, () => {
     it('add new and update existing', async () => {
-      const newRows: AnomaliesRecord[] = [
+      const newRows: AnomalyRecord[] = [
         // to update
         {
           timestamp: START.add(-1, 'hours'),
@@ -61,7 +61,7 @@ describeDatabase(AnomaliesRepository.name, (database) => {
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
-        newRows[0],
+        newRows[0]!,
         {
           timestamp: START.add(-2, 'hours'),
           projectId: PROJECT_B,
@@ -74,7 +74,7 @@ describeDatabase(AnomaliesRepository.name, (database) => {
           subtype: 'proofSubmissions',
           duration: 100,
         },
-        newRows[1],
+        newRows[1]!,
       ])
     })
 

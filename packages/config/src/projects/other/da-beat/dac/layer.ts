@@ -7,8 +7,8 @@ import { immutableXDac } from './bridges/immutablex'
  */
 export const dac: DaLayer = {
   id: 'dac',
-  type: 'da-layer',
-  kind: 'dac',
+  type: 'DaLayer',
+  kind: 'DAC',
   display: {
     name: 'Data Availability Committee (DAC)',
     slug: 'dac',

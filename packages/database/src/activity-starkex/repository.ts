@@ -31,8 +31,11 @@ export class StarkExTransactionCountRepository {
     return `${record.projectId.toString()}-${record.timestamp.toString()}`
   }
 
-  async deleteAll() {
-    await this.db.deleteFrom('activity.starkex').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('activity.starkex')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async findLastTimestampByProjectId(projectId: ProjectId) {

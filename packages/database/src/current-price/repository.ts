@@ -56,7 +56,10 @@ export class CurrentPriceRepository {
       .execute()
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.CurrentPrice').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.CurrentPrice')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

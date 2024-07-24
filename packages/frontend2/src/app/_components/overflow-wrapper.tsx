@@ -85,7 +85,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
           )}
         >
           <div className="flex h-full items-center justify-center">
-            <ChevronIcon className="scale-75 rotate-90 dark:fill-white" />
+            <ChevronIcon className="rotate-90 scale-75 dark:fill-white" />
           </div>
         </div>
         <div
@@ -109,7 +109,7 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
           )}
         >
           <div className="flex h-full items-center justify-center">
-            <ChevronIcon className="scale-75 -rotate-90 dark:fill-white" />
+            <ChevronIcon className="-rotate-90 scale-75 dark:fill-white" />
           </div>
         </div>
       </div>

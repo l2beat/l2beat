@@ -119,8 +119,9 @@ export class ValueRepository {
     return rows.length
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.values').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db.deleteFrom('public.values').executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   // #endregion

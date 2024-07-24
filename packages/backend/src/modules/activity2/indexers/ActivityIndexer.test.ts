@@ -148,16 +148,30 @@ describe(ActivityIndexer.name, () => {
   })
 
   describe(ActivityIndexer.prototype.invalidate.name, () => {
-    it('deletes records after targetHeight and returns the new safe height', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
-        deleteAfter: mockFn().resolvesTo(undefined),
-      })
-
+    it('returns targetHeight', async () => {
       const indexer = new ActivityIndexer({
         logger: Logger.SILENT,
         parents: [],
         txsCountProvider: mockObject<TxsCountProvider>({}),
-        activityRepository,
+        activityRepository: mockObject<ActivityRepository>({}),
+        projectId: ProjectId('a'),
+        indexerService: mockObject<IndexerService>({}),
+        minHeight: 0,
+        batchSize: 1,
+      })
+
+      const targetHeight = 0
+      const newSafeHeight = await indexer.invalidate(targetHeight)
+
+      expect(newSafeHeight).toEqual(targetHeight)
+    })
+
+    it('throws assertion when targetHeight different than safeHeight', async () => {
+      const indexer = new ActivityIndexer({
+        logger: Logger.SILENT,
+        parents: [],
+        txsCountProvider: mockObject<TxsCountProvider>({}),
+        activityRepository: mockObject<ActivityRepository>({}),
         projectId: ProjectId('a'),
         indexerService: mockObject<IndexerService>({}),
         minHeight: 0,
@@ -165,13 +179,8 @@ describe(ActivityIndexer.name, () => {
       })
 
       const targetHeight = 10
-      const newSafeHeight = await indexer.invalidate(targetHeight)
 
-      expect(activityRepository.deleteAfter).toHaveBeenCalledWith(
-        new UnixTime(targetHeight),
-        ProjectId('a'),
-      )
-      expect(newSafeHeight).toEqual(targetHeight)
+      expect(async () => await indexer.invalidate(targetHeight)).toBeRejected()
     })
   })
 })

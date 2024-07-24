@@ -36,14 +36,18 @@ export class L2CostPriceRepository {
     return rows.length
   }
 
-  deleteAfter(from: UnixTime) {
-    return this.db
+  async deleteAfter(from: UnixTime): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.l2_costs_prices')
       .where('timestamp', '>', from.toDate())
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.l2_costs_prices').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.l2_costs_prices')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

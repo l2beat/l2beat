@@ -48,7 +48,7 @@ export function BigPizzaRosette(props: BigPizzaRosetteProps) {
           className={cn(props.isUpcoming && 'opacity-30')}
         />
         {props.isUpcoming && (
-          <UpcomingBadge className="absolute top-[130px] left-[90px]" />
+          <UpcomingBadge className="absolute left-[90px] top-[130px]" />
         )}
         <PizzaRosetteLabels
           values={props.values}

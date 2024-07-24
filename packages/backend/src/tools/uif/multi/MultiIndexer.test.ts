@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn } from 'earl'
-import { MOCK_TRANSACTION, mockLegacyDatabase } from '../../../test/database'
+import { MOCK_TRX, mockDatabase } from '../../../test/database'
 import { MultiIndexer } from './MultiIndexer'
 import {
   Configuration,
@@ -139,11 +139,11 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [actual('a', 100, 200)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, MOCK_TRANSACTION)
+      ).toHaveBeenOnlyCalledWith(200, MOCK_TRX)
     })
 
     it('calls multiUpdate with a late matching configuration', async () => {
@@ -160,11 +160,11 @@ describe(MultiIndexer.name, () => {
         300,
         400,
         [actual('b', 300, 400)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(400, MOCK_TRANSACTION)
+      ).toHaveBeenOnlyCalledWith(400, MOCK_TRX)
     })
 
     it('calls multiUpdate with two matching configurations', async () => {
@@ -181,11 +181,11 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [actual('a', 100, 200), actual('b', 100, 400)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, MOCK_TRANSACTION)
+      ).toHaveBeenOnlyCalledWith(200, MOCK_TRX)
     })
 
     it('calls multiUpdate with two middle matching configurations', async () => {
@@ -202,11 +202,11 @@ describe(MultiIndexer.name, () => {
         301,
         400,
         [actual('a', 100, 400), actual('b', 200, 500)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(400, MOCK_TRANSACTION)
+      ).toHaveBeenOnlyCalledWith(400, MOCK_TRX)
     })
 
     it('skips calling multiUpdate if we are too early', async () => {
@@ -270,11 +270,11 @@ describe(MultiIndexer.name, () => {
         100,
         200,
         [actual('b', 100, 400)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, MOCK_TRANSACTION)
+      ).toHaveBeenOnlyCalledWith(200, MOCK_TRX)
 
       // TODO: what was the idea behind this test?
       // The same range. In real life might be a result of a parent reorg
@@ -285,7 +285,7 @@ describe(MultiIndexer.name, () => {
       //   100,
       //   200,
       //   [actual('a', 100, 200), actual('b', 100, 400)],
-      //   MOCK_TRANSACTION,
+      //   MOCK_TRX,
       // )
       // expect(
       //   testIndexer.updateConfigurationsCurrentHeight,
@@ -298,11 +298,11 @@ describe(MultiIndexer.name, () => {
         201,
         400,
         [actual('b', 100, 400)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(2, 400, MOCK_TRANSACTION)
+      ).toHaveBeenNthCalledWith(2, 400, MOCK_TRX)
     })
 
     it('correctly updates currentHeight in saved configurations', async () => {
@@ -322,11 +322,11 @@ describe(MultiIndexer.name, () => {
         100,
         250,
         [actual('a', 100, 500)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(250, MOCK_TRANSACTION)
+      ).toHaveBeenOnlyCalledWith(250, MOCK_TRX)
 
       expect(await testIndexer.update(251, 500)).toEqual(500)
       expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
@@ -334,11 +334,11 @@ describe(MultiIndexer.name, () => {
         251,
         500,
         [actual('a', 100, 500), actual('b', 100, 500)],
-        MOCK_TRANSACTION,
+        MOCK_TRX,
       )
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(2, 500, MOCK_TRANSACTION)
+      ).toHaveBeenNthCalledWith(2, 500, MOCK_TRX)
     })
   })
 
@@ -419,7 +419,7 @@ class TestMultiIndexer extends MultiIndexer<null> {
     configurations: Configuration<null>[],
     private readonly _saved: SavedConfiguration<null>[],
   ) {
-    super(Logger.SILENT, [], mockLegacyDatabase(), configurations)
+    super(Logger.SILENT, [], mockDatabase(), configurations)
   }
 
   getSafeHeight =

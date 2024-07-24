@@ -42,15 +42,19 @@ export class DiscoveryCacheRepository {
     return rows.map(toRecord)
   }
 
-  async deleteAfter(blockNumber: number, chain: string) {
-    return await this.db
+  async deleteAfter(blockNumber: number, chain: string): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.discovery_cache')
       .where('block_number', '>', blockNumber)
       .where('chain', '=', chain)
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  deleteAll() {
-    return this.db.deleteFrom('public.discovery_cache').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.discovery_cache')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 }

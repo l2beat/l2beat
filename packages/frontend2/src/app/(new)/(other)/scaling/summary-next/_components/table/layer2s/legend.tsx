@@ -11,7 +11,7 @@ export function ScalingLegend() {
         const { Icon, text } = value
         return (
           <p className="flex gap-1" key={key}>
-            <Icon className="-top-0.5 size-6 relative min-w-[24px]" />
+            <Icon className="relative -top-0.5 size-6 min-w-[24px]" />
             <span>&ndash;</span>
             <span>{text}</span>
           </p>

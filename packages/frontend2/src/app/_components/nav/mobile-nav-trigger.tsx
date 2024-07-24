@@ -11,7 +11,7 @@ export function MobileNavTriggerOpen() {
   const { setOpen } = useMobileNav()
   return (
     <button onClick={() => setOpen(true)}>
-      <MenuOpenIcon className="h-6 w-6" />
+      <MenuOpenIcon className="size-6" />
     </button>
   )
 }
@@ -23,7 +23,7 @@ export function MobileNavTriggerClose() {
   const { setOpen } = useMobileNav()
   return (
     <button onClick={() => setOpen(false)}>
-      <MenuCloseIcon className="h-6 w-6" />
+      <MenuCloseIcon className="size-6" />
     </button>
   )
 }

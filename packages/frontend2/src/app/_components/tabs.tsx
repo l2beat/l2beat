@@ -34,7 +34,7 @@ const TabsTrigger = React.forwardRef<
     {...props}
   >
     {children}
-    <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80  group-data-[state=active]:opacity-100 group-data-[state=active]:bg-pink-900 dark:group-data-[state=active]:bg-pink-200" />
+    <span className="absolute bottom-0 left-0 block h-1 w-full rounded-t-sm bg-gray-700 opacity-0 transition-all duration-300 group-hover:opacity-80  group-data-[state=active]:bg-pink-900 group-data-[state=active]:opacity-100 dark:group-data-[state=active]:bg-pink-200" />
   </TabsPrimitive.Trigger>
 ))
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName

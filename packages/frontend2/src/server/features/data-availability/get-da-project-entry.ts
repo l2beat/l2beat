@@ -85,7 +85,7 @@ function getHeader({
     tvs,
     economicSecurity,
     durationStorage:
-      daLayer.kind === 'public-blockchain' ? daLayer.pruningWindow : undefined,
+      daLayer.kind === 'PublicBlockchain' ? daLayer.pruningWindow : undefined,
     usedIn: daBridge.usedIn,
   }
 }

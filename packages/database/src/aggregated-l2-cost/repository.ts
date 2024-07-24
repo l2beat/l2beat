@@ -48,15 +48,19 @@ export class AggregatedL2CostRepository {
     return records.length
   }
 
-  async deleteAfter(from: UnixTime): Promise<void> {
-    await this.db
+  async deleteAfter(from: UnixTime): Promise<number> {
+    const result = await this.db
       .deleteFrom('public.aggregated_l2_costs')
       .where('timestamp', '>', from.toDate())
-      .execute()
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
-  async deleteAll(): Promise<void> {
-    await this.db.deleteFrom('public.aggregated_l2_costs').execute()
+  async deleteAll(): Promise<number> {
+    const result = await this.db
+      .deleteFrom('public.aggregated_l2_costs')
+      .executeTakeFirst()
+    return Number(result.numDeletedRows)
   }
 
   async getByProjectAndTimeRange(
