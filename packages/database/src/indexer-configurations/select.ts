@@ -1,6 +1,6 @@
 import { IndexerConfiguration } from '../kysely/generated/types'
 
-export const selectIndexerConfiguration = [
+export const selectIndexerConfigurations = [
   'id',
   'indexer_id',
   'max_height',

@@ -1,9 +1,9 @@
 import { PostgresDatabase, Transaction } from '../kysely'
 import { batchExecute } from '../utils/batchExecute'
 import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
-import { selectIndexerConfiguration } from './select'
+import { selectIndexerConfigurations } from './select'
 
-export class IndexerConfigurationRepository {
+export class IndexerConfigurationsRepository {
   constructor(private readonly db: PostgresDatabase) {}
 
   async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
@@ -30,7 +30,7 @@ export class IndexerConfigurationRepository {
   async getSavedConfigurations(indexerId: string) {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
-      .select(selectIndexerConfiguration)
+      .select(selectIndexerConfigurations)
       .where('indexer_id', '=', indexerId)
       .execute()
 
@@ -40,14 +40,14 @@ export class IndexerConfigurationRepository {
   async getSavedConfigurationsByIds(configurationIds: string[]) {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
-      .select(selectIndexerConfiguration)
+      .select(selectIndexerConfigurations)
       .where('id', 'in', configurationIds)
       .execute()
 
     return rows.map(toRecord)
   }
 
-  updateSavedConfigurations(
+  updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
     trx?: Transaction,
@@ -88,7 +88,7 @@ export class IndexerConfigurationRepository {
   async getAll() {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
-      .select(selectIndexerConfiguration)
+      .select(selectIndexerConfigurations)
       .execute()
 
     return rows.map(toRecord)

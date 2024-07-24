@@ -17,7 +17,7 @@ import { DeploymentRepository } from './deployment/repository'
 import { DiscoveryCacheRepository } from './discovery-cache/repository'
 import { ExternalBridgeRepository } from './external-bridge/repository'
 import { FinalityRepository } from './finality/repository'
-import { IndexerConfigurationRepository } from './indexer-configuration/repository'
+import { IndexerConfigurationsRepository } from './indexer-configurations/repository'
 import { IndexerStateRepository } from './indexer-state/repository'
 import { PostgresDatabase, Transaction } from './kysely'
 import { L2CostPriceRepository } from './l2-cost-price/repository'
@@ -72,7 +72,7 @@ export function createDatabase(config?: PoolConfig) {
     dailyDiscovery: new DailyDiscoveryRepository(db),
     discoveryCache: new DiscoveryCacheRepository(db),
     finality: new FinalityRepository(db),
-    indexerConfiguration: new IndexerConfigurationRepository(db),
+    indexerConfigurations: new IndexerConfigurationsRepository(db),
     indexerState: new IndexerStateRepository(db),
     l2Cost: new L2CostRepository(db),
     l2CostPrice: new L2CostPriceRepository(db),
