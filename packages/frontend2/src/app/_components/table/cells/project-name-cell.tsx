@@ -10,16 +10,14 @@ import ShieldIcon from '~/icons/shield.svg'
 import UnderReviewIcon from '~/icons/under-review.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import { type SyncStatus } from '~/types/SyncStatus'
+import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 
 export interface ProjectCellProps {
   project: {
     name: string
     shortName?: string
-    slug: string
     isVerified?: boolean
-    isUpcoming?: boolean
-    isArchived?: boolean
     redWarning?: string
     showProjectUnderReview?: boolean
     hasImplementationChanged?: boolean
@@ -28,11 +26,17 @@ export interface ProjectCellProps {
   }
   type?: 'layer2' | 'layer3' | 'bridge'
   showIsL3?: boolean
+  className?: string
 }
 
-export function ProjectNameCell({ project, showIsL3, type }: ProjectCellProps) {
+export function ProjectNameCell({
+  project,
+  showIsL3,
+  type,
+  className,
+}: ProjectCellProps) {
   return (
-    <div className="pl-2 2xl:pl-3">
+    <div className={cn('pl-2 2xl:pl-3', className)}>
       <span className="text-base font-bold md:text-lg">
         {project.shortName ?? project.name}
       </span>

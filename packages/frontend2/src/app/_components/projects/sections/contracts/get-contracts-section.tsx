@@ -12,11 +12,11 @@ import {
 } from '@l2beat/config'
 import {
   assert,
+  type ContractsVerificationStatuses,
   type EthereumAddress,
   type ImplementationChangeReportApiResponse,
   type ImplementationChangeReportProjectData,
   type ManuallyVerifiedContracts,
-  type VerificationStatus,
 } from '@l2beat/shared-pure'
 import { concat } from 'lodash'
 import { getExplorerUrl } from '~/utils/get-explorer-url'
@@ -35,6 +35,7 @@ type ProjectParams = {
   id: string
   slug: string
   isUnderReview?: boolean
+  isVerified: boolean
   architectureImage?: string
   contracts: ScalingProjectContracts
   escrows: ScalingProjectEscrow[] | undefined
@@ -50,7 +51,7 @@ type ProjectParams = {
 
 export function getContractsSection(
   projectParams: ProjectParams,
-  verificationStatus: VerificationStatus,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportApiResponse | undefined,
 ): Omit<ContractsSectionProps, 'sectionOrder' | 'id' | 'title'> | undefined {
@@ -59,14 +60,17 @@ export function getContractsSection(
   }
 
   const contracts = projectParams.contracts.addresses.map((contract) => {
-    const isUnverified = isContractUnverified(contract, verificationStatus)
+    const isUnverified = isContractUnverified(
+      contract,
+      contractsVerificationStatuses,
+    )
     const implementationChangeForProject =
       implementationChange?.projects[projectParams.id]
     return makeTechnologyContract(
       contract,
       projectParams,
       isUnverified,
-      verificationStatus,
+      contractsVerificationStatuses,
       manuallyVerifiedContracts,
       implementationChangeForProject,
     )
@@ -80,7 +84,7 @@ export function getContractsSection(
           contracts.map((contract) => {
             const isUnverified = isContractUnverified(
               contract,
-              verificationStatus,
+              contractsVerificationStatuses,
             )
             const implementationChangeForProject =
               implementationChange?.projects[projectParams.id]
@@ -88,7 +92,7 @@ export function getContractsSection(
               contract,
               projectParams,
               isUnverified,
-              verificationStatus,
+              contractsVerificationStatuses,
               manuallyVerifiedContracts,
               implementationChangeForProject,
             )
@@ -103,7 +107,10 @@ export function getContractsSection(
       ?.filter((escrow) => escrow.newVersion && !escrow.isHistorical)
       .sort(moreTokensFirst)
       .map((escrow) => {
-        const isUnverified = isEscrowUnverified(escrow, verificationStatus)
+        const isUnverified = isEscrowUnverified(
+          escrow,
+          contractsVerificationStatuses,
+        )
         const contract = escrowToProjectContract(escrow)
         const implementationChangeForProject =
           implementationChange?.projects[projectParams.id]
@@ -112,7 +119,7 @@ export function getContractsSection(
           contract,
           projectParams,
           isUnverified,
-          verificationStatus,
+          contractsVerificationStatuses,
           manuallyVerifiedContracts,
           implementationChangeForProject,
           true,
@@ -124,7 +131,11 @@ export function getContractsSection(
     isCritical: !!risk.isCritical,
   }))
 
-  if (verificationStatus.projects[projectParams.id] === false) {
+  /*
+    TODO: isVerified should not be required after https://linear.app/l2beat/issue/L2B-6497/refactor-verification-status is done
+    That's because contractsVerificationStatuses should only contain the verification status of the contracts that are actually used in the project thus you can derive isVerified from that.
+  */
+  if (projectParams.isVerified === false) {
     risks.push({
       text: `${CONTRACTS.UNVERIFIED_RISK.category} ${CONTRACTS.UNVERIFIED_RISK.text}`,
       isCritical: !!CONTRACTS.UNVERIFIED_RISK.isCritical,
@@ -164,13 +175,13 @@ function makeTechnologyContract(
   item: ScalingProjectContract,
   projectParams: ProjectParams,
   isUnverified: boolean,
-  verificationStatus: VerificationStatus,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
   manuallyVerifiedContracts: ManuallyVerifiedContracts,
   implementationChange: ImplementationChangeReportProjectData | undefined,
   isEscrow?: boolean,
 ): TechnologyContract {
   const chain = item.chain ?? 'ethereum'
-  const verificationStatusForChain = verificationStatus.contracts[chain] ?? {}
+  const verificationStatusForChain = contractsVerificationStatuses[chain] ?? {}
   const manuallyVerifiedContractsForChain =
     manuallyVerifiedContracts[chain] ?? {}
   const etherscanUrl = getExplorerUrl(chain)
@@ -346,31 +357,31 @@ function makeTechnologyContract(
 
 function isContractUnverified(
   contract: ScalingProjectContract,
-  verificationStatus: VerificationStatus,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
   const chain = contract.chain ?? 'ethereum'
   if (isSingleAddress(contract)) {
     return (
-      verificationStatus.contracts[chain]?.[contract.address.toString()] ===
+      contractsVerificationStatuses[chain]?.[contract.address.toString()] ===
       false
     )
   }
 
   return contract.multipleAddresses.some(
     (address) =>
-      verificationStatus.contracts[chain]?.[address.toString()] === false,
+      contractsVerificationStatuses[chain]?.[address.toString()] === false,
   )
 }
 
 function isEscrowUnverified(
   escrow: ScalingProjectEscrow,
-  verificationStatus: VerificationStatus,
+  contractsVerificationStatuses: ContractsVerificationStatuses,
 ): boolean {
   const chain = escrow.newVersion
     ? escrow.contract.chain ?? 'ethereum'
     : 'ethereum'
   return (
-    verificationStatus.contracts[chain]?.[escrow.address.toString()] === false
+    contractsVerificationStatuses[chain]?.[escrow.address.toString()] === false
   )
 }
 
