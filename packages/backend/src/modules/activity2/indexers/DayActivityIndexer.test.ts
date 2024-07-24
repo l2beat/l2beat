@@ -6,7 +6,7 @@ import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import { TxsCountProvider } from '../services/TxsCountProvider'
 import { DayActivityIndexer } from './DayActivityIndexer'
-import { ActivityIndexerDeps } from './types'
+import { DayActivityIndexerDeps } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -17,18 +17,12 @@ describe(DayActivityIndexer.name, () => {
 
   describe(DayActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
-      })
-
       const txsCountProvider = mockObject<TxsCountProvider>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
       const indexer = createIndexer({
         txsCountProvider,
-        activityRepository,
         batchSize: 50,
       })
 
@@ -36,6 +30,23 @@ describe(DayActivityIndexer.name, () => {
 
       expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 50)
       expect(newSafeHeight).toEqual(50)
+    })
+
+    it('make update based on batchSize and uncertaintyBuffer', async () => {
+      const txsCountProvider = mockObject<TxsCountProvider>({
+        getTxsCount: mockFn().resolvesTo([]),
+      })
+
+      const indexer = createIndexer({
+        txsCountProvider,
+        batchSize: 50,
+        uncertaintyBuffer: 10,
+      })
+
+      const newSafeHeight = await indexer.update(50, 100)
+
+      expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(40, 90)
+      expect(newSafeHeight).toEqual(90)
     })
 
     it('gets blocks counts and saves to db', async () => {
@@ -71,9 +82,7 @@ describe(DayActivityIndexer.name, () => {
 
   describe(DayActivityIndexer.prototype.invalidate.name, () => {
     it('returns targetHeight', async () => {
-      const indexer = createIndexer({
-        batchSize: 1,
-      })
+      const indexer = createIndexer()
 
       const targetHeight = 0
       const newSafeHeight = await indexer.invalidate(targetHeight)
@@ -92,17 +101,23 @@ function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
 }
 
 function createIndexer(
-  deps?: Partial<ActivityIndexerDeps>,
+  deps?: Partial<DayActivityIndexerDeps>,
 ): DayActivityIndexer {
   return new DayActivityIndexer({
     logger: Logger.SILENT,
     parents: [],
-    txsCountProvider: mockObject<TxsCountProvider>({}),
-    activityRepository: mockObject<ActivityRepository>({}),
+    txsCountProvider: mockObject<TxsCountProvider>({
+      getTxsCount: mockFn().resolvesTo([]),
+    }),
+    activityRepository: mockObject<ActivityRepository>({
+      getByProjectAndTimeRange: mockFn().resolvesTo([]),
+      addOrUpdateMany: mockFn().resolvesTo(undefined),
+    }),
     projectId: ProjectId('a'),
     indexerService: mockObject<IndexerService>({}),
     minHeight: 0,
     batchSize: 1,
+    uncertaintyBuffer: 0,
     ...deps,
   })
 }

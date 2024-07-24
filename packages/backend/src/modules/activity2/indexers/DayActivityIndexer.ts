@@ -1,17 +1,28 @@
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { ActivityIndexerDeps } from './types'
+import { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: ActivityIndexerDeps) {
+  constructor(private readonly $: DayActivityIndexerDeps) {
     const logger = $.logger.tag($.projectId)
     super({ ...$, logger, name: `activity_indexer_${$.projectId}` })
   }
 
   override async update(from: number, to: number): Promise<number> {
-    const fromWithBatchSize = from + this.$.batchSize
+    // TODO: confirm if this logic is still needed
+    // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
+    const fromWithUncertainty = from - (this.$.uncertaintyBuffer ?? 0)
+    const adjustedFrom =
+      fromWithUncertainty < this.$.minHeight
+        ? this.$.minHeight
+        : fromWithUncertainty
+
+    const fromWithBatchSize = adjustedFrom + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
 
-    const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
+    const counts = await this.$.txsCountProvider.getTxsCount(
+      adjustedFrom,
+      adjustedTo,
+    )
 
     await this.$.activityRepository.addOrUpdateMany(counts)
 

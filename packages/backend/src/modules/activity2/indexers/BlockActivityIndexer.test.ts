@@ -17,18 +17,12 @@ describe(BlockActivityIndexer.name, () => {
 
   describe(BlockActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
-      })
-
       const txsCountProvider = mockObject<TxsCountProvider>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
       const indexer = createIndexer({
         txsCountProvider,
-        activityRepository,
         batchSize: 50,
       })
 
@@ -75,14 +69,7 @@ describe(BlockActivityIndexer.name, () => {
 
   describe(BlockActivityIndexer.prototype.getDatabaseEntries.name, () => {
     it('return an empty map if there are no records', async () => {
-      const activityRepository = mockObject<ActivityRepository>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([]),
-      })
-
-      const indexer = createIndexer({
-        activityRepository,
-        batchSize: 1,
-      })
+      const indexer = createIndexer()
 
       const entries = await indexer.getDatabaseEntries([])
 
@@ -130,9 +117,7 @@ describe(BlockActivityIndexer.name, () => {
 
   describe(BlockActivityIndexer.prototype.invalidate.name, () => {
     it('returns targetHeight', async () => {
-      const indexer = createIndexer({
-        batchSize: 1,
-      })
+      const indexer = createIndexer()
 
       const targetHeight = 0
       const newSafeHeight = await indexer.invalidate(targetHeight)
@@ -141,9 +126,7 @@ describe(BlockActivityIndexer.name, () => {
     })
 
     it('throws assertion when targetHeight different than safeHeight', async () => {
-      const indexer = createIndexer({
-        batchSize: 1,
-      })
+      const indexer = createIndexer()
 
       const targetHeight = 10
 
@@ -166,8 +149,13 @@ function createIndexer(
   return new BlockActivityIndexer({
     logger: Logger.SILENT,
     parents: [],
-    txsCountProvider: mockObject<TxsCountProvider>({}),
-    activityRepository: mockObject<ActivityRepository>({}),
+    txsCountProvider: mockObject<TxsCountProvider>({
+      getTxsCount: mockFn().resolvesTo([]),
+    }),
+    activityRepository: mockObject<ActivityRepository>({
+      getByProjectAndTimeRange: mockFn().resolvesTo([]),
+      addOrUpdateMany: mockFn().resolvesTo(undefined),
+    }),
     projectId: ProjectId('a'),
     indexerService: mockObject<IndexerService>({}),
     minHeight: 0,
