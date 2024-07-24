@@ -195,6 +195,14 @@ export const nova: Layer2 = orbitStackL2({
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, “wrapped” token will be minted.',
       ...upgradeExecutorUpgradeability,
     }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
+      sinceTimestamp: new UnixTime(1659620187),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2..',
+      ...upgradeExecutorUpgradeability,
+    }),
   ],
   nonTemplateRiskView: {
     exitWindow: {
