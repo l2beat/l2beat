@@ -25,7 +25,7 @@ export function MobileNavLink({
       <Link
         href={href}
         className={cn(
-          'flex flex-col justify-center h-full relative px-2 font-medium text-base md:px-4 md:text-lg',
+          'relative flex h-full flex-col justify-center px-2 text-base font-medium md:px-4 md:text-lg',
           active && 'text-pink-900 dark:text-pink-200',
         )}
       >

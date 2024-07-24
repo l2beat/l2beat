@@ -31,7 +31,7 @@ export function StageBadge({
       <span
         className={cn(
           getColorClassName(stage),
-          '!leading-none inline-block h-min rounded px-1.5 text-center font-medium',
+          'inline-block h-min rounded px-1.5 text-center font-medium !leading-none',
           oneSize && 'w-20',
           big ? 'py-0.5 text-base md:text-lg' : 'py-[3px] text-xs',
           value && 'uppercase',

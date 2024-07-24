@@ -29,7 +29,7 @@ export function Verifiers(props: Props) {
     <div className="w-full">
       <div
         className={cn(
-          'border-gray-200 border-b align-bottom dark:border-zinc-700',
+          'border-b border-gray-200 align-bottom dark:border-zinc-700',
           grid,
         )}
       >
@@ -52,14 +52,14 @@ export function Verifiers(props: Props) {
             key={`${item.contractAddress.toString()}-${+item.chainId}`}
             value={`${item.contractAddress.toString()}-${+item.chainId}`}
             className={cn(
-              'hover:!bg-zinc-100 dark:hover:!bg-neutral-800 transition-colors dark:data-[state=open]:bg-zinc-900 data-[state=open]:bg-gray-100 w-full',
+              'w-full transition-colors hover:!bg-zinc-100 data-[state=open]:bg-gray-100 dark:hover:!bg-neutral-800 dark:data-[state=open]:bg-zinc-900',
             )}
           >
             <AccordionHeader asChild>
               <AccordionTrigger asChild>
                 <div
                   className={cn(
-                    'group md:h-14 cursor-pointer border-gray-200 border-b dark:border-zinc-700 data-[state=open]:border-none text-left flex w-full items-center justify-between',
+                    'group flex w-full cursor-pointer items-center justify-between border-b border-gray-200 text-left data-[state=open]:border-none dark:border-zinc-700 md:h-14',
                     grid,
                   )}
                 >
