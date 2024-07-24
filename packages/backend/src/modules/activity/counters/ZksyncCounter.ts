@@ -3,7 +3,7 @@ import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
 import { Database, Transaction } from '@l2beat/database'
-import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
+import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
 
@@ -11,7 +11,7 @@ export class ZksyncCounter extends SequenceProcessor {
   constructor(
     projectId: ProjectId,
     db: Database,
-    private readonly zksyncClient: ZksyncClient,
+    private readonly zksyncClient: ZksyncLiteClient,
     logger: Logger,
     batchSize: number,
   ) {
