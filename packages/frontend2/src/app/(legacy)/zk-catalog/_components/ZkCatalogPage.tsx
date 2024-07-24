@@ -28,7 +28,7 @@ export function ZkCatalogPage(props: ZkCatalogViewProps) {
           <AccordionHeader asChild>
             <AccordionTrigger
               asChild
-              className="relative w-full z-10 flex-col rounded-xl border border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900 cursor-pointer"
+              className="relative w-full z-10 flex-col border rounded-xl border-gray-300 bg-gray-100 px-6 py-4 md:flex-row dark:border-gray-800 dark:bg-zinc-900 cursor-pointer"
             >
               <div className="grid md:grid-cols-[4fr,4fr,4fr,4fr,4fr,1fr]">
                 <div className="mb-3 flex items-center gap-2 md:hidden">
