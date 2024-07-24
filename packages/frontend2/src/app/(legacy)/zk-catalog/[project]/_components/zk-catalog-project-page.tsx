@@ -46,6 +46,7 @@ export function ZkCatalogProjectPage(props: ZkCatalogProjectPageProps) {
           />
         </Section>
         <Section title="Description">
+          <p className="mb-2">{props.details.shortDescription}</p>
           <Markdown className="zk-description">
             {props.details.description}
           </Markdown>
