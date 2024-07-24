@@ -6,7 +6,7 @@ import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
-import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
+import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import {
   RpcActivityTransactionConfig,
   SimpleActivityTransactionConfig,
@@ -238,10 +238,14 @@ describe(TxsCountProvider.name, () => {
         activityRecord('a', START.add(2, 'days').toStartOf('day'), 5),
       ])
 
-      expect(peripherals.getClient).toHaveBeenNthCalledWith(1, ZksyncClient, {
-        url: 'url',
-        callsPerMinute: 1,
-      })
+      expect(peripherals.getClient).toHaveBeenNthCalledWith(
+        1,
+        ZksyncLiteClient,
+        {
+          url: 'url',
+          callsPerMinute: 1,
+        },
+      )
       expect(client.getTransactionsInBlock).toHaveBeenCalledTimes(3)
     })
   })
@@ -262,7 +266,7 @@ function mockPeripherals({
 }: {
   rpc?: { client: RpcClient; options: any }
   starkex?: { client: StarkexClient; options: any }
-  zksync?: { client: ZksyncClient; options: any }
+  zksync?: { client: ZksyncLiteClient; options: any }
 }) {
   return mockObject<Peripherals>({
     getClient: mockFn()
@@ -270,7 +274,7 @@ function mockPeripherals({
       .returnsOnce(rpc?.client)
       .given(StarkexClient, starkex?.options)
       .returnsOnce(starkex?.client)
-      .given(ZksyncClient, zksync?.options)
+      .given(ZksyncLiteClient, zksync?.options)
       .returnsOnce(zksync?.client),
   })
 }
@@ -303,7 +307,7 @@ function mockZksyncClient(
     ),
   )
 
-  return mockObject<ZksyncClient>({
+  return mockObject<ZksyncLiteClient>({
     getTransactionsInBlock: mockGetBlock,
   })
 }

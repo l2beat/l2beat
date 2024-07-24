@@ -3,7 +3,7 @@ import { Database } from '@l2beat/database'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
-import { ZksyncClient } from '../../peripherals/zksync/ZksyncClient'
+import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
@@ -129,7 +129,7 @@ function createActivityIndexers(
       }
       case 'zksync': {
         const blockTimestampProvider = new BlockTimestampProvider({
-          client: peripherals.getClient(ZksyncClient, {
+          client: peripherals.getClient(ZksyncLiteClient, {
             url: project.config.url,
             callsPerMinute: project.config.callsPerMinute,
           }),

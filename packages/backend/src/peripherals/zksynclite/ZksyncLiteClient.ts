@@ -9,9 +9,9 @@ import {
 
 import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import {
-  ZksyncBlocksResultSchema,
-  ZksyncResponse,
-  ZksyncTransactionResultSchema,
+  ZksyncLiteBlocksResultSchema,
+  ZksyncLiteResponse,
+  ZksyncLiteTransactionResultSchema,
 } from './schemas'
 
 interface Transaction {
@@ -23,7 +23,7 @@ interface Transaction {
 const PAGE_LIMIT = 100
 const CALLS_PER_MINUTE = 60
 
-export class ZksyncClient {
+export class ZksyncLiteClient {
   constructor(
     private readonly httpClient: HttpClient,
     private readonly logger: Logger,
@@ -41,7 +41,7 @@ export class ZksyncClient {
     services: { httpClient: HttpClient; logger: Logger },
     options: { url: string; callsPerMinute: number | undefined },
   ) {
-    return new ZksyncClient(
+    return new ZksyncLiteClient(
       services.httpClient,
       services.logger,
       options.url,
@@ -52,7 +52,7 @@ export class ZksyncClient {
   async getLatestBlock() {
     const result = await this.call('blocks/lastFinalized')
 
-    const parsed = ZksyncBlocksResultSchema.safeParse(result)
+    const parsed = ZksyncLiteBlocksResultSchema.safeParse(result)
 
     if (!parsed.success) {
       throw new TypeError('Invalid Zksync block schema')
@@ -118,7 +118,7 @@ export class ZksyncClient {
       direction: 'older',
     })
 
-    const parsed = ZksyncTransactionResultSchema.safeParse(result)
+    const parsed = ZksyncLiteTransactionResultSchema.safeParse(result)
 
     if (!parsed.success) {
       throw new TypeError('Invalid Zksync transactions schema')
@@ -154,22 +154,22 @@ export class ZksyncClient {
     }
 
     const json: unknown = JSON.parse(text)
-    const zksyncResponse = ZksyncResponse.safeParse(json)
+    const zksyncLiteResponse = ZksyncLiteResponse.safeParse(json)
 
-    if (!zksyncResponse.success) {
+    if (!zksyncLiteResponse.success) {
       const message = 'Invalid Zksync response.'
       this.recordError(path, timeMs, message)
       throw new TypeError(message)
     }
 
-    if (zksyncResponse.data.status !== 'success') {
-      this.recordError(path, timeMs, zksyncResponse.data.error.message)
-      throw new Error(zksyncResponse.data.error.message)
+    if (zksyncLiteResponse.data.status !== 'success') {
+      this.recordError(path, timeMs, zksyncLiteResponse.data.error.message)
+      throw new Error(zksyncLiteResponse.data.error.message)
     }
 
     this.logger.debug({ type: 'success', timeMs, path })
 
-    return zksyncResponse.data.result
+    return zksyncLiteResponse.data.result
   }
 
   private recordError(path: string, timeMs: number, message: string) {

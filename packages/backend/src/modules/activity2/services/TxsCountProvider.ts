@@ -6,7 +6,7 @@ import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
-import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
+import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
 
 interface TxsCountProviderDeps {
@@ -112,7 +112,7 @@ export class TxsCountProvider {
     )
     const projectConfig = this.$.projectConfig
 
-    const zksyncClient = this.$.peripherals.getClient(ZksyncClient, {
+    const zksyncClient = this.$.peripherals.getClient(ZksyncLiteClient, {
       url: projectConfig.url,
       callsPerMinute: projectConfig.callsPerMinute,
     })

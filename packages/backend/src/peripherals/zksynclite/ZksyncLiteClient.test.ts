@@ -4,10 +4,10 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { Response } from 'node-fetch'
 
-import { ZksyncClient } from './ZksyncClient'
+import { ZksyncLiteClient } from './ZksyncLiteClient'
 
-describe(ZksyncClient.name, () => {
-  describe(ZksyncClient.prototype.getTransactionsInBlock.name, () => {
+describe(ZksyncLiteClient.name, () => {
+  describe(ZksyncLiteClient.prototype.getTransactionsInBlock.name, () => {
     it('returns transactions array', async () => {
       const transactions = Array.from({ length: 69 }, () => fakeTransaction())
 
@@ -21,7 +21,7 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -45,7 +45,7 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -86,7 +86,7 @@ describe(ZksyncClient.name, () => {
           ),
       })
 
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -129,7 +129,7 @@ describe(ZksyncClient.name, () => {
           ),
       })
 
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -142,7 +142,7 @@ describe(ZksyncClient.name, () => {
     })
   })
 
-  describe(ZksyncClient.prototype.getLatestBlock.name, () => {
+  describe(ZksyncLiteClient.prototype.getLatestBlock.name, () => {
     it('gets latest block', async () => {
       const httpClient = mockObject<HttpClient>({
         fetch: async () =>
@@ -154,7 +154,7 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -175,7 +175,7 @@ describe(ZksyncClient.name, () => {
             }),
           ),
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -188,7 +188,7 @@ describe(ZksyncClient.name, () => {
     })
   })
 
-  describe(ZksyncClient.prototype.call.name, () => {
+  describe(ZksyncLiteClient.prototype.call.name, () => {
     it('throws for error responses', async () => {
       const httpClient = mockObject<HttpClient>({
         async fetch() {
@@ -201,7 +201,7 @@ describe(ZksyncClient.name, () => {
           )
         },
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -218,7 +218,7 @@ describe(ZksyncClient.name, () => {
           return new Response(JSON.stringify({ status: '', foo: 'bar' }))
         },
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
@@ -235,7 +235,7 @@ describe(ZksyncClient.name, () => {
           return new Response('foo', { status: 400 })
         },
       })
-      const zksyncClient = new ZksyncClient(
+      const zksyncClient = new ZksyncLiteClient(
         httpClient,
         Logger.SILENT,
         'https://example.com',
