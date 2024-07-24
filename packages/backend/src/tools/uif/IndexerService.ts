@@ -80,12 +80,12 @@ export class IndexerService {
     return configurations
   }
 
-  async updateSavedConfigurations(
+  async updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
     trx: Transaction,
   ): Promise<void> {
-    await this.db.indexerConfiguration.updateSavedConfigurations(
+    await this.db.indexerConfiguration.updateCurrentHeights(
       indexerId,
       currentHeight,
       trx,

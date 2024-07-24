@@ -83,11 +83,11 @@ async function main() {
         ? fetchL2CostsApi(config.backend, http)
         : undefined,
     ])
-    const supportedChains = getChainNames([
+    const supportedChains = getChainNames(
       ...config.layer2s,
       ...config.layer3s,
       ...config.bridges,
-    ])
+    )
     const verificationStatus = getVerificationStatus(supportedChains)
     const manuallyVerifiedContracts =
       getManuallyVerifiedContracts(supportedChains)

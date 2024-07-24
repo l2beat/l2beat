@@ -88,7 +88,7 @@ export const UpgradeDetails: Story = {
           isAdmin: true,
         },
       ],
-      upgradeableBy: 'Tom and Jerry',
+      upgradeableBy: ['Tom and Jerry'],
       upgradeDelay: '1 day',
       upgradeConsiderations:
         'Upgrading this contract requires the deployer to be dancing.',

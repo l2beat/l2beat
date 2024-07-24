@@ -82,7 +82,7 @@ const props: ContractsSectionProps = {
       description:
         'DAI Vault for custom DAI Gateway managed by MakerDAO. This contract stores the following tokens: DAI.',
       links: [],
-      upgradeableBy: 'Maker DAO',
+      upgradeableBy: ['Maker DAO'],
       upgradeDelay: 'No delay',
     },
     {

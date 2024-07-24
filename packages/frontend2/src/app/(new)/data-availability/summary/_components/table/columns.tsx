@@ -8,7 +8,6 @@ import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index
 import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
-import { DaBridgeCell } from './da-bridge-cell'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'
 import { ProjectsUsedIn } from './projects-used-in'
 
@@ -40,11 +39,26 @@ export const columns = [
   }),
   columnHelper.accessor('name', {
     header: 'DA Layer',
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        project={{
+          name: ctx.getValue(),
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('daBridge', {
     header: 'DA Bridge',
-    cell: (ctx) => <DaBridgeCell daBridge={ctx.getValue()} />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        className="!pl-0"
+        project={{
+          ...ctx.row.original,
+          name: ctx.getValue().name,
+          shortName: undefined,
+        }}
+      />
+    ),
   }),
   columnHelper.accessor('risks', {
     header: 'Risks',

@@ -117,7 +117,7 @@ function CategoryRisks({ title, risks }: { title: string; risks: Risk[] }) {
               </div>
               <span
                 className={cn(
-                  'font-semibold text-sm whitespace-normal',
+                  'whitespace-normal text-sm font-semibold',
                   risk.isCritical ? 'text-red-700' : 'text-zinc-800',
                 )}
               >
