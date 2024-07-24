@@ -50,6 +50,10 @@ export class AmountRepository {
   }
 
   async getByTimestamps(timestamps: UnixTime[]) {
+    if (timestamps.length === 0) {
+      return []
+    }
+
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
