@@ -200,7 +200,7 @@ export const nova: Layer2 = orbitStackL2({
       sinceTimestamp: new UnixTime(1659620187),
       tokens: '*',
       description:
-        'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2..',
+        'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2.',
       ...upgradeExecutorUpgradeability,
     }),
   ],
