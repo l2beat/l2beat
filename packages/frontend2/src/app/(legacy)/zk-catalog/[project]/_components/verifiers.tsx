@@ -1,11 +1,11 @@
 import { EtherscanLink } from '~/app/_components/etherscan-link'
 import { Markdown } from '~/app/_components/markdown/markdown'
 import ChevronDownIcon from '~/icons/chevron.svg'
-import { getExplorerUrlByChainId } from '../../_utils/getExplorerUrl'
-import { LastUsedCell } from './LastUsedCell'
-import { SubVerifiersTable } from './SubVerifiersTable'
-import { VerifiedCell } from './VerifiedCell'
-import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
+import { getExplorerUrlByChainId } from '../../_utils/get-explorer-url'
+import { LastUsedCell } from './last-used-cell'
+import { SubVerifiersTable } from './sub-verifiers-table'
+import { VerifiedCell } from './verified-cell'
+import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 import {
   Accordion,
   AccordionContent,

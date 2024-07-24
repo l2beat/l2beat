@@ -1,7 +1,7 @@
 import { type VerifiersStatuses } from '~/server/features/zk-catalog/get-verifiers'
-import { type ZkCatalogViewProps } from '../_components/ZkCatalogPage'
-import { getProofVerification } from './getProofVerification'
-import { getTrustedSetup } from './getTrustedSetup'
+import { type ZkCatalogViewProps } from '../_components/zk-catalog-page'
+import { getProofVerification } from './get-proof-verification'
+import { getTrustedSetup } from './get-trusted-setup'
 import { type Project } from './types'
 
 export const ZK_CATALOG_ASK_FOR_VERIFICATION_LINK =

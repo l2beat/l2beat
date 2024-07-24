@@ -1,10 +1,10 @@
 import { EtherscanLink } from '~/app/_components/etherscan-link'
-import { LastUsedCell } from '../[project]/_components/LastUsedCell'
-import { SubVerifiersTable } from '../[project]/_components/SubVerifiersTable'
-import { VerifiedCell } from '../[project]/_components/VerifiedCell'
-import { getExplorerUrlByChainId } from '../_utils/getExplorerUrl'
+import { LastUsedCell } from '../[project]/_components/last-used-cell'
+import { SubVerifiersTable } from '../[project]/_components/sub-verifiers-table'
+import { VerifiedCell } from '../[project]/_components/verified-cell'
+import { getExplorerUrlByChainId } from '../_utils/get-explorer-url'
 import { type ZkCatalogViewEntry } from '../types'
-import { DetailsItem } from './DetailsItem'
+import { DetailsItem } from './details-item'
 
 export function VerifierCard({
   verifier,

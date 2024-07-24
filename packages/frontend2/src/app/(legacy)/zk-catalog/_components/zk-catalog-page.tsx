@@ -7,11 +7,11 @@ import {
 } from '@radix-ui/react-accordion'
 import Image from 'next/image'
 import ChevronDownIcon from '~/icons/chevron.svg'
-import { VerifiedCountWithDetails } from '../[project]/_components/VerifiedCountWithDetails'
+import { VerifiedCountWithDetails } from '../[project]/_components/verified-count-with-details'
 import { type ZkCatalogViewEntry } from '../types'
-import { DetailsItem } from './DetailsItem'
-import { DetailsLink } from './DetailsLink'
-import { VerifierCard } from './VerifierCard'
+import { DetailsItem } from './details-item'
+import { DetailsLink } from './details-link'
+import { VerifierCard } from './verifier-card'
 
 export interface ZkCatalogViewProps {
   items: ZkCatalogViewEntry[]

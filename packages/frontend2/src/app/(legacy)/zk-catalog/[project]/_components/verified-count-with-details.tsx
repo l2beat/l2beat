@@ -3,7 +3,7 @@ import CircleQuestionMark from '~/icons/circle-question-mark.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import VerifiedIcon from '~/icons/verified.svg'
 
-import { type ZkCatalogProjectDetails } from './ZkCatalogProjectPage'
+import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'
 
 interface Props {
   verifiers: ZkCatalogProjectDetails['verifiers']

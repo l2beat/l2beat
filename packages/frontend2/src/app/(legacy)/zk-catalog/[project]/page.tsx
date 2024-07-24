@@ -3,10 +3,10 @@ import { notFound } from 'next/navigation'
 import { ContentWrapper } from '~/app/_components/content-wrapper'
 import { getVerifiers } from '~/server/features/zk-catalog/get-verifiers'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/getZkCatalogView'
+import { ZK_CATALOG_ASK_FOR_VERIFICATION_LINK } from '../_utils/get-zk-catalog-view'
 import { projects } from '../_utils/projects'
-import { ZkCatalogProjectPage } from './_components/ZkCatalogProjectPage'
-import { getZkCatalogProjectDetails } from './_utils/getZkCatalogProjectDetails'
+import { ZkCatalogProjectPage } from './_components/zk-catalog-project-page'
+import { getZkCatalogProjectDetails } from './_utils/get-zk-catalog-project-details'
 
 interface Props {
   params: {

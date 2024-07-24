@@ -13,10 +13,10 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
 import { type ZkCatalogProofVerification } from '../../_utils/types'
-import { ProjectHeader } from './ProjectHeader'
-import { RequiredTools } from './RequiredTools'
-import { VerifiedCountWithDetails } from './VerifiedCountWithDetails'
-import { Verifiers } from './Verifiers'
+import { ProjectHeader } from './project-header'
+import { RequiredTools } from './required-tools'
+import { VerifiedCountWithDetails } from './verified-count-with-details'
+import { Verifiers } from './verifiers'
 
 export interface ZkCatalogProjectPageProps {
   details: ZkCatalogProjectDetails
