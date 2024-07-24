@@ -4,6 +4,7 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { AztecClient } from '../../../peripherals/aztec/AztecClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
@@ -28,6 +29,9 @@ export class TxsCountProvider {
       }
       case 'starkex': {
         return await this.getStarkexTxsCount(from, to)
+      }
+      case 'aztec': {
+        return await this.getAztecTxsCount(from, to)
       }
       default:
         throw new Error(`${this.$.projectConfig.type} type not implemented`)
@@ -60,25 +64,7 @@ export class TxsCountProvider {
 
     const blocks = await Promise.all(queries)
 
-    const result: ActivityRecord[] = []
-
-    for (const block of blocks) {
-      const timestamp = block.timestamp.toStartOf('day')
-      const currentCount = result.find(
-        (r) => r.timestamp.toNumber() === timestamp.toNumber(),
-      )
-
-      if (currentCount) {
-        currentCount.count += block.count
-      } else {
-        result.push({
-          projectId: this.$.projectId,
-          timestamp,
-          count: block.count,
-        })
-      }
-    }
-    return result
+    return this.sumCountsPerDay(blocks)
   }
 
   async getStarkexTxsCount(
@@ -118,5 +104,56 @@ export class TxsCountProvider {
       timestamp: c.timestamp,
       count: c.count,
     }))
+  }
+
+  async getAztecTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'aztec',
+      'Method not supported for projects other than aztec',
+    )
+    const projectConfig = this.$.projectConfig
+    const aztecClient = this.$.peripherals.getClient(AztecClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const block = await aztecClient.getBlock(blockNumber)
+      return {
+        count: block.transactionCount,
+        timestamp: block.timestamp,
+      }
+    })
+
+    const blocks = await Promise.all(queries)
+
+    return this.sumCountsPerDay(blocks)
+  }
+
+  sumCountsPerDay(
+    blocks: {
+      count: number
+      timestamp: UnixTime
+    }[],
+  ): ActivityRecord[] {
+    const result: ActivityRecord[] = []
+
+    for (const block of blocks) {
+      const timestamp = block.timestamp.toStartOf('day')
+      const currentCount = result.find(
+        (r) => r.timestamp.toNumber() === timestamp.toNumber(),
+      )
+
+      if (currentCount) {
+        currentCount.count += block.count
+      } else {
+        result.push({
+          projectId: this.$.projectId,
+          timestamp,
+          count: block.count,
+        })
+      }
+    }
+    return result
   }
 }
