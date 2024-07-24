@@ -60,7 +60,7 @@ export class IndexerConfigurationRepository {
     return rows.map((r) => r.id)
   }
 
-  updateSavedConfigurations(
+  updateCurrentHeights(
     indexerId: string,
     currentHeight: number | null,
     trx?: Transaction,
