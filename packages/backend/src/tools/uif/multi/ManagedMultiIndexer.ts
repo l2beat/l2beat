@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
@@ -87,12 +87,10 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
 
   override async updateConfigurationsCurrentHeight(
     currentHeight: number,
-    trx: Transaction,
   ): Promise<void> {
     await this.options.indexerService.updateConfigurationsCurrentHeight(
       this.indexerId,
       currentHeight,
-      trx,
     )
   }
 }

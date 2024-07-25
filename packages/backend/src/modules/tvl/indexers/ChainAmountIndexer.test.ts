@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { AmountRecord, Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { MOCK_TRX, mockDatabase } from '../../../test/database'
+import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
@@ -59,7 +59,7 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate, MOCK_TRX)
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
@@ -69,10 +69,9 @@ describe(ChainAmountIndexer.name, () => {
         toUpdate,
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith(
-        [amount('a', 200, 123)],
-        MOCK_TRX,
-      )
+      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
+        amount('a', 200, 123),
+      ])
 
       expect(safeHeight).toEqual(timestampToSync.toNumber())
     })
@@ -103,7 +102,7 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [actual('a', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate, MOCK_TRX)
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
       expect(safeHeight).toEqual(to)
@@ -132,7 +131,7 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate, MOCK_TRX)
+      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
 
       expect(safeHeight).toEqual(to)
     })

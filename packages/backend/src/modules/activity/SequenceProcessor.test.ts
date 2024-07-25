@@ -15,7 +15,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 
-  type ProcessRange = (from: number, to: number, trx: any) => Promise<void>
+  type ProcessRange = (from: number, to: number) => Promise<void>
 
   function createSequenceProcessor({
     getLatest,
@@ -75,9 +75,8 @@ describeDatabase(SequenceProcessor.name, (db) => {
       protected override async processRange(
         from: number,
         to: number,
-        trx: any,
       ): Promise<void> {
-        return processRange(from, to, trx)
+        return processRange(from, to)
       }
     })()
   }
@@ -510,17 +509,12 @@ describeDatabase(SequenceProcessor.name, (db) => {
 })
 
 function checkRanges(
-  processRangeMock: MockFunction<[number, number, any], Promise<void>>,
+  processRangeMock: MockFunction<[number, number], Promise<void>>,
   ranges: [number, number][],
 ) {
   expect(processRangeMock).toHaveBeenCalledTimes(ranges.length)
   for (const [i, [start, end]] of ranges.entries()) {
-    expect(processRangeMock).toHaveBeenNthCalledWith(
-      i + 1,
-      start,
-      end,
-      expect.anything(),
-    )
+    expect(processRangeMock).toHaveBeenNthCalledWith(i + 1, start, end)
   }
 }
 

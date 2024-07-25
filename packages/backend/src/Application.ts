@@ -30,7 +30,10 @@ export class Application {
   constructor(config: Config, logger: Logger) {
     const database = new LegacyDatabase(config.database, logger, config.name)
 
-    const kyselyDatabase = createDatabase(config.database.connection)
+    const kyselyDatabase = createDatabase({
+      ...config.database.connection,
+      ...config.database.connectionPoolSize,
+    })
 
     const clock = new Clock(
       config.clock.minBlockTimestamp,

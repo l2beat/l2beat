@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ActivityRecord } from '@l2beat/database/src/activity/entity'
+import { ActivityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { ActivityConfig } from '../../../config/Config'
