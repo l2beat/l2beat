@@ -340,7 +340,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('TreasuryGovernor', {
-        description: `Governance contract used for creating non-constitutional AIPs, or "treasury proposals", e.g., transferring founds out of the DAO Treasury. Also enforces the ${l2TreasuryQuorumPercent} % quorum for proposals.`,
+        description: `Governance contract used for creating non-constitutional AIPs, or "treasury proposals", e.g., transferring founds out of the DAO Treasury. Also enforces the ${l2TreasuryQuorumPercent}% quorum for proposals.`,
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('L2TreasuryTimelock', {
