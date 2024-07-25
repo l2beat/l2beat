@@ -247,8 +247,8 @@ class TestIndexer extends ManagedMultiIndexer<null> {
   constructor(override readonly options: ManagedMultiIndexerOptions<null>) {
     super(options)
   }
-  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
-    Promise.resolve(targetHeight),
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
+    async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 }

@@ -1,7 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
-import { RateLimiter, getErrorMessage } from '@l2beat/shared-pure'
+import { RateLimiter, UnixTime, getErrorMessage } from '@l2beat/shared-pure'
 
+import { getBlockNumberAtOrBefore } from '../getBlockNumberAtOrBefore'
 import { DegateResponse } from './schemas'
 
 type Block = number | 'latest'
@@ -45,6 +46,20 @@ export class DegateClient {
 
   async getBlock(blockNumber: number) {
     return await this.call(blockNumber)
+  }
+
+  async getBlockNumberAtOrBefore(timestamp: UnixTime, start = 0) {
+    const end = await this.getLatestBlockNumber()
+
+    return await getBlockNumberAtOrBefore(
+      timestamp,
+      start,
+      end,
+      async (block) => {
+        const blockData = await this.getBlock(block)
+        return { timestamp: blockData.createdAt.toNumber() }
+      },
+    )
   }
 
   private async call(block: Block) {

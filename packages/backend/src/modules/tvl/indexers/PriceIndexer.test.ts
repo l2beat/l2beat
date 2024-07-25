@@ -72,7 +72,8 @@ describe(PriceIndexer.name, () => {
         actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, configurations)
+      const saveData = await indexer.multiUpdate(from, to, configurations)
+      const safeHeight = await saveData()
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
 

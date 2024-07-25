@@ -54,16 +54,17 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    this.logger.info('Saving prices into DB', {
-      from,
-      to: adjustedTo.toNumber(),
-      configurationsToSync: configurations.length,
-      prices: optimizedPrices.length,
-    })
+    return async () => {
+      await this.$.db.price.insertMany(optimizedPrices)
+      this.logger.info('Saved prices into DB', {
+        from,
+        to: adjustedTo.toNumber(),
+        configurationsToSync: configurations.length,
+        prices: optimizedPrices.length,
+      })
 
-    await this.$.db.price.insertMany(optimizedPrices)
-
-    return adjustedTo.toNumber()
+      return adjustedTo.toNumber()
+    }
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
