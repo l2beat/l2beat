@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xd2139e7ec6e7f6a8566780c760916d780e211b0d
+
+# Diff at Thu, 25 Jul 2024 08:06:53 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@22ea980261775f90fcc11819837e728806ddea2b block: 20239375
+- current block number: 20382262
+
+## Description
+
+RegistryCoordinator upgrade: two new variables lastEjectionTimestamp, and ejectionCooldown. Once ejected, operators now need to wait for the cooldown period to end before they can reregister (currently 7 days).
+
+## Watched changes
+
+```diff
+    contract RegistryCoordinator (0x0BAAc79acD45A023E19345c352d8a7a83C4e5656) {
+    +++ description: Operators register here with an AVS: The coordinator has three registries: 1) a `StakeRegistry` that keeps track of operators' stakes, 2) a `BLSApkRegistry` that keeps track of operators' BLS public keys and aggregate BLS public keys for each quorum, 3) an `IndexRegistry` that keeps track of an ordered list of operators for each quorum
+      values.$implementation:
+-        "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF"
++        "0xdcabf0bE991d4609096CCe316df08d091356E03F"
+      values.ejectionCooldown:
++        604800
+    }
+```
+
+## Source code changes
+
+```diff
+.../RegistryCoordinator/RegistryCoordinator.sol    | 68 ++++++++++++++++++----
+ 1 file changed, 58 insertions(+), 10 deletions(-)
+```
+
 Generated with discovered.json: 0x1cb8d13729ba33d6cddd0c638aca07a479a0e8bf
 
 # Diff at Wed, 22 May 2024 14:05:54 GMT:
