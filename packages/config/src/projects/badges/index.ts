@@ -33,6 +33,14 @@ export const badges = {
     },
     type: BadgeType.RaaS,
   },
+  Gateway: {
+    display: {
+      name: 'Gateway',
+      description:
+        'This project was deployed via the rollup-as-a-service provider Gateway',
+    },
+    type: BadgeType.RaaS,
+  },
   Conduit: {
     display: {
       name: 'Conduit',
@@ -361,6 +369,22 @@ export const badges = {
     display: {
       name: 'L3 Host Chain',
       description: 'This project serves as a host chain for L3s',
+    },
+    type: BadgeType.Other,
+  },
+  BasedSequencing: {
+    display: {
+      name: 'Based Sequencing',
+      description:
+        'This project is ordering its transactions through Ethereum block proposers.',
+    },
+    type: BadgeType.Other,
+  },
+  MigratedFromL1: {
+    display: {
+      name: 'Migrated from L1 to Ethereum L2',
+      description:
+        'This project has migrated from being a standalone L1 blockchain to an Ethereum L2.',
     },
     type: BadgeType.Other,
   },
