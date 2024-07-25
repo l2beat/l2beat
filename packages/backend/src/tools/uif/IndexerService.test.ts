@@ -229,7 +229,8 @@ describe(IndexerService.name, () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      deleteConfigurationsExcluding: async () => -1,
+      deleteConfigurations: async () => -1,
+      getIdsByIndexer: async () => ['a', 'b', 'c'],
     })
 
     const indexerService = new IndexerService(
@@ -242,8 +243,12 @@ describe(IndexerService.name, () => {
     await indexerService.persistOnlyUsedConfigurations('indexer', ['a', 'b'])
 
     expect(
-      indexerConfigurationsRepository.deleteConfigurationsExcluding,
-    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
+      indexerConfigurationsRepository.deleteConfigurations,
+    ).toHaveBeenOnlyCalledWith('indexer', ['c'])
+
+    expect(
+      indexerConfigurationsRepository.getIdsByIndexer,
+    ).toHaveBeenOnlyCalledWith('indexer')
   })
 
   it(IndexerService.prototype.getAmountsStatus.name, async () => {

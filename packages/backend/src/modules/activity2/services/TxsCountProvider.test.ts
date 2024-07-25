@@ -4,6 +4,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { DegateClient } from '../../../peripherals/degate'
+import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
@@ -90,6 +92,62 @@ describe(TxsCountProvider.name, () => {
 
       const expected = [activityRecord('a', START, 1)]
       txsCountProvider.getStarknetTxsCount = mockFn().resolvesTo(expected)
+
+      // if this will return expected, then it means that getRpcTxsCount was called
+      const result = await txsCountProvider.getTxsCount(0, 2)
+      expect(result).toEqual(expected)
+    })
+
+    it('should get txs count for Loopring', async () => {
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals: mockPeripherals({}),
+        projectId: ProjectId('a'),
+        projectConfig: mockObject<SimpleActivityTransactionConfig<'loopring'>>({
+          type: 'loopring',
+        }),
+        activityConfig: mockObject<ActivityConfig>(),
+      })
+
+      const expected = [activityRecord('a', START, 1)]
+      txsCountProvider.getLoopringTxsCount = mockFn().resolvesTo(expected)
+
+      // if this will return expected, then it means that getRpcTxsCount was called
+      const result = await txsCountProvider.getTxsCount(0, 2)
+      expect(result).toEqual(expected)
+    })
+    it('should get txs count for Loopring', async () => {
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals: mockPeripherals({}),
+        projectId: ProjectId('a'),
+        projectConfig: mockObject<SimpleActivityTransactionConfig<'loopring'>>({
+          type: 'loopring',
+        }),
+        activityConfig: mockObject<ActivityConfig>(),
+      })
+
+      const expected = [activityRecord('a', START, 1)]
+      txsCountProvider.getLoopringTxsCount = mockFn().resolvesTo(expected)
+
+      // if this will return expected, then it means that getRpcTxsCount was called
+      const result = await txsCountProvider.getTxsCount(0, 2)
+      expect(result).toEqual(expected)
+    })
+
+    it('should get txs count for Degate', async () => {
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals: mockPeripherals({}),
+        projectId: ProjectId('a'),
+        projectConfig: mockObject<SimpleActivityTransactionConfig<'degate'>>({
+          type: 'degate',
+        }),
+        activityConfig: mockObject<ActivityConfig>(),
+      })
+
+      const expected = [activityRecord('a', START, 1)]
+      txsCountProvider.getDegateTxsCount = mockFn().resolvesTo(expected)
 
       // if this will return expected, then it means that getRpcTxsCount was called
       const result = await txsCountProvider.getTxsCount(0, 2)
@@ -333,6 +391,94 @@ describe(TxsCountProvider.name, () => {
       expect(client.getBlock).toHaveBeenCalledTimes(3)
     })
   })
+
+  describe(TxsCountProvider.prototype.getLoopringTxsCount.name, () => {
+    it('should return txs count', async () => {
+      const client = mockLoopringClient([
+        { timestamp: START, count: 1, number: 1 },
+        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START.add(2, 'days'), count: 5, number: 3 },
+      ])
+
+      const peripherals = mockPeripherals({
+        loopring: {
+          client,
+          options: {
+            url: 'url',
+            callsPerMinute: 1,
+          },
+        },
+      })
+
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals,
+        projectId: ProjectId('a'),
+        projectConfig: {
+          type: 'loopring',
+          url: 'url',
+          callsPerMinute: 1,
+        },
+        activityConfig: mockObject<ActivityConfig>(),
+      })
+      const result = await txsCountProvider.getLoopringTxsCount(1, 3)
+
+      expect(result).toEqual([
+        activityRecord('a', START.toStartOf('day'), 3, 1, 2),
+        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 3, 3),
+      ])
+
+      expect(peripherals.getClient).toHaveBeenNthCalledWith(1, LoopringClient, {
+        url: 'url',
+        callsPerMinute: 1,
+      })
+      expect(client.getBlock).toHaveBeenCalledTimes(3)
+    })
+  })
+
+  describe(TxsCountProvider.prototype.getDegateTxsCount.name, () => {
+    it('should return txs count', async () => {
+      const client = mockDegateClient([
+        { timestamp: START, count: 1, number: 1 },
+        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START.add(2, 'days'), count: 5, number: 3 },
+      ])
+
+      const peripherals = mockPeripherals({
+        degate: {
+          client,
+          options: {
+            url: 'url',
+            callsPerMinute: 1,
+          },
+        },
+      })
+
+      const txsCountProvider = new TxsCountProvider({
+        logger: Logger.SILENT,
+        peripherals,
+        projectId: ProjectId('a'),
+        projectConfig: {
+          type: 'degate',
+          url: 'url',
+          callsPerMinute: 1,
+        },
+        activityConfig: mockObject<ActivityConfig>(),
+      })
+      const result = await txsCountProvider.getDegateTxsCount(1, 3)
+
+      expect(result).toEqual([
+        activityRecord('a', START.toStartOf('day'), 3, 1, 2),
+        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 3, 3),
+      ])
+
+      expect(peripherals.getClient).toHaveBeenNthCalledWith(1, DegateClient, {
+        url: 'url',
+        callsPerMinute: 1,
+      })
+      expect(client.getBlock).toHaveBeenCalledTimes(3)
+    })
+  })
 })
 
 function activityRecord(
@@ -356,11 +502,15 @@ function mockPeripherals({
   starkex,
   zksync,
   starknet,
+  loopring,
+  degate,
 }: {
   rpc?: { client: RpcClient; options: any }
   starkex?: { client: StarkexClient; options: any }
   zksync?: { client: ZksyncLiteClient; options: any }
   starknet?: { client: StarknetClient; options: any }
+  loopring?: { client: LoopringClient; options: any }
+  degate?: { client: DegateClient; options: any }
 }) {
   return mockObject<Peripherals>({
     getClient: mockFn()
@@ -371,7 +521,11 @@ function mockPeripherals({
       .given(ZksyncLiteClient, zksync?.options)
       .returnsOnce(zksync?.client)
       .given(StarknetClient, starknet?.options)
-      .returnsOnce(starknet?.client),
+      .returnsOnce(starknet?.client)
+      .given(LoopringClient, loopring?.options)
+      .returnsOnce(loopring?.client)
+      .given(DegateClient, degate?.options)
+      .returnsOnce(degate?.client),
   })
 }
 
@@ -405,6 +559,40 @@ function mockStarknetClient(
   )
 
   return mockObject<StarknetClient>({
+    getBlock: mockGetBlock,
+  })
+}
+
+function mockDegateClient(
+  blocks: { timestamp: UnixTime; count: number; number: number }[],
+) {
+  const mockGetBlock = mockFn()
+  blocks.forEach(({ timestamp, count, number }) =>
+    mockGetBlock.resolvesToOnce({
+      transactions: count,
+      createdAt: timestamp,
+      blockId: number,
+    }),
+  )
+
+  return mockObject<DegateClient>({
+    getBlock: mockGetBlock,
+  })
+}
+
+function mockLoopringClient(
+  blocks: { timestamp: UnixTime; count: number; number: number }[],
+) {
+  const mockGetBlock = mockFn()
+  blocks.forEach(({ timestamp, count, number }) =>
+    mockGetBlock.resolvesToOnce({
+      transactions: count,
+      createdAt: timestamp,
+      blockId: number,
+    }),
+  )
+
+  return mockObject<LoopringClient>({
     getBlock: mockGetBlock,
   })
 }

@@ -4,6 +4,8 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { DegateClient } from '../../../peripherals/degate'
+import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
@@ -36,6 +38,12 @@ export class TxsCountProvider {
       }
       case 'starknet': {
         return await this.getStarknetTxsCount(from, to)
+      }
+      case 'loopring': {
+        return await this.getLoopringTxsCount(from, to)
+      }
+      case 'degate': {
+        return await this.getDegateTxsCount(from, to)
       }
       default:
         throw new Error(`${this.$.projectConfig.type} type not implemented`)
@@ -164,6 +172,58 @@ export class TxsCountProvider {
       }
     })
 
+    const blocks = await Promise.all(queries)
+    return this.aggregatePerDay(blocks)
+  }
+
+  async getLoopringTxsCount(
+    from: number,
+    to: number,
+  ): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'loopring',
+      'Method not supported for projects other than Loopring',
+    )
+    const projectConfig = this.$.projectConfig
+
+    const loopringClient = this.$.peripherals.getClient(LoopringClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const block = await loopringClient.getBlock(blockNumber)
+      return {
+        count: block.transactions,
+        timestamp: block.createdAt,
+        number: block.blockId,
+      }
+    })
+
+    const blocks = await Promise.all(queries)
+    return this.aggregatePerDay(blocks)
+  }
+
+  async getDegateTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'degate',
+      'Method not supported for projects other than Degate',
+    )
+    const projectConfig = this.$.projectConfig
+
+    const degateClient = this.$.peripherals.getClient(DegateClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const block = await degateClient.getBlock(blockNumber)
+      return {
+        count: block.transactions,
+        timestamp: block.createdAt,
+        number: block.blockId,
+      }
+    })
     const blocks = await Promise.all(queries)
     return this.aggregatePerDay(blocks)
   }

@@ -86,6 +86,19 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   )
 
   it(
+    IndexerConfigurationRepository.prototype.getIdsByIndexer.name,
+    async () => {
+      const records = CONFIGURATIONS
+
+      await repository.addOrUpdateMany(records)
+
+      const result = await repository.getIdsByIndexer('indexer-1')
+
+      expect(result).toEqualUnsorted(records.slice(0, 2).map((r) => r.id))
+    },
+  )
+
+  it(
     IndexerConfigurationRepository.prototype.updateCurrentHeights.name,
     async () => {
       const records = [
@@ -115,38 +128,40 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   )
 
   describe(
-    IndexerConfigurationRepository.prototype.deleteConfigurationsExcluding.name,
+    IndexerConfigurationRepository.prototype.deleteConfigurations.name,
     () => {
-      it('excluding 1 2 3', async () => {
-        const records = CONFIGURATIONS
-
+      it('delete correctly by id and indexer', async () => {
+        const records = [
+          config('a', 1, null, 10),
+          config('b', 1, null, 10),
+          { ...config('c', 1, null, 10), indexerId: 'other' },
+          config('d', 1, null, 10),
+        ]
         await repository.addOrUpdateMany(records)
-        await repository.deleteConfigurationsExcluding('indexer-1', [
-          CONFIGURATIONS[1]!.id,
-          CONFIGURATIONS[2]!.id,
-          CONFIGURATIONS[3]!.id,
+
+        await repository.deleteConfigurations('indexer', [
+          'a'.repeat(12),
+          'b'.repeat(12),
+          'c'.repeat(12),
         ])
 
         const result = await repository.getAll()
 
         expect(result).toEqualUnsorted([
-          CONFIGURATIONS[1]!,
-          CONFIGURATIONS[2]!,
-          CONFIGURATIONS[3]!,
+          { ...config('c', 1, null, 10), indexerId: 'other' },
+          config('d', 1, null, 10),
         ])
       })
 
-      it('excluding nothing', async () => {
-        const records = CONFIGURATIONS
-
-        await repository.addOrUpdateMany(records)
-        await repository.deleteConfigurationsExcluding('indexer-1', [])
+      it('works for bigger query', async () => {
+        await repository.deleteConfigurations(
+          'indexer',
+          [...Array(100_000)].map((_) => 'a'.repeat(12)),
+        )
 
         const result = await repository.getAll()
 
-        expect(result).toEqualUnsorted(
-          CONFIGURATIONS.filter((x) => x.indexerId !== 'indexer-1'),
-        )
+        expect(result).toEqualUnsorted([])
       })
     },
   )

@@ -70,7 +70,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     from: number,
     to: number,
     configurations: Configuration<T>[],
-  ): Promise<number>
+  ): Promise<() => Promise<number>>
 
   /**
    * Removes data that was previously synced but because configurations changed
@@ -149,12 +149,10 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
+    const saveData = await this.multiUpdate(from, adjustedTo, configurations)
+
     return await this.db.transaction(async () => {
-      const safeHeight = await this.multiUpdate(
-        from,
-        adjustedTo,
-        configurations,
-      )
+      const safeHeight = await saveData()
 
       if (safeHeight < from || safeHeight > adjustedTo) {
         throw new Error(
