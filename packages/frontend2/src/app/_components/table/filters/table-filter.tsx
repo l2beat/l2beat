@@ -26,14 +26,14 @@ interface Option {
   value: string | undefined
 }
 
-interface Props {
+interface Props<T> {
   title: string
   options: Option[]
-  value: string | undefined
-  onValueChange: (option: string | undefined) => void
+  value: T | undefined
+  onValueChange: (option: T | undefined) => void
 }
 
-export function TableFilter(props: Props) {
+export function TableFilter<T extends string | undefined>(props: Props<T>) {
   const [open, setOpen] = useState(false)
   const breakpoint = useBreakpoint()
   const showDrawer = breakpoint === 'tablet' || breakpoint === 'mobile'
@@ -49,7 +49,7 @@ export function TableFilter(props: Props) {
   return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
 }
 
-function SelectedValue({ options, value, onValueChange }: Props) {
+function SelectedValue({ options, value, onValueChange }: Props<any>) {
   const option = options.find((option) => option.value === value)
   assert(option, 'Option not found')
   return (
@@ -74,7 +74,7 @@ function TableFilterSelect({
   options,
   value,
   onValueChange,
-}: Props & {
+}: Props<any> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
@@ -113,7 +113,7 @@ function TableFilterDrawer({
   title,
   options,
   onValueChange,
-}: Props & {
+}: Props<any> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {

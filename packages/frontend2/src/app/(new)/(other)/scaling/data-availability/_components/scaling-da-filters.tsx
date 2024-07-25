@@ -6,6 +6,7 @@ import {
   BaseScalingFilters,
   type BaseScalingFiltersState,
 } from '../../../_components/base-scaling-filters'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 
 type ScalingFiltersEntry = ScalingDataAvailabilityEntry
 export type ScalingDaFiltersState = {
@@ -14,11 +15,10 @@ export type ScalingDaFiltersState = {
 
 interface Props {
   items: ScalingFiltersEntry[]
-  state: ScalingDaFiltersState
-  setState: React.Dispatch<React.SetStateAction<ScalingDaFiltersState>>
 }
 
-export function ScalingDaFilters({ items, state, setState }: Props) {
+export function ScalingDaFilters({ items }: Props) {
+  const filter = useScalingFilter()
   const daLayerOptions = uniq(
     items.flatMap((item) => item.dataAvailability.layer.value),
   )
@@ -32,19 +32,10 @@ export function ScalingDaFilters({ items, state, setState }: Props) {
     <TableFilter
       title="DA Layer"
       options={daLayerOptions}
-      value={state.daLayer}
-      onValueChange={(value) =>
-        setState((prev) => ({ ...prev, daLayer: value }))
-      }
+      value={filter.daLayer}
+      onValueChange={(value) => filter.set({ daLayer: value })}
     />
   )
 
-  return (
-    <BaseScalingFilters
-      setState={setState}
-      state={state}
-      items={items}
-      additionalFilters={daLayerFilter}
-    />
-  )
+  return <BaseScalingFilters items={items} additionalFilters={daLayerFilter} />
 }

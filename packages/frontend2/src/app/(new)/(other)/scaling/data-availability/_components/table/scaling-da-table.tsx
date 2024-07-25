@@ -11,6 +11,7 @@ import {
   type ScalingDaFiltersState,
 } from '../scaling-da-filters'
 import { columns } from './columns'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 
 export interface Props {
   items: ScalingDataAvailabilityEntry[]
@@ -26,9 +27,7 @@ const DEFAULT_DA_SCALING_FILTERS = {
 } satisfies ScalingDaFiltersState
 
 export function ScalingDataAvailabilityTable({ items }: Props) {
-  const [filters, setFilters] = useState<ScalingDaFiltersState>(
-    DEFAULT_DA_SCALING_FILTERS,
-  )
+  const filters = useScalingFilter()
 
   const includeFilters = useCallback(
     (entry: ScalingDataAvailabilityEntry) => {
@@ -83,15 +82,8 @@ export function ScalingDataAvailabilityTable({ items }: Props) {
 
   return (
     <section className="space-y-6">
-      <ScalingDaFilters
-        items={projects}
-        state={filters}
-        setState={setFilters}
-      />
-      <BasicTable
-        table={table}
-        onResetFilters={() => setFilters(DEFAULT_DA_SCALING_FILTERS)}
-      />
+      <ScalingDaFilters items={projects} />
+      <BasicTable table={table} />
     </section>
   )
 }

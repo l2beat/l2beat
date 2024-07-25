@@ -16,34 +16,21 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
-import {
-  ScalingFilters,
-  type ScalingFiltersState,
-} from '../../../_components/scaling-filters'
+import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 
 interface Props {
   layer2s: ScalingSummaryLayer2sEntry[]
   layer3s: ScalingSummaryLayer3sEntry[]
 }
 
-const DEFAULT_SCALING_FILTERS = {
-  rollupsOnly: false,
-  category: undefined,
-  stack: undefined,
-  stage: undefined,
-  purpose: undefined,
-  hostChain: undefined,
-}
-
 export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
-  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
-    DEFAULT_SCALING_FILTERS,
-  )
+  const scalingFilters = useScalingFilter()
 
   const includeFilters = useCallback(
     (entry: ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry) => {
@@ -177,8 +164,6 @@ export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
           ...archivedProjects,
           ...upcomingProjects,
         ]}
-        state={scalingFilters}
-        setState={setScalingFilters}
       />
       <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
@@ -206,29 +191,17 @@ export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="layer2s">
-          <BasicTable
-            table={layer2sTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={layer2sTable} />
           <ScalingLegend />
         </TabsContent>
         <TabsContent value="layer3s">
-          <BasicTable
-            table={layer3sTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={layer3sTable} />
         </TabsContent>
         <TabsContent value="upcoming">
-          <BasicTable
-            table={upcomingTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={upcomingTable} />
         </TabsContent>
         <TabsContent value="archived">
-          <BasicTable
-            table={archivedTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={archivedTable} />
         </TabsContent>
       </Tabs>
     </div>

@@ -8,6 +8,7 @@ import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
+import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -24,9 +25,11 @@ export default async function Page() {
 
   return (
     <div className="mb-20">
-      <TvlChart milestones={HOMEPAGE_MILESTONES} />
-      <HorizontalSeparator className="my-4 md:my-6" />
-      <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
+      <ScalingFilterContextProvider>
+        <TvlChart milestones={HOMEPAGE_MILESTONES} />
+        <HorizontalSeparator className="my-4 md:my-6" />
+        <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
+      </ScalingFilterContextProvider>
       <OtherSites />
       <About />
     </div>

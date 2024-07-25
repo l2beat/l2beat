@@ -119,11 +119,7 @@ export function ScalingRiskTables({
 
   return (
     <div className="space-y-2">
-      <ScalingFilters
-        items={allProjects}
-        state={scalingFilters}
-        setState={setScalingFilters}
-      />
+      <ScalingFilters items={allProjects} />
       <Tabs defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
@@ -142,16 +138,10 @@ export function ScalingRiskTables({
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="active">
-          <BasicTable
-            table={activeTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={activeTable} />
         </TabsContent>
         <TabsContent value="archived">
-          <BasicTable
-            table={archivedTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={archivedTable} />
         </TabsContent>
       </Tabs>
     </div>

@@ -6,6 +6,7 @@ import {
   type BaseScalingFiltersEntry,
   type BaseScalingFiltersState,
 } from './base-scaling-filters'
+import { useScalingFilter } from './scaling-filter-context'
 
 export type ScalingFiltersState = {
   hostChain: string | undefined
@@ -13,15 +14,12 @@ export type ScalingFiltersState = {
 
 interface Props<T extends ScalingFiltersState> {
   items: BaseScalingFiltersEntry[]
-  state: T
-  setState: React.Dispatch<React.SetStateAction<T>>
 }
 
 export function ScalingFilters<T extends ScalingFiltersState>({
   items,
-  state,
-  setState,
 }: Props<T>) {
+  const state = useScalingFilter()
   const hostChainOptions = uniq(
     items.map((item) =>
       item.type === 'layer3' && !('dataAvailability' in item)
@@ -40,18 +38,11 @@ export function ScalingFilters<T extends ScalingFiltersState>({
       title="Host Chain"
       options={hostChainOptions}
       value={state.hostChain}
-      onValueChange={(value) =>
-        setState((prev) => ({ ...prev, hostChain: value }))
-      }
+      onValueChange={(value) => state.set({ hostChain: value })}
     />
   )
 
   return (
-    <BaseScalingFilters
-      items={items}
-      state={state}
-      setState={setState}
-      additionalFilters={hostChainFilter}
-    />
+    <BaseScalingFilters items={items} additionalFilters={hostChainFilter} />
   )
 }

@@ -10,6 +10,7 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
+import { useScalingFilter } from './scaling-filter-context'
 
 export type BaseScalingFiltersEntry =
   | ScalingSummaryLayer2sEntry
@@ -25,19 +26,13 @@ export interface BaseScalingFiltersState {
   purpose: string | undefined
 }
 
-interface Props<T extends BaseScalingFiltersState> {
+interface Props {
   items: BaseScalingFiltersEntry[]
-  state: T
-  setState: React.Dispatch<React.SetStateAction<T>>
   additionalFilters?: React.ReactNode
 }
 
-export function BaseScalingFilters<T extends BaseScalingFiltersState>({
-  items,
-  state,
-  setState,
-  additionalFilters,
-}: Props<T>) {
+export function BaseScalingFilters({ items, additionalFilters }: Props) {
+  const filter = useScalingFilter()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
     .map((value) => ({
@@ -81,9 +76,7 @@ export function BaseScalingFilters<T extends BaseScalingFiltersState>({
       <div className="flex space-x-2">
         <Checkbox
           id="rollups-only"
-          onCheckedChange={(checked) =>
-            setState((prev) => ({ ...prev, rollupsOnly: !!checked }))
-          }
+          onCheckedChange={(checked) => filter.set({ rollupsOnly: !!checked })}
           disabled={!isRollupInItems}
         >
           Rollups only
@@ -91,34 +84,26 @@ export function BaseScalingFilters<T extends BaseScalingFiltersState>({
         <TableFilter
           title="Type"
           options={typeOptions}
-          value={state.category}
-          onValueChange={(value) =>
-            setState((prev) => ({ ...prev, category: value }))
-          }
+          value={filter.category}
+          onValueChange={(value) => filter.set({ category: value })}
         />
         <TableFilter
           title="Stack"
           options={stackOptions}
-          value={state.stack}
-          onValueChange={(value) =>
-            setState((prev) => ({ ...prev, stack: value }))
-          }
+          value={filter.stack}
+          onValueChange={(value) => filter.set({ stack: value })}
         />
         <TableFilter
           title="Stage"
           options={stageOptions}
-          value={state.stage}
-          onValueChange={(value) =>
-            setState((prev) => ({ ...prev, stage: value }))
-          }
+          value={filter.stage}
+          onValueChange={(value) => filter.set({ stage: value })}
         />
         <TableFilter
           title="Purpose"
           options={purposeOptions}
-          value={state.purpose}
-          onValueChange={(value) =>
-            setState((prev) => ({ ...prev, purpose: value }))
-          }
+          value={filter.purpose}
+          onValueChange={(value) => filter.set({ purpose: value })}
         />
         {additionalFilters}
       </div>
