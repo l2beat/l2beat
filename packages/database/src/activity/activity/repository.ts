@@ -23,6 +23,8 @@ export class ActivityRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
             count: eb.ref('excluded.count'),
+            start: eb.ref('excluded.start'),
+            end: eb.ref('excluded.end'),
           })),
         )
         .execute()

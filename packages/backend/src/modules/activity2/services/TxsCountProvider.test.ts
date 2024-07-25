@@ -100,9 +100,9 @@ describe(TxsCountProvider.name, () => {
   describe(TxsCountProvider.prototype.getRpcTxsCount.name, () => {
     it('should return txs count', async () => {
       const client = mockRpcClient([
-        count(START, 1),
-        count(START.add(1, 'hours'), 2),
-        count(START.add(2, 'days'), 5),
+        { timestamp: START, count: 1, number: 1 },
+        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START.add(2, 'days'), count: 5, number: 3 },
       ])
 
       const peripherals = mockPeripherals({
@@ -126,11 +126,11 @@ describe(TxsCountProvider.name, () => {
         },
         activityConfig: mockObject<ActivityConfig>(),
       })
-      const result = await txsCountProvider.getRpcTxsCount(0, 2)
+      const result = await txsCountProvider.getRpcTxsCount(1, 3)
 
       expect(result).toEqual([
-        activityRecord('a', START.toStartOf('day'), 3),
-        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5),
+        activityRecord('a', START.toStartOf('day'), 3, 1, 2),
+        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 3, 3),
       ])
 
       expect(peripherals.getClient).toHaveBeenNthCalledWith(1, RpcClient, {
@@ -142,8 +142,8 @@ describe(TxsCountProvider.name, () => {
 
     it('should return txs count and use assessCount', async () => {
       const client = mockRpcClient([
-        count(START, 1),
-        count(START.add(1, 'hours'), 2),
+        { timestamp: START, count: 1, number: 1 },
+        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
       ])
 
       const peripherals = mockPeripherals({
@@ -170,9 +170,11 @@ describe(TxsCountProvider.name, () => {
         },
         activityConfig: mockObject<ActivityConfig>(),
       })
-      const result = await txsCountProvider.getRpcTxsCount(0, 1)
+      const result = await txsCountProvider.getRpcTxsCount(1, 2)
 
-      expect(result).toEqual([activityRecord('a', START.toStartOf('day'), 1)])
+      expect(result).toEqual([
+        activityRecord('a', START.toStartOf('day'), 1, 1, 2),
+      ])
       expect(peripherals.getClient).toHaveBeenNthCalledWith(1, RpcClient, {
         url: 'url',
         callsPerMinute: 1,
@@ -205,11 +207,29 @@ describe(TxsCountProvider.name, () => {
         }),
       })
 
-      const result = await txsCountProvider.getStarkexTxsCount(0, 1)
+      const start = UnixTime.fromDays(5)
+      const end = UnixTime.fromDays(6)
+
+      const result = await txsCountProvider.getStarkexTxsCount(
+        start.toDays(),
+        end.toDays(),
+      )
 
       expect(result).toEqual([
-        activityRecord('a', UnixTime.fromDays(0), 5),
-        activityRecord('a', UnixTime.fromDays(1), 9),
+        activityRecord(
+          'a',
+          start,
+          5,
+          start.toNumber(),
+          start.add(-1, 'seconds').toNumber(),
+        ),
+        activityRecord(
+          'a',
+          end,
+          9,
+          end.toNumber(),
+          end.toEndOf('day').add(-1, 'seconds').toNumber(),
+        ),
       ])
 
       expect(peripherals.getClient).toHaveBeenNthCalledWith(
@@ -225,9 +245,9 @@ describe(TxsCountProvider.name, () => {
   describe(TxsCountProvider.prototype.getZksyncTxsCount.name, () => {
     it('should return txs count', async () => {
       const client = mockZksyncClient([
-        count(START, 1),
-        count(START.add(1, 'hours'), 2),
-        count(START.add(2, 'days'), 5),
+        { timestamp: START, count: 1 },
+        { timestamp: START.add(1, 'hours'), count: 2 },
+        { timestamp: START.add(2, 'days'), count: 5 },
       ])
 
       const peripherals = mockPeripherals({
@@ -251,11 +271,11 @@ describe(TxsCountProvider.name, () => {
         },
         activityConfig: mockObject<ActivityConfig>(),
       })
-      const result = await txsCountProvider.getZksyncTxsCount(0, 2)
+      const result = await txsCountProvider.getZksyncTxsCount(1, 3)
 
       expect(result).toEqual([
-        activityRecord('a', START.toStartOf('day'), 3),
-        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5),
+        activityRecord('a', START.toStartOf('day'), 3, 1, 2),
+        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 3, 3),
       ])
 
       expect(peripherals.getClient).toHaveBeenNthCalledWith(
@@ -273,9 +293,9 @@ describe(TxsCountProvider.name, () => {
   describe(TxsCountProvider.prototype.getStarknetTxsCount.name, () => {
     it('should return txs count', async () => {
       const client = mockStarknetClient([
-        count(START, 1),
-        count(START.add(1, 'hours'), 2),
-        count(START.add(2, 'days'), 5),
+        { timestamp: START, count: 1, number: 1 },
+        { timestamp: START.add(1, 'hours'), count: 2, number: 2 },
+        { timestamp: START.add(2, 'days'), count: 5, number: 3 },
       ])
 
       const peripherals = mockPeripherals({
@@ -299,11 +319,11 @@ describe(TxsCountProvider.name, () => {
         },
         activityConfig: mockObject<ActivityConfig>(),
       })
-      const result = await txsCountProvider.getStarknetTxsCount(0, 2)
+      const result = await txsCountProvider.getStarknetTxsCount(1, 3)
 
       expect(result).toEqual([
-        activityRecord('a', START.toStartOf('day'), 3),
-        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5),
+        activityRecord('a', START.toStartOf('day'), 3, 1, 2),
+        activityRecord('a', START.add(2, 'days').toStartOf('day'), 5, 3, 3),
       ])
 
       expect(peripherals.getClient).toHaveBeenNthCalledWith(1, StarknetClient, {
@@ -315,11 +335,19 @@ describe(TxsCountProvider.name, () => {
   })
 })
 
-function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
+function activityRecord(
+  projectId: string,
+  timestamp: UnixTime,
+  count: number,
+  start: number = 0,
+  end: number = 10,
+) {
   return {
     projectId: ProjectId(projectId),
     timestamp,
     count,
+    start,
+    end,
   }
 }
 
@@ -348,13 +376,14 @@ function mockPeripherals({
 }
 
 function mockRpcClient(
-  transactionsAndTimestamps: { count: number; timestamp: number }[],
+  blocks: { timestamp: UnixTime; count: number; number: number }[],
 ) {
   const mockGetBlock = mockFn()
-  transactionsAndTimestamps.forEach(({ timestamp, count }) =>
+  blocks.forEach(({ timestamp, count, number }) =>
     mockGetBlock.resolvesToOnce({
       transactions: transactions(count),
-      timestamp,
+      timestamp: timestamp.toNumber(),
+      number,
     }),
   )
 
@@ -364,13 +393,14 @@ function mockRpcClient(
 }
 
 function mockStarknetClient(
-  transactionsAndTimestamps: { count: number; timestamp: number }[],
+  blocks: { timestamp: UnixTime; count: number; number: number }[],
 ) {
   const mockGetBlock = mockFn()
-  transactionsAndTimestamps.forEach(({ timestamp, count }) =>
+  blocks.forEach(({ timestamp, count, number }) =>
     mockGetBlock.resolvesToOnce({
       transactions: transactions(count),
-      timestamp,
+      timestamp: timestamp.toNumber(),
+      number,
     }),
   )
 
@@ -379,14 +409,12 @@ function mockStarknetClient(
   })
 }
 
-function mockZksyncClient(
-  transactionsAndTimestamps: { count: number; timestamp: number }[],
-) {
+function mockZksyncClient(blocks: { timestamp: UnixTime; count: number }[]) {
   const mockGetBlock = mockFn()
-  transactionsAndTimestamps.forEach(({ timestamp, count }) =>
+  blocks.forEach(({ timestamp, count }) =>
     mockGetBlock.resolvesToOnce(
       range(count).map(() => ({
-        createdAt: new UnixTime(timestamp).add(1, 'seconds'),
+        createdAt: timestamp.add(1, 'seconds'),
       })),
     ),
   )
@@ -407,8 +435,4 @@ function mockStarkexClient(counts: number[]) {
 
 function transactions(count: number) {
   return range(count).map((i) => `0x${i.toString()}`)
-}
-
-function count(timestamp: UnixTime, count: number) {
-  return { timestamp: timestamp.toNumber(), count }
 }
