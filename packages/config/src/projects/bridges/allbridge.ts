@@ -136,7 +136,7 @@ export const allbridge: Bridge = {
         'Validation process takes place in external network called the Guardian Network. Nodes in the network, called Guardians, observe the Core Contract on each supported chain and produce VAAs (Verified Action Approvals, essentially signed messages) when those contracts receive an interaction. Based on the VAA user can withdraw funds on the other end of the bridge.',
       references: [
         {
-          text: 'AllrbidgeMessenger contract: function receiveMessage()',
+          text: 'AllbridgeMessenger contract: function receiveMessage()',
           href: 'https://etherscan.io/address/0x203e8785b4d4312c4152D0c42Ba3FA8BD79086dA#code#F1#L97',
         },
         {
