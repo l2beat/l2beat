@@ -13,26 +13,28 @@ describeDatabase(BlockTransactionCountRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  it(
+  describe(
     BlockTransactionCountRepository.prototype.addOrUpdateMany.name,
-    async () => {
-      const records = [mockRecord(PROJECT_A, 0), mockRecord(PROJECT_B, 0)]
-      await repository.addOrUpdateMany(records)
+    () => {
+      it('adds records', async () => {
+        const records = [mockRecord(PROJECT_A, 0), mockRecord(PROJECT_B, 0)]
+        await repository.addOrUpdateMany(records)
 
-      const result = await repository.getAll()
-      expect(result).toEqual(records)
+        const result = await repository.getAll()
+        expect(result).toEqual(records)
+      })
+
+      it('merges on conflict', async () => {
+        await repository.addOrUpdateMany([mockRecord(PROJECT_A, 0)])
+        await repository.addOrUpdateMany([
+          { ...mockRecord(PROJECT_A, 0), count: 2 },
+        ])
+
+        const result = await repository.getAll()
+        expect(result).toEqual([{ ...mockRecord(PROJECT_A, 0), count: 2 }])
+      })
     },
   )
-
-  describe(BlockTransactionCountRepository.prototype.addOrUpdate.name, () => {
-    it('merges on conflict', async () => {
-      await repository.addOrUpdate(mockRecord(PROJECT_A, 0))
-      await repository.addOrUpdate({ ...mockRecord(PROJECT_A, 0), count: 2 })
-
-      const result = await repository.getAll()
-      expect(result).toEqual([{ ...mockRecord(PROJECT_A, 0), count: 2 }])
-    })
-  })
 })
 
 const mockRecord = (projectId: ProjectId, offset: number) => ({

@@ -7,25 +7,20 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async addOrUpdateMany(
     records: BlockTransactionCountRecord[],
   ): Promise<number> {
-    for (const record of records) {
-      await this.addOrUpdate(record)
-    }
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('activity.block')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['project_id', 'block_number']).doUpdateSet((eb) => ({
+            unix_timestamp: eb.ref('excluded.unix_timestamp'),
+            count: eb.ref('excluded.count'),
+          })),
+        )
+        .execute()
+    })
     return records.length
-  }
-
-  async addOrUpdate(record: BlockTransactionCountRecord) {
-    await this.db
-      .insertInto('activity.block')
-      .values(toRow(record))
-      .onConflict((cb) =>
-        cb.columns(['project_id', 'block_number']).doUpdateSet((eb) => ({
-          unix_timestamp: eb.ref('excluded.unix_timestamp'),
-          count: eb.ref('excluded.count'),
-        })),
-      )
-      .execute()
-
-    return `${record.projectId.toString()}-${record.blockNumber}`
   }
 
   async deleteAll(): Promise<number> {
@@ -33,23 +28,23 @@ export class BlockTransactionCountRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async findLastTimestampByProjectId(projectId: ProjectId) {
+  async findLastTimestampByProjectId(
+    projectId: ProjectId,
+  ): Promise<UnixTime | undefined> {
     const row = await this.db
       .selectFrom('activity.block')
       .select('unix_timestamp')
       .where('project_id', '=', projectId.toString())
       .orderBy('block_number', 'desc')
       .executeTakeFirst()
-
-    return row ? UnixTime.fromDate(row.unix_timestamp) : undefined
+    return row && UnixTime.fromDate(row.unix_timestamp)
   }
 
-  async getAll() {
+  async getAll(): Promise<BlockTransactionCountRecord[]> {
     const rows = await this.db
       .selectFrom('activity.block')
       .select(selectBlockTransactionCount)
       .execute()
-
     return rows.map(toRecord)
   }
 }
