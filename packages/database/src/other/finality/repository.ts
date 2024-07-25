@@ -24,6 +24,7 @@ export class FinalityRepository extends BaseRepository {
       .select(selectFinality)
       .where('project_id', '=', projectId)
       .orderBy('timestamp', 'desc')
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined

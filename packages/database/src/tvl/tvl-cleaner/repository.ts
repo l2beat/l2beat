@@ -24,6 +24,7 @@ export class TvlCleanerRepository extends BaseRepository {
       .selectFrom('public.tvl_cleaner')
       .select(selectTvlCleaner)
       .where('repository_name', '=', repositoryName)
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined

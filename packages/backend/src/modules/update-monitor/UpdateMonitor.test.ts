@@ -148,7 +148,7 @@ describe(UpdateMonitor.name, () => {
 
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
       const timestamp = new UnixTime(0)
 
@@ -223,7 +223,7 @@ describe(UpdateMonitor.name, () => {
 
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -300,7 +300,7 @@ describe(UpdateMonitor.name, () => {
           discovery: DISCOVERY_RESULT,
           configHash: mockConfig(PROJECT_A).hash,
         }),
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -344,7 +344,7 @@ describe(UpdateMonitor.name, () => {
           discovery: DISCOVERY_RESULT,
           configHash: mockConfig(PROJECT_A).hash,
         }),
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -392,7 +392,7 @@ describe(UpdateMonitor.name, () => {
           configHash: config.hash,
           blockNumber: BLOCK_NUMBER - 1,
         }),
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -460,7 +460,7 @@ describe(UpdateMonitor.name, () => {
 
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -673,7 +673,7 @@ describe(UpdateMonitor.name, () => {
       const timestamp = new UnixTime(0)
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
       const configReader = mockObject<ConfigReader>({
         readDiscovery: (name: string, chain: string) => {
@@ -758,7 +758,7 @@ describe(UpdateMonitor.name, () => {
       const timestamp = new UnixTime(0)
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
       const configReader = mockObject<ConfigReader>({
         readDiscovery: () => ({
@@ -805,7 +805,7 @@ describe(UpdateMonitor.name, () => {
       const timestamp = new UnixTime(0)
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        upsert: async () => '',
+        upsert: async () => undefined,
       })
       const configReader = mockObject<ConfigReader>({
         readDiscovery: () => ({

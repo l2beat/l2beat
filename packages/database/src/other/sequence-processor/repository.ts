@@ -25,6 +25,7 @@ export class SequenceProcessorRepository extends BaseRepository {
       .selectFrom('public.sequence_processor')
       .select(selectSequenceProcessor)
       .where('id', '=', id)
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : null

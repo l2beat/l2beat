@@ -23,6 +23,7 @@ export class BlockTimestampRepository extends BaseRepository {
       .select(selectBlockTimestamp)
       .where('chain', '=', chain)
       .where('timestamp', '=', timestamp.toDate())
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row).blockNumber : null

@@ -29,6 +29,7 @@ export class VerifierStatusRepository extends BaseRepository {
       .select(selectVerifierStatus)
       .where('address', '=', address)
       .where('chain_id', '=', +chainId)
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined

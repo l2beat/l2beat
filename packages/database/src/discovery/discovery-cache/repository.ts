@@ -17,26 +17,24 @@ export class DiscoveryCacheRepository extends BaseRepository {
         })),
       )
       .execute()
-
     return row.key
   }
 
-  async findByKey(key: DiscoveryCacheRecord['key']) {
+  async findByKey(key: string): Promise<DiscoveryCacheRecord | undefined> {
     const row = await this.db
       .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)
       .where('key', '=', key)
+      .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row) : undefined
+    return row && toRecord(row)
   }
 
-  async getAll() {
+  async getAll(): Promise<DiscoveryCacheRecord[]> {
     const rows = await this.db
       .selectFrom('public.discovery_cache')
       .select(selectDiscoveryCache)
       .execute()
-
     return rows.map(toRecord)
   }
 

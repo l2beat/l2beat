@@ -38,6 +38,7 @@ export class IndexerStateRepository extends BaseRepository {
       .selectFrom('public.indexer_state')
       .selectAll()
       .where('indexer_id', '=', indexerId)
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined

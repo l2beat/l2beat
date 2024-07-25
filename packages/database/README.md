@@ -75,7 +75,6 @@ class ExampleRepository extends BaseRepository {
         .values(batch)
         .returning("id")
         .execute();
-      // TODO: This doesn't return ids in the correct order!
       ids.push(...results.map((result) => result.id));
     });
     return ids;

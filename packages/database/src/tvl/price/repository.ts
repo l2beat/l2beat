@@ -46,6 +46,7 @@ export class PriceRepository extends BaseRepository {
       .select(selectPrice)
       .where('configuration_id', '=', configId)
       .where('timestamp', '=', timestamp.toDate())
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : null

@@ -25,6 +25,7 @@ export class CacheRepository extends BaseRepository {
       .selectFrom('public.Cache')
       .select(selectCache)
       .where('public.Cache.key', '=', key)
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : null
