@@ -11,38 +11,29 @@ describeDatabase(ZkSyncTransactionRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  it(ZkSyncTransactionRepository.prototype.addOrUpdateMany.name, async () => {
-    const records = [mockRecord(0), mockRecord(1)]
-
-    await repository.addOrUpdateMany(records)
-
-    const rows = await repository.getAll()
-
-    expect(rows).toEqual(records)
-  })
-
-  describe(ZkSyncTransactionRepository.prototype.addOrUpdate.name, () => {
-    it('merges on conflict', async () => {
-      await repository.addOrUpdate(mockRecord(0))
-      await repository.addOrUpdate({
-        ...mockRecord(0),
-        timestamp: new UnixTime(2000),
-      })
+  describe(ZkSyncTransactionRepository.prototype.addOrUpdateMany.name, () => {
+    it('adds multiple records', async () => {
+      const records = [mockRecord(1, 100), mockRecord(2, 200)]
+      await repository.addOrUpdateMany(records)
 
       const rows = await repository.getAll()
+      expect(rows).toEqual(records)
+    })
 
-      expect(rows).toEqual([
-        {
-          ...mockRecord(0),
-          timestamp: new UnixTime(2000),
-        },
-      ])
+    it('updates multiple records', async () => {
+      const records1 = [mockRecord(1, 100), mockRecord(2, 200)]
+      await repository.addOrUpdateMany(records1)
+      const records2 = [mockRecord(1, 101), mockRecord(2, 202)]
+      await repository.addOrUpdateMany(records2)
+
+      const rows = await repository.getAll()
+      expect(rows).toEqual(records2)
     })
   })
 })
 
-const mockRecord = (offset: number) => ({
+const mockRecord = (offset: number, offset2?: number) => ({
   blockIndex: 1 + offset,
   blockNumber: 100 + offset,
-  timestamp: new UnixTime(1000 + offset),
+  timestamp: new UnixTime(1000 + (offset2 ?? offset)),
 })

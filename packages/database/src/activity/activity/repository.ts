@@ -9,7 +9,6 @@ export class ActivityRepository extends BaseRepository {
       .selectFrom('public.activity')
       .select(selectActivity)
       .execute()
-
     return rows.map(toRecord)
   }
 
@@ -27,7 +26,6 @@ export class ActivityRepository extends BaseRepository {
         )
         .execute()
     })
-
     return records.length
   }
 
@@ -64,7 +62,6 @@ export class ActivityRepository extends BaseRepository {
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
-
     return rows.map(toRecord)
   }
 }

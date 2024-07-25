@@ -14,18 +14,6 @@ describeDatabase(StarkExTransactionCountRepository.name, (db) => {
   })
 
   describe(
-    StarkExTransactionCountRepository.prototype.findLastTimestampByProjectId
-      .name,
-    () => {
-      it('works with empty database', async () => {
-        expect(
-          await repository.findLastTimestampByProjectId(ProjectId('starknet')),
-        ).toEqual(undefined)
-      })
-    },
-  )
-
-  describe(
     StarkExTransactionCountRepository.prototype.addOrUpdateMany.name,
     () => {
       it('adds multiple records', async () => {

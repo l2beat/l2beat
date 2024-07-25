@@ -1,4 +1,3 @@
-import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { BlockTransactionCountRecord, toRecord, toRow } from './entity'
 import { selectBlockTransactionCount } from './select'
@@ -26,18 +25,6 @@ export class BlockTransactionCountRepository extends BaseRepository {
   async deleteAll(): Promise<number> {
     const result = await this.db.deleteFrom('activity.block').executeTakeFirst()
     return Number(result.numDeletedRows)
-  }
-
-  async findLastTimestampByProjectId(
-    projectId: ProjectId,
-  ): Promise<UnixTime | undefined> {
-    const row = await this.db
-      .selectFrom('activity.block')
-      .select('unix_timestamp')
-      .where('project_id', '=', projectId.toString())
-      .orderBy('block_number', 'desc')
-      .executeTakeFirst()
-    return row && UnixTime.fromDate(row.unix_timestamp)
   }
 
   async getAll(): Promise<BlockTransactionCountRecord[]> {
