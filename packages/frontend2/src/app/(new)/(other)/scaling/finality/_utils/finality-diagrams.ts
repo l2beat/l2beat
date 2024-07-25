@@ -1,4 +1,4 @@
-import { getDiagramImageOrThrow } from './get-diagram-image'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 
 export const finalityDiagrams = [
   {
@@ -43,5 +43,11 @@ export const finalityDiagrams = [
 ]
 
 function getDiagram(diagramName: string) {
-  return getDiagramImageOrThrow('finality', diagramName)
+  const diagram = getDiagramParams('finality', diagramName)
+
+  if (!diagram) {
+    throw new Error(`Diagram not found: ${diagramName}`)
+  }
+
+  return diagram.src
 }
