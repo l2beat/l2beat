@@ -12,9 +12,7 @@ export const metadata: Metadata = getDefaultMetadata({
 
 export default async function Page() {
   const text = cookies().get('cookies-prefetch-poc-text')?.value ?? 'world'
-  await api.cookiesPrefetchPoC.prefetch({
-    text,
-  })
+  await api.cookiesPrefetchPoC.prefetch({ text })
 
   return (
     <HydrateClient>
