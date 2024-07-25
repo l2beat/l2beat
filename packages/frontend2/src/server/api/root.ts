@@ -1,20 +1,11 @@
-import { z } from 'zod'
-import { createCallerFactory, procedure, router } from '~/server/api/trpc'
+import { createCallerFactory, router } from '~/server/api/trpc'
 
 /**
  * This is the primary router for your server.
  *
  * All routers added in /api/routers should be manually added here.
  */
-export const appRouter = router({
-  cookiesPrefetchPoC: procedure
-    .input(
-      z.object({
-        text: z.string(),
-      }),
-    )
-    .query(({ input }) => `Hello ${input.text}`),
-})
+export const appRouter = router({})
 
 // export type definition of API
 export type AppRouter = typeof appRouter

@@ -5,7 +5,6 @@ import { ZodError } from 'zod'
 export const createTRPCContext = (opts: { headers: Headers }) => {
   return {
     ...opts,
-    rsc: opts.headers.get('x-trpc-source') === 'rsc',
   }
 }
 
