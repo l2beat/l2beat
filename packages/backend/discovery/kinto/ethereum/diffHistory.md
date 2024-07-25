@@ -8,7 +8,7 @@ Generated with discovered.json: 0xa42788482c8e1ace73e574337062d675b58d5479
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Kinto sends blobs, tracked txs added.
 
 ## Watched changes
 
