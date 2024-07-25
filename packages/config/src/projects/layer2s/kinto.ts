@@ -97,6 +97,49 @@ export const kinto: Layer2 = orbitStackL2({
     },
     {
       uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
+        selector: '0xe0bc9729',
+        functionSignature:
+          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1721705699),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
+        selector: '0x8f111f3c',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1721705699),
+      },
+    },
+
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1721705699),
+      },
+    },
+    {
+      uses: [
         { type: 'liveness', subtype: 'stateUpdates' },
         { type: 'l2costs', subtype: 'stateUpdates' },
       ],
@@ -107,19 +150,6 @@ export const kinto: Layer2 = orbitStackL2({
         functionSignature:
           'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
         sinceTimestamp: new UnixTime(1702607855),
-      },
-    },
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        // tracks both blobs and calldata (works for op stack, does it work here too?)
-        formula: 'transfer',
-        from: EthereumAddress('0xe27f3f6db6824def1738b2aACe2672aC59046a39'),
-        to: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
-        sinceTimestamp: new UnixTime(1721705699), // first blob tx
       },
     },
   ],
