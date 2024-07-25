@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { Clock } from '../../../tools/Clock'
@@ -20,6 +20,7 @@ describe(BlockTargetIndexer.name, () => {
         Logger.SILENT,
         clock,
         mockBlockTimestampProvider(0),
+        ProjectId('mock'),
       )
 
       await indexer.start()
@@ -40,6 +41,7 @@ describe(BlockTargetIndexer.name, () => {
         Logger.SILENT,
         clock,
         blockTimestampProvider,
+        ProjectId('mock'),
       )
 
       const result = await indexer.tick()
