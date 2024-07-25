@@ -1,7 +1,7 @@
 import { assert } from '@l2beat/backend-tools'
 import { type Layer2FinalityConfig } from '@l2beat/config'
 import {
-  type FinalityApiResponse,
+  FinalityApiResponse,
   type ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -21,7 +21,8 @@ export type FinalityProjectConfig = {
 
 export async function getFinality(projects: FinalityProjectConfig[]) {
   noStore()
-  return getCachedFinality(projects)
+  const cached = await getCachedFinality(projects)
+  return FinalityApiResponse.parse(cached)
 }
 
 const getCachedFinality = cache(

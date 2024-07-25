@@ -4,7 +4,6 @@ import { type Interval } from './calculate-intervals'
 import { filterIntervalsByRange } from './filter-intervals-by-range'
 import { type LivenessRecordWithConfig } from './get-liveness-by-type-since'
 
-
 describe(filterIntervalsByRange.name, () => {
   it('should filter intervals by range', async () => {
     const NOW = UnixTime.now()
