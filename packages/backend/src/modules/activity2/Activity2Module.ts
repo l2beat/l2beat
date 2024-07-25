@@ -179,7 +179,7 @@ function createActivityIndexers(
           parents: [blockTargetIndexer],
           txsCountProvider,
           indexerService,
-          activityRepository,
+          db,
         })
 
         indexers.push(blockTargetIndexer, activityIndexer)
