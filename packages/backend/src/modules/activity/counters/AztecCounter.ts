@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { AztecClient } from '../../../peripherals/aztec/AztecClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
@@ -24,11 +24,7 @@ export class AztecCounter extends SequenceProcessor {
     return block.number
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const block = await this.aztecClient.getBlock(blockNumber)
 
@@ -43,6 +39,6 @@ export class AztecCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'AztecBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks, trx)
+    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
   }
 }

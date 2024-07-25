@@ -65,7 +65,6 @@ function createActivityIndexers(
 
   const indexers: ActivityIndexer[] = []
 
-  const activityRepository = db.activity
   const indexerService = new IndexerService(db)
 
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
@@ -104,7 +103,7 @@ function createActivityIndexers(
           parents: [blockTargetIndexer],
           txsCountProvider,
           indexerService,
-          activityRepository,
+          db,
         })
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -121,7 +120,7 @@ function createActivityIndexers(
           parents: [dayTargetIndexer],
           txsCountProvider,
           indexerService,
-          activityRepository,
+          db,
         })
 
         indexers.push(activityIndexer)
@@ -150,7 +149,7 @@ function createActivityIndexers(
           parents: [blockTargetIndexer],
           txsCountProvider,
           indexerService,
-          activityRepository,
+          db,
         })
 
         indexers.push(blockTargetIndexer, activityIndexer)

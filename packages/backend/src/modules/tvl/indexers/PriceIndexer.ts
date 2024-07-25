@@ -1,4 +1,3 @@
-import { Transaction } from '@l2beat/database'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
@@ -34,7 +33,6 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
-    trx: Transaction,
   ) {
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
@@ -63,7 +61,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       prices: optimizedPrices.length,
     })
 
-    await this.$.db.price.addMany(optimizedPrices, trx)
+    await this.$.db.price.addMany(optimizedPrices)
 
     return adjustedTo.toNumber()
   }

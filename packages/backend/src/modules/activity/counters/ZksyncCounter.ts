@@ -1,8 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
-
-import { Database, Transaction } from '@l2beat/database'
 import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
@@ -23,11 +22,7 @@ export class ZksyncCounter extends SequenceProcessor {
     return await this.zksyncClient.getLatestBlock()
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const transactions =
         await this.zksyncClient.getTransactionsInBlock(blockNumber)
@@ -49,7 +44,6 @@ export class ZksyncCounter extends SequenceProcessor {
     })
     await this.db.zkSyncTransactionCount.addOrUpdateMany(
       blockTransactions.flat(),
-      trx,
     )
   }
 }

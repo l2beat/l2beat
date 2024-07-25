@@ -1,11 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
-import {
-  MOCK_TRX,
-  describeDatabase,
-  mockDatabase,
-} from '../../../test/database'
+import { describeDatabase, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import {
@@ -140,11 +136,11 @@ describe(ManagedMultiIndexer.name, () => {
 
       const indexer = await initializeMockIndexer(indexerService, [], [])
 
-      await indexer.updateConfigurationsCurrentHeight(1, MOCK_TRX)
+      await indexer.updateConfigurationsCurrentHeight(1)
 
       expect(
         indexerService.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(1, 'indexer', 1, MOCK_TRX)
+      ).toHaveBeenNthCalledWith(1, 'indexer', 1)
     },
   )
 
@@ -177,40 +173,24 @@ describe(ManagedMultiIndexer.name, () => {
         current = await indexer.update(current + 1, target)
       }
 
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
-        1,
-        100,
-        199,
-        [actual('a', 100, 300)],
-        expect.anything(), // Knex transaction,
-      )
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
-        2,
-        200,
-        300,
-        [actual('a', 100, 300), actual('b', 200, 500)],
-        expect.anything(), // Knex transaction,
-      )
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
-        3,
-        301,
-        399,
-        [actual('b', 200, 500)],
-        expect.anything(), // Knex transaction,
-      )
-      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(
-        4,
-        400,
-        500,
-        [actual('b', 200, 500), actual('c', 400, null)],
-        expect.anything(), // Knex transaction,
-      )
-      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(
-        551,
-        600,
-        [actual('c', 400, null), actual('d', 100, null)],
-        expect.anything(), // Knex transaction,
-      )
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 199, [
+        actual('a', 100, 300),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(2, 200, 300, [
+        actual('a', 100, 300),
+        actual('b', 200, 500),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(3, 301, 399, [
+        actual('b', 200, 500),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(4, 400, 500, [
+        actual('b', 200, 500),
+        actual('c', 400, null),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(551, 600, [
+        actual('c', 400, null),
+        actual('d', 100, null),
+      ])
 
       const configurations = await getSavedConfigurations(indexerService)
 

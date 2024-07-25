@@ -3,7 +3,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
 
 const activityLast = new Gauge({
@@ -57,7 +57,6 @@ export abstract class SequenceProcessor extends EventEmitter {
   protected abstract processRange(
     from: number, // inclusive
     to: number, // inclusive
-    trx: Transaction,
   ): Promise<void>
 
   constructor(
@@ -158,16 +157,13 @@ export abstract class SequenceProcessor extends EventEmitter {
       for (; from <= latest; from += this.opts.batchSize) {
         const to = Math.min(from + this.opts.batchSize - 1, latest)
         this.logger.info('Processing range started', { from, to })
-        await this.db.transaction(async (trx) => {
-          await this.processRange(from, to, trx)
-          await this.setState(
-            {
-              lastProcessed: to,
-              latest,
-              syncedOnce: !!this.state?.syncedOnce || to === latest,
-            },
-            trx,
-          )
+        await this.db.transaction(async () => {
+          await this.processRange(from, to)
+          await this.setState({
+            lastProcessed: to,
+            latest,
+            syncedOnce: !!this.state?.syncedOnce || to === latest,
+          })
         })
         this.logger.info('Processing range finished', { from, to })
       }
@@ -185,14 +181,11 @@ export abstract class SequenceProcessor extends EventEmitter {
     this.state = state ?? undefined
   }
 
-  private async setState(state: State, trx?: Transaction): Promise<void> {
-    await this.db.sequenceProcessor.addOrUpdate(
-      {
-        id: this.projectId.toString(),
-        ...state,
-      },
-      trx,
-    )
+  private async setState(state: State): Promise<void> {
+    await this.db.sequenceProcessor.addOrUpdate({
+      id: this.projectId.toString(),
+      ...state,
+    })
     activityLast
       .labels({ project: this.projectId.toString() })
       .set(state.lastProcessed)
