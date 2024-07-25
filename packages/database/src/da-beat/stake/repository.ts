@@ -22,9 +22,8 @@ export class StakeRepository extends BaseRepository {
   }
 
   async getByIds(ids: string[]): Promise<StakeRecord[]> {
-    if (ids.length === 0) {
-      return []
-    }
+    if (ids.length === 0) return []
+
     const res = await this.db
       .selectFrom('public.Stake')
       .select(selectStake)
@@ -37,7 +36,9 @@ export class StakeRepository extends BaseRepository {
     await this.upsertMany([record])
   }
 
-  async upsertMany(records: StakeRecord[]): Promise<void> {
+  async upsertMany(records: StakeRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
     const rows = records.map(toRow)
     await this.batch(rows, 1000, async (batch) => {
       await this.db
@@ -51,6 +52,7 @@ export class StakeRepository extends BaseRepository {
         )
         .execute()
     })
+    return records.length
   }
 
   async deleteAll(): Promise<number> {

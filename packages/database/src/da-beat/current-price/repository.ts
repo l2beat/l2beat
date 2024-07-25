@@ -26,9 +26,7 @@ export class CurrentPriceRepository extends BaseRepository {
   async getByCoingeckoIds(
     coingeckoIds: string[],
   ): Promise<CurrentPriceRecord[]> {
-    if (coingeckoIds.length === 0) {
-      return []
-    }
+    if (coingeckoIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.CurrentPrice')
@@ -41,6 +39,8 @@ export class CurrentPriceRepository extends BaseRepository {
   async upsertMany(
     records: Omit<CurrentPriceRecord, 'updatedAt'>[],
   ): Promise<number> {
+    if (records.length === 0) return 0
+
     const rows = records.map(toRow)
     await this.db
       .insertInto('public.CurrentPrice')

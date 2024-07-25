@@ -54,6 +54,8 @@ class ExampleRepository extends BaseRepository {
 
   /** Creates many records. Returns number of records created. */
   insertMany(records: Record[]): Promise<number> {
+    if (records.length === 0) return 0;
+
     const rows = records.map(toRow);
     await this.batch(rows, 1_000, async (batch) => {
       await this.db.insertInto("example_column").values(batch).execute();
@@ -63,6 +65,8 @@ class ExampleRepository extends BaseRepository {
 
   /** Alternative: Returning ids. */
   insertMany(records: Omit<Record, "id">[]): Promise<number[]> {
+    if (records.length === 0) return [];
+
     const rows = records.map(toRow);
     const ids: number[] = [];
     await this.batch(rows, 1_000, async (batch) => {
@@ -84,6 +88,8 @@ class ExampleRepository extends BaseRepository {
 
   /** Creates or updates many records. */
   upsertMany(records: Record[]): Promise<number> {
+    if (records.length === 0) return 0;
+
     const rows = records.map(toRow);
     await this.batch(rows, 1_000, async (batch) => {
       await this.db
