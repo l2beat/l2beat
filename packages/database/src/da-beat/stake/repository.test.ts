@@ -10,34 +10,34 @@ describeDatabase(StakeRepository.name, (database) => {
     await repository.deleteAll()
   })
 
-  describe(`${StakeRepository.prototype.upsert.name} and ${StakeRepository.prototype.findById.name}`, async () => {
-    it('inserts if not exists', async () => {
+  describe(StakeRepository.prototype.findById.name, async () => {
+    it('finds existing record', async () => {
       await repository.upsert(saved('A', 1n, 2n))
-
-      const stake = await repository.findById('A')
-      expect(stake).toEqual(saved('A', 1n, 2n))
+      const records = await repository.findById('A')
+      expect(records).toEqual(saved('A', 1n, 2n))
     })
 
-    it('updates if exists', async () => {
+    it('returns undefined for nonexistent records', async () => {
       await repository.upsert(saved('A', 1n, 2n))
-      await repository.upsert(saved('A', 2n, 3n))
-
-      const stake = await repository.findById('A')
-      expect(stake).toEqual(saved('A', 2n, 3n))
+      const records = await repository.findById('B')
+      expect(records).toEqual(undefined)
     })
   })
 
-  describe(StakeRepository.prototype.getAll.name, async () => {
-    it('returns all stakes', async () => {
-      await repository.upsert(saved('A', 1n, 2n))
-      await repository.upsert(saved('B', 2n, 3n))
-      await repository.upsert(saved('C', 3n, 4n))
-      const stakes = await repository.getAll()
-      expect(stakes).toEqualUnsorted([
-        saved('A', 1n, 2n),
-        saved('B', 2n, 3n),
-        saved('C', 3n, 4n),
-      ])
+  describe(StakeRepository.prototype.upsertMany.name, async () => {
+    it('inserts records', async () => {
+      await repository.upsertMany([saved('A', 1n, 2n), saved('B', 2n, 3n)])
+
+      const records = await repository.getAll()
+      expect(records).toEqual([saved('A', 1n, 2n), saved('B', 2n, 3n)])
+    })
+
+    it('updates conflicting records', async () => {
+      await repository.upsertMany([saved('A', 1n, 2n), saved('B', 2n, 3n)])
+      await repository.upsertMany([saved('A', 11n, 22n), saved('B', 22n, 33n)])
+
+      const records = await repository.getAll()
+      expect(records).toEqual([saved('A', 11n, 22n), saved('B', 22n, 33n)])
     })
   })
 
@@ -58,9 +58,5 @@ function saved(
   totalStake: bigint,
   thresholdStake: bigint,
 ): StakeRecord {
-  return {
-    id,
-    totalStake,
-    thresholdStake,
-  }
+  return { id, totalStake, thresholdStake }
 }

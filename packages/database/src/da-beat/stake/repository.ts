@@ -33,18 +33,24 @@ export class StakeRepository extends BaseRepository {
     return res.map(toRecord)
   }
 
-  async upsert(stake: StakeRecord): Promise<void> {
-    const row = toRow(stake)
-    await this.db
-      .insertInto('public.Stake')
-      .values(row)
-      .onConflict((oc) =>
-        oc.columns(['id']).doUpdateSet((eb) => ({
-          thresholdStake: eb.ref('excluded.thresholdStake'),
-          totalStake: eb.ref('excluded.totalStake'),
-        })),
-      )
-      .execute()
+  async upsert(record: StakeRecord): Promise<void> {
+    await this.upsertMany([record])
+  }
+
+  async upsertMany(records: StakeRecord[]): Promise<void> {
+    const rows = records.map(toRow)
+    await this.batch(rows, 1000, async (batch) => {
+      await this.db
+        .insertInto('public.Stake')
+        .values(batch)
+        .onConflict((oc) =>
+          oc.columns(['id']).doUpdateSet((eb) => ({
+            thresholdStake: eb.ref('excluded.thresholdStake'),
+            totalStake: eb.ref('excluded.totalStake'),
+          })),
+        )
+        .execute()
+    })
   }
 
   async deleteAll(): Promise<number> {
