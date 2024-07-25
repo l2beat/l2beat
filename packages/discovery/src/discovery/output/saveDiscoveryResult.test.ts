@@ -2,25 +2,23 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { map } from 'lodash'
 
-import { AnalyzedContract } from '../analysis/AddressAnalyzer'
+import {
+  AnalyzedContract,
+  EMPTY_ANALYZED_CONTRACT,
+} from '../analysis/AddressAnalyzer'
 import { getSourceOutputPath } from './saveDiscoveryResult'
 
 describe(getSourceOutputPath.name, () => {
   const genAnalyzedContract = (name: string): AnalyzedContract => ({
+    ...EMPTY_ANALYZED_CONTRACT,
     type: 'Contract' as const,
     name,
     address: EthereumAddress.random(),
     derivedName: undefined,
-    errors: {},
-    values: {},
     isVerified: true,
     deploymentTimestamp: new UnixTime(1234),
     deploymentBlockNumber: 9876,
     proxyType: 'immutable',
-    implementations: [],
-    abis: {},
-    sourceBundles: [],
-    relatives: {},
   })
 
   const contractA = genAnalyzedContract('A')

@@ -8,7 +8,7 @@ import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
-import { AddressAnalyzer } from './AddressAnalyzer'
+import { AddressAnalyzer, EMPTY_ANALYZED_CONTRACT } from './AddressAnalyzer'
 import { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {
@@ -132,10 +132,9 @@ describe(AddressAnalyzer.name, () => {
       )
 
       expect(result).toEqual({
-        type: 'Contract',
+        ...EMPTY_ANALYZED_CONTRACT,
         address,
         name: 'Test',
-        derivedName: undefined,
         isVerified: true,
         deploymentTimestamp: new UnixTime(1234),
         deploymentBlockNumber: 9876,
@@ -146,11 +145,8 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin,
           owner: owner.toString(),
         },
-        errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
-        extendedTemplate: undefined,
-        selfMeta: undefined,
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
@@ -164,8 +160,6 @@ describe(AddressAnalyzer.name, () => {
             types: undefined,
           },
         },
-        ignoreInWatchMode: undefined,
-        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -262,9 +256,8 @@ describe(AddressAnalyzer.name, () => {
       )
 
       expect(result).toEqual({
-        type: 'Contract',
+        ...EMPTY_ANALYZED_CONTRACT,
         name: 'Test',
-        derivedName: undefined,
         address,
         isVerified: false,
         deploymentTimestamp: new UnixTime(1234),
@@ -276,11 +269,8 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin,
           owner: owner.toString(),
         },
-        errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
-        extendedTemplate: undefined,
-        selfMeta: undefined,
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
@@ -294,8 +284,6 @@ describe(AddressAnalyzer.name, () => {
             types: undefined,
           },
         },
-        ignoreInWatchMode: undefined,
-        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),
@@ -388,10 +376,9 @@ describe(AddressAnalyzer.name, () => {
       )
 
       expect(result).toEqual({
-        type: 'Contract',
+        ...EMPTY_ANALYZED_CONTRACT,
         address,
         name: 'Test',
-        derivedName: undefined,
         deploymentBlockNumber: undefined,
         deploymentTimestamp: undefined,
         isVerified: true,
@@ -402,11 +389,8 @@ describe(AddressAnalyzer.name, () => {
           $admin: admin,
           owner: owner.toString(),
         },
-        errors: {},
         abis: sources.abis,
         sourceBundles: sources.sources,
-        extendedTemplate: undefined,
-        selfMeta: undefined,
         targetsMeta: {
           [admin.toString()]: {
             displayName: undefined,
@@ -420,8 +404,6 @@ describe(AddressAnalyzer.name, () => {
             types: undefined,
           },
         },
-        ignoreInWatchMode: undefined,
-        usedTypes: [],
         relatives: {
           [owner.toString()]: new Set(),
           [admin.toString()]: new Set(),

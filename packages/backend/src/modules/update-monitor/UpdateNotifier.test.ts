@@ -147,7 +147,6 @@ describe(UpdateNotifier.name, () => {
           Contract: {
             fields: {
               A: {
-                type: null,
                 severity: 'MEDIUM',
                 description: 'This should never be equal to two',
               },

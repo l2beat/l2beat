@@ -82,13 +82,13 @@ export function fieldDiffToMarkdown(
 ): string {
   const result = []
 
-  if (field?.description !== null && field?.description !== undefined) {
+  if (field?.description !== undefined) {
     result.push(`+++ description: ${field.description}`)
   }
-  if (field?.type !== null && field?.type !== undefined) {
+  if (field?.type !== undefined) {
     result.push(`+++ type: ${field.type.toString()}`)
   }
-  if (field?.severity !== null && field?.severity !== undefined) {
+  if (field?.severity !== undefined) {
     result.push(`+++ severity: ${field.severity}`)
   }
 

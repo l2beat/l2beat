@@ -1,4 +1,8 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  DiscoveryOutput,
+  FieldMeta,
+} from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -19,7 +23,7 @@ export function toDiscoveryOutput(
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
-    fieldMeta: {},
+    fieldMeta: flattenFieldsMeta(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
     shapeFilesHash,
   }
@@ -37,14 +41,26 @@ export function collectUsedTemplatesWithHashes(
   return Object.fromEntries(entries)
 }
 
+function flattenFieldsMeta(analyses: Analysis[]): Record<string, FieldMeta> {
+  const result: Record<string, FieldMeta> = {}
+
+  for (const analysis of analyses) {
+    if (analysis.type !== 'Contract') {
+      continue
+    }
+
+    for (const [key, value] of Object.entries(analysis.fieldsMeta)) {
+      const flatKey = `${analysis.address.toString()}.${key}`
+      result[flatKey] = value
+    }
+  }
+
+  return result
+}
+
 export function processAnalysis(
   results: Analysis[],
-): Pick<
-  DiscoveryOutput,
-  | 'contracts'
-  | 'eoas'
-  | 'abis'
-> {
+): Pick<DiscoveryOutput, 'contracts' | 'eoas' | 'abis'> {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
 

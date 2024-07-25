@@ -2,7 +2,11 @@ import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
-import { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
+import {
+  AnalyzedContract,
+  EMPTY_ANALYZED_CONTRACT,
+  ExtendedTemplate,
+} from './AddressAnalyzer'
 import {
   ContractMeta,
   findHighestSeverity,
@@ -400,17 +404,12 @@ const generateFakeAnalysis = (
   values?: Record<string, ContractValue | undefined>,
 ): AnalyzedContract => {
   return {
-    type: 'Contract',
+    ...EMPTY_ANALYZED_CONTRACT,
     address,
     name: `NameOf${address.toString()}`,
-    derivedName: undefined,
     isVerified: true,
-    implementations: [],
     values: values ?? { numberField: 1122 },
     errors: errors ?? {},
-    abis: {},
-    sourceBundles: [],
     extendedTemplate,
-    relatives: {},
   }
 }

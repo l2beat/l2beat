@@ -402,7 +402,7 @@ describe(fieldDiffToMarkdown.name, () => {
 
     const field: DiscoveryContractField = {
       type: 'L2',
-      description: null,
+      description: undefined,
       severity: 'LOW',
     }
 

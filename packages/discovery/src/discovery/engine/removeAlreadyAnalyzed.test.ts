@@ -5,6 +5,7 @@ import {
   AddressesWithTemplates,
   Analysis,
   AnalyzedContract,
+  EMPTY_ANALYZED_CONTRACT,
   ExtendedTemplate,
 } from '../analysis/AddressAnalyzer'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
@@ -122,17 +123,13 @@ const generateFakeAnalysis = (
   errors?: Record<string, string>,
 ): AnalyzedContract => {
   return {
-    type: 'Contract',
+    ...EMPTY_ANALYZED_CONTRACT,
     address,
     name: `NameOf${address.toString()}`,
     derivedName: undefined,
     isVerified: true,
-    implementations: [],
     values: { a: 1 },
     errors: errors ?? {},
-    abis: {},
-    sourceBundles: [],
     extendedTemplate,
-    relatives: {},
   }
 }

@@ -41,29 +41,29 @@ export interface DiscoveryOutput {
   abis: Record<string, string[]>
   configHash: Hash256
   version: number
-  fieldMeta: Record<string, BaseMeta>
+  fieldMeta: Record<string, FieldMeta>
   usedTemplates: Record<string, Hash256>
   shapeFilesHash: Hash256
 }
 
 export interface DiscoveryCustomType {
-  typeCaster?: string | null
-  arg?: Record<string, string | number> | null
-  description?: string | null
-  severity?: string | null
+  typeCaster?: string
+  arg?: Record<string, string | number>
 }
 
-export interface BaseMeta {
-  descriptions?: string[]
+export interface FieldMeta {
+  description?: string
   severity?: ContractFieldSeverity
 }
 
-export type Meta = {
+export interface Meta {
   roles?: StackRole[]
   assignedPermissions?: Record<string, EthereumAddress[]>
   categories?: StackCategory[]
   types?: ContractValueType[]
-} & BaseMeta
+  descriptions?: string[]
+  severity?: ContractFieldSeverity
+}
 
 export type EoaParameters = {
   address: EthereumAddress
