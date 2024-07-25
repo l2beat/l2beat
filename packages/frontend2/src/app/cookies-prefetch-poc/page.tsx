@@ -10,7 +10,7 @@ export const metadata: Metadata = getDefaultMetadata({
   },
 })
 
-export async function Page() {
+export default async function Page() {
   const text = cookies().get('cookies-prefetch-poc-text')?.value ?? 'world'
   await api.cookiesPrefetchPoC.prefetch({
     text,
