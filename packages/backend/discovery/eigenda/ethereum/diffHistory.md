@@ -8,7 +8,7 @@ Generated with discovered.json: 0xd2139e7ec6e7f6a8566780c760916d780e211b0d
 
 ## Description
 
-RegistryCoordinator upgrade: two new variables lastEjectionTimestamp, and ejectionCooldown. Once ejected, operators now need to wait for the cooldown period the end before they can reregister (currently 7 days).
+RegistryCoordinator upgrade: two new variables lastEjectionTimestamp, and ejectionCooldown. Once ejected, operators now need to wait for the cooldown period to end before they can reregister (currently 7 days).
 
 ## Watched changes
 
