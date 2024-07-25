@@ -361,7 +361,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
       l2Discovery.getContractDetails('ConstitutionHash', {
         description:
-          'Keeps the current hash of the ArbitrumDAO Constitution. Settable by the owner.',
+          'Keeps the current hash of the ArbitrumDAO Constitution. Settable by the L2UpgradeExecutor.',
       }),
       l2Discovery.getContractDetails('L2ProxyAdmin', {
         description:
