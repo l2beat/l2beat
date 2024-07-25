@@ -98,6 +98,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                 key={`${contract.name}-${contract.chain}`}
                 contract={contract}
                 className="my-4"
+                type="contract"
               />
             ))}
             {changedContracts.length > 0 && (
@@ -121,6 +122,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                       key={`${contract.name}-${contract.chain}`}
                       contract={contract}
                       className="my-4"
+                      type="contract"
                     />
                   ))}
                   {changedContracts.length > 0 && (
@@ -146,6 +148,7 @@ export function ContractsSection(props: ContractsSectionProps) {
                 key={`${contract.name}-${contract.chain}`}
                 contract={contract}
                 className="my-4"
+                type="contract"
               />
             ))}
             {changedEscrows.length > 0 && (
@@ -181,6 +184,7 @@ function ImplementationHasChangedContracts(props: {
           key={`${contract.name}-${contract.chain}`}
           contract={contract}
           className="my-4 p-0"
+          type="contract"
         />
       ))}
     </div>

@@ -1,96 +1,107 @@
 import { PoolConfig } from 'pg'
-import { BlockTransactionCountRepository } from './activity-block/repository'
-import { StarkExTransactionCountRepository } from './activity-starkex/repository'
-import { ActivityViewRepository } from './activity-view/repository'
-import { ZkSyncTransactionRepository } from './activity-zksync/repository'
-import { ActivityRepository } from './activity/repository'
-import { AggregatedL2CostRepository } from './aggregated-l2-cost/repository'
-import { AggregatedLivenessRepository } from './aggregated-liveness/repository'
-import { AmountRepository } from './amount/repository'
-import { AnomaliesRepository } from './anomalies/repository'
-import { BlockTimestampRepository } from './block-timestamp/repository'
-import { BridgeEscrowRepository } from './bridge-escrow/repository'
-import { CacheRepository } from './cache/repository'
-import { CurrentPriceRepository } from './current-price/repository'
-import { DailyDiscoveryRepository } from './daily-discovery/repository'
-import { DeploymentRepository } from './deployment/repository'
-import { DiscoveryCacheRepository } from './discovery-cache/repository'
-import { ExternalBridgeRepository } from './external-bridge/repository'
-import { FinalityRepository } from './finality/repository'
-import { IndexerConfigurationRepository } from './indexer-configuration/repository'
-import { IndexerStateRepository } from './indexer-state/repository'
-import { PostgresDatabase, Transaction } from './kysely'
-import { L2CostPriceRepository } from './l2-cost-price/repository'
-import { L2CostRepository } from './l2-cost/repository'
-import { LivenessRepository } from './liveness/repository'
-import { NetworkExplorerRepository } from './network-explorer/repository'
-import { NetworkRpcRepository } from './network-rpc/repository'
-import { NetworkRepository } from './network/repository'
-import { PriceRepository } from './price/repository'
-import { SequenceProcessorRepository } from './sequence-processor/repository'
-import { StakeRepository } from './stake/repository'
-import { TokenBridgeRepository } from './token-bridge/repository'
-import { TokenMetaRepository } from './token-meta/repository'
-import { TokenRepository } from './token/repository'
-import { TvlCleanerRepository } from './tvl-cleaner/repository'
-import { UpdateMonitorRepository } from './update-monitor/repository'
-import { UpdateNotifierRepository } from './update-notifier/repository'
-import { ValueRepository } from './value/repository'
-import { VerifierStatusRepository } from './verifier-status/repository'
+import { BlockTransactionCountRepository } from './activity/activity-block/repository'
+import { StarkExTransactionCountRepository } from './activity/activity-starkex/repository'
+import { ActivityViewRepository } from './activity/activity-view/repository'
+import { ZkSyncTransactionRepository } from './activity/activity-zksync/repository'
+import { ActivityRepository } from './activity/activity/repository'
+import { CurrentPriceRepository } from './da-beat/current-price/repository'
+import { StakeRepository } from './da-beat/stake/repository'
+import { DailyDiscoveryRepository } from './discovery/daily-discovery/repository'
+import { DiscoveryCacheRepository } from './discovery/discovery-cache/repository'
+import { UpdateMonitorRepository } from './discovery/update-monitor/repository'
+import { UpdateNotifierRepository } from './discovery/update-notifier/repository'
+import { DatabaseClient } from './kysely'
+import { AggregatedL2CostRepository } from './other/aggregated-l2-cost/repository'
+import { AggregatedLivenessRepository } from './other/aggregated-liveness/repository'
+import { AnomaliesRepository } from './other/anomalies/repository'
+import { FinalityRepository } from './other/finality/repository'
+import { L2CostPriceRepository } from './other/l2-cost-price/repository'
+import { L2CostRepository } from './other/l2-cost/repository'
+import { LivenessRepository } from './other/liveness/repository'
+import { SequenceProcessorRepository } from './other/sequence-processor/repository'
+import { VerifierStatusRepository } from './other/verifier-status/repository'
+import { BridgeEscrowRepository } from './token-db/bridge-escrow/repository'
+import { CacheRepository } from './token-db/cache/repository'
+import { DeploymentRepository } from './token-db/deployment/repository'
+import { ExternalBridgeRepository } from './token-db/external-bridge/repository'
+import { NetworkExplorerRepository } from './token-db/network-explorer/repository'
+import { NetworkRpcRepository } from './token-db/network-rpc/repository'
+import { NetworkRepository } from './token-db/network/repository'
+import { TokenBridgeRepository } from './token-db/token-bridge/repository'
+import { TokenMetaRepository } from './token-db/token-meta/repository'
+import { TokenRepository } from './token-db/token/repository'
+import { AmountRepository } from './tvl/amount/repository'
+import { BlockTimestampRepository } from './tvl/block-timestamp/repository'
+import { PriceRepository } from './tvl/price/repository'
+import { TvlCleanerRepository } from './tvl/tvl-cleaner/repository'
+import { ValueRepository } from './tvl/value/repository'
+import { IndexerConfigurationRepository } from './uif/indexer-configuration/repository'
+import { IndexerStateRepository } from './uif/indexer-state/repository'
 
 export type Database = ReturnType<typeof createDatabase>
 export function createDatabase(config?: PoolConfig) {
-  const db = new PostgresDatabase({ ...config })
+  const db = new DatabaseClient({ ...config })
 
   return {
-    transaction: <T>(cb: (trx: Transaction) => Promise<T>): Promise<T> => {
-      return db.transaction().execute(cb)
-    },
-    close: () => db.destroy(),
+    transaction: db.transaction.bind(db),
+    close: db.close.bind(db),
 
-    // DA-BEAT
-    currentPrice: new CurrentPriceRepository(db),
-    stake: new StakeRepository(db),
-
-    // Token-DB
-    bridgeEscrow: new BridgeEscrowRepository(db),
-    externalBridge: new ExternalBridgeRepository(db),
-    deployment: new DeploymentRepository(db),
-    networkRpc: new NetworkRpcRepository(db),
-    networkExplorer: new NetworkExplorerRepository(db),
-    networks: new NetworkRepository(db),
-    tokenBridge: new TokenBridgeRepository(db),
-    tokenMeta: new TokenMetaRepository(db),
-    token: new TokenRepository(db),
-    cache: new CacheRepository(db),
-
-    // L2BEAT - public
-    aggregatedL2Cost: new AggregatedL2CostRepository(db),
-    aggregatedLiveness: new AggregatedLivenessRepository(db),
-    amount: new AmountRepository(db),
-    anomalies: new AnomaliesRepository(db),
-    blockTimestamp: new BlockTimestampRepository(db),
-    dailyDiscovery: new DailyDiscoveryRepository(db),
-    discoveryCache: new DiscoveryCacheRepository(db),
-    finality: new FinalityRepository(db),
-    indexerConfiguration: new IndexerConfigurationRepository(db),
-    indexerState: new IndexerStateRepository(db),
-    l2Cost: new L2CostRepository(db),
-    l2CostPrice: new L2CostPriceRepository(db),
-    liveness: new LivenessRepository(db),
-    price: new PriceRepository(db),
-    sequenceProcessor: new SequenceProcessorRepository(db),
-    tvlCleaner: new TvlCleanerRepository(db),
-    updateMonitor: new UpdateMonitorRepository(db),
-    updateNotifier: new UpdateNotifierRepository(db),
-    value: new ValueRepository(db),
-    verifierStatus: new VerifierStatusRepository(db),
-
-    // L2BEAT - activity
+    // #region Activity
     activity: new ActivityRepository(db),
     activityView: new ActivityViewRepository(db),
     blockTransactionCount: new BlockTransactionCountRepository(db),
     starkExTransactionCount: new StarkExTransactionCountRepository(db),
     zkSyncTransactionCount: new ZkSyncTransactionRepository(db),
+    // #endregion
+
+    // #region DA BEAT
+    currentPrice: new CurrentPriceRepository(db),
+    stake: new StakeRepository(db),
+    // #endregion
+
+    // #region Discovery
+    dailyDiscovery: new DailyDiscoveryRepository(db),
+    discoveryCache: new DiscoveryCacheRepository(db),
+    updateMonitor: new UpdateMonitorRepository(db),
+    updateNotifier: new UpdateNotifierRepository(db),
+    // #endregion
+
+    // #region Token DB
+    bridgeEscrow: new BridgeEscrowRepository(db),
+    cache: new CacheRepository(db),
+    deployment: new DeploymentRepository(db),
+    externalBridge: new ExternalBridgeRepository(db),
+    networkExplorer: new NetworkExplorerRepository(db),
+    networkRpc: new NetworkRpcRepository(db),
+    networks: new NetworkRepository(db),
+    token: new TokenRepository(db),
+    tokenBridge: new TokenBridgeRepository(db),
+    tokenMeta: new TokenMetaRepository(db),
+    // #endregion
+
+    // #region TVL
+    amount: new AmountRepository(db),
+    blockTimestamp: new BlockTimestampRepository(db),
+    price: new PriceRepository(db),
+    tvlCleaner: new TvlCleanerRepository(db),
+    value: new ValueRepository(db),
+    // #endregion
+
+    // #region UIF
+    indexerConfiguration: new IndexerConfigurationRepository(db),
+    indexerState: new IndexerStateRepository(db),
+    // #endregion
+
+    // #region Other
+    aggregatedL2Cost: new AggregatedL2CostRepository(db),
+    aggregatedLiveness: new AggregatedLivenessRepository(db),
+    anomalies: new AnomaliesRepository(db),
+    finality: new FinalityRepository(db),
+    l2Cost: new L2CostRepository(db),
+    l2CostPrice: new L2CostPriceRepository(db),
+    liveness: new LivenessRepository(db),
+    sequenceProcessor: new SequenceProcessorRepository(db),
+    verifierStatus: new VerifierStatusRepository(db),
+    // #endregion
   }
 }

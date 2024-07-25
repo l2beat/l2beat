@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
@@ -23,11 +23,7 @@ export class LoopringCounter extends SequenceProcessor {
     return await this.loopringClient.getFinalizedBlockNumber()
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const block = await this.loopringClient.getBlock(blockNumber)
       return {
@@ -41,6 +37,6 @@ export class LoopringCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'LoopringBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks, trx)
+    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
   }
 }

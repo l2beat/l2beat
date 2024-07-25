@@ -3,10 +3,16 @@ import { Callout } from '~/app/_components/callout'
 import { CustomLink } from '~/app/_components/link/custom-link'
 import { HighlightableLink } from '~/app/_components/link/highlightable/highlightable-link'
 import { Markdown } from '~/app/_components/markdown/markdown'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
 import BulletIcon from '~/icons/bullet.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
 import { cn } from '~/utils/cn'
+import { type VerificationStatus } from '~/utils/project/contracts-and-permissions/to-verification-status'
 import { ReferenceList, type TechnologyReference } from './reference-list'
 import { UpgradeConsiderations } from './upgrade-considerations'
 import { type UsedInProject, UsedInProjectEntry } from './used-in-project'
@@ -29,15 +35,20 @@ export interface TechnologyContractAddress {
   href: string
   address: string
   isAdmin: boolean
-  verified: boolean
+  verificationStatus: VerificationStatus
 }
 
 export interface ContractEntryProps {
   contract: TechnologyContract
+  type: 'permission' | 'contract'
   className?: string
 }
 
-export function ContractEntry({ contract, className }: ContractEntryProps) {
+export function ContractEntry({
+  contract,
+  type,
+  className,
+}: ContractEntryProps) {
   const sharedProxies = contract.usedInProjects?.filter(
     (c) => c.type === 'proxy',
   )
@@ -48,7 +59,7 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
     (c) => c.type === 'permission',
   )
 
-  const { color, icon } = getCalloutProps(contract)
+  const { color, icon } = getCalloutProps(contract, type)
 
   return (
     <Callout
@@ -57,16 +68,30 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
       icon={icon}
       body={
         <>
-          <div className="flex flex-wrap items-center gap-x-2">
+          <div className="flex flex-wrap items-center gap-x-2 !leading-[1.15]">
             <strong id={contract.name}>{contract.name}</strong>{' '}
             {contract.addresses.map((address, i) => (
               <HighlightableLink
                 key={i}
                 variant={
-                  !address.verified && !address.isAdmin ? 'danger' : 'primary'
+                  address.verificationStatus === 'unverified'
+                    ? 'danger'
+                    : undefined
                 }
                 href={address.href}
+                className="flex items-center gap-0.5"
               >
+                {address.verificationStatus === 'unverified' &&
+                color !== 'red' ? (
+                  <Tooltip>
+                    <TooltipTrigger>
+                      <UnverifiedIcon className="fill-red-300" />
+                    </TooltipTrigger>
+                    <TooltipContent>
+                      This contract is not verified
+                    </TooltipContent>
+                  </Tooltip>
+                ) : null}
                 {address.name}
               </HighlightableLink>
             ))}
@@ -130,30 +155,38 @@ export function ContractEntry({ contract, className }: ContractEntryProps) {
   )
 }
 
-function getCalloutProps(contract: TechnologyContract) {
-  const areAddressesUnverified = contract.addresses.some(
-    (c) => !c.verified && !c.isAdmin,
+function getCalloutProps(
+  contract: TechnologyContract,
+  type: 'permission' | 'contract',
+) {
+  const isAnyAddressUnverified = contract.addresses.some(
+    (c) => c.verificationStatus === 'unverified' && !c.isAdmin,
   )
-  const color = areAddressesUnverified ? ('red' as const) : undefined
+  const isEveryAddressUnverified = contract.addresses.every(
+    (c) => c.verificationStatus === 'unverified',
+  )
+  const showRedBackground =
+    (type === 'contract' && isAnyAddressUnverified) ||
+    (type === 'permission' && isEveryAddressUnverified)
 
-  if (areAddressesUnverified) {
+  if (showRedBackground) {
     return {
-      color,
-      icon: <UnverifiedIcon className="fill-red-300" />,
-    }
+      color: 'red',
+      icon: <UnverifiedIcon className="size-5 fill-red-300" />,
+    } as const
   }
 
   if (contract.implementationHasChanged) {
     return {
-      color,
+      color: undefined,
       icon: (
-        <ShieldIcon className={cn('fill-yellow-700 dark:fill-yellow-300')} />
+        <ShieldIcon className="size-5 fill-yellow-700 dark:fill-yellow-300" />
       ),
     }
   }
 
   return {
-    color,
-    icon: <BulletIcon />,
+    color: undefined,
+    icon: <BulletIcon className="size-5" />,
   }
 }

@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
@@ -32,7 +32,6 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     from: number,
     to: number,
     configurations: Configuration<ChainAmountConfig>[],
-    trx: Transaction,
   ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp.toNumber() > to) {
@@ -66,7 +65,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
         .length,
     })
-    await this.$.db.amount.addMany(nonZeroAmounts, trx)
+    await this.$.db.amount.addMany(nonZeroAmounts)
 
     return timestamp.toNumber()
   }

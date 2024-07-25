@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Database, IndexerStateRecord, Transaction } from '@l2beat/database'
+import { Database, IndexerStateRecord } from '@l2beat/database'
 import {
   AmountConfigEntry,
   CirculatingSupplyEntry,
@@ -83,12 +83,10 @@ export class IndexerService {
   async updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
-    trx: Transaction,
   ): Promise<void> {
     await this.db.indexerConfiguration.updateCurrentHeights(
       indexerId,
       currentHeight,
-      trx,
     )
   }
 

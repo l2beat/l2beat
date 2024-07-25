@@ -6,7 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { MOCK_TRX, mockDatabase } from '../../../test/database'
+import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
 import {
@@ -72,12 +72,7 @@ describe(PriceIndexer.name, () => {
         actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        MOCK_TRX,
-      )
+      const safeHeight = await indexer.multiUpdate(from, to, configurations)
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
 
@@ -99,10 +94,12 @@ describe(PriceIndexer.name, () => {
         new UnixTime(200),
       ])
 
-      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith(
-        [price('a', 100), price('a', 200), price('b', 100), price('b', 200)],
-        MOCK_TRX,
-      )
+      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith([
+        price('a', 100),
+        price('a', 200),
+        price('b', 100),
+        price('b', 200),
+      ])
 
       expect(safeHeight).toEqual(adjustedTo)
     })

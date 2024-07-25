@@ -1,4 +1,4 @@
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
@@ -30,7 +30,6 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<TrackedTxConfigEntry>[],
-    trx: Transaction,
   ) {
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
@@ -42,7 +41,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
 
     for (const updater of this.$.updaters) {
       const filteredTxs = txs.filter((tx) => tx.type === updater.type)
-      await updater.update(filteredTxs, trx)
+      await updater.update(filteredTxs)
     }
     this.logger.info('Saved txs into DB', {
       from,

@@ -44,7 +44,15 @@ export function getUniqueContractsForProject(
   chain: string,
 ): EthereumAddress[] {
   const projectContracts = getProjectContractsForChain(project, chain)
-  return getUniqueContractsFromList(projectContracts).map((c) => c.address)
+  const uniqueProjectContracts = getUniqueContractsFromList(
+    projectContracts,
+  ).map((c) => c.address)
+  const permissionedAddresses = getPermissionedAddressesForChain(project, chain)
+
+  return withoutDuplicates([
+    ...uniqueProjectContracts,
+    ...permissionedAddresses,
+  ])
 }
 
 export function getUniqueContractsFromList(
@@ -62,13 +70,12 @@ export function getUniqueContractsFromList(
         chain: c.chain ?? 'ethereum',
       })),
     )
-
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
 function getProjectContractsForChain(project: Project, chain: string) {
   const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract, chain),
+    isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
@@ -77,7 +84,9 @@ function getProjectContractsForChain(project: Project, chain: string) {
       }
       return { address: escrow.address, ...escrow.contract }
     })
-    .filter((escrowContract) => isContractOnChain(escrowContract, chain))
+    .filter((escrowContract) =>
+      isContractOnChain(escrowContract.chain, chain, project),
+    )
 
   return [...contracts, ...escrows]
 }
@@ -117,12 +126,26 @@ function getDaBridgePermissionsForChain(
   return permissions.filter((p) => p.chain === chain)
 }
 
-function isContractOnChain(contract: ScalingProjectContract, chain: string) {
-  // For backwards compatibility, we assume that contracts without chain are for ethereum
-  if (contract.chain === undefined && chain === 'ethereum') {
-    return true
+function getPermissionedAddressesForChain(project: Project, chain: string) {
+  const permissions =
+    project.permissions === 'UnderReview' ? [] : project.permissions ?? []
+  return permissions
+    .filter((p) => isContractOnChain(p.chain, chain, project))
+    .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
+    .filter((p) => p.type !== 'EOA')
+    .map((p) => p.address)
+}
+
+function isContractOnChain(
+  contractChain: string | undefined,
+  chain: string,
+  project: Project,
+) {
+  if (contractChain === undefined) {
+    // For backwards compatibility, we assume that L2 contracts without chain are for ethereum
+    contractChain = project.type === 'layer3' ? project.hostChain : 'ethereum'
   }
-  return contract.chain === chain
+  return contractChain === chain
 }
 
 export function areAllAddressesVerified(

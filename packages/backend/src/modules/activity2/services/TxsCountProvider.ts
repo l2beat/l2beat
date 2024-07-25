@@ -1,11 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { ActivityRecord } from '@l2beat/database/src/activity/entity'
+import { ActivityRecord } from '@l2beat/database'
 import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
+import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
 
 interface TxsCountProviderDeps {
@@ -28,6 +30,12 @@ export class TxsCountProvider {
       }
       case 'starkex': {
         return await this.getStarkexTxsCount(from, to)
+      }
+      case 'zksync': {
+        return await this.getZksyncTxsCount(from, to)
+      }
+      case 'starknet': {
+        return await this.getStarknetTxsCount(from, to)
       }
       default:
         throw new Error(`${this.$.projectConfig.type} type not implemented`)
@@ -59,26 +67,7 @@ export class TxsCountProvider {
     })
 
     const blocks = await Promise.all(queries)
-
-    const result: ActivityRecord[] = []
-
-    for (const block of blocks) {
-      const timestamp = block.timestamp.toStartOf('day')
-      const currentCount = result.find(
-        (r) => r.timestamp.toNumber() === timestamp.toNumber(),
-      )
-
-      if (currentCount) {
-        currentCount.count += block.count
-      } else {
-        result.push({
-          projectId: this.$.projectId,
-          timestamp,
-          count: block.count,
-        })
-      }
-    }
-    return result
+    return this.sumCountsPerDay(blocks)
   }
 
   async getStarkexTxsCount(
@@ -118,5 +107,83 @@ export class TxsCountProvider {
       timestamp: c.timestamp,
       count: c.count,
     }))
+  }
+
+  async getZksyncTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'zksync',
+      'Method not supported for projects other than zksync',
+    )
+    const projectConfig = this.$.projectConfig
+
+    const zksyncClient = this.$.peripherals.getClient(ZksyncLiteClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const transactions =
+        await zksyncClient.getTransactionsInBlock(blockNumber)
+
+      return transactions.map((t) => ({ timestamp: t.createdAt, count: 1 }))
+    })
+
+    const blocks = await Promise.all(queries)
+    return this.sumCountsPerDay(blocks.flat())
+  }
+
+  async getStarknetTxsCount(
+    from: number,
+    to: number,
+  ): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'starknet',
+      'Method not supported for projects other than Starknet',
+    )
+    const projectConfig = this.$.projectConfig
+
+    const starknetClient = this.$.peripherals.getClient(StarknetClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const block = await starknetClient.getBlock(blockNumber)
+
+      return {
+        count: block.transactions.length,
+        timestamp: new UnixTime(block.timestamp),
+      }
+    })
+
+    const blocks = await Promise.all(queries)
+    return this.sumCountsPerDay(blocks)
+  }
+
+  sumCountsPerDay(
+    blocks: {
+      count: number
+      timestamp: UnixTime
+    }[],
+  ): ActivityRecord[] {
+    const result: ActivityRecord[] = []
+
+    for (const block of blocks) {
+      const timestamp = block.timestamp.toStartOf('day')
+      const currentCount = result.find(
+        (r) => r.timestamp.toNumber() === timestamp.toNumber(),
+      )
+
+      if (currentCount) {
+        currentCount.count += block.count
+      } else {
+        result.push({
+          projectId: this.$.projectId,
+          timestamp,
+          count: block.count,
+        })
+      }
+    }
+    return result
   }
 }

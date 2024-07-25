@@ -108,7 +108,7 @@ function createChainModule(
 
   const blockTimestampProvider = new BlockTimestampProvider({
     blockExplorerClient,
-    rpcClient,
+    client: rpcClient,
     logger,
   })
 
