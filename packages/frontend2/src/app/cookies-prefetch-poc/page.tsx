@@ -1,6 +1,6 @@
 import { type Metadata } from 'next'
 import { cookies } from 'next/headers'
-import { api, HydrateClient } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { CookiesPrefetchPocClientComponent } from './_components/cookies-prefetch-poc-client-component'
 
