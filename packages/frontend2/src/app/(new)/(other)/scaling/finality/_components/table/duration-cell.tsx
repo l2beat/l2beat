@@ -1,5 +1,4 @@
 import { pluralize } from '@l2beat/shared-pure'
-import React from 'react'
 
 export function DurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds

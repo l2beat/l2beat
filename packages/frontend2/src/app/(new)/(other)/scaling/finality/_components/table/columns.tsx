@@ -1,4 +1,5 @@
-import { createColumnHelper } from '@tanstack/react-table'
+import { formatSeconds } from '@l2beat/shared-pure'
+import { type Row, createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { Badge } from '~/app/_components/badge/badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
@@ -8,8 +9,20 @@ import {
   TypeColumnTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
-import { FinalityDurationCell } from './FinalityDurationCell'
+import { FinalityDurationCell } from './finality-duration-cell'
 
+const sortFinality =
+  (key: 'timeToInclusion' | 'stateUpdateDelay') =>
+  (a: Row<ScalingFinalityEntry>, b: Row<ScalingFinalityEntry>) => {
+    const aVal = a.original.data?.[key]?.averageInSeconds
+    const bVal = b.original.data?.[key]?.averageInSeconds
+
+    if (!aVal || !bVal) {
+      return -1
+    }
+
+    return aVal - bVal
+  }
 const columnHelper = createColumnHelper<ScalingFinalityEntry>()
 
 export const scalingFinalityColumns = [
@@ -25,18 +38,18 @@ export const scalingFinalityColumns = [
     id: 'logo',
     cell: (ctx) => (
       <Image
-        className="min-w-[18px] min-h-[18px]"
+        className="min-h-[18px] min-w-[18px]"
         src={`/icons/${ctx.row.original.slug}.png`}
         width={18}
         height={18}
         alt={`${ctx.row.original.name} logo`}
       />
     ),
-    // size: 26,
-    // meta: {
-    //   headClassName: 'w-0',
-    //   cellClassName: 'lg:!pr-0',
-    // },
+    size: 26,
+    meta: {
+      headClassName: 'w-0',
+      cellClassName: 'lg:!pr-0',
+    },
   }),
   columnHelper.accessor('name', {
     cell: (ctx) => (
@@ -65,9 +78,10 @@ export const scalingFinalityColumns = [
     },
   }),
   columnHelper.accessor('data', {
+    id: 'timeToInclusion',
     header: 'Past day avg.\nTime to inclusion',
     cell: (ctx) => {
-      const data = ctx.getValue()
+      const { data } = ctx.row.original
       return data ? (
         <FinalityDurationCell
           scope="timeToInclusion"
@@ -79,15 +93,18 @@ export const scalingFinalityColumns = [
         <Badge type="gray">COMING SOON</Badge>
       )
     },
+    sortUndefined: 'last',
+    sortingFn: sortFinality('timeToInclusion'),
     meta: {
       tooltip:
         'The average time it would take for an L2 transaction to be included on the L1. Please note, this is an approximate estimation and is different than Time to finality since it ignores the overhead time to reach L1 finality after L1 inclusion.',
     },
   }),
-  columnHelper.accessor('data', {
+  columnHelper.accessor('data.stateUpdateDelay.averageInSeconds', {
+    id: 'stateUpdateDelay',
     header: 'State update\ndelay',
     cell: (ctx) => {
-      const data = ctx.getValue()
+      const { data } = ctx.row.original
       return data?.stateUpdateDelay ? (
         data.stateUpdateDelay.averageInSeconds === 0 ? (
           'None'
@@ -103,19 +120,28 @@ export const scalingFinalityColumns = [
         <Badge type="gray">COMING SOON</Badge>
       )
     },
+    sortUndefined: 'last',
+    sortingFn: sortFinality('stateUpdateDelay'),
     meta: {
       tooltip:
         'Time interval between time to inclusion and state root submission.',
     },
   }),
   columnHelper.accessor('finalizationPeriod', {
-    header: 'Execution Delay',
-    cell: (ctx) => <span>{ctx.getValue()}</span>,
+    header: 'Execution\nDelay',
+    cell: (ctx) => {
+      const period = ctx.getValue()
+      const value = period
+        ? formatSeconds(period, {
+            fullUnit: false,
+          })
+        : 'None'
+
+      return <span className="w-[25px]">{value}</span>
+    },
     meta: {
-      headClassName: 'w-0',
       tooltip:
         'Time interval between state root submission and state root finalization. For Optimistic Rollups, this usually corresponds to the challenge period, whereas for ZK Rollups, it might be added as a safety precaution.',
     },
-    size: 100,
   }),
 ]

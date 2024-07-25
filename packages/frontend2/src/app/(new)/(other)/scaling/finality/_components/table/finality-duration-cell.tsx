@@ -3,18 +3,18 @@ import {
   type WarningValueWithSentiment,
 } from '@l2beat/shared-pure'
 
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from '@radix-ui/react-tooltip'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+} from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type SyncStatus } from '~/types/SyncStatus'
 import { formatTimestamp } from '~/utils/dates'
-import { DurationCell } from './DurationCell'
-import { GrayedOut } from './GrayedOut'
+import { DurationCell } from './duration-cell'
+import { GrayedOut } from './grayed-out'
 
 type BaseProps = {
   syncStatus: SyncStatus
@@ -38,7 +38,7 @@ export function FinalityDurationCell(props: Props & BaseProps) {
       : 'state update delay'
 
   return (
-    <Tooltip data-testid="finality-duration-cell">
+    <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
         <GrayedOut grayOut={!props.syncStatus.isSynced}>
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />

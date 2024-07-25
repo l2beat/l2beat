@@ -6,7 +6,7 @@ export function GrayedOut(props: {
 }) {
   if (props.grayOut) {
     return (
-      <div className="[&_*]:!text-gray-500 [&_*]:!fill-gray-500">
+      <div className="[&_*]:!fill-gray-500 [&_*]:!text-gray-500">
         {props.children}
       </div>
     )

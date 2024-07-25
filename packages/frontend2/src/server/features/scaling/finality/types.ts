@@ -27,7 +27,7 @@ export interface ScalingFinalityEntry {
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
   data: ScalingFinalityEntryData | undefined
-  finalizationPeriod?: string
+  finalizationPeriod?: number
 }
 
 export interface ScalingFinalityEntryData {

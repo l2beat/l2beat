@@ -4,7 +4,6 @@ import {
   type FinalityProjectData,
   type ProjectId,
   UnixTime,
-  formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
@@ -105,10 +104,6 @@ function getScalingFinalityEntry(
     purposes: project.display.purposes,
     stage: project.stage,
     data: getFinalityData(finalityProjectData, project),
-    finalizationPeriod: project.display.finality?.finalizationPeriod
-      ? formatSeconds(project.display.finality.finalizationPeriod, {
-          fullUnit: false,
-        })
-      : 'None',
+    finalizationPeriod: project.display.finality?.finalizationPeriod,
   }
 }

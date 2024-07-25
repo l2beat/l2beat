@@ -26,7 +26,7 @@ export function FinalityDiagramsSection({ diagrams, className }: Props) {
   return (
     // TODO: re-enable section once diagrams are ready
     <section className={className} style={{ display: 'none' }}>
-      <h2 className="mb-6 font-bold text-3xl">Finality diagrams</h2>
+      <h2 className="mb-6 text-3xl font-bold">Finality diagrams</h2>
       <div className="flex flex-col gap-4">
         {diagrams.map((diagram) => (
           <Diagram key={diagram.name} diagram={diagram} />
@@ -38,9 +38,9 @@ export function FinalityDiagramsSection({ diagrams, className }: Props) {
 
 function Diagram({ diagram }: { diagram: FinalityDiagram }) {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border-2 border-gray-50 bg-[#F1F3F7] p-4 md:flex-row md:gap-0 dark:border-zinc-500 dark:bg-zinc-900 md:p-8">
+    <div className="flex flex-col gap-3 rounded-lg border-2 border-gray-50 bg-[#F1F3F7] p-4 md:flex-row md:gap-0 md:p-8 dark:border-zinc-500 dark:bg-zinc-900">
       <div className="flex flex-col justify-between md:w-[190px]">
-        <h3 className="whitespace-pre-line font-bold text-xl leading-tight dark:text-[#F27935]">
+        <h3 className="whitespace-pre-line text-xl font-bold leading-tight dark:text-[#F27935]">
           {diagram.name}
         </h3>
         <Logo className="hidden scale-75 md:block" animated={false} />
@@ -65,7 +65,7 @@ function Diagram({ diagram }: { diagram: FinalityDiagram }) {
           sizes="100vw"
           alt={`${diagram.name} diagram`}
           src={diagram.src.dark.mobile}
-          className="md:!hidden hidden size-full dark:block"
+          className="hidden size-full md:!hidden dark:block"
         />
       )}
 
@@ -89,7 +89,7 @@ function Diagram({ diagram }: { diagram: FinalityDiagram }) {
           sizes="100vw"
           alt={`${diagram.name} diagram`}
           src={diagram.src.light.mobile}
-          className="size-full dark:hidden md:hidden"
+          className="size-full md:hidden dark:hidden"
         />
       )}
       <Logo className="scale-75 md:hidden" animated={false} />
