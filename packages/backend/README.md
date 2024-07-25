@@ -212,17 +212,6 @@ You can configure the log level by setting the `LOG_LEVEL` variable. The possibl
 
 - `scripts/rediscoverRawDevAll.sh` - re-runs raw discovery --dev on all existing projects
 
-## Repository naming convention
-
-- `add(T): number` - adds a new record and returns its id
-- `addMany(T[]): R[]` - adds many new records and returns their ids
-- `getAll(): T[]` - returns an array of all records
-- `getByKey(K): T[]` - returns an array of all matching records
-- `findByKey(K): T?` - returns a single matching record or undefined
-- `deleteAll(): number` - removes all records and returns the number of removed records
-- `deleteByKey(K): number` - removes all matching records and returns the number of removed records
-- `save(T): boolean` - updates a record and returns boolean indicating if record was updated
-
 ## Maintenance endpoints
 
 The `/status` endpoints were created to see the current state of our backend.
