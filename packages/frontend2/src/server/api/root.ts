@@ -14,13 +14,7 @@ export const appRouter = router({
         text: z.string(),
       }),
     )
-    .query(({ ctx, input }) => {
-      if (!ctx.rsc)
-        cookies().set('cookies-prefetch-poc-text', input.text, {
-          maxAge: 60 * 60,
-        })
-      return `Hello ${input.text}`
-    }),
+    .query(({ input }) => `Hello ${input.text}`),
 })
 
 // export type definition of API
