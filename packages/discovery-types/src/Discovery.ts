@@ -41,6 +41,7 @@ export interface DiscoveryOutput {
   abis: Record<string, string[]>
   configHash: Hash256
   version: number
+  fieldMeta: Record<string, BaseMeta>
   usedTemplates: Record<string, Hash256>
   shapeFilesHash: Hash256
 }
@@ -52,14 +53,17 @@ export interface DiscoveryCustomType {
   severity?: string | null
 }
 
-export interface Meta {
+export interface BaseMeta {
   descriptions?: string[]
+  severity?: ContractFieldSeverity
+}
+
+export type Meta = {
   roles?: StackRole[]
   assignedPermissions?: Record<string, EthereumAddress[]>
   categories?: StackCategory[]
   types?: ContractValueType[]
-  severity?: ContractFieldSeverity
-}
+} & BaseMeta
 
 export type EoaParameters = {
   address: EthereumAddress

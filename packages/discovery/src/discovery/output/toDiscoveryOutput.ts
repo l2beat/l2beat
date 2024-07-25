@@ -19,6 +19,7 @@ export function toDiscoveryOutput(
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
+    fieldMeta: {},
     usedTemplates: collectUsedTemplatesWithHashes(results),
     shapeFilesHash,
   }
@@ -38,15 +39,11 @@ export function collectUsedTemplatesWithHashes(
 
 export function processAnalysis(
   results: Analysis[],
-): Omit<
+): Pick<
   DiscoveryOutput,
-  | 'name'
-  | 'blockNumber'
-  | 'configHash'
-  | 'version'
-  | 'chain'
-  | 'usedTemplates'
-  | 'shapeFilesHash'
+  | 'contracts'
+  | 'eoas'
+  | 'abis'
 > {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
