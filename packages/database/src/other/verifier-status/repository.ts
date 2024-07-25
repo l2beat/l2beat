@@ -4,20 +4,27 @@ import { VerifierStatusRecord, toRecord, toRow } from './entity'
 import { selectVerifierStatus } from './select'
 
 export class VerifierStatusRepository extends BaseRepository {
-  async upsert(record: VerifierStatusRecord): Promise<string> {
-    const row = toRow(record)
-    await this.db
-      .insertInto('public.verifier_status')
-      .values(row)
-      .onConflict((cb) =>
-        cb.columns(['address', 'chain_id']).doUpdateSet({
-          last_used: row.last_used,
-          last_updated: row.last_updated,
-        }),
-      )
-      .execute()
+  async upsert(record: VerifierStatusRecord): Promise<void> {
+    await this.upsertMany([record])
+  }
 
-    return `[${record.address}]: ${record.lastUsed}`
+  async upsertMany(records: VerifierStatusRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.verifier_status')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['address', 'chain_id']).doUpdateSet((eb) => ({
+            last_used: eb.ref('excluded.last_used'),
+            last_updated: eb.ref('excluded.last_updated'),
+          })),
+        )
+        .execute()
+    })
+    return records.length
   }
 
   async findVerifierStatus(
@@ -31,8 +38,7 @@ export class VerifierStatusRepository extends BaseRepository {
       .where('chain_id', '=', +chainId)
       .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row) : undefined
+    return row && toRecord(row)
   }
 
   async getAll(): Promise<VerifierStatusRecord[]> {
@@ -40,7 +46,6 @@ export class VerifierStatusRepository extends BaseRepository {
       .selectFrom('public.verifier_status')
       .select(selectVerifierStatus)
       .execute()
-
     return rows.map(toRecord)
   }
 

@@ -25,8 +25,8 @@ describe(StarkexCounter.name, () => {
     const db = mockDatabase({
       starkExTransactionCount,
       sequenceProcessor: mockObject<Database['sequenceProcessor']>({
-        findById: async () => null,
-        upsert: async () => '',
+        findById: async () => undefined,
+        upsert: async () => undefined,
       }),
     })
 

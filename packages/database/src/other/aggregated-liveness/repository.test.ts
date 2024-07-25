@@ -99,9 +99,9 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
-  describe(AggregatedLivenessRepository.prototype.getByProject.name, () => {
+  describe(AggregatedLivenessRepository.prototype.getByProjectId.name, () => {
     it('should return all rows for project', async () => {
-      const results = await repository.getByProject(PROJECT_B)
+      const results = await repository.getByProjectId(PROJECT_B)
 
       expect(results).toEqualUnsorted(DATA.slice(1, 2))
     })

@@ -3,32 +3,39 @@ import { SequenceProcessorRecord, toRecord, toRow } from './entity'
 import { selectSequenceProcessor } from './select'
 
 export class SequenceProcessorRepository extends BaseRepository {
-  async upsert(record: SequenceProcessorRecord) {
-    const row = toRow(record)
-    await this.db
-      .insertInto('public.sequence_processor')
-      .values(row)
-      .onConflict((cb) =>
-        cb.column('id').doUpdateSet((eb) => ({
-          last_processed: eb.ref('excluded.last_processed'),
-          latest: eb.ref('excluded.latest'),
-          synced_once: eb.ref('excluded.synced_once'),
-          updated_at: eb.ref('excluded.updated_at'),
-        })),
-      )
-      .execute()
-    return record.id
+  async upsert(record: SequenceProcessorRecord): Promise<void> {
+    await this.upsertMany([record])
   }
 
-  async findById(id: string) {
+  async upsertMany(records: SequenceProcessorRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.sequence_processor')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.column('id').doUpdateSet((eb) => ({
+            last_processed: eb.ref('excluded.last_processed'),
+            latest: eb.ref('excluded.latest'),
+            synced_once: eb.ref('excluded.synced_once'),
+            updated_at: eb.ref('excluded.updated_at'),
+          })),
+        )
+        .execute()
+    })
+    return records.length
+  }
+
+  async findById(id: string): Promise<SequenceProcessorRecord | undefined> {
     const row = await this.db
       .selectFrom('public.sequence_processor')
       .select(selectSequenceProcessor)
       .where('id', '=', id)
       .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row) : null
+    return row && toRecord(row)
   }
 
   async deleteAll(): Promise<number> {

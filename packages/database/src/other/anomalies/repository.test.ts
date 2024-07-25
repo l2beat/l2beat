@@ -95,9 +95,9 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     })
   })
 
-  describe(AnomaliesRepository.prototype.getByProjectFrom.name, () => {
+  describe(AnomaliesRepository.prototype.getByProjectIdFrom.name, () => {
     it('should return all rows for project from timestamp', async () => {
-      const results = await repository.getByProjectFrom(
+      const results = await repository.getByProjectIdFrom(
         PROJECT_B,
         START.add(-2, 'hours'),
       )

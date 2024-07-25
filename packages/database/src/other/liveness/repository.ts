@@ -6,22 +6,19 @@ import { LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'
 
 export class LivenessRepository extends BaseRepository {
-  async getAll() {
+  async getAll(): Promise<LivenessRecord[]> {
     const rows = await this.db
       .selectFrom('public.liveness')
       .selectAll()
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getByConfigurationIdSince(
     configurationIds: TrackedTxId[],
     since: UnixTime,
-  ) {
-    if (configurationIds.length === 0) {
-      return []
-    }
+  ): Promise<LivenessRecord[]> {
+    if (configurationIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.liveness')
@@ -31,17 +28,14 @@ export class LivenessRepository extends BaseRepository {
       .distinctOn(['timestamp', 'configuration_id'])
       .orderBy('timestamp', 'desc')
       .execute()
-
     return rows.map(toRecord)
   }
 
   async getByConfigurationIdUpTo(
     configurationIds: TrackedTxId[],
     to: UnixTime,
-  ) {
-    if (configurationIds.length === 0) {
-      return []
-    }
+  ): Promise<LivenessRecord[]> {
+    if (configurationIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.liveness')
@@ -51,7 +45,6 @@ export class LivenessRepository extends BaseRepository {
       .distinctOn(['timestamp', 'configuration_id'])
       .orderBy('timestamp', 'desc')
       .execute()
-
     return rows.map(toRecord)
   }
 
@@ -59,13 +52,10 @@ export class LivenessRepository extends BaseRepository {
     configurationIds: string[],
     from: UnixTime,
     to: UnixTime,
-  ) {
-    if (configurationIds.length === 0) {
-      return []
-    }
+  ): Promise<LivenessRecord[]> {
+    if (configurationIds.length === 0) return []
 
     assert(from.toNumber() < to.toNumber(), 'From must be less than to')
-
     const rows = await this.db
       .selectFrom('public.liveness')
       .select(selectLiveness)
@@ -75,21 +65,16 @@ export class LivenessRepository extends BaseRepository {
       .distinctOn(['timestamp', 'configuration_id'])
       .orderBy('timestamp', 'desc')
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async insertMany(records: LivenessRecord[]) {
-    if (records.length === 0) {
-      return 0
-    }
+  async insertMany(records: LivenessRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-
     await this.batch(rows, 10_000, async (batch) => {
       await this.db.insertInto('public.liveness').values(batch).execute()
     })
-
     return rows.length
   }
 
