@@ -6,36 +6,45 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { db } from '~/server/database'
-import { getLivenessByTypeSince } from './get-liveness-by-type-since'
 import { calcAvgsPerProject } from './calc-avgs-per-project'
 import { divideAndAddLag } from './divide-and-add-lag'
+import { getLivenessByTypeSince } from './get-liveness-by-type-since'
 
 export type FinalityProjectConfig = {
   projectId: ProjectId
 } & Layer2FinalityConfig
 
-
-
-export async function getFinality(
-  projects: FinalityProjectConfig[],
-): Promise<FinalityApiResponse> {
-  const result: FinalityApiResponse['projects'] = {}
-
-  const [OPStackProjects, otherProjects] = partition(
-    projects,
-    (p) => p.type === 'OPStack',
-  )
-  const OPStackFinality = await getOPStackFinality(OPStackProjects)
-  Object.assign(result, OPStackFinality)
-
-  const projectsFinality = await getProjectsFinality(otherProjects)
-  Object.assign(result, projectsFinality)
-
-  return {
-    projects: result,
-  }
+export async function getFinality(projects: FinalityProjectConfig[]) {
+  noStore()
+  return getCachedFinality(projects)
 }
+
+const getCachedFinality = cache(
+  async (projects: FinalityProjectConfig[]): Promise<FinalityApiResponse> => {
+    const result: FinalityApiResponse['projects'] = {}
+
+    const [OPStackProjects, otherProjects] = partition(
+      projects,
+      (p) => p.type === 'OPStack',
+    )
+    const OPStackFinality = await getOPStackFinality(OPStackProjects)
+    Object.assign(result, OPStackFinality)
+
+    const projectsFinality = await getProjectsFinality(otherProjects)
+    Object.assign(result, projectsFinality)
+
+    return {
+      projects: result,
+    }
+  },
+  ['finality'],
+  { revalidate: 60 * 60 },
+)
 
 async function getProjectsFinality(
   projects: FinalityProjectConfig[],
@@ -151,7 +160,11 @@ async function getOPStackFinality(
 
       if (!syncedUntil) return
 
-      const records = await getLivenessByTypeSince(configsToUse, 'batchSubmissions', syncedUntil.add(-1, 'days'))
+      const records = await getLivenessByTypeSince(
+        configsToUse,
+        'batchSubmissions',
+        syncedUntil.add(-1, 'days'),
+      )
 
       const intervals = calcAvgsPerProject(records)
       const projectResult = divideAndAddLag(intervals, project.lag)
