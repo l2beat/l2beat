@@ -140,7 +140,9 @@ function createActivityIndexers(
   return indexers
 }
 
-function getProjectClient(type: ActivityTransactionConfig['type']) {
+function getProjectClient(
+  type: ActivityTransactionConfig['type'],
+): ClientClass<BaseClient, { url: string; callsPerMinute: number }> {
   switch (type) {
     case 'rpc':
       return RpcClient
@@ -168,7 +170,7 @@ function createBlockTargetIndexer<
     id: ProjectId
     config: ActivityTransactionConfig
   },
-) {
+): BlockTargetIndexer {
   assert(
     project.config.type === 'rpc' ||
       project.config.type === 'zksync' ||
