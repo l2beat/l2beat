@@ -27,7 +27,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
   })
 
   describe(
-    BlockTimestampRepository.prototype.findByChainAndTimestamp.name,
+    BlockTimestampRepository.prototype.findBlockNumberByChainAndTimestamp.name,
     () => {
       it('finds block number by chain and timestamp', async () => {
         const blocks = [
@@ -49,7 +49,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
         ]
         await Promise.all(blocks.map((b) => repository.insert(b)))
 
-        const blockNumber = await repository.findByChainAndTimestamp(
+        const blockNumber = await repository.findBlockNumberByChainAndTimestamp(
           'chain',
           new UnixTime(1),
         )

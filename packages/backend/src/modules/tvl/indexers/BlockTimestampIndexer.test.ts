@@ -28,7 +28,7 @@ describe(BlockTimestampIndexer.name, () => {
         getBlockNumberAtOrBefore: async () => 666,
       })
       const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
-        insert: async () => '',
+        insert: async () => undefined,
       })
 
       const chain = 'ethereum'

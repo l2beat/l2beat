@@ -9,24 +9,22 @@ import { BlockTimestampRecord, toRecord, toRow } from './entity'
 import { selectBlockTimestamp } from './select'
 
 export class BlockTimestampRepository extends BaseRepository {
-  async insert(record: BlockTimestampRecord) {
-    const row = toRow(record)
-
-    await this.db.insertInto('public.block_timestamps').values(row).execute()
-
-    return `${record.chain}-${record.timestamp.toNumber()}`
+  async insert(record: BlockTimestampRecord): Promise<void> {
+    await this.insertMany([record])
   }
 
-  async findByChainAndTimestamp(chain: string, timestamp: UnixTime) {
+  async findBlockNumberByChainAndTimestamp(
+    chain: string,
+    timestamp: UnixTime,
+  ): Promise<number | undefined> {
     const row = await this.db
       .selectFrom('public.block_timestamps')
-      .select(selectBlockTimestamp)
+      .select('block_number')
       .where('chain', '=', chain)
       .where('timestamp', '=', timestamp.toDate())
       .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row).blockNumber : null
+    return row?.block_number
   }
 
   async deleteAfterExclusive(
@@ -42,38 +40,33 @@ export class BlockTimestampRepository extends BaseRepository {
   }
 
   // #region methods used only in TvlCleaner
-  deleteHourlyUntil(dateRange: CleanDateRange) {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteHourlyUntil(this.db, 'public.block_timestamps', dateRange)
   }
 
-  deleteSixHourlyUntil(dateRange: CleanDateRange) {
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteSixHourlyUntil(this.db, 'public.block_timestamps', dateRange)
   }
   // #endregion
 
-  async getAll() {
+  async getAll(): Promise<BlockTimestampRecord[]> {
     const rows = await this.db
       .selectFrom('public.block_timestamps')
       .select(selectBlockTimestamp)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async insertMany(records: BlockTimestampRecord[]) {
-    if (records.length === 0) {
-      return 0
-    }
+  async insertMany(records: BlockTimestampRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-
     await this.batch(rows, 2_000, async (batch) => {
       await this.db
         .insertInto('public.block_timestamps')
         .values(batch)
         .execute()
     })
-
     return rows.length
   }
 

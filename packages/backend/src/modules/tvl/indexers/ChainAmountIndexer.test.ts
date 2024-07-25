@@ -39,7 +39,7 @@ describe(ChainAmountIndexer.name, () => {
 
       const blockNumber = 666
       const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
-        findByChainAndTimestamp: async () => blockNumber,
+        findBlockNumberByChainAndTimestamp: async () => blockNumber,
       })
 
       const indexer = new ChainAmountIndexer({

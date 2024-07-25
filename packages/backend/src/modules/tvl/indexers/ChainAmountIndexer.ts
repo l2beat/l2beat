@@ -71,10 +71,11 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   }
 
   private async getBlockNumber(timestamp: UnixTime) {
-    const blockNumber = await this.$.db.blockTimestamp.findByChainAndTimestamp(
-      this.$.chain,
-      timestamp,
-    )
+    const blockNumber =
+      await this.$.db.blockTimestamp.findBlockNumberByChainAndTimestamp(
+        this.$.chain,
+        timestamp,
+      )
     assert(
       blockNumber,
       `Block number not found for timestamp: ${timestamp.toNumber()}`,

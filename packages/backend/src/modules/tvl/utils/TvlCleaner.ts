@@ -57,7 +57,8 @@ export class TvlCleaner {
 
     for (const repository of this.repositoriesToClean) {
       const repositoryName = repository.constructor.name
-      const tvlCleanerRecord = await this.db.tvlCleaner.find(repositoryName)
+      const tvlCleanerRecord =
+        await this.db.tvlCleaner.findByRepositoryName(repositoryName)
 
       if (
         tvlCleanerRecord?.hourlyCleanedUntil?.gte(hourlyDeletionBoundary) &&
