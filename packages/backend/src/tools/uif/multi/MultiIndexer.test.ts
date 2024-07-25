@@ -325,7 +325,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(200)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(200))
 
       const newHeight = await testIndexer.update(200, 500)
       expect(newHeight).toEqual(200)
@@ -336,7 +336,7 @@ describe(MultiIndexer.name, () => {
       const testIndexer = new TestMultiIndexer([], [])
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(200)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(200))
 
       const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(300)
@@ -349,7 +349,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(250)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(250))
 
       const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(250)
@@ -366,7 +366,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(150)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(150))
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -380,7 +380,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(350)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -410,8 +410,8 @@ class TestMultiIndexer extends MultiIndexer<null> {
     return Promise.resolve(this._saved)
   }
 
-  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
-    Promise.resolve(targetHeight),
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
+    async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
 
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)

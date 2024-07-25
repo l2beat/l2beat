@@ -2,6 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
+import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
@@ -192,6 +193,36 @@ function createActivityIndexers(
       case 'loopring': {
         const blockTimestampProvider = new BlockTimestampProvider({
           client: peripherals.getClient(LoopringClient, {
+            url: project.config.url,
+            callsPerMinute: project.config.callsPerMinute,
+          }),
+          logger,
+        })
+        const blockTargetIndexer = new BlockTargetIndexer(
+          logger,
+          clock,
+          blockTimestampProvider,
+          project.id,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          db,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+      case 'degate': {
+        const blockTimestampProvider = new BlockTimestampProvider({
+          client: peripherals.getClient(DegateClient, {
             url: project.config.url,
             callsPerMinute: project.config.callsPerMinute,
           }),

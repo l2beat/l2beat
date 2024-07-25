@@ -39,17 +39,19 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       unixTo,
     )
 
-    for (const updater of this.$.updaters) {
-      const filteredTxs = txs.filter((tx) => tx.type === updater.type)
-      await updater.update(filteredTxs)
-    }
-    this.logger.info('Saved txs into DB', {
-      from,
-      to: unixTo.toNumber(),
-      configurationsToSync: configurations.length,
-    })
+    return async () => {
+      for (const updater of this.$.updaters) {
+        const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+        await updater.update(filteredTxs)
+      }
+      this.logger.info('Saved txs into DB', {
+        from,
+        to: unixTo.toNumber(),
+        configurationsToSync: configurations.length,
+      })
 
-    return unixTo.toNumber()
+      return unixTo.toNumber()
+    }
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
