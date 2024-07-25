@@ -59,7 +59,8 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const saveData = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await saveData()
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
 
@@ -102,7 +103,8 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [actual('a', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const saveData = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await saveData()
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
       expect(safeHeight).toEqual(to)
@@ -131,7 +133,8 @@ describe(ChainAmountIndexer.name, () => {
 
       const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
 
-      const safeHeight = await indexer.multiUpdate(from, to, toUpdate)
+      const saveData = await indexer.multiUpdate(from, to, toUpdate)
+      const safeHeight = await saveData()
 
       expect(safeHeight).toEqual(to)
     })
