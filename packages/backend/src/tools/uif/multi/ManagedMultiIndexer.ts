@@ -68,7 +68,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
   }
 
   override async getPreviousConfigurationsState(): Promise<
-    Omit<SavedConfiguration<T>, 'properties'>[]
+    SavedConfiguration<string>[]
   > {
     return await this.options.indexerService.getSavedConfigurations(
       this.indexerId,

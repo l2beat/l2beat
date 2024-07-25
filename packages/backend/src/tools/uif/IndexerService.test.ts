@@ -191,12 +191,14 @@ describe(IndexerService.name, () => {
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
+        properties: JSON.stringify({ a: 1 }),
       },
       {
         id: 'b',
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
+        properties: JSON.stringify({ b: 1 }),
       },
     ])
   })

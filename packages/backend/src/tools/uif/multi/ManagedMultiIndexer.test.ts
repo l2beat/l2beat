@@ -95,7 +95,12 @@ describe(ManagedMultiIndexer.name, () => {
 
       const result = await indexer.getPreviousConfigurationsState()
 
-      expect(result).toEqual(configurations)
+      expect(result).toEqual(
+        configurations.map((c) => ({
+          ...c,
+          properties: JSON.stringify(c.properties),
+        })),
+      )
       expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
         'indexer',
       )
@@ -195,12 +200,17 @@ describe(ManagedMultiIndexer.name, () => {
 
       const configurations = await getSavedConfigurations(indexerService)
 
-      expect(configurations).toEqualUnsorted([
-        savedWithoutProperties('a', 100, 300, 300),
-        savedWithoutProperties('b', 200, 500, 500),
-        savedWithoutProperties('c', 400, null, 600),
-        savedWithoutProperties('d', 100, null, 600),
-      ])
+      expect(configurations).toEqualUnsorted(
+        [
+          saved('a', 100, 300, 300),
+          saved('b', 200, 500, 500),
+          saved('c', 400, null, 600),
+          saved('d', 100, null, 600),
+        ].map((c) => ({
+          ...c,
+          properties: JSON.stringify(c),
+        })),
+      )
     })
 
     it('configuration removed', async () => {
@@ -298,20 +308,6 @@ function saved(
   return {
     id: id.repeat(12),
     properties: null,
-    minHeight,
-    maxHeight,
-    currentHeight,
-  }
-}
-
-function savedWithoutProperties(
-  id: string,
-  minHeight: number,
-  maxHeight: number | null,
-  currentHeight: number | null,
-): Omit<SavedConfiguration<null>, 'properties'> {
-  return {
-    id: id.repeat(12),
     minHeight,
     maxHeight,
     currentHeight,

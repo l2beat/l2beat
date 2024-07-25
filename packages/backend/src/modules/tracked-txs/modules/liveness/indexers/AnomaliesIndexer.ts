@@ -1,6 +1,5 @@
 import { BackendProject } from '@l2beat/config'
 import { AnomalyRecord, Database } from '@l2beat/database'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   assert,
   ProjectId,
@@ -69,10 +68,9 @@ export class AnomaliesIndexer extends ManagedChildIndexer {
   async getAnomalies(to: UnixTime) {
     const anomalies: AnomalyRecord[] = []
 
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     // we need data from 2 * SYNC_RANGE past days to calculate standard deviation
     const deviationRange = to.add(-1 * this.SYNC_RANGE * 2, 'days')

@@ -38,7 +38,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * because they are not needed for the initialization.
    */
   abstract getPreviousConfigurationsState(): Promise<
-    Omit<SavedConfiguration<T>, 'properties'>[]
+    SavedConfiguration<string>[]
   >
 
   /**
@@ -197,7 +197,7 @@ function findRange<T>(
 
 function toConfigurationsWithPreviousState<T>(
   configurations: Configuration<T>[],
-  previouslySaved: Omit<SavedConfiguration<T>, 'properties'>[],
+  previouslySaved: SavedConfiguration<string>[],
 ): SavedConfiguration<T>[] {
   const previousStateMapping = new Map(previouslySaved.map((p) => [p.id, p]))
 
