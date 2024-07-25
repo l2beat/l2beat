@@ -56,7 +56,8 @@ describe(TrackedTxsIndexer.name, () => {
         actual<TrackedTxConfigEntry>('c', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(from, to, configurations)
+      const saveData = await indexer.multiUpdate(from, to, configurations)
+      const safeHeight = await saveData()
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
         1,
@@ -96,11 +97,12 @@ describe(TrackedTxsIndexer.name, () => {
         actual<TrackedTxConfigEntry>('a', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(
+      const saveData = await indexer.multiUpdate(
         from.toNumber(),
         to.toNumber(),
         configurations,
       )
+      const safeHeight = await saveData()
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
         1,

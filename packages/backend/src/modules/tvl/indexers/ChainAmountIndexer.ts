@@ -40,7 +40,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         to,
         optimizedTimestamp: timestamp.toNumber(),
       })
-      return to
+      return () => Promise.resolve(to)
     }
 
     const blockNumber = await this.getBlockNumber(timestamp)
@@ -59,15 +59,18 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    this.logger.info('Saving amounts for timestamp into DB', {
-      timestamp: timestamp.toNumber(),
-      escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
-      totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
-        .length,
-    })
-    await this.$.db.amount.addMany(nonZeroAmounts)
 
-    return timestamp.toNumber()
+    return async () => {
+      await this.$.db.amount.addMany(nonZeroAmounts)
+      this.logger.info('Saved amounts for timestamp into DB', {
+        timestamp: timestamp.toNumber(),
+        escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
+        totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
+          .length,
+      })
+
+      return timestamp.toNumber()
+    }
   }
 
   private async getBlockNumber(timestamp: UnixTime) {
