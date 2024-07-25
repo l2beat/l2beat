@@ -1,19 +1,11 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
-import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
-import {
-  Configuration,
-  ConfigurationRange,
-  RemovalConfiguration,
-  SavedConfiguration,
-} from './types'
+import { Configuration, ConfigurationRange, SavedConfiguration } from './types'
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
-  // TODO: rename
-  private saved = new Map<string, SavedConfiguration<T>>()
 
   constructor(
     logger: Logger,
@@ -22,24 +14,19 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     private readonly configurations: Configuration<T>[],
     options?: IndexerOptions,
   ) {
+    assert(configurations.length > 0, 'Configurations should not be empty')
+
     super(logger, parents, options)
   }
 
   /**
-   * Initializes the indexer. It returns the configurations that were saved
-   * previously. In case no configurations were saved, it should return an empty
-   * array.
-   *
-   * This method is expected to read the configurations that was saved
-   * previously with `setStoredConfigurations`. It shouldn't call
-   * `setStoredConfigurations` itself.
-   *
-   * @returns The configurations that were saved previously. Properties are omitted
-   * because they are not needed for the initialization.
+   * Initializes indexer state. In most cases it will mean that it reads the
+   * previously saved configurations, finds the diff between saved and currently injected,
+   * updates database state accordingly and returns configurations with the currentHeight
    */
-  abstract getPreviousConfigurationsState(): Promise<
-    SavedConfiguration<string>[]
-  >
+  abstract multiInitialize(
+    configurations: Configuration<T>[],
+  ): Promise<SavedConfiguration<T>[]>
 
   /**
    * Implements the main data fetching process. It is up to the indexer to
@@ -57,12 +44,11 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    *
    * @param configurations The configurations that the indexer should use to
    * sync data. The configurations are guaranteed to be in the range of
-   * `from` and `to`. Some of those configurations might have been synced
-   * previously for this range. Those configurations will include the `hasData`
-   * flag set to `true`.
+   * `from` and `to`.
    *
-   * @returns The height that the indexer has synced up to. Returning
-   * `from` means that the indexer has synced a single data point. Returning
+   * @returns Callback returning the height that the indexer has synced up to.
+   * Saving data to the database should be executed inside this callback.
+   * Returning `from` means that the indexer has synced a single data point. Returning
    * a value greater than `from` means that the indexer has synced up
    * to that height. Returning a value less than `from` or greater than
    * `to` is not permitted.
@@ -73,62 +59,22 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     configurations: Configuration<T>[],
   ): Promise<() => Promise<number>>
 
-  /**
-   * Removes data that was previously synced but because configurations changed
-   * is no longer valid. The data should be removed for the ranges specified
-   * in each configuration. It is possible for multiple ranges to share a
-   * configuration id!
-   *
-   * This method can only be called during the initialization of the indexer,
-   * after `multiInitialize` returns.
-   */
-  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
-
-  /**
-   * Saves configurations that the indexer should use to sync data. The
-   * configurations saved here should be read in the `multiInitialize` method.
-   *
-   * @param configurations The configurations that the indexer should save. The
-   * indexer should save the returned configurations and ensure that no other
-   * configurations are persisted.
-   */
-  abstract updateConfigurationsState(state: {
-    toAdd: Configuration<T>[]
-    toUpdate: SavedConfiguration<T>[]
-    toDelete: string[]
-    toTrim: RemovalConfiguration[]
-  }): Promise<void>
-
   abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
   ): Promise<void>
 
-  /**
-   * It should return a height that the indexer has synced up to. If the indexer
-   * has not synced any data, it should return `undefined`.
-   *
-   * This method is expected to read the height that was saved previously with
-   * `setSafeHeight`. It shouldn't call `setSafeHeight` itself.
-   *
-   * @returns The height that the indexer has synced up to.
-   */
-  abstract getSafeHeight(): Promise<number | undefined>
-
   async initialize() {
-    const previouslySaved = await this.getPreviousConfigurationsState()
+    const configurations = await this.multiInitialize(this.configurations)
 
-    this.ranges = toRanges(
-      toConfigurationsWithPreviousState(this.configurations, previouslySaved),
+    this.ranges = toRanges(configurations)
+
+    const safeHeight = configurations.reduce(
+      (agg, curr) =>
+        (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
+      Infinity,
     )
 
-    const diff = diffConfigurations(this.configurations, previouslySaved)
-    const oldSafeHeight = (await this.getSafeHeight()) ?? diff.safeHeight
-
-    this.saved = new Map(diff.toSave.map((c) => [c.id, c]))
-
-    await this.updateConfigurationsState(diff)
-
-    return { safeHeight: Math.min(diff.safeHeight, oldSafeHeight) }
+    return { safeHeight }
   }
 
   async update(from: number, to: number): Promise<number> {
@@ -158,25 +104,10 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
         )
       }
 
-      this.updateSavedConfigurations(configurations, safeHeight)
       await this.updateConfigurationsCurrentHeight(safeHeight)
 
       return safeHeight
     })
-  }
-
-  private updateSavedConfigurations(
-    updatedConfigurations: Configuration<T>[],
-    newHeight: number,
-  ) {
-    for (const updated of updatedConfigurations) {
-      const saved = this.saved.get(updated.id)
-      if (!saved) {
-        throw new Error('Programmer error, saved configuration not found')
-      }
-
-      saved.currentHeight = newHeight
-    }
   }
 
   async invalidate(targetHeight: number): Promise<number> {
@@ -193,20 +124,4 @@ function findRange<T>(
     throw new Error('Programmer error, there should always be a range')
   }
   return range
-}
-
-function toConfigurationsWithPreviousState<T>(
-  configurations: Configuration<T>[],
-  previouslySaved: SavedConfiguration<string>[],
-): SavedConfiguration<T>[] {
-  const previousStateMapping = new Map(previouslySaved.map((p) => [p.id, p]))
-
-  return configurations.map((c) => {
-    const config = previousStateMapping.get(c.id)
-
-    return {
-      ...c,
-      currentHeight: config?.currentHeight ?? null,
-    }
-  })
 }

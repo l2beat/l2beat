@@ -4,6 +4,7 @@ import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
+import { diffConfigurations } from './diffConfigurations'
 import {
   Configuration,
   RemovalConfiguration,
@@ -45,37 +46,22 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     }
   }
 
-  async getSafeHeight() {
-    return await this.options.indexerService.getSafeHeight(this.indexerId)
-  }
-
-  async setSafeHeight(safeHeight: number) {
-    return await this.options.indexerService.setSafeHeight(
-      this.indexerId,
-      safeHeight,
-    )
-  }
-
-  override setInitialState(
-    safeHeight: number,
-    configHash?: string | undefined,
-  ): Promise<void> {
-    return this.options.indexerService.setInitialState(
-      this.indexerId,
-      safeHeight,
-      configHash,
-    )
-  }
-
-  override async getPreviousConfigurationsState(): Promise<
-    SavedConfiguration<string>[]
-  > {
-    return await this.options.indexerService.getSavedConfigurations(
+  override async multiInitialize(
+    configurations: Configuration<T>[],
+  ): Promise<SavedConfiguration<T>[]> {
+    const previous = await this.options.indexerService.getSavedConfigurations(
       this.indexerId,
     )
+
+    const diff = diffConfigurations(configurations, previous)
+    await this.updateConfigurationsState(diff)
+
+    return diff.configurations
   }
 
-  override async updateConfigurationsState(state: {
+  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
+
+  async updateConfigurationsState(state: {
     toAdd: Configuration<T>[]
     toUpdate: SavedConfiguration<T>[]
     toDelete: string[]
@@ -109,12 +95,30 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     }
   }
 
+  override setInitialState(
+    safeHeight: number,
+    configHash?: string | undefined,
+  ): Promise<void> {
+    return this.options.indexerService.setInitialState(
+      this.indexerId,
+      safeHeight,
+      configHash,
+    )
+  }
+
   override async updateConfigurationsCurrentHeight(
     currentHeight: number,
   ): Promise<void> {
     await this.options.indexerService.updateConfigurationsCurrentHeight(
       this.indexerId,
       currentHeight,
+    )
+  }
+
+  async setSafeHeight(safeHeight: number) {
+    return await this.options.indexerService.setSafeHeight(
+      this.indexerId,
+      safeHeight,
     )
   }
 }

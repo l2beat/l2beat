@@ -90,7 +90,7 @@ describe(MultiIndexer.name, () => {
     it('calls getters in order', async () => {
       const calls: string[] = []
       const testIndexer = new TestMultiIndexer([], [])
-      testIndexer.getPreviousConfigurationsState = mockFn(async () => {
+      testIndexer.multiInitialize = mockFn(async () => {
         calls.push('multiInitialize')
         return []
       })
@@ -406,9 +406,7 @@ class TestMultiIndexer extends MultiIndexer<null> {
   setInitialState =
     mockFn<MultiIndexer<null>['setInitialState']>().resolvesTo(undefined)
 
-  override getPreviousConfigurationsState(): Promise<
-    SavedConfiguration<null>[]
-  > {
+  override multiInitialize(): Promise<SavedConfiguration<null>[]> {
     return Promise.resolve(this._saved)
   }
 

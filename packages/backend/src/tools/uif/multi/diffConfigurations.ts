@@ -12,11 +12,8 @@ export function diffConfigurations<T>(
   toUpdate: SavedConfiguration<T>[]
   toDelete: string[]
   toTrim: RemovalConfiguration[]
-  toSave: SavedConfiguration<T>[]
-  safeHeight: number
+  configurations: SavedConfiguration<T>[]
 } {
-  let safeHeight = Infinity
-
   const actualMap = new Map(actual.map((c) => [c.id, c]))
   const savedMap = new Map(saved.map((c) => [c.id, c]))
 
@@ -32,7 +29,7 @@ export function diffConfigurations<T>(
     })
   }
 
-  const toSave: SavedConfiguration<T>[] = []
+  const configurations: SavedConfiguration<T>[] = []
   const toAdd: Configuration<T>[] = []
   const toUpdate: SavedConfiguration<T>[] = []
 
@@ -52,20 +49,18 @@ export function diffConfigurations<T>(
     const stored = savedMap.get(c.id)
 
     if (!stored) {
-      safeHeight = Math.min(safeHeight, c.minHeight - 1)
       toAdd.push({ ...c })
-      toSave.push({ ...c, currentHeight: null })
+      configurations.push({ ...c, currentHeight: null })
       continue
     }
 
     if (stored.currentHeight === null) {
-      safeHeight = Math.min(safeHeight, c.minHeight - 1)
-      toSave.push({ ...c, currentHeight: null })
+      configurations.push({ ...c, currentHeight: null })
+
       continue
     }
 
     if (stored.minHeight > c.minHeight) {
-      safeHeight = Math.min(safeHeight, c.minHeight - 1)
       // We remove everything because we cannot have gaps in downloaded data
       // We will re-download everything from the beginning
       toTrim.push({
@@ -73,7 +68,8 @@ export function diffConfigurations<T>(
         from: stored.minHeight,
         to: stored.currentHeight,
       })
-      toSave.push({ ...c, currentHeight: null })
+      configurations.push({ ...c, currentHeight: null })
+
       toUpdate.push({ ...c, currentHeight: null })
       continue
     }
@@ -94,17 +90,13 @@ export function diffConfigurations<T>(
         to: stored.currentHeight,
       })
       toUpdate.push({ ...c, currentHeight: stored.currentHeight })
-    } else if (c.maxHeight === null || stored.currentHeight < c.maxHeight) {
-      safeHeight = Math.min(safeHeight, stored.currentHeight)
     }
 
     const currentHeight = Math.min(
       stored.currentHeight,
       c.maxHeight ?? stored.currentHeight,
     )
-    toSave.push({ ...c, currentHeight })
-
-    // TODO: fix this
+    configurations.push({ ...c, currentHeight })
     if (stored.properties !== c.properties) {
       toUpdate.push({ ...c, currentHeight: stored.currentHeight })
     }
@@ -114,5 +106,5 @@ export function diffConfigurations<T>(
     .filter((s) => !knownIds.has(s.id))
     .map((c) => c.id)
 
-  return { toAdd, toUpdate, toDelete, toTrim, toSave, safeHeight }
+  return { toAdd, toUpdate, toDelete, toTrim, configurations }
 }
