@@ -52,7 +52,7 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
+  async upsertMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
     await this.batch(rows, 2_000, async (batch) => {
@@ -112,7 +112,7 @@ export class ValueRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: ValueRecord[]): Promise<number> {
+  async insertMany(records: ValueRecord[]): Promise<number> {
     const rows = records.map(toRow)
     await this.db
       .insertInto('public.values')

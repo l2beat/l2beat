@@ -3,7 +3,7 @@ import { DiscoveryCacheRecord, toRecord, toRow } from './entity'
 import { selectDiscoveryCache } from './select'
 
 export class DiscoveryCacheRepository extends BaseRepository {
-  async addOrUpdate(record: DiscoveryCacheRecord): Promise<string> {
+  async upsert(record: DiscoveryCacheRecord): Promise<string> {
     const row = toRow(record)
     await this.db
       .insertInto('public.discovery_cache')

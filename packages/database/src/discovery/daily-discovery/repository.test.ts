@@ -85,9 +85,9 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
       version: 0,
     }
 
-    await repository.addOrUpdate(expectedEth)
-    await repository.addOrUpdate(secondEth)
-    await repository.addOrUpdate(expectedArb)
+    await repository.upsert(expectedEth)
+    await repository.upsert(secondEth)
+    await repository.upsert(expectedArb)
 
     const resultEth = await repository.findLatest(projectName, ChainId.ETHEREUM)
     const resultArb = await repository.findLatest(projectName, ChainId.ARBITRUM)
@@ -123,8 +123,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
       ...discovery,
       timestamp: new UnixTime(2),
     }
-    await repository.addOrUpdate(discovery)
-    await repository.addOrUpdate(discovery2)
+    await repository.upsert(discovery)
+    await repository.upsert(discovery2)
     const timestamps = await repository.getTimestamps(
       projectName,
       ChainId.ETHEREUM,
@@ -175,7 +175,7 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
         version: 0,
       }
 
-      await repository.addOrUpdate(discovery)
+      await repository.upsert(discovery)
 
       const result = await repository.getProject(projectName, ChainId.ETHEREUM)
       expect(result.length).toEqual(1)
@@ -226,7 +226,7 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
           version: 0,
         }
 
-        await repository.addOrUpdate(discovery)
+        await repository.upsert(discovery)
         const stale = await repository.getProject(projectName, ChainId.ETHEREUM)
         expect(stale).toEqual([discovery])
 

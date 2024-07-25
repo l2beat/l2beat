@@ -77,7 +77,7 @@ describe(IndexerService.name, () => {
 
   it(IndexerService.prototype.setInitialState.name, async () => {
     const indexerStateRepository = mockObject<Database['indexerState']>({
-      addOrUpdate: async () => '',
+      upsert: async () => '',
     })
 
     const indexerService = new IndexerService(
@@ -88,7 +88,7 @@ describe(IndexerService.name, () => {
     )
 
     await indexerService.setInitialState('indexer', 123, 'hash')
-    expect(indexerStateRepository.addOrUpdate).toHaveBeenOnlyCalledWith({
+    expect(indexerStateRepository.upsert).toHaveBeenOnlyCalledWith({
       indexerId: 'indexer',
       safeHeight: 123,
       configHash: 'hash',
@@ -99,7 +99,7 @@ describe(IndexerService.name, () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      addOrUpdateMany: async () => {},
+      upsertMany: async () => {},
     })
 
     const indexerService = new IndexerService(
@@ -130,26 +130,26 @@ describe(IndexerService.name, () => {
       (properties: json) => JSON.stringify(properties),
     )
 
-    expect(
-      indexerConfigurationsRepository.addOrUpdateMany,
-    ).toHaveBeenOnlyCalledWith([
-      {
-        id: 'a',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ a: 1 }),
-        indexerId: 'indexer',
-      },
-      {
-        id: 'b',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ b: 1 }),
-        indexerId: 'indexer',
-      },
-    ])
+    expect(indexerConfigurationsRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      [
+        {
+          id: 'a',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ a: 1 }),
+          indexerId: 'indexer',
+        },
+        {
+          id: 'b',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ b: 1 }),
+          indexerId: 'indexer',
+        },
+      ],
+    )
   })
 
   it(IndexerService.prototype.getSavedConfigurations.name, async () => {

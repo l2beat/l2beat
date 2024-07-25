@@ -29,7 +29,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
     })
 
     it('should return correct response for single project', async () => {
-      await db.blockTransactionCount.addOrUpdateMany([
+      await db.blockTransactionCount.upsertMany([
         mockBlockRecord(PROJECT_A, 0, 0, 1),
         mockBlockRecord(PROJECT_A, 1, 0, 2),
         mockBlockRecord(PROJECT_A, 2, 0, 3),
@@ -47,7 +47,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
     })
 
     it('should return correct response for multiple projects', async () => {
-      await db.blockTransactionCount.addOrUpdateMany([
+      await db.blockTransactionCount.upsertMany([
         mockBlockRecord(PROJECT_A, 0, 0, 1),
         mockBlockRecord(PROJECT_A, 1, 0, 2),
         mockBlockRecord(PROJECT_B, 1, 0, 3),
@@ -55,7 +55,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
         mockBlockRecord(PROJECT_A, 2, 1, 5),
       ])
 
-      await db.zkSyncTransactionCount.addOrUpdateMany([
+      await db.zkSyncTransactionCount.upsertMany([
         mockZkSyncRecord(1, 0),
         mockZkSyncRecord(1, 1),
         mockZkSyncRecord(2, 0),
@@ -69,7 +69,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
         mockStarkExRecord(PROJECT_C, 2, 0, 3),
         mockStarkExRecord(PROJECT_C, 3, 0, 4),
       ]
-      await db.starkExTransactionCount.addOrUpdateMany(starkExMockRecords)
+      await db.starkExTransactionCount.upsertMany(starkExMockRecords)
 
       const blockRelatedValues: DailyTransactionCountRecord[] = [
         getDailyTransactionCountRecord(PROJECT_A, 0, 1),
@@ -108,7 +108,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
     ActivityViewRepository.prototype.getDailyCountsPerProject.name,
     () => {
       it('should filter by project', async () => {
-        await db.blockTransactionCount.addOrUpdateMany([
+        await db.blockTransactionCount.upsertMany([
           mockBlockRecord(PROJECT_A, 0, 0, 1),
           mockBlockRecord(PROJECT_B, 0, 0, 1),
         ])
@@ -127,7 +127,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
     ActivityViewRepository.prototype.getProjectsAggregatedDailyCount.name,
     () => {
       it('should return correct response for single project', async () => {
-        await db.blockTransactionCount.addOrUpdateMany([
+        await db.blockTransactionCount.upsertMany([
           mockBlockRecord(PROJECT_A, 0, 0, 1),
           mockBlockRecord(PROJECT_B, 1, 0, 2),
           mockBlockRecord(PROJECT_A, 2, 0, 3),
@@ -148,7 +148,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
       })
 
       it('should return correct response for multiple projects', async () => {
-        await db.blockTransactionCount.addOrUpdateMany([
+        await db.blockTransactionCount.upsertMany([
           // day 0
           mockBlockRecord(PROJECT_A, 0, 0, 1),
           mockBlockRecord(PROJECT_A, 0, 1, 1),

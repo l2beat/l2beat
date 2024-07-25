@@ -19,7 +19,7 @@ describe(L2CostsPricesIndexer.name, () => {
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
-        addMany: mockFn().resolvesTo(1),
+        insertMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
@@ -36,7 +36,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(fetchPricesMock).toHaveBeenCalledWith(from, to)
 
-      expect(repository.addMany).toHaveBeenCalledWith(prices)
+      expect(repository.insertMany).toHaveBeenCalledWith(prices)
 
       expect(result).toEqual(to.toNumber())
     })
@@ -46,7 +46,7 @@ describe(L2CostsPricesIndexer.name, () => {
       const to = NOW
 
       const repository = mockObject<Database['l2CostPrice']>({
-        addMany: mockFn().resolvesTo(0),
+        insertMany: mockFn().resolvesTo(0),
       })
 
       const indexer = createIndexer({
@@ -63,7 +63,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(fetchPricesMock).toHaveBeenCalledWith(from, to)
 
-      expect(repository.addMany).not.toHaveBeenCalled()
+      expect(repository.insertMany).not.toHaveBeenCalled()
 
       expect(result).toEqual(to.toNumber())
     })
@@ -80,7 +80,7 @@ describe(L2CostsPricesIndexer.name, () => {
       )
 
       const repository = mockObject<Database['l2CostPrice']>({
-        addMany: mockFn().resolvesTo(1),
+        insertMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
@@ -162,7 +162,7 @@ function createIndexer(deps?: Partial<L2CostsPricesIndexerDeps>) {
     parents: [],
     db: mockObject<Database>({
       l2CostPrice: mockObject<Database['l2CostPrice']>({
-        addMany: mockFn().resolvesTo(1),
+        insertMany: mockFn().resolvesTo(1),
       }),
     }),
     coingeckoQueryService: mockObject<CoingeckoQueryService>({

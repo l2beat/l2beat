@@ -38,7 +38,7 @@ export class CurrentPriceRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(
+  async upsertMany(
     records: Omit<CurrentPriceRecord, 'updatedAt'>[],
   ): Promise<number> {
     const rows = records.map(toRow)
@@ -51,7 +51,7 @@ export class CurrentPriceRepository extends BaseRepository {
           updatedAt: eb.ref('excluded.updatedAt'),
         })),
       )
-      .execute()
+      .executeTakeFirst()
     return records.length
   }
 

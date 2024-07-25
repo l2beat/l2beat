@@ -28,7 +28,7 @@ describe(ChainAmountIndexer.name, () => {
       })
 
       const amountRepository = mockObject<Database['amount']>({
-        addMany: async () => 1,
+        insertMany: async () => 1,
       })
       const amountService = mockObject<AmountService>({
         fetchAmounts: async () => [
@@ -69,7 +69,7 @@ describe(ChainAmountIndexer.name, () => {
         toUpdate,
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([
         amount('a', 200, 123),
       ])
 

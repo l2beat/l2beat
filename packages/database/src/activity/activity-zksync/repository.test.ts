@@ -11,10 +11,10 @@ describeDatabase(ZkSyncTransactionRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(ZkSyncTransactionRepository.prototype.addOrUpdateMany.name, () => {
+  describe(ZkSyncTransactionRepository.prototype.upsertMany.name, () => {
     it('adds multiple records', async () => {
       const records = [mockRecord(1, 100), mockRecord(2, 200)]
-      await repository.addOrUpdateMany(records)
+      await repository.upsertMany(records)
 
       const rows = await repository.getAll()
       expect(rows).toEqual(records)
@@ -22,9 +22,9 @@ describeDatabase(ZkSyncTransactionRepository.name, (db) => {
 
     it('updates multiple records', async () => {
       const records1 = [mockRecord(1, 100), mockRecord(2, 200)]
-      await repository.addOrUpdateMany(records1)
+      await repository.upsertMany(records1)
       const records2 = [mockRecord(1, 101), mockRecord(2, 202)]
-      await repository.addOrUpdateMany(records2)
+      await repository.upsertMany(records2)
 
       const rows = await repository.getAll()
       expect(rows).toEqual(records2)

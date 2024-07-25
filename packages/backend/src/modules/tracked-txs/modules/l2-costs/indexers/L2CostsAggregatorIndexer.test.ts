@@ -134,7 +134,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
           l2CostPrice: l2CostsPricesRepositoryMock,
           indexerConfiguration: indexerConfigurationRepositoryMock,
           aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-            addOrUpdateMany: mockFn().resolvesTo(1),
+            upsertMany: mockFn().resolvesTo(1),
           }),
         }),
       })
@@ -383,7 +383,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
             l2CostPrice: mockObject<Database['l2CostPrice']>(),
             indexerConfiguration: indexerConfigurationRepositoryMock,
             aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-              addOrUpdateMany: mockFn().resolvesTo(1),
+              upsertMany: mockFn().resolvesTo(1),
             }),
           }),
         })
@@ -556,7 +556,7 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
       l2Cost: mockObject<Database['l2Cost']>(),
       l2CostPrice: mockObject<Database['l2CostPrice']>(),
       aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
-        addOrUpdateMany: mockFn().resolvesTo(1),
+        upsertMany: mockFn().resolvesTo(1),
       }),
       indexerConfiguration: mockObject<Database['indexerConfiguration']>(),
     }),

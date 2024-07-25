@@ -18,7 +18,7 @@ export class UpdateMonitorRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
+  async upsert(record: UpdateMonitorRecord): Promise<string> {
     const row = toRow(record)
 
     await this.db

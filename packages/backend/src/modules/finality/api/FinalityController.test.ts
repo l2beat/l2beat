@@ -360,7 +360,7 @@ describe(FinalityController.name, () => {
 function getMockFinalityRepository(records: FinalityRecord[]) {
   return mockObject<Database['finality']>({
     getLatestGroupedByProjectId: mockFn().resolvesTo(records),
-    addMany() {
+    insertMany() {
       return Promise.resolve(1)
     },
     deleteAll() {
@@ -378,7 +378,7 @@ function getMockLivenessRepository(records: LivenessRecord[]) {
           .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
       )
     },
-    addMany() {
+    insertMany() {
       return Promise.resolve(1)
     },
     deleteAll() {

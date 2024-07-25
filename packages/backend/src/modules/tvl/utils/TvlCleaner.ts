@@ -80,7 +80,7 @@ export class TvlCleaner {
         to: sixHourlyDeletionBoundary,
       })
 
-      await this.db.tvlCleaner.addOrUpdate({
+      await this.db.tvlCleaner.upsert({
         repositoryName: repositoryName,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,

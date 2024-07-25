@@ -35,10 +35,10 @@ describeDatabase(AnomaliesRepository.name, (db) => {
   beforeEach(async function () {
     this.timeout(10000)
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
+    await repository.upsertMany(DATA)
   })
 
-  describe(AnomaliesRepository.prototype.addOrUpdateMany.name, () => {
+  describe(AnomaliesRepository.prototype.upsertMany.name, () => {
     it('add new and update existing', async () => {
       const newRows: AnomalyRecord[] = [
         // to update
@@ -57,7 +57,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
         },
       ]
 
-      await repository.addOrUpdateMany(newRows)
+      await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -79,7 +79,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).not.toBeRejected()
     })
   })
 

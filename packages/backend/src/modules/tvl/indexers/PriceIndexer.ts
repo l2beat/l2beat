@@ -61,7 +61,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       prices: optimizedPrices.length,
     })
 
-    await this.$.db.price.addMany(optimizedPrices)
+    await this.$.db.price.insertMany(optimizedPrices)
 
     return adjustedTo.toNumber()
   }

@@ -4,14 +4,14 @@ import { AnomalyRecord, toRecord, toRow } from './entity'
 import { selectAnomaly } from './select'
 
 export class AnomaliesRepository extends BaseRepository {
-  async addOrUpdateMany(records: AnomalyRecord[]): Promise<number> {
+  async upsertMany(records: AnomalyRecord[]): Promise<number> {
     for (const record of records) {
-      await this.addOrUpdate(record)
+      await this.upsert(record)
     }
     return records.length
   }
 
-  async addOrUpdate(record: AnomalyRecord): Promise<string> {
+  async upsert(record: AnomalyRecord): Promise<string> {
     const row = toRow(record)
     await this.db
       .insertInto('public.anomalies')

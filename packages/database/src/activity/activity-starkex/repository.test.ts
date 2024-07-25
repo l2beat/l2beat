@@ -13,41 +13,38 @@ describeDatabase(StarkExTransactionCountRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(
-    StarkExTransactionCountRepository.prototype.addOrUpdateMany.name,
-    () => {
-      it('adds multiple records', async () => {
-        const records = [
-          mockRecord(PROJECT_A, 0, 100),
-          mockRecord(PROJECT_B, 0, 200),
-        ]
+  describe(StarkExTransactionCountRepository.prototype.upsertMany.name, () => {
+    it('adds multiple records', async () => {
+      const records = [
+        mockRecord(PROJECT_A, 0, 100),
+        mockRecord(PROJECT_B, 0, 200),
+      ]
 
-        await repository.addOrUpdateMany(records)
+      await repository.upsertMany(records)
 
-        const result = await repository.getAll()
+      const result = await repository.getAll()
 
-        expect(result).toEqual(records)
-      })
+      expect(result).toEqual(records)
+    })
 
-      it('updates multiple records', async () => {
-        const records = [
-          mockRecord(PROJECT_A, 0, 100),
-          mockRecord(PROJECT_B, 0, 200),
-        ]
-        await repository.addOrUpdateMany(records)
+    it('updates multiple records', async () => {
+      const records = [
+        mockRecord(PROJECT_A, 0, 100),
+        mockRecord(PROJECT_B, 0, 200),
+      ]
+      await repository.upsertMany(records)
 
-        const updatedRecords = [
-          mockRecord(PROJECT_A, 0, 1000),
-          mockRecord(PROJECT_B, 0, 2000),
-        ]
-        await repository.addOrUpdateMany(updatedRecords)
+      const updatedRecords = [
+        mockRecord(PROJECT_A, 0, 1000),
+        mockRecord(PROJECT_B, 0, 2000),
+      ]
+      await repository.upsertMany(updatedRecords)
 
-        const result = await repository.getAll()
+      const result = await repository.getAll()
 
-        expect(result).toEqual(updatedRecords)
-      })
-    },
-  )
+      expect(result).toEqual(updatedRecords)
+    })
+  })
 })
 
 const mockRecord = (projectId: ProjectId, offset: number, count: number) => ({

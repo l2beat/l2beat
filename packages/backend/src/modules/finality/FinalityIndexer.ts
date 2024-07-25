@@ -66,7 +66,7 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     if (finalityData) {
-      await this.db.finality.add(finalityData)
+      await this.db.finality.insert(finalityData)
     }
 
     this.logger.info('Update finished', {
@@ -150,7 +150,7 @@ export class FinalityIndexer extends ChildIndexer {
     safeHeight: number,
     _configHash?: string | undefined,
   ): Promise<void> {
-    await this.db.indexerState.addOrUpdate({
+    await this.db.indexerState.upsert({
       indexerId: this.indexerId,
       safeHeight,
     })

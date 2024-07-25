@@ -4,14 +4,14 @@ import { AggregatedLivenessRecord, toRecord, toRow } from './entity'
 import { selectAggregatedLiveness } from './select'
 
 export class AggregatedLivenessRepository extends BaseRepository {
-  async addOrUpdateMany(records: AggregatedLivenessRecord[]): Promise<number> {
+  async upsertMany(records: AggregatedLivenessRecord[]): Promise<number> {
     for (const record of records) {
-      await this.addOrUpdate(record)
+      await this.upsert(record)
     }
     return records.length
   }
 
-  async addOrUpdate(record: AggregatedLivenessRecord): Promise<string> {
+  async upsert(record: AggregatedLivenessRecord): Promise<string> {
     const row = toRow(record)
     await this.db
       .insertInto('public.aggregated_liveness')

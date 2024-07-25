@@ -9,7 +9,7 @@ describeDatabase(AmountRepository.name, (db) => {
 
   describe(AmountRepository.prototype.getByIdsAndTimestamp.name, () => {
     it('gets by timestamp', async () => {
-      await repository.addMany([
+      await repository.insertMany([
         amount('a', new UnixTime(100), 1n),
         amount('b', new UnixTime(100), 1n),
         amount('c', new UnixTime(100), 1n),
@@ -33,7 +33,7 @@ describeDatabase(AmountRepository.name, (db) => {
 
   describe(AmountRepository.prototype.getByConfigIdsInRange.name, () => {
     it('gets by ids in inclusive range', async () => {
-      await repository.addMany([
+      await repository.insertMany([
         amount('a', new UnixTime(50), 100n),
         amount('a', new UnixTime(100), 100n),
         amount('b', new UnixTime(100), 100n),
@@ -66,7 +66,7 @@ describeDatabase(AmountRepository.name, (db) => {
 
   describe(AmountRepository.prototype.getByTimestamps.name, () => {
     it('finds by config and timestamp', async () => {
-      await repository.addMany([
+      await repository.insertMany([
         amount('a', new UnixTime(100), 1n),
         amount('a', new UnixTime(200), 2n),
         amount('a', new UnixTime(300), 3n),
@@ -82,9 +82,9 @@ describeDatabase(AmountRepository.name, (db) => {
     })
   })
 
-  describe(AmountRepository.prototype.addMany.name, () => {
+  describe(AmountRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
-      await repository.addMany([
+      await repository.insertMany([
         amount('a', UnixTime.ZERO, 111n),
         amount('b', UnixTime.ZERO, 222n),
       ])
@@ -97,7 +97,7 @@ describeDatabase(AmountRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).not.toBeRejected()
     })
 
     it('performs batch insert when more than 10k records', async () => {
@@ -106,13 +106,13 @@ describeDatabase(AmountRepository.name, (db) => {
         records.push(amount('a', new UnixTime(i), 111n))
       }
 
-      await expect(repository.addMany(records)).not.toBeRejected()
+      await expect(repository.insertMany(records)).not.toBeRejected()
     })
   })
 
   describe(AmountRepository.prototype.deleteByConfigInTimeRange.name, () => {
     it('deletes data in range for matching config', async () => {
-      await repository.addMany([
+      await repository.insertMany([
         amount('b', new UnixTime(1), 0n),
         amount('b', new UnixTime(2), 0n),
         amount('b', new UnixTime(3), 0n),
@@ -128,7 +128,7 @@ describeDatabase(AmountRepository.name, (db) => {
       expect(results).toEqualUnsorted([amount('b', new UnixTime(3), 0n)])
     })
     it('does not delete data if matching config not found', async () => {
-      await repository.addMany([amount('b', new UnixTime(1), 0n)])
+      await repository.insertMany([amount('b', new UnixTime(1), 0n)])
 
       await repository.deleteByConfigInTimeRange(
         'c',
@@ -143,7 +143,7 @@ describeDatabase(AmountRepository.name, (db) => {
 
   describe(AmountRepository.prototype.deleteByConfigAfter.name, () => {
     it('deletes data in range for matching config', async () => {
-      await repository.addMany([
+      await repository.insertMany([
         amount('b', new UnixTime(1), 0n),
         amount('b', new UnixTime(2), 0n),
         amount('b', new UnixTime(3), 0n),
@@ -156,7 +156,7 @@ describeDatabase(AmountRepository.name, (db) => {
     })
 
     it('does not delete data if matching config not found', async () => {
-      await repository.addMany([amount('b', new UnixTime(2), 0n)])
+      await repository.insertMany([amount('b', new UnixTime(2), 0n)])
 
       await repository.deleteByConfigAfter('c', new UnixTime(1))
 
@@ -172,7 +172,7 @@ describeDatabase(AmountRepository.name, (db) => {
 
   // #region methods used only in tests
   it(AmountRepository.prototype.deleteAll.name, async () => {
-    await repository.addMany([amount('a', UnixTime.ZERO, 111n)])
+    await repository.insertMany([amount('a', UnixTime.ZERO, 111n)])
     await repository.deleteAll()
     const results = await repository.getAll()
     expect(results).toEqual([])

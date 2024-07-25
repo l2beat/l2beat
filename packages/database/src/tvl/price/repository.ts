@@ -51,7 +51,7 @@ export class PriceRepository extends BaseRepository {
     return row ? toRecord(row) : null
   }
 
-  async addMany(records: PriceRecord[]) {
+  async insertMany(records: PriceRecord[]) {
     if (records.length === 0) {
       return 0
     }

@@ -79,7 +79,7 @@ export class LivenessRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: LivenessRecord[]) {
+  async insertMany(records: LivenessRecord[]) {
     if (records.length === 0) {
       return 0
     }

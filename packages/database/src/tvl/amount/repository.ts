@@ -65,7 +65,7 @@ export class AmountRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: AmountRecord[]) {
+  async insertMany(records: AmountRecord[]) {
     if (records.length === 0) {
       return
     }

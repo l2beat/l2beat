@@ -13,7 +13,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
+  async upsertMany(records: AggregatedL2CostRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
     await this.batch(rows, 5_000, async (batch) => {

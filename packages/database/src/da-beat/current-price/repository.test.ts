@@ -10,17 +10,17 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
     await repository.deleteAll()
   })
 
-  describe(CurrentPriceRepository.prototype.addOrUpdateMany.name, async () => {
+  describe(CurrentPriceRepository.prototype.upsertMany.name, async () => {
     it('inserts if not exists', async () => {
-      await repository.addOrUpdateMany([mock('A', 1), mock('B', 2)])
+      await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
       const currentPrices = await repository.getAll()
       expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])
     })
 
     it('updates if exists', async () => {
-      await repository.addOrUpdateMany([mock('A', 1), mock('B', 2)])
-      await repository.addOrUpdateMany([mock('A', 2), mock('B', 3)])
+      await repository.upsertMany([mock('A', 1), mock('B', 2)])
+      await repository.upsertMany([mock('A', 2), mock('B', 3)])
       const currentPrices = await repository.getAll()
       expect(currentPrices).toEqualUnsorted([saved('A', 2), saved('B', 3)])
     })
@@ -30,11 +30,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
     CurrentPriceRepository.prototype.getByCoingeckoIds.name,
     async () => {
       it('deletes all currentPrices', async () => {
-        await repository.addOrUpdateMany([
-          mock('A', 1),
-          mock('B', 2),
-          mock('C', 3),
-        ])
+        await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
 
         const currentPrices = await repository.getByCoingeckoIds(['A', 'B'])
         expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])

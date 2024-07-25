@@ -65,7 +65,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
         .length,
     })
-    await this.$.db.amount.addMany(nonZeroAmounts)
+    await this.$.db.amount.insertMany(nonZeroAmounts)
 
     return timestamp.toNumber()
   }

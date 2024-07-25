@@ -3,9 +3,7 @@ import { BlockTransactionCountRecord, toRecord, toRow } from './entity'
 import { selectBlockTransactionCount } from './select'
 
 export class BlockTransactionCountRepository extends BaseRepository {
-  async addOrUpdateMany(
-    records: BlockTransactionCountRecord[],
-  ): Promise<number> {
+  async upsertMany(records: BlockTransactionCountRecord[]): Promise<number> {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db

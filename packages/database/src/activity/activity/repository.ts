@@ -12,7 +12,7 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: ActivityRecord[]): Promise<number> {
+  async upsertMany(records: ActivityRecord[]): Promise<number> {
     const rows = records.map(toRow)
 
     await this.batch(rows, 5_000, async (batch) => {

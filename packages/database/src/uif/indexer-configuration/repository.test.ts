@@ -18,50 +18,47 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(
-    IndexerConfigurationRepository.prototype.addOrUpdateMany.name,
-    () => {
-      it('adds new records', async () => {
-        const newRecords = [CONFIGURATIONS[0]!, CONFIGURATIONS[1]!]
+  describe(IndexerConfigurationRepository.prototype.upsertMany.name, () => {
+    it('adds new records', async () => {
+      const newRecords = [CONFIGURATIONS[0]!, CONFIGURATIONS[1]!]
 
-        await repository.addOrUpdateMany(newRecords)
+      await repository.upsertMany(newRecords)
 
-        const result = await repository.getAll()
+      const result = await repository.getAll()
 
-        expect(result).toEqualUnsorted(newRecords)
-      })
+      expect(result).toEqualUnsorted(newRecords)
+    })
 
-      describe('updates existing record', () => {
-        const columns = [
-          { column: 'indexerId', value: 'new-indexer' },
-          { column: 'currentHeight', value: 123 },
-          { column: 'minHeight', value: 0 },
-          { column: 'maxHeight', value: 666 },
-          { column: 'properties', value: 'new-properties' },
-        ]
-        for (const c of columns) {
-          it(`updates ${c.column}`, async () => {
-            await repository.addOrUpdateMany([mock({ id: 'a'.repeat(12) })])
-            const recordsPostUpsert: IndexerConfigurationRecord[] = [
-              {
-                ...CONFIGURATIONS[0]!,
-                [c.column]: c.value,
-              },
-            ]
-            await repository.addOrUpdateMany(recordsPostUpsert)
-            const result = await repository.getAll()
-            expect(result).toEqualUnsorted(recordsPostUpsert)
-          })
-        }
-      })
-    },
-  )
+    describe('updates existing record', () => {
+      const columns = [
+        { column: 'indexerId', value: 'new-indexer' },
+        { column: 'currentHeight', value: 123 },
+        { column: 'minHeight', value: 0 },
+        { column: 'maxHeight', value: 666 },
+        { column: 'properties', value: 'new-properties' },
+      ]
+      for (const c of columns) {
+        it(`updates ${c.column}`, async () => {
+          await repository.upsertMany([mock({ id: 'a'.repeat(12) })])
+          const recordsPostUpsert: IndexerConfigurationRecord[] = [
+            {
+              ...CONFIGURATIONS[0]!,
+              [c.column]: c.value,
+            },
+          ]
+          await repository.upsertMany(recordsPostUpsert)
+          const result = await repository.getAll()
+          expect(result).toEqualUnsorted(recordsPostUpsert)
+        })
+      }
+    })
+  })
 
   describe(
     IndexerConfigurationRepository.prototype.getSavedConfigurationsByIds.name,
     () => {
       it('returns configurations by ids', async () => {
-        await repository.addOrUpdateMany(CONFIGURATIONS)
+        await repository.upsertMany(CONFIGURATIONS)
 
         const result = await repository.getSavedConfigurationsByIds([
           CONFIGURATIONS[0]!.id,
@@ -77,7 +74,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addOrUpdateMany(records)
+      await repository.upsertMany(records)
 
       const result = await repository.getSavedConfigurations('indexer-1')
 
@@ -97,7 +94,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
         { ...config('f', 1, null, null), indexerId: 'other' }, // do not update: other indexer
       ]
 
-      await repository.addOrUpdateMany(records)
+      await repository.upsertMany(records)
 
       await repository.updateCurrentHeights('indexer', 100)
 
@@ -120,7 +117,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
       it('excluding 1 2 3', async () => {
         const records = CONFIGURATIONS
 
-        await repository.addOrUpdateMany(records)
+        await repository.upsertMany(records)
         await repository.deleteConfigurationsExcluding('indexer-1', [
           CONFIGURATIONS[1]!.id,
           CONFIGURATIONS[2]!.id,
@@ -139,7 +136,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
       it('excluding nothing', async () => {
         const records = CONFIGURATIONS
 
-        await repository.addOrUpdateMany(records)
+        await repository.upsertMany(records)
         await repository.deleteConfigurationsExcluding('indexer-1', [])
 
         const result = await repository.getAll()

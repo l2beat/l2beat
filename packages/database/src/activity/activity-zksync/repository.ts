@@ -3,7 +3,7 @@ import { ZkSyncTransactionRecord, toRecord, toRow } from './entity'
 import { selectZksyncTransaction } from './select'
 
 export class ZkSyncTransactionRepository extends BaseRepository {
-  async addOrUpdateMany(records: ZkSyncTransactionRecord[]): Promise<number> {
+  async upsertMany(records: ZkSyncTransactionRecord[]): Promise<number> {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db

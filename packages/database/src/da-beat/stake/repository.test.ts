@@ -10,17 +10,17 @@ describeDatabase(StakeRepository.name, (database) => {
     await repository.deleteAll()
   })
 
-  describe(`${StakeRepository.prototype.addOrUpdate.name} and ${StakeRepository.prototype.findById.name}`, async () => {
+  describe(`${StakeRepository.prototype.upsert.name} and ${StakeRepository.prototype.findById.name}`, async () => {
     it('inserts if not exists', async () => {
-      await repository.addOrUpdate(saved('A', 1n, 2n))
+      await repository.upsert(saved('A', 1n, 2n))
 
       const stake = await repository.findById('A')
       expect(stake).toEqual(saved('A', 1n, 2n))
     })
 
     it('updates if exists', async () => {
-      await repository.addOrUpdate(saved('A', 1n, 2n))
-      await repository.addOrUpdate(saved('A', 2n, 3n))
+      await repository.upsert(saved('A', 1n, 2n))
+      await repository.upsert(saved('A', 2n, 3n))
 
       const stake = await repository.findById('A')
       expect(stake).toEqual(saved('A', 2n, 3n))
@@ -29,9 +29,9 @@ describeDatabase(StakeRepository.name, (database) => {
 
   describe(StakeRepository.prototype.getAll.name, async () => {
     it('returns all stakes', async () => {
-      await repository.addOrUpdate(saved('A', 1n, 2n))
-      await repository.addOrUpdate(saved('B', 2n, 3n))
-      await repository.addOrUpdate(saved('C', 3n, 4n))
+      await repository.upsert(saved('A', 1n, 2n))
+      await repository.upsert(saved('B', 2n, 3n))
+      await repository.upsert(saved('C', 3n, 4n))
       const stakes = await repository.getAll()
       expect(stakes).toEqualUnsorted([
         saved('A', 1n, 2n),
@@ -43,9 +43,9 @@ describeDatabase(StakeRepository.name, (database) => {
 
   describe(StakeRepository.prototype.getByIds.name, async () => {
     it('deletes all stakes', async () => {
-      await repository.addOrUpdate(saved('A', 1n, 2n))
-      await repository.addOrUpdate(saved('B', 2n, 3n))
-      await repository.addOrUpdate(saved('C', 3n, 4n))
+      await repository.upsert(saved('A', 1n, 2n))
+      await repository.upsert(saved('B', 2n, 3n))
+      await repository.upsert(saved('C', 3n, 4n))
 
       const stakes = await repository.getByIds(['A', 'B'])
       expect(stakes).toEqualUnsorted([saved('A', 1n, 2n), saved('B', 2n, 3n)])

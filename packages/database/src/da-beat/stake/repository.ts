@@ -33,7 +33,7 @@ export class StakeRepository extends BaseRepository {
     return res.map(toRecord)
   }
 
-  async addOrUpdate(stake: StakeRecord): Promise<void> {
+  async upsert(stake: StakeRecord): Promise<void> {
     const row = toRow(stake)
     await this.db
       .insertInto('public.Stake')

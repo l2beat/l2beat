@@ -69,7 +69,7 @@ export class FinalityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: FinalityRecord[]) {
+  async insertMany(records: FinalityRecord[]) {
     if (records.length === 0) {
       return 0
     }
@@ -83,7 +83,7 @@ export class FinalityRepository extends BaseRepository {
     return rows.length
   }
 
-  async add(record: FinalityRecord) {
+  async insert(record: FinalityRecord) {
     const row = toRow(record)
 
     const result = await this.db

@@ -9,7 +9,7 @@ import { BlockTimestampRecord, toRecord, toRow } from './entity'
 import { selectBlockTimestamp } from './select'
 
 export class BlockTimestampRepository extends BaseRepository {
-  async add(record: BlockTimestampRecord) {
+  async insert(record: BlockTimestampRecord) {
     const row = toRow(record)
 
     await this.db.insertInto('public.block_timestamps').values(row).execute()
@@ -59,7 +59,7 @@ export class BlockTimestampRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: BlockTimestampRecord[]) {
+  async insertMany(records: BlockTimestampRecord[]) {
     if (records.length === 0) {
       return 0
     }

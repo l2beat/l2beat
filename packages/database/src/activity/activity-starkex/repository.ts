@@ -3,9 +3,7 @@ import { StarkExTransactionCountRecord, toRecord, toRow } from './entity'
 import { selectStarkExTransactionCount } from './select'
 
 export class StarkExTransactionCountRepository extends BaseRepository {
-  async addOrUpdateMany(
-    records: StarkExTransactionCountRecord[],
-  ): Promise<number> {
+  async upsertMany(records: StarkExTransactionCountRecord[]): Promise<number> {
     const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db

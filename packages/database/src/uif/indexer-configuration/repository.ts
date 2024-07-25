@@ -3,7 +3,7 @@ import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
 import { selectIndexerConfiguration } from './select'
 
 export class IndexerConfigurationRepository extends BaseRepository {
-  async addOrUpdateMany(record: IndexerConfigurationRecord[]) {
+  async upsertMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
     await this.batch(rows, 5_000, async (batch) => {

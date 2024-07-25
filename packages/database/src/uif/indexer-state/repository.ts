@@ -2,7 +2,7 @@ import { BaseRepository } from '../../BaseRepository'
 import { IndexerStateRecord, toRecord, toRow } from './entity'
 
 export class IndexerStateRepository extends BaseRepository {
-  async addOrUpdate(record: IndexerStateRecord): Promise<string> {
+  async upsert(record: IndexerStateRecord): Promise<string> {
     const row = toRow(record)
     await this.db
       .insertInto('public.indexer_state')

@@ -14,7 +14,7 @@ export class UpdateNotifierRepository extends BaseRepository {
     return row ? row.id : undefined
   }
 
-  async add(
+  async insert(
     record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
   ) {
     const row = toRow(record)

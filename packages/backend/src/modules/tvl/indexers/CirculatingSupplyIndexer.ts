@@ -55,7 +55,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     )
     const nonZeroAmounts = optimizedAmounts.filter((a) => a.amount > 0n)
 
-    await this.$.db.amount.addMany(nonZeroAmounts)
+    await this.$.db.amount.insertMany(nonZeroAmounts)
 
     this.logger.info('Saved amounts into DB', {
       from,

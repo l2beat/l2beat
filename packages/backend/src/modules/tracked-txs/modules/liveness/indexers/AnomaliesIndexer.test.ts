@@ -60,7 +60,7 @@ describe(AnomaliesIndexer.name, () => {
 
     it('should update', async () => {
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
-        addOrUpdateMany: mockFn().resolvesTo(1),
+        upsertMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
@@ -87,7 +87,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockCalculateAnomalies).toHaveBeenCalledWith(NOW.toStartOf('day'))
 
-      expect(mockAnomaliesRepository.addOrUpdateMany).toHaveBeenCalledWith(
+      expect(mockAnomaliesRepository.upsertMany).toHaveBeenCalledWith(
         mockAnomalies,
       )
 
@@ -96,7 +96,7 @@ describe(AnomaliesIndexer.name, () => {
 
     it('should adjust and update', async () => {
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
-        addOrUpdateMany: mockFn().resolvesTo(1),
+        upsertMany: mockFn().resolvesTo(1),
       })
 
       const indexer = createIndexer({
@@ -123,7 +123,7 @@ describe(AnomaliesIndexer.name, () => {
 
       expect(mockCalculateAnomalies).toHaveBeenCalledWith(NOW.toStartOf('day'))
 
-      expect(mockAnomaliesRepository.addOrUpdateMany).toHaveBeenCalledWith(
+      expect(mockAnomaliesRepository.upsertMany).toHaveBeenCalledWith(
         mockAnomalies,
       )
 
@@ -363,7 +363,7 @@ function createIndexer(options: {
       anomalies:
         options.anomaliesRepository ??
         mockObject<Database['anomalies']>({
-          addOrUpdateMany: mockFn().resolvesTo(1),
+          upsertMany: mockFn().resolvesTo(1),
         }),
     }),
     projects: MOCK_PROJECTS,

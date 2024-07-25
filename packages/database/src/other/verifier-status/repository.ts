@@ -4,7 +4,7 @@ import { VerifierStatusRecord, toRecord, toRow } from './entity'
 import { selectVerifierStatus } from './select'
 
 export class VerifierStatusRepository extends BaseRepository {
-  async addOrUpdate(record: VerifierStatusRecord): Promise<string> {
+  async upsert(record: VerifierStatusRecord): Promise<string> {
     const row = toRow(record)
     await this.db
       .insertInto('public.verifier_status')

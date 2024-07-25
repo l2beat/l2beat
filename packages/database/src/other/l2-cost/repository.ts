@@ -13,7 +13,7 @@ export class L2CostRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: L2CostRecord[]): Promise<number> {
+  async insertMany(records: L2CostRecord[]): Promise<number> {
     if (records.length === 0) {
       return 0
     }

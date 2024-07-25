@@ -27,7 +27,7 @@ export class DailyDiscoveryRepository extends BaseRepository {
     return rows.map((row) => UnixTime.fromDate(row.unix_timestamp))
   }
 
-  async addOrUpdate(record: DailyDiscoveryRecord) {
+  async upsert(record: DailyDiscoveryRecord) {
     const row = toRow(record)
 
     await this.db

@@ -60,7 +60,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     )
 
     const aggregated = this.aggregate(costs, ethPrices)
-    await this.$.db.aggregatedL2Cost.addOrUpdateMany(aggregated)
+    await this.$.db.aggregatedL2Cost.upsertMany(aggregated)
     this.logger.info('Aggregated L2 costs', {
       count: aggregated.length,
     })

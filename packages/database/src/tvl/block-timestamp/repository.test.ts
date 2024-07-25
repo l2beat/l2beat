@@ -11,7 +11,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(BlockTimestampRepository.prototype.add.name, () => {
+  describe(BlockTimestampRepository.prototype.insert.name, () => {
     it('adds new row', async () => {
       const newRow = {
         chain: 'chain',
@@ -19,7 +19,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
         blockNumber: 0,
       }
 
-      await repository.add(newRow)
+      await repository.insert(newRow)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([newRow])
@@ -47,7 +47,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
             blockNumber: 1,
           },
         ]
-        await Promise.all(blocks.map((b) => repository.add(b)))
+        await Promise.all(blocks.map((b) => repository.insert(b)))
 
         const blockNumber = await repository.findByChainAndTimestamp(
           'chain',
@@ -78,7 +78,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
           blockNumber: 1,
         },
       ]
-      await Promise.all(blocks.map((b) => repository.add(b)))
+      await Promise.all(blocks.map((b) => repository.insert(b)))
 
       await repository.deleteAfterExclusive('chain', new UnixTime(1))
 
@@ -88,7 +88,7 @@ describeDatabase(BlockTimestampRepository.name, (db) => {
   })
 
   it(BlockTimestampRepository.prototype.deleteAll.name, async () => {
-    await repository.add({
+    await repository.insert({
       chain: 'chain',
       timestamp: UnixTime.ZERO,
       blockNumber: 0,

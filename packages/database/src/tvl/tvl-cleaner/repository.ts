@@ -3,7 +3,7 @@ import { TvlCleanerRecord, toRecord, toRow } from './entity'
 import { selectTvlCleaner } from './select'
 
 export class TvlCleanerRepository extends BaseRepository {
-  async addOrUpdate(record: TvlCleanerRecord) {
+  async upsert(record: TvlCleanerRecord) {
     const row = toRow(record)
     await this.db
       .insertInto('public.tvl_cleaner')

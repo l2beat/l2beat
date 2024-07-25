@@ -3,7 +3,7 @@ import { SequenceProcessorRecord, toRecord, toRow } from './entity'
 import { selectSequenceProcessor } from './select'
 
 export class SequenceProcessorRepository extends BaseRepository {
-  async addOrUpdate(record: SequenceProcessorRecord) {
+  async upsert(record: SequenceProcessorRecord) {
     const row = toRow(record)
     await this.db
       .insertInto('public.sequence_processor')

@@ -85,7 +85,7 @@ describe(TvlCleaner.name, () => {
           })
           .given(secondTable.constructor.name)
           .resolvesToOnce(undefined),
-        addOrUpdate: mockFn().resolvesTo(1),
+        upsert: mockFn().resolvesTo(1),
       })
 
       const tvlCleaner = new TvlCleaner(
@@ -110,7 +110,7 @@ describe(TvlCleaner.name, () => {
         from: firstTableSixHourlyCleanedUntil,
         to: sixHourlyDeletionBoundary,
       })
-      expect(repository.addOrUpdate).toHaveBeenNthCalledWith(1, {
+      expect(repository.upsert).toHaveBeenNthCalledWith(1, {
         repositoryName: firstTable.constructor.name,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
@@ -127,7 +127,7 @@ describe(TvlCleaner.name, () => {
         from: undefined,
         to: sixHourlyDeletionBoundary,
       })
-      expect(repository.addOrUpdate).toHaveBeenNthCalledWith(2, {
+      expect(repository.upsert).toHaveBeenNthCalledWith(2, {
         repositoryName: secondTable.constructor.name,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
@@ -157,7 +157,7 @@ describe(TvlCleaner.name, () => {
           hourlyCleanedUntil: hourlyDeletionBoundary,
           sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
         }),
-        addOrUpdate: mockFn().resolvesTo(1),
+        upsert: mockFn().resolvesTo(1),
       })
 
       const tvlCleaner = new TvlCleaner(
@@ -176,7 +176,7 @@ describe(TvlCleaner.name, () => {
       )
       expect(firstTable.deleteHourlyUntil).not.toHaveBeenCalled()
       expect(firstTable.deleteSixHourlyUntil).not.toHaveBeenCalled()
-      expect(repository.addOrUpdate).not.toHaveBeenCalled()
+      expect(repository.upsert).not.toHaveBeenCalled()
     })
   })
 })

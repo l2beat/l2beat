@@ -37,7 +37,7 @@ export class IndexerService {
     safeHeight: number,
     configHash?: string,
   ) {
-    await this.db.indexerState.addOrUpdate({
+    await this.db.indexerState.upsert({
       indexerId,
       safeHeight,
       configHash,
@@ -57,7 +57,7 @@ export class IndexerService {
       properties: encode(config.properties),
     }))
 
-    await this.db.indexerConfiguration.addOrUpdateMany(
+    await this.db.indexerConfiguration.upsertMany(
       encoded.map((e) => ({ ...e, indexerId })),
     )
   }
