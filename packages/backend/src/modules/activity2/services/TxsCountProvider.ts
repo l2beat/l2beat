@@ -4,6 +4,7 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
+import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
@@ -36,6 +37,9 @@ export class TxsCountProvider {
       }
       case 'starknet': {
         return await this.getStarknetTxsCount(from, to)
+      }
+      case 'loopring': {
+        return await this.getLoopringTxsCount(from, to)
       }
       default:
         throw new Error(`${this.$.projectConfig.type} type not implemented`)
@@ -153,6 +157,33 @@ export class TxsCountProvider {
       return {
         count: block.transactions.length,
         timestamp: new UnixTime(block.timestamp),
+      }
+    })
+
+    const blocks = await Promise.all(queries)
+    return this.sumCountsPerDay(blocks)
+  }
+
+  async getLoopringTxsCount(
+    from: number,
+    to: number,
+  ): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'loopring',
+      'Method not supported for projects other than Loopring',
+    )
+    const projectConfig = this.$.projectConfig
+
+    const loopringClient = this.$.peripherals.getClient(LoopringClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const block = await loopringClient.getBlock(blockNumber)
+      return {
+        count: block.transactions,
+        timestamp: block.createdAt,
       }
     })
 
