@@ -1,9 +1,9 @@
 import { type FinalityDataPoint, UnixTime } from '@l2beat/shared-pure'
 
-import { type LivenessRecordWithConfig } from './LivenessWithConfigService'
-import { calculateIntervals } from './calculateIntervals'
-import { calculateStats } from './calculateStats'
-import { filterIntervalsByRange } from './filterIntervalsByRange'
+import { type LivenessRecordWithConfig } from './get-liveness-by-type-since'
+import { calculateIntervals } from './calculate-intervals'
+import { filterIntervalsByRange } from './filter-intervals-by-range'
+import { calculateStats } from './calculate-stats'
 
 export function calcAvgsPerProject(
   records: LivenessRecordWithConfig[],

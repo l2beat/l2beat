@@ -1,6 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
 import { type Layer2FinalityConfig } from '@l2beat/config'
-import { type Database } from '@l2beat/database'
 import {
   type FinalityApiResponse,
   type ProjectId,
@@ -8,18 +7,15 @@ import {
 } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 import { db } from '~/server/database'
-import { LivenessWithConfigService } from './LivenessWithConfigService'
-import { calcAvgsPerProject } from './calcAvgsPerProject'
-import { divideAndAddLag } from './divideAndAddLag'
+import { getLivenessByTypeSince } from './get-liveness-by-type-since'
+import { calcAvgsPerProject } from './calc-avgs-per-project'
+import { divideAndAddLag } from './divide-and-add-lag'
 
 export type FinalityProjectConfig = {
   projectId: ProjectId
 } & Layer2FinalityConfig
 
-export interface FinalityControllerDeps {
-  db: Database
-  projects: FinalityProjectConfig[]
-}
+
 
 export async function getFinality(
   projects: FinalityProjectConfig[],
@@ -155,13 +151,7 @@ async function getOPStackFinality(
 
       if (!syncedUntil) return
 
-      // TODO: (sz-piotr) Refactor as dependency!
-      const livenessWithConfig = new LivenessWithConfigService(configsToUse, db)
-
-      const records = await livenessWithConfig.getByTypeSince(
-        'batchSubmissions',
-        syncedUntil.add(-1, 'days'),
-      )
+      const records = await getLivenessByTypeSince(configsToUse, 'batchSubmissions', syncedUntil.add(-1, 'days'))
 
       const intervals = calcAvgsPerProject(records)
       const projectResult = divideAndAddLag(intervals, project.lag)

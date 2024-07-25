@@ -13,6 +13,7 @@ import { type SyncStatus } from '~/types/SyncStatus'
 
 export interface ScalingFinalityEntry {
   slug: string
+  href: string
   name: string
   shortName: string | undefined
   category: ScalingProjectCategory

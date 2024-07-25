@@ -1,6 +1,6 @@
 import { type AggregatedLivenessRange } from '@l2beat/database'
 import { type UnixTime, assertUnreachable } from '@l2beat/shared-pure'
-import { type Interval } from './calculateIntervals'
+import { type Interval } from './calculate-intervals'
 
 export function filterIntervalsByRange(
   intervals: Interval[],

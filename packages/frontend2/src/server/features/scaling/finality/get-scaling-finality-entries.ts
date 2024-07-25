@@ -7,7 +7,7 @@ import {
   formatSeconds,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../../tvl/order-by-tvl'
 import {
   type ScalingFinalityEntry,
@@ -18,16 +18,16 @@ export async function getScalingFinalityEntries(
   projects: Layer2[],
   tvl: Record<ProjectId, number>,
   finality: FinalityApiResponse,
+  implementationChangeReport: ImplementationChangeReport,
 ) {
   const includedProjects = getIncludedProjects(projects, finality)
   const orderedProjects = orderByTvl(includedProjects, tvl)
-
-  const implementationChangeReport = await getImplementationChangeReport()
 
   return orderedProjects
     .map((project) => {
       const hasImplementationChanged =
         !!implementationChangeReport?.projects[project.id.toString()]
+
       return getScalingFinalityEntry(
         project,
         finality.projects[project.id.toString()],
@@ -41,7 +41,10 @@ function getFinalityData(
   finalityProjectData: FinalityProjectData | undefined,
   project: Layer2,
 ) {
-  if (!finalityProjectData) return undefined
+  if (!finalityProjectData) {
+    return
+  }
+
   const data: ScalingFinalityEntryData = {
     timeToInclusion: {
       averageInSeconds: finalityProjectData.timeToInclusion.averageInSeconds,
@@ -90,6 +93,7 @@ function getScalingFinalityEntry(
   return {
     type: project.type,
     name: project.display.name,
+    href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,

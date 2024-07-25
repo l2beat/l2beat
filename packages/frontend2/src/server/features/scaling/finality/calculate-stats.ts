@@ -1,4 +1,4 @@
-import { type Interval } from './calculateIntervals'
+import { type Interval } from './calculate-intervals'
 
 type Stats = {
   averageInSeconds: number

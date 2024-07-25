@@ -1,4 +1,3 @@
-import path from 'path'
 import { chains } from '@l2beat/config'
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import {
@@ -14,6 +13,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import path from 'path'
 import { env } from '~/env'
 import { db } from '~/server/database'
 
@@ -21,6 +21,10 @@ export function getImplementationChangeReport() {
   noStore()
   return getCachedImplementationChangeReport()
 }
+
+export type ImplementationChangeReport = Awaited<
+  ReturnType<typeof getCachedImplementationChangeReport>
+>
 
 const getCachedImplementationChangeReport = cache(
   async () => {

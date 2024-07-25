@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { type LivenessRecordWithConfig } from './LivenessWithConfigService'
-import { type Interval } from './calculateIntervals'
-import { filterIntervalsByRange } from './filterIntervalsByRange'
+import { type Interval } from './calculate-intervals'
+import { calculateStats } from './calculate-stats'
+import { type LivenessRecordWithConfig } from './get-liveness-by-type-since'
 
-describe(filterIntervalsByRange.name, () => {
-  it('should filter intervals by range', async () => {
+describe(calculateStats.name, () => {
+  it('should calculate stats', async () => {
     const NOW = UnixTime.now()
     const MOCK_INTERVALS: Interval[] = [
       {
@@ -31,8 +31,12 @@ describe(filterIntervalsByRange.name, () => {
       },
     ]
 
-    const result = filterIntervalsByRange(MOCK_INTERVALS, NOW, '30D')
+    const result = calculateStats(MOCK_INTERVALS)
 
-    expect(result).toEqual([...MOCK_INTERVALS].splice(0, 2))
+    expect(result).toEqual({
+      averageInSeconds: 20,
+      minimumInSeconds: 10,
+      maximumInSeconds: 30,
+    })
   })
 })
