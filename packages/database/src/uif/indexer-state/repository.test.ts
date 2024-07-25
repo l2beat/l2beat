@@ -11,9 +11,9 @@ describeDatabase(IndexerStateRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(IndexerStateRepository.prototype.findIndexerState.name, () => {
+  describe(IndexerStateRepository.prototype.findByIndexerId.name, () => {
     it('returns undefined if no record exists', async () => {
-      const indexerState = await repository.findIndexerState('indexer')
+      const indexerState = await repository.findByIndexerId('indexer')
       expect(indexerState).toEqual(undefined)
     })
 
@@ -25,7 +25,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         configHash: '0x123456',
       }
       await repository.upsert(newRecord)
-      const indexerState = await repository.findIndexerState('indexer1')
+      const indexerState = await repository.findByIndexerId('indexer1')
       expect(indexerState).toEqual(newRecord)
     })
   })
@@ -104,7 +104,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
     })
   })
 
-  describe(IndexerStateRepository.prototype.setSafeHeight.name, () => {
+  describe(IndexerStateRepository.prototype.updateSafeHeight.name, () => {
     it('updates the safe height of given indexer', async () => {
       const BEFORE = 12345
       const AFTER = 54321
@@ -116,8 +116,8 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       }
       await repository.upsert(record)
 
-      const updated = await repository.setSafeHeight('indexer1', AFTER)
-      const indexerState = await repository.findIndexerState('indexer1')
+      const updated = await repository.updateSafeHeight('indexer1', AFTER)
+      const indexerState = await repository.findByIndexerId('indexer1')
 
       expect(updated).toEqual(1)
       expect(indexerState).toEqual({ ...record, safeHeight: AFTER })
@@ -134,8 +134,8 @@ describeDatabase(IndexerStateRepository.name, (db) => {
       }
       await repository.upsert(record)
 
-      const updated = await repository.setSafeHeight('indexer2', AFTER)
-      const indexerState = await repository.findIndexerState('indexer1')
+      const updated = await repository.updateSafeHeight('indexer2', AFTER)
+      const indexerState = await repository.findByIndexerId('indexer1')
 
       expect(updated).toEqual(0)
       expect(indexerState).toEqual({ ...record })

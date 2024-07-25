@@ -3,9 +3,10 @@ import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
 import { selectIndexerConfiguration } from './select'
 
 export class IndexerConfigurationRepository extends BaseRepository {
-  async upsertMany(record: IndexerConfigurationRecord[]) {
-    const rows = record.map(toRow)
+  async upsertMany(record: IndexerConfigurationRecord[]): Promise<number> {
+    if (record.length === 0) return 0
 
+    const rows = record.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('public.indexer_configurations')
@@ -22,33 +23,36 @@ export class IndexerConfigurationRepository extends BaseRepository {
         )
         .execute()
     })
+    return record.length
   }
 
-  async getSavedConfigurations(indexerId: string) {
+  async getByIndexerId(
+    indexerId: string,
+  ): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('indexer_id', '=', indexerId)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async getSavedConfigurationsByIds(configurationIds: string[]) {
-    if (configurationIds.length === 0) {
-      return []
-    }
+  async getByConfigurationIds(configurationIds: string[]) {
+    if (configurationIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .where('id', 'in', configurationIds)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  updateCurrentHeights(indexerId: string, currentHeight: number | null) {
-    return this.db
+  async updateCurrentHeights(
+    indexerId: string,
+    currentHeight: number | null,
+  ): Promise<void> {
+    await this.db
       .updateTable('public.indexer_configurations')
       .set('current_height', currentHeight)
       .where('indexer_id', '=', indexerId)
@@ -87,12 +91,11 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getAll() {
+  async getAll(): Promise<IndexerConfigurationRecord[]> {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select(selectIndexerConfiguration)
       .execute()
-
     return rows.map(toRecord)
   }
 

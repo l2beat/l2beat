@@ -55,12 +55,12 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   })
 
   describe(
-    IndexerConfigurationRepository.prototype.getSavedConfigurationsByIds.name,
+    IndexerConfigurationRepository.prototype.getByConfigurationIds.name,
     () => {
       it('returns configurations by ids', async () => {
         await repository.upsertMany(CONFIGURATIONS)
 
-        const result = await repository.getSavedConfigurationsByIds([
+        const result = await repository.getByConfigurationIds([
           CONFIGURATIONS[0]!.id,
           CONFIGURATIONS[2]!.id,
         ])
@@ -69,18 +69,15 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     },
   )
 
-  it(
-    IndexerConfigurationRepository.prototype.getSavedConfigurations.name,
-    async () => {
-      const records = CONFIGURATIONS
+  it(IndexerConfigurationRepository.prototype.getByIndexerId.name, async () => {
+    const records = CONFIGURATIONS
 
-      await repository.upsertMany(records)
+    await repository.upsertMany(records)
 
-      const result = await repository.getSavedConfigurations('indexer-1')
+    const result = await repository.getByIndexerId('indexer-1')
 
-      expect(result).toEqualUnsorted(records.slice(0, 2))
-    },
-  )
+    expect(result).toEqualUnsorted(records.slice(0, 2))
+  })
 
   it(
     IndexerConfigurationRepository.prototype.updateCurrentHeights.name,

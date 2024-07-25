@@ -45,7 +45,7 @@ describe(findUnusedConfigs.name, () => {
 
 function mockIndexerConfigurationRepository(ids: string[]) {
   return mockObject<Database['indexerConfiguration']>({
-    getSavedConfigurations: mockFn().resolvesTo(ids.map((id) => ({ id }))),
+    getByIndexerId: mockFn().resolvesTo(ids.map((id) => ({ id }))),
   })
 }
 

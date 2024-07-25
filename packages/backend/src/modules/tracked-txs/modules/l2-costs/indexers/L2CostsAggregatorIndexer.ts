@@ -112,7 +112,7 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     ])
 
     const configurations =
-      await this.$.db.indexerConfiguration.getSavedConfigurationsByIds(
+      await this.$.db.indexerConfiguration.getByConfigurationIds(
         uniq(costs.map((c) => c.configurationId)),
       )
 

@@ -117,7 +117,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const indexerConfigurationRepositoryMock = mockObject<
         Database['indexerConfiguration']
       >({
-        getSavedConfigurationsByIds: mockFn().resolvesTo([
+        getByConfigurationIds: mockFn().resolvesTo([
           mockObject<IndexerConfigurationRecord>({
             id: txs[0].configurationId,
             properties: JSON.stringify({
@@ -360,7 +360,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const indexerConfigurationRepositoryMock = mockObject<
           Database['indexerConfiguration']
         >({
-          getSavedConfigurationsByIds: mockFn().resolvesTo([
+          getByConfigurationIds: mockFn().resolvesTo([
             mockObject<IndexerConfigurationRecord>({
               id: id1,
               properties: JSON.stringify({

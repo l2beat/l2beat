@@ -17,19 +17,19 @@ export class IndexerService {
   // #region ManagedChildIndexer & ManagedMultiIndexer
 
   async getSafeHeight(indexerId: string): Promise<number | undefined> {
-    const record = await this.db.indexerState.findIndexerState(indexerId)
+    const record = await this.db.indexerState.findByIndexerId(indexerId)
     return record?.safeHeight
   }
 
   async getIndexerState(
     indexerId: string,
   ): Promise<IndexerStateRecord | undefined> {
-    const record = await this.db.indexerState.findIndexerState(indexerId)
+    const record = await this.db.indexerState.findByIndexerId(indexerId)
     return record
   }
 
   async setSafeHeight(indexerId: string, safeHeight: number) {
-    await this.db.indexerState.setSafeHeight(indexerId, safeHeight)
+    await this.db.indexerState.updateSafeHeight(indexerId, safeHeight)
   }
 
   async setInitialState(
@@ -68,7 +68,7 @@ export class IndexerService {
     const configurations: (Omit<SavedConfiguration<T>, 'properties'> & {
       indexerId?: string
       properties?: string
-    })[] = await this.db.indexerConfiguration.getSavedConfigurations(indexerId)
+    })[] = await this.db.indexerConfiguration.getByIndexerId(indexerId)
 
     for (const config of configurations) {
       // biome-ignore lint/performance/noDelete: not a performance problem
@@ -175,7 +175,7 @@ export class IndexerService {
     const lagging = []
 
     const configurationsState =
-      await this.db.indexerConfiguration.getSavedConfigurationsByIds(
+      await this.db.indexerConfiguration.getByConfigurationIds(
         configurations.map((c) => c.configId),
       )
 
