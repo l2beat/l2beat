@@ -22,29 +22,31 @@ export type FinalityProjectConfig = {
 
 export async function getFinality(projects: FinalityProjectConfig[]) {
   noStore()
-  const cached = await getCachedFinality(projects)
+  const cached = await getCachedFinalityData(projects)
   return FinalityData.parse(cached)
 }
 
-const getCachedFinality = cache(
-  async (projects: FinalityProjectConfig[]): Promise<FinalityData> => {
-    const result: FinalityData = {}
+const getCachedFinalityData = cache(getFinalityData, ['finality'], {
+  revalidate: 60 * 60,
+})
 
-    const [OPStackProjects, otherProjects] = partition(
-      projects,
-      (p) => p.type === 'OPStack',
-    )
-    const OPStackFinality = await getOPStackFinality(OPStackProjects)
-    Object.assign(result, OPStackFinality)
+export async function getFinalityData(
+  projects: FinalityProjectConfig[],
+): Promise<FinalityData> {
+  const result: FinalityData = {}
 
-    const projectsFinality = await getProjectsFinality(otherProjects)
-    Object.assign(result, projectsFinality)
+  const [OPStackProjects, otherProjects] = partition(
+    projects,
+    (p) => p.type === 'OPStack',
+  )
+  const OPStackFinality = await getOPStackFinality(OPStackProjects)
+  Object.assign(result, OPStackFinality)
 
-    return result
-  },
-  ['finality'],
-  { revalidate: 60 * 60 },
-)
+  const projectsFinality = await getProjectsFinality(otherProjects)
+  Object.assign(result, projectsFinality)
+
+  return result
+}
 
 async function getProjectsFinality(
   projects: FinalityProjectConfig[],
