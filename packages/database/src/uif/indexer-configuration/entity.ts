@@ -22,6 +22,19 @@ export function toRecord(
     maxHeight: row.max_height,
   }
 }
+
+export function toRecordWithoutIndexerId(
+  row: Selectable<Omit<IndexerConfiguration, 'indexer_id'>>,
+) {
+  return {
+    id: row.id,
+    properties: row.properties,
+    currentHeight: row.current_height,
+    minHeight: row.min_height,
+    maxHeight: row.max_height,
+  }
+}
+
 export function toRow(
   record: IndexerConfigurationRecord,
 ): Insertable<IndexerConfiguration> {

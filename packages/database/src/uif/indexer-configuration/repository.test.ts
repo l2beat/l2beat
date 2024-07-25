@@ -86,6 +86,29 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
   )
 
   it(
+    IndexerConfigurationRepository.prototype.getConfigurationsWithoutIndexerId
+      .name,
+    async () => {
+      const records = CONFIGURATIONS
+
+      await repository.addOrUpdateMany(records)
+
+      const result =
+        await repository.getConfigurationsWithoutIndexerId('indexer-1')
+
+      expect(result).toEqualUnsorted(
+        records.slice(0, 2).map((c) => ({
+          currentHeight: c.currentHeight,
+          maxHeight: c.maxHeight,
+          minHeight: c.minHeight,
+          id: c.id,
+          properties: c.properties,
+        })),
+      )
+    },
+  )
+
+  it(
     IndexerConfigurationRepository.prototype.getIdsByIndexer.name,
     async () => {
       const records = CONFIGURATIONS

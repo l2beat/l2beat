@@ -1,5 +1,10 @@
 import { BaseRepository } from '../../BaseRepository'
-import { IndexerConfigurationRecord, toRecord, toRow } from './entity'
+import {
+  IndexerConfigurationRecord,
+  toRecord,
+  toRecordWithoutIndexerId,
+  toRow,
+} from './entity'
 import { selectIndexerConfiguration } from './select'
 
 export class IndexerConfigurationRepository extends BaseRepository {
@@ -32,6 +37,22 @@ export class IndexerConfigurationRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getConfigurationsWithoutIndexerId(indexerId: string) {
+    const rows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .select([
+        'id',
+        'max_height',
+        'min_height',
+        'current_height',
+        'properties',
+      ])
+      .where('indexer_id', '=', indexerId)
+      .execute()
+
+    return rows.map(toRecordWithoutIndexerId)
   }
 
   async getSavedConfigurationsByIds(configurationIds: string[]) {
