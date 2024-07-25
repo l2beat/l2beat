@@ -31,7 +31,6 @@ export class ZkSyncTransactionRepository extends BaseRepository {
       .selectFrom('activity.zksync')
       .select(selectZksyncTransaction)
       .execute()
-
     return rows.map(toRecord)
   }
 }

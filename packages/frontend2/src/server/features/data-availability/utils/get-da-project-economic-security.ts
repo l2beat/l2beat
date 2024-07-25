@@ -30,7 +30,7 @@ const getCachedEconomicSecurity = cache(
 
     const type = daLayer.economicSecurity.type
 
-    const stake = await db.stake.findOneById(type)
+    const stake = await db.stake.findById(type)
     if (!stake) {
       return { id: daLayer.id, status: 'StakeNotSynced' as const }
     }
@@ -38,8 +38,8 @@ const getCachedEconomicSecurity = cache(
     const meta = daEconomicSecurityMeta[type]
     const coingeckoId = meta?.coingeckoId
     const currentPrice = coingeckoId
-      ? await db.currentPrice.findOneByAssetId(coingeckoId)
-      : null
+      ? await db.currentPrice.findByCoingeckoId(coingeckoId)
+      : undefined
     if (!currentPrice) {
       return { id: daLayer.id, status: 'CurrentPriceNotSynced' as const }
     }

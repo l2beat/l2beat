@@ -1,54 +1,50 @@
 import { BaseRepository } from '../../BaseRepository'
-import { UpsertableCurrentPrice, toRecord, toRow } from './entity'
+import { CurrentPriceRecord, toRecord, toRow } from './entity'
 import { selectCurrentPrice } from './select'
 
 export class CurrentPriceRepository extends BaseRepository {
-  async findMany() {
-    const res = await this.db
+  async getAll(): Promise<CurrentPriceRecord[]> {
+    const rows = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .execute()
-    return res.map(toRecord)
+    return rows.map(toRecord)
   }
 
-  async findOneByAssetId(coingeckoId: string) {
-    const res = await this.db
+  async findByCoingeckoId(
+    coingeckoId: string,
+  ): Promise<CurrentPriceRecord | undefined> {
+    const row = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', '=', coingeckoId)
       .limit(1)
       .executeTakeFirst()
-    return res ? toRecord(res) : null
+    return row && toRecord(row)
   }
 
-  async findByIds(coingeckoIds: string[]) {
+  async getByCoingeckoIds(
+    coingeckoIds: string[],
+  ): Promise<CurrentPriceRecord[]> {
     if (coingeckoIds.length === 0) {
       return []
     }
 
-    const res = await this.db
+    const rows = await this.db
       .selectFrom('public.CurrentPrice')
       .select(selectCurrentPrice)
       .where('coingeckoId', 'in', coingeckoIds)
       .execute()
-    return res.map(toRecord)
+    return rows.map(toRecord)
   }
 
-  async upsert(currentPrice: UpsertableCurrentPrice) {
-    const entity = toRow(currentPrice)
-    const { coingeckoId, ...rest } = entity
-    return this.db
+  async addOrUpdateMany(
+    records: Omit<CurrentPriceRecord, 'updatedAt'>[],
+  ): Promise<number> {
+    const rows = records.map(toRow)
+    await this.db
       .insertInto('public.CurrentPrice')
-      .values(entity)
-      .onConflict((oc) => oc.column('coingeckoId').doUpdateSet(rest))
-      .execute()
-  }
-
-  async upsertMany(currentPrices: UpsertableCurrentPrice[]) {
-    const entities = currentPrices.map(toRow)
-    return this.db
-      .insertInto('public.CurrentPrice')
-      .values(entities)
+      .values(rows)
       .onConflict((oc) =>
         oc.column('coingeckoId').doUpdateSet((eb) => ({
           priceUsd: eb.ref('excluded.priceUsd'),
@@ -56,6 +52,7 @@ export class CurrentPriceRepository extends BaseRepository {
         })),
       )
       .execute()
+    return records.length
   }
 
   async deleteAll(): Promise<number> {

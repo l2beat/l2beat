@@ -88,7 +88,7 @@ export class DaBeatStakeRefresher {
         try {
           const { totalStake, thresholdStake } = await analyzer.analyze()
           this.logger.info(`Stake data for ${type} refreshed`)
-          await database.stake.upsert({
+          await database.stake.addOrUpdate({
             id: type,
             totalStake,
             thresholdStake,

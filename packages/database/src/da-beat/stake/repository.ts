@@ -3,25 +3,25 @@ import { StakeRecord, toRecord, toRow } from './entity'
 import { selectStake } from './select'
 
 export class StakeRepository extends BaseRepository {
-  async findMany() {
-    const res = await this.db
+  async getAll(): Promise<StakeRecord[]> {
+    const rows = await this.db
       .selectFrom('public.Stake')
       .select(selectStake)
       .execute()
-    return res.map(toRecord)
+    return rows.map(toRecord)
   }
 
-  async findOneById(id: string) {
-    const res = await this.db
+  async findById(id: string): Promise<StakeRecord | undefined> {
+    const row = await this.db
       .selectFrom('public.Stake')
       .select(selectStake)
       .where('id', '=', id)
       .limit(1)
       .executeTakeFirst()
-    return res ? toRecord(res) : null
+    return row && toRecord(row)
   }
 
-  async findByIds(ids: string[]) {
+  async getByIds(ids: string[]): Promise<StakeRecord[]> {
     if (ids.length === 0) {
       return []
     }
@@ -33,13 +33,17 @@ export class StakeRepository extends BaseRepository {
     return res.map(toRecord)
   }
 
-  async upsert(stake: StakeRecord) {
-    const entity = toRow(stake)
-    const { id, ...rest } = entity
-    return this.db
+  async addOrUpdate(stake: StakeRecord): Promise<void> {
+    const row = toRow(stake)
+    await this.db
       .insertInto('public.Stake')
-      .values(entity)
-      .onConflict((oc) => oc.columns(['id']).doUpdateSet(rest))
+      .values(row)
+      .onConflict((oc) =>
+        oc.columns(['id']).doUpdateSet((eb) => ({
+          thresholdStake: eb.ref('excluded.thresholdStake'),
+          totalStake: eb.ref('excluded.totalStake'),
+        })),
+      )
       .execute()
   }
 

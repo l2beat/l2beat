@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 import { describeDatabase } from '../../test/database'
-import type { CurrentPriceRecord, UpsertableCurrentPrice } from './entity'
+import type { CurrentPriceRecord } from './entity'
 import { CurrentPriceRepository } from './repository'
 
 describeDatabase(CurrentPriceRepository.name, (database) => {
@@ -10,50 +10,43 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
     await repository.deleteAll()
   })
 
-  describe(`${CurrentPriceRepository.prototype.upsert.name} and ${CurrentPriceRepository.prototype.findOneByAssetId.name}`, async () => {
+  describe(CurrentPriceRepository.prototype.addOrUpdateMany.name, async () => {
     it('inserts if not exists', async () => {
-      await repository.upsert(mock('A', 1))
+      await repository.addOrUpdateMany([mock('A', 1), mock('B', 2)])
 
-      const currentPrice = await repository.findOneByAssetId('A')
-      expect(currentPrice).toEqual(saved('A', 1))
-    })
-
-    it('updates if exists', async () => {
-      await repository.upsert(mock('A', 1))
-      await repository.upsert(mock('A', 2))
-
-      const currentPrice = await repository.findOneByAssetId('A')
-      expect(currentPrice).toEqual(saved('A', 2))
-    })
-  })
-
-  describe(`${CurrentPriceRepository.prototype.upsertMany.name} and ${CurrentPriceRepository.prototype.findMany.name}`, async () => {
-    it('inserts if not exists', async () => {
-      await repository.upsertMany([mock('A', 1), mock('B', 2)])
-
-      const currentPrices = await repository.findMany()
+      const currentPrices = await repository.getAll()
       expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])
     })
 
     it('updates if exists', async () => {
-      await repository.upsertMany([mock('A', 1), mock('B', 2)])
-      await repository.upsertMany([mock('A', 2), mock('B', 3)])
-      const currentPrices = await repository.findMany()
+      await repository.addOrUpdateMany([mock('A', 1), mock('B', 2)])
+      await repository.addOrUpdateMany([mock('A', 2), mock('B', 3)])
+      const currentPrices = await repository.getAll()
       expect(currentPrices).toEqualUnsorted([saved('A', 2), saved('B', 3)])
     })
   })
 
-  describe(CurrentPriceRepository.prototype.findByIds.name, async () => {
-    it('deletes all currentPrices', async () => {
-      await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
+  describe(
+    CurrentPriceRepository.prototype.getByCoingeckoIds.name,
+    async () => {
+      it('deletes all currentPrices', async () => {
+        await repository.addOrUpdateMany([
+          mock('A', 1),
+          mock('B', 2),
+          mock('C', 3),
+        ])
 
-      const currentPrices = await repository.findByIds(['A', 'B'])
-      expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])
-    })
-  })
+        const currentPrices = await repository.getByCoingeckoIds(['A', 'B'])
+        expect(currentPrices).toEqualUnsorted([saved('A', 1), saved('B', 2)])
+      })
+    },
+  )
 })
 
-function mock(coingeckoId: string, priceUsd: number): UpsertableCurrentPrice {
+function mock(
+  coingeckoId: string,
+  priceUsd: number,
+): Omit<CurrentPriceRecord, 'updatedAt'> {
   return { coingeckoId, priceUsd }
 }
 

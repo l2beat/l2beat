@@ -52,7 +52,7 @@ export class DaBeatPricesRefresher {
         }),
       )
 
-    await this.database.currentPrice.upsertMany(
+    await this.database.currentPrice.addOrUpdateMany(
       result.map(({ id, current_price }) => ({
         coingeckoId: id,
         priceUsd: current_price,
