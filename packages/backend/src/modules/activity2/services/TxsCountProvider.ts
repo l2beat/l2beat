@@ -6,6 +6,7 @@ import { ActivityConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import { ActivityTransactionConfig } from '../../activity/ActivityTransactionConfig'
 
@@ -32,6 +33,9 @@ export class TxsCountProvider {
       }
       case 'zksync': {
         return await this.getZksyncTxsCount(from, to)
+      }
+      case 'starknet': {
+        return await this.getStarknetTxsCount(from, to)
       }
       default:
         throw new Error(`${this.$.projectConfig.type} type not implemented`)
@@ -126,6 +130,34 @@ export class TxsCountProvider {
 
     const blocks = await Promise.all(queries)
     return this.sumCountsPerDay(blocks.flat())
+  }
+
+  async getStarknetTxsCount(
+    from: number,
+    to: number,
+  ): Promise<ActivityRecord[]> {
+    assert(
+      this.$.projectConfig.type === 'starknet',
+      'Method not supported for projects other than Starknet',
+    )
+    const projectConfig = this.$.projectConfig
+
+    const starknetClient = this.$.peripherals.getClient(StarknetClient, {
+      url: projectConfig.url,
+      callsPerMinute: projectConfig.callsPerMinute,
+    })
+
+    const queries = range(from, to + 1).map(async (blockNumber) => {
+      const block = await starknetClient.getBlock(blockNumber)
+
+      return {
+        count: block.transactions.length,
+        timestamp: new UnixTime(block.timestamp),
+      }
+    })
+
+    const blocks = await Promise.all(queries)
+    return this.sumCountsPerDay(blocks)
   }
 
   sumCountsPerDay(
