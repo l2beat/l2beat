@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xa42788482c8e1ace73e574337062d675b58d5479
+
+# Diff at Thu, 25 Jul 2024 10:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@42efd1ab55ccb369bfc0edad188854abb104aaef block: 20367973
+- current block number: 20383066
+
+## Description
+
+Kinto sends blobs, tracked txs added.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x9590eb8caf62006f1a01c0e27a62734ce8c11f6c
 
 # Diff at Tue, 23 Jul 2024 08:16:34 GMT:
