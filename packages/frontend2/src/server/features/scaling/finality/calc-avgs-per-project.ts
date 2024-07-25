@@ -1,9 +1,9 @@
-import { type FinalityDataPoint, UnixTime } from '@l2beat/shared-pure'
-
+import { UnixTime } from '@l2beat/shared-pure'
 import { calculateIntervals } from './calculate-intervals'
 import { calculateStats } from './calculate-stats'
 import { filterIntervalsByRange } from './filter-intervals-by-range'
 import { type LivenessRecordWithConfig } from './get-liveness-by-type-since'
+import { type FinalityDataPoint } from './schema'
 
 export function calcAvgsPerProject(
   records: LivenessRecordWithConfig[],

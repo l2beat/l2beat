@@ -1,5 +1,4 @@
 import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
-import React from 'react'
 
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
 import { LoopringIcon } from '~/icons/providers/loopring-icon'

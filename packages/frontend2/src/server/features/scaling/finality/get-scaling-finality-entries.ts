@@ -1,13 +1,8 @@
 import { type Layer2 } from '@l2beat/config'
-import {
-  type FinalityApiResponse,
-  type FinalityProjectData,
-  type ProjectId,
-  UnixTime,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../../tvl/order-by-tvl'
+import { type FinalityData, type FinalityProjectData } from './schema'
 import {
   type ScalingFinalityEntry,
   type ScalingFinalityEntryData,
@@ -16,7 +11,7 @@ import {
 export async function getScalingFinalityEntries(
   projects: Layer2[],
   tvl: Record<ProjectId, number>,
-  finality: FinalityApiResponse,
+  finality: FinalityData,
   implementationChangeReport: ImplementationChangeReport,
 ) {
   const includedProjects = getIncludedProjects(projects, finality)
@@ -29,7 +24,7 @@ export async function getScalingFinalityEntries(
 
       return getScalingFinalityEntry(
         project,
-        finality.projects[project.id.toString()],
+        finality[project.id.toString()],
         hasImplementationChanged,
       )
     })
@@ -71,15 +66,12 @@ function isSynced(syncedUntil: UnixTime) {
   return UnixTime.now().add(-1, 'days').add(-1, 'hours').lte(syncedUntil)
 }
 
-function getIncludedProjects(
-  projects: Layer2[],
-  finalityApiResponse: FinalityApiResponse,
-) {
+function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
   return projects.filter(
     (p) =>
       !p.isUpcoming &&
       !p.isArchived &&
-      (p.config.finality ?? finalityApiResponse.projects[p.id.toString()]) &&
+      (p.config.finality ?? finality[p.id.toString()]) &&
       (p.display.category === 'ZK Rollup' ||
         p.display.category === 'Optimistic Rollup'),
   )

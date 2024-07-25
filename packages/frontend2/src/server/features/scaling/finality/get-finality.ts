@@ -1,7 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { type Layer2FinalityConfig } from '@l2beat/config'
 import {
-  FinalityApiResponse,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,
@@ -15,6 +14,7 @@ import { db } from '~/server/database'
 import { calcAvgsPerProject } from './calc-avgs-per-project'
 import { divideAndAddLag } from './divide-and-add-lag'
 import { getLivenessByTypeSince } from './get-liveness-by-type-since'
+import { FinalityData } from './schema'
 
 export type FinalityProjectConfig = {
   projectId: ProjectId
@@ -23,12 +23,12 @@ export type FinalityProjectConfig = {
 export async function getFinality(projects: FinalityProjectConfig[]) {
   noStore()
   const cached = await getCachedFinality(projects)
-  return FinalityApiResponse.parse(cached)
+  return FinalityData.parse(cached)
 }
 
 const getCachedFinality = cache(
-  async (projects: FinalityProjectConfig[]): Promise<FinalityApiResponse> => {
-    const result: FinalityApiResponse['projects'] = {}
+  async (projects: FinalityProjectConfig[]): Promise<FinalityData> => {
+    const result: FinalityData = {}
 
     const [OPStackProjects, otherProjects] = partition(
       projects,
@@ -40,9 +40,7 @@ const getCachedFinality = cache(
     const projectsFinality = await getProjectsFinality(otherProjects)
     Object.assign(result, projectsFinality)
 
-    return {
-      projects: result,
-    }
+    return result
   },
   ['finality'],
   { revalidate: 60 * 60 },
@@ -50,11 +48,11 @@ const getCachedFinality = cache(
 
 async function getProjectsFinality(
   projects: FinalityProjectConfig[],
-): Promise<FinalityApiResponse['projects']> {
+): Promise<FinalityData> {
   const projectIds = projects.map((p) => p.projectId)
   const records = await db.finality.getLatestGroupedByProjectId(projectIds)
 
-  const result: FinalityApiResponse['projects'] = mapValues(
+  const result: FinalityData = mapValues(
     keyBy(records, 'projectId'),
     (record) => {
       const {
@@ -119,8 +117,8 @@ async function getProjectsFinality(
 
 async function getOPStackFinality(
   projects: FinalityProjectConfig[],
-): Promise<FinalityApiResponse['projects']> {
-  const result: FinalityApiResponse['projects'] = {}
+): Promise<FinalityData> {
+  const result: FinalityData = {}
 
   const configurations = await getLatestConfigurations()
 

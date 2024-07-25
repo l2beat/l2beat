@@ -5,11 +5,9 @@ import {
   type ScalingProjectPurpose,
   type StageConfig,
 } from '@l2beat/config'
-import {
-  type FinalityDataPoint,
-  type WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { type SyncStatus } from '~/types/SyncStatus'
+import { type FinalityDataPoint } from './schema'
 
 export interface ScalingFinalityEntry {
   slug: string

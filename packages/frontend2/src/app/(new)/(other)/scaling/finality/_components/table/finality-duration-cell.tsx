@@ -1,7 +1,4 @@
-import {
-  type FinalityDataPoint,
-  type WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
+import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import {
@@ -11,6 +8,7 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
 import { type SyncStatus } from '~/types/SyncStatus'
 import { formatTimestamp } from '~/utils/dates'
 import { DurationCell } from './duration-cell'
