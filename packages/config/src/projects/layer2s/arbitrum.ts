@@ -356,7 +356,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
       l2Discovery.getContractDetails('SecurityCouncilManager', {
         description:
-          'This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to ethereum and Arbitrum Nova to keep the configuration in sync.',
+          'This contract enforces the rules for changing members and cohorts of the SecurityCouncil and creates crosschain messages to Ethereum and Arbitrum Nova to keep the configuration in sync.',
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('ConstitutionHash', {
