@@ -279,14 +279,14 @@ describe(TxsCountProvider.name, () => {
           start,
           5,
           start.toNumber(),
-          start.add(-1, 'seconds').toNumber(),
+          start.add(1, 'days').add(-1, 'seconds').toNumber(),
         ),
         activityRecord(
           'a',
           end,
           9,
           end.toNumber(),
-          end.toEndOf('day').add(-1, 'seconds').toNumber(),
+          end.add(1, 'days').add(-1, 'seconds').toNumber(),
         ),
       ])
 

@@ -116,7 +116,7 @@ export class TxsCountProvider {
       timestamp: c.timestamp,
       count: c.count,
       start: c.timestamp.toStartOf('day').toNumber(),
-      end: c.timestamp.toEndOf('day').add(-1, 'seconds').toNumber(),
+      end: c.timestamp.add(1, 'days').add(-1, 'seconds').toNumber(),
     }))
   }
 
