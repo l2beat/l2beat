@@ -1,15 +1,14 @@
 'use client'
 
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { QueryClientProvider, type QueryClient } from '@tanstack/react-query'
 import { loggerLink, unstable_httpBatchStreamLink } from '@trpc/client'
 import { createTRPCReact } from '@trpc/react-query'
 import { type inferRouterInputs, type inferRouterOutputs } from '@trpc/server'
 import { useState } from 'react'
-import superjson from 'superjson'
+import SuperJSON from 'superjson'
 
 import { type AppRouter } from '~/server/api/root'
-
-const createQueryClient = () => new QueryClient()
+import { createQueryClient } from './query-client'
 
 let clientQueryClientSingleton: QueryClient | undefined = undefined
 const getQueryClient = () => {
@@ -49,12 +48,12 @@ export function TRPCReactProvider(props: { children: React.ReactNode }) {
             (op.direction === 'down' && op.result instanceof Error),
         }),
         unstable_httpBatchStreamLink({
-          transformer: superjson,
+          transformer: SuperJSON,
           url: getBaseUrl() + '/api/trpc',
           headers: () => {
-            return {
-              'x-trpc-source': 'nextjs-react',
-            }
+            const headers = new Headers()
+            headers.set('x-trpc-source', 'nextjs-react')
+            return headers
           },
         }),
       ],
