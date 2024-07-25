@@ -25,7 +25,7 @@ describe(diffConfigurations.name, () => {
   describe('regular sync', () => {
     it('empty actual and stored', () => {
       const result = diffConfigurations([], [])
-      expect(result).toEqual({ toRemove: [], toSave: [], safeHeight: Infinity })
+      expect(result).toEqual({ toTrim: [], toSave: [], safeHeight: Infinity })
     })
 
     it('empty stored', () => {
@@ -34,7 +34,7 @@ describe(diffConfigurations.name, () => {
         [],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, null, null), saved('b', 200, 300, null)],
         safeHeight: 99,
       })
@@ -46,7 +46,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
         safeHeight: 300,
       })
@@ -58,7 +58,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 400, 300), saved('b', 555, null, null)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, 400, 300), saved('b', 555, null, null)],
         safeHeight: 300,
       })
@@ -70,7 +70,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 555, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, 555, 400), saved('b', 200, 300, 300)],
         safeHeight: 400,
       })
@@ -82,7 +82,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, null, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, null, 400), saved('b', 200, 300, 300)],
         safeHeight: 400,
       })
@@ -94,7 +94,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 400, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, 400, 400), saved('b', 200, 300, 300)],
         safeHeight: Infinity,
       })
@@ -108,7 +108,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
       )
       expect(result).toEqual({
-        toRemove: [removal('a', 100, 300), removal('b', 200, 300)],
+        toTrim: [removal('a', 100, 300), removal('b', 200, 300)],
         toSave: [],
         safeHeight: Infinity,
       })
@@ -120,7 +120,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, null, 300), saved('b', 200, 400, 300)],
       )
       expect(result).toEqual({
-        toRemove: [removal('a', 100, 300)],
+        toTrim: [removal('a', 100, 300)],
         toSave: [saved('b', 200, 400, 300)],
         safeHeight: 300,
       })
@@ -132,7 +132,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, 400, 300)],
         safeHeight: 300,
       })
@@ -144,7 +144,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        toRemove: [removal('a', 201, 300)],
+        toTrim: [removal('a', 201, 300)],
         toSave: [saved('a', 100, 200, 200)],
         safeHeight: Infinity,
       })
@@ -156,7 +156,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        toRemove: [],
+        toTrim: [],
         toSave: [saved('a', 100, null, 300)],
         safeHeight: 300,
       })
@@ -168,7 +168,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 400, 300)],
       )
       expect(result).toEqual({
-        toRemove: [removal('a', 100, 199)],
+        toTrim: [removal('a', 100, 199)],
         toSave: [saved('a', 200, 400, 300)],
         safeHeight: 300,
       })
@@ -180,7 +180,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 200, 400, 300)],
       )
       expect(result).toEqual({
-        toRemove: [removal('a', 200, 300)],
+        toTrim: [removal('a', 200, 300)],
         toSave: [saved('a', 100, 400, null)],
         safeHeight: 99,
       })
@@ -192,7 +192,7 @@ describe(diffConfigurations.name, () => {
         [saved('a', 100, 400, 400)],
       )
       expect(result).toEqual({
-        toRemove: [removal('a', 100, 199), removal('a', 301, 400)],
+        toTrim: [removal('a', 100, 199), removal('a', 301, 400)],
         toSave: [saved('a', 200, 300, 300)],
         safeHeight: Infinity,
       })

@@ -7,7 +7,7 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { SavedConfiguration } from './multi/types'
+import { Configuration, SavedConfiguration } from './multi/types'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
@@ -46,6 +46,21 @@ export class IndexerService {
 
   // #endregion
   // #region ManagedMultiIndexer
+
+  async insertConfigurations<T>(
+    indexerId: string,
+    configurations: Configuration<T>[],
+    encode: (value: T) => string,
+  ): Promise<void> {
+    // TODO
+    // const encoded = configurations.map((config) => ({
+    //   ...config,
+    //   properties: encode(config.properties),
+    // }))
+    // await this.db.indexerConfiguration.addOrUpdateMany(
+    //   encoded.map((e) => ({ ...e, indexerId })),
+    // )
+  }
 
   async upsertConfigurations<T>(
     indexerId: string,
@@ -90,20 +105,14 @@ export class IndexerService {
     )
   }
 
-  async persistOnlyUsedConfigurations(
+  async deleteConfigurations(
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    const savedConfigurations =
-      await this.db.indexerConfiguration.getIdsByIndexer(indexerId)
-
-    const runtimeConfigurations = new Set(configurationIds)
-
-    const unused = savedConfigurations.filter(
-      (c) => !runtimeConfigurations.has(c),
+    await this.db.indexerConfiguration.deleteConfigurations(
+      indexerId,
+      configurationIds,
     )
-
-    await this.db.indexerConfiguration.deleteConfigurations(indexerId, unused)
   }
 
   // #endregion

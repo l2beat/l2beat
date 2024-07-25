@@ -225,7 +225,7 @@ describe(IndexerService.name, () => {
     },
   )
 
-  it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
+  it(IndexerService.prototype.deleteConfigurations.name, async () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
@@ -240,7 +240,7 @@ describe(IndexerService.name, () => {
       }),
     )
 
-    await indexerService.persistOnlyUsedConfigurations('indexer', ['a', 'b'])
+    await indexerService.deleteConfigurations('indexer', ['a', 'b'])
 
     expect(
       indexerConfigurationsRepository.deleteConfigurations,

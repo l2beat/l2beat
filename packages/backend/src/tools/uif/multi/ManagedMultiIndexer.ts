@@ -4,7 +4,11 @@ import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
-import { Configuration, SavedConfiguration } from './types'
+import {
+  Configuration,
+  RemovalConfiguration,
+  SavedConfiguration,
+} from './types'
 
 export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   parents: Indexer[]
@@ -63,7 +67,7 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
-  override async multiInitialize(): Promise<
+  override async getPreviousConfigurationsState(): Promise<
     Omit<SavedConfiguration<T>, 'properties'>[]
   > {
     return await this.options.indexerService.getSavedConfigurations(
@@ -71,18 +75,38 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     )
   }
 
-  override async setSavedConfigurations(
-    configurations: SavedConfiguration<T>[],
-  ): Promise<void> {
-    await this.options.indexerService.upsertConfigurations(
-      this.indexerId,
-      configurations,
-      this.options.serializeConfiguration,
-    )
-    await this.options.indexerService.persistOnlyUsedConfigurations(
-      this.indexerId,
-      configurations.map((c) => c.id),
-    )
+  override async updateConfigurationsState(state: {
+    toAdd: Configuration<T>[]
+    toUpdate: SavedConfiguration<T>[]
+    toDelete: string[]
+    toTrim: RemovalConfiguration[]
+  }): Promise<void> {
+    if (state.toAdd.length > 0) {
+      await this.options.indexerService.insertConfigurations(
+        this.indexerId,
+        state.toAdd,
+        this.options.serializeConfiguration,
+      )
+    }
+
+    if (state.toUpdate.length > 0) {
+      await this.options.indexerService.upsertConfigurations(
+        this.indexerId,
+        state.toUpdate,
+        this.options.serializeConfiguration,
+      )
+    }
+
+    if (state.toDelete.length > 0) {
+      await this.options.indexerService.deleteConfigurations(
+        this.indexerId,
+        state.toDelete,
+      )
+    }
+
+    if (state.toTrim.length > 0) {
+      await this.removeData(state.toTrim)
+    }
   }
 
   override async updateConfigurationsCurrentHeight(

@@ -12,6 +12,7 @@ import {
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
+  // TODO: rename
   private saved = new Map<string, SavedConfiguration<T>>()
 
   constructor(
@@ -36,7 +37,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * @returns The configurations that were saved previously. Properties are omitted
    * because they are not needed for the initialization.
    */
-  abstract multiInitialize(): Promise<
+  abstract getPreviousConfigurationsState(): Promise<
     Omit<SavedConfiguration<T>, 'properties'>[]
   >
 
@@ -91,9 +92,12 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
    * indexer should save the returned configurations and ensure that no other
    * configurations are persisted.
    */
-  abstract setSavedConfigurations(
-    configurations: SavedConfiguration<T>[],
-  ): Promise<void>
+  abstract updateConfigurationsState(state: {
+    toAdd: Configuration<T>[]
+    toUpdate: SavedConfiguration<T>[]
+    toDelete: string[]
+    toTrim: RemovalConfiguration[]
+  }): Promise<void>
 
   abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
@@ -111,26 +115,20 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract getSafeHeight(): Promise<number | undefined>
 
   async initialize() {
-    const previouslySaved = await this.multiInitialize()
+    const previouslySaved = await this.getPreviousConfigurationsState()
 
     this.ranges = toRanges(
       toConfigurationsWithPreviousState(this.configurations, previouslySaved),
     )
 
-    const { toRemove, toSave, safeHeight } = diffConfigurations(
-      this.configurations,
-      previouslySaved,
-    )
-    const oldSafeHeight = (await this.getSafeHeight()) ?? safeHeight
+    const diff = diffConfigurations(this.configurations, previouslySaved)
+    const oldSafeHeight = (await this.getSafeHeight()) ?? diff.safeHeight
 
-    this.saved = new Map(toSave.map((c) => [c.id, c]))
-    // TODO: should we remove data in a transaction?
-    if (toRemove.length > 0) {
-      await this.removeData(toRemove)
-    }
-    await this.setSavedConfigurations(toSave)
+    this.saved = new Map(diff.toSave.map((c) => [c.id, c]))
 
-    return { safeHeight: Math.min(safeHeight, oldSafeHeight) }
+    await this.updateConfigurationsState(diff)
+
+    return { safeHeight: Math.min(diff.safeHeight, oldSafeHeight) }
   }
 
   async update(from: number, to: number): Promise<number> {

@@ -83,43 +83,44 @@ describe(ManagedMultiIndexer.name, () => {
     expect(indexerService.setSafeHeight).toHaveBeenOnlyCalledWith('indexer', 1)
   })
 
-  it(ManagedMultiIndexer.prototype.multiInitialize.name, async () => {
-    const configurations = [saved('a', 100, null, null)]
-    const indexerService = mockObject<IndexerService>({
-      getSavedConfigurations: mockFn().resolvesTo(configurations),
-    })
+  it(
+    ManagedMultiIndexer.prototype.getPreviousConfigurationsState.name,
+    async () => {
+      const configurations = [saved('a', 100, null, null)]
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: mockFn().resolvesTo(configurations),
+      })
 
-    const indexer = await initializeMockIndexer(indexerService, [], [])
+      const indexer = await initializeMockIndexer(indexerService, [], [])
 
-    const result = await indexer.multiInitialize()
+      const result = await indexer.getPreviousConfigurationsState()
 
-    expect(result).toEqual(configurations)
-    expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
-      'indexer',
-    )
-  })
+      expect(result).toEqual(configurations)
+      expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
+        'indexer',
+      )
+    },
+  )
 
-  it(ManagedMultiIndexer.prototype.setSavedConfigurations.name, async () => {
+  it(ManagedMultiIndexer.prototype.updateConfigurationsState.name, async () => {
     const configurations = [saved('a', 100, null, null)]
 
     const indexerService = mockObject<IndexerService>({
       upsertConfigurations: async () => {},
       updateConfigurationsCurrentHeight: async () => {},
-      persistOnlyUsedConfigurations: async () => {},
+      deleteConfigurations: async () => {},
     })
 
     const indexer = await initializeMockIndexer(indexerService, [], [])
 
-    await indexer.setSavedConfigurations(configurations)
+    await indexer.updateConfigurationsState(configurations)
 
     expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
       'indexer',
       configurations,
       expect.anything(),
     )
-    expect(
-      indexerService.persistOnlyUsedConfigurations,
-    ).toHaveBeenOnlyCalledWith(
+    expect(indexerService.deleteConfigurations).toHaveBeenOnlyCalledWith(
       'indexer',
       configurations.map((c) => c.id),
     )
@@ -131,7 +132,7 @@ describe(ManagedMultiIndexer.name, () => {
       const indexerService = mockObject<IndexerService>({
         upsertConfigurations: async () => {},
         updateConfigurationsCurrentHeight: async () => {},
-        persistOnlyUsedConfigurations: async () => {},
+        deleteConfigurations: async () => {},
       })
 
       const indexer = await initializeMockIndexer(indexerService, [], [])

@@ -8,7 +8,10 @@ export function diffConfigurations<T>(
   actual: Configuration<T>[],
   saved: Omit<SavedConfiguration<T>, 'properties'>[],
 ): {
-  toRemove: RemovalConfiguration[]
+  toTrim: RemovalConfiguration[]
+  toDelete: string[]
+  toAdd: Configuration<T>[]
+  toUpdate: SavedConfiguration<T>[]
   toSave: SavedConfiguration<T>[]
   safeHeight: number
 } {
@@ -89,5 +92,5 @@ export function diffConfigurations<T>(
     toSave.push({ ...c, currentHeight })
   }
 
-  return { toRemove, toSave, safeHeight }
+  return { toTrim, toSave, safeHeight }
 }

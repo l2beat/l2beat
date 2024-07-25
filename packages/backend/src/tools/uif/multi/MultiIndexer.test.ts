@@ -26,7 +26,7 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.removeData).toHaveBeenOnlyCalledWith([
         removal('c', 100, 300),
       ])
-      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
+      expect(testIndexer.updateConfigurationsState).toHaveBeenOnlyCalledWith([
         saved('a', 100, 400, 300),
         saved('b', 200, 500, 300),
       ])
@@ -42,7 +42,7 @@ describe(MultiIndexer.name, () => {
       expect(newHeight).toEqual({ safeHeight: Infinity })
 
       expect(testIndexer.removeData).not.toHaveBeenCalled()
-      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
+      expect(testIndexer.updateConfigurationsState).toHaveBeenCalledWith([
         saved('a', 100, 400, 400),
         saved('b', 200, 500, 500),
       ])
@@ -58,7 +58,7 @@ describe(MultiIndexer.name, () => {
       expect(newHeight).toEqual({ safeHeight: 99 })
 
       expect(testIndexer.removeData).not.toHaveBeenCalled()
-      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
+      expect(testIndexer.updateConfigurationsState).toHaveBeenCalledWith([
         saved('a', 100, 400, null),
         saved('b', 200, null, null),
       ])
@@ -80,7 +80,7 @@ describe(MultiIndexer.name, () => {
       expect(testIndexer.removeData).toHaveBeenCalledWith([
         removal('b', 100, 199),
       ])
-      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledWith([
+      expect(testIndexer.updateConfigurationsState).toHaveBeenCalledWith([
         saved('a', 100, 500, 300),
         saved('b', 200, 400, 300),
         saved('c', 300, null, 300),
@@ -90,7 +90,7 @@ describe(MultiIndexer.name, () => {
     it('calls getters in order', async () => {
       const calls: string[] = []
       const testIndexer = new TestMultiIndexer([], [])
-      testIndexer.multiInitialize = mockFn(async () => {
+      testIndexer.getPreviousConfigurationsState = mockFn(async () => {
         calls.push('multiInitialize')
         return []
       })
@@ -329,7 +329,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(200, 500)
       expect(newHeight).toEqual(200)
-      expect(testIndexer.setSavedConfigurations).toHaveBeenCalledTimes(1)
+      expect(testIndexer.updateConfigurationsState).toHaveBeenCalledTimes(1)
     })
 
     it('returns the targetHeight', async () => {
@@ -353,7 +353,7 @@ describe(MultiIndexer.name, () => {
 
       const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(250)
-      expect(testIndexer.setSavedConfigurations).toHaveBeenOnlyCalledWith([
+      expect(testIndexer.updateConfigurationsState).toHaveBeenOnlyCalledWith([
         saved('a', 100, 300, 250),
         saved('b', 100, 400, 250),
       ])
@@ -406,7 +406,9 @@ class TestMultiIndexer extends MultiIndexer<null> {
   setInitialState =
     mockFn<MultiIndexer<null>['setInitialState']>().resolvesTo(undefined)
 
-  override multiInitialize(): Promise<SavedConfiguration<null>[]> {
+  override getPreviousConfigurationsState(): Promise<
+    SavedConfiguration<null>[]
+  > {
     return Promise.resolve(this._saved)
   }
 
@@ -416,8 +418,10 @@ class TestMultiIndexer extends MultiIndexer<null> {
 
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 
-  setSavedConfigurations =
-    mockFn<MultiIndexer<null>['setSavedConfigurations']>().resolvesTo(undefined)
+  updateConfigurationsState =
+    mockFn<MultiIndexer<null>['updateConfigurationsState']>().resolvesTo(
+      undefined,
+    )
 
   updateConfigurationsCurrentHeight =
     mockFn<
