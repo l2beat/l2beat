@@ -3,6 +3,7 @@ import { type Layer2FinalityConfig } from '@l2beat/config'
 import {
   FinalityApiResponse,
   type ProjectId,
+  type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
@@ -121,19 +122,7 @@ async function getOPStackFinality(
 ): Promise<FinalityApiResponse['projects']> {
   const result: FinalityApiResponse['projects'] = {}
 
-  // TODO: Fix it using types from finality
-  function toConfig(raw: string) {
-    return JSON.parse(raw) as {
-      projectId: ProjectId
-      subtype: 'batchSubmissions' | 'stateUpdates' | 'proofSubmissions'
-    }
-  }
-  const configurations = (
-    await db.indexerConfiguration.getSavedConfigurations('tracked_txs_indexer')
-  ).map((c) => ({
-    ...c,
-    properties: toConfig(c.properties),
-  }))
+  const configurations = await getLatestConfigurations()
 
   await Promise.all(
     projects.map(async (project) => {
@@ -149,7 +138,9 @@ async function getOPStackFinality(
           currentHeight: c.currentHeight,
         }))
 
-      if (!configsToUse) return
+      if (!configsToUse) {
+        return
+      }
 
       const syncedUntil = new UnixTime(
         Math.max(
@@ -159,7 +150,9 @@ async function getOPStackFinality(
         ),
       )
 
-      if (!syncedUntil) return
+      if (!syncedUntil) {
+        return
+      }
 
       const records = await getLivenessByTypeSince(
         configsToUse,
@@ -180,4 +173,21 @@ async function getOPStackFinality(
     }),
   )
   return result
+}
+
+async function getLatestConfigurations() {
+  function coerce(raw: string) {
+    return JSON.parse(raw) as {
+      projectId: ProjectId
+      subtype: TrackedTxsConfigSubtype
+    }
+  }
+
+  const configurations = (
+    await db.indexerConfiguration.getSavedConfigurations('tracked_txs_indexer')
+  ).map((c) => ({
+    ...c,
+    properties: coerce(c.properties),
+  }))
+  return configurations
 }
