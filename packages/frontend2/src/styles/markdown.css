@@ -116,3 +116,15 @@
 .mdc img {
   @apply dark:invert inline max-w-full align-[unset];
 }
+
+.mdc.zk-description h1 {
+  @apply text-xl font-bold;
+}
+
+.mdc.zk-description h2 {
+  @apply text-xl font-bold;
+}
+
+.mdc.zk-description h3 {
+  @apply text-xl font-bold;
+}

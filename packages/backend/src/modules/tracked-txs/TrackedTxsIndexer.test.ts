@@ -4,7 +4,7 @@ import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { ProjectId } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { MOCK_TRX, mockDatabase } from '../../test/database'
+import { mockDatabase } from '../../test/database'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
 import { actual, removal } from '../../tools/uif/multi/test/mockConfigurations'
@@ -56,12 +56,8 @@ describe(TrackedTxsIndexer.name, () => {
         actual<TrackedTxConfigEntry>('c', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        MOCK_TRX,
-      )
+      const saveData = await indexer.multiUpdate(from, to, configurations)
+      const safeHeight = await saveData()
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
         1,
@@ -72,12 +68,10 @@ describe(TrackedTxsIndexer.name, () => {
       expect(livenessUpdater.update).toHaveBeenNthCalledWith(
         1,
         trackedTxResults.filter((tx) => tx.type === 'liveness'),
-        MOCK_TRX,
       )
       expect(l2costsUpdater.update).toHaveBeenNthCalledWith(
         1,
         trackedTxResults.filter((tx) => tx.type === 'l2costs'),
-        MOCK_TRX,
       )
       expect(safeHeight).toEqual(to)
     })
@@ -103,12 +97,12 @@ describe(TrackedTxsIndexer.name, () => {
         actual<TrackedTxConfigEntry>('a', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(
+      const saveData = await indexer.multiUpdate(
         from.toNumber(),
         to.toNumber(),
         configurations,
-        MOCK_TRX,
       )
+      const safeHeight = await saveData()
 
       expect(trackedTxsClient.getData).toHaveBeenNthCalledWith(
         1,

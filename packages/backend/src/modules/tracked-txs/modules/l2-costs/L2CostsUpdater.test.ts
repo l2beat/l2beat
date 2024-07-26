@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { Database, L2CostRecord, Transaction } from '@l2beat/database'
+import { Database, L2CostRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
@@ -17,7 +17,7 @@ describe(L2CostsUpdater.name, () => {
         Logger.SILENT,
       )
 
-      await updater.update([], TRX)
+      await updater.update([])
 
       expect(repository.addMany).not.toHaveBeenCalled()
     })
@@ -38,9 +38,9 @@ describe(L2CostsUpdater.name, () => {
 
       updater.transform = mockFn().resolvesTo(mockRecord)
 
-      await updater.update(transactions, TRX)
+      await updater.update(transactions)
 
-      expect(repository.addMany).toHaveBeenNthCalledWith(1, mockRecord, TRX)
+      expect(repository.addMany).toHaveBeenNthCalledWith(1, mockRecord)
     })
   })
 
@@ -96,19 +96,16 @@ describe(L2CostsUpdater.name, () => {
       )
 
       const id = createTrackedTxId.random()
-      await updater.deleteFromById(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFromById(id, MIN_TIMESTAMP)
 
       expect(repository.deleteFromById).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
-        TRX,
       )
     })
   })
 })
-
-const TRX = mockObject<Transaction>({})
 
 function getMockL2CostsRepository() {
   return mockObject<Database['l2Cost']>({

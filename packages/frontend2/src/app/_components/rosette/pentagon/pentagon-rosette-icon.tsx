@@ -52,7 +52,7 @@ export function PentagonRosetteIcon({
       // Easiest way to move the center of the pentagon to the center of the div
       // It's basically percentage diff between r and R
       // See: https://uploads-cdn.omnicalculator.com/images//geometry/area/pentagon-calc-fixed.svg
-      className={cn(className, 'translate-y-[5.28%]')}
+      className={cn(className, 'translate-y-[-5.28%]')}
     >
       {background ? (
         <path

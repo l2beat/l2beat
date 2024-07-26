@@ -8,11 +8,11 @@ export function shouldSkip(
   counter: number,
 ): string | undefined {
   if (config.overrides.get(address).ignoreDiscovery) {
-    return 'Address ignored'
+    return `Address ${address} ignored via "ignoreDiscovery"`
   }
 
   if (config.isInSharedModules(address)) {
-    return 'Part of a shared module'
+    return `Ignoring ${address} - it's part of a shared module`
   }
 
   if (depth > config.maxDepth) {

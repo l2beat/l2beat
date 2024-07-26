@@ -1,4 +1,3 @@
-import { Transaction } from '@l2beat/database'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
@@ -34,7 +33,6 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
-    trx: Transaction,
   ) {
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
@@ -56,16 +54,17 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    this.logger.info('Saving prices into DB', {
-      from,
-      to: adjustedTo.toNumber(),
-      configurationsToSync: configurations.length,
-      prices: optimizedPrices.length,
-    })
+    return async () => {
+      await this.$.db.price.addMany(optimizedPrices)
+      this.logger.info('Saved prices into DB', {
+        from,
+        to: adjustedTo.toNumber(),
+        configurationsToSync: configurations.length,
+        prices: optimizedPrices.length,
+      })
 
-    await this.$.db.price.addMany(optimizedPrices, trx)
-
-    return adjustedTo.toNumber()
+      return adjustedTo.toNumber()
+    }
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {

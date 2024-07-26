@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { expect, mockFn } from 'earl'
-import { MOCK_TRX, mockDatabase } from '../../../test/database'
+import { mockDatabase } from '../../../test/database'
 import { MultiIndexer } from './MultiIndexer'
 import {
   Configuration,
@@ -135,15 +135,12 @@ describe(MultiIndexer.name, () => {
       const newHeight = await testIndexer.update(100, 500)
 
       expect(newHeight).toEqual(200)
-      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(
-        100,
-        200,
-        [actual('a', 100, 200)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(100, 200, [
+        actual('a', 100, 200),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, MOCK_TRX)
+      ).toHaveBeenOnlyCalledWith(200)
     })
 
     it('calls multiUpdate with a late matching configuration', async () => {
@@ -156,15 +153,12 @@ describe(MultiIndexer.name, () => {
       const newHeight = await testIndexer.update(300, 500)
 
       expect(newHeight).toEqual(400)
-      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(
-        300,
-        400,
-        [actual('b', 300, 400)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(300, 400, [
+        actual('b', 300, 400),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(400, MOCK_TRX)
+      ).toHaveBeenOnlyCalledWith(400)
     })
 
     it('calls multiUpdate with two matching configurations', async () => {
@@ -177,15 +171,13 @@ describe(MultiIndexer.name, () => {
       const newHeight = await testIndexer.update(100, 500)
 
       expect(newHeight).toEqual(200)
-      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(
-        100,
-        200,
-        [actual('a', 100, 200), actual('b', 100, 400)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(100, 200, [
+        actual('a', 100, 200),
+        actual('b', 100, 400),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, MOCK_TRX)
+      ).toHaveBeenOnlyCalledWith(200)
     })
 
     it('calls multiUpdate with two middle matching configurations', async () => {
@@ -198,15 +190,13 @@ describe(MultiIndexer.name, () => {
       const newHeight = await testIndexer.update(301, 600)
 
       expect(newHeight).toEqual(400)
-      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(
-        301,
-        400,
-        [actual('a', 100, 400), actual('b', 200, 500)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(301, 400, [
+        actual('a', 100, 400),
+        actual('b', 200, 500),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(400, MOCK_TRX)
+      ).toHaveBeenOnlyCalledWith(400)
     })
 
     it('skips calling multiUpdate if we are too early', async () => {
@@ -265,16 +255,12 @@ describe(MultiIndexer.name, () => {
       await testIndexer.initialize()
 
       expect(await testIndexer.update(100, 500)).toEqual(200)
-      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
-        1,
-        100,
-        200,
-        [actual('b', 100, 400)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 200, [
+        actual('b', 100, 400),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(200, MOCK_TRX)
+      ).toHaveBeenOnlyCalledWith(200)
 
       // TODO: what was the idea behind this test?
       // The same range. In real life might be a result of a parent reorg
@@ -285,7 +271,7 @@ describe(MultiIndexer.name, () => {
       //   100,
       //   200,
       //   [actual('a', 100, 200), actual('b', 100, 400)],
-      //   MOCK_TRX,
+      //   ,
       // )
       // expect(
       //   testIndexer.updateConfigurationsCurrentHeight,
@@ -293,16 +279,12 @@ describe(MultiIndexer.name, () => {
 
       // Next range
       expect(await testIndexer.update(201, 500)).toEqual(400)
-      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
-        2,
-        201,
-        400,
-        [actual('b', 100, 400)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(2, 201, 400, [
+        actual('b', 100, 400),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(2, 400, MOCK_TRX)
+      ).toHaveBeenNthCalledWith(2, 400)
     })
 
     it('correctly updates currentHeight in saved configurations', async () => {
@@ -317,28 +299,21 @@ describe(MultiIndexer.name, () => {
       expect(await testIndexer.initialize()).toEqual({ safeHeight: 99 })
 
       expect(await testIndexer.update(100, 500)).toEqual(250)
-      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
-        1,
-        100,
-        250,
-        [actual('a', 100, 500)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 250, [
+        actual('a', 100, 500),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenOnlyCalledWith(250, MOCK_TRX)
+      ).toHaveBeenOnlyCalledWith(250)
 
       expect(await testIndexer.update(251, 500)).toEqual(500)
-      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
-        2,
-        251,
-        500,
-        [actual('a', 100, 500), actual('b', 100, 500)],
-        MOCK_TRX,
-      )
+      expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(2, 251, 500, [
+        actual('a', 100, 500),
+        actual('b', 100, 500),
+      ])
       expect(
         testIndexer.updateConfigurationsCurrentHeight,
-      ).toHaveBeenNthCalledWith(2, 500, MOCK_TRX)
+      ).toHaveBeenNthCalledWith(2, 500)
     })
   })
 
@@ -350,7 +325,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(200)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(200))
 
       const newHeight = await testIndexer.update(200, 500)
       expect(newHeight).toEqual(200)
@@ -361,7 +336,7 @@ describe(MultiIndexer.name, () => {
       const testIndexer = new TestMultiIndexer([], [])
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(200)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(200))
 
       const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(300)
@@ -374,7 +349,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(250)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(250))
 
       const newHeight = await testIndexer.update(201, 300)
       expect(newHeight).toEqual(250)
@@ -391,7 +366,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(150)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(150))
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -405,7 +380,7 @@ describe(MultiIndexer.name, () => {
       )
       await testIndexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(350)
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
 
       await expect(testIndexer.update(200, 300)).toBeRejectedWith(
         /returned height must be between from and to/,
@@ -435,8 +410,8 @@ class TestMultiIndexer extends MultiIndexer<null> {
     return Promise.resolve(this._saved)
   }
 
-  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>((_, targetHeight) =>
-    Promise.resolve(targetHeight),
+  multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
+    async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
 
   removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)

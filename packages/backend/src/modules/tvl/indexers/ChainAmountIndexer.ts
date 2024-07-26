@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
@@ -32,7 +32,6 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     from: number,
     to: number,
     configurations: Configuration<ChainAmountConfig>[],
-    trx: Transaction,
   ) {
     const timestamp = this.$.syncOptimizer.getTimestampToSync(from)
     if (timestamp.toNumber() > to) {
@@ -41,7 +40,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         to,
         optimizedTimestamp: timestamp.toNumber(),
       })
-      return to
+      return () => Promise.resolve(to)
     }
 
     const blockNumber = await this.getBlockNumber(timestamp)
@@ -60,15 +59,18 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     })
 
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
-    this.logger.info('Saving amounts for timestamp into DB', {
-      timestamp: timestamp.toNumber(),
-      escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
-      totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
-        .length,
-    })
-    await this.$.db.amount.addMany(nonZeroAmounts, trx)
 
-    return timestamp.toNumber()
+    return async () => {
+      await this.$.db.amount.addMany(nonZeroAmounts)
+      this.logger.info('Saved amounts for timestamp into DB', {
+        timestamp: timestamp.toNumber(),
+        escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
+        totalSupplies: nonZeroAmounts.filter((a) => a.type === 'totalSupply')
+          .length,
+      })
+
+      return timestamp.toNumber()
+    }
   }
 
   private async getBlockNumber(timestamp: UnixTime) {

@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { Database, IndexerStateRecord, Transaction } from '@l2beat/database'
+import { Database, IndexerStateRecord } from '@l2beat/database'
 import {
   AmountConfigEntry,
   CirculatingSupplyEntry,
@@ -83,12 +83,10 @@ export class IndexerService {
   async updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
-    trx: Transaction,
   ): Promise<void> {
     await this.db.indexerConfiguration.updateCurrentHeights(
       indexerId,
       currentHeight,
-      trx,
     )
   }
 
@@ -96,10 +94,16 @@ export class IndexerService {
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    await this.db.indexerConfiguration.deleteConfigurationsExcluding(
-      indexerId,
-      configurationIds,
+    const savedConfigurations =
+      await this.db.indexerConfiguration.getIdsByIndexer(indexerId)
+
+    const runtimeConfigurations = new Set(configurationIds)
+
+    const unused = savedConfigurations.filter(
+      (c) => !runtimeConfigurations.has(c),
     )
+
+    await this.db.indexerConfiguration.deleteConfigurations(indexerId, unused)
   }
 
   // #endregion
