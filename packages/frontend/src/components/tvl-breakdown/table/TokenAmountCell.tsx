@@ -44,9 +44,7 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
       <TooltipTrigger className="font-medium text-xs">
         {formatNumberWithCommas(Number(props.amount))}
       </TooltipTrigger>
-      <TooltipContent>
-        {token?.source === 'external' ? 'Circulating supply' : formula}
-      </TooltipContent>
+      <TooltipContent>{formula}</TooltipContent>
     </Tooltip>
   )
 }
