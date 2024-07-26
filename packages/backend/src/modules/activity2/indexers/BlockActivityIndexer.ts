@@ -16,14 +16,18 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
     const currentMap = await this.getDatabaseEntries(counts)
 
-    const dataToSave = counts.map(({ timestamp, count, projectId }) => {
-      const currentCount = currentMap.get(timestamp.toNumber())
-      return {
-        timestamp: timestamp,
-        count: currentCount ? currentCount + count : count,
-        projectId,
-      }
-    })
+    const dataToSave = counts.map(
+      ({ timestamp, count, projectId, start, end }) => {
+        const currentRecord = currentMap.get(timestamp.toNumber())
+        return {
+          projectId,
+          timestamp: timestamp,
+          count: currentRecord ? currentRecord.count + count : count,
+          start: currentRecord ? Math.min(currentRecord.start, start) : start,
+          end: currentRecord ? Math.max(currentRecord.end, end) : end,
+        }
+      },
+    )
     await this.$.db.activity.addOrUpdateMany(dataToSave)
 
     return adjustedTo
@@ -31,7 +35,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
 
   async getDatabaseEntries(
     activityRecords: ActivityRecord[],
-  ): Promise<Map<number, number>> {
+  ): Promise<Map<number, ActivityRecord>> {
     if (activityRecords.length === 0) return new Map()
 
     let min = activityRecords[0].timestamp.toNumber()
@@ -47,7 +51,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
       this.$.projectId,
       [new UnixTime(min), new UnixTime(max)],
     )
-    return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v.count]))
+    return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v]))
   }
 
   override invalidate(targetHeight: number): Promise<number> {
