@@ -722,20 +722,10 @@ export const zklinknova: Layer3 = {
         mantleDiscovery.getContract('MantleProxyAdmin'),
         'Owner of the L1ERC20Bridge on Mantle.',
       ),
-      {
-        name: 'MantleOwner',
-        accounts: [
-          mantleDiscovery.getPermissionedAccount('MantleProxyAdmin', 'owner'),
-        ],
-        description:
-          'Admin of the zkLink contract on Mantle and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
-      },
-      /* unverified contract
       ...mantleDiscovery.getMultisigPermission(
         'MantleOwner',
         'Admin of the zkLink contract on Mantle and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
       ),
-      */
     ],
     scroll: [
       scrollDiscovery.contractAsPermissioned(

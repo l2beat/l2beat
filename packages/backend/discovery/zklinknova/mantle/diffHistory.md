@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x325ac0ec463d6af052dd65f355a937cd472c7091
+
+# Diff at Fri, 26 Jul 2024 09:00:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 66795905
+- current block number: 66927056
+
+## Description
+
+One signer is added to the Owner MS, and the threshold is increased to 5.
+
+## Watched changes
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 7 (57%)"
++        "5 of 8 (63%)"
+      values.getOwners.7:
++        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+      values.getOwners.6:
+-        "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
++        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.getOwners.5:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
+      values.getOwners.4:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
+      values.getOwners.3:
+-        "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.getOwners.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.getOwners.1:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.getOwners.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+      values.getThreshold:
+-        4
++        5
+    }
+```
+
 Generated with discovered.json: 0xab25db57124d1d2d28a30d457b8e868e0416a172
 
 # Diff at Tue, 23 Jul 2024 08:08:52 GMT:
