@@ -1,5 +1,9 @@
 import { type z } from 'zod'
-import { type KnownCookieName, knownCookies } from '~/consts/cookies'
+import {
+  type KnownCookieName,
+  knownCookies,
+  type KnownCookieValue,
+} from '~/consts/cookies'
 
 /**
  * Parse a cookie value.
@@ -7,10 +11,10 @@ import { type KnownCookieName, knownCookies } from '~/consts/cookies'
  * @param value cookie value
  * @returns parsed value or default value if parsing fails
  */
-export function parseKnownCookie({
+export function parseKnownCookie<T extends KnownCookieName>({
   name,
   value,
-}: { name: KnownCookieName; value: string }) {
+}: { name: T; value: string }): KnownCookieValue<T> {
   const meta = knownCookies[name]
   try {
     const parsedValue: unknown = JSON.parse(value)
@@ -32,7 +36,7 @@ export function serializeKnownCookie<T extends KnownCookieName>({
 }: {
   name: KnownCookieName
   value: z.infer<(typeof knownCookies)[T]['schema']>
-}) {
+}): string {
   const meta = knownCookies[name]
   return JSON.stringify(meta.schema.parse(value))
 }

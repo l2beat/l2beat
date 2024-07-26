@@ -14,6 +14,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { useChartLoading } from './core/chart-loading-context'
 import { useIsClient } from '~/hooks/use-is-client'
+import { useCookieState } from '~/hooks/use-cookie-state'
 
 interface TvlChartPointData {
   timestamp: number
@@ -27,14 +28,11 @@ interface Props {
 }
 
 export function TvlChart({ milestones, tag = 'summary' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage<TvlChartRange>(
-    `${tag}-time-range`,
-    '1y',
-  )
+  const [timeRange, setTimeRange] = useCookieState('chartRange')
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const { data } = api.tvl.chart.useQuery({
+  const { data } = api.scaling.summary.useQuery({
     range: timeRange,
     type: 'layer2',
   })

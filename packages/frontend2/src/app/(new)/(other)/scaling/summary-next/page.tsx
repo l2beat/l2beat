@@ -7,7 +7,8 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OtherSites } from '~/app/_components/other-sites'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
-import { api } from '~/trpc/server'
+import { api, HydrateClient } from '~/trpc/server'
+import { getCookie } from '~/utils/cookies/server'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -19,17 +20,22 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  await api.scaling.summary.prefetch({})
+  await api.scaling.summary.prefetch({
+    type: 'layer2',
+    range: getCookie('chartRange'),
+  })
 
   return (
-    <div className="mb-20">
-      <ScalingFilterContextProvider>
-        <TvlChart milestones={HOMEPAGE_MILESTONES} />
-        <HorizontalSeparator className="my-4 md:my-6" />
-        <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
-      </ScalingFilterContextProvider>
-      <OtherSites />
-      <About />
-    </div>
+    <HydrateClient>
+      <div className="mb-20">
+        <ScalingFilterContextProvider>
+          <TvlChart milestones={HOMEPAGE_MILESTONES} />
+          <HorizontalSeparator className="my-4 md:my-6" />
+          <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
+        </ScalingFilterContextProvider>
+        <OtherSites />
+        <About />
+      </div>
+    </HydrateClient>
   )
 }

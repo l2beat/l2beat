@@ -6,7 +6,7 @@ import { TvlChartRange } from '~/server/features/tvl/range-utils'
  */
 export const knownCookies = {
   // Chart range used for preloads.
-  chartRange: knownCookie('chart-range', TvlChartRange, '1y'),
+  chartRange: knownCookie('l2beat-chart-range', TvlChartRange, '1y'),
 } satisfies Record<string, KnownCookie>
 
 /**
