@@ -13,6 +13,10 @@ export function handleInvalidateSucceeded(
     ...state,
     status: 'idle',
     height: action.targetHeight,
+    invalidateToHeight:
+      action.targetHeight < state.invalidateToHeight
+        ? action.targetHeight
+        : state.invalidateToHeight,
     forceInvalidate: false,
   })
 }

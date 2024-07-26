@@ -179,7 +179,7 @@ describe(BlockActivityIndexer.name, () => {
 
       expect(
         activityRepository.getByProjectIncludingDataPoint,
-      ).toHaveBeenCalledWith(mockProjectId, targetHeight)
+      ).toHaveBeenCalledWith(mockProjectId, targetHeight + 1)
 
       const expectedTargetHeight = mockActivityRecords[0].start - 1
       const expectedTimestamp = mockActivityRecords[0].timestamp

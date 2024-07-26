@@ -66,7 +66,7 @@ export class ActivityRepository extends BaseRepository {
       .select(selectActivity)
       .where('project_id', '=', projectId.toString())
       .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<', to.toDate())
+      .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
 

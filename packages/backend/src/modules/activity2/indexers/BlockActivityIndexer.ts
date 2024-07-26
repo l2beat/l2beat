@@ -58,7 +58,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     //find record that includes targetHeight
     const records = await this.$.db.activity.getByProjectIncludingDataPoint(
       this.$.projectId,
-      targetHeight,
+      targetHeight + 1,
     )
 
     if (records.length === 0) {
