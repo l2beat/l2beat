@@ -1,3 +1,55 @@
+Generated with discovered.json: 0xde5376b773eecea543f6c653d6459e9c88a5b0bb
+
+# Diff at Fri, 26 Jul 2024 08:58:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20319585
+- current block number: 20389678
+
+## Description
+
+Matter Labs Multisig changes one signer, and removes another.
+
+## Watched changes
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      values.$multisigThreshold:
+-        "4 of 8 (50%)"
++        "4 of 7 (57%)"
++++ description: Signers of the multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.7:
+-        "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
++++ description: Signers of the multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.6:
+-        "0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF"
++        "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
++++ description: Signers of the multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.5:
+-        "0x9dF8bc0918F357c766A5697E031fF5237c05747A"
++        "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2"
++++ description: Signers of the multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.4:
+-        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
++        "0x9dF8bc0918F357c766A5697E031fF5237c05747A"
++++ description: Signers of the multisig
++++ type: PERMISSION
++++ severity: LOW
+      values.getOwners.3:
+-        "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f"
++        "0x702caCafA54B88e9c54449563Fb2e496e85c78b7"
+    }
+```
+
 Generated with discovered.json: 0xbbd3ea3917e6834c4b3e76bfd7d8ab7af9d48fb8
 
 # Diff at Tue, 16 Jul 2024 14:11:47 GMT:
