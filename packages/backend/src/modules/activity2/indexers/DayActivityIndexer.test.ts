@@ -5,7 +5,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { TxsCountProvider } from '../services/TxsCountProvider'
+import { BaseTxsCountProvider } from '../services/BaseTxsCountProvider'
 import { DayActivityIndexer } from './DayActivityIndexer'
 import { DayActivityIndexerDeps } from './types'
 
@@ -18,7 +18,7 @@ describe(DayActivityIndexer.name, () => {
 
   describe(DayActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountProvider = mockObject<BaseTxsCountProvider>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
@@ -34,7 +34,7 @@ describe(DayActivityIndexer.name, () => {
     })
 
     it('make update based on batchSize and uncertaintyBuffer', async () => {
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountProvider = mockObject<BaseTxsCountProvider>({
         getTxsCount: mockFn().resolvesTo([]),
       })
 
@@ -61,7 +61,7 @@ describe(DayActivityIndexer.name, () => {
         activityRecord('a', START.add(2, 'days'), 2),
       ]
 
-      const txsCountProvider = mockObject<TxsCountProvider>({
+      const txsCountProvider = mockObject<BaseTxsCountProvider>({
         getTxsCount: mockFn().resolvesTo(mockActvityRecords),
       })
 
@@ -109,7 +109,7 @@ function createIndexer(
   return new DayActivityIndexer({
     logger: Logger.SILENT,
     parents: [],
-    txsCountProvider: mockObject<TxsCountProvider>({
+    txsCountProvider: mockObject<BaseTxsCountProvider>({
       getTxsCount: mockFn().resolvesTo([]),
     }),
     db: mockDatabase({

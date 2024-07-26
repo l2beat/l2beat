@@ -1,7 +1,7 @@
 import { Database } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
-import { TxsCountProvider } from '../services/TxsCountProvider'
+import { BaseTxsCountProvider } from '../services/BaseTxsCountProvider'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 import { DayActivityIndexer } from './DayActivityIndexer'
@@ -10,7 +10,7 @@ import { DayTargetIndexer } from './DayTargetIndexer'
 export interface ActivityIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   projectId: ProjectId
-  txsCountProvider: TxsCountProvider
+  txsCountProvider: BaseTxsCountProvider
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
