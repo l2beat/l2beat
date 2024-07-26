@@ -1,6 +1,6 @@
 /*
   This file is a quick prototype and will be refactored if it's proven useful.
-  
+
   Do not INCLUDE this file - it immediately runs `updateDiffHistoryFile()`
 */
 
@@ -8,7 +8,6 @@ import { execSync } from 'child_process'
 import { existsSync, readFileSync, statSync, writeFileSync } from 'fs'
 import {
   ConfigReader,
-  DiscoveryConfig,
   DiscoveryDiff,
   diffDiscovery,
   discover,
@@ -48,7 +47,6 @@ async function updateDiffHistoryFile() {
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
   const curDiscovery = configReader.readDiscovery(projectName, chain)
-  const config = configReader.readConfig(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -114,7 +112,7 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
       diff,
-      config,
+      curDiscovery,
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
@@ -285,7 +283,7 @@ function generateDiffHistoryMarkdown(
   blockNumberFromMainBranchDiscovery: number | undefined,
   curBlockNumber: number,
   diffs: DiscoveryDiff[],
-  discoveryConfig: DiscoveryConfig | undefined,
+  discovery: DiscoveryOutput,
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
@@ -330,7 +328,7 @@ function generateDiffHistoryMarkdown(
       result.push('## Watched changes')
     }
     result.push('')
-    result.push(discoveryDiffToMarkdown(diffs, discoveryConfig))
+    result.push(discoveryDiffToMarkdown(diffs, discovery))
     result.push('')
   }
 
@@ -353,7 +351,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
-    result.push(discoveryDiffToMarkdown(configRelatedDiff, discoveryConfig))
+    result.push(discoveryDiffToMarkdown(configRelatedDiff, discovery))
     result.push('')
   }
 

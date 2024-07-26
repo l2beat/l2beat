@@ -1,15 +1,17 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,
   EthereumAddress,
+  Hash256,
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
+import { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
@@ -17,6 +19,19 @@ import {
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
+const EMPTY_DISCOVERY_OUTPUT: DiscoveryOutput = {
+  name: 'test',
+  chain: 'ethereum',
+  blockNumber: BLOCK,
+  contracts: [],
+  eoas: [],
+  abis: {},
+  configHash: Hash256.random(),
+  version: 123,
+  fieldMeta: {},
+  usedTemplates: {},
+  shapeFilesHash: Hash256.random(),
+}
 
 describe(UpdateNotifier.name, () => {
   const chainConverter = new ChainConverter([
@@ -59,7 +74,7 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
+        EMPTY_DISCOVERY_OUTPUT,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -136,29 +151,28 @@ describe(UpdateNotifier.name, () => {
           diff: [{ key: 'A', before: '1', after: '2' }],
         },
       ]
-      const config = new DiscoveryConfig({
-        name: 'test',
-        chain: 'ethereum',
-        initialAddresses: [],
-        names: {
-          '0x0000000000000000000000000000000000000001': 'Contract',
-        },
-        overrides: {
-          Contract: {
-            fields: {
-              A: {
-                severity: 'MEDIUM',
-                description: 'This should never be equal to two',
-              },
-            },
+      const discovery: DiscoveryOutput = {
+        ...EMPTY_DISCOVERY_OUTPUT,
+        contracts: [
+          {
+            name: 'Contract',
+            address: EthereumAddress(
+              '0x0000000000000000000000000000000000000001',
+            ),
+          },
+        ],
+        fieldMeta: {
+          '0x0000000000000000000000000000000000000001.A': {
+            severity: 'MEDIUM',
+            description: 'This should never be equal to two',
           },
         },
-      })
+      }
 
       await updateNotifier.handleUpdate(
         project,
         changes,
-        config,
+        discovery,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -245,7 +259,7 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
+        EMPTY_DISCOVERY_OUTPUT,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -329,7 +343,7 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
+        EMPTY_DISCOVERY_OUTPUT,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,

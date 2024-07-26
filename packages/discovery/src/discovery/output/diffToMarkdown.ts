@@ -1,18 +1,18 @@
 import { assert } from '@l2beat/backend-tools'
+import { DiscoveryOutput, FieldMeta } from '@l2beat/discovery-types'
 import { toUpper } from 'lodash'
-
-import { DiscoveryConfig } from '../config/DiscoveryConfig'
-import {
-  DiscoveryContract,
-  DiscoveryContractField,
-} from '../config/RawDiscoveryConfig'
-import { getContractField } from '../utils/metaGetters'
+import { normalizeDiffPath } from '../utils/normalizeDiffPath'
 import { FieldDiff } from './diffContracts'
 import { DiscoveryDiff } from './diffDiscovery'
 
+export interface ContractDiffInformation {
+  description: string
+  fields: Record<string, FieldMeta>
+}
+
 export function discoveryDiffToMarkdown(
   diffs: DiscoveryDiff[],
-  config: DiscoveryConfig | undefined,
+  discovery: DiscoveryOutput,
   maxLength: number = Number.MAX_SAFE_INTEGER,
 ): string {
   const result = []
@@ -21,7 +21,7 @@ export function discoveryDiffToMarkdown(
   const countOfNewLines = joinerString.length * (diffs.length - 1)
   let lengthAccumulator = 0
   for (const diff of diffs) {
-    const contract = config?.getContract(diff.name)
+    const contract = getContractDiffInformation(discovery, diff.name)
     const markdown = contractDiffToMarkdown(
       diff,
       contract,
@@ -42,7 +42,7 @@ export function discoveryDiffToMarkdown(
 
 export function contractDiffToMarkdown(
   diff: DiscoveryDiff,
-  contract: DiscoveryContract | undefined,
+  contract: ContractDiffInformation | undefined,
   maxLength: number = Number.MAX_SAFE_INTEGER,
 ): string {
   const result = []
@@ -60,7 +60,11 @@ export function contractDiffToMarkdown(
     result.push(descriptionLine)
 
     for (const valueDiff of diff.diff) {
-      const field = getContractField(contract, valueDiff.key)
+      let field: FieldMeta | undefined
+      if (valueDiff.key !== undefined) {
+        field = contract?.fields?.[normalizeDiffPath(valueDiff.key)]
+      }
+
       result.push(fieldDiffToMarkdown(valueDiff, field))
     }
 
@@ -77,16 +81,13 @@ export function contractDiffToMarkdown(
 
 export function fieldDiffToMarkdown(
   diff: FieldDiff,
-  field: DiscoveryContractField | undefined,
+  field: FieldMeta | undefined,
   maxLength: number = Number.MAX_SAFE_INTEGER,
 ): string {
   const result = []
 
   if (field?.description !== undefined) {
     result.push(`+++ description: ${field.description}`)
-  }
-  if (field?.type !== undefined) {
-    result.push(`+++ type: ${field.type.toString()}`)
   }
   if (field?.severity !== undefined) {
     result.push(`+++ severity: ${field.severity}`)
@@ -123,4 +124,27 @@ function handleOverflow(
     0,
     maxLength - WARNING_MESSAGE.length - userSuffix.length,
   )}${WARNING_MESSAGE}${userSuffix}`
+}
+
+function getContractDiffInformation(
+  discovery: DiscoveryOutput,
+  name: string,
+): ContractDiffInformation | undefined {
+  const contract = discovery.contracts.find((c) => c.name === name)
+  if (contract === undefined) {
+    return contract
+  }
+
+  const fields = Object.fromEntries(
+    Object.entries(discovery.fieldMeta)
+      .filter(([v, _]) => v.startsWith(contract.address.toString()))
+      .map(([k, v]) => [k.slice(contract.address.toString().length + 1), v]),
+  )
+
+  const result: ContractDiffInformation = {
+    description: contract.descriptions?.join(' ') ?? 'None',
+    fields,
+  }
+
+  return result
 }
