@@ -413,13 +413,13 @@ model UpdateNotifier {
 model Value {
   id         Int       @default(autoincrement())
   timestamp  DateTime  @db.Timestamp(6)
-  projectId  String    @map("project_id") @db.VarChar(255)
-  dataSource String    @map("data_source") @db.VarChar(255)
-  type       ValueType @default(Total)
-  forTotal   Boolean   @default(false) @map("for_total")
-  external   BigInt    @default(0)
-  canonical  BigInt    @default(0)
-  native     BigInt    @default(0)
+  projectId  String    @db.VarChar(255)
+  dataSource String    @db.VarChar(255)
+  type       ValueType
+  forTotal   Boolean
+  external   BigInt
+  canonical  BigInt
+  native     BigInt
 
   @@unique([timestamp, projectId, dataSource, type])
   @@map("values")
