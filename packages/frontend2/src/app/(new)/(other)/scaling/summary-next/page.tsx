@@ -5,10 +5,9 @@ import { About } from '~/app/_components/about'
 import { TvlChart } from '~/app/_components/chart/tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OtherSites } from '~/app/_components/other-sites'
-import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
-import { getTvl } from '~/server/features/scaling/get-tvl'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
+import { api } from '~/trpc/server'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -20,8 +19,7 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const tvl = await getTvl()
-  const { layer2s, layer3s } = await getScalingSummaryEntries(tvl)
+  await api.scaling.summary.prefetch({})
 
   return (
     <div className="mb-20">

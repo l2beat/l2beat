@@ -3,8 +3,8 @@ import { procedure, router } from '../trpc'
 import { getTvlChart } from '~/server/features/tvl/get-tvl-chart'
 import { TvlChartRange } from '~/server/features/tvl/range-utils'
 
-export const tvlRouter = router({
-  chart: procedure
+export const scalingRouter = router({
+  summary: procedure
     .input(
       z
         .object({
