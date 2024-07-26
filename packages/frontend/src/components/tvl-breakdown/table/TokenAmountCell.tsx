@@ -9,21 +9,19 @@ import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/Tooltip'
 interface TokenAmountCellProps {
   assetId: AssetId
   amount: string
-  forCanonical?: boolean
   escrows?: TVLProjectBreakdown['canonical'][number]['escrows']
-  forExternal?: boolean
 }
 
 export function TokenAmountCell(props: TokenAmountCellProps) {
   const token = safeGetTokenByAssetId(props.assetId)
   const formula =
     token?.supply === 'totalSupply'
-      ? 'Total supply'
+      ? 'Total Supply'
       : token?.supply === 'circulatingSupply'
-        ? 'Circulating supply (Market Cap/Price)'
+        ? 'Circulating Supply'
         : ''
 
-  return props.forCanonical && props.escrows ? (
+  return token?.source === 'canonical' && props.escrows ? (
     <Tooltip>
       <TooltipTrigger className="flex flex-col items-end gap-2 font-medium text-xs">
         {formatNumberWithCommas(Number(props.amount))}
@@ -39,16 +37,14 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
             </div>
           ))}
       </TooltipTrigger>
-      <TooltipContent>Circulating supply</TooltipContent>
+      <TooltipContent>Tokens locked in the escrow</TooltipContent>
     </Tooltip>
   ) : (
     <Tooltip>
       <TooltipTrigger className="font-medium text-xs">
         {formatNumberWithCommas(Number(props.amount))}
       </TooltipTrigger>
-      <TooltipContent>
-        {props.forExternal ? 'Circulating supply' : formula}
-      </TooltipContent>
+      <TooltipContent>{formula}</TooltipContent>
     </Tooltip>
   )
 }
