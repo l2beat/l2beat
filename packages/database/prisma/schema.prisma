@@ -200,6 +200,8 @@ model Activity {
   projectId String   @map("project_id") @db.VarChar(255)
   timestamp DateTime @map("timestamp") @db.Timestamp(6)
   count     Int      @map("count")
+  start     Int      @map("start")
+  end       Int      @map("end")
 
   @@id([projectId, timestamp])
   @@index([projectId], map: "activity_project_id_index")

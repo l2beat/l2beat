@@ -152,6 +152,21 @@
       "supply": "zero"
     },
     {
+      "id": "alt-altlayer-token",
+      "name": "AltLayer Token",
+      "coingeckoId": "altlayer",
+      "address": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+      "symbol": "ALT",
+      "decimals": 18,
+      "deploymentTimestamp": 1704446615,
+      "coingeckoListingTimestamp": 1706227200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34608/large/Logomark_200x200.png?1715107868",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "amo-amino",
       "name": "Amino",
       "coingeckoId": "amino",
@@ -6442,6 +6457,25 @@
       "chainId": 5000,
       "source": "canonical",
       "supply": "zero"
+    },
+    {
+      "id": "cyber:cyber-cyberconnect",
+      "name": "CyberConnect",
+      "coingeckoId": "cyberconnect",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+      "symbol": "CYBER",
+      "decimals": 18,
+      "deploymentTimestamp": 1715900791,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31274/large/token.png?1715826754",
+      "chainId": 7560,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "layerzerov2oft"
+      }
     },
     {
       "id": "kinto:usd+-usd+",

@@ -98,6 +98,8 @@ function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
     projectId: ProjectId(projectId),
     timestamp,
     count,
+    start: timestamp.toStartOf('day').toNumber(),
+    end: timestamp.toEndOf('day').add(-1, 'seconds').toNumber(),
   }
 }
 
