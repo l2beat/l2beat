@@ -10,6 +10,7 @@ import { type SyncStatus } from '~/types/SyncStatus'
 import { type FinalityDataPoint } from './schema'
 
 export interface ScalingFinalityEntry {
+  entryType: 'finality'
   slug: string
   href: string
   name: string

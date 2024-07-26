@@ -38,7 +38,7 @@ export function FinalityDiagramsSection({ diagrams, className }: Props) {
 
 function Diagram({ diagram }: { diagram: FinalityDiagram }) {
   return (
-    <div className="flex flex-col gap-3 rounded-lg border-2 border-gray-50 bg-[#F1F3F7] p-4 dark:border-zinc-500 dark:bg-zinc-900 md:flex-row md:gap-0 md:p-8">
+    <div className="flex flex-col gap-3 rounded-lg border-2 border-gray-50 bg-[#F1F3F7] p-4 md:flex-row md:gap-0 md:p-8 dark:border-zinc-500 dark:bg-zinc-900">
       <div className="flex flex-col justify-between md:w-[190px]">
         <h3 className="whitespace-pre-line text-xl font-bold leading-tight dark:text-[#F27935]">
           {diagram.name}
@@ -65,7 +65,7 @@ function Diagram({ diagram }: { diagram: FinalityDiagram }) {
           sizes="100vw"
           alt={`${diagram.name} diagram`}
           src={diagram.src.dark.mobile}
-          className="hidden size-full dark:block md:!hidden"
+          className="hidden size-full md:!hidden dark:block"
         />
       )}
 
@@ -77,7 +77,7 @@ function Diagram({ diagram }: { diagram: FinalityDiagram }) {
           sizes="100vw"
           alt={`${diagram.name} diagram`}
           src={diagram.src.light.desktop}
-          className="mx-auto hidden w-[calc(100%-190px)] dark:hidden md:block"
+          className="mx-auto hidden w-[calc(100%-190px)] md:block dark:hidden"
         />
       )}
 
@@ -89,7 +89,7 @@ function Diagram({ diagram }: { diagram: FinalityDiagram }) {
           sizes="100vw"
           alt={`${diagram.name} diagram`}
           src={diagram.src.light.mobile}
-          className="size-full dark:hidden md:hidden"
+          className="size-full md:hidden dark:hidden"
         />
       )}
       <Logo className="scale-75 md:hidden" animated={false} />

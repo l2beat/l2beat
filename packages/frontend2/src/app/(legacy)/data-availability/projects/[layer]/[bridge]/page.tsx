@@ -20,7 +20,7 @@ export default async function Page(props: Props) {
   if (!daBridge) return notFound()
 
   const header = (
-    <header className="space-y-4 pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:pb-4 max-md:dark:bg-zinc-900 md:space-y-3">
+    <header className="space-y-4 pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:pb-4 md:space-y-3 max-md:dark:bg-zinc-900">
       <ProjectHeader
         title={daLayer.display.name}
         src={`/icons/${daLayer.display.slug}.png`}

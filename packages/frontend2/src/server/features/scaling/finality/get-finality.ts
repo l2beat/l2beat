@@ -14,7 +14,7 @@ import { db } from '~/server/database'
 import { calcAvgsPerProject } from './calc-avgs-per-project'
 import { divideAndAddLag } from './divide-and-add-lag'
 import { getLivenessByTypeSince } from './get-liveness-by-type-since'
-import { FinalityData } from './schema'
+import { FinalityData, type SerializableFinalityData } from './schema'
 
 export type FinalityProjectConfig = {
   projectId: ProjectId
@@ -23,6 +23,7 @@ export type FinalityProjectConfig = {
 export async function getFinality(projects: FinalityProjectConfig[]) {
   noStore()
   const cached = await getCachedFinalityData(projects)
+
   return FinalityData.parse(cached)
 }
 
@@ -32,8 +33,8 @@ const getCachedFinalityData = cache(getFinalityData, ['finality'], {
 
 export async function getFinalityData(
   projects: FinalityProjectConfig[],
-): Promise<FinalityData> {
-  const result: FinalityData = {}
+): Promise<SerializableFinalityData> {
+  const result: SerializableFinalityData = {}
 
   const [OPStackProjects, otherProjects] = partition(
     projects,
@@ -50,11 +51,11 @@ export async function getFinalityData(
 
 async function getProjectsFinality(
   projects: FinalityProjectConfig[],
-): Promise<FinalityData> {
+): Promise<SerializableFinalityData> {
   const projectIds = projects.map((p) => p.projectId)
   const records = await db.finality.getLatestGroupedByProjectId(projectIds)
 
-  const result: FinalityData = mapValues(
+  const result: SerializableFinalityData = mapValues(
     keyBy(records, 'projectId'),
     (record) => {
       const {
@@ -69,7 +70,7 @@ async function getProjectsFinality(
       } = record
 
       const base = {
-        syncedUntil: timestamp,
+        syncedUntil: timestamp.toNumber(), // cache serialization, will be coerced to UnixTime
         timeToInclusion: {
           minimumInSeconds: minimumTimeToInclusion,
           maximumInSeconds: maximumTimeToInclusion,
@@ -119,8 +120,8 @@ async function getProjectsFinality(
 
 async function getOPStackFinality(
   projects: FinalityProjectConfig[],
-): Promise<FinalityData> {
-  const result: FinalityData = {}
+): Promise<SerializableFinalityData> {
+  const result: SerializableFinalityData = {}
 
   const configurations = await getLatestConfigurations()
 
@@ -167,7 +168,7 @@ async function getOPStackFinality(
         result[project.projectId.toString()] = {
           timeToInclusion: projectResult,
           stateUpdateDelays: null,
-          syncedUntil,
+          syncedUntil: syncedUntil.toNumber(), // cache serialization, will be coerced to UnixTime
         }
       }
     }),
