@@ -1,4 +1,9 @@
-import { assert, UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import {
+  assert,
+  EthereumAddress,
+  UnixTime,
+  formatSeconds,
+} from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -24,7 +29,7 @@ const daResolveWindow = formatSeconds(
 export const cyber: Layer2 = opStackL2({
   associatedTokens: ['CYBER'],
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.OPStack, Badge.DA.CustomDA],
+  badges: [Badge.DA.CustomDA],
   display: {
     name: 'Cyber',
     slug: 'cyber',
@@ -40,7 +45,7 @@ export const cyber: Layer2 = opStackL2({
         'https://wallet.cyber.co/',
       ],
       documentation: ['https://docs.cyber.co/'],
-      explorers: ['https://cyberscan.co/'],
+      explorers: ['https://cyberscan.co/', 'https://7560.routescan.io/'],
       repositories: ['https://github.com/cyberconnecthq'],
       socialMedia: [
         'https://twitter.com/cyberconnecthq',
@@ -83,6 +88,25 @@ export const cyber: Layer2 = opStackL2({
       ],
     },
     bridge: { type: 'None + DA challenges' },
+  },
+  chainConfig: {
+    name: 'cyber',
+    chainId: 7560,
+    explorerUrl: 'https://cyberscan.co/',
+    coingeckoPlatform: 'cyber',
+    explorerApi: {
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/7560/etherscan/api', // alternative https://api.socialscan.io/cyber (supposedly etherscan-like)
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1713428569), // block 1 ts
+    multicallContracts: [
+      {
+        sinceBlock: 1,
+        batchSize: 150,
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        version: '3',
+      },
+    ],
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(

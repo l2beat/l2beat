@@ -1,7 +1,10 @@
 import path from 'path'
 import { chains } from '@l2beat/config'
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import { type DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  type DiscoveryOutput,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
@@ -68,7 +71,7 @@ const getCachedImplementationChangeReport = cache(
             ? diffDiscovery(discovery.contracts, latestContracts)
             : []
         const implementationChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.key?.startsWith('implementation')),
+          diff.diff?.some((f) => f.key === 'values.$implementation'),
         )
 
         if (implementationChanges.length === 0) {
@@ -76,9 +79,9 @@ const getCachedImplementationChangeReport = cache(
         }
 
         result.projects[project] ??= {}
-        const projectRecord = result.projects[project]!
+        const projectRecord = result.projects[project]
         projectRecord[chainName] ??= []
-        const chainRecord = projectRecord[chainName]!
+        const chainRecord = projectRecord[chainName]
 
         for (const diff of implementationChanges) {
           assert(latestContracts, 'latestContracts is undefined')
@@ -86,7 +89,7 @@ const getCachedImplementationChangeReport = cache(
             (c) => c.address === diff.address,
           )
           assert(diffedContract, 'diffedContract is undefined')
-          const newImplementations = diffedContract.implementations ?? []
+          const newImplementations = get$Implementations(diffedContract.values)
 
           chainRecord.push({
             containingContract: diff.address,
@@ -99,7 +102,7 @@ const getCachedImplementationChangeReport = cache(
     return result
   },
   ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 60 * 60 },
+  { revalidate: 60 * 10 },
 )
 
 function chainNameToId(chainName: string): ChainId {

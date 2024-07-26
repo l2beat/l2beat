@@ -3,14 +3,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { Config } from '../../../../config'
 import { Peripherals } from '../../../../peripherals/Peripherals'
 import { Clock } from '../../../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../../../tools/uif/IndexerStateRepository'
 import { ApplicationModuleWithUpdater } from '../../../ApplicationModule'
 import { LivenessUpdater } from './LivenessUpdater'
 import { LivenessController } from './api/LivenessController'
 import { createLivenessRouter } from './api/LivenessRouter'
-import { LivenessRepository } from './repositories/LivenessRepository'
 
 export function createLivenessModule(
   config: Config,
@@ -23,28 +20,14 @@ export function createLivenessModule(
     return
   }
 
-  const livenessUpdater = new LivenessUpdater(
-    peripherals.getRepository(LivenessRepository),
-    logger,
-  )
-
-  const indexerStateRepository = peripherals.getRepository(
-    IndexerStateRepository,
-  )
-  const configurationsRepository = peripherals.getRepository(
-    IndexerConfigurationRepository,
-  )
-  const indexerService = new IndexerService(
-    indexerStateRepository,
-    configurationsRepository,
-  )
-
+  const livenessUpdater = new LivenessUpdater(peripherals.database, logger)
+  const indexerService = new IndexerService(peripherals.database)
   const livenessController = new LivenessController({
     clock,
     indexerService,
     projects: config.projects,
     logger,
-    livenessRepository: peripherals.getRepository(LivenessRepository),
+    db: peripherals.database,
   })
 
   const livenessRouter = createLivenessRouter(livenessController, config)

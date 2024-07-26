@@ -5,7 +5,10 @@ import {
   formatSeconds,
 } from '@l2beat/shared-pure'
 
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   DERIVATION,
   EXITS,
@@ -30,7 +33,7 @@ const discovery = new ProjectDiscovery('optimism')
 const l2Discovery = new ProjectDiscovery('optimism', 'optimism')
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }
@@ -38,7 +41,7 @@ function safeGetImplementation(contract: ContractParameters): string {
 }
 
 const l1Upgradeability = {
-  upgradableBy: ['ProxyAdmin'],
+  upgradableBy: ['SuperchainProxyAdmin'],
   upgradeDelay: 'No delay',
 }
 
@@ -89,9 +92,11 @@ export const optimism: Layer2 = {
   type: 'layer2',
   id: ProjectId('optimism'),
   badges: [
-    Badge.DA.EthereumBlobs,
     Badge.VM.EVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Stack.OPStack,
     Badge.Infra.Superchain,
+    Badge.Other.L3HostChain,
     Badge.Other.Governance,
   ],
   display: {
@@ -319,7 +324,7 @@ export const optimism: Layer2 = {
         },
         {
           text: 'FaultDisputeGame.sol - Etherscan source code, attack() function',
-          href: 'https://etherscan.io/address/0x4146DF64D83acB0DcB0c1a4884a16f090165e122#code',
+          href: 'https://etherscan.io/address/0xf691F8A6d908B58C534B624cF16495b491E633BA#code',
         },
       ],
     },
@@ -455,12 +460,12 @@ export const optimism: Layer2 = {
       description: 'Central actor allowed to submit transaction batches to L1.',
     },
     discovery.contractAsPermissioned(
-      discovery.getContract('ProxyAdmin'),
+      discovery.getContract('SuperchainProxyAdmin'),
       'Admin of OptimismPortal, L1StandardBridge, L1ERC721Bridge, OptimismMintableERC20Factory, SuperchainConfig, DelayedWETH, DisputeGameFactory, AnchorStateRegistry and SystemConfig contracts.',
     ),
     ...discovery.getMultisigPermission(
-      'ProxyAdminOwner',
-      'Owner of the ProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
+      'SuperchainProxyAdminOwner',
+      'Owner of the SuperchainProxyAdmin. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. It also controls the L2ProxyAdmin, meaning it can upgrade L2 system components.',
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',
@@ -468,11 +473,11 @@ export const optimism: Layer2 = {
     ),
     ...discovery.getMultisigPermission(
       'FoundationMultisig_1',
-      'Member of the ProxyAdminOwner.',
+      'Member of the SuperchainProxyAdminOwner.',
     ),
     ...discovery.getMultisigPermission(
       'SecurityCouncilMultisig',
-      `Member of the ProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
+      `Member of the SuperchainProxyAdminOwner. It implements a LivenessModule used to remove inactive (${formatSeconds(
         livenessInterval,
       )}) members while making sure that the threshold remains above 75%. If the number of members falls below 8, the Foundation takes ownership of the Security Council.`,
       [
@@ -560,7 +565,7 @@ export const optimism: Layer2 = {
       }),
       discovery.getContractDetails('DelayedWETH', {
         description:
-          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the ProxyAdminOwner multisig.',
+          'Contract designed to hold the bonded ETH for each dispute game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds. It is owned by the SuperchainProxyAdminOwner multisig.',
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('SuperchainConfig', {
@@ -659,7 +664,7 @@ export const optimism: Layer2 = {
     ],
   },
   upgradesAndGovernance:
-    'All contracts are upgradable by the `ProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The ProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
+    'All contracts are upgradable by the `SuperchainProxyAdmin` which is controlled by a 2/2 multisig composed by the Optimism Foundation and a Security Council. The Guardian role is assigned to the Security Council multisig, with a Safe Module that allows the Foundation to act through it to stop withdrawals in the whole Superchain or blacklist dispute games in case of emergencies. The Security Council can remove the module if the Foundation becomes malicious. The single Sequencer actor can be modified by the `FoundationMultisig_2` via the `SystemConfig` contract. The SuperchainProxyAdminOwner can recover dispute bonds in case of bugs that would distribute them incorrectly. \n\nAt the moment, for regular upgrades, the DAO signals its intent by voting on upgrade proposals, but has no direct control over the upgrade process.',
   milestones: [
     {
       name: 'OP Mainnet becomes Stage 1',

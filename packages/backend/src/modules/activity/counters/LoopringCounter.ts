@@ -1,29 +1,21 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { range } from 'lodash'
 
+import { Database } from '@l2beat/database'
 import { LoopringClient } from '../../../peripherals/loopring/LoopringClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
-import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 
 export class LoopringCounter extends SequenceProcessor {
   constructor(
     projectId: ProjectId,
-    sequenceProcessorRepository: SequenceProcessorRepository,
-    private readonly blockRepository: BlockTransactionCountRepository,
+    db: Database,
     private readonly loopringClient: LoopringClient,
     logger: Logger,
     batchSize: number,
   ) {
-    super(
-      projectId,
-      sequenceProcessorRepository,
-      { batchSize, startFrom: 1 },
-      logger,
-    )
+    super(projectId, db, { batchSize, startFrom: 1 }, logger)
     this.logger = this.logger.for(this)
   }
 
@@ -31,11 +23,7 @@ export class LoopringCounter extends SequenceProcessor {
     return await this.loopringClient.getFinalizedBlockNumber()
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Knex.Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const block = await this.loopringClient.getBlock(blockNumber)
       return {
@@ -49,6 +37,6 @@ export class LoopringCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'LoopringBlockCounter',
     })
-    await this.blockRepository.addOrUpdateMany(blocks, trx)
+    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
   }
 }

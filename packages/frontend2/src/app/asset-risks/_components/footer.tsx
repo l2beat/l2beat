@@ -4,10 +4,10 @@ import { cn } from '~/utils/cn'
 
 export function Footer({ className }: { className?: ClassNameValue }) {
   return (
-    <footer className="md:py-6 py-4 w-full flex justify-center bg-[#E6E7EC]">
+    <footer className="flex w-full justify-center bg-[#E6E7EC] py-4 md:py-6">
       <div
         className={cn(
-          'flex flex-row w-full gap-4 justify-between font-medium text-xs text-zinc-500 dark:text-gray-50 px-[8px]',
+          'flex w-full flex-row justify-between gap-4 px-[8px] text-xs font-medium text-zinc-500 dark:text-gray-50',
           className,
         )}
       >
@@ -16,7 +16,7 @@ export function Footer({ className }: { className?: ClassNameValue }) {
           <Link
             href={'https://l2beat.com'}
             target="_blank"
-            className="text-blue-700 dark:text-blue-500 underline underline-offset-2"
+            className="text-blue-700 underline underline-offset-2 dark:text-blue-500"
           >
             L2BEAT
           </Link>

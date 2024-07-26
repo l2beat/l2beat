@@ -1,9 +1,8 @@
 import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { DiscoveryDiff } from '@l2beat/shared-pure'
+import { ChainConverter, DiscoveryDiff } from '@l2beat/shared-pure'
 
-import { Project } from '../../../model/Project'
-import { ChainConverter } from '../../../tools/ChainConverter'
-import { UpdateMonitorRepository } from '../repositories/UpdateMonitorRepository'
+import { BackendProject } from '@l2beat/config'
+import { Database } from '@l2beat/database'
 import { getDashboardContracts } from './props/getDashboardContracts'
 import {
   DashboardProject,
@@ -18,8 +17,8 @@ export class UpdateMonitorController {
   private readonly onDiskConfigs: Record<string, DiscoveryConfig[]> = {}
 
   constructor(
-    private readonly updateMonitorRepository: UpdateMonitorRepository,
-    private readonly projects: Project[],
+    private readonly db: Database,
+    private readonly projects: BackendProject[],
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
   ) {
@@ -38,7 +37,7 @@ export class UpdateMonitorController {
         projectsToFill,
         this.onDiskConfigs[chain],
         this.configReader,
-        this.updateMonitorRepository,
+        this.db,
         chain,
         this.chainConverter.toChainId(chain),
       )
@@ -56,7 +55,7 @@ export class UpdateMonitorController {
     const contracts = getDashboardContracts(discovery, config)
 
     const diff: DiscoveryDiff[] = await getDiff(
-      this.updateMonitorRepository,
+      this.db,
       discovery,
       this.chainConverter.toChainId(chain),
     )

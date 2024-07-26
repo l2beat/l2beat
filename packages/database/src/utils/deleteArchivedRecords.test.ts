@@ -5,12 +5,12 @@ interface TestedRepository<T> {
   deleteHourlyUntil: (dateRange: {
     from: UnixTime | undefined
     to: UnixTime
-  }) => Promise<number>
+  }) => Promise<unknown>
   deleteSixHourlyUntil: (dateRange: {
     from: UnixTime | undefined
     to: UnixTime
-  }) => Promise<number>
-  addMany: (records: T[]) => Promise<number>
+  }) => Promise<unknown>
+  addMany: (records: T[]) => Promise<unknown>
   getAll: () => Promise<T[]>
 }
 

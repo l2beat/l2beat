@@ -1,6 +1,7 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import {
+  ChainConverter,
   ChainId,
   EthereumAddress,
   UnixTime,
@@ -8,14 +9,13 @@ import {
 } from '@l2beat/shared-pure'
 import { isEmpty } from 'lodash'
 
+import { Database } from '@l2beat/database'
 import {
   Channel,
   DiscordClient,
   MAX_MESSAGE_LENGTH,
 } from '../../peripherals/discord/DiscordClient'
-import { ChainConverter } from '../../tools/ChainConverter'
 import { fieldThrottleDiff } from './fieldThrottleDiff'
-import { UpdateNotifierRepository } from './repositories/UpdateNotifierRepository'
 import { diffToMessage } from './utils/diffToMessage'
 import { filterDiff } from './utils/filterDiff'
 import { isNineAM } from './utils/isNineAM'
@@ -35,7 +35,7 @@ const HOUR_RANGE = 12
 
 export class UpdateNotifier {
   constructor(
-    private readonly updateNotifierRepository: UpdateNotifierRepository,
+    private readonly db: Database,
     private readonly discordClient: DiscordClient | undefined,
     private readonly chainConverter: ChainConverter,
     private readonly logger: Logger,
@@ -53,7 +53,7 @@ export class UpdateNotifier {
     unknownContracts: EthereumAddress[],
   ) {
     const nonce = await this.getInternalMessageNonce()
-    await this.updateNotifierRepository.add({
+    await this.db.updateNotifier.add({
       projectName: name,
       diff,
       blockNumber: blockNumber,
@@ -61,7 +61,7 @@ export class UpdateNotifier {
     })
 
     const timeFence = UnixTime.now().add(-HOUR_RANGE, 'hours')
-    const previousRecords = await this.updateNotifierRepository.getNewerThan(
+    const previousRecords = await this.db.updateNotifier.getNewerThan(
       timeFence,
       name,
       chainId,
@@ -114,7 +114,7 @@ export class UpdateNotifier {
   }
 
   async getInternalMessageNonce() {
-    const latestId = await this.updateNotifierRepository.findLatestId()
+    const latestId = await this.db.updateNotifier.findLatestId()
 
     if (latestId === undefined) {
       return 0

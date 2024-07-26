@@ -1,4 +1,53 @@
-Generated with discovered.json: 0xf4d7ebaeff519d19016c1a3cf8c8c63493669fb6
+Generated with discovered.json: 0x0ecf9abaee6f7547e2d668517072ac2603d2fb4a
+
+# Diff at Fri, 12 Jul 2024 11:52:45 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@d6f7bd1c3a10712b93b6891cc6ca39616765a983 block: 121899221
+- current block number: 122593187
+
+## Description
+
+The changes are due to the [OP Mainnet 'Fjord' upgrade](https://gov.optimism.io/t/upgrade-proposal-9-fjord-network-upgrade/8236).
+
+The GasPriceOracle predeploy is changed to use a FastLZ-based compression estimator for gas price estimation. (compare [the spec](https://github.com/ethereum-optimism/specs/blob/main/specs/fjord/exec-engine.md#fees))
+
+## Watched changes
+
+```diff
+    contract GasPriceOracle (0x420000000000000000000000000000000000000F) {
+    +++ description: None
+      values.$implementation:
+-        "0xb528D11cC114E026F138fE568744c6D45ce6Da7A"
++        "0xa919894851548179A0750865e7974DA599C0Fac7"
+      values.baseFeeScalar:
+-        1368
++        5227
+      values.version:
+-        "1.2.0"
++        "1.3.0"
+      values.isFjord:
++        true
+    }
+```
+
+```diff
+    contract L1Block (0x4200000000000000000000000000000000000015) {
+    +++ description: None
+      values.baseFeeScalar:
+-        1368
++        5227
+    }
+```
+
+## Source code changes
+
+```diff
+.../GasPriceOracle/GasPriceOracle.sol              | 558 ++++++++++++++++++---
+ 1 file changed, 493 insertions(+), 65 deletions(-)
+```
+
+Generated with discovered.json: 0x010f9329c5b32c1c688ec638d3dd7adefe490a80
 
 # Diff at Wed, 26 Jun 2024 10:20:31 GMT:
 

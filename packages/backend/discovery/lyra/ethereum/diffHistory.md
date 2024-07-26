@@ -1,4 +1,53 @@
-Generated with discovered.json: 0xac65f348a25a6b0ed231d7bf498f6fa0d3452b45
+Generated with discovered.json: 0xe7ffa6843a63e60119da3f8effc13634c4a5f3dd
+
+# Diff at Thu, 18 Jul 2024 10:31:44 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20331900
+- current block number: 20331900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331900 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x35d5D43271548c984662d4879FBc8e041Bc1Ff93, inheriting its permissions."]
+    }
+```
+
+Generated with discovered.json: 0xea71ccb52a7fbc8dc15a42c895b9a0c73ce801e5
+
+# Diff at Thu, 18 Jul 2024 07:25:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14a8b2e13da16d68d776511f98207e5360accba3 block: 19927699
+- current block number: 20331900
+
+## Description
+
+Lyra bumps gas limit by 4x to 120M. This is in the ballpark of what base is also running.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e) {
+    +++ description: None
+      values.gasLimit:
+-        30000000
++        120000000
+    }
+```
+
+Generated with discovered.json: 0x0eea8969d66cf8d703d845a3102f84b758742fa1
 
 # Diff at Wed, 22 May 2024 20:07:21 GMT:
 

@@ -1,11 +1,10 @@
 import { EventEmitter } from 'events'
 import { Logger } from '@l2beat/backend-tools'
 import { assert, ProjectId } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { Gauge } from 'prom-client'
 
+import { Database } from '@l2beat/database'
 import { TaskQueue } from '../../tools/queue/TaskQueue'
-import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 
 const activityLast = new Gauge({
   name: 'activity_last_synced',
@@ -58,12 +57,11 @@ export abstract class SequenceProcessor extends EventEmitter {
   protected abstract processRange(
     from: number, // inclusive
     to: number, // inclusive
-    trx: Knex.Transaction,
   ): Promise<void>
 
   constructor(
     readonly projectId: ProjectId,
-    private readonly repository: SequenceProcessorRepository,
+    protected readonly db: Database,
     private readonly opts: SequenceProcessorOpts,
     protected logger: Logger,
   ) {
@@ -159,16 +157,13 @@ export abstract class SequenceProcessor extends EventEmitter {
       for (; from <= latest; from += this.opts.batchSize) {
         const to = Math.min(from + this.opts.batchSize - 1, latest)
         this.logger.info('Processing range started', { from, to })
-        await this.repository.runInTransaction(async (trx) => {
-          await this.processRange(from, to, trx)
-          await this.setState(
-            {
-              lastProcessed: to,
-              latest,
-              syncedOnce: !!this.state?.syncedOnce || to === latest,
-            },
-            trx,
-          )
+        await this.db.transaction(async () => {
+          await this.processRange(from, to)
+          await this.setState({
+            lastProcessed: to,
+            latest,
+            syncedOnce: !!this.state?.syncedOnce || to === latest,
+          })
         })
         this.logger.info('Processing range finished', { from, to })
       }
@@ -180,18 +175,17 @@ export abstract class SequenceProcessor extends EventEmitter {
   }
 
   private async loadState(): Promise<void> {
-    const state = await this.repository.findById(this.projectId.toString())
-    this.state = state
+    const state = await this.db.sequenceProcessor.findById(
+      this.projectId.toString(),
+    )
+    this.state = state ?? undefined
   }
 
-  private async setState(state: State, trx?: Knex.Transaction): Promise<void> {
-    await this.repository.addOrUpdate(
-      {
-        id: this.projectId.toString(),
-        ...state,
-      },
-      trx,
-    )
+  private async setState(state: State): Promise<void> {
+    await this.db.sequenceProcessor.addOrUpdate({
+      id: this.projectId.toString(),
+      ...state,
+    })
     activityLast
       .labels({ project: this.projectId.toString() })
       .set(state.lastProcessed)

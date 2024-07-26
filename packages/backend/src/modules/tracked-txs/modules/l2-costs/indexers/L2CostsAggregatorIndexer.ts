@@ -1,42 +1,34 @@
+import { BackendProject } from '@l2beat/config'
+import {
+  AggregatedL2CostRecord,
+  Database,
+  L2CostPriceRecord,
+  L2CostRecord,
+} from '@l2beat/database'
+import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import {
   assert,
   ProjectId,
   UnixTime,
   clampRangeToDay,
 } from '@l2beat/shared-pure'
-
-import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
 import { uniq } from 'lodash'
-import { Project } from '../../../../../model/Project'
-import { IndexerConfigurationRepository } from '../../../../../tools/uif/IndexerConfigurationRepository'
 import {
   ManagedChildIndexer,
   type ManagedChildIndexerOptions,
 } from '../../../../../tools/uif/ManagedChildIndexer'
-import type {
-  AggregatedL2CostsRecord,
-  AggregatedL2CostsRepository,
-} from '../repositories/AggregatedL2CostsRepository'
-import {
-  L2CostsPricesRecord,
-  L2CostsPricesRepository,
-} from '../repositories/L2CostsPricesRepository'
-import type {
-  L2CostsRecord,
-  L2CostsRecordWithProjectId,
-  L2CostsRepository,
-} from '../repositories/L2CostsRepository'
 
 // Amount of gas required for a basic tx
 const OVERHEAD = 21_000
 
+export interface ProjectL2Cost extends L2CostRecord {
+  projectId: ProjectId
+}
+
 export interface L2CostsAggregatorIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
-  l2CostsRepository: L2CostsRepository
-  aggregatedL2CostsRepository: AggregatedL2CostsRepository
-  l2CostsPricesRepository: L2CostsPricesRepository
-  indexerConfigurationRepository: IndexerConfigurationRepository
-  projects: Project[]
+  db: Database
+  projects: BackendProject[]
 }
 
 export interface TrackedTxMultiplier {
@@ -57,18 +49,18 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const costs = await this.getL2CostsRecordsWithProjectId([
+    const costs = await this.getL2CostRecordsWithProjectId([
       shiftedFrom,
       shiftedTo,
     ])
 
-    const ethPrices = await this.$.l2CostsPricesRepository.getByTimestampRange(
+    const ethPrices = await this.$.db.l2CostPrice.getByTimestampRange(
       shiftedFrom,
       shiftedTo,
     )
 
     const aggregated = this.aggregate(costs, ethPrices)
-    await this.$.aggregatedL2CostsRepository.addMany(aggregated)
+    await this.$.db.aggregatedL2Cost.addOrUpdateMany(aggregated)
     this.logger.info('Aggregated L2 costs', {
       count: aggregated.length,
     })
@@ -77,17 +69,16 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    const unixTargetHeight = new UnixTime(targetHeight)
-    await this.$.aggregatedL2CostsRepository.deleteAfter(unixTargetHeight)
-
-    return targetHeight
+    // no need to remove data
+    // safeHeight will be updated to this value
+    return await Promise.resolve(targetHeight)
   }
 
   shift(from: number, to: number): [UnixTime, UnixTime] {
     // limit time range to one day if greater
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
-    // start from a begining of an hour
+    // start from a beginning of an hour
     // 13:00:01 => 13:00:00
     const shiftedUnixFrom = unixFrom.toStartOf('hour')
 
@@ -111,17 +102,17 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
     return [shiftedUnixFrom, shiftedUnixTo]
   }
 
-  async getL2CostsRecordsWithProjectId(
+  async getL2CostRecordsWithProjectId(
     timeRange: [UnixTime, UnixTime],
-  ): Promise<L2CostsRecordWithProjectId[]> {
+  ): Promise<ProjectL2Cost[]> {
     const [shiftedFrom, shiftedTo] = timeRange
-    const costs = await this.$.l2CostsRepository.getByTimeRange([
+    const costs = await this.$.db.l2Cost.getByTimeRange([
       shiftedFrom,
       shiftedTo,
     ])
 
     const configurations =
-      await this.$.indexerConfigurationRepository.getSavedConfigurationsByIds(
+      await this.$.db.indexerConfiguration.getSavedConfigurationsByIds(
         uniq(costs.map((c) => c.configurationId)),
       )
 
@@ -141,11 +132,11 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   aggregate(
-    records: L2CostsRecordWithProjectId[],
-    ethPrices: L2CostsPricesRecord[],
-  ): AggregatedL2CostsRecord[] {
+    records: ProjectL2Cost[],
+    ethPrices: L2CostPriceRecord[],
+  ): AggregatedL2CostRecord[] {
     const multipliers = this.findTxConfigsWithMultiplier()
-    const map = new Map<string, AggregatedL2CostsRecord>()
+    const map = new Map<string, AggregatedL2CostRecord>()
 
     for (const record of records) {
       const timestamp = record.timestamp.toStartOf('hour')
@@ -226,10 +217,10 @@ export class L2CostsAggregatorIndexer extends ManagedChildIndexer {
   }
 
   calculate(
-    tx: L2CostsRecord,
+    tx: L2CostRecord,
     ethUsdPrice: number,
     factor: number,
-  ): Omit<AggregatedL2CostsRecord, 'timestamp' | 'projectId'> {
+  ): Omit<AggregatedL2CostRecord, 'timestamp' | 'projectId'> {
     const gasPriceETH = this.weiToEth(tx.gasPrice)
     const totalGas = Math.round(tx.gasUsed * factor)
     const calldataGas = Math.round(tx.calldataGasUsed * factor)

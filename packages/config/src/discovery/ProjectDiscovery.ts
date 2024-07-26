@@ -1,36 +1,38 @@
 import {
   ConfigReader,
   InvertedAddresses,
-  StackRole,
   calculateInversion,
 } from '@l2beat/discovery'
-import type {
-  ContractParameters,
-  ContractValue,
-  DiscoveryOutput,
+import {
+  type ContractParameters,
+  type ContractValue,
+  type DiscoveryOutput,
+  EoaParameters,
+  StackRole,
+  get$Admins,
+  get$Implementations,
+  toAddressArray,
 } from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
   UnixTime,
-  gatherAddressesFromUpgradeability,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
-import { isArray, isString } from 'lodash'
+import { isArray, isString, uniq } from 'lodash'
 
 import { join } from 'path'
-import {
-  ScalingProjectEscrow,
-  ScalingProjectPermission,
-  ScalingProjectPermissionedAccount,
-  ScalingProjectReference,
-} from '../common'
 import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,
 } from '../common/ScalingProjectContracts'
-import { delayDescriptionFromSeconds } from '../utils/delayDescription'
+import { ScalingProjectEscrow } from '../common/ScalingProjectEscrow'
+import {
+  ScalingProjectPermission,
+  ScalingProjectPermissionedAccount,
+} from '../common/ScalingProjectPermission'
+import { ScalingProjectReference } from '../common/ScalingProjectReference'
 import {
   OP_STACK_CONTRACT_DESCRIPTION,
   OP_STACK_PERMISSION_TEMPLATES,
@@ -47,16 +49,6 @@ import {
   StackPermissionsTag,
 } from './StackTemplateTypes'
 import { findRoleMatchingTemplate } from './values/templateUtils'
-
-type AllKeys<T> = T extends T ? keyof T : never
-
-type MergedUnion<T extends object> = {
-  [K in AllKeys<T>]: PickType<T, K>
-}
-
-type PickType<T, K extends AllKeys<T>> = T extends { [k in K]?: T[K] }
-  ? T[K]
-  : undefined
 
 export class ProjectDiscovery {
   private readonly discoveries: DiscoveryOutput[]
@@ -98,7 +90,7 @@ export class ProjectDiscovery {
     return {
       name: contract.name,
       address: contract.address,
-      upgradeability: contract.upgradeability,
+      upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
     }
@@ -336,16 +328,30 @@ export class ProjectDiscovery {
   ): ScalingProjectPermission[] {
     const contract = this.getContract(identifier)
     assert(
-      contract.upgradeability.type === 'gnosis safe',
+      contract.proxyType === 'gnosis safe',
       `Contract ${contract.name} is not a Gnosis Safe (${this.projectName})`,
     )
 
+    const modules = toAddressArray(contract.values?.GnosisSafe_modules)
+    const modulesDescriptions = modules
+      .map((m) => this.getContractByAddress(m))
+      .filter(notUndefined)
+      .map(
+        (contract) =>
+          `${contract.name} (${this.describeContractOrEoa(contract)})`,
+      )
+
+    const fullModulesDescription =
+      modulesDescriptions.length === 0
+        ? ''
+        : `It uses the following modules: ${modulesDescriptions.join(', ')}.`
+
     return [
       {
-        name: identifier,
+        name: contract.name,
         description: `${description} This is a Gnosis Safe with ${this.getMultisigStats(
           identifier,
-        )} threshold.`,
+        )} threshold. ${fullModulesDescription}`,
         accounts: [
           {
             address: contract.address,
@@ -447,7 +453,7 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const contract = contracts.find((contract) => contract.address === address)
-    const isMultisig = contract?.upgradeability.type === 'gnosis safe'
+    const isMultisig = contract?.proxyType === 'gnosis safe'
 
     const type = isEOA ? 'EOA' : isMultisig ? 'MultiSig' : 'Contract'
 
@@ -497,35 +503,10 @@ export class ProjectDiscovery {
     return {
       address: contract.address,
       name: contract.name,
-      upgradeability: contract.upgradeability,
+      upgradeability: getUpgradeability(contract),
       chain: this.chain,
       ...descriptionOrOptions,
     }
-  }
-
-  getContractFromUpgradeability<
-    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
-  >(contractIdentifier: string, key: K): ContractParameters {
-    const address = this.getContractUpgradeabilityParam(contractIdentifier, key)
-    assert(
-      isString(address) && EthereumAddress.check(address),
-      `Value of ${key} must be an Ethereum address`,
-    )
-    const contract = this.getContract(address)
-
-    return {
-      address: contract.address,
-      name: contract.name,
-      upgradeability: contract.upgradeability,
-    }
-  }
-
-  getDelayStringFromUpgradeability<
-    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
-  >(contractIdentifier: string, key: K): string {
-    const delay = this.getContractUpgradeabilityParam(contractIdentifier, key)
-    assert(typeof delay === 'number', `Value of ${key} must be a number`)
-    return delayDescriptionFromSeconds(delay)
   }
 
   contractAsPermissioned(
@@ -566,19 +547,14 @@ export class ProjectDiscovery {
     ]
   }
 
-  getContractUpgradeabilityParam<
-    K extends keyof MergedUnion<ScalingProjectUpgradeability>,
-    T extends MergedUnion<ScalingProjectUpgradeability>[K],
-  >(contractIdentifier: string, key: K): NonNullable<T> {
+  get$Admins(contractIdentifier: string) {
     const contract = this.getContract(contractIdentifier)
-    //@ts-expect-error only 'type' is allowed here, but many more are possible with our error handling
-    const result = contract.upgradeability[key] as T | undefined
-    assert(
-      isNonNullable(result),
-      `Upgradeability param of key ${key} does not exist in ${contract.name} contract (${this.projectName})`,
-    )
+    return get$Admins(contract.values)
+  }
 
-    return result
+  get$Implementations(contractIdentifier: string) {
+    const contract = this.getContract(contractIdentifier)
+    return get$Implementations(contract.values)
   }
 
   getAccessControlField(
@@ -589,15 +565,7 @@ export class ProjectDiscovery {
     members: EthereumAddress[]
   } {
     const accessControl = this.getContractValue<
-      Partial<
-        Record<
-          string,
-          {
-            adminRole: string
-            members: string[]
-          }
-        >
-      >
+      Partial<Record<string, { adminRole: string; members: string[] }>>
     >(contractIdentifier, 'accessControl')
     const role = accessControl && accessControl[roleName]
     assert(role, `Role ${roleName} does not exist`)
@@ -622,18 +590,20 @@ export class ProjectDiscovery {
       (discovery) => discovery.contracts,
     )
     const addressesWithinUpgradeability = contracts.flatMap((contract) =>
-      gatherAddressesFromUpgradeability(contract.upgradeability),
+      get$Implementations(contract.values),
     )
 
     return addressesWithinUpgradeability.filter((addr) => !this.isEOA(addr))
   }
 
-  getContractByAddress(address: string): ContractParameters | undefined {
+  getContractByAddress(
+    address: string | EthereumAddress,
+  ): ContractParameters | undefined {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
     return contracts.find(
-      (contract) => contract.address === EthereumAddress(address),
+      (contract) => contract.address === EthereumAddress(address.toString()),
     )
   }
 
@@ -661,16 +631,197 @@ export class ProjectDiscovery {
     return contracts.filter((contract) => contract.name === name)
   }
 
-  getPermissionsByRole(role: StackRole): ScalingProjectPermissionedAccount[] {
+  getContractsAndEoas(): (ContractParameters | EoaParameters)[] {
     const contracts = this.discoveries.flatMap(
       (discovery) => discovery.contracts,
     )
     const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
-
     return [...contracts, ...eoas]
+  }
+
+  getPermissionsByRole(role: StackRole): ScalingProjectPermissionedAccount[] {
+    return this.getContractsAndEoas()
       .filter((x) => x.roles?.includes(role))
       .map((x) => this.formatPermissionedAccount(x.address))
   }
+
+  getDiscoveredRoles(): ScalingProjectPermission[] {
+    const contractsAndEoas = this.getContractsAndEoas()
+
+    const roles = uniq(
+      contractsAndEoas.flatMap((x) => x.roles).filter(notUndefined),
+    )
+    roles.sort()
+    return roles.map((role) => ({
+      name: role,
+      accounts: this.getPermissionsByRole(role),
+      description: roleDescriptions[role] ?? '',
+      chain: this.chain,
+    }))
+  }
+
+  describeGnosisSafeMembership(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const safesWithThisMember = this.discoveries
+      .flatMap((discovery) => discovery.contracts)
+      .filter((contract) => contract.proxyType === 'gnosis safe')
+      .filter((contract) =>
+        toAddressArray(contract.values?.getOwners).includes(
+          contractOrEoa.address,
+        ),
+      )
+      .map((contract) => contract.name)
+    return safesWithThisMember.length === 0
+      ? undefined
+      : 'Member of ' + safesWithThisMember.join(', ') + '.'
+  }
+
+  describeRoles(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const roles = contractOrEoa.roles
+    return roles === undefined
+      ? undefined
+      : (roles.length === 1 ? 'A ' : '') + roles.join(', ') + '.'
+  }
+
+  describePermissions(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string | undefined {
+    const permissions = contractOrEoa.assignedPermissions
+    return permissions === undefined
+      ? undefined
+      : Object.entries(contractOrEoa.assignedPermissions ?? {})
+          .map(([role, addresses]) => {
+            const addressesString = addresses
+              .map((address) => this.getContract(address.toString()).name)
+              .join(', ')
+            return `${capitalize(role)} of ${addressesString}.`
+          })
+          .join(' ')
+  }
+
+  describeContractOrEoa(
+    contractOrEoa: ContractParameters | EoaParameters,
+  ): string {
+    return [
+      this.describeRoles(contractOrEoa),
+      this.describeGnosisSafeMembership(contractOrEoa),
+      this.describePermissions(contractOrEoa),
+      contractOrEoa.descriptions?.join(' '),
+    ]
+      .filter(notUndefined)
+      .join(' ')
+  }
+
+  replaceAddressesWithNames(s: string): string {
+    const ethereumAddressRegex = /\b0x[a-fA-F0-9]{40}\b/g
+    const addresses = s.match(ethereumAddressRegex) ?? []
+
+    for (const address of addresses) {
+      const contract = this.getContractByAddress(address)
+      if (contract !== undefined) {
+        s = s.replace(address, contract.name)
+      }
+    }
+    return s
+  }
+
+  getDiscoveredPermissions(): ScalingProjectPermission[] {
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const result: ScalingProjectPermission[] = []
+    for (const contract of contracts) {
+      const description = this.describeContractOrEoa(contract)
+      if (contract.proxyType === 'gnosis safe') {
+        result.push(
+          ...this.getMultisigPermission(
+            contract.address.toString(),
+            description,
+          ),
+        )
+      } else if (contract.assignedPermissions !== undefined) {
+        result.push(this.contractAsPermissioned(contract, description))
+      }
+    }
+
+    const eoas = this.discoveries.flatMap((discovery) => discovery.eoas)
+    for (const eoa of eoas) {
+      if (eoa.assignedPermissions === undefined) {
+        continue
+      }
+      const description = this.describeContractOrEoa(eoa)
+      result.push({
+        name: 'EOA',
+        accounts: [this.formatPermissionedAccount(eoa.address)],
+        chain: this.chain,
+        description,
+      })
+    }
+
+    result.forEach((permission) => {
+      permission.description = this.replaceAddressesWithNames(
+        permission.description,
+      )
+    })
+    return result
+  }
+
+  getDiscoveredContracts(): ScalingProjectContractSingleAddress[] {
+    const contracts = this.discoveries.flatMap(
+      (discovery) => discovery.contracts,
+    )
+    const gnosisModules = contracts.flatMap((contract) =>
+      toAddressArray(contract.values?.GnosisSafe_modules),
+    )
+    const result = contracts
+      .filter((contract) => !gnosisModules.includes(contract.address))
+      .filter((contracts) => contracts.assignedPermissions === undefined)
+      .filter((contracts) => contracts.proxyType !== 'gnosis safe')
+      .map((contract) => {
+        const admins = get$Admins(contract.values)
+        const upgradableBy = admins.length > 0 && {
+          upgradableBy: admins.map(
+            (a) => this.getContractByAddress(a)?.name ?? a.toString(),
+          ),
+          upgradeDelay: 'No delay',
+        }
+
+        return this.getContractDetails(contract.address.toString(), {
+          description: this.describeContractOrEoa(contract),
+          ...upgradableBy,
+        })
+      })
+
+    result.forEach((contract) => {
+      if (contract.description !== undefined) {
+        contract.description = this.replaceAddressesWithNames(
+          contract.description,
+        )
+      }
+    })
+
+    return result
+  }
+}
+
+function getUpgradeability(
+  contract: ContractParameters,
+): ScalingProjectUpgradeability | undefined {
+  if (!contract.proxyType) {
+    return undefined
+  }
+  const upgradeability: ScalingProjectUpgradeability = {
+    proxyType: contract.proxyType,
+    admins: get$Admins(contract.values),
+    implementations: get$Implementations(contract.values),
+  }
+  if (contract.values?.$immutable !== undefined) {
+    upgradeability.immutable = !!contract.values.$immutable
+  }
+  return upgradeability
 }
 
 function isNonNullable<T>(
@@ -685,3 +836,17 @@ export function stringFormat(str: string, ...val: string[]) {
   }
   return str
 }
+
+const roleDescriptions: { [key in StackRole]: string } = {
+  Sequencer:
+    'Sequencer is an actor allowed to commit transactions from current layer to the host chain.',
+  Proposer:
+    'Proposer is an actor allowed to post new state roots of current layer to the host chain.',
+  Challenger:
+    'Challenger is an actor allowed to delete state roots proposed by a Proposer.',
+  Guardian: 'Guardian is an actor allowed to pause deposits and withdrawals.',
+  Validator:
+    'Validator is an actor that validates the correctness of state transitions.',
+}
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

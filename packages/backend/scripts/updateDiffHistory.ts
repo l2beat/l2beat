@@ -22,12 +22,14 @@ import { rimraf } from 'rimraf'
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
 
 const FIRST_SECTION_PREFIX = '# Diff at'
+const ALLOWED_SWITCHES = ['--dev', '--save-sources', '--refresh']
 
 // This is a CLI tool. Run logic immediately.
 void updateDiffHistoryFile()
 
 async function updateDiffHistoryFile() {
-  if (process.argv.filter((v) => v.startsWith('-')).length > 0) {
+  const filtered = process.argv.filter((v) => !ALLOWED_SWITCHES.includes(v))
+  if (filtered.filter((v) => v.startsWith('-')).length > 0) {
     console.log(
       'Discovery run with non-default configuration, skipping updating the diff history file...',
     )
@@ -45,8 +47,8 @@ async function updateDiffHistoryFile() {
   // Get discovered.json from main branch and compare to current
   console.log(`Project: ${projectName}`)
   const configReader = new ConfigReader()
-  const curDiscovery = await configReader.readDiscovery(projectName, chain)
-  const config = await configReader.readConfig(projectName, chain)
+  const curDiscovery = configReader.readDiscovery(projectName, chain)
+  const config = configReader.readConfig(projectName, chain)
   const discoveryFolder = `./discovery/${projectName}/${chain}`
   const { content: discoveryJsonFromMainBranch, mainBranchHash } =
     getFileVersionOnMainBranch(`${discoveryFolder}/discovered.json`)
@@ -55,21 +57,45 @@ async function updateDiffHistoryFile() {
       ? undefined
       : (JSON.parse(discoveryJsonFromMainBranch) as DiscoveryOutput)
 
-  const { prevDiscovery, codeDiff } = await performDiscoveryOnPreviousBlock(
-    discoveryFromMainBranch,
-    projectName,
-    chain,
-  )
+  const saveSources = process.argv.some((a) => a === '--save-sources')
 
-  const diff = diffDiscovery(
-    prevDiscovery?.contracts ?? [],
-    curDiscovery.contracts,
-  )
+  let diff: DiscoveryDiff[] = []
+  let codeDiff
+  let configRelatedDiff
 
-  let configRelatedDiff = diffDiscovery(
-    discoveryFromMainBranch?.contracts ?? [],
-    prevDiscovery?.contracts ?? [],
-  )
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) > curDiscovery.blockNumber) {
+    throw new Error(
+      `Main branch discovery block number (${discoveryFromMainBranch?.blockNumber}) is higher than current discovery block number (${curDiscovery.blockNumber})`,
+    )
+  }
+
+  if ((discoveryFromMainBranch?.blockNumber ?? 0) < curDiscovery.blockNumber) {
+    const rerun = await performDiscoveryOnPreviousBlock(
+      discoveryFromMainBranch,
+      projectName,
+      chain,
+      saveSources,
+    )
+    codeDiff = rerun.codeDiff
+
+    diff = diffDiscovery(
+      rerun.prevDiscovery?.contracts ?? [],
+      curDiscovery.contracts,
+    )
+    configRelatedDiff = diffDiscovery(
+      discoveryFromMainBranch?.contracts ?? [],
+      rerun.prevDiscovery?.contracts ?? [],
+    )
+  } else {
+    console.log(
+      'Discovery was run on the same block as main branch, skipping rerun.',
+    )
+    configRelatedDiff = diffDiscovery(
+      discoveryFromMainBranch?.contracts ?? [],
+      curDiscovery?.contracts ?? [],
+    )
+  }
+
   removeIgnoredFields(configRelatedDiff)
   configRelatedDiff = filterOutEmptyDiffs(configRelatedDiff)
 
@@ -141,6 +167,7 @@ async function performDiscoveryOnPreviousBlock(
   discoveryFromMainBranch: DiscoveryOutput | undefined,
   projectName: string,
   chain: string,
+  saveSources: boolean,
 ) {
   if (discoveryFromMainBranch === undefined) {
     return { prevDiscovery: undefined, codeDiff: undefined }
@@ -162,6 +189,7 @@ async function performDiscoveryOnPreviousBlock(
     sourcesFolder: `.code@${blockNumberFromMainBranch}`,
     flatSourcesFolder: `.flat@${blockNumberFromMainBranch}`,
     discoveryFilename: `discovered@${blockNumberFromMainBranch}.json`,
+    saveSources,
   })
 
   const prevDiscoveryFile = readFileSync(
@@ -283,9 +311,15 @@ function generateDiffHistoryMarkdown(
     result.push(description)
   } else {
     result.push('')
-    result.push(
-      'Provide description of changes. This section will be preserved.',
-    )
+    if ((blockNumberFromMainBranchDiscovery ?? 0) !== curBlockNumber) {
+      result.push(
+        'Provide description of changes. This section will be preserved.',
+      )
+    } else {
+      result.push(
+        'Discovery rerun on the same block number with only config-related changes.',
+      )
+    }
     result.push('')
   }
 

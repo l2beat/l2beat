@@ -1,9 +1,7 @@
 import { expect } from 'earl'
 
-import {
-  ContractFieldSeverity,
-  DiscoveryContract,
-} from '../config/RawDiscoveryConfig'
+import { ContractFieldSeverity } from '@l2beat/discovery-types'
+import { DiscoveryContract } from '../config/RawDiscoveryConfig'
 import { FieldDiff } from '../output/diffContracts'
 import { sortBySeverity } from './sortDiffs'
 

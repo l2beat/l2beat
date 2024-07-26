@@ -1,5 +1,9 @@
 import { ConfigReader } from '@l2beat/discovery'
-import { ContractValue, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractValue,
+  DiscoveryOutput,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import { hashJson } from '@l2beat/shared'
 import {
   assert,
@@ -9,6 +13,10 @@ import {
 } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
+  Bridge,
+  DaLayer,
+  Layer2,
+  Layer3,
   Project,
   ScalingProjectContract,
   ScalingProjectPermission,
@@ -16,19 +24,35 @@ import {
   layer2s,
   layer3s,
 } from '..'
-import { gatherAddressesFromUpgradeability } from '../../scripts/checkVerifiedContracts/addresses'
 
-export function getCommonContractsIn(project: Project) {
+type Params =
+  | {
+      type: (Layer2 | Bridge | DaLayer)['type']
+    }
+  | {
+      type: Layer3['type']
+      hostChain: string
+    }
+
+export function getCommonContractsIn(project: Params) {
   if (project.type === 'layer2') {
     return findCommonContractsMemoized(layer2s)
-  } else if (project.type === 'bridge') {
+  }
+
+  if (project.type === 'bridge') {
     return findCommonContractsMemoized(bridges)
-  } else if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
+  }
+
+  if (project.type === 'layer3' && project.hostChain !== 'Multiple') {
     const projects = layer3s.filter((l3) => l3.hostChain === project.hostChain)
     return findCommonContractsMemoized(projects, project.hostChain as string)
-  } else {
-    return {}
   }
+
+  if (project.type === 'DaLayer') {
+    throw new Error('Not implemented yet')
+  }
+
+  return {}
 }
 
 const memo = new Map<Hash256, Record<string, ReferenceInfo[]>>()
@@ -104,7 +128,7 @@ function findCommonContracts(
       .includes(address)
     const isImplementation = linkedProjectes
       .flatMap((p) => p.contracts)
-      .flatMap((a) => a.implementations ?? [])
+      .flatMap((a) => get$Implementations(a.values) ?? [])
       .map((a) => a.toString())
       .includes(address)
 
@@ -185,7 +209,7 @@ function projectContainsAddressAsContract(
       'address' in contract &&
       (contract.address.toString() === address ||
         (contract.upgradeability !== undefined &&
-          gatherAddressesFromUpgradeability(contract.upgradeability)
+          contract.upgradeability.implementations
             .map((a) => a.toString())
             .includes(address)))
     ) {
@@ -230,7 +254,9 @@ function getPermissionContainingAddress(
 
 function getProjectAddresses(project: DiscoveryOutput) {
   const addresses: EthereumAddress[] = project.eoas.map((e) => e.address)
-  addresses.push(...project.contracts.flatMap((c) => c.implementations ?? []))
+  addresses.push(
+    ...project.contracts.flatMap((c) => get$Implementations(c.values)),
+  )
   addresses.push(...project.contracts.map((c) => c.address))
   addresses.push(
     ...project.contracts.flatMap((c) => {

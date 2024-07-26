@@ -1,12 +1,12 @@
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
 import {
   assert,
+  ChainConverter,
   ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
 
-import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { ChainConverter } from '../../../tools/ChainConverter'
-import { UpdateMonitorRepository } from '../../update-monitor/repositories/UpdateMonitorRepository'
+import { Database } from '@l2beat/database'
+import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
 
 export class ImplementationChangeController {
   private readonly onDiskChains: string[] = []
@@ -17,7 +17,7 @@ export class ImplementationChangeController {
   > = {}
 
   constructor(
-    private readonly updateMonitorRepository: UpdateMonitorRepository,
+    private readonly db: Database,
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
   ) {
@@ -40,21 +40,21 @@ export class ImplementationChangeController {
       projects: {},
     }
 
+    const newDiscoveries = await this.db.updateMonitor.getAll()
     for (const chain of this.onDiskChains) {
       for (const project of this.onDiskProjects[chain]) {
         const discovery = this.onDiskDiscoveries[chain][project]
         const chainId = this.chainConverter.toChainId(chain)
-        const newDiscovery = await this.updateMonitorRepository.findLatest(
-          project,
-          chainId,
-        )
 
+        const newDiscovery = newDiscoveries.find(
+          (d) => d.chainId === chainId && d.projectName === project,
+        )
         const latestContracts = newDiscovery?.discovery?.contracts
         const diffs = latestContracts
           ? diffDiscovery(discovery.contracts, latestContracts)
           : []
         const implementationChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.key && f.key.startsWith('implementation')),
+          diff.diff?.some((f) => f.key && f.key === 'values.$implementation'),
         )
 
         if (implementationChanges.length === 0) {
@@ -70,7 +70,7 @@ export class ImplementationChangeController {
             (c) => c.address === diff.address,
           )
           assert(diffedContract, 'diffedContract is undefined')
-          const newImplementations = diffedContract.implementations ?? []
+          const newImplementations = get$Implementations(diffedContract.values)
 
           result.projects[project][chain].push({
             containingContract: diff.address,

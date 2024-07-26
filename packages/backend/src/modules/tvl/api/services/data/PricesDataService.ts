@@ -1,13 +1,13 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 
+import { Database } from '@l2beat/database'
 import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { PriceRepository } from '../../../repositories/PriceRepository'
 
 interface Dependencies {
-  readonly priceRepository: PriceRepository
+  readonly db: Database
   readonly indexerService: IndexerService
   readonly clock: Clock
   etherPriceConfig: PriceConfigEntry & { configId: string }
@@ -23,7 +23,7 @@ export class PricesDataService {
     configuration: PriceConfigEntry & { configId: string },
     targetTimestamp: UnixTime,
   ) {
-    const priceRecords = await this.$.priceRepository.getByConfigIdsInRange(
+    const priceRecords = await this.$.db.price.getByConfigIdsInRange(
       [configuration.configId],
       configuration.sinceTimestamp,
       targetTimestamp,
@@ -82,7 +82,7 @@ export class PricesDataService {
     configurations: (PriceConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const prices = await this.$.priceRepository.getByTimestamp(targetTimestamp)
+    const prices = await this.$.db.price.getByTimestamp(targetTimestamp)
     const status = await this.$.indexerService.getConfigurationsStatus(
       configurations,
       targetTimestamp,
@@ -100,11 +100,10 @@ export class PricesDataService {
 
     await Promise.all(
       status.lagging.map(async (laggingConfig) => {
-        const latestRecord =
-          await this.$.priceRepository.findByConfigAndTimestamp(
-            laggingConfig.id,
-            laggingConfig.latestTimestamp,
-          )
+        const latestRecord = await this.$.db.price.findByConfigAndTimestamp(
+          laggingConfig.id,
+          laggingConfig.latestTimestamp,
+        )
 
         assert(latestRecord, `Undefined record for ${laggingConfig.id}`)
 

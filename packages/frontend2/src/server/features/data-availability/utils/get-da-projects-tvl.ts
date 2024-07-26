@@ -11,33 +11,37 @@ export async function getDaProjectsTvl(projectIds: ProjectId[]) {
   return await getCachedDaProjectsTvl(projectIds)
 }
 
-const getCachedDaProjectsTvl = cache(async (projectIds: ProjectId[]) => {
-  const values = await db.value.getLatestValuesForProjects(projectIds)
+const getCachedDaProjectsTvl = cache(
+  async (projectIds: ProjectId[]) => {
+    const values = await db.value.getLatestValuesForProjects(projectIds)
 
-  const byProject = groupBy(values, 'projectId')
+    const byProject = groupBy(values, 'projectId')
 
-  const aggregated = Object.entries(byProject).map(([projectId, values]) => {
-    const { canonical, external, native } = values.reduce(
-      (acc, value) => {
-        acc.canonical += value.canonical
-        acc.external += value.external
-        acc.native += value.native
+    const aggregated = Object.entries(byProject).map(([projectId, values]) => {
+      const { canonical, external, native } = values.reduce(
+        (acc, value) => {
+          acc.canonical += value.canonical
+          acc.external += value.external
+          acc.native += value.native
 
-        return acc
-      },
-      { canonical: 0n, external: 0n, native: 0n },
-    )
+          return acc
+        },
+        { canonical: 0n, external: 0n, native: 0n },
+      )
 
-    const tvl = canonical + external + native
+      const tvl = canonical + external + native
 
-    return {
-      projectId: ProjectId(projectId),
-      tvl: Number(tvl),
-    }
-  })
+      return {
+        projectId: ProjectId(projectId),
+        tvl: Number(tvl),
+      }
+    })
 
-  return aggregated
-})
+    return aggregated
+  },
+  ['daProjectsTvl'],
+  { revalidate: 60 * 10 },
+)
 
 /**
  * @helper

@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x9630b3b332c010546d253006b1abd392e44710d0
+Generated with discovered.json: 0xff6960f255809cdeb7f9dbbe56b2e014c409e898
+
+# Diff at Thu, 18 Jul 2024 10:31:13 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 19531626
+- current block number: 19531626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531626 (main branch discovery), not current.
+
+```diff
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C, inheriting its permissions."]
+    }
+```
+
+Generated with discovered.json: 0x425903034a509368cac295deabcbca75860f4d05
 
 # Diff at Thu, 28 Mar 2024 09:10:45 GMT:
 

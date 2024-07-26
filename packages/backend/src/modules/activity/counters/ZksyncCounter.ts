@@ -1,29 +1,20 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { range } from 'lodash'
-
-import { ZksyncClient } from '../../../peripherals/zksync/ZksyncClient'
+import { ZksyncLiteClient } from '../../../peripherals/zksynclite/ZksyncLiteClient'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { ZksyncTransactionRepository } from '../repositories/ZksyncTransactionRepository'
 
 export class ZksyncCounter extends SequenceProcessor {
   constructor(
     projectId: ProjectId,
-    sequenceProcessorRepository: SequenceProcessorRepository,
-    private readonly zksyncRepository: ZksyncTransactionRepository,
-    private readonly zksyncClient: ZksyncClient,
+    db: Database,
+    private readonly zksyncClient: ZksyncLiteClient,
     logger: Logger,
     batchSize: number,
   ) {
-    super(
-      projectId,
-      sequenceProcessorRepository,
-      { batchSize, startFrom: 1 },
-      logger,
-    )
+    super(projectId, db, { batchSize, startFrom: 1 }, logger)
     this.logger = this.logger.for(this)
   }
 
@@ -31,11 +22,7 @@ export class ZksyncCounter extends SequenceProcessor {
     return await this.zksyncClient.getLatestBlock()
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Knex.Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const transactions =
         await this.zksyncClient.getTransactionsInBlock(blockNumber)
@@ -55,6 +42,8 @@ export class ZksyncCounter extends SequenceProcessor {
     const blockTransactions = await promiseAllPlus(queries, this.logger, {
       metricsId: 'ZksyncBlockCounter',
     })
-    await this.zksyncRepository.addOrUpdateMany(blockTransactions.flat(), trx)
+    await this.db.zkSyncTransactionCount.addOrUpdateMany(
+      blockTransactions.flat(),
+    )
   }
 }

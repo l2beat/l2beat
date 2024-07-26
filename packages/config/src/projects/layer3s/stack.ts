@@ -9,12 +9,7 @@ const discovery = new ProjectDiscovery('stack', 'base')
 
 export const stack: Layer3 = opStackL3({
   discovery,
-  badges: [
-    Badge.VM.EVM,
-    Badge.Stack.OPStack,
-    Badge.L3ParentChain.Base,
-    Badge.DA.Celestia,
-  ],
+  badges: [Badge.DA.Celestia, Badge.L3ParentChain.Base, Badge.RaaS.Conduit],
   hostChain: ProjectId('base'),
   display: {
     name: 'Stack',

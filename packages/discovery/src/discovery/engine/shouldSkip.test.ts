@@ -39,6 +39,8 @@ describe(shouldSkip.name, () => {
         abis: {},
         configHash: Hash256.random(),
         version: 123,
+        usedTemplates: {},
+        shapeFilesHash: Hash256.random(),
       }),
     })
 
@@ -54,6 +56,7 @@ describe(shouldSkip.name, () => {
           Foo: 'SharedFoo',
         },
       },
+      {},
       configReader,
     )
     const result = shouldSkip(address, config, 0, 1)

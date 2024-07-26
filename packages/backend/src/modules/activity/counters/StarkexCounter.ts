@@ -1,21 +1,18 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { range } from 'lodash'
 
+import { Database } from '@l2beat/database'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { StarkexTransactionCountRepository } from '../repositories/StarkexCountRepository'
 
 export class StarkexCounter extends SequenceProcessor {
   constructor(
     projectId: ProjectId,
     private readonly starkexInstances: string[],
-    sequenceProcessorRepository: SequenceProcessorRepository,
-    private readonly starkexRepository: StarkexTransactionCountRepository,
+    db: Database,
     private readonly starkexClient: StarkexClient,
     private readonly clock: Clock,
     logger: Logger,
@@ -25,7 +22,7 @@ export class StarkexCounter extends SequenceProcessor {
   ) {
     super(
       projectId,
-      sequenceProcessorRepository,
+      db,
       {
         batchSize,
         startFrom: sinceTimestamp.toStartOf('day').toDays(),
@@ -42,11 +39,7 @@ export class StarkexCounter extends SequenceProcessor {
     return await Promise.resolve(day)
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Knex.Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((day) => async () => {
       const counts = await Promise.all(
         this.starkexInstances.map(
@@ -65,6 +58,6 @@ export class StarkexCounter extends SequenceProcessor {
     const counts = await promiseAllPlus(queries, this.logger, {
       metricsId: `StarkexBlockCounter_${this.projectId.toString()}`,
     })
-    await this.starkexRepository.addOrUpdateMany(counts, trx)
+    await this.db.starkExTransactionCount.addOrUpdateMany(counts)
   }
 }

@@ -1,13 +1,14 @@
-import { EIP1967ProxyUpgradeability } from '@l2beat/discovery-types'
+import { ContractValue } from '@l2beat/discovery-types'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
-import { AnalyzedContract } from './AddressAnalyzer'
+import { AnalyzedContract, ExtendedTemplate } from './AddressAnalyzer'
 import {
   ContractMeta,
   findHighestSeverity,
   getMetaFromUpgradeability,
   getTargetsMeta,
+  interpolateDescription,
   invertMeta,
   mergeContractMeta,
   mergePermissions,
@@ -130,7 +131,8 @@ describe('metaUtils', () => {
         },
         owner: {
           target: {
-            description: 'The owner of the contract',
+            description:
+              'The owner of the contract (some number {{ numberField }} )',
             role: 'Challenger',
             permission: 'owner',
             category: 'Core',
@@ -140,7 +142,7 @@ describe('metaUtils', () => {
         },
         resourceConfig: {
           target: {
-            description: 'The resource config of the contract',
+            description: 'The resource config of the contract {{ #address }}',
             role: ['Guardian', 'Challenger'],
             permission: ['admin', 'owner'],
             category: ['Gateways&Escrows', 'Core'],
@@ -160,27 +162,25 @@ describe('metaUtils', () => {
         },
       }
 
-      const upgradeabilityAdmin = EthereumAddress(
-        '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
-      )
-      const upgradeability: EIP1967ProxyUpgradeability = {
-        type: 'EIP1967 proxy',
-        admin: upgradeabilityAdmin,
-        implementation: EthereumAddress.from('0x8888'),
+      const mergedValues = {
+        $admin: '0xC72aE5c7cc9a332699305E29F68Be66c73b60542',
+        ...Object.fromEntries(
+          handlerResults.map(({ field, value }) => [field, value]),
+        ),
       }
 
       const selfAddress = EthereumAddress.from('0x1234')
       const result = getTargetsMeta(
         selfAddress,
-        upgradeability,
-        handlerResults,
+        mergedValues,
         fields,
+        generateFakeAnalysis(selfAddress),
       )
 
       expect(result).toEqual({
         '0xC72aE5c7cc9a332699305E29F68Be66c73b60542': {
           displayName: undefined,
-          descriptions: ['The owner of the contract'],
+          descriptions: ['The owner of the contract (some number 1122 )'],
           roles: new Set(['Challenger']),
           permissions: {
             admin: new Set([selfAddress]),
@@ -193,7 +193,9 @@ describe('metaUtils', () => {
         '0xc52BC7344e24e39dF1bf026fe05C4e6E23CfBcFf': {
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: ['The resource config of the contract'],
+          descriptions: [
+            'The resource config of the contract 0x0000000000000000000000000000000000001234',
+          ],
           permissions: {
             owner: new Set([selfAddress]),
             admin: new Set([selfAddress]),
@@ -205,7 +207,9 @@ describe('metaUtils', () => {
         '0x6F54Ca6F6EdE96662024Ffd61BFd18f3f4e34DFf': {
           displayName: undefined,
           categories: new Set(['Core', 'Gateways&Escrows']),
-          descriptions: ['The resource config of the contract'],
+          descriptions: [
+            'The resource config of the contract 0x0000000000000000000000000000000000001234',
+          ],
           permissions: {
             owner: new Set([selfAddress]),
             admin: new Set([selfAddress]),
@@ -337,13 +341,8 @@ describe('metaUtils', () => {
     it('should properly get meta from upgradeability', () => {
       const selfAddress = EthereumAddress.from('0x1234')
       const admin = EthereumAddress.from('0xabcd')
-      const upgradeability: EIP1967ProxyUpgradeability = {
-        type: 'EIP1967 proxy',
-        admin,
-        implementation: EthereumAddress.from('0x5678'),
-      }
 
-      const result = getMetaFromUpgradeability(selfAddress, upgradeability)
+      const result = getMetaFromUpgradeability(selfAddress, [admin])
 
       expect(result).toEqual({
         [admin.toString()]: {
@@ -360,4 +359,58 @@ describe('metaUtils', () => {
       })
     })
   })
+
+  describe('interpolateDescription', () => {
+    it('should correctly interpolate variables in the description', () => {
+      const description =
+        'Contract with address {{ #address }} and value {{ someValue }}'
+      const analysis = generateFakeAnalysis(
+        EthereumAddress.from('0x1234567890123456789012345678901234567890'),
+        undefined,
+        undefined,
+        {
+          someValue: 42,
+        },
+      )
+
+      const result = interpolateDescription(description, analysis)
+
+      expect(result).toEqual(
+        'Contract with address 0x1234567890123456789012345678901234567890 and value 42',
+      )
+    })
+
+    it('should throw an error if a variable is not found in the analysis', () => {
+      const description = 'Contract with missing {{ missingValue }}'
+      const analysis = generateFakeAnalysis(
+        EthereumAddress.from('0x1234567890123456789012345678901234567890'),
+      )
+
+      expect(() => interpolateDescription(description, analysis)).toThrow(
+        'Value for variable "{{ missingValue }}" in contract description not found in contract analysis',
+      )
+    })
+  })
 })
+
+const generateFakeAnalysis = (
+  address: EthereumAddress,
+  extendedTemplate?: ExtendedTemplate,
+  errors?: Record<string, string>,
+  values?: Record<string, ContractValue | undefined>,
+): AnalyzedContract => {
+  return {
+    type: 'Contract',
+    address,
+    name: `NameOf${address.toString()}`,
+    derivedName: undefined,
+    isVerified: true,
+    implementations: [],
+    values: values ?? { numberField: 1122 },
+    errors: errors ?? {},
+    abis: {},
+    sourceBundles: [],
+    extendedTemplate,
+    relatives: {},
+  }
+}

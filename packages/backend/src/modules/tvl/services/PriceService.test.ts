@@ -5,7 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { UpdateConfiguration } from '../../../tools/uif/multi/types'
+import { Configuration } from '../../../tools/uif/multi/types'
 import { PriceService } from './PriceService'
 
 describe(PriceService.name, () => {
@@ -14,10 +14,10 @@ describe(PriceService.name, () => {
       const from = new UnixTime(100)
       const to = new UnixTime(300)
       const coingeckoId = CoingeckoId('id')
-      const configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[] = [
-        update('a', 100, null),
-        update('b', 100, 200),
-        update('c', 100, 400),
+      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
+        configuration('a', 100, null),
+        configuration('b', 100, 200),
+        configuration('c', 100, 400),
       ]
 
       const coingeckoQueryService = mockObject<CoingeckoQueryService>({
@@ -78,11 +78,11 @@ describe(PriceService.name, () => {
   })
 })
 
-function update(
+function configuration(
   id: string,
   minHeight: number,
   maxHeight: number | null,
-): UpdateConfiguration<CoingeckoPriceConfigEntry> {
+): Configuration<CoingeckoPriceConfigEntry> {
   return {
     id,
     properties: mockObject<CoingeckoPriceConfigEntry>({
@@ -90,7 +90,6 @@ function update(
     }),
     minHeight,
     maxHeight,
-    hasData: false, // not important here
   }
 }
 

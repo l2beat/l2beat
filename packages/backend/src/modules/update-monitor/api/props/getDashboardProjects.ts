@@ -1,8 +1,8 @@
 import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
 import { ChainId } from '@l2beat/shared-pure'
 
-import { Project } from '../../../../model/Project'
-import { UpdateMonitorRepository } from '../../repositories/UpdateMonitorRepository'
+import { BackendProject } from '@l2beat/config'
+import { Database } from '@l2beat/database'
 import { getDiff } from './utils/getDiff'
 
 export interface DashboardProject {
@@ -13,10 +13,10 @@ export interface DashboardProject {
 }
 
 export async function getDashboardProjects(
-  projects: Project[],
+  projects: BackendProject[],
   configs: DiscoveryConfig[],
   configReader: ConfigReader,
-  updateMonitorRepository: UpdateMonitorRepository,
+  db: Database,
   chain: string,
   chainId: ChainId,
 ): Promise<DashboardProject[]> {
@@ -24,11 +24,7 @@ export async function getDashboardProjects(
 
   for (const config of configs) {
     const discovery = configReader.readDiscovery(config.name, chain)
-    const diff: DiscoveryDiff[] = await getDiff(
-      updateMonitorRepository,
-      discovery,
-      chainId,
-    )
+    const diff: DiscoveryDiff[] = await getDiff(db, discovery, chainId)
 
     const project: DashboardProject = {
       name: config.name,

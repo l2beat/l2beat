@@ -1,4 +1,143 @@
-Generated with discovered.json: 0x477be080c00203993ec9f502263501a905ee0e4d
+Generated with discovered.json: 0x5013f11878fa492b43f258c666a94f5851309e6a
+
+# Diff at Mon, 22 Jul 2024 14:42:16 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20289773
+- current block number: 20362731
+
+## Description
+
+Two new token pools are added related to Zunami protocol: zunETH and zunUSD. Tokens are added to Ethereum (in case these escrows are used in the future).
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract BurnMintTokenPool (0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD)
+    +++ description: None
+```
+
+```diff
+    contract LockReleaseTokenPool (0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4) {
+    +++ description: None
+      values.getOffRamps.6:
++        "0xCe6364dBe64D2789D916180131fAda2ABFF702E8"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xf5224EfD7Ea9edFa6b6e06964084b92426DCdE99) {
+    +++ description: None
+      values.getSupportedChains.2:
++        "15971525489660198786"
+      values.getSupportedChains.1:
++        "3734403246176062136"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xa96787DCe9Df7BF7bB033E39777bd108E29D349b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xF84Bf7D614F3138D805186C497995d4eD315fA72)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...0xF84Bf7D614F3138D805186C497995d4eD315fA72.sol} |  461 ++++++-
+ ...-0xa96787DCe9Df7BF7bB033E39777bd108E29D349b.sol | 1407 ++++++++++++++++++++
+ 2 files changed, 1842 insertions(+), 26 deletions(-)
+```
+
+Generated with discovered.json: 0x51df07c0d84720ff6c68455e3bcd515e7859dba9
+
+# Diff at Fri, 12 Jul 2024 10:19:04 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@48ec906f1df3ec8351c0e2324170592091f7c1db block: 20217553
+- current block number: 20289773
+
+## Description
+
+A new burn/mint tokenPool for USD+ (Dinari) is added.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.11:
++        {"sourceChainSelector":"8805746078405598895","offRamp":"0xCe6364dBe64D2789D916180131fAda2ABFF702E8"}
+      values.onRamps.8805746078405598895:
++        "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC"
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.11:
++        "0x3d8a95adA63D406ee8232562AbD83CEdb0B90466"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xeaE89E53B8317CaB04165F5323285252D5669B73) {
+    +++ description: None
+      values.getOffRamps.1:
++        "0xdf85c8381954694E74abD07488f452b4c2Cddfb3"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOffRamp (0xCe6364dBe64D2789D916180131fAda2ABFF702E8)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x80e2dcE0A16c8DB769995129cF6BbFCac8E4cFb8.sol |  998 +++++++
+ ...-0x9c6a6E9C3Bb973C24ee2982F59BE9b796327e1dD.sol |  998 +++++++
+ ...-0x3d8a95adA63D406ee8232562AbD83CEdb0B90466.sol | 1089 ++++++++
+ ...-0xCe6364dBe64D2789D916180131fAda2ABFF702E8.sol | 2894 ++++++++++++++++++++
+ ...-0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC.sol | 2732 ++++++++++++++++++
+ 5 files changed, 8711 insertions(+)
+```
+
+Generated with discovered.json: 0x635fd0f952f8a70017ac8f90189d49f723440119
 
 # Diff at Mon, 01 Jul 2024 12:13:33 GMT:
 

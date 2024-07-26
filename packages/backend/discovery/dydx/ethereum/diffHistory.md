@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x50094fb3978e49e64874954d7fa52a6f1c5ed03a
+Generated with discovered.json: 0x66fd297c9b9a07f6a21c93da75993eb2d09c7480
+
+# Diff at Thu, 18 Jul 2024 10:30:44 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 19825321
+- current block number: 19825321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825321 (main branch discovery), not current.
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      assignedPermissions:
++        {"admin":["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]}
+    }
+```
+
+Generated with discovered.json: 0xc451776acd16cd4a023e980afd2fd3d73f69a7d9
 
 # Diff at Wed, 08 May 2024 12:25:13 GMT:
 

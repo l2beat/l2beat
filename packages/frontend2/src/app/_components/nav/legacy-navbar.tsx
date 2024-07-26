@@ -17,12 +17,11 @@ export async function LegacyNavbar({
   groups,
 }: { logoLink: string; groups: NavGroup[] }) {
   const hiringBadge = env.NEXT_PUBLIC_SHOW_HIRING_BADGE
-  const zkCatalog = env.NEXT_PUBLIC_FEATURE_FLAG_ZK_CATALOG
 
   return (
-    <div className="h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 hidden xl:block">
+    <div className="hidden h-[4.25rem] border-b border-gray-200 text-base dark:border-gray-850 xl:block">
       <nav className="relative mx-auto box-border flex h-full max-w-[1780px] items-center justify-between px-6">
-        <ul className="flex py-4 items-center">
+        <ul className="flex items-center py-4">
           <li className="mr-8">
             <Link href={logoLink}>
               <Logo className="h-8 w-auto" />
@@ -41,15 +40,13 @@ export async function LegacyNavbar({
           )}
         </ul>
         <div className="flex h-full items-center gap-5">
-          <ul className="items-center gap-4 hidden 2xl:flex">
+          <ul className="hidden items-center gap-4 2xl:flex">
             <SocialLinks />
           </ul>
-          <div className="h-8 w-px bg-gray-300 dark:bg-gray-700 hidden 2xl:block" />
+          <div className="hidden h-8 w-px bg-gray-300 dark:bg-gray-700 2xl:block" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavLink title="Forum" href={externalLinks.forum} />
-            {zkCatalog && (
-              <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
-            )}
+            <LegacyNavLink title="ZK Catalog" href="/zk-catalog" />
             <LegacyNavLink title="Donate" href="/donate" />
             <LegacyNavLink title="Governance" href="/governance" />
             <LegacyNavLink title="Glossary" href="/glossary" />

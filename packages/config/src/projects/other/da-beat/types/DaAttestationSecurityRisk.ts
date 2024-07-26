@@ -8,7 +8,7 @@ export type DaAttestationSecurityRisk =
   | ReturnType<typeof SigVerifiedZK>
 
 const Enshrined = {
-  type: 'Enshirned',
+  type: 'Enshrined',
   value: 'Enshrined',
   sentiment: 'good',
   description: 'TODO',

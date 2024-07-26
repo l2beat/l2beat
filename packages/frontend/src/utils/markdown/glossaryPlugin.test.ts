@@ -1,36 +1,44 @@
 import { expect } from 'earl'
 import MarkdownIt from 'markdown-it'
-import { GlossaryEntry } from '../../pages/glossary/props/getGlossaryEntry'
+import { CollectionEntry } from '../../content/getCollection'
 import { glossaryPlugin, linkGlossaryTerms } from './glossaryPlugin'
 
 describe(linkGlossaryTerms.name, () => {
-  const glossary: GlossaryEntry[] = [
+  const glossary: CollectionEntry<'glossary'>[] = [
     {
-      term: 'Blob',
       id: 'blob',
-      match: ['blobs'],
-      definition: 'A blob of data.',
-      isSpicy: false,
+      data: {
+        term: 'Blob',
+        match: ['blobs'],
+        definition: 'A blob of data.',
+        isSpicy: false,
+      },
     },
     {
       id: 'node',
-      term: 'Node',
-      definition: 'A software client that participates in the network.',
-      isSpicy: false,
+      data: {
+        term: 'Node',
+        definition: 'A software client that participates in the network.',
+        isSpicy: false,
+      },
     },
     {
       id: 'dac',
-      term: 'Data Availability Committee (DAC)',
-      definition:
-        'A set of members whose task is attesting and ensuring that the data is available for the public. An onchain DAC verifier checks that a threshold of signatures from the DAC members is reached before considering a data commitment as available and therefore valid to be used in the system.',
-      isSpicy: false,
+      data: {
+        term: 'Data Availability Committee (DAC)',
+        definition:
+          'A set of members whose task is attesting and ensuring that the data is available for the public. An onchain DAC verifier checks that a threshold of signatures from the DAC members is reached before considering a data commitment as available and therefore valid to be used in the system.',
+        isSpicy: false,
+      },
     },
     {
       id: 'da',
-      term: 'Data availability',
-      definition:
-        "The property of a rollup's data being reachable by any node retrieving the data that were rolled up and executed to reach the proposed state.",
-      isSpicy: true,
+      data: {
+        term: 'Data availability',
+        definition:
+          "The property of a rollup's data being reachable by any node retrieving the data that were rolled up and executed to reach the proposed state.",
+        isSpicy: true,
+      },
     },
   ]
 

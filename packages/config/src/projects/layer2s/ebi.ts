@@ -1,10 +1,8 @@
-import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const ebi: Layer2 = upcomingL2({
   id: 'ebi',
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
   display: {
     name: 'Ebi',
     slug: 'ebi',

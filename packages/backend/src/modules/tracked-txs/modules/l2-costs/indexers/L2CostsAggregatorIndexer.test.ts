@@ -7,43 +7,34 @@ import {
 } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
-import { TrackedTxId, createTrackedTxId } from '@l2beat/shared'
-import { Project } from '../../../../../model/Project'
+import { BackendProject } from '@l2beat/config'
 import {
+  AggregatedL2CostRecord,
+  Database,
   IndexerConfigurationRecord,
-  IndexerConfigurationRepository,
-} from '../../../../../tools/uif/IndexerConfigurationRepository'
+  L2CostPriceRecord,
+  L2CostRecord,
+} from '@l2beat/database'
+import { TrackedTxId, createTrackedTxId } from '@l2beat/shared'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../../tools/uif/ids'
 import {
-  AggregatedL2CostsRecord,
-  AggregatedL2CostsRepository,
-} from '../repositories/AggregatedL2CostsRepository'
-import {
-  L2CostsPricesRecord,
-  L2CostsPricesRepository,
-} from '../repositories/L2CostsPricesRepository'
-import {
-  L2CostsRecord,
-  L2CostsRecordWithProjectId,
-  L2CostsRepository,
-} from '../repositories/L2CostsRepository'
-import {
   L2CostsAggregatorIndexer,
   L2CostsAggregatorIndexerDeps,
+  ProjectL2Cost,
   TrackedTxMultiplier,
 } from './L2CostsAggregatorIndexer'
 
 const MIN = new UnixTime(1682899200)
 const NOW = new UnixTime(1714662000)
 
-const MOCK_PROJECTS: Project[] = [
-  mockObject<Project>({
+const MOCK_PROJECTS: BackendProject[] = [
+  mockObject<BackendProject>({
     projectId: ProjectId('project1'),
     isArchived: false,
     trackedTxsConfig: undefined,
   }),
-  mockObject<Project>({
+  mockObject<BackendProject>({
     projectId: ProjectId('project2'),
     isArchived: false,
     trackedTxsConfig: [
@@ -74,7 +65,7 @@ const MOCK_PROJECTS: Project[] = [
       },
     ],
   }),
-  mockObject<Project>({
+  mockObject<BackendProject>({
     projectId: ProjectId('project3'),
     isArchived: false,
     trackedTxsConfig: [
@@ -111,35 +102,41 @@ describe(L2CostsAggregatorIndexer.name, () => {
         }),
       ]
 
-      const ethPrices: L2CostsPricesRecord[] = [
+      const ethPrices: L2CostPriceRecord[] = [
         { timestamp: txTime.toStartOf('hour'), priceUsd: 2000 },
       ]
 
-      const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
+      const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
         getByTimeRange: mockFn().resolvesTo(txs),
       })
 
-      const l2CostsPricesRepositoryMock = mockObject<L2CostsPricesRepository>({
+      const l2CostsPricesRepositoryMock = mockObject<Database['l2CostPrice']>({
         getByTimestampRange: mockFn().resolvesTo(ethPrices),
       })
 
-      const indexerConfigurationRepositoryMock =
-        mockObject<IndexerConfigurationRepository>({
-          getSavedConfigurationsByIds: mockFn().resolvesTo([
-            mockObject<IndexerConfigurationRecord>({
-              id: txs[0].configurationId,
-              properties: JSON.stringify({
-                projectId: txs[0].projectId,
-              }),
+      const indexerConfigurationRepositoryMock = mockObject<
+        Database['indexerConfiguration']
+      >({
+        getSavedConfigurationsByIds: mockFn().resolvesTo([
+          mockObject<IndexerConfigurationRecord>({
+            id: txs[0].configurationId,
+            properties: JSON.stringify({
+              projectId: txs[0].projectId,
             }),
-          ]),
-        })
+          }),
+        ]),
+      })
 
       const indexer = createIndexer({
         tag: 'update-correct',
-        l2CostsRepository: l2CostsRepositoryMock,
-        l2CostsPricesRepository: l2CostsPricesRepositoryMock,
-        indexerConfigurationRepository: indexerConfigurationRepositoryMock,
+        db: mockObject<Database>({
+          l2Cost: l2CostsRepositoryMock,
+          l2CostPrice: l2CostsPricesRepositoryMock,
+          indexerConfiguration: indexerConfigurationRepositoryMock,
+          aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+            addOrUpdateMany: mockFn().resolvesTo(1),
+          }),
+        }),
       })
 
       const multipliers: TrackedTxMultiplier[] = [
@@ -176,9 +173,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       // 2023-05-01 00:30:00
       const to = MIN.add(30, 'minutes')
 
-      const indexer = createIndexer({
-        tag: 'update-nothing',
-      })
+      const indexer = createIndexer({ tag: 'update-nothing' })
 
       indexer.shift = mockFn().returns([MIN, MIN])
 
@@ -234,7 +229,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
         }),
       ]
 
-      const ethPrices: L2CostsPricesRecord[] = [
+      const ethPrices: L2CostPriceRecord[] = [
         { timestamp: NOW, priceUsd: 2000 },
         { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
       ]
@@ -302,7 +297,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       ])
     })
 
-    it('throws if multplier missing', async () => {
+    it('throws if multiplier missing', async () => {
       const indexer = createIndexer({ tag: 'aggregate-throws-no-multiplier' })
 
       const trackedTxId = 'dwadad'
@@ -310,7 +305,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
 
       const txs = [tx(trackedTxId)]
 
-      const ethPrices: L2CostsPricesRecord[] = [
+      const ethPrices: L2CostPriceRecord[] = [
         { timestamp: NOW, priceUsd: 2000 },
       ]
 
@@ -323,7 +318,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
       const indexer = createIndexer({ tag: 'aggregate-throws-no-price' })
       const txs = [tx('wada')]
 
-      const ethPrices: L2CostsPricesRecord[] = [
+      const ethPrices: L2CostPriceRecord[] = [
         { timestamp: NOW.add(1, 'hours'), priceUsd: 2100 },
       ]
 
@@ -336,7 +331,7 @@ describe(L2CostsAggregatorIndexer.name, () => {
   })
 
   describe(
-    L2CostsAggregatorIndexer.prototype.getL2CostsRecordsWithProjectId.name,
+    L2CostsAggregatorIndexer.prototype.getL2CostRecordsWithProjectId.name,
     () => {
       it('match records with projectIds', async () => {
         const id1 = createTrackedTxId.random()
@@ -346,63 +341,70 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const project2 = ProjectId('project2')
 
         const txs = [
-          mockObject<L2CostsRecord>({
+          mockObject<L2CostRecord>({
             timestamp: new UnixTime(1),
             configurationId: id1,
           }),
-          mockObject<L2CostsRecord>({
+          mockObject<L2CostRecord>({
             timestamp: new UnixTime(2),
             configurationId: id1,
           }),
-          mockObject<L2CostsRecord>({
+          mockObject<L2CostRecord>({
             timestamp: new UnixTime(3),
             configurationId: id2,
           }),
         ]
-        const l2CostsRepositoryMock = mockObject<L2CostsRepository>({
+        const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
           getByTimeRange: mockFn().resolvesTo(txs),
         })
-        const indexerConfigurationRepositoryMock =
-          mockObject<IndexerConfigurationRepository>({
-            getSavedConfigurationsByIds: mockFn().resolvesTo([
-              mockObject<IndexerConfigurationRecord>({
-                id: id1,
-                properties: JSON.stringify({
-                  projectId: project1,
-                }),
+        const indexerConfigurationRepositoryMock = mockObject<
+          Database['indexerConfiguration']
+        >({
+          getSavedConfigurationsByIds: mockFn().resolvesTo([
+            mockObject<IndexerConfigurationRecord>({
+              id: id1,
+              properties: JSON.stringify({
+                projectId: project1,
               }),
-              mockObject<IndexerConfigurationRecord>({
-                id: id2,
-                properties: JSON.stringify({
-                  projectId: project2,
-                }),
+            }),
+            mockObject<IndexerConfigurationRecord>({
+              id: id2,
+              properties: JSON.stringify({
+                projectId: project2,
               }),
-            ]),
-          })
+            }),
+          ]),
+        })
 
         const indexer = createIndexer({
           tag: 'update-correct',
-          l2CostsRepository: l2CostsRepositoryMock,
-          indexerConfigurationRepository: indexerConfigurationRepositoryMock,
+          db: mockObject<Database>({
+            l2Cost: l2CostsRepositoryMock,
+            l2CostPrice: mockObject<Database['l2CostPrice']>(),
+            indexerConfiguration: indexerConfigurationRepositoryMock,
+            aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+              addOrUpdateMany: mockFn().resolvesTo(1),
+            }),
+          }),
         })
 
-        const result = await indexer.getL2CostsRecordsWithProjectId([
+        const result = await indexer.getL2CostRecordsWithProjectId([
           new UnixTime(0),
           new UnixTime(4),
         ])
 
         expect(result).toEqual([
-          mockObject<L2CostsRecordWithProjectId>({
+          mockObject<ProjectL2Cost>({
             timestamp: new UnixTime(1),
             projectId: project1,
             configurationId: id1,
           }),
-          mockObject<L2CostsRecordWithProjectId>({
+          mockObject<ProjectL2Cost>({
             timestamp: new UnixTime(2),
             projectId: project1,
             configurationId: id1,
           }),
-          mockObject<L2CostsRecordWithProjectId>({
+          mockObject<ProjectL2Cost>({
             timestamp: new UnixTime(3),
             projectId: project2,
             configurationId: id2,
@@ -550,13 +552,14 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
     logger: Logger.SILENT,
     minHeight: 0,
     parents: [],
-    aggregatedL2CostsRepository: mockObject<AggregatedL2CostsRepository>({
-      addMany: mockFn().resolvesTo(1),
+    db: mockObject<Database>({
+      l2Cost: mockObject<Database['l2Cost']>(),
+      l2CostPrice: mockObject<Database['l2CostPrice']>(),
+      aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+        addOrUpdateMany: mockFn().resolvesTo(1),
+      }),
+      indexerConfiguration: mockObject<Database['indexerConfiguration']>(),
     }),
-    indexerConfigurationRepository:
-      mockObject<IndexerConfigurationRepository>(),
-    l2CostsRepository: mockObject<L2CostsRepository>(),
-    l2CostsPricesRepository: mockObject<L2CostsPricesRepository>(),
     projects: MOCK_PROJECTS,
     ...deps,
   })
@@ -564,8 +567,8 @@ function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
 
 function tx(
   configurationId: TrackedTxId,
-  data?: Partial<AggregatedL2CostsRecord>,
-): L2CostsRecordWithProjectId {
+  data?: Partial<AggregatedL2CostRecord>,
+): ProjectL2Cost {
   return {
     timestamp: NOW,
     projectId: ProjectId('random'),
@@ -581,9 +584,7 @@ function tx(
   }
 }
 
-function txWithBlob(
-  data?: Partial<AggregatedL2CostsRecord>,
-): L2CostsRecordWithProjectId {
+function txWithBlob(data?: Partial<AggregatedL2CostRecord>): ProjectL2Cost {
   return {
     timestamp: NOW,
     projectId: ProjectId('random'),

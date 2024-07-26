@@ -53,7 +53,10 @@
         "USDC",
         "usdmCurvePool",
         "wUSDM",
-        "swapRouter"
+        "swapRouter",
+        "SOLV_BTC",
+        "SOLV_SFT_WRAP_ROUTER",
+        "WBTC"
       ],
       "ignoreMethods": [
         "proxiableUUID",
@@ -79,6 +82,11 @@
         "sequencerVersion": {
           "handler": {
             "type": "arbitrumSequencerVersion"
+          }
+        },
+        "postsBlobs": {
+          "handler": {
+            "type": "orbitPostsBlobs"
           }
         },
         // when this changes, it means the sequencers have changed

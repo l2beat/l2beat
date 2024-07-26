@@ -1,11 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
 import { HttpClient } from '@l2beat/shared'
 
-import { createRepositories } from '@l2beat/database'
+import { createDatabase } from '@l2beat/database'
+import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createActivityModule } from './modules/activity/ActivityModule'
+import { createActivity2Module } from './modules/activity2/Activity2Module'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
@@ -19,7 +21,6 @@ import { createTvlModule } from './modules/tvl/modules/TvlModule'
 import { createUpdateMonitorModule } from './modules/update-monitor/UpdateMonitorModule'
 import { createVerifiersModule } from './modules/verifiers/VerifiersModule'
 import { Peripherals } from './peripherals/Peripherals'
-import { Database } from './peripherals/database/Database'
 import { Clock } from './tools/Clock'
 import { getErrorReportingMiddleware } from './tools/ErrorReporter'
 
@@ -27,9 +28,12 @@ export class Application {
   start: () => Promise<void>
 
   constructor(config: Config, logger: Logger) {
-    const database = new Database(config.database, logger, config.name)
+    const database = new LegacyDatabase(config.database, logger, config.name)
 
-    const kyselyDatabase = createRepositories(config.database.connection)
+    const kyselyDatabase = createDatabase({
+      ...config.database.connection,
+      ...config.database.connectionPoolSize,
+    })
 
     const clock = new Clock(
       config.clock.minBlockTimestamp,
@@ -52,6 +56,7 @@ export class Application {
       createHealthModule(config),
       createMetricsModule(config),
       createActivityModule(config, logger, peripherals, clock),
+      createActivity2Module(config, logger, peripherals, kyselyDatabase, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createImplementationChangeModule(config, logger, peripherals),
       createStatusModule(config, logger, peripherals),
@@ -64,7 +69,7 @@ export class Application {
       ),
       createLzOAppsModule(config, logger),
       createTvlModule(config, logger, peripherals, clock),
-      createVerifiersModule(config, logger, peripherals),
+      createVerifiersModule(config, logger, peripherals, clock),
       createFeaturesModule(config),
       createDaBeatModule(config, logger, peripherals, clock),
     ]

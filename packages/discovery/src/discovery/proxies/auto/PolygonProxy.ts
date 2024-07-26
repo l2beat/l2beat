@@ -26,12 +26,10 @@ export async function detectPolygonProxy(
   }
   const admin = await provider.getStorageAsAddress(address, ADMIN_SLOT)
   return {
-    implementations: [implementation],
-    relatives: [admin],
-    upgradeability: {
-      type: 'Polygon proxy',
-      implementation,
-      admin,
+    type: 'Polygon proxy',
+    values: {
+      $admin: admin,
+      $implementation: implementation,
     },
   }
 }

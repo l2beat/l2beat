@@ -33,14 +33,14 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('paradex')
 const verifierAddress = discovery.getAddressFromValue('Paradex', 'verifier')
 
-const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractValue<number>(
   'Paradex',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
-const escrowUSDCDelaySeconds = discovery.getContractUpgradeabilityParam(
+const escrowUSDCDelaySeconds = discovery.getContractValue<number>(
   'USDC Bridge',
-  'upgradeDelay',
+  'StarkWareProxy_upgradeDelay',
 )
 
 const minDelay = Math.min(upgradeDelaySeconds, escrowUSDCDelaySeconds)
@@ -64,7 +64,12 @@ const escrowUSDCMaxTotalBalanceString = formatMaxTotalBalanceString(
 export const paradex: Layer2 = {
   type: 'layer2',
   id: ProjectId('paradex'),
-  badges: [Badge.VM.CairoVM, Badge.DA.EthereumBlobs, Badge.Infra.SHARP],
+  badges: [
+    Badge.VM.CairoVM,
+    Badge.DA.EthereumBlobs,
+    Badge.Fork.StarknetFork,
+    Badge.Infra.SHARP,
+  ],
   display: {
     name: 'Paradex',
     slug: 'paradex',

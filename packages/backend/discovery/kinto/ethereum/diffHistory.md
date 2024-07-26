@@ -1,4 +1,115 @@
-Generated with discovered.json: 0x8aee8ab7fc7f72a1e83341840da8714f5dbb04c7
+Generated with discovered.json: 0xa42788482c8e1ace73e574337062d675b58d5479
+
+# Diff at Thu, 25 Jul 2024 10:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@42efd1ab55ccb369bfc0edad188854abb104aaef block: 20367973
+- current block number: 20383066
+
+## Description
+
+Kinto sends blobs, tracked txs added.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x9590eb8caf62006f1a01c0e27a62734ce8c11f6c
+
+# Diff at Tue, 23 Jul 2024 08:16:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7fe674fdf7aafe1f69f1463836cac0d7e337d34 block: 20362833
+- current block number: 20367973
+
+## Description
+
+The bridger (gateway) is upgraded to support a new asset (solvBTC) which can be wrapped from WBTC.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      values.$implementation:
+-        "0xEEe82E92bA40A694409B4BDa3D7426188c61163e"
++        "0x23559eB4Ad22c31940a929958B104821126F35b7"
+      values.SOLV_BTC:
++        "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0"
+      values.SOLV_BTC_POOL_ID:
++        "0x488def4a346b409d5d57985a160cd216d29d4f555e1b716df4e04e2374d2d9f6"
+      values.SOLV_SFT_WRAP_ROUTER:
++        "0x6Ea88D4D0c4bC06F6A51f427eF295c93e10D0b36"
+      values.WBTC:
++        "0x2f2a2543B76A4166549F7aaB2e75Bef0aefC5B0f"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20362833 => .flat}/Bridger/Bridger.sol  | 54 +++++++++++++++++-----
+ 1 file changed, 42 insertions(+), 12 deletions(-)
+```
+
+Generated with discovered.json: 0x87c5c2e00532cf5609ebd2a87ccf20e1d7afef8c
+
+# Diff at Fri, 19 Jul 2024 08:55:45 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e818aac724e8e67da6b05262134684a79d6fb217 block: 20324731
+- current block number: 20339515
+
+## Description
+
+wasmModuleRoot updated. Like before, this is not a root that we have seen before. Related to the [HF 5 Mainnet](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/6) and [HF 6 Mainnet](https://github.com/ConstellationCrypto/kinto-go-ethereum/pull/9).
+
+## Watched changes
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x89e305433a6403ac5e73b659b16ccaa2ed796cf6cd6fcb46e72c7d865a8ec6ae"
++        "0x2ca63ffd73f314d60f8d672954389881918100435f27fd4193becb12310d7faa"
+    }
+```
+
+Generated with discovered.json: 0xf35de91de6d8a18812a6d9c106abeff0880f2aef
+
+# Diff at Wed, 17 Jul 2024 07:24:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@f46e1b9319335587ca32b6e85f9d2f0c7ab7a729 block: 20210980
+- current block number: 20324731
+
+## Description
+
+Use the new handler to check if it's posting blobs.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20210980 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      values.postsBlobs:
++        false
+    }
+```
+
+Generated with discovered.json: 0xbb4b529ff5b280dc70aa4cf09e5651f5f00363fb
 
 # Diff at Mon, 01 Jul 2024 10:10:33 GMT:
 

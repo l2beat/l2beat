@@ -1,9 +1,13 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
+import {
+  Database,
+  IndexerConfigurationRecord,
+  LivenessRecord,
+} from '@l2beat/database'
+import { createTrackedTxId } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { IndexerConfigurationRepository } from '../../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../../tracked-txs/modules/liveness/repositories/LivenessRepository'
 import { BaseAnalyzer, Transaction } from './BaseAnalyzer'
 
 describe(BaseAnalyzer.name, () => {
@@ -11,27 +15,51 @@ describe(BaseAnalyzer.name, () => {
     it('calls analyze for each transaction from the interval', async () => {
       const now = UnixTime.now()
 
-      const mockTxs: Transaction[] = [
-        { txHash: 'tx1', timestamp: now },
-        { txHash: 'tx2', timestamp: now.add(1, 'hours') },
+      const mockConfigurationId = createTrackedTxId.random()
+      const mockLivenessRecords: LivenessRecord[] = [
+        mockObject<LivenessRecord>({
+          configurationId: mockConfigurationId,
+          txHash: 'tx1',
+          timestamp: now,
+        }),
+        mockObject<LivenessRecord>({
+          configurationId: mockConfigurationId,
+          txHash: 'tx2',
+          timestamp: now.add(1, 'hours'),
+        }),
       ]
-      const mockProvider = mockObject<RpcClient>({})
-      const mockLivenessRepository = mockObject<LivenessRepository>({
-        getTransactionsWithinTimeRangeByConfigurationsIds:
-          mockFn().resolvesTo(mockTxs),
-      })
-      const mockIndexerConfigurationRepository =
-        mockObject<IndexerConfigurationRepository>({
-          getSavedConfigurations: mockFn().resolvesTo([]),
-        })
-      const projectId = ProjectId('projectId')
+
+      const mockProjectId = ProjectId('projectId')
       const mockTxSubtype = 'batchSubmissions'
+
+      const mockConfiguration = mockObject<IndexerConfigurationRecord>({
+        id: mockConfigurationId,
+        properties: JSON.stringify({
+          projectId: mockProjectId,
+          type: 'liveness',
+          subtype: mockTxSubtype,
+        }),
+      })
+
+      const mockProvider = mockObject<RpcClient>({})
+      const mockLivenessRepository = mockObject<Database['liveness']>({
+        getByConfigurationIdWithinTimeRange:
+          mockFn().resolvesTo(mockLivenessRecords),
+      })
+      const mockIndexerConfigurationRepository = mockObject<
+        Database['indexerConfiguration']
+      >({
+        getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
+      })
+
       const getFinalitySpy = mockFn((_tx: Transaction) => {})
       const mockAnalyzer = new MockAnalyzer(
         mockProvider,
-        mockLivenessRepository,
-        mockIndexerConfigurationRepository,
-        projectId,
+        mockObject<Database>({
+          indexerConfiguration: mockIndexerConfigurationRepository,
+          liveness: mockLivenessRepository,
+        }),
+        mockProjectId,
         getFinalitySpy,
         mockTxSubtype,
       )
@@ -40,11 +68,17 @@ describe(BaseAnalyzer.name, () => {
         await mockAnalyzer.analyzeInterval(now, now.add(10, 'hours')),
       ).toEqual([1, 1])
       expect(
-        mockLivenessRepository.getTransactionsWithinTimeRangeByConfigurationsIds,
-      ).toHaveBeenCalledWith([], now, now.add(10, 'hours'))
+        mockLivenessRepository.getByConfigurationIdWithinTimeRange,
+      ).toHaveBeenCalledWith([mockConfigurationId], now, now.add(10, 'hours'))
       expect(getFinalitySpy).toHaveBeenCalledTimes(2)
-      expect(getFinalitySpy).toHaveBeenCalledWith(mockTxs[0])
-      expect(getFinalitySpy).toHaveBeenCalledWith(mockTxs[1])
+      expect(getFinalitySpy).toHaveBeenCalledWith({
+        txHash: mockLivenessRecords[0].txHash,
+        timestamp: mockLivenessRecords[0].timestamp,
+      })
+      expect(getFinalitySpy).toHaveBeenCalledWith({
+        txHash: mockLivenessRecords[1].txHash,
+        timestamp: mockLivenessRecords[1].timestamp,
+      })
     })
   })
 })
@@ -52,8 +86,7 @@ describe(BaseAnalyzer.name, () => {
 class MockAnalyzer extends BaseAnalyzer {
   constructor(
     provider: RpcClient,
-    livenessRepository: LivenessRepository,
-    indexerConfigurationRepository: IndexerConfigurationRepository,
+    db: Database,
     projectId: ProjectId,
     private readonly getFinalitySpy: (tx: Transaction) => void,
     private readonly txSubtype:
@@ -61,12 +94,7 @@ class MockAnalyzer extends BaseAnalyzer {
       | 'stateUpdates'
       | 'proofSubmissions',
   ) {
-    super(
-      provider,
-      livenessRepository,
-      indexerConfigurationRepository,
-      projectId,
-    )
+    super(provider, db, projectId)
   }
 
   async analyze(tx: Transaction) {

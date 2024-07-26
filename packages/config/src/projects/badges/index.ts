@@ -5,18 +5,20 @@
  *
  * In order to add a new badge type, you need to:
  * - add it to the BadgeType object below & that's it
+ *
+ * Badges are ordered first by type, then alphabetically by display name.
+ * Order of types is determined by the order in the BadgeType object.
  */
 
 export const BadgeType = {
-  RaaS: 'RaaS',
-  DA: 'DA',
   VM: 'VM',
-  Token: 'Token',
+  DA: 'DA',
   Stack: 'Stack',
   Fork: 'Fork',
-  L3ParentChain: 'L3ParentChain',
   Infra: 'Infra',
+  L3ParentChain: 'L3ParentChain',
   Other: 'Other',
+  RaaS: 'RaaS',
 } as const
 
 export type BadgeType = (typeof BadgeType)[keyof typeof BadgeType]
@@ -26,7 +28,16 @@ export const badges = {
   AltLayer: {
     display: {
       name: 'AltLayer',
-      description: 'Lorem AltLayer dolor sit amet...',
+      description:
+        'This project was deployed via the rollup-as-a-service provider AltLayer',
+    },
+    type: BadgeType.RaaS,
+  },
+  Gateway: {
+    display: {
+      name: 'Gateway',
+      description:
+        'This project was deployed via the rollup-as-a-service provider Gateway',
     },
     type: BadgeType.RaaS,
   },
@@ -92,7 +103,13 @@ export const badges = {
     },
     type: BadgeType.DA,
   },
-  //should we mention that it is either calldata or blobs depending on the price? should it be one badge or two?
+  NearDA: {
+    display: {
+      name: 'NearDA',
+      description: 'This project is posting its data to NearDA',
+    },
+    type: BadgeType.DA,
+  },
   EthereumBlobs: {
     display: {
       name: 'Ethereum with blobs',
@@ -110,7 +127,15 @@ export const badges = {
   CustomDA: {
     display: {
       name: 'Custom DA solution',
-      description: 'This project is using a custom DA solution.',
+      description: 'This project is using a custom DA solution',
+    },
+    type: BadgeType.DA,
+  },
+  DAC: {
+    display: {
+      name: 'Data Availability Committee',
+      description:
+        'There is a Data Availability Commitee that provides/attests to data availability',
     },
     type: BadgeType.DA,
   },
@@ -133,7 +158,7 @@ export const badges = {
   },
   CairoVM: {
     display: {
-      name: 'Cairo',
+      name: 'CairoVM',
       description:
         'This project uses the Cairo Virtual Machine to run its smart contracts and supports the Cairo programming language',
     },
@@ -179,25 +204,32 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
+  AppChain: {
+    display: {
+      name: 'Application-specific chain',
+      description: 'This project is built to operate a specific application',
+    },
+    type: BadgeType.VM,
+  },
   //Infra
   Superchain: {
     display: {
       name: 'Part of the Superchain',
-      description: 'The project is part of the Superchain.',
+      description: 'The project is part of the Superchain',
     },
     type: BadgeType.Infra,
   },
   SHARP: {
     display: {
       name: 'Uses SHARP',
-      description: 'The project uses a shared prover - SHARP.',
+      description: 'The project uses a shared prover - SHARP',
     },
     type: BadgeType.Infra,
   },
   AggLayer: {
     display: {
       name: 'Part of the AggLayer',
-      description: 'The project is part of the AggLayer.',
+      description: 'The project is part of the AggLayer',
     },
     type: BadgeType.Infra,
   },
@@ -205,14 +237,21 @@ export const badges = {
   OPStack: {
     display: {
       name: 'Built on OP Stack',
-      description: 'The project is built on the OP Stack.',
+      description: 'The project is built on the OP Stack',
     },
     type: BadgeType.Stack,
   },
   Orbit: {
     display: {
       name: 'Built on Arbitrum Orbit',
-      description: 'The project is built on Arbitrum Orbit.',
+      description: 'The project is built on Arbitrum Orbit',
+    },
+    type: BadgeType.Stack,
+  },
+  Nitro: {
+    display: {
+      name: 'Built on Arbitrum Nitro',
+      description: 'The project is built on Arbitrum Nitro',
     },
     type: BadgeType.Stack,
   },
@@ -227,35 +266,56 @@ export const badges = {
   ZKStack: {
     display: {
       name: 'Built on the ZK Stack',
-      description: 'The project is built on the ZK Stack.',
+      description: 'The project is built on the ZK Stack',
     },
     type: BadgeType.Stack,
   },
   PolygonCDK: {
     display: {
       name: 'Built on the Polygon CDK stack',
-      description: 'The project is built on the Polygon CDK stack.',
+      description: 'The project is built on the Polygon CDK stack',
     },
     type: BadgeType.Stack,
   },
   Cartesi: {
     display: {
       name: 'Built on the Cartesi stack',
-      description: 'The project is built on the Cartesi stack.',
+      description: 'The project is built on the Cartesi stack',
     },
     type: BadgeType.Stack,
   },
-  Loopring: {
+  LoopringFork: {
     display: {
       name: 'Fork of Loopring',
-      description: 'The project is fork of Loopring.',
+      description: 'The project is fork of Loopring',
     },
     type: BadgeType.Fork,
   },
-  ZKsyncLite: {
+  OVM: {
+    display: {
+      name: 'Fork of OVM',
+      description: 'The project is fork of the Optimistic Virtual Machine',
+    },
+    type: BadgeType.Fork,
+  },
+  ZKsyncLiteFork: {
     display: {
       name: 'Fork of ZKsync Lite',
-      description: 'The project is fork of ZKsync Lite.',
+      description: 'The project is fork of ZKsync Lite',
+    },
+    type: BadgeType.Fork,
+  },
+  StarknetFork: {
+    display: {
+      name: 'Fork of Starknet',
+      description: 'The project is fork of Starknet',
+    },
+    type: BadgeType.Fork,
+  },
+  TaikoFork: {
+    display: {
+      name: 'Fork of Taiko',
+      description: 'The project is fork of Taiko',
     },
     type: BadgeType.Fork,
   },
@@ -263,21 +323,28 @@ export const badges = {
   Arbitrum: {
     display: {
       name: 'Built on top of Arbitrum',
-      description: 'The project has Arbitrum as its host chain.',
+      description: 'The project has Arbitrum as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },
   Base: {
     display: {
       name: 'Built on top of Base',
-      description: 'The project has Base as its host chain.',
+      description: 'The project has Base as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },
   Linea: {
     display: {
       name: 'Built on top of Linea',
-      description: 'The project has Linea as its host chain.',
+      description: 'The project has Linea as its host chain',
+    },
+    type: BadgeType.L3ParentChain,
+  },
+  Nova: {
+    display: {
+      name: 'Built on top of Arbitrum Nova',
+      description: 'The project has Arbitrum Nova as its host chain',
     },
     type: BadgeType.L3ParentChain,
   },
@@ -293,8 +360,7 @@ export const badges = {
   Governance: {
     display: {
       name: 'Governance',
-      description:
-        'This project has a decentralized governance system that votes on proposed changes',
+      description: 'This project features token voting',
     },
     type: BadgeType.Other,
   },
@@ -303,6 +369,22 @@ export const badges = {
     display: {
       name: 'L3 Host Chain',
       description: 'This project serves as a host chain for L3s',
+    },
+    type: BadgeType.Other,
+  },
+  BasedSequencing: {
+    display: {
+      name: 'Based Sequencing',
+      description:
+        'This project is ordering its transactions through Ethereum block proposers.',
+    },
+    type: BadgeType.Other,
+  },
+  MigratedFromL1: {
+    display: {
+      name: 'Migrated from L1 to Ethereum L2',
+      description:
+        'This project has migrated from being a standalone L1 blockchain to an Ethereum L2.',
     },
     type: BadgeType.Other,
   },
@@ -332,3 +414,12 @@ export const Badge: {
 
 export type BadgeId = keyof typeof badges
 export type AnyBadge = (typeof badges)[BadgeId]
+
+export const badgeTypeOrder = Object.values(BadgeType)
+export const badgesCompareFn = (a: BadgeId, b: BadgeId) => {
+  const typeOrder =
+    badgeTypeOrder.indexOf(badges[a].type) -
+    badgeTypeOrder.indexOf(badges[b].type)
+  if (typeOrder !== 0) return typeOrder
+  return badges[a].display.name.localeCompare(badges[b].display.name)
+}

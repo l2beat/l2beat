@@ -10,16 +10,12 @@ import { MockFunction, expect, mockFn } from 'earl'
 
 import { describeDatabase } from '../../test/database'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
-import { SequenceProcessorRepository } from './repositories/SequenceProcessorRepository'
 
-//! TODO: Due to repository drilling we skip legacy-to-new smoke test for now
-describeDatabase(SequenceProcessor.name, (knex) => {
-  const repository = new SequenceProcessorRepository(knex, Logger.SILENT)
-
+describeDatabase(SequenceProcessor.name, (db) => {
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 
-  type ProcessRange = (from: number, to: number, trx: any) => Promise<void>
+  type ProcessRange = (from: number, to: number) => Promise<void>
 
   function createSequenceProcessor({
     getLatest,
@@ -61,7 +57,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
       constructor() {
         super(
           ProjectId(PROCESSOR_ID),
-          repository,
+          db,
           {
             batchSize,
             startFrom,
@@ -79,15 +75,14 @@ describeDatabase(SequenceProcessor.name, (knex) => {
       protected override async processRange(
         from: number,
         to: number,
-        trx: any,
       ): Promise<void> {
-        return processRange(from, to, trx)
+        return processRange(from, to)
       }
     })()
   }
 
   beforeEach(async () => {
-    await repository.deleteAll()
+    await db.sequenceProcessor.deleteAll()
   })
 
   afterEach(async () => {
@@ -121,7 +116,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
         [4, 5],
       ])
 
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
@@ -144,7 +139,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       checkRanges(processRange, [[4, 5]])
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
@@ -167,7 +162,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       checkRanges(processRange, [[4, 4]])
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 4,
         latest: 4,
@@ -201,7 +196,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
         [2, 2],
       ])
 
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
@@ -231,7 +226,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
 
       checkRanges(processRange, [[0, 2]])
 
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
@@ -303,7 +298,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
         latest,
         syncedOnce: true,
       }
-      await repository.addOrUpdate(initialState)
+      await db.sequenceProcessor.addOrUpdate(initialState)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 1,
         batchSize: 2,
@@ -316,7 +311,9 @@ describeDatabase(SequenceProcessor.name, (knex) => {
 
       expect(sequenceProcessor.hasProcessedAll()).toEqual(true)
       expect(processRange).not.toHaveBeenCalled()
-      expect(await repository.findById(PROCESSOR_ID)).toEqual(initialState)
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual(
+        initialState,
+      )
     })
 
     it('continues syncing when more data available', async () => {
@@ -348,7 +345,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
         [6, 7],
       ])
 
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 7,
         latest: 7,
@@ -389,7 +386,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
         [2, 2],
       ])
 
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 2,
         latest: 2,
@@ -437,7 +434,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
         [5, 5],
       ])
 
-      expect(await repository.findById(PROCESSOR_ID)).toEqual({
+      expect(await db.sequenceProcessor.findById(PROCESSOR_ID)).toEqual({
         id: PROCESSOR_ID,
         lastProcessed: 5,
         latest: 5,
@@ -462,7 +459,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
 
     it('loads existing state on start', async () => {
       const latest = 3
-      await repository.addOrUpdate({
+      await db.sequenceProcessor.addOrUpdate({
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest: latest,
@@ -484,7 +481,7 @@ describeDatabase(SequenceProcessor.name, (knex) => {
   describe('syncedOnce flag', () => {
     it('sets syncedOnce to true after first full sync', async () => {
       const latest = 5
-      await repository.addOrUpdate({
+      await db.sequenceProcessor.addOrUpdate({
         id: PROCESSOR_ID,
         lastProcessed: 1,
         latest: latest,
@@ -512,17 +509,12 @@ describeDatabase(SequenceProcessor.name, (knex) => {
 })
 
 function checkRanges(
-  processRangeMock: MockFunction<[number, number, any], Promise<void>>,
+  processRangeMock: MockFunction<[number, number], Promise<void>>,
   ranges: [number, number][],
 ) {
   expect(processRangeMock).toHaveBeenCalledTimes(ranges.length)
   for (const [i, [start, end]] of ranges.entries()) {
-    expect(processRangeMock).toHaveBeenNthCalledWith(
-      i + 1,
-      start,
-      end,
-      expect.anything(),
-    )
+    expect(processRangeMock).toHaveBeenNthCalledWith(i + 1, start, end)
   }
 }
 

@@ -45,10 +45,10 @@ export function Breakdown() {
   const groups = getBreakdownGroups(CONFIG)
 
   return (
-    <div className="flex flex-col mt-1">
+    <div className="mt-1 flex flex-col">
       <div
         className={cn(
-          'h-[14px] md:h-[56px] w-full max-w-full md:my-0 relative',
+          'relative h-[14px] w-full max-w-full md:my-0 md:h-[56px]',
         )}
       >
         {groups.map((g, i) => {
@@ -71,32 +71,32 @@ export function Breakdown() {
           )
         })}
       </div>
-      <div className="flex md:hidden flex-col mt-4 text-sm w-full">
+      <div className="mt-4 flex w-full flex-col text-sm md:hidden">
         {groups.map((g, i) => (
           <div
             key={`breakdown-legend-${i}`}
-            className="flex items-center justify-between w-full"
+            className="flex w-full items-center justify-between"
           >
             <div className="flex items-center gap-1">
               <div
                 className={cn(
-                  'size-4 bg-gradient-to-r border rounded',
+                  'size-4 rounded border bg-gradient-to-r',
                   g.className,
                 )}
               />
-              <span className="pl-1 text-pink-900 font-extrabold hidden sm:inline-block">
+              <span className="hidden pl-1 font-extrabold text-pink-900 sm:inline-block">
                 ${formatNumberWithCommas(g.value)}
               </span>
-              <span className="text-zinc-500 font-medium hidden sm:inline-block">
+              <span className="hidden font-medium text-zinc-500 sm:inline-block">
                 ({g.weight}%)
               </span>
               <span className="font-semibold text-zinc-800">{g.name}</span>
             </div>
             <div className="block sm:hidden">
-              <span className="pl-1 text-pink-900 font-extrabold">
+              <span className="pl-1 font-extrabold text-pink-900">
                 ${formatNumberWithCommas(g.value)}
               </span>
-              <span className="text-zinc-500 font-medium">({g.weight}%)</span>
+              <span className="font-medium text-zinc-500">({g.weight}%)</span>
             </div>
           </div>
         ))}
@@ -142,10 +142,10 @@ function BreakdownItem({
     <div
       ref={parentRef}
       className={cn(
-        'rounded-lg h-full last:mr-0 bg-gradient-to-r border',
+        'h-full rounded-lg border bg-gradient-to-r last:mr-0',
         'flex flex-col items-end justify-end',
-        'absolute overflow-hidden overflow-ellipsis',
-        'py-0 md:py-[10px] px-0 md:px-3',
+        'absolute overflow-hidden text-ellipsis',
+        'p-0 md:px-3 md:py-[10px]',
         group.className,
       )}
       style={{
@@ -156,13 +156,13 @@ function BreakdownItem({
     >
       <span
         ref={valueRef}
-        className={cn('text-sm hidden md:inline-block', group.valueClassName)}
+        className={cn('hidden text-sm md:inline-block', group.valueClassName)}
       >
         ${formatNumberWithCommas(group.value)}
       </span>
       <span
         ref={textRef}
-        className="text-sm font-semibold leading-[15px] whitespace-nowrap overflow-ellipsis hidden md:inline-block"
+        className="hidden text-ellipsis whitespace-nowrap text-sm font-semibold leading-[15px] md:inline-block"
       >
         {group.name}
       </span>
@@ -232,7 +232,8 @@ export function unifyPercentagesAsIntegers(percentages: number[]): number[] {
   const iterations = 100 - sum(intParts)
   for (let i = 0; i < iterations; i++) {
     const largestIndex = indexOf(decimalParts, max(decimalParts))
-    intParts[largestIndex] += 1
+    if (intParts[largestIndex] !== undefined) intParts[largestIndex] += 1
+
     decimalParts[largestIndex] = 0
   }
 

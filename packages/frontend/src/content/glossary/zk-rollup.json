@@ -1,5 +1,0 @@
-{
-  "term": "ZK-Rollup",
-  "definition": "A rollup that uses ZKPs (also often called validity proofs) to validate the correctness of the state transition function and update the rollup state. This is one of two main types of rollup constructions, along with optimistic rollups.",
-  "isSpicy": false
-}

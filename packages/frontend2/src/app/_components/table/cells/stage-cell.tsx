@@ -4,7 +4,7 @@ import React from 'react'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
 import InfoIcon from '~/icons/info.svg'
 import MissingIcon from '~/icons/missing.svg'
-import { RoundedWarningIcon } from '~/icons/rounded-warning-icon'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import UnderReviewIcon from '~/icons/under-review.svg'
 import { StageBadge } from '../../badge/stage-badge'
 import { Callout } from '../../callout'
@@ -126,7 +126,7 @@ export function StageTooltip({ stageConfig }: StageTooltipProps) {
       <Callout
         color="blue"
         body="Please mind, stages do not reflect rollup security"
-        icon={<InfoIcon className="fill-blue-500 size-4" />}
+        icon={<InfoIcon className="size-4 fill-blue-500" />}
         className="p-4 font-medium"
       />
     </div>

@@ -1,4 +1,148 @@
-Generated with discovered.json: 0x99851fccea60dfd0899e1a92369d413a74f71555
+Generated with discovered.json: 0xa4d9b32a352fab45729f1039d1720c106e0f9af8
+
+# Diff at Tue, 16 Jul 2024 08:47:32 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@4cebc868d0be9a9868d2842c2670f1974594c48e block: 20310579
+- current block number: 20317972
+
+## Description
+
+The Base connector that was accidentally removed is re-added.
+
+## Watched changes
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors.13:
++        "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0xa4e473cfb05a7a4dfaac6b579b027ef81b1daf44179b942325dddbba59d5e587"
++        "0xe813f3a6a50b9d0b90ac54107ca8ab16dd7faba907e4de56210c710200c60755"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../amarok/ethereum/.flat/BaseHubConnector.sol     | 1005 ++++++++++++++++++++
+ 1 file changed, 1005 insertions(+)
+```
+
+Generated with discovered.json: 0x32989f7cdc1a82d82ea6c20e509b400658f02e98
+
+# Diff at Mon, 15 Jul 2024 08:01:24 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c6bae99047cf03487a19e4008cfffabf520bcf2b block: 20289729
+- current block number: 20310579
+
+## Description
+
+After ~1 week of using canonical AMBs for message passing, optimistic mode is re-activated for the connext bridge. The connector for base is not yet reconnected.
+
+postmorten tldr from connext telegram:
+> had two false positives from our watcher, the RPC was behind in a watcher with a slightly misconfigured rpc/quorum. First one threw the system into slow mode, second one removed the base connector as it (falsely) detected fraud on the amb
+
+## Watched changes
+
+```diff
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
+    +++ description: None
+      values.optimisticMode:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.optimisticMode:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xf0a8f5e100287de45c70f0adc9d7086e8e93ca11
+
+# Diff at Fri, 12 Jul 2024 10:09:44 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@48ec906f1df3ec8351c0e2324170592091f7c1db block: 20259771
+- current block number: 20289729
+
+## Description
+
+One of the op stack connectors (used for Base) is removed from the list of used connectors.
+The support of Base L2 is now removed from connnext/amarok/everclear.
+System is still in non-optimistic mode.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract BaseHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94)
+    +++ description: None
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.connectors.13:
+-        "0x279fDA9AdDB854541f0bb86733d924e28c24c625"
+      values.connectors.10:
+-        "0x23b7abe4cc664F24Eb68E80cFAdc572857799a94"
++        "0x279fDA9AdDB854541f0bb86733d924e28c24c625"
++++ description: Hash of all connectors' addresses. Changes when a connector is added or removed.
++++ severity: LOW
+      values.connectorsHash:
+-        "0xc42a577ed5d3cd88fe742888027cc407ea75817228119d14e6d19cd8e80208d6"
++        "0xa4e473cfb05a7a4dfaac6b579b027ef81b1daf44179b942325dddbba59d5e587"
+    }
+```
+
+## Source code changes
+
+```diff
+.../BaseHubConnector.sol => /dev/null              | 958 ---------------------
+ 1 file changed, 958 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20259771 (main branch discovery), not current.
+
+```diff
+    contract NewOptimismHubConnector (0x23b7abe4cc664F24Eb68E80cFAdc572857799a94) {
+    +++ description: None
+      name:
+-        "NewOptimismHubConnector"
++        "BaseHubConnector"
+    }
+```
+
+```diff
+    contract OptimismV0HubConnector (0x9Ba7D2Ab079Bd1924859e2fECDAD1bEBe5B119Fa) {
+    +++ description: None
+      name:
+-        "OptimismV0HubConnector"
++        "MetisHubConnector"
+    }
+```
+
+Generated with discovered.json: 0xfdb6fed8b35e97461c2db907f00033d0d31fcebd
 
 # Diff at Mon, 08 Jul 2024 05:42:55 GMT:
 

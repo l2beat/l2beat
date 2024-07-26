@@ -1,5 +1,0 @@
-{
-  "term": "Operator",
-  "definition": "An operator is the entity charged with managing a rollup and progressing its state. An rollup operator can be a centralized sequencer, proposer, prover, challenger, pauser of admin that is able to perform upgrades.",
-  "isSpicy": false
-}

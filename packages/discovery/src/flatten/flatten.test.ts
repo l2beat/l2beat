@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
-import { FileContent, ParsedFilesManager } from './ParsedFilesManager'
-import { flattenStartingFrom } from './flattenStartingFrom'
+import { FileContent } from './ParsedFilesManager'
+import { flattenStartingFrom } from './flatten'
 
 describe('flatten', () => {
   it('handles multiple files, imports, remappings, renames etc.', () => {
@@ -68,8 +68,7 @@ describe('flatten', () => {
       },
     ]
 
-    const manager = ParsedFilesManager.parseFiles(files, remappings)
-    const flattened = flattenStartingFrom('R1', manager)
+    const flattened = flattenStartingFrom('R1', files, remappings)
 
     expect(flattened).toEqual(
       [
@@ -79,6 +78,100 @@ describe('flatten', () => {
         CONTRACT3_SOURCE,
         ROOT_CONTRACT_SOURCE,
       ].join('\n\n'),
+    )
+  })
+
+  it('picks correct contracts to be regenerated as interfaces, for minimized output', () => {
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+contract DC1 is DC2 { function df() public {} }
+contract DC2 is C2 { }
+
+contract C2 { }
+contract C3 is C2 { }
+contract C4 { }
+
+contract R1 is C2, C3, C4 {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [file], [])
+    expect(flattened).toEqual(
+      String.raw`contract C4 { }
+
+contract C3 is C2 { }
+
+contract C2 { }
+
+contract R1 is C2, C3, C4 {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}`,
+    )
+  })
+
+  it('picks correct contracts to be regenerated as interfaces, for full output', () => {
+    const file: FileContent = {
+      path: 'Root.sol',
+      content: String.raw`
+contract DC1 is DC2 { function df() public {} }
+
+contract DC2 is C2 {
+    struct S1 { uint256 x; }
+    function f1() public {
+        S1 memory s;
+        s.somethingmagic();
+        s.thiswillberemoved();
+    }
+}
+
+contract C2 { }
+contract C3 is C2 { }
+contract C4 { }
+
+contract R1 is C2, C3, C4 {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}
+`,
+    }
+
+    const flattened = flattenStartingFrom('R1', [file], [], {
+      includeAll: true,
+    })
+    expect(flattened).toEqual(
+      String.raw`// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
+interface DC2 is C2 {
+    struct S1 {
+        uint256 x;
+    }
+
+    function f1() external;
+}
+
+// NOTE(l2beat): This is a virtual interface, generated from the contract source code.
+interface DC1 is DC2 {
+    function df() external;
+}
+
+contract C4 { }
+
+contract C3 is C2 { }
+
+contract C2 { }
+
+contract R1 is C2, C3, C4 {
+    function f(address x) public {
+        DC1(x).df();
+    }
+}`,
     )
   })
 })

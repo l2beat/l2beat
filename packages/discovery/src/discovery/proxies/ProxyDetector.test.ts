@@ -7,23 +7,19 @@ import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
 
 describe(ProxyDetector.name, () => {
   const FIRST_DETAILS: ProxyDetails = {
-    upgradeability: {
-      type: 'EIP1967 proxy',
-      admin: EthereumAddress.random(),
-      implementation: EthereumAddress.random(),
+    type: 'EIP1967 proxy',
+    values: {
+      $admin: EthereumAddress.random(),
+      $implementation: EthereumAddress.random(),
     },
-    implementations: [],
-    relatives: [],
   }
 
   const SECOND_DETAILS: ProxyDetails = {
-    upgradeability: {
-      type: 'EIP1967 proxy',
-      admin: EthereumAddress.random(),
-      implementation: EthereumAddress.random(),
+    type: 'EIP1967 proxy',
+    values: {
+      $admin: EthereumAddress.random(),
+      $implementation: EthereumAddress.random(),
     },
-    implementations: [],
-    relatives: [],
   }
 
   it('can detect no proxy', async () => {

@@ -33,14 +33,15 @@ export async function detectZeppelinOSProxy(
     provider.getStorageAsAddress(address, OWNER_SLOT),
     provider.getStorageAsAddress(address, ADMIN_SLOT),
   ])
+
+  const admins = [owner, admin].filter((a) => a !== EthereumAddress.ZERO)
+
   return {
-    implementations: [implementation],
-    relatives: [owner, admin].filter((x) => x !== EthereumAddress.ZERO),
-    upgradeability: {
-      type: 'ZeppelinOS proxy',
-      implementation,
-      owner: owner !== EthereumAddress.ZERO ? owner : undefined,
-      admin: admin !== EthereumAddress.ZERO ? admin : undefined,
+    type: 'ZeppelinOS proxy',
+    values: {
+      $immutable: admins.length === 0,
+      $implementation: implementation,
+      $admin: admins,
     },
   }
 }

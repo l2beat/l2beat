@@ -1,9 +1,14 @@
 import { Env } from '@l2beat/backend-tools'
-import { bridges, chains, layer2s } from '@l2beat/config'
+import {
+  bridgeToBackendProject,
+  bridges,
+  chains,
+  layer2ToBackendProject,
+  layer2s,
+} from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
-import { bridgeToProject, layer2ToProject } from '../model/Project'
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
 import {
@@ -39,7 +44,9 @@ export function makeConfig(
   return {
     name,
     isReadonly,
-    projects: layer2s.map(layer2ToProject).concat(bridges.map(bridgeToProject)),
+    projects: layer2s
+      .map(layer2ToBackendProject)
+      .concat(bridges.map(bridgeToBackendProject)),
     clock: {
       minBlockTimestamp: minTimestampOverride ?? getEthereumMinTimestamp(),
       safeTimeOffsetSeconds: 60 * 60,
@@ -169,6 +176,25 @@ export function makeConfig(
         [],
       projects: getProjectsWithActivity()
         .filter((x) => flags.isEnabled('activity', x.id.toString()))
+        .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
+    },
+    activity2: flags.isEnabled('activity2') && {
+      starkexApiKey: env.string([
+        'STARKEX_API_KEY_FOR_ACTIVITY',
+        'STARKEX_API_KEY',
+      ]),
+      starkexCallsPerMinute: env.integer(
+        [
+          'STARKEX_API_CALLS_PER_MINUTE_FOR_ACTIVITY',
+          'STARKEX_API_CALLS_PER_MINUTE',
+        ],
+        600,
+      ),
+      projectsExcludedFromAPI:
+        env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
+        [],
+      projects: getProjectsWithActivity()
+        .filter((x) => flags.isEnabled('activity2', x.id.toString()))
         .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
     },
     verifiers: flags.isEnabled('verifiers'),

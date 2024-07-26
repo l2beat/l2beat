@@ -222,8 +222,8 @@ export default async function Page({ params: { address } }: Props) {
   const vanityAddress = await getAddressDisplayName(address)
 
   return (
-    <main className="max-w-[1176px] w-screen px-0 sm:px-4 md:px-12 mx-auto pt-10">
-      <div className="flex flex-col gap-6 mb-10">
+    <main className="mx-auto w-screen max-w-[1176px] px-0 pt-10 sm:px-4 md:px-12">
+      <div className="mb-10 flex flex-col gap-6">
         <DetailsHeader
           // TODO: Replace with real data when we have it
           dolarValue={0}

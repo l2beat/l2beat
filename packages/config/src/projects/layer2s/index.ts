@@ -36,6 +36,7 @@ import { edgeless } from './edgeless'
 import { ethernity } from './ethernity'
 import { everclear } from './everclear'
 import { fhenix } from './fhenix'
+import { fluent } from './fluent'
 import { form } from './form'
 import { frame } from './frame'
 import { fraxtal } from './fraxtal'
@@ -75,6 +76,7 @@ import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
+import { network3 } from './network3'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -124,7 +126,9 @@ import { world } from './world'
 import { xchain } from './xchain'
 import { xlayer } from './xlayer'
 import { xpla } from './xpla'
+import { xterio } from './xterio'
 import { zentachain } from './zentachain'
+import { zeronetwork } from './zeronetwork'
 import { zircuit } from './zircuit'
 import { zkcandy } from './zkcandy'
 import { zkfair } from './zkfair'
@@ -177,6 +181,7 @@ export const layer2s: Layer2[] = [
   ethernity,
   everclear,
   fhenix,
+  fluent,
   form,
   frame,
   fraxtal,
@@ -216,6 +221,7 @@ export const layer2s: Layer2[] = [
   myria,
   myshell,
   nil,
+  network3,
   nova,
   oev,
   ola,
@@ -263,7 +269,9 @@ export const layer2s: Layer2[] = [
   xchain,
   xlayer,
   xpla,
+  xterio,
   zentachain,
+  zeronetwork,
   zircuit,
   zkcandy,
   zkfair,

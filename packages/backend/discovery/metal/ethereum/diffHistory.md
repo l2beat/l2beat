@@ -1,4 +1,187 @@
-Generated with discovered.json: 0xfa4186e7e0761eddf6f251a4ed55e1f121b2a45a
+Generated with discovered.json: 0xc077a0f745782d216f312414167ad14d22631217
+
+# Diff at Thu, 18 Jul 2024 10:31:54 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20211468
+- current block number: 20211468
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211468 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: None
+      values.livenessInterval:
+-        8467200
++        "98d"
+      template:
++        "gnosisSafeModules/LivenessModule"
+      descriptions:
++        ["used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"]
+    }
+```
+
+```diff
+    contract GuardianMultisig (0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) {
+    +++ description: None
+      roles:
++        ["Guardian"]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x0a47A44f1B2bb753474f8c830322554A96C9934D) {
+    +++ description: None
+      template:
++        "opstack/L1CrossDomainMessenger"
+      descriptions:
++        ["Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."]
+      categories:
++        ["Core"]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730) {
+    +++ description: None
+      template:
++        "opstack/OptimismMintableERC20Factory"
+      descriptions:
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      descriptions:
++        ["Liveness Guard of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - used to remove members inactive for 98d."]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) {
+    +++ description: None
+      descriptions:
++        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+    }
+```
+
+```diff
+    contract L2OutputOracle (0x3B1F7aDa0Fcc26B13515af752Dd07fB1CAc11426) {
+    +++ description: None
+      template:
++        "opstack/L2OutputOracle"
+      descriptions:
++        ["Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956) {
+    +++ description: None
+      template:
++        "opstack/OptimismPortal"
+      descriptions:
++        ["The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99, inheriting its permissions."]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x50D700e97967F9115e3f999bDB263d69F6704680) {
+    +++ description: None
+      template:
++        "opstack/L1ERC721Bridge"
+      descriptions:
++        ["Used to bridge ERC-721 tokens from host chain to this chain."]
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."]
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8) {
+    +++ description: None
+      template:
++        "gnosisSafeModules/DeputyGuardianModule"
+      descriptions:
++        ["allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3) {
+    +++ description: None
+      template:
++        "opstack/L1StandardBridge"
+      descriptions:
++        ["The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."]
+      categories:
++        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract SystemConfig (0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: None
+      template:
++        "opstack/SystemConfig"
+      descriptions:
++        ["Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."]
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      descriptions:
++        ["Fallback Owner of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 if the number of members falls below 8."]
+    }
+```
+
+```diff
+    contract SuperchainConfig (0x95703e0982140D16f8ebA6d158FccEde42f04a4C) {
+    +++ description: None
+      template:
++        "opstack/SuperchainConfig"
+      descriptions:
++        ["Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."]
+      categories:
++        ["Upgrades&Governance"]
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      descriptions:
++        ["Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."]
+    }
+```
+
+Generated with discovered.json: 0x8ac7122549441d15e2f7c93a7e6c36129570212d
 
 # Diff at Fri, 28 Jun 2024 07:30:12 GMT:
 

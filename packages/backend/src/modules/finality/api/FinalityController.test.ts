@@ -1,36 +1,40 @@
 import { FinalityType, StateUpdateMode } from '@l2beat/config'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  ProjectId,
+  TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import {
+  Database,
+  FinalityRecord,
+  IndexerConfigurationRecord,
+  LivenessRecord,
+} from '@l2beat/database'
 import { createTrackedTxId } from '@l2beat/shared'
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import {
-  calculateDetailsFor,
-  calculateIntervals,
-} from '../../tracked-txs/modules/liveness/api/calculateIntervalWithAverages'
-import {
-  LivenessRecordWithProjectIdAndSubtype,
-  LivenessRepository,
-} from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import {
-  FinalityRecord,
-  FinalityRepository,
-} from '../repositories/FinalityRepository'
+import { calculateIntervals } from '../../tracked-txs/modules/liveness/utils/calculateIntervals'
+import { calculateStats } from '../../tracked-txs/modules/liveness/utils/calculateStats'
+import { filterIntervalsByRange } from '../../tracked-txs/modules/liveness/utils/filterIntervalsByRange'
 import { FinalityController } from './FinalityController'
+
+const START = UnixTime.now()
 
 describe(FinalityController.name, () => {
   describe(FinalityController.prototype.getFinality.name, () => {
     it('returns empty object if no data', async () => {
       const finalityController = new FinalityController({
         projects: [],
-        finalityRepository: getMockFinalityRepository([]),
-        livenessRepository: getMockLivenessRepository([]),
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({
+        db: mockObject<Database>({
+          finality: getMockFinalityRepository([]),
+          liveness: getMockLivenessRepository([]),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
             getSavedConfigurations: mockFn().resolvesTo([]),
           }),
+        }),
       })
 
       const result = await finalityController.getFinality()
@@ -38,21 +42,31 @@ describe(FinalityController.name, () => {
     })
 
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
-        ...range(5).map((_, i) => {
-          return {
-            projectId: ProjectId('project1'),
+      const mockConfigurationId = createTrackedTxId.random()
+
+      const mockConfiguration = mockObject<IndexerConfigurationRecord>({
+        id: mockConfigurationId,
+        properties: JSON.stringify({
+          projectId: ProjectId('project1'),
+          type: 'liveness',
+          subtype: 'batchSubmissions',
+        }),
+        currentHeight: START.toNumber(),
+      })
+
+      const RECORDS: LivenessRecord[] = [
+        ...range(5).map((_, i) =>
+          mockObject<LivenessRecord>({
+            configurationId: mockConfigurationId,
             timestamp: START.add(-i, 'days'),
-            subtype: 'batchSubmissions',
-          } as const
-        }),
-        ...range(3).map((_, i) => {
-          return {
-            projectId: ProjectId('project1'),
+          }),
+        ),
+        ...range(5).map((_, i) =>
+          mockObject<LivenessRecord>({
+            configurationId: mockConfigurationId,
             timestamp: START.add(-(5 + i * 2), 'days'),
-            subtype: 'batchSubmissions',
-          } as const
-        }),
+          }),
+        ),
       ]
 
       const project2Result = {
@@ -66,8 +80,13 @@ describe(FinalityController.name, () => {
         maximumStateUpdate: 4,
       }
       const finalityController = new FinalityController({
-        finalityRepository: getMockFinalityRepository([project2Result]),
-        livenessRepository: getMockLivenessRepository(RECORDS),
+        db: mockObject<Database>({
+          finality: getMockFinalityRepository([project2Result]),
+          liveness: getMockLivenessRepository(RECORDS),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
+            getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
+          }),
+        }),
         projects: mockProjectConfig([
           {
             projectId: ProjectId('project1'),
@@ -82,24 +101,22 @@ describe(FinalityController.name, () => {
             stateUpdate: 'analyze',
           },
         ]),
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({
-            getSavedConfigurations: mockFn().resolvesTo([
-              {
-                id: createTrackedTxId.random(),
-                properties: JSON.stringify({
-                  projectId: ProjectId('project1'),
-                  subtype: 'batchSubmissions',
-                }),
-                currentHeight: START.toNumber(),
-              },
-            ]),
-          }),
       })
 
-      const records = [...RECORDS]
-      calculateIntervals(records)
-      const last30Days = calculateDetailsFor(records, '30d')
+      const recordsWithConfig = RECORDS.map((r) => ({
+        ...r,
+        id: mockConfigurationId,
+        subtype: 'batchSubmissions' as TrackedTxsConfigSubtype,
+      }))
+
+      const intervals = calculateIntervals(recordsWithConfig)
+      const filteredIntervals = filterIntervalsByRange(
+        intervals,
+        UnixTime.now(),
+        '30D',
+      )
+
+      const last30Days = calculateStats(filteredIntervals)
 
       assert(last30Days, 'last30Days is undefined')
 
@@ -111,7 +128,7 @@ describe(FinalityController.name, () => {
           maximumInSeconds: last30Days.maximumInSeconds,
         },
         stateUpdateDelays: null,
-        syncedUntil: records[0].timestamp,
+        syncedUntil: recordsWithConfig[0].timestamp,
       })
       expect(result.projects.project2).toEqual({
         timeToInclusion: {
@@ -130,35 +147,56 @@ describe(FinalityController.name, () => {
 
   describe(FinalityController.prototype.getOPStackFinality.name, () => {
     it('correctly calculate avg, min and max', async () => {
-      const RECORDS: LivenessRecordWithProjectIdAndSubtype[] = [
-        ...range(5).map((_, i) => {
-          return {
-            projectId: ProjectId('project1'),
+      const mockConfigurationId1 = createTrackedTxId.random()
+
+      const mockConfiguration1 = mockObject<IndexerConfigurationRecord>({
+        id: mockConfigurationId1,
+        properties: JSON.stringify({
+          projectId: ProjectId('project1'),
+          type: 'liveness',
+          subtype: 'batchSubmissions',
+        }),
+        currentHeight: START.toNumber(),
+      })
+
+      const mockConfigurationId2 = createTrackedTxId.random()
+
+      const mockConfiguration2 = mockObject<IndexerConfigurationRecord>({
+        id: mockConfigurationId2,
+        properties: JSON.stringify({
+          projectId: ProjectId('project2'),
+          type: 'liveness',
+          subtype: 'batchSubmissions',
+        }),
+        currentHeight: null,
+      })
+
+      const RECORDS: LivenessRecord[] = [
+        ...range(5).map((_, i) =>
+          mockObject<LivenessRecord>({
+            configurationId: mockConfigurationId1,
             timestamp: START.add(-i, 'days'),
-            subtype: 'batchSubmissions',
-          } as const
-        }),
-        ...range(3).map((_, i) => {
-          return {
-            projectId: ProjectId('project1'),
+          }),
+        ),
+
+        ...range(3).map((_, i) =>
+          mockObject<LivenessRecord>({
+            configurationId: mockConfigurationId1,
             timestamp: START.add(-(5 + i * 2), 'days'),
-            subtype: 'batchSubmissions',
-          } as const
-        }),
-        ...range(5).map((_, i) => {
-          return {
-            projectId: ProjectId('project2'),
+          }),
+        ),
+        ...range(5).map((_, i) =>
+          mockObject<LivenessRecord>({
+            configurationId: mockConfigurationId2,
             timestamp: START.add(-i, 'days'),
-            subtype: 'batchSubmissions',
-          } as const
-        }),
-        ...range(3).map((_, i) => {
-          return {
-            projectId: ProjectId('project2'),
+          }),
+        ),
+        ...range(3).map((_, i) =>
+          mockObject<LivenessRecord>({
+            configurationId: mockConfigurationId2,
             timestamp: START.add(-(5 + i * 2), 'days'),
-            subtype: 'batchSubmissions',
-          } as const
-        }),
+          }),
+        ),
       ]
 
       const projects = mockProjectConfig([
@@ -171,36 +209,33 @@ describe(FinalityController.name, () => {
       ])
       const finalityController = new FinalityController({
         projects,
-        finalityRepository: getMockFinalityRepository([]),
-        livenessRepository: getMockLivenessRepository(RECORDS),
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({
+        db: mockObject<Database>({
+          finality: getMockFinalityRepository([]),
+          liveness: getMockLivenessRepository(RECORDS),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>({
             getSavedConfigurations: mockFn().resolvesTo([
-              {
-                id: createTrackedTxId.random(),
-                properties: JSON.stringify({
-                  projectId: ProjectId('project1'),
-                  subtype: 'batchSubmissions',
-                }),
-                currentHeight: START.toNumber(),
-              },
-              {
-                id: createTrackedTxId.random(),
-                properties: JSON.stringify({
-                  projectId: ProjectId('project2'),
-                  subtype: 'batchSubmissions',
-                }),
-                currentHeight: null,
-              },
+              mockConfiguration1,
+              mockConfiguration2,
             ]),
           }),
+        }),
       })
 
-      const project1Records = RECORDS.filter(
-        (r) => r.projectId === ProjectId('project1'),
+      const project1LivenessWithConfig = RECORDS.filter(
+        (r) => r.configurationId === mockConfigurationId1,
+      ).map((r) => ({
+        ...r,
+        id: mockConfigurationId1,
+        subtype: 'batchSubmissions' as TrackedTxsConfigSubtype,
+      }))
+
+      const intervals = calculateIntervals(project1LivenessWithConfig)
+      const filteredIntervals = filterIntervalsByRange(
+        intervals,
+        UnixTime.now(),
+        '30D',
       )
-      calculateIntervals(project1Records)
-      const project1Last30Days = calculateDetailsFor(project1Records, '30d')
+      const project1Last30Days = calculateStats(filteredIntervals)
 
       assert(project1Last30Days, 'last30Days is undefined')
 
@@ -247,36 +282,39 @@ describe(FinalityController.name, () => {
         },
       ])
       const finalityController = new FinalityController({
-        livenessRepository: getMockLivenessRepository([]),
-        finalityRepository: getMockFinalityRepository([
-          {
-            projectId: ProjectId('project1'),
-            timestamp: new UnixTime(1000),
-            minimumTimeToInclusion: 1,
-            averageTimeToInclusion: 2,
-            maximumTimeToInclusion: 3,
-            averageStateUpdate: 3,
-          },
-          {
-            projectId: ProjectId('project2'),
-            timestamp: new UnixTime(1000),
-            minimumTimeToInclusion: 4,
-            averageTimeToInclusion: 5,
-            maximumTimeToInclusion: 6,
-            averageStateUpdate: null,
-          },
-          {
-            projectId: ProjectId('project3'),
-            timestamp: new UnixTime(12000),
-            minimumTimeToInclusion: 7,
-            averageTimeToInclusion: 8,
-            maximumTimeToInclusion: 9,
-            averageStateUpdate: null,
-          },
-        ]),
+        db: mockObject<Database>({
+          liveness: getMockLivenessRepository([]),
+          finality: getMockFinalityRepository([
+            {
+              projectId: ProjectId('project1'),
+              timestamp: new UnixTime(1000),
+              minimumTimeToInclusion: 1,
+              averageTimeToInclusion: 2,
+              maximumTimeToInclusion: 3,
+              averageStateUpdate: 3,
+            },
+            {
+              projectId: ProjectId('project2'),
+              timestamp: new UnixTime(1000),
+              minimumTimeToInclusion: 4,
+              averageTimeToInclusion: 5,
+              maximumTimeToInclusion: 6,
+              averageStateUpdate: null,
+            },
+            {
+              projectId: ProjectId('project3'),
+              timestamp: new UnixTime(12000),
+              minimumTimeToInclusion: 7,
+              averageTimeToInclusion: 8,
+              maximumTimeToInclusion: 9,
+              averageStateUpdate: null,
+            },
+          ]),
+          indexerConfiguration: mockObject<Database['indexerConfiguration']>(
+            {},
+          ),
+        }),
         projects,
-        indexerConfigurationRepository:
-          mockObject<IndexerConfigurationRepository>({}),
       })
 
       const result = await finalityController.getProjectsFinality(projects)
@@ -319,10 +357,8 @@ describe(FinalityController.name, () => {
   })
 })
 
-const START = UnixTime.now()
-
 function getMockFinalityRepository(records: FinalityRecord[]) {
-  return mockObject<FinalityRepository>({
+  return mockObject<Database['finality']>({
     getLatestGroupedByProjectId: mockFn().resolvesTo(records),
     addMany() {
       return Promise.resolve(1)
@@ -333,14 +369,12 @@ function getMockFinalityRepository(records: FinalityRecord[]) {
   })
 }
 
-function getMockLivenessRepository(
-  records: LivenessRecordWithProjectIdAndSubtype[],
-) {
-  return mockObject<LivenessRepository>({
-    getByProjectIdAndType(projectId: ProjectId) {
+function getMockLivenessRepository(records: LivenessRecord[]) {
+  return mockObject<Database['liveness']>({
+    getByConfigurationIdSince(configurationIds: string[]) {
       return Promise.resolve(
         records
-          .filter((x) => x.projectId === projectId)
+          .filter((x) => configurationIds.includes(x.configurationId))
           .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
       )
     },

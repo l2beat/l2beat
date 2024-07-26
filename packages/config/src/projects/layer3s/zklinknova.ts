@@ -16,6 +16,7 @@ import {
   makeBridgeCompatible,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
 import { Layer3 } from './types'
 
 const optimismDiscovery = new ProjectDiscovery('zklinknova', 'optimism')
@@ -94,6 +95,7 @@ export const zklinknova: Layer3 = {
   type: 'layer3',
   id: ProjectId('zklinknova'),
   hostChain: ProjectId('linea'),
+  badges: [Badge.VM.EVM, Badge.DA.DAC, Badge.L3ParentChain.Linea],
   display: {
     name: 'zkLink Nova',
     slug: 'zklinknova',
@@ -356,7 +358,7 @@ export const zklinknova: Layer3 = {
       upgradeDelaySeconds,
       executionDelaySeconds,
     ),
-    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA_L1,
+    sequencerFailure: RISK_VIEW.SEQUENCER_ENQUEUE_VIA('L2'),
     proposerFailure: RISK_VIEW.PROPOSER_CANNOT_WITHDRAW,
   }),
   technology: {
@@ -376,10 +378,10 @@ export const zklinknova: Layer3 = {
       ],
     },
     forceTransactions: {
-      name: 'Users can force any transaction via L1',
+      name: 'Users can force any transaction via L2',
       description:
-        'If a user is censored by L2 Sequencer, they can try to force transaction via L1 queue. Right now there is no mechanism that forces L2 Sequencer to include\
-        transactions from L1 queue in an L1 block.',
+        'If a user is censored by L3 Sequencer, they can try to force transaction via L2 queue. Right now there is no mechanism that forces L3 Sequencer to include\
+        transactions from L2 queue in an L3 block.',
       risks: FORCE_TRANSACTIONS.SEQUENCER_NO_MECHANISM.risks,
       references: [],
     },

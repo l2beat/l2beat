@@ -2,23 +2,20 @@ import { Config } from '../build/config'
 import { Page, PagesData } from './Page'
 import { getBridgesRiskPage } from './bridges/risk'
 import { getBridgesSummaryPage } from './bridges/summary'
-import { getGlossaryPage } from './glossary'
+import { getDARiskPage } from './da-risk'
 import { getMultisigReportDownloadPage } from './multisig-report'
 import { outputPages } from './output'
 import { getBridgeProjectPages } from './project/bridge'
 import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
-import { getZkCatalogProjectPages } from './project/zk-catalog'
 import { getActivityPage } from './scaling/activity'
+import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
 import { getCostsPage } from './scaling/costs'
-import { getScalingDataAvailabilityPage } from './scaling/data-availability'
 import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
-import { getRiskPage } from './scaling/risk'
 import { getSummaryPage } from './scaling/summary'
 import { getTvlPage } from './scaling/tvl'
-import { getZkCatalogPage } from './zk-catalog'
 
 export function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
@@ -32,10 +29,9 @@ export function renderPages(config: Config, pagesData: PagesData) {
     finalityApiResponse,
     l2CostsApiResponse,
     implementationChange,
-    verifiersApiResponse,
   } = pagesData
 
-  pages.push(getRiskPage(config, pagesData))
+  pages.push(getDARiskPage())
   pages.push(getSummaryPage(config, pagesData))
   pages.push(...getProjectPages(config, pagesData))
   pages.push(...getL3sProjectPages(config, pagesData))
@@ -54,6 +50,8 @@ export function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
+  } else {
+    pages.push(getMaintenanceActivityPage(config))
   }
 
   pages.push(getTvlPage(config, pagesData))
@@ -87,15 +85,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     )
   }
 
-  pages.push(getGlossaryPage(config))
-
-  pages.push(
-    getScalingDataAvailabilityPage(config, {
-      tvlApiResponse,
-      implementationChange,
-    }),
-  )
-
   if (config.features.costsPage && l2CostsApiResponse) {
     pages.push(
       getCostsPage(config, {
@@ -105,11 +94,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
         implementationChange,
       }),
     )
-  }
-
-  if (config.features.zkCatalog && verifiersApiResponse) {
-    pages.push(getZkCatalogPage(config, verifiersApiResponse))
-    pages.push(...getZkCatalogProjectPages(config, verifiersApiResponse))
   }
 
   outputPages(config, pages)

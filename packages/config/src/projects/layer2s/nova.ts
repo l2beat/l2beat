@@ -44,7 +44,13 @@ const maxTimeVariation = discovery.getContractValue<number[]>(
 const selfSequencingDelay = maxTimeVariation[2]
 
 export const nova: Layer2 = orbitStackL2({
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit],
+  badges: [
+    Badge.VM.EVM,
+    Badge.DA.DAC,
+    Badge.Stack.Nitro,
+    Badge.Other.Governance,
+    Badge.Other.L3HostChain,
+  ],
   discovery,
   associatedTokens: ['ARB'],
   bridge: discovery.getContract('Bridge'),
@@ -85,6 +91,25 @@ export const nova: Layer2 = orbitStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+  },
+  chainConfig: {
+    name: 'nova',
+    chainId: 42170,
+    explorerUrl: 'https://nova.arbiscan.io/',
+    explorerApi: {
+      url: 'https://api-nova.arbiscan.io/api',
+      type: 'etherscan',
+    },
+    minTimestampForTvl: new UnixTime(1656122488),
+    multicallContracts: [
+      {
+        address: EthereumAddress('0xcA11bde05977b3631167028862bE2a173976CA11'),
+        batchSize: 150,
+        sinceBlock: 1746963,
+        version: '3',
+      },
+    ],
+    coingeckoPlatform: 'arbitrum-nova',
   },
   rpcUrl: 'https://nova.arbitrum.io/rpc',
   nonTemplatePermissions: [
@@ -168,6 +193,14 @@ export const nova: Layer2 = orbitStackL2({
       tokens: '*',
       description:
         'Main entry point for users depositing ERC20 tokens. Upon depositing, on L2 a generic, “wrapped” token will be minted.',
+      ...upgradeExecutorUpgradeability,
+    }),
+    discovery.getEscrowDetails({
+      address: EthereumAddress('0x23122da8C581AA7E0d07A36Ff1f16F799650232f'),
+      sinceTimestamp: new UnixTime(1659620187),
+      tokens: '*',
+      description:
+        'Main entry point for users depositing ERC20 tokens that require minting a custom token on the L2.',
       ...upgradeExecutorUpgradeability,
     }),
   ],

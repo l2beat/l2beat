@@ -29,11 +29,18 @@ const Tooltip = ({
 
 const TooltipTrigger = React.forwardRef<
   React.ElementRef<typeof TooltipPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger>
->(({ ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof TooltipPrimitive.Trigger> & {
+    disabledOnMobile?: boolean
+  }
+>(({ disabledOnMobile, ...props }, ref) => {
   const localRef = useRef(null)
   const { setOpen } = useTooltipTriggerContext()
   useOnClickOutside(localRef, () => setOpen(false), 'touchend')
+
+  // Tooltips do not work on mobile by default
+  if (disabledOnMobile) {
+    return <TooltipPrimitive.Trigger ref={ref} {...props} />
+  }
 
   return (
     <TooltipPrimitive.Trigger
@@ -61,8 +68,8 @@ const TooltipContent = React.forwardRef<
     ref={ref}
     sideOffset={sideOffset}
     className={cn(
-      'z-110 rounded-md bg-white text-gray-700 dark:bg-neutral-700 dark:text-white px-4 py-3 text-left text-sm leading-tight shadow-md normal-case font-normal animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2',
-      !fitContent && 'text-wrap max-w-[300px]',
+      'z-110 rounded-md bg-white px-4 py-3 text-left text-sm font-normal normal-case leading-tight text-gray-700 shadow-md animate-in fade-in-0 zoom-in-95 data-[state=closed]:animate-out data-[state=closed]:fade-out-0 data-[state=closed]:zoom-out-95 data-[side=bottom]:slide-in-from-top-2 data-[side=left]:slide-in-from-right-2 data-[side=right]:slide-in-from-left-2 data-[side=top]:slide-in-from-bottom-2 dark:bg-neutral-700 dark:text-white',
+      !fitContent && 'max-w-[300px] text-wrap',
       className,
     )}
     {...props}

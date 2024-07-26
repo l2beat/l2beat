@@ -1,4 +1,30 @@
-Generated with discovered.json: 0x90a7acfa341004f44ac4784662204598531fb330
+Generated with discovered.json: 0xf156c0f09e4036b32491db988a14c79f0d7eb554
+
+# Diff at Thu, 18 Jul 2024 10:30:09 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20016201
+- current block number: 20016201
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20016201 (main branch discovery), not current.
+
+```diff
+    contract RollupOwnerMultisig (0xC91482A96e9c2A104d9298D1980eCCf8C4dc764E) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x0d9f416260598313Be6FDf6B010f2FbC34957Cd0, inheriting its permissions."]
+    }
+```
+
+Generated with discovered.json: 0x8966bc0f2b786fa51b15aa2d9982fd1d05f792ec
 
 # Diff at Wed, 22 May 2024 16:40:05 GMT:
 

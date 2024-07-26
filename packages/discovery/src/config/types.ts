@@ -7,7 +7,6 @@ export interface DiscoveryCliConfig {
   discovery: DiscoveryModuleConfig | false
   singleDiscovery: SingleDiscoveryModuleConfig | false
   invert: InversionConfig | false
-  flatten: FlattenConfig | false
 }
 
 export interface DiscoveryModuleConfig {

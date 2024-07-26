@@ -1,94 +1,67 @@
-import { ProjectId } from '@l2beat/shared-pure'
-import { DacBridge, NoDaBridge, OnChainDaBridge } from './DaBridge'
+import {
+  DacBridge,
+  EnshrinedBridge,
+  NoDaBridge,
+  OnChainDaBridge,
+} from './DaBridge'
+import { DaConsensusAlgorithm } from './DaConsensusAlgorithm'
 import { DaEconomicSecurity } from './DaEconomicSecurity'
 import { DaEconomicSecurityRisk } from './DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from './DaFraudDetectionRisk'
-
-export const DaLayerKind = {
-  PublicBlockchain: 'PublicBlockchain',
-  DAC: 'DAC',
-} as const
-
-export type DaLayerKind = (typeof DaLayerKind)[keyof typeof DaLayerKind]
+import { DaLinks } from './DaLinks'
+import { DataAvailabilitySampling } from './DataAvailabilitySampling'
+import { UsedInProject } from './UsedInProject'
 
 export type DaLayer = BlockchainDaLayer | DacDaLayer
 
-export const DaLayerKindDisplay: Record<DaLayerKind, string> = {
-  PublicBlockchain: 'Public blockchain',
-  DAC: 'DAC',
-}
-
 export type BlockchainDaLayer = CommonDaLayer & {
-  kind: typeof DaLayerKind.PublicBlockchain
-
-  bridges: (OnChainDaBridge | NoDaBridge)[]
-
-  /**
-   * The duration of the data storage.
-   * @unit seconds
-   */
-  storageDuration: number
-
-  /**
-   * Consensus finality time.
-   * @unit seconds
-   */
-  consensusFinality: number
-
-  /**
-   * Duration of time for unbonding in seconds
-   * @unit seconds
-   */
-  unbondingPeriod: number
-
-  /**
-   * Economic security configuration.
-   */
+  kind: 'PublicBlockchain'
+  bridges: (OnChainDaBridge | EnshrinedBridge | NoDaBridge)[]
+  /** The period within which full nodes must store and distribute data. @unit seconds */
+  pruningWindow: number
+  /** Details about data availability sampling. */
+  dataAvailabilitySampling?: DataAvailabilitySampling
+  /** The consensus algorithm used by the data availability layer. */
+  consensusAlgorithm: DaConsensusAlgorithm
+  /** Economic security configuration. */
   economicSecurity?: DaEconomicSecurity
 }
 
 export type DacDaLayer = CommonDaLayer & {
-  kind: typeof DaLayerKind.DAC
-
+  kind: 'DAC'
   bridges: DacBridge[]
 }
 
 export type CommonDaLayer = {
-  /**
-   * Unique identifier of the data availability layer
-   */
+  type: 'DaLayer'
+  /** Unique identifier of the data availability layer. */
   id: string
-
-  display: {
-    /**
-     * The name of the data availability layer.
-     */
-    name: string
-
-    /**
-     * Slug of the data availability bridge
-     */
-    slug: string
-
-    /**
-     * A short description of the data availability layer.
-     */
-    description?: string
-  }
-
-  /**
-   * List of projects given da layer is being used in
-   */
-  usedIn: ProjectId[]
-
-  /**
-   * Risks associated with the data availability layer.
-   * @see DaLayerRisks
-   */
+  /** Display information for the data availability layer. */
+  display: DaLayerDisplay
+  /** Is the DA layer upcoming? */
+  isUpcoming?: boolean
+  /** Is the DA layer under review? */
+  isUnderReview?: boolean
+  /** The technology used by the data availability layer. [MARKDOWN] */
+  technology: string
+  /** List of projects given da layer is being used in. */
+  usedIn: UsedInProject[]
+  /** Risks associated with the data availability layer. */
   risks: DaLayerRisks
 }
 
 export type DaLayerRisks = {
   economicSecurity: DaEconomicSecurityRisk
   fraudDetection: DaFraudDetectionRisk
+}
+
+interface DaLayerDisplay {
+  /** The name of the data availability layer. */
+  name: string
+  /** Slug of the data availability bridge. */
+  slug: string
+  /** A short description of the data availability layer. */
+  description: string
+  /** Links related to the data availability layer. */
+  links: DaLinks
 }

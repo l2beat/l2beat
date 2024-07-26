@@ -1,4 +1,7 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  get$Implementations,
+} from '@l2beat/discovery-types'
 import {
   assert,
   EthereumAddress,
@@ -34,9 +37,10 @@ import {
   makeBridgeCompatible,
 } from '../../../common'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { BadgeId } from '../../badges'
+import { Badge, BadgeId, badges } from '../../badges'
 import { getStage } from '../common/stages/getStage'
 import { Layer2, Layer2Display, Layer2TxConfig } from '../types'
+import { mergeBadges } from './utils'
 
 export interface DAProvider {
   name: DataAvailabilityLayer
@@ -74,6 +78,12 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
   const daProvider = templateVars.daProvider
   const shared = new ProjectDiscovery('shared-polygon-cdk')
   const rollupManagerContract = shared.getContract('PolygonRollupManager')
+  if (daProvider !== undefined) {
+    assert(
+      templateVars.badges?.find((b) => badges[b].type === 'DA') !== undefined,
+      'DA badge is required for external DA',
+    )
+  }
 
   const upgradeDelay = shared.getContractValue<number>(
     'Timelock',
@@ -468,15 +478,6 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     stateValidation: templateVars.stateValidation,
     permissions: [
       {
-        name: 'ProxyAdminOwner',
-        accounts: [
-          templateVars.discovery.formatPermissionedAccount(
-            shared.getContractValue('SharedProxyAdmin', 'owner'), // could be EOA or multisig
-          ),
-        ],
-        description: `Admin of the ${templateVars.rollupModuleContract.name} rollup, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.`,
-      },
-      {
         name: 'Sequencer',
         accounts: [
           templateVars.discovery.getPermissionedAccount(
@@ -593,7 +594,10 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     upgradesAndGovernance: templateVars.upgradesAndGovernance,
     milestones: templateVars.milestones,
     knowledgeNuggets: templateVars.knowledgeNuggets,
-    badges: templateVars.badges,
+    badges: mergeBadges(
+      [Badge.Stack.PolygonCDK, Badge.VM.EVM, Badge.DA.EthereumCalldata],
+      templateVars.badges ?? [],
+    ),
   }
 }
 
@@ -619,7 +623,7 @@ function technologyDA(
 }
 
 function safeGetImplementation(contract: ContractParameters): string {
-  const implementation = contract.implementations?.[0]
+  const implementation = get$Implementations(contract.values)[0]
   if (!implementation) {
     throw new Error(`No implementation found for ${contract.name}`)
   }

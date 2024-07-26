@@ -36,9 +36,9 @@ const freezeGracePeriod = discovery.getContractValue<number>(
   'FREEZE_GRACE_PERIOD',
 )
 
-const upgradeDelaySeconds = discovery.getContractUpgradeabilityParam(
+const upgradeDelaySeconds = discovery.getContractValue<number>(
   'StarkExchange',
-  'upgradeDelay',
+  'StarkWareDiamond_upgradeDelay',
 )
 const includingSHARPUpgradeDelaySeconds = Math.min(
   upgradeDelaySeconds,
@@ -54,7 +54,12 @@ const committee = getCommittee(discovery)
 
 export const sorare: Layer2 = {
   type: 'layer2',
-  badges: [Badge.Stack.StarkEx, Badge.Infra.SHARP],
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.DAC,
+    Badge.Stack.StarkEx,
+    Badge.Infra.SHARP,
+  ],
   id: ProjectId('sorare'),
   display: {
     name: 'Sorare',

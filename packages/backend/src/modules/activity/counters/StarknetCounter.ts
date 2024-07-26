@@ -1,31 +1,23 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { range } from 'lodash'
 
+import { Database } from '@l2beat/database'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
 import { SequenceProcessor } from '../SequenceProcessor'
-import { BlockTransactionCountRepository } from '../repositories/BlockTransactionCountRepository'
-import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
 
 export class StarknetCounter extends SequenceProcessor {
   constructor(
     projectId: ProjectId,
-    sequenceProcessorRepository: SequenceProcessorRepository,
-    private readonly blockRepository: BlockTransactionCountRepository,
+    db: Database,
     private readonly starknetClient: StarknetClient,
     private readonly clock: Clock,
     logger: Logger,
     batchSize: number,
   ) {
-    super(
-      projectId,
-      sequenceProcessorRepository,
-      { batchSize, startFrom: 0 },
-      logger,
-    )
+    super(projectId, db, { batchSize, startFrom: 0 }, logger)
     this.logger = this.logger.for(this)
   }
 
@@ -37,11 +29,7 @@ export class StarknetCounter extends SequenceProcessor {
     return blockNumber
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Knex.Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const block = await this.starknetClient.getBlock(blockNumber)
 
@@ -56,6 +44,6 @@ export class StarknetCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'StarknetBlockCounter',
     })
-    await this.blockRepository.addOrUpdateMany(blocks, trx)
+    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
   }
 }

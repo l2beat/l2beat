@@ -49,8 +49,12 @@ const maxForcedWithdrawalFeeString = `${utils.formatEther(
 export const degate: Layer2 = {
   isArchived: true,
   type: 'layer2',
+  badges: [
+    Badge.VM.AppChain,
+    Badge.DA.EthereumCalldata,
+    Badge.Fork.LoopringFork,
+  ],
   id: ProjectId('degate'),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumCalldata, Badge.Fork.Loopring],
   display: {
     name: 'DeGate Legacy',
     slug: 'degate',

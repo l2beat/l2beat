@@ -17,18 +17,16 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'AstarValidiumEtrog',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>('AstarValidium', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
 const upgradeability = {
-  upgradableBy: ['ProxyAdminOwner'],
+  upgradableBy: ['LocalAdmin'],
   upgradeDelay: 'None',
 }
 
 export const astarzkevm: Layer2 = polygonCDKStack({
-  badges: [Badge.VM.EVM, Badge.Infra.AggLayer],
+  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   daProvider: {
     name: 'DAC',
     bridge: {
@@ -43,9 +41,9 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       }),
       sources: [
         {
-          contract: 'AstarValidiumEtrog',
+          contract: 'PolygonDataCommittee.sol',
           references: [
-            'https://etherscan.io/address/0x9cf80f7eB1C76ec5AE7A88b417e373449b73ac30',
+            'https://etherscan.io/address/0xF4e87685e323818E0aE35dCdFc3B65106002E456#code',
           ],
         },
       ],
@@ -63,13 +61,13 @@ export const astarzkevm: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'AstarValidiumEtrog.sol - Etherscan source code, sequenceBatches function',
-          href: 'https://etherscan.io/address/0x519E42c24163192Dca44CD3fBDCEBF6be9130987',
+          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
   },
-  rollupModuleContract: discovery.getContract('AstarValidiumEtrog'),
+  rollupModuleContract: discovery.getContract('AstarValidium'),
   rollupVerifierContract: discovery.getContract('AstarVerifier'),
   display: {
     name: 'Astar zkEVM',
@@ -110,8 +108,14 @@ export const astarzkevm: Layer2 = polygonCDKStack({
     genesisState:
       'The genesis state, whose corresponding root is accessible as Batch 0 root in the `getRollupBatchNumToStateRoot` method of PolygonRollupManager, is available [here](https://github.com/0xPolygonHermez/zkevm-contracts/blob/1ad7089d04910c319a257ff4f3674ffd6fc6e64e/tools/addRollupType/genesis.json).',
     dataFormat:
-      'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidiumEtrog contract.',
+      'The trusted sequencer request signatures from DAC members off-chain, and posts hashed batches with signatures to the AstarValidium contract.',
   },
+  nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'LocalAdmin',
+      'Admin of the AstarValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the AstarValidiumDAC contract',
+    ),
+  ],
   nonTemplateContracts: [
     discovery.getContractDetails('AstarValidiumDAC', {
       description:

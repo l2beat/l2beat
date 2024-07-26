@@ -8,7 +8,7 @@ const discovery = new ProjectDiscovery('molten', 'arbitrum')
 
 export const molten: Layer3 = orbitStackL3({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.L3ParentChain.Arbitrum],
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Arbitrum, Badge.RaaS.Caldera],
   hostChain: ProjectId('arbitrum'),
   display: {
     name: 'Molten Network',

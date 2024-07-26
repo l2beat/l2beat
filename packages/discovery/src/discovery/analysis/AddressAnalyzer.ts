@@ -1,15 +1,13 @@
 import { assert } from '@l2beat/backend-tools'
-import {
-  ContractParameters,
-  ContractValue,
-  UpgradeabilityParameters,
-} from '@l2beat/discovery-types'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
+import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
+import { HandlerResult } from '../handlers/Handler'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
@@ -31,9 +29,9 @@ export interface AnalyzedContract {
   deploymentBlockNumber?: number
   derivedName: string | undefined
   isVerified: boolean
-  upgradeability: UpgradeabilityParameters
+  proxyType?: string
   implementations: EthereumAddress[]
-  values: Record<string, ContractValue>
+  values: Record<string, ContractValue | undefined>
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
@@ -49,6 +47,7 @@ export interface AnalyzedContract {
 export interface ExtendedTemplate {
   template: string
   reason: 'byExtends' | 'byReferrer' | 'byShapeMatch'
+  templateHash: Hash256
 }
 
 export interface AnalyzedEOA {
@@ -88,7 +87,11 @@ export class AddressAnalyzer {
     let extendedTemplate: ExtendedTemplate | undefined = undefined
 
     if (overrides?.extends !== undefined) {
-      extendedTemplate = { template: overrides.extends, reason: 'byExtends' }
+      extendedTemplate = {
+        template: overrides.extends,
+        reason: 'byExtends',
+        templateHash: this.templateService.getTemplateHash(overrides.extends),
+      }
     } else if (suggestedTemplates !== undefined) {
       const template = Array.from(suggestedTemplates)[0]
       if (template !== undefined) {
@@ -97,7 +100,11 @@ export class AddressAnalyzer {
           overrides ?? { address },
           template,
         )
-        extendedTemplate = { template, reason: 'byReferrer' }
+        extendedTemplate = {
+          template,
+          reason: 'byReferrer',
+          templateHash: this.templateService.getTemplateHash(template),
+        }
       }
       if (suggestedTemplates.size > 1) {
         templateErrors['@template'] =
@@ -113,11 +120,12 @@ export class AddressAnalyzer {
       logger,
       overrides?.proxyType,
     )
+    const implementations = get$Implementations(proxy?.values)
 
     const sources = await this.sourceCodeService.getSources(
       provider,
       address,
-      proxy?.implementations,
+      implementations,
     )
     logger.logName(sources.name)
 
@@ -136,7 +144,11 @@ export class AddressAnalyzer {
           overrides ?? { address },
           template,
         )
-        extendedTemplate = { template, reason: 'byShapeMatch' }
+        extendedTemplate = {
+          template,
+          reason: 'byShapeMatch',
+          templateHash: this.templateService.getTemplateHash(template),
+        }
       }
       if (matchingTemplates.length > 1) {
         templateErrors['@template'] =
@@ -160,24 +172,28 @@ export class AddressAnalyzer {
         types,
         logger,
       )
+
+    const proxyResults = Object.entries(proxy?.values ?? {}).map(
+      ([field, value]): HandlerResult => ({ field, value }),
+    )
+
     const relatives = getRelativesWithSuggestedTemplates(
-      results,
+      results.concat(proxyResults),
       overrides?.ignoreRelatives,
-      proxy?.relatives,
-      proxy?.implementations,
+      implementations,
       overrides?.fields,
     )
 
-    const upgradeability = proxy?.upgradeability ?? { type: 'immutable' }
+    const mergedValues = {
+      ...(!proxy ? { $immutable: true } : {}),
+      ...(proxy?.values ?? {}),
+      ...(values ?? {}),
+    }
 
-    const targetsMeta = getTargetsMeta(
-      address,
-      upgradeability,
-      results,
-      overrides?.fields,
-    )
-
-    return {
+    const analysisWithoutMeta: Omit<
+      AnalyzedContract,
+      'selfMeta' | 'targetsMeta'
+    > = {
       type: 'Contract',
       name: overrides?.name ?? sources.name,
       derivedName: overrides?.name !== undefined ? sources.name : undefined,
@@ -185,19 +201,29 @@ export class AddressAnalyzer {
       address,
       deploymentTimestamp: deployment?.timestamp,
       deploymentBlockNumber: deployment?.blockNumber,
-      upgradeability,
-      implementations: proxy?.implementations ?? [],
-      values: values ?? {},
+      implementations: implementations,
+      proxyType: proxy?.type,
+      values: mergedValues,
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,
       sourceBundles: sources.sources,
       extendedTemplate,
       ignoreInWatchMode: overrides?.ignoreInWatchMode,
       relatives,
-      selfMeta: getSelfMeta(overrides),
-      targetsMeta,
       usedTypes,
     }
+
+    const analysis: AnalyzedContract = {
+      ...analysisWithoutMeta,
+      selfMeta: getSelfMeta(overrides, analysisWithoutMeta),
+      targetsMeta: getTargetsMeta(
+        address,
+        mergedValues,
+        overrides?.fields,
+        analysisWithoutMeta,
+      ),
+    }
+    return analysis
   }
 
   async hasContractChanged(
@@ -207,12 +233,13 @@ export class AddressAnalyzer {
     types: Record<string, DiscoveryCustomType> | undefined,
     abis: Record<string, string[]>,
   ): Promise<boolean> {
+    const implementations = get$Implementations(contract.values)
     if (contract.unverified) {
       // Check if the contract is verified now
       const { isVerified } = await this.sourceCodeService.getSources(
         provider,
         contract.address,
-        contract.implementations,
+        implementations,
       )
       return isVerified
     }
@@ -220,7 +247,7 @@ export class AddressAnalyzer {
     const abi = this.sourceCodeService.getRelevantAbi(
       abis,
       contract.address,
-      contract.implementations,
+      implementations,
       contract.ignoreInWatchMode,
     )
 

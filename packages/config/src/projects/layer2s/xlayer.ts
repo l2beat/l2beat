@@ -17,19 +17,17 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
 )
 
 const isForcedBatchDisallowed =
-  discovery.getContractValue<string>(
-    'XLayerValidiumEtrog',
-    'forceBatchAddress',
-  ) !== '0x0000000000000000000000000000000000000000'
+  discovery.getContractValue<string>('XLayerValidium', 'forceBatchAddress') !==
+  '0x0000000000000000000000000000000000000000'
 
 const upgradeability = {
-  upgradableBy: ['ProxyAdminOwner'],
+  upgradableBy: ['DACProxyAdminOwner'],
   upgradeDelay: 'No delay',
 }
 
 export const xlayer: Layer2 = polygonCDKStack({
   discovery,
-  badges: [Badge.VM.EVM, Badge.Infra.AggLayer],
+  badges: [Badge.DA.DAC],
   daProvider: {
     name: 'DAC',
     bridge: {
@@ -44,9 +42,9 @@ export const xlayer: Layer2 = polygonCDKStack({
       }),
       sources: [
         {
-          contract: 'XLayerValidiumEtrog',
+          contract: 'PolygonDataCommittee.sol',
           references: [
-            'https://etherscan.io/address/0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507',
+            'https://etherscan.io/address/0xd620Ca1ad5c3888e4521c3374cE4088Cb78079b8#code',
           ],
         },
       ],
@@ -64,8 +62,8 @@ export const xlayer: Layer2 = polygonCDKStack({
       ],
       references: [
         {
-          text: 'XLayerValidiumEtrog.sol - Etherscan source code, sequenceBatches function',
-          href: 'https://etherscan.io/address/0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507',
+          text: 'PolygonValidiumStorageMigration.sol - Etherscan source code, sequenceBatchesValidium function',
+          href: 'https://etherscan.io/address/0x10D296e8aDd0535be71639E5D1d1c30ae1C6bD4C#code#F1#L126',
         },
       ],
     },
@@ -98,7 +96,7 @@ export const xlayer: Layer2 = polygonCDKStack({
     },
   ],
   knowledgeNuggets: [],
-  rollupModuleContract: discovery.getContract('XLayerValidiumEtrog'),
+  rollupModuleContract: discovery.getContract('XLayerValidium'),
   rollupVerifierContract: discovery.getContract('XLayerVerifier'),
   rpcUrl: 'https://rpc.xlayer.tech',
   isForcedBatchDisallowed,
@@ -107,6 +105,28 @@ export const xlayer: Layer2 = polygonCDKStack({
       ...NEW_CRYPTOGRAPHY.ZK_BOTH,
     },
   },
+  nonTemplatePermissions: [
+    {
+      name: 'LocalAdmin',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('XLayerValidium', 'admin'),
+        ),
+      ],
+      description:
+        'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
+    },
+    {
+      name: 'DACProxyAdminOwner',
+      accounts: [
+        discovery.formatPermissionedAccount(
+          discovery.getContractValue('ProxyAdmin', 'owner'),
+        ),
+      ],
+      description:
+        "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
+    },
+  ],
   nonTemplateContracts: [
     discovery.getContractDetails('XLayerValidiumDAC', {
       description:

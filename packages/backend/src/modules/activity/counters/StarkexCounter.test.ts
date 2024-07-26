@@ -2,37 +2,33 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { install } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
-import { Knex } from 'knex'
 import waitForExpect from 'wait-for-expect'
 
+import { Database } from '@l2beat/database'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import { mockDatabase } from '../../../test/database'
 import { Clock } from '../../../tools/Clock'
-import { SequenceProcessorRepository } from '../repositories/SequenceProcessorRepository'
-import { StarkexTransactionCountRepository } from '../repositories/StarkexCountRepository'
 import { StarkexCounter } from './StarkexCounter'
 
 describe(StarkexCounter.name, () => {
   it('iterates over products', async () => {
     const project = ProjectId('starkex_project')
-    const starkexRepository = mockObject<StarkexTransactionCountRepository>({
-      addOrUpdateMany: async () => -1,
-    })
     const txCount = 1
     const starkexClient = mockObject<StarkexClient>({
       getDailyCount: async () => txCount,
     })
-    const transaction = mockObject<Knex.Transaction>({})
-    const sequenceProcessorRepository = mockObject<SequenceProcessorRepository>(
-      {
-        findById: async () => undefined,
+    const starkExTransactionCount = mockObject<
+      Database['starkExTransactionCount']
+    >({
+      addOrUpdateMany: async () => -1,
+    })
+    const db = mockDatabase({
+      starkExTransactionCount,
+      sequenceProcessor: mockObject<Database['sequenceProcessor']>({
+        findById: async () => null,
         addOrUpdate: async () => '',
-        runInTransaction: async (
-          fun: (trx: Knex.Transaction) => Promise<void>,
-        ) => {
-          await fun(transaction)
-        },
-      },
-    )
+      }),
+    })
 
     const DAY = UnixTime.fromDate(new Date('2022-05-30'))
     const clock = mockObject<Clock>({
@@ -43,8 +39,7 @@ describe(StarkexCounter.name, () => {
     const counter = new StarkexCounter(
       project,
       product,
-      sequenceProcessorRepository,
-      starkexRepository,
+      db,
       starkexClient,
       clock,
       Logger.SILENT,
@@ -72,8 +67,8 @@ describe(StarkexCounter.name, () => {
         DAY.toDays(),
         product[1],
       )
-      expect(starkexRepository.addOrUpdateMany).toHaveBeenCalledTimes(1)
-      expect(starkexRepository.addOrUpdateMany).toHaveBeenNthCalledWith(
+      expect(starkExTransactionCount.addOrUpdateMany).toHaveBeenCalledTimes(1)
+      expect(starkExTransactionCount.addOrUpdateMany).toHaveBeenNthCalledWith(
         1,
         [
           {
@@ -82,7 +77,6 @@ describe(StarkexCounter.name, () => {
             projectId: project,
           },
         ],
-        transaction,
       )
     })
   })

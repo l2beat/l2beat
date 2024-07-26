@@ -1,4 +1,181 @@
-Generated with discovered.json: 0x9efa2c8ccfb080227d7db5e3731ae5fd7ddda014
+Generated with discovered.json: 0xfab30ad5b7946a5d5787743d2e3ae493a491cfa6
+
+# Diff at Thu, 18 Jul 2024 10:30:00 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20331930
+- current block number: 20331930
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331930 (main branch discovery), not current.
+
+```diff
+    contract LivenessModule (0x0454092516c9A4d636d3CAfA1e82161376C8a748) {
+    +++ description: None
+      values.livenessInterval:
+-        8467200
++        "98d"
+      template:
++        "gnosisSafeModules/LivenessModule"
+      descriptions:
++        ["used to remove members inactive for 98d while making sure that the threshold remains above 75%. If the number of members falls below 8, the 0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E) {
+    +++ description: None
+      descriptions:
++        ["It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."]
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (0x05cc379EBD9B30BbA19C6fA282AB29218EC61D84) {
+    +++ description: None
+      template:
++        "opstack/OptimismMintableERC20Factory"
+      descriptions:
++        ["A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintablERC20 as this chain's representation of a token on the host chain, or vice-versa."]
+    }
+```
+
+```diff
+    contract BaseMultisig2 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: None
+      descriptions:
++        ["It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."]
+    }
+```
+
+```diff
+    contract LivenessGuard (0x24424336F04440b1c28685a38303aC33C9D14a25) {
+    +++ description: None
+      descriptions:
++        ["Liveness Guard of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - used to remove members inactive for 98d."]
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x3154Cf16ccdb4C6d922629664174b904d80F2C35) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      descriptions.0:
+-        "The main entry point to deposit ERC20 tokens from L1 to L2. This contract can store any token."
++        "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
+      categories:
++        ["Gateways&Escrows"]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x49048044D57e1C92A77f79988d21Fa8fAF74E97e) {
+    +++ description: None
+      descriptions.0:
+-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."]
+    }
+```
+
+```diff
+    contract DeputyGuardianModule (0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8) {
+    +++ description: None
+      template:
++        "gnosisSafeModules/DeputyGuardianModule"
+      descriptions:
++        ["allows the 0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A (the deputy guardian) to act on behalf of the Gnosis Safe."]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (0x608d94945A64503E642E6370Ec598e519a2C1E53) {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      descriptions.0:
+-        "Used to bridge ERC-721 tokens from L1 to L2"
++        "Used to bridge ERC-721 tokens from host chain to this chain."
+    }
+```
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      descriptions.0:
+-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract AdminMultisig (0x7bB41C3008B3f03FE483B28b8DB90e19Cf07595c) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0x0475cBCAebd9CE8AfA5025828d5b98DFb67E059E, inheriting its permissions."]
+    }
+```
+
+```diff
+    contract FoundationMultisig_1 (0x847B5c174615B1B7fDF770882256e2D3E95b9D92) {
+    +++ description: None
+      descriptions:
++        ["Fallback Owner of 0x0454092516c9A4d636d3CAfA1e82161376C8a748 - takes ownership of 0xc2819DC788505Aac350142A7A707BF9D03E3Bd03 if the number of members falls below 8."]
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0x866E82a600A1414e583f7F13623F1aC5d58b0Afa) {
+    +++ description: None
+      descriptions.0:
+-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+```diff
+    contract FoundationMultisig_2 (0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) {
+    +++ description: None
+      descriptions:
++        ["Deputy Guardian of 0x5dC91D01290af474CE21DE14c17335a6dEe4d2a8. It can act on behalf of the 0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2."]
+    }
+```
+
+Generated with discovered.json: 0x03afd294b80a7fe1069f878499e9ea6e466c3245
+
+# Diff at Thu, 18 Jul 2024 07:32:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14a8b2e13da16d68d776511f98207e5360accba3 block: 20224230
+- current block number: 20331930
+
+## Description
+
+Gas limit bumped by 8% to 105M.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.gasLimit:
+-        97500000
++        105000000
+    }
+```
+
+Generated with discovered.json: 0x34e310f51105c3150b66509fde7d89efe751d8b2
 
 # Diff at Wed, 03 Jul 2024 06:36:00 GMT:
 

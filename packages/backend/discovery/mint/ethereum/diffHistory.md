@@ -1,4 +1,57 @@
-Generated with discovered.json: 0x47ca6d8d54df3b938b3b13870fd559cb3611b80e
+Generated with discovered.json: 0x1d9d5f50fa5e5186410fb005a1c9728894bcede5
+
+# Diff at Thu, 18 Jul 2024 10:31:59 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 20032860
+- current block number: 20032860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032860 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
++        ["It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions.","It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."]
+    }
+```
+
+```diff
+    contract OptimismPortal (0x59625d1FE0Eeb8114a4d13c863978F39b3471781) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      descriptions.0:
+-        "The main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals."
++        "The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals."
+    }
+```
+
+```diff
+    contract SystemConfig (0xC975862927797812371A9Fb631f83F8f5e2240D5) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      descriptions.0:
+-        "Contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address."
++        "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19) {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      descriptions.0:
+-        "Sends messages from L1 to L2, and relays messages from L2 onto L1. In the event that a message sent from L1 to L2 is rejected for exceeding the L2 epoch gas limit, it can be resubmitted via this contract's replay function."
++        "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function."
+    }
+```
+
+Generated with discovered.json: 0x8907a9d0268c44c81ceacbf6af9438ae3a744a10
 
 # Diff at Thu, 06 Jun 2024 12:44:26 GMT:
 

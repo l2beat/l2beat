@@ -79,13 +79,7 @@ export const base: Layer2 = opStackL2({
       description: 'Base is live on mainnet.',
     },
   ],
-  badges: [
-    Badge.DA.EthereumBlobs,
-    Badge.VM.EVM,
-    Badge.Other.L3HostChain,
-    Badge.Stack.OPStack,
-    Badge.Infra.Superchain,
-  ],
+  badges: [Badge.Infra.Superchain, Badge.Other.L3HostChain],
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x9de443AdC5A411E83F1878Ef24C3F52C61571e72'),
@@ -153,6 +147,7 @@ export const base: Layer2 = opStackL2({
   ],
   chainConfig: {
     name: 'base',
+    blockscoutV2ApiUrl: 'https://base.blockscout.com/api/v2',
     chainId: 8453,
     explorerUrl: 'https://basescan.org',
     explorerApi: {

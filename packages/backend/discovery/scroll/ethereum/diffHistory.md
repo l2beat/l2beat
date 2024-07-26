@@ -1,4 +1,110 @@
-Generated with discovered.json: 0xf31b08f14b13a96a57b0105fef7cb9920faa38b6
+Generated with discovered.json: 0x74483202a2abf595fbdc6afc5fe3b6ad0a90017a
+
+# Diff at Tue, 23 Jul 2024 13:16:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f8d5c0ccc8d74a077f85a8dca4038e175812c389 block: 20311071
+- current block number: 20369470
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract PufferFinanceOpsMultisig (0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 7 (43%)"
++        "3 of 8 (38%)"
+      values.getOwners.7:
++        "0x206846dE1F372A9a603e672ba97A5238cC89aeAA"
+      values.getOwners.6:
+-        "0x206846dE1F372A9a603e672ba97A5238cC89aeAA"
++        "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D"
+      values.getOwners.5:
+-        "0xf061f1FceFa32b3bbD5d18c5A623DB64bfBc107D"
++        "0x8F97Bf67182122D2f1745216a81724143db97E43"
+      values.getOwners.4:
+-        "0x8F97Bf67182122D2f1745216a81724143db97E43"
++        "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94"
+      values.getOwners.3:
+-        "0xD70aa9d7280E6FEe89B86f53c0B2A363478D5e94"
++        "0xD6475ce37d964d4816715FdafFEeAAf2958948bE"
+      values.getOwners.2:
+-        "0xD6475ce37d964d4816715FdafFEeAAf2958948bE"
++        "0xf09c25681090C5F9408c6D3CD24baa8721870dc5"
+      values.getOwners.1:
+-        "0xf09c25681090C5F9408c6D3CD24baa8721870dc5"
++        "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA"
+      values.getOwners.0:
+-        "0xE408AE2E70a567c83C0BD36dC4a00b0a56F0A8DA"
++        "0x11B0BE5e19E38F6f6E07e11f103C4F4e8A5d0f6a"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311071 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (0x9eBf2f33526CD571f8b2ad312492cb650870CFd6)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract pufEthEscrow (0xA033Ff09f2da45f0e9ae495f525363722Df42b2a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PufferFinanceOpsMultisig (0xC0896ab1A8cae8c2C1d27d011eb955Cca955580d)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xddd7a815a741e8c748b9f47145b520ee367f47b5
+
+# Diff at Mon, 15 Jul 2024 09:39:11 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c6bae99047cf03487a19e4008cfffabf520bcf2b block: 20259894
+- current block number: 20311071
+
+## Description
+
+New targets are added to the ScrollOwner accessControl: `updateVerifier` on the MultipleVersionRollupVerifier can now be called via TimelockMid(7d) and `setBatchConfig` on the L1BatchBridgeGateway via TimelockFast(1d).
+
+## Watched changes
+
+```diff
+    contract ScrollOwner (0x798576400F7D662961BA15C6b3F3d813447a26a6) {
+    +++ description: Owner of all contracts in the system. It implements an extension of AccessControl that manages roles and functions allowed to be called by each role.
+      values.accessControl.targets.0xf94AfBD9370E25Dd6Ca557d5D67634aeFDA2416B:
++        {"updateVerifier(uint256,uint64,address)":["TIMELOCK_7DAY_DELAY_ROLE"]}
+      values.accessControl.targets.0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4:
++        {"setBatchConfig(address,(uint96,uint96,uint16,uint24,uint24))":["TIMELOCK_1DAY_DELAY_TOLE"]}
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20259894 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract L1BatchBridgeGateway (0x5Bcfd99c34cf7E06fc756f6f5aE7400504852bc4)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xc91c535b44afb48eb36ccafc1f98ec0e73dd837f
 
 # Diff at Mon, 08 Jul 2024 06:07:38 GMT:
 
@@ -9,6 +115,8 @@ Generated with discovered.json: 0xf31b08f14b13a96a57b0105fef7cb9920faa38b6
 ## Description
 
 Batches are reverted [in this transaction](https://app.blocksec.com/explorer/tx/eth/0xf58cd0223418a4dd390be63d67c31ccd3b05a82d59461106227664e8fc417ac5). Unclear what justified this action.
+
+Relevant incident page: https://status.scroll.io/incidents/44k6s4qg6kcs
 
 ## Watched changes
 

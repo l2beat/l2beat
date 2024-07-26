@@ -1,4 +1,27 @@
-Generated with discovered.json: 0x31755984b11699d17c806c7355946d17c813410c
+Generated with discovered.json: 0xe76e64ade19fdfb8e1f73934bf078b0de45918da
+
+# Diff at Mon, 15 Jul 2024 09:45:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c6bae99047cf03487a19e4008cfffabf520bcf2b block: 20225271
+- current block number: 20311101
+
+## Description
+
+The roller (a function of the escrow that allows rolling loans from native termstructure to aave) is deactivated. 
+
+## Watched changes
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      values.isActivatedRoller:
+-        true
++        false
+    }
+```
+
+Generated with discovered.json: 0x6de85e324fbb243c0d0483d1d2714a8d350ace81
 
 # Diff at Fri, 21 Jun 2024 06:55:16 GMT:
 

@@ -1,4 +1,53 @@
-Generated with discovered.json: 0x131046a4ea2ca1d1c70511c299f2315546205830
+Generated with discovered.json: 0x3472af4426f87029fd6eda4633eb11b0babd99b6
+
+# Diff at Mon, 22 Jul 2024 14:59:13 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 120698212
+- current block number: 123030782
+
+## Description
+
+The WorldIDIdentityManager is upgraded to a new implementation. 6 new SMTB verifiers and a new Semaphore verifier are deployed. The worldcoin team confirmed that this is a staging deployment which is not currently used.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract SemaphoreVerifier (0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierLookupTable (0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract VerifierLookupTable (0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c.sol |  601 +++++++
+ ...-0xA8710B3ba329fc7B80a49F7C82E889D1340C99fb.sol |  281 +++
+ ...-0xfEab49fEEfefCB4b39dF640B66e7AcaC9B392A86.sol |  281 +++
+ .../WorldIDIdentityManager.p.sol                   |  637 +++++++
+ .../WorldIDIdentityManagerImplV2.sol               | 1900 ++++++++++++++++++++
+ 5 files changed, 3700 insertions(+)
+```
+
+Generated with discovered.json: 0x4397acc0c008d4be61c60e1586d02368aa552ed7
 
 # Diff at Wed, 29 May 2024 15:06:51 GMT:
 

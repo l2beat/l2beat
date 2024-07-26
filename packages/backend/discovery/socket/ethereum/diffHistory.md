@@ -1,4 +1,197 @@
-Generated with discovered.json: 0xd1b44ecdbb1036ffdccd93481c30c610d9f1144b
+Generated with discovered.json: 0x204b6b2c286321984245ecd7b47aa438ff7a60e3
+
+# Diff at Tue, 23 Jul 2024 08:10:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a7fe674fdf7aafe1f69f1463836cac0d7e337d34 block: 20340184
+- current block number: 20367941
+
+## Description
+
+New (unverified) plug, and executionManager is pointed to a new (unverified) contract. The old executionManager was used for crosschain execution and -fees.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: Manages crosschain execution and -fees.
+      values.executionManager__:
+-        "0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0"
++        "0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.70:
++        "0x83D8e248cAb7c6074dCc07EA25892F8022244c50"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ExecutionManager (0xFB4dcD94A051a1D2cF3EaF713a2Ef686653884E0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ExecutionManager.sol => /dev/null              | 1289 --------------------
+ 1 file changed, 1289 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340184 (main branch discovery), not current.
+
+```diff
+    contract TransmitManager (0xeD037aFBffC65a94E9CC592947E851FB2f730341) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+Generated with discovered.json: 0x0e8508e83cd4c4229d0609413a4b05430f644a65
+
+# Diff at Fri, 19 Jul 2024 11:10:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@744d4e1fec0be9972ab7fde1dd4cc0ba0c91a28c block: 20332210
+- current block number: 20340184
+
+## Description
+
+New plug, no new vaults.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.69:
++        "0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20332210 (main branch discovery), not current.
+
+```diff
+    contract rsETH Vault Lyra (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      unverified:
+-        true
+      values.bridgeType:
++        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+    }
+```
+
+Generated with discovered.json: 0xcc11fb16443328f87fc9461c33c6a81fd8d17ed9
+
+# Diff at Thu, 18 Jul 2024 08:28:17 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14a8b2e13da16d68d776511f98207e5360accba3 block: 20211873
+- current block number: 20332210
+
+## Description
+
+New plugs are added. Some new vaults were discovered and are added to the socket.ts. (Lyra and Kinto projects already have these escrows)
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.68:
++        "0xcf2B4958e72Db99FDF844cD3992Daa2a8B7319c5"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.67:
++        "0x4a43eD818411585fEAaf667a2D3E2605962084e0"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.66:
++        "0x6B3614474eE19FA9A2d6D2079a2D73c04E567310"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.65:
++        "0x54bd887d31A5119Bbc91426eD6289b8ACD2b7349"
++++ description: ConnectorPlugs connect vaults (esrows) or controllers via the socket main contract to the switchboards. They have counerparts on the sibling chain.
++++ type: CODE_CHANGE
++++ severity: LOW
+      values.plugs.64:
++        "0xBF3233Ef07B9552578987e2A2d25F760fBf192e5"
+    }
+```
+
+```diff
+    contract sUSDe Vault Lyra (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf) {
+    +++ description: None
+      values.owner:
+-        "0xA82994cc5e9D94FED2916f762e03245FcBE79f23"
++        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211873 (main branch discovery), not current.
+
+```diff
+    contract rsETH Vault Lyra (0x35d4D9bc79B0a543934b1769304B90d752691caD) {
+    +++ description: None
+      values.bridgeType:
+-        "0x9faa379a8f7762447354a00c30bda6b12f39577783c03b588d3fd75b4e2a5876"
+      values.nominee:
+-        "0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x246d38588b16Dd877c558b245e6D5a711C649fCF"
+      unverified:
++        true
+    }
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Kinto (0x755cD5d147036E11c76F1EeffDd94794fC265f0d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Lyra (0xE3E96892D30E0ee1a8131BAf87c891201F7137bf)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x77e73d2314cf2a0a4b7229471195a61da7d0de3c
 
 # Diff at Mon, 01 Jul 2024 13:10:28 GMT:
 

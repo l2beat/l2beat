@@ -20,6 +20,7 @@ jobs:
         with:
           push: false
           file: Dockerfile.backend
+
   build-frontend:
     name: Build frontend
     runs-on: ubuntu-latest
@@ -34,13 +35,35 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
 
       - name: Build frontend
         run: yarn build:frontend
+
+  build-protocolbeat:
+    name: Build protocolbeat
+    runs-on: ubuntu-latest
+    env:
+      TURBO_TOKEN: ${{ secrets.TURBO_TOKEN }}
+      TURBO_TEAM: ${{ vars.TURBO_TEAM }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+
+      - name: Build protocolbeat
+        run: yarn build:protocolbeat
 
   typecheck:
     name: Typecheck
@@ -56,7 +79,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -93,7 +116,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 18.x
-          cache: "yarn"
+          cache: 'yarn'
 
       - name: Install dependencies
         run: yarn --frozen-lockfile
@@ -113,3 +136,56 @@ jobs:
 
       - name: Run Biome
         run: ls packages/ | xargs -n 1 -I {} -- sh -c 'biome ci --config-path=packages/{} packages/{}'
+
+  config-smoke-test:
+    name: Config smoke test
+    runs-on: ubuntu-latest
+    env:
+      HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
+      HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18.x
+          cache: 'yarn'
+
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+        working-directory: packages/backend
+
+      - name: Build packages
+        run: yarn build:dependencies
+        working-directory: packages/backend
+
+      - name: Install Heroku CLI
+        run: curl https://cli-assets.heroku.com/install.sh | sh
+
+      - name: Pull staging configuration
+        run: heroku config -a l2beat-staging --shell > .env
+        working-directory: packages/backend
+
+      # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
+      - name: Fill PORT variable
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
+
+      - name: Run staging smoke test
+        run: yarn test:config
+        working-directory: packages/backend
+
+      - name: Pull production configuration
+        run: heroku config -a l2beat-production --shell > .env
+        working-directory: packages/backend
+
+      # PORT variable is not present inside the dump and is assigned by Heroku at deployment time
+      - name: Fill PORT variable
+        run: echo "PORT=3000" >> .env
+        working-directory: packages/backend
+
+      - name: Run production smoke test
+        run: yarn test:config
+        working-directory: packages/backend

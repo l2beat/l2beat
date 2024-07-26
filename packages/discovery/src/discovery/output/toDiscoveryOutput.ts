@@ -1,4 +1,4 @@
-import { DiscoveryOutput } from '@l2beat/discovery-types'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -10,6 +10,7 @@ export function toDiscoveryOutput(
   configHash: Hash256,
   blockNumber: number,
   results: Analysis[],
+  shapeFilesHash: Hash256,
 ): DiscoveryOutput {
   return {
     name,
@@ -18,21 +19,34 @@ export function toDiscoveryOutput(
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
+    usedTemplates: collectUsedTemplatesWithHashes(results),
+    shapeFilesHash,
   }
 }
 
-export function setToArray<T>(set?: Set<T>): T[] | undefined {
-  if (set === undefined) {
-    return undefined
-  }
-  return Array.from(set)
+export function collectUsedTemplatesWithHashes(
+  results: Analysis[],
+): Record<string, Hash256> {
+  const entries: [string, Hash256][] = results
+    .filter((a): a is AnalyzedContract => a.type === 'Contract')
+    .map((contract) => contract.extendedTemplate)
+    .filter((t) => t !== undefined)
+    .map((t) => [t.template, t.templateHash])
+  entries.sort((a, b) => a[0].localeCompare(b[0]))
+  return Object.fromEntries(entries)
 }
 
 export function processAnalysis(
   results: Analysis[],
 ): Omit<
   DiscoveryOutput,
-  'name' | 'blockNumber' | 'configHash' | 'version' | 'chain'
+  | 'name'
+  | 'blockNumber'
+  | 'configHash'
+  | 'version'
+  | 'chain'
+  | 'usedTemplates'
+  | 'shapeFilesHash'
 > {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
@@ -41,27 +55,25 @@ export function processAnalysis(
   return {
     contracts: contracts
       .sort((a, b) => a.address.localeCompare(b.address.toString()))
-      .map((x) => {
+      .map((x): ContractParameters => {
         const displayName = x.combinedMeta?.displayName
         return withoutUndefinedKeys({
           name: x.name,
           address: x.address,
-          unverified: x.isVerified ? undefined : (true as const),
+          unverified: x.isVerified ? undefined : true,
           template: x.extendedTemplate?.template,
-          upgradeability: x.upgradeability,
+          proxyType: x.proxyType,
           displayName:
             displayName && displayName !== x.name ? displayName : undefined,
           descriptions: x.combinedMeta?.descriptions,
-          roles: setToArray(x.combinedMeta?.roles),
-          categories: x.combinedMeta?.categories,
-          types: x.combinedMeta?.types,
+          roles: setToSortedArray(x.combinedMeta?.roles),
+          categories: setToSortedArray(x.combinedMeta?.categories),
+          types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
-          assignedPermissions: x.combinedMeta?.permissions,
+          assignedPermissions: objectWithSetsToArrays(
+            x.combinedMeta?.permissions,
+          ),
           ignoreInWatchMode: x.ignoreInWatchMode,
-          implementations:
-            Object.keys(x.implementations).length === 0
-              ? undefined
-              : x.implementations,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
           values:
             Object.keys(x.values).length === 0
@@ -73,7 +85,7 @@ export function processAnalysis(
               : sortByKeys(x.errors),
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
-        })
+        } satisfies ContractParameters)
       }),
     eoas: results
       .filter((x) => x.type === 'EOA')
@@ -81,11 +93,13 @@ export function processAnalysis(
       .map((x) => ({
         address: x.address,
         descriptions: x.combinedMeta?.descriptions,
-        roles: setToArray(x.combinedMeta?.roles),
-        categories: x.combinedMeta?.categories,
-        types: x.combinedMeta?.types,
+        roles: setToSortedArray(x.combinedMeta?.roles),
+        categories: setToSortedArray(x.combinedMeta?.categories),
+        types: setToSortedArray(x.combinedMeta?.types),
         severity: x.combinedMeta?.severity,
-        assignedPermissions: x.combinedMeta?.permissions,
+        assignedPermissions: objectWithSetsToArrays(
+          x.combinedMeta?.permissions,
+        ),
       })),
     abis,
   }
@@ -110,7 +124,7 @@ function getContracts(results: Analysis[]): {
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {
-  return JSON.parse(JSON.stringify(obj, convertSetToSortedArray)) as T
+  return JSON.parse(JSON.stringify(obj)) as T
 }
 
 export function sortByKeys<T extends object>(obj: T): T {
@@ -119,9 +133,20 @@ export function sortByKeys<T extends object>(obj: T): T {
   ) as T
 }
 
-function convertSetToSortedArray(_key: string, value: unknown) {
-  if (value instanceof Set) {
-    return Array.from(value).sort()
+function setToSortedArray<T>(value: Set<T> | undefined): T[] | undefined {
+  return value && Array.from(value).sort()
+}
+
+function objectWithSetsToArrays<T>(
+  obj: Record<string, Set<T>> | undefined,
+): Record<string, T[]> | undefined {
+  if (obj === undefined) {
+    return undefined
   }
-  return value
+  const asMap: [string, T[]][] = Object.entries(obj).map(([key, value]) => [
+    key,
+    Array.from(value).sort(),
+  ])
+  asMap.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
+  return Object.fromEntries(asMap)
 }

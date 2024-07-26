@@ -1,41 +1,53 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 65985974,
-  "configHash": "0x81005fd260dc9b0d28265c4280e9c9b2f07f745737399e78c30e47fb869356cb",
-  "version": 8,
+  "blockNumber": 66795905,
+  "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
+  "version": 9,
   "contracts": [
     {
       "name": "MantleOwner",
       "address": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
-      "unverified": true,
-      "upgradeability": {
-        "type": "gnosis safe",
-        "masterCopy": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "modules": [],
-        "threshold": "4 of 7 (57%)"
-      },
+      "template": "GnosisSafe",
+      "proxyType": "gnosis safe",
       "assignedPermissions": {
         "admin": [
           "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         ]
       },
-      "implementations": ["0xfb1bffC9d739B8D520DaF37dF666da4C687191EA"],
+      "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1710253012,
-      "derivedName": ""
+      "values": {
+        "$immutable": false,
+        "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
+        "$multisigThreshold": "4 of 7 (57%)",
+        "domainSeparator": "0x8ebc72747d383ee6fea9342b35202682cad3166f782cebee00f825155d20b2e4",
+        "getChainId": 5000,
+        "getOwners": [
+          "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
+          "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
+          "0xF801886AE2e127A269B0F11892edb54F692d02dF",
+          "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
+          "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db",
+          "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
+          "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
+        ],
+        "getThreshold": 4,
+        "GnosisSafe_modules": [],
+        "nonce": 9,
+        "VERSION": "1.3.0"
+      },
+      "derivedName": "GnosisSafeL2"
     },
     {
       "name": "L1ERC20Bridge",
       "address": "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
-        "admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82"
-      },
-      "implementations": ["0x7769C18828569692Dfb65affa0856533613ea458"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1709296907,
       "values": {
+        "$admin": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
+        "$implementation": "0x7769C18828569692Dfb65affa0856533613ea458",
         "l2Bridge": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272",
         "l2TokenBeacon": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe",
         "l2TokenProxyBytecodeHash": "0x010001211b0c33353cdf7a320f768e3dc40bce1326d639fcac099bba9ecd8e34"
@@ -46,14 +58,19 @@
       "name": "zkLink",
       "address": "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
       "template": "zklinknova/secondaryZkLink",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
-        "admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
-      },
-      "implementations": ["0x0C04046546C46652969Aa9eB4BFB758cFDf1e821"],
+      "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": [
+        "getTotalBatchesExecuted",
+        "getTotalPriorityTxs",
+        "totalBatchesExecuted",
+        "totalPriorityTxs",
+        "totalSyncedPriorityTxs",
+        "totalValidatorForwardFee"
+      ],
       "sinceTimestamp": 1709279309,
       "values": {
+        "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+        "$implementation": "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821",
         "feeParams": {
           "pubdataPricingMode": 0,
           "batchOverheadL1Gas": 1000000,
@@ -68,14 +85,14 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 15253,
-        "getTotalPriorityTxs": 829,
+        "getTotalBatchesExecuted": 17833,
+        "getTotalPriorityTxs": 847,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": false,
-        "totalBatchesExecuted": 15253,
-        "totalPriorityTxs": 829,
-        "totalSyncedPriorityTxs": 829,
-        "totalValidatorForwardFee": "1039144057119072918626",
+        "totalBatchesExecuted": 17833,
+        "totalPriorityTxs": 847,
+        "totalSyncedPriorityTxs": 839,
+        "totalValidatorForwardFee": "1073477315519078081522",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 140000000000000
       },
@@ -85,14 +102,11 @@
       "name": "MantleL2Gateway",
       "address": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
       "template": "zklinknova/secondaryGateway",
-      "upgradeability": {
-        "type": "EIP1967 proxy",
-        "implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
-        "admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60"
-      },
-      "implementations": ["0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D"],
+      "proxyType": "EIP1967 proxy",
       "sinceTimestamp": 1709279398,
       "values": {
+        "$admin": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
+        "$implementation": "0xCdcDF691aF3e3717A35A2352aB7e34fd2980613D",
         "ethToken": "0xdEAddEaDdeadDEadDEADDEAddEADDEAddead1111",
         "getRemoteGateway": "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
         "isEthGasToken": false,
@@ -105,14 +119,12 @@
     {
       "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
-      "upgradeability": {
-        "type": "immutable"
-      },
       "assignedPermissions": {
         "admin": ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
       },
       "sinceTimestamp": 1709296907,
       "values": {
+        "$immutable": true,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
@@ -120,15 +132,16 @@
     }
   ],
   "eoas": [
-    {
-      "address": "0x0000000000000000000000000000000000000000"
-    },
-    {
-      "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe"
-    },
-    {
-      "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272"
-    }
+    { "address": "0x0000000000000000000000000000000000000000" },
+    { "address": "0x21194Efd1D913Bc8D62F1ED9467aA0cA2a257FCe" },
+    { "address": "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9" },
+    { "address": "0x321Ce902eDFC6466B224ce5D9A7Bc16858855272" },
+    { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
+    { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
+    { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
+    { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
+    { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
+    { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],
   "abis": {
     "0x0C04046546C46652969Aa9eB4BFB758cFDf1e821": [
@@ -205,6 +218,9 @@
       "function upgradeToAndCall(address newImplementation, bytes data) payable",
       "function validators(address validatorAddress) view returns (bool isValidator)",
       "function withdrawForwardFee(address _receiver, uint256 _amount)"
+    ],
+    "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60": [
+      "constructor(address _singleton)"
     ],
     "0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2": [
       "constructor(address _logic, address initialOwner, bytes _data) payable",
@@ -286,6 +302,62 @@
       "function renounceOwnership()",
       "function transferOwnership(address newOwner)",
       "function upgradeAndCall(address proxy, address implementation, bytes data) payable"
+    ],
+    "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA": [
+      "event AddedOwner(address owner)",
+      "event ApproveHash(bytes32 indexed approvedHash, address indexed owner)",
+      "event ChangedFallbackHandler(address handler)",
+      "event ChangedGuard(address guard)",
+      "event ChangedThreshold(uint256 threshold)",
+      "event DisabledModule(address module)",
+      "event EnabledModule(address module)",
+      "event ExecutionFailure(bytes32 txHash, uint256 payment)",
+      "event ExecutionFromModuleFailure(address indexed module)",
+      "event ExecutionFromModuleSuccess(address indexed module)",
+      "event ExecutionSuccess(bytes32 txHash, uint256 payment)",
+      "event RemovedOwner(address owner)",
+      "event SafeModuleTransaction(address module, address to, uint256 value, bytes data, uint8 operation)",
+      "event SafeMultiSigTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures, bytes additionalInfo)",
+      "event SafeReceived(address indexed sender, uint256 value)",
+      "event SafeSetup(address indexed initiator, address[] owners, uint256 threshold, address initializer, address fallbackHandler)",
+      "event SignMsg(bytes32 indexed msgHash)",
+      "function VERSION() view returns (string)",
+      "function addOwnerWithThreshold(address owner, uint256 _threshold)",
+      "function approveHash(bytes32 hashToApprove)",
+      "function approvedHashes(address, bytes32) view returns (uint256)",
+      "function changeThreshold(uint256 _threshold)",
+      "function checkNSignatures(bytes32 dataHash, bytes data, bytes signatures, uint256 requiredSignatures) view",
+      "function checkSignatures(bytes32 dataHash, bytes data, bytes signatures) view",
+      "function disableModule(address prevModule, address module)",
+      "function domainSeparator() view returns (bytes32)",
+      "function enableModule(address module)",
+      "function encodeTransactionData(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes)",
+      "function execTransaction(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, bytes signatures) payable returns (bool)",
+      "function execTransactionFromModule(address to, uint256 value, bytes data, uint8 operation) returns (bool success)",
+      "function execTransactionFromModuleReturnData(address to, uint256 value, bytes data, uint8 operation) returns (bool success, bytes returnData)",
+      "function getChainId() view returns (uint256)",
+      "function getModulesPaginated(address start, uint256 pageSize) view returns (address[] array, address next)",
+      "function getOwners() view returns (address[])",
+      "function getStorageAt(uint256 offset, uint256 length) view returns (bytes)",
+      "function getThreshold() view returns (uint256)",
+      "function getTransactionHash(address to, uint256 value, bytes data, uint8 operation, uint256 safeTxGas, uint256 baseGas, uint256 gasPrice, address gasToken, address refundReceiver, uint256 _nonce) view returns (bytes32)",
+      "function isModuleEnabled(address module) view returns (bool)",
+      "function isOwner(address owner) view returns (bool)",
+      "function nonce() view returns (uint256)",
+      "function removeOwner(address prevOwner, address owner, uint256 _threshold)",
+      "function requiredTxGas(address to, uint256 value, bytes data, uint8 operation) returns (uint256)",
+      "function setFallbackHandler(address handler)",
+      "function setGuard(address guard)",
+      "function setup(address[] _owners, uint256 _threshold, address to, bytes data, address fallbackHandler, address paymentToken, uint256 payment, address paymentReceiver)",
+      "function signedMessages(bytes32) view returns (uint256)",
+      "function simulateAndRevert(address targetContract, bytes calldataPayload)",
+      "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ]
-  }
+  },
+  "usedTemplates": {
+    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
+    "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
+  },
+  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
 }

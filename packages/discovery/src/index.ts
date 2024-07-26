@@ -12,13 +12,7 @@ export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
 export { TemplateService } from './discovery/analysis/TemplateService'
 export { ConfigReader } from './discovery/config/ConfigReader'
 export { DiscoveryConfig } from './discovery/config/DiscoveryConfig'
-export {
-  RawDiscoveryConfig,
-  StackCategory,
-  StackRole,
-  Permission,
-  ContractFieldSeverity,
-} from './discovery/config/RawDiscoveryConfig'
+export { RawDiscoveryConfig } from './discovery/config/RawDiscoveryConfig'
 export { DiscoveryLogger } from './discovery/DiscoveryLogger'
 export { getContractField } from './discovery/utils/metaGetters'
 export {
@@ -64,4 +58,4 @@ export { HttpClient } from './utils/HttpClient'
 export { AllProviders } from './discovery/provider/AllProviders'
 export type { IProvider } from './discovery/provider/IProvider'
 export { ParsedFilesManager } from './flatten/ParsedFilesManager'
-export { flattenStartingFrom } from './flatten/flattenStartingFrom'
+export { flattenStartingFrom } from './flatten/flatten'

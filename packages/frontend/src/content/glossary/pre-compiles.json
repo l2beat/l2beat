@@ -1,5 +1,0 @@
-{
-  "term": "Pre-compiles",
-  "definition": "Special contracts that include complex computations, but do not require the EVM overhead. For example, hashing operations and signature schemes.",
-  "isSpicy": false
-}

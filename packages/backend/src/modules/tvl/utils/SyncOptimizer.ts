@@ -11,12 +11,14 @@ export class SyncOptimizer {
     return this.clock
       .getLastHour()
       .add(-this.clock.sixHourlyCutoffDays - this.gracePeriodDays, 'days')
+      .toEndOf('six hours')
   }
 
   get hourlyCutOffWithGracePeriod() {
     return this.clock
       .getLastHour()
       .add(-this.clock.hourlyCutoffDays - this.gracePeriodDays, 'days')
+      .toEndOf('hour')
   }
 
   shouldTimestampBeSynced(timestamp: UnixTime) {

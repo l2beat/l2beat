@@ -1,17 +1,14 @@
 import { assert } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { FinalityApiResponse, UnixTime } from '@l2beat/shared-pure'
 import { keyBy, mapValues, partition } from 'lodash'
 import { FinalityProjectConfig } from '../../../config/features/finality'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
-import { LivenessRepository } from '../../tracked-txs/modules/liveness/repositories/LivenessRepository'
-import { FinalityRepository } from '../repositories/FinalityRepository'
+import { LivenessWithConfigService } from '../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 import { calcAvgsPerProject } from './calcAvgsPerProject'
 import { divideAndAddLag } from './divideAndAddLag'
 
 export interface FinalityControllerDeps {
-  livenessRepository: LivenessRepository
-  finalityRepository: FinalityRepository
-  indexerConfigurationRepository: IndexerConfigurationRepository
+  db: Database
   projects: FinalityProjectConfig[]
 }
 
@@ -39,7 +36,7 @@ export class FinalityController {
   ): Promise<FinalityApiResponse['projects']> {
     const projectIds = projects.map((p) => p.projectId)
     const records =
-      await this.$.finalityRepository.getLatestGroupedByProjectId(projectIds)
+      await this.$.db.finality.getLatestGroupedByProjectId(projectIds)
 
     const result: FinalityApiResponse['projects'] = mapValues(
       keyBy(records, 'projectId'),
@@ -108,8 +105,9 @@ export class FinalityController {
     projects: FinalityProjectConfig[],
   ): Promise<FinalityApiResponse['projects']> {
     const result: FinalityApiResponse['projects'] = {}
+
     const configurations = (
-      await this.$.indexerConfigurationRepository.getSavedConfigurations(
+      await this.$.db.indexerConfiguration.getSavedConfigurations(
         'tracked_txs_indexer',
       )
     ).map((c) => ({
@@ -119,14 +117,23 @@ export class FinalityController {
 
     await Promise.all(
       projects.map(async (project) => {
+        const configsToUse = configurations
+          .filter(
+            (c) =>
+              c.properties.projectId === project.projectId &&
+              c.properties.subtype === 'batchSubmissions',
+          )
+          .map((c) => ({
+            id: c.id,
+            subtype: c.properties.subtype,
+            currentHeight: c.currentHeight,
+          }))
+
+        if (!configsToUse) return
+
         const syncedUntil = new UnixTime(
           Math.max(
-            ...configurations
-              .filter(
-                (c) =>
-                  c.properties.projectId === project.projectId &&
-                  c.properties.subtype === 'batchSubmissions',
-              )
+            ...configsToUse
               .map((c) => c.currentHeight)
               .filter((h): h is number => h !== null),
           ),
@@ -134,8 +141,13 @@ export class FinalityController {
 
         if (!syncedUntil) return
 
-        const records = await this.$.livenessRepository.getByProjectIdAndType(
-          project.projectId,
+        // TODO: (sz-piotr) Refactor as dependency!
+        const livenessWithConfig = new LivenessWithConfigService(
+          configsToUse,
+          this.$.db,
+        )
+
+        const records = await livenessWithConfig.getByTypeSince(
           'batchSubmissions',
           syncedUntil.add(-1, 'days'),
         )

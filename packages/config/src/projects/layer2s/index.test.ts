@@ -4,13 +4,13 @@ import {
   EthereumAddress,
   UnixTime,
   assertUnreachable,
-  gatherAddressesFromUpgradeability,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import { startsWith } from 'lodash'
 
+import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {
   NUGGETS,
@@ -88,6 +88,31 @@ describe('layer2s', () => {
 
         for (const escrow of layer2.config.escrows) {
           expect([false, undefined]).toInclude(escrow.isUpcoming)
+        }
+      }
+    })
+
+    describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+      for (const layer2 of layer2s) {
+        for (const escrow of layer2.config.escrows) {
+          const chain = chains.find((c) => c.name === escrow.chain)
+
+          it(`${layer2.id.toString()} : ${escrow.address.toString()}`, () => {
+            assert(
+              chain,
+              `Chain not found for escrow ${escrow.address.toString()}`,
+            )
+            assert(
+              chain.minTimestampForTvl,
+              `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+                chain.name
+              }`,
+            )
+
+            expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
+              chain.minTimestampForTvl.toNumber(),
+            )
+          })
         }
       }
     })
@@ -285,9 +310,7 @@ describe('layer2s', () => {
 
                     const contractAddresses = [
                       contract.address,
-                      ...gatherAddressesFromUpgradeability(
-                        contract.upgradeability,
-                      ),
+                      ...get$Implementations(contract.values),
                     ]
 
                     expect(

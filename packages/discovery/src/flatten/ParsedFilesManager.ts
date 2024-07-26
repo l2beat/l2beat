@@ -2,8 +2,8 @@ import * as posix from 'path'
 import { assert } from '@l2beat/backend-tools'
 import type * as AST from '@mradomski/fast-solidity-parser'
 import { parse } from '@mradomski/fast-solidity-parser'
-
 import { getASTIdentifiers } from './getASTIdentifiers'
+import { FlattenOptions } from './types'
 
 type ParseResult = ReturnType<typeof parse>
 
@@ -35,9 +35,10 @@ export interface TopLevelDeclaration {
 
   ast: AST.ASTNode
   byteRange: ByteRange
+  content: string
 
   inheritsFrom: string[]
-  referencedDeclaration: string[]
+  dynamicReferences: string[]
 }
 
 // If import is:
@@ -80,14 +81,17 @@ export interface DeclarationFilePair {
 
 export class ParsedFilesManager {
   private files: ParsedFile[] = []
+  private options: FlattenOptions = {}
 
   static parseFiles(
     files: FileContent[],
     remappingStrings: string[],
+    options?: FlattenOptions,
   ): ParsedFilesManager {
     const result = new ParsedFilesManager()
-    const remappings = decodeRemappings(remappingStrings)
+    result.options = options ?? result.options
 
+    const remappings = decodeRemappings(remappingStrings)
     result.files = files.map(({ path, content }) => {
       const remappedPath = resolveRemappings(path, remappings)
       return {
@@ -123,7 +127,7 @@ export class ParsedFilesManager {
     // Pass 3: Resolve all references to other contracts
     for (const file of result.files) {
       for (const declaration of file.topLevelDeclarations) {
-        declaration.referencedDeclaration = result.resolveReferencedLibraries(
+        declaration.dynamicReferences = result.resolveDynamicReferences(
           file,
           declaration.ast,
         )
@@ -171,11 +175,12 @@ export class ParsedFilesManager {
           d.type === 'ContractDefinition'
             ? d.baseContracts.map((c) => c.baseName.namePath)
             : [],
-        referencedDeclaration: [],
+        dynamicReferences: [],
         byteRange: {
           start: d.range[0],
           end: d.range[1],
         },
+        content: file.content.slice(d.range[0], d.range[1] + 1),
       }
     })
 
@@ -292,10 +297,7 @@ export class ParsedFilesManager {
     })
   }
 
-  private resolveReferencedLibraries(
-    file: ParsedFile,
-    c: AST.ASTNode,
-  ): string[] {
+  private resolveDynamicReferences(file: ParsedFile, c: AST.ASTNode): string[] {
     let subNodes: AST.BaseASTNode[] = []
     if (c.type === 'ContractDefinition') {
       subNodes = c.subNodes
@@ -318,21 +320,22 @@ export class ParsedFilesManager {
     const referenced = []
     for (const identifier of identifiers) {
       const result = this.tryFindDeclaration(identifier, file)
-      const isLibrary =
-        result !== undefined && result.declaration.type === 'library'
-      const isStruct =
-        result !== undefined && result.declaration.type === 'struct'
-      const isFunction =
-        result !== undefined && result.declaration.type === 'function'
-      const isTypedef =
-        result !== undefined && result.declaration.type === 'typedef'
-      const isEnum = result !== undefined && result.declaration.type === 'enum'
-      if (
-        result !== undefined &&
-        (isLibrary || isStruct || isFunction || isTypedef || isEnum)
-      ) {
-        referenced.push(identifier)
+      if (result === undefined) {
+        continue
       }
+
+      const isContract = result.declaration.type === 'contract'
+      const isAbstract = result.declaration.type === 'abstract'
+      const isInterface = result.declaration.type === 'interface'
+
+      if (
+        (isInterface || isContract || isAbstract) &&
+        this.options.includeAll !== true
+      ) {
+        continue
+      }
+
+      referenced.push(identifier)
     }
 
     return referenced

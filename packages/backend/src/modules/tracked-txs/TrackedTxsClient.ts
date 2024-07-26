@@ -1,7 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { BigQueryClient } from '../../peripherals/bigquery/BigQueryClient'
-import { UpdateConfiguration } from '../../tools/uif/multi/types'
 
 import {
   TrackedTxConfigEntry,
@@ -9,6 +8,7 @@ import {
   TrackedTxSharpSubmissionConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
+import { Configuration } from '../../tools/uif/multi/types'
 import {
   BigQueryFunctionCallResult,
   BigQueryTransferResult,
@@ -24,28 +24,28 @@ export class TrackedTxsClient {
   constructor(private readonly bigquery: BigQueryClient) {}
 
   async getData(
-    configurations: UpdateConfiguration<TrackedTxConfigEntry>[],
+    configurations: Configuration<TrackedTxConfigEntry>[],
     from: UnixTime,
     to: UnixTime,
   ): Promise<TrackedTxResult[]> {
     const transfersConfig = configurations.filter(
       (
         c,
-      ): c is UpdateConfiguration<
+      ): c is Configuration<
         TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
       > => c.properties.params.formula === 'transfer',
     )
     const functionCallsConfig = configurations.filter(
       (
         c,
-      ): c is UpdateConfiguration<
+      ): c is Configuration<
         TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
       > => c.properties.params.formula === 'functionCall',
     )
     const sharpSubmissionsConfig = configurations.filter(
       (
         c,
-      ): c is UpdateConfiguration<
+      ): c is Configuration<
         TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
       > => c.properties.params.formula === 'sharpSubmission',
     )
@@ -64,7 +64,7 @@ export class TrackedTxsClient {
   }
 
   async getTransfers(
-    transfersConfig: UpdateConfiguration<
+    transfersConfig: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxTransferConfig }
     >[],
     from: UnixTime,
@@ -84,10 +84,10 @@ export class TrackedTxsClient {
   }
 
   async getFunctionCalls(
-    functionCallsConfig: UpdateConfiguration<
+    functionCallsConfig: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxFunctionCallConfig }
     >[],
-    sharpSubmissionsConfig: UpdateConfiguration<
+    sharpSubmissionsConfig: Configuration<
       TrackedTxConfigEntry & { params: TrackedTxSharpSubmissionConfig }
     >[],
     from: UnixTime,

@@ -33,7 +33,7 @@ function NavLinkGroup({
       <div className="ml-1 font-medium text-[15px] text-slate-600 uppercase leading-[15px] tracking-tight xl:sidenav-collapsed:hidden dark:text-gray-50">
         {title}
       </div>
-      <div className="mt-[12px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-gray-50" />
+      <div className="mt-[14px] hidden h-px w-8 bg-slate-600 xl:sidenav-collapsed:block dark:bg-gray-50" />
       <ul className="flex flex-col gap-0.5">{children}</ul>
     </div>
   )
@@ -345,9 +345,7 @@ export function Sidenav({
             <Divider />
             <NavSmallLinkGroup>
               <NavSmallLink title="Forum" href={config.links.forum} />
-              {config.features.zkCatalog && (
-                <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
-              )}
+              <NavSmallLink title="ZK Catalog" href="/zk-catalog" />
               <NavSmallLink title="Donate" href={'/donate'} />
               <NavSmallLink title="Governance" href={'/governance'} />
               <NavSmallLink title="Glossary" href="/glossary" />
@@ -355,6 +353,10 @@ export function Sidenav({
                 Jobs
                 {config.features.hiringBadge && <HiringBadge />}
               </NavSmallLink>
+              <NavSmallLink
+                title="Brand Kit"
+                href="https://l2beat.notion.site/L2BEAT-Brand-Guidelines-f8b757302c0043e2839f22277781162b"
+              />
               <NavSmallLink title="FAQ" href="/faq" />
             </NavSmallLinkGroup>
             <Divider />
@@ -437,9 +439,7 @@ function LegacyNavBar({ links }: { links: NavbarLinkGroups }) {
           <div className="hidden h-8 w-px bg-gray-300 2xl:block dark:bg-gray-700" />
           <ul className="flex h-full items-center gap-1.5">
             <LegacyNavBarLink title="Forum" href={config.links.forum} />
-            {config.features.zkCatalog && (
-              <LegacyNavBarLink title="ZK Catalog" href="/zk-catalog" />
-            )}
+            <LegacyNavBarLink title="ZK Catalog" href="/zk-catalog" />
             <LegacyNavBarLink title="Donate" href={'/donate'} />
             <LegacyNavBarLink title="Governance" href="/governance" />
             <LegacyNavBarLink title="Glossary" href="/glossary" />
@@ -510,7 +510,7 @@ export function NavWrapper({
           title: 'Activity',
           icon: ActivityIcon,
           href: '/scaling/activity',
-          enabled: config.features.activity,
+          enabled: true,
         },
         {
           title: 'Costs',

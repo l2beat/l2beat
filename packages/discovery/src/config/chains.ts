@@ -35,6 +35,15 @@ export const chains: ChainConfig[] = [
     },
   },
   {
+    name: 'nova',
+    chainId: 42170,
+    multicall: getMulticall3Config(1746963),
+    explorer: {
+      type: 'etherscan',
+      url: 'https://api-nova.arbiscan.io/api',
+    },
+  },
+  {
     name: 'optimism',
     chainId: 10,
     multicall: getMulticall3Config(4286263),
@@ -156,8 +165,8 @@ export const chains: ChainConfig[] = [
     chainId: 5000,
     multicall: getMulticall3Config(304717),
     explorer: {
-      type: 'blockscout',
-      url: 'https://explorer.mantle.xyz/api',
+      type: 'etherscan',
+      url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
     },
   },
   {
@@ -194,9 +203,6 @@ export const chains: ChainConfig[] = [
     explorer: {
       type: 'blockscout',
       url: 'https://pacific-explorer.manta.network/api',
-      unsupported: {
-        getContractCreation: true,
-      },
     },
   },
   {

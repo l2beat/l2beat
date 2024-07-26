@@ -1,10 +1,8 @@
-import { Badge } from '../badges'
 import { upcomingL2 } from './templates/upcoming'
 import { Layer2 } from './types'
 
 export const alephzero: Layer2 = upcomingL2({
   id: 'alephzero',
-  badges: [Badge.VM.EVM, Badge.RaaS.Gelato, Badge.Stack.Orbit],
   display: {
     name: 'Aleph Zero',
     slug: 'aleph-zero',

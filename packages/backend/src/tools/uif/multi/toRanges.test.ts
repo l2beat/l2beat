@@ -1,7 +1,7 @@
 import { expect } from 'earl'
 
 import { toRanges } from './toRanges'
-import { Configuration } from './types'
+import { Configuration, SavedConfiguration } from './types'
 
 describe(toRanges.name, () => {
   it('empty', () => {
@@ -12,7 +12,7 @@ describe(toRanges.name, () => {
   })
 
   it('single infinite configuration', () => {
-    const ranges = toRanges([actual('a', 100, null)])
+    const ranges = toRanges([saved('a', 100, null)])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
       { from: 100, to: Infinity, configurations: [actual('a', 100, null)] },
@@ -20,7 +20,7 @@ describe(toRanges.name, () => {
   })
 
   it('single finite configuration', () => {
-    const ranges = toRanges([actual('a', 100, 300)])
+    const ranges = toRanges([saved('a', 100, 300)])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
       { from: 100, to: 300, configurations: [actual('a', 100, 300)] },
@@ -29,7 +29,7 @@ describe(toRanges.name, () => {
   })
 
   it('multiple overlapping configurations on the edges', () => {
-    const ranges = toRanges([actual('a', 100, 300), actual('b', 300, 500)])
+    const ranges = toRanges([saved('a', 100, 300), saved('b', 300, 500)])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
       { from: 100, to: 299, configurations: [actual('a', 100, 300)] },
@@ -45,9 +45,9 @@ describe(toRanges.name, () => {
 
   it('multiple overlapping configurations', () => {
     const ranges = toRanges([
-      actual('a', 100, 300),
-      actual('b', 200, 400),
-      actual('c', 300, 500),
+      saved('a', 100, 300),
+      saved('b', 200, 400),
+      saved('c', 300, 500),
     ])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
@@ -78,9 +78,9 @@ describe(toRanges.name, () => {
 
   it('multiple non-overlapping configurations', () => {
     const ranges = toRanges([
-      actual('a', 100, 200),
-      actual('b', 300, 400),
-      actual('c', 500, 600),
+      saved('a', 100, 200),
+      saved('b', 300, 400),
+      saved('c', 500, 600),
     ])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
@@ -95,10 +95,10 @@ describe(toRanges.name, () => {
 
   it('multiple overlapping and non-overlapping configurations', () => {
     const ranges = toRanges([
-      actual('a', 100, 200),
-      actual('b', 300, 500),
-      actual('c', 400, 600),
-      actual('d', 700, 800),
+      saved('a', 100, 200),
+      saved('b', 300, 500),
+      saved('c', 400, 600),
+      saved('d', 700, 800),
     ])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
@@ -118,7 +118,7 @@ describe(toRanges.name, () => {
   })
 
   it('adjacent: one configuration start where other ends', () => {
-    const ranges = toRanges([actual('a', 100, 200), actual('b', 200, 300)])
+    const ranges = toRanges([saved('a', 100, 200), saved('b', 200, 300)])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
       { from: 100, to: 199, configurations: [actual('a', 100, 200)] },
@@ -141,7 +141,7 @@ describe(toRanges.name, () => {
   })
 
   it('identical: two configurations with exactly the same boundaries', () => {
-    const ranges = toRanges([actual('a', 100, 200), actual('b', 100, 200)])
+    const ranges = toRanges([saved('a', 100, 200), saved('b', 100, 200)])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
       {
@@ -158,7 +158,7 @@ describe(toRanges.name, () => {
   })
 
   it('single point: configuration starts and ends in the same time', () => {
-    const ranges = toRanges([actual('a', 100, 100)])
+    const ranges = toRanges([saved('a', 100, 100)])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
       {
@@ -176,9 +176,9 @@ describe(toRanges.name, () => {
 
   it('order of inputs does not affect output', () => {
     const ranges = toRanges([
-      actual('b', 300, 400),
-      actual('c', 500, 600),
-      actual('a', 100, 200),
+      saved('b', 300, 400),
+      saved('c', 500, 600),
+      saved('a', 100, 200),
     ])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
@@ -193,9 +193,9 @@ describe(toRanges.name, () => {
 
   it('same starting point, multiple maxHeights', () => {
     const ranges = toRanges([
-      actual('a', 100, 200),
-      actual('b', 100, 300),
-      actual('c', 100, 400),
+      saved('a', 100, 200),
+      saved('b', 100, 300),
+      saved('c', 100, 400),
     ])
     expect(ranges).toEqual([
       { from: -Infinity, to: 99, configurations: [] },
@@ -221,6 +221,37 @@ describe(toRanges.name, () => {
       { from: 401, to: Infinity, configurations: [] },
     ])
   })
+
+  it('takes currentHeight into consideration', () => {
+    const ranges = toRanges([
+      saved('a', 100, 200, 150),
+      saved('b', 100, 300, 200),
+      saved('c', 100, null, undefined),
+    ])
+    expect(ranges).toEqual([
+      { from: -Infinity, to: 99, configurations: [] },
+      {
+        from: 100,
+        to: 150,
+        configurations: [actual('c', 100, null)],
+      },
+      {
+        from: 151,
+        to: 200,
+        configurations: [actual('a', 100, 200), actual('c', 100, null)],
+      },
+      {
+        from: 201,
+        to: 300,
+        configurations: [actual('b', 100, 300), actual('c', 100, null)],
+      },
+      {
+        from: 301,
+        to: Infinity,
+        configurations: [actual('c', 100, null)],
+      },
+    ])
+  })
 })
 
 function actual(
@@ -228,5 +259,25 @@ function actual(
   minHeight: number,
   maxHeight: number | null,
 ): Configuration<null> {
-  return { id, properties: null, minHeight, maxHeight }
+  return {
+    id,
+    properties: null,
+    minHeight,
+    maxHeight,
+  }
+}
+
+function saved(
+  id: string,
+  minHeight: number,
+  maxHeight: number | null,
+  currentHeight?: number,
+): SavedConfiguration<null> {
+  return {
+    id,
+    properties: null,
+    minHeight,
+    maxHeight,
+    currentHeight: currentHeight ?? null,
+  }
 }

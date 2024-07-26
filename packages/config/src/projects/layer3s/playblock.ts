@@ -1,27 +1,54 @@
 import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
-import { upcomingL3 } from '../layer2s/templates/upcoming'
+import { orbitStackL3 } from '../layer2s/templates/orbitStack'
 import { Layer3 } from './types'
 
-export const playblock: Layer3 = upcomingL3({
-  id: 'playblock',
-  hostChain: ProjectId('arbitrum'),
-  badges: [Badge.VM.EVM, Badge.Stack.Orbit, Badge.RaaS.Gelato],
+const discovery = new ProjectDiscovery('playblock', 'nova')
+
+export const playblock: Layer3 = orbitStackL3({
+  discovery,
+  hostChain: ProjectId('nova'),
+  badges: [Badge.DA.DAC, Badge.L3ParentChain.Nova, Badge.RaaS.Gelato],
   display: {
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     name: 'PlayBlock',
     slug: 'playblock',
     description:
-      'PlayBlock is an upcoming Layer 3 on Arbitrum, built on the Orbit stack. It is built by the team behind Playnance, and is focused on gasless gaming.',
+      'PlayBlock is an Orbit stack Layer 3 on Arbitrum Nova. It is built by the team behind Playnance, and is focused on gasless gaming and gambling.',
     purposes: ['Gaming'],
-    category: 'Optimium',
-    provider: 'Arbitrum',
     links: {
       websites: ['https://playnance.com/'],
       apps: [],
       documentation: [],
-      explorers: [],
-      repositories: [],
+      explorers: ['https://explorer.playblock.io/'],
+      repositories: ['https://github.com/playnance-games/PlayBlock'],
       socialMedia: ['https://twitter.com/Playnancetech'],
     },
   },
+  // not on coingecko
+  // nativeToken: 'PBG',
+  // associatedTokens: ['PBG'],
+  rpcUrl: 'https://playnance.drpc.org/',
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
+  nonTemplatePermissions: [
+    {
+      name: 'RollupOwnerEOA',
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
+      description:
+        'This address has the Executor role and can upgrade the rollup contracts (via ProxyAdmin) without delay, potentially stealing all funds.',
+    },
+  ],
+  nonTemplateContracts: [
+    discovery.getContractDetails('ProxyAdmin', {
+      description:
+        'This contract can upgrade the implementations of the rollup proxies.',
+    }),
+  ],
 })

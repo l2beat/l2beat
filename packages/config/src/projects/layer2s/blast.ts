@@ -2,7 +2,6 @@ import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { EXITS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
 
@@ -14,16 +13,15 @@ const upgradeability = {
 }
 
 const optimismPortalImplementation =
-  discovery.getContract('OptimismPortal').implementations?.[0]
+  discovery.get$Implementations('OptimismPortal')[0]
 const l2OutputOracleImplementation =
-  discovery.getContract('L2OutputOracle').implementations?.[0]
+  discovery.get$Implementations('L2OutputOracle')[0]
 
 assert(optimismPortalImplementation, 'OptimismPortal implementation not found')
 assert(l2OutputOracleImplementation, 'L2OutputOracle implementation not found')
 
 export const blast: Layer2 = opStackL2({
   discovery,
-  badges: [Badge.Stack.OPStack, Badge.VM.EVM, Badge.DA.EthereumBlobs],
   display: {
     name: 'Blast',
     slug: 'blast',
@@ -37,7 +35,7 @@ export const blast: Layer2 = opStackL2({
       documentation: ['https://docs.blast.io/about-blast'],
       explorers: ['https://blastscan.io', 'https://blastexplorer.io'],
       repositories: [],
-      socialMedia: ['https://twitter.com/Blast_L2'],
+      socialMedia: ['https://twitter.com/blast'],
     },
     activityDataSource: 'Blockchain RPC',
     tvlWarning: {

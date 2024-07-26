@@ -3,7 +3,6 @@ import {
   Configuration,
   RemovalConfiguration,
   SavedConfiguration,
-  UpdateConfiguration,
 } from '../types'
 
 export function actual<T>(
@@ -33,22 +32,6 @@ export function saved<T>(
     minHeight,
     maxHeight,
     currentHeight,
-  }
-}
-
-export function update<T>(
-  id: string,
-  minHeight: number,
-  maxHeight: number | null,
-  hasData: boolean,
-  properties?: Partial<T>,
-): UpdateConfiguration<T> {
-  return {
-    id,
-    properties: mockObject<T>({ ...properties }),
-    minHeight,
-    maxHeight,
-    hasData,
   }
 }
 

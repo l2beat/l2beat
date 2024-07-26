@@ -1,4 +1,31 @@
-Generated with discovered.json: 0xab93aa9c29fce77a42125c8aecec7330e0614ffd
+Generated with discovered.json: 0x3cd31d65df666925c70f362ca499b54989562013
+
+# Diff at Wed, 17 Jul 2024 08:35:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@0df6fda263b58edb9acce032017abb5ebd61f5fd block: 19882097
+- current block number: 20325087
+
+## Description
+
+Introduced a new LocalAdmin, not handled by the shared template, which mainContract admin (not the upgradeabilityAdmin) and who can change local system configs. This role was wrongly given to the SharedProxyAdminOwner before.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19882097 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumEtrog (0x2B0ee28D4D51bC9aDde5E58E295873F61F4a0507) {
+    +++ description: None
+      name:
+-        "XLayerValidiumEtrog"
++        "XLayerValidium"
+    }
+```
+
+Generated with discovered.json: 0xedecf8c6eda26e5959db341cbc0c301a4ee07513
 
 # Diff at Thu, 16 May 2024 10:59:54 GMT:
 

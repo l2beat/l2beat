@@ -24,7 +24,7 @@ export function Breakdown({ values, gap = 1, className }: BreakdownProps) {
         <div
           key={`breakdown-group-${i}`}
           className={cn(
-            'h-full last:mr-0 last:rounded-r first:rounded-l',
+            'h-full first:rounded-l last:mr-0 last:rounded-r',
             g.className,
           )}
           style={{

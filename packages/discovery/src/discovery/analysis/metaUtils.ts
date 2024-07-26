@@ -1,19 +1,16 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
-  ContractValue,
-  UpgradeabilityParameters,
-} from '@l2beat/discovery-types'
-import { ContractOverrides } from '../config/DiscoveryOverrides'
-import {
   ContractFieldSeverity,
-  DiscoveryContractField,
+  ContractValue,
+  ContractValueType,
   Permission,
   StackCategory,
   StackRole,
-  ValueType,
-} from '../config/RawDiscoveryConfig'
-import { HandlerResult } from '../handlers/Handler'
+  get$Admins,
+} from '@l2beat/discovery-types'
+import { ContractOverrides } from '../config/DiscoveryOverrides'
+import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
@@ -26,7 +23,7 @@ export interface ContractMeta {
   roles: Set<StackRole> | undefined
   permissions: { [permission: string]: Set<EthereumAddress> } | undefined
   categories: Set<StackCategory> | undefined
-  types: Set<ValueType> | undefined
+  types: Set<ContractValueType> | undefined
   severity: ContractFieldSeverity | undefined
 }
 
@@ -64,15 +61,32 @@ export function mergePermissions(
   return isEmptyObject(result) ? undefined : result
 }
 
+export function interpolateDescription(
+  description: string,
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
+): string {
+  return description.replace(/\{\{\s*(#?\w+)\s*\}\}/g, (_match, key) => {
+    const value = key === '#address' ? analysis.address : analysis.values[key]
+    if (value === undefined) {
+      throw new Error(
+        `Value for variable "{{ ${key} }}" in contract description not found in contract analysis`,
+      )
+    }
+    return String(value)
+  })
+}
+
 export function getSelfMeta(
-  overrides?: ContractOverrides,
+  overrides: ContractOverrides | undefined,
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (overrides?.description === undefined) {
     return undefined
   }
+  const description = interpolateDescription(overrides?.description, analysis)
   return {
     displayName: overrides.displayName ?? undefined,
-    descriptions: [overrides.description],
+    descriptions: [description],
     roles: undefined,
     permissions: undefined,
     categories: undefined,
@@ -83,25 +97,23 @@ export function getSelfMeta(
 
 export function getTargetsMeta(
   self: EthereumAddress,
-  upgradeability: UpgradeabilityParameters,
-  handlerResults: HandlerResult[],
-  fields?: { [address: string]: DiscoveryContractField },
+  values: Record<string, ContractValue | undefined> = {},
+  fields: { [address: string]: DiscoveryContractField } = {},
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): AddressToMetaMap | undefined {
-  const result = getMetaFromUpgradeability(self, upgradeability)
+  const result = getMetaFromUpgradeability(self, get$Admins(values))
 
-  if (fields !== undefined) {
-    for (const handlerResult of handlerResults) {
-      const field = fields?.[handlerResult.field]
-      const target = field?.target
-      if (target) {
-        for (const address of getAddresses(handlerResult.value)) {
-          const meta = mergeContractMeta(
-            result[address.toString()],
-            targetConfigToMeta(self, field, target),
-          )
-          if (meta) {
-            result[address.toString()] = meta
-          }
+  for (const [fieldName, value] of Object.entries(values)) {
+    const field = fields[fieldName]
+    const target = field?.target
+    if (target) {
+      for (const address of getAddresses(value)) {
+        const meta = mergeContractMeta(
+          result[address.toString()],
+          targetConfigToMeta(self, field, target, analysis),
+        )
+        if (meta) {
+          result[address.toString()] = meta
         }
       }
     }
@@ -112,25 +124,23 @@ export function getTargetsMeta(
 
 export function getMetaFromUpgradeability(
   self: EthereumAddress,
-  upgradeability: UpgradeabilityParameters,
+  admins: EthereumAddress[],
 ): AddressToMetaMap {
   const result: Record<string, ContractMeta> = {}
-  // @ts-expect-error pulling 'admin' from any type of proxy
-  const upgradeabilityAdmin = upgradeability['admin'] as
-    | EthereumAddress
-    | undefined
-  if (upgradeabilityAdmin !== undefined) {
-    const permission: Permission = 'admin'
-    result[upgradeabilityAdmin.toString()] = {
-      displayName: undefined,
-      categories: undefined,
-      descriptions: undefined,
-      roles: undefined,
-      severity: undefined,
-      types: undefined,
-      permissions: {
-        [permission]: new Set([self]),
-      },
+  for (const upgradeabilityAdmin of admins) {
+    if (upgradeabilityAdmin !== undefined) {
+      const permission: Permission = 'admin'
+      result[upgradeabilityAdmin.toString()] = {
+        displayName: undefined,
+        categories: undefined,
+        descriptions: undefined,
+        roles: undefined,
+        severity: undefined,
+        types: undefined,
+        permissions: {
+          [permission]: new Set([self]),
+        },
+      }
     }
   }
   return result
@@ -140,13 +150,18 @@ export function targetConfigToMeta(
   self: EthereumAddress,
   field: DiscoveryContractField,
   target: DiscoveryContractField['target'],
+  analysis: Omit<AnalyzedContract, 'selfMeta' | 'targetsMeta'>,
 ): ContractMeta | undefined {
   if (target === undefined) {
     return undefined
   }
+  const descriptions = target.description
+    ? [interpolateDescription(target.description, analysis)]
+    : undefined
+
   const result: ContractMeta = {
     displayName: undefined,
-    descriptions: target.description ? [target.description] : undefined,
+    descriptions,
     roles: toSet(target.role),
     permissions: getTargetPermissions(self, toSet(target.permission)),
     categories: toSet(target.category),

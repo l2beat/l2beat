@@ -7,12 +7,9 @@ import {
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
 
+import { DailyTransactionCountRecord, Database } from '@l2beat/database'
 import { Clock } from '../../../tools/Clock'
 import { SequenceProcessor } from '../SequenceProcessor'
-import {
-  ActivityViewRepository,
-  DailyTransactionCountRecord,
-} from '../repositories/ActivityViewRepository'
 import { ActivityController } from './ActivityController'
 import { DailyTransactionCount } from './types'
 
@@ -247,7 +244,7 @@ describe(ActivityController.name, () => {
             hasProcessedAll: false,
           }),
         ],
-        repository: mockObject<ActivityViewRepository>({
+        repository: mockObject<Database['activityView']>({
           getDailyCountsPerProject: mockFn()
             .given(ProjectId.ETHEREUM)
             .resolvesToOnce([
@@ -330,7 +327,7 @@ describe(ActivityController.name, () => {
             hasProcessedAll: false,
           }),
         ],
-        repository: mockObject<ActivityViewRepository>({
+        repository: mockObject<Database['activityView']>({
           getDailyCountsPerProject: mockFn().resolvesTo([]),
           getProjectsAggregatedDailyCount: mockFn().resolvesTo([]),
         }),
@@ -563,34 +560,36 @@ describe(ActivityController.name, () => {
       const controller = new ActivityController(
         includedIds,
         processors,
-        mockRepository([
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: TODAY.add(-2, 'days'),
-            count: 2137,
-          },
-          {
-            projectId: ProjectId.ETHEREUM,
-            timestamp: TODAY.add(-1, 'days'),
-            count: 420,
-          },
-          { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
-          {
-            projectId: PROJECT_A,
-            timestamp: TODAY.add(-2, 'days'),
-            count: 2,
-          },
-          {
-            projectId: PROJECT_A,
-            timestamp: TODAY.add(-1, 'days'),
-            count: 1,
-          },
-          {
-            projectId: PROJECT_B,
-            timestamp: TODAY.add(-2, 'days'),
-            count: 1337,
-          },
-        ]),
+        mockObject<Database>({
+          activityView: mockRepository([
+            {
+              projectId: ProjectId.ETHEREUM,
+              timestamp: TODAY.add(-2, 'days'),
+              count: 2137,
+            },
+            {
+              projectId: ProjectId.ETHEREUM,
+              timestamp: TODAY.add(-1, 'days'),
+              count: 420,
+            },
+            { projectId: ProjectId.ETHEREUM, timestamp: TODAY, count: 100 },
+            {
+              projectId: PROJECT_A,
+              timestamp: TODAY.add(-2, 'days'),
+              count: 2,
+            },
+            {
+              projectId: PROJECT_A,
+              timestamp: TODAY.add(-1, 'days'),
+              count: 1,
+            },
+            {
+              projectId: PROJECT_B,
+              timestamp: TODAY.add(-2, 'days'),
+              count: 1337,
+            },
+          ]),
+        }),
         mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
@@ -684,7 +683,7 @@ describe(ActivityController.name, () => {
       const controller = new ActivityController(
         includedIds,
         processors,
-        mockRepository(data),
+        mockObject<Database>({ activityView: mockRepository(data) }),
         mockObject<Clock>({ getLastHour: () => NOW }),
       )
 
@@ -774,13 +773,13 @@ function createController({
 }: Partial<{
   includedIds: ProjectId[]
   processors: SequenceProcessor[]
-  repository: ActivityViewRepository
+  repository: Database['activityView']
   clock: Clock
 }>) {
   return new ActivityController(
     includedIds ?? [],
     processors ?? [],
-    repository ?? mockRepository([]),
+    mockObject<Database>({ activityView: repository ?? mockRepository([]) }),
     clock ?? mockObject<Clock>(),
   )
 }
@@ -807,7 +806,7 @@ function mockProcessor({
 }
 
 function mockRepository(counts: DailyTransactionCountRecord[]) {
-  return mockObject<ActivityViewRepository>({
+  return mockObject<Database['activityView']>({
     getDailyCounts: async () => counts,
   })
 }

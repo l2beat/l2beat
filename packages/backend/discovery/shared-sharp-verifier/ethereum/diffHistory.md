@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xa1319e7f5c8a992a6ea47ec53243d1dea6c18245
+Generated with discovered.json: 0x98333a8861a2aa83fb491c4d94cadf90944c4f51
+
+# Diff at Thu, 18 Jul 2024 10:33:19 GMT:
+
+- author: Adrian Adamiak (<adrian@adamiak.net>)
+- comparing to: main@d89fe52cb65d643cef712d1d7910564a7acf2dce block: 19531641
+- current block number: 19531641
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531641 (main branch discovery), not current.
+
+```diff
+    contract SHARPVerifierGovernorMultisig (0x21F9eC47b19d95b5C2DDFB6Ae5D4F92fAdacAEc4) {
+    +++ description: None
+      assignedPermissions:
++        {"admin":["0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"]}
+    }
+```
+
+Generated with discovered.json: 0x5c0ffa57659e38889ca2880a1ee7efda61b6d240
 
 # Diff at Thu, 28 Mar 2024 09:13:10 GMT:
 

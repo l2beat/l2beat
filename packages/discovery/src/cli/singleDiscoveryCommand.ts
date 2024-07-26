@@ -27,6 +27,7 @@ export async function singleDiscoveryCommand(
       chain: singleDiscovery.chain.name,
       initialAddresses: [singleDiscovery.address],
     },
+    {},
     configReader,
   )
   const http = new HttpClient()
@@ -34,7 +35,7 @@ export async function singleDiscoveryCommand(
   logger = logger.for('SingleDiscovery')
   logger.info('Starting')
 
-  const { result, blockNumber } = await discover(
+  const { result, blockNumber, shapeFilesHash } = await discover(
     chainConfigs,
     projectConfig,
     DiscoveryLogger.CLI,
@@ -50,6 +51,7 @@ export async function singleDiscoveryCommand(
     projectConfig,
     blockNumber,
     DiscoveryLogger.CLI,
+    shapeFilesHash,
     { rootFolder },
   )
 

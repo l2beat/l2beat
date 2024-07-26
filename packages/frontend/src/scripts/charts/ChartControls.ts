@@ -83,7 +83,6 @@ export class ChartControls {
     )
     this.configureEthereumTxsToggle(query, settings)
     this.configureTokenSelect(query, unitControls)
-    this.configureCanonicalToggle()
     this.configureExcludeAssociatedTokensToggle()
     this.configureProjectFilters()
     this.configureRefetchButton(query)
@@ -217,18 +216,6 @@ export class ChartControls {
         type: 'project-token-tvl',
         info: tokenInfo,
       })
-    })
-  }
-
-  private configureCanonicalToggle() {
-    const { $ } = makeQuery()
-    const canonicalToggle = $.maybe<HTMLInputElement>(
-      '[data-role="chart-combined"]',
-    )
-
-    canonicalToggle?.addEventListener('change', () => {
-      const includeCanonical = !!canonicalToggle.checked
-      this.updateChartType({ type: 'bridges-tvl', includeCanonical })
     })
   }
 

@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { ChildIndexer, Indexer, IndexerOptions } from '@l2beat/uif'
-
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
 import { diffConfigurations } from './diffConfigurations'
 import { toRanges } from './toRanges'
 import {
@@ -9,7 +8,6 @@ import {
   ConfigurationRange,
   RemovalConfiguration,
   SavedConfiguration,
-  UpdateConfiguration,
 } from './types'
 
 export abstract class MultiIndexer<T> extends ChildIndexer {
@@ -19,7 +17,7 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   constructor(
     logger: Logger,
     parents: Indexer[],
-    private readonly createDatabaseMiddleware: () => Promise<DatabaseMiddleware>,
+    private readonly db: Database,
     private readonly configurations: Configuration<T>[],
     options?: IndexerOptions,
   ) {
@@ -71,9 +69,8 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   abstract multiUpdate(
     from: number,
     to: number,
-    configurations: UpdateConfiguration<T>[],
-    dbMiddleware: DatabaseMiddleware,
-  ): Promise<number>
+    configurations: Configuration<T>[],
+  ): Promise<() => Promise<number>>
 
   /**
    * Removes data that was previously synced but because configurations changed
@@ -98,10 +95,8 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
     configurations: SavedConfiguration<T>[],
   ): Promise<void>
 
-  abstract updateCurrentHeight(
-    configurationIds: string[],
+  abstract updateConfigurationsCurrentHeight(
     currentHeight: number,
-    dbMiddleware?: DatabaseMiddleware,
   ): Promise<void>
 
   /**
@@ -118,7 +113,9 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
   async initialize() {
     const previouslySaved = await this.multiInitialize()
 
-    this.ranges = toRanges(this.configurations)
+    this.ranges = toRanges(
+      toConfigurationsWithPreviousState(this.configurations, previouslySaved),
+    )
 
     const { toRemove, toSave, safeHeight } = diffConfigurations(
       this.configurations,
@@ -138,16 +135,13 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
 
   async update(from: number, to: number): Promise<number> {
     const range = findRange(this.ranges, from)
-    if (range.configurations.length === 0) {
+    const configurations = range.configurations
+
+    if (configurations.length === 0) {
       return Math.min(range.to, to)
     }
 
-    const { configurations, minCurrentHeight } = getConfigurationsInRange(
-      range,
-      this.saved,
-      from,
-    )
-    const adjustedTo = Math.min(range.to, to, minCurrentHeight)
+    const adjustedTo = Math.min(range.to, to)
 
     this.logger.info('Calling multiUpdate', {
       from,
@@ -155,50 +149,36 @@ export abstract class MultiIndexer<T> extends ChildIndexer {
       configurations: configurations.length,
     })
 
-    const dbMiddleware = await this.createDatabaseMiddleware()
-    const newHeight = await this.multiUpdate(
-      from,
-      adjustedTo,
-      configurations,
-      dbMiddleware,
-    )
-    if (newHeight < from || newHeight > adjustedTo) {
-      throw new Error(
-        'Programmer error, returned height must be between from and to (both inclusive).',
-      )
-    }
+    const saveData = await this.multiUpdate(from, adjustedTo, configurations)
 
-    if (newHeight >= from) {
-      const updatedIds = this.updateSavedConfigurations(
-        configurations,
-        newHeight,
-      )
-      if (updatedIds.length > 0) {
-        await this.updateCurrentHeight(updatedIds, newHeight, dbMiddleware)
+    return await this.db.transaction(async () => {
+      const safeHeight = await saveData()
+
+      if (safeHeight < from || safeHeight > adjustedTo) {
+        throw new Error(
+          'Programmer error, returned height must be between from and to (both inclusive).',
+        )
       }
-    }
 
-    await dbMiddleware.execute()
+      this.updateSavedConfigurations(configurations, safeHeight)
+      await this.updateConfigurationsCurrentHeight(safeHeight)
 
-    return newHeight
+      return safeHeight
+    })
   }
 
   private updateSavedConfigurations(
-    updatedConfigurations: UpdateConfiguration<T>[],
+    updatedConfigurations: Configuration<T>[],
     newHeight: number,
-  ): string[] {
-    const touched: string[] = []
+  ) {
     for (const updated of updatedConfigurations) {
       const saved = this.saved.get(updated.id)
       if (!saved) {
         throw new Error('Programmer error, saved configuration not found')
       }
-      if (saved.currentHeight === null || saved.currentHeight < newHeight) {
-        saved.currentHeight = newHeight
-        touched.push(saved.id)
-      }
+
+      saved.currentHeight = newHeight
     }
-    return touched
   }
 
   async invalidate(targetHeight: number): Promise<number> {
@@ -217,26 +197,18 @@ function findRange<T>(
   return range
 }
 
-function getConfigurationsInRange<T>(
-  range: ConfigurationRange<T>,
-  savedConfigurations: Map<string, SavedConfiguration<T>>,
-  currentHeight: number,
-): { configurations: UpdateConfiguration<T>[]; minCurrentHeight: number } {
-  let minCurrentHeight = Infinity
-  const configurations = range.configurations.map(
-    (configuration): UpdateConfiguration<T> => {
-      const saved = savedConfigurations.get(configuration.id)
-      if (
-        saved &&
-        saved.currentHeight !== null &&
-        saved.currentHeight > currentHeight
-      ) {
-        minCurrentHeight = Math.min(minCurrentHeight, saved.currentHeight)
-        return { ...configuration, hasData: true }
-      } else {
-        return { ...configuration, hasData: false }
-      }
-    },
-  )
-  return { configurations, minCurrentHeight }
+function toConfigurationsWithPreviousState<T>(
+  configurations: Configuration<T>[],
+  previouslySaved: Omit<SavedConfiguration<T>, 'properties'>[],
+): SavedConfiguration<T>[] {
+  const previousStateMapping = new Map(previouslySaved.map((p) => [p.id, p]))
+
+  return configurations.map((c) => {
+    const config = previousStateMapping.get(c.id)
+
+    return {
+      ...c,
+      currentHeight: config?.currentHeight ?? null,
+    }
+  })
 }

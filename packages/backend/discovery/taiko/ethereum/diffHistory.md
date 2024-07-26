@@ -1,4 +1,313 @@
-Generated with discovered.json: 0x78a7a0805b72d26f35cfb5404e40c67584804ce5
+Generated with discovered.json: 0xb2a593359c71ae5bfd7af8acf5a2c646669ae3c5
+
+# Diff at Tue, 23 Jul 2024 06:40:25 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@898b873eac66b785af49fe56edca0c3dc1a5d0d7 block: 20325786
+- current block number: 20367491
+
+## Description
+
+Small upgrade, no functional changes.
+
+## Watched changes
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$implementation:
+-        "0xEE5F6648307319263FFBaE91f68ac700b188fF24"
++        "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3"
+      values.impl:
+-        "0xEE5F6648307319263FFBaE91f68ac700b188fF24"
++        "0x7EE4CEF8a945639e09DDf3032e9d95c8d90f07f3"
+    }
+```
+
+## Source code changes
+
+```diff
+.../SgxVerifier/MainnetSgxVerifier.sol              | 21 +++++++++++++++------
+ 1 file changed, 15 insertions(+), 6 deletions(-)
+```
+
+Generated with discovered.json: 0x4d8acd4949ddb9e86b59f0e29b2718147f570d2d
+
+# Diff at Wed, 17 Jul 2024 10:56:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@bff2b984ff65f6f4ce53cd6d7831c30ff25fdfa1 block: 20310388
+- current block number: 20325786
+
+## Description
+
+Taiko [upgrade 1.9.0](https://github.com/taikoxyz/taiko-mono/pull/17783). The diff is extensive but logic changes are not since much of the diff is about naming and refactoring. The MainnetXXX contracts are deployed to save gas, logic is supposed to stay the same. Contract diffs were reviewed superficially since the code is changing too often and there seem to be no new features / permissions. Below is a changelog copied from the Taiko monorepo:
+
+### Features
+
+* **protocol:** add withdraw eth function to proverset ([#17800](https://github.com/taikoxyz/taiko-mono/issues/17800)) ([bb2abc5](https://github.com/taikoxyz/taiko-mono/commit/bb2abc510c98e62c89e0bfd9382c11720fb9edc7))
+* **protocol:** update Hekla deployment ([#17795](https://github.com/taikoxyz/taiko-mono/issues/17795)) ([cadaef8](https://github.com/taikoxyz/taiko-mono/commit/cadaef882c0751496809c88ee03ff818e49c4b4a))
+* **protocol:** update risc0 verifier contract to release-1.0 ([#17776](https://github.com/taikoxyz/taiko-mono/issues/17776)) ([2dd30ab](https://github.com/taikoxyz/taiko-mono/commit/2dd30ab2dc92b25105f19a4bcc1ddf7b40886039))
+
+
+### Bug Fixes
+
+* **protocol:** reduce MainnetTaikoL1 code size ([#17792](https://github.com/taikoxyz/taiko-mono/issues/17792)) ([45281b8](https://github.com/taikoxyz/taiko-mono/commit/45281b848f3ef3c45487bfcd1bfd38b382eff4d0))
+
+
+### Documentation
+
+* **protocol:** update L1 deployment ([#17789](https://github.com/taikoxyz/taiko-mono/issues/17789)) ([a889f1a](https://github.com/taikoxyz/taiko-mono/commit/a889f1a3e6c27b6758e873572c371ac9399a3d9a))
+
+
+### Code Refactoring
+
+* **protocol:** add MainnetGuardianProver ([#17805](https://github.com/taikoxyz/taiko-mono/issues/17805)) ([6f68316](https://github.com/taikoxyz/taiko-mono/commit/6f68316e89373670cf2c58bde5e64de196b9c139))
+* **protocol:** add MainnetSgxVerifier ([#17803](https://github.com/taikoxyz/taiko-mono/issues/17803)) ([a4be247](https://github.com/taikoxyz/taiko-mono/commit/a4be247e181861300d79af6454b3fd3776100b48))
+* **protocol:** added cached version of the bridge and vaults ([#17801](https://github.com/taikoxyz/taiko-mono/issues/17801)) ([b70cc57](https://github.com/taikoxyz/taiko-mono/commit/b70cc57704d750081a62a7e8e44f68f32efdc4c1))
+* **protocol:** improve mainnet gas efficiency with addresses cached ([#17791](https://github.com/taikoxyz/taiko-mono/issues/17791)) ([b12227d](https://github.com/taikoxyz/taiko-mono/commit/b12227d4d2b2636fb80e04ee7ebc2dec3c17faa8))
+* **protocol:** name address manager param clearer ([#17806](https://github.com/taikoxyz/taiko-mono/issues/17806)) ([1d5a6ff](https://github.com/taikoxyz/taiko-mono/commit/1d5a6ff191e8457ee12c96cb73c074560c556a2a))
+
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.$implementation:
+-        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
++        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
+      values.impl:
+-        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
++        "0xBA1d90BCfA74163bFE09e8eF609b346507D83231"
+      values.prover_set:
+-        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
++        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
+      derivedName:
+-        "TaikoL1"
++        "MainnetTaikoL1"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract ProverSet (0x518845daA8870bE2C59E49620Fc262AD48953C9a)
+    +++ description: None
+```
+
+```diff
+    contract GuardianMinorityProver (0x579A8d63a2Db646284CBFE31FE5082c9989E985c) {
+    +++ description: Verifier contract for blocks proven by Guardian minority.
+      values.$implementation:
+-        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
++        "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"
+      values.impl:
+-        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
++        "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"
+      derivedName:
+-        "GuardianProver"
++        "MainnetGuardianProver"
+    }
+```
+
+```diff
+    contract L1RollupAddressManager (0x579f40D0BE111b823962043702cabe6Aaa290780) {
+    +++ description: None
+      values.$implementation:
+-        "0x29a88d60246C76E4F28806b9C8a42d2183154900"
++        "0x4f6D5D3109C07E77035B410602996e445b18E8E9"
+      values.impl:
+-        "0x29a88d60246C76E4F28806b9C8a42d2183154900"
++        "0x4f6D5D3109C07E77035B410602996e445b18E8E9"
+      derivedName:
+-        "L1RollupAddressManager"
++        "MainnetRollupAddressManager"
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      values.$implementation:
+-        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
++        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
+      values.impl:
+-        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
++        "0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A"
+      derivedName:
+-        "ProverSet"
++        "MainnetProverSet"
+    }
+```
+
+```diff
+    contract SharedERC20Vault (0x996282cA11E5DEb6B5D122CC3B9A1FcAAD4415Ab) {
+    +++ description: None
+      values.$implementation:
+-        "0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
++        "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30"
+      values.impl:
+-        "0xa303784B0557BF1F1FB8b8abEF2B18a005722689"
++        "0x7ACFBb369a552C45d402448A4d64b9da54C3FF30"
+      derivedName:
+-        "ERC20Vault"
++        "MainnetERC20Vault"
+    }
+```
+
+```diff
+    contract SignalService (0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) {
+    +++ description: None
+      values.$implementation:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF"
+      values.impl:
+-        "0xB11Cd7bA46a12F238b4Ad831f6F296262C1e652d"
++        "0xDF8642a1FBFc2014de27E8E87283D6f3eEF315DF"
+      derivedName:
+-        "SignalService"
++        "MainnetSignalService"
+    }
+```
+
+```diff
+    contract SgxVerifier (0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81) {
+    +++ description: Verifier contract for SGX proven blocks.
+      values.$implementation:
+-        "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"
++        "0xEE5F6648307319263FFBaE91f68ac700b188fF24"
+      values.impl:
+-        "0xB0b782cf0fCEce896E0C041F8e54f86cA4cC8e9F"
++        "0xEE5F6648307319263FFBaE91f68ac700b188fF24"
+      derivedName:
+-        "SgxVerifier"
++        "MainnetSgxVerifier"
+    }
+```
+
+```diff
+    contract TaikoBridge (0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) {
+    +++ description: None
+      values.$implementation:
+-        "0x01E7D369a619eF1B0E92563d8737F42C09789986"
++        "0xAc96FF285158bceBB8573D20d853e86BB2915aF3"
+      values.impl:
+-        "0x01E7D369a619eF1B0E92563d8737F42C09789986"
++        "0xAc96FF285158bceBB8573D20d853e86BB2915aF3"
+      derivedName:
+-        "Bridge"
++        "MainnetBridge"
+    }
+```
+
+```diff
+    contract GuardianProver (0xE3D777143Ea25A6E031d1e921F396750885f43aC) {
+    +++ description: Verifier contract for Guardian proven blocks.
+      values.$implementation:
+-        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
++        "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"
+      values.impl:
+-        "0x7E717FFD6f7dD1008192bDC7193904FaB25BC8A4"
++        "0x3c40CC51e78B4a622622F9A4Df1b40068bc8Df98"
+      derivedName:
+-        "GuardianProver"
++        "MainnetGuardianProver"
+    }
+```
+
+```diff
+    contract L1SharedAddressManager (0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa) {
+    +++ description: None
+      values.$implementation:
+-        "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"
++        "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD"
+      values.impl:
+-        "0x9496502d7D121B3D5eF25cA6c58d4f7593398a17"
++        "0x2f7126f78365AD54EAB26fD7faEc60435008E2fD"
+      derivedName:
+-        "L1SharedAddressManager"
++        "MainnetSharedAddressManager"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract MainnetProverSet (0xCE5a119479337a153CA3bd1b2bF9755c78F2B15A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../MainnetGuardianProver.sol}                     |  251 +-
+ .../GuardianProver/MainnetGuardianProver.sol}      |  251 +-
+ .../MainnetRollupAddressManager.sol}               |  141 +-
+ .../MainnetSharedAddressManager.sol}               |  177 +-
+ .../ProverSet.sol => .flat/MainnetProverSet.sol}   | 2657 +++++-----
+ .../ProverSetProxy/MainnetProverSet.sol}           | 2657 +++++-----
+ .../SgxVerifier/MainnetSgxVerifier.sol}            | 3481 ++++++-------
+ .../SharedERC20Vault/MainnetERC20Vault.sol}        | 1270 ++---
+ .../SignalService/MainnetSignalService.sol}        | 4297 ++++++++--------
+ .../TaikoBridge/MainnetBridge.sol}                 | 1998 ++++----
+ .../TaikoL1Contract/MainnetTaikoL1.sol}            | 5158 ++++++++++----------
+ 11 files changed, 11487 insertions(+), 10851 deletions(-)
+```
+
+Generated with discovered.json: 0xe016135302e207e21201065ab78e19edbf886272
+
+# Diff at Mon, 15 Jul 2024 07:22:39 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@c6bae99047cf03487a19e4008cfffabf520bcf2b block: 20262044
+- current block number: 20310388
+
+## Description
+
+This is the [Taiko protocol v1.8.0 upgrade](https://github.com/taikoxyz/taiko-mono/releases/tag/protocol-v1.8.0).
+
+tldr:
+- TAIKO bonds are escrowed in the TaikoL1 contract and only manually withdrawn using `withdrawBond()` by proposers / provers. For efficiency, bonds can be deposited once in the contract and be left there.
+- ring buffer size increased by 36 000 blocks (5 days worth of blocks @ 12 seconds). `getVerifiedBlockProver` can be called on these blocks to get their prover's address.
+- `CalldataTxList` emitted when calldata is used as DA (to be used for derivation)
+
+## Watched changes
+
+```diff
+    contract TaikoL1Contract (0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a) {
+    +++ description: This contract provides functionalities for proposing, proving, and verifying blocks.
+      values.$implementation:
+-        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
++        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
+      values.getConfig.blockRingBufferSize:
+-        324512
++        360000
+      values.impl:
+-        "0x5fc54737ECC1de49D58AE1195d4A296257F1E31b"
++        "0xcEe590fACd976B9BDE87BC1B7620B284c5edD2C3"
+    }
+```
+
+```diff
+    contract ProverSetProxy (0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9) {
+    +++ description: A contract that holds TKO token and acts as a Taiko prover. This contract will simply relay `proveBlock` calls to TaikoL1 so msg.sender doesn't need to hold any TKO.
+      values.$implementation:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+      values.impl:
+-        "0xD547Ca5d6b50dC5E900a091978597eB51F18F9D1"
++        "0x518845daA8870bE2C59E49620Fc262AD48953C9a"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ProverSetProxy/ProverSet.sol                   |   41 +-
+ .../TaikoL1Contract/TaikoL1.sol                    | 3683 ++++++++++----------
+ 2 files changed, 1924 insertions(+), 1800 deletions(-)
+```
+
+Generated with discovered.json: 0xd7d312e4f6b226cdfb6b99d711a06dfdbe019f7c
 
 # Diff at Mon, 08 Jul 2024 13:19:34 GMT:
 

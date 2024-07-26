@@ -1,13 +1,19 @@
-import { EthereumAddress, assertUnreachable } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import {
+  DaBridge,
+  DacBridge,
+  OnChainDaBridge,
   ScalingProjectContract,
-  ScalingProjectUpgradeability,
   isSingleAddress,
 } from '../../src'
-import { VerificationMapPerChain } from './output'
 import { Project } from './types'
 import { withoutDuplicates } from './utils'
+
+export interface AddressOnChain {
+  chain: string
+  address: EthereumAddress
+}
 
 export function getUniqueContractsForAllProjects(
   projects: Project[],
@@ -19,24 +25,57 @@ export function getUniqueContractsForAllProjects(
   return withoutDuplicates(addresses)
 }
 
+export function getUniqueAddressesForDaBridge(
+  bridge: DaBridge,
+  chain: string,
+): EthereumAddress[] {
+  const addresses = withoutDuplicates(
+    getDaBridgeContractsForChain(bridge, chain).map((c) => c.address),
+  )
+  const permissions = withoutDuplicates(
+    getDaBridgePermissionsForChain(bridge, chain).map((p) => p.address),
+  )
+
+  return [...addresses, ...permissions]
+}
+
 export function getUniqueContractsForProject(
   project: Project,
   chain: string,
 ): EthereumAddress[] {
   const projectContracts = getProjectContractsForChain(project, chain)
-  const mainAddresses = projectContracts.flatMap((c) => getAddresses(c))
-  const upgradeabilityAddresses = projectContracts
-    .filter(isSingleAddress)
-    .map((c) => c.upgradeability)
-    .filter((u): u is ScalingProjectUpgradeability => !!u) // remove undefined
-    .flatMap((u) => gatherAddressesFromUpgradeability(u))
+  const uniqueProjectContracts = getUniqueContractsFromList(
+    projectContracts,
+  ).map((c) => c.address)
+  const permissionedAddresses = getPermissionedAddressesForChain(project, chain)
 
+  return withoutDuplicates([
+    ...uniqueProjectContracts,
+    ...permissionedAddresses,
+  ])
+}
+
+export function getUniqueContractsFromList(
+  contracts: ScalingProjectContract[],
+): AddressOnChain[] {
+  const mainAddresses = contracts.flatMap((c) =>
+    getAddresses(c).map((a) => ({ address: a, chain: c.chain ?? 'ethereum' })),
+  )
+  const upgradeabilityAddresses = contracts
+    .filter(isSingleAddress)
+    .filter((c) => !!c.upgradeability) // remove undefined
+    .flatMap((c) =>
+      (c.upgradeability?.implementations ?? []).flatMap((a) => ({
+        address: a,
+        chain: c.chain ?? 'ethereum',
+      })),
+    )
   return withoutDuplicates([...mainAddresses, ...upgradeabilityAddresses])
 }
 
 function getProjectContractsForChain(project: Project, chain: string) {
   const contracts = (project.contracts?.addresses ?? []).filter((contract) =>
-    isContractOnChain(contract, chain),
+    isContractOnChain(contract.chain, chain, project),
   )
   const escrows = project.config.escrows
     .flatMap((escrow) => {
@@ -45,106 +84,71 @@ function getProjectContractsForChain(project: Project, chain: string) {
       }
       return { address: escrow.address, ...escrow.contract }
     })
-    .filter((escrowContract) => isContractOnChain(escrowContract, chain))
+    .filter((escrowContract) =>
+      isContractOnChain(escrowContract.chain, chain, project),
+    )
 
   return [...contracts, ...escrows]
 }
 
-function isContractOnChain(contract: ScalingProjectContract, chain: string) {
-  // For backwards compatibility, we assume that contracts without chain are for ethereum
-  if (contract.chain === undefined && chain === 'ethereum') {
-    return true
-  }
-  return contract.chain === chain
+function getDaBridgeContractsForChain(
+  bridge: DaBridge,
+  chain: string,
+): AddressOnChain[] {
+  const contracts = [bridge]
+    .filter(
+      (b): b is OnChainDaBridge | DacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'DAC',
+    )
+    .flatMap((b) => b.contracts.addresses)
+  const addresses = getUniqueContractsFromList(contracts)
+  return addresses.filter((a) => a.chain === chain)
 }
 
-export function gatherAddressesFromUpgradeability(
-  item: ScalingProjectUpgradeability,
-): EthereumAddress[] {
-  const result: EthereumAddress[] = []
+function getDaBridgePermissionsForChain(
+  bridge: DaBridge,
+  chain: string,
+): AddressOnChain[] {
+  const permissions: AddressOnChain[] = [bridge]
+    .filter(
+      (b): b is OnChainDaBridge | DacBridge =>
+        b.type === 'OnChainBridge' || b.type === 'DAC',
+    )
+    .flatMap((b) =>
+      b.permissions.flatMap((p) => {
+        return p.accounts.flatMap((a) => ({
+          chain: b.chain.toString(),
+          address: a.address,
+        }))
+      }),
+    )
 
-  switch (item.type) {
-    case 'Custom':
-    case 'CustomWithoutAdmin':
-    case 'EIP1967 proxy':
-    case 'LightLink proxy':
-    case 'Polygon proxy':
-    case 'ZeppelinOS proxy':
-    case 'StarkWare diamond':
-    case 'resolved delegate proxy':
-    case 'call implementation proxy':
-    case 'EIP897 proxy':
-    case 'Eternal Storage proxy':
-      result.push(item.implementation)
-      break
-    case 'StarkWare proxy':
-      result.push(item.implementation)
-      if (item.callImplementation) {
-        result.push(item.callImplementation)
-      }
-      break
-    case 'Arbitrum proxy':
-      result.push(item.adminImplementation)
-      result.push(item.userImplementation)
-      break
-    case 'new Arbitrum proxy':
-      result.push(item.adminImplementation)
-      result.push(item.userImplementation)
-      result.push(item.implementation)
-      break
-    case 'Beacon':
-      result.push(item.beacon)
-      result.push(item.implementation)
-      break
-    case 'zkSync Lite proxy':
-      result.push(item.implementation)
-      result.push(item.additional)
-      break
-    case 'Polygon Extension proxy':
-      result.push(item.implementation)
-      result.push(item.extension)
-      break
-    case 'zkSpace proxy':
-      result.push(item.implementation)
-      result.push(...item.additional)
-      break
-    case 'Optics Beacon proxy':
-      result.push(item.upgradeBeacon)
-      result.push(item.beaconController)
-      result.push(item.implementation)
-      break
-    case 'Reference':
-    case 'immutable':
-    case 'gnosis safe':
-    case 'gnosis safe zodiac module':
-    case 'EIP2535 diamond proxy':
-    case 'Axelar proxy':
-      // Ignoring types because no (admin/user)implementation included in them
-      break
-    default:
-      // This code triggers a typescript compile-time error if not all cases have been covered
-      assertUnreachable(item)
-  }
-
-  return result
+  return permissions.filter((p) => p.chain === chain)
 }
 
-export function areAllProjectContractsVerified(
+function getPermissionedAddressesForChain(project: Project, chain: string) {
+  const permissions =
+    project.permissions === 'UnderReview' ? [] : project.permissions ?? []
+  return permissions
+    .filter((p) => isContractOnChain(p.chain, chain, project))
+    .flatMap((p) => [...p.accounts, ...(p.participants ?? [])])
+    .filter((p) => p.type !== 'EOA')
+    .map((p) => p.address)
+}
+
+function isContractOnChain(
+  contractChain: string | undefined,
+  chain: string,
   project: Project,
-  addressVerificationMapPerChain: VerificationMapPerChain,
-): boolean {
-  for (const [chain, addressVerificationMap] of Object.entries(
-    addressVerificationMapPerChain,
-  )) {
-    const projectAddresses = getUniqueContractsForProject(project, chain)
-    if (!areAllAddressesVerified(projectAddresses, addressVerificationMap)) {
-      return false
-    }
+) {
+  if (contractChain === undefined) {
+    // For backwards compatibility, we assume that L2 contracts without chain are for ethereum
+    contractChain = project.type === 'layer3' ? project.hostChain : 'ethereum'
   }
-  return true
+  return contractChain === chain
 }
 
-function areAllAddressesVerified(
+export function areAllAddressesVerified(
   addresses: EthereumAddress[],
   addressVerificationMap: Record<string, boolean>,
 ): boolean {

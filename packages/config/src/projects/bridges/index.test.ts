@@ -1,11 +1,8 @@
-import {
-  ChainId,
-  UnixTime,
-  gatherAddressesFromUpgradeability,
-} from '@l2beat/shared-pure'
+import { ChainId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { assert } from '@l2beat/backend-tools'
+import { get$Implementations } from '@l2beat/discovery-types'
 import { chains } from '../../chains'
 import {
   NUGGETS,
@@ -65,9 +62,7 @@ describe('bridges', () => {
 
                   const contractAddresses = [
                     contract.address,
-                    ...gatherAddressesFromUpgradeability(
-                      contract.upgradeability,
-                    ),
+                    ...get$Implementations(contract.values),
                   ]
 
                   expect(
@@ -112,6 +107,31 @@ describe('bridges', () => {
         }
       }
     })
+  })
+
+  describe('every escrow sinceTimestamp is greater or equal to chains minTimestampForTvl', () => {
+    for (const bridge of bridges) {
+      for (const escrow of bridge.config.escrows) {
+        const chain = chains.find((c) => c.name === escrow.chain)
+
+        it(`${bridge.id.toString()} : ${escrow.address.toString()}`, () => {
+          assert(
+            chain,
+            `Chain not found for escrow ${escrow.address.toString()}`,
+          )
+          assert(
+            chain.minTimestampForTvl,
+            `Escrow ${escrow.address.toString()} added for chain without minTimestampForTvl ${
+              chain.name
+            }`,
+          )
+
+          expect(escrow.sinceTimestamp.toNumber()).toBeGreaterThanOrEqual(
+            chain.minTimestampForTvl.toNumber(),
+          )
+        })
+      }
+    }
   })
 
   describe('technology', () => {

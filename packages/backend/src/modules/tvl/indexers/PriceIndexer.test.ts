@@ -1,23 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database, PriceRecord } from '@l2beat/database'
 import {
   CoingeckoId,
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { DatabaseMiddleware } from '../../../peripherals/database/DatabaseMiddleware'
+import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { mockDbMiddleware } from '../../../tools/uif/multi/MultiIndexer.test'
 import {
+  actual,
   removal,
-  update,
 } from '../../../tools/uif/multi/test/mockConfigurations'
 import {
+  Configuration,
   RemovalConfiguration,
-  UpdateConfiguration,
 } from '../../../tools/uif/multi/types'
-import { PriceRecord, PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { PriceIndexer } from './PriceIndexer'
@@ -45,7 +44,7 @@ describe(PriceIndexer.name, () => {
         ],
       })
 
-      const priceRepository = mockObject<PriceRepository>({
+      const priceRepository = mockObject<Database['price']>({
         addMany: async () => 1,
       })
 
@@ -54,7 +53,6 @@ describe(PriceIndexer.name, () => {
       })
 
       const indexer = new PriceIndexer({
-        priceRepository,
         parents: [],
         priceService,
         syncOptimizer,
@@ -63,25 +61,19 @@ describe(PriceIndexer.name, () => {
         configurations: [],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockDatabase({ price: priceRepository }),
       })
 
       const parameters = {
         coingeckoId: CoingeckoId('id'),
       }
-      const configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[] = [
-        update<CoingeckoPriceConfigEntry>('a', 100, null, false, parameters),
-        update<CoingeckoPriceConfigEntry>('b', 100, null, false, parameters),
-        update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
+      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
+        actual<CoingeckoPriceConfigEntry>('a', 100, null, parameters),
+        actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
       ]
 
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        mockDbMiddleware,
-      )
+      const saveData = await indexer.multiUpdate(from, to, configurations)
+      const safeHeight = await saveData()
 
       expect(priceService.getAdjustedTo).toHaveBeenOnlyCalledWith(from, to)
 
@@ -89,7 +81,7 @@ describe(PriceIndexer.name, () => {
         new UnixTime(from),
         new UnixTime(adjustedTo),
         parameters.coingeckoId,
-        configurations.slice(0, 2),
+        configurations,
       )
 
       expect(
@@ -103,59 +95,24 @@ describe(PriceIndexer.name, () => {
         new UnixTime(200),
       ])
 
-      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith(
-        [price('a', 100), price('a', 200), price('b', 100), price('b', 200)],
-        undefined,
-      )
+      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith([
+        price('a', 100),
+        price('a', 200),
+        price('b', 100),
+        price('b', 200),
+      ])
 
       expect(safeHeight).toEqual(adjustedTo)
-    })
-
-    it('returns to if no configurations to sync', async () => {
-      const from = 100
-      const to = 300
-
-      const indexer = new PriceIndexer({
-        priceRepository: mockObject<PriceRepository>({}),
-        parents: [],
-        priceService: mockObject<PriceService>({}),
-        syncOptimizer: mockObject<SyncOptimizer>({}),
-        coingeckoId: CoingeckoId('id'),
-        indexerService: mockObject<IndexerService>({}),
-        configurations: [],
-        logger: Logger.SILENT,
-        serializeConfiguration: () => '',
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
-      })
-
-      const parameters = {
-        coingeckoId: CoingeckoId('id'),
-      }
-      const configurations: UpdateConfiguration<CoingeckoPriceConfigEntry>[] = [
-        update<CoingeckoPriceConfigEntry>('a', 100, null, true, parameters),
-        update<CoingeckoPriceConfigEntry>('c', 100, null, true, parameters),
-      ]
-
-      const safeHeight = await indexer.multiUpdate(
-        from,
-        to,
-        configurations,
-        mockDbMiddleware,
-      )
-
-      expect(safeHeight).toEqual(to)
     })
   })
 
   describe(PriceIndexer.prototype.removeData.name, () => {
     it('removes data for configurations', async () => {
-      const priceRepository = mockObject<PriceRepository>({
+      const priceRepository = mockObject<Database['price']>({
         deleteByConfigInTimeRange: async () => 1,
       })
 
       const indexer = new PriceIndexer({
-        priceRepository,
         parents: [],
         priceService: mockObject<PriceService>({}),
         syncOptimizer: mockObject<SyncOptimizer>({}),
@@ -164,8 +121,7 @@ describe(PriceIndexer.name, () => {
         configurations: [],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        createDatabaseMiddleware: async () =>
-          mockObject<DatabaseMiddleware>({}),
+        db: mockDatabase({ price: priceRepository }),
       })
 
       const configurations: RemovalConfiguration[] = [
