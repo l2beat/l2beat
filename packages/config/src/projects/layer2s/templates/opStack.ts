@@ -326,7 +326,7 @@ export function opStackCommon(
     contracts: {
       addresses:
         templateVars.useDiscoveryMetaOnly === true
-          ? [...templateVars.discovery.getDiscoveredContracts()]
+          ? templateVars.discovery.getDiscoveredContracts()
           : [
               ...templateVars.discovery.getOpStackContractDetails(
                 upgradeability,
