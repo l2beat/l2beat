@@ -732,7 +732,7 @@ export const zklinknova: Layer3 = {
         scrollDiscovery.getContract('ScrollProxyAdmin'),
         'Owner of the L1ERC20Bridge on Scroll.',
       ),
-      ...blastDiscovery.getMultisigPermission(
+      ...scrollDiscovery.getMultisigPermission(
         'AdminMultisig',
         'Admin of the zkLink contract on Scroll and the ProxyAdmin, meaning it can upgrade the bridge implementation and potentially gain access to all funds.',
       ),
