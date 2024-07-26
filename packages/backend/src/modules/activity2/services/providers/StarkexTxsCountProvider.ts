@@ -7,7 +7,7 @@ import { ActivityTransactionConfig } from '../../../activity/ActivityTransaction
 import { BaseTxsCountProvider } from '../BaseTxsCountProvider'
 
 export class StarkexTxsCountProvider extends BaseTxsCountProvider {
-  private readonly providerProjectId: ProjectId
+  private readonly projectIdCopy: ProjectId
   constructor(
     logger: Logger,
     projectId: ProjectId,
@@ -15,7 +15,7 @@ export class StarkexTxsCountProvider extends BaseTxsCountProvider {
     private readonly projectConfig: ActivityTransactionConfig,
   ) {
     super({ logger, projectId })
-    this.providerProjectId = projectId
+    this.projectIdCopy = projectId
   }
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
@@ -42,7 +42,7 @@ export class StarkexTxsCountProvider extends BaseTxsCountProvider {
     const counts = await Promise.all(queries)
 
     return counts.map((c) => ({
-      projectId: this.providerProjectId,
+      projectId: this.projectIdCopy,
       timestamp: c.timestamp,
       count: c.count,
       start: c.timestamp.toStartOf('day').toNumber(),
