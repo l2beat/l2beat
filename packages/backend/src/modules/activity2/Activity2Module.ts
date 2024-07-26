@@ -107,8 +107,8 @@ function createActivityIndexers(
           projectId: project.id,
           // TODO: add batchSize to config
           batchSize: 100,
-          minHeight:
-            project.config.type === 'rpc' ? project.config.startBlock ?? 1 : 1,
+          minHeight: 199600,
+          //project.config.type === 'rpc' ? project.config.startBlock ?? 1 : 1,
           parents: [blockTargetIndexer],
           txsCountProvider,
           indexerService,

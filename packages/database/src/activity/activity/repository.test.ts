@@ -50,8 +50,8 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
-  describe(ActivityRepository.prototype.deleteAfter.name, () => {
-    it('should delete all rows after a given timestamp and projectId', async () => {
+  describe(ActivityRepository.prototype.deleteByProjectIdFrom.name, () => {
+    it('should delete all rows starting form a given timestamp and projectId', async () => {
       await repository.addOrUpdateMany([
         record('a', START),
         record('a', START.add(1, 'days')),
@@ -59,7 +59,10 @@ describeDatabase(ActivityRepository.name, (db) => {
         record('a', START.add(3, 'days')),
       ])
 
-      await repository.deleteAfter(START.add(1, 'days'), ProjectId('a'))
+      await repository.deleteByProjectIdFrom(
+        ProjectId('a'),
+        START.add(2, 'days'),
+      )
 
       const results = await repository.getAll()
 
@@ -89,6 +92,26 @@ describeDatabase(ActivityRepository.name, (db) => {
       ])
     })
   })
+
+  describe(
+    ActivityRepository.prototype.getByProjectIncludingDataPoint.name,
+    () => {
+      it('should return all rows including data point', async () => {
+        await repository.addOrUpdateMany([
+          record('a', START, 1, 0, 10),
+          record('a', START.add(1, 'days'), 1, 11, 20),
+          record('a', START.add(2, 'days'), 1, 21, 30),
+        ])
+
+        const results = await repository.getByProjectIncludingDataPoint(
+          ProjectId('a'),
+          15,
+        )
+
+        expect(results).toEqual([record('a', START.add(1, 'days'), 1, 11, 20)])
+      })
+    },
+  )
 
   afterEach(async function () {
     await repository.deleteAll()
