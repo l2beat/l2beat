@@ -411,24 +411,28 @@ model UpdateNotifier {
 }
 
 model Value {
+  id                          Int      @default(autoincrement())
   timestamp                   DateTime @map("timestamp") @db.Timestamp(6)
   projectId                   String   @map("project_id") @db.VarChar(255)
   dataSource                  String   @map("data_source") @db.VarChar(255)
-  external                    BigInt   @map("external")
-  externalAssociated          BigInt   @map("external_associated")
-  externalForTotal            BigInt   @map("external_for_total")
-  externalAssociatedForTotal  BigInt   @map("external_associated_for_total")
-  canonical                   BigInt   @map("canonical")
-  canonicalAssociated         BigInt   @map("canonical_associated")
-  canonicalForTotal           BigInt   @map("canonical_for_total")
-  canonicalAssociatedForTotal BigInt   @map("canonical_associated_for_total")
-  native                      BigInt   @map("native")
-  nativeAssociated            BigInt   @map("native_associated")
-  nativeForTotal              BigInt   @map("native_for_total")
-  nativeAssociatedForTotal    BigInt   @map("native_associated_for_total")
+  type                        ValueType @default(Total)
+  forTotal                    Boolean  @map("for_total") @default(false)
+  external                    BigInt   @map("external") @default(0)
+  canonical                   BigInt   @map("canonical") @default(0)
+  native                      BigInt   @map("native") @default(0)
 
-  @@id([timestamp, projectId, dataSource])
+  @@unique([timestamp, projectId, dataSource, type])
   @@map("values")
+  @@schema("public")
+}
+
+enum ValueType {
+  Total
+  Associated
+  NonAssociatedEther
+  NonAssociatedStablecoin
+  NonAssociatedOther
+
   @@schema("public")
 }
 
