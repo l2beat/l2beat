@@ -35,7 +35,7 @@ export function serializeKnownCookie<T extends KnownCookieName>({
   value,
 }: {
   name: KnownCookieName
-  value: z.infer<(typeof knownCookies)[T]['schema']>
+  value: KnownCookieValue<T>
 }): string {
   const meta = knownCookies[name]
   return JSON.stringify(meta.schema.parse(value))
