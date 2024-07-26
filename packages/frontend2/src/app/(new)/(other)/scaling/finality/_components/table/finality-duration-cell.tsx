@@ -38,9 +38,14 @@ export function FinalityDurationCell(props: Props & BaseProps) {
   return (
     <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <GrayedOut grayOut={!props.syncStatus.isSynced}>
+        {props.syncStatus.isSynced ? (
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-        </GrayedOut>
+        ) : (
+          <GrayedOut>
+            <DurationCell durationInSeconds={props.timings.averageInSeconds} />
+          </GrayedOut>
+        )}
+
         {props.warning && (
           <RoundedWarningIcon
             className="size-5"
