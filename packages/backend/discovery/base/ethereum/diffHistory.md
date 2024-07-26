@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb20be9340830e0b18dd8a54c754f5707e636bb19
+
+# Diff at Fri, 26 Jul 2024 08:45:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20331930
+- current block number: 20389614
+
+## Description
+
+(Tentative) gas limit raise (+ ~10%).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.gasLimit:
+-        105000000
++        112500000
+    }
+```
+
 Generated with discovered.json: 0xfab30ad5b7946a5d5787743d2e3ae493a491cfa6
 
 # Diff at Thu, 18 Jul 2024 10:30:00 GMT:
