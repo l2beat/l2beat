@@ -1,10 +1,10 @@
 'use client'
 
 import {
-  Layer2Provider,
-  ScalingProjectCategory,
-  ScalingProjectPurpose,
-  Stage,
+  type Layer2Provider,
+  type ScalingProjectCategory,
+  type ScalingProjectPurpose,
+  type Stage,
 } from '@l2beat/config'
 import {
   createContext,

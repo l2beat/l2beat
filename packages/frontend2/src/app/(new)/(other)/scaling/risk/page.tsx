@@ -12,7 +12,10 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const tvl = await getLatestTvlUsd({ type: 'layer2' })
+  const tvl = await getLatestTvlUsd({
+    type: 'layer2',
+    excludeAssociatedTokens: false,
+  })
   const projects = await getScalingRiskEntries(tvl)
 
   return (

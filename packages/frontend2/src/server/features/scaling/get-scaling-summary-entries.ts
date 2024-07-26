@@ -6,6 +6,7 @@ import {
 } from '@l2beat/config'
 import {
   assert,
+  type ProjectId,
   type ImplementationChangeReportApiResponse,
   type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
@@ -14,7 +15,6 @@ import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { type TvlResponse } from './get-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
@@ -24,16 +24,9 @@ import { getTvlWarnings } from './utils/get-tvl-warnings'
 import { getTvlWithChange } from './utils/get-tvl-with-change'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
-export async function getScalingSummaryEntries(tvl: TvlResponse) {
-  // NOTE: This is a temporary solution to keep the current behavior & will be removed in L2B-6115.
-  const preprocessedTvl = Object.fromEntries(
-    Object.entries(tvl.projects).map(([projectId, data]) => [
-      projectId,
-      data.charts.hourly.data.at(-1)?.[1] ?? 0,
-    ]),
-  )
-  const orderedLayer2s = orderByTvl(LAYER_2S, preprocessedTvl)
-  const orderedLayer3s = orderByTvl(LAYER_3S, preprocessedTvl)
+export async function getScalingSummaryEntries(tvl: Record<ProjectId, number>) {
+  const orderedLayer2s = orderByTvl(LAYER_2S, tvl)
+  const orderedLayer3s = orderByTvl(LAYER_3S, tvl)
 
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
@@ -56,7 +49,7 @@ export async function getScalingSummaryEntries(tvl: TvlResponse) {
 
 interface Params<T> {
   projects: T[]
-  tvl: TvlResponse
+  tvl: Record<ProjectId, number>
   implementationChangeReport: ImplementationChangeReportApiResponse
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }
