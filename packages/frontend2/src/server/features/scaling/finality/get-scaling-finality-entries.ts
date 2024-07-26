@@ -82,6 +82,7 @@ function getScalingFinalityEntry(
   hasImplementationChanged?: boolean,
 ): ScalingFinalityEntry {
   return {
+    entryType: 'finality',
     type: project.type,
     name: project.display.name,
     href: `/scaling/projects/${project.display.slug}`,

@@ -5,7 +5,6 @@ import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
 import { type ScalingDataAvailabilityEntry } from './types'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export async function getScalingDaEntries(
   tvl: Record<ProjectId, number>,
@@ -39,6 +38,7 @@ function getScalingDataAvailabilityEntry(
   if (!project.dataAvailability) return
 
   return {
+    entryType: 'data-availability',
     ...getCommonScalingEntry({ project, isVerified, hasImplementationChanged }),
     dataAvailability: {
       layer: project.dataAvailability.layer,
