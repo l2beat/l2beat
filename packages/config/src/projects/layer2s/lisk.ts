@@ -35,6 +35,11 @@ export const lisk: Layer2 = opStackL2({
       ],
     },
     activityDataSource: 'Blockchain RPC',
+    tvlWarning: {
+      content:
+        'The TVL currently also accounts for illiquid LSK tokens on the L2.',
+      sentiment: 'warning',
+    },
   },
   finality: {
     type: 'OPStack-blob',
