@@ -10,7 +10,7 @@ export const lisk: Layer2 = opStackL2({
   discovery,
   genesisTimestamp: new UnixTime(1714728793),
   associatedTokens: ['LSK'],
-  badges: [Badge.RaaS.Gelato],
+  badges: [Badge.RaaS.Gelato, Badge.Other.MigratedFromL1],
   display: {
     name: 'Lisk',
     slug: 'lisk',
