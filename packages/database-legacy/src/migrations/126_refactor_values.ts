@@ -33,7 +33,7 @@ export async function up(knex: Knex) {
     table.bigint('canonical').notNullable()
     table.bigint('external').notNullable()
 
-    table.unique(['timestamp', 'project_id', 'data_source', 'type'])
+    table.unique(['timestamp', 'project_id', 'data_source', 'type', 'forTotal'])
   })
 }
 

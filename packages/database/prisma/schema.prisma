@@ -421,7 +421,7 @@ model Value {
   canonical  BigInt
   native     BigInt
 
-  @@unique([timestamp, projectId, dataSource, type])
+  @@unique([timestamp, projectId, dataSource, type, forTotal])
   @@map("values")
   @@schema("public")
 }
