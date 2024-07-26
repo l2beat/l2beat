@@ -85,11 +85,7 @@ export function getExternallyBridgedColumns() {
       align: 'right',
       headClassName: 'md:pl-4',
       getValue: (token) => (
-        <TokenAmountCell
-          amount={token.amount}
-          assetId={token.assetId}
-          forExternal
-        />
+        <TokenAmountCell amount={token.amount} assetId={token.assetId} />
       ),
     },
     {
@@ -146,7 +142,6 @@ export function getCanonicallyBridgedColumns() {
         <TokenAmountCell
           amount={token.amount}
           assetId={token.assetId}
-          forCanonical
           escrows={token.escrows}
         />
       ),
