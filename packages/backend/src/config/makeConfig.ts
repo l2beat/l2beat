@@ -244,8 +244,8 @@ export function makeConfig(
         600,
       ),
       nearRpcUrl: env.string(
-        ['NEAR_RPC_URL_FOR_DA_BEAT_TEST', 'NEAR_RPC_URL_TEST'],
-        // 'https://rpc.mainnet.near.org/',
+        ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
+        'https://rpc.mainnet.near.org/',
       ),
     },
 
