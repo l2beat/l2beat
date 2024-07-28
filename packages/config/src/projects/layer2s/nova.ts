@@ -127,10 +127,6 @@ export const nova: Layer2 = orbitStackL2({
       'BatchPosterManagerMultisig',
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
     ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('L1Timelock'),
-      'It gives the DAO participants on the L2 the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
-    ),
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {
@@ -145,7 +141,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('SequencerInbox', {
       description:
-        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+        'Main entry point for the Sequencer submitting transaction batches to a Rollup. Sequencers can be changed here through the UpgradeExecutor or the BatchPosterManager.',
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getContractDetails('Inbox', {
@@ -165,7 +161,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('L1Timelock', {
       description:
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+        'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getContractDetails('L1GatewayRouter', {
@@ -174,7 +170,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('ChallengeManager', {
       description:
-        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy.',
+        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.',
       ...upgradeExecutorUpgradeability,
     }),
   ],
