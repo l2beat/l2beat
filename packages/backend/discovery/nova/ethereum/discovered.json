@@ -1,7 +1,7 @@
 {
   "name": "nova",
   "chain": "ethereum",
-  "blockNumber": 20377214,
+  "blockNumber": 20406562,
   "configHash": "0xe383c8ac50c19d8e1aa6ab2fe3d308835f13015b8436c6c3fa5f693885cadb07",
   "version": 9,
   "contracts": [
@@ -26,7 +26,7 @@
       "values": {
         "$admin": "0x71D78dC7cCC0e037e12de1E50f5470903ce37148",
         "$implementation": "0x31DA64D19Cd31A19CD09F4070366Fe2144792cf7",
-        "batchCount": 93711,
+        "batchCount": 95610,
         "batchPosterManager": "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B",
         "batchPosters": [
           "0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D",
@@ -46,7 +46,7 @@
         "reader4844": "0xb5f6951AB2504442c3F6dD37fF1E1D1d253C5097",
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerVersion": "0x88",
-        "totalDelayedMessagesRead": 338555,
+        "totalDelayedMessagesRead": 340479,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -385,11 +385,11 @@
           "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
         ],
         "allowedOutboxList": ["0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"],
-        "delayedMessageCount": 338557,
+        "delayedMessageCount": 340482,
         "rollup": "0xFb209827c58283535b744575e11953DCC4bEAD88",
         "sequencerInbox": "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b",
-        "sequencerMessageCount": 93711,
-        "sequencerReportedSubMessageCount": 74535046
+        "sequencerMessageCount": 95610,
+        "sequencerReportedSubMessageCount": 74656235
       }
     },
     {
@@ -604,10 +604,10 @@
         "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
         "getChainId": 1,
         "getOwners": [
-          "0xa0683d725420e2F75415806352Cd9c3fE10Fa960",
-          "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C",
-          "0xB3b60932E598fe946169EC209A197184Bad760B7",
-          "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D",
+          "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
+          "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
+          "0x5a09A94eE8198D3c474d723337aa58023810022C",
+          "0x5DD2205C3aac13E592F0a3D85188c948D1781df1",
           "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3",
           "0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed",
           "0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF",
@@ -664,12 +664,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "1000000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 17696,
+        "firstUnresolvedNode": 17793,
         "inbox": "0xc4448b71118c9071Bcb9734A0EAc55D18A153949",
         "isERC20Enabled": false,
         "lastStakeBlock": 17257726,
-        "latestConfirmed": 17695,
-        "latestNodeCreated": 17847,
+        "latestConfirmed": 17792,
+        "latestNodeCreated": 17945,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58",
@@ -730,23 +730,25 @@
       "address": "0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c",
       "roles": ["Validator"]
     },
+    { "address": "0x5a09A94eE8198D3c474d723337aa58023810022C" },
     { "address": "0x5B3E4404d05339D41A7E672BC912CBf511Cca294" },
+    { "address": "0x5DD2205C3aac13E592F0a3D85188c948D1781df1" },
     {
       "address": "0x610Aa279989F440820e14248BD3879B148717974",
       "roles": ["Validator"]
     },
     { "address": "0x64379Dee676ab442B48925Ed603771f386510Ee7" },
+    { "address": "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75" },
     { "address": "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe" },
     { "address": "0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3" },
     { "address": "0x9de97C570c1214f6c0ba08c2321d6a5F20D85a47" },
-    { "address": "0xa0683d725420e2F75415806352Cd9c3fE10Fa960" },
     { "address": "0xa723C008e76E379c55599D2E4d93879BeaFDa79C" },
+    { "address": "0xA821c8c245d1F3A257e3B0DEC99268cA05144422" },
     {
       "address": "0xAB1A39332e934300eBCc57B5f95cA90631a347FF",
       "roles": ["Validator"]
     },
     { "address": "0xb07dc9103328A51128bC6Cc1049d1137035f5E28" },
-    { "address": "0xB3b60932E598fe946169EC209A197184Bad760B7" },
     {
       "address": "0xB51EDdfc9A945e2B909905e4F242C4796Ac0C61d",
       "roles": ["Validator"]
@@ -766,8 +768,6 @@
       "address": "0xDfB23DFE9De7dcC974467195C8B7D5cd21C9d7cB",
       "roles": ["Validator"]
     },
-    { "address": "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D" },
-    { "address": "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C" },
     { "address": "0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd" },
     { "address": "0xfE2bf40f2A9183774BF8E871d634A4E50255158B" }
   ],

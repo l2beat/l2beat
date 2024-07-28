@@ -1,3 +1,35 @@
+Generated with discovered.json: 0xff698798ec9161d369c43696f22fd02518bdbb28
+
+# Diff at Sun, 28 Jul 2024 17:33:10 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 20377214
+- current block number: 20406562
+
+## Description
+
+SecurityCouncil signer rotation completed.
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.getOwners.3:
+-        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.getOwners.2:
+-        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.getOwners.1:
+-        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
+      values.getOwners.0:
+-        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+    }
+```
+
 Generated with discovered.json: 0x2d8674eaceb027327df8573b1d851f63d76771f7
 
 # Diff at Tue, 21 May 2024 06:35:33 GMT:
