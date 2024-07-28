@@ -38,7 +38,7 @@ const l1TimelockDelay = discovery.getContractValue<number>(
   'getMinDelay',
 )
 const l2TimelockDelay = discovery_arbitrum.getContractValue<number>(
-  'L2CoreTimelock',
+  'L2Timelock',
   'getMinDelay',
 ) // 3 days
 const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
@@ -76,11 +76,8 @@ const l2TreasuryQuorumPercent =
       'quorumDenominator',
     )) *
   100
-const l2CoreTimelockDelay = l2Discovery.getContractValue<number>(
-  'L2CoreTimelock',
-  'getMinDelay',
-)
-const l2TreasuryTimelockDelay = l2Discovery.getContractValue<number>(
+
+const treasuryTimelockDelay = l2Discovery.getContractValue<number>(
   'L2TreasuryTimelock',
   'getMinDelay',
 )
@@ -249,6 +246,30 @@ export const arbitrum: Layer2 = orbitStackL2({
     coingeckoPlatform: 'arbitrum-one',
   },
   rpcUrl: 'https://arb1.arbitrum.io/rpc',
+  upgradesAndGovernance: `
+  All critical system smart contracts are upgradeable (can be arbitrarily changed). This permission is governed by the Arbitrum Decentralized Autonomous Organization (DAO) 
+  and their elected Security Council. The Arbitrum DAO controls Arbitrum One and Arbitrum Nova through upgrades and modifications to their smart contracts on Layer 1 Ethereum and the Layer 2s. 
+  While the DAO governs through token-weighted governance in their associated ARB token, the Security Council can directly act through 
+  the deployed Security Council smart contracts on all three chains. Although these multisig smart contracts are technically separate and connect to different target permissions, 
+  their member- and threshold configuration is kept in sync by a manager contract on Arbitrum One and crosschain transactions.
+  
+  Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One 
+  and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs 
+  (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts. 
+  These two general paths have the same destination: The respective UpgradeExecutor smart contract.
+  
+  Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a 
+  CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${l2TimelockDelay} delay and then sends it to the Outbox contract on Ethereum. 
+  Here, the L1 Timelock delays for additional ${l1TimelockDelay}. Both timelocks serve as delays during which the transparent transaction contents can be audited, and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts through the UpgradeExecutor on Ethereum. If the predefined  transaction destination in Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
+  
+  Operator roles like the Sequencers and Validators are managed using the same paths. 
+  Sequencer changes can be delegated to a Batch Poster Manager.
+  
+  Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
+    treasuryTimelockDelay,
+  )} 
+  Treasury Timelock by meeting a TreasuryGovernor-enforced ${l2TreasuryQuorumPercent}% threshold of votable ARB tokens. The Security Council cannot regularly cancel 
+  these transactions or schedule different ones but can overwrite them anyway by having full admin upgrade permissions for all the underlying smart contracts.`,
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
@@ -323,7 +344,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       ),
       ...l2Discovery.getMultisigPermission(
         'L2SecurityCouncilPropose',
-        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2CoreTimelock (e.g. upgrade proposals).',
+        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2 to propose transactions in the L2Timelock (e.g. upgrade proposals).',
       ),
     ],
   },
@@ -333,9 +354,9 @@ export const arbitrum: Layer2 = orbitStackL2({
         description: `Governance contract accepting and managing constitutional Arbitrum Improvement Proposals (AIPs, core proposals) and, among other formal parameters, enforcing the ${l2CoreQuorumPercent}% quorum for proposals.`,
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L2CoreTimelock', {
+      l2Discovery.getContractDetails('L2Timelock', {
         description: `Delays constitutional AIPs from the CoreGovernor by ${formatSeconds(
-          l2CoreTimelockDelay,
+          l2TimelockDelay,
         )}.`,
         ...l2Upgradability,
       }),
@@ -345,7 +366,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
       l2Discovery.getContractDetails('L2TreasuryTimelock', {
         description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
-          l2TreasuryTimelockDelay,
+          treasuryTimelockDelay,
         )}.`,
         ...l2Upgradability,
       }),
