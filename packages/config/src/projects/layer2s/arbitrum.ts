@@ -261,8 +261,12 @@ export const arbitrum: Layer2 = orbitStackL2({
   
   
   Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a 
-  CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${l2TimelockDelay} delay and then sends it to the Outbox contract on Ethereum. 
-  Here, the L1 Timelock delays for additional ${l1TimelockDelay}. Both timelocks serve as delays during which the transparent transaction contents can be audited, and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts through the UpgradeExecutor on Ethereum. If the predefined  transaction destination in Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
+  CoreGovernor-enforced ${l2CoreQuorumPercent}% threshold of the votable tokens. The L2 Timelock queues the transaction for a ${formatSeconds(
+    l2TimelockDelay,
+  )} delay and then sends it to the Outbox contract on Ethereum. 
+  Here, the L1 Timelock delays for additional ${formatSeconds(l1TimelockDelay)}. Both timelocks serve as delays during which the transparent transaction contents can be audited, 
+  and even cancelled by the Emergency Security Council. Finally, the transaction can be executed, calling Admin- or Owner functions of the respective destination smart contracts 
+  through the UpgradeExecutor on Ethereum. If the predefined  transaction destination in Arbitrum One or -Nova, this last call is executed on L2 through the canonical bridge and the aliased address of the L1 Timelock.
   
   
   Operator roles like the Sequencers and Validators are managed using the same paths. 
