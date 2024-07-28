@@ -270,7 +270,7 @@ export const scroll: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data',
+    mode: 'Transaction data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
