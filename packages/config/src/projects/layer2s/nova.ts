@@ -123,6 +123,10 @@ export const nova: Layer2 = orbitStackL2({
         },
       ],
     ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('L1Timelock'),
+      'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
+    ),
     ...discovery.getMultisigPermission(
       'BatchPosterManagerMultisig',
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',

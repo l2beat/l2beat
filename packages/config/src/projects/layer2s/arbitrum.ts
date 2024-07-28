@@ -268,7 +268,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   Operator roles like the Sequencers and Validators are managed using the same paths. 
   Sequencer changes can be delegated to a Batch Poster Manager.
   
-  
+
   Transactions targeting the Arbitrum DAO Treasury can be scheduled in the ${formatSeconds(
     treasuryTimelockDelay,
   )} 
@@ -284,6 +284,10 @@ export const arbitrum: Layer2 = orbitStackL2({
           href: 'https://docs.arbitrum.foundation/security-council-members',
         },
       ],
+    ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('L1Timelock'),
+      'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
     ),
     ...discovery.getMultisigPermission(
       'BatchPosterManagerMultisig',
