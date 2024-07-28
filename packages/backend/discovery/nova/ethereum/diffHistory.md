@@ -1,14 +1,15 @@
-Generated with discovered.json: 0xff698798ec9161d369c43696f22fd02518bdbb28
+Generated with discovered.json: 0xf44d03c7115a41e7b70885b746bb3fa529a6b6cd
 
-# Diff at Sun, 28 Jul 2024 17:33:10 GMT:
+# Diff at Sun, 28 Jul 2024 17:43:23 GMT:
 
 - author: sekuba (<sekuba@users.noreply.github.com>)
 - comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 20377214
-- current block number: 20406562
+- current block number: 20406615
 
 ## Description
 
-SecurityCouncil signer rotation completed.
+1) SecurityCouncil signer rotation completed.
+2) Changed naming to be consistent with the diagram.
 
 ## Watched changes
 
@@ -27,6 +28,21 @@ SecurityCouncil signer rotation completed.
       values.getOwners.0:
 -        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
 +        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20377214 (main branch discovery), not current.
+
+```diff
+    contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      name:
+-        "L1ArbitrumTimelock"
++        "L1Timelock"
     }
 ```
 

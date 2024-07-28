@@ -22,14 +22,14 @@ const challengeWindow = discovery.getContractValue<number>(
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
-  'L1ArbitrumTimelock',
+  'L1Timelock',
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
+  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by Security Council`,
@@ -128,7 +128,7 @@ export const nova: Layer2 = orbitStackL2({
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
     ),
     discovery.contractAsPermissioned(
-      discovery.getContract('L1ArbitrumTimelock'),
+      discovery.getContract('L1Timelock'),
       'It gives the DAO participants on the L2 the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
     ),
   ],
@@ -160,10 +160,10 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('UpgradeExecutor', {
       description:
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
       ...upgradeExecutorUpgradeability,
     }),
-    discovery.getContractDetails('L1ArbitrumTimelock', {
+    discovery.getContractDetails('L1Timelock', {
       description:
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       ...upgradeExecutorUpgradeability,

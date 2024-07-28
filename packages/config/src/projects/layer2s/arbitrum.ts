@@ -34,7 +34,7 @@ const challengeWindow = discovery.getContractValue<number>(
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
-  'L1ArbitrumTimelock',
+  'L1Timelock',
   'getMinDelay',
 )
 const l2TimelockDelay = discovery_arbitrum.getContractValue<number>(
@@ -44,7 +44,7 @@ const l2TimelockDelay = discovery_arbitrum.getContractValue<number>(
 const totalDelay = l2TimelockDelay + challengeWindowSeconds + l1TimelockDelay // compare https://github.com/ArbitrumFoundation/governance/blob/main/docs/overview.md#proposal-delays
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
+  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by the Security Council`,
@@ -56,7 +56,7 @@ const l2Upgradability = {
   upgradableBy: [
     'SecurityCouncilEmergency',
     'SecurityCouncilPropose',
-    'L1ArbitrumTimelock',
+    'L1Timelock',
   ],
   upgradeDelay: `${formatSeconds(
     totalDelay,
@@ -78,7 +78,7 @@ const l2TreasuryQuorumPercent =
   100
 
 const treasuryTimelockDelay = l2Discovery.getContractValue<number>(
-  'L2TreasuryTimelock',
+  'TreasuryTimelock',
   'getMinDelay',
 )
 
@@ -286,7 +286,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
     ),
     discovery.contractAsPermissioned(
-      discovery.getContract('L1ArbitrumTimelock'),
+      discovery.getContract('L1Timelock'),
       'It gives the DAO participants on the L2 the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
     ),
   ],
@@ -318,10 +318,10 @@ export const arbitrum: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('UpgradeExecutor', {
       description:
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
       ...upgradeExecutorUpgradeability,
     }),
-    discovery.getContractDetails('L1ArbitrumTimelock', {
+    discovery.getContractDetails('L1Timelock', {
       description:
         'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
       ...upgradeExecutorUpgradeability,
@@ -364,7 +364,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         description: `Governance contract used for creating non-constitutional AIPs, or "treasury proposals", e.g., transferring founds out of the DAO Treasury. Also enforces the ${l2TreasuryQuorumPercent}% quorum for proposals.`,
         ...l2Upgradability,
       }),
-      l2Discovery.getContractDetails('L2TreasuryTimelock', {
+      l2Discovery.getContractDetails('TreasuryTimelock', {
         description: `Delays treasury proposals from the TreasuryGovernor by ${formatSeconds(
           treasuryTimelockDelay,
         )}.`,
@@ -372,7 +372,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       }),
       l2Discovery.getContractDetails('L2UpgradeExecutor', {
         description:
-          "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock (via its alias on L2).",
+          "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
         ...l2Upgradability,
       }),
       l2Discovery.getContractDetails('SecurityCouncilManager', {
