@@ -25,7 +25,7 @@ jobs:
         run: |
           if [ -z $HEROKU_API_KEY ] && [ -z $HEROKU_ORGANIZATION ]; then
             echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
-            echo "❌ - Failed to met the requirements, skipping the smoke test"
+            echo "❌ - Failed to meet the requirements, skipping the smoke test"
           else
             echo "heroku_key_set=true" >> "$GITHUB_OUTPUT"
             echo "✅ - Requirements met, proceeding with the smoke test"
