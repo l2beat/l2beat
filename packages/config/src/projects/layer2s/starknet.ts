@@ -775,7 +775,8 @@ export const starknet: Layer2 = {
             '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
           ),
           chainId: ChainId.ETHEREUM,
-          subVerifiers: [ // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
+          subVerifiers: [
+            // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
             {
               name: 'Final universal bootloader',
               proofSystem: 'STARK',
