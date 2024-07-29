@@ -27,7 +27,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.etherscan.io/api',
     },
-  } ,
+  },
   {
     name: 'arbitrum',
     chainId: 42161,
@@ -36,7 +36,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.arbiscan.io/api',
     },
-  } ,
+  },
   {
     name: 'nova',
     chainId: 42170,
@@ -45,7 +45,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api-nova.arbiscan.io/api',
     },
-  } ,
+  },
   {
     name: 'optimism',
     chainId: 10,
@@ -54,7 +54,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api-optimistic.etherscan.io/api',
     },
-  } ,
+  },
   {
     name: 'polygonpos',
     chainId: 137,
@@ -63,7 +63,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.polygonscan.com/api',
     },
-  } ,
+  },
   {
     name: 'bsc',
     chainId: 56,
@@ -72,7 +72,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.bscscan.com/api',
     },
-  } ,
+  },
   {
     name: 'avalanche',
     chainId: 43114,
@@ -81,7 +81,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.snowtrace.io/api',
     },
-  } ,
+  },
   {
     name: 'celo',
     chainId: 42220,
@@ -93,7 +93,7 @@ export const constChains = [
         getContractCreation: true,
       },
     },
-  } ,
+  },
   {
     name: 'linea',
     chainId: 59144,
@@ -102,7 +102,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.lineascan.build/api',
     },
-  } ,
+  },
   {
     name: 'base',
     chainId: 8453,
@@ -111,7 +111,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.basescan.org/api',
     },
-  } ,
+  },
   {
     name: 'polygonzkevm',
     chainId: 1101,
@@ -120,7 +120,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api-zkevm.polygonscan.com/api',
     },
-  } ,
+  },
   {
     name: 'gnosis',
     chainId: 100,
@@ -132,7 +132,7 @@ export const constChains = [
         getContractCreation: true,
       },
     },
-  } ,
+  },
   {
     name: 'zksync2',
     chainId: 324,
@@ -144,7 +144,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api-era.zksync.network/api',
     },
-  } ,
+  },
   {
     name: 'sepolia',
     chainId: 11155111,
@@ -153,7 +153,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api-sepolia.etherscan.io/api',
     },
-  } ,
+  },
   {
     name: 'scroll',
     chainId: 534352,
@@ -162,7 +162,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.scrollscan.com/api',
     },
-  } ,
+  },
   {
     name: 'mantle',
     chainId: 5000,
@@ -171,7 +171,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/5000/etherscan/api',
     },
-  } ,
+  },
   {
     name: 'metis',
     chainId: 1088,
@@ -180,7 +180,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/1088/etherscan/api',
     },
-  } ,
+  },
   {
     name: 'bobanetwork',
     chainId: 288,
@@ -189,7 +189,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/288/etherscan/api',
     },
-  } ,
+  },
   {
     name: 'mode',
     chainId: 34443,
@@ -198,7 +198,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.routescan.io/v2/network/mainnet/evm/34443/etherscan/api',
     },
-  } ,
+  },
   {
     name: 'mantapacific',
     chainId: 169,
@@ -207,7 +207,7 @@ export const constChains = [
       type: 'blockscout',
       url: 'https://pacific-explorer.manta.network/api',
     },
-  } ,
+  },
   {
     name: 'blast',
     chainId: 81457,
@@ -216,7 +216,7 @@ export const constChains = [
       type: 'etherscan',
       url: 'https://api.blastscan.io/api',
     },
-  } ,
+  },
 ] as const satisfies ChainConfig[]
 
 export const chains = constChains as ChainConfig[]
