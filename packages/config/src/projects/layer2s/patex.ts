@@ -21,16 +21,18 @@ export const patex: Layer2 = underReviewL2({
         'https://x.com/patex_ecosystem',
         'https://t.me/cpatexeng',
         'https://discord.gg/ntjQYv9VAA',
-        'https://www.youtube.com/channel/UCLmHyM6kZ5bViyh7my6ZkpA',
+        'https://youtube.com/channel/UCLmHyM6kZ5bViyh7my6ZkpA',
       ],
     },
     activityDataSource: 'Blockchain RPC',
   },
   rpcUrl: 'https://rpc.patex.io/', //chainid 789
-  escrows: [{
-    chain: 'ethereum',
-    address: EthereumAddress('0x0d6e11E2A3B2B3a245bf839c07D775983aCB787d'), // unverified
-    sinceTimestamp: new UnixTime(1686211235),
-    tokens: ['ETH'],
-  },],
+  escrows: [
+    {
+      chain: 'ethereum',
+      address: EthereumAddress('0x0d6e11E2A3B2B3a245bf839c07D775983aCB787d'), // unverified
+      sinceTimestamp: new UnixTime(1686211235),
+      tokens: ['ETH'],
+    },
+  ],
 })
