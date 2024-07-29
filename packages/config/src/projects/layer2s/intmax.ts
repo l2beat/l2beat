@@ -11,7 +11,7 @@ export const intmax: Layer2 = upcomingL2({
     purposes: ['Payments'],
     category: 'ZK Rollup',
     links: {
-      websites: ['https://www.intmax.io/'],
+      websites: ['https://intmax.io/'],
       apps: [],
       documentation: [
         'https://eprint.iacr.org/2023/1082.pdf',
