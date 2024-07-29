@@ -18,7 +18,7 @@ export class ValueRepository extends BaseRepository {
       .selectFrom('public.values')
       .select(selectValue)
       .where(
-        'projectId',
+        'project_id',
         'in',
         projectIds.map((id) => id.toString()),
       )
@@ -40,7 +40,7 @@ export class ValueRepository extends BaseRepository {
       .selectFrom('public.values')
       .select(selectValue)
       .where(
-        'projectId',
+        'project_id',
         'in',
         projectIds.map((id) => id.toString()),
       )
@@ -61,17 +61,28 @@ export class ValueRepository extends BaseRepository {
         .values(batch)
         .onConflict((cb) =>
           cb
-            .columns([
-              'projectId',
-              'timestamp',
-              'dataSource',
-              'type',
-              'forTotal',
-            ])
+            .columns(['project_id', 'timestamp', 'data_source'])
             .doUpdateSet((eb) => ({
               external: eb.ref('excluded.external'),
+              external_associated: eb.ref('excluded.external_associated'),
+              external_for_total: eb.ref('excluded.external_for_total'),
+              external_associated_for_total: eb.ref(
+                'excluded.external_associated_for_total',
+              ),
               canonical: eb.ref('excluded.canonical'),
+              canonical_associated: eb.ref('excluded.canonical_associated'),
+              canonical_for_total: eb.ref('excluded.canonical_for_total'),
+              canonical_associated_for_total: eb.ref(
+                'excluded.canonical_associated_for_total',
+              ),
               native: eb.ref('excluded.native'),
+              native_associated: eb.ref('excluded.native_associated'),
+              native_for_total: eb.ref('excluded.native_for_total'),
+              native_associated_for_total: eb.ref(
+                'excluded.native_associated_for_total',
+              ),
+              ether: eb.ref('excluded.ether'),
+              stablecoin: eb.ref('excluded.stablecoin'),
             })),
         )
         .execute()
@@ -110,11 +121,28 @@ export class ValueRepository extends BaseRepository {
       .values(rows)
       .onConflict((cb) =>
         cb
-          .columns(['projectId', 'timestamp', 'dataSource', 'type', 'forTotal'])
+          .columns(['project_id', 'timestamp', 'data_source'])
           .doUpdateSet((eb) => ({
             external: eb.ref('excluded.external'),
+            external_associated: eb.ref('excluded.external_associated'),
+            external_for_total: eb.ref('excluded.external_for_total'),
+            external_associated_for_total: eb.ref(
+              'excluded.external_associated_for_total',
+            ),
             canonical: eb.ref('excluded.canonical'),
+            canonical_associated: eb.ref('excluded.canonical_associated'),
+            canonical_for_total: eb.ref('excluded.canonical_for_total'),
+            canonical_associated_for_total: eb.ref(
+              'excluded.canonical_associated_for_total',
+            ),
             native: eb.ref('excluded.native'),
+            native_associated: eb.ref('excluded.native_associated'),
+            native_for_total: eb.ref('excluded.native_for_total'),
+            native_associated_for_total: eb.ref(
+              'excluded.native_associated_for_total',
+            ),
+            ether: eb.ref('excluded.ether'),
+            stablecoin: eb.ref('excluded.stablecoin'),
           })),
       )
       .execute()
@@ -142,7 +170,7 @@ export class ValueRepository extends BaseRepository {
     }
 
     const rows = await this.db
-      .with('latestValues', (cb) =>
+      .with('latest_values', (cb) =>
         cb
           .selectFrom('public.values')
           .select([
@@ -151,20 +179,20 @@ export class ValueRepository extends BaseRepository {
               .agg('ROW_NUMBER')
               .over((over) =>
                 over
-                  .partitionBy(['projectId', 'dataSource'])
+                  .partitionBy(['project_id', 'data_source'])
                   .orderBy('timestamp', 'desc'),
               )
-              .as('combinationNumber'),
+              .as('combination_number'),
           ])
           .where(
-            'projectId',
+            'project_id',
             'in',
             projectIds.map((id) => id.toString()),
           ),
       )
-      .selectFrom('latestValues')
+      .selectFrom('latest_values')
       .select(selectValue)
-      .where('combinationNumber', '=', 1)
+      .where('combination_number', '=', 1)
       .execute()
 
     return rows.map(toRecord)
