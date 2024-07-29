@@ -40,7 +40,7 @@ describe(discoveryDiffToMarkdown.name, () => {
         description: 'The foo value',
         severity: 'LOW',
       },
-    }
+    },
   }
 
   const DISCOVERY_OUTPUT: DiscoveryOutput = {

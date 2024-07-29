@@ -1,8 +1,4 @@
-import {
-  ContractParameters,
-  DiscoveryOutput,
-  FieldMeta,
-} from '@l2beat/discovery-types'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
@@ -38,23 +34,6 @@ export function collectUsedTemplatesWithHashes(
     .map((t) => [t.template, t.templateHash])
   entries.sort((a, b) => a[0].localeCompare(b[0]))
   return Object.fromEntries(entries)
-}
-
-function flattenFieldsMeta(analyses: Analysis[]): Record<string, FieldMeta> {
-  const result: Record<string, FieldMeta> = {}
-
-  for (const analysis of analyses) {
-    if (analysis.type !== 'Contract') {
-      continue
-    }
-
-    for (const [key, value] of Object.entries(analysis.fieldsMeta)) {
-      const flatKey = `${analysis.address.toString()}.${key}`
-      result[flatKey] = value
-    }
-  }
-
-  return result
 }
 
 export function processAnalysis(
@@ -95,7 +74,8 @@ export function processAnalysis(
             Object.keys(x.errors).length === 0
               ? undefined
               : sortByKeys(x.errors),
-          fieldMeta: Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
+          fieldMeta:
+            Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies ContractParameters)

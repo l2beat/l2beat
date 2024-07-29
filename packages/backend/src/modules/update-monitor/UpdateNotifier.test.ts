@@ -159,7 +159,7 @@ describe(UpdateNotifier.name, () => {
               '0x0000000000000000000000000000000000000001',
             ),
             fieldMeta: {
-              'A': {
+              A: {
                 severity: 'MEDIUM',
                 description: 'This should never be equal to two',
               },
