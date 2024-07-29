@@ -20,13 +20,15 @@ jobs:
       HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
     steps:
-      - name: Check if HEROKU_TOKEN is set
+      - name: Check Heroku API key & organization
         id: check_key
         run: |
           if [ -z $HEROKU_API_KEY ] && [ -z $HEROKU_ORGANIZATION ]; then
             echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
+            echo "❌ - Failed to met the requirements, skipping the smoke test"
           else
             echo "heroku_key_set=true" >> "$GITHUB_OUTPUT"
+            echo "✅ - Requirements met, proceeding with the smoke test"
           fi
 
   config-smoke-test:
