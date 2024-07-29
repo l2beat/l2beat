@@ -89,6 +89,7 @@ import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
+import { patex } from './patex'
 import { payy } from './payy'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
@@ -235,6 +236,7 @@ export const layer2s: Layer2[] = [
   palm,
   paradex,
   parallel,
+  patex,
   payy,
   playchain,
   plumenetwork,
