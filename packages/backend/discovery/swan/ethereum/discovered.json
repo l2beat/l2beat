@@ -1,8 +1,8 @@
 {
   "name": "swan",
   "chain": "ethereum",
-  "blockNumber": 20412296,
-  "configHash": "0xf0b1bfdcc38e271af6c818c2026f1a9d2f57753bf2b538334a55590f13b6d304",
+  "blockNumber": 20413034,
+  "configHash": "0xa442e5c0750802e9d260f0d1d4044419dcba21e638219df1f8e1e8ad6fe8f86f",
   "version": 9,
   "contracts": [
     {
@@ -20,7 +20,7 @@
         "$immutable": false,
         "$implementation": "0x76A8Eb93D4a200e8594B1ab1021ab5595CDfB57D",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620025",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620027",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -163,7 +163,7 @@
       }
     },
     {
-      "name": "GnosisSafe",
+      "name": "Swan Network Multisig",
       "address": "0x6197f64902b9275e6815F9A5b641Ed2291A5d39c",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -191,7 +191,8 @@
         "GnosisSafe_modules": [],
         "nonce": 15,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "SuperchainConfig",
@@ -234,7 +235,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20411881
+          "prevBlockNum": 20412472
         },
         "paused": false,
         "superchainConfig": "0xadE916De67511E5C24af4174Be67143d0dA94959",

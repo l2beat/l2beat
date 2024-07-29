@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xce4e54a22aa5a3d642dd810754dd972f359d7eba
+Generated with discovered.json: 0x384ba11ab649558fc75508b449408c264f12d147
 
-# Diff at Mon, 29 Jul 2024 12:43:53 GMT:
+# Diff at Mon, 29 Jul 2024 15:11:50 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 20412296
+- current block number: 20413034
 
 ## Description
 
@@ -43,7 +43,7 @@ Initial discovery: OP stack rollup with non-onboarded SuperchainConfig.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c)
+    contract Swan Network Multisig (0x6197f64902b9275e6815F9A5b641Ed2291A5d39c)
     +++ description: None
 ```
 
