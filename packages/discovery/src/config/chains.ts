@@ -15,10 +15,7 @@ export interface ChainConfig {
   multicall: MulticallConfig
 }
 
-export type ChainName = (typeof constChains)[number]['name']
-export type ChainId = (typeof constChains)[number]['chainId']
-
-export const constChains = [
+export const chains: ChainConfig[] = [
   {
     name: 'ethereum',
     chainId: 1,
@@ -218,5 +215,3 @@ export const constChains = [
     },
   },
 ] as const satisfies ChainConfig[]
-
-export const chains = constChains as ChainConfig[]
