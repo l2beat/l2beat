@@ -1,8 +1,8 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20389168,
-  "configHash": "0x27cb9c1b969bafe792a850135f1013ce1eed3640bbf045332f3a36025b8cfd83",
+  "blockNumber": 20412891,
+  "configHash": "0xbc9a459ceb78018e275b623a83c95165762b20ec7e4c2b1a295ea48585cc0e6a",
   "version": 9,
   "contracts": [
     {
@@ -61,6 +61,7 @@
             "members": ["0x0A4aB40Cc78D34052e1A8F5Bb5BaEb0174aBDe12"]
           }
         },
+        "EXPIRATION_PERIOD": 1209600,
         "facetAddresses": [
           "0x09E01425780094a9754B2bd8A3298f73ce837CF9",
           "0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A",
@@ -209,7 +210,7 @@
         },
         "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "getAccountNum": 51,
-        "getBlockNum": [161, 161, 161],
+        "getBlockNum": [167, 167, 167],
         "getBorrowFeeRate": 10000000,
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
@@ -217,7 +218,7 @@
         "getFundWeight": { "treasury": 0, "insurance": 0, "vault": 10000 },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
-        "getL1RequestNum": [210, 210, 213],
+        "getL1RequestNum": [215, 215, 215],
         "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
         "getTokenNum": 72,
@@ -239,7 +240,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "GnosisSafe",
+      "name": "VaultMultisig",
       "address": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -259,10 +260,11 @@
         "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "InsuranceMultisig",
       "address": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -282,7 +284,8 @@
         "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "",
@@ -311,7 +314,6 @@
       "sinceTimestamp": 1716263831,
       "values": {
         "$immutable": true,
-        "EXPIRATION_PERIOD": 1209600,
         "getBlockNum": [0, 0, 0],
         "getL1RequestNum": [0, 0, 0]
       },
@@ -348,7 +350,7 @@
       "derivedName": "GnosisSafe"
     },
     {
-      "name": "GnosisSafe",
+      "name": "TreasuryMultisig",
       "address": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -368,7 +370,8 @@
         "GnosisSafe_modules": [],
         "nonce": 0,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     }
   ],
   "eoas": [
