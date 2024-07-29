@@ -197,5 +197,6 @@ function mock(): AmountConfigBase {
     decimals: 18,
     symbol: 'SYMBOL',
     isAssociated: false,
+    category: 'other',
   }
 }

@@ -100,6 +100,7 @@ function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
     type: 'totalSupply',
     address: EthereumAddress.ZERO,
     isAssociated: false,
+    category: 'other',
     ...v,
   }
 }
