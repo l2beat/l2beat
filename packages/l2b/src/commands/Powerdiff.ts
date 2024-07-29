@@ -1,6 +1,21 @@
-import { command, option, positional, string } from 'cmd-ts'
-import { powerdiff } from '../implementations/powerdiff'
+import { Type, command, option, positional, string } from 'cmd-ts'
+import {
+  DIFFING_MODES,
+  DiffingMode,
+  powerdiff,
+} from '../implementations/powerdiff'
 import { Directory } from './types'
+
+export const DiffingModeType: Type<string, DiffingMode> = {
+  async from(str): Promise<DiffingMode> {
+    return new Promise((resolve, reject) => {
+      if (!DIFFING_MODES.includes(str as DiffingMode)) {
+        reject(new Error(`Diffing modes are: ${DIFFING_MODES.join(', ')}`))
+      }
+      resolve(str as DiffingMode)
+    })
+  },
+}
 
 export const Powerdiff = command({
   name: 'powerdiff',
@@ -15,8 +30,14 @@ export const Powerdiff = command({
       long: 'difftastic-path',
       defaultValue: () => 'difft',
     }),
+    mode: option({
+      type: DiffingModeType,
+      long: 'mode',
+      short: 'm',
+      defaultValue: () => 'together' as const,
+    }),
   },
-  handler: (args) => {
-    powerdiff(args.leftPath, args.rightPath, args.difftasticPath)
+  handler: ({ leftPath, rightPath, difftasticPath, mode }) => {
+    powerdiff(leftPath, rightPath, difftasticPath, mode)
   },
 })
