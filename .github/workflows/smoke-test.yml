@@ -12,13 +12,14 @@ jobs:
   # We cannot reference secrets in the if condition, so we have to check if the secret is set in a separate job
   # using cross-job outputs
   check-heroku-api-key:
+    name: Check heroku access
     runs-on: ubuntu-latest
     outputs:
       heroku_key_set: ${{ steps.check_key.outputs.heroku_key_set }}
     steps:
-      - name: Check if HEROKU_API_KEY is set
+      - name: Check if HEROKU_TOKEN is set
         id: check_key
-        run: echo "::set-output name=heroku_key_set::${{ secrets.HEROKU_API_KEY != '' }}"
+        run: echo "::set-output name=heroku_key_set::${{ secrets.HEROKU_TOKEN != '' }}"
 
   config-smoke-test:
     name: Config smoke test
