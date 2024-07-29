@@ -1,45 +1,48 @@
-import { type ProjectId } from '@l2beat/shared-pure'
-import { orderByTvl } from '../tvl/order-by-tvl'
-import { layer2s } from '@l2beat/config'
+import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { getVerificationStatus } from '../verification-status/get-verification-status'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
+import { orderByTvl } from '../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { type ScalingDataAvailabilityEntry } from './types'
+import { getCommonScalingEntry } from './get-common-scaling-entry'
 
 export async function getScalingLivenessEntries(
   tvl: Record<ProjectId, number>,
-) {
-  const orderedProjects = orderByTvl(layer2s, tvl)
-
+): Promise<ScalingDataAvailabilityEntry[]> {
+  const activeProjects = [...layer2s].filter(
+    (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
+  )
+  const orderedByTvl = orderByTvl(activeProjects, tvl)
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
   const implementationChangeReport = await getImplementationChangeReport()
-  const verificationStatus = await getVerificationStatus()
 
-  return orderedProjects.map((project) => {
-    const isVerified = !!verificationStatus.projects[project.id.toString()]
-    const hasImplementationChanged =
-      !!implementationChangeReport.projects[project.id.toString()]
-
-    return {
-      type: project.type,
-      category: project.display.category,
-      stage: project.type === 'layer2' ? project.stage : undefined,
-      provider: project.display.provider,
-      purposes: project.display.purposes,
-      name: project.display.name,
-      shortName: project.display.shortName,
-      slug: project.display.slug,
-      href: `/scaling/projects/${project.display.slug}`,
-      warning: project.display.warning,
-      redWarning: project.display.redWarning,
-      isVerified,
-      showProjectUnderReview: isAnySectionUnderReview(project),
-      hasImplementationChanged,
-      risks: project.riskView,
-      isUpcoming: !!project.isUpcoming,
-      isArchived: !!project.isArchived,
-    }
-  })
+  return orderedByTvl
+    .map((p) => {
+      const hasImplementationChanged =
+        !!implementationChangeReport.projects[p.id.toString()]
+      const isVerified = !!projectsVerificationStatuses[p.id.toString()]
+      return getScalingDataAvailabilityEntry(
+        p,
+        hasImplementationChanged,
+        isVerified,
+      )
+    })
+    .filter(notUndefined)
 }
 
-export type ScalingLivenessEntry = Awaited<
-  ReturnType<typeof getScalingLivenessEntries>
->[number]
+function getScalingDataAvailabilityEntry(
+  project: Layer2 | Layer3,
+  hasImplementationChanged: boolean,
+  isVerified: boolean,
+): ScalingDataAvailabilityEntry | undefined {
+  if (!project.dataAvailability) return
+
+  return {
+    ...getCommonScalingEntry({ project, hasImplementationChanged, isVerified }),
+    dataAvailability: {
+      layer: project.dataAvailability.layer,
+      bridge: project.dataAvailability.bridge,
+      mode: project.dataAvailability.mode,
+    },
+  }
+}

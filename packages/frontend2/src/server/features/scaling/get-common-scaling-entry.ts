@@ -1,4 +1,4 @@
-import { type Layer2 } from '@l2beat/config'
+import { type Bridge, type Layer3, type Layer2 } from '@l2beat/config'
 import {
   type ImplementationChangeReportApiResponse,
   type VerificationStatus,
@@ -7,31 +7,27 @@ import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export function getCommonScalingEntry({
   project,
-  verificationStatus,
-  implementationChangeReport,
+  isVerified,
+  hasImplementationChanged,
 }: {
-  project: Layer2
-  verificationStatus: VerificationStatus
-  implementationChangeReport: ImplementationChangeReportApiResponse
+  project: Layer2 | Layer3
+  isVerified: boolean
+  hasImplementationChanged: boolean
 }) {
-  const isVerified = !!verificationStatus.projects[project.id.toString()]
-  const hasImplementationChanged =
-    !!implementationChangeReport.projects[project.id.toString()]
-
   return {
-    type: project.type,
-    category: project.display.category,
-    stage: project.type === 'layer2' ? project.stage : undefined,
-    provider: project.display.provider,
-    purposes: project.display.purposes,
     name: project.display.name,
+    href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
     slug: project.display.slug,
-    href: `/scaling/projects/${project.display.slug}`,
+    category: project.display.category,
+    type: project.type,
+    provider: project.display.provider,
     warning: project.display.warning,
-    redWarning: project.display.redWarning,
     isVerified,
-    showProjectUnderReview: isAnySectionUnderReview(project),
     hasImplementationChanged,
+    showProjectUnderReview: isAnySectionUnderReview(project),
+    redWarning: project.display.redWarning,
+    purposes: project.display.purposes,
+    stage: project.type === 'layer2' ? project.stage : undefined,
   }
 }
