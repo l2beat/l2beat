@@ -1,8 +1,8 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 20411040,
-  "configHash": "0x2aea2a0e325c98fa417f25c41b714b423d20f0d7509fe46de046f36ed0393194",
+  "blockNumber": 20411788,
+  "configHash": "0x899e53b29b077d1af0417c2dcf901f5a4bfdb20a2598939c95c06827ec471499",
   "version": 9,
   "contracts": [
     {
@@ -27,11 +27,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly0",
       "address": "0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
       "name": "CpuConstraintPoly",
@@ -122,32 +123,36 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "name": "Level2PoseidonPoseidonPartialRoundKey0Column0",
       "address": "0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey0Column"
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "name": "Level2PoseidonPoseidonFullRoundKey1Column0",
       "address": "0x1E8E41141347E01f33d84718b7f4cEFB433D5a94",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey1Column"
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly1",
       "address": "0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "name": "Level2PoseidonPoseidonPartialRoundKey1Column0",
       "address": "0x20F10963eBCA608f8B24a5AEE275861B20ec868E",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey1Column"
     },
     {
       "name": "SHARPVerifierGovernorMultisig",
@@ -208,7 +213,7 @@
       }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier0",
       "address": "0x28E3aD4201ba416B23d9950503dB28a9232BE32a",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706309663,
@@ -238,21 +243,24 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "name": "Level2PoseidonPoseidonFullRoundKey2Column0",
       "address": "0x2b159027d7F0E23D5C15b0517e33DdA838C46045",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey2Column"
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly2",
       "address": "0x307982EB84858A04d32b5e0b72D152be5A3eEcEA",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
       "name": "FriStatementContract",
@@ -276,18 +284,20 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods0",
       "address": "0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
-      "name": "PedersenHashPointsXColumn",
+      "name": "Level2PedersenHashPointsXColumn",
       "address": "0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140847,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PedersenHashPointsXColumn"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -320,11 +330,12 @@
       }
     },
     {
-      "name": "MemoryPageFactRegistry",
+      "name": "Level2MemoryPageFactRegistry",
       "address": "0x40864568f679c10aC9e72211500096a5130770fA",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140835,
-      "values": { "$immutable": true, "hasRegisteredFact": true }
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "derivedName": "MemoryPageFactRegistry"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -360,11 +371,12 @@
       }
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly3",
       "address": "0x450909cC615036Ca4772dDDd8a69988B031811c9",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140835,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
       "name": "SHARPVerifierProxy",
@@ -393,11 +405,12 @@
       "derivedName": "CallProxy"
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods1",
       "address": "0x473E7B002f9A3109fd0FcdA4597935E4E610f367",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141015,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
       "name": "CpuOods",
@@ -421,11 +434,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods2",
       "address": "0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141459,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
       "name": "CpuConstraintPoly",
@@ -1253,7 +1267,7 @@
       }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier1",
       "address": "0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706140859,
@@ -1280,10 +1294,11 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier2",
       "address": "0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706141015,
@@ -1310,7 +1325,8 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -1343,18 +1359,20 @@
       }
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey1Column",
+      "name": "Level2PoseidonPoseidonPartialRoundKey1Column1",
       "address": "0x62960C874379653D7BBe3644Ac653736Da2eda12",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey1Column"
     },
     {
-      "name": "MerkleStatementContract",
+      "name": "Level2MerkleStatementContract",
       "address": "0x634DCf4f1421Fc4D95A968A559a450ad0245804c",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140859,
-      "values": { "$immutable": true, "hasRegisteredFact": true }
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "derivedName": "MerkleStatementContract"
     },
     {
       "name": "CpuOods",
@@ -1364,7 +1382,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier3",
       "address": "0x66F2345D003511a1A60D87E3984Bb8d12C21A970",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706141519,
@@ -1391,14 +1409,16 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods3",
       "address": "0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
       "name": "OldSHARPVerifier",
@@ -1423,28 +1443,31 @@
       "derivedName": "GpsStatementVerifier"
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods4",
       "address": "0x704DFf65eD9b3d121d469b7A790A9927C853607F",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140859,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
-      "name": "PoseidonPoseidonPartialRoundKey0Column",
+      "name": "Level2PoseidonPoseidonPartialRoundKey0Column1",
       "address": "0x75D887d2437eF87EA17B93143716BECD7BBbCa0a",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonPartialRoundKey0Column"
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "name": "Level2PoseidonPoseidonFullRoundKey0Column0",
       "address": "0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309663,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey0Column"
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier4",
       "address": "0x8055948c530dbBc19cc350d53473EEe3a1e3d22B",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706141639,
@@ -1469,7 +1492,8 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
       "name": "CpuConstraintPoly",
@@ -1479,11 +1503,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods5",
       "address": "0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140859,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
       "name": "PoseidonPoseidonFullRoundKey1Column",
@@ -1493,14 +1518,15 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "EcdsaPointsYColumn",
+      "name": "Level2EcdsaPointsYColumn",
       "address": "0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140859,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EcdsaPointsYColumn"
     },
     {
-      "name": "CurrentVerifierEntry",
+      "name": "SHARPVerifier",
       "address": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
       "template": "shared-sharp-verifier/Verifier",
       "sinceTimestamp": 1722195851,
@@ -1550,7 +1576,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier5",
       "address": "0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706309663,
@@ -1582,7 +1608,8 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -1627,7 +1654,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CairoBootloaderProgram",
+      "name": "Level2CairoBootloaderProgram",
       "address": "0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40",
       "sinceTimestamp": 1706140835,
       "values": {
@@ -2362,28 +2389,32 @@
           "5200109463683497984",
           "2345108766317314046"
         ]
-      }
+      },
+      "derivedName": "CairoBootloaderProgram"
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey2Column",
+      "name": "Level2PoseidonPoseidonFullRoundKey2Column1",
       "address": "0xB5A5759Dd063899F213eB9699906B445f855660D",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey2Column"
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly4",
       "address": "0xB62Dc40175812208f509B69506315A48C92fb15A",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140859,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods6",
       "address": "0xB640935b164024EF1BC0b9e176432c440a5cd4dc",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141519,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
       "name": "PoseidonPoseidonPartialRoundKey0Column",
@@ -2393,7 +2424,7 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier6",
       "address": "0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706141015,
@@ -2420,14 +2451,16 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey1Column",
+      "name": "Level2PoseidonPoseidonFullRoundKey1Column1",
       "address": "0xC2969a099F22430e20bcE237F469ac6F3101Ac5f",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey1Column"
     },
     {
       "name": "CpuConstraintPoly",
@@ -2444,28 +2477,31 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "EcdsaPointsXColumn",
+      "name": "Level2EcdsaPointsXColumn",
       "address": "0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140847,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "EcdsaPointsXColumn"
     },
     {
-      "name": "CpuOods",
+      "name": "Level2CpuOods7",
       "address": "0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309447,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuOods"
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly5",
       "address": "0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141519,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
-      "name": "CpuFrilessVerifier",
+      "name": "Level2CpuFrilessVerifier7",
       "address": "0xD0fC19710c389ef4a7244656cB08db08eA9D88b4",
       "template": "shared-sharp-verifier/CpuFrilessVerifier",
       "sinceTimestamp": 1706309651,
@@ -2492,10 +2528,11 @@
         "PAGE_INFO_SIZE": 3,
         "PAGE_INFO_SIZE_IN_BYTES": 96,
         "PAGE_INFO_SIZE_OFFSET": 1
-      }
+      },
+      "derivedName": "CpuFrilessVerifier"
     },
     {
-      "name": "GpsStatementVerifier",
+      "name": "Level2SHARPVerifier",
       "address": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
       "template": "shared-sharp-verifier/DeprecatedVerifier",
       "sinceTimestamp": 1706309663,
@@ -2526,7 +2563,8 @@
         "PAGE_INFO_SIZE_OFFSET": 1,
         "referenceFactRegistry": "0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6",
         "referralExpirationTime": 1714344863
-      }
+      },
+      "derivedName": "GpsStatementVerifier"
     },
     {
       "name": "CpuOods",
@@ -2543,11 +2581,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly6",
       "address": "0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
       "name": "PoseidonPoseidonFullRoundKey2Column",
@@ -2557,11 +2596,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "FriStatementContract",
+      "name": "Level2FriStatementContract",
       "address": "0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140859,
-      "values": { "$immutable": true, "hasRegisteredFact": true }
+      "values": { "$immutable": true, "hasRegisteredFact": true },
+      "derivedName": "FriStatementContract"
     },
     {
       "name": "CpuFrilessVerifier",
@@ -2606,11 +2646,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "CpuConstraintPoly",
+      "name": "Level2CpuConstraintPoly7",
       "address": "0xE5313feE344376D22A42C9F0919e7F0d43920CAc",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706141639,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "CpuConstraintPoly"
     },
     {
       "name": "MemoryPageFactRegistry",
@@ -2620,11 +2661,12 @@
       "values": { "$immutable": true, "hasRegisteredFact": true }
     },
     {
-      "name": "PoseidonPoseidonFullRoundKey0Column",
+      "name": "Level2PoseidonPoseidonFullRoundKey0Column1",
       "address": "0xe7B835eA7e348B25aF2480272C4cA28429573293",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706309651,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PoseidonPoseidonFullRoundKey0Column"
     },
     {
       "name": "PoseidonPoseidonFullRoundKey0Column",
@@ -2641,11 +2683,12 @@
       "values": { "$immutable": true }
     },
     {
-      "name": "PedersenHashPointsYColumn",
+      "name": "Level2PedersenHashPointsYColumn",
       "address": "0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd",
       "template": "shared-sharp-verifier/ignoreCompute",
       "sinceTimestamp": 1706140847,
-      "values": { "$immutable": true }
+      "values": { "$immutable": true },
+      "derivedName": "PedersenHashPointsYColumn"
     },
     {
       "name": "OldMemoryPageFactRegistry",

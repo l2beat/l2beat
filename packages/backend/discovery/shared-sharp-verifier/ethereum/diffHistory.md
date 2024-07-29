@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xe1e48291c901dc1990374e0f78be66cf117e2aa1
+Generated with discovered.json: 0x201de26b846b70c4a01b3f38758c3beb268ad7f0
 
-# Diff at Mon, 29 Jul 2024 08:32:03 GMT:
+# Diff at Mon, 29 Jul 2024 11:02:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 19531641
-- current block number: 20411040
+- current block number: 20411788
 
 ## Description
 
@@ -31,7 +31,7 @@ The discovery config now uses templates and recursively discovers old verifiers 
 ```
 
 ```diff
-    contract GpsStatementVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
+    contract Level2SHARPVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
     +++ description: None
       template:
 -        "shared-sharp-verifier/Verifier"
@@ -197,7 +197,7 @@ The discovery config now uses templates and recursively discovers old verifiers 
 
 ```diff
 +   Status: CREATED
-    contract CurrentVerifierEntry (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    contract SHARPVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
     +++ description: None
 ```
 
@@ -300,8 +300,7 @@ The discovery config now uses templates and recursively discovers old verifiers 
 ## Source code changes
 
 ```diff
-...-0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515.sol |  809 +++
- ...0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40.sol} |    0
+.../ethereum/.flat/CairoBootloaderProgram.sol      |  809 +++
  ...-0x05C98569CA566a2035b87dE7d1b623C950798035.sol | 4408 +++++++++++++
  ...-0x351666E9EeA6E012f08695ccd1923f37519563f1.sol | 3208 ++++++++++
  ...-0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5.sol | 5047 +++++++++++++++
@@ -326,21 +325,13 @@ The discovery config now uses templates and recursively discovers old verifiers 
  ...-0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0.sol | 4849 +++++++++++++++
  ...-0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40.sol | 2957 +++++++++
  ...-0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84.sol | 3819 ++++++++++++
- .../ethereum/.flat/CurrentVerifierEntry.sol        |  889 +++
- ...0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1.sol} |    0
- ...-0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B.sol |  648 ++
- ...0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1.sol} |    0
- ...-0xE3929Ea107238Ce59d64A3cE497f12b57846B716.sol |  648 ++
- ...-0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400.sol | 1278 ++++
- ...0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb.sol} |    0
- ...0x40864568f679c10aC9e72211500096a5130770fA.sol} |    0
- ...-0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460.sol |  344 ++
- ...-0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd.sol |  286 +
- ...0x634DCf4f1421Fc4D95A968A559a450ad0245804c.sol} |    0
- ...0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1.sol} |    0
- ...-0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB.sol | 1271 ++++
- ...0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed.sol} |    0
- ...-0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd.sol | 1271 ++++
+ .../ethereum/.flat/EcdsaPointsXColumn.sol          |  648 ++
+ .../ethereum/.flat/EcdsaPointsYColumn.sol          |  648 ++
+ .../ethereum/.flat/FriStatementContract.sol        | 1278 ++++
+ .../ethereum/.flat/MemoryPageFactRegistry.sol      |  344 ++
+ .../ethereum/.flat/MerkleStatementContract.sol     |  286 +
+ .../ethereum/.flat/PedersenHashPointsXColumn.sol   | 1271 ++++
+ .../ethereum/.flat/PedersenHashPointsYColumn.sol   | 1271 ++++
  ...-0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540.sol |   47 +
  ...-0xedFfEA8296945aA91FC035Aefc8c33D737dBc573.sol |   47 +
  ...-0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc.sol |   47 +
@@ -351,7 +342,8 @@ The discovery config now uses templates and recursively discovers old verifiers 
  ...-0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF.sol |  183 +
  ...-0x032e5cDb729Ce94638ACA9e82A22688109B43046.sol |  104 +
  ...-0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2.sol |  104 +
- 51 files changed, 107479 insertions(+)
+ .../ethereum/.flat/SHARPVerifier.sol               |  889 +++
+ 43 files changed, 107479 insertions(+)
 ```
 
 ## Config/verification related changes
@@ -363,6 +355,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -373,7 +368,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonPartialRoundKey0Column"
-+        "PoseidonPoseidonPartialRoundKey0Column"
++        "Level2PoseidonPoseidonPartialRoundKey0Column0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -384,7 +379,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonFullRoundKey1Column"
-+        "PoseidonPoseidonFullRoundKey1Column"
++        "Level2PoseidonPoseidonFullRoundKey1Column0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -393,6 +388,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -403,7 +401,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonPartialRoundKey1Column"
-+        "PoseidonPoseidonPartialRoundKey1Column"
++        "Level2PoseidonPoseidonPartialRoundKey1Column0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -414,7 +412,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier1"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier0"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -425,7 +423,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonFullRoundKey2Column"
-+        "PoseidonPoseidonFullRoundKey2Column"
++        "Level2PoseidonPoseidonFullRoundKey2Column0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -434,6 +432,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0x307982EB84858A04d32b5e0b72D152be5A3eEcEA) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly2"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -442,6 +443,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -450,6 +454,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract PedersenHashPointsXColumn (0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB) {
     +++ description: None
+      name:
+-        "PedersenHashPointsXColumn"
++        "Level2PedersenHashPointsXColumn"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -458,6 +465,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA) {
     +++ description: None
+      name:
+-        "MemoryPageFactRegistry"
++        "Level2MemoryPageFactRegistry"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -466,6 +476,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0x450909cC615036Ca4772dDDd8a69988B031811c9) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly3"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -474,6 +487,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0x473E7B002f9A3109fd0FcdA4597935E4E610f367) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -482,6 +498,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods2"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -492,7 +511,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier2"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier1"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -503,7 +522,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier3"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier2"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -514,7 +533,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonPartialRoundKey1Column"
-+        "PoseidonPoseidonPartialRoundKey1Column"
++        "Level2PoseidonPoseidonPartialRoundKey1Column1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -523,6 +542,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract MerkleStatementContract (0x634DCf4f1421Fc4D95A968A559a450ad0245804c) {
     +++ description: None
+      name:
+-        "MerkleStatementContract"
++        "Level2MerkleStatementContract"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -533,7 +555,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier4"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier3"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -542,6 +564,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods3"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -558,6 +583,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0x704DFf65eD9b3d121d469b7A790A9927C853607F) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods4"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -568,7 +596,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonPartialRoundKey0Column"
-+        "PoseidonPoseidonPartialRoundKey0Column"
++        "Level2PoseidonPoseidonPartialRoundKey0Column1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -579,7 +607,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonFullRoundKey0Column"
-+        "PoseidonPoseidonFullRoundKey0Column"
++        "Level2PoseidonPoseidonFullRoundKey0Column0"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -590,7 +618,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier5"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier4"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -599,6 +627,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods5"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -607,6 +638,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract EcdsaPointsYColumn (0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1) {
     +++ description: None
+      name:
+-        "EcdsaPointsYColumn"
++        "Level2EcdsaPointsYColumn"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -617,9 +651,18 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier6"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier5"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract CairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40) {
+    +++ description: None
+      name:
+-        "CairoBootloaderProgram"
++        "Level2CairoBootloaderProgram"
     }
 ```
 
@@ -628,7 +671,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonFullRoundKey2Column"
-+        "PoseidonPoseidonFullRoundKey2Column"
++        "Level2PoseidonPoseidonFullRoundKey2Column1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -637,6 +680,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0xB62Dc40175812208f509B69506315A48C92fb15A) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly4"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -645,6 +691,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0xB640935b164024EF1BC0b9e176432c440a5cd4dc) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods6"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -655,7 +704,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier7"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier6"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -666,7 +715,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonFullRoundKey1Column"
-+        "PoseidonPoseidonFullRoundKey1Column"
++        "Level2PoseidonPoseidonFullRoundKey1Column1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -675,6 +724,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract EcdsaPointsXColumn (0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B) {
     +++ description: None
+      name:
+-        "EcdsaPointsXColumn"
++        "Level2EcdsaPointsXColumn"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -683,6 +735,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuOods (0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4) {
     +++ description: None
+      name:
+-        "CpuOods"
++        "Level2CpuOods7"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -691,6 +746,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly5"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -701,7 +759,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "CpuFrilessVerifier8"
-+        "CpuFrilessVerifier"
++        "Level2CpuFrilessVerifier7"
       template:
 +        "shared-sharp-verifier/CpuFrilessVerifier"
     }
@@ -712,7 +770,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "SHARPVerifier"
-+        "GpsStatementVerifier"
++        "Level2SHARPVerifier"
       template:
 +        "shared-sharp-verifier/Verifier"
     }
@@ -721,6 +779,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly6"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -729,6 +790,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract FriStatementContract (0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb) {
     +++ description: None
+      name:
+-        "FriStatementContract"
++        "Level2FriStatementContract"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -737,6 +801,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract CpuConstraintPoly (0xE5313feE344376D22A42C9F0919e7F0d43920CAc) {
     +++ description: None
+      name:
+-        "CpuConstraintPoly"
++        "Level2CpuConstraintPoly7"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -747,7 +814,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonFullRoundKey0Column"
-+        "PoseidonPoseidonFullRoundKey0Column"
++        "Level2PoseidonPoseidonFullRoundKey0Column1"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
@@ -756,6 +823,9 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```diff
     contract PedersenHashPointsYColumn (0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd) {
     +++ description: None
+      name:
+-        "PedersenHashPointsYColumn"
++        "Level2PedersenHashPointsYColumn"
       template:
 +        "shared-sharp-verifier/ignoreCompute"
     }
