@@ -23,7 +23,6 @@ export function toDiscoveryOutput(
     configHash,
     version: DISCOVERY_LOGIC_VERSION,
     ...processAnalysis(results),
-    fieldMeta: flattenFieldsMeta(results),
     usedTemplates: collectUsedTemplatesWithHashes(results),
     shapeFilesHash,
   }
@@ -96,6 +95,7 @@ export function processAnalysis(
             Object.keys(x.errors).length === 0
               ? undefined
               : sortByKeys(x.errors),
+          fieldMeta: Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies ContractParameters)

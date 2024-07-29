@@ -23,7 +23,6 @@ const EMPTY_DISCOVERY_OUTPUT: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.random(),
   version: 123,
-  fieldMeta: {},
   usedTemplates: {},
   shapeFilesHash: Hash256.random(),
 }

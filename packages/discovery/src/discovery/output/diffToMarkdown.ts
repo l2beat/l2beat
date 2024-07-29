@@ -135,15 +135,9 @@ function getContractDiffInformation(
     return contract
   }
 
-  const fields = Object.fromEntries(
-    Object.entries(discovery.fieldMeta)
-      .filter(([v, _]) => v.startsWith(contract.address.toString()))
-      .map(([k, v]) => [k.slice(contract.address.toString().length + 1), v]),
-  )
-
   const result: ContractDiffInformation = {
     description: contract.descriptions?.join(' ') ?? 'None',
-    fields,
+    fields: contract.fieldMeta ?? {},
   }
 
   return result

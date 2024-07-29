@@ -35,6 +35,12 @@ describe(discoveryDiffToMarkdown.name, () => {
     name: 'foo',
     address: SECOND_ADDRESS,
     descriptions: undefined,
+    fieldMeta: {
+      [`baz`]: {
+        description: 'The foo value',
+        severity: 'LOW',
+      },
+    }
   }
 
   const DISCOVERY_OUTPUT: DiscoveryOutput = {
@@ -46,12 +52,6 @@ describe(discoveryDiffToMarkdown.name, () => {
     abis: {},
     configHash: Hash256.random(),
     version: 0,
-    fieldMeta: {
-      [`${SECOND_ADDRESS.toString()}.baz`]: {
-        description: 'The foo value',
-        severity: 'LOW',
-      },
-    },
     usedTemplates: {},
     shapeFilesHash: Hash256.random(),
   }
@@ -123,7 +123,6 @@ describe(discoveryDiffToMarkdown.name, () => {
       [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
       {
         ...DISCOVERY_OUTPUT,
-        fieldMeta: {},
         contracts: [],
       },
     )
@@ -151,7 +150,6 @@ describe(discoveryDiffToMarkdown.name, () => {
   it('single contract diff, no meta', () => {
     const result = discoveryDiffToMarkdown([FOO_CONTRACT_DIFF], {
       ...DISCOVERY_OUTPUT,
-      fieldMeta: {},
       contracts: [],
     })
 
@@ -172,7 +170,6 @@ describe(discoveryDiffToMarkdown.name, () => {
   it('empty diffs, no meta', () => {
     const result = discoveryDiffToMarkdown([], {
       ...DISCOVERY_OUTPUT,
-      fieldMeta: {},
       contracts: [],
     })
     expect(result).toEqual('')

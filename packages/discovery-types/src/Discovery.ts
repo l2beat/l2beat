@@ -41,7 +41,6 @@ export interface DiscoveryOutput {
   abis: Record<string, string[]>
   configHash: Hash256
   version: number
-  fieldMeta: Record<string, FieldMeta>
   usedTemplates: Record<string, Hash256>
   shapeFilesHash: Hash256
 }
@@ -83,6 +82,7 @@ export type ContractParameters = {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
+  fieldMeta?: Record<string, FieldMeta>
 } & Meta
 
 export type ContractValue =

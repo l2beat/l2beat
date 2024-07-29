@@ -28,7 +28,6 @@ const EMPTY_DISCOVERY_OUTPUT: DiscoveryOutput = {
   abis: {},
   configHash: Hash256.random(),
   version: 123,
-  fieldMeta: {},
   usedTemplates: {},
   shapeFilesHash: Hash256.random(),
 }
@@ -159,14 +158,14 @@ describe(UpdateNotifier.name, () => {
             address: EthereumAddress(
               '0x0000000000000000000000000000000000000001',
             ),
+            fieldMeta: {
+              'A': {
+                severity: 'MEDIUM',
+                description: 'This should never be equal to two',
+              },
+            },
           },
         ],
-        fieldMeta: {
-          '0x0000000000000000000000000000000000000001.A': {
-            severity: 'MEDIUM',
-            description: 'This should never be equal to two',
-          },
-        },
       }
 
       await updateNotifier.handleUpdate(
