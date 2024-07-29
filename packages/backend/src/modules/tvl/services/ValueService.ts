@@ -20,6 +20,8 @@ interface Values {
   nativeAssociated: bigint
   nativeForTotal: bigint
   nativeAssociatedForTotal: bigint
+  ether: bigint
+  stablecoin: bigint
 }
 
 export class ValueService {
@@ -130,6 +132,8 @@ function createEmptyResult() {
     nativeAssociated: 0n,
     nativeForTotal: 0n,
     nativeAssociatedForTotal: 0n,
+    ether: 0n,
+    stablecoin: 0n,
   }
 }
 
@@ -156,6 +160,8 @@ function toValueRecords(
         externalAssociated: value.externalAssociated,
         externalForTotal: value.externalForTotal,
         externalAssociatedForTotal: value.externalAssociatedForTotal,
+        ether: value.ether,
+        stablecoin: value.stablecoin,
       }) satisfies ValueRecord,
   )
 }

@@ -84,6 +84,8 @@ function valueRecord(v?: Partial<ValueRecord>) {
     nativeAssociated: 0n,
     nativeForTotal: 0n,
     nativeAssociatedForTotal: 0n,
+    ether: 0n,
+    stablecoin: 0n,
     ...v,
   }
 }
