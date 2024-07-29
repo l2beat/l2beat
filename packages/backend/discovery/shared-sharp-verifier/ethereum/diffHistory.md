@@ -1,14 +1,18 @@
-Generated with discovered.json: 0xdc4a147a428b075f6883547c595c06153b290518
+Generated with discovered.json: 0x15947b7733f1326d7e8fc6fb2ee04472b2a35944
 
-# Diff at Mon, 29 Jul 2024 06:14:42 GMT:
+# Diff at Mon, 29 Jul 2024 06:58:43 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 19531641
-- current block number: 20410353
+- current block number: 20410574
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+A new GpsStatementVerifier (SHARPVerifier) is deployed and registered:
+- `constant N_BUILTINS` increased from 9 to 11 (https://docs.cairo-lang.org/how_cairo_works/builtins.html)
+- introduction of `applicativeBootloaderProgramHash_` in addition to the old `simpleBootloaderProgramHash_`
+- `OFFSET_N_VERIFIER_FRIENDLY_LAYERS` introduced in the offsets section
+- `PROGRAM_SIZE` increased from 728 to 794
 
 ## Watched changes
 
