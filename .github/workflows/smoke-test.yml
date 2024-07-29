@@ -23,7 +23,7 @@ jobs:
       - name: Check Heroku API key & organization
         id: check_key
         run: |
-          if [ -z $HEROKU_API_KEYYYYY ] || [ -z $HEROKU_ORGANIZATION ]; then
+          if [ -z $HEROKU_API_KEY ] || [ -z $HEROKU_ORGANIZATION ]; then
             echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
             echo "❌ - Failed to meet the requirements, skipping the smoke test"
           else
