@@ -44,6 +44,6 @@ export class StarknetCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'StarknetBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
+    await this.db.blockTransactionCount.upsertMany(blocks)
   }
 }

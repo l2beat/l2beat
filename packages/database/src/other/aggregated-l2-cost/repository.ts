@@ -9,13 +9,13 @@ export class AggregatedL2CostRepository extends BaseRepository {
       .selectFrom('public.aggregated_l2_costs')
       .select(selectAggregatedL2Costs)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: AggregatedL2CostRecord[]): Promise<number> {
-    const rows = records.map(toRow)
+  async upsertMany(records: AggregatedL2CostRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
+    const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('public.aggregated_l2_costs')
@@ -41,7 +41,6 @@ export class AggregatedL2CostRepository extends BaseRepository {
         )
         .execute()
     })
-
     return records.length
   }
 
@@ -73,7 +72,6 @@ export class AggregatedL2CostRepository extends BaseRepository {
       .where('timestamp', '<', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
-
     return rows.map(toRecord)
   }
 }

@@ -2,6 +2,7 @@ import { UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import {
   FinalityRecord,
+  ProjectFinalityRecord,
   toProjectFinalityRecord,
   toRecord,
   toRow,
@@ -9,27 +10,31 @@ import {
 import { selectFinality } from './select'
 
 export class FinalityRepository extends BaseRepository {
-  async getAll() {
+  async getAll(): Promise<FinalityRecord[]> {
     const rows = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async findLatestByProjectId(projectId: string) {
+  async findLatestByProjectId(
+    projectId: string,
+  ): Promise<FinalityRecord | undefined> {
     const row = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
       .where('project_id', '=', projectId)
       .orderBy('timestamp', 'desc')
+      .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row) : undefined
+    return row && toRecord(row)
   }
 
-  async findProjectFinalityOnTimestamp(projectId: string, timestamp: UnixTime) {
+  async findProjectFinalityOnTimestamp(
+    projectId: string,
+    timestamp: UnixTime,
+  ): Promise<ProjectFinalityRecord | undefined> {
     const row = await this.db
       .selectFrom('public.finality')
       .select(selectFinality)
@@ -37,14 +42,12 @@ export class FinalityRepository extends BaseRepository {
       .where('project_id', '=', projectId.toString())
       .limit(1)
       .executeTakeFirst()
-
-    return row ? toProjectFinalityRecord(row) : undefined
+    return row && toProjectFinalityRecord(row)
   }
 
   async getLatestGroupedByProjectId(projectIds: string[]) {
-    if (projectIds.length === 0) {
-      return []
-    }
+    if (projectIds.length === 0) return []
+
     const maxTimestampSubquery = this.db
       .selectFrom('public.finality')
       .select(['project_id', this.db.fn.max('timestamp').as('max_timestamp')])
@@ -69,30 +72,18 @@ export class FinalityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: FinalityRecord[]) {
-    if (records.length === 0) {
-      return 0
-    }
+  async insert(record: FinalityRecord): Promise<void> {
+    await this.insertMany([record])
+  }
+
+  async insertMany(records: FinalityRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-
     await this.batch(rows, 10_000, async (batch) => {
       await this.db.insertInto('public.finality').values(batch).execute()
     })
-
     return rows.length
-  }
-
-  async add(record: FinalityRecord) {
-    const row = toRow(record)
-
-    const result = await this.db
-      .insertInto('public.finality')
-      .values(row)
-      .returning('project_id')
-      .executeTakeFirst()
-
-    return result?.project_id
   }
 
   async deleteAll(): Promise<number> {

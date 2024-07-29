@@ -23,7 +23,7 @@ describe(LivenessUpdater.name, () => {
 
       await updater.update(transactions)
 
-      expect(livenessRepo.addMany).not.toHaveBeenCalled()
+      expect(livenessRepo.insertMany).not.toHaveBeenCalled()
     })
 
     it('calls liveness repo with correct parameters', async () => {
@@ -36,7 +36,7 @@ describe(LivenessUpdater.name, () => {
       const transactions: TrackedTxResult[] = getMockTrackedTxResults()
       await updater.update(transactions)
 
-      expect(livenessRepo.addMany).toHaveBeenNthCalledWith(1, [
+      expect(livenessRepo.insertMany).toHaveBeenNthCalledWith(1, [
         {
           txHash: transactions[0].hash,
           blockNumber: transactions[0].blockNumber,
@@ -104,7 +104,7 @@ describe(LivenessUpdater.name, () => {
 function getMockLivenessRepository() {
   return mockObject<Database['liveness']>({
     deleteFromById: async () => 0,
-    addMany: async () => 0,
+    insertMany: async () => 0,
   })
 }
 

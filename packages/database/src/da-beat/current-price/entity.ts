@@ -7,17 +7,12 @@ export interface CurrentPriceRecord {
   updatedAt: Date
 }
 
-export interface UpsertableCurrentPrice {
-  coingeckoId: string
-  priceUsd: number
-}
-
 export function toRecord(entity: Selectable<CurrentPrice>): CurrentPriceRecord {
   return entity
 }
 
 export function toRow(
-  currentPrice: UpsertableCurrentPrice,
+  currentPrice: Omit<CurrentPriceRecord, 'updatedAt'>,
 ): Insertable<CurrentPrice> {
   return {
     ...currentPrice,

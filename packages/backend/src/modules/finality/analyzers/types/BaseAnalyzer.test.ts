@@ -49,7 +49,7 @@ describe(BaseAnalyzer.name, () => {
       const mockIndexerConfigurationRepository = mockObject<
         Database['indexerConfiguration']
       >({
-        getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
+        getByIndexerId: mockFn().resolvesTo([mockConfiguration]),
       })
 
       const getFinalitySpy = mockFn((_tx: Transaction) => {})

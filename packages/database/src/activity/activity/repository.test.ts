@@ -9,9 +9,9 @@ describeDatabase(ActivityRepository.name, (db) => {
 
   const START = UnixTime.now()
 
-  describe(ActivityRepository.prototype.addOrUpdateMany.name, () => {
+  describe(ActivityRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         record('a', START, 1, 1, 2),
         record('a', START.add(1, 'days'), 2, 3, 4),
         record('a', START.add(2, 'days'), 4, 5, 6),
@@ -26,11 +26,11 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
 
     it('merges on conflict', async () => {
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         record('a', START, 1, 1, 2),
         record('a', START.add(1, 'days'), 2, 4, 5),
       ])
-      await repository.addOrUpdateMany([record('a', START, 3, 1, 3)])
+      await repository.upsertMany([record('a', START, 3, 1, 3)])
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -52,7 +52,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
   describe(ActivityRepository.prototype.deleteAfter.name, () => {
     it('should delete all rows after a given timestamp and projectId', async () => {
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         record('a', START),
         record('a', START.add(1, 'days')),
         record('a', START.add(2, 'days')),
@@ -72,7 +72,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
   describe(ActivityRepository.prototype.getByProjectAndTimeRange.name, () => {
     it('should return all rows in a given time range', async () => {
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         record('a', START),
         record('a', START.add(1, 'days')),
         record('a', START.add(2, 'days')),

@@ -16,6 +16,6 @@ export class DiscoveryCache implements DiscoveryCacheInterface {
     chain: string,
     blockNumber: number,
   ): Promise<void> {
-    await this.db.discoveryCache.addOrUpdate({ key, value, chain, blockNumber })
+    await this.db.discoveryCache.upsert({ key, value, chain, blockNumber })
   }
 }

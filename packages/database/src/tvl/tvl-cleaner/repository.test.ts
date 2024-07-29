@@ -11,22 +11,26 @@ describeDatabase(TvlCleanerRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(`${TvlCleanerRepository.prototype.addOrUpdate.name} and ${TvlCleanerRepository.prototype.find.name}`, () => {
+  describe(`${TvlCleanerRepository.prototype.upsert.name} and ${TvlCleanerRepository.prototype.findByRepositoryName.name}`, () => {
     it('adds or updates and finds record', async () => {
       const record = recordTemplate(
         new Date('2022-02-13'),
         new Date('2022-01-13'),
       )
-      await repository.addOrUpdate(record)
-      const foundRecord = await repository.find(record.repositoryName)
+      await repository.upsert(record)
+      const foundRecord = await repository.findByRepositoryName(
+        record.repositoryName,
+      )
       expect(foundRecord).toEqual(record)
 
       const updatedRecord = recordTemplate(
         new Date('1999-03-19'),
         new Date('1999-02-13'),
       )
-      await repository.addOrUpdate(updatedRecord)
-      const foundUpdatedRecord = await repository.find(record.repositoryName)
+      await repository.upsert(updatedRecord)
+      const foundUpdatedRecord = await repository.findByRepositoryName(
+        record.repositoryName,
+      )
       expect(foundUpdatedRecord).toEqual(updatedRecord)
     })
   })
