@@ -1,12 +1,18 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
+import { addSentimentToDataAvailability } from '../../common'
 
 const discovery = new ProjectDiscovery('termstructure')
 
-export const termstructure: Layer2 = underReviewL2({
+export const termstructure: Layer2 = {
   id: ProjectId('termstructure'),
+  dataAvailability: addSentimentToDataAvailability({
+    layers: [],
+    bridge: {},
+    mode: '',
+  }),
+  badges: [],
   display: {
     name: 'Term Structure',
     slug: 'termstructure',
@@ -29,11 +35,18 @@ export const termstructure: Layer2 = underReviewL2({
       ],
     },
   },
-  escrows: [
-    discovery.getEscrowDetails({
-      address: EthereumAddress('0x09E01425780094a9754B2bd8A3298f73ce837CF9'),
-      sinceTimestamp: new UnixTime(1716263903),
-      tokens: '*',
-    }),
-  ],
-})
+  config: {
+    escrows: [
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0x09E01425780094a9754B2bd8A3298f73ce837CF9'),
+        sinceTimestamp: new UnixTime(1716263903),
+        tokens: '*',
+      }),
+    ],
+  },
+  type: 'layer2',
+  riskView: undefined,
+  stage: undefined,
+  technology: undefined,
+  contracts: undefined,
+}
