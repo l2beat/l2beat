@@ -66,7 +66,7 @@ export class FinalityIndexer extends ChildIndexer {
     )
 
     if (finalityData) {
-      await this.db.finality.add(finalityData)
+      await this.db.finality.insert(finalityData)
     }
 
     this.logger.info('Update finished', {
@@ -136,7 +136,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async initialize() {
-    const indexerState = await this.db.indexerState.findIndexerState(
+    const indexerState = await this.db.indexerState.findByIndexerId(
       this.indexerId,
     )
 
@@ -150,14 +150,14 @@ export class FinalityIndexer extends ChildIndexer {
     safeHeight: number,
     _configHash?: string | undefined,
   ): Promise<void> {
-    await this.db.indexerState.addOrUpdate({
+    await this.db.indexerState.upsert({
       indexerId: this.indexerId,
       safeHeight,
     })
   }
 
   async getSafeHeight(): Promise<number> {
-    const indexerState = await this.db.indexerState.findIndexerState(
+    const indexerState = await this.db.indexerState.findByIndexerId(
       this.indexerId,
     )
     return (
@@ -166,7 +166,7 @@ export class FinalityIndexer extends ChildIndexer {
   }
 
   override async setSafeHeight(safeHeight: number): Promise<void> {
-    await this.db.indexerState.setSafeHeight(this.indexerId, safeHeight)
+    await this.db.indexerState.updateSafeHeight(this.indexerId, safeHeight)
   }
 
   /**

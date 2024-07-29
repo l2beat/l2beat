@@ -90,7 +90,7 @@ describe(VerifiersStatusRefresher.name, () => {
       const verifierStatusRepositoryMock = mockObject<
         Database['verifierStatus']
       >({
-        addOrUpdate: mockFn().resolvesTo(''),
+        upsert: mockFn().resolvesTo(''),
       })
 
       const refresher = createVerifierStatusRefresher({
@@ -117,7 +117,7 @@ describe(VerifiersStatusRefresher.name, () => {
 
       await refresher.refresh()
 
-      expect(verifierStatusRepositoryMock.addOrUpdate).toHaveBeenCalledWith({
+      expect(verifierStatusRepositoryMock.upsert).toHaveBeenCalledWith({
         address: zkVerifierAddress.toString(),
         chainId: ChainId.ETHEREUM,
         lastUsed,

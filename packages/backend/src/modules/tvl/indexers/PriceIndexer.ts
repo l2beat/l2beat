@@ -55,7 +55,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     )
 
     return async () => {
-      await this.$.db.price.addMany(optimizedPrices)
+      await this.$.db.price.insertMany(optimizedPrices)
       this.logger.info('Saved prices into DB', {
         from,
         to: adjustedTo.toNumber(),

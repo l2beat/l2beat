@@ -2,24 +2,22 @@ import { BaseRepository } from '../../BaseRepository'
 import { DeploymentRecord, toRow } from './entity'
 
 export class DeploymentRepository extends BaseRepository {
-  upsert(Deployment: DeploymentRecord) {
-    const row = toRow(Deployment)
-
-    return this.db
+  async upsert(record: DeploymentRecord): Promise<void> {
+    const row = toRow(record)
+    await this.db
       .insertInto('public.Deployment')
       .values(row)
-      .onConflict((conflict) =>
-        conflict.column('tokenId').doUpdateSet({
-          tokenId: (excluded) => excluded.ref('excluded.tokenId'),
-          txHash: (excluded) => excluded.ref('excluded.txHash'),
-          blockNumber: (excluded) => excluded.ref('excluded.blockNumber'),
-          timestamp: (excluded) => excluded.ref('excluded.timestamp'),
-          from: (excluded) => excluded.ref('excluded.from'),
-          to: (excluded) => excluded.ref('excluded.to'),
-          isDeployerEoa: (excluded) => excluded.ref('excluded.isDeployerEoa'),
-          sourceAvailable: (excluded) =>
-            excluded.ref('excluded.sourceAvailable'),
-        }),
+      .onConflict((cb) =>
+        cb.column('tokenId').doUpdateSet((eb) => ({
+          tokenId: eb.ref('excluded.tokenId'),
+          txHash: eb.ref('excluded.txHash'),
+          blockNumber: eb.ref('excluded.blockNumber'),
+          timestamp: eb.ref('excluded.timestamp'),
+          from: eb.ref('excluded.from'),
+          to: eb.ref('excluded.to'),
+          isDeployerEoa: eb.ref('excluded.isDeployerEoa'),
+          sourceAvailable: eb.ref('excluded.sourceAvailable'),
+        })),
       )
       .execute()
   }

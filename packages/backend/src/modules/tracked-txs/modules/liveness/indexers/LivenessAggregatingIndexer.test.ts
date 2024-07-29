@@ -91,7 +91,7 @@ describe(LivenessAggregatingIndexer.name, () => {
     it('should adjust target height and generate liveness data', async () => {
       const mockLivenessRepository = mockObject<Database['aggregatedLiveness']>(
         {
-          addOrUpdateMany: mockFn().resolvesTo(1),
+          upsertMany: mockFn().resolvesTo(1),
         },
       )
 
@@ -126,7 +126,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW.toStartOf('day').add(-1, 'seconds'),
       )
 
-      expect(mockLivenessRepository.addOrUpdateMany).toHaveBeenCalledWith(
+      expect(mockLivenessRepository.upsertMany).toHaveBeenCalledWith(
         mockLiveness,
       )
 
@@ -258,7 +258,7 @@ function createIndexer(options: {
       aggregatedLiveness:
         options.aggregatedLivenessRepository ??
         mockObject<Database['aggregatedLiveness']>({
-          addOrUpdateMany: mockFn().resolvesTo(1),
+          upsertMany: mockFn().resolvesTo(1),
         }),
     }),
     projects: MOCK_PROJECTS,

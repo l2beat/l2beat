@@ -9,23 +9,35 @@ export class UpdateNotifierRepository extends BaseRepository {
       .selectFrom('public.update_notifier')
       .select(['id'])
       .orderBy('id', 'desc')
+      .limit(1)
       .executeTakeFirst()
-
-    return row ? row.id : undefined
+    return row?.id
   }
 
-  async add(
+  async insert(
     record: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>,
-  ) {
-    const row = toRow(record)
+  ): Promise<number> {
+    const [id] = await this.insertMany([record])
+    // biome-ignore lint/style/noNonNullAssertion: guaranteed by the query
+    return id!
+  }
 
-    const insertedResult = await this.db
-      .insertInto('public.update_notifier')
-      .values(row)
-      .returning('id')
-      .executeTakeFirst()
+  async insertMany(
+    records: Omit<UpdateNotifierRecord, 'id' | 'createdAt' | 'updatedAt'>[],
+  ): Promise<number[]> {
+    if (records.length === 0) return []
 
-    return insertedResult?.id
+    const rows = records.map(toRow)
+    const ids: number[] = []
+    await this.batch(rows, 1_000, async (batch) => {
+      const results = await this.db
+        .insertInto('public.update_notifier')
+        .values(batch)
+        .returning('id')
+        .execute()
+      ids.push(...results.map((result) => result.id))
+    })
+    return ids
   }
 
   async getAll(): Promise<UpdateNotifierRecord[]> {
@@ -49,7 +61,6 @@ export class UpdateNotifierRepository extends BaseRepository {
       .where('project_name', '=', projectName)
       .where('chain_id', '=', +chainId)
       .execute()
-
     return rows.map(toRecord)
   }
 

@@ -101,10 +101,10 @@ export class LivenessController {
       }
 
       const aggregatedLivenessRecords =
-        await this.$.db.aggregatedLiveness.getByProject(project.projectId)
+        await this.$.db.aggregatedLiveness.getByProjectId(project.projectId)
 
       const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
-      const anomalyRecords = await this.$.db.anomalies.getByProjectFrom(
+      const anomalyRecords = await this.$.db.anomalies.getByProjectIdFrom(
         project.projectId,
         last30Days,
       )

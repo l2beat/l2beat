@@ -45,7 +45,7 @@ describe(PriceIndexer.name, () => {
       })
 
       const priceRepository = mockObject<Database['price']>({
-        addMany: async () => 1,
+        insertMany: async () => 1,
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
@@ -95,7 +95,7 @@ describe(PriceIndexer.name, () => {
         new UnixTime(200),
       ])
 
-      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(priceRepository.insertMany).toHaveBeenOnlyCalledWith([
         price('a', 100),
         price('a', 200),
         price('b', 100),

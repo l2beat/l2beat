@@ -28,7 +28,7 @@ describe(BlockTimestampIndexer.name, () => {
         getBlockNumberAtOrBefore: async () => 666,
       })
       const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
-        add: async () => '',
+        insert: async () => undefined,
       })
 
       const chain = 'ethereum'
@@ -51,7 +51,7 @@ describe(BlockTimestampIndexer.name, () => {
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenOnlyCalledWith(timestampToSync)
 
-      expect(blockTimestampRepository.add).toHaveBeenOnlyCalledWith({
+      expect(blockTimestampRepository.insert).toHaveBeenOnlyCalledWith({
         chain,
         timestamp: timestampToSync,
         blockNumber: 666,

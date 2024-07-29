@@ -182,7 +182,7 @@ export abstract class SequenceProcessor extends EventEmitter {
   }
 
   private async setState(state: State): Promise<void> {
-    await this.db.sequenceProcessor.addOrUpdate({
+    await this.db.sequenceProcessor.upsert({
       id: this.projectId.toString(),
       ...state,
     })

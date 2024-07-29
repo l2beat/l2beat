@@ -49,7 +49,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       blockNumber,
     })
 
-    await this.$.db.blockTimestamp.add({
+    await this.$.db.blockTimestamp.insert({
       chain: this.$.chain,
       timestamp,
       blockNumber,

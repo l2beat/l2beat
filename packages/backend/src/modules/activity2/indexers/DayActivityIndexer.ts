@@ -24,7 +24,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       adjustedTo,
     )
 
-    await this.$.db.activity.addOrUpdateMany(counts)
+    await this.$.db.activity.upsertMany(counts)
 
     return adjustedTo
   }

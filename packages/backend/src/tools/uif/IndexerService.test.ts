@@ -17,7 +17,7 @@ describe(IndexerService.name, () => {
   it(IndexerService.prototype.getSafeHeight.name, async () => {
     const safeHeight = 123
     const indexerStateRepository = mockObject<Database['indexerState']>({
-      findIndexerState: async () => mock({ safeHeight }),
+      findByIndexerId: async () => mock({ safeHeight }),
     })
 
     const indexerService = new IndexerService(
@@ -30,7 +30,7 @@ describe(IndexerService.name, () => {
     const result = await indexerService.getSafeHeight('indexer')
 
     expect(result).toEqual(safeHeight)
-    expect(indexerStateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
+    expect(indexerStateRepository.findByIndexerId).toHaveBeenOnlyCalledWith(
       'indexer',
     )
   })
@@ -38,7 +38,7 @@ describe(IndexerService.name, () => {
   it(IndexerService.prototype.getIndexerState.name, async () => {
     const configHash = '0x123456'
     const indexerStateRepository = mockObject<Database['indexerState']>({
-      findIndexerState: async () => mock({ configHash }),
+      findByIndexerId: async () => mock({ configHash }),
     })
 
     const indexerService = new IndexerService(
@@ -51,14 +51,14 @@ describe(IndexerService.name, () => {
     const result = await indexerService.getIndexerState('indexer')
 
     expect(result).toEqual(mock({ configHash }))
-    expect(indexerStateRepository.findIndexerState).toHaveBeenOnlyCalledWith(
+    expect(indexerStateRepository.findByIndexerId).toHaveBeenOnlyCalledWith(
       'indexer',
     )
   })
 
   it(IndexerService.prototype.setSafeHeight.name, async () => {
     const indexerStateRepository = mockObject<Database['indexerState']>({
-      setSafeHeight: async () => 1,
+      updateSafeHeight: async () => 1,
     })
 
     const indexerService = new IndexerService(
@@ -69,7 +69,7 @@ describe(IndexerService.name, () => {
     )
 
     await indexerService.setSafeHeight('indexer', 123)
-    expect(indexerStateRepository.setSafeHeight).toHaveBeenOnlyCalledWith(
+    expect(indexerStateRepository.updateSafeHeight).toHaveBeenOnlyCalledWith(
       'indexer',
       123,
     )
@@ -77,7 +77,7 @@ describe(IndexerService.name, () => {
 
   it(IndexerService.prototype.setInitialState.name, async () => {
     const indexerStateRepository = mockObject<Database['indexerState']>({
-      addOrUpdate: async () => '',
+      upsert: async () => undefined,
     })
 
     const indexerService = new IndexerService(
@@ -88,7 +88,7 @@ describe(IndexerService.name, () => {
     )
 
     await indexerService.setInitialState('indexer', 123, 'hash')
-    expect(indexerStateRepository.addOrUpdate).toHaveBeenOnlyCalledWith({
+    expect(indexerStateRepository.upsert).toHaveBeenOnlyCalledWith({
       indexerId: 'indexer',
       safeHeight: 123,
       configHash: 'hash',
@@ -99,7 +99,7 @@ describe(IndexerService.name, () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      addOrUpdateMany: async () => {},
+      upsertMany: async () => 0,
     })
 
     const indexerService = new IndexerService(
@@ -130,33 +130,33 @@ describe(IndexerService.name, () => {
       (properties: json) => JSON.stringify(properties),
     )
 
-    expect(
-      indexerConfigurationsRepository.addOrUpdateMany,
-    ).toHaveBeenOnlyCalledWith([
-      {
-        id: 'a',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ a: 1 }),
-        indexerId: 'indexer',
-      },
-      {
-        id: 'b',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ b: 1 }),
-        indexerId: 'indexer',
-      },
-    ])
+    expect(indexerConfigurationsRepository.upsertMany).toHaveBeenOnlyCalledWith(
+      [
+        {
+          id: 'a',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ a: 1 }),
+          indexerId: 'indexer',
+        },
+        {
+          id: 'b',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ b: 1 }),
+          indexerId: 'indexer',
+        },
+      ],
+    )
   })
 
   it(IndexerService.prototype.getSavedConfigurations.name, async () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      getSavedConfigurations: async () => [
+      getByIndexerId: async () => [
         {
           id: 'a',
           currentHeight: null,
@@ -207,7 +207,7 @@ describe(IndexerService.name, () => {
       const indexerConfigurationsRepository = mockObject<
         Database['indexerConfiguration']
       >({
-        updateCurrentHeights: async () => [],
+        updateCurrentHeights: async () => undefined,
       })
 
       const indexerService = new IndexerService(
@@ -257,7 +257,7 @@ describe(IndexerService.name, () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      getSavedConfigurationsByIds: async () => [
+      getByConfigurationIds: async () => [
         config('a', 0, null, null),
         config('b', 0, null, targetTimestamp.toNumber()),
         config('c', 0, 100, 100),
@@ -321,7 +321,7 @@ describe(IndexerService.name, () => {
     })
 
     expect(
-      indexerConfigurationsRepository.getSavedConfigurationsByIds,
+      indexerConfigurationsRepository.getByConfigurationIds,
     ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
 
     expect(indexerStateRepository.getByIndexerIds).toHaveBeenOnlyCalledWith([
@@ -338,7 +338,7 @@ describe(IndexerService.name, () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      getSavedConfigurationsByIds: async () => [
+      getByConfigurationIds: async () => [
         config('a', 0, null, null),
         config('b', 0, null, targetTimestamp.toNumber()),
         config('c', 0, 100, 100),
@@ -377,7 +377,7 @@ describe(IndexerService.name, () => {
     })
 
     expect(
-      indexerConfigurationsRepository.getSavedConfigurationsByIds,
+      indexerConfigurationsRepository.getByConfigurationIds,
     ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
   })
 })

@@ -2,9 +2,13 @@ import { BaseRepository } from '../../BaseRepository'
 import { NetworkExplorerRecord, toRow } from './entity'
 
 export class NetworkExplorerRepository extends BaseRepository {
-  insertMany(explorers: NetworkExplorerRecord[]) {
-    const rows = explorers.map(toRow)
+  async insertMany(records: NetworkExplorerRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
-    return this.db.insertInto('public.NetworkExplorer').values(rows).execute()
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db.insertInto('public.NetworkExplorer').values(batch).execute()
+    })
+    return records.length
   }
 }

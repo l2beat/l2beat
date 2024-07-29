@@ -2,19 +2,23 @@ import { BaseRepository } from '../../BaseRepository'
 import { TokenMetaRecord, toRow } from './entity'
 
 export class TokenMetaRepository extends BaseRepository {
-  upsertMany(tokenMetas: TokenMetaRecord[]) {
-    const entities = tokenMetas.map(toRow)
+  async upsertMany(records: TokenMetaRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
-    return this.db
-      .insertInto('public.TokenMeta')
-      .values(entities)
-      .onConflict((conflict) =>
-        conflict.columns(['tokenId', 'source']).doUpdateSet({
-          tokenId: (excluded) => excluded.ref('excluded.tokenId'),
-          source: (excluded) => excluded.ref('excluded.source'),
-        }),
-      )
-      .returning('public.TokenMeta.id')
-      .execute()
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.TokenMeta')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['tokenId', 'source']).doUpdateSet((eb) => ({
+            tokenId: eb.ref('excluded.tokenId'),
+            source: eb.ref('excluded.source'),
+          })),
+        )
+        .returning('public.TokenMeta.id')
+        .execute()
+    })
+    return records.length
   }
 }

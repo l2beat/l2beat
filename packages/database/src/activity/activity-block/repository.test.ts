@@ -13,21 +13,18 @@ describeDatabase(BlockTransactionCountRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  it(
-    BlockTransactionCountRepository.prototype.addOrUpdateMany.name,
-    async () => {
+  describe(BlockTransactionCountRepository.prototype.upsertMany.name, () => {
+    it('adds records', async () => {
       const records = [mockRecord(PROJECT_A, 0), mockRecord(PROJECT_B, 0)]
-      await repository.addOrUpdateMany(records)
+      await repository.upsertMany(records)
 
       const result = await repository.getAll()
       expect(result).toEqual(records)
-    },
-  )
+    })
 
-  describe(BlockTransactionCountRepository.prototype.addOrUpdate.name, () => {
     it('merges on conflict', async () => {
-      await repository.addOrUpdate(mockRecord(PROJECT_A, 0))
-      await repository.addOrUpdate({ ...mockRecord(PROJECT_A, 0), count: 2 })
+      await repository.upsertMany([mockRecord(PROJECT_A, 0)])
+      await repository.upsertMany([{ ...mockRecord(PROJECT_A, 0), count: 2 }])
 
       const result = await repository.getAll()
       expect(result).toEqual([{ ...mockRecord(PROJECT_A, 0), count: 2 }])

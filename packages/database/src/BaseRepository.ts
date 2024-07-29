@@ -11,11 +11,18 @@ export class BaseRepository {
     return this.client.db
   }
 
-  protected batch<T>(
+  protected async batch<T>(
     rows: T[],
     batchSize: number,
     execute: (batch: T[]) => Promise<void>,
   ): Promise<void> {
+    if (rows.length === 0) return
+
+    if (rows.length <= batchSize) {
+      await execute(rows)
+      return
+    }
+
     return this.transaction(async () => {
       for (let i = 0; i < rows.length; i += batchSize) {
         await execute(rows.slice(i, i + batchSize))

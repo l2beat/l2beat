@@ -58,6 +58,6 @@ export class StarkexCounter extends SequenceProcessor {
     const counts = await promiseAllPlus(queries, this.logger, {
       metricsId: `StarkexBlockCounter_${this.projectId.toString()}`,
     })
-    await this.db.starkExTransactionCount.addOrUpdateMany(counts)
+    await this.db.starkExTransactionCount.upsertMany(counts)
   }
 }

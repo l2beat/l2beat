@@ -27,7 +27,7 @@ describe(CirculatingSupplyIndexer.name, () => {
       const adjustedTo = 200
 
       const amountRepository = mockObject<Database['amount']>({
-        addMany: async () => 1,
+        insertMany: async () => 1,
       })
 
       const configuration = mockObject<CirculatingSupplyEntry>({
@@ -77,7 +77,7 @@ describe(CirculatingSupplyIndexer.name, () => {
         configuration,
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([
         amount(configuration, 200),
       ])
 

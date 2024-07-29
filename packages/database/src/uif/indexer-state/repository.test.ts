@@ -11,9 +11,9 @@ describeDatabase(IndexerStateRepository.name, (db) => {
     await repository.deleteAll()
   })
 
-  describe(IndexerStateRepository.prototype.findIndexerState.name, () => {
+  describe(IndexerStateRepository.prototype.findByIndexerId.name, () => {
     it('returns undefined if no record exists', async () => {
-      const indexerState = await repository.findIndexerState('indexer')
+      const indexerState = await repository.findByIndexerId('indexer')
       expect(indexerState).toEqual(undefined)
     })
 
@@ -24,8 +24,8 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         minTimestamp: UnixTime.now(),
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(newRecord)
-      const indexerState = await repository.findIndexerState('indexer1')
+      await repository.upsert(newRecord)
+      const indexerState = await repository.findByIndexerId('indexer1')
       expect(indexerState).toEqual(newRecord)
     })
   })
@@ -38,28 +38,28 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         minTimestamp: UnixTime.now(),
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(record)
+      await repository.upsert(record)
       const record2 = {
         indexerId: 'b',
         safeHeight: 12345,
         minTimestamp: UnixTime.now(),
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(record2)
+      await repository.upsert(record2)
       const record3 = {
         indexerId: 'c',
         safeHeight: 12345,
         minTimestamp: UnixTime.now(),
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(record3)
+      await repository.upsert(record3)
 
       const indexerState = await repository.getByIndexerIds(['a', 'b'])
       expect(indexerState).toEqual([record, record2])
     })
   })
 
-  describe(IndexerStateRepository.prototype.addOrUpdate.name, () => {
+  describe(IndexerStateRepository.prototype.upsert.name, () => {
     it('adds a new record', async () => {
       const empty = await repository.getAll()
       expect(empty).toEqual([])
@@ -71,7 +71,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         configHash: '0x123456',
       }
 
-      await repository.addOrUpdate(newRecord)
+      await repository.upsert(newRecord)
 
       const result = await repository.getAll()
       expect(result).toEqual([newRecord])
@@ -83,7 +83,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         safeHeight: 1,
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(record)
+      await repository.upsert(record)
 
       const result = await repository.getAll()
 
@@ -96,7 +96,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         safeHeight: 1,
         minTimestamp: UnixTime.ZERO,
       }
-      await repository.addOrUpdate(record)
+      await repository.upsert(record)
 
       const result = await repository.getAll()
 
@@ -104,7 +104,7 @@ describeDatabase(IndexerStateRepository.name, (db) => {
     })
   })
 
-  describe(IndexerStateRepository.prototype.setSafeHeight.name, () => {
+  describe(IndexerStateRepository.prototype.updateSafeHeight.name, () => {
     it('updates the safe height of given indexer', async () => {
       const BEFORE = 12345
       const AFTER = 54321
@@ -114,10 +114,10 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         minTimestamp: UnixTime.now(),
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(record)
+      await repository.upsert(record)
 
-      const updated = await repository.setSafeHeight('indexer1', AFTER)
-      const indexerState = await repository.findIndexerState('indexer1')
+      const updated = await repository.updateSafeHeight('indexer1', AFTER)
+      const indexerState = await repository.findByIndexerId('indexer1')
 
       expect(updated).toEqual(1)
       expect(indexerState).toEqual({ ...record, safeHeight: AFTER })
@@ -132,10 +132,10 @@ describeDatabase(IndexerStateRepository.name, (db) => {
         minTimestamp: UnixTime.now(),
         configHash: '0x123456',
       }
-      await repository.addOrUpdate(record)
+      await repository.upsert(record)
 
-      const updated = await repository.setSafeHeight('indexer2', AFTER)
-      const indexerState = await repository.findIndexerState('indexer1')
+      const updated = await repository.updateSafeHeight('indexer2', AFTER)
+      const indexerState = await repository.findByIndexerId('indexer1')
 
       expect(updated).toEqual(0)
       expect(indexerState).toEqual({ ...record })
