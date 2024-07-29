@@ -25,7 +25,6 @@ export function splitIntoSubfiles(
     if (result !== undefined) {
       newFilePathList.push(result)
     } else {
-      console.log(`[SKIP]: ${fullPaths.left} & ${fullPaths.right}`)
     }
   }
 
@@ -77,12 +76,14 @@ function splitFileIntoDirectory(atPath: string, outputDirectory: string): void {
     assert(child.range !== undefined)
     const childContent = content.substring(child.range[0], child.range[1] + 1)
     const childName = getASTTopLevelChildName(child)
-    const outputPath = path.join(outputDirectory, `${childName}.sol`)
-    fs.writeFileSync(outputPath, childContent)
+    if (childName !== undefined) {
+      const outputPath = path.join(outputDirectory, `${childName}.sol`)
+      fs.writeFileSync(outputPath, childContent)
+    }
   }
 }
 
-function getASTTopLevelChildName(child: ASTNode): string {
+function getASTTopLevelChildName(child: ASTNode): string | undefined {
   switch (child.type) {
     case 'UsingForDeclaration':
       assert(child.libraryName !== null)
@@ -105,6 +106,9 @@ function getASTTopLevelChildName(child: ASTNode): string {
       return child.name
     case 'EventDefinition':
       return child.name
+    case 'PragmaDirective':
+    case 'ImportDirective':
+      return undefined
     default: {
       assert(false)
     }
