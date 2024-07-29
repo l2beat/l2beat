@@ -9,17 +9,20 @@ on:
   merge_group:
 
 jobs:
-  # We cannot reference secrets in the if condition, so we have to check if the secret is set in a separate job
-  # using cross-job outputs
+  # We cannot reference secrets in the if condition, so we have to check
+  # if the secret is set in a separate job using cross-job outputs
   check-heroku-api-key:
     name: Check prerequisites
     runs-on: ubuntu-latest
-    outputs:
-      heroku_key_set: ${{ steps.check_key.outputs.heroku_key_set }}
     steps:
       - name: Check if HEROKU_TOKEN is set
         id: check_key
-        run: echo "::set-output name=heroku_key_set::${{ secrets.HEROKU_TOKEN != '' }}"
+        run: |
+          if [ -z "${{ secrets.HEROKU_TOKEN }}" ]; then
+            echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "heroku_key_set=true" >> "$GITHUB_OUTPUT"
+          fi
 
   config-smoke-test:
     name: Configuration smoke test
