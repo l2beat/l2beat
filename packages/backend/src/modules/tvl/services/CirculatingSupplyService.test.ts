@@ -38,6 +38,7 @@ describe(CirculatingSupplyService.name, () => {
           address: EthereumAddress.random(),
           coingeckoId,
           decimals: 18,
+          category: 'other',
         })
 
         const result = await service.fetchCirculatingSupplies(from, to, config)

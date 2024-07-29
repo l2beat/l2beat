@@ -43,6 +43,7 @@ function amountConfiguration(v: Partial<TotalSupplyEntry>) {
     decimals: DECIMALS,
     symbol: 'SYMBOL',
     isAssociated: false,
+    category: 'other',
     ...v,
   })
 }
