@@ -1,4 +1,43 @@
-Generated with discovered.json: 0x42ce99e80cd13ef6a6889fb328565d57beecd590
+Generated with discovered.json: 0xdc4a147a428b075f6883547c595c06153b290518
+
+# Diff at Mon, 29 Jul 2024 06:14:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 19531641
+- current block number: 20410353
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract SHARPVerifierProxy (0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60) {
+    +++ description: None
+      values.callProxyImplementation:
+-        "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF"
++        "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"
+      values.StarkWareProxy_callImplementation:
+-        "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF"
++        "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GpsStatementVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GpsStatementVerifier.sol        | 889 +++++++++++++++++++++
+ 1 file changed, 889 insertions(+)
+```
+
+Generated with discovered.json: 0x98333a8861a2aa83fb491c4d94cadf90944c4f51
 
 # Diff at Thu, 18 Jul 2024 10:33:19 GMT:
 

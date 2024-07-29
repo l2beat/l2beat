@@ -1,7 +1,7 @@
 {
   "name": "shared-sharp-verifier",
   "chain": "ethereum",
-  "blockNumber": 19531641,
+  "blockNumber": 20410353,
   "configHash": "0x446f481375f24a1ebdb62c00d34185db930f81f5886f322ea3526361b22ab3b1",
   "version": 10,
   "contracts": [
@@ -61,7 +61,7 @@
         ],
         "getThreshold": 2,
         "GnosisSafe_modules": [],
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -151,14 +151,14 @@
         "$immutable": false,
         "$implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "CALL_PROXY_VERSION": "3.1.0",
-        "callProxyImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+        "callProxyImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
         "getUpgradeActivationDelay": 0,
         "implementation": "0xD4C4044ACa68ebBcB81B13cC2699e1Bca2d3F458",
         "isFrozen": false,
         "isNotFinalized": true,
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
-        "StarkWareProxy_callImplementation": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+        "StarkWareProxy_callImplementation": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
         "StarkWareProxy_upgradeDelay": 0,
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f"
       },
@@ -366,6 +366,28 @@
       "sinceTimestamp": 1706140859,
       "values": { "$immutable": true },
       "derivedName": "EcdsaPointsYColumn"
+    },
+    {
+      "name": "GpsStatementVerifier",
+      "address": "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942",
+      "sinceTimestamp": 1722195851,
+      "values": {
+        "$immutable": true,
+        "getBootloaderConfig": [
+          "160268921359133235574810995023520895391777547407923205700393332203861498631",
+          "1104316318711847786071125527957082259001554753246760931396914052122269757907",
+          "988080400528720010398639244351885480706475299330001427790099377094461351470"
+        ],
+        "hasRegisteredFact": true,
+        "identify": "StarkWare_GpsStatementVerifier_2024_10",
+        "PAGE_INFO_ADDRESS_OFFSET": 0,
+        "PAGE_INFO_HASH_OFFSET": 2,
+        "PAGE_INFO_SIZE": 3,
+        "PAGE_INFO_SIZE_IN_BYTES": 96,
+        "PAGE_INFO_SIZE_OFFSET": 1,
+        "referenceFactRegistry": "0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF",
+        "referralExpirationTime": 1729971851
+      }
     },
     {
       "name": "CpuFrilessVerifier6",
@@ -1499,6 +1521,23 @@
     ],
     "0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1": [
       "function compute(uint256 x) pure returns (uint256 result)"
+    ],
+    "0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942": [
+      "constructor(address bootloaderProgramContract, address memoryPageFactRegistry_, address[] cairoVerifierContracts, uint256 simpleBootloaderProgramHash, uint256 applicativeBootloaderProgramHash, uint256 hashedSupportedCairoVerifiers, address referenceVerifier, uint256 referralDurationSeconds)",
+      "event LogMemoryPagesHashes(bytes32 programOutputFact, bytes32[] pagesHashes)",
+      "function PAGE_INFO_ADDRESS_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_HASH_OFFSET() view returns (uint256)",
+      "function PAGE_INFO_SIZE() view returns (uint256)",
+      "function PAGE_INFO_SIZE_IN_BYTES() view returns (uint256)",
+      "function PAGE_INFO_SIZE_OFFSET() view returns (uint256)",
+      "function getBootloaderConfig() view returns (uint256, uint256, uint256)",
+      "function hasRegisteredFact() view returns (bool)",
+      "function identify() pure returns (string)",
+      "function isValid(bytes32 fact) view returns (bool)",
+      "function localIsValid(bytes32 fact) view returns (bool)",
+      "function referenceFactRegistry() view returns (address)",
+      "function referralExpirationTime() view returns (uint256)",
+      "function verifyProofAndRegister(uint256[] proofParams, uint256[] proof, uint256[] taskMetadata, uint256[] cairoAuxInput, uint256 cairoVerifierId)"
     ],
     "0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9": [
       "constructor(address[] auxPolynomials, address oodsContract, address memoryPageFactRegistry_, address merkleStatementContractAddress, address friStatementContractAddress, uint256 numSecurityBits_, uint256 minProofOfWorkBits_)",
