@@ -18,7 +18,7 @@ jobs:
       - name: Check if HEROKU_TOKEN is set
         id: check_key
         run: |
-          if [ -z "${{ secrets.HEROKU_TOKEN }}" ]; then
+          if [[ -z "${{ secrets.HEROKU_TOKEN }}" ]]; then
             echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
           else
             echo "heroku_key_set=true" >> "$GITHUB_OUTPUT"
