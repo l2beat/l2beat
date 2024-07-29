@@ -109,6 +109,13 @@ export class ValueService {
             result[forTotalKey] += value
           }
         }
+
+        if (
+          amountConfig.category === 'ether' ||
+          amountConfig.category === 'stablecoin'
+        ) {
+          result[amountConfig.category] += value
+        }
       }
 
       results.set(timestamp, result)

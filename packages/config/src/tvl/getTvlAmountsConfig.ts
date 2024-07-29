@@ -59,6 +59,7 @@ export function getTvlAmountsConfig(
             decimals: token.decimals,
             symbol: token.symbol,
             isAssociated,
+            category: token.category,
           })
           break
         case 'circulatingSupply':
@@ -75,6 +76,7 @@ export function getTvlAmountsConfig(
             decimals: token.decimals,
             symbol: token.symbol,
             isAssociated,
+            category: token.category,
           })
           break
         case 'zero':
@@ -121,6 +123,7 @@ export function getTvlAmountsConfig(
           symbol: token.symbol,
           isAssociated,
           bridge: escrow.bridge,
+          category: token.category,
         })
       }
     }
