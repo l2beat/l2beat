@@ -8,11 +8,13 @@ Generated with discovered.json: 0x201de26b846b70c4a01b3f38758c3beb268ad7f0
 
 ## Description
 
-A new GpsStatementVerifier (SHARPVerifier) is deployed and registered:
+A new GpsStatementVerifier (SHARPVerifier) is deployed and registered with all its relatives:
 - `constant N_BUILTINS` increased from 9 to 11 (https://docs.cairo-lang.org/how_cairo_works/builtins.html)
 - introduction of `applicativeBootloaderProgramHash_` in addition to the old `simpleBootloaderProgramHash_`
 - `OFFSET_N_VERIFIER_FRIENDLY_LAYERS` introduced in the offsets section
 - `PROGRAM_SIZE` increased from 728 to 794
+
+A related commit to the cairo repo [can be found here](https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a). 
 
 The discovery config now uses templates and recursively discovers old verifiers and their relatives.
 
