@@ -8,7 +8,7 @@ export const intmax: Layer2 = upcomingL2({
     slug: 'intmax',
     description:
       'INTMAX is a stateless Plasma-like ZK Rollup with permissionless block production.',
-    purposes: ['Universal'],
+    purposes: ['Payments'],
     category: 'ZK Rollup',
     links: {
       websites: ['https://www.intmax.io/'],
