@@ -410,19 +410,29 @@ model UpdateNotifier {
   @@schema("public")
 }
 
-model Value {
-  id         Int       @default(autoincrement())
-  timestamp  DateTime  @db.Timestamp(6)
-  projectId  String    @db.VarChar(255)
-  dataSource String    @db.VarChar(255)
-  type       ValueType
-  forTotal   Boolean
-  external   BigInt
-  canonical  BigInt
-  native     BigInt
+model ValueGroup {
+  id         Int      @id @default(autoincrement())
+  timestamp  DateTime @db.Timestamp(6)
+  projectId  String   @db.VarChar(255)
+  dataSource String   @db.VarChar(255)
+  values     Value[]
 
-  @@unique([timestamp, projectId, dataSource, type, forTotal])
+  @@unique([timestamp, projectId, dataSource])
   @@map("values")
+  @@schema("public")
+}
+
+model Value {
+  id           Int        @id @default(autoincrement())
+  valueGroupId Int
+  valueGroup   ValueGroup @relation(fields: [valueGroupId], references: [id], onDelete: Cascade)
+  type         ValueType
+  forTotal     Boolean
+  external     BigInt
+  canonical    BigInt
+  native       BigInt
+
+  @@unique([valueGroupId, type, forTotal])
   @@schema("public")
 }
 
@@ -431,7 +441,6 @@ enum ValueType {
   Associated
   Ether
   Stablecoin
-  Other
 
   @@schema("public")
 }
