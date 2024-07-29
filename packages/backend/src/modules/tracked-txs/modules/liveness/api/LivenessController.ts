@@ -13,14 +13,17 @@ import {
 } from '@l2beat/shared-pure'
 
 import { BackendProject } from '@l2beat/config'
-import { AggregatedLivenessRecord, Database } from '@l2beat/database'
+import {
+  AggregatedLivenessRecord,
+  AnomalyRecord,
+  Database,
+} from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
-import { AnomaliesRecord } from '../repositories/AnomaliesRepository'
 import { LivenessWithConfigService } from '../services/LivenessWithConfigService'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
@@ -98,10 +101,10 @@ export class LivenessController {
       }
 
       const aggregatedLivenessRecords =
-        await this.$.db.aggregatedLiveness.getByProject(project.projectId)
+        await this.$.db.aggregatedLiveness.getByProjectId(project.projectId)
 
       const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
-      const anomalyRecords = await this.$.db.anomalies.getByProjectFrom(
+      const anomalyRecords = await this.$.db.anomalies.getByProjectIdFrom(
         project.projectId,
         last30Days,
       )
@@ -196,7 +199,7 @@ export class LivenessController {
     }
   }
 
-  mapAnomalyRecords(records: AnomaliesRecord[]): LivenessAnomaly[] {
+  mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
     return records.map((a) => ({
       // TODO: validate if it makes sense to pass the end of anomaly rather than the start
       timestamp: new UnixTime(a.timestamp.toNumber() + a.duration),

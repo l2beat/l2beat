@@ -10,7 +10,7 @@ export function Card(props: CardProps) {
   return (
     <div
       className={cn(
-        'bg-white dark:bg-zinc-900 rounded-xl w-full p-6',
+        'w-full rounded-xl bg-white p-6 dark:bg-zinc-900',
         props.className,
       )}
     >

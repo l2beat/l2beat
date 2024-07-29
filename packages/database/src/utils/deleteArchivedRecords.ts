@@ -1,6 +1,6 @@
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { sql } from 'kysely'
-import { PostgresDatabase } from '../kysely'
+import { QueryBuilder } from '../kysely'
 import { DB } from '../kysely/generated/types'
 
 export interface CleanDateRange {
@@ -15,12 +15,12 @@ type TablesWithTimestamp = {
 /**
  * WARNING: this method requires table to have timestamp column
  */
-export function deleteHourlyUntil(
-  db: PostgresDatabase,
+export async function deleteHourlyUntil(
+  db: QueryBuilder,
   tableName: TablesWithTimestamp,
   dateRange: CleanDateRange,
-) {
-  return db
+): Promise<number> {
+  const result = await db
     .deleteFrom(tableName)
     .where((eb) =>
       eb.and(
@@ -32,18 +32,19 @@ export function deleteHourlyUntil(
         ].filter(notUndefined),
       ),
     )
-    .execute()
+    .executeTakeFirst()
+  return Number(result.numDeletedRows)
 }
 
 /**
  * WARNING: this method requires table to have timestamp column
  */
-export function deleteSixHourlyUntil(
-  db: PostgresDatabase,
+export async function deleteSixHourlyUntil(
+  db: QueryBuilder,
   tableName: TablesWithTimestamp,
   dateRange: CleanDateRange,
-) {
-  return db
+): Promise<number> {
+  const result = await db
     .deleteFrom(tableName)
     .where((eb) =>
       eb.and(
@@ -57,5 +58,6 @@ export function deleteSixHourlyUntil(
         ].filter(notUndefined),
       ),
     )
-    .execute()
+    .executeTakeFirst()
+  return Number(result.numDeletedRows)
 }

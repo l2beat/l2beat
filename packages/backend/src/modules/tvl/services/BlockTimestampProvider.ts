@@ -2,11 +2,14 @@ import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
 import { BlockExplorerClient } from '@l2beat/shared'
-import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
+
+export type BaseClient = {
+  getBlockNumberAtOrBefore(timestamp: UnixTime, start?: number): Promise<number>
+}
 
 interface Dependencies {
   readonly blockExplorerClient?: BlockExplorerClient
-  readonly rpcClient: RpcClient
+  readonly client: BaseClient
   logger: Logger
 }
 
@@ -31,10 +34,10 @@ export class BlockTimestampProvider {
           'Failed to fetch block number via blockExplorerClient. Trying to fetch using RPC.',
           error,
         )
-        return await this.$.rpcClient.getBlockNumberAtOrBefore(_timestamp)
+        return await this.$.client.getBlockNumberAtOrBefore(_timestamp)
       }
     }
 
-    return await this.$.rpcClient.getBlockNumberAtOrBefore(_timestamp)
+    return await this.$.client.getBlockNumberAtOrBefore(_timestamp)
   }
 }

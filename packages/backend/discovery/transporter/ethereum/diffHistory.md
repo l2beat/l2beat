@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x6e3fa3bf60c3ff9402bafe069336978276249e74
+
+# Diff at Fri, 26 Jul 2024 08:15:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20362731
+- current block number: 20389460
+
+## Description
+
+The bridge limit (max amount of tokens that can be transferred out to other chains) is raised to 2,5M tokens, which is about the current amount of GHO tokens locked in this pool.
+
+## Watched changes
+
+```diff
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C) {
+    +++ description: None
+      values.getBridgeLimit:
+-        "1000000000000000000000000"
++        "2500000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x5013f11878fa492b43f258c666a94f5851309e6a
 
 # Diff at Mon, 22 Jul 2024 14:42:16 GMT:

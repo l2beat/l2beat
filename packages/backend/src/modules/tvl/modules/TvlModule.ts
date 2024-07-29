@@ -4,11 +4,8 @@ import { chains } from '@l2beat/config'
 import { ChainConverter, ChainId, UnixTime } from '@l2beat/shared-pure'
 import { Config, TvlConfig } from '../../../config/Config'
 import { Peripherals } from '../../../peripherals/Peripherals'
-import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
-import { IndexerConfigurationRepository } from '../../../tools/uif/IndexerConfigurationRepository'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { IndexerStateRepository } from '../../../tools/uif/IndexerStateRepository'
 import { ApplicationModule } from '../../ApplicationModule'
 import { createTvlRouter } from '../api/TvlRouter'
 import { AggregatedService } from '../api/services/AggregatedService'
@@ -20,10 +17,6 @@ import { PricesDataService } from '../api/services/data/PricesDataService'
 import { ValuesDataService } from '../api/services/data/ValuesDataService'
 import { ApiProject, AssociatedToken } from '../api/utils/types'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
-import { AmountRepository } from '../repositories/AmountRepository'
-import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
-import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
 import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { TvlCleaner } from '../utils/TvlCleaner'
@@ -43,16 +36,7 @@ export function createTvlModule(
     return
   }
 
-  const indexerStateRepository = peripherals.getRepository(
-    IndexerStateRepository,
-  )
-  const configurationsRepository = peripherals.getRepository(
-    IndexerConfigurationRepository,
-  )
-  const indexerService = new IndexerService(
-    indexerStateRepository,
-    configurationsRepository,
-  )
+  const indexerService = new IndexerService(peripherals.database)
 
   const syncOptimizer = new SyncOptimizer(clock)
 
@@ -96,7 +80,7 @@ export function createTvlModule(
   )
 
   const pricesDataService = new PricesDataService({
-    priceRepository: peripherals.getRepository(PriceRepository),
+    db: peripherals.database,
     indexerService,
     clock,
     etherPriceConfig: getEtherPriceConfig(config.tvl),
@@ -104,14 +88,14 @@ export function createTvlModule(
   })
 
   const amountsDataService = new AmountsDataService({
-    amountRepository: peripherals.getRepository(AmountRepository),
+    db: peripherals.database,
     indexerService,
     clock,
     logger,
   })
 
   const valuesDataService = new ValuesDataService({
-    valueRepository: peripherals.getRepository(ValueRepository),
+    db: peripherals.database,
     indexerService,
     clock,
     logger,
@@ -166,12 +150,12 @@ export function createTvlModule(
     clock,
     logger,
     syncOptimizer,
-    peripherals.getRepository(TvlCleanerRepository),
+    peripherals.database,
     [
-      peripherals.getRepository(AmountRepository),
-      peripherals.getRepository(BlockTimestampRepository),
-      peripherals.getRepository(PriceRepository),
-      peripherals.getRepository(ValueRepository),
+      peripherals.database.amount,
+      peripherals.database.blockTimestamp,
+      peripherals.database.price,
+      peripherals.database.value,
     ],
   )
 

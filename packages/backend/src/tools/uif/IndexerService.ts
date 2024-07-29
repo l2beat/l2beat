@@ -1,4 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
+import { Database, IndexerStateRecord } from '@l2beat/database'
 import {
   AmountConfigEntry,
   CirculatingSupplyEntry,
@@ -6,38 +7,29 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
-import { IndexerConfigurationRepository } from './IndexerConfigurationRepository'
-import {
-  IndexerStateRecord,
-  IndexerStateRepository,
-} from './IndexerStateRepository'
 import { SavedConfiguration } from './multi/types'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
 export class IndexerService {
-  constructor(
-    private readonly indexerStateRepository: IndexerStateRepository,
-    private readonly indexerConfigurationRepository: IndexerConfigurationRepository,
-  ) {}
+  constructor(private readonly db: Database) {}
 
   // #region ManagedChildIndexer & ManagedMultiIndexer
 
   async getSafeHeight(indexerId: string): Promise<number | undefined> {
-    const record = await this.indexerStateRepository.findIndexerState(indexerId)
+    const record = await this.db.indexerState.findByIndexerId(indexerId)
     return record?.safeHeight
   }
 
   async getIndexerState(
     indexerId: string,
   ): Promise<IndexerStateRecord | undefined> {
-    const record = await this.indexerStateRepository.findIndexerState(indexerId)
+    const record = await this.db.indexerState.findByIndexerId(indexerId)
     return record
   }
 
   async setSafeHeight(indexerId: string, safeHeight: number) {
-    await this.indexerStateRepository.setSafeHeight(indexerId, safeHeight)
+    await this.db.indexerState.updateSafeHeight(indexerId, safeHeight)
   }
 
   async setInitialState(
@@ -45,7 +37,7 @@ export class IndexerService {
     safeHeight: number,
     configHash?: string,
   ) {
-    await this.indexerStateRepository.addOrUpdate({
+    await this.db.indexerState.upsert({
       indexerId,
       safeHeight,
       configHash,
@@ -65,7 +57,7 @@ export class IndexerService {
       properties: encode(config.properties),
     }))
 
-    await this.indexerConfigurationRepository.addOrUpdateMany(
+    await this.db.indexerConfiguration.upsertMany(
       encoded.map((e) => ({ ...e, indexerId })),
     )
   }
@@ -76,10 +68,7 @@ export class IndexerService {
     const configurations: (Omit<SavedConfiguration<T>, 'properties'> & {
       indexerId?: string
       properties?: string
-    })[] =
-      await this.indexerConfigurationRepository.getSavedConfigurations(
-        indexerId,
-      )
+    })[] = await this.db.indexerConfiguration.getByIndexerId(indexerId)
 
     for (const config of configurations) {
       // biome-ignore lint/performance/noDelete: not a performance problem
@@ -91,15 +80,13 @@ export class IndexerService {
     return configurations
   }
 
-  async updateSavedConfigurations(
+  async updateConfigurationsCurrentHeight(
     indexerId: string,
     currentHeight: number | null,
-    trx: Knex.Transaction,
   ): Promise<void> {
-    await this.indexerConfigurationRepository.updateSavedConfigurations(
+    await this.db.indexerConfiguration.updateCurrentHeights(
       indexerId,
       currentHeight,
-      trx,
     )
   }
 
@@ -107,10 +94,16 @@ export class IndexerService {
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    await this.indexerConfigurationRepository.deleteConfigurationsExcluding(
-      indexerId,
-      configurationIds,
+    const savedConfigurations =
+      await this.db.indexerConfiguration.getIdsByIndexer(indexerId)
+
+    const runtimeConfigurations = new Set(configurationIds)
+
+    const unused = savedConfigurations.filter(
+      (c) => !runtimeConfigurations.has(c),
     )
+
+    await this.db.indexerConfiguration.deleteConfigurations(indexerId, unused)
   }
 
   // #endregion
@@ -134,7 +127,7 @@ export class IndexerService {
         c.type === 'circulatingSupply',
     )
 
-    const indexersState = await this.indexerStateRepository.getByIndexerIds(
+    const indexersState = await this.db.indexerState.getByIndexerIds(
       circulatingSupplyConfigs.map(
         (c) => `circulating_supply_indexer::${c.coingeckoId}`,
       ),
@@ -188,7 +181,7 @@ export class IndexerService {
     const lagging = []
 
     const configurationsState =
-      await this.indexerConfigurationRepository.getSavedConfigurationsByIds(
+      await this.db.indexerConfiguration.getByConfigurationIds(
         configurations.map((c) => c.configId),
       )
 

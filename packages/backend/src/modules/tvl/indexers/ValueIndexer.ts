@@ -5,11 +5,11 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 
+import { Database } from '@l2beat/database'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
-import { ValueRepository } from '../repositories/ValueRepository'
 import { ValueService } from '../services/ValueService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { AmountId, createAmountId } from '../utils/createAmountId'
@@ -20,7 +20,7 @@ import { getValuesConfigHash } from '../utils/getValuesConfigHash'
 export interface ValueIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   valueService: ValueService
-  valueRepository: ValueRepository
+  db: Database
   priceConfigs: PriceConfigEntry[]
   amountConfigs: AmountConfigEntry[]
   project: ProjectId
@@ -84,7 +84,7 @@ export class ValueIndexer extends ManagedChildIndexer {
       timestamps,
     )
 
-    await this.$.valueRepository.addOrUpdateMany(values)
+    await this.$.db.value.upsertMany(values)
 
     this.logger.info('Saved values into DB', {
       from,

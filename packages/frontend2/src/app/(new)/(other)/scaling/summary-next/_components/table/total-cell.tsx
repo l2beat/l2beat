@@ -35,12 +35,12 @@ export function TotalCell({ data }: TotalCellProps) {
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
-            <span className="text-base md:text-lg font-bold">
+            <span className="text-base font-bold md:text-lg">
               ${formatNumber(data.tvl)}
             </span>
             <PercentChange
               value={data.sevenDayChange}
-              className="!text-base ml-1 font-medium"
+              className="ml-1 !text-base font-medium"
             />
           </div>
           <TokenBreakdown

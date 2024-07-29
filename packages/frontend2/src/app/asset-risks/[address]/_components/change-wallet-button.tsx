@@ -12,10 +12,10 @@ export function ChangeWalletButton({ wallet }: { wallet?: string }) {
           isConnected &&
           (!wallet || wallet === address || wallet === ensName) && (
             <>
-              <div className="hidden md:flex items-center">
+              <div className="hidden items-center md:flex">
                 <ChangeButton show={show} />
               </div>
-              <div className="md:hidden flex items-center">
+              <div className="flex items-center md:hidden">
                 <WalletDrawer>
                   <DrawerTrigger>
                     <ChangeButton />

@@ -20,18 +20,15 @@ const getCachedEconomicSecurity = cache(
     // TODO: It's probably better to not fetch all data at once
 
     const stakes = Object.fromEntries(
-      (await db.stake.findMany()).map((s) => [s.id, s.thresholdStake]),
+      (await db.stake.getAll()).map((s) => [s.id, s.thresholdStake]),
     )
 
     const currentPrices = Object.fromEntries(
-      (await db.currentPrice.findMany()).map((p) => [
-        p.coingeckoId,
-        p.priceUsd,
-      ]),
+      (await db.currentPrice.getAll()).map((p) => [p.coingeckoId, p.priceUsd]),
     )
 
     const arr = daLayers.map((daLayer) => {
-      if (daLayer.kind !== 'public-blockchain' || !daLayer.economicSecurity) {
+      if (daLayer.kind !== 'PublicBlockchain' || !daLayer.economicSecurity) {
         return undefined
       }
 

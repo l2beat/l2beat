@@ -7,13 +7,13 @@ import {
 import {
   assert,
   type ImplementationChangeReportApiResponse,
-  type VerificationStatus,
+  type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
-import { getVerificationStatus } from '../verification-status/get-verification-status'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { type TvlResponse } from './get-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
@@ -36,20 +36,20 @@ export async function getScalingSummaryEntries(tvl: TvlResponse) {
   const orderedLayer3s = orderByTvl(LAYER_3S, preprocessedTvl)
 
   const implementationChangeReport = await getImplementationChangeReport()
-  const verificationStatus = await getVerificationStatus()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
 
   return {
     layer2s: getLayer2s({
       projects: orderedLayer2s,
       tvl,
       implementationChangeReport,
-      verificationStatus,
+      projectsVerificationStatuses,
     }),
     layer3s: getLayer3s({
       projects: orderedLayer3s,
       tvl,
       implementationChangeReport,
-      verificationStatus,
+      projectsVerificationStatuses,
     }),
   }
 }
@@ -58,12 +58,16 @@ interface Params<T> {
   projects: T[]
   tvl: TvlResponse
   implementationChangeReport: ImplementationChangeReportApiResponse
-  verificationStatus: VerificationStatus
+  projectsVerificationStatuses: ProjectsVerificationStatuses
 }
 
 function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
-  const { projects, tvl, implementationChangeReport, verificationStatus } =
-    params
+  const {
+    projects,
+    tvl,
+    implementationChangeReport,
+    projectsVerificationStatuses,
+  } = params
   const entries = projects.map((layer2) => {
     const projectTvl = tvl.projects[layer2.id.toString()]
 
@@ -73,7 +77,7 @@ function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
       : undefined
     const { tvl: aggregateTvl } = getTvlWithChange(tvl.layers2s)
 
-    const isVerified = !!verificationStatus.projects[layer2.id.toString()]
+    const isVerified = !!projectsVerificationStatuses[layer2.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[layer2.id.toString()]
 
@@ -116,8 +120,12 @@ function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
 }
 
 function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
-  const { projects, tvl, implementationChangeReport, verificationStatus } =
-    params
+  const {
+    projects,
+    tvl,
+    implementationChangeReport,
+    projectsVerificationStatuses,
+  } = params
   const entries = projects.map((layer3) => {
     const projectTvl = tvl.projects[layer3.id.toString()]
     const associatedTokens = layer3.config.associatedTokens ?? []
@@ -134,7 +142,7 @@ function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
       'Programmer Error: Can not find host chain',
     )
 
-    const isVerified = !!verificationStatus.projects[layer3.id.toString()]
+    const isVerified = !!projectsVerificationStatuses[layer3.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[layer3.id.toString()]
 

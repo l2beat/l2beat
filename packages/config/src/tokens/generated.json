@@ -152,6 +152,21 @@
       "supply": "zero"
     },
     {
+      "id": "alt-altlayer-token",
+      "name": "AltLayer Token",
+      "coingeckoId": "altlayer",
+      "address": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+      "symbol": "ALT",
+      "decimals": 18,
+      "deploymentTimestamp": 1704446615,
+      "coingeckoListingTimestamp": 1706227200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34608/large/Logomark_200x200.png?1715107868",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "amo-amino",
       "name": "Amino",
       "coingeckoId": "amino",
@@ -312,6 +327,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/681/large/Avatar_Circle_x6.png?1696501871",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "arb-arbitrum",
+      "name": "Arbitrum",
+      "coingeckoId": "arbitrum",
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "symbol": "ARB",
+      "decimals": 18,
+      "deploymentTimestamp": 1678968467,
+      "coingeckoListingTimestamp": 1679529600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2111,21 +2141,6 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "stablecoin",
       "iconUrl": "https://assets.coingecko.com/coins/images/9567/large/HUSD.jpg?1696509647",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
-      "id": "hypr-hypr",
-      "name": "HYPR",
-      "coingeckoId": "hypr-network",
-      "address": "0x31aDdA225642a8f4D7e90d4152BE6661ab22a5a2",
-      "symbol": "HYPR",
-      "decimals": 18,
-      "deploymentTimestamp": 1700052659,
-      "coingeckoListingTimestamp": 1700524800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/33071/large/655412078d33fa9fee8e3a1b_hypr_logo_200.png?1700598490",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6429,6 +6444,25 @@
       "supply": "zero"
     },
     {
+      "id": "cyber:cyber-cyberconnect",
+      "name": "CyberConnect",
+      "coingeckoId": "cyberconnect",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+      "symbol": "CYBER",
+      "decimals": 18,
+      "deploymentTimestamp": 1715900791,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31274/large/token.png?1715826754",
+      "chainId": 7560,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "id": "kinto:usd+-usd+",
       "name": "USD+",
       "coingeckoId": "dinari-usd",
@@ -6880,7 +6914,7 @@
       }
     },
     {
-      "id": "arb-arbitrum",
+      "id": "arbitrum:arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -6889,7 +6923,7 @@
       "deploymentTimestamp": 1678968508,
       "coingeckoListingTimestamp": 1679529600,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
@@ -7456,7 +7490,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 42161,
       "source": "native",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "arbitrum:sparta-sparta",
@@ -8371,6 +8405,24 @@
       "supply": "zero"
     },
     {
+      "id": "scroll:solvbtc-free-bridged-solvbtc.b",
+      "name": "Free Bridged SolvBTC.b",
+      "coingeckoId": "solv-btc",
+      "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1716874538,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 534352,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
+    {
       "id": "scroll:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -8468,6 +8520,25 @@
       "coingeckoListingTimestamp": 1702512000,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 534352,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "scroll:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1718321733,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 534352,
       "source": "external",
       "supply": "totalSupply",

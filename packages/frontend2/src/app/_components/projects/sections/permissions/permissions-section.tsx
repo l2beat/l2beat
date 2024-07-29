@@ -33,7 +33,12 @@ export function PermissionsSection({
       </h3>
       <div className="my-4">
         {permissions.map((permission, i) => (
-          <ContractEntry key={i} contract={permission} className="my-4" />
+          <ContractEntry
+            key={i}
+            contract={permission}
+            className="my-4"
+            type="permission"
+          />
         ))}
         {nativePermissions !== undefined &&
           Object.entries(nativePermissions).map(([chainName, permissions]) => {
@@ -51,6 +56,7 @@ export function PermissionsSection({
                     key={i}
                     contract={permission}
                     className="my-4"
+                    type="permission"
                   />
                 ))}
               </div>

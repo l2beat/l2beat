@@ -1,6 +1,6 @@
+import { Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -11,16 +11,13 @@ import {
   RemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
-import { L2CostsRepository } from './modules/l2-costs/repositories/L2CostsRepository'
-import { LivenessRepository } from './modules/liveness/repositories/LivenessRepository'
 import { TxUpdaterInterface } from './types/TxUpdaterInterface'
 
 interface Dependencies
   extends Omit<ManagedMultiIndexerOptions<TrackedTxConfigEntry>, 'name'> {
   updaters: TxUpdaterInterface[]
   trackedTxsClient: TrackedTxsClient
-  livenessRepository: LivenessRepository
-  l2CostsRepository: L2CostsRepository
+  db: Database
 }
 
 export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry> {
@@ -33,7 +30,6 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<TrackedTxConfigEntry>[],
-    trx: Knex.Transaction,
   ) {
     const { from: unixFrom, to: unixTo } = clampRangeToDay(from, to)
 
@@ -43,29 +39,31 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
       unixTo,
     )
 
-    for (const updater of this.$.updaters) {
-      const filteredTxs = txs.filter((tx) => tx.type === updater.type)
-      await updater.update(filteredTxs, trx)
-    }
-    this.logger.info('Saved txs into DB', {
-      from,
-      to: unixTo.toNumber(),
-      configurationsToSync: configurations.length,
-    })
+    return async () => {
+      for (const updater of this.$.updaters) {
+        const filteredTxs = txs.filter((tx) => tx.type === updater.type)
+        await updater.update(filteredTxs)
+      }
+      this.logger.info('Saved txs into DB', {
+        from,
+        to: unixTo.toNumber(),
+        configurationsToSync: configurations.length,
+      })
 
-    return unixTo.toNumber()
+      return unixTo.toNumber()
+    }
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
       const [livenessDeletedRecords, l2CostsDeletedRecords] = await Promise.all(
         [
-          this.$.livenessRepository.deleteByConfigInTimeRange(
+          this.$.db.liveness.deleteByConfigInTimeRange(
             configuration.id,
             new UnixTime(configuration.from),
             new UnixTime(configuration.to),
           ),
-          this.$.l2CostsRepository.deleteByConfigInTimeRange(
+          this.$.db.l2Cost.deleteByConfigInTimeRange(
             configuration.id,
             new UnixTime(configuration.from),
             new UnixTime(configuration.to),

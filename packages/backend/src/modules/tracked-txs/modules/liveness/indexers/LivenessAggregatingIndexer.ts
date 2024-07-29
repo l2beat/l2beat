@@ -69,7 +69,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
     const updatedLivenessRecords = await this.generateLiveness(targetHeight)
 
-    await this.$.db.aggregatedLiveness.addOrUpdateMany(updatedLivenessRecords)
+    await this.$.db.aggregatedLiveness.upsertMany(updatedLivenessRecords)
 
     return parentSafeHeight
   }
@@ -178,7 +178,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
         min: stats.minimumInSeconds,
         avg: stats.averageInSeconds,
         max: stats.maximumInSeconds,
-        timestamp: syncTo,
+        updatedAt: syncTo,
       }
 
       aggregatedRecords.push(record)

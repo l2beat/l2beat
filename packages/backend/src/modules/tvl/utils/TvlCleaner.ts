@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 
-import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
+import { Database } from '@l2beat/database'
 import { Clock } from '../../../tools/Clock'
 import { TaskQueue } from '../../../tools/queue/TaskQueue'
 import { SyncOptimizer } from './SyncOptimizer'
@@ -28,7 +28,7 @@ export class TvlCleaner {
     private readonly clock: Clock,
     private readonly logger: Logger,
     private readonly syncOptimizer: SyncOptimizer,
-    private readonly tvlCleanerRepository: TvlCleanerRepository,
+    private readonly db: Database,
     private readonly repositoriesToClean: TvlRepositoryToClean[],
   ) {
     this.logger = this.logger.for(this)
@@ -58,11 +58,11 @@ export class TvlCleaner {
     for (const repository of this.repositoriesToClean) {
       const repositoryName = repository.constructor.name
       const tvlCleanerRecord =
-        await this.tvlCleanerRepository.find(repositoryName)
+        await this.db.tvlCleaner.findByRepositoryName(repositoryName)
 
       if (
-        tvlCleanerRecord?.hourlyCleanedUntil.gte(hourlyDeletionBoundary) &&
-        tvlCleanerRecord.sixHourlyCleanedUntil.gte(sixHourlyDeletionBoundary)
+        tvlCleanerRecord?.hourlyCleanedUntil?.gte(hourlyDeletionBoundary) &&
+        tvlCleanerRecord.sixHourlyCleanedUntil?.gte(sixHourlyDeletionBoundary)
       ) {
         this.logger.info(
           `Nothing to clean for ${repositoryName}, waiting for next hour`,
@@ -73,15 +73,15 @@ export class TvlCleaner {
       this.logger.info(`Cleaning ${repositoryName}`)
 
       const hourly = await repository.deleteHourlyUntil({
-        from: tvlCleanerRecord?.hourlyCleanedUntil,
+        from: tvlCleanerRecord?.hourlyCleanedUntil ?? undefined,
         to: hourlyDeletionBoundary,
       })
       const sixHourly = await repository.deleteSixHourlyUntil({
-        from: tvlCleanerRecord?.sixHourlyCleanedUntil,
+        from: tvlCleanerRecord?.sixHourlyCleanedUntil ?? undefined,
         to: sixHourlyDeletionBoundary,
       })
 
-      await this.tvlCleanerRepository.addOrUpdate({
+      await this.db.tvlCleaner.upsert({
         repositoryName: repositoryName,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,

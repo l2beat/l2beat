@@ -1,4 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
+import { AmountRecord, Database } from '@l2beat/database'
 import {
   CirculatingSupplyEntry,
   CoingeckoId,
@@ -9,10 +10,6 @@ import {
 import { expect, mockObject } from 'earl'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import {
-  AmountRecord,
-  AmountRepository,
-} from '../repositories/AmountRepository'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
@@ -29,8 +26,8 @@ describe(CirculatingSupplyIndexer.name, () => {
       const to = 300
       const adjustedTo = 200
 
-      const amountRepository = mockObject<AmountRepository>({
-        addMany: async () => 1,
+      const amountRepository = mockObject<Database['amount']>({
+        insertMany: async () => 1,
       })
 
       const configuration = mockObject<CirculatingSupplyEntry>({
@@ -55,7 +52,7 @@ describe(CirculatingSupplyIndexer.name, () => {
       })
 
       const indexer = new CirculatingSupplyIndexer({
-        amountRepository,
+        db: mockObject<Database>({ amount: amountRepository }),
         configuration,
         parents: [],
         circulatingSupplyService,
@@ -80,7 +77,7 @@ describe(CirculatingSupplyIndexer.name, () => {
         configuration,
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([
         amount(configuration, 200),
       ])
 
@@ -100,12 +97,12 @@ describe(CirculatingSupplyIndexer.name, () => {
         coingeckoId: CoingeckoId('id'),
       })
 
-      const amountRepository = mockObject<AmountRepository>({
+      const amountRepository = mockObject<Database['amount']>({
         deleteByConfigAfter: async () => 1,
       })
 
       const indexer = new CirculatingSupplyIndexer({
-        amountRepository,
+        db: mockObject<Database>({ amount: amountRepository }),
         configuration,
         parents: [],
         circulatingSupplyService: mockObject<CirculatingSupplyService>({}),

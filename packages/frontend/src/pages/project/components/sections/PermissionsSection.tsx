@@ -50,6 +50,7 @@ export function PermissionsSection({
             verificationStatus={verificationStatus}
             manuallyVerifiedContracts={manuallyVerifiedContracts}
             className="my-4"
+            type="permission"
           />
         ))}
         {nativePermissions !== undefined &&
@@ -67,6 +68,7 @@ export function PermissionsSection({
                     verificationStatus={verificationStatus}
                     manuallyVerifiedContracts={manuallyVerifiedContracts}
                     className="my-4"
+                    type="permission"
                   />
                 ))}
               </div>

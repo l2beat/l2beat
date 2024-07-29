@@ -10,8 +10,6 @@ interface TokenValueCellProps {
   assetId: AssetId
   usdValue: string
   escrows?: TVLProjectBreakdown['canonical'][number]['escrows']
-  forCanonical?: boolean
-  forExternal?: boolean
 }
 
 export function TokenValueCell(props: TokenValueCellProps) {
@@ -23,7 +21,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
         ? 'circulating supply'
         : ''
 
-  return props.forCanonical && props.escrows ? (
+  return token?.source === 'canonical' && props.escrows ? (
     <Tooltip>
       <TooltipTrigger className="flex flex-col items-end gap-2 font-bold text-xs">
         ${formatNumberWithCommas(Number(props.usdValue))}
@@ -42,7 +40,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
       <TooltipContent>
         Calculation formula:
         <br />
-        Value = circulating supply * price
+        Value = tokens locked in the escrow * price
       </TooltipContent>
     </Tooltip>
   ) : (
@@ -53,7 +51,7 @@ export function TokenValueCell(props: TokenValueCellProps) {
       <TooltipContent>
         Calculation formula:
         <br />
-        Value = {props.forExternal ? 'circulating supply' : formula} * price
+        Value = {formula} * price
       </TooltipContent>
     </Tooltip>
   )

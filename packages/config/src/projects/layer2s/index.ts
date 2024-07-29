@@ -46,12 +46,14 @@ import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gpt } from './gpt'
 import { grvt } from './grvt'
+import { gwyneth } from './gwyneth'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
@@ -76,6 +78,7 @@ import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
+import { network3 } from './network3'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
@@ -190,11 +193,13 @@ export const layer2s: Layer2[] = [
   gpt,
   galxegravity,
   grvt,
+  gwyneth,
   hermez,
   hybrid,
   hychain,
   hypr,
   immutablex,
+  intmax,
   kakarotzkevm,
   karak,
   kinto,
@@ -220,6 +225,7 @@ export const layer2s: Layer2[] = [
   myria,
   myshell,
   nil,
+  network3,
   nova,
   oev,
   ola,

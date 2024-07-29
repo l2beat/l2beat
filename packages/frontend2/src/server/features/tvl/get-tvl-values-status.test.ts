@@ -66,11 +66,17 @@ function mockValue(source: string, timestamp: number) {
     dataSource: source,
     timestamp: new UnixTime(timestamp),
     canonical: 0n,
+    canonicalAssociated: 0n,
     canonicalForTotal: 0n,
+    canonicalAssociatedForTotal: 0n,
     external: 0n,
+    externalAssociated: 0n,
     externalForTotal: 0n,
+    externalAssociatedForTotal: 0n,
     native: 0n,
+    nativeAssociated: 0n,
     nativeForTotal: 0n,
+    nativeAssociatedForTotal: 0n,
   }
 }
 function mockProject(sources: string[]): TvlProject {

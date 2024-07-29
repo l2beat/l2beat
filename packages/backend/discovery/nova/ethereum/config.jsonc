@@ -3,10 +3,10 @@
   "chain": "ethereum",
   "name": "nova",
   "initialAddresses": [
-    "0xFb209827c58283535b744575e11953DCC4bEAD88",
-    "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
-    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786"
+    "0xFb209827c58283535b744575e11953DCC4bEAD88", // RollupProxy
+    "0xc840838bc438d73c16c2f8b22d2ce3669963cd48", // L1GatewayRouter
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f", // L1CustomGateway
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786" // L1DaiGateway
   ],
   "names": {
     "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",

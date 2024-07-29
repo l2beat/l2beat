@@ -23,7 +23,7 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
   return (
     <>
       {!isNavigationEmpty && (
-        <div className="sticky top-0 z-100 md:hidden -mx-4">
+        <div className="sticky top-0 z-100 -mx-4 md:hidden">
           <MobileProjectNavigation sections={daProjectEntry.projectDetails} />
         </div>
       )}

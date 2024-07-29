@@ -7,6 +7,7 @@ import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
 import { createActivityModule } from './modules/activity/ActivityModule'
+import { createActivity2Module } from './modules/activity2/Activity2Module'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
 import { createFinalityModule } from './modules/finality/FinalityModule'
@@ -29,7 +30,10 @@ export class Application {
   constructor(config: Config, logger: Logger) {
     const database = new LegacyDatabase(config.database, logger, config.name)
 
-    const kyselyDatabase = createDatabase(config.database.connection)
+    const kyselyDatabase = createDatabase({
+      ...config.database.connection,
+      ...config.database.connectionPoolSize,
+    })
 
     const clock = new Clock(
       config.clock.minBlockTimestamp,
@@ -52,6 +56,7 @@ export class Application {
       createHealthModule(config),
       createMetricsModule(config),
       createActivityModule(config, logger, peripherals, clock),
+      createActivity2Module(config, logger, peripherals, kyselyDatabase, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createImplementationChangeModule(config, logger, peripherals),
       createStatusModule(config, logger, peripherals),

@@ -5,12 +5,12 @@ interface TestedRepository<T> {
   deleteHourlyUntil: (dateRange: {
     from: UnixTime | undefined
     to: UnixTime
-  }) => Promise<number>
+  }) => Promise<unknown>
   deleteSixHourlyUntil: (dateRange: {
     from: UnixTime | undefined
     to: UnixTime
-  }) => Promise<number>
-  addMany: (records: T[]) => Promise<number>
+  }) => Promise<unknown>
+  insertMany: (records: T[]) => Promise<unknown>
   getAll: () => Promise<T[]>
 }
 
@@ -27,7 +27,7 @@ export function testDeletingArchivedRecords<T>(
       entries.push(fakeRecord(new UnixTime(i)))
     }
 
-    await repository.addMany(entries)
+    await repository.insertMany(entries)
     await repository.deleteHourlyUntil({ from: undefined, to })
     const results = await repository.getAll()
 
@@ -51,7 +51,7 @@ export function testDeletingArchivedRecords<T>(
       entries.push(fakeRecord(new UnixTime(i)))
     }
 
-    await repository.addMany(entries)
+    await repository.insertMany(entries)
     await repository.deleteHourlyUntil({ from, to })
     const results = await repository.getAll()
 
@@ -79,7 +79,7 @@ export function testDeletingArchivedRecords<T>(
       entries.push(fakeRecord(new UnixTime(i)))
     }
 
-    await repository.addMany(entries)
+    await repository.insertMany(entries)
     await repository.deleteSixHourlyUntil({ from: undefined, to })
     const results = await repository.getAll()
 
@@ -104,7 +104,7 @@ export function testDeletingArchivedRecords<T>(
       entries.push(fakeRecord(new UnixTime(i)))
     }
 
-    await repository.addMany(entries)
+    await repository.insertMany(entries)
     await repository.deleteSixHourlyUntil({ from, to })
     const results = await repository.getAll()
 

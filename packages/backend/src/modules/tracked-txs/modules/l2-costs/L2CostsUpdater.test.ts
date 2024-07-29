@@ -1,14 +1,10 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database, L2CostRecord } from '@l2beat/database'
 import { TrackedTxConfigEntry, createTrackedTxId } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
-import { Knex } from 'knex'
 import { TrackedTxResult } from '../../types/model'
 import { L2CostsUpdater } from './L2CostsUpdater'
-import {
-  L2CostsRecord,
-  L2CostsRepository,
-} from './repositories/L2CostsRepository'
 
 const MIN_TIMESTAMP = UnixTime.now()
 
@@ -16,42 +12,51 @@ describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.update.name, () => {
     it('skips if no transactions', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(repository, Logger.SILENT)
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+      )
 
-      await updater.update([], TRX)
+      await updater.update([])
 
-      expect(repository.addMany).not.toHaveBeenCalled()
+      expect(repository.insertMany).not.toHaveBeenCalled()
     })
 
     it('transforms and saves to db ', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(repository, Logger.SILENT)
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+      )
       const transactions = getMockTrackedTxResults()
 
-      const mockRecord: L2CostsRecord[] = [
-        mockObject<L2CostsRecord>({
+      const mockRecord: L2CostRecord[] = [
+        mockObject<L2CostRecord>({
           txHash: '0x123',
         }),
       ]
 
       updater.transform = mockFn().resolvesTo(mockRecord)
 
-      await updater.update(transactions, TRX)
+      await updater.update(transactions)
 
-      expect(repository.addMany).toHaveBeenNthCalledWith(1, mockRecord, TRX)
+      expect(repository.insertMany).toHaveBeenNthCalledWith(1, mockRecord)
     })
   })
 
   describe(L2CostsUpdater.prototype.transform.name, () => {
     it('transforms transactions and adds details', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(repository, Logger.SILENT)
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+      )
 
       const transactions = getMockTrackedTxResults()
 
       const result = await updater.transform(transactions)
 
-      const expected: L2CostsRecord[] = [
+      const expected: L2CostRecord[] = [
         {
           txHash: transactions[0].hash,
           timestamp: transactions[0].blockTimestamp,
@@ -85,28 +90,27 @@ describe(L2CostsUpdater.name, () => {
   describe(L2CostsUpdater.prototype.deleteFromById.name, () => {
     it('calls repository deleteAfter', async () => {
       const repository = getMockL2CostsRepository()
-      const updater = new L2CostsUpdater(repository, Logger.SILENT)
+      const updater = new L2CostsUpdater(
+        mockObject<Database>({ l2Cost: repository }),
+        Logger.SILENT,
+      )
 
       const id = createTrackedTxId.random()
-      await updater.deleteFromById(id, MIN_TIMESTAMP, TRX)
+      await updater.deleteFromById(id, MIN_TIMESTAMP)
 
       expect(repository.deleteFromById).toHaveBeenNthCalledWith(
         1,
         id,
         MIN_TIMESTAMP,
-        TRX,
       )
     })
   })
 })
 
-const TRX = mockObject<Knex.Transaction>({})
-
 function getMockL2CostsRepository() {
-  return mockObject<L2CostsRepository>({
+  return mockObject<Database['l2Cost']>({
     deleteFromById: async () => 0,
-    runInTransaction: async (fn) => fn(TRX),
-    addMany: async () => 0,
+    insertMany: async () => 0,
   })
 }
 

@@ -336,10 +336,7 @@ export class ProjectDiscovery {
     const modulesDescriptions = modules
       .map((m) => this.getContractByAddress(m))
       .filter(notUndefined)
-      .map(
-        (contract) =>
-          `${contract.name} (${this.describeContractOrEoa(contract)})`,
-      )
+      .map((contract) => `${contract.name}`)
 
     const fullModulesDescription =
       modulesDescriptions.length === 0

@@ -83,7 +83,7 @@ async function Header(props: HeaderProps) {
         <div className="grid md:grid-cols-12">
           <div className="relative leading-normal md:col-span-7">
             <h1 className="text-6xl font-bold">Donate</h1>
-            <div className="space-y-6 mt-6">
+            <div className="mt-6 space-y-6">
               <p>
                 Thank you for supporting L2BEAT&apos;s mission to bring
                 education and transparency to the blockchain space.
@@ -122,14 +122,14 @@ async function Header(props: HeaderProps) {
             </div>
 
             <div className="relative z-10 mt-6">
-              <span className="text-sm text-purple-100 dark:text-pink-200 uppercase">
+              <span className="text-sm uppercase text-purple-100 dark:text-pink-200">
                 Donate through
               </span>
               <div className="mt-2 flex flex-col gap-2 md:flex-row md:flex-wrap">
                 {props.networks.map((network) => (
                   <OutLink
                     key={network.name}
-                    className="flex justify-center items-center gap-1.5 text-sm rounded-lg border border-gray-400 bg-gray-100 py-3 transition-colors duration-200 hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:px-3 md:py-1 w-full md:w-max"
+                    className="flex w-full items-center justify-center gap-1.5 rounded-lg border border-gray-400 bg-gray-100 py-3 text-sm transition-colors duration-200 hover:bg-gray-200 dark:border-zinc-500 dark:bg-zinc-800 dark:hover:bg-zinc-900 md:w-max md:px-3 md:py-1"
                     href={network.linkURL}
                     underline={false}
                   >

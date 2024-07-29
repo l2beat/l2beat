@@ -3,7 +3,6 @@ import {
   CoingeckoPriceConfigEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import {
   ManagedMultiIndexer,
@@ -13,14 +12,12 @@ import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { PriceRepository } from '../repositories/PriceRepository'
 import { PriceService } from '../services/PriceService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 
 export interface PriceIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<CoingeckoPriceConfigEntry>, 'name'> {
   priceService: PriceService
-  priceRepository: PriceRepository
   syncOptimizer: SyncOptimizer
   coingeckoId: CoingeckoId
 }
@@ -36,7 +33,6 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     from: number,
     to: number,
     configurations: Configuration<CoingeckoPriceConfigEntry>[],
-    trx: Knex.Transaction,
   ) {
     const adjustedTo = this.$.priceService.getAdjustedTo(from, to)
 
@@ -58,26 +54,26 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
       this.$.syncOptimizer.shouldTimestampBeSynced(p.timestamp),
     )
 
-    this.logger.info('Saving prices into DB', {
-      from,
-      to: adjustedTo.toNumber(),
-      configurationsToSync: configurations.length,
-      prices: optimizedPrices.length,
-    })
+    return async () => {
+      await this.$.db.price.insertMany(optimizedPrices)
+      this.logger.info('Saved prices into DB', {
+        from,
+        to: adjustedTo.toNumber(),
+        configurationsToSync: configurations.length,
+        prices: optimizedPrices.length,
+      })
 
-    await this.$.priceRepository.addMany(optimizedPrices, trx)
-
-    return adjustedTo.toNumber()
+      return adjustedTo.toNumber()
+    }
   }
 
   override async removeData(configurations: RemovalConfiguration[]) {
     for (const configuration of configurations) {
-      const deletedRecords =
-        await this.$.priceRepository.deleteByConfigInTimeRange(
-          configuration.id,
-          new UnixTime(configuration.from),
-          new UnixTime(configuration.to),
-        )
+      const deletedRecords = await this.$.db.price.deleteByConfigInTimeRange(
+        configuration.id,
+        new UnixTime(configuration.from),
+        new UnixTime(configuration.to),
+      )
 
       if (deletedRecords > 0) {
         this.logger.info('Deleted records', {

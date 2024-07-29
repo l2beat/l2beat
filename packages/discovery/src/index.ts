@@ -2,10 +2,7 @@ export { discover } from './cli/discoverCommand'
 export { getChainConfig } from './config/config.discovery'
 export type {
   DiscoveryChainConfig,
-  DiscoveryCliConfig,
   DiscoveryModuleConfig,
-  InversionConfig,
-  SingleDiscoveryModuleConfig,
 } from './config/types'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { AddressAnalyzer } from './discovery/analysis/AddressAnalyzer'
