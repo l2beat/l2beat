@@ -14,6 +14,8 @@ jobs:
   check-heroku-api-key:
     name: Check prerequisites
     runs-on: ubuntu-latest
+    outputs:
+      heroku_key_set: ${{ steps.check_key.outputs.heroku_key_set }}
     env:
       HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
@@ -21,7 +23,7 @@ jobs:
       - name: Check if HEROKU_TOKEN is set
         id: check_key
         run: |
-          if [ -z $HEROKU_API_KEY ] && [ -z $HEROKU_ORG ]; then
+          if [ -z $HEROKU_API_KEY ] && [ -z $HEROKU_ORGANIZATION ]; then
             echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
           else
             echo "heroku_key_set=true" >> "$GITHUB_OUTPUT"
