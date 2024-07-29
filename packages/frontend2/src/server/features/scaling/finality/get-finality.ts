@@ -185,7 +185,7 @@ async function getLatestConfigurations() {
   }
 
   const configurations = (
-    await db.indexerConfiguration.getSavedConfigurations('tracked_txs_indexer')
+    await db.indexerConfiguration.getByIndexerId('tracked_txs_indexer')
   ).map((c) => ({
     ...c,
     properties: coerce(c.properties),
