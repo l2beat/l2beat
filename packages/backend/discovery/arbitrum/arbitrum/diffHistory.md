@@ -1,3 +1,140 @@
+Generated with discovered.json: 0xefe337070da8927bb9e6b78750ba44724e7ebcf8
+
+# Diff at Wed, 24 Jul 2024 12:09:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f8d5c0ccc8d74a077f85a8dca4038e175812c389 block: 233533906
+- current block number: 235552250
+
+## Description
+
+Add L2 contracts to discovery config.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 233533906 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract L2CustomGateway (0x096760F208390250649E3e8763348E783AEF5562)
+    +++ description: None
+```
+
+```diff
+    contract SC9 (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      name:
+-        "SC9"
++        "L2SecurityCouncilEmergency"
+    }
+```
+
+```diff
+    contract SC7 (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      name:
+-        "SC7"
++        "L2SecurityCouncilPropose"
+    }
+```
+
+```diff
+    contract L2ReverseCustomGateway (0xCaD7828a19b363A2B44717AFB1786B5196974D8E) {
+    +++ description: None
+      name:
+-        "L2ReverseCustomGateway"
++        "L2ARBGateway"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827) {
+    +++ description: None
+      name:
+-        "UpgradeExecutor"
++        "L2UpgradeExecutor"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      name:
+-        "ProxyAdmin"
++        "L2GatewaysProxyAdmin"
+      assignedPermissions.admin.2:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+      assignedPermissions.admin.1:
+-        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
++        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      assignedPermissions.admin.0:
+-        "0x096760F208390250649E3e8763348E783AEF5562"
++        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      name:
+-        "ProxyAdmin"
++        "L2ProxyAdmin"
+      assignedPermissions.admin.8:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      assignedPermissions.admin.7:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      assignedPermissions.admin.6:
+-        "0xF3FC178157fb3c87548bAA86F9d24BA38E649B58"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract FixedDelegateErc20Wallet (0xF3FC178157fb3c87548bAA86F9d24BA38E649B58)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract ConstitutionHash (0x1D62fFeB72e4c360CcBbacf7c965153b00260417)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2SurplusFee (0x32e7AF5A8151934F3787d0cD59EB6EDd0a736b1d)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2DAIGateway (0x467194771dAe2967Aef3ECbEDD3Bf9a310C76C65)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2WethGateway (0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2LPTGateway (0x6D2457a4ad276000A615295f7A80F79E48CcD318)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract L2BaseFee (0xbF5041Fc07E1c866D15c749156657B8eEd0fb649)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x88694b18fb31b6808b8357614cdfb72568db8723
 
 # Diff at Tue, 16 Jul 2024 07:37:04 GMT:

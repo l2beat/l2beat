@@ -9,10 +9,11 @@ import { AmountRecord, toRecord, toRow } from './entity'
 import { selectAmount } from './select'
 
 export class AmountRepository extends BaseRepository {
-  async getByIdsAndTimestamp(configIds: string[], timestamp: UnixTime) {
-    if (configIds.length === 0) {
-      return []
-    }
+  async getByIdsAndTimestamp(
+    configIds: string[],
+    timestamp: UnixTime,
+  ): Promise<AmountRecord[]> {
+    if (configIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.amounts')
@@ -21,7 +22,6 @@ export class AmountRepository extends BaseRepository {
       .where('timestamp', '=', timestamp.toDate())
       .orderBy('timestamp')
       .execute()
-
     return rows.map(toRecord)
   }
 
@@ -30,9 +30,7 @@ export class AmountRepository extends BaseRepository {
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
   ): Promise<AmountRecord[]> {
-    if (configIds.length === 0) {
-      return []
-    }
+    if (configIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.amounts')
@@ -42,14 +40,11 @@ export class AmountRepository extends BaseRepository {
       .where('timestamp', '<=', toInclusive.toDate())
       .orderBy('timestamp')
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async getByTimestamps(timestamps: UnixTime[]) {
-    if (timestamps.length === 0) {
-      return []
-    }
+  async getByTimestamps(timestamps: UnixTime[]): Promise<AmountRecord[]> {
+    if (timestamps.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.amounts')
@@ -61,21 +56,16 @@ export class AmountRepository extends BaseRepository {
       )
       .orderBy('timestamp')
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async addMany(records: AmountRecord[]) {
-    if (records.length === 0) {
-      return
-    }
+  async insertMany(records: AmountRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-
     await this.batch(rows, 1_000, async (batch) => {
       await this.db.insertInto('public.amounts').values(batch).execute()
     })
-
     return rows.length
   }
 
@@ -106,20 +96,19 @@ export class AmountRepository extends BaseRepository {
   }
 
   // #region methods used only in TvlCleaner
-  deleteHourlyUntil(dateRange: CleanDateRange) {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteHourlyUntil(this.db, 'public.amounts', dateRange)
   }
 
-  deleteSixHourlyUntil(dateRange: CleanDateRange) {
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteSixHourlyUntil(this.db, 'public.amounts', dateRange)
   }
 
-  async getAll() {
+  async getAll(): Promise<AmountRecord[]> {
     const rows = await this.db
       .selectFrom('public.amounts')
       .select(selectAmount)
       .execute()
-
     return rows.map(toRecord)
   }
 

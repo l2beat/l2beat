@@ -53,7 +53,7 @@ export class UpdateNotifier {
     unknownContracts: EthereumAddress[],
   ) {
     const nonce = await this.getInternalMessageNonce()
-    await this.db.updateNotifier.add({
+    await this.db.updateNotifier.insert({
       projectName: name,
       diff,
       blockNumber: blockNumber,

@@ -1,66 +1,120 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
+import chalk from 'chalk'
 
 import {
-  getChainConfigs,
-  getDiscoveryCliConfig,
-} from '../config/config.discovery'
-import {
-  DiscoveryChainConfig,
-  DiscoveryCliConfig,
-  DiscoveryModuleConfig,
-} from '../config/types'
+  boolean,
+  command,
+  flag,
+  number,
+  option,
+  optional,
+  positional,
+  string,
+} from 'cmd-ts'
+import { getChainConfigs } from '../config/config.discovery'
+import { DiscoveryChainConfig, DiscoveryModuleConfig } from '../config/types'
 import { ConfigReader } from '../discovery/config/ConfigReader'
 import { dryRunDiscovery, runDiscovery } from '../discovery/runDiscovery'
 import { HttpClient } from '../utils/HttpClient'
+import { ChainValue } from './types'
 
-export async function discoverCommand(
-  config: DiscoveryCliConfig,
-  chainConfigs: DiscoveryChainConfig[],
-  logger: Logger,
+export const DiscoverCommand = command({
+  name: 'discover',
+  args: {
+    chain: positional({
+      type: ChainValue,
+      displayName: 'chain',
+      description: 'name of the chain on which discovery will happen',
+    }),
+    project: positional({
+      type: string,
+      displayName: 'project',
+      description: 'name of the project which will be discovered',
+    }),
+    dryRun: flag({
+      type: boolean,
+      long: 'dry-run',
+      short: 'n',
+      description: 'runs two discoveries and shows the diff',
+    }),
+    dev: flag({
+      type: boolean,
+      long: 'dev',
+      description: 'runs discovery on the block saved in discovered.json',
+    }),
+    printStats: flag({
+      type: boolean,
+      long: 'stats',
+      short: 'c',
+      description: 'show the count of calls to external RPCs',
+    }),
+    saveSources: flag({
+      type: boolean,
+      long: 'save-sources',
+      short: 's',
+      description: 'save raw sources downloaded from chain explorer',
+    }),
+    sourcesFolder: option({
+      type: optional(string),
+      long: 'sources-folder',
+      description:
+        'directory name to use instead of the default .code, does not change the output path',
+    }),
+    flatSourcesFolder: option({
+      type: optional(string),
+      long: 'flat-sources-folder',
+      description:
+        'directory name to use instead of the default .flat, does not change the output path',
+    }),
+    discoveryFilename: option({
+      type: optional(string),
+      long: 'discovery-filename',
+      short: 'o',
+      description:
+        'file name to use instead of the discovered.json, does not change the output path',
+    }),
+    blockNumber: option({
+      type: optional(number),
+      long: 'block-number',
+      short: 'b',
+      description: 'the block number on which the discovery will be performed',
+    }),
+  },
+  handler: async (args) => {
+    const chainConfigs = getChainConfigs()
+    const chain = chainConfigs.find((c) => c.name === args.chain)
+    assert(chain !== undefined)
+
+    const config: DiscoveryModuleConfig = {
+      ...args,
+      chain,
+    }
+
+    discover(config, chainConfigs)
+  },
+})
+
+export async function discover(
+  config: DiscoveryModuleConfig,
+  chainConfigs: DiscoveryChainConfig[] = getChainConfigs(),
+  logger: Logger = Logger.DEBUG,
 ): Promise<void> {
-  if (!config.discovery) {
-    return
-  }
-  const discoverConfig = config.discovery
   const http = new HttpClient()
   const configReader = new ConfigReader()
 
-  if (discoverConfig.dryRun) {
+  if (config.dryRun) {
     logger = logger.for('DryRun')
     logger.info('Starting')
 
-    await dryRunDiscovery(http, configReader, discoverConfig, chainConfigs)
+    await dryRunDiscovery(http, configReader, config, chainConfigs)
     return
   }
 
   logger = logger.for('Discovery')
-  logger.info('Starting discovery...')
-  logger.info(`Project: ${discoverConfig.project}`)
-  logger.info(`Chain: ${discoverConfig.chain.name}\n`)
-  await runDiscovery(http, configReader, discoverConfig, chainConfigs)
-}
-
-/**
- * Expose the discover command as a method exported by the package.
- */
-export function discover(
-  config: DiscoveryModuleConfig,
-  logger: Logger = Logger.DEBUG,
-  chainConfigs = getChainConfigs(),
-): Promise<void> {
-  const cliConfig = getDiscoveryCliConfig({
-    mode: 'discover',
-    project: config.project,
-    chain: config.chain.name,
-    dryRun: config.dryRun === true,
-    dev: config.dev === true,
-    printStats: config.printStats === true,
-    saveSources: config.saveSources === true,
-    sourcesFolder: config.sourcesFolder,
-    flatSourcesFolder: config.flatSourcesFolder,
-    discoveryFilename: config.discoveryFilename,
-    blockNumber: config.blockNumber,
-  })
-
-  return discoverCommand(cliConfig, chainConfigs, logger)
+  logger.info(
+    `Starting discovery of ${chalk.blue(config.project)} on ${chalk.blue(
+      config.chain.name,
+    )}`,
+  )
+  await runDiscovery(http, configReader, config, chainConfigs)
 }

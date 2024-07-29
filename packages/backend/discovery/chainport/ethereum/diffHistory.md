@@ -1,3 +1,30 @@
+Generated with discovered.json: 0xd4edabd36b47d6d04eb8b764f4fba365729e4e7a
+
+# Diff at Fri, 26 Jul 2024 08:24:04 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20181708
+- current block number: 20389507
+
+## Description
+
+Two scheduled transactions (the first is already executed):
+1) unpause bridges
+2) deploy 'LiquidityManager' ([unverified contract](https://etherscan.io/address/0xca9a74c22f0a2eb91909d59a98f48f9357499a46))
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        55
++        57
+    }
+```
+
 Generated with discovered.json: 0x4fd047f7a3a415b0bb239baf3fb1480e28513eba
 
 # Diff at Thu, 27 Jun 2024 08:04:02 GMT:

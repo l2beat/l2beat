@@ -18,19 +18,19 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
   it(UpdateNotifierRepository.prototype.findLatestId.name, async () => {
     const record = mockRecord(PROJECT1)
 
-    await repository.add(record)
-    await repository.add(record)
-    const latestId = await repository.add(record)
+    await repository.insert(record)
+    await repository.insert(record)
+    const latestId = await repository.insert(record)
 
     const result = await repository.findLatestId()
 
     expect(result).toEqual(latestId)
   })
 
-  it(UpdateNotifierRepository.prototype.add.name, async () => {
+  it(UpdateNotifierRepository.prototype.insert.name, async () => {
     const record = mockRecord(PROJECT1)
 
-    const latestId = await repository.add(record)
+    const latestId = await repository.insert(record)
 
     const latest = await repository.findLatestId()
 
@@ -43,9 +43,9 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
       const arbRecord1 = mockRecord(PROJECT1, ChainId.ARBITRUM)
       const arbRecord2 = mockRecord(PROJECT1, ChainId.ARBITRUM)
 
-      await repository.add(ethRecord)
-      const secondId = await repository.add(arbRecord1)
-      const thirdId = await repository.add(arbRecord2)
+      await repository.insert(ethRecord)
+      const secondId = await repository.insert(arbRecord1)
+      const thirdId = await repository.insert(arbRecord2)
       const result = await repository.getNewerThan(
         NOW.add(-2, 'days'),
         PROJECT1,
@@ -60,7 +60,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
     it('does not return if does not match the range', async () => {
       const ethRecord = mockRecord(PROJECT1, ChainId.ETHEREUM)
 
-      await repository.add(ethRecord)
+      await repository.insert(ethRecord)
       const result = await repository.getNewerThan(
         NOW.add(2, 'days'),
         PROJECT1,
@@ -73,7 +73,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
     it('does not return if does not match any chainId', async () => {
       const ethRecord = mockRecord(PROJECT1, ChainId.ETHEREUM)
 
-      await repository.add(ethRecord)
+      await repository.insert(ethRecord)
       const result = await repository.getNewerThan(
         NOW.add(-2, 'days'),
         PROJECT1,

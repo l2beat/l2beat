@@ -31,7 +31,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
@@ -97,8 +97,8 @@ describe(UpdateNotifier.name, () => {
         ].join('\n'),
         'PUBLIC',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -112,7 +112,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
@@ -201,8 +201,8 @@ describe(UpdateNotifier.name, () => {
         ].join('\n'),
         'PUBLIC',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -216,7 +216,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
@@ -288,8 +288,8 @@ describe(UpdateNotifier.name, () => {
         publicMessage,
         'PUBLIC',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -303,7 +303,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => 0,
         getNewerThan: async () => [],
       })
@@ -353,8 +353,8 @@ describe(UpdateNotifier.name, () => {
         ].join('\n'),
         'INTERNAL',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -366,7 +366,7 @@ describe(UpdateNotifier.name, () => {
   describe(UpdateNotifier.prototype.sendDailyReminder.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
       })
 
       const discordClient = mockObject<DiscordClient>({
@@ -454,7 +454,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
       })
 
       const discordClient = mockObject<DiscordClient>({
@@ -505,7 +505,7 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
       })
       const updateNotifier = new UpdateNotifier(

@@ -39,7 +39,7 @@ describe(BlockActivityIndexer.name, () => {
           activityRecord('a', START, 7, 0, 8),
           activityRecord('a', START.add(1, 'days'), 3, 11, 13),
         ]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       })
 
       const txsCountProvider = mockObject<TxsCountProvider>({
@@ -59,7 +59,7 @@ describe(BlockActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 10)
 
       expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
-      expect(activityRepository.addOrUpdateMany).toHaveBeenCalledWith([
+      expect(activityRepository.upsertMany).toHaveBeenCalledWith([
         activityRecord('a', START, 12, 0, 10),
         activityRecord('a', START.add(1, 'days'), 7, 11, 15),
         activityRecord('a', START.add(2, 'days'), 2, 16, 20),
@@ -166,7 +166,7 @@ function createIndexer(
     db: mockDatabase({
       activity: mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       }),
     }),
     projectId: ProjectId('a'),

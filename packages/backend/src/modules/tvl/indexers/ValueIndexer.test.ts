@@ -93,7 +93,7 @@ describe(ValueIndexer.name, () => {
         calculateTvlForTimestamps: async () => values,
       })
       const valueRepository = mockObject<Database['value']>({
-        addOrUpdateMany: async () => 1,
+        upsertMany: async () => 1,
       })
       const ADDRESS_A = EthereumAddress.random()
       const ADDRESS_B = EthereumAddress.random()
@@ -138,7 +138,7 @@ describe(ValueIndexer.name, () => {
         ]),
         timestamps,
       )
-      expect(valueRepository.addOrUpdateMany).toHaveBeenOnlyCalledWith(values)
+      expect(valueRepository.upsertMany).toHaveBeenOnlyCalledWith(values)
     })
   })
 })

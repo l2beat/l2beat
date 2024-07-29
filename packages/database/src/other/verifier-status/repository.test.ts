@@ -27,7 +27,7 @@ describeDatabase(VerifierStatusRepository.name, (db) => {
         lastUsed: UnixTime.now(),
         lastUpdated: UnixTime.now(),
       }
-      await repository.addOrUpdate(newRecord)
+      await repository.upsert(newRecord)
       const verifierStatus = await repository.findVerifierStatus(
         newRecord.address,
         newRecord.chainId,
@@ -36,7 +36,7 @@ describeDatabase(VerifierStatusRepository.name, (db) => {
     })
   })
 
-  describe(VerifierStatusRepository.prototype.addOrUpdate.name, () => {
+  describe(VerifierStatusRepository.prototype.upsert.name, () => {
     const existingRecord = {
       address: EthereumAddress.random().toString(),
       chainId: ChainId.ETHEREUM,
@@ -45,7 +45,7 @@ describeDatabase(VerifierStatusRepository.name, (db) => {
     }
 
     beforeEach(async () => {
-      await repository.addOrUpdate(existingRecord)
+      await repository.upsert(existingRecord)
     })
 
     it('adds a new record', async () => {
@@ -56,7 +56,7 @@ describeDatabase(VerifierStatusRepository.name, (db) => {
         lastUpdated: UnixTime.now(),
       }
 
-      await repository.addOrUpdate(newRecord)
+      await repository.upsert(newRecord)
 
       const result = await repository.getAll()
       expect(result).toEqualUnsorted([existingRecord, newRecord])
@@ -70,7 +70,7 @@ describeDatabase(VerifierStatusRepository.name, (db) => {
         lastUpdated: UnixTime.now(),
       }
 
-      await repository.addOrUpdate(newRecord)
+      await repository.upsert(newRecord)
 
       const result = await repository.getAll()
       expect(result).toEqual([

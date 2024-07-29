@@ -50,6 +50,6 @@ export class RpcCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: `RpcBlockCounter_${this.projectId.toString()}`,
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
+    await this.db.blockTransactionCount.upsertMany(blocks)
   }
 }

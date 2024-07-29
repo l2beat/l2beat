@@ -1,28 +1,14 @@
-import { Logger } from '@l2beat/backend-tools'
+import { InvertCommand } from './cli/invertCommand'
+import { SingleDiscoveryCommand } from './cli/singleDiscoveryCommand'
 
-import { discoverCommand } from './cli/discoverCommand'
-import { handleCli } from './cli/handleCli'
-import { invertCommand } from './cli/invertCommand'
-import { singleDiscoveryCommand } from './cli/singleDiscoveryCommand'
-import {
-  getChainConfigs,
-  getDiscoveryCliConfig,
-} from './config/config.discovery'
+import { run, subcommands } from 'cmd-ts'
+import { DiscoverCommand } from './cli/discoverCommand'
 
-main().catch((e) => {
-  console.error(e)
-  process.exit(1)
+const targets = [SingleDiscoveryCommand, InvertCommand, DiscoverCommand]
+
+const main = subcommands({
+  name: 'discovery',
+  cmds: Object.fromEntries(targets.map((t) => [t.name, t])),
 })
 
-async function main(): Promise<void> {
-  const cli = handleCli()
-  const config = getDiscoveryCliConfig(cli)
-  const logger = Logger.DEBUG
-
-  const chainConfigs = getChainConfigs()
-  logger.debug('Supported chains', { chains: chainConfigs.map((x) => x.name) })
-
-  await discoverCommand(config, chainConfigs, logger)
-  await invertCommand(config, logger)
-  await singleDiscoveryCommand(config, chainConfigs, logger)
-}
+run(main, process.argv.slice(2))

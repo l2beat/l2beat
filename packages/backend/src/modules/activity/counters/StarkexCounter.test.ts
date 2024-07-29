@@ -20,13 +20,13 @@ describe(StarkexCounter.name, () => {
     const starkExTransactionCount = mockObject<
       Database['starkExTransactionCount']
     >({
-      addOrUpdateMany: async () => -1,
+      upsertMany: async () => -1,
     })
     const db = mockDatabase({
       starkExTransactionCount,
       sequenceProcessor: mockObject<Database['sequenceProcessor']>({
-        findById: async () => null,
-        addOrUpdate: async () => '',
+        findById: async () => undefined,
+        upsert: async () => undefined,
       }),
     })
 
@@ -67,17 +67,14 @@ describe(StarkexCounter.name, () => {
         DAY.toDays(),
         product[1],
       )
-      expect(starkExTransactionCount.addOrUpdateMany).toHaveBeenCalledTimes(1)
-      expect(starkExTransactionCount.addOrUpdateMany).toHaveBeenNthCalledWith(
-        1,
-        [
-          {
-            count: txCount * 2,
-            timestamp: DAY,
-            projectId: project,
-          },
-        ],
-      )
+      expect(starkExTransactionCount.upsertMany).toHaveBeenCalledTimes(1)
+      expect(starkExTransactionCount.upsertMany).toHaveBeenNthCalledWith(1, [
+        {
+          count: txCount * 2,
+          timestamp: DAY,
+          projectId: project,
+        },
+      ])
     })
   })
 })

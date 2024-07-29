@@ -215,7 +215,7 @@ export class UpdateMonitor {
       runner.chain,
     )
 
-    await this.db.updateMonitor.addOrUpdate({
+    await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,
       chainId: this.chainConverter.toChainId(runner.chain),
       timestamp,

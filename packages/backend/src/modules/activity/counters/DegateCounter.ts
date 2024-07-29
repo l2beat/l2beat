@@ -37,6 +37,6 @@ export class DegateCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'DegateBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
+    await this.db.blockTransactionCount.upsertMany(blocks)
   }
 }

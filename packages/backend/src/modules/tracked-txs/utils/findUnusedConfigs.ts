@@ -1,7 +1,7 @@
 import { Database } from '@l2beat/database'
 
 export async function findUnusedConfigs(db: Database): Promise<string[]> {
-  const allConfigs = await db.indexerConfiguration.getSavedConfigurations(
+  const allConfigs = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',
   )
   const l2CostsConfigs = await db.l2Cost.getUsedConfigsIds()

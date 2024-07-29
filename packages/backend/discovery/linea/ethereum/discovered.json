@@ -1,7 +1,7 @@
 {
   "name": "linea",
   "chain": "ethereum",
-  "blockNumber": 20340569,
+  "blockNumber": 20389671,
   "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
   "version": 9,
   "contracts": [
@@ -70,7 +70,7 @@
       "values": {
         "$admin": "0x41fAD3Df1B07B647D120D055259E474fE8046eb5",
         "$implementation": "0x0eC393209674090368C592A591B25811e490BF36",
-        "balance": 46589993741254,
+        "balance": 40788560818546,
         "messageService": "0xd19d4B5d358258f05D7B411E21A1460D11B0876F",
         "owner": "0x892bb7EeD71efB060ab90140e7825d8127991DD3",
         "paused": false,
@@ -104,17 +104,10 @@
         ],
         "getThreshold": 4,
         "GnosisSafe_modules": ["0xF24f1DC519d88246809B660eb56D94048575d083"],
-        "nonce": 46,
+        "nonce": 47,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
-    },
-    {
-      "name": "VerifierProofType1",
-      "address": "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4",
-      "sinceTimestamp": 1711105859,
-      "values": { "$immutable": true },
-      "derivedName": "PlonkVerifierForMultiTypeDataAggregation"
     },
     {
       "name": "ERC20UpgradableBeacon",
@@ -180,11 +173,11 @@
             "members": ["0xd6B95c960779c72B8C6752119849318E5d550574"]
           }
         },
-        "currentFinalizedShnarf": "0x19551fb7101d9abf4e1ea224682a8349aab3496a104bd9addd7143417f5edce8",
-        "currentFinalizedState": "0xfe58da4d5d6fc18915e1ba63cbcbf1d5242d803abe7a7f088418c9a54d12ee74",
+        "currentFinalizedShnarf": "0x51d1a2f8412f512da671b197d4a22674937a7d0dc2f3004a4eea8ee1dd52e7e7",
+        "currentFinalizedState": "0xb9961117acce6197e60c78837e78488aee32941903651b8d65dd7945cb45cef8",
         "currentL2StoredL1MessageNumber": 626080,
         "currentL2StoredL1RollingHash": "0xc2453f13443df7f6fd1a09328e1ed9aca29edf668321fb8376948908127c22ac",
-        "currentPeriodAmountInWei": "3940590000000000000",
+        "currentPeriodAmountInWei": "4230291477179228284127",
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "GENERAL_PAUSE_TYPE": 1,
         "generalPause": false,
@@ -211,7 +204,7 @@
         "VERIFIER_SETTER_ROLE": "0x32937fd5162e282df7e9a14a5073a2425321c7966eaf70ed6c838a1006d84c4c",
         "verifiers": [
           "0x1111111111111111111111111111111111111111",
-          "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4",
+          "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000",
           "0xBfF4a03A355eEF7dA720bBC7878F9BdBBE81fe6F",
           "0x1111111111111111111111111111111111111111",
@@ -597,9 +590,6 @@
     ],
     "0x892bb7EeD71efB060ab90140e7825d8127991DD3": [
       "constructor(address _singleton)"
-    ],
-    "0x8AB455030E1Ea718e445f423Bb8D993dcAd24Cc4": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)"
     ],
     "0x971f46a2852d11D59dbF0909e837cfd06f357DeB": [
       "constructor(address implementation_)",

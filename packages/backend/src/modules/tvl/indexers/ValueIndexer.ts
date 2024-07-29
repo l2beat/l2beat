@@ -84,7 +84,7 @@ export class ValueIndexer extends ManagedChildIndexer {
       timestamps,
     )
 
-    await this.$.db.value.addOrUpdateMany(values)
+    await this.$.db.value.upsertMany(values)
 
     this.logger.info('Saved values into DB', {
       from,
