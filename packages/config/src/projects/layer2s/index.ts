@@ -113,6 +113,7 @@ import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
+import { swan } from './swan'
 import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
@@ -260,6 +261,7 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   superseed,
+  swan,
   swell,
   sxt,
   taiko,
