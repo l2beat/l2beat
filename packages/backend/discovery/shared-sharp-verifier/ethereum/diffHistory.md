@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x15947b7733f1326d7e8fc6fb2ee04472b2a35944
+Generated with discovered.json: 0xe1e48291c901dc1990374e0f78be66cf117e2aa1
 
-# Diff at Mon, 29 Jul 2024 06:58:43 GMT:
+# Diff at Mon, 29 Jul 2024 08:32:03 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 19531641
-- current block number: 20410574
+- current block number: 20411040
 
 ## Description
 
@@ -13,6 +13,8 @@ A new GpsStatementVerifier (SHARPVerifier) is deployed and registered:
 - introduction of `applicativeBootloaderProgramHash_` in addition to the old `simpleBootloaderProgramHash_`
 - `OFFSET_N_VERIFIER_FRIENDLY_LAYERS` introduced in the offsets section
 - `PROGRAM_SIZE` increased from 728 to 794
+
+The discovery config now uses templates and recursively discovers old verifiers and their relatives.
 
 ## Watched changes
 
@@ -29,16 +31,734 @@ A new GpsStatementVerifier (SHARPVerifier) is deployed and registered:
 ```
 
 ```diff
+    contract GpsStatementVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
+    +++ description: None
+      template:
+-        "shared-sharp-verifier/Verifier"
++        "shared-sharp-verifier/DeprecatedVerifier"
+    }
+```
+
+```diff
 +   Status: CREATED
-    contract GpsStatementVerifier (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    contract EcdsaPointsXColumn (0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey1Column (0x032e5cDb729Ce94638ACA9e82A22688109B43046)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsXColumn (0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x05C98569CA566a2035b87dE7d1b623C950798035)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey1Column (0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PedersenHashPointsYColumn (0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x243682b9A01455ac671c97D8dE686EBd4EE25791)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract FriStatementContract (0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MerkleStatementContract (0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x351666E9EeA6E012f08695ccd1923f37519563f1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x3d57526c1C8D63fa2A8704487Df65e9000166c8E)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x42AF9498647Be47A256C9cc8278eE94473Cb7771)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x4742f8723CAE9C17Cb1D54708898904fB43621c9)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey2Column (0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey0Column (0x53daC4aB94955f35657463252a7b25F343A14451)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CairoBootloaderProgram (0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey1Column (0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CurrentVerifierEntry (0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xA9db7bDfbc3664C8954f490e4d94B8607a080f23)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0xAaAe0edF6536de72E7163D293518c40011179f8a)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonPartialRoundKey0Column (0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuConstraintPoly (0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey0Column (0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuOods (0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey2Column (0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract CpuFrilessVerifier (0xe155154845950573EC5F518fC0D4950AB71303ff)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract EcdsaPointsYColumn (0xE3929Ea107238Ce59d64A3cE497f12b57846B716)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract MemoryPageFactRegistry (0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey0Column (0xedFfEA8296945aA91FC035Aefc8c33D737dBc573)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract PoseidonPoseidonFullRoundKey1Column (0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc)
     +++ description: None
 ```
 
 ## Source code changes
 
 ```diff
-.../ethereum/.flat/GpsStatementVerifier.sol        | 889 +++++++++++++++++++++
- 1 file changed, 889 insertions(+)
+...-0x58600A1Dc51dcF7D4F541a8f1F5C6c6AA86cc515.sol |  809 +++
+ ...0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40.sol} |    0
+ ...-0x05C98569CA566a2035b87dE7d1b623C950798035.sol | 4408 +++++++++++++
+ ...-0x351666E9EeA6E012f08695ccd1923f37519563f1.sol | 3208 ++++++++++
+ ...-0x4feFa770f154624067cF9d8Ff4B925a21E33Abe5.sol | 5047 +++++++++++++++
+ ...-0x547eeCf2aeE8f3859732BCFFC70dE24C75CE0717.sol | 6512 ++++++++++++++++++++
+ ...-0x86ABf7A15Ea9Ff955C0E6e168DA4cd009a8CdA46.sol | 5790 +++++++++++++++++
+ ...-0xA9baC69dbcC703096Ee4db8B6Fdb8480a4DC2DAE.sol | 6252 +++++++++++++++++++
+ ...-0xC3938063598A23B9f3c71cA8AFa3A22fdB287f7B.sol | 5067 +++++++++++++++
+ ...-0xb195C66bf046cb4A4D7FcCD7a24Fb5a2b9D36b67.sol | 3584 +++++++++++
+ ...-0x094bD609998F0D4504145adAaaC3C3B3406e0Ae3.sol | 3080 +++++++++
+ ...-0x18d3f47Ff00272Db6db5D4548B5d7b6a0765138E.sol | 3192 ++++++++++
+ ...-0x243682b9A01455ac671c97D8dE686EBd4EE25791.sol | 3175 ++++++++++
+ ...-0x3d57526c1C8D63fa2A8704487Df65e9000166c8E.sol | 3080 +++++++++
+ ...-0x42AF9498647Be47A256C9cc8278eE94473Cb7771.sol | 3178 ++++++++++
+ ...-0x61BF6C2C60E3416B13C3c8d0591AEDd4D9d398D1.sol | 3080 +++++++++
+ ...-0xAaAe0edF6536de72E7163D293518c40011179f8a.sol | 3134 ++++++++++
+ ...-0xe155154845950573EC5F518fC0D4950AB71303ff.sol | 3236 ++++++++++
+ ...-0x0aCC3292202b05175F86C7Bf4bd6011eB79eC5cb.sol | 5674 +++++++++++++++++
+ ...-0x4742f8723CAE9C17Cb1D54708898904fB43621c9.sol | 6069 ++++++++++++++++++
+ ...-0x4A3635EEd2C38cB0Eac2D52ddE9CFaB49Be48C17.sol | 3904 ++++++++++++
+ ...-0x6454b594e2C968ab4BdA63139B0df83A4EfD4A6e.sol | 3029 +++++++++
+ ...-0xA9db7bDfbc3664C8954f490e4d94B8607a080f23.sol | 3855 ++++++++++++
+ ...-0xAC6250BCc9C806FDFFAd774276c7584CDCFE3ac0.sol | 4849 +++++++++++++++
+ ...-0xD5700c7d3948BE2361177CaE9Ce0bB4A2c8d2A40.sol | 2957 +++++++++
+ ...-0xdc2c543f4eE2711C34fe7F892D4F9177BfaeAE84.sol | 3819 ++++++++++++
+ .../ethereum/.flat/CurrentVerifierEntry.sol        |  889 +++
+ ...0x01228f83C6664A14fC3Bb4EA28B7d1a2FC283bF1.sol} |    0
+ ...-0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B.sol |  648 ++
+ ...0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1.sol} |    0
+ ...-0xE3929Ea107238Ce59d64A3cE497f12b57846B716.sol |  648 ++
+ ...-0x30EfaAA99f8eFe310D9FdC83072e2a04c093d400.sol | 1278 ++++
+ ...0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb.sol} |    0
+ ...0x40864568f679c10aC9e72211500096a5130770fA.sol} |    0
+ ...-0xe583BcDE0160b637330b27a3ea1F3c02ba2eC460.sol |  344 ++
+ ...-0x32a91Ff604AB2aDCd832e91D68b2f3f25358FdAd.sol |  286 +
+ ...0x634DCf4f1421Fc4D95A968A559a450ad0245804c.sol} |    0
+ ...0x047Dd4275bbDc1eE6b8bf026239E203c617E86D1.sol} |    0
+ ...-0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB.sol | 1271 ++++
+ ...0x1A6F3bD4E4b80F85A0b1974b73D981F3295899ed.sol} |    0
+ ...-0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd.sol | 1271 ++++
+ ...-0xc9A02D0d8A88e71Cc92417b6011029cF8A44a540.sol |   47 +
+ ...-0xedFfEA8296945aA91FC035Aefc8c33D737dBc573.sol |   47 +
+ ...-0x9d820BA19fBAbE91F01413a7a7Ae554925CF95Fc.sol |   47 +
+ ...-0xF0B58EFdA0721c768149e85C1DDF2D02fc9e05Fc.sol |   47 +
+ ...-0x487175b93FDbac971ceB3a88b9843F46f1d5d2C8.sol |   47 +
+ ...-0xde8d55104aBdf18ad2642F45D5bd51eb4f6D41fD.sol |   47 +
+ ...-0x53daC4aB94955f35657463252a7b25F343A14451.sol |  183 +
+ ...-0xBaeC49f8Ac145D6b7CE7c7B8FF86b3a158D717EF.sol |  183 +
+ ...-0x032e5cDb729Ce94638ACA9e82A22688109B43046.sol |  104 +
+ ...-0x14106Aa9431ED9b3006D742AEBf9f9930d7CE0C2.sol |  104 +
+ 51 files changed, 107479 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531641 (main branch discovery), not current.
+
+```diff
+    contract CpuConstraintPoly (0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract Fri6_PoseidonPoseidonPartialRoundKey0Column (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975) {
+    +++ description: None
+      name:
+-        "Fri6_PoseidonPoseidonPartialRoundKey0Column"
++        "PoseidonPoseidonPartialRoundKey0Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract Fri1_PoseidonPoseidonFullRoundKey1Column (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94) {
+    +++ description: None
+      name:
+-        "Fri1_PoseidonPoseidonFullRoundKey1Column"
++        "PoseidonPoseidonFullRoundKey1Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract Fri1_PoseidonPoseidonPartialRoundKey1Column (0x20F10963eBCA608f8B24a5AEE275861B20ec868E) {
+    +++ description: None
+      name:
+-        "Fri1_PoseidonPoseidonPartialRoundKey1Column"
++        "PoseidonPoseidonPartialRoundKey1Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier1 (0x28E3aD4201ba416B23d9950503dB28a9232BE32a) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier1"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract Fri1_PoseidonPoseidonFullRoundKey2Column (0x2b159027d7F0E23D5C15b0517e33DdA838C46045) {
+    +++ description: None
+      name:
+-        "Fri1_PoseidonPoseidonFullRoundKey2Column"
++        "PoseidonPoseidonFullRoundKey2Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x307982EB84858A04d32b5e0b72D152be5A3eEcEA) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuOods (0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract PedersenHashPointsXColumn (0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0x450909cC615036Ca4772dDDd8a69988B031811c9) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuOods (0x473E7B002f9A3109fd0FcdA4597935E4E610f367) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuOods (0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier2 (0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier2"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier3 (0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier3"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract Fri6_PoseidonPoseidonPartialRoundKey1Column (0x62960C874379653D7BBe3644Ac653736Da2eda12) {
+    +++ description: None
+      name:
+-        "Fri6_PoseidonPoseidonPartialRoundKey1Column"
++        "PoseidonPoseidonPartialRoundKey1Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract MerkleStatementContract (0x634DCf4f1421Fc4D95A968A559a450ad0245804c) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier4 (0x66F2345D003511a1A60D87E3984Bb8d12C21A970) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier4"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract CpuOods (0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract OldSHARPVerifier (0x6cB3EE90C50a38A0e4662bB7e7E6e40B91361BF6) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/DeprecatedVerifier"
+    }
+```
+
+```diff
+    contract CpuOods (0x704DFf65eD9b3d121d469b7A790A9927C853607F) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract Fri1_PoseidonPoseidonPartialRoundKey0Column (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a) {
+    +++ description: None
+      name:
+-        "Fri1_PoseidonPoseidonPartialRoundKey0Column"
++        "PoseidonPoseidonPartialRoundKey0Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract Fri1_PoseidonPoseidonFullRoundKey0Column (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6) {
+    +++ description: None
+      name:
+-        "Fri1_PoseidonPoseidonFullRoundKey0Column"
++        "PoseidonPoseidonFullRoundKey0Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier5 (0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier5"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract CpuOods (0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract EcdsaPointsYColumn (0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier6 (0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier6"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract Fri6_PoseidonPoseidonFullRoundKey2Column (0xB5A5759Dd063899F213eB9699906B445f855660D) {
+    +++ description: None
+      name:
+-        "Fri6_PoseidonPoseidonFullRoundKey2Column"
++        "PoseidonPoseidonFullRoundKey2Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xB62Dc40175812208f509B69506315A48C92fb15A) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuOods (0xB640935b164024EF1BC0b9e176432c440a5cd4dc) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier7 (0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier7"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract Fri6_PoseidonPoseidonFullRoundKey1Column (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f) {
+    +++ description: None
+      name:
+-        "Fri6_PoseidonPoseidonFullRoundKey1Column"
++        "PoseidonPoseidonFullRoundKey1Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract EcdsaPointsXColumn (0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuOods (0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuFrilessVerifier8 (0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) {
+    +++ description: None
+      name:
+-        "CpuFrilessVerifier8"
++        "CpuFrilessVerifier"
+      template:
++        "shared-sharp-verifier/CpuFrilessVerifier"
+    }
+```
+
+```diff
+    contract SHARPVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
+    +++ description: None
+      name:
+-        "SHARPVerifier"
++        "GpsStatementVerifier"
+      template:
++        "shared-sharp-verifier/Verifier"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract FriStatementContract (0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract CpuConstraintPoly (0xE5313feE344376D22A42C9F0919e7F0d43920CAc) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract Fri6_PoseidonPoseidonFullRoundKey0Column (0xe7B835eA7e348B25aF2480272C4cA28429573293) {
+    +++ description: None
+      name:
+-        "Fri6_PoseidonPoseidonFullRoundKey0Column"
++        "PoseidonPoseidonFullRoundKey0Column"
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
+```
+
+```diff
+    contract PedersenHashPointsYColumn (0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd) {
+    +++ description: None
+      template:
++        "shared-sharp-verifier/ignoreCompute"
+    }
 ```
 
 Generated with discovered.json: 0x98333a8861a2aa83fb491c4d94cadf90944c4f51
