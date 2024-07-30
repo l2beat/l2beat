@@ -8,7 +8,7 @@ import {
 } from './types'
 
 const SERIALIZE = (v: unknown) => JSON.stringify(v)
-const DIFF = { toAdd: [], toUpdate: [], toDelete: [], toTrim: [] }
+const EMPTY_DIFF = { toAdd: [], toUpdate: [], toDelete: [], toTrim: [] }
 
 describe(getNewConfigurationsState.name, () => {
   describe('errors', () => {
@@ -33,7 +33,7 @@ describe(getNewConfigurationsState.name, () => {
     it('empty actual and saved', () => {
       const result = getNewConfigurationsState([], SERIALIZE, [])
       expect(result).toEqual({
-        diff: DIFF,
+        diff: EMPTY_DIFF,
         configurations: [],
       })
     })
@@ -46,12 +46,12 @@ describe(getNewConfigurationsState.name, () => {
       )
       expect(result).toEqual({
         diff: {
-          ...DIFF,
+          ...EMPTY_DIFF,
           toAdd: [actual('a', 100, null), actual('b', 200, 300)],
         },
         configurations: [
-          saved('a', 100, null, null),
-          saved('b', 200, 300, null),
+          { ...actual('a', 100, null), currentHeight: null },
+          { ...actual('b', 200, 300), currentHeight: null },
         ],
       })
     })
@@ -63,7 +63,7 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
       )
       expect(result).toEqual({
-        diff: { ...DIFF },
+        diff: { ...EMPTY_DIFF },
         configurations: [
           { ...actual('a', 100, 400), currentHeight: 300 },
           { ...actual('b', 200, null), currentHeight: 300 },
@@ -78,10 +78,10 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 400, 300), saved('b', 555, null, null)],
       )
       expect(result).toEqual({
-        diff: DIFF,
+        diff: EMPTY_DIFF,
         configurations: [
-          saved('a', 100, 400, 300),
-          saved('b', 555, null, null),
+          { ...actual('a', 100, 400), currentHeight: 300 },
+          { ...actual('b', 555, null), currentHeight: null },
         ],
       })
     })
@@ -93,8 +93,14 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 555, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        diff: DIFF,
-        configurations: [saved('a', 100, 555, 400), saved('b', 200, 300, 300)],
+        diff: EMPTY_DIFF,
+        configurations: [
+          { ...actual('a', 100, 555), currentHeight: 400 },
+          {
+            ...actual('b', 200, 300),
+            currentHeight: 300,
+          },
+        ],
       })
     })
 
@@ -105,8 +111,11 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, null, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        diff: DIFF,
-        configurations: [saved('a', 100, null, 400), saved('b', 200, 300, 300)],
+        diff: EMPTY_DIFF,
+        configurations: [
+          { ...actual('a', 100, null), currentHeight: 400 },
+          { ...actual('b', 200, 300), currentHeight: 300 },
+        ],
       })
     })
 
@@ -117,8 +126,11 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 400, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        diff: DIFF,
-        configurations: [saved('a', 100, 400, 400), saved('b', 200, 300, 300)],
+        diff: EMPTY_DIFF,
+        configurations: [
+          { ...actual('a', 100, 400), currentHeight: 400 },
+          { ...actual('b', 200, 300), currentHeight: 300 },
+        ],
       })
     })
   })
@@ -130,7 +142,11 @@ describe(getNewConfigurationsState.name, () => {
         saved('b', 200, null, 300),
       ])
       expect(result).toEqual({
-        diff: [removal('a', 100, 300), removal('b', 200, 300)],
+        diff: {
+          ...EMPTY_DIFF,
+          toDelete: ['a', 'b'],
+          toTrim: [removal('a', 100, 300), removal('b', 200, 300)],
+        },
         configurations: [],
       })
     })
@@ -142,8 +158,12 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, null, 300), saved('b', 200, 400, 300)],
       )
       expect(result).toEqual({
-        diff: [removal('a', 100, 300)],
-        configurations: [saved('b', 200, 400, 300)],
+        diff: {
+          ...EMPTY_DIFF,
+          toDelete: ['a'],
+          toTrim: [removal('a', 100, 300)],
+        },
+        configurations: [{ ...actual('b', 200, 400), currentHeight: 300 }],
       })
     })
 
@@ -154,8 +174,11 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        diff: DIFF,
-        configurations: [saved('a', 100, 400, 300)],
+        diff: {
+          ...EMPTY_DIFF,
+          toUpdate: [{ ...actual('a', 100, 400), currentHeight: 300 }],
+        },
+        configurations: [{ ...actual('a', 100, 400), currentHeight: 300 }],
       })
     })
 
@@ -166,8 +189,27 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        diff: [removal('a', 201, 300)],
-        configurations: [saved('a', 100, 200, 200)],
+        diff: {
+          ...EMPTY_DIFF,
+          toTrim: [removal('a', 201, 300)],
+          toUpdate: [{ ...actual('a', 100, 200), currentHeight: 200 }],
+        },
+        configurations: [{ ...actual('a', 100, 200), currentHeight: 200 }],
+      })
+    })
+
+    it('maxHeight updated down, nothing to trim', () => {
+      const result = getNewConfigurationsState(
+        [actual('a', 100, 200)],
+        SERIALIZE,
+        [saved('a', 100, 300, 150)],
+      )
+      expect(result).toEqual({
+        diff: {
+          ...EMPTY_DIFF,
+          toUpdate: [{ ...actual('a', 100, 200), currentHeight: 150 }],
+        },
+        configurations: [{ ...actual('a', 100, 200), currentHeight: 150 }],
       })
     })
 
@@ -178,8 +220,11 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        diff: DIFF,
-        configurations: [saved('a', 100, null, 300)],
+        diff: {
+          ...EMPTY_DIFF,
+          toUpdate: [{ ...actual('a', 100, null), currentHeight: 300 }],
+        },
+        configurations: [{ ...actual('a', 100, null), currentHeight: 300 }],
       })
     })
 
@@ -190,19 +235,28 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 400, 300)],
       )
       expect(result).toEqual({
-        diff: [removal('a', 100, 199)],
-        configurations: [saved('a', 200, 400, 300)],
+        diff: {
+          ...EMPTY_DIFF,
+          toTrim: [removal('a', 100, 199)],
+          toUpdate: [{ ...actual('a', 200, 400), currentHeight: 300 }],
+        },
+        configurations: [{ ...actual('a', 200, 400), currentHeight: 300 }],
       })
     })
 
     it('minHeight updated down', () => {
       const result = getNewConfigurationsState(
         [actual('a', 100, 400)],
+        SERIALIZE,
         [saved('a', 200, 400, 300)],
       )
       expect(result).toEqual({
-        diff: [removal('a', 200, 300)],
-        configurations: [saved('a', 100, 400, null)],
+        diff: {
+          ...EMPTY_DIFF,
+          toTrim: [removal('a', 200, 300)],
+          toUpdate: [{ ...actual('a', 100, 400), currentHeight: null }],
+        },
+        configurations: [{ ...actual('a', 100, 400), currentHeight: null }],
       })
     })
 
@@ -213,8 +267,39 @@ describe(getNewConfigurationsState.name, () => {
         [saved('a', 100, 400, 400)],
       )
       expect(result).toEqual({
-        diff: [removal('a', 100, 199), removal('a', 301, 400)],
-        configurations: [saved('a', 200, 300, 300)],
+        diff: {
+          ...EMPTY_DIFF,
+          toTrim: [removal('a', 100, 199), removal('a', 301, 400)],
+          toUpdate: [{ ...actual('a', 200, 300), currentHeight: 300 }],
+        },
+        configurations: [{ ...actual('a', 200, 300), currentHeight: 300 }],
+      })
+    })
+
+    it('properties changed', () => {
+      const result = getNewConfigurationsState(
+        [{ ...actual('a', 100, 400), properties: 'new-props' }],
+        SERIALIZE,
+        [saved('a', 100, 400, 300)],
+      )
+      expect(result).toEqual({
+        diff: {
+          ...EMPTY_DIFF,
+          toUpdate: [
+            {
+              ...actual('a', 100, 400),
+              properties: 'new-props',
+              currentHeight: 300,
+            },
+          ],
+        },
+        configurations: [
+          {
+            ...actual('a', 100, 400),
+            properties: 'new-props',
+            currentHeight: 300,
+          },
+        ],
       })
     })
   })

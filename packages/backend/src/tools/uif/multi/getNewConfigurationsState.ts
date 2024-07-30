@@ -88,13 +88,20 @@ export function getNewConfigurationsState<T>(
       toUpdate.push({ ...c, currentHeight: stored.currentHeight })
     }
 
+    if (c.maxHeight !== stored.maxHeight) {
+      const currentHeight = Math.min(
+        stored.currentHeight,
+        c.maxHeight ?? Infinity,
+      )
+      toUpdate.push({ ...c, currentHeight })
+    }
+
     if (c.maxHeight !== null && stored.currentHeight > c.maxHeight) {
       toTrim.push({
         id: stored.id,
         from: c.maxHeight + 1,
         to: stored.currentHeight,
       })
-      toUpdate.push({ ...c, currentHeight: stored.currentHeight })
     }
 
     const currentHeight = Math.min(
