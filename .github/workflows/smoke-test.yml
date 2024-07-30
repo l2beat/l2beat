@@ -1,41 +1,12 @@
 name: Smoke Test
 
 on:
-  pull_request:
-  push:
-    branches:
-      - master
-      - main
   merge_group:
 
 jobs:
-  # We cannot reference secrets in the if condition, so we have to check
-  # if the secret is set in a separate job using cross-job outputs
-  check-heroku-api-key:
-    name: Check prerequisites
-    runs-on: ubuntu-latest
-    outputs:
-      heroku_key_set: ${{ steps.check_key.outputs.heroku_key_set }}
-    env:
-      HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
-      HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
-    steps:
-      - name: Check Heroku API key & organization
-        id: check_key
-        run: |
-          if [ -z $HEROKU_API_KEY ] || [ -z $HEROKU_ORGANIZATION ]; then
-            echo "heroku_key_set=false" >> "$GITHUB_OUTPUT"
-            echo "❌ - Failed to meet the requirements, skipping the smoke test"
-          else
-            echo "heroku_key_set=true" >> "$GITHUB_OUTPUT"
-            echo "✅ - Requirements met, proceeding with the smoke test"
-          fi
-
   config-smoke-test:
     name: Config smoke test
     runs-on: ubuntu-latest
-    needs: check-heroku-api-key
-    if: needs.check-heroku-api-key.outputs.heroku_key_set == 'true'
     env:
       HEROKU_ORGANIZATION: ${{ vars.HEROKU_ORG }}
       HEROKU_API_KEY: ${{ secrets.HEROKU_TOKEN }}
