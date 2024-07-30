@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x62852440703eb0ddd632a1f505f860b7a865134b
+
+# Diff at Tue, 30 Jul 2024 11:16:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20389678
+- current block number: 20389678
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389678 (main branch discovery), not current.
+
+```diff
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61) {
+    +++ description: None
+      fieldMeta:
++        {"minDelay":{"severity":"MEDIUM","description":"Minimum delay for scheduled upgrades"},"owner":{"severity":"HIGH","description":"This owner role has all permissions in absence of a security council"},"pendingOwner":{"severity":"HIGH","description":"Pending owner can be set by current owner and accept or renounce ownership"},"securityCouncil":{"severity":"HIGH","description":"Address of the security council, change Governance section if this differs from the null address"}}
+    }
+```
+
+```diff
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213) {
+    +++ description: None
+      fieldMeta:
++        {"chainsCreated":{"description":"All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs."}}
+    }
+```
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      fieldMeta:
++        {"txFilterer":{"severity":"HIGH","description":"Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."},"getProtocolVersion":{"severity":"MEDIUM","description":"Protocol version, increments with each protocol change"},"getVerifierParams":{"severity":"LOW","description":"Verifier parameters used for proving batches"}}
+    }
+```
+
+```diff
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828) {
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+      fieldMeta:
++        {"getOwners":{"severity":"LOW","description":"Signers of the multisig"},"getThreshold":{"severity":"HIGH","description":"Should be 4/8 per official docs"}}
+    }
+```
+
 Generated with discovered.json: 0xde5376b773eecea543f6c653d6459e9c88a5b0bb
 
 # Diff at Fri, 26 Jul 2024 08:58:17 GMT:

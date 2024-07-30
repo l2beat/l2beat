@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 6349728,
   "configHash": "0x6c55b858b842e046139e5aa87fd8f201e2b06d85311095d9aec21c8711b5ab0e",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "LineaOwner",

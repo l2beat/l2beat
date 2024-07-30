@@ -38,16 +38,7 @@ export function collectUsedTemplatesWithHashes(
 
 export function processAnalysis(
   results: Analysis[],
-): Omit<
-  DiscoveryOutput,
-  | 'name'
-  | 'blockNumber'
-  | 'configHash'
-  | 'version'
-  | 'chain'
-  | 'usedTemplates'
-  | 'shapeFilesHash'
-> {
+): Pick<DiscoveryOutput, 'contracts' | 'eoas' | 'abis'> {
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
 
@@ -83,6 +74,8 @@ export function processAnalysis(
             Object.keys(x.errors).length === 0
               ? undefined
               : sortByKeys(x.errors),
+          fieldMeta:
+            Object.keys(x.fieldsMeta).length > 0 ? x.fieldsMeta : undefined,
           derivedName: x.derivedName,
           usedTypes: x.usedTypes?.length === 0 ? undefined : x.usedTypes,
         } satisfies ContractParameters)

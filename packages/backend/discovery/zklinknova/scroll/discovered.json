@@ -3,7 +3,7 @@
   "chain": "scroll",
   "blockNumber": 7788134,
   "configHash": "0x7f3c0c7f8dbff6d0beb0fae4065f8c0f2aba3de1b92c4ce05c4e20a70d731a0d",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "zkLink",

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x07c625d43bc7bfcbff2a978baaf2989f8a02fe39
+
+# Diff at Tue, 30 Jul 2024 11:11:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20032836
+- current block number: 20032836
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032836 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      fieldMeta:
++        {"getOwners":{"severity":"LOW","description":"Signers of the multisig, high severity if threshold changes"},"getThreshold":{"severity":"HIGH","description":"Multisig threshold"}}
+    }
+```
+
 Generated with discovered.json: 0x6002e87a118db1246bf48b3a23039cc57a2034cb
 
 # Diff at Thu, 18 Jul 2024 10:30:54 GMT:

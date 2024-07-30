@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20317887,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -187,6 +187,12 @@
         "version": "1.10.0",
         "VERSION": 0
       },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
+      },
       "derivedName": "SystemConfig"
     },
     {
@@ -369,6 +375,12 @@
         "TOKEN": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
       },
+      "fieldMeta": {
+        "insuranceFeeBips": {
+          "severity": "MEDIUM",
+          "description": "Insurance fee taken from positive yields"
+        }
+      },
       "derivedName": "ETHYieldManager"
     },
     {
@@ -394,6 +406,12 @@
         "sharePrice": "1000000000000000000000000000",
         "TOKEN": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "version": "1.0.0"
+      },
+      "fieldMeta": {
+        "insuranceFeeBips": {
+          "severity": "MEDIUM",
+          "description": "Insurance fee taken from positive yields"
+        }
       },
       "derivedName": "USDYieldManager"
     },

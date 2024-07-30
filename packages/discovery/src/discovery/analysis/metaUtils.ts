@@ -199,10 +199,8 @@ export function invertMeta(
   return result
 }
 
-export function toSet<T>(
-  value: T | T[] | null | undefined,
-): Set<T> | undefined {
-  if (value === undefined || value === null) {
+export function toSet<T>(value: T | T[] | undefined): Set<T> | undefined {
+  if (value === undefined) {
     return undefined
   }
   if (Array.isArray(value)) {

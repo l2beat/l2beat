@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389678,
   "configHash": "0x37b28ee084c112b9ee4632198456d96a7c8ba62086f4c52fa3d671af15137369",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Governance",
@@ -7344,6 +7344,24 @@
         ],
         "securityCouncil": "0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "minDelay": {
+          "severity": "MEDIUM",
+          "description": "Minimum delay for scheduled upgrades"
+        },
+        "owner": {
+          "severity": "HIGH",
+          "description": "This owner role has all permissions in absence of a security council"
+        },
+        "pendingOwner": {
+          "severity": "HIGH",
+          "description": "Pending owner can be set by current owner and accept or renounce ownership"
+        },
+        "securityCouncil": {
+          "severity": "HIGH",
+          "description": "Address of the security council, change Governance section if this differs from the null address"
+        }
+      },
       "derivedName": "Governance"
     },
     {
@@ -7369,6 +7387,11 @@
         "sharedBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "zksyncEraDiamond": "0x32400084C286CF3E17e7B677ea9583e60a000324",
         "zksyncEraSTM": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+      },
+      "fieldMeta": {
+        "chainsCreated": {
+          "description": "All new chains created go thorugh the central bridgehub and are thus stored here with their respective STMs."
+        }
       },
       "derivedName": "Bridgehub"
     },
@@ -7524,6 +7547,20 @@
         "txFilterer": [],
         "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
       },
+      "fieldMeta": {
+        "txFilterer": {
+          "severity": "HIGH",
+          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2."
+        },
+        "getProtocolVersion": {
+          "severity": "MEDIUM",
+          "description": "Protocol version, increments with each protocol change"
+        },
+        "getVerifierParams": {
+          "severity": "LOW",
+          "description": "Verifier parameters used for proving batches"
+        }
+      },
       "derivedName": "DiamondProxy"
     },
     {
@@ -7587,6 +7624,16 @@
         "GnosisSafe_modules": [],
         "nonce": 141,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "getOwners": {
+          "severity": "LOW",
+          "description": "Signers of the multisig"
+        },
+        "getThreshold": {
+          "severity": "HIGH",
+          "description": "Should be 4/8 per official docs"
+        }
       },
       "derivedName": "GnosisSafe"
     },

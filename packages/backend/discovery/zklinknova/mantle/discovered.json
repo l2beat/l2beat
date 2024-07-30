@@ -3,7 +3,7 @@
   "chain": "mantle",
   "blockNumber": 66927056,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "MantleOwner",

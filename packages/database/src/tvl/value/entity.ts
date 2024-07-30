@@ -18,6 +18,8 @@ export interface ValueRecord {
   nativeAssociated: bigint
   nativeForTotal: bigint
   nativeAssociatedForTotal: bigint
+  ether: bigint
+  stablecoin: bigint
 }
 
 export function toRow(record: ValueRecord): Insertable<Value> {
@@ -38,6 +40,8 @@ export function toRow(record: ValueRecord): Insertable<Value> {
     external_associated: record.externalAssociated.toString(),
     external_for_total: record.externalForTotal.toString(),
     external_associated_for_total: record.externalAssociatedForTotal.toString(),
+    ether: record.ether.toString(),
+    stablecoin: record.stablecoin.toString(),
   }
 }
 
@@ -58,5 +62,7 @@ export function toRecord(row: Selectable<Value>): ValueRecord {
     externalAssociated: BigInt(row.external_associated),
     externalForTotal: BigInt(row.external_for_total),
     externalAssociatedForTotal: BigInt(row.external_associated_for_total),
+    ether: BigInt(row.ether),
+    stablecoin: BigInt(row.stablecoin),
   }
 }

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6754ee3a84c468c528c97cd6019fa2f7acf214bf
+
+# Diff at Tue, 30 Jul 2024 11:17:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 223440408
+- current block number: 223440408
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 223440408 (main branch discovery), not current.
+
+```diff
+    contract TokenMessaging (0x19cFCE47eD54a88614648DC3f19A5980097007dD) {
+    +++ description: None
+      fieldMeta:
++        {"maxAssetId":{"description":"The highest currently registered assetID"}}
+    }
+```
+
 Generated with discovered.json: 0xe9d32b44d18541b13a2f27fbd00584de6c3aec89
 
 # Diff at Wed, 19 Jun 2024 08:56:48 GMT:

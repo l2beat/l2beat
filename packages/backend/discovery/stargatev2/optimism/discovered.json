@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 121594324,
   "configHash": "0x9ac92b5366c1020988935c7832fca42559018edd2bdc62f02c7ed212dc145aaa",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "StargatePoolMigratable",
@@ -158,6 +158,11 @@
         ],
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
+      },
+      "fieldMeta": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        }
       },
       "derivedName": "TokenMessaging"
     }

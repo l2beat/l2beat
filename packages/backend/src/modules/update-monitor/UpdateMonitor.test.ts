@@ -270,7 +270,6 @@ describe(UpdateMonitor.name, () => {
         1,
         PROJECT_A,
         mockDiff,
-        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -280,7 +279,6 @@ describe(UpdateMonitor.name, () => {
         2,
         PROJECT_B,
         mockDiff,
-        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -891,22 +889,28 @@ const mockDiff: DiscoveryDiff[] = [
   {
     address: ADDRESS_A,
     name: NAME_A,
+    description: undefined,
     diff: [
       {
         key: 'values.a',
         before: 'true',
         after: 'false',
+        description: undefined,
+        severity: undefined,
       },
     ],
   },
   {
     address: ADDRESS_B,
     name: NAME_B,
+    description: undefined,
     diff: [
       {
         before:
           '{"nonce":"Processing error occurred.","totalLiquidity":"Processing error occurred."}',
         key: 'errors',
+        description: undefined,
+        severity: undefined,
       },
     ],
   },

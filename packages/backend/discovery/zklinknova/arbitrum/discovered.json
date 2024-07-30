@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 236183206,
   "configHash": "0x4e258a6d37db579d90ca6b8795256e842346300928c347ad3abfdd97b2620488",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ArbitrumProxyAdmin",

@@ -17,7 +17,7 @@
     "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil",
     "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD": "ArbitrumProxyAdmin",
     "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678": "UpgradeExecutorAdmin",
-    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1ArbitrumTimelock",
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock",
     "0x5eF0D09d1E6204141B4d37530808eD19f60FBa35": "RollupProxy",
     "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": "SequencerInbox",
     "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f": "Inbox",
@@ -50,7 +50,7 @@
     "L1ERC20Gateway": {
       "ignoreRelatives": ["counterpartGateway"]
     },
-    "L1ArbitrumTimelock": {
+    "L1Timelock": {
       "ignoreRelatives": ["l2Timelock"],
       "fields": {
         "accessControl": {

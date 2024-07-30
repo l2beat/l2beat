@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 229043861,
   "configHash": "0xea56b0f2760ab0b676dd10e24100dd3a76e70ef71ff24dbd1554ba2e9859e693",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "",

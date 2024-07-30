@@ -33,6 +33,11 @@ describe(createValueId.name, () => {
       newValue: EthereumAddress.random(),
       shouldUpdateHash: true,
     },
+    {
+      key: 'category',
+      newValue: 'ether',
+      shouldUpdateHash: true,
+    },
   ]
 
   const priceFields = [
@@ -100,6 +105,7 @@ function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
     type: 'totalSupply',
     address: EthereumAddress.ZERO,
     isAssociated: false,
+    category: 'other',
     ...v,
   }
 }
