@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x49c04ea178f15a5ca569206702e2a72d608ea7bf
+
+# Diff at Fri, 26 Jul 2024 08:03:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 2708488
+- current block number: 2775705
+
+## Description
+
+Apparently a threshold change, but the contract is still unverified. (partial match source available on blockscout)
+
+## Watched changes
+
+```diff
+    contract MantaOwner (0x6ed8745d9ad0EE1fEeB060d63c7cf78A7E4c2dE3) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "6 of 8 (75%)"
++        "5 of 8 (63%)"
+    }
+```
+
 Generated with discovered.json: 0x4e01f9510bb002c5303c9be45611bc4e29f50750
 
 # Diff at Thu, 04 Jul 2024 14:14:21 GMT:

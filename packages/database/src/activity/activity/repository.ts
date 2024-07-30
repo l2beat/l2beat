@@ -9,13 +9,13 @@ export class ActivityRepository extends BaseRepository {
       .selectFrom('public.activity')
       .select(selectActivity)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: ActivityRecord[]): Promise<number> {
-    const rows = records.map(toRow)
+  async upsertMany(records: ActivityRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
+    const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('public.activity')
@@ -23,11 +23,12 @@ export class ActivityRepository extends BaseRepository {
         .onConflict((cb) =>
           cb.columns(['timestamp', 'project_id']).doUpdateSet((eb) => ({
             count: eb.ref('excluded.count'),
+            start: eb.ref('excluded.start'),
+            end: eb.ref('excluded.end'),
           })),
         )
         .execute()
     })
-
     return records.length
   }
 
@@ -64,7 +65,6 @@ export class ActivityRepository extends BaseRepository {
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
-
     return rows.map(toRecord)
   }
 }

@@ -33,18 +33,16 @@ export class ActivityViewRepository extends BaseRepository {
   }
 
   async getProjectsAggregatedDailyCount(
-    projectIdsFilter: ProjectId[],
+    projectIds: ProjectId[],
   ): Promise<Omit<DailyTransactionCountRecord, 'projectId'>[]> {
-    if (projectIdsFilter.length === 0) {
-      return []
-    }
+    if (projectIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('activity.daily_count_view')
       .where(
         'project_id',
         'in',
-        projectIdsFilter.map((id) => id.toString()),
+        projectIds.map((id) => id.toString()),
       )
       .select('unix_timestamp')
       .select((eb) => eb.fn.sum('count').as('count'))

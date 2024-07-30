@@ -32,7 +32,7 @@ describe(FinalityController.name, () => {
           finality: getMockFinalityRepository([]),
           liveness: getMockLivenessRepository([]),
           indexerConfiguration: mockObject<Database['indexerConfiguration']>({
-            getSavedConfigurations: mockFn().resolvesTo([]),
+            getByIndexerId: mockFn().resolvesTo([]),
           }),
         }),
       })
@@ -84,7 +84,7 @@ describe(FinalityController.name, () => {
           finality: getMockFinalityRepository([project2Result]),
           liveness: getMockLivenessRepository(RECORDS),
           indexerConfiguration: mockObject<Database['indexerConfiguration']>({
-            getSavedConfigurations: mockFn().resolvesTo([mockConfiguration]),
+            getByIndexerId: mockFn().resolvesTo([mockConfiguration]),
           }),
         }),
         projects: mockProjectConfig([
@@ -213,7 +213,7 @@ describe(FinalityController.name, () => {
           finality: getMockFinalityRepository([]),
           liveness: getMockLivenessRepository(RECORDS),
           indexerConfiguration: mockObject<Database['indexerConfiguration']>({
-            getSavedConfigurations: mockFn().resolvesTo([
+            getByIndexerId: mockFn().resolvesTo([
               mockConfiguration1,
               mockConfiguration2,
             ]),
@@ -360,7 +360,7 @@ describe(FinalityController.name, () => {
 function getMockFinalityRepository(records: FinalityRecord[]) {
   return mockObject<Database['finality']>({
     getLatestGroupedByProjectId: mockFn().resolvesTo(records),
-    addMany() {
+    insertMany() {
       return Promise.resolve(1)
     },
     deleteAll() {
@@ -378,7 +378,7 @@ function getMockLivenessRepository(records: LivenessRecord[]) {
           .sort((a, b) => b.timestamp.toNumber() - a.timestamp.toNumber()),
       )
     },
-    addMany() {
+    insertMany() {
       return Promise.resolve(1)
     },
     deleteAll() {

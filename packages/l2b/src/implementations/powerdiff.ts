@@ -4,11 +4,22 @@ import http from 'http'
 import path from 'path'
 import Convert from 'ansi-to-html'
 import chalk from 'chalk'
+import { splitIntoSubfiles } from './powerdiff/splitIntoFiles'
+import { Configuration } from './powerdiff/types'
+
+export const DIFFING_MODES = ['together', 'split'] as const
+export type DiffingMode = (typeof DIFFING_MODES)[number]
+
+export interface LeftRightPair {
+  left: string
+  right: string
+}
 
 function diffToHtml(
   path1: string,
   path2: string,
-  difftasticPath: string = 'difft',
+  difftasticPath: string,
+  mode: DiffingMode,
 ): string {
   const currentDirectory = process.env.INIT_CWD ?? process.cwd()
 
@@ -16,16 +27,51 @@ function diffToHtml(
   const absPath2 = path.resolve(currentDirectory, path2)
 
   const gitDiff = gitDiffFolders(absPath1, absPath2)
-  const filePathsList = processGitDiff(gitDiff)
+  let filePathsList = processGitDiff(gitDiff)
+
+  const config: Configuration = {
+    path1: absPath1,
+    path2: absPath2,
+    difftasticPath,
+  }
 
   const result = []
   result.push(HTML_START)
+
+  if (mode === 'split') {
+    const splitResult = splitIntoSubfiles(config, filePathsList)
+
+    config.path1 = splitResult.path1
+    config.path2 = splitResult.path2
+    for (const list of splitResult.filePathsList) {
+      const { left, right } = list
+      const filePathsList = processGitDiff(gitDiffFolders(left, right))
+      const title = `${path.basename(left)} <-> ${path.basename(right)}`
+      result.push(
+        collapsible(title, diffPaths(config, filePathsList).join('\n')),
+      )
+    }
+
+    filePathsList = splitResult.filePathsList
+  } else if (mode === 'together') {
+    result.push(...diffPaths(config, filePathsList))
+  }
+
+  result.push(HTML_END)
+  return result.join('\n')
+}
+
+function diffPaths(
+  config: Configuration,
+  filePathsList: LeftRightPair[],
+): string[] {
+  const result = []
   for (const filePaths of filePathsList) {
     let status: 'diff' | 'added' | 'removed' = 'diff'
     let diff
-    if (filePaths[0] === filePaths[1]) {
-      diff = readFileSync(filePaths[0]).toString()
-      if (filePaths[0].startsWith(absPath1)) {
+    if (filePaths.left === filePaths.right) {
+      diff = readFileSync(filePaths.left).toString()
+      if (filePaths.left.startsWith(config.path1)) {
         status = 'removed'
         diff = chalk.redBright(diff)
       } else {
@@ -33,7 +79,11 @@ function diffToHtml(
         diff = chalk.greenBright(diff)
       }
     } else {
-      diff = compareUsingDifftastic(filePaths[0], filePaths[1], difftasticPath)
+      diff = compareUsingDifftastic(
+        filePaths.left,
+        filePaths.right,
+        config.difftasticPath,
+      )
       const difftasticStatus = diff.split('\n')[1] ?? 'Error'
       if (
         difftasticStatus === 'No syntactic changes.' ||
@@ -43,7 +93,7 @@ function diffToHtml(
       }
       if (diff.includes('exceeded DFT_PARSE_ERROR_LIMIT')) {
         chalk.redBright(
-          `Error with difftastic: exceeded DFT_PARSE_ERROR_LIMIT for ${filePaths[0]}`,
+          `Error with difftastic: exceeded DFT_PARSE_ERROR_LIMIT for ${filePaths.left}`,
         )
         result.push(
           `<div class="warning">  
@@ -58,16 +108,19 @@ function diffToHtml(
 
     result.push(genDiffHtml(filePaths, status, diff))
   }
-  result.push(HTML_END)
-  return result.join('\n')
+
+  return result
 }
 
-function processGitDiff(gitDiff: string) {
+function processGitDiff(gitDiff: string): LeftRightPair[] {
   const lines = gitDiff.split('\n')
   const pathLines = lines.filter((line) => line.startsWith('diff --git'))
   const pathsList = pathLines.map((path) => {
     const split = path.split(' ')
-    return [split[2].replace('a/', ''), split[3].replace('b/', '')]
+    return {
+      left: split[2].replace('a/', ''),
+      right: split[3].replace('b/', ''),
+    }
   })
   return pathsList
 }
@@ -118,29 +171,37 @@ function osExec(command: string) {
 }
 
 function genDiffHtml(
-  filePaths: string[],
+  filePaths: LeftRightPair,
   status: string,
   diff: string,
 ): string {
+  const result = []
+  result.push('<pre>')
+  result.push(filePaths.left)
+  result.push('&#8595;') // arrow down
+  result.push(filePaths.right)
+  result.push()
+  result.push(new Convert().toHtml(diff))
+  result.push('</pre>')
+
+  return collapsible(
+    `(${status}) ${filePaths.left.split('/').slice(-1)[0]}`,
+    result.join('\n'),
+  )
+}
+
+function collapsible(button: string, content: string): string {
   const result = []
   result.push('<div class="collapsible">')
   result.push(
     '<button class="button" onclick="toggleCollapse(this.parentElement)">',
   )
-  result.push(
-    '<span class="icon">&#9654;</span> <!-- Right-pointing triangle; rotates when expanded -->',
-  )
-  result.push(`(${status})`)
-  result.push(filePaths[0].split('/').slice(-1)[0])
+  result.push('<span class="icon">&#9654;</span>')
+  result.push(button)
   result.push('</button>')
-  result.push('<input type="checkbox" />')
-  result.push('<pre>')
-  result.push(filePaths[0])
-  result.push('&#8595;') // arrow down
-  result.push(filePaths[1])
-  result.push()
-  result.push(new Convert().toHtml(diff))
-  result.push('</pre>')
+  result.push('<div class="content">')
+  result.push(content)
+  result.push('</div>')
   result.push('</div>')
   return result.join('\n')
 }
@@ -167,14 +228,23 @@ const HTML_START = `
             overflow: hidden;
             line-height: 1em;
             height: 2em; /* Adjust to line height + button padding */
-            transition: height 0.3s ease-out;
+            transition: height 0.12s cubic-bezier(0.22, 1, 0.36, 1);
             margin-bottom: 0.5em;
+            padding-left: 0px;
+        }
+
+        .collapsible .content {
+          padding-left: 20px;
+        }
+
+        .collapsible .collapsible {
+          padding-left: 20px;
         }
 
         .icon {
             display: inline-block;
             margin-right: 10px;
-            transition: transform 0.3s ease-out;
+            transition: transform 0.12s cubic-bezier(0.22, 1, 0.36, 1);
         }
 
         .button {
@@ -211,7 +281,11 @@ const HTML_START = `
             height: auto; /* Adjust to content */
         }
 
-        .expanded .icon {
+        .collapsible.expanded > .button {
+            background-color: #CCB18F;
+        }
+
+        .collapsible.expanded > .button > .icon {
             transform: rotate(90deg);
         }
     </style>
@@ -221,7 +295,6 @@ const HTML_START = `
     <script>
       function toggleCollapse(element) {
         var content = element;
-        var icon = element.querySelector('.icon');
         
         if (content.classList.contains('expanded')) {
             content.classList.remove('expanded');
@@ -239,9 +312,10 @@ export function powerdiff(
   path1: string,
   path2: string,
   difftasticPath: string = 'difft',
+  mode: DiffingMode = 'together',
 ) {
   checkDeps()
-  const htmlContent = diffToHtml(path1, path2, difftasticPath)
+  const htmlContent = diffToHtml(path1, path2, difftasticPath, mode)
 
   const server = http.createServer((_, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' })

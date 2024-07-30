@@ -36,17 +36,17 @@ describe(BlockActivityIndexer.name, () => {
     it('gets blocks counts, sum with current counts and saves to db', async () => {
       const activityRepository = mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([
-          activityRecord('a', START, 7),
-          activityRecord('a', START.add(1, 'days'), 3),
+          activityRecord('a', START, 7, 0, 8),
+          activityRecord('a', START.add(1, 'days'), 3, 11, 13),
         ]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       })
 
       const txsCountProvider = mockObject<TxsCountProvider>({
         getTxsCount: mockFn().resolvesTo([
-          activityRecord('a', START, 5),
-          activityRecord('a', START.add(1, 'days'), 4),
-          activityRecord('a', START.add(2, 'days'), 2),
+          activityRecord('a', START, 5, 9, 10),
+          activityRecord('a', START.add(1, 'days'), 4, 13, 15),
+          activityRecord('a', START.add(2, 'days'), 2, 16, 20),
         ]),
       })
 
@@ -59,10 +59,10 @@ describe(BlockActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 10)
 
       expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
-      expect(activityRepository.addOrUpdateMany).toHaveBeenCalledWith([
-        activityRecord('a', START, 12),
-        activityRecord('a', START.add(1, 'days'), 7),
-        activityRecord('a', START.add(2, 'days'), 2),
+      expect(activityRepository.upsertMany).toHaveBeenCalledWith([
+        activityRecord('a', START, 12, 0, 10),
+        activityRecord('a', START.add(1, 'days'), 7, 11, 15),
+        activityRecord('a', START.add(2, 'days'), 2, 16, 20),
       ])
       expect(newSafeHeight).toEqual(10)
     })
@@ -77,13 +77,15 @@ describe(BlockActivityIndexer.name, () => {
       expect(entries).toEqual(new Map())
     })
 
-    it('returns a map of timestamps to counts', async () => {
+    it('returns a map of timestamps to records', async () => {
+      const mockActivityRecords = [
+        activityRecord('a', START, 1),
+        activityRecord('a', START.add(1, 'days'), 2),
+        activityRecord('a', START.add(2, 'days'), 4),
+      ]
+
       const activityRepository = mockObject<Database['activity']>({
-        getByProjectAndTimeRange: mockFn().resolvesTo([
-          activityRecord('a', START, 1),
-          activityRecord('a', START.add(1, 'days'), 2),
-          activityRecord('a', START.add(2, 'days'), 4),
-        ]),
+        getByProjectAndTimeRange: mockFn().resolvesTo(mockActivityRecords),
       })
 
       const indexer = createIndexer({
@@ -108,9 +110,9 @@ describe(BlockActivityIndexer.name, () => {
       // returns a map of timestamps to counts
       expect(entries).toEqual(
         new Map([
-          [START.toNumber(), 1],
-          [START.add(1, 'days').toNumber(), 2],
-          [START.add(2, 'days').toNumber(), 4],
+          [START.toNumber(), mockActivityRecords[0]],
+          [START.add(1, 'days').toNumber(), mockActivityRecords[1]],
+          [START.add(2, 'days').toNumber(), mockActivityRecords[2]],
         ]),
       )
     })
@@ -136,11 +138,19 @@ describe(BlockActivityIndexer.name, () => {
   })
 })
 
-function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
+function activityRecord(
+  projectId: string,
+  timestamp: UnixTime,
+  count: number,
+  start: number = 0,
+  end: number = 0,
+) {
   return {
     projectId: ProjectId(projectId),
     timestamp,
     count,
+    start,
+    end,
   }
 }
 
@@ -156,7 +166,7 @@ function createIndexer(
     db: mockDatabase({
       activity: mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       }),
     }),
     projectId: ProjectId('a'),

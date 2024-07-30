@@ -46,12 +46,14 @@ import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gpt } from './gpt'
 import { grvt } from './grvt'
+import { gwyneth } from './gwyneth'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
@@ -87,6 +89,7 @@ import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
+import { patex } from './patex'
 import { payy } from './payy'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
@@ -110,6 +113,7 @@ import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
+import { swan } from './swan'
 import { swell } from './swell'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
@@ -191,11 +195,13 @@ export const layer2s: Layer2[] = [
   gpt,
   galxegravity,
   grvt,
+  gwyneth,
   hermez,
   hybrid,
   hychain,
   hypr,
   immutablex,
+  intmax,
   kakarotzkevm,
   karak,
   kinto,
@@ -231,6 +237,7 @@ export const layer2s: Layer2[] = [
   palm,
   paradex,
   parallel,
+  patex,
   payy,
   playchain,
   plumenetwork,
@@ -254,6 +261,7 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   superseed,
+  swan,
   swell,
   sxt,
   taiko,

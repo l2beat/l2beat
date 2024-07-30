@@ -36,7 +36,7 @@ export class L2CostsPricesIndexer extends ManagedChildIndexer {
       return to
     }
 
-    await this.$.db.l2CostPrice.addMany(prices)
+    await this.$.db.l2CostPrice.insertMany(prices)
 
     this.logger.info('Saved prices into DB', {
       prices: prices.length,

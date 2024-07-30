@@ -71,11 +71,12 @@ export class TxsCountProvider {
         count:
           projectConfig.assessCount?.(block.transactions.length, blockNumber) ??
           block.transactions.length,
+        number: block.number,
       }
     })
 
     const blocks = await Promise.all(queries)
-    return this.sumCountsPerDay(blocks)
+    return this.aggregatePerDay(blocks)
   }
 
   async getStarkexTxsCount(
@@ -114,6 +115,8 @@ export class TxsCountProvider {
       projectId: this.$.projectId,
       timestamp: c.timestamp,
       count: c.count,
+      start: c.timestamp.toStartOf('day').toNumber(),
+      end: c.timestamp.add(1, 'days').add(-1, 'seconds').toNumber(),
     }))
   }
 
@@ -133,11 +136,15 @@ export class TxsCountProvider {
       const transactions =
         await zksyncClient.getTransactionsInBlock(blockNumber)
 
-      return transactions.map((t) => ({ timestamp: t.createdAt, count: 1 }))
+      return transactions.map((t) => ({
+        timestamp: t.createdAt,
+        count: 1,
+        number: blockNumber,
+      }))
     })
 
     const blocks = await Promise.all(queries)
-    return this.sumCountsPerDay(blocks.flat())
+    return this.aggregatePerDay(blocks.flat())
   }
 
   async getStarknetTxsCount(
@@ -161,11 +168,12 @@ export class TxsCountProvider {
       return {
         count: block.transactions.length,
         timestamp: new UnixTime(block.timestamp),
+        number: block.number,
       }
     })
 
     const blocks = await Promise.all(queries)
-    return this.sumCountsPerDay(blocks)
+    return this.aggregatePerDay(blocks)
   }
 
   async getLoopringTxsCount(
@@ -188,11 +196,12 @@ export class TxsCountProvider {
       return {
         count: block.transactions,
         timestamp: block.createdAt,
+        number: block.blockId,
       }
     })
 
     const blocks = await Promise.all(queries)
-    return this.sumCountsPerDay(blocks)
+    return this.aggregatePerDay(blocks)
   }
 
   async getDegateTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
@@ -212,16 +221,18 @@ export class TxsCountProvider {
       return {
         count: block.transactions,
         timestamp: block.createdAt,
+        number: block.blockId,
       }
     })
     const blocks = await Promise.all(queries)
-    return this.sumCountsPerDay(blocks)
+    return this.aggregatePerDay(blocks)
   }
 
-  sumCountsPerDay(
+  aggregatePerDay(
     blocks: {
       count: number
       timestamp: UnixTime
+      number: number
     }[],
   ): ActivityRecord[] {
     const result: ActivityRecord[] = []
@@ -234,11 +245,15 @@ export class TxsCountProvider {
 
       if (currentCount) {
         currentCount.count += block.count
+        currentCount.start = Math.min(currentCount.start, block.number)
+        currentCount.end = Math.max(currentCount.end, block.number)
       } else {
         result.push({
           projectId: this.$.projectId,
           timestamp,
           count: block.count,
+          start: block.number,
+          end: block.number,
         })
       }
     }

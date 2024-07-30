@@ -76,7 +76,7 @@ describe(TvlCleaner.name, () => {
         new Date('2024-01-03T06:00:00Z'),
       )
       const repository = mockObject<Database['tvlCleaner']>({
-        find: mockFn()
+        findByRepositoryName: mockFn()
           .given(firstTable.constructor.name)
           .resolvesToOnce({
             repositoryName: firstTable.constructor.name,
@@ -85,7 +85,7 @@ describe(TvlCleaner.name, () => {
           })
           .given(secondTable.constructor.name)
           .resolvesToOnce(undefined),
-        addOrUpdate: mockFn().resolvesTo(1),
+        upsert: mockFn().resolvesTo(1),
       })
 
       const tvlCleaner = new TvlCleaner(
@@ -98,7 +98,7 @@ describe(TvlCleaner.name, () => {
 
       await tvlCleaner.clean()
 
-      expect(repository.find).toHaveBeenNthCalledWith(
+      expect(repository.findByRepositoryName).toHaveBeenNthCalledWith(
         1,
         firstTable.constructor.name,
       )
@@ -110,12 +110,12 @@ describe(TvlCleaner.name, () => {
         from: firstTableSixHourlyCleanedUntil,
         to: sixHourlyDeletionBoundary,
       })
-      expect(repository.addOrUpdate).toHaveBeenNthCalledWith(1, {
+      expect(repository.upsert).toHaveBeenNthCalledWith(1, {
         repositoryName: firstTable.constructor.name,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
       })
-      expect(repository.find).toHaveBeenNthCalledWith(
+      expect(repository.findByRepositoryName).toHaveBeenNthCalledWith(
         2,
         secondTable.constructor.name,
       )
@@ -127,7 +127,7 @@ describe(TvlCleaner.name, () => {
         from: undefined,
         to: sixHourlyDeletionBoundary,
       })
-      expect(repository.addOrUpdate).toHaveBeenNthCalledWith(2, {
+      expect(repository.upsert).toHaveBeenNthCalledWith(2, {
         repositoryName: secondTable.constructor.name,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
@@ -152,12 +152,12 @@ describe(TvlCleaner.name, () => {
       })
 
       const repository = mockObject<Database['tvlCleaner']>({
-        find: mockFn().resolvesTo({
+        findByRepositoryName: mockFn().resolvesTo({
           repositoryName: firstTable.constructor.name,
           hourlyCleanedUntil: hourlyDeletionBoundary,
           sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
         }),
-        addOrUpdate: mockFn().resolvesTo(1),
+        upsert: mockFn().resolvesTo(1),
       })
 
       const tvlCleaner = new TvlCleaner(
@@ -170,13 +170,13 @@ describe(TvlCleaner.name, () => {
 
       await tvlCleaner.clean()
 
-      expect(repository.find).toHaveBeenNthCalledWith(
+      expect(repository.findByRepositoryName).toHaveBeenNthCalledWith(
         1,
         firstTable.constructor.name,
       )
       expect(firstTable.deleteHourlyUntil).not.toHaveBeenCalled()
       expect(firstTable.deleteSixHourlyUntil).not.toHaveBeenCalled()
-      expect(repository.addOrUpdate).not.toHaveBeenCalled()
+      expect(repository.upsert).not.toHaveBeenCalled()
     })
   })
 })

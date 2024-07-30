@@ -48,6 +48,7 @@ export const kinto: Layer2 = orbitStackL2({
     // this is the full launch of their mainnet, should be negligible socket bridged tvl before
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-05-21T00:00:01Z')),
   },
+  usesBlobs: true,
   trackedTxs: [
     {
       uses: [
@@ -61,6 +62,7 @@ export const kinto: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
         sinceTimestamp: new UnixTime(1702607855),
+        untilTimestamp: new UnixTime(1721705699), // first blob tx
       },
     },
     {
@@ -75,6 +77,7 @@ export const kinto: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder)',
         sinceTimestamp: new UnixTime(1702607855),
+        untilTimestamp: new UnixTime(1721705699), // first blob tx
       },
     },
     {
@@ -89,6 +92,50 @@ export const kinto: Layer2 = orbitStackL2({
         functionSignature:
           'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
         sinceTimestamp: new UnixTime(1702607855),
+        untilTimestamp: new UnixTime(1721705699), // first blob tx
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
+        selector: '0xe0bc9729',
+        functionSignature:
+          'function addSequencerL2Batch(uint256 sequenceNumber,bytes calldata data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1721705699),
+      },
+    },
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
+        selector: '0x8f111f3c',
+        functionSignature:
+          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1721705699),
+      },
+    },
+
+    {
+      uses: [
+        { type: 'liveness', subtype: 'batchSubmissions' },
+        { type: 'l2costs', subtype: 'batchSubmissions' },
+      ],
+      query: {
+        formula: 'functionCall',
+        address: EthereumAddress('0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a'),
+        selector: '0x3e5aa082',
+        functionSignature:
+          'function addSequencerL2BatchFromBlobs(uint256 sequenceNumber,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+        sinceTimestamp: new UnixTime(1721705699),
       },
     },
     {

@@ -52,7 +52,7 @@ describe(DayActivityIndexer.name, () => {
 
     it('gets blocks counts and saves to db', async () => {
       const activityRepository = mockObject<Database['activity']>({
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       })
 
       const mockActvityRecords = [
@@ -74,7 +74,7 @@ describe(DayActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 10)
 
       expect(txsCountProvider.getTxsCount).toHaveBeenCalledWith(0, 10)
-      expect(activityRepository.addOrUpdateMany).toHaveBeenCalledWith(
+      expect(activityRepository.upsertMany).toHaveBeenCalledWith(
         mockActvityRecords,
       )
       expect(newSafeHeight).toEqual(10)
@@ -98,6 +98,8 @@ function activityRecord(projectId: string, timestamp: UnixTime, count: number) {
     projectId: ProjectId(projectId),
     timestamp,
     count,
+    start: timestamp.toStartOf('day').toNumber(),
+    end: timestamp.toEndOf('day').add(-1, 'seconds').toNumber(),
   }
 }
 
@@ -113,7 +115,7 @@ function createIndexer(
     db: mockDatabase({
       activity: mockObject<Database['activity']>({
         getByProjectAndTimeRange: mockFn().resolvesTo([]),
-        addOrUpdateMany: mockFn().resolvesTo(undefined),
+        upsertMany: mockFn().resolvesTo(undefined),
       }),
     }),
     projectId: ProjectId('a'),

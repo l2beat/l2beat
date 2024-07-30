@@ -93,6 +93,10 @@
       "address": "0xe7c3755482d0dA522678Af05945062d4427e0923"
     },
     {
+      "symbol": "ALT",
+      "address": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB"
+    },
+    {
       "symbol": "alUSD",
       "address": "0xBC6DA0FE9aD5f3b0d58160288917AA56653660E9",
       "category": "stablecoin"
@@ -601,10 +605,6 @@
       "symbol": "HUSD",
       "address": "0xdF574c24545E5FfEcb9a659c229253D4111d87e1",
       "category": "stablecoin"
-    },
-    {
-      "symbol": "HYPR",
-      "address": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
     },
     {
       "symbol": "ILV",
@@ -2245,6 +2245,18 @@
       "bridgedUsing": {
         "bridge": "Layer Zero",
         "slug": "stargate"
+      }
+    }
+  ],
+  "cyber": [
+    {
+      "symbol": "CYBER",
+      "address": "0x14778860e937f509e651192a90589de711fb88a9",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "layerzerov2oft"
       }
     }
   ],

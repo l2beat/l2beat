@@ -28,7 +28,7 @@ describe(ChainAmountIndexer.name, () => {
       })
 
       const amountRepository = mockObject<Database['amount']>({
-        addMany: async () => 1,
+        insertMany: async () => 1,
       })
       const amountService = mockObject<AmountService>({
         fetchAmounts: async () => [
@@ -39,7 +39,7 @@ describe(ChainAmountIndexer.name, () => {
 
       const blockNumber = 666
       const blockTimestampRepository = mockObject<Database['blockTimestamp']>({
-        findByChainAndTimestamp: async () => blockNumber,
+        findBlockNumberByChainAndTimestamp: async () => blockNumber,
       })
 
       const indexer = new ChainAmountIndexer({
@@ -70,7 +70,7 @@ describe(ChainAmountIndexer.name, () => {
         toUpdate,
       )
 
-      expect(amountRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([
         amount('a', 200, 123),
       ])
 
