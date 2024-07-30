@@ -95,32 +95,9 @@ describe(MultiIndexer.name, () => {
         return []
       })
 
-      testIndexer.getSafeHeight = mockFn(() => {
-        calls.push('getSafeHeight')
-        return Promise.resolve(undefined)
-      })
-
       await testIndexer.initialize()
 
-      expect(calls).toEqual(['multiInitialize', 'getSafeHeight'])
-    })
-
-    it('getSafeHeight lower than saved configs', async () => {
-      const testIndexer = new TestMultiIndexer(
-        [actual('a', 100, 200)],
-        [saved('a', 100, 200, 150)],
-      )
-      testIndexer.getSafeHeight.resolvesTo(130)
-      expect(await testIndexer.initialize()).toEqual({ safeHeight: 130 })
-    })
-
-    it('getSafeHeight higher than saved configs', async () => {
-      const testIndexer = new TestMultiIndexer(
-        [actual('a', 100, 200)],
-        [saved('a', 100, 200, 150)],
-      )
-      testIndexer.getSafeHeight.resolvesTo(160)
-      expect(await testIndexer.initialize()).toEqual({ safeHeight: 150 })
+      expect(calls).toEqual(['multiInitialize'])
     })
   })
 
@@ -397,9 +374,6 @@ class TestMultiIndexer extends MultiIndexer<null> {
     super(Logger.SILENT, [], mockDatabase(), configurations)
   }
 
-  getSafeHeight =
-    mockFn<MultiIndexer<null>['getSafeHeight']>().resolvesTo(undefined)
-
   setSafeHeight =
     mockFn<MultiIndexer<null>['setSafeHeight']>().resolvesTo(undefined)
 
@@ -413,8 +387,6 @@ class TestMultiIndexer extends MultiIndexer<null> {
   multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
     async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
-
-  removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
 
   updateConfigurationsState =
     mockFn<MultiIndexer<null>['updateConfigurationsState']>().resolvesTo(

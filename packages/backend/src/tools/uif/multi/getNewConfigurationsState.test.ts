@@ -1,210 +1,220 @@
 import { expect } from 'earl'
 
-import { diffConfigurations } from './diffConfigurations'
+import { getNewConfigurationsState } from './getNewConfigurationsState'
 import {
   Configuration,
   RemovalConfiguration,
   SavedConfiguration,
 } from './types'
 
-describe(diffConfigurations.name, () => {
+const SERIALIZE = (v: unknown) => JSON.stringify(v)
+const DIFF = { toAdd: [], toUpdate: [], toDelete: [], toTrim: [] }
+
+describe(getNewConfigurationsState.name, () => {
   describe('errors', () => {
     it('duplicate config id', () => {
       expect(() =>
-        diffConfigurations([actual('a', 100, null), actual('a', 200, 300)], []),
+        getNewConfigurationsState(
+          [actual('a', 100, null), actual('a', 200, 300)],
+          SERIALIZE,
+          [],
+        ),
       ).toThrow(/a is duplicated/)
     })
 
     it('minHeight greater than maxHeight', () => {
-      expect(() => diffConfigurations([actual('a', 200, 100)], [])).toThrow(
-        /a has minHeight greater than maxHeight/,
-      )
+      expect(() =>
+        getNewConfigurationsState([actual('a', 200, 100)], SERIALIZE, []),
+      ).toThrow(/a has minHeight greater than maxHeight/)
     })
   })
 
   describe('regular sync', () => {
-    it('empty actual and stored', () => {
-      const result = diffConfigurations([], [])
+    it('empty actual and saved', () => {
+      const result = getNewConfigurationsState([], SERIALIZE, [])
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [],
-        safeHeight: Infinity,
       })
     })
 
-    it('empty stored', () => {
-      const result = diffConfigurations(
+    it('empty saved', () => {
+      const result = getNewConfigurationsState(
         [actual('a', 100, null), actual('b', 200, 300)],
+        SERIALIZE,
         [],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: {
+          ...DIFF,
+          toAdd: [actual('a', 100, null), actual('b', 200, 300)],
+        },
         configurations: [
           saved('a', 100, null, null),
           saved('b', 200, 300, null),
         ],
-        safeHeight: 99,
       })
     })
 
     it('partially synced, both early', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 400), actual('b', 200, null)],
+        SERIALIZE,
         [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
       )
       expect(result).toEqual({
-        toTrim: [],
-        configurations: [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
-        safeHeight: 300,
+        diff: { ...DIFF },
+        configurations: [
+          { ...actual('a', 100, 400), currentHeight: 300 },
+          { ...actual('b', 200, null), currentHeight: 300 },
+        ],
       })
     })
 
     it('partially synced, one new not yet started', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 400), actual('b', 555, null)],
+        SERIALIZE,
         [saved('a', 100, 400, 300), saved('b', 555, null, null)],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [
           saved('a', 100, 400, 300),
           saved('b', 555, null, null),
         ],
-        safeHeight: 300,
       })
     })
 
     it('partially synced, one finished', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 555), actual('b', 200, 300)],
+        SERIALIZE,
         [saved('a', 100, 555, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [saved('a', 100, 555, 400), saved('b', 200, 300, 300)],
-        safeHeight: 400,
       })
     })
 
     it('partially synced, one finished, one infinite', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, null), actual('b', 200, 300)],
+        SERIALIZE,
         [saved('a', 100, null, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [saved('a', 100, null, 400), saved('b', 200, 300, 300)],
-        safeHeight: 400,
       })
     })
 
     it('both synced', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 400), actual('b', 200, 300)],
+        SERIALIZE,
         [saved('a', 100, 400, 400), saved('b', 200, 300, 300)],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [saved('a', 100, 400, 400), saved('b', 200, 300, 300)],
-        safeHeight: Infinity,
       })
     })
   })
 
   describe('configuration changed', () => {
     it('empty actual', () => {
-      const result = diffConfigurations(
-        [],
-        [saved('a', 100, 400, 300), saved('b', 200, null, 300)],
-      )
+      const result = getNewConfigurationsState([], SERIALIZE, [
+        saved('a', 100, 400, 300),
+        saved('b', 200, null, 300),
+      ])
       expect(result).toEqual({
-        toTrim: [removal('a', 100, 300), removal('b', 200, 300)],
+        diff: [removal('a', 100, 300), removal('b', 200, 300)],
         configurations: [],
-        safeHeight: Infinity,
       })
     })
 
     it('single removed', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('b', 200, 400)],
+        SERIALIZE,
         [saved('a', 100, null, 300), saved('b', 200, 400, 300)],
       )
       expect(result).toEqual({
-        toTrim: [removal('a', 100, 300)],
+        diff: [removal('a', 100, 300)],
         configurations: [saved('b', 200, 400, 300)],
-        safeHeight: 300,
       })
     })
 
     it('maxHeight updated up', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 400)],
+        SERIALIZE,
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [saved('a', 100, 400, 300)],
-        safeHeight: 300,
       })
     })
 
     it('maxHeight updated down', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 200)],
+        SERIALIZE,
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        toTrim: [removal('a', 201, 300)],
+        diff: [removal('a', 201, 300)],
         configurations: [saved('a', 100, 200, 200)],
-        safeHeight: Infinity,
       })
     })
 
     it('maxHeight removed', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, null)],
+        SERIALIZE,
         [saved('a', 100, 300, 300)],
       )
       expect(result).toEqual({
-        toTrim: [],
+        diff: DIFF,
         configurations: [saved('a', 100, null, 300)],
-        safeHeight: 300,
       })
     })
 
     it('minHeight updated up', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 200, 400)],
+        SERIALIZE,
         [saved('a', 100, 400, 300)],
       )
       expect(result).toEqual({
-        toTrim: [removal('a', 100, 199)],
+        diff: [removal('a', 100, 199)],
         configurations: [saved('a', 200, 400, 300)],
-        safeHeight: 300,
       })
     })
 
     it('minHeight updated down', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 100, 400)],
         [saved('a', 200, 400, 300)],
       )
       expect(result).toEqual({
-        toTrim: [removal('a', 200, 300)],
+        diff: [removal('a', 200, 300)],
         configurations: [saved('a', 100, 400, null)],
-        safeHeight: 99,
       })
     })
 
     it('both min and max height updated', () => {
-      const result = diffConfigurations(
+      const result = getNewConfigurationsState(
         [actual('a', 200, 300)],
+        SERIALIZE,
         [saved('a', 100, 400, 400)],
       )
       expect(result).toEqual({
-        toTrim: [removal('a', 100, 199), removal('a', 301, 400)],
+        diff: [removal('a', 100, 199), removal('a', 301, 400)],
         configurations: [saved('a', 200, 300, 300)],
-        safeHeight: Infinity,
       })
     })
   })
@@ -214,8 +224,9 @@ function actual(
   id: string,
   minHeight: number,
   maxHeight: number | null,
-): Configuration<null> {
-  return { id, properties: null, minHeight, maxHeight }
+  properties?: string,
+): Configuration<string> {
+  return { id, properties: properties ?? '', minHeight, maxHeight }
 }
 
 function saved(
@@ -223,8 +234,15 @@ function saved(
   minHeight: number,
   maxHeight: number | null,
   currentHeight: number | null,
-): SavedConfiguration<null> {
-  return { id, properties: null, minHeight, maxHeight, currentHeight }
+  properties?: string,
+): SavedConfiguration<string> {
+  return {
+    id,
+    properties: JSON.stringify(properties ?? ''),
+    minHeight,
+    maxHeight,
+    currentHeight,
+  }
 }
 
 function removal(id: string, from: number, to: number): RemovalConfiguration {

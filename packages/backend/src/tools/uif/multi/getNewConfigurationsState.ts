@@ -4,16 +4,21 @@ import {
   SavedConfiguration,
 } from './types'
 
-export function diffConfigurations<T>(
-  actual: Configuration<T>[],
-  saved: SavedConfiguration<string>[],
-): {
-  toAdd: Configuration<T>[]
-  toUpdate: SavedConfiguration<T>[]
-  toDelete: string[]
-  toTrim: RemovalConfiguration[]
+interface ConfigurationsState<T> {
+  diff: {
+    toAdd: Configuration<T>[]
+    toUpdate: SavedConfiguration<T>[]
+    toDelete: string[]
+    toTrim: RemovalConfiguration[]
+  }
   configurations: SavedConfiguration<T>[]
-} {
+}
+
+export function getNewConfigurationsState<T>(
+  actual: Configuration<T>[],
+  serializeConfiguration: (value: T) => string,
+  saved: SavedConfiguration<string>[],
+): ConfigurationsState<T> {
   const actualMap = new Map(actual.map((c) => [c.id, c]))
   const savedMap = new Map(saved.map((c) => [c.id, c]))
 
@@ -97,7 +102,7 @@ export function diffConfigurations<T>(
       c.maxHeight ?? stored.currentHeight,
     )
     configurations.push({ ...c, currentHeight })
-    if (stored.properties !== c.properties) {
+    if (stored.properties !== serializeConfiguration(c.properties)) {
       toUpdate.push({ ...c, currentHeight: stored.currentHeight })
     }
   }
@@ -106,5 +111,5 @@ export function diffConfigurations<T>(
     .filter((s) => !knownIds.has(s.id))
     .map((c) => c.id)
 
-  return { toAdd, toUpdate, toDelete, toTrim, configurations }
+  return { diff: { toAdd, toUpdate, toDelete, toTrim }, configurations }
 }

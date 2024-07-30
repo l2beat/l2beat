@@ -59,19 +59,6 @@ describe(ManagedMultiIndexer.name, () => {
     })
   })
 
-  it(ManagedMultiIndexer.prototype.getSafeHeight.name, async () => {
-    const indexerService = mockObject<IndexerService>({
-      getSafeHeight: async () => 1,
-    })
-
-    const indexer = await initializeMockIndexer(indexerService, [], [])
-
-    const result = await indexer.getSafeHeight()
-
-    expect(result).toEqual(1)
-    expect(indexerService.getSafeHeight).toHaveBeenOnlyCalledWith('indexer')
-  })
-
   it(ManagedMultiIndexer.prototype.setSafeHeight.name, async () => {
     const indexerService = mockObject<IndexerService>({
       setSafeHeight: async () => {},
@@ -248,6 +235,63 @@ describe(ManagedMultiIndexer.name, () => {
         removal('d', 201, 550),
       ])
     })
+
+    it('properties changed', async () => {
+      const savedConfigurations = [
+        { ...saved('a', 100, null, 500), properties: { prop: 'a' } },
+        { ...saved('b', 100, null, 500), properties: { prop: 'b' } },
+      ]
+      await indexerService.upsertConfigurations(
+        'indexer',
+        savedConfigurations,
+        (v) => JSON.stringify(v),
+      )
+
+      const configurations = [
+        { ...actual('a', 100, null), properties: { prop: 'aa' } },
+        { ...actual('b', 100, null), properties: { prop: 'b' } },
+      ]
+
+      class TestIndexer2<T> extends ManagedMultiIndexer<T> {
+        constructor(override readonly options: ManagedMultiIndexerOptions<T>) {
+          super(options)
+        }
+        multiUpdate = mockFn<MultiIndexer<T>['multiUpdate']>(
+          async (_, targetHeight) => () => Promise.resolve(targetHeight),
+        )
+        removeData =
+          mockFn<ManagedMultiIndexer<T>['removeData']>().resolvesTo(undefined)
+
+        override updateConfigurationsState =
+          mockFn<
+            ManagedMultiIndexer<T>['updateConfigurationsState']
+          >().resolvesTo(undefined)
+      }
+
+      const indexer = new TestIndexer2<{ prop: string }>({
+        parents: [],
+        name: 'indexer',
+        indexerService,
+        configurations,
+        logger: Logger.SILENT,
+        serializeConfiguration: (v) => JSON.stringify(v),
+        db: mockDatabase(),
+      })
+
+      await indexer.start()
+
+      expect(indexer.updateConfigurationsState).toHaveBeenOnlyCalledWith({
+        toAdd: [],
+        toUpdate: [
+          {
+            ...saved('a', 100, null, 500),
+            properties: { prop: 'aa' },
+          },
+        ],
+        toDelete: [],
+        toTrim: [],
+      })
+    })
   })
 })
 
@@ -258,7 +302,8 @@ class TestIndexer extends ManagedMultiIndexer<null> {
   multiUpdate = mockFn<MultiIndexer<null>['multiUpdate']>(
     async (_, targetHeight) => () => Promise.resolve(targetHeight),
   )
-  removeData = mockFn<MultiIndexer<null>['removeData']>().resolvesTo(undefined)
+  removeData =
+    mockFn<ManagedMultiIndexer<null>['removeData']>().resolvesTo(undefined)
 }
 
 async function getSavedConfigurations(indexerService: IndexerService) {

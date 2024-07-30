@@ -4,7 +4,7 @@ import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
 import { IndexerService } from '../IndexerService'
 import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
 import { MultiIndexer } from './MultiIndexer'
-import { diffConfigurations } from './diffConfigurations'
+import { getNewConfigurationsState } from './getNewConfigurationsState'
 import {
   Configuration,
   RemovalConfiguration,
@@ -53,10 +53,15 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
       this.indexerId,
     )
 
-    const diff = diffConfigurations(configurations, previous)
-    await this.updateConfigurationsState(diff)
+    const state = getNewConfigurationsState(
+      configurations,
+      this.options.serializeConfiguration,
+      previous,
+    )
 
-    return diff.configurations
+    await this.updateConfigurationsState(state.diff)
+
+    return state.configurations
   }
 
   abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
