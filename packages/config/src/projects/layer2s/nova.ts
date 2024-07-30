@@ -237,7 +237,7 @@ export const nova: Layer2 = orbitStackL2({
         {
           contract: 'Outbox',
           references: [
-            'https://etherscan.io/address/0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840#code',
+            'https://etherscan.io/address/0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f#code',
           ],
         },
       ],
