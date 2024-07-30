@@ -31,7 +31,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return record.length
   }
 
-  async addMany(record: IndexerConfigurationRecord[]) {
+  async insertMany(record: IndexerConfigurationRecord[]) {
     const rows = record.map(toRow)
 
     await this.batch(rows, 5_000, async (batch) => {

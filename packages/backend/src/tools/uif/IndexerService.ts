@@ -56,7 +56,7 @@ export class IndexerService {
       ...config,
       properties: encode(config.properties),
     }))
-    await this.db.indexerConfiguration.addMany(
+    await this.db.indexerConfiguration.insertMany(
       encoded.map((e) => ({ ...e, indexerId, currentHeight: null })),
     )
   }

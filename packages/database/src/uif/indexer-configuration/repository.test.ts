@@ -54,11 +54,11 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     })
   })
 
-  describe(IndexerConfigurationRepository.prototype.addMany.name, () => {
+  describe(IndexerConfigurationRepository.prototype.insertMany.name, () => {
     it('adds new records', async () => {
       const newRecords = [CONFIGURATIONS[0]!, CONFIGURATIONS[1]!]
 
-      await repository.addOrUpdateMany(newRecords)
+      await repository.upsertMany(newRecords)
 
       const result = await repository.getAll()
 
@@ -97,7 +97,7 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     async () => {
       const records = CONFIGURATIONS
 
-      await repository.addOrUpdateMany(records)
+      await repository.upsertMany(records)
 
       const result =
         await repository.getConfigurationsWithoutIndexerId('indexer-1')
