@@ -66,6 +66,9 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         state.toAdd,
         this.options.serializeConfiguration,
       )
+      this.logger.info('Inserted configurations', {
+        configurations: state.toAdd.length,
+      })
     }
 
     if (state.toUpdate.length > 0) {
@@ -74,6 +77,9 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         state.toUpdate,
         this.options.serializeConfiguration,
       )
+      this.logger.info('Updated configurations', {
+        configurations: state.toUpdate.length,
+      })
     }
 
     if (state.toDelete.length > 0) {
@@ -81,6 +87,9 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         this.indexerId,
         state.toDelete,
       )
+      this.logger.info('Deleted configurations', {
+        configurations: state.toDelete.length,
+      })
     }
 
     if (state.toTrim.length > 0) {
