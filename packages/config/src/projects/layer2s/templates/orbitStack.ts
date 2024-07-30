@@ -289,7 +289,7 @@ export function orbitStackCommon(
           FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
           ` After a delay of ${formatSeconds(
             selfSequencingDelaySeconds,
-          )} in which a Sequencer has failed to include a transaction, it can be forcefully included by anyone on the host chain. `,
+          )} in which a Sequencer has failed to include a transaction that was directly posted to the smart contract, it can be forcefully included by anyone on the host chain, which finalizes its ordering.`,
         references: [
           {
             text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
