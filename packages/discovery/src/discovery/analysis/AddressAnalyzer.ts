@@ -137,13 +137,14 @@ export class AddressAnalyzer {
     )
     logger.logName(sources.name)
 
+    const name = overrides?.name ?? sources.name
     // Match templates by shape only if there are no explicitly set
     if (
       overrides?.extends === undefined &&
       (suggestedTemplates === undefined || suggestedTemplates.size === 0)
     ) {
       const matchingTemplatesByShape =
-        this.templateService.findMatchingTemplates(sources)
+        this.templateService.findMatchingTemplates(name, sources)
       const matchingTemplates = Object.keys(matchingTemplatesByShape)
       const template = matchingTemplates[0]
       if (template !== undefined) {
@@ -203,7 +204,7 @@ export class AddressAnalyzer {
       'selfMeta' | 'targetsMeta'
     > = {
       type: 'Contract',
-      name: overrides?.name ?? sources.name,
+      name,
       derivedName: overrides?.name !== undefined ? sources.name : undefined,
       isVerified: sources.isVerified,
       address,
