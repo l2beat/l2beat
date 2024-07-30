@@ -1,7 +1,7 @@
 {
   "name": "paradex",
   "chain": "ethereum",
-  "blockNumber": 20418285,
+  "blockNumber": 20420390,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
   "version": 10,
   "contracts": [
@@ -131,7 +131,7 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1899,
+        "l1ToL2MessageNonce": 1901,
         "MAX_UPGRADE_DELAY": 15552000,
         "messageCancellationDelay": 432000,
         "operators": ["0xC70ae19B5FeAA5c19f576e621d2bad9771864fe2"],
