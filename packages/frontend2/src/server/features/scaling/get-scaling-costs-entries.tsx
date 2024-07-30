@@ -13,6 +13,7 @@ import { getImplementationChangeReport } from '../implementation-change-report/g
 import { random } from 'lodash'
 
 export interface ScalingCostsEntry {
+  type: 'layer2'
   name: string
   shortName: string | undefined
   slug: string
@@ -54,6 +55,7 @@ export async function getScalingCostsEntries(
   const orderedProjects = orderByTvl(projects, tvl)
 
   return orderedProjects.map((project) => ({
+    type: project.type,
     name: project.display.name,
     shortName: project.display.shortName,
     slug: project.display.slug,

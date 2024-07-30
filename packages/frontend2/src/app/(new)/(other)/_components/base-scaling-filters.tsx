@@ -4,6 +4,7 @@ import React from 'react'
 import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   type ScalingDataAvailabilityEntry,
@@ -16,6 +17,7 @@ export type BaseScalingFiltersEntry =
   | ScalingSummaryLayer3sEntry
   | ScalingRiskEntry
   | ScalingDataAvailabilityEntry
+  | ScalingCostsEntry
 
 export interface BaseScalingFiltersState {
   rollupsOnly: boolean | undefined
@@ -30,6 +32,7 @@ interface Props<T extends BaseScalingFiltersState> {
   state: T
   setState: React.Dispatch<React.SetStateAction<T>>
   additionalFilters?: React.ReactNode
+  showRollupsOnly?: boolean
 }
 
 export function BaseScalingFilters<T extends BaseScalingFiltersState>({
@@ -37,6 +40,7 @@ export function BaseScalingFilters<T extends BaseScalingFiltersState>({
   state,
   setState,
   additionalFilters,
+  showRollupsOnly = true,
 }: Props<T>) {
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
@@ -79,15 +83,17 @@ export function BaseScalingFilters<T extends BaseScalingFiltersState>({
   return (
     <OverflowWrapper>
       <div className="flex space-x-2">
-        <Checkbox
-          id="rollups-only"
-          onCheckedChange={(checked) =>
-            setState((prev) => ({ ...prev, rollupsOnly: !!checked }))
-          }
-          disabled={!isRollupInItems}
-        >
-          Rollups only
-        </Checkbox>
+        {showRollupsOnly ? (
+          <Checkbox
+            id="rollups-only"
+            onCheckedChange={(checked) =>
+              setState((prev) => ({ ...prev, rollupsOnly: !!checked }))
+            }
+            disabled={!isRollupInItems}
+          >
+            Rollups only
+          </Checkbox>
+        ) : null}
         <TableFilter
           title="Type"
           options={typeOptions}

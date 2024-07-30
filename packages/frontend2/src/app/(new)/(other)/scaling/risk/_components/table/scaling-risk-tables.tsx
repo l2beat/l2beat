@@ -18,8 +18,8 @@ import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-ris
 import {
   ScalingFilters,
   type ScalingFiltersState,
-} from '../../../_components/scaling-filters'
-import { scalingRiskColumns } from './table/columns'
+} from '../../../../_components/scaling-filters'
+import { scalingRiskColumns } from './columns'
 
 const DEFAULT_SCALING_FILTERS = {
   rollupsOnly: false,
@@ -31,8 +31,8 @@ const DEFAULT_SCALING_FILTERS = {
 }
 
 export function ScalingRiskTables({
-  projects,
-}: { projects: ScalingRiskEntry[] }) {
+  entries,
+}: { entries: ScalingRiskEntry[] }) {
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
     DEFAULT_SCALING_FILTERS,
   )
@@ -65,8 +65,8 @@ export function ScalingRiskTables({
   )
 
   const allProjects = useMemo(
-    () => projects.filter((item) => includeFilters(item)),
-    [projects, includeFilters],
+    () => entries.filter((item) => includeFilters(item)),
+    [entries, includeFilters],
   )
 
   const activeProjects = useMemo(
