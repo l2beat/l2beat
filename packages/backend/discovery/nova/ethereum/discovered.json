@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20406615,
   "configHash": "0x1241b90279ce248a8d9706c69b47eade2b801d879df669fccf14af7d3a924a41",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ValidatorWallet",
@@ -706,6 +706,14 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
+      },
+      "fieldMeta": {
+        "confirmPeriodBlocks": {
+          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+        },
+        "wasmModuleRoot": {
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        }
       },
       "derivedName": "ArbitrumProxy"
     }

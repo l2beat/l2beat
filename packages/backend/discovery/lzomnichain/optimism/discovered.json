@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122295641,
   "configHash": "0xef4a8d9fc64cd6cb4841c2f2a5a158c30e7d525c846e6834ae078ffc5521512d",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "FPValidator",

@@ -25,10 +25,7 @@ async function main() {
   )
   const toRefresh: { config: DiscoveryConfig; reason: string }[] = []
   for (const config of chainConfigs) {
-    const discovery = await configReader.readDiscovery(
-      config.name,
-      config.chain,
-    )
+    const discovery = configReader.readDiscovery(config.name, config.chain)
     const needsRefreshReason = refreshAll
       ? '--all flag was provided'
       : discoveryNeedsRefresh(discovery, config)
@@ -54,7 +51,7 @@ async function main() {
     )
     if (keyInYN('Do you want to continue?')) {
       for (const { config } of toRefresh) {
-        execSync(`yarn discover "${config.chain}" "${config.name}" --refresh`, {
+        execSync(`yarn discover "${config.chain}" "${config.name}" --dev`, {
           stdio: 'inherit',
         })
       }

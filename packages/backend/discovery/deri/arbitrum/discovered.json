@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 225980981,
   "configHash": "0x1d0e887180bdda238daaf60110f4111bd9b31c4c364ff992216c2c07985ab052",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "UpgradeExecutor",
@@ -177,6 +177,14 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
+      },
+      "fieldMeta": {
+        "confirmPeriodBlocks": {
+          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+        },
+        "wasmModuleRoot": {
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        }
       },
       "derivedName": "RollupProxy"
     },

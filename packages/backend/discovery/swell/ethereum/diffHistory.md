@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x994b7195894dbe1239dcd0ff57459be40f0fa939
+
+# Diff at Tue, 30 Jul 2024 11:16:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20016207
+- current block number: 20016207
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20016207 (main branch discovery), not current.
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+      fieldMeta:
++        {"nonce":{"severity":"MEDIUM","description":"Watch out for txs concerning the prelaunch vault and swell L2 launch"}}
+    }
+```
+
 Generated with discovered.json: 0xd27154564d17a85a983339e3252fc37fe7df0563
 
 # Diff at Tue, 04 Jun 2024 04:55:37 GMT:

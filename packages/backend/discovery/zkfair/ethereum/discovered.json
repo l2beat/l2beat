@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19726116,
   "configHash": "0x87319ffc81b8bb1bb0b08aef29643f604664bba90c854426c2bde7387833a65a",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",
@@ -182,6 +182,9 @@
         ],
         "owner": "0xa57c2B747193fe3F9CC8bea89103B7d76B8A0c70",
         "requiredAmountOfSignatures": 3
+      },
+      "fieldMeta": {
+        "members": { "description": "URL and address of the DAC member" }
       },
       "derivedName": "CDKDataCommittee"
     },

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389671,
   "configHash": "0x311143ae4848e97520f64a30bb9922830c881232fba2b4ba5205492f3e5e951e",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ERC20Bridge",
@@ -214,6 +214,11 @@
           "0x0000000000000000000000000000000000000000",
           "0x0000000000000000000000000000000000000000"
         ]
+      },
+      "fieldMeta": {
+        "verifiers": {
+          "description": "Mapping of proof type to ZK Plonk Verifier contract"
+        }
       },
       "derivedName": "LineaRollup"
     },

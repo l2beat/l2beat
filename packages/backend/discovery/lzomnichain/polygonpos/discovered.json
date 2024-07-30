@@ -3,7 +3,7 @@
   "chain": "polygonpos",
   "blockNumber": 58991670,
   "configHash": "0xce744ee7bc25cb5f9f0d45db11af4edfd1f88023463e53fc1c4ea11f4bc426b5",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ProxyAdmin",

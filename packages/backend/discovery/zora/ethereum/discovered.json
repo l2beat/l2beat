@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20276973,
   "configHash": "0x4f504880274f99c9783e5ed09c9ab707e056c1de0fa410a99b7139474a1dad7f",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -430,6 +430,12 @@
         "unsafeBlockSigner": "0x3Dc8Dfd0709C835cAd15a6A27e089FF4cF4C9228",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       }
     },
     {

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325237,
   "configHash": "0xc748524ec076fcbb2cf7c53d0d0fce30db3acf06ffe6f07b7718dbe6326c7e8e",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "FflonkVerifier",

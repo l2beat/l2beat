@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20406543,
   "configHash": "0x3be146629b3904878d29089b2b24eedb6fd28eac93893a4a02d537e595445642",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Outbox",
@@ -370,6 +370,14 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
+      },
+      "fieldMeta": {
+        "confirmPeriodBlocks": {
+          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+        },
+        "wasmModuleRoot": {
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        }
       },
       "derivedName": "RollupProxy"
     },

@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 15661242,
   "configHash": "0x0c0d0bcd179872a8706b012c4ecadd3454541847850f80a127ceaea39a281aea",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ProxyAdmin",

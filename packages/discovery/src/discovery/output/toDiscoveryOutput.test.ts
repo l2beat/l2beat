@@ -2,6 +2,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { processAnalysis, sortByKeys } from './toDiscoveryOutput'
 
 const emptyOutputMeta = {
@@ -15,19 +16,14 @@ const emptyOutputMeta = {
 
 describe(processAnalysis.name, () => {
   const base = {
+    ...EMPTY_ANALYZED_CONTRACT,
     type: 'Contract' as const,
     derivedName: undefined,
-    errors: {},
-    values: {},
     isVerified: true,
     deploymentTimestamp: new UnixTime(1234),
     deploymentBlockNumber: 9876,
     proxyType: 'immutable',
-    implementations: [],
-    abis: {},
-    sourceBundles: [],
-    matchingTemplates: {},
-    relatives: {},
+    ignoreInWatchMode: undefined,
   }
 
   const ADDRESS_A = EthereumAddress(

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x86efd1c6b6da68e674cb0ce8a4fc9e1539bbf704
+
+# Diff at Tue, 30 Jul 2024 11:11:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20389507
+- current block number: 20389507
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389507 (main branch discovery), not current.
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      fieldMeta:
++        {"proposalCount":{"severity":"MEDIUM","description":"The amount of proposals ever created. Goes up by 1 for each proposal."}}
+    }
+```
+
 Generated with discovered.json: 0xd4edabd36b47d6d04eb8b764f4fba365729e4e7a
 
 # Diff at Fri, 26 Jul 2024 08:24:04 GMT:

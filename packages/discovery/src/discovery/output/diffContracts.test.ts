@@ -55,16 +55,41 @@ describe(diffContracts.name, () => {
         key: 'address',
         before: JSON.stringify(OLD_ADDRESS),
         after: JSON.stringify(NEW_ADDRESS),
+        description: undefined,
+        severity: undefined,
       },
       {
         key: 'values.$admin',
         before: JSON.stringify(OLD_ADMIN),
         after: JSON.stringify(NEW_ADMIN),
+        description: undefined,
+        severity: undefined,
       },
-      { key: 'values.A', before: 'true', after: 'false' },
-      { key: 'values.B', before: 'true' },
-      { key: 'values.D.3', after: '4' },
-      { key: 'values.A.F', after: '"dontIgnoreMe"' },
+      {
+        key: 'values.A',
+        before: 'true',
+        after: 'false',
+        description: undefined,
+        severity: undefined,
+      },
+      {
+        key: 'values.B',
+        before: 'true',
+        description: undefined,
+        severity: undefined,
+      },
+      {
+        key: 'values.D.3',
+        after: '4',
+        description: undefined,
+        severity: undefined,
+      },
+      {
+        key: 'values.A.F',
+        after: '"dontIgnoreMe"',
+        description: undefined,
+        severity: undefined,
+      },
     ])
   })
 })

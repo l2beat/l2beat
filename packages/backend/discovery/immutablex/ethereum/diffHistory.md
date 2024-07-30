@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x811ce9be0609e4816cbe1e6fe58877ea70557706
+
+# Diff at Tue, 30 Jul 2024 11:12:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 19910271
+- current block number: 19910271
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19910271 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x5FDCCA53617f4d2b9134B29090C87D01058e27e9) {
+    +++ description: None
+      fieldMeta:
++        {"DEPOSIT_CANCEL_DELAY":{"description":"The time delay required before canceled deposits to the L2 can be reclaimed."}}
+    }
+```
+
 Generated with discovered.json: 0x31ba0c8d41aae8b994281974a65468f6448d1593
 
 # Diff at Mon, 20 May 2024 09:34:20 GMT:

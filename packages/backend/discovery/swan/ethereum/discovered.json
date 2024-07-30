@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20413034,
   "configHash": "0xa442e5c0750802e9d260f0d1d4044419dcba21e638219df1f8e1e8ad6fe8f86f",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -150,6 +150,12 @@
         "unsafeBlockSigner": "0x05a220507e8F4c73a446DbAfC5607016A7D5Eab0",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       }
     },
     {

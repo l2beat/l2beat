@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20361394,
   "configHash": "0x9eb1a3eb20decdb8382eb8b7f5f17850cb57d755c28eb61bdabb00d662d70212",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "AztecFeeDistributor",
@@ -20,6 +20,12 @@
         "router": "0x7a250d5630B4cF539739dF2C5dAcb4c659F2488D",
         "txFeeBalance": ["5456566547832096188", 0, 59000],
         "WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
+      },
+      "fieldMeta": {
+        "reimburseConstant": {
+          "severity": "LOW",
+          "description": "Tip that gets added to a gas reimbursement for processing the rollup."
+        }
       },
       "derivedName": "AztecFeeDistributor"
     },
@@ -112,6 +118,16 @@
         "txNumPubInputs": 12,
         "txPubInputLength": 384,
         "verifier": "0x48Cb7BA00D087541dC8E2B3738f80fDd1FEe8Ce8"
+      },
+      "fieldMeta": {
+        "rollupProviders": {
+          "severity": "LOW",
+          "description": "Can call the ProcessRollup function"
+        },
+        "verifier": {
+          "severity": "LOW",
+          "description": "Address of the ZK verifier."
+        }
       },
       "derivedName": "RollupProcessor"
     },

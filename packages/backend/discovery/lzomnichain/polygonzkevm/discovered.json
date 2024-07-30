@@ -3,7 +3,7 @@
   "chain": "polygonzkevm",
   "blockNumber": 12848751,
   "configHash": "0x710026b5135b5d108b40faf49d9063aa0102a28e3c1346da5da9851d474cdc27",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "",

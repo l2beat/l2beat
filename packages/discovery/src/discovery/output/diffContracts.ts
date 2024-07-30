@@ -1,10 +1,16 @@
-import { ContractParameters } from '@l2beat/discovery-types'
+import {
+  ContractFieldSeverity,
+  ContractParameters,
+} from '@l2beat/discovery-types'
 import { diff } from 'deep-diff'
+import { normalizeDiffPath } from '../utils/normalizeDiffPath'
 
 export interface FieldDiff {
-  key?: string
+  key: string
   before?: string
   after?: string
+  severity?: ContractFieldSeverity
+  description?: string
 }
 
 export function diffContracts(
@@ -24,19 +30,19 @@ export function diffContracts(
     switch (difference.kind) {
       case 'N':
         result.push({
-          key: difference.path?.join('.'),
+          key: difference.path?.join('.') ?? '',
           after: JSON.stringify(difference.rhs),
         })
         break
       case 'D':
         result.push({
-          key: difference.path?.join('.'),
+          key: difference.path?.join('.') ?? '',
           before: JSON.stringify(difference.lhs),
         })
         break
       case 'E':
         result.push({
-          key: difference.path?.join('.'),
+          key: difference.path?.join('.') ?? '',
           before: JSON.stringify(difference.lhs),
           after: JSON.stringify(difference.rhs),
         })
@@ -44,9 +50,7 @@ export function diffContracts(
       case 'A':
         {
           const r: FieldDiff = {
-            key: `${difference.path?.join('.') ?? 'undefined'}.${
-              difference.index
-            }`,
+            key: `${difference.path?.join('.') ?? ''}.${difference.index}`,
           }
           if (difference.item.kind === 'N') {
             r.after = JSON.stringify(difference.item.rhs)
@@ -65,16 +69,12 @@ export function diffContracts(
   }
 
   const filteredResult = result.filter((r) => {
-    if (r.key === undefined) {
-      return true
-    }
-    for (const i of ignore) {
-      if (r.key.startsWith(i)) {
-        return false
-      }
-    }
-    return true
+    return !ignore.some((i) => r.key.startsWith(i))
   })
 
-  return filteredResult
+  return filteredResult.map((entry) => ({
+    ...entry,
+    severity: after.fieldMeta?.[normalizeDiffPath(entry.key)]?.severity,
+    description: after.fieldMeta?.[normalizeDiffPath(entry.key)]?.description,
+  }))
 }
