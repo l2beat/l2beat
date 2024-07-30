@@ -74,6 +74,24 @@ export interface ScalingDataAvailabilityEntry {
   hasImplementationChanged: boolean
 }
 
+export interface ScalingLivenessEntry {
+  slug: string
+  name: string
+  href: string
+  shortName: string | undefined
+  type: 'layer2' | 'layer3'
+  category: ScalingProjectCategory
+  provider: Layer2Provider | Layer3Provider | undefined
+  warning: string | undefined
+  isVerified: boolean
+  purposes: ScalingProjectPurpose[]
+  stage: StageConfig | undefined
+  liveness: LivenessData
+  redWarning: string | undefined
+  showProjectUnderReview: boolean
+  hasImplementationChanged: boolean
+}
+
 type DataAvailability = {
   layer: ValueWithSentiment<string>
   bridge: ValueWithSentiment<string>
