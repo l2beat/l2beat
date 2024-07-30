@@ -26,71 +26,86 @@ import {
   type AnomalyRecord,
   type AggregatedLivenessRecord,
 } from '@l2beat/database'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 
 export async function getLiveness() {
-  const backendProjects = [
-    ...layer2s.map(layer2ToBackendProject),
-    ...layer3s.map(layer3ToBackendProject),
-    ...bridges.map(bridgeToBackendProject),
-  ]
-
-  const projects: LivenessApiResponse['projects'] = {}
-
-  const configurations = await getSavedConfigurations<TrackedTxConfigEntry>({
-    indexerId: 'tracked_txs_indexer',
-  })
-
-  for (const project of backendProjects) {
-    const activeConfigs = getActiveConfigurations(project, configurations)
-
-    if (!activeConfigs) {
-      continue
-    }
-
-    const aggregatedLivenessRecords =
-      await db.aggregatedLiveness.getByProjectId(project.projectId)
-
-    const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
-    const anomalyRecords = await db.anomalies.getByProjectIdFrom(
-      project.projectId,
-      last30Days,
-    )
-
-    const livenessData: LivenessApiProject = {
-      stateUpdates: mapAggregatedLivenessRecords(
-        aggregatedLivenessRecords,
-        'stateUpdates',
-        project,
-        configurations,
-      ),
-      batchSubmissions: mapAggregatedLivenessRecords(
-        aggregatedLivenessRecords,
-        'batchSubmissions',
-        project,
-        configurations,
-      ),
-      proofSubmissions: mapAggregatedLivenessRecords(
-        aggregatedLivenessRecords,
-        'proofSubmissions',
-        project,
-        configurations,
-      ),
-      anomalies: mapAnomalyRecords(anomalyRecords),
-    }
-
-    // duplicate data from one subtype to another if configured
-    if (project.livenessConfig) {
-      const { from, to } = project.livenessConfig.duplicateData
-      const data = livenessData[from]
-      assert(data, 'From data must exist')
-      livenessData[to] = { ...data }
-    }
-
-    projects[project.projectId.toString()] = livenessData
-  }
-
-  return projects
+  noStore()
+  return getCachedLiveness()
 }
+
+const getCachedLiveness = cache(
+  async () => {
+    const backendProjects = [
+      ...layer2s.map(layer2ToBackendProject),
+      ...layer3s.map(layer3ToBackendProject),
+      ...bridges.map(bridgeToBackendProject),
+    ]
+
+    const projects: LivenessApiResponse['projects'] = {}
+
+    const configurations = await getSavedConfigurations<TrackedTxConfigEntry>({
+      indexerId: 'tracked_txs_indexer',
+    })
+
+    for (const project of backendProjects) {
+      const activeConfigs = getActiveConfigurations(project, configurations)
+
+      if (!activeConfigs) {
+        continue
+      }
+
+      const aggregatedLivenessRecords =
+        await db.aggregatedLiveness.getByProjectId(project.projectId)
+
+      const last30Days = UnixTime.now().add(-30, 'days').toStartOf('day')
+      const anomalyRecords = await db.anomalies.getByProjectIdFrom(
+        project.projectId,
+        last30Days,
+      )
+
+      const livenessData: LivenessApiProject = {
+        stateUpdates: mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'stateUpdates',
+          project,
+          configurations,
+        ),
+        batchSubmissions: mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'batchSubmissions',
+          project,
+          configurations,
+        ),
+        proofSubmissions: mapAggregatedLivenessRecords(
+          aggregatedLivenessRecords,
+          'proofSubmissions',
+          project,
+          configurations,
+        ),
+        anomalies: mapAnomalyRecords(anomalyRecords),
+      }
+
+      // duplicate data from one subtype to another if configured
+      if (project.livenessConfig) {
+        const { from, to } = project.livenessConfig.duplicateData
+        const data = livenessData[from]
+        assert(data, 'From data must exist')
+        livenessData[to] = { ...data }
+      }
+
+      projects[project.projectId.toString()] = livenessData
+    }
+
+    return projects
+  },
+  ['getLiveness'],
+  {
+    revalidate: 60 * 60,
+  },
+)
 
 function mapAggregatedLivenessRecords(
   records: AggregatedLivenessRecord[],
