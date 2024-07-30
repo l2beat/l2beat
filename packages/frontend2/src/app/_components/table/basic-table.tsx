@@ -77,6 +77,7 @@ export function BasicTable<T extends BasicEntry>({
                   'bg-white dark:bg-neutral-900',
                   header.column.columnDef.meta?.headClassName,
                 )}
+                align={header.column.columnDef.meta?.align}
                 tooltip={header.column.columnDef.meta?.tooltip}
                 style={getCommonPinningStyles(header.column)}
               >
@@ -113,6 +114,7 @@ export function BasicTable<T extends BasicEntry>({
                   <TableCell
                     key={cell.id}
                     href={getHref(row.original.href, meta?.hash)}
+                    align={meta?.align}
                     className={cn(
                       getRowTypeClassNames(rowType),
                       meta?.cellClassName,

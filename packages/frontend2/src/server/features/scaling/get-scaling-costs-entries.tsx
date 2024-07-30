@@ -11,7 +11,7 @@ import { type ProjectId } from '@l2beat/shared-pure'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 
-export interface ScalingCostsViewEntry {
+export interface ScalingCostsEntry {
   name: string
   shortName: string | undefined
   slug: string
@@ -27,18 +27,19 @@ export interface ScalingCostsViewEntry {
   costsWarning: WarningWithSentiment | undefined
 }
 
-interface CostsData {
+export interface CostsData {
   total: CostsDataBreakdown
   calldata: CostsDataBreakdown
   blobs: CostsDataBreakdown | undefined
   compute: CostsDataBreakdown
   overhead: CostsDataBreakdown
   txCount: number | undefined
+  syncStatus?: never
 }
 
 export interface CostsDataBreakdown {
-  ethCost: number
-  usdCost: number
+  eth: number
+  usd: number
   gas: number
 }
 
@@ -46,7 +47,7 @@ const UPCOMING_PROJECTS = ['paradex']
 
 export async function getScalingCostsEntries(
   tvl: Record<ProjectId, number>,
-): Promise<ScalingCostsViewEntry[]> {
+): Promise<ScalingCostsEntry[]> {
   const implementationChange = await getImplementationChangeReport()
 
   // for now, later fetch costs from db
@@ -70,28 +71,28 @@ export async function getScalingCostsEntries(
     stage: project.stage,
     data: {
       total: {
-        ethCost: 400,
-        usdCost: 400,
+        eth: 400,
+        usd: 400,
         gas: 400,
       },
       calldata: {
-        ethCost: 100,
-        usdCost: 100,
+        eth: 100,
+        usd: 100,
         gas: 100,
       },
       blobs: {
-        ethCost: 100,
-        usdCost: 100,
+        eth: 100,
+        usd: 100,
         gas: 100,
       },
       compute: {
-        ethCost: 100,
-        usdCost: 100,
+        eth: 100,
+        usd: 100,
         gas: 100,
       },
       overhead: {
-        ethCost: 100,
-        usdCost: 100,
+        eth: 100,
+        usd: 100,
         gas: 100,
       },
       txCount: 2000,

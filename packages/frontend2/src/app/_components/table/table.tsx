@@ -77,8 +77,9 @@ const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement> & {
     tooltip?: React.ReactNode
+    align?: 'right'
   }
->(({ className, children, tooltip, ...props }, ref) => (
+>(({ className, children, tooltip, align, ...props }, ref) => (
   <th
     ref={ref}
     className={cn(
@@ -87,7 +88,12 @@ const TableHead = React.forwardRef<
     )}
     {...props}
   >
-    <div className="flex items-end gap-1.5 leading-none">
+    <div
+      className={cn(
+        'flex items-end gap-1.5 leading-none',
+        align === 'right' && 'justify-end',
+      )}
+    >
       {children}
       {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
     </div>
@@ -97,14 +103,18 @@ TableHead.displayName = 'TableHead'
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement> & { href?: string }
->(({ className, children, href, ...props }, ref) => (
+  React.TdHTMLAttributes<HTMLTableCellElement> & {
+    href?: string
+    align?: 'right'
+  }
+>(({ className, children, href, align, ...props }, ref) => (
   <td
     ref={ref}
     className={cn(
       'group h-9 whitespace-pre align-middle md:h-14',
       !href && 'pr-3 first:pl-2 last:pr-2',
       !href && className,
+      align === 'right' && 'text-right',
     )}
     {...props}
   >
