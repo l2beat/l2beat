@@ -42,10 +42,10 @@ export const scalingCostsColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('data', {
+  columnHelper.accessor('data.total', {
     header: 'Total cost',
     cell: (ctx) => {
-      const value = ctx.getValue()
+      const value = ctx.row.original.data
       if (!value) return <UpcomingBadge />
       return <CostsTotalCell data={value} unit={unit} />
     },
@@ -55,7 +55,7 @@ export const scalingCostsColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (!value) return EM_DASH
-      return <CostsBreakdownValueCell value={value[unit]} unit={unit} />
+      return <CostsBreakdownValueCell value={value} unit={unit} />
     },
     meta: {
       align: 'right',
@@ -73,7 +73,7 @@ export const scalingCostsColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (!value) return EM_DASH
-      return <CostsBreakdownValueCell value={value[unit]} unit={unit} />
+      return <CostsBreakdownValueCell value={value} unit={unit} />
     },
     meta: {
       align: 'right',
@@ -91,7 +91,7 @@ export const scalingCostsColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (!value) return EM_DASH
-      return <CostsBreakdownValueCell value={value[unit]} unit={unit} />
+      return <CostsBreakdownValueCell value={value} unit={unit} />
     },
     meta: {
       align: 'right',
@@ -108,7 +108,7 @@ export const scalingCostsColumns = [
     cell: (ctx) => {
       const value = ctx.getValue()
       if (!value) return EM_DASH
-      return <CostsBreakdownValueCell value={value[unit]} unit={unit} />
+      return <CostsBreakdownValueCell value={value} unit={unit} />
     },
     meta: {
       align: 'right',

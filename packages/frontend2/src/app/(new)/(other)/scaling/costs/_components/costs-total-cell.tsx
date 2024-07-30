@@ -2,8 +2,8 @@ import { type WarningWithSentiment } from '@l2beat/config'
 import React from 'react'
 
 import {
+  type CostsUnit,
   type CostsData,
-  type CostsDataBreakdown,
 } from '~/server/features/scaling/get-scaling-costs-entries'
 import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
 import {
@@ -18,13 +18,13 @@ import { formatCostValue } from '../_utils/format-cost-value'
 
 interface CellProps {
   data: CostsData
-  unit: keyof CostsDataBreakdown
+  unit: CostsUnit
   warning?: WarningWithSentiment
   className?: string
 }
 
 export function CostsTotalCell({ data, unit, className, warning }: CellProps) {
-  const formatted = formatCostValue(data.total[unit], unit)
+  const formatted = formatCostValue(data.total, unit)
 
   return (
     <div className={className}>
@@ -32,16 +32,14 @@ export function CostsTotalCell({ data, unit, className, warning }: CellProps) {
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
           <span className="text-lg font-semibold">
-            <DetailedOnHover value={data.total.eth}>
-              {formatted}
-            </DetailedOnHover>
+            <DetailedOnHover value={data.total}>{formatted}</DetailedOnHover>
           </span>
         </div>
         <CostsBreakdown
-          blobs={data.blobs?.[unit]}
-          calldata={data.calldata[unit]}
-          compute={data.compute[unit]}
-          overhead={data.overhead[unit]}
+          blobs={data.blobs}
+          calldata={data.calldata}
+          compute={data.compute}
+          overhead={data.overhead}
         />
       </div>
     </div>

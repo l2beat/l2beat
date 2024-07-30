@@ -10,6 +10,7 @@ import {
 import { type ProjectId } from '@l2beat/shared-pure'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { random } from 'lodash'
 
 export interface ScalingCostsEntry {
   name: string
@@ -27,20 +28,16 @@ export interface ScalingCostsEntry {
   costsWarning: WarningWithSentiment | undefined
 }
 
+export type CostsUnit = 'eth' | 'usd' | 'gas'
+
 export interface CostsData {
-  total: CostsDataBreakdown
-  calldata: CostsDataBreakdown
-  blobs: CostsDataBreakdown | undefined
-  compute: CostsDataBreakdown
-  overhead: CostsDataBreakdown
+  total: number
+  calldata: number
+  blobs: number | undefined
+  compute: number
+  overhead: number
   txCount: number | undefined
   syncStatus?: never
-}
-
-export interface CostsDataBreakdown {
-  eth: number
-  usd: number
-  gas: number
 }
 
 const UPCOMING_PROJECTS = ['paradex']
@@ -70,32 +67,12 @@ export async function getScalingCostsEntries(
     purposes: project.display.purposes,
     stage: project.stage,
     data: {
-      total: {
-        eth: 400,
-        usd: 400,
-        gas: 400,
-      },
-      calldata: {
-        eth: 100,
-        usd: 100,
-        gas: 100,
-      },
-      blobs: {
-        eth: 100,
-        usd: 100,
-        gas: 100,
-      },
-      compute: {
-        eth: 100,
-        usd: 100,
-        gas: 100,
-      },
-      overhead: {
-        eth: 100,
-        usd: 100,
-        gas: 100,
-      },
-      txCount: 2000,
+      total: random(true) * 1000000,
+      calldata: random(true) * 10000,
+      blobs: random(true) * 100000,
+      compute: random(true) * 100,
+      overhead: random(true) * 10,
+      txCount: random(true) * 1000000000,
     },
     costsWarning: project.display.costsWarning,
   }))
