@@ -1,8 +1,7 @@
 import { DiscoveryDiff, discoveryDiffToMarkdown } from '@l2beat/discovery'
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   diffToMessage,
   formatNonce,
@@ -13,19 +12,6 @@ import {
 
 const ADDRESS = EthereumAddress('0x94cA7e313287a0C4c35AD4c243D1B2f3f6557D01')
 const BLOCK_NUMBER = 123456789
-
-const EMPTY_DISCOVERY_OUTPUT: DiscoveryOutput = {
-  name: 'test',
-  chain: 'ethereum',
-  blockNumber: BLOCK_NUMBER,
-  contracts: [],
-  eoas: [],
-  abis: {},
-  configHash: Hash256.random(),
-  version: 123,
-  usedTemplates: {},
-  shapeFilesHash: Hash256.random(),
-}
 
 describe('Discord message formatting', () => {
   describe(diffToMessage.name, () => {
@@ -59,7 +45,6 @@ describe('Discord message formatting', () => {
       const result = diffToMessage(
         name,
         diff,
-        EMPTY_DISCOVERY_OUTPUT,
         BLOCK_NUMBER,
         'ethereum',
         dependents,
@@ -67,7 +52,7 @@ describe('Discord message formatting', () => {
 
       const expected = [
         `***${name}*** | detected changes on chain: ***ethereum***`,
-        discoveryDiffToMarkdown(diff, EMPTY_DISCOVERY_OUTPUT),
+        discoveryDiffToMarkdown(diff),
       ]
 
       expect(result).toEqual(expected.join(''))
@@ -103,7 +88,6 @@ describe('Discord message formatting', () => {
       const result = diffToMessage(
         name,
         diff,
-        EMPTY_DISCOVERY_OUTPUT,
         BLOCK_NUMBER,
         'ethereum',
         dependents,
@@ -114,7 +98,7 @@ describe('Discord message formatting', () => {
         wrapItalic('This is a shared module, used by the following projects:'),
         ' ',
         wrapBoldAndItalic('system1, system2.'),
-        discoveryDiffToMarkdown(diff, EMPTY_DISCOVERY_OUTPUT),
+        discoveryDiffToMarkdown(diff),
       ]
 
       expect(result).toEqual(expected.join(''))

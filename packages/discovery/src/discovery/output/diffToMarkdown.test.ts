@@ -1,10 +1,7 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
-import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
-import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
 import { DiscoveryDiff } from './diffDiscovery'
 import {
-  ContractDiffInformation,
   contractDiffToMarkdown,
   discoveryDiffToMarkdown,
   fieldDiffToMarkdown,
@@ -18,49 +15,28 @@ describe(discoveryDiffToMarkdown.name, () => {
   const FOO_CONTRACT_DIFF: DiscoveryDiff = {
     name: 'foo',
     address: ADDRESS,
-    diff: [{ key: 'values.baz', before: 'quax', after: 'quox' }],
+    diff: [
+      {
+        key: 'values.baz',
+        before: 'quax',
+        after: 'quox',
+        description: 'The foo value',
+        severity: 'LOW',
+      },
+    ],
   }
   const BAR_CONTRACT_DIFF: DiscoveryDiff = {
     name: 'bar',
     address: SECOND_ADDRESS,
+    description: 'The contract getting deleted',
     type: 'deleted',
   }
 
-  const BAR_CONTRACT_DISCOVERY: ContractParameters = {
-    name: 'bar',
-    address: ADDRESS,
-    descriptions: ['The contract getting deleted'],
-  }
-  const FOO_CONTRACT_DISCOVERY: ContractParameters = {
-    name: 'foo',
-    address: SECOND_ADDRESS,
-    descriptions: undefined,
-    fieldMeta: {
-      [`baz`]: {
-        description: 'The foo value',
-        severity: 'LOW',
-      },
-    },
-  }
-
-  const DISCOVERY_OUTPUT: DiscoveryOutput = {
-    name: 'test',
-    chain: 'ethereum',
-    blockNumber: 123,
-    contracts: [BAR_CONTRACT_DISCOVERY, FOO_CONTRACT_DISCOVERY],
-    eoas: [],
-    abis: {},
-    configHash: Hash256.random(),
-    version: 0,
-    usedTemplates: {},
-    shapeFilesHash: Hash256.random(),
-  }
-
   it('multi contract diff, meta', () => {
-    const result = discoveryDiffToMarkdown(
-      [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
-      DISCOVERY_OUTPUT,
-    )
+    const result = discoveryDiffToMarkdown([
+      FOO_CONTRACT_DIFF,
+      BAR_CONTRACT_DIFF,
+    ])
 
     expect(result).toEqual(
       [
@@ -88,7 +64,6 @@ describe(discoveryDiffToMarkdown.name, () => {
     const maxLength = 128
     const result = discoveryDiffToMarkdown(
       [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
-      DISCOVERY_OUTPUT,
       maxLength,
     )
 
@@ -106,11 +81,7 @@ describe(discoveryDiffToMarkdown.name, () => {
 
   it('truncating, single contract with meta', () => {
     const maxLength = 48
-    const result = discoveryDiffToMarkdown(
-      [FOO_CONTRACT_DIFF],
-      DISCOVERY_OUTPUT,
-      maxLength,
-    )
+    const result = discoveryDiffToMarkdown([FOO_CONTRACT_DIFF], maxLength)
 
     expect(result.length).toBeLessThanOrEqual(maxLength)
     expect(result).toEqual(
@@ -119,13 +90,17 @@ describe(discoveryDiffToMarkdown.name, () => {
   })
 
   it('multi contract diff, no meta', () => {
-    const result = discoveryDiffToMarkdown(
-      [FOO_CONTRACT_DIFF, BAR_CONTRACT_DIFF],
+    const result = discoveryDiffToMarkdown([
       {
-        ...DISCOVERY_OUTPUT,
-        contracts: [],
+        ...FOO_CONTRACT_DIFF,
+        diff: FOO_CONTRACT_DIFF.diff?.map((d) => ({
+          ...d,
+          description: undefined,
+          severity: undefined,
+        })),
       },
-    )
+      { ...BAR_CONTRACT_DIFF, description: undefined },
+    ])
 
     expect(result).toEqual(
       [
@@ -148,10 +123,16 @@ describe(discoveryDiffToMarkdown.name, () => {
   })
 
   it('single contract diff, no meta', () => {
-    const result = discoveryDiffToMarkdown([FOO_CONTRACT_DIFF], {
-      ...DISCOVERY_OUTPUT,
-      contracts: [],
-    })
+    const result = discoveryDiffToMarkdown([
+      {
+        ...FOO_CONTRACT_DIFF,
+        diff: FOO_CONTRACT_DIFF.diff?.map((d) => ({
+          ...d,
+          description: undefined,
+          severity: undefined,
+        })),
+      },
+    ])
 
     expect(result).toEqual(
       [
@@ -168,10 +149,7 @@ describe(discoveryDiffToMarkdown.name, () => {
   })
 
   it('empty diffs, no meta', () => {
-    const result = discoveryDiffToMarkdown([], {
-      ...DISCOVERY_OUTPUT,
-      contracts: [],
-    })
+    const result = discoveryDiffToMarkdown([])
     expect(result).toEqual('')
   })
 })
@@ -260,7 +238,6 @@ describe(contractDiffToMarkdown.name, () => {
           { key: 'values.baz', before: 'bad', after: 'good' },
         ],
       },
-      undefined,
       maxLength,
     )
 
@@ -271,27 +248,21 @@ describe(contractDiffToMarkdown.name, () => {
   })
 
   it('contract with a known diff, meta', () => {
-    const contract: ContractDiffInformation = {
+    const result = contractDiffToMarkdown({
+      name: 'foo',
+      address: ADDRESS,
       description: 'The foo contract',
-      fields: {
-        baz: {
+      diff: [
+        { key: 'values.bar', before: 'oldValue', after: 'newValue' },
+        {
+          key: 'values.baz',
+          before: 'bad',
+          after: 'good',
           description: 'The baz value',
           severity: 'LOW',
         },
-      },
-    }
-
-    const result = contractDiffToMarkdown(
-      {
-        name: 'foo',
-        address: ADDRESS,
-        diff: [
-          { key: 'values.bar', before: 'oldValue', after: 'newValue' },
-          { key: 'values.baz', before: 'bad', after: 'good' },
-        ],
-      },
-      contract,
-    )
+      ],
+    })
 
     expect(result).toEqual(
       [
@@ -330,28 +301,13 @@ describe(fieldDiffToMarkdown.name, () => {
     )
   })
 
-  it('key unset', () => {
-    const diff = {
-      before: 'oldValue',
-      after: 'newValue',
-    }
-
-    expect(fieldDiffToMarkdown(diff, undefined)).toEqual(
-      [
-        '      unknown:', // prettier hack
-        '-        oldValue',
-        '+        newValue',
-      ].join('\n'),
-    )
-  })
-
   it('before unset', () => {
     const diff = {
       key: 'values.bar',
       after: 'newValue',
     }
 
-    expect(fieldDiffToMarkdown(diff, undefined)).toEqual(
+    expect(fieldDiffToMarkdown(diff)).toEqual(
       [
         '      values.bar:', // prettier hack
         '+        newValue',
@@ -367,7 +323,7 @@ describe(fieldDiffToMarkdown.name, () => {
     }
 
     const maxLength = 32
-    const result = fieldDiffToMarkdown(diff, undefined, maxLength)
+    const result = fieldDiffToMarkdown(diff, maxLength)
     expect(result).toEqual('      valu... (message too long)')
     expect(result.length).toBeLessThanOrEqual(maxLength)
   })
@@ -377,14 +333,11 @@ describe(fieldDiffToMarkdown.name, () => {
       key: 'values.bar',
       before: 'oldValue',
       after: 'newValue',
-    }
-
-    const field: DiscoveryContractField = {
       description: 'The bar value',
       severity: 'LOW',
-    }
+    } as const
 
-    expect(fieldDiffToMarkdown(diff, field)).toEqual(
+    expect(fieldDiffToMarkdown(diff)).toEqual(
       [
         '+++ description: The bar value', // prettier hack
         '+++ severity: LOW',
@@ -400,14 +353,10 @@ describe(fieldDiffToMarkdown.name, () => {
       key: 'values.bar',
       before: 'oldValue',
       after: 'newValue',
-    }
-
-    const field: DiscoveryContractField = {
-      description: undefined,
       severity: 'LOW',
-    }
+    } as const
 
-    expect(fieldDiffToMarkdown(diff, field)).toEqual(
+    expect(fieldDiffToMarkdown(diff)).toEqual(
       [
         '+++ severity: LOW',
         '      values.bar:',
@@ -422,15 +371,12 @@ describe(fieldDiffToMarkdown.name, () => {
       key: 'values.bar',
       before: 'oldValue',
       after: 'newValue',
-    }
-
-    const field: DiscoveryContractField = {
       description: 'The bar value',
       severity: 'LOW',
-    }
+    } as const
 
     const maxLength = 48
-    const result = fieldDiffToMarkdown(diff, field, maxLength)
+    const result = fieldDiffToMarkdown(diff, maxLength)
     expect(result.length).toBeLessThanOrEqual(maxLength)
     expect(result).toEqual('+++ description: The bar v... (message too long)')
   })

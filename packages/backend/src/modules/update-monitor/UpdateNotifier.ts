@@ -10,7 +10,6 @@ import {
 import { isEmpty } from 'lodash'
 
 import { Database } from '@l2beat/database'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   Channel,
   DiscordClient,
@@ -47,7 +46,6 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    discovery: DiscoveryOutput,
     blockNumber: number,
     chainId: ChainId,
     dependents: string[],
@@ -82,7 +80,6 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      discovery,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -102,7 +99,6 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      discovery,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,

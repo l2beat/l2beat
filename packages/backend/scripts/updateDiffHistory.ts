@@ -112,7 +112,6 @@ async function updateDiffHistoryFile() {
       discoveryFromMainBranch?.blockNumber,
       curDiscovery.blockNumber,
       diff,
-      curDiscovery,
       configRelatedDiff,
       mainBranchHash,
       codeDiff,
@@ -283,7 +282,6 @@ function generateDiffHistoryMarkdown(
   blockNumberFromMainBranchDiscovery: number | undefined,
   curBlockNumber: number,
   diffs: DiscoveryDiff[],
-  discovery: DiscoveryOutput,
   configRelatedDiff: DiscoveryDiff[],
   mainBranchHash: string,
   codeDiff?: string,
@@ -328,7 +326,7 @@ function generateDiffHistoryMarkdown(
       result.push('## Watched changes')
     }
     result.push('')
-    result.push(discoveryDiffToMarkdown(diffs, discovery))
+    result.push(discoveryDiffToMarkdown(diffs))
     result.push('')
   }
 
@@ -351,7 +349,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block ${blockNumberFromMainBranchDiscovery} (main branch discovery), not current.`,
     )
     result.push('')
-    result.push(discoveryDiffToMarkdown(configRelatedDiff, discovery))
+    result.push(discoveryDiffToMarkdown(configRelatedDiff))
     result.push('')
   }
 

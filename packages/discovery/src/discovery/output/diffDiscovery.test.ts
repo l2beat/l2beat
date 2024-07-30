@@ -110,16 +110,27 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
-        diff: [{ key: 'values.A', before: 'true', after: 'false' }],
+        description: undefined,
+        diff: [
+          {
+            key: 'values.A',
+            before: 'true',
+            after: 'false',
+            description: undefined,
+            severity: undefined,
+          },
+        ],
       },
       {
         name: 'B',
         address: ADDRESS_B,
+        description: undefined,
         type: 'deleted',
       },
       {
         name: 'C',
         address: ADDRESS_C,
+        description: undefined,
         type: 'created',
       },
     ])

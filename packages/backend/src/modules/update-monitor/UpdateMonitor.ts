@@ -307,7 +307,6 @@ export class UpdateMonitor {
       await this.updateNotifier.handleUpdate(
         projectConfig.name,
         diff,
-        discovery,
         blockNumber,
         this.chainConverter.toChainId(chain),
         dependents,

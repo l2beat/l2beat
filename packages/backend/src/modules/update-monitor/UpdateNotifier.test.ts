@@ -4,14 +4,12 @@ import {
   ChainConverter,
   ChainId,
   EthereumAddress,
-  Hash256,
   UnixTime,
   formatAsAsciiTable,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
 import { Database } from '@l2beat/database'
-import { DiscoveryOutput } from '@l2beat/discovery-types'
 import {
   DiscordClient,
   MAX_MESSAGE_LENGTH,
@@ -19,18 +17,6 @@ import {
 import { DailyReminderChainEntry, UpdateNotifier } from './UpdateNotifier'
 
 const BLOCK = 123
-const EMPTY_DISCOVERY_OUTPUT: DiscoveryOutput = {
-  name: 'test',
-  chain: 'ethereum',
-  blockNumber: BLOCK,
-  contracts: [],
-  eoas: [],
-  abis: {},
-  configHash: Hash256.random(),
-  version: 123,
-  usedTemplates: {},
-  shapeFilesHash: Hash256.random(),
-}
 
 describe(UpdateNotifier.name, () => {
   const chainConverter = new ChainConverter([
@@ -73,7 +59,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        EMPTY_DISCOVERY_OUTPUT,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -147,31 +132,21 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
-          diff: [{ key: 'A', before: '1', after: '2' }],
+          diff: [
+            {
+              key: 'A',
+              before: '1',
+              after: '2',
+              severity: 'MEDIUM',
+              description: 'This should never be equal to two',
+            },
+          ],
         },
       ]
-      const discovery: DiscoveryOutput = {
-        ...EMPTY_DISCOVERY_OUTPUT,
-        contracts: [
-          {
-            name: 'Contract',
-            address: EthereumAddress(
-              '0x0000000000000000000000000000000000000001',
-            ),
-            fieldMeta: {
-              A: {
-                severity: 'MEDIUM',
-                description: 'This should never be equal to two',
-              },
-            },
-          },
-        ],
-      }
 
       await updateNotifier.handleUpdate(
         project,
         changes,
-        discovery,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -258,7 +233,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        EMPTY_DISCOVERY_OUTPUT,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -342,7 +316,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        EMPTY_DISCOVERY_OUTPUT,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
