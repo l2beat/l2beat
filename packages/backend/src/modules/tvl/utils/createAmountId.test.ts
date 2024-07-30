@@ -49,6 +49,11 @@ describe(createAmountId.name, () => {
       newValue: 666,
       shouldUpdateHash: false,
     },
+    {
+      key: 'category',
+      newValue: 'ether',
+      shouldUpdateHash: false,
+    },
   ]
 
   describe('Total supply', () => {

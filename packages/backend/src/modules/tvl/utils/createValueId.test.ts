@@ -33,6 +33,11 @@ describe(createValueId.name, () => {
       newValue: EthereumAddress.random(),
       shouldUpdateHash: true,
     },
+    {
+      key: 'category',
+      newValue: 'ether',
+      shouldUpdateHash: true,
+    },
   ]
 
   const priceFields = [
