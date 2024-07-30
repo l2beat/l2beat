@@ -1,52 +1,58 @@
-import { Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
-import { Indexer, IndexerOptions, RetryStrategy } from '@l2beat/uif'
-import { IndexerService } from '../IndexerService'
-import { assetUniqueConfigId, assetUniqueIndexerId } from '../ids'
-import { MultiIndexer } from './MultiIndexer'
+import { assert } from '@l2beat/backend-tools'
+import { ChildIndexer } from '@l2beat/uif'
+import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
 import { getNewConfigurationsState } from './getNewConfigurationsState'
+import { toRanges } from './toRanges'
 import {
   Configuration,
+  ConfigurationRange,
+  ManagedMultiIndexerOptions,
   RemovalConfiguration,
   SavedConfiguration,
 } from './types'
 
-export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
-  parents: Indexer[]
-  name: string
-  tag?: string
-  indexerService: IndexerService
-  configurations: Configuration<T>[]
-  serializeConfiguration: (value: T) => string
-  logger: Logger
-  updateRetryStrategy?: RetryStrategy
-  db: Database
-}
+export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
+  private ranges: ConfigurationRange<T>[] = []
+  private readonly indexerId: string
 
-export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
-  private readonly indexerId
-
-  constructor(public readonly options: ManagedMultiIndexerOptions<T>) {
-    super(
-      options.logger,
-      options.parents,
-      options.db,
-      options.configurations,
-      options,
+  constructor(private readonly options: ManagedMultiIndexerOptions<T>) {
+    assert(
+      options.configurations.length > 0,
+      'Configurations should not be empty',
     )
+
+    super(options.logger, options.parents, options)
 
     this.indexerId = options.name
     if (options.tag) {
       this.indexerId += `::${options.tag}`
     }
-    assetUniqueIndexerId(this.indexerId)
+    assertUniqueIndexerId(this.indexerId)
 
     for (const configuration of options.configurations) {
-      assetUniqueConfigId(configuration.id)
+      assertUniqueConfigId(configuration.id)
     }
   }
 
-  override async multiInitialize(
+  // #region initialize
+
+  async initialize() {
+    const configurations = await this.multiInitialize(
+      this.options.configurations,
+    )
+
+    this.ranges = toRanges(configurations)
+
+    const safeHeight = configurations.reduce(
+      (agg, curr) =>
+        (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
+      Infinity,
+    )
+
+    return { safeHeight }
+  }
+
+  async multiInitialize(
     configurations: Configuration<T>[],
   ): Promise<SavedConfiguration<T>[]> {
     const previous = await this.options.indexerService.getSavedConfigurations(
@@ -63,8 +69,6 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
 
     return state.configurations
   }
-
-  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
 
   async updateConfigurationsState(state: {
     toAdd: Configuration<T>[]
@@ -100,23 +104,82 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
     }
   }
 
-  override setInitialState(
-    safeHeight: number,
-    configHash?: string | undefined,
-  ): Promise<void> {
-    return this.options.indexerService.setInitialState(
-      this.indexerId,
-      safeHeight,
-      configHash,
-    )
+  // #endregion
+
+  // #region update
+
+  async update(from: number, to: number): Promise<number> {
+    const range = this.findRange(from)
+    const configurations = range.configurations
+
+    if (configurations.length === 0) {
+      return Math.min(range.to, to)
+    }
+
+    const adjustedTo = Math.min(range.to, to)
+
+    this.logger.info('Calling multiUpdate', {
+      from,
+      to: adjustedTo,
+      configurations: configurations.length,
+    })
+
+    const saveData = await this.multiUpdate(from, adjustedTo, configurations)
+
+    return await this.options.db.transaction(async () => {
+      const safeHeight = await saveData()
+
+      if (safeHeight < from || safeHeight > adjustedTo) {
+        throw new Error(
+          'Programmer error, returned height must be between from and to (both inclusive).',
+        )
+      }
+
+      await this.updateConfigurationsCurrentHeight(safeHeight)
+
+      return safeHeight
+    })
   }
 
-  override async updateConfigurationsCurrentHeight(
+  private findRange(from: number): ConfigurationRange<T> {
+    const range = this.ranges.find(
+      (range) => range.from <= from && range.to >= from,
+    )
+    if (!range) {
+      throw new Error('Programmer error, there should always be a range')
+    }
+    return range
+  }
+
+  async updateConfigurationsCurrentHeight(
     currentHeight: number,
   ): Promise<void> {
     await this.options.indexerService.updateConfigurationsCurrentHeight(
       this.indexerId,
       currentHeight,
+    )
+  }
+
+  // #endregion
+
+  // #region invalidate
+
+  async invalidate(targetHeight: number): Promise<number> {
+    return await Promise.resolve(targetHeight)
+  }
+
+  // #endregion
+
+  // #region Indexer state
+
+  async setInitialState(
+    safeHeight: number,
+    configHash?: string | undefined,
+  ): Promise<void> {
+    return await this.options.indexerService.setInitialState(
+      this.indexerId,
+      safeHeight,
+      configHash,
     )
   }
 
@@ -126,4 +189,18 @@ export abstract class ManagedMultiIndexer<T> extends MultiIndexer<T> {
       safeHeight,
     )
   }
+
+  // #endregion
+
+  // #region abstract methods
+
+  abstract multiUpdate(
+    from: number,
+    to: number,
+    configurations: Configuration<T>[],
+  ): Promise<() => Promise<number>>
+
+  abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
+
+  // #endregion
 }
