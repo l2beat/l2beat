@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xe44c3989a003ea87c833135bc3d298c5e7c435ef
+
+# Diff at Tue, 30 Jul 2024 11:11:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20317887
+- current block number: 20317887
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20317887 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9) {
+    +++ description: None
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract ETHYieldManager (0x98078db053902644191f93988341E31289E1C8FE) {
+    +++ description: None
+      fieldMeta:
++        {"insuranceFeeBips":{"severity":"MEDIUM","description":"Insurance fee taken from positive yields"}}
+    }
+```
+
+```diff
+    contract USDYieldManager (0xa230285d5683C74935aD14c446e137c8c8828438) {
+    +++ description: None
+      fieldMeta:
++        {"insuranceFeeBips":{"severity":"MEDIUM","description":"Insurance fee taken from positive yields"}}
+    }
+```
+
 Generated with discovered.json: 0x06e5f4fa7163e9ba26f1ac71a9f5417d0f521b2c
 
 # Diff at Tue, 16 Jul 2024 08:31:24 GMT:

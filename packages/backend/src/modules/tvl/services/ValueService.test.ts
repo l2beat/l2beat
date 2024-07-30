@@ -44,6 +44,7 @@ describe(ValueService.name, () => {
       decimals: DECIMALS,
       source: 'canonical',
       isAssociated: false,
+      category: 'ether',
     })
     const CONFIG_B = mockObject<AmountConfigEntry>({
       sinceTimestamp: new UnixTime(300),
@@ -53,6 +54,7 @@ describe(ValueService.name, () => {
       decimals: DECIMALS,
       source: 'external',
       isAssociated: false,
+      category: 'stablecoin',
     })
     const amountConfigs: Map<AmountId, AmountConfigEntry> = new Map([
       ['a', CONFIG_A],
@@ -89,12 +91,15 @@ describe(ValueService.name, () => {
         timestamp: new UnixTime(200),
         canonical: 200n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 200n * 10n ** BigInt(USD_DECIMALS),
+        ether: 200n * 10n ** BigInt(USD_DECIMALS),
       }),
       valueRecord({
         timestamp: new UnixTime(300),
         canonical: 300n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 300n * 10n ** BigInt(USD_DECIMALS),
         external: 300n * 10n ** BigInt(USD_DECIMALS),
+        ether: 300n * 10n ** BigInt(USD_DECIMALS),
+        stablecoin: 300n * 10n ** BigInt(USD_DECIMALS),
       }),
     ])
 

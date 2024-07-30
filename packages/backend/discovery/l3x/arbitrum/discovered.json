@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 234834723,
   "configHash": "0x17b1d8b40bfe763fe331dea870945d8e5ac092e0c0c77471b10814fba181001a",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Outbox",
@@ -274,6 +274,14 @@
         "zombieCount": 0,
         "zombieLatestStakedNode": []
       },
+      "fieldMeta": {
+        "confirmPeriodBlocks": {
+          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+        },
+        "wasmModuleRoot": {
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        }
+      },
       "derivedName": "RollupProxy"
     },
     {
@@ -308,6 +316,11 @@
         "totalDelayedMessagesRead": 141,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
+      },
+      "fieldMeta": {
+        "maxTimeVariation": {
+          "description": "Struct: delayBlocks, futureBlocks, delaySeconds, futureSeconds. onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."
+        }
       },
       "derivedName": "SequencerInbox"
     },

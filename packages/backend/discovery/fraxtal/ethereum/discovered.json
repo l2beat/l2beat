@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032836,
   "configHash": "0x508e4b07a4b641a1977476d77a68c60de60147a319ca2c92dd932852df3c9481",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "DepositContract",
@@ -145,6 +145,12 @@
         "unsafeBlockSigner": "0xc88138f5c82DD1bD327708C7F1c15E44Ce7FdA0C",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },
@@ -467,6 +473,16 @@
         "GnosisSafe_modules": [],
         "nonce": 29,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "getOwners": {
+          "severity": "LOW",
+          "description": "Signers of the multisig, high severity if threshold changes"
+        },
+        "getThreshold": {
+          "severity": "HIGH",
+          "description": "Multisig threshold"
+        }
       },
       "derivedName": "GnosisSafe"
     }

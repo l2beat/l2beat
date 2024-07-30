@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532020,
   "configHash": "0x8dca5a8454f5155b660803896348b9646389cfe9609c50a969defa9dbc4817e5",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "BridgeGovernance",
@@ -209,6 +209,12 @@
           "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
         ],
         "version": 1
+      },
+      "fieldMeta": {
+        "validatorList": {
+          "severity": "MEDIUM",
+          "description": "Array of the signers in the validator multisig"
+        }
       },
       "derivedName": "BridgeValidators"
     }

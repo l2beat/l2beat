@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20382262,
   "configHash": "0x42228c2828298f02436f5667f44151d72647810ec8c962bdf5e229f847ad6516",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -330,6 +330,21 @@
         "serviceManager": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
       },
+      "fieldMeta": {
+        "operatorSetParamsQuorum1": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake"
+        },
+        "operatorSetParamsQuorum2": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake"
+        },
+        "quorumCount": {
+          "severity": "HIGH",
+          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config"
+        },
+        "registeredOperators": {
+          "description": "List of all registered operators ids"
+        }
+      },
       "derivedName": "RegistryCoordinator"
     },
     {
@@ -350,6 +365,14 @@
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      },
+      "fieldMeta": {
+        "ejectionRateLimitWindow": {
+          "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta."
+        },
+        "ejectableStakePercent": {
+          "description": "Max stake to be ejectable per time delta."
+        }
       },
       "derivedName": "EjectionManager"
     },
@@ -415,6 +438,20 @@
         "STORE_DURATION_BLOCKS": 100800,
         "taskNumber": 19056,
         "THRESHOLD_DENOMINATOR": 100
+      },
+      "fieldMeta": {
+        "BLOCK_STALE_MEASURE": {
+          "severity": "MEDIUM",
+          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert."
+        },
+        "quorumAdversaryThresholdPercentages": {
+          "severity": "MEDIUM",
+          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum."
+        },
+        "quorumConfirmationThresholdPercentages": {
+          "severity": "MEDIUM",
+          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum."
+        }
       },
       "derivedName": "EigenDAServiceManager"
     },

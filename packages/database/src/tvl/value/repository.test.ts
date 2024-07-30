@@ -129,5 +129,7 @@ function saved(
     nativeAssociated: BigInt(native),
     nativeForTotal: BigInt(native),
     nativeAssociatedForTotal: BigInt(native),
+    ether: BigInt(0),
+    stablecoin: BigInt(0),
   }
 }

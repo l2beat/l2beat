@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122593187,
   "configHash": "0x31a3019cd0013048c71bd882672a02bed221167c8934d74ae1189dbeb3ceb61b",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "MintManagerOwner",

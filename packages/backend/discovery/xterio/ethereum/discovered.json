@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20327427,
   "configHash": "0x497f9aab4d6e2415743cc0c3311740b95171aba13be97d01c498bf83e2dcade6",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "PreimageOracle",
@@ -315,6 +315,12 @@
         "unsafeBlockSigner": "0xcbdD38Ce74BA96F0ae3D2E608DA96Ec744c80A7E",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },

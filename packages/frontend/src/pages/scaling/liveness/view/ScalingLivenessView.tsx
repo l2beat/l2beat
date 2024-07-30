@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { TableView } from '../../../../components/table/TableView'
 import { ScalingFilters } from '../../../../components/table/filters/ScalingFilters'
 import { getScalingRowProps } from '../../../../components/table/props/getScalingRowProps'
@@ -26,7 +25,6 @@ export function ScalingLivenessView({ items }: ScalingLivenessViewProps) {
         <LivenessTimeRangeControls />
       </div>
       <TableView columnsConfig={columnsConfig} rows={rows} items={items} />
-      <ScalingLegend />
     </section>
   )
 }

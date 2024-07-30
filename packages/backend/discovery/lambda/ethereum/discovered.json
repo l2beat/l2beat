@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20111587,
   "configHash": "0xba904c10ca237db82812bea7549846d299d0893a10edef7690748e1e1217efbf",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "SuperchainConfig",
@@ -284,6 +284,12 @@
         "unsafeBlockSigner": "0x4C61Be5626D1Fb101324f0F41542Da30C0aDa4D4",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },

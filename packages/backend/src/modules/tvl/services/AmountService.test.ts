@@ -144,6 +144,7 @@ function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
     decimals: 18,
     symbol: 'SYMBOL',
     isAssociated: false,
+    category: 'other',
     ...base,
   }
 }

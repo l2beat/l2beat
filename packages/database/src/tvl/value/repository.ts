@@ -76,6 +76,8 @@ export class ValueRepository extends BaseRepository {
               native_associated_for_total: eb.ref(
                 'excluded.native_associated_for_total',
               ),
+              ether: eb.ref('excluded.ether'),
+              stablecoin: eb.ref('excluded.stablecoin'),
             })),
         )
         .execute()

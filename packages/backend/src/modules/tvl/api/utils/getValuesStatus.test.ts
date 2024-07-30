@@ -77,6 +77,8 @@ function mockValue(source: string, timestamp: number) {
     nativeAssociated: 0n,
     nativeForTotal: 0n,
     nativeAssociatedForTotal: 0n,
+    ether: 0n,
+    stablecoin: 0n,
   }
 }
 function mockProject(sources: string[]): ApiProject {

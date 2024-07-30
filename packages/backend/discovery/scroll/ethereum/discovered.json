@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20369470,
   "configHash": "0x16d08149a3169a7f934f3c943ab8f5108b8cf15e4a7a577b5ab7e6a11ca76859",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "PlonkVerifierV2",
@@ -347,6 +347,12 @@
         "messageQueue": "0x0d7E906BD9cAFa154b048cFa766Cc1E54E39AF9B",
         "owner": "0x798576400F7D662961BA15C6b3F3d813447a26a6",
         "paused": true
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."
+        }
       },
       "derivedName": "EnforcedTxGateway"
     },

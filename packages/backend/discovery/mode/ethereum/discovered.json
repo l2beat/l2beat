@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20211472,
   "configHash": "0x1cf3195f77a04b929fa2ef8f1e23e6b005f700852af9155c06f702debf0fca3d",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -364,6 +364,12 @@
         "unsafeBlockSigner": "0xa7fA9CA4ac88686A542C0f830d7378eAB4A0278F",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },

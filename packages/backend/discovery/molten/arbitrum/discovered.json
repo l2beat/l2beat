@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 225981159,
   "configHash": "0x4bcc4ab1c1d8dceb270855fb93c856f1a041e875b0b0614026083a0039ba110a",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "OneStepProverMemory",
@@ -76,6 +76,14 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
+      },
+      "fieldMeta": {
+        "confirmPeriodBlocks": {
+          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+        },
+        "wasmModuleRoot": {
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        }
       },
       "derivedName": "RollupProxy"
     },
