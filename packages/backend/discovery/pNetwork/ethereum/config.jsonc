@@ -22,7 +22,8 @@
       "ignoreInWatchMode": ["nonce"]
     },
     "ERC20 Vault V2": {
-      "ignoreMethods": ["getSupportedTokens", "weth"]
+      "ignoreMethods": ["getSupportedTokens", "weth"],
+      "ignoreRelatives": ["PNT_TOKEN_ADDRESS"]
     },
     "UOS Vault": {
       "ignoreMethods": ["getSupportedTokens", "weth"]
