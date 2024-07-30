@@ -1,14 +1,14 @@
 'use client'
+import { notUndefined } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
+import { useCallback, useMemo, useState } from 'react'
+import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
+import { type ScalingFiltersState } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { scalingCostsColumns } from './columns'
 import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
-import { type ScalingFiltersState } from '~/app/(new)/(other)/_components/scaling-filters'
-import { useCallback, useMemo, useState } from 'react'
-import { notUndefined } from '@l2beat/shared-pure'
-import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
 import { CostsTypeControls } from '../costs-type-controls'
+import { scalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]
@@ -89,9 +89,7 @@ export function ScalingCostsTable({ entries }: Props) {
       </div>
       <BasicTable
         table={table}
-        onResetFilters={() => {
-          return
-        }}
+        onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
       />
     </div>
   )
