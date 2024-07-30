@@ -1,4 +1,4 @@
-import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
+import { type Layer2, layer2s } from '@l2beat/config'
 import {
   type EthereumAddress,
   type LivenessApiProject,
@@ -10,10 +10,6 @@ import {
   notUndefined,
 } from '@l2beat/shared-pure'
 import { orderByTvl } from '../tvl/order-by-tvl'
-import {
-  type ScalingLivenessEntry,
-  type ScalingDataAvailabilityEntry,
-} from './types'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
 import { formatTimestamp } from '~/utils/dates'
 
@@ -23,7 +19,7 @@ export async function getScalingLivenessEntries({
   implementationChangeReport,
   projectsVerificationStatuses,
 }: {
-  liveness: LivenessApiResponse
+  liveness: LivenessApiResponse['projects']
   tvl: Record<ProjectId, number>
   projectsVerificationStatuses: Record<string, boolean | undefined>
   implementationChangeReport: {
@@ -38,45 +34,44 @@ export async function getScalingLivenessEntries({
       >
     >
   }
-}): Promise<ScalingDataAvailabilityEntry[]> {
+}) {
   const activeProjects = [...layer2s].filter(
-    (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
+    (p) =>
+      liveness[p.id.toString()] &&
+      (p.display.category === 'Optimistic Rollup' ||
+        p.display.category === 'ZK Rollup') &&
+      !p.isUpcoming &&
+      !p.isArchived,
   )
   const orderedByTvl = orderByTvl(activeProjects, tvl)
 
   return orderedByTvl
-    .map((p) => {
+    .map((project) => {
       const hasImplementationChanged =
-        !!implementationChangeReport.projects[p.id.toString()]
-      const isVerified = !!projectsVerificationStatuses[p.id.toString()]
-      const data = getLivenessData(liveness.projects[p.id.toString()], p)
-      const explanation = p.display.liveness?.explanation
+        !!implementationChangeReport.projects[project.id.toString()]
+      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+      const data = getLivenessData(liveness[project.id.toString()], project)
+      const explanation = project.display.liveness?.explanation
       const anomalies = getAnomalyEntries(
-        liveness.projects[p.id.toString()]?.anomalies,
+        liveness[project.id.toString()]?.anomalies,
       )
-      return getScalingLivenessEntry(
-        p,
-        hasImplementationChanged,
-        isVerified,
-        livenessData,
-      )
+      return {
+        ...getCommonScalingEntry({
+          project,
+          hasImplementationChanged,
+          isVerified,
+        }),
+        data,
+        explanation,
+        anomalies,
+      }
     })
     .filter(notUndefined)
 }
 
-function getScalingLivenessEntry(
-  project: Layer2 | Layer3,
-  hasImplementationChanged: boolean,
-  isVerified: boolean,
-  livenessData: ReturnType<typeof getLivenessData>,
-): ScalingLivenessEntry | undefined {
-  if (!project.dataAvailability) return
-
-  return {
-    ...getCommonScalingEntry({ project, hasImplementationChanged, isVerified }),
-    liveness: livenessData,
-  }
-}
+export type ScalingLivenessEntry = Awaited<
+  ReturnType<typeof getScalingLivenessEntries>
+>[number]
 
 function getLivenessData(
   liveness: LivenessApiResponse['projects'][string],
@@ -148,20 +143,6 @@ export function getSyncStatus(syncedUntil: UnixTime, syncTarget: UnixTime) {
       },
     )}.`,
   }
-}
-
-function getIncludedProjects(
-  projects: Layer2[],
-  livenessResponse: LivenessApiResponse | undefined,
-) {
-  return projects.filter(
-    (p) =>
-      livenessResponse?.projects[p.id.toString()] &&
-      (p.display.category === 'Optimistic Rollup' ||
-        p.display.category === 'ZK Rollup') &&
-      !p.isUpcoming &&
-      !p.isArchived,
-  )
 }
 
 function getAnomalyEntries(anomalies: LivenessApiProject['anomalies']) {
