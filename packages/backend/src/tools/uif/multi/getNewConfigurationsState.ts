@@ -129,18 +129,20 @@ function setUpdated<T>(
   c: Configuration<T>,
   currentHeight: number | null,
 ) {
-  const u = toUpdate.get(c.id)
+  const existingConfig = toUpdate.get(c.id)
 
-  //TODO: refactor
-  if (u === undefined) {
+  if (!existingConfig) {
     toUpdate.set(c.id, { ...c, currentHeight })
-  } else {
-    if (u.currentHeight !== null) {
-      if (currentHeight === null) {
-        toUpdate.set(c.id, { ...c, currentHeight })
-      } else if (currentHeight < u.currentHeight) {
-        toUpdate.set(c.id, { ...c, currentHeight })
-      }
-    }
+    return
+  }
+
+  if (existingConfig.currentHeight === null) {
+    return
+  }
+
+  if (currentHeight === null) {
+    toUpdate.set(c.id, { ...c, currentHeight })
+  } else if (currentHeight < existingConfig.currentHeight) {
+    toUpdate.set(c.id, { ...c, currentHeight })
   }
 }
