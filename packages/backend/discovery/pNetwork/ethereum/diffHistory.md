@@ -1,4 +1,34 @@
-Generated with discovered.json: 0x2850e23e70e2850f3fd756a1be6193fab6882df2
+Generated with discovered.json: 0xcbf6397e2da904c4da4f58174a8e084137074232
+
+# Diff at Tue, 30 Jul 2024 08:47:12 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 19926484
+- current block number: 20418279
+
+## Description
+
+Ignore PNT (token) discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19926484 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract PNT (0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayHub (0xD216153c06E857cD7f72665E0aF1d7D82172F494)
+    +++ description: None
+```
+
+Generated with discovered.json: 0xcb1f9edd4134d42632c04eea238473909e88cf06
 
 # Diff at Wed, 22 May 2024 16:03:17 GMT:
 
