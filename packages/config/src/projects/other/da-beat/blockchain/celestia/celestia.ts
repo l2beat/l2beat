@@ -6,7 +6,7 @@ import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
-import { noBridge } from './bridges/no-bridge'
+import { NO_BRIDGE } from '../../templates/no-bridge-template'
 
 export const celestia: DaLayer = {
   id: 'celestia',
@@ -31,7 +31,12 @@ export const celestia: DaLayer = {
   },
   technology:
     'Some note about the technology used by the data availability layer.\n## Markdown supported',
-  bridges: [noBridge, ...blobstream],
+  bridges: [
+    NO_BRIDGE({
+      layer: 'Celestia',
+    }),
+    ...blobstream,
+  ],
   usedIn: linkByDA({
     layer: (layer) => layer === 'Celestia',
   }),
