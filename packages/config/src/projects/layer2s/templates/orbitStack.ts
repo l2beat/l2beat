@@ -76,7 +76,7 @@ export interface OrbitStackConfigCommon {
     upgradeDelay: string | undefined
   }
   bridge: ContractParameters
-  challengePeriodBlockTimeSeconds?: number
+  blockNumberOpcodeTimeSeconds?: number
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
@@ -357,22 +357,22 @@ export function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  const challengePeriodBlockTimeSeconds =
-    templateVars.challengePeriodBlockTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+  const blockNumberOpcodeTimeSeconds =
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
 
   const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'confirmPeriodBlocks',
   )
   const challengePeriodSeconds =
-    challengePeriodBlocks * challengePeriodBlockTimeSeconds
+    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
   )
   const validatorAfkTimeSeconds =
-    validatorAfkBlocks * challengePeriodBlockTimeSeconds
+    validatorAfkBlocks * blockNumberOpcodeTimeSeconds
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,

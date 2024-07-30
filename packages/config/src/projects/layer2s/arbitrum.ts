@@ -498,27 +498,13 @@ export const arbitrum: Layer2 = orbitStackL2({
   ],
   nonTemplateRiskView: {
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
-      description: `Upgrades are initiated on L2 and have to first go through a ${formatSeconds(
+      ...RISK_VIEW.EXIT_WINDOW_NITRO(
         l2TimelockDelay,
-      )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
-      )} delay to force a tx, users have only ${formatSeconds(
-        l2TimelockDelay - selfSequencingDelay,
-      )} to exit. Any transaction forced before that time would have to be included on L1 together with the upgrade.
-      \nIf users post a tx after that time, they would need to self propose a root after (in the worst case) a ${formatSeconds(
-        challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
-      )} validator AFK delay and then wait for the ${formatSeconds(
         challengeWindowSeconds,
-      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window and the ${formatSeconds(
+        validatorAfkTime,
         l1TimelockDelay,
-      )} L1 timelock.`,
-      warning: {
-        value: 'The Security Council can upgrade with no delay.',
-        sentiment: 'bad',
-      },
+      ),
       sources: [
         {
           contract: 'RollupProxy',
