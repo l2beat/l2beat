@@ -1,34 +1,30 @@
-Generated with discovered.json: 0x11dfb91b5a1bb2c3e4b7d1b6028dae43c0fadc05
+Generated with discovered.json: 0xc87a74b3f717372b73bcc7d5bab2f8ad94f1c3bb
 
-# Diff at Tue, 30 Jul 2024 11:13:29 GMT:
+# Diff at Tue, 30 Jul 2024 08:48:41 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20110229
-- current block number: 20110229
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20110229
+- current block number: 20418285
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Accesscontrol roles of APP_GOVERNOR and APP_ROLE_ADMIN are given to the EOA that already has the upgrade admin and GOVERNANCE_ADMIN roles, not adding any new net permissions. `maxTotalBalance' raised from 20M to 30M USDC.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 20110229 (main branch discovery), not current.
+## Watched changes
 
 ```diff
     contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
     +++ description: None
-      fieldMeta:
-+        {"maxTotalBalance":{"severity":"MEDIUM","description":"Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)"}}
-    }
-```
-
-```diff
-    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
-    +++ description: None
-      fieldMeta:
-+        {"programHash":{"severity":"HIGH","description":"The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."}}
+      values.accessControl.APP_GOVERNOR.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++++ description: Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)
++++ type: RISK_PARAMETER
++++ severity: MEDIUM
+      values.maxTotalBalance:
+-        20000000000000
++        30000000000000
     }
 ```
 
