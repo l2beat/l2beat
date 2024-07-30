@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
@@ -6,7 +7,6 @@ import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
-import { NO_BRIDGE } from '../../templates/no-bridge-template'
 
 export const celestia: DaLayer = {
   id: 'celestia',
