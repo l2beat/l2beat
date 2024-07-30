@@ -52,9 +52,9 @@ export function diffDiscovery(
 
     if (diff.length > 0) {
       modifiedOrDeleted.push({
-        name: previousContract.name,
-        address: previousContract.address,
-        description: previousContract.descriptions?.join(' '),
+        name: currentContract.name,
+        address: currentContract.address,
+        description: currentContract.descriptions?.join(' '),
         diff,
       })
     }
