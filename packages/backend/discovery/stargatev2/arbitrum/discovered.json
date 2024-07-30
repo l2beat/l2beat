@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 223440408,
   "configHash": "0x2dedeb686ae7973502d6a4c436d14370f30589fa594b644de6706b9310331a28",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -37,6 +37,11 @@
         ],
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
+      },
+      "fieldMeta": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        }
       },
       "derivedName": "TokenMessaging"
     },

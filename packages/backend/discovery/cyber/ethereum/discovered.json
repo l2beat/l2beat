@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032828,
   "configHash": "0xebe0f0cb6387d9421fe6b57702689f36f872724a4106dd03177b3b84447f0ecb",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -235,6 +235,12 @@
         "unsafeBlockSigner": "0xa7A4D6d5920b93D0FE590f9524Ef17f24EE1F5B8",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },

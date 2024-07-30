@@ -28,7 +28,7 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         }
       },
     )
-    await this.$.db.activity.addOrUpdateMany(dataToSave)
+    await this.$.db.activity.upsertMany(dataToSave)
 
     return adjustedTo
   }

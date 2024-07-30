@@ -1,9 +1,9 @@
 {
   "name": "zklinknova",
   "chain": "mantle",
-  "blockNumber": 66795905,
+  "blockNumber": 66927056,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "MantleOwner",
@@ -21,10 +21,11 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$multisigThreshold": "4 of 7 (57%)",
+        "$multisigThreshold": "5 of 8 (63%)",
         "domainSeparator": "0x8ebc72747d383ee6fea9342b35202682cad3166f782cebee00f825155d20b2e4",
         "getChainId": 5000,
         "getOwners": [
+          "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
           "0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -33,9 +34,9 @@
           "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "getThreshold": 4,
+        "getThreshold": 5,
         "GnosisSafe_modules": [],
-        "nonce": 9,
+        "nonce": 10,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -85,14 +86,14 @@
         "getGateway": "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0",
         "getGovernor": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "getPriorityTxMaxGasLimit": 72000000,
-        "getTotalBatchesExecuted": 17833,
-        "getTotalPriorityTxs": 847,
+        "getTotalBatchesExecuted": 18313,
+        "getTotalPriorityTxs": 855,
         "owner": "0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60",
         "paused": false,
-        "totalBatchesExecuted": 17833,
-        "totalPriorityTxs": 847,
-        "totalSyncedPriorityTxs": 839,
-        "totalValidatorForwardFee": "1073477315519078081522",
+        "totalBatchesExecuted": 18313,
+        "totalPriorityTxs": 855,
+        "totalSyncedPriorityTxs": 855,
+        "totalValidatorForwardFee": "1091419113052414112870",
         "totalValidatorForwardFeeWithdrawn": 0,
         "txGasPrice": 140000000000000
       },
@@ -140,6 +141,7 @@
     { "address": "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10" },
     { "address": "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db" },
     { "address": "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5" },
+    { "address": "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5" },
     { "address": "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92" },
     { "address": "0xF801886AE2e127A269B0F11892edb54F692d02dF" }
   ],

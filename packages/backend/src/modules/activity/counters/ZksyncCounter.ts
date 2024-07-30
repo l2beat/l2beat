@@ -42,8 +42,6 @@ export class ZksyncCounter extends SequenceProcessor {
     const blockTransactions = await promiseAllPlus(queries, this.logger, {
       metricsId: 'ZksyncBlockCounter',
     })
-    await this.db.zkSyncTransactionCount.addOrUpdateMany(
-      blockTransactions.flat(),
-    )
+    await this.db.zkSyncTransactionCount.upsertMany(blockTransactions.flat())
   }
 }

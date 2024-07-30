@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,
@@ -31,7 +31,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
@@ -59,7 +59,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -97,8 +96,8 @@ describe(UpdateNotifier.name, () => {
         ].join('\n'),
         'PUBLIC',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -112,7 +111,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
@@ -133,33 +132,21 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
-          diff: [{ key: 'A', before: '1', after: '2' }],
+          diff: [
+            {
+              key: 'A',
+              before: '1',
+              after: '2',
+              severity: 'MEDIUM',
+              description: 'This should never be equal to two',
+            },
+          ],
         },
       ]
-      const config = new DiscoveryConfig({
-        name: 'test',
-        chain: 'ethereum',
-        initialAddresses: [],
-        names: {
-          '0x0000000000000000000000000000000000000001': 'Contract',
-        },
-        overrides: {
-          Contract: {
-            fields: {
-              A: {
-                type: null,
-                severity: 'MEDIUM',
-                description: 'This should never be equal to two',
-              },
-            },
-          },
-        },
-      })
 
       await updateNotifier.handleUpdate(
         project,
         changes,
-        config,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -201,8 +188,8 @@ describe(UpdateNotifier.name, () => {
         ].join('\n'),
         'PUBLIC',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -216,7 +203,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
         getNewerThan: async () => [],
       })
@@ -246,7 +233,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -288,8 +274,8 @@ describe(UpdateNotifier.name, () => {
         publicMessage,
         'PUBLIC',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -303,7 +289,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => 0,
         getNewerThan: async () => [],
       })
@@ -330,7 +316,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -353,8 +338,8 @@ describe(UpdateNotifier.name, () => {
         ].join('\n'),
         'INTERNAL',
       )
-      expect(updateNotifierRepository.add).toHaveBeenCalledTimes(1)
-      expect(updateNotifierRepository.add).toHaveBeenCalledWith({
+      expect(updateNotifierRepository.insert).toHaveBeenCalledTimes(1)
+      expect(updateNotifierRepository.insert).toHaveBeenCalledWith({
         projectName: project,
         diff: changes,
         blockNumber: BLOCK,
@@ -366,7 +351,7 @@ describe(UpdateNotifier.name, () => {
   describe(UpdateNotifier.prototype.sendDailyReminder.name, () => {
     it('sends daily reminder at 9am CET', async () => {
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
       })
 
       const discordClient = mockObject<DiscordClient>({
@@ -454,7 +439,7 @@ describe(UpdateNotifier.name, () => {
       })
 
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
       })
 
       const discordClient = mockObject<DiscordClient>({
@@ -505,7 +490,7 @@ describe(UpdateNotifier.name, () => {
         sendMessage: async () => {},
       })
       const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        add: async () => 0,
+        insert: async () => 0,
         findLatestId: async () => undefined,
       })
       const updateNotifier = new UpdateNotifier(

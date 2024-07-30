@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032860,
   "configHash": "0xfcdd1d44a109cc54bb52f2b9dafbedf5355303521be7cd729b22f44c417ac8a7",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -178,6 +178,12 @@
         "unsafeBlockSigner": "0x41c4FAE5E80B9a622d8968bcd3EBbcf1F93b30Db",
         "version": "1.3.1",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },

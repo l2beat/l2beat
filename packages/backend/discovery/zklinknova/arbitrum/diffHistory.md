@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5a7fb6a1e0fa61d85d4874e74c887b8d654ba53f
+
+# Diff at Fri, 26 Jul 2024 08:09:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 231384315
+- current block number: 236183206
+
+## Description
+
+The admin / owner MS threshold is lowered to 5/8.
+
+## Watched changes
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "6 of 8 (75%)"
++        "5 of 8 (63%)"
+      values.getThreshold:
+-        6
++        5
+    }
+```
+
 Generated with discovered.json: 0x85cbc6a4cd4dcbb2283e6b810b1867b8faaeacc6
 
 # Diff at Thu, 04 Jul 2024 14:08:47 GMT:

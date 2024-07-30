@@ -39,6 +39,6 @@ export class AztecCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'AztecBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
+    await this.db.blockTransactionCount.upsertMany(blocks)
   }
 }

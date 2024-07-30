@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 6393468,
   "configHash": "0xabb838a05984fe6db9b4ec1b011a4bcaa5a8f259cfca75d63e191bcecaf86051",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "MPTValidator01",

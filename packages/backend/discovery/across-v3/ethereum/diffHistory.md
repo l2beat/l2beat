@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x662c97ddcf6ac09e49d3c79f354cceb6bd549801
+
+# Diff at Fri, 26 Jul 2024 08:38:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20289714
+- current block number: 20389580
+
+## Description
+
+A new Adapter and L2 crosschain target for Scroll is registered.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.534352:
++        "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F"
+      values.CrossChainContracts.534352:
++        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll_Adapter (0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Scroll_Adapter.sol    | 531 +++++++++++++++++++++
+ 1 file changed, 531 insertions(+)
+```
+
 Generated with discovered.json: 0x5bed7c1b5746cf1f6518eef6a73859844d4d86c8
 
 # Diff at Fri, 12 Jul 2024 10:06:36 GMT:

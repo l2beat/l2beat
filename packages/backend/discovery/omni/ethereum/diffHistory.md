@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x11ed28255cdc6c6e11fd5a6b7ffdb047230a3b49
+
+# Diff at Tue, 30 Jul 2024 11:13:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 19532020
+- current block number: 19532020
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532020 (main branch discovery), not current.
+
+```diff
+    contract BridgeValidators (0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064) {
+    +++ description: None
+      fieldMeta:
++        {"validatorList":{"severity":"MEDIUM","description":"Array of the signers in the validator multisig"}}
+    }
+```
+
 Generated with discovered.json: 0xabc1571e97c6a3fd09f23adee4c8f5d92b0c464e
 
 # Diff at Thu, 28 Mar 2024 10:29:44 GMT:

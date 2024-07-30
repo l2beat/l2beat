@@ -35,10 +35,10 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
   beforeEach(async function () {
     this.timeout(10000)
     await repository.deleteAll()
-    await repository.addOrUpdateMany(DATA)
+    await repository.upsertMany(DATA)
   })
 
-  describe(AggregatedLivenessRepository.prototype.addOrUpdateMany.name, () => {
+  describe(AggregatedLivenessRepository.prototype.upsertMany.name, () => {
     it('add new and update existing', async () => {
       const newRows: AggregatedLivenessRecord[] = [
         // to update
@@ -63,7 +63,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         },
       ]
 
-      await repository.addOrUpdateMany(newRows)
+      await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
 
@@ -83,7 +83,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).not.toBeRejected()
     })
   })
 
@@ -99,9 +99,9 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
-  describe(AggregatedLivenessRepository.prototype.getByProject.name, () => {
+  describe(AggregatedLivenessRepository.prototype.getByProjectId.name, () => {
     it('should return all rows for project', async () => {
-      const results = await repository.getByProject(PROJECT_B)
+      const results = await repository.getByProjectId(PROJECT_B)
 
       expect(results).toEqualUnsorted(DATA.slice(1, 2))
     })

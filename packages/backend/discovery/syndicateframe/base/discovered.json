@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 15661223,
   "configHash": "0xf98611165f5abbbf65d8da4632824d2cc0fcc293c72b7d86c7db088cb1fbd810",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",

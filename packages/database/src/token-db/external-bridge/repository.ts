@@ -2,13 +2,12 @@ import { BaseRepository } from '../../BaseRepository'
 import { ExternalBridgeRecord, toRow } from './entity'
 
 export class ExternalBridgeRepository extends BaseRepository {
-  upsert(externalBridge: ExternalBridgeRecord) {
-    const row = toRow(externalBridge)
-
-    return this.db
+  async upsert(record: ExternalBridgeRecord): Promise<void> {
+    const row = toRow(record)
+    await this.db
       .insertInto('public.ExternalBridge')
       .values(row)
-      .onConflict((conflict) => conflict.doNothing())
+      .onConflict((cb) => cb.doNothing())
       .execute()
   }
 }

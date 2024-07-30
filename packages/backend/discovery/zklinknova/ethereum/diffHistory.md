@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xea0c6c59d41b988559f9d01b80708452703288ef
+
+# Diff at Fri, 26 Jul 2024 07:37:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20289552
+- current block number: 20389275
+
+## Description
+
+The ScrollL1Gateway admin and owner are changed from the zkLinkNova deployer to the EthereumOwner MS. The same MS is already owner and admin of all other gateways on ethereum.
+
+## Watched changes
+
+```diff
+    contract ScrollL1Gateway (0x986c905087a663db3C81ad319b94c1E9dd388e92) {
+    +++ description: None
+      values.$admin:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+      values.owner:
+-        "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9"
++        "0xdb4D755E3b8735314147b9bB146327C269701E2D"
+    }
+```
+
+```diff
+    contract EthereumOwner (0xdb4D755E3b8735314147b9bB146327C269701E2D) {
+    +++ description: None
+      assignedPermissions.admin.9:
++        "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+      assignedPermissions.admin.8:
+-        "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
++        "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
+      assignedPermissions.admin.7:
+-        "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269"
++        "0x986c905087a663db3C81ad319b94c1E9dd388e92"
+      values.$multisigThreshold:
+-        "6 of 8 (75%)"
++        "5 of 8 (63%)"
+      values.getThreshold:
+-        6
++        5
+    }
+```
+
 Generated with discovered.json: 0x35ed1bc9d854f4ae1497773397ef884bc0f57ae9
 
 # Diff at Fri, 05 Jul 2024 13:17:46 GMT:

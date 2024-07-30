@@ -3,7 +3,7 @@
   "chain": "scroll",
   "blockNumber": 6694912,
   "configHash": "0x9fa65037b0e93c454add856c6e9edc2c563b21e5c0a40fdad3a2286de4532ff0",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
@@ -78,6 +78,11 @@
         ],
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
+      },
+      "fieldMeta": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        }
       },
       "derivedName": "TokenMessaging"
     },

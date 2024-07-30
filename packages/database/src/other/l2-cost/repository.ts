@@ -13,16 +13,13 @@ export class L2CostRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async addMany(records: L2CostRecord[]): Promise<number> {
-    if (records.length === 0) {
-      return 0
-    }
-    const rows = records.map(toRow)
+  async insertMany(records: L2CostRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
+    const rows = records.map(toRow)
     await this.batch(rows, 1_000, async (batch) => {
       await this.db.insertInto('public.l2_costs').values(batch).execute()
     })
-
     return rows.length
   }
 

@@ -1,5 +1,5 @@
-import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { ChainConverter, DiscoveryDiff } from '@l2beat/shared-pure'
+import { ConfigReader, DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import { ChainConverter } from '@l2beat/shared-pure'
 
 import { BackendProject } from '@l2beat/config'
 import { Database } from '@l2beat/database'

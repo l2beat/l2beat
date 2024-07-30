@@ -22,7 +22,7 @@ export class LivenessUpdater implements TxUpdaterInterface {
     }
 
     const transformedTransactions = this.transformTransactions(transactions)
-    await this.db.liveness.addMany(transformedTransactions)
+    await this.db.liveness.insertMany(transformedTransactions)
     this.logger.info('Updated liveness', { count: transactions.length })
   }
 

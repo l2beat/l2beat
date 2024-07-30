@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531981,
   "configHash": "0x7b4443a7e17b174dc610b0eb42695f821608a6139d42809fdf1aca12b41076c3",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "PauserRegistry",

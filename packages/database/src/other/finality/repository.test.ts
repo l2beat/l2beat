@@ -41,10 +41,10 @@ describeDatabase(FinalityRepository.name, (db) => {
   beforeEach(async function () {
     this.timeout(10000)
     await repository.deleteAll()
-    await repository.addMany(DATA)
+    await repository.insertMany(DATA)
   })
 
-  describe(FinalityRepository.prototype.add.name, () => {
+  describe(FinalityRepository.prototype.insert.name, () => {
     it('adds new row', async () => {
       const newRecord = {
         projectId: ProjectId('project-c'),
@@ -55,14 +55,14 @@ describeDatabase(FinalityRepository.name, (db) => {
         averageStateUpdate: null,
       }
 
-      await repository.add(newRecord)
+      await repository.insert(newRecord)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...DATA, newRecord])
     })
   })
 
-  describe(FinalityRepository.prototype.addMany.name, () => {
+  describe(FinalityRepository.prototype.insertMany.name, () => {
     it('adds new rows', async () => {
       const newRows = [
         {
@@ -82,14 +82,14 @@ describeDatabase(FinalityRepository.name, (db) => {
           averageStateUpdate: 3,
         },
       ]
-      await repository.addMany(newRows)
+      await repository.insertMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...DATA, ...newRows])
     })
 
     it('empty array', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).not.toBeRejected()
     })
 
     it('big query', async () => {
@@ -106,7 +106,7 @@ describeDatabase(FinalityRepository.name, (db) => {
           averageStateUpdate: i,
         })
       }
-      await repository.addMany(records)
+      await repository.insertMany(records)
     })
   })
 
@@ -214,7 +214,7 @@ describeDatabase(FinalityRepository.name, (db) => {
           latestProjectDFinality,
         ]
 
-        await repository.addMany(additionalRows)
+        await repository.insertMany(additionalRows)
 
         const result = await repository.getLatestGroupedByProjectId([
           ProjectId('project-a'),
@@ -259,7 +259,7 @@ describeDatabase(FinalityRepository.name, (db) => {
           averageStateUpdate: null,
         },
       ]
-      await repository.addMany(newRows)
+      await repository.insertMany(newRows)
 
       const result = await repository.findLatestByProjectId(
         ProjectId('project-c'),

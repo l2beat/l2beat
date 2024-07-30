@@ -186,4 +186,5 @@ export interface DABeatConfig {
   readonly quicknodeCallsPerMinute: number
   readonly celestiaApiUrl: string
   readonly celestiaCallsPerMinute: number
+  readonly nearRpcUrl: string
 }

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20311101,
   "configHash": "0x194537b8435cd3929c23c50ed4f2c1da87d7d6ad8471582b383d61ab38bb697d",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ZkTrueUp",
