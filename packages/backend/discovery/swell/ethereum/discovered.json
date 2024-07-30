@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016207,
   "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "SwellMultisig",
@@ -33,6 +33,12 @@
         "GnosisSafe_modules": [],
         "nonce": 110,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "nonce": {
+          "severity": "MEDIUM",
+          "description": "Watch out for txs concerning the prelaunch vault and swell L2 launch"
+        }
       },
       "derivedName": "GnosisSafe"
     },

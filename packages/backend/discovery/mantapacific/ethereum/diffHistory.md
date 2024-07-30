@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x350cf1d20f12687b485e4f46de8c1dc18ecbcc1c
+
+# Diff at Tue, 30 Jul 2024 11:12:40 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 19531966
+- current block number: 19531966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531966 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x895E00269A05848F3c9889EfA677D02fF7351a5D) {
+    +++ description: None
+      fieldMeta:
++        {"overhead":{"severity":"LOW","description":"Fixed L2 gas overhead. Used as part of the L2 fee calculation."},"scalar":{"severity":"LOW","description":"Dynamic L2 gas overhead. Used as part of the L2 fee calculation."}}
+    }
+```
+
 Generated with discovered.json: 0x0a45e5c92f859c0519f98dc3bc80e43aa365fa72
 
 # Diff at Thu, 18 Jul 2024 10:31:49 GMT:

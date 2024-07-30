@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc4093837d75607cf4e7610514ccb85dca5270f1e
+
+# Diff at Tue, 30 Jul 2024 11:17:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 237006565
+- current block number: 237006565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 237006565 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
+      fieldMeta:
++        {"getBothCohorts":{"severity":"MEDIUM","description":"All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"}}
+    }
+```
+
 Generated with discovered.json: 0xc72cf5f2281dbc063920bfc56809ba4a2c51b665
 
 # Diff at Sun, 28 Jul 2024 17:31:45 GMT:

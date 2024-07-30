@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 237006565,
   "configHash": "0x3969a51ee4560bb977a179bd6a5b4f810748bd02772b21381d3be4a481c19e81",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "L2ERC20Gateway",
@@ -492,6 +492,12 @@
         ],
         "securityCouncilsLength": 4,
         "updateNonce": 6
+      },
+      "fieldMeta": {
+        "getBothCohorts": {
+          "severity": "MEDIUM",
+          "description": "All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"
+        }
       },
       "derivedName": "SecurityCouncilManager"
     },

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x86ecb92ce581ce26c8cf706e130fe8bf766dafdd
+
+# Diff at Tue, 30 Jul 2024 11:11:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 19960612
+- current block number: 19960612
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19960612 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB) {
+    +++ description: It contains configuration parameters such as the Sequencer address, the L2 gas limit and the unsafe block signer address.
+      fieldMeta:
++        {"unsafeBlockSigner":{"severity":"LOW","description":"Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner."},"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
 Generated with discovered.json: 0xe567d8e1edc1a9346a7ebff53c952dd545933f9c
 
 # Diff at Thu, 18 Jul 2024 10:30:11 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4df4661c58418e3344cd64f7aad67f71ee53f099
+
+# Diff at Tue, 30 Jul 2024 11:12:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20017490
+- current block number: 20017490
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017490 (main branch discovery), not current.
+
+```diff
+    contract Bridge (0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6) {
+    +++ description: None
+      fieldMeta:
++        {"withdrawalDelay":{"severity":"MEDIUM","description":"Delay in seconds of any withdrawals submitted after the withdrawal queue is activated."},"withdrawalQueueActivated":{"severity":"LOW","description":"If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism."}}
+    }
+```
+
 Generated with discovered.json: 0xbff143ccc78a2ae0361e6da5156907a0666680fe
 
 # Diff at Tue, 04 Jun 2024 09:13:43 GMT:
