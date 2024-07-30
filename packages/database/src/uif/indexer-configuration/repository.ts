@@ -29,6 +29,17 @@ export class IndexerConfigurationRepository extends BaseRepository {
     })
   }
 
+  async addMany(record: IndexerConfigurationRecord[]) {
+    const rows = record.map(toRow)
+
+    await this.batch(rows, 5_000, async (batch) => {
+      await this.db
+        .insertInto('public.indexer_configurations')
+        .values(batch)
+        .execute()
+    })
+  }
+
   async getSavedConfigurations(indexerId: string) {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')

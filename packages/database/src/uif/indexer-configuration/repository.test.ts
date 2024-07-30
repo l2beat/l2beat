@@ -57,6 +57,18 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     },
   )
 
+  describe(IndexerConfigurationRepository.prototype.addMany.name, () => {
+    it('adds new records', async () => {
+      const newRecords = [CONFIGURATIONS[0]!, CONFIGURATIONS[1]!]
+
+      await repository.addOrUpdateMany(newRecords)
+
+      const result = await repository.getAll()
+
+      expect(result).toEqualUnsorted(newRecords)
+    })
+  })
+
   describe(
     IndexerConfigurationRepository.prototype.getSavedConfigurationsByIds.name,
     () => {

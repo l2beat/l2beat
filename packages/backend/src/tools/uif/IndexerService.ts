@@ -52,14 +52,13 @@ export class IndexerService {
     configurations: Configuration<T>[],
     encode: (value: T) => string,
   ): Promise<void> {
-    // TODO
-    // const encoded = configurations.map((config) => ({
-    //   ...config,
-    //   properties: encode(config.properties),
-    // }))
-    // await this.db.indexerConfiguration.addOrUpdateMany(
-    //   encoded.map((e) => ({ ...e, indexerId })),
-    // )
+    const encoded = configurations.map((config) => ({
+      ...config,
+      properties: encode(config.properties),
+    }))
+    await this.db.indexerConfiguration.addMany(
+      encoded.map((e) => ({ ...e, indexerId, currentHeight: null })),
+    )
   }
 
   async upsertConfigurations<T>(
