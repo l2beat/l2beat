@@ -47,7 +47,13 @@ export const scalingCostsColumns = [
     cell: (ctx) => {
       const value = ctx.row.original.data
       if (!value) return <UpcomingBadge />
-      return <CostsTotalCell data={value} unit={unit} />
+      return (
+        <CostsTotalCell
+          data={value}
+          unit={unit}
+          warning={ctx.row.original.costsWarning}
+        />
+      )
     },
   }),
   columnHelper.accessor('data.calldata', {

@@ -19,15 +19,14 @@ import { formatCostValue } from '../_utils/format-cost-value'
 interface CellProps {
   data: CostsData
   unit: CostsUnit
-  warning?: WarningWithSentiment
-  className?: string
+  warning: WarningWithSentiment | undefined
 }
 
-export function CostsTotalCell({ data, unit, className, warning }: CellProps) {
+export function CostsTotalCell({ data, unit, warning }: CellProps) {
   const formatted = formatCostValue(data.total, unit)
 
   return (
-    <div className={className}>
+    <div>
       <div className="flex flex-col items-end">
         <div className="flex items-center gap-1">
           {warning && <Warning warning={warning} />}
