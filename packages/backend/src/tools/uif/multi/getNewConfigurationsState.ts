@@ -36,7 +36,7 @@ export function getNewConfigurationsState<T>(
 
   const configurations: SavedConfiguration<T>[] = []
   const toAdd: Configuration<T>[] = []
-  const toUpdate: SavedConfiguration<T>[] = []
+  const updated = new Map<string, SavedConfiguration<T>>()
 
   const knownIds = new Set<string>()
   for (const c of actual) {
@@ -75,7 +75,7 @@ export function getNewConfigurationsState<T>(
       })
       configurations.push({ ...c, currentHeight: null })
 
-      toUpdate.push({ ...c, currentHeight: null })
+      setUpdated(updated, c, null)
       continue
     }
 
@@ -85,7 +85,7 @@ export function getNewConfigurationsState<T>(
         from: stored.minHeight,
         to: c.minHeight - 1,
       })
-      toUpdate.push({ ...c, currentHeight: stored.currentHeight })
+      setUpdated(updated, c, stored.currentHeight)
     }
 
     if (c.maxHeight !== stored.maxHeight) {
@@ -93,7 +93,7 @@ export function getNewConfigurationsState<T>(
         stored.currentHeight,
         c.maxHeight ?? Infinity,
       )
-      toUpdate.push({ ...c, currentHeight })
+      setUpdated(updated, c, currentHeight)
     }
 
     if (c.maxHeight !== null && stored.currentHeight > c.maxHeight) {
@@ -110,7 +110,7 @@ export function getNewConfigurationsState<T>(
     )
     configurations.push({ ...c, currentHeight })
     if (stored.properties !== serializeConfiguration(c.properties)) {
-      toUpdate.push({ ...c, currentHeight: stored.currentHeight })
+      setUpdated(updated, c, stored.currentHeight)
     }
   }
 
@@ -118,5 +118,29 @@ export function getNewConfigurationsState<T>(
     .filter((s) => !knownIds.has(s.id))
     .map((c) => c.id)
 
-  return { diff: { toAdd, toUpdate, toDelete, toTrim }, configurations }
+  return {
+    diff: { toAdd, toUpdate: Array.from(updated.values()), toDelete, toTrim },
+    configurations,
+  }
+}
+
+function setUpdated<T>(
+  toUpdate: Map<string, SavedConfiguration<T>>,
+  c: Configuration<T>,
+  currentHeight: number | null,
+) {
+  const u = toUpdate.get(c.id)
+
+  //TODO: refactor
+  if (u === undefined) {
+    toUpdate.set(c.id, { ...c, currentHeight })
+  } else {
+    if (u.currentHeight !== null) {
+      if (currentHeight === null) {
+        toUpdate.set(c.id, { ...c, currentHeight })
+      } else if (currentHeight < u.currentHeight) {
+        toUpdate.set(c.id, { ...c, currentHeight })
+      }
+    }
+  }
 }
