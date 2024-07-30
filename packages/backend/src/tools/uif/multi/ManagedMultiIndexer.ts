@@ -15,7 +15,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
   private readonly indexerId: string
 
-  constructor(private readonly options: ManagedMultiIndexerOptions<T>) {
+  constructor(readonly options: ManagedMultiIndexerOptions<T>) {
     assert(
       options.configurations.length > 0,
       'Configurations should not be empty',
@@ -37,37 +37,21 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   // #region initialize
 
   async initialize() {
-    const configurations = await this.multiInitialize(
-      this.options.configurations,
-    )
-
-    this.ranges = toRanges(configurations)
-
-    const safeHeight = configurations.reduce(
-      (agg, curr) =>
-        (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
-      Infinity,
-    )
-
-    return { safeHeight }
-  }
-
-  async multiInitialize(
-    configurations: Configuration<T>[],
-  ): Promise<SavedConfiguration<T>[]> {
     const previous = await this.options.indexerService.getSavedConfigurations(
       this.indexerId,
     )
 
     const state = getNewConfigurationsState(
-      configurations,
+      this.options.configurations,
       this.options.serializeConfiguration,
       previous,
     )
 
     await this.updateConfigurationsState(state.diff)
 
-    return state.configurations
+    this.ranges = toRanges(state.configurations)
+
+    return { safeHeight: getSafeHeight(state.configurations) }
   }
 
   async updateConfigurationsState(state: {
@@ -75,7 +59,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     toUpdate: SavedConfiguration<T>[]
     toDelete: string[]
     toTrim: RemovalConfiguration[]
-  }): Promise<void> {
+  }) {
     if (state.toAdd.length > 0) {
       await this.options.indexerService.insertConfigurations(
         this.indexerId,
@@ -203,4 +187,12 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
 
   // #endregion
+}
+
+function getSafeHeight(configurations: SavedConfiguration<T>[]) {
+  return configurations.reduce(
+    (agg, curr) =>
+      (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
+    Infinity,
+  )
 }

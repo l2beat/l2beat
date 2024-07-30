@@ -41,5 +41,6 @@ export interface ManagedMultiIndexerOptions<T> extends IndexerOptions {
   serializeConfiguration: (value: T) => string
   logger: Logger
   updateRetryStrategy?: RetryStrategy
+  /** Used for saving data in transaction */
   db: Database
 }
