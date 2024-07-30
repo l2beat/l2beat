@@ -1,8 +1,10 @@
 import { getScalingCostsEntries } from '~/server/features/scaling/get-scaling-costs-entries'
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { ScalingCostsTable } from './_components/table/scaling-costs-table'
+import { CostsChart } from '~/app/_components/chart/costs-chart'
+import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -16,7 +18,8 @@ export default async function Page() {
 
   return (
     <div>
-      <SimplePageHeader>Onchain Costs</SimplePageHeader>
+      <CostsChart milestones={HOMEPAGE_MILESTONES} />
+      <HorizontalSeparator className="my-4 md:my-6" />
       <ScalingCostsTable entries={entries} />
     </div>
   )

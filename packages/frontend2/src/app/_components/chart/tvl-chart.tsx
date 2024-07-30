@@ -29,7 +29,7 @@ interface Props {
 }
 
 export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
+  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '30d')
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
