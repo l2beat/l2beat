@@ -1,14 +1,25 @@
-Generated with discovered.json: 0x86efd1c6b6da68e674cb0ce8a4fc9e1539bbf704
+Generated with discovered.json: 0x2aae8bc8a062b8f1cbf3b3a132d2ac2ec425c049
 
-# Diff at Tue, 30 Jul 2024 11:11:22 GMT:
+# Diff at Tue, 30 Jul 2024 15:56:41 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20389507
-- current block number: 20389507
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20389507
+- current block number: 20420404
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Upgraded implementation. (unverified contract)
+
+## Watched changes
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      values.$implementation:
+-        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
++        "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
+    }
+```
 
 ## Config/verification related changes
 
