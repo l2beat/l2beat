@@ -257,7 +257,7 @@ export const arbitrum: Layer2 = orbitStackL2({
   Regular upgrades, Admin- and Owner actions originate from either the Arbitrum DAO or the non-emergency (proposer-) Security Council on Arbitrum One 
   and pass through multiple delays and timelocks before being executed at their destination. Contrarily, the three Emergency Security Council multisigs 
   (one on each chain: Arbitrum One, Ethereum, Arbitrum Nova) can skip delays and directly access all admin- and upgrade functions of all smart contracts. 
-  These two general paths have the same destination: The respective UpgradeExecutor smart contract.
+  These two general paths have the same destination: the respective UpgradeExecutor smart contract.
   
   
   Regular upgrades are scheduled in the L2 Timelock. The proposer Security Council can do this directly and the Arbitrum DAO (ARB token holders and delegates) must meet a 
