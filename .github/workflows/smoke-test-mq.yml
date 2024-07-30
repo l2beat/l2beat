@@ -1,4 +1,4 @@
-name: Smoke Test
+name: Smoke Test (MQ)
 
 on:
   merge_group:
