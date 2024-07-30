@@ -32,6 +32,7 @@ export const degen: Layer3 = orbitStackL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  challengePeriodBlockTimeSeconds: 2, // block.number on base (degen host chain) assumes 2 second blocks (different to OP stack host chains)
   transactionApi: {
     type: 'rpc',
     defaultUrl: 'https://rpc.degen.tips',
