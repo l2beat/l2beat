@@ -5,9 +5,9 @@ import {
   AddressesWithTemplates,
   Analysis,
   AnalyzedContract,
-  EMPTY_ANALYZED_CONTRACT,
   ExtendedTemplate,
 } from '../analysis/AddressAnalyzer'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { removeAlreadyAnalyzed } from './removeAlreadyAnalyzed'
 
 describe(removeAlreadyAnalyzed.name, () => {

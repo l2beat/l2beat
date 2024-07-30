@@ -8,7 +8,8 @@ import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
 import { ProxyDetector } from '../proxies/ProxyDetector'
 import { ContractSources, SourceCodeService } from '../source/SourceCodeService'
-import { AddressAnalyzer, EMPTY_ANALYZED_CONTRACT } from './AddressAnalyzer'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
+import { AddressAnalyzer } from './AddressAnalyzer'
 import { TemplateService } from './TemplateService'
 
 describe(AddressAnalyzer.name, () => {

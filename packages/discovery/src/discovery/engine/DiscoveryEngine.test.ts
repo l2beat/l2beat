@@ -2,13 +2,11 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 
 import { DiscoveryLogger } from '../DiscoveryLogger'
-import {
-  AddressAnalyzer,
-  EMPTY_ANALYZED_CONTRACT,
-} from '../analysis/AddressAnalyzer'
+import { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { DiscoveryConfig } from '../config/DiscoveryConfig'
 import { RawDiscoveryConfig } from '../config/RawDiscoveryConfig'
 import { IProvider } from '../provider/IProvider'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { DiscoveryEngine } from './DiscoveryEngine'
 
 const base = {
