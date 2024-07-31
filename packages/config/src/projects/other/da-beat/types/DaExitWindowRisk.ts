@@ -19,7 +19,7 @@ const NoBridge = {
   type: 'NoBridge',
   value: 'No bridge',
   sentiment: 'bad',
-  description: 'TODO',
+  description: `There is no DA bridge from the DA layer to Ethereum. As such, there is no proof that validators on the DA layer have reached consensus on the availability of the data.`,
 } as const
 
 const ONE_DAY_SECONDS = 24 * 60 * 60

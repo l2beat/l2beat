@@ -30,11 +30,11 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
   const type = 'NoBridge'
   const description =
     template.description ??
-    'No bridge dolore occaecat excepteur consectetur sit excepteur et. Laborum ullamco occaecat irure consequat labore tempor sint sit est. Elit laborum incididunt reprehenderit voluptate exercitation cupidatat cupidatat sunt. Dolore fugiat ullamco ipsum ex aute eu incididunt ullamco.'
+    'This project does not have a DA bridge on Ethereum.'
 
   const technology =
     template.technology ??
-    'Some note about the technology used by the data availability layer.\n## Markdown supported'
+    'There is no DA bridge on Ethereum.'
 
   const usedIn =
     template.usedIn ??
@@ -42,11 +42,11 @@ export function NO_BRIDGE(template: TemplateVars): NoDaBridge {
       layer: (layer) => layer === template.layer,
       bridge: (bridge) => bridge === 'None',
     })
-
   const display = {
     name: 'No bridge',
     slug: `no-bridge`,
     description,
+    redWarning: 'Without a DA bridge, Ethereum has no proof of data availability for this project.',
     links: {
       websites: [],
       documentation: [],
