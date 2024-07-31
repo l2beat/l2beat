@@ -977,6 +977,21 @@
       "supply": "zero"
     },
     {
+      "id": "cvxfxs-convex-fxs",
+      "name": "Convex FXS",
+      "coingeckoId": "convex-fxs",
+      "address": "0xFEEf77d3f69374f66429C91d732A244f074bdf74",
+      "symbol": "cvxFXS",
+      "decimals": 18,
+      "deploymentTimestamp": 1640164144,
+      "coingeckoListingTimestamp": 1676160000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29001/large/cvxfxs.png?1696527973",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "cvx-convex-token",
       "name": "Convex Token",
       "coingeckoId": "convex-finance",
