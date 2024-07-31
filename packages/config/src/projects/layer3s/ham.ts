@@ -1,51 +1,44 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL3 } from '../layer2s/templates/opStack'
 import { Layer3 } from './types'
 
-const discovery = new ProjectDiscovery('optopia')
+const discovery = new ProjectDiscovery('ham', 'base')
 
-export const optopia: Layer3 = opStackL3({
+export const ham: Layer3 = opStackL3({
   discovery,
+  hostChain: ProjectId('base'),
   display: {
-    name: 'Optopia',
-    slug: 'optopia',
+    name: 'Ham',
+    slug: 'ham',
     description:
-      'Optopia is an OP stack Rollup on Ethereum focusing on the intersection of AI, Intents and DeFi.',
-    purposes: ['Universal', 'AI'],
+      'Ham Chain is an OP stack Optimium L3 on Base enabling Tips and SocialFi on the Farcaster social network.',
+    purposes: ['Social', 'Payments'],
     links: {
-      websites: ['https://optopia.ai/'],
-      apps: ['https://bridge.optopia.ai/'],
-      documentation: ['https://docs.optopia.ai/', 'https://stack.optimism.io/'],
-      explorers: ['https://scan.optopia.ai/'],
-      repositories: ['https://github.com/OptopiaLabs'],
+      websites: ['https://ham.fun/'],
+      apps: [
+        'https://ham.bridge.caldera.xyz/',
+        'https://ham.fun/bridge',
+        'https://relay.link/ham',
+      ],
+      documentation: [
+        'https://docs.ham.fun/',
+        'https://stack.optimism.io/',
+        'https://ham.fun/developers',
+      ],
+      explorers: ['https://explorer.ham.fun/'],
+      repositories: [],
       socialMedia: [
-        'https://x.com/Optopia_AI',
-        'https://discord.com/invite/BFr9hXPDY6',
-        'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33',
+        'https://x.com/HamOnWarpcast',
+        'https://warpcast.com/~/channel/lp',
+        'https://t.me/+B93fbhulpb5iYWYx',
       ],
     },
     activityDataSource: 'Blockchain RPC',
   },
-  genesisTimestamp: new UnixTime(1715333977),
-  finality: {
-    type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1715333977),
-    minTimestamp: new UnixTime(1715336651), // first blob
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
+  genesisTimestamp: new UnixTime(1716590734),
   usesBlobs: true,
   isNodeAvailable: true,
-  rpcUrl: 'https://rpc-mainnet-2.optopia.ai', // chainId: 62050
+  rpcUrl: 'https://rpc.ham.fun', // chainId: 5112
   useDiscoveryMetaOnly: true,
-  milestones: [
-    {
-      name: 'Optopia Mainnet Launch',
-      link: 'https://mirror.xyz/0x384F32e132501C9C3361C0495841715585164d33/t66jmeXb8sKTFoxFViXUeCQdhSZ_8CN12i13-ySNAUs',
-      date: '2024-05-21T00:00:00.00Z',
-      description: 'Optopia is live on mainnet.',
-    },
-  ],
 })

@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xbcca76541a33854ae204ea185259f349ada3ba34
+Generated with discovered.json: 0x05d0893d8cadd2b6f0bf619fe90c1fee304254d8
 
-# Diff at Wed, 31 Jul 2024 16:42:12 GMT:
+# Diff at Wed, 31 Jul 2024 16:59:44 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 17827379
+- current block number: 17827903
 
 ## Description
 
@@ -13,7 +13,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x211A8defcF685E0Ef5Ed8eEf0c43dc1B0ba56aEA)
+    contract HamMultisig1 (0x211A8defcF685E0Ef5Ed8eEf0c43dc1B0ba56aEA)
     +++ description: It can act on behalf of 0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49, inheriting its permissions.
 ```
 
@@ -49,7 +49,7 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d)
+    contract HamMultisig2 (0x87Ef0aB1189F76eBCaEe736A5EB8F639a8cF156d)
     +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
 ```
 
