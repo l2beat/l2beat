@@ -17,8 +17,10 @@ const SERIALIZE = (v: unknown) => JSON.stringify(v)
 const common = {
   name: INDEXER_ID,
   parents: [],
-  configurations: [mockObject<Configuration<string>>({ id: 'a' })],
-  indexerService: mockObject<IndexerService>(),
+  configurations: [actual('a', 100, null)],
+  indexerService: mockObject<IndexerService>({
+    getSavedConfigurations: async () => [saved('a', 100, null, null)],
+  }),
   logger: Logger.SILENT,
   serializeConfiguration: SERIALIZE,
   db: mockDatabase(),
@@ -135,6 +137,7 @@ describe(ManagedMultiIndexer.name, () => {
       })
       await testIndexer.initialize()
 
+      // Configuration starts at 100, this range will be empty
       const newHeight = await testIndexer.update(0, 50)
 
       expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
@@ -181,194 +184,41 @@ describe(ManagedMultiIndexer.name, () => {
 
       expect(newHeight).toEqual(1100)
     })
+
+    it('cannot return more than currentHeight', async () => {
+      const testIndexer = new TestIndexer({
+        ...common,
+      })
+
+      await testIndexer.initialize()
+
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(50))
+      await expect(testIndexer.update(100, 500)).toBeRejectedWith(
+        /Returned height must be between from and to/,
+      )
+
+      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(50_000))
+      await expect(testIndexer.update(100, 500)).toBeRejectedWith(
+        /Returned height must be between from and to/,
+      )
+    })
+
+    //   it('cannot return more than targetHeight', async () => {
+    //     const testIndexer = new TestIndexer(
+    //       [actual('a', 100, 300), actual('b', 100, 400)],
+    //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
+    //     )
+    //     await testIndexer.initialize()
+
+    //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
+
+    //     await expect(testIndexer.update(200, 300)).toBeRejectedWith(
+    //       /returned height must be between from and to/,
+    //     )
+    //   })
   })
 
-  // describe(MultiIndexer.prototype.update.name, () => {
-  //   it('calls multiUpdate with an early matching configuration', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 300, 400)],
-  //       [],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(100, 500)
-
-  //     expect(newHeight).toEqual(200)
-  //     expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(100, 200, [
-  //       actual('a', 100, 200),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenOnlyCalledWith(200)
-  //   })
-
-  //   it('calls multiUpdate with a late matching configuration', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 300, 400)],
-  //       [saved('a', 100, 200, 200)],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(300, 500)
-
-  //     expect(newHeight).toEqual(400)
-  //     expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(300, 400, [
-  //       actual('b', 300, 400),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenOnlyCalledWith(400)
-  //   })
-
-  //   it('calls multiUpdate with two matching configurations', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 100, 400)],
-  //       [],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(100, 500)
-
-  //     expect(newHeight).toEqual(200)
-  //     expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(100, 200, [
-  //       actual('a', 100, 200),
-  //       actual('b', 100, 400),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenOnlyCalledWith(200)
-  //   })
-
-  //   it('calls multiUpdate with two middle matching configurations', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 400), actual('b', 200, 500)],
-  //       [saved('a', 100, 400, 300), saved('b', 200, 500, 300)],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(301, 600)
-
-  //     expect(newHeight).toEqual(400)
-  //     expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(301, 400, [
-  //       actual('a', 100, 400),
-  //       actual('b', 200, 500),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenOnlyCalledWith(400)
-  //   })
-
-  //   it('multiple update calls', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 100, 400)],
-  //       [saved('a', 100, 200, 200)],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     expect(await testIndexer.update(100, 500)).toEqual(200)
-  //     expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 200, [
-  //       actual('b', 100, 400),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenOnlyCalledWith(200)
-
-  //     // TODO: what was the idea behind this test?
-  //     // The same range. In real life might be a result of a parent reorg
-  //     // Invalidate is a no-op so we don't need to call it
-  //     // expect(await testIndexer.update(100, 500)).toEqual(200)
-  //     // expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(
-  //     //   2,
-  //     //   100,
-  //     //   200,
-  //     //   [actual('a', 100, 200), actual('b', 100, 400)],
-  //     //   ,
-  //     // )
-  //     // expect(
-  //     //   testIndexer.updateConfigurationsCurrentHeight,
-  //     // ).toHaveBeenCalledTimes(1)
-
-  //     // Next range
-  //     expect(await testIndexer.update(201, 500)).toEqual(400)
-  //     expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(2, 201, 400, [
-  //       actual('b', 100, 400),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenNthCalledWith(2, 400)
-  //   })
-
-  //   it('correctly updates currentHeight in saved configurations', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 500), actual('b', 100, 500), actual('c', 100, 500)],
-  //       [
-  //         saved('a', 100, 500, null),
-  //         saved('b', 100, 500, 250),
-  //         saved('c', 100, 500, 500),
-  //       ],
-  //     )
-  //     expect(await testIndexer.initialize()).toEqual({ safeHeight: 99 })
-
-  //     expect(await testIndexer.update(100, 500)).toEqual(250)
-  //     expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 250, [
-  //       actual('a', 100, 500),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenOnlyCalledWith(250)
-
-  //     expect(await testIndexer.update(251, 500)).toEqual(500)
-  //     expect(testIndexer.multiUpdate).toHaveBeenNthCalledWith(2, 251, 500, [
-  //       actual('a', 100, 500),
-  //       actual('b', 100, 500),
-  //     ])
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenNthCalledWith(2, 500)
-  //   })
-  // })
-
   // describe('multiUpdate', () => {
-  //   it('returns the currentHeight', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 300), actual('b', 100, 400)],
-  //       [saved('a', 100, 300, 200), saved('b', 100, 400, 200)],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(200))
-
-  //     const newHeight = await testIndexer.update(200, 500)
-  //     expect(newHeight).toEqual(200)
-  //     expect(testIndexer.updateConfigurationsState).toHaveBeenCalledTimes(1)
-  //   })
-
-  //   it('returns the targetHeight', async () => {
-  //     const testIndexer = new TestIndexer([], [])
-  //     await testIndexer.initialize()
-
-  //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(200))
-
-  //     const newHeight = await testIndexer.update(201, 300)
-  //     expect(newHeight).toEqual(300)
-  //   })
-
-  //   it('returns something in between', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 300), actual('b', 100, 400)],
-  //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(250))
-
-  //     const newHeight = await testIndexer.update(201, 300)
-  //     expect(newHeight).toEqual(250)
-  //     expect(testIndexer.updateConfigurationsState).toHaveBeenOnlyCalledWith([
-  //       saved('a', 100, 300, 250),
-  //       saved('b', 100, 400, 250),
-  //     ])
-  //   })
 
   //   it('cannot return less than currentHeight', async () => {
   //     const testIndexer = new TestIndexer(

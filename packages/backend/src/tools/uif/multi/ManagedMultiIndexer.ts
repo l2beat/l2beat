@@ -122,11 +122,10 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     return await this.options.db.transaction(async () => {
       const safeHeight = await saveData()
 
-      if (safeHeight < from || safeHeight > adjustedTo) {
-        throw new Error(
-          'Programmer error, returned height must be between from and to (both inclusive).',
-        )
-      }
+      assert(
+        safeHeight >= from && safeHeight <= adjustedTo,
+        'Returned height must be between from and to (both inclusive).',
+      )
 
       await this.updateConfigurationsCurrentHeight(safeHeight)
 
