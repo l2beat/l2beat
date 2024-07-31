@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { expect, mockFn, mockObject } from 'earl'
-import { mockDatabase } from '../../../test/database'
+import { describeDatabase, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../ids'
 import { ManagedMultiIndexer } from './ManagedMultiIndexer'
@@ -336,165 +336,226 @@ describe(ManagedMultiIndexer.name, () => {
     )
   })
 
-  // describeDatabase('e2e', (db) => {
-  //   const indexerService = new IndexerService(db)
-  //   afterEach(async () => {
-  //     _TEST_ONLY_resetUniqueIds()
-  //     await db.indexerState.deleteAll()
-  //     await db.indexerConfiguration.deleteAll()
-  //   })
+  describeDatabase('e2e', (db) => {
+    const indexerService = new IndexerService(db)
+    afterEach(async () => {
+      _TEST_ONLY_resetUniqueIds()
+      await db.indexerState.deleteAll()
+      await db.indexerConfiguration.deleteAll()
+    })
 
-  //   it('update', async () => {
-  //     const indexer = await initializeMockIndexer(
-  //       indexerService,
-  //       [saved('d', 100, null, 550)],
-  //       [
-  //         actual('a', 100, 300),
-  //         actual('b', 200, 500),
-  //         actual('c', 400, null),
-  //         actual('d', 100, null),
-  //       ],
-  //       db,
-  //     )
-  //     await indexer.start()
+    it('update', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [
+          actual('a', 100, 300),
+          actual('b', 200, 500),
+          actual('c', 400, null),
+          actual('d', 100, null),
+        ],
+        db,
+      )
+      await indexer.start()
 
-  //     const target = 600
-  //     let current = 99
-  //     // This "+1" logic mimics Indexer.executeUpdate
-  //     while (current + 1 < target) {
-  //       current = await indexer.update(current + 1, target)
-  //     }
+      const target = 600
+      let current = 99
+      // This "+1" logic mimics Indexer.executeUpdate
+      while (current + 1 < target) {
+        current = await indexer.update(current + 1, target)
+      }
 
-  //     expect(indexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 199, [
-  //       actual('a', 100, 300),
-  //     ])
-  //     expect(indexer.multiUpdate).toHaveBeenNthCalledWith(2, 200, 300, [
-  //       actual('a', 100, 300),
-  //       actual('b', 200, 500),
-  //     ])
-  //     expect(indexer.multiUpdate).toHaveBeenNthCalledWith(3, 301, 399, [
-  //       actual('b', 200, 500),
-  //     ])
-  //     expect(indexer.multiUpdate).toHaveBeenNthCalledWith(4, 400, 500, [
-  //       actual('b', 200, 500),
-  //       actual('c', 400, null),
-  //     ])
-  //     expect(indexer.multiUpdate).toHaveBeenLastCalledWith(551, 600, [
-  //       actual('c', 400, null),
-  //       actual('d', 100, null),
-  //     ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(1, 100, 199, [
+        actual('a', 100, 300),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(2, 200, 300, [
+        actual('a', 100, 300),
+        actual('b', 200, 500),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(3, 301, 399, [
+        actual('b', 200, 500),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenNthCalledWith(4, 400, 500, [
+        actual('b', 200, 500),
+        actual('c', 400, null),
+      ])
+      expect(indexer.multiUpdate).toHaveBeenLastCalledWith(551, 600, [
+        actual('c', 400, null),
+        actual('d', 100, null),
+      ])
 
-  //     const configurations = await getSavedConfigurations(indexerService)
+      const configurations = await getSavedConfigurations(indexerService)
 
-  //     expect(configurations).toEqualUnsorted(
-  //       [
-  //         saved('a', 100, 300, 300),
-  //         saved('b', 200, 500, 500),
-  //         saved('c', 400, null, 600),
-  //         saved('d', 100, null, 600),
-  //       ].map((c) => ({
-  //         ...c,
-  //         properties: JSON.stringify(c),
-  //       })),
-  //     )
-  //   })
+      expect(configurations).toEqualUnsorted([
+        saved('a', 100, 300, 300),
+        saved('b', 200, 500, 500),
+        saved('c', 400, null, 600),
+        saved('d', 100, null, 600),
+      ])
+    })
 
-  //   it('configuration removed', async () => {
-  //     const indexer = await initializeMockIndexer(
-  //       indexerService,
-  //       [saved('d', 100, null, 550)],
-  //       [],
-  //     )
-  //     await indexer.start()
+    it('configuration removed', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('a', 400, null, 550), saved('d', 100, null, 550)],
+        [actual('a', 400, null)],
+      )
 
-  //     expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-  //       removal('d', 100, 550),
-  //     ])
-  //   })
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([
+        saved('a', 400, null, 550),
+        saved('d', 100, null, 550),
+      ])
 
-  //   it('minHeight changed', async () => {
-  //     const indexer = await initializeMockIndexer(
-  //       indexerService,
-  //       [saved('d', 100, null, 550)],
-  //       [actual('d', 50, null)],
-  //     )
-  //     await indexer.start()
+      await indexer.start()
 
-  //     expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-  //       removal('d', 100, 550),
-  //     ])
-  //   })
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('a', 400, null, 550)])
 
-  //   it('maxHeight changed', async () => {
-  //     const indexer = await initializeMockIndexer(
-  //       indexerService,
-  //       [saved('d', 100, null, 550)],
-  //       [actual('d', 100, 200)],
-  //     )
-  //     await indexer.start()
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 100, 550),
+      ])
+    })
 
-  //     expect(indexer.removeData).toHaveBeenOnlyCalledWith([
-  //       removal('d', 201, 550),
-  //     ])
-  //   })
+    it('minHeight changed to earlier than previously set', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 50, null)],
+      )
 
-  //   it('properties changed', async () => {
-  //     const savedConfigurations = [
-  //       { ...saved('a', 100, null, 500), properties: { prop: 'a' } },
-  //       { ...saved('b', 100, null, 500), properties: { prop: 'b' } },
-  //     ]
-  //     await indexerService.upsertConfigurations(
-  //       'indexer',
-  //       savedConfigurations,
-  //       (v) => JSON.stringify(v),
-  //     )
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
 
-  //     const configurations = [
-  //       { ...actual('a', 100, null), properties: { prop: 'aa' } },
-  //       { ...actual('b', 100, null), properties: { prop: 'b' } },
-  //     ]
+      await indexer.start()
 
-  //     class TestIndexer2<T> extends ManagedMultiIndexer<T> {
-  //       constructor(override readonly options: ManagedMultiIndexerOptions<T>) {
-  //         super(options)
-  //       }
-  //       multiUpdate = mockFn<MultiIndexer<T>['multiUpdate']>(
-  //         async (_, targetHeight) => () => Promise.resolve(targetHeight),
-  //       )
-  //       removeData =
-  //         mockFn<ManagedMultiIndexer<T>['removeData']>().resolvesTo(undefined)
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('d', 50, null, null)])
 
-  //       override updateConfigurationsState =
-  //         mockFn<
-  //           ManagedMultiIndexer<T>['updateConfigurationsState']
-  //         >().resolvesTo(undefined)
-  //     }
+      // remove all data
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 100, 550),
+      ])
+    })
 
-  //     const indexer = new TestIndexer2<{ prop: string }>({
-  //       parents: [],
-  //       name: 'indexer',
-  //       indexerService,
-  //       configurations,
-  //       logger: Logger.SILENT,
-  //       serializeConfiguration: (v) => JSON.stringify(v),
-  //       db: mockDatabase(),
-  //     })
+    it('minHeight changed to later than previously set', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 150, null)],
+      )
 
-  //     await indexer.start()
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
 
-  //     expect(indexer.updateConfigurationsState).toHaveBeenOnlyCalledWith({
-  //       toAdd: [],
-  //       toUpdate: [
-  //         {
-  //           ...saved('a', 100, null, 500),
-  //           properties: { prop: 'aa' },
-  //         },
-  //       ],
-  //       toDelete: [],
-  //       toTrim: [],
-  //     })
-  //   })
-  // })
+      await indexer.start()
+
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('d', 150, null, 550)])
+
+      // remove part of data
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 100, 149),
+      ])
+    })
+
+    it('maxHeight changed without need to trim', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 100, 1000)],
+      )
+
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+
+      await indexer.start()
+
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('d', 100, 1000, 550)])
+
+      expect(indexer.removeData).not.toHaveBeenCalled()
+    })
+
+    it('maxHeight changed with need to trim', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 100, 200)],
+      )
+
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+
+      await indexer.start()
+
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('d', 100, 200, 200)])
+
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 201, 550),
+      ])
+    })
+
+    it('properties changed', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [{ ...saved('d', 100, null, 550), properties: 'old-props' }],
+        [{ ...actual('d', 100, null), properties: 'new-props' }],
+      )
+
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([
+        { ...saved('d', 100, null, 550), properties: 'old-props' },
+      ])
+
+      await indexer.start()
+
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([
+        {
+          ...saved('d', 100, null, 550),
+          properties: JSON.stringify('new-props'),
+        },
+      ])
+    })
+  })
 })
 
 class TestIndexer extends ManagedMultiIndexer<string> {
@@ -542,29 +603,27 @@ function removal(id: string, from: number, to: number): RemovalConfiguration {
   return { id: id.repeat(12), from, to }
 }
 
-// async function getSavedConfigurations(indexerService: IndexerService) {
-//   return await indexerService.getSavedConfigurations('indexer')
-// }
+async function getSavedConfigurations(indexerService: IndexerService) {
+  return await indexerService.getSavedConfigurations('indexer')
+}
 
-// async function initializeMockIndexer(
-//   indexerService: IndexerService,
-//   saved: SavedConfiguration<null>[],
-//   configurations: Configuration<null>[],
-//   database?: Database,
-// ) {
-//   if (saved.length > 0) {
-//     await indexerService.upsertConfigurations('indexer', saved, (v) =>
-//       JSON.stringify(v),
-//     )
-//   }
-//   const indexer = new TestIndexer({
-//     parents: [],
-//     name: 'indexer',
-//     indexerService,
-//     configurations,
-//     logger: Logger.SILENT,
-//     serializeConfiguration: (v) => JSON.stringify(v),
-//     db: database ?? mockDatabase(),
-//   })
-//   return indexer
-// }
+async function initializeMockIndexer(
+  indexerService: IndexerService,
+  saved: SavedConfiguration<string>[],
+  configurations: Configuration<string>[],
+  database?: Database,
+) {
+  if (saved.length > 0) {
+    await indexerService.upsertConfigurations('indexer', saved, (v) => v)
+  }
+  const indexer = new TestIndexer({
+    parents: [],
+    name: 'indexer',
+    indexerService,
+    configurations,
+    logger: Logger.SILENT,
+    serializeConfiguration: (v) => JSON.stringify(v),
+    db: database ?? mockDatabase(),
+  })
+  return indexer
+}
