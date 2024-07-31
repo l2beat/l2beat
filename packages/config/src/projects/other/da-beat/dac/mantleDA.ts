@@ -1,10 +1,7 @@
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
-import { immutableXDac } from './bridges/immutablex'
+import { mantleDABridge } from './bridges/mantleDABridge'
 
-/**
- * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
- */
 export const mantleDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
@@ -13,21 +10,24 @@ export const mantleDA: DaLayer = {
     name: 'MantleDA',
     slug: 'mantle-da',
     description:
-      'Set of parties responsible for signing and attesting to the availability of data.',
+      'MantleDA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
     links: {
-      websites: [],
+      websites: ['https://mantle.xyz'],
       documentation: [
+        'https://docs.mantle.xyz/network/introduction/concepts/data-availability'
       ],
-      repositories: [],
+      repositories: [
+        'https://github.com/mantlenetworkio'
+      ],
       apps: [],
-      explorers: [],
-      socialMedia: [],
+      explorers: ['https://explorer.mantle.xyz/mantle-da'],
+      socialMedia: ['https://twitter.com/0xMantle', 'https://t.me/mantlenetwork'],
     },
   },
   technology:
     'Some note about the technology used by the data availability layer.\n## Markdown supported',
-  bridges: [immutableXDac],
-  usedIn: [...immutableXDac.usedIn],
+  bridges: [mantleDABridge],
+  usedIn: [...mantleDABridge.usedIn],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
