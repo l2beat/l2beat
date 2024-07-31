@@ -1,4 +1,4 @@
-import { FourBytesClient } from './FourBytesClient'
+import { FourByteClient } from './FourByteClient'
 import { methods } from './methods'
 import { Operation } from './types'
 
@@ -39,10 +39,10 @@ export async function countUserOperations(calldata: string) {
   const selectors = new Set<string>()
   addSelectors(counted, selectors)
 
-  const fourBytesClient = new FourBytesClient()
+  const fourByteClient = new FourByteClient()
   const signatures: Record<string, string> = {}
   for (const selector of selectors) {
-    const signature = await fourBytesClient.getSignature(selector)
+    const signature = await fourByteClient.getSignature(selector)
     if (signature) {
       const name = signature.split('(')[0]
       signatures[selector] = name

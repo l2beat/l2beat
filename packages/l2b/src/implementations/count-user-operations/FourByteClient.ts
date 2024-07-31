@@ -8,7 +8,7 @@ const Response = z.object({
   ),
 })
 
-export class FourBytesClient {
+export class FourByteClient {
   async getSignature(selector: string): Promise<string | undefined> {
     const url = `https://www.4byte.directory/api/v1/signatures/?format=json&hex_signature=${selector}`
     const res = await fetch(url)
