@@ -229,7 +229,6 @@
         "apkUpdates",
         "getTotalStakeFromIndex",
         "totalOperatorsHistory",
-        "totalStake",
         "quorumBips",
         "getLengthOfTotalOperatorsHistory",
         "getLengthOfTotalStakeHistory"
