@@ -1,7 +1,7 @@
 import {
   type KnownCookieName,
-  knownCookies,
   type KnownCookieValue,
+  knownCookies,
 } from '~/consts/cookies'
 
 /**

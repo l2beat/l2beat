@@ -4,8 +4,8 @@ import { cn } from '~/utils/cn'
 import { ChartMilestoneHover } from '../hovers/chart-milestone-hover'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
-import { POINT_CLASS_NAMES } from './styles'
 import { useChartRect } from './chart-rect-context'
+import { POINT_CLASS_NAMES } from './styles'
 
 const HOVER_CANVAS_PADDING = 16
 

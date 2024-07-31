@@ -1,4 +1,4 @@
-import { type z, type ZodTypeAny } from 'zod'
+import { type ZodTypeAny, type z } from 'zod'
 import { TvlChartRange } from '~/server/features/tvl/range-utils'
 
 /**

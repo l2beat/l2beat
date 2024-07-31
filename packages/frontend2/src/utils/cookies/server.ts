@@ -1,12 +1,12 @@
-import 'server-only'
+import { type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { cookies } from 'next/headers'
+import 'server-only'
 import {
   type KnownCookieName,
-  knownCookies,
   type KnownCookieValue,
+  knownCookies,
 } from '~/consts/cookies'
 import { parseKnownCookie, serializeKnownCookie } from './common'
-import { type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 
 export function getCookie(name: KnownCookieName) {
   const meta = knownCookies[name]

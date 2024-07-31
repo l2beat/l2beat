@@ -3,12 +3,12 @@ import { notUndefined } from '@l2beat/shared-pure'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useCallback, useMemo } from 'react'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/types'
 import { ScalingDaFilters } from '../scaling-da-filters'
 import { columns } from './columns'
-import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 
 export interface Props {
   items: ScalingDataAvailabilityEntry[]

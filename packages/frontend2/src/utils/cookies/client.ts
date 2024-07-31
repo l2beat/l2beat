@@ -1,8 +1,8 @@
 import Cookies from 'js-cookie'
 import {
   type KnownCookieName,
-  knownCookies,
   type KnownCookieValue,
+  knownCookies,
 } from '~/consts/cookies'
 import { parseKnownCookie, serializeKnownCookie } from './common'
 

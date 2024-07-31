@@ -1,14 +1,14 @@
+import { assert } from '@l2beat/backend-tools'
 import { type ValueRecord } from '@l2beat/database'
 import {
-  unstable_noStore as noStore,
   unstable_cache as cache,
+  unstable_noStore as noStore,
 } from 'next/cache'
 import { getEthPrices } from './get-eth-prices'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range-utils'
 import { sumValuesPerSource } from './sum-values-per-source'
-import { assert } from '@l2beat/backend-tools'
 
 export async function getScalingSummaryData(
   ...args: Parameters<typeof getCachedScalingSummaryData>

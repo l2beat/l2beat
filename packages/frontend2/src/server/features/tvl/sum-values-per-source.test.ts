@@ -1,7 +1,7 @@
 import { type ValueRecord } from '@l2beat/database'
-import { sumValuesPerSource } from './sum-values-per-source'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { sumValuesPerSource } from './sum-values-per-source'
 
 describe(sumValuesPerSource.name, () => {
   it('correctly sums project TVL', () => {

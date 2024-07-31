@@ -7,14 +7,14 @@ import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
+import { useCookieState } from '~/hooks/use-cookie-state'
+import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { useChartLoading } from './core/chart-loading-context'
-import { useIsClient } from '~/hooks/use-is-client'
-import { useCookieState } from '~/hooks/use-cookie-state'
 
 interface TvlChartPointData {
   timestamp: number
