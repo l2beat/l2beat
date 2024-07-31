@@ -14,7 +14,7 @@ export const mantleDA: DaLayer = {
     links: {
       websites: ['https://mantle.xyz'],
       documentation: [
-        'https://docs.mantle.xyz/network/introduction/concepts/data-availability'
+        'https://docs-v2.mantle.xyz/intro/risk-management/da'
       ],
       repositories: [
         'https://github.com/mantlenetworkio'
