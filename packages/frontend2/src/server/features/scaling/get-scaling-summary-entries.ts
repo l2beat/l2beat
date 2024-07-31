@@ -14,6 +14,7 @@ import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getCommonScalingEntry } from './get-common-scaling-entry'
 import { type TvlResponse } from './get-tvl'
 import {
   type ScalingSummaryLayer2sEntry,
@@ -22,7 +23,6 @@ import {
 import { getTvlStats } from './utils/get-tvl-stats'
 import { getTvlWarnings } from './utils/get-tvl-warnings'
 import { getTvlWithChange } from './utils/get-tvl-with-change'
-import { getCommonScalingEntry } from './get-common-scaling-entry'
 
 export async function getScalingSummaryEntries(tvl: TvlResponse) {
   // NOTE: This is a temporary solution to keep the current behavior & will be removed in L2B-6115.

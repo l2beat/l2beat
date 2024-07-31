@@ -3,9 +3,9 @@ import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getCommonScalingEntry } from './get-common-scaling-entry'
 import { type ScalingDataAvailabilityEntry } from './types'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
-import { getCommonScalingEntry } from './get-common-scaling-entry'
 
 export async function getScalingDaEntries(
   tvl: Record<ProjectId, number>,
