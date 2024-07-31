@@ -12,9 +12,9 @@ export const eclipse: Layer2 = underReviewL2({
     purposes: ['Universal'],
     category: 'Optimium',
     links: {
-      websites: ['https://eclipse.builders/'],
-      apps: ['https://bridge.eclipse.builders/'],
-      documentation: ['https://docs.eclipse.builders/'],
+      websites: ['https://www.eclipse.xyz/'],
+      apps: [],
+      documentation: ['https://docs.eclipse.xyz/'],
       explorers: ['https://explorer.eclipse.xyz/'],
       repositories: ['https://github.com/Eclipse-Laboratories-Inc'],
       socialMedia: [
