@@ -74,6 +74,8 @@ const mockRecord = {
   nativeAssociated: 2000000n,
   nativeForTotal: 9000000n,
   nativeAssociatedForTotal: 7000000n,
-}
+  ether: 10000n,
+  stablecoin: 10000n,
+} satisfies ValueRecord
 
 const dataSet: ValueRecord[] = [mockRecord, mockRecord, mockRecord]
