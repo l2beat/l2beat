@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import {
   Configuration,
   RemovalConfiguration,
@@ -29,16 +30,12 @@ export function getNewConfigurationsState<T>(
 
   const knownIds = new Set<string>()
   for (const c of actual) {
-    if (knownIds.has(c.id)) {
-      throw new Error(`Configuration ${c.id} is duplicated!`)
-    }
+    assert(!knownIds.has(c.id), `Configuration ${c.id} is duplicated!`)
+    assert(
+      c.maxHeight === null || c.minHeight <= c.maxHeight,
+      `Configuration ${c.id} has minHeight greater than maxHeight!`,
+    )
     knownIds.add(c.id)
-
-    if (c.maxHeight !== null && c.minHeight > c.maxHeight) {
-      throw new Error(
-        `Configuration ${c.id} has minHeight greater than maxHeight!`,
-      )
-    }
 
     const stored = savedMap.get(c.id)
 
@@ -59,7 +56,6 @@ export function getNewConfigurationsState<T>(
         })
       }
       configurations.push({ ...c, currentHeight: null })
-
       setUpdated(c, null)
       continue
     }
@@ -74,23 +70,23 @@ export function getNewConfigurationsState<T>(
     }
 
     if (c.maxHeight !== stored.maxHeight) {
+      if (
+        c.maxHeight !== null &&
+        stored.currentHeight !== null &&
+        stored.currentHeight > c.maxHeight
+      ) {
+        toTrim.push({
+          id: stored.id,
+          from: c.maxHeight + 1,
+          to: stored.currentHeight,
+        })
+      }
+
       const currentHeight =
         stored.currentHeight === null
           ? null
           : Math.min(stored.currentHeight, c.maxHeight ?? Infinity)
       setUpdated(c, currentHeight)
-    }
-
-    if (
-      c.maxHeight !== null &&
-      stored.currentHeight &&
-      stored.currentHeight > c.maxHeight
-    ) {
-      toTrim.push({
-        id: stored.id,
-        from: c.maxHeight + 1,
-        to: stored.currentHeight,
-      })
     }
 
     const currentHeight =
