@@ -67,13 +67,13 @@ describe(ManagedMultiIndexer.name, () => {
         insertConfigurations: async () => {},
       })
 
-      const testIndexer = new TestIndexer({
+      const indexer = new TestIndexer({
         ...common,
         indexerService,
         configurations: [actual('a', 100, null), actual('b', 100, null)],
       })
 
-      const newHeight = await testIndexer.initialize()
+      const newHeight = await indexer.initialize()
 
       expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
         INDEXER_ID,
@@ -94,9 +94,9 @@ describe(ManagedMultiIndexer.name, () => {
         upsertConfigurations: async () => {},
         deleteConfigurations: async () => {},
       })
-      const testIndexer = new TestIndexer({ ...common, indexerService })
+      const indexer = new TestIndexer({ ...common, indexerService })
 
-      await testIndexer.updateConfigurationsState({
+      await indexer.updateConfigurationsState({
         toAdd: [actual('a', 100, null)],
         toUpdate: [saved('b', 100, 1000, 1000, 'props')],
         toDelete: ['c', 'd'],
@@ -117,7 +117,7 @@ describe(ManagedMultiIndexer.name, () => {
         INDEXER_ID,
         ['c', 'd'],
       )
-      expect(testIndexer.removeData).toHaveBeenOnlyCalledWith([
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
         removal('b', 50, 99),
         removal('b', 1001, 1500),
       ])
@@ -130,17 +130,17 @@ describe(ManagedMultiIndexer.name, () => {
         getSavedConfigurations: async () => [saved('a', 100, null, null)],
       })
 
-      const testIndexer = new TestIndexer({
+      const indexer = new TestIndexer({
         ...common,
         indexerService,
         configurations: [actual('a', 100, null)],
       })
-      await testIndexer.initialize()
+      await indexer.initialize()
 
       // Configuration starts at 100, this range will be empty
-      const newHeight = await testIndexer.update(0, 50)
+      const newHeight = await indexer.update(0, 50)
 
-      expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
+      expect(indexer.multiUpdate).not.toHaveBeenCalled()
       expect(newHeight).toEqual(50)
     })
 
@@ -157,21 +157,21 @@ describe(ManagedMultiIndexer.name, () => {
         transaction: async (fun) => await fun(),
       })
 
-      const testIndexer = new TestIndexer({
+      const indexer = new TestIndexer({
         ...common,
         db,
         indexerService,
         configurations: [actual('a', 100, null), actual('b', 100, null)],
       })
       const saveData = mockFn((targetHeight) => Promise.resolve(targetHeight))
-      testIndexer.multiUpdate = mockFn<
-        ManagedMultiIndexer<string>['multiUpdate']
-      >(async (_, targetHeight) => () => saveData(targetHeight))
+      indexer.multiUpdate = mockFn<ManagedMultiIndexer<string>['multiUpdate']>(
+        async (_, targetHeight) => () => saveData(targetHeight),
+      )
 
-      await testIndexer.initialize()
-      const newHeight = await testIndexer.update(1001, 1100)
+      await indexer.initialize()
+      const newHeight = await indexer.update(1001, 1100)
 
-      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(1001, 1100, [
+      expect(indexer.multiUpdate).toHaveBeenOnlyCalledWith(1001, 1100, [
         actual('a', 100, null),
         actual('b', 100, null),
       ])
@@ -186,56 +186,56 @@ describe(ManagedMultiIndexer.name, () => {
     })
 
     it('cannot return more than currentHeight', async () => {
-      const testIndexer = new TestIndexer({
+      const indexer = new TestIndexer({
         ...common,
       })
 
-      await testIndexer.initialize()
+      await indexer.initialize()
 
-      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(50))
-      await expect(testIndexer.update(100, 500)).toBeRejectedWith(
+      indexer.multiUpdate.resolvesTo(() => Promise.resolve(50))
+      await expect(indexer.update(100, 500)).toBeRejectedWith(
         /Returned height must be between from and to/,
       )
 
-      testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(50_000))
-      await expect(testIndexer.update(100, 500)).toBeRejectedWith(
+      indexer.multiUpdate.resolvesTo(() => Promise.resolve(50_000))
+      await expect(indexer.update(100, 500)).toBeRejectedWith(
         /Returned height must be between from and to/,
       )
     })
 
     //   it('cannot return more than targetHeight', async () => {
-    //     const testIndexer = new TestIndexer(
+    //     const indexer = new TestIndexer(
     //       [actual('a', 100, 300), actual('b', 100, 400)],
     //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
     //     )
-    //     await testIndexer.initialize()
+    //     await indexer.initialize()
 
-    //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
+    //     indexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
 
-    //     await expect(testIndexer.update(200, 300)).toBeRejectedWith(
+    //     await expect(indexer.update(200, 300)).toBeRejectedWith(
     //       /returned height must be between from and to/,
     //     )
     //   })
   })
 
   describe(ManagedMultiIndexer.prototype.findRange.name, () => {
-    let testIndexer: ManagedMultiIndexer<string>
+    let indexer: ManagedMultiIndexer<string>
 
     beforeEach(async () => {
       const indexerService = mockObject<IndexerService>({
         getSavedConfigurations: async () => [saved('a', 100, 200, null)],
       })
-      testIndexer = new TestIndexer({
+      indexer = new TestIndexer({
         ...common,
         indexerService,
         configurations: [actual('a', 100, 200)],
       })
-      await testIndexer.initialize()
+      await indexer.initialize()
     })
 
     it('finds range correctly for a value before the start', () => {
       const fromBeforeStart = 10
-      expect(testIndexer.findRange(fromBeforeStart)).toEqual({
+      expect(indexer.findRange(fromBeforeStart)).toEqual({
         from: -Infinity,
         to: 99,
         configurations: [],
@@ -244,7 +244,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value at the start', () => {
       const fromAtStart = 100
-      expect(testIndexer.findRange(fromAtStart)).toEqual({
+      expect(indexer.findRange(fromAtStart)).toEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -253,7 +253,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value between start and end', () => {
       const fromBetween = 150
-      expect(testIndexer.findRange(fromBetween)).toEqual({
+      expect(indexer.findRange(fromBetween)).toEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -262,7 +262,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value at the end', () => {
       const fromAtEnd = 200
-      expect(testIndexer.findRange(fromAtEnd)).toEqual({
+      expect(indexer.findRange(fromAtEnd)).toEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -271,7 +271,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value after the end', () => {
       const fromAfterStart = 250
-      expect(testIndexer.findRange(fromAfterStart)).toEqual({
+      expect(indexer.findRange(fromAfterStart)).toEqual({
         from: 201,
         to: Infinity,
         configurations: [],
@@ -287,9 +287,9 @@ describe(ManagedMultiIndexer.name, () => {
           updateConfigurationsCurrentHeight: async () => {},
         })
 
-        const testIndexer = new TestIndexer({ ...common, indexerService })
+        const indexer = new TestIndexer({ ...common, indexerService })
 
-        await testIndexer.updateConfigurationsCurrentHeight(100)
+        await indexer.updateConfigurationsCurrentHeight(100)
 
         expect(
           indexerService.updateConfigurationsCurrentHeight,
@@ -298,80 +298,43 @@ describe(ManagedMultiIndexer.name, () => {
     },
   )
 
-  // it(ManagedMultiIndexer.prototype.setSafeHeight.name, async () => {
-  //   const indexerService = mockObject<IndexerService>({
-  //     setSafeHeight: async () => {},
-  //   })
-  //   const indexer = await initializeMockIndexer(indexerService, [], [])
+  describe(ManagedMultiIndexer.prototype.invalidate.name, () => {
+    it('returns target height', async () => {
+      const indexer = new TestIndexer({ ...common })
 
-  //   await indexer.setSafeHeight(1)
+      const targetHeight = await indexer.invalidate(100)
 
-  //   expect(indexerService.setSafeHeight).toHaveBeenOnlyCalledWith('indexer', 1)
-  // })
+      expect(targetHeight).toEqual(100)
+    })
+  })
 
-  // it(ManagedMultiIndexer.prototype.multiInitialize.name, async () => {
-  //   const configurations = [saved('a', 100, null, null)]
-  //   const indexerService = mockObject<IndexerService>({
-  //     getSavedConfigurations: mockFn().resolvesTo(configurations),
-  //   })
+  it(ManagedMultiIndexer.prototype.setInitialState.name, async () => {
+    const indexerService = mockObject<IndexerService>({
+      setInitialState: async () => {},
+    })
+    const indexer = new TestIndexer({ ...common, indexerService })
 
-  //   const indexer = await initializeMockIndexer(indexerService, [], [])
+    await indexer.setInitialState(100, 'config-hash')
 
-  //   const result = await indexer.multiInitialize()
+    expect(indexerService.setInitialState).toHaveBeenOnlyCalledWith(
+      INDEXER_ID,
+      100,
+      'config-hash',
+    )
+  })
+  it(ManagedMultiIndexer.prototype.setSafeHeight.name, async () => {
+    const indexerService = mockObject<IndexerService>({
+      setSafeHeight: async () => {},
+    })
+    const indexer = new TestIndexer({ ...common, indexerService })
 
-  //   expect(result).toEqual(
-  //     configurations.map((c) => ({
-  //       ...c,
-  //       properties: JSON.stringify(c.properties),
-  //     })),
-  //   )
-  //   expect(indexerService.getSavedConfigurations).toHaveBeenOnlyCalledWith(
-  //     'indexer',
-  //   )
-  // })
+    await indexer.setSafeHeight(100)
 
-  // it(ManagedMultiIndexer.prototype.updateConfigurationsState.name, async () => {
-  //   const configurations = [saved('a', 100, null, null)]
-
-  //   const indexerService = mockObject<IndexerService>({
-  //     upsertConfigurations: async () => {},
-  //     updateConfigurationsCurrentHeight: async () => {},
-  //     deleteConfigurations: async () => {},
-  //   })
-
-  //   const indexer = await initializeMockIndexer(indexerService, [], [])
-
-  //   await indexer.updateConfigurationsState(configurations)
-
-  //   expect(indexerService.upsertConfigurations).toHaveBeenOnlyCalledWith(
-  //     'indexer',
-  //     configurations,
-  //     expect.anything(),
-  //   )
-  //   expect(indexerService.deleteConfigurations).toHaveBeenOnlyCalledWith(
-  //     'indexer',
-  //     configurations.map((c) => c.id),
-  //   )
-  // })
-
-  // it(
-  //   ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
-  //   async () => {
-  //     const indexerService = mockObject<IndexerService>({
-  //       upsertConfigurations: async () => {},
-  //       updateConfigurationsCurrentHeight: async () => {},
-  //       deleteConfigurations: async () => {},
-  //     })
-
-  //     const indexer = await initializeMockIndexer(indexerService, [], [])
-
-  //     await indexer.updateConfigurationsCurrentHeight(1)
-
-  //     expect(
-  //       indexerService.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenNthCalledWith(1, 'indexer', 1)
-  //   },
-  // )
+    expect(indexerService.setSafeHeight).toHaveBeenOnlyCalledWith(
+      INDEXER_ID,
+      100,
+    )
+  })
 
   // describeDatabase('e2e', (db) => {
   //   const indexerService = new IndexerService(db)

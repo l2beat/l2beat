@@ -196,7 +196,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   // #endregion
 }
 
-function getSafeHeight(configurations: SavedConfiguration<T>[]) {
+function getSafeHeight<T>(configurations: SavedConfiguration<T>[]) {
   return configurations.reduce(
     (agg, curr) =>
       (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
