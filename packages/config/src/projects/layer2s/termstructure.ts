@@ -9,6 +9,12 @@ import {
 import { Badge } from '../badges'
 import { RISK_VIEW } from '../../common/riskView'
 import { getStage } from './common/stages/getStage'
+import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
+import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
+import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
+import { OPERATOR } from '../../common/operator'
+import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { EXITS } from '../../common/exits'
 
 const discovery = new ProjectDiscovery('termstructure')
 
@@ -141,7 +147,118 @@ export const termstructure: Layer2 = {
       delayWith30DExitWindow: false,
     },
   }),
-  technology: {}, // TODO: Add technology details
+  technology: {
+    stateCorrectness: {
+      ...STATE_CORRECTNESS.VALIDITY_PROOFS,
+      references: [
+        {
+          text: 'RollupFacet.sol - Etherscan source code, verifyOneBlock function',
+          href: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+        },
+      ],
+    },
+    newCryptography: {
+      ...NEW_CRYPTOGRAPHY.ZK_SNARKS,
+      references: [
+        {
+          text: 'Verifier.sol - Etherscan source code',
+          href: 'https://etherscan.io/address/0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE',
+        },
+        {
+          text: 'EvacuVerifier.sol - Etherscan source code',
+          href: 'https://etherscan.io/address/0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467#code',
+        },
+      ],
+    },
+    dataAvailability: {
+      ...TECHNOLOGY_DATA_AVAILABILITY.ON_CHAIN_CALLDATA,
+      references: [
+        {
+          text: 'RollupFacet.sol - Etherscan source code, _commitOneBlock function',
+          href: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+        },
+      ],
+    },
+    operator: {
+      ...OPERATOR.CENTRALIZED_OPERATOR,
+      references: [
+        {
+          text: 'RollupFacet.sol - Etherscan source code, onlyRole in commit, verify, execute functions',
+          href: 'https://etherscan.io/address/0x955cdD2E56Ca2776a101a552A318d28fe311398D#code',
+        },
+      ],
+    },
+    forceTransactions: {
+      ...FORCE_TRANSACTIONS.WITHDRAW_OR_HALT(),
+      references: [
+        {
+          text: 'AccountFacet.sol - Etherscan source code, forceWithdraw function',
+          href: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
+        },
+        {
+          text: 'Force Withdrawal and Evacuation Mode - Term Structure documentation',
+          href: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode',
+        },
+      ],
+    },
+    exitMechanisms: [
+      {
+        ...EXITS.REGULAR('zk', 'no proof'),
+        references: [
+          {
+            text: 'AccountFacet.sol - Etherscan source code, withdraw function',
+            href: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
+          },
+          {
+            text: 'Withdraw - Term Structure documentation',
+            href: 'https://docs.ts.finance/protocol-spec/general/withdraw',
+          },
+        ],
+      },
+      {
+        ...EXITS.FORCED(),
+        references: [
+          {
+            text: 'AccountFacet.sol - Etherscan source code, forceWithdraw function',
+            href: 'https://etherscan.io/address/0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A#code',
+          },
+          {
+            text: 'Forced Withdrawal - Term Structure documentation',
+            href: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#forced-withdrawal',
+          },
+        ],
+      },
+      {
+        ...EXITS.EMERGENCY('Evacuation Mode', 'zero knowledge proof'),
+        references: [
+          {
+            text: 'Evacuation Mode - Term Structure documentation',
+            href: 'https://docs.ts.finance/zktrue-up/zk-architecture/forced-withdrawal-and-evacuation-mode#evacuation-mode',
+          },
+        ],
+      },
+    ],
+    otherConsiderations: [
+      {
+        name: 'Flashloans on escrowed funds',
+        description:
+          'The protocol allows flashloans with the funds locked with the bridge, for a fee.',
+        references: [
+          {
+            text: 'FlashloanFacet.sol - Etherscan source code, flashLoan function',
+            href: 'https://etherscan.io/address/0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c#code',
+          },
+        ],
+        risks: [
+          {
+            category: 'Funds can be lost if',
+            text: 'The flashloan mechanism is implemented incorrectly.',
+          },
+        ],
+        isIncomplete: true,
+      },
+    ],
+  },
   permissions: [
     {
       name: 'OwnerEOA',
