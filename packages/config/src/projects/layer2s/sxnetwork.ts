@@ -6,6 +6,7 @@ export const sxnetwork: Layer2 = underReviewL2({
   id: ProjectId('sxnetwork'),
   display: {
     category: 'Optimium',
+    provider: 'Arbitrum',
     name: 'SX Network',
     slug: 'sxnetwork',
     description:
