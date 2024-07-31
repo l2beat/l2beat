@@ -8,6 +8,7 @@ import { OtherSites } from '~/app/_components/other-sites'
 import { HydrateClient, api } from '~/trpc/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
+import { getCookie } from '~/utils/cookies/server'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
