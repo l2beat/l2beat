@@ -115,6 +115,7 @@ import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
 import { swan } from './swan'
 import { swell } from './swell'
+import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
@@ -264,6 +265,7 @@ export const layer2s: Layer2[] = [
   swan,
   swell,
   sxt,
+  sxnetwork,
   taiko,
   tanx,
   telos,
