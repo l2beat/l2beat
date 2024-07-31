@@ -3,6 +3,7 @@ import { utils } from 'ethers'
 import * as z from 'zod'
 
 import { ContractValue, get$Implementations } from '@l2beat/discovery-types'
+import { uniqBy } from 'lodash'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'
 import { ProxyDetector } from '../../proxies/ProxyDetector'
@@ -201,9 +202,11 @@ export class ZKsyncEraScheduledTransactionHandler implements Handler {
     const metadatas = await Promise.all(
       addresses.map((a) => provider.getSource(a)),
     )
-    const contractInterface = new utils.Interface([
-      ...new Set(metadatas.flatMap((m) => m.abi)),
-    ])
+    const abi = uniqBy(
+      metadatas.flatMap((m) => uniqBy(m.abi, JSON.stringify)),
+      JSON.stringify,
+    ).filter((a) => !a.startsWith('constructor'))
+    const contractInterface = new utils.Interface(abi)
     const decodedCalldata = this.decodeCalldata(contractInterface, call.data)
     return {
       target: call.target,
