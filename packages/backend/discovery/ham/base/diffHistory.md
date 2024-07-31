@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x8f061e04ee4ef6f700d54148aadf71a07c3ab2c7
+Generated with discovered.json: 0xbcca76541a33854ae204ea185259f349ada3ba34
 
-# Diff at Wed, 31 Jul 2024 16:06:32 GMT:
+# Diff at Wed, 31 Jul 2024 16:42:12 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- current block number: 17826303
+- current block number: 17827379
 
 ## Description
 
@@ -13,26 +13,8 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafeL2 (0x1DA898D47E057Bc9Af0a5709F20acbfF900bDe60)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract GnosisSafeL2 (0x211A8defcF685E0Ef5Ed8eEf0c43dc1B0ba56aEA)
     +++ description: It can act on behalf of 0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49, inheriting its permissions.
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0x2304CB33d95999dC29f4CeF1e35065e670a70050)
-    +++ description: It can act on behalf of 0x4200000000000000000000000000000000000018, inheriting its permissions.
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0x28EDB11394eb271212ED66c08f2b7893C04C5D65)
-    +++ description: None
 ```
 
 ```diff
@@ -55,38 +37,14 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract L2CrossDomainMessenger (0x4200000000000000000000000000000000000007)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2StandardBridge (0x4200000000000000000000000000000000000010)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract L2ERC721Bridge (0x4200000000000000000000000000000000000014)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract ProxyAdmin (0x4200000000000000000000000000000000000018)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
     contract ProxyAdmin (0x5eC25263F8a79F8D5fF7bD5F493640b6E2627B49)
-    +++ description: None
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
 ```
 
 ```diff
 +   Status: CREATED
     contract L1ERC721Bridge (0x80292D35789462aeD1D694899f1FaAE184Fe3E5b)
-    +++ description: None
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
 ```
 
 ```diff
@@ -98,7 +56,7 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract L1StandardBridge (0x936c137699230c4732d534c7E968cC7cEAa6Cf45)
-    +++ description: None
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
 ```
 
 ```diff
@@ -110,12 +68,6 @@ Provide description of changes. This section will be preserved.
 ```diff
 +   Status: CREATED
     contract AddressManager (0xd2e0532f8AE8DeDA4b9Ad2CB79f008C97c9C25eE)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract GnosisSafeL2 (0xd94E416cf2c7167608B2515B7e4102B41efff94f)
     +++ description: None
 ```
 

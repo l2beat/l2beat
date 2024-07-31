@@ -1,11 +1,11 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { opStackL2 } from './templates/opStack'
-import { Layer2 } from './types'
+import { opStackL3 } from '../layer2s/templates/opStack'
+import { Layer3 } from './types'
 
 const discovery = new ProjectDiscovery('optopia')
 
-export const optopia: Layer2 = opStackL2({
+export const optopia: Layer3 = opStackL3({
   discovery,
   display: {
     name: 'Optopia',
