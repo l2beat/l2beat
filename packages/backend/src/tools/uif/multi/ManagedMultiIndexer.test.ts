@@ -94,7 +94,10 @@ describe(ManagedMultiIndexer.name, () => {
         upsertConfigurations: async () => {},
         deleteConfigurations: async () => {},
       })
-      const indexer = new TestIndexer({ ...common, indexerService })
+      const db = mockObject<Database>({
+        transaction: async (fun) => await fun(),
+      })
+      const indexer = new TestIndexer({ ...common, indexerService, db })
 
       await indexer.updateConfigurationsState({
         toAdd: [actual('a', 100, null)],
@@ -121,6 +124,7 @@ describe(ManagedMultiIndexer.name, () => {
         removal('b', 50, 99),
         removal('b', 1001, 1500),
       ])
+      expect(db.transaction).toHaveBeenCalledTimes(1)
     })
   })
 

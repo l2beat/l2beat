@@ -60,41 +60,43 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     toDelete: string[]
     toTrim: RemovalConfiguration[]
   }) {
-    if (state.toAdd.length > 0) {
-      await this.options.indexerService.insertConfigurations(
-        this.indexerId,
-        state.toAdd,
-        this.options.serializeConfiguration,
-      )
-      this.logger.info('Inserted configurations', {
-        configurations: state.toAdd.length,
-      })
-    }
+    return await this.options.db.transaction(async () => {
+      if (state.toAdd.length > 0) {
+        await this.options.indexerService.insertConfigurations(
+          this.indexerId,
+          state.toAdd,
+          this.options.serializeConfiguration,
+        )
+        this.logger.info('Inserted configurations', {
+          configurations: state.toAdd.length,
+        })
+      }
 
-    if (state.toUpdate.length > 0) {
-      await this.options.indexerService.upsertConfigurations(
-        this.indexerId,
-        state.toUpdate,
-        this.options.serializeConfiguration,
-      )
-      this.logger.info('Updated configurations', {
-        configurations: state.toUpdate.length,
-      })
-    }
+      if (state.toUpdate.length > 0) {
+        await this.options.indexerService.upsertConfigurations(
+          this.indexerId,
+          state.toUpdate,
+          this.options.serializeConfiguration,
+        )
+        this.logger.info('Updated configurations', {
+          configurations: state.toUpdate.length,
+        })
+      }
 
-    if (state.toDelete.length > 0) {
-      await this.options.indexerService.deleteConfigurations(
-        this.indexerId,
-        state.toDelete,
-      )
-      this.logger.info('Deleted configurations', {
-        configurations: state.toDelete.length,
-      })
-    }
+      if (state.toDelete.length > 0) {
+        await this.options.indexerService.deleteConfigurations(
+          this.indexerId,
+          state.toDelete,
+        )
+        this.logger.info('Deleted configurations', {
+          configurations: state.toDelete.length,
+        })
+      }
 
-    if (state.toTrim.length > 0) {
-      await this.removeData(state.toTrim)
-    }
+      if (state.toTrim.length > 0) {
+        await this.removeData(state.toTrim)
+      }
+    })
   }
 
   // #endregion
