@@ -1,7 +1,7 @@
 'use client'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useCallback, useMemo } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { BasicTable } from '~/app/_components/table/basic-table'
@@ -15,27 +15,14 @@ import { useTable } from '~/hooks/use-table'
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
-import {
-  ScalingFilters,
-  type ScalingFiltersState,
-} from '../../../_components/scaling-filters'
+import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './table/columns'
-
-const DEFAULT_SCALING_FILTERS = {
-  rollupsOnly: false,
-  category: undefined,
-  stack: undefined,
-  stage: undefined,
-  purpose: undefined,
-  hostChain: undefined,
-}
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 
 export function ScalingRiskTables({
   projects,
 }: { projects: ScalingRiskEntry[] }) {
-  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
-    DEFAULT_SCALING_FILTERS,
-  )
+  const scalingFilters = useScalingFilter()
 
   const includeFilters = useCallback(
     (entry: ScalingRiskEntry) => {

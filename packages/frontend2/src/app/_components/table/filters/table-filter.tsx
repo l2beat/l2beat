@@ -49,6 +49,7 @@ export function TableFilter<T extends string | undefined>(props: Props<T>) {
   return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
 }
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function SelectedValue({ options, value, onValueChange }: Props<any>) {
   const option = options.find((option) => option.value === value)
   assert(option, 'Option not found')
@@ -74,6 +75,7 @@ function TableFilterSelect({
   options,
   value,
   onValueChange,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: Props<any> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
@@ -86,6 +88,7 @@ function TableFilterSelect({
   return (
     <Select
       open={open}
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value={value ?? ''}
       onOpenChange={setOpen}
       onValueChange={(v) => {
@@ -113,6 +116,7 @@ function TableFilterDrawer({
   title,
   options,
   onValueChange,
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
 }: Props<any> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>

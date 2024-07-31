@@ -1,4 +1,4 @@
-import { ValueRecord } from '@l2beat/database'
+import { type ValueRecord } from '@l2beat/database'
 import { sumValuesPerSource } from './sum-values-per-source'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'

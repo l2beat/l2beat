@@ -12,13 +12,11 @@ export type ScalingFiltersState = {
   hostChain: string | undefined
 } & BaseScalingFiltersState
 
-interface Props<T extends ScalingFiltersState> {
+interface Props {
   items: BaseScalingFiltersEntry[]
 }
 
-export function ScalingFilters<T extends ScalingFiltersState>({
-  items,
-}: Props<T>) {
+export function ScalingFilters({ items }: Props) {
   const state = useScalingFilter()
   const hostChainOptions = uniq(
     items.map((item) =>

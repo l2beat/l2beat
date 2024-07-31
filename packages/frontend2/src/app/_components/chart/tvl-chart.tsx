@@ -32,10 +32,12 @@ export function TvlChart({ milestones, tag = 'summary' }: Props) {
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const { data } = api.scaling.summary.useQuery({
+  const scalingSummaryQuery = api.scaling.summary.useQuery({
     range: timeRange,
     type: 'layer2',
   })
+
+  const data = scalingSummaryQuery.data?.chart
 
   const mappedMilestones = getMilestones(milestones)
   const rangeStart = data?.[0]?.[0] ?? 0

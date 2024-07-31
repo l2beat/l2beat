@@ -31,7 +31,7 @@ export default async function Page() {
         <ScalingFilterContextProvider>
           <TvlChart milestones={HOMEPAGE_MILESTONES} />
           <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
+          <ScalingSummaryTables layer2s={[]} layer3s={[]} />
         </ScalingFilterContextProvider>
         <OtherSites />
         <About />
