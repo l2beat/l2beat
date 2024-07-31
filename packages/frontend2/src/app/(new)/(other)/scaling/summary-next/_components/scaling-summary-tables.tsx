@@ -21,13 +21,20 @@ import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { type Layer2, type Layer3 } from '@l2beat/config'
+import { useCookieState } from '~/hooks/use-cookie-state'
+import { api } from '~/trpc/react'
 
 interface Props {
   projects: CommonScalingEntry[]
 }
 
 export function ScalingSummaryTables({ projects }: Props) {
+  const [timeRange] = useCookieState('chartRange')
   const includeFilters = useScalingFilter()
+  const { data } = api.scaling.summary.useQuery({
+    range: timeRange,
+    type: 'layer2',
+  })
 
   const layer2sProjects = useMemo(
     () =>
