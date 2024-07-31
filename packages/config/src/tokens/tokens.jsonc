@@ -1394,6 +1394,17 @@
   ],
   "arbitrum": [
     {
+      "symbol": "wOETH",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Transporter",
+        "slug": "transporter"
+      }
+    },
+    {
       "symbol": "SolvBTC",
       "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
       "supply": "zero", // the collateral is WBTC on arbitrum
