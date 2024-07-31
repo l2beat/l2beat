@@ -133,13 +133,12 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     })
   }
 
-  private findRange(from: number): ConfigurationRange<T> {
+  findRange(from: number): ConfigurationRange<T> {
     const range = this.ranges.find(
       (range) => range.from <= from && range.to >= from,
     )
-    if (!range) {
-      throw new Error('Programmer error, there should always be a range')
-    }
+    assert(range, 'There should always be a range')
+
     return range
   }
 

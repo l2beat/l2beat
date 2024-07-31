@@ -218,36 +218,85 @@ describe(ManagedMultiIndexer.name, () => {
     //   })
   })
 
-  // describe('multiUpdate', () => {
+  describe(ManagedMultiIndexer.prototype.findRange.name, () => {
+    let testIndexer: ManagedMultiIndexer<string>
 
-  //   it('cannot return less than currentHeight', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 300), actual('b', 100, 400)],
-  //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
-  //     )
-  //     await testIndexer.initialize()
+    beforeEach(async () => {
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: async () => [saved('a', 100, 200, null)],
+      })
+      testIndexer = new TestIndexer({
+        ...common,
+        indexerService,
+        configurations: [actual('a', 100, 200)],
+      })
+      await testIndexer.initialize()
+    })
 
-  //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(150))
+    it('finds range correctly for a value before the start', () => {
+      const fromBeforeStart = 10
+      expect(testIndexer.findRange(fromBeforeStart)).toEqual({
+        from: -Infinity,
+        to: 99,
+        configurations: [],
+      })
+    })
 
-  //     await expect(testIndexer.update(200, 300)).toBeRejectedWith(
-  //       /returned height must be between from and to/,
-  //     )
-  //   })
+    it('finds range correctly for a value at the start', () => {
+      const fromAtStart = 100
+      expect(testIndexer.findRange(fromAtStart)).toEqual({
+        from: 100,
+        to: 200,
+        configurations: [actual('a', 100, 200)],
+      })
+    })
 
-  //   it('cannot return more than targetHeight', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 300), actual('b', 100, 400)],
-  //       [saved('a', 100, 300, null), saved('b', 100, 400, null)],
-  //     )
-  //     await testIndexer.initialize()
+    it('finds range correctly for a value between start and end', () => {
+      const fromBetween = 150
+      expect(testIndexer.findRange(fromBetween)).toEqual({
+        from: 100,
+        to: 200,
+        configurations: [actual('a', 100, 200)],
+      })
+    })
 
-  //     testIndexer.multiUpdate.resolvesTo(() => Promise.resolve(350))
+    it('finds range correctly for a value at the end', () => {
+      const fromAtEnd = 200
+      expect(testIndexer.findRange(fromAtEnd)).toEqual({
+        from: 100,
+        to: 200,
+        configurations: [actual('a', 100, 200)],
+      })
+    })
 
-  //     await expect(testIndexer.update(200, 300)).toBeRejectedWith(
-  //       /returned height must be between from and to/,
-  //     )
-  //   })
-  // })
+    it('finds range correctly for a value after the end', () => {
+      const fromAfterStart = 250
+      expect(testIndexer.findRange(fromAfterStart)).toEqual({
+        from: 201,
+        to: Infinity,
+        configurations: [],
+      })
+    })
+  })
+
+  describe(
+    ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
+    () => {
+      it('calls indexer service', async () => {
+        const indexerService = mockObject<IndexerService>({
+          updateConfigurationsCurrentHeight: async () => {},
+        })
+
+        const testIndexer = new TestIndexer({ ...common, indexerService })
+
+        await testIndexer.updateConfigurationsCurrentHeight(100)
+
+        expect(
+          indexerService.updateConfigurationsCurrentHeight,
+        ).toHaveBeenOnlyCalledWith(INDEXER_ID, 100)
+      })
+    },
+  )
 
   // it(ManagedMultiIndexer.prototype.setSafeHeight.name, async () => {
   //   const indexerService = mockObject<IndexerService>({
