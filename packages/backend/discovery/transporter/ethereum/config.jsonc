@@ -24,7 +24,9 @@
         "1346049177634351622": "celo",
         "7264351850409363825": "mode",
         "11344663589394136015": "bnb",
-        "15971525489660198786": "base"
+        "15971525489660198786": "base",
+        "4411394078118774322": "blast",
+        "8805746078405598895": "metis"
       }
     }
   },
@@ -48,6 +50,7 @@
     "0x61135E701a2214C170c5F596D0067798FEfbaaE4": "OffRamp12",
     "0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94": "OffRamp13",
     "0xfF51C00546AA3d9051a4B96Ae81346E14709CD24": "OffRamp14",
+    "0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf": "OffRamp15",
 
     "0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB": "CommitStore1",
     "0x118a9389960F86390A4F14ce4C95D6ff076C6bFC": "CommitStore2",
@@ -63,6 +66,7 @@
     "0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C": "CommitStore12",
     "0x7986C9892389854cAAbAC785ff18123B0070a5Fd": "CommitStore13",
     "0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77": "CommitStore14",
+    "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194": "CommitStore15",
 
     "0x86B47d8411006874eEf8E4584BdFD7be8e5549d1": "OnRamp1",
     "0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B": "OnRamp2",
@@ -98,6 +102,7 @@
     "OffRamp12": { "extends": "transporter/OffRamp" },
     "OffRamp13": { "extends": "transporter/OffRamp" },
     "OffRamp14": { "extends": "transporter/OffRamp" },
+    "OffRamp15": { "extends": "transporter/OffRamp" },
 
     "ARM": {
       "ignoreMethods": ["getConfigDetails"] // information about voters - bless, curse, curseUnvote

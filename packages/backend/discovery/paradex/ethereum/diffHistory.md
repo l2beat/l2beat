@@ -1,14 +1,31 @@
-Generated with discovered.json: 0x11dfb91b5a1bb2c3e4b7d1b6028dae43c0fadc05
+Generated with discovered.json: 0x90741ef6ae43b315dc2179b078c222aed60821b1
 
-# Diff at Tue, 30 Jul 2024 11:13:29 GMT:
+# Diff at Tue, 30 Jul 2024 15:53:58 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20110229
-- current block number: 20110229
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20110229
+- current block number: 20420390
 
 ## Description
 
-Discovery rerun on the same block number with only config-related changes.
+Accesscontrol roles of APP_GOVERNOR and APP_ROLE_ADMIN are given to the EOA that already has the upgrade admin and GOVERNANCE_ADMIN roles, not adding any new net permissions. `maxTotalBalance' raised from 20M to 30M USDC.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.accessControl.APP_GOVERNOR.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++++ description: Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)
++++ severity: MEDIUM
+      values.maxTotalBalance:
+-        20000000000000
++        30000000000000
+    }
+```
 
 ## Config/verification related changes
 

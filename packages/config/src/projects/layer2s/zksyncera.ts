@@ -59,11 +59,11 @@ const isSCset =
 const validators = () => {
   const validatorsAdded = discovery.getContractValue<string[]>(
     'ValidatorTimelock',
-    'validatorsAdded',
+    'zksyncValidatorsAdded',
   )
   const validatorsRemoved = discovery.getContractValue<string[]>(
     'ValidatorTimelock',
-    'validatorsRemoved',
+    'zksyncValidatorsRemoved',
   )
 
   // Create a map to track the net state of each validator (added or removed)

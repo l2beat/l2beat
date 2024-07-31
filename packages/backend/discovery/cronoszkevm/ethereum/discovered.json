@@ -1,13 +1,23 @@
 {
-  "name": "zksync2",
+  "name": "cronoszkevm",
   "chain": "ethereum",
-  "blockNumber": 20425965,
-  "configHash": "0xe56d445481a646fa42b8ad76b71a0e5fec966b9f26b65adede13dd2a8f8669a7",
+  "blockNumber": 20425837,
+  "configHash": "0x51f3ec4cc4e4eda64f2af929c4179a2bcd079bf95db43f1c246288946dd35cc7",
   "version": 10,
   "contracts": [
     {
-      "name": "ZKsync",
-      "address": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+      "name": "Verifier",
+      "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
+      "sinceTimestamp": 1717507391,
+      "values": {
+        "$immutable": true,
+        "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
+      }
+    },
+    {
+      "name": "CronosZkEvm",
+      "address": "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc",
+      "unverified": true,
       "proxyType": "EIP2535 diamond proxy",
       "ignoreInWatchMode": [
         "getPriorityQueueSize",
@@ -21,7 +31,7 @@
         "priorityQueueFrontOperation",
         "getFirstUnprocessedPriorityTx"
       ],
-      "sinceTimestamp": 1676315375,
+      "sinceTimestamp": 1722357035,
       "values": {
         "$immutable": false,
         "$implementation": [
@@ -31,7 +41,7 @@
           "0xaD193aDe635576d8e9f7ada71Af2137b16c64075"
         ],
         "baseTokenGasPriceMultiplierDenominator": 1,
-        "baseTokenGasPriceMultiplierNominator": 1,
+        "baseTokenGasPriceMultiplierNominator": 40000,
         "facetAddresses": [
           "0xF6F26b416CE7AE5e5FE224Be332C7aE4e1f3450a",
           "0xE60E94fCCb18a81D501a38959E532C0A85A1be89",
@@ -118,30 +128,30 @@
             "revertBatchesSharedBridge(uint256,uint256)"
           ]
         },
-        "getAdmin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-        "getBaseToken": "0x0000000000000000000000000000000000000001",
+        "getAdmin": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137",
+        "getBaseToken": "0x28Ff2E4dD1B58efEB0fC138602A28D5aE81e44e2",
         "getBaseTokenBridge": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
         "getBridgehub": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
-        "getFirstUnprocessedPriorityTx": 3257848,
+        "getFirstUnprocessedPriorityTx": 0,
         "getL2BootloaderBytecodeHash": "0x010008e742608b21bf7eb23c1a9d0602047e3618b464c9b59c0fba3b3d7ab66e",
         "getL2DefaultAccountBytecodeHash": "0x01000563374c277a2c1e34659a2a1e87371bb6d852ce142022d497bfb50b9e32",
-        "getL2SystemContractsUpgradeBatchNumber": 0,
-        "getL2SystemContractsUpgradeBlockNumber": 0,
-        "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "getL2SystemContractsUpgradeBatchNumber": 1,
+        "getL2SystemContractsUpgradeBlockNumber": 1,
+        "getL2SystemContractsUpgradeTxHash": "0xd05d194051ec55ccc2207d19499a7959c87327586d85b0914684b0f3319cbeff",
         "getPendingAdmin": "0x0000000000000000000000000000000000000000",
-        "getPriorityQueueSize": 52,
+        "getPriorityQueueSize": 5,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 103079215105,
-        "getPubdataPricingMode": 0,
+        "getPubdataPricingMode": 1,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 489971,
-        "getTotalBatchesExecuted": 489929,
-        "getTotalBatchesVerified": 489966,
-        "getTotalBlocksCommitted": 489971,
-        "getTotalBlocksExecuted": 489929,
-        "getTotalBlocksVerified": 489966,
-        "getTotalPriorityTxs": 3257900,
+        "getTotalBatchesCommitted": 1,
+        "getTotalBatchesExecuted": 0,
+        "getTotalBatchesVerified": 1,
+        "getTotalBlocksCommitted": 1,
+        "getTotalBlocksExecuted": 0,
+        "getTotalBlocksVerified": 1,
+        "getTotalPriorityTxs": 5,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
           "recursionNodeLevelVkHash": "0xf520cd5b37e74e19fdb369c8d676a04dce8a19457497ac6686d2bb95d94109c8",
@@ -150,12 +160,17 @@
         },
         "isDiamondStorageFrozen": false,
         "priorityQueueFrontOperation": {
-          "canonicalTxHash": "0x5ab397926b8eafa3f524838d7508f52152fd9e632701dd2bbd35dd20207cf9e7",
-          "expirationTimestamp": 1722337607,
+          "canonicalTxHash": "0x67074a48a5bd417d93dc9c15956976b7850f98345f85a2a12c15935ff087db7f",
+          "expirationTimestamp": 1722373295,
           "layer2Tip": 0
         },
-        "txFilterer": [],
-        "validators": ["0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD"]
+        "txFilterer": [
+          {
+            "oldTransactionFilterer": "0x0000000000000000000000000000000000000000",
+            "newTransactionFilterer": "0xA8998F231a660Eca365B382943c71ad9b7619139"
+          }
+        ],
+        "validators": []
       },
       "fieldMeta": {
         "txFilterer": {
@@ -171,228 +186,39 @@
           "description": "Verifier parameters used for proving batches"
         }
       },
-      "derivedName": "DiamondProxy"
+      "derivedName": ""
     },
     {
-      "name": "L1ERC20Bridge_wstETH",
-      "address": "0x41527B2d03844dB6b0945f25702cB958b6d55989",
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1698065351,
-      "values": {
-        "$admin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "$implementation": "0x9a810469F4a451Ebb7ef53672142053b4971587c",
-        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
-        "DEPOSITS_DISABLER_ROLE": "0x63f736f21cb2943826cd50b191eb054ebbea670e4e962d0527611f830cd399d6",
-        "DEPOSITS_ENABLER_ROLE": "0x4b43b36766bde12c5e9cbbc37d15f8d1f769f08f54720ab370faeb4ce893753a",
-        "isDepositsEnabled": true,
-        "isInitialized": true,
-        "isWithdrawalsEnabled": true,
-        "l1Token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
-        "l2Bridge": "0xE1D6A50E7101c8f8db77352897Ee3f1AC53f782B",
-        "l2Token": "0x703b52F2b28fEbcB60E1372858AF5b18849FE867",
-        "proxy__getAdmin": "0x3e40D73EB977Dc6a537aF587D48316feE66E9C8c",
-        "proxy__getImplementation": "0x9a810469F4a451Ebb7ef53672142053b4971587c",
-        "proxy__getIsOssified": false,
-        "WITHDRAWALS_DISABLER_ROLE": "0x94a954c0bc99227eddbc0715a62a7e1056ed8784cd719c2303b685683908857c",
-        "WITHDRAWALS_ENABLER_ROLE": "0x9ab8816a3dc0b3849ec1ac00483f6ec815b07eee2fd766a353311c823ad59d0d",
-        "zkSync": "0x32400084C286CF3E17e7B677ea9583e60a000324"
-      },
-      "derivedName": "L1ERC20Bridge"
-    },
-    {
-      "name": "L1ERC20Bridge",
-      "address": "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063",
-      "proxyType": "EIP1967 proxy",
-      "sinceTimestamp": 1676370683,
-      "values": {
-        "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x8191975d8B0851C7f0740918896Cf298c09aA05E",
-        "l2Bridge": "0x11f943b2c77b743AB90f4A0Ae7d5A4e7FCA3E102",
-        "l2TokenBeacon": "0x1Eb710030273e529A6aD7E1e14D4e601765Ba3c6",
-        "l2TokenProxyBytecodeHash": "0x01000121a363b3fbec270986067c1b553bf540c30a6f186f45313133ff1a1019",
-        "SHARED_BRIDGE": "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB"
-      },
-      "derivedName": "L1ERC20Bridge"
-    },
-    {
-      "name": "Verifier",
-      "address": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
-      "sinceTimestamp": 1717507391,
+      "name": "TransactionFiltererDenyList",
+      "address": "0xA8998F231a660Eca365B382943c71ad9b7619139",
+      "sinceTimestamp": 1722304883,
       "values": {
         "$immutable": true,
-        "verificationKeyHash": "0x14f97b81e54b35fe673d8708cc1a19e1ea5b5e348e12d31e39824ed4f42bbca2"
+        "owner": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137",
+        "pendingOwner": "0x0000000000000000000000000000000000000000"
       }
-    },
-    {
-      "name": "ValidatorTimelock_deprecated",
-      "address": "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD",
-      "sinceTimestamp": 1709850611,
-      "values": {
-        "$immutable": true,
-        "constructorArgs": {
-          "_initialOwner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-          "_zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324",
-          "_executionDelay": 75600,
-          "_validators": [
-            "0x3527439923a63F8C13CF72b8Fe80a77f6e572092",
-            "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99"
-          ]
-        },
-        "executionDelay": 75600,
-        "getName": "ValidatorTimelock",
-        "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
-        "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "revertedBlocks": [],
-        "validatorsAdded": [],
-        "validatorsRemoved": [],
-        "zkSyncContract": "0x32400084C286CF3E17e7B677ea9583e60a000324"
-      },
-      "derivedName": "ValidatorTimelock"
     }
   ],
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
-    { "address": "0x0000000000000000000000000000000000000001" },
-    { "address": "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99" },
-    { "address": "0x3527439923a63F8C13CF72b8Fe80a77f6e572092" }
+    { "address": "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137" }
   ],
   "abis": {
-    "0x32400084C286CF3E17e7B677ea9583e60a000324": [
-      "constructor(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)"
-    ],
-    "0x41527B2d03844dB6b0945f25702cB958b6d55989": [
-      "constructor(address implementation_, address admin_, bytes data_)",
-      "error ErrorNotAdmin()",
-      "error ErrorProxyIsOssified()",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event ProxyOssified()",
-      "event Upgraded(address indexed implementation)",
-      "function proxy__changeAdmin(address newAdmin_)",
-      "function proxy__getAdmin() view returns (address)",
-      "function proxy__getImplementation() view returns (address)",
-      "function proxy__getIsOssified() view returns (bool)",
-      "function proxy__ossify()",
-      "function proxy__upgradeTo(address newImplementation_)",
-      "function proxy__upgradeToAndCall(address newImplementation_, bytes setupCalldata_, bool forceCall_)"
-    ],
-    "0x57891966931Eb4Bb6FB81430E6cE0A03AAbDe063": [
-      "constructor(address _logic, address admin_, bytes _data) payable",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Upgraded(address indexed implementation)",
-      "function admin() returns (address admin_)",
-      "function changeAdmin(address newAdmin)",
-      "function implementation() returns (address implementation_)",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
     "0x70F3FBf8a427155185Ec90BED8a3434203de9604": [
       "function verificationKeyHash() pure returns (bytes32 vkHash)",
       "function verify(uint256[], uint256[], uint256[]) view returns (bool)"
     ],
-    "0x8191975d8B0851C7f0740918896Cf298c09aA05E": [
-      "constructor(address _sharedBridge)",
-      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
-      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount)",
-      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
-      "function SHARED_BRIDGE() view returns (address)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
-      "function depositAmount(address account, address l1Token, bytes32 depositL2TxHash) view returns (uint256 amount)",
-      "function finalizeWithdrawal(uint256 _l2BatchNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBatch, bytes _message, bytes32[] _merkleProof)",
-      "function initialize()",
-      "function isWithdrawalFinalized(uint256 l2BatchNumber, uint256 l2ToL1MessageNumber) view returns (bool isFinalized)",
-      "function l2Bridge() view returns (address)",
-      "function l2TokenAddress(address _l1Token) view returns (address)",
-      "function l2TokenBeacon() view returns (address)",
-      "function l2TokenProxyBytecodeHash() view returns (bytes32)",
-      "function transferTokenToSharedBridge(address _token)"
-    ],
-    "0x9a810469F4a451Ebb7ef53672142053b4971587c": [
-      "constructor()",
-      "error ErrorAccountIsZeroAddress()",
-      "error ErrorAlreadyInitialized()",
-      "error ErrorDepositsDisabled()",
-      "error ErrorDepositsEnabled()",
-      "error ErrorUnsupportedL1Token()",
-      "error ErrorUnsupportedL2Token()",
-      "error ErrorWithdrawalsDisabled()",
-      "error ErrorWithdrawalsEnabled()",
-      "event ClaimedFailedDeposit(address indexed to, address indexed l1Token, uint256 amount)",
-      "event DepositInitiated(bytes32 indexed l2DepositTxHash, address indexed from, address indexed to, address l1Token, uint256 amount, address refundRecipient)",
-      "event DepositsDisabled(address indexed disabler)",
-      "event DepositsEnabled(address indexed enabler)",
-      "event Initialized(uint8 version)",
-      "event InitializedBridgingManager(address indexed admin)",
-      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
-      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
-      "event WithdrawalFinalized(address indexed to, address indexed l1Token, uint256 amount)",
-      "event WithdrawalsDisabled(address indexed disabler)",
-      "event WithdrawalsEnabled(address indexed enabler)",
-      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
-      "function DEPOSITS_DISABLER_ROLE() view returns (bytes32)",
-      "function DEPOSITS_ENABLER_ROLE() view returns (bytes32)",
-      "function WITHDRAWALS_DISABLER_ROLE() view returns (bytes32)",
-      "function WITHDRAWALS_ENABLER_ROLE() view returns (bytes32)",
-      "function claimFailedDeposit(address _depositSender, address _l1Token, bytes32 _l2TxHash, uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes32[] _merkleProof)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte) payable returns (bytes32 l2TxHash)",
-      "function deposit(address _l2Receiver, address _l1Token, uint256 _amount, uint256 _l2TxGasLimit, uint256 _l2TxGasPerPubdataByte, address _refundRecipient) payable returns (bytes32 l2TxHash)",
-      "function depositAmount(address, bytes32) view returns (uint256)",
-      "function disableDeposits()",
-      "function disableWithdrawals()",
-      "function enableDeposits()",
-      "function enableWithdrawals()",
-      "function finalizeWithdrawal(uint256 _l2BlockNumber, uint256 _l2MessageIndex, uint16 _l2TxNumberInBlock, bytes _message, bytes32[] _merkleProof)",
-      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
-      "function grantRole(bytes32 role, address account)",
-      "function hasRole(bytes32 role, address account) view returns (bool)",
-      "function initialize(bytes[] _factoryDeps, tuple(address _l1Token, address _l2Token, address _governor, address _admin, address _zkSync) addresses, uint256 _deployBridgeImplementationFee, uint256 _deployBridgeProxyFee) payable",
-      "function isDepositsEnabled() view returns (bool)",
-      "function isInitialized() view returns (bool)",
-      "function isWithdrawalFinalized(uint256, uint256) view returns (bool)",
-      "function isWithdrawalsEnabled() view returns (bool)",
-      "function l1Token() view returns (address)",
-      "function l2Bridge() view returns (address)",
-      "function l2Token() view returns (address)",
-      "function l2TokenAddress(address _l1Token) view returns (address l2TokenAddr)",
-      "function renounceRole(bytes32 role, address account)",
-      "function revokeRole(bytes32 role, address account)",
-      "function supportsInterface(bytes4 interfaceId) view returns (bool)",
-      "function zkSync() view returns (address)"
-    ],
-    "0xa8CB082A5a689E0d594d7da1E2d72A3D63aDc1bD": [
-      "constructor(address _initialOwner, address _zkSyncContract, uint32 _executionDelay, address[] _validators)",
-      "error AddressAlreadyValidator()",
-      "error ValidatorDoesNotExist()",
-      "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlockExecution(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",
-      "event BlocksRevert(uint256 totalBatchesCommitted, uint256 totalBatchesVerified, uint256 totalBatchesExecuted)",
-      "event BlocksVerification(uint256 indexed previousLastVerifiedBatch, uint256 indexed currentLastVerifiedBatch)",
-      "event NewExecutionDelay(uint256 _newExecutionDelay)",
+    "0xA8998F231a660Eca365B382943c71ad9b7619139": [
+      "constructor(address _owner, address[] list)",
       "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event ValidatorAdded(address _addedValidator)",
-      "event ValidatorRemoved(address _removedValidator)",
       "function acceptOwnership()",
-      "function addValidator(address _newValidator)",
-      "function commitBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), tuple(uint64 batchNumber, uint64 timestamp, uint64 indexRepeatedStorageChanges, bytes32 newStateRoot, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 bootloaderHeapInitialContentsHash, bytes32 eventsQueueStateHash, bytes systemLogs, bytes pubdataCommitments)[] _newBatchesData)",
-      "function executeBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[] _newBatchesData)",
-      "function executionDelay() view returns (uint32)",
-      "function getCommittedBatchTimestamp(uint256 _l2BatchNumber) view returns (uint256)",
-      "function getName() view returns (string)",
+      "function isTransactionAllowed(address _sender, address, uint256, uint256, bytes, address) view returns (bool)",
       "function owner() view returns (address)",
       "function pendingOwner() view returns (address)",
-      "function proveBatches(tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment), tuple(uint64 batchNumber, bytes32 batchHash, uint64 indexRepeatedStorageChanges, uint256 numberOfLayer1Txs, bytes32 priorityOperationsHash, bytes32 l2LogsTreeRoot, uint256 timestamp, bytes32 commitment)[], tuple(uint256[] recursiveAggregationInput, uint256[] serializedProof))",
-      "function removeValidator(address _validator)",
       "function renounceOwnership()",
-      "function revertBatches(uint256)",
-      "function setExecutionDelay(uint32 _executionDelay)",
       "function transferOwnership(address newOwner)",
-      "function validators(address) view returns (bool)",
-      "function zkSyncContract() view returns (address)"
+      "function updateDenyList(address[] _list, bool _add)"
     ],
     "0xaD193aDe635576d8e9f7ada71Af2137b16c64075": [
       "event BlockCommit(uint256 indexed batchNumber, bytes32 indexed batchHash, bytes32 indexed commitment)",

@@ -23,7 +23,7 @@ import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
 import { coti } from './coti'
-import { cronos } from './cronos'
+import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { debank } from './debank'
 import { degate } from './degate'
@@ -115,6 +115,7 @@ import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
 import { swan } from './swan'
 import { swell } from './swell'
+import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
@@ -172,7 +173,7 @@ export const layer2s: Layer2[] = [
   cyber,
   canvasconnect,
   coti,
-  cronos,
+  cronoszkevm,
   debank,
   honeypot,
   degate,
@@ -264,6 +265,7 @@ export const layer2s: Layer2[] = [
   swan,
   swell,
   sxt,
+  sxnetwork,
   taiko,
   tanx,
   telos,
