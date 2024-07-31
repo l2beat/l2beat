@@ -508,33 +508,6 @@ class TestIndexer extends ManagedMultiIndexer<string> {
     mockFn<ManagedMultiIndexer<string>['removeData']>().resolvesTo(undefined)
 }
 
-async function getSavedConfigurations(indexerService: IndexerService) {
-  return await indexerService.getSavedConfigurations('indexer')
-}
-
-async function initializeMockIndexer(
-  indexerService: IndexerService,
-  saved: SavedConfiguration<null>[],
-  configurations: Configuration<null>[],
-  database?: Database,
-) {
-  if (saved.length > 0) {
-    await indexerService.upsertConfigurations('indexer', saved, (v) =>
-      JSON.stringify(v),
-    )
-  }
-  const indexer = new TestIndexer({
-    parents: [],
-    name: 'indexer',
-    indexerService,
-    configurations,
-    logger: Logger.SILENT,
-    serializeConfiguration: (v) => JSON.stringify(v),
-    db: database ?? mockDatabase(),
-  })
-  return indexer
-}
-
 function actual(
   id: string,
   minHeight: number,
@@ -568,3 +541,30 @@ function saved(
 function removal(id: string, from: number, to: number): RemovalConfiguration {
   return { id: id.repeat(12), from, to }
 }
+
+// async function getSavedConfigurations(indexerService: IndexerService) {
+//   return await indexerService.getSavedConfigurations('indexer')
+// }
+
+// async function initializeMockIndexer(
+//   indexerService: IndexerService,
+//   saved: SavedConfiguration<null>[],
+//   configurations: Configuration<null>[],
+//   database?: Database,
+// ) {
+//   if (saved.length > 0) {
+//     await indexerService.upsertConfigurations('indexer', saved, (v) =>
+//       JSON.stringify(v),
+//     )
+//   }
+//   const indexer = new TestIndexer({
+//     parents: [],
+//     name: 'indexer',
+//     indexerService,
+//     configurations,
+//     logger: Logger.SILENT,
+//     serializeConfiguration: (v) => JSON.stringify(v),
+//     db: database ?? mockDatabase(),
+//   })
+//   return indexer
+// }
