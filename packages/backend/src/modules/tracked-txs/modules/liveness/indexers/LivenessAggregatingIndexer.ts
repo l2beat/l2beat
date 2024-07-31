@@ -4,7 +4,7 @@ import {
   AggregatedLivenessRecord,
   Database,
 } from '@l2beat/database'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { getActiveConfigurations, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -21,7 +21,6 @@ import {
 import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
 import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
-import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export interface LivenessAggregatingIndexerDeps

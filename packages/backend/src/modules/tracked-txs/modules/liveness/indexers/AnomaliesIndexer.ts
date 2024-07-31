@@ -1,6 +1,6 @@
 import { BackendProject } from '@l2beat/config'
 import { AnomalyRecord, Database } from '@l2beat/database'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { getActiveConfigurations, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   assert,
   ProjectId,
@@ -19,7 +19,6 @@ import {
 } from '../services/LivenessWithConfigService'
 import { RunningStatistics } from '../utils/RollingVariance'
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
-import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export interface AnomaliesIndexerIndexerDeps

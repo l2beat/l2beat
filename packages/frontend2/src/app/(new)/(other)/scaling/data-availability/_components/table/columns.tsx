@@ -38,7 +38,6 @@ export const columns = [
       cellClassName: '!pr-0 md:pl-1',
     },
   }),
-
   columnHelper.accessor('name', {
     cell: (ctx) => (
       <ProjectNameCell

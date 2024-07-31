@@ -18,14 +18,16 @@ import {
   AnomalyRecord,
   Database,
 } from '@l2beat/database'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
+import {
+  getActiveConfigurations,
+  getSyncedUntil,
+  TrackedTxConfigEntry,
+} from '@l2beat/shared'
 import { Clock } from '../../../../../tools/Clock'
 import { TaskQueue } from '../../../../../tools/queue/TaskQueue'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import { getSyncedUntil } from '../../utils/getSyncedUntil'
 import { LivenessWithConfigService } from '../services/LivenessWithConfigService'
-import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 import { groupByType } from '../utils/groupByType'
 
 export type LivenessResult = Result<LivenessApiResponse, 'DATA_NOT_SYNCED'>
