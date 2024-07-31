@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x6e9204715ddc9afdf6b0d86ad9fd73000813c16f
+
+# Diff at Tue, 30 Jul 2024 11:14:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20369470
+- current block number: 20369470
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20369470 (main branch discovery), not current.
+
+```diff
+    contract EnforcedTxGateway (0x72CAcBcfDe2d1e19122F8A36a4d6676cd39d7A5d) {
+    +++ description: None
+      fieldMeta:
++        {"paused":{"severity":"HIGH","description":"Whether the sendTransaction function is paused or not. Affects the sequencer failure risk."}}
+    }
+```
+
 Generated with discovered.json: 0x74483202a2abf595fbdc6afc5fe3b6ad0a90017a
 
 # Diff at Tue, 23 Jul 2024 13:16:46 GMT:

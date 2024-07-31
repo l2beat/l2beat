@@ -16,4 +16,6 @@ export const selectValue = [
   'native_associated',
   'native_for_total',
   'native_associated_for_total',
+  'ether',
+  'stablecoin',
 ] as const satisfies (keyof Value)[]

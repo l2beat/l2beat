@@ -64,7 +64,9 @@ export class ArrayFromOneEventWithArgHandler implements Handler {
     const values = new Set<ContractValue>()
     for (const log of logs) {
       const parsed = this.abi.parseLog(log)
-      const argValue = parsed.args[this.definition.arg] as string
+      const argValue = toContractValue(
+        parsed.args[this.definition.arg],
+      ).toString()
       if (argValue !== this.definition.argValue) {
         continue
       }

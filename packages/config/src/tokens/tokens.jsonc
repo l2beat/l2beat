@@ -327,6 +327,10 @@
       "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B"
     },
     {
+      "symbol": "cvxFXS",
+      "address": "0xFEEf77d3f69374f66429C91d732A244f074bdf74"
+    },
+    {
       "symbol": "cvxCRV",
       "address": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7"
     },
@@ -1135,6 +1139,10 @@
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
     },
     {
+      "symbol": "SX",
+      "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624"
+    },
+    {
       "symbol": "SXP",
       "address": "0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9"
     },
@@ -1385,6 +1393,17 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "wOETH",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Transporter",
+        "slug": "transporter"
+      }
+    },
     {
       "symbol": "SolvBTC",
       "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",

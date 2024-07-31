@@ -1,5 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,
@@ -59,7 +59,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -133,33 +132,21 @@ describe(UpdateNotifier.name, () => {
         {
           name: 'Contract',
           address,
-          diff: [{ key: 'A', before: '1', after: '2' }],
+          diff: [
+            {
+              key: 'A',
+              before: '1',
+              after: '2',
+              severity: 'MEDIUM',
+              description: 'This should never be equal to two',
+            },
+          ],
         },
       ]
-      const config = new DiscoveryConfig({
-        name: 'test',
-        chain: 'ethereum',
-        initialAddresses: [],
-        names: {
-          '0x0000000000000000000000000000000000000001': 'Contract',
-        },
-        overrides: {
-          Contract: {
-            fields: {
-              A: {
-                type: null,
-                severity: 'MEDIUM',
-                description: 'This should never be equal to two',
-              },
-            },
-          },
-        },
-      })
 
       await updateNotifier.handleUpdate(
         project,
         changes,
-        config,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -246,7 +233,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,
@@ -330,7 +316,6 @@ describe(UpdateNotifier.name, () => {
       await updateNotifier.handleUpdate(
         project,
         changes,
-        undefined,
         BLOCK,
         ChainId.ETHEREUM,
         dependents,

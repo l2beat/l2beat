@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825372,
   "configHash": "0xec73bf7b47e1c44e88f45136b1cdd18abc4541fb1f612fcbcab34490c60deff7",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Committee",
@@ -153,6 +153,16 @@
         "GnosisSafe_modules": [],
         "nonce": 23,
         "VERSION": "1.3.0"
+      },
+      "fieldMeta": {
+        "getOwners": {
+          "severity": "LOW",
+          "description": "Signers of the Multisig"
+        },
+        "getThreshold": {
+          "severity": "HIGH",
+          "description": "Threshold of the Multisig"
+        }
       },
       "derivedName": "GnosisSafe"
     }

@@ -3,7 +3,7 @@
   "chain": "bsc",
   "blockNumber": 40608530,
   "configHash": "0xa5396a1a2e11aeb0f8e7ef582ed4a209f01b734e71667872e6bdebda305a75c3",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "FPValidator",
@@ -103,6 +103,7 @@
         "supportedOutboundProof",
         "ulnLookup"
       ],
+      "sinceTimestamp": 1661528751,
       "values": {
         "$immutable": true,
         "chainAddressSizeMap": {
@@ -1455,6 +1456,7 @@
       "address": "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1669425920,
       "values": {
         "$admin": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
         "$implementation": "0xc9A227D0319f42e8C5997BD639a5286642474849"
@@ -1465,6 +1467,7 @@
       "address": "0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1687808660,
       "values": {
         "$admin": "0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C",
         "$implementation": "0x893BB42a352CA8Ee8bCb58348455DD3966368737"
@@ -1556,6 +1559,7 @@
       "name": "RelayerV2Radar",
       "address": "0xde19274c009A22921E3966a1Ec868cEba40A5DaC",
       "proxyType": "EIP1967 proxy",
+      "sinceTimestamp": 1669420588,
       "values": {
         "$admin": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
         "$implementation": "0x8363302080e711E0CAb978C081b9e69308d49808",
@@ -1569,6 +1573,7 @@
     {
       "name": "VerifierFeeLib",
       "address": "0xdeA04ef31C4B4FDf31CB58923F37869739280d49",
+      "sinceTimestamp": 1694218841,
       "values": { "$immutable": true }
     }
   ],

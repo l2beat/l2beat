@@ -16,9 +16,9 @@
   ],
   "names": {
     "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9": "CoreGovernor",
-    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": "L2CoreTimelock",
+    "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0": "L2Timelock",
     "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4": "TreasuryGovernor",
-    "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "L2TreasuryTimelock",
+    "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58": "TreasuryTimelock",
     "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827": "L2UpgradeExecutor",
     "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC": "SecurityCouncilManager",
     "0x1D62fFeB72e4c360CcBbacf7c965153b00260417": "ConstitutionHash",
@@ -76,7 +76,7 @@
         }
       }
     },
-    "L2CoreTimelock": {
+    "L2Timelock": {
       "fields": {
         "accessControl": {
           "handler": {
@@ -85,7 +85,7 @@
         }
       }
     },
-    "L2TreasuryTimelock": {
+    "TreasuryTimelock": {
       "fields": {
         "accessControl": {
           "handler": {

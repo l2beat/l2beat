@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19960612,
   "configHash": "0x150fd11b72d9b276dab0b43c60f2417401823f672a2bf8c70ec190bd26acdfb7",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "SystemConfig",
@@ -57,6 +57,16 @@
         "unsafeBlockSigner": "0x4Ac69842680847e1135f514eE3d75172B685ECBf",
         "version": "1.12.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "unsafeBlockSigner": {
+          "severity": "LOW",
+          "description": "Blocks are gossiped around the L2 p2p network before they are made available on L1. To prevent denial of service on the p2p layer, these unsafe blocks must be signed with a particular key to be accepted as 'canonical' unsafe blocks. The address corresponding to this key is the unsafeBlockSigner."
+        },
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },

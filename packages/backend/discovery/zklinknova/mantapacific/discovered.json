@@ -3,7 +3,7 @@
   "chain": "mantapacific",
   "blockNumber": 2775705,
   "configHash": "0x47105bb307ede9b31b7f4dff4a5ccbc362ced0d066f6eb8da52c0753e64b3f8a",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "MantaProxyAdmin",

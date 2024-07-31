@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x10226bb863a161e5a398eedc6a22976345522e19
+
+# Diff at Tue, 30 Jul 2024 11:14:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20362649
+- current block number: 20362649
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20362649 (main branch discovery), not current.
+
+```diff
+    contract Starknet (0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4) {
+    +++ description: None
+      fieldMeta:
++        {"programHash":{"severity":"HIGH","description":"The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."}}
+    }
+```
+
 Generated with discovered.json: 0x11244fe284c19d4642f60d9cf293f1b9bf2169a3
 
 # Diff at Thu, 18 Jul 2024 10:33:51 GMT:

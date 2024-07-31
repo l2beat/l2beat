@@ -1,5 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { DiscoveryConfig, DiscoveryDiff } from '@l2beat/discovery'
+import { DiscoveryDiff } from '@l2beat/discovery'
 import {
   ChainConverter,
   ChainId,
@@ -46,7 +46,6 @@ export class UpdateNotifier {
   async handleUpdate(
     name: string,
     diff: DiscoveryDiff[],
-    config: DiscoveryConfig | undefined,
     blockNumber: number,
     chainId: ChainId,
     dependents: string[],
@@ -81,7 +80,6 @@ export class UpdateNotifier {
     const message = diffToMessage(
       name,
       throttled,
-      config,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,
@@ -101,7 +99,6 @@ export class UpdateNotifier {
     const filteredMessage = diffToMessage(
       name,
       filteredDiff,
-      config,
       blockNumber,
       this.chainConverter.toName(chainId),
       dependents,

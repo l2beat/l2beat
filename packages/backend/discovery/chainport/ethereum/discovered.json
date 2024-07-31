@@ -1,9 +1,9 @@
 {
   "name": "chainport",
   "chain": "ethereum",
-  "blockNumber": 20389507,
+  "blockNumber": 20420404,
   "configHash": "0x722bdc74afa4186d83f17ede56db3b5fde5f89d6a296169858d275ccc239df59",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ChainportCongressMembersRegistry",
@@ -73,7 +73,7 @@
       "sinceTimestamp": 1626949825,
       "values": {
         "$admin": "0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F",
-        "$implementation": "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
+        "$implementation": "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
       },
       "derivedName": ""
     },
@@ -111,6 +111,12 @@
         "getMembersRegistry": "0x1DeE7Be5415F6Fdcc8515cA06AE8d9aFb550aBCa",
         "name": "ChainportCongress",
         "proposalCount": 57
+      },
+      "fieldMeta": {
+        "proposalCount": {
+          "severity": "MEDIUM",
+          "description": "The amount of proposals ever created. Goes up by 1 for each proposal."
+        }
       },
       "derivedName": "ChainportCongress"
     }

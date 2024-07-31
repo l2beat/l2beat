@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20290315,
   "configHash": "0x6d624e575825d58201c252f4bcd284e5ba9093b6a4678ccccabefaf3b2e95e83",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -138,6 +138,12 @@
         "unsafeBlockSigner": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
         "version": "2.2.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },
@@ -618,6 +624,12 @@
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "3.10.0"
+      },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
       },
       "derivedName": "OptimismPortal2"
     },

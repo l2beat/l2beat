@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 5996230,
   "configHash": "0xb518fa3786fc0cee82738c9a8889c9d5275704fe7a50710cc695c1e0b1907a91",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "TokenMessaging",
@@ -37,6 +37,11 @@
         ],
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
+      },
+      "fieldMeta": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        }
       },
       "derivedName": "TokenMessaging"
     },

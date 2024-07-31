@@ -22,14 +22,14 @@ const challengeWindow = discovery.getContractValue<number>(
 )
 const challengeWindowSeconds = challengeWindow * assumedBlockTime
 const l1TimelockDelay = discovery.getContractValue<number>(
-  'L1ArbitrumTimelock',
+  'L1Timelock',
   'getMinDelay',
 )
 const l2TimelockDelay = 259200 // 3 days, got from https://arbiscan.io/address/0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0#readProxyContract
 const totalDelay = l1TimelockDelay + challengeWindowSeconds + l2TimelockDelay
 
 const upgradeExecutorUpgradeability = {
-  upgradableBy: ['SecurityCouncil', 'L1ArbitrumTimelock'],
+  upgradableBy: ['SecurityCouncil', 'L1Timelock'],
   upgradeDelay: `${formatSeconds(
     totalDelay,
   )} or 0 if overridden by Security Council`,
@@ -123,13 +123,13 @@ export const nova: Layer2 = orbitStackL2({
         },
       ],
     ),
+    discovery.contractAsPermissioned(
+      discovery.getContract('L1Timelock'),
+      'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
+    ),
     ...discovery.getMultisigPermission(
       'BatchPosterManagerMultisig',
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
-    ),
-    discovery.contractAsPermissioned(
-      discovery.getContract('L1ArbitrumTimelock'),
-      'It gives the DAO participants on the L2 the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
     ),
   ],
   nonTemplateContracts: [
@@ -145,7 +145,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('SequencerInbox', {
       description:
-        'Main entry point for the Sequencer submitting transaction batches to a Rollup.',
+        'Main entry point for the Sequencer submitting transaction batches to a Rollup. Sequencers can be changed here through the UpgradeExecutor or the BatchPosterManager.',
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getContractDetails('Inbox', {
@@ -160,12 +160,12 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('UpgradeExecutor', {
       description:
-        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1ArbitrumTimelock.",
+        "This contract can upgrade the system's contracts. The upgrades can be done either by the Security Council or by the L1Timelock.",
       ...upgradeExecutorUpgradeability,
     }),
-    discovery.getContractDetails('L1ArbitrumTimelock', {
+    discovery.getContractDetails('L1Timelock', {
       description:
-        'Timelock contract for Arbitrum DAO Governance. It gives the DAO participants the ability to upgrade the system. Only the L2 counterpart of this contract can execute the upgrades.',
+        'Timelock contract for Arbitrum Governance transactions. Scheduled transactions from Arbitrum One L2 (by the DAO or the Security Council) are delayed here and can be canceled by the Security Council or executed to upgrade and change system contracts on Ethereum, Arbitrum One and -Nova.',
       ...upgradeExecutorUpgradeability,
     }),
     discovery.getContractDetails('L1GatewayRouter', {
@@ -174,7 +174,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
     discovery.getContractDetails('ChallengeManager', {
       description:
-        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy.',
+        'Contract that allows challenging invalid state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.',
       ...upgradeExecutorUpgradeability,
     }),
   ],
@@ -206,27 +206,27 @@ export const nova: Layer2 = orbitStackL2({
   ],
   nonTemplateRiskView: {
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
-      sentiment: 'bad',
-      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+      ...RISK_VIEW.EXIT_WINDOW_NITRO(
         l2TimelockDelay,
-      )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
-      )} to force a tx, users have only ${formatSeconds(
-        l2TimelockDelay - selfSequencingDelay,
-      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        challengeWindowSeconds,
         validatorAfkTime,
-      )} delay and then wait for the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
-      )} L1 timelock.`,
-      warning: {
-        value: 'The Security Council can upgrade with no delay.',
-        sentiment: 'bad',
-      },
+      ),
+      sources: [
+        {
+          contract: 'RollupProxy',
+          references: [
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43',
+          ],
+        },
+        {
+          contract: 'Outbox',
+          references: [
+            'https://etherscan.io/address/0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f#code',
+          ],
+        },
+      ],
     },
   },
   nonTemplateTechnology: {

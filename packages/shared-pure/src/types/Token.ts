@@ -13,7 +13,6 @@ export interface Token {
   decimals: number
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
-  /** @deprecated */
   category: 'ether' | 'stablecoin' | 'other'
   iconUrl?: string
   chainId: ChainId
