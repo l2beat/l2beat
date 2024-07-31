@@ -79,7 +79,10 @@ export async function runDiscovery(
     printProviderStats(providerStats)
   }
   if (config.printTemplateSimilarity) {
-    printExecutedMatches(executedMatches, config.templateSimilarityCutoff)
+    printExecutedMatches(
+      executedMatches,
+      config.templateSimilarityCutoff ?? 0.5,
+    )
   }
 }
 
