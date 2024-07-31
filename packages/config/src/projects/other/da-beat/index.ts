@@ -1,4 +1,3 @@
-import { mantle } from '../../layer2s/mantle'
 import { celestia } from './blockchain/celestia/celestia'
 import { ethereum } from './blockchain/ethereum/ethereum'
 import { mantleDA } from './dac/mantleDA'
