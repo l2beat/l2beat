@@ -22,12 +22,9 @@ export function getNewConfigurationsState<T>(
 
   const savedMap = new Map(saved.map((c) => [c.id, c]))
   const knownIds = new Set<string>()
+
   for (const c of actual) {
-    assert(!knownIds.has(c.id), `Configuration ${c.id} is duplicated!`)
-    assert(
-      c.maxHeight === null || c.minHeight <= c.maxHeight,
-      `Configuration ${c.id} has minHeight greater than maxHeight!`,
-    )
+    assertConfigurationValidity(knownIds, c)
     knownIds.add(c.id)
 
     const stored = savedMap.get(c.id)
@@ -70,6 +67,17 @@ export function getNewConfigurationsState<T>(
     },
     configurations: state.configurations,
   }
+}
+
+function assertConfigurationValidity<T>(
+  knownIds: Set<string>,
+  c: Configuration<T>,
+) {
+  assert(!knownIds.has(c.id), `Configuration ${c.id} is duplicated!`)
+  assert(
+    c.maxHeight === null || c.minHeight <= c.maxHeight,
+    `Configuration ${c.id} has minHeight greater than maxHeight!`,
+  )
 }
 
 function calculateCurrentHeight<T>(
