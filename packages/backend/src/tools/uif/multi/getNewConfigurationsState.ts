@@ -19,20 +19,9 @@ export function getNewConfigurationsState<T>(
   serializeConfiguration: (value: T) => string,
   saved: SavedConfiguration<string>[],
 ): ConfigurationsState<T> {
-  const actualMap = new Map(actual.map((c) => [c.id, c]))
   const savedMap = new Map(saved.map((c) => [c.id, c]))
 
   const toTrim: RemovalConfiguration[] = []
-  for (const c of saved) {
-    if (actualMap.has(c.id) || c.currentHeight === null) {
-      continue
-    }
-    toTrim.push({
-      id: c.id,
-      from: c.minHeight,
-      to: c.currentHeight,
-    })
-  }
 
   const configurations: SavedConfiguration<T>[] = []
   const toAdd: Configuration<T>[] = []
@@ -117,12 +106,15 @@ export function getNewConfigurationsState<T>(
     }
   }
 
-  const toDelete: string[] = saved
-    .filter((s) => !knownIds.has(s.id))
-    .map((c) => c.id)
+  const deleted = findDeleted(saved, knownIds, actual)
 
   return {
-    diff: { toAdd, toUpdate: Array.from(updated.values()), toDelete, toTrim },
+    diff: {
+      toAdd,
+      toUpdate: Array.from(updated.values()),
+      toDelete: deleted.toDelete,
+      toTrim: [...toTrim, ...deleted.toTrim],
+    },
     configurations,
   }
 
@@ -154,4 +146,28 @@ export function getNewConfigurationsState<T>(
       updated.set(c.id, { ...c, currentHeight: heightToSet })
     }
   }
+}
+function findDeleted<T>(
+  saved: SavedConfiguration<string>[],
+  knownIds: Set<string>,
+  actual: Configuration<T>[],
+) {
+  const toDelete: string[] = saved
+    .filter((s) => !knownIds.has(s.id))
+    .map((c) => c.id)
+
+  const actualMap = new Map(actual.map((c) => [c.id, c]))
+  const toTrim: RemovalConfiguration[] = []
+
+  for (const c of saved) {
+    if (actualMap.has(c.id) || c.currentHeight === null) {
+      continue
+    }
+    toTrim.push({
+      id: c.id,
+      from: c.minHeight,
+      to: c.currentHeight,
+    })
+  }
+  return { toDelete, toTrim }
 }
