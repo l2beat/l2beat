@@ -122,6 +122,67 @@ describe(ManagedMultiIndexer.name, () => {
     })
   })
 
+  describe(ManagedMultiIndexer.prototype.update.name, () => {
+    it('skips if range is empty, returns correct to', async () => {
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: async () => [saved('a', 100, null, null)],
+      })
+
+      const testIndexer = new TestIndexer({
+        ...common,
+        indexerService,
+        configurations: [actual('a', 100, null)],
+      })
+      await testIndexer.initialize()
+
+      const newHeight = await testIndexer.update(0, 50)
+
+      expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
+      expect(newHeight).toEqual(50)
+    })
+
+    it('gets configurations from range, updates and saves the state', async () => {
+      const indexerService = mockObject<IndexerService>({
+        getSavedConfigurations: async () => [
+          saved('a', 100, null, 1000),
+          saved('b', 100, null, 1000),
+        ],
+        updateConfigurationsCurrentHeight: async () => {},
+      })
+
+      const db = mockObject<Database>({
+        transaction: async (fun) => await fun(),
+      })
+
+      const testIndexer = new TestIndexer({
+        ...common,
+        db,
+        indexerService,
+        configurations: [actual('a', 100, null), actual('b', 100, null)],
+      })
+      const saveData = mockFn((targetHeight) => Promise.resolve(targetHeight))
+      testIndexer.multiUpdate = mockFn<
+        ManagedMultiIndexer<string>['multiUpdate']
+      >(async (_, targetHeight) => () => saveData(targetHeight))
+
+      await testIndexer.initialize()
+      const newHeight = await testIndexer.update(1001, 1100)
+
+      expect(testIndexer.multiUpdate).toHaveBeenOnlyCalledWith(1001, 1100, [
+        actual('a', 100, null),
+        actual('b', 100, null),
+      ])
+
+      expect(db.transaction).toHaveBeenCalledTimes(1)
+      expect(saveData).toHaveBeenCalledTimes(1)
+      expect(
+        indexerService.updateConfigurationsCurrentHeight,
+      ).toHaveBeenOnlyCalledWith(INDEXER_ID, 1100)
+
+      expect(newHeight).toEqual(1100)
+    })
+  })
+
   // describe(MultiIndexer.prototype.update.name, () => {
   //   it('calls multiUpdate with an early matching configuration', async () => {
   //     const testIndexer = new TestIndexer(
@@ -195,54 +256,6 @@ describe(ManagedMultiIndexer.name, () => {
   //     expect(
   //       testIndexer.updateConfigurationsCurrentHeight,
   //     ).toHaveBeenOnlyCalledWith(400)
-  //   })
-
-  //   it('skips calling multiUpdate if we are too early', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 300, 400)],
-  //       [],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(0, 500)
-
-  //     expect(newHeight).toEqual(99)
-  //     expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenCalledTimes(0)
-  //   })
-
-  //   it('skips calling multiUpdate if we are too late', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 300, 400)],
-  //       [],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(401, 500)
-
-  //     expect(newHeight).toEqual(500)
-  //     expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenCalledTimes(0)
-  //   })
-
-  //   it('skips calling multiUpdate between configs', async () => {
-  //     const testIndexer = new TestIndexer(
-  //       [actual('a', 100, 200), actual('b', 300, 400)],
-  //       [],
-  //     )
-  //     await testIndexer.initialize()
-
-  //     const newHeight = await testIndexer.update(201, 500)
-
-  //     expect(newHeight).toEqual(299)
-  //     expect(testIndexer.multiUpdate).not.toHaveBeenCalled()
-  //     expect(
-  //       testIndexer.updateConfigurationsCurrentHeight,
-  //     ).toHaveBeenCalledTimes(0)
   //   })
 
   //   it('multiple update calls', async () => {
