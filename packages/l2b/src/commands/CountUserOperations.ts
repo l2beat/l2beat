@@ -1,5 +1,5 @@
 import { command, positional, string } from 'cmd-ts'
-import { countUserOperations } from '../implementations/countUserOperations'
+import { countUserOperations } from '../implementations/count-user-operations/countUserOperations'
 
 export const CountUserOperations = command({
   name: 'count-user-operations',
