@@ -1,3 +1,5 @@
+/** eslint-disable @typescript-eslint/no-unsafe-assignment */
+/** eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
@@ -23,10 +25,14 @@ const DEFAULT_SCALING_FILTERS = {
   hostChain: undefined,
 }
 
-export function ScalingCostsTable({ entries }: Props) {
+export function ScalingCostsTable(props: Props) {
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
     DEFAULT_SCALING_FILTERS,
   )
+
+  const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
+
+  const entries = useMemo(() => calculateDataByType(props.entries, type), [type, props.entries])
 
   const includeFilters = useCallback(
     (entry: ScalingCostsEntry) => {
@@ -76,6 +82,7 @@ export function ScalingCostsTable({ entries }: Props) {
       },
     },
   })
+
   return (
     <div className="space-y-2">
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
@@ -85,7 +92,7 @@ export function ScalingCostsTable({ entries }: Props) {
           setState={setScalingFilters}
           showRollupsOnly={false}
         />
-        <CostsTypeControls />
+        <CostsTypeControls value={type} onValueChange={setType} />
       </div>
       <BasicTable
         table={table}
@@ -93,4 +100,25 @@ export function ScalingCostsTable({ entries }: Props) {
       />
     </div>
   )
+}
+
+function calculateDataByType(entries: ScalingCostsEntry[], type: 'total' | 'per-l2-tx') {
+  if (type === 'total') {
+    return entries
+  }
+
+  return entries.map(e => {
+    if (!e.data?.txCount) return e
+    return {
+      ...e,
+      data: {
+        ...e.data,
+        total: e.data.total / e.data.txCount,
+        blobs: e.data.blobs ? e.data.blobs / e.data.txCount : undefined,
+        compute: e.data.compute / e.data.txCount,
+        calldata: e.data.calldata / e.data.txCount,
+        overhead: e.data.overhead / e.data.txCount,
+      }
+    }
+  })
 }

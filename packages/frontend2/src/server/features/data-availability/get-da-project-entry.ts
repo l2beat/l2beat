@@ -27,6 +27,7 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
 
   const isVerified =
     !!projectsVerificationStatuses[getDaProjectKey(daLayer, daBridge)]
+  console.log(isVerified)
   const rosetteValues = mapRisksToRosetteValues(
     getDaRisks(daLayer, daBridge, tvs, economicSecurity),
   )
