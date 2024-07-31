@@ -67,7 +67,7 @@ export const getCachedScalingSummaryData = cache(
         Number(summed.native),
         Number(summed.canonical),
         Number(summed.external),
-        ethPrices[+timestamp]!,
+        ethPrices[+timestamp]! * 100,
       ] as const
     })
 
@@ -75,11 +75,11 @@ export const getCachedScalingSummaryData = cache(
       Object.entries(values).map(([projectId, values]) => {
         const timestamps = Object.keys(values)
         const oldestTimestamp = timestamps.reduce(
-          (acc, curr) => (+curr < +acc ? +curr : acc),
+          (acc, curr) => (+curr < acc ? +curr : acc),
           Infinity,
         )
         const newestTimestamp = timestamps.reduce(
-          (acc, curr) => (+curr > +acc ? +curr : acc),
+          (acc, curr) => (+curr > acc ? +curr : acc),
           -Infinity,
         )
         assert(
@@ -98,7 +98,7 @@ export const getCachedScalingSummaryData = cache(
         return [
           projectId,
           {
-            timestamp: +values[newestTimestamp][0]!.timestamp,
+            timestamp: newestTimestamp,
             latest: {
               native: Number(latest.native),
               canonical: Number(latest.canonical),
