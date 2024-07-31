@@ -81,7 +81,7 @@
         "getCommittedBatchTimestamp"
       ],
       "fields": {
-        "ZksyncValidatorsAdded": {
+        "zksyncValidatorsAdded": {
           "handler": {
             "type": "arrayFromOneEventWithArg",
             "event": "ValidatorAdded",
@@ -90,7 +90,7 @@
             "argValue": "324"
           }
         },
-        "ZksyncValidatorsRemoved": {
+        "zksyncValidatorsRemoved": {
           "handler": {
             "type": "arrayFromOneEventWithArg",
             "event": "ValidatorRemoved",
@@ -99,7 +99,7 @@
             "argValue": "324"
           }
         },
-        "CronosValidatorsAdded": {
+        "cronosValidatorsAdded": {
           "handler": {
             "type": "arrayFromOneEventWithArg",
             "event": "ValidatorAdded",
@@ -108,7 +108,7 @@
             "argValue": "388"
           }
         },
-        "CronosValidatorsRemoved": {
+        "cronosValidatorsRemoved": {
           "handler": {
             "type": "arrayFromOneEventWithArg",
             "event": "ValidatorRemoved",

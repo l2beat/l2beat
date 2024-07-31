@@ -45,7 +45,7 @@
   "chainport": false,
   "connext": true,
   "coti": true,
-  "cronos": true,
+  "cronoszkevm": true,
   "cyber": true,
   "dac-immutablex-dac": true,
   "davos": true,

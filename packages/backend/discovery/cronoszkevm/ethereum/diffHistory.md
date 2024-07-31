@@ -8,8 +8,8 @@ Generated with discovered.json: 0x0db4e2d4ccfde023d0988938c4a75373749e62d3
 ## Description
 
 Initial discovery:
-ZK stack chain in ValidiumMode ()`getPubdataPricingMode : 1`) sharing the STM, ValidatorTimelock and Verifier with ZKsync Era.
-DiamondProxy not yet verified which is not really a problem for our discovery?. Admin EOA so far (for the non-shared parts).
+ZK stack chain in ValidiumMode (`getPubdataPricingMode : 1`) sharing the STM, ValidatorTimelock, Verifier and all diamond facet implementations with ZKsync Era.
+DiamondProxy not yet verified which is not really a problem for our discovery?. Admin EOA so far (for the non-shared parts). BaseToken is zkCRO.
 
 ## Initial discovery
 

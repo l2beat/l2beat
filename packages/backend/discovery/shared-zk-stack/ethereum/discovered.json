@@ -1,8 +1,8 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20425810,
-  "configHash": "0x3fa7b0fcfac117c0eb2ee76588dd9b5b4c4db5c0aeef503ae7840df939222382",
+  "blockNumber": 20425929,
+  "configHash": "0x3e540466c98a0c0f872158d689eceb5d9ad3aa1e74a0fcd5733f230d5284f899",
   "version": 10,
   "contracts": [
     {
@@ -7642,13 +7642,13 @@
       "sinceTimestamp": 1717520615,
       "values": {
         "$immutable": true,
-        "CronosValidatorsAdded": [
+        "cronosValidatorsAdded": [
           "0xACBD581D1BedB2F71d2F5F01f881586e0623d591",
           "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
           "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122",
           "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7"
         ],
-        "CronosValidatorsRemoved": [
+        "cronosValidatorsRemoved": [
           "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14",
           "0xACBD581D1BedB2F71d2F5F01f881586e0623d591"
         ],
@@ -7658,11 +7658,11 @@
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "revertedBlocks": [],
         "stateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "ZksyncValidatorsAdded": [
+        "zksyncValidatorsAdded": [
           "0x0D3250c3D5FAcb74Ac15834096397a3Ef790ec99",
           "0x3527439923a63F8C13CF72b8Fe80a77f6e572092"
         ],
-        "ZksyncValidatorsRemoved": []
+        "zksyncValidatorsRemoved": []
       },
       "derivedName": "ValidatorTimelock"
     },

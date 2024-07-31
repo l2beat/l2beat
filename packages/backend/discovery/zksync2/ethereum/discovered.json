@@ -1,8 +1,8 @@
 {
   "name": "zksync2",
   "chain": "ethereum",
-  "blockNumber": 20425898,
-  "configHash": "0x5c1e7a52e0d5aee586fa6b8c4a44911d6018d83f33e333290bb3f8afbecec501",
+  "blockNumber": 20425965,
+  "configHash": "0xe56d445481a646fa42b8ad76b71a0e5fec966b9f26b65adede13dd2a8f8669a7",
   "version": 10,
   "contracts": [
     {
@@ -135,12 +135,12 @@
         "getPubdataPricingMode": 0,
         "getSemverProtocolVersion": [0, 24, 1],
         "getStateTransitionManager": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
-        "getTotalBatchesCommitted": 489970,
+        "getTotalBatchesCommitted": 489971,
         "getTotalBatchesExecuted": 489929,
-        "getTotalBatchesVerified": 489965,
-        "getTotalBlocksCommitted": 489970,
+        "getTotalBatchesVerified": 489966,
+        "getTotalBlocksCommitted": 489971,
         "getTotalBlocksExecuted": 489929,
-        "getTotalBlocksVerified": 489965,
+        "getTotalBlocksVerified": 489966,
         "getTotalPriorityTxs": 3257900,
         "getVerifier": "0x70F3FBf8a427155185Ec90BED8a3434203de9604",
         "getVerifierParams": {
