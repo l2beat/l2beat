@@ -206,27 +206,27 @@ export const nova: Layer2 = orbitStackL2({
   ],
   nonTemplateRiskView: {
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay, 0),
-      sentiment: 'bad',
-      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+      ...RISK_VIEW.EXIT_WINDOW_NITRO(
         l2TimelockDelay,
-      )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
-      )} to force a tx, users have only ${formatSeconds(
-        l2TimelockDelay - selfSequencingDelay,
-      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        challengeWindowSeconds,
         validatorAfkTime,
-      )} delay and then wait for the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
-      )} L1 timelock.`,
-      warning: {
-        value: 'The Security Council can upgrade with no delay.',
-        sentiment: 'bad',
-      },
+      ),
+      sources: [
+        {
+          contract: 'RollupProxy',
+          references: [
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43',
+          ],
+        },
+        {
+          contract: 'Outbox',
+          references: [
+            'https://etherscan.io/address/0x7439d8d4F3b9d9B6222f3E9760c75a47e08a7b3f#code',
+          ],
+        },
+      ],
     },
   },
   nonTemplateTechnology: {

@@ -8,7 +8,6 @@ import {
   UPGRADE_MECHANISM,
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { VALUES } from '../../discovery/values'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common/liveness'
 import { getStage } from './common/stages/getStage'
@@ -490,7 +489,7 @@ export const arbitrum: Layer2 = orbitStackL2({
     {
       // This bridge is inactive, but we keep it
       // in case we have to gather historic data
-      address: VALUES.ARBITRUM.OLD_BRIDGE,
+      address: EthereumAddress('0x011B6E24FfB0B5f5fCc564cf4183C5BBBc96D515'),
       chain: 'ethereum',
       sinceTimestamp: new UnixTime(1622243344),
       tokens: ['ETH'],
@@ -499,28 +498,20 @@ export const arbitrum: Layer2 = orbitStackL2({
   ],
   nonTemplateRiskView: {
     exitWindow: {
-      ...RISK_VIEW.EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
-      sentiment: 'bad',
-      description: `Upgrades are initiated on L2 and have to go first through a ${formatSeconds(
+      ...RISK_VIEW.EXIT_WINDOW_NITRO(
         l2TimelockDelay,
-      )} delay. Since there is a ${formatSeconds(
         selfSequencingDelay,
-      )} to force a tx, users have only ${formatSeconds(
-        l2TimelockDelay - selfSequencingDelay,
-      )} to exit.\nIf users post a tx after that time, they would need to self propose a root with a ${formatSeconds(
+        challengeWindowSeconds,
         validatorAfkTime,
-      )} delay and then wait for the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
-        challengeWindowSeconds,
-      )} challenge window and the ${formatSeconds(
         l1TimelockDelay,
-      )} L1 timelock.`,
-      warning: {
-        value: 'The Security Council can upgrade with no delay.',
-        sentiment: 'bad',
-      },
+      ),
       sources: [
+        {
+          contract: 'RollupProxy',
+          references: [
+            'https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43',
+          ],
+        },
         {
           contract: 'Outbox',
           references: [

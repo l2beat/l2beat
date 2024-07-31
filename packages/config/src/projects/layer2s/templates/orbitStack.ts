@@ -31,7 +31,6 @@ import {
 } from '../../../common'
 import { subtractOne } from '../../../common/assessCount'
 import { ProjectDiscovery } from '../../../discovery/ProjectDiscovery'
-import { VALUES } from '../../../discovery/values'
 import { Badge, BadgeId, badges } from '../../badges'
 import { Layer3, Layer3Display } from '../../layer3s/types'
 import { StageConfig } from '../common'
@@ -77,6 +76,7 @@ export interface OrbitStackConfigCommon {
     upgradeDelay: string | undefined
   }
   bridge: ContractParameters
+  blockNumberOpcodeTimeSeconds?: number
   finality?: Layer2FinalityConfig
   rollupProxy: ContractParameters
   sequencerInbox: ContractParameters
@@ -144,10 +144,11 @@ export function orbitStackCommon(
   Layer2,
   'type' | 'display' | 'config' | 'isArchived' | 'stage' | 'riskView'
 > {
-  const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
-    'RollupProxy',
-    'VALIDATOR_AFK_BLOCKS',
+  const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
+    templateVars.discovery,
   )
+
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
@@ -286,8 +287,9 @@ export function orbitStackCommon(
         ...FORCE_TRANSACTIONS.CANONICAL_ORDERING,
         description:
           FORCE_TRANSACTIONS.CANONICAL_ORDERING.description +
-          ' ' +
-          VALUES.ARBITRUM.getProposerFailureString(validatorAfkBlocks),
+          ` After a delay of ${formatSeconds(
+            selfSequencingDelaySeconds,
+          )} in which a Sequencer has failed to include a transaction that was directly posted to the smart contract, it can be forcefully included by anyone on the host chain, which finalizes its ordering.`,
         references: [
           {
             text: 'SequencerInbox.sol - Etherscan source code, forceInclusion function',
@@ -355,19 +357,28 @@ export function orbitStackCommon(
 }
 
 export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
-  const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
+  const blockNumberOpcodeTimeSeconds =
+    templateVars.blockNumberOpcodeTimeSeconds ?? 12 // currently only for the case of Degen Chain (built on OP stack chain which returns `block.number` based on 2 second block times, orbit host chains do not do this)
+
+  const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
+    'RollupProxy',
+    'confirmPeriodBlocks',
+  )
+  const challengePeriodSeconds =
+    challengePeriodBlocks * blockNumberOpcodeTimeSeconds
 
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
   )
-  const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
+  const validatorAfkTimeSeconds =
+    validatorAfkBlocks * blockNumberOpcodeTimeSeconds
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
 
-  const selfSequencingDelay = maxTimeVariation.delaySeconds
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
@@ -386,9 +397,13 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
   }
 
   const riskView = makeBridgeCompatible({
-    stateValidation:
-      templateVars.nonTemplateRiskView?.stateValidation ??
-      RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(nOfChallengers),
+    stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
+      ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
+        nOfChallengers,
+        challengePeriodSeconds,
+      ),
+      secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
+    },
     dataAvailability:
       templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
         ? (() => {
@@ -405,13 +420,15 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
         : RISK_VIEW.DATA_ON_CHAIN_L3,
     exitWindow:
       templateVars.nonTemplateRiskView?.exitWindow ??
-      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
+      RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
     sequencerFailure:
       templateVars.nonTemplateRiskView?.sequencerFailure ??
-      RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+      RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
     proposerFailure:
       templateVars.nonTemplateRiskView?.proposerFailure ??
-      RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
+      RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+        challengePeriodSeconds + validatorAfkTimeSeconds,
+      ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
     validatedBy:
       templateVars.nonTemplateRiskView?.validatedBy ??
       RISK_VIEW.VALIDATED_BY_L2(templateVars.hostChain),
@@ -540,23 +557,23 @@ export function orbitStackL3(templateVars: OrbitStackConfigL3): Layer3 {
 export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
   const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 
-  const challengeWindowBlocks = templateVars.discovery.getContractValue<number>(
+  const challengePeriodBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'confirmPeriodBlocks',
   )
-  const challengeWindowSeconds = challengeWindowBlocks * assumedBlockTime
+  const challengePeriodSeconds = challengePeriodBlocks * assumedBlockTime
 
   const validatorAfkBlocks = templateVars.discovery.getContractValue<number>(
     'RollupProxy',
     'VALIDATOR_AFK_BLOCKS',
   )
-  const validatorAfkTime = validatorAfkBlocks * assumedBlockTime
+  const validatorAfkTimeSeconds = validatorAfkBlocks * assumedBlockTime
 
   const maxTimeVariation = ensureMaxTimeVariationObjectFormat(
     templateVars.discovery,
   )
 
-  const selfSequencingDelay = maxTimeVariation.delaySeconds
+  const selfSequencingDelaySeconds = maxTimeVariation.delaySeconds
 
   const sequencerVersion = templateVars.discovery.getContractValue<string>(
     'SequencerInbox',
@@ -586,7 +603,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       provider: 'Arbitrum',
       category,
       finality: {
-        finalizationPeriod: challengeWindowSeconds,
+        finalizationPeriod: challengePeriodSeconds,
       },
       liveness: postsToExternalDA
         ? undefined
@@ -597,9 +614,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
             explanation: `${
               templateVars.display.name
             } is an ${category} that posts transaction data to the L1. For a transaction to be considered final, it has to be posted to the L1. Forced txs can be delayed up to ${formatSeconds(
-              selfSequencingDelay,
+              selfSequencingDelaySeconds,
             )}. The state root gets finalized ${formatSeconds(
-              challengeWindowBlocks * assumedBlockTime,
+              challengePeriodSeconds,
             )} after it has been posted.`,
           },
     },
@@ -662,9 +679,9 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
       stateValidation: templateVars.nonTemplateRiskView?.stateValidation ?? {
         ...RISK_VIEW.STATE_ARBITRUM_FRAUD_PROOFS(
           nOfChallengers,
-          challengeWindowSeconds,
+          challengePeriodSeconds,
         ),
-        secondLine: `${formatSeconds(challengeWindowSeconds)} challenge period`,
+        secondLine: `${formatSeconds(challengePeriodSeconds)} challenge period`,
       },
       dataAvailability:
         templateVars.nonTemplateRiskView?.dataAvailability ?? postsToExternalDA
@@ -682,13 +699,15 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
           : RISK_VIEW.DATA_ON_CHAIN,
       exitWindow:
         templateVars.nonTemplateRiskView?.exitWindow ??
-        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelay),
+        RISK_VIEW.EXIT_WINDOW(0, selfSequencingDelaySeconds),
       sequencerFailure:
         templateVars.nonTemplateRiskView?.sequencerFailure ??
-        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelay),
+        RISK_VIEW.SEQUENCER_SELF_SEQUENCE(selfSequencingDelaySeconds),
       proposerFailure:
         templateVars.nonTemplateRiskView?.proposerFailure ??
-        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(validatorAfkTime),
+        RISK_VIEW.PROPOSER_SELF_PROPOSE_WHITELIST_DROPPED(
+          challengePeriodSeconds + validatorAfkTimeSeconds,
+        ), // see `_validatorIsAfk()` https://basescan.org/address/0xB7202d306936B79Ba29907b391faA87D3BEec33A#code#F1#L50
       validatedBy:
         templateVars.nonTemplateRiskView?.validatedBy ??
         RISK_VIEW.VALIDATED_BY_ETHEREUM,

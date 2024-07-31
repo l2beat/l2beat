@@ -4096,6 +4096,21 @@
       "supply": "zero"
     },
     {
+      "id": "sx-sx-network",
+      "name": "SX Network",
+      "coingeckoId": "sx-network-2",
+      "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
+      "symbol": "SX",
+      "decimals": 18,
+      "deploymentTimestamp": 1706125739,
+      "coingeckoListingTimestamp": 1706659200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34934/large/sx-ntework.jpeg?1706699134",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "sis-symbiosis",
       "name": "Symbiosis",
       "coingeckoId": "symbiosis-finance",
