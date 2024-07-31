@@ -1,4 +1,5 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { subtractOne } from '../../common/assessCount'
 import { underReviewL2 } from './templates/underReview'
 import { Layer2 } from './types'
 
@@ -30,6 +31,13 @@ export const sxnetwork: Layer2 = underReviewL2({
   },
   associatedTokens: ['SX'],
   rpcUrl: 'https://rpc.sx-rollup.gelato.digital', //chainid 4162
+  transactionApi: {
+    type: 'rpc',
+    defaultUrl: 'https://rpc.sx-rollup.gelato.digital',
+    defaultCallsPerMinute: 1500,
+    assessCount: subtractOne,
+    startBlock: 1,
+  },
   escrows: [
     {
       chain: 'ethereum',
