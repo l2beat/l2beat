@@ -1,9 +1,22 @@
+import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
 import { mantleDABridge } from './bridges/mantleDABridge'
 
+const discovery = new ProjectDiscovery('mantle')
 
+const committeeMembers = discovery.getContractValue<number>(
+  'BLSRegistry',
+  'numOperators',
+)
 
+const threshold =
+  discovery.getContractValue<number>(
+    'DataLayrServiceManager',
+    'quorumThresholdBasisPoints',
+  ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
+
+  
 export const mantleDA: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
