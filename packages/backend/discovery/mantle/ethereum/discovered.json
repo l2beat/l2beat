@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 20428394,
+  "blockNumber": 20428577,
   "configHash": "0xd65b3b38dd2658cc7acd69da11476df005c02b55eb19c6f191ba94a3396f5a84",
   "version": 9,
   "contracts": [
@@ -373,15 +373,15 @@
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
         "dataStoresForDuration": {
-          "one_duration": 34522,
+          "one_duration": 34524,
           "two_duration": 0,
           "three_duration": 0,
           "four_duration": 0,
           "five_duration": 0,
           "six_duration": 0,
           "seven_duration": 0,
-          "dataStoreId": 34523,
-          "latestTime": 1722454847
+          "dataStoreId": 34525,
+          "latestTime": 1722456767
         },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",

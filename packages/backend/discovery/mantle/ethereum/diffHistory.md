@@ -1,4 +1,30 @@
-Generated with discovered.json: 0xb2d6a91d75a182d9fbc44285e608a7175d30e465
+Generated with discovered.json: 0xdd0fe74393972614d7152d2ba69494151202f6a2
+
+# Diff at Wed, 31 Jul 2024 19:19:52 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@d56d4dbb204689f1599b0e3bb6de495651bd8c62 block: 19531981
+- current block number: 20428577
+
+## Description
+
+Add the total stake for of MantleDA.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531981 (main branch discovery), not current.
+
+```diff
+    contract BLSRegistry (0x1eD35B793d887e028493dAC4a11AA5Feb811dd67) {
+    +++ description: None
+      values.totalStake:
++        ["1000000000000000000000000",0]
+    }
+```
+
+Generated with discovered.json: 0x19b8ac3c39eec33112adfb83fbe5bce7d728e73a
 
 # Diff at Thu, 18 Jul 2024 10:31:51 GMT:
 
