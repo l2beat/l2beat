@@ -10,7 +10,8 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
-import { useScalingFilter } from './scaling-filter-context'
+import { useScalingFilterValues } from './scaling-filter-context'
+import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
 export type BaseScalingFiltersEntry =
   | ScalingSummaryLayer2sEntry
@@ -27,12 +28,12 @@ export interface BaseScalingFiltersState {
 }
 
 interface Props {
-  items: BaseScalingFiltersEntry[]
+  items: CommonScalingEntry[]
   additionalFilters?: React.ReactNode
 }
 
 export function BaseScalingFilters({ items, additionalFilters }: Props) {
-  const filter = useScalingFilter()
+  const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
     .map((value) => ({

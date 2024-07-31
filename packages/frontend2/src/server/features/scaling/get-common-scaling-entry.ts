@@ -1,7 +1,9 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
-export function getCommonScalingEntry<T extends Layer2 | Layer3>({
+export function getCommonScalingEntry<
+  T extends Layer2 | Layer3 = Layer2 | Layer3,
+>({
   project,
   isVerified,
   hasImplementationChanged,
@@ -10,25 +12,41 @@ export function getCommonScalingEntry<T extends Layer2 | Layer3>({
   isVerified: boolean
   hasImplementationChanged: boolean
 }) {
-  return {
+  const common = {
     name: project.display.name,
     href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
     slug: project.display.slug,
     category: project.display.category,
-    type: project.type as T['type'],
-    provider: project.display.provider as T['display']['provider'],
-    warning: project.display.warning,
     isVerified,
     hasImplementationChanged,
-    showProjectUnderReview: isAnySectionUnderReview(project),
-    redWarning: project.display.redWarning,
-    purposes: project.display.purposes,
-    stage: (project.type === 'layer2'
-      ? project.stage
-      : undefined) as T extends Layer2 ? Layer2['stage'] : undefined,
     isArchived: !!project.isArchived,
     isUpcoming: !!project.isUpcoming,
     isUnderReview: !!project.isUnderReview,
+    warning: project.display.warning,
+    showProjectUnderReview: isAnySectionUnderReview(project),
+    redWarning: project.display.redWarning,
+    purposes: project.display.purposes,
+  }
+
+  if (project.type === 'layer2') {
+    return {
+      ...common,
+      type: project.type,
+      provider: project.display.provider,
+      stage: project.stage,
+      hostChain: undefined,
+    }
+  }
+
+  return {
+    ...common,
+    type: project.type,
+    provider: project.display.provider,
+    hostChain: project.hostChain,
+    stage: undefined,
   }
 }
+
+export type CommonScalingEntry<T extends Layer2 | Layer3 = Layer2 | Layer3> =
+  ReturnType<typeof getCommonScalingEntry<T>>

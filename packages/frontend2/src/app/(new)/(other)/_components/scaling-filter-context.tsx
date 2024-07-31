@@ -6,6 +6,7 @@ import {
   type ScalingProjectPurpose,
   type Stage,
 } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
 import {
   createContext,
   useCallback,
@@ -13,6 +14,7 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
@@ -45,7 +47,7 @@ const defaultValues: ScalingFilterContextValue = {
   daLayer: undefined,
 }
 
-export function useScalingFilter() {
+export function useScalingFilterValues() {
   const context = useContext(ScalingFilterContext)
   if (!context) {
     throw new Error(
@@ -53,6 +55,44 @@ export function useScalingFilter() {
     )
   }
   return context
+}
+
+export function useScalingFilter() {
+  const scalingFilters = useScalingFilterValues()
+
+  const filter = useCallback(
+    (entry: CommonScalingEntry) => {
+      const checks = [
+        scalingFilters.rollupsOnly !== false
+          ? entry.category.includes('Rollup')
+          : undefined,
+        scalingFilters.category !== undefined
+          ? entry.category === scalingFilters.category
+          : undefined,
+        scalingFilters.stack !== undefined
+          ? entry.provider === scalingFilters.stack
+          : undefined,
+        scalingFilters.stage !== undefined
+          ? entry.type === 'layer2'
+            ? entry.stage?.stage === scalingFilters.stage
+            : false
+          : undefined,
+        scalingFilters.purpose !== undefined
+          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
+          : undefined,
+        scalingFilters.hostChain !== undefined
+          ? scalingFilters.hostChain === 'Ethereum'
+            ? entry.type === 'layer2'
+            : entry.type === 'layer3' &&
+              entry.hostChain === scalingFilters.hostChain
+          : undefined,
+      ].filter(notUndefined)
+      return checks.length === 0 || checks.every(Boolean)
+    },
+    [scalingFilters],
+  )
+
+  return filter
 }
 
 export function ScalingFilterContextProvider({

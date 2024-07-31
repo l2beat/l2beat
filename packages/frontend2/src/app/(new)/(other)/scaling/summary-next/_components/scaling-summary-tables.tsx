@@ -12,10 +12,6 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
-import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingArchivedColumns } from './table/archived/columns'
@@ -23,72 +19,45 @@ import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
+import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { type Layer2, type Layer3 } from '@l2beat/config'
 
 interface Props {
-  layer2s: ScalingSummaryLayer2sEntry[]
-  layer3s: ScalingSummaryLayer3sEntry[]
+  projects: CommonScalingEntry[]
 }
 
-export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
-  const scalingFilters = useScalingFilter()
-
-  const includeFilters = useCallback(
-    (entry: ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === scalingFilters.stage
-            : false
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-        scalingFilters.hostChain !== undefined
-          ? scalingFilters.hostChain === 'Ethereum'
-            ? entry.type === 'layer2'
-            : entry.type === 'layer3' &&
-              entry.hostChainName === scalingFilters.hostChain
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
+export function ScalingSummaryTables({ projects }: Props) {
+  const includeFilters = useScalingFilter()
 
   const layer2sProjects = useMemo(
     () =>
-      layer2s.filter(
-        (item) => !item.isArchived && !item.isUpcoming && includeFilters(item),
-      ),
-    [layer2s, includeFilters],
+      projects.filter(
+        (item) =>
+          item.type === 'layer2' &&
+          !item.isArchived &&
+          !item.isUpcoming &&
+          includeFilters(item),
+      ) as CommonScalingEntry<Layer2>[],
+    [projects, includeFilters],
   )
   const layer3sProjects = useMemo(
     () =>
-      layer3s.filter(
-        (item) => !item.isArchived && !item.isUpcoming && includeFilters(item),
-      ),
-    [layer3s, includeFilters],
+      projects.filter(
+        (item) =>
+          item.type === 'layer3' &&
+          !item.isArchived &&
+          !item.isUpcoming &&
+          includeFilters(item),
+      ) as CommonScalingEntry<Layer3>[],
+    [projects, includeFilters],
   )
   const upcomingProjects = useMemo(
-    () =>
-      [...layer2s, ...layer3s].filter(
-        (item) => item.isUpcoming && includeFilters(item),
-      ),
-    [layer2s, layer3s, includeFilters],
+    () => projects.filter((item) => item.isUpcoming && includeFilters(item)),
+    [projects, includeFilters],
   )
   const archivedProjects = useMemo(
-    () => layer2s.filter((item) => item.isArchived && includeFilters(item)),
-    [layer2s, includeFilters],
+    () => projects.filter((item) => item.isArchived && includeFilters(item)),
+    [projects, includeFilters],
   )
 
   const layer2sTable = useTable({
