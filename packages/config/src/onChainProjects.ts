@@ -8,4 +8,5 @@ export const onChainProjects: string[] = [
   'shared-eigenlayer',
   'swell',
   'worldcoin',
+  'cronoszkevm',
 ]

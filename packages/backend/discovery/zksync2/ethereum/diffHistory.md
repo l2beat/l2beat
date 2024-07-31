@@ -1,3 +1,69 @@
+Generated with discovered.json: 0x4ab06dc4a2eca06150f20ffab0f58e2bf8a17773
+
+# Diff at Wed, 31 Jul 2024 10:33:50 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d56d4dbb204689f1599b0e3bb6de495651bd8c62 block: 20389678
+- current block number: 20425965
+
+## Description
+
+Move to shared config --> `shared-zk-stack`.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389678 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract Governance (0x0b622A2061EaccAE1c664eBC3E868b8438e03F61)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract BridgeHub (0x303a465B659cBB0ab36eE643eA362c509EEb5213)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract GenesisUpgrade (0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract Matter Labs Multisig (0x4e4943346848c4867F81dFb37c4cA9C5715A7828)
+    +++ description: Can instantly upgrade all contracts and roles in the zksync Era contracts
+```
+
+```diff
+-   Status: DELETED
+    contract ValidatorTimelock (0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract StateTransitionManager (0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract L1SharedBridge (0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x62852440703eb0ddd632a1f505f860b7a865134b
 
 # Diff at Tue, 30 Jul 2024 11:16:54 GMT:
