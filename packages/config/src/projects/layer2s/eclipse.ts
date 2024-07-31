@@ -10,13 +10,13 @@ export const eclipse: Layer2 = underReviewL2({
     description:
       'Eclipse is a Layer 2 powered by the Solana Virtual Machine (SVM).',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'Optimium',
     links: {
       websites: ['https://eclipse.builders/'],
       apps: ['https://bridge.eclipse.builders/'],
       documentation: ['https://docs.eclipse.builders/'],
       explorers: ['https://explorer.eclipse.xyz/'],
-      repositories: [],
+      repositories: ['https://github.com/Eclipse-Laboratories-Inc'],
       socialMedia: [
         'https://twitter.com/eclipsefnd',
         'https://discord.gg/eclipse-labs',
