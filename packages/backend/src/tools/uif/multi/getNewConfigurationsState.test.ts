@@ -244,6 +244,22 @@ describe(getNewConfigurationsState.name, () => {
       })
     })
 
+    it('minHeight updated up after currentHeight', () => {
+      const result = getNewConfigurationsState(
+        [actual('a', 1000, null)],
+        SERIALIZE,
+        [saved('a', 100, 400, 300)],
+      )
+      expect(result).toEqual({
+        diff: {
+          ...EMPTY_DIFF,
+          toTrim: [removal('a', 100, 999)],
+          toUpdate: [{ ...actual('a', 1000, null), currentHeight: null }],
+        },
+        configurations: [{ ...actual('a', 1000, null), currentHeight: null }],
+      })
+    })
+
     it('minHeight updated down', () => {
       const result = getNewConfigurationsState(
         [actual('a', 100, 400)],

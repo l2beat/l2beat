@@ -477,6 +477,32 @@ describe(ManagedMultiIndexer.name, () => {
       ])
     })
 
+    it('minHeight changed to later than previously set and currentHeight', async () => {
+      const indexer = await initializeMockIndexer(
+        indexerService,
+        [saved('d', 100, null, 550)],
+        [actual('d', 1000, null)],
+      )
+
+      const before =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+
+      await indexer.start()
+
+      const after =
+        await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+          INDEXER_ID,
+        )
+      expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
+
+      expect(indexer.removeData).toHaveBeenOnlyCalledWith([
+        removal('d', 100, 999),
+      ])
+    })
+
     it('maxHeight changed without need to trim', async () => {
       const indexer = await initializeMockIndexer(
         indexerService,
