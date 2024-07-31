@@ -9,9 +9,9 @@ export const noBridge = {
   display: {
     name: 'No Bridge',
     slug: 'no-bridge',
-    description:
-      'This project does not have a DA bridge on Ethereum.',
-    redWarning: 'Without a DA bridge, Ethereum has no proof of data availability for this project.',
+    description: 'This project does not have a DA bridge on Ethereum.',
+    redWarning:
+      'Without a DA bridge, Ethereum has no proof of data availability for this project.',
     links: {
       websites: [],
       documentation: [],
@@ -21,8 +21,7 @@ export const noBridge = {
       socialMedia: [],
     },
   },
-  technology:
-    `There is no DA bridge on Ethereum.\n`,
+  technology: `There is no DA bridge on Ethereum.\n`,
   usedIn: linkByDA({
     layer: (layer) => layer === 'Celestia',
     bridge: (bridge) => bridge === 'None',

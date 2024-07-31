@@ -13,7 +13,8 @@ const NotEnshrined = {
   type: 'NotEnshrined',
   value: 'External',
   sentiment: 'warning',
-  description: 'The DA bridge is not enshrined in Ethereum. This introduces an additional trust assumption on the honest majority of DA layer validators or committee.',
+  description:
+    'The DA bridge is not enshrined in Ethereum. This introduces an additional trust assumption on the honest majority of DA layer validators or committee.',
 } as const
 
 export const DaAccessibilityRisk = {

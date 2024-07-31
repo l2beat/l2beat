@@ -96,9 +96,11 @@ export const near: DaLayer = {
   A rollup can utilize a dedicated Data Availability (DA) smart contract on a NEAR shard, known as a Blob Store contract, where it posts data as standard NEAR transactions. All transactions are converted into Receipts, and depending on their actions, some receipts may be processed over two blocks.
   Regarding data retrieval, full nodes prune Receipts after 3 epochs (approximately 36 hours). Once the pruning window expires, the data remains accessible only through archive nodes.
   `,
-  bridges: [NO_BRIDGE({
+  bridges: [
+    NO_BRIDGE({
       layer: 'NearDA',
-  })],
+    }),
+  ],
   usedIn: linkByDA({
     layer: (layer) => layer === 'NearDA',
   }),
