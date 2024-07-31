@@ -48,20 +48,16 @@ export function getNewConfigurationsState<T>(
       continue
     }
 
-    if (stored.currentHeight === null) {
-      configurations.push({ ...c, currentHeight: null })
-
-      continue
-    }
-
     if (stored.minHeight > c.minHeight) {
       // We remove everything because we cannot have gaps in downloaded data
       // We will re-download everything from the beginning
-      toTrim.push({
-        id: stored.id,
-        from: stored.minHeight,
-        to: stored.currentHeight,
-      })
+      if (stored.currentHeight !== null) {
+        toTrim.push({
+          id: stored.id,
+          from: stored.minHeight,
+          to: stored.currentHeight,
+        })
+      }
       configurations.push({ ...c, currentHeight: null })
 
       setUpdated(c, null)
@@ -78,14 +74,18 @@ export function getNewConfigurationsState<T>(
     }
 
     if (c.maxHeight !== stored.maxHeight) {
-      const currentHeight = Math.min(
-        stored.currentHeight,
-        c.maxHeight ?? Infinity,
-      )
+      const currentHeight =
+        stored.currentHeight === null
+          ? null
+          : Math.min(stored.currentHeight, c.maxHeight ?? Infinity)
       setUpdated(c, currentHeight)
     }
 
-    if (c.maxHeight !== null && stored.currentHeight > c.maxHeight) {
+    if (
+      c.maxHeight !== null &&
+      stored.currentHeight &&
+      stored.currentHeight > c.maxHeight
+    ) {
       toTrim.push({
         id: stored.id,
         from: c.maxHeight + 1,
@@ -94,13 +94,16 @@ export function getNewConfigurationsState<T>(
     }
 
     const currentHeight =
-      // Handle special case when minHeight get change into the future
-      // relative to current configuration state
-      stored.currentHeight < c.minHeight
+      stored.currentHeight === null
         ? null
-        : Math.min(stored.currentHeight, c.maxHeight ?? stored.currentHeight)
+        : // Handle special case when minHeight get change into the future
+          // relative to current configuration state
+          stored.currentHeight < c.minHeight
+          ? null
+          : Math.min(stored.currentHeight, c.maxHeight ?? stored.currentHeight)
 
     configurations.push({ ...c, currentHeight })
+
     if (stored.properties !== serializeConfiguration(c.properties)) {
       setUpdated(c, stored.currentHeight)
     }
@@ -147,6 +150,7 @@ export function getNewConfigurationsState<T>(
     }
   }
 }
+
 function findDeleted<T>(
   saved: SavedConfiguration<string>[],
   knownIds: Set<string>,
