@@ -15,6 +15,13 @@ interface ConfigurationsState<T> {
   configurations: SavedConfiguration<T>[]
 }
 
+interface ConfigurationState2<T> {
+  added: Configuration<T>[]
+  updated: Map<string, SavedConfiguration<T>>
+  trimmed: RemovalConfiguration[]
+  configurations: SavedConfiguration<T>[]
+}
+
 export function getNewConfigurationsState<T>(
   actual: Configuration<T>[],
   serializeConfiguration: (value: T) => string,
@@ -22,11 +29,12 @@ export function getNewConfigurationsState<T>(
 ): ConfigurationsState<T> {
   const savedMap = new Map(saved.map((c) => [c.id, c]))
 
-  const toTrim: RemovalConfiguration[] = []
-
-  const configurations: SavedConfiguration<T>[] = []
-  const toAdd: Configuration<T>[] = []
-  const updated = new Map<string, SavedConfiguration<T>>()
+  const state: ConfigurationState2<T> = {
+    added: [],
+    updated: new Map(),
+    trimmed: [],
+    configurations: [],
+  }
 
   const knownIds = new Set<string>()
   for (const c of actual) {
@@ -40,8 +48,8 @@ export function getNewConfigurationsState<T>(
     const stored = savedMap.get(c.id)
 
     if (!stored) {
-      toAdd.push({ ...c })
-      configurations.push({ ...c, currentHeight: null })
+      state.added.push({ ...c })
+      state.configurations.push({ ...c, currentHeight: null })
       continue
     }
 
@@ -49,24 +57,24 @@ export function getNewConfigurationsState<T>(
       // We remove everything because we cannot have gaps in downloaded data
       // We will re-download everything from the beginning
       if (stored.currentHeight !== null) {
-        toTrim.push({
+        state.trimmed.push({
           id: stored.id,
           from: stored.minHeight,
           to: stored.currentHeight,
         })
       }
-      configurations.push({ ...c, currentHeight: null })
-      setUpdated(c, null)
+      state.configurations.push({ ...c, currentHeight: null })
+      setUpdated(state, c, null)
       continue
     }
 
     if (stored.minHeight < c.minHeight) {
-      toTrim.push({
+      state.trimmed.push({
         id: stored.id,
         from: stored.minHeight,
         to: c.minHeight - 1,
       })
-      setUpdated(c, stored.currentHeight)
+      setUpdated(state, c, stored.currentHeight)
     }
 
     if (c.maxHeight !== stored.maxHeight) {
@@ -75,7 +83,7 @@ export function getNewConfigurationsState<T>(
         stored.currentHeight !== null &&
         stored.currentHeight > c.maxHeight
       ) {
-        toTrim.push({
+        state.trimmed.push({
           id: stored.id,
           from: c.maxHeight + 1,
           to: stored.currentHeight,
@@ -86,7 +94,7 @@ export function getNewConfigurationsState<T>(
         stored.currentHeight === null
           ? null
           : Math.min(stored.currentHeight, c.maxHeight ?? Infinity)
-      setUpdated(c, currentHeight)
+      setUpdated(state, c, currentHeight)
     }
 
     const currentHeight =
@@ -98,10 +106,10 @@ export function getNewConfigurationsState<T>(
           ? null
           : Math.min(stored.currentHeight, c.maxHeight ?? stored.currentHeight)
 
-    configurations.push({ ...c, currentHeight })
+    state.configurations.push({ ...c, currentHeight })
 
     if (stored.properties !== serializeConfiguration(c.properties)) {
-      setUpdated(c, stored.currentHeight)
+      setUpdated(state, c, stored.currentHeight)
     }
   }
 
@@ -109,41 +117,45 @@ export function getNewConfigurationsState<T>(
 
   return {
     diff: {
-      toAdd,
-      toUpdate: Array.from(updated.values()),
+      toAdd: state.added,
+      toUpdate: Array.from(state.updated.values()),
       toDelete: deleted.toDelete,
-      toTrim: [...toTrim, ...deleted.toTrim],
+      toTrim: [...state.trimmed, ...deleted.toTrim],
     },
-    configurations,
+    configurations: state.configurations,
+  }
+}
+
+function setUpdated<T>(
+  state: ConfigurationState2<T>,
+  c: Configuration<T>,
+  targetHeight: number | null,
+) {
+  // Handle special case when minHeight get change into the future
+  // relative to current configuration state
+  const heightToSet =
+    targetHeight === null
+      ? null
+      : targetHeight < c.minHeight
+        ? null
+        : targetHeight
+
+  const existingConfig = state.updated.get(c.id)
+
+  if (!existingConfig) {
+    state.updated.set(c.id, { ...c, currentHeight: heightToSet })
+    return
   }
 
-  function setUpdated(c: Configuration<T>, targetHeight: number | null) {
-    // Handle special case when minHeight get change into the future
-    // relative to current configuration state
-    const heightToSet =
-      targetHeight === null
-        ? null
-        : targetHeight < c.minHeight
-          ? null
-          : targetHeight
+  // If it is already null then do nothing
+  if (existingConfig.currentHeight === null) {
+    return
+  }
 
-    const existingConfig = updated.get(c.id)
-
-    if (!existingConfig) {
-      updated.set(c.id, { ...c, currentHeight: heightToSet })
-      return
-    }
-
-    // If it is already null then do nothing
-    if (existingConfig.currentHeight === null) {
-      return
-    }
-
-    if (heightToSet === null) {
-      updated.set(c.id, { ...c, currentHeight: heightToSet })
-    } else if (heightToSet < existingConfig.currentHeight) {
-      updated.set(c.id, { ...c, currentHeight: heightToSet })
-    }
+  if (heightToSet === null) {
+    state.updated.set(c.id, { ...c, currentHeight: heightToSet })
+  } else if (heightToSet < existingConfig.currentHeight) {
+    state.updated.set(c.id, { ...c, currentHeight: heightToSet })
   }
 }
 
