@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x01c4069a257c132bab78126a20f09fe37b437b9a
+
+# Diff at Wed, 31 Jul 2024 18:35:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28619f34f6a7f9a291869f87d25f8e63f92f855b block: 12848751
+- current block number: 12848751
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 12848751 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract  (0x38dE71124f7a447a01D67945a51eDcE9FF491251)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x3c2269811836af69497E5F486A85D7316753cf62)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x66A71Dcef29A0fFBDBE3c6a460a3B5BC225Cd675)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb)
+    +++ description: None
+```
+
+```diff
+    contract UltraLightNodeV2 (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    +++ description: None
+      errors:
++        {"chainAddressSizeMap":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"logs are limited to a 10000 block range\\\"}}\", error={\"code\":-32602}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0xc40e6f\\\",\\\"address\\\":\\\"0xfe7c30860d01e28371d40434806f4a8fcdd3a098\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":87,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://polygonzkevm-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)","defaultAdapterParams":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"logs are limited to a 10000 block range\\\"}}\", error={\"code\":-32602}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0xc40e6f\\\",\\\"address\\\":\\\"0xfe7c30860d01e28371d40434806f4a8fcdd3a098\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":87,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://polygonzkevm-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)","defaultAppConfig":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"logs are limited to a 10000 block range\\\"}}\", error={\"code\":-32602}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0xc40e6f\\\",\\\"address\\\":\\\"0xfe7c30860d01e28371d40434806f4a8fcdd3a098\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":87,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://polygonzkevm-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)","inboundProofLibrary":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"logs are limited to a 10000 block range\\\"}}\", error={\"code\":-32602}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0xc40e6f\\\",\\\"address\\\":\\\"0xfe7c30860d01e28371d40434806f4a8fcdd3a098\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":87,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://polygonzkevm-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)","supportedOutboundProof":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"logs are limited to a 10000 block range\\\"}}\", error={\"code\":-32602}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0xc40e6f\\\",\\\"address\\\":\\\"0xfe7c30860d01e28371d40434806f4a8fcdd3a098\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":87,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://polygonzkevm-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)","ulnLookup":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":87,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"logs are limited to a 10000 block range\\\"}}\", error={\"code\":-32602}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0xc40e6f\\\",\\\"address\\\":\\\"0xfe7c30860d01e28371d40434806f4a8fcdd3a098\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":87,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://polygonzkevm-mainnet.g.alchemy.com/v2/Tb7-JFJ5vrKo7CF_rNpc4iTKqe3WBH32\", code=SERVER_ERROR, version=web/5.7.1)"}
+    }
+```
+
 Generated with discovered.json: 0x85823047ea1caa73401628cdd2e639d4c1effd94
 
 # Diff at Mon, 27 May 2024 13:20:40 GMT:

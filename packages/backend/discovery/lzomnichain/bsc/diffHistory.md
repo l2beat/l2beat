@@ -1,3 +1,101 @@
+Generated with discovered.json: 0x27f5439adaad76977b31b79fabdfd32f0146c8b6
+
+# Diff at Wed, 31 Jul 2024 18:32:55 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@28619f34f6a7f9a291869f87d25f8e63f92f855b block: 40608530
+- current block number: 40608530
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 40608530 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract FPValidator (0x28A5536cA9F36c45A9d2AC8d2B62Fc46Fde024B6)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract MPTValidator01 (0x462F7eC57C6492B983a8C8322B4369a7f149B859)
+    +++ description: None
+```
+
+```diff
+    contract UltraLightNodeV2 (0x4D73AdB72bC3DD368966edD0f0b2148401A178E2) {
+    +++ description: None
+      errors:
++        {"chainAddressSizeMap":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":57,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"Invalid params\\\",\\\"data\\\":{\\\"range\\\":\\\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\\\"}}}\", error={\"code\":-32602,\"data\":{\"range\":\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\"}}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x26ba312\\\",\\\"address\\\":\\\"0x4d73adb72bc3dd368966edd0f0b2148401a178e2\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":57,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://bnb.rpc.subquery.network/public\", code=SERVER_ERROR, version=web/5.7.1)","defaultAdapterParams":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":57,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"Invalid params\\\",\\\"data\\\":{\\\"range\\\":\\\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\\\"}}}\", error={\"code\":-32602,\"data\":{\"range\":\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\"}}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x26ba312\\\",\\\"address\\\":\\\"0x4d73adb72bc3dd368966edd0f0b2148401a178e2\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":57,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://bnb.rpc.subquery.network/public\", code=SERVER_ERROR, version=web/5.7.1)","defaultAppConfig":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":57,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"Invalid params\\\",\\\"data\\\":{\\\"range\\\":\\\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\\\"}}}\", error={\"code\":-32602,\"data\":{\"range\":\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\"}}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x26ba312\\\",\\\"address\\\":\\\"0x4d73adb72bc3dd368966edd0f0b2148401a178e2\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":57,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://bnb.rpc.subquery.network/public\", code=SERVER_ERROR, version=web/5.7.1)","inboundProofLibrary":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":57,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"Invalid params\\\",\\\"data\\\":{\\\"range\\\":\\\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\\\"}}}\", error={\"code\":-32602,\"data\":{\"range\":\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\"}}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x26ba312\\\",\\\"address\\\":\\\"0x4d73adb72bc3dd368966edd0f0b2148401a178e2\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":57,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://bnb.rpc.subquery.network/public\", code=SERVER_ERROR, version=web/5.7.1)","supportedOutboundProof":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":57,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"Invalid params\\\",\\\"data\\\":{\\\"range\\\":\\\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\\\"}}}\", error={\"code\":-32602,\"data\":{\"range\":\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\"}}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x26ba312\\\",\\\"address\\\":\\\"0x4d73adb72bc3dd368966edd0f0b2148401a178e2\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":57,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://bnb.rpc.subquery.network/public\", code=SERVER_ERROR, version=web/5.7.1)","ulnLookup":"processing response error (body=\"{\\\"jsonrpc\\\":\\\"2.0\\\",\\\"id\\\":57,\\\"error\\\":{\\\"code\\\":-32602,\\\"message\\\":\\\"Invalid params\\\",\\\"data\\\":{\\\"range\\\":\\\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\\\"}}}\", error={\"code\":-32602,\"data\":{\"range\":\"the range 0 - 40608530 exceeds the range allowed for your plan (40608530 > 2000).\"}}, requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x0\\\",\\\"toBlock\\\":\\\"0x26ba312\\\",\\\"address\\\":\\\"0x4d73adb72bc3dd368966edd0f0b2148401a178e2\\\",\\\"topics\\\":[[\\\"0x0611bb2107e385b79ec826fff8ecc1c1248a7aae3c875c96668f8cfbf1734220\\\",\\\"0x4a5695eee2a74d548d5f5c485a3de99ace99e3b664c8e30a90f49be6ebb54932\\\",\\\"0x5a76432853a0871c4e780def7f3ffc7912339b53f022ac31127fe5ff84a36fa1\\\",\\\"0x802d55279d51813cb7a9a98e8fd2d7bec5346cb830901c11b85d1650cb857e9a\\\",\\\"0xec23bee6f88cfecebb09d6aaaed66f0ce110debc1f61117c8270a7116597df9a\\\",\\\"0x0dad975e1d2fbe771c95cdcc7be9a1e61181de7173abe0a32b8f8f83140873e5\\\"]]}],\\\"id\\\":57,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://bnb.rpc.subquery.network/public\", code=SERVER_ERROR, version=web/5.7.1)"}
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x5a54fe5234E811466D5366846283323c954310B2)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x5b3b51F830A79a250808f080e0e8dB08BAdf2D1C)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x7A50b180265eb5347Ce7b92224F0B0Cd6cE0493b)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayerV2 (0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierNetwork (0xD56e4eAb23cb81f43168F9F45211Eb027b9aC7cc)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract RelayerV2Radar (0xde19274c009A22921E3966a1Ec868cEba40A5DaC)
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract VerifierFeeLib (0xdeA04ef31C4B4FDf31CB58923F37869739280d49)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x229ccfafa81ea73992c4e83ad8d9645ee271dd33
 
 # Diff at Tue, 30 Jul 2024 11:17:52 GMT:
