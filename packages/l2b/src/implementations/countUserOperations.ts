@@ -123,29 +123,6 @@ function printItem(level: number, name: string, count: number) {
   console.log(`${'  '.repeat(level)}${name} (${count})`)
 }
 
-function main() {
-  const { calldata } = parseCliArguments()
+export function countUserOperations(calldata: string) {
   countOperations({ type: 'recursive', calldata }, 0).print()
 }
-
-interface CliArguments {
-  calldata: string
-}
-
-function parseCliArguments(): CliArguments {
-  const args = process.argv.slice(2)
-  if (args.length !== 1 || !isHexString(args[0])) {
-    console.log('Usage: yarn count-user-operations <calldata>')
-    process.exit(1)
-  }
-  return { calldata: args[0] }
-}
-
-function isHexString(value: string): boolean {
-  if (value.length % 2 !== 0) {
-    return false
-  }
-  return /^0x[0-9a-fA-F]*$/.test(value)
-}
-
-void main()
