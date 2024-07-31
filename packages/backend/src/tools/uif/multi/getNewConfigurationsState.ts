@@ -18,7 +18,7 @@ export function getNewConfigurationsState<T>(
   serializeConfiguration: (value: T) => string,
   saved: SavedConfiguration<string>[],
 ) {
-  const state = initializeEmptyState()
+  const state = initializeEmptyState<T>()
 
   const savedMap = new Map(saved.map((c) => [c.id, c]))
   const knownIds = new Set<string>()
@@ -44,7 +44,7 @@ export function getNewConfigurationsState<T>(
     }
 
     if (c.maxHeight !== stored.maxHeight) {
-      handleMaxHeightChange<T>(c, stored, state)
+      handleMaxHeightChange(state, stored, c)
     }
 
     const currentHeight = calculateCurrentHeight(stored, c)
@@ -96,9 +96,9 @@ function calculateCurrentHeight<T>(
 }
 
 function handleMaxHeightChange<T>(
-  c: Configuration<T>,
+  state: ConfigurationState<T>,
   stored: SavedConfiguration<string>,
-  state: ConfigurationState<unknown>,
+  c: Configuration<T>,
 ) {
   if (
     c.maxHeight !== null &&
@@ -120,7 +120,7 @@ function handleMaxHeightChange<T>(
 }
 
 function handleMinHeightIncrease<T>(
-  state: ConfigurationState<unknown>,
+  state: ConfigurationState<T>,
   stored: SavedConfiguration<string>,
   c: Configuration<T>,
 ) {
@@ -133,7 +133,7 @@ function handleMinHeightIncrease<T>(
 }
 
 function handleMinHeightDecrease<T>(
-  state: ConfigurationState<unknown>,
+  state: ConfigurationState<T>,
   stored: SavedConfiguration<string>,
   c: Configuration<T>,
 ) {
