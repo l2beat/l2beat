@@ -7817,6 +7817,25 @@
       "supply": "zero"
     },
     {
+      "id": "arbitrum:woeth-wrapped-oeth",
+      "name": "Wrapped OETH",
+      "coingeckoId": "wrapped-oeth",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "symbol": "wOETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1707392291,
+      "coingeckoListingTimestamp": 1699920000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Transporter",
+        "slug": "transporter"
+      }
+    },
+    {
       "id": "arbitrum:xai-xai",
       "name": "Xai",
       "coingeckoId": "xai-blockchain",
