@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x244a47e0a51ac1d284df29f48a2d19a75c99c6ec
+Generated with discovered.json: 0xec05d44d24e89d5c5222dd61531b850d0c8d91b9
 
-# Diff at Mon, 29 Jul 2024 14:43:13 GMT:
+# Diff at Thu, 01 Aug 2024 07:40:12 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@cd1638356ffd1e80738a74e7ae4014fe879eb346 block: 20311101
-- current block number: 20412891
+- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 20311101
+- current block number: 20432263
 
 ## Description
 
@@ -28,7 +28,7 @@ discovery. Values are for block 20311101 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
     +++ description: None
       name:
 -        "GnosisSafe"
@@ -37,7 +37,7 @@ discovery. Values are for block 20311101 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
     +++ description: None
       name:
 -        "GnosisSafe"
@@ -54,7 +54,7 @@ discovery. Values are for block 20311101 (main branch discovery), not current.
 ```
 
 ```diff
-    contract GnosisSafe (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
     +++ description: None
       name:
 -        "GnosisSafe"
@@ -62,7 +62,7 @@ discovery. Values are for block 20311101 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0xe76e64ade19fdfb8e1f73934bf078b0de45918da
+Generated with discovered.json: 0x741d590ac7848b42bf231fff98a4c917ee772478
 
 # Diff at Mon, 15 Jul 2024 09:45:08 GMT:
 

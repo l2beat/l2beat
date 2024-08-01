@@ -1,9 +1,9 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20412891,
+  "blockNumber": 20432263,
   "configHash": "0xbc9a459ceb78018e275b623a83c95165762b20ec7e4c2b1a295ea48585cc0e6a",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "ZkTrueUp",
@@ -210,7 +210,7 @@
         },
         "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "getAccountNum": 51,
-        "getBlockNum": [167, 167, 167],
+        "getBlockNum": [177, 177, 177],
         "getBorrowFeeRate": 10000000,
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
@@ -218,10 +218,10 @@
         "getFundWeight": { "treasury": 0, "insurance": 0, "vault": 10000 },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
-        "getL1RequestNum": [215, 215, 215],
+        "getL1RequestNum": [219, 219, 220],
         "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
-        "getTokenNum": 72,
+        "getTokenNum": 75,
         "getTreasuryAddr": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
         "getVaultAddr": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
         "getVerifier": "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE",
