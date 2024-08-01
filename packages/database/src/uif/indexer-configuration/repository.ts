@@ -31,15 +31,17 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return record.length
   }
 
-  async insertMany(record: IndexerConfigurationRecord[]) {
-    const rows = record.map(toRow)
+  async insertMany(records: IndexerConfigurationRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
+    const rows = records.map(toRow)
     await this.batch(rows, 5_000, async (batch) => {
       await this.db
         .insertInto('public.indexer_configurations')
         .values(batch)
         .execute()
     })
+    return records.length
   }
 
   async getByIndexerId(
@@ -53,7 +55,9 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getConfigurationsWithoutIndexerId(indexerId: string) {
+  async getConfigurationsWithoutIndexerId(
+    indexerId: string,
+  ): Promise<Omit<IndexerConfigurationRecord, 'indexerId'>[]> {
     const rows = await this.db
       .selectFrom('public.indexer_configurations')
       .select([
@@ -65,7 +69,6 @@ export class IndexerConfigurationRepository extends BaseRepository {
       ])
       .where('indexer_id', '=', indexerId)
       .execute()
-
     return rows.map(toRecordWithoutIndexerId)
   }
 

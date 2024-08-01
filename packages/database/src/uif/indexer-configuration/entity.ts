@@ -25,7 +25,7 @@ export function toRecord(
 
 export function toRecordWithoutIndexerId(
   row: Selectable<Omit<IndexerConfiguration, 'indexer_id'>>,
-) {
+): Omit<IndexerConfigurationRecord, 'indexerId'> {
   return {
     id: row.id,
     properties: row.properties,
