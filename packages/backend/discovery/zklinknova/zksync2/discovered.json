@@ -1,7 +1,7 @@
 {
   "name": "zklinknova",
   "chain": "zksync2",
-  "blockNumber": 38562106,
+  "blockNumber": 40563041,
   "configHash": "0x04bcea5ee3d1dbb85b9f4514ecd0cd9710c3e155a03fd4f908d1e8e6824410bc",
   "version": 10,
   "contracts": [
@@ -155,5 +155,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
