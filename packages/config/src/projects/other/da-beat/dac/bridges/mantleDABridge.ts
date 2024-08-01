@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import {
@@ -8,6 +8,7 @@ import {
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { toUsedInProject } from '../../utils/to-used-in-project'
+import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -21,6 +22,17 @@ const threshold =
     'DataLayrServiceManager',
     'quorumThresholdBasisPoints',
   ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
+
+const dataStorePermissionList = discovery.getContractValue<string[]>(
+  'RegistryPermission',
+  'dataStorePermission',
+);
+
+const registerOperatorPermissionList = discovery.getContractValue<string[]>(
+  'RegistryPermission',
+  'registerOperatorPermission',
+);
+
 
 export const mantleDABridge = {
   id: 'mantleDABridge',
@@ -49,8 +61,18 @@ export const mantleDABridge = {
         description:
           'This contract is the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
       }),
-      discovery.getContractDetails('RegistryPermission'),
-      discovery.getContractDetails('PauserRegistry'),
+      discovery.getContractDetails('BLSRegistry', {
+        description:
+          'This contract stores the number of Mantle DA operators and their public keys. It also store the quorum threshold and the minimum stake required to be part of the quorum.',
+      }),
+      discovery.getContractDetails('RegistryPermission', {
+        description:
+          'This contract is used to manage permissions for the BLSRegistry contract.',
+      }),
+      discovery.getContractDetails('PauserRegistry', {
+        description:
+          'This contract is used to manage permissions for the DataLayrServiceManager contract.',
+      }),
     ],
     risks: [],
   },
@@ -62,11 +84,31 @@ export const mantleDABridge = {
     `,
   permissions: [
     ...discovery.getMultisigPermission(
-      'Owner2Multisig',
+      'MantleEngineeringMultisig',
       'The owner of the DA bridge. This entity is responsible for managing the bridge, it can pause the bridge and change various parameters such as the quorum threshold and service fee for node operators.',
     ),
+    {
+      name: 'Permission Data Store',
+      description: `List of addresses authorized to post data commitments to the DA bridge.`,
+      accounts: dataStorePermissionList.map((permissionedAddress) => ({
+        address: EthereumAddress(permissionedAddress),
+        type: 'EOA',
+      })),
+    },
+    {
+      name: 'Permissioned Register Operator',
+      description: `List of addresses authorized to register or change status of DA node operators.`,
+      accounts: registerOperatorPermissionList.map((permissionedAddress) => ({
+        address: EthereumAddress(permissionedAddress),
+        type: 'EOA',
+      })),
+    },
   ],
   chain: ChainId.ETHEREUM,
+  transactionDataType: DacTransactionDataType.TransactionData,
+  members: {
+    type: 'unknown',
+  },
   requiredMembers: threshold,
   totalMembers: committeeMembers,
   usedIn: toUsedInProject([mantle]),
