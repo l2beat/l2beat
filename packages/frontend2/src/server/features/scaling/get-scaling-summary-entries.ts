@@ -1,17 +1,14 @@
-import { layer2s } from '@l2beat/config'
-import { type ProjectId } from '@l2beat/shared-pure'
+import { layer2s, layer3s } from '@l2beat/config'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
+import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 
-export async function getScalingRiskEntries(tvl: Record<ProjectId, number>) {
-  const orderedProjects = orderByTvl(layer2s, tvl)
-
+export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
 
-  return orderedProjects.map((project) => {
+  return [...layer2s, ...layer3s].map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[project.id.toString()]
@@ -22,11 +19,11 @@ export async function getScalingRiskEntries(tvl: Record<ProjectId, number>) {
         isVerified,
         hasImplementationChanged,
       }),
-      risks: project.riskView,
+      risks: getL2Risks(project.riskView),
     }
   })
 }
 
-export type ScalingRiskEntry = Awaited<
-  ReturnType<typeof getScalingRiskEntries>
+export type ScalingSummaryEntry = Awaited<
+  ReturnType<typeof getScalingSummaryEntries>
 >[number]

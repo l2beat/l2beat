@@ -12,7 +12,7 @@ export const scalingRouter = router({
         })
         .and(
           z.union([
-            z.object({ type: z.enum(['all', 'layer2', 'layer3', 'bridge']) }),
+            z.object({ type: z.enum(['layer2']) }),
             z.object({
               type: z.literal('projects'),
               projectIds: z.array(z.string()),

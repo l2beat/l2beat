@@ -8,49 +8,63 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
 import { formatNumber } from '~/utils/format-number'
-
-type TotalEntry = ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
+import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
+import { type Sentiment } from '@l2beat/shared-pure'
 
 export interface TotalCellProps {
-  data: NonNullable<TotalEntry['tvlData']>
+  data: NonNullable<ScalingSummaryTableRow['tvl']>
   className?: string
 }
 
 export function TotalCell({ data }: TotalCellProps) {
-  const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
+  //const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
+
+  // TODO:
+  const tvlWarnings: { content: string; sentiment: Sentiment }[] = []
+  const anyBadWarnings = false
+  const tvlBreakdownLabel = ''
+
+  const totalTvl = data.breakdown.total / 100
 
   return (
     <Tooltip>
       <TooltipTrigger>
         <div className="flex flex-col items-end">
           <div className="flex items-center gap-1">
-            {data.tvlWarnings.length ? (
+            {tvlWarnings.length ? (
               <RoundedWarningIcon
                 className="size-4"
                 sentiment={anyBadWarnings ? 'bad' : 'warning'}
               />
             ) : null}
             <span className="text-base font-bold md:text-lg">
-              ${formatNumber(data.tvl)}
+              ${formatNumber(totalTvl)}
             </span>
-            {/* TODO: Percent change value */}
-            <PercentChange value={0} className="ml-1 !text-base font-medium" />
+            <PercentChange
+              value={data.change}
+              className="ml-1 !text-base font-medium"
+            />
           </div>
           <TokenBreakdown
-            {...data.tvlBreakdown}
+            label={tvlBreakdownLabel} // TODO
+            associated={data.breakdown.associated}
+            ether={data.breakdown.ether}
+            stable={data.breakdown.stablecoin}
+            other={
+              data.breakdown.total -
+              data.breakdown.associated -
+              data.breakdown.ether -
+              data.breakdown.stablecoin
+            }
             className="h-[3px] w-[180px]"
           />
         </div>
       </TooltipTrigger>
       <TooltipContent>
         <div className="space-y-2">
-          {data.tvlBreakdown.label}
-          {data.tvlWarnings.map((warning, i) => (
+          {tvlBreakdownLabel}
+          {tvlWarnings.map((warning, i) => (
             <WarningBar
               key={`tvl-warning-${i}`}
               icon={RoundedWarningIcon}

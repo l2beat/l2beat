@@ -23,24 +23,17 @@ export const getCachedScalingSummaryData = cache(
     excludeAssociatedTokens,
     ...rest
   }: { range: TvlChartRange; excludeAssociatedTokens?: boolean } & (
-    | { type: 'all' | TvlProject['type'] }
+    | { type: 'layer2' }
     | { type: 'projects'; projectIds: string[] }
   )) => {
     const projectsFilter = (() => {
-      if (rest.type === 'all') {
-        return () => true
-      }
-      if (rest.type === 'projects') {
-        const projectIds = new Set(rest.projectIds)
-        return (project: TvlProject) => projectIds.has(project.id)
-      }
-
       if (rest.type === 'layer2') {
         return (project: TvlProject) =>
           ['layer2', 'layer3'].includes(project.type)
       }
 
-      return (project: TvlProject) => project.type === rest.type
+      const projectIds = new Set(rest.projectIds)
+      return (project: TvlProject) => projectIds.has(project.id)
     })()
 
     const tvlProjects = getTvlProjects().filter(projectsFilter)
@@ -124,6 +117,10 @@ export const getCachedScalingSummaryData = cache(
   ['getScalingSummaryData'],
   { revalidate: 60 * 10 },
 )
+
+export type ScalingSummaryData = Awaited<
+  ReturnType<typeof getCachedScalingSummaryData>
+>
 
 function getBreakdown(values: ValueRecord[]) {
   return values.reduce(

@@ -2,6 +2,7 @@ import React from 'react'
 
 import { TrendArrowDownIcon, TrendArrowUpIcon } from '~/icons/trend-arrow'
 import { cn } from '~/utils/cn'
+import { formatPercent } from '~/utils/get-percentage-change'
 
 interface Props {
   value: number
@@ -27,7 +28,7 @@ export function PercentChange({ value, className }: Props) {
       {isLess && (
         <TrendArrowDownIcon className="absolute top-1/2 -translate-y-1/2" />
       )}
-      <span className="relative pl-3.5">{value}%</span>
+      <span className="relative pl-3.5">{formatPercent(value)}</span>
     </span>
   )
 }

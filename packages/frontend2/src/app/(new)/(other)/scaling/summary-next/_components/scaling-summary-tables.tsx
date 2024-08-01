@@ -19,13 +19,13 @@ import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import { type Layer2, type Layer3 } from '@l2beat/config'
 import { useCookieState } from '~/hooks/use-cookie-state'
 import { api } from '~/trpc/react'
+import { toTableRows } from '../_utils/to-table-rows'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 
 interface Props {
-  projects: CommonScalingEntry[]
+  projects: ScalingSummaryEntry[]
 }
 
 export function ScalingSummaryTables({ projects }: Props) {
@@ -38,34 +38,62 @@ export function ScalingSummaryTables({ projects }: Props) {
 
   const layer2sProjects = useMemo(
     () =>
-      projects.filter(
-        (item) =>
-          item.type === 'layer2' &&
-          !item.isArchived &&
-          !item.isUpcoming &&
-          includeFilters(item),
-      ) as CommonScalingEntry<Layer2>[],
-    [projects, includeFilters],
+      data
+        ? toTableRows({
+            projects: projects.filter(
+              (item) =>
+                item.type === 'layer2' &&
+                !item.isArchived &&
+                !item.isUpcoming &&
+                includeFilters(item),
+            ),
+            summaryData: data,
+          })
+        : [],
+    [projects, includeFilters, data],
   )
-  const layer3sProjects = useMemo(
+  {
+    /*const layer3sProjects = useMemo(
     () =>
-      projects.filter(
-        (item) =>
-          item.type === 'layer3' &&
-          !item.isArchived &&
-          !item.isUpcoming &&
-          includeFilters(item),
-      ) as CommonScalingEntry<Layer3>[],
-    [projects, includeFilters],
+      data
+        ? toTableRows({
+            projects: projects.filter(
+              (item) =>
+                item.type === 'layer3' &&
+                !item.isArchived &&
+                !item.isUpcoming &&
+                includeFilters(item),
+            ),
+            summaryData: data,
+          })
+        : [],
+    [projects, includeFilters, data],
   )
   const upcomingProjects = useMemo(
-    () => projects.filter((item) => item.isUpcoming && includeFilters(item)),
-    [projects, includeFilters],
+    () =>
+      data
+        ? toTableRows({
+            projects: projects.filter(
+              (item) => item.isUpcoming && includeFilters(item),
+            ),
+            summaryData: data,
+          })
+        : [],
+    [projects, includeFilters, data],
   )
   const archivedProjects = useMemo(
-    () => projects.filter((item) => item.isArchived && includeFilters(item)),
-    [projects, includeFilters],
-  )
+    () =>
+      data
+        ? toTableRows({
+            projects: projects.filter(
+              (item) => item.isArchived && includeFilters(item),
+            ),
+            summaryData: data,
+          })
+        : [],
+    [projects, includeFilters, data],
+  )*/
+  }
 
   const layer2sTable = useTable({
     data: layer2sProjects,
@@ -83,7 +111,7 @@ export function ScalingSummaryTables({ projects }: Props) {
     },
   })
 
-  const layer3sTable = useTable({
+  /*const layer3sTable = useTable({
     data: layer3sProjects,
     columns: summaryLayer3sColumns,
     getCoreRowModel: getCoreRowModel(),
@@ -129,16 +157,18 @@ export function ScalingSummaryTables({ projects }: Props) {
         },
       ],
     },
-  })
+  })*/
+
+  if (!data) return null
 
   return (
     <div className="space-y-2">
       <ScalingFilters
         items={[
           ...layer2sProjects,
-          ...layer3sProjects,
-          ...archivedProjects,
-          ...upcomingProjects,
+          //...layer3sProjects,
+          //...archivedProjects,
+          //...upcomingProjects,
         ]}
       />
       <Tabs defaultValue="layer2s" className="w-full">
@@ -149,7 +179,7 @@ export function ScalingSummaryTables({ projects }: Props) {
               <span className="max-md:hidden">Layer 2 projects</span>
               <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
             </TabsTrigger>
-            <TabsTrigger value="layer3s" className="gap-1.5">
+            {/*<TabsTrigger value="layer3s" className="gap-1.5">
               <span className="md:hidden">Layer 3s</span>
               <span className="max-md:hidden">Layer 3 projects</span>
               <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
@@ -163,14 +193,14 @@ export function ScalingSummaryTables({ projects }: Props) {
               <span className="md:hidden">Archived</span>
               <span className="max-md:hidden">Archived projects</span>
               <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>
+            </TabsTrigger>*/}
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="layer2s">
           <BasicTable table={layer2sTable} />
           <ScalingLegend />
         </TabsContent>
-        <TabsContent value="layer3s">
+        {/*<TabsContent value="layer3s">
           <BasicTable table={layer3sTable} />
         </TabsContent>
         <TabsContent value="upcoming">
@@ -178,7 +208,7 @@ export function ScalingSummaryTables({ projects }: Props) {
         </TabsContent>
         <TabsContent value="archived">
           <BasicTable table={archivedTable} />
-        </TabsContent>
+        </TabsContent>*/}
       </Tabs>
     </div>
   )

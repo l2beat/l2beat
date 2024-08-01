@@ -1,4 +1,4 @@
-import { type Layer2, type Layer3 } from '@l2beat/config'
+import { type StageConfig, type Layer2, type Layer3 } from '@l2beat/config'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export function getCommonScalingEntry<
@@ -13,6 +13,7 @@ export function getCommonScalingEntry<
   hasImplementationChanged: boolean
 }) {
   const common = {
+    id: project.id,
     name: project.display.name,
     href: `/scaling/projects/${project.display.slug}`,
     shortName: project.display.shortName,
@@ -44,7 +45,7 @@ export function getCommonScalingEntry<
     type: project.type,
     provider: project.display.provider,
     hostChain: project.hostChain,
-    stage: undefined,
+    stage: { stage: 'NotApplicable' } satisfies StageConfig,
   }
 }
 
