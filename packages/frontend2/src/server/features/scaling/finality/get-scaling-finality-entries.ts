@@ -7,6 +7,7 @@ import {
   type ScalingFinalityEntry,
   type ScalingFinalityEntryData,
 } from './types'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
 export async function getScalingFinalityEntries(
   projects: Layer2[],
@@ -20,7 +21,7 @@ export async function getScalingFinalityEntries(
   return orderedProjects
     .map((project) => {
       const hasImplementationChanged =
-        !!implementationChangeReport?.projects[project.id.toString()]
+        !!implementationChangeReport.projects[project.id.toString()]
 
       return getScalingFinalityEntry(
         project,
@@ -82,20 +83,12 @@ function getScalingFinalityEntry(
   hasImplementationChanged?: boolean,
 ): ScalingFinalityEntry {
   return {
-    entryType: 'finality',
-    type: project.type,
-    name: project.display.name,
-    href: `/scaling/projects/${project.display.slug}`,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    category: project.display.category,
+    ...getCommonScalingEntry({
+      project,
+      isVerified: false,
+      hasImplementationChanged: hasImplementationChanged ?? false,
+    }),
     dataAvailabilityMode: project.dataAvailability?.mode,
-    provider: project.display.provider,
-    warning: project.display.warning,
-    redWarning: project.display.redWarning,
-    hasImplementationChanged,
-    purposes: project.display.purposes,
-    stage: project.stage,
     data: getFinalityData(finalityProjectData, project),
     finalizationPeriod: project.display.finality?.finalizationPeriod,
   }

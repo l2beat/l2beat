@@ -9,12 +9,14 @@ import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
   items: CommonScalingEntry[]
+  showRollupsOnly?: boolean
   additionalFiltersLeft?: React.ReactNode
   additionalFiltersRight?: React.ReactNode
 }
 
 export function BaseScalingFilters({
   items,
+  showRollupsOnly,
   additionalFiltersLeft,
   additionalFiltersRight,
 }: Props) {
@@ -61,15 +63,17 @@ export function BaseScalingFilters({
     <OverflowWrapper>
       <div className="flex flex-row justify-between space-x-2">
         <div className="flex space-x-2">
-          <Checkbox
-            id="rollups-only"
-            onCheckedChange={(checked) =>
-              filter.set({ rollupsOnly: !!checked })
-            }
-            disabled={!isRollupInItems}
-          >
-            Rollups only
-          </Checkbox>
+          {showRollupsOnly && (
+            <Checkbox
+              id="rollups-only"
+              onCheckedChange={(checked) =>
+                filter.set({ rollupsOnly: !!checked })
+              }
+              disabled={!isRollupInItems}
+            >
+              Rollups only
+            </Checkbox>
+          )}
           <TableFilter
             title="Type"
             options={typeOptions}

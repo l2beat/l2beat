@@ -82,7 +82,6 @@ function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
       !!implementationChangeReport.projects[layer2.id.toString()]
 
     const entry: ScalingSummaryLayer2sEntry = {
-      entryType: 'summary',
       ...getCommonScalingEntry({
         project: layer2,
         isVerified,
@@ -136,7 +135,6 @@ function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
       !!implementationChangeReport.projects[layer3.id.toString()]
 
     const entry: ScalingSummaryLayer3sEntry = {
-      entryType: 'summary',
       ...getCommonScalingEntry({
         project: layer3,
         isVerified,
