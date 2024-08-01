@@ -87,7 +87,7 @@ describe(ManagedMultiIndexer.name, () => {
     })
   })
 
-  describe(ManagedMultiIndexer.prototype.updateConfigurationsState.name, () => {
+  describe(ManagedMultiIndexer.prototype.updateSavedConfigurations.name, () => {
     it('adds, updates, deletes and trims', async () => {
       const indexerService = mockObject<IndexerService>({
         insertConfigurations: async () => {},
@@ -99,11 +99,11 @@ describe(ManagedMultiIndexer.name, () => {
       })
       const indexer = new TestIndexer({ ...common, indexerService, db })
 
-      await indexer.updateConfigurationsState({
+      await indexer.updateSavedConfigurations({
         toAdd: [actual('a', 100, null)],
         toUpdate: [saved('b', 100, 1000, 1000, 'props')],
         toDelete: ['c', 'd'],
-        toTrim: [removal('b', 50, 99), removal('b', 1001, 1500)],
+        toRemoveData: [removal('b', 50, 99), removal('b', 1001, 1500)],
       })
 
       expect(indexerService.insertConfigurations).toHaveBeenOnlyCalledWith(

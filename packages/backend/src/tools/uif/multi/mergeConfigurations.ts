@@ -13,11 +13,26 @@ interface ConfigurationState<T> {
   configurations: SavedConfiguration<T>[]
 }
 
-export function getNewConfigurationsState<T>(
+export interface ConfigurationsDiff<T> {
+  toAdd: Configuration<T>[]
+  toUpdate: SavedConfiguration<T>[]
+  toDelete: string[]
+  toRemoveData: RemovalConfiguration[]
+}
+
+export interface MergeResult<T> {
+  diff: ConfigurationsDiff<T>
+  configurations: SavedConfiguration<T>[]
+  safeHeight: number
+}
+
+export function mergeConfigurations<T>(
+  saved: SavedConfiguration<string>[],
   actual: Configuration<T>[],
   serializeConfiguration: (value: T) => string,
-  saved: SavedConfiguration<string>[],
-) {
+): MergeResult<T> {
+  assert(actual.length > 0, 'Actual configurations should not be empty')
+
   const state = initializeEmptyState<T>()
 
   const savedMap = new Map(saved.map((c) => [c.id, c]))
@@ -63,9 +78,10 @@ export function getNewConfigurationsState<T>(
       toAdd: state.added,
       toUpdate: Array.from(state.updated.values()),
       toDelete: state.deleted,
-      toTrim: state.trimmed,
+      toRemoveData: state.trimmed,
     },
     configurations: state.configurations,
+    safeHeight: getSafeHeight(state.configurations),
   }
 }
 
@@ -221,4 +237,12 @@ function findDeleted<T>(
       to: c.currentHeight,
     })
   }
+}
+
+function getSafeHeight<T>(configurations: SavedConfiguration<T>[]) {
+  return configurations.reduce(
+    (agg, curr) =>
+      (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
+    Infinity,
+  )
 }

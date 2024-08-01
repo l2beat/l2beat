@@ -1,14 +1,13 @@
 import { assert } from '@l2beat/backend-tools'
 import { ChildIndexer } from '@l2beat/uif'
 import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
-import { getNewConfigurationsState } from './getNewConfigurationsState'
+import { ConfigurationsDiff, mergeConfigurations } from './mergeConfigurations'
 import { toRanges } from './toRanges'
 import {
   Configuration,
   ConfigurationRange,
   ManagedMultiIndexerOptions,
   RemovalConfiguration,
-  SavedConfiguration,
 } from './types'
 
 export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
@@ -37,64 +36,55 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   // #region initialize
 
   async initialize() {
-    const previous = await this.options.indexerService.getSavedConfigurations(
+    const saved = await this.options.indexerService.getSavedConfigurations(
       this.indexerId,
     )
-
-    const state = getNewConfigurationsState(
+    const state = mergeConfigurations(
+      saved,
       this.options.configurations,
       this.options.serializeConfiguration,
-      previous,
     )
-
-    await this.updateConfigurationsState(state.diff)
-
+    await this.updateSavedConfigurations(state.diff)
     this.ranges = toRanges(state.configurations)
-
-    return { safeHeight: getSafeHeight(state.configurations) }
+    return { safeHeight: state.safeHeight }
   }
 
-  async updateConfigurationsState(state: {
-    toAdd: Configuration<T>[]
-    toUpdate: SavedConfiguration<T>[]
-    toDelete: string[]
-    toTrim: RemovalConfiguration[]
-  }) {
+  async updateSavedConfigurations(diff: ConfigurationsDiff<T>) {
     return await this.options.db.transaction(async () => {
-      if (state.toAdd.length > 0) {
+      if (diff.toAdd.length > 0) {
         await this.options.indexerService.insertConfigurations(
           this.indexerId,
-          state.toAdd,
+          diff.toAdd,
           this.options.serializeConfiguration,
         )
         this.logger.info('Inserted configurations', {
-          configurations: state.toAdd.length,
+          configurations: diff.toAdd.length,
         })
       }
 
-      if (state.toUpdate.length > 0) {
+      if (diff.toUpdate.length > 0) {
         await this.options.indexerService.upsertConfigurations(
           this.indexerId,
-          state.toUpdate,
+          diff.toUpdate,
           this.options.serializeConfiguration,
         )
         this.logger.info('Updated configurations', {
-          configurations: state.toUpdate.length,
+          configurations: diff.toUpdate.length,
         })
       }
 
-      if (state.toDelete.length > 0) {
+      if (diff.toDelete.length > 0) {
         await this.options.indexerService.deleteConfigurations(
           this.indexerId,
-          state.toDelete,
+          diff.toDelete,
         )
         this.logger.info('Deleted configurations', {
-          configurations: state.toDelete.length,
+          configurations: diff.toDelete.length,
         })
       }
 
-      if (state.toTrim.length > 0) {
-        await this.removeData(state.toTrim)
+      if (diff.toRemoveData.length > 0) {
+        await this.removeData(diff.toRemoveData)
       }
     })
   }
@@ -196,12 +186,4 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   abstract removeData(configurations: RemovalConfiguration[]): Promise<void>
 
   // #endregion
-}
-
-function getSafeHeight<T>(configurations: SavedConfiguration<T>[]) {
-  return configurations.reduce(
-    (agg, curr) =>
-      (agg = Math.min(agg, curr.currentHeight ?? curr.minHeight - 1)),
-    Infinity,
-  )
 }
