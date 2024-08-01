@@ -66,7 +66,7 @@ export function TvlChart({ milestones, tag = 'summary' }: Props) {
   const latestTvlRecord = columns.at(-1)?.data ?? { usdValue: 0, ethValue: 0 }
   const tvl = latestTvlRecord[unit === 'usd' ? 'usdValue' : 'ethValue']
   const pastTvl = firstTvlRecord[unit === 'usd' ? 'usdValue' : 'ethValue']
-  const tvlChange = Number((((tvl - pastTvl) / pastTvl) * 100).toFixed(2))
+  const tvlChange = Number((tvl - pastTvl) / pastTvl)
 
   return (
     <ChartProvider
