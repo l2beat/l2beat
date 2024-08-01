@@ -98,6 +98,10 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
     const configurations = range.configurations
 
     if (configurations.length === 0) {
+      this.logger.info('Skipping update', {
+        from,
+        to: Math.min(range.to, to),
+      })
       return Math.min(range.to, to)
     }
 
