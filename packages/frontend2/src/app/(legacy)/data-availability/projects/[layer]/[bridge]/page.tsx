@@ -16,7 +16,9 @@ interface Props {
 export default async function Page(props: Props) {
   const daLayer = daLayers.find((p) => p.display.slug === props.params.layer)
   if (!daLayer) return notFound()
-  const daBridge = daLayer.bridges.find((b) => b.id === props.params.bridge)
+  const daBridge = daLayer.bridges.find(
+    (b) => b.display.slug === props.params.bridge,
+  )
   if (!daBridge) return notFound()
 
   const header = (
