@@ -1,6 +1,7 @@
+import 'server-only'
+
 import { type ResponseCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { cookies } from 'next/headers'
-import 'server-only'
 import {
   type KnownCookieName,
   type KnownCookieValue,
