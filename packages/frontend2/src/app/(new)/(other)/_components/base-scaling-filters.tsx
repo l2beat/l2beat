@@ -9,10 +9,15 @@ import { type CommonScalingEntry } from '~/server/features/scaling/get-common-sc
 
 interface Props {
   items: CommonScalingEntry[]
-  additionalFilters?: React.ReactNode
+  additionalFiltersLeft?: React.ReactNode
+  additionalFiltersRight?: React.ReactNode
 }
 
-export function BaseScalingFilters({ items, additionalFilters }: Props) {
+export function BaseScalingFilters({
+  items,
+  additionalFiltersLeft,
+  additionalFiltersRight,
+}: Props) {
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
@@ -89,16 +94,9 @@ export function BaseScalingFilters({ items, additionalFilters }: Props) {
             value={filter.purpose}
             onValueChange={(value) => filter.set({ purpose: value })}
           />
-          {additionalFilters}
+          {additionalFiltersLeft}
         </div>
-
-        <Checkbox
-          onCheckedChange={(checked) => filter.set({ rollupsOnly: !!checked })}
-          disabled={!isRollupInItems}
-          id={'exclude-associated-tokens'}
-        >
-          Exclude associated tokens
-        </Checkbox>
+        {additionalFiltersRight}
       </div>
     </OverflowWrapper>
   )

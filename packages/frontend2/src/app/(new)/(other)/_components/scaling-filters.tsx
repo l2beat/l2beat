@@ -30,6 +30,6 @@ export function ScalingFilters({ items }: Props) {
   )
 
   return (
-    <BaseScalingFilters items={items} additionalFilters={hostChainFilter} />
+    <BaseScalingFilters items={items} additionalFiltersLeft={hostChainFilter} />
   )
 }
