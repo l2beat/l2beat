@@ -95,7 +95,53 @@ export const termstructure: Layer2 = {
         tokens: '*',
       }),
     ],
-    trackedTxs: [], // TODO: Add tracked transactions
+    trackedTxs: [
+      {
+        uses: [{ type: 'l2costs', subtype: 'batchSubmissions' }],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x09E01425780094a9754B2bd8A3298f73ce837CF9',
+          ),
+          selector: '0x0d874ce4',
+          functionSignature:
+            'function commitBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])',
+          sinceTimestamp: new UnixTime(1716263903),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'proofSubmissions' },
+          { type: 'l2costs', subtype: 'proofSubmissions' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x09E01425780094a9754B2bd8A3298f73ce837CF9',
+          ),
+          selector: '0x70ab1eb6',
+          functionSignature:
+            'function verifyBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])',
+          sinceTimestamp: new UnixTime(1716263903),
+        },
+      },
+      {
+        uses: [
+          { type: 'liveness', subtype: 'stateUpdates' },
+          { type: 'l2costs', subtype: 'stateUpdates' },
+        ],
+        query: {
+          formula: 'functionCall',
+          address: EthereumAddress(
+            '0x09E01425780094a9754B2bd8A3298f73ce837CF9',
+          ),
+          selector: '0x632a5607',
+          functionSignature:
+            'function executeBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])',
+          sinceTimestamp: new UnixTime(1716263903),
+        },
+      },
+    ],
   },
   type: 'layer2',
   riskView: makeBridgeCompatible({
