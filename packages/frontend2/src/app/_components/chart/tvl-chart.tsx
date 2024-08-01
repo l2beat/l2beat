@@ -184,7 +184,7 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (
