@@ -3,6 +3,7 @@ import round from 'lodash/round'
 import { type ReactNode } from 'react'
 import { ProjectsUsedIn } from '~/app/(new)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { EM_DASH } from '~/app/_components/nav/consts'
 import {
   Tooltip,
   TooltipContent,
@@ -22,7 +23,7 @@ export function DaProjectStats({ project }: Props) {
     ? round(project.header.durationStorage / UnixTime.DAY, 2)
     : undefined
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
+    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 md:grid-cols-3 md:px-6 md:py-5 dark:bg-zinc-900">
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"
@@ -33,15 +34,19 @@ export function DaProjectStats({ project }: Props) {
       <ProjectStat
         title="Economic security"
         value={
-          project.header.economicSecurity?.status === 'Synced'
-            ? formatCurrency(
-                project.header.economicSecurity.economicSecurity,
-                'usd',
-                {
-                  showLessThanMinimum: false,
-                },
-              )
-            : 'Not synced'
+          // EC not set
+          project.header.economicSecurity
+            ? // EC set but not synced
+              project.header.economicSecurity.status === 'Synced'
+              ? formatCurrency(
+                  project.header.economicSecurity.economicSecurity,
+                  'usd',
+                  {
+                    showLessThanMinimum: false,
+                  },
+                )
+              : 'Not synced'
+            : EM_DASH
         }
       />
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
@@ -93,7 +98,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 fill-gray-500 dark:fill-gray-600 md:size-3.5" />
+              <InfoIcon className="mt-0.5 fill-gray-500 md:size-3.5 dark:fill-gray-600" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>
