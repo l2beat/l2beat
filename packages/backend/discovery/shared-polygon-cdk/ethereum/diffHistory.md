@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x25b3c5723fd7af1867dd9877734aee9f8b274646
+
+# Diff at Tue, 30 Jul 2024 11:14:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20324826
+- current block number: 20324826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20324826 (main branch discovery), not current.
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
+      fieldMeta:
++        {"rollupsData":{"severity":"MEDIUM","description":"Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"},"rollupTypes":{"description":"struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"},"isVerifyingBatches":{"description":"Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."}}
+    }
+```
+
 Generated with discovered.json: 0x45e85d1936f082cff5ce1c0e9eecb83a443e9505
 
 # Diff at Tue, 23 Jul 2024 14:45:52 GMT:

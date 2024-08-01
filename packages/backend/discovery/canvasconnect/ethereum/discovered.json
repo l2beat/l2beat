@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825363,
   "configHash": "0x19ddeca30a70f486e371b6ec9d33ee69634c48c8e3064a3a5de8bfe1bb713263",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "GpsFactRegistryAdapter",
@@ -489,5 +489,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

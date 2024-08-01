@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x4220929a666aee751752bbed1141d7d708ba2ef8
+
+# Diff at Tue, 30 Jul 2024 11:12:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20368673
+- current block number: 20368673
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20368673 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x05f23282FFDCA8286E4738C1aF79079f3d843750) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
 Generated with discovered.json: 0x8d4557f91adb07eed80d7b422ffce2b174c2270e
 
 # Diff at Tue, 23 Jul 2024 10:36:43 GMT:

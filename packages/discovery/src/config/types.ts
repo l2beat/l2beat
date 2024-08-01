@@ -12,6 +12,8 @@ export interface DiscoveryModuleConfig {
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
+  readonly printTemplateSimilarity?: boolean
+  readonly templateSimilarityCutoff?: number
 }
 
 export interface DiscoveryChainConfig {

@@ -2,6 +2,7 @@ import {
   assert,
   ProjectId,
   Sentiment,
+  WarningValueWithSentiment,
   formatSeconds,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
@@ -502,6 +503,39 @@ export function EXIT_WINDOW(
   }
 }
 
+export function EXIT_WINDOW_NITRO(
+  l2TimelockDelay: number,
+  selfSequencingDelay: number,
+  challengeWindowSeconds: number,
+  validatorAfkTime: number,
+  l1TimelockDelay: number,
+): ScalingProjectRiskViewEntry {
+  const description = `Non-emergency upgrades are initiated on L2 and go through a ${formatSeconds(
+    l2TimelockDelay,
+  )} delay. Since there is a ${formatSeconds(
+    selfSequencingDelay,
+  )} delay to force a tx (forcing the inclusion in the following state update), users have only ${formatSeconds(
+    l2TimelockDelay - selfSequencingDelay,
+  )} to exit. 
+    
+  If users post a tx after that time, they would only be able to self propose a state root ${formatSeconds(
+    challengeWindowSeconds + validatorAfkTime, // see `_validatorIsAfk()` https://etherscan.io/address/0xA0Ed0562629D45B88A34a342f20dEb58c46C15ff#code#F1#L43
+  )} after the last state root was proposed and then wait for the ${formatSeconds(
+    challengeWindowSeconds,
+  )} challenge window, while the upgrade would be confirmed just after the ${formatSeconds(
+    challengeWindowSeconds,
+  )} challenge window and the ${formatSeconds(l1TimelockDelay)} L1 timelock.`
+  const warning: WarningValueWithSentiment = {
+    value: 'The Security Council can upgrade with no delay.',
+    sentiment: 'bad',
+  }
+  return {
+    ...EXIT_WINDOW(l2TimelockDelay, selfSequencingDelay),
+    description: description,
+    warning: warning,
+  }
+}
+
 export const EXIT_WINDOW_NON_UPGRADABLE: ScalingProjectRiskViewEntry = {
   value: '∞',
   description:
@@ -567,6 +601,7 @@ export const RISK_VIEW = {
   PROPOSER_SELF_PROPOSE_ROOTS,
   UNDER_REVIEW_RISK,
   EXIT_WINDOW,
+  EXIT_WINDOW_NITRO,
   EXIT_WINDOW_NON_UPGRADABLE,
   EXIT_WINDOW_UNKNOWN,
 }

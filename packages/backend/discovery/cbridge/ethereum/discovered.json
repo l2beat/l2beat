@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20331848,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -219,6 +219,19 @@
         ],
         "relaxed": false,
         "relaxThreshold": 2
+      },
+      "fieldMeta": {
+        "numRelaxedGuards": {
+          "description": "Number of relaxed guards in the Sentinel."
+        },
+        "relaxThreshold": {
+          "severity": "MEDIUM",
+          "description": "Threshold of relaxed Guards needed to relax the Sentinel"
+        },
+        "relaxed": {
+          "severity": "MEDIUM",
+          "description": "An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)"
+        }
       },
       "derivedName": "Sentinel"
     },
@@ -791,5 +804,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x0ba4c97ce4590eccf4c9766af8432e548d700a62
+
+# Diff at Tue, 30 Jul 2024 11:13:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20362600
+- current block number: 20362600
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20362600 (main branch discovery), not current.
+
+```diff
+    contract ETH Vault (0x1Bf68A9d1EaEe7826b3593C20a0ca93293cb489a) {
+    +++ description: None
+      fieldMeta:
++        {"policyAdmin":{"severity":"MEDIUM","description":"Can set bridging fees, gas limits and can pause / unpause the bridge or censor individual withdrawals."},"required":{"severity":"HIGH","description":"Threshold of the bridge governance admin multisig"}}
+    }
+```
+
 Generated with discovered.json: 0x91684e58959b4d6b2f34fc48ef10d4839aa81ab5
 
 # Diff at Mon, 22 Jul 2024 14:15:23 GMT:

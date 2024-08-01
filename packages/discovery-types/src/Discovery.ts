@@ -46,18 +46,21 @@ export interface DiscoveryOutput {
 }
 
 export interface DiscoveryCustomType {
-  typeCaster?: string | null
-  arg?: Record<string, string | number> | null
-  description?: string | null
-  severity?: string | null
+  typeCaster?: string
+  arg?: Record<string, string | number>
+}
+
+export interface FieldMeta {
+  description?: string
+  severity?: ContractFieldSeverity
 }
 
 export interface Meta {
-  descriptions?: string[]
   roles?: StackRole[]
   assignedPermissions?: Record<string, EthereumAddress[]>
   categories?: StackCategory[]
   types?: ContractValueType[]
+  descriptions?: string[]
   severity?: ContractFieldSeverity
 }
 
@@ -79,6 +82,7 @@ export type ContractParameters = {
   errors?: Record<string, string>
   ignoreInWatchMode?: string[]
   usedTypes?: DiscoveryCustomType[]
+  fieldMeta?: Record<string, FieldMeta>
 } & Meta
 
 export type ContractValue =

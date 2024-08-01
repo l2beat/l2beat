@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x3c024b87baed4c457cb832b6529c8aeaaab5fc41
+
+# Diff at Tue, 30 Jul 2024 15:56:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20389507
+- current block number: 20420404
+
+## Description
+
+Upgraded implementation. (unverified contract)
+
+## Watched changes
+
+```diff
+    contract Vault6 (0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a) {
+    +++ description: None
+      values.$implementation:
+-        "0x5D9A457ce3F6ab74B7854DA7Cdc8ac5cc5bbb16C"
++        "0x118cbd7a4769846AD4928598D1f805a509Cc8c0d"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389507 (main branch discovery), not current.
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
+      fieldMeta:
++        {"proposalCount":{"severity":"MEDIUM","description":"The amount of proposals ever created. Goes up by 1 for each proposal."}}
+    }
+```
+
 Generated with discovered.json: 0xd4edabd36b47d6d04eb8b764f4fba365729e4e7a
 
 # Diff at Fri, 26 Jul 2024 08:24:04 GMT:

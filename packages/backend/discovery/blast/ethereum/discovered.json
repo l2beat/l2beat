@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20317887,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -187,6 +187,12 @@
         "version": "1.10.0",
         "VERSION": 0
       },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
+      },
       "derivedName": "SystemConfig"
     },
     {
@@ -369,6 +375,12 @@
         "TOKEN": "0x0000000000000000000000000000000000000000",
         "version": "1.0.0"
       },
+      "fieldMeta": {
+        "insuranceFeeBips": {
+          "severity": "MEDIUM",
+          "description": "Insurance fee taken from positive yields"
+        }
+      },
       "derivedName": "ETHYieldManager"
     },
     {
@@ -394,6 +406,12 @@
         "sharePrice": "1000000000000000000000000000",
         "TOKEN": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "version": "1.0.0"
+      },
+      "fieldMeta": {
+        "insuranceFeeBips": {
+          "severity": "MEDIUM",
+          "description": "Insurance fee taken from positive yields"
+        }
       },
       "derivedName": "USDYieldManager"
     },
@@ -1233,5 +1251,5 @@
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
     "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

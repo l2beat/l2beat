@@ -17,7 +17,8 @@ export const worldcoinsmtb: ZkCatalogProject = {
           '0xb5f23A0c92F2f4aeE506FA3B1Cc2813820d13258',
         ),
         chainId: ChainId.ETHEREUM,
-        verified: 'no',
+        verified: 'yes',
+        performedBy: PERFORMED_BY.l2beat,
         subVerifiers: [
           {
             name: 'RegisterCircuitSize100',
@@ -94,7 +95,8 @@ export const worldcoinsmtb: ZkCatalogProject = {
           '0x43B68ccBa7FC726540768fD1537c3179283140ed',
         ),
         chainId: ChainId.ETHEREUM,
-        verified: 'no',
+        verified: 'yes',
+        performedBy: PERFORMED_BY.l2beat,
         subVerifiers: [
           {
             name: 'DeleteCircuitSize100',

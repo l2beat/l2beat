@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x5be646dcbd4e259784675edfccb4f73b54a477d6
+
+# Diff at Tue, 30 Jul 2024 11:16:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20367491
+- current block number: 20367491
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20367491 (main branch discovery), not current.
+
+```diff
+    contract TierProvider (0x3a1A900680BaADb889202faf12915F7E47B71ddd) {
+    +++ description: None
+      fieldMeta:
++        {"TIER_SGX":{"description":"verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN_MINORITY":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_GUARDIAN":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_OPTIMISTIC":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"},"TIER_SGX_ZKVM":{"description":"tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"}}
+    }
+```
+
 Generated with discovered.json: 0xb2a593359c71ae5bfd7af8acf5a2c646669ae3c5
 
 # Diff at Tue, 23 Jul 2024 06:40:25 GMT:

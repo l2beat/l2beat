@@ -1,5 +1,6 @@
 export { createDatabase, type Database } from './database'
 export { type Transaction } from './kysely'
+export * from './kysely/generated/enums'
 
 // Records
 

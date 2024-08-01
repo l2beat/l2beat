@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xabc49245ffd85c3972902ab1568f7a8c3fdde61b
+
+# Diff at Tue, 30 Jul 2024 11:12:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ProxyOwner (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      fieldMeta:
++        {"getOwners":{"severity":"LOW","description":"Array of addresses that are owners, allowed to chage contract values."}}
+    }
+```
+
 Generated with discovered.json: 0x1d4c7d8eb9cff7a28b9c42692183109e802eac22
 
 # Diff at Mon, 10 Jun 2024 06:22:03 GMT:

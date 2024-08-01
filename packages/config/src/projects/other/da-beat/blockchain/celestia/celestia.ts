@@ -1,4 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import { NO_BRIDGE } from '../../templates/no-bridge-template'
 import { DaEconomicSecurityRisk } from '../../types/DaEconomicSecurityRisk'
 import { DaFraudDetectionRisk } from '../../types/DaFraudDetectionRisk'
 import { DaLayer } from '../../types/DaLayer'
@@ -6,7 +7,6 @@ import { DasErasureCodingProof } from '../../types/DasErasureCodingProof'
 import { DasErasureCodingScheme } from '../../types/DasErasureCodingScheme'
 import { linkByDA } from '../../utils/link-by-da'
 import { blobstream } from './bridges/blobstream'
-import { noBridge } from './bridges/no-bridge'
 
 export const celestia: DaLayer = {
   id: 'celestia',
@@ -31,7 +31,12 @@ export const celestia: DaLayer = {
   },
   technology:
     'Some note about the technology used by the data availability layer.\n## Markdown supported',
-  bridges: [noBridge, ...blobstream],
+  bridges: [
+    NO_BRIDGE({
+      layer: 'Celestia',
+    }),
+    ...blobstream,
+  ],
   usedIn: linkByDA({
     layer: (layer) => layer === 'Celestia',
   }),
