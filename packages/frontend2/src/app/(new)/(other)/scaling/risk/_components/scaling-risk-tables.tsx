@@ -1,7 +1,7 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
+
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { BasicTable } from '~/app/_components/table/basic-table'
@@ -15,54 +15,14 @@ import { useTable } from '~/hooks/use-table'
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
-import {
-  ScalingFilters,
-  type ScalingFiltersState,
-} from '../../../_components/scaling-filters'
+import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './table/columns'
-
-const DEFAULT_SCALING_FILTERS = {
-  rollupsOnly: false,
-  category: undefined,
-  stack: undefined,
-  stage: undefined,
-  purpose: undefined,
-  hostChain: undefined,
-}
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 
 export function ScalingRiskTables({
   projects,
 }: { projects: ScalingRiskEntry[] }) {
-  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
-    DEFAULT_SCALING_FILTERS,
-  )
-
-  const includeFilters = useCallback(
-    (entry: ScalingRiskEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === scalingFilters.stage
-            : false
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
+  const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
     () => projects.filter((item) => includeFilters(item)),
@@ -119,11 +79,7 @@ export function ScalingRiskTables({
 
   return (
     <div className="space-y-2">
-      <ScalingFilters
-        items={allProjects}
-        state={scalingFilters}
-        setState={setScalingFilters}
-      />
+      <ScalingFilters items={allProjects} />
       <Tabs defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
@@ -142,16 +98,10 @@ export function ScalingRiskTables({
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="active">
-          <BasicTable
-            table={activeTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={activeTable} />
         </TabsContent>
         <TabsContent value="archived">
-          <BasicTable
-            table={archivedTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={archivedTable} />
         </TabsContent>
       </Tabs>
     </div>

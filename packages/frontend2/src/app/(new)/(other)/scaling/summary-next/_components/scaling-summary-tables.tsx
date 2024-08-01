@@ -16,67 +16,21 @@ import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
-import {
-  ScalingFilters,
-  type ScalingFiltersState,
-} from '../../../_components/scaling-filters'
+import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 
 interface Props {
   layer2s: ScalingSummaryLayer2sEntry[]
   layer3s: ScalingSummaryLayer3sEntry[]
 }
 
-const DEFAULT_SCALING_FILTERS = {
-  rollupsOnly: false,
-  category: undefined,
-  stack: undefined,
-  stage: undefined,
-  purpose: undefined,
-  hostChain: undefined,
-}
-
 export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
-  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
-    DEFAULT_SCALING_FILTERS,
-  )
-
-  const includeFilters = useCallback(
-    (entry: ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === scalingFilters.stage
-            : false
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-        scalingFilters.hostChain !== undefined
-          ? scalingFilters.hostChain === 'Ethereum'
-            ? entry.type === 'layer2'
-            : entry.type === 'layer3' &&
-              entry.hostChainName === scalingFilters.hostChain
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
+  const includeFilters = useScalingFilter()
 
   const layer2sProjects = useMemo(
     () =>
@@ -177,8 +131,6 @@ export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
           ...archivedProjects,
           ...upcomingProjects,
         ]}
-        state={scalingFilters}
-        setState={setScalingFilters}
       />
       <Tabs defaultValue="layer2s" className="w-full">
         <OverflowWrapper>
@@ -206,29 +158,17 @@ export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="layer2s">
-          <BasicTable
-            table={layer2sTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={layer2sTable} />
           <ScalingLegend />
         </TabsContent>
         <TabsContent value="layer3s">
-          <BasicTable
-            table={layer3sTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={layer3sTable} />
         </TabsContent>
         <TabsContent value="upcoming">
-          <BasicTable
-            table={upcomingTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={upcomingTable} />
         </TabsContent>
         <TabsContent value="archived">
-          <BasicTable
-            table={archivedTable}
-            onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-          />
+          <BasicTable table={archivedTable} />
         </TabsContent>
       </Tabs>
     </div>

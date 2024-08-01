@@ -4,12 +4,8 @@ import { getImplementationChangeReport } from '../implementation-change-report/g
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { type ScalingDataAvailabilityEntry } from './types'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
-export async function getScalingDaEntries(
-  tvl: Record<ProjectId, number>,
-): Promise<ScalingDataAvailabilityEntry[]> {
+export async function getScalingDaEntries(tvl: Record<ProjectId, number>) {
   const activeProjects = [...layer2s, ...layer3s].filter(
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
@@ -35,7 +31,7 @@ function getScalingDataAvailabilityEntry(
   project: Layer2 | Layer3,
   hasImplementationChanged: boolean,
   isVerified: boolean,
-): ScalingDataAvailabilityEntry | undefined {
+) {
   if (!project.dataAvailability) return
 
   return {
@@ -47,3 +43,8 @@ function getScalingDataAvailabilityEntry(
     },
   }
 }
+
+export type ScalingDataAvailabilityEntry = Exclude<
+  ReturnType<typeof getScalingDataAvailabilityEntry>,
+  undefined
+>

@@ -33,10 +33,7 @@ export function DaRiskTable({ items }: Props) {
       <FilterWrapper>
         <TableFacetedFilter title="DA Layer" column={table.getColumn('name')} />
       </FilterWrapper>
-      <BasicTable
-        table={table}
-        onResetFilters={() => table.resetColumnFilters()}
-      />
+      <BasicTable table={table} />
     </>
   )
 }
