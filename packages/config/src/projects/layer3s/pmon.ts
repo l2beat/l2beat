@@ -6,7 +6,12 @@ import { Layer3 } from '../layer3s'
 export const pmon: Layer3 = underReviewL3({
   hostChain: ProjectId('arbitrum'),
   id: ProjectId('pmon'),
-  badges: [Badge.L3ParentChain.Arbitrum],
+  badges: [
+    Badge.L3ParentChain.Arbitrum,
+    Badge.DA.Celestia,
+    Badge.Stack.Orbit,
+    Badge.VM.EVM,
+  ],
   display: {
     category: 'Optimium',
     provider: 'Arbitrum',
