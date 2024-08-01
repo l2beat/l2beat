@@ -1,10 +1,10 @@
 import { TvlChart } from '~/app/_components/chart/tvl-chart'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getBridgesSummaryEntries } from '~/server/features/bridges/get-bridge-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { BridgesMvpWarning } from '../_components/bridges-mvp-warning'
 import { BridgesSummaryTables } from './_components/table/bridges-summary-tables'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
