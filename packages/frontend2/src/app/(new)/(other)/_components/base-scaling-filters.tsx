@@ -4,6 +4,7 @@ import React from 'react'
 import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   type ScalingDataAvailabilityEntry,
@@ -11,7 +12,6 @@ import {
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
 import { useScalingFilterValues } from './scaling-filter-context'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 
 export type BaseScalingFiltersEntry =
   | ScalingSummaryLayer2sEntry
@@ -74,39 +74,50 @@ export function BaseScalingFilters({ items, additionalFilters }: Props) {
 
   return (
     <OverflowWrapper>
-      <div className="flex space-x-2">
+      <div className="flex flex-row justify-between space-x-2">
+        <div className="flex space-x-2">
+          <Checkbox
+            onCheckedChange={(checked) =>
+              filter.set({ rollupsOnly: !!checked })
+            }
+            disabled={!isRollupInItems}
+          >
+            Rollups only
+          </Checkbox>
+          <TableFilter
+            title="Type"
+            options={typeOptions}
+            value={filter.category}
+            onValueChange={(value) => filter.set({ category: value })}
+          />
+          <TableFilter
+            title="Stack"
+            options={stackOptions}
+            value={filter.stack}
+            onValueChange={(value) => filter.set({ stack: value })}
+          />
+          <TableFilter
+            title="Stage"
+            options={stageOptions}
+            value={filter.stage}
+            onValueChange={(value) => filter.set({ stage: value })}
+          />
+          <TableFilter
+            title="Purpose"
+            options={purposeOptions}
+            value={filter.purpose}
+            onValueChange={(value) => filter.set({ purpose: value })}
+          />
+          {additionalFilters}
+        </div>
+
         <Checkbox
-          id="rollups-only"
           onCheckedChange={(checked) => filter.set({ rollupsOnly: !!checked })}
           disabled={!isRollupInItems}
+          id={'exclude-associated-tokens'}
         >
-          Rollups only
+          Exclude associated tokens
         </Checkbox>
-        <TableFilter
-          title="Type"
-          options={typeOptions}
-          value={filter.category}
-          onValueChange={(value) => filter.set({ category: value })}
-        />
-        <TableFilter
-          title="Stack"
-          options={stackOptions}
-          value={filter.stack}
-          onValueChange={(value) => filter.set({ stack: value })}
-        />
-        <TableFilter
-          title="Stage"
-          options={stageOptions}
-          value={filter.stage}
-          onValueChange={(value) => filter.set({ stage: value })}
-        />
-        <TableFilter
-          title="Purpose"
-          options={purposeOptions}
-          value={filter.purpose}
-          onValueChange={(value) => filter.set({ purpose: value })}
-        />
-        {additionalFilters}
       </div>
     </OverflowWrapper>
   )

@@ -18,7 +18,7 @@ export function useCookieState<Name extends KnownCookieName>(
 
   useEffect(() => {
     setCookie(name, state)
-  })
+  }, [name, state])
 
   return [state, setState]
 }

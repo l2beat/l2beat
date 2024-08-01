@@ -11,18 +11,18 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/app/_components/tabs'
+import { useCookieState } from '~/hooks/use-cookie-state'
 import { useTable } from '~/hooks/use-table'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
+import { api } from '~/trpc/react'
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../../_components/scaling-filters'
+import { toTableRows } from '../_utils/to-table-rows'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
-import { useCookieState } from '~/hooks/use-cookie-state'
-import { api } from '~/trpc/react'
-import { toTableRows } from '../_utils/to-table-rows'
-import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 
 interface Props {
   projects: ScalingSummaryEntry[]

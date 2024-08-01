@@ -1,4 +1,4 @@
-import { type StageConfig, type Layer2, type Layer3 } from '@l2beat/config'
+import { type Layer2, type Layer3, type StageConfig } from '@l2beat/config'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export function getCommonScalingEntry<
