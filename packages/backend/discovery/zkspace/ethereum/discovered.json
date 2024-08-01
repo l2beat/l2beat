@@ -1,7 +1,7 @@
 {
   "name": "zkspace",
   "chain": "ethereum",
-  "blockNumber": 20267733,
+  "blockNumber": 20432393,
   "configHash": "0x5a6adcb84f69f3427bb3009dbeca4565d6d8f3f0b71acce213a8c26f17995b0a",
   "version": 10,
   "contracts": [
@@ -53,8 +53,8 @@
           { "totalBlocksCommitted": 13463, "totalBlocksVerified": 13461 }
         ],
         "totalBlocksChecked": 39649,
-        "totalBlocksCommitted": 39651,
-        "totalBlocksVerified": 39651,
+        "totalBlocksCommitted": 39657,
+        "totalBlocksVerified": 39656,
         "totalCommittedPriorityRequests": 0,
         "totalOpenPriorityRequests": 0,
         "upgradePreparationActivationTime": 0,
