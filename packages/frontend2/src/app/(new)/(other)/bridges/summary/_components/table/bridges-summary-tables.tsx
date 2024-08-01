@@ -25,6 +25,9 @@ import {
   bridgesSummaryArchivedColumns,
 } from './columns'
 
+import ActiveIcon from '~/icons/active.svg'
+import ArchivedIcon from '~/icons/archived.svg'
+
 export interface Props {
   items: BridgesSummaryEntry[]
 }
@@ -94,13 +97,25 @@ export function BridgesSummaryTables({ items }: Props) {
         <OverflowWrapper>
           <TabsList>
             <TabsTrigger value="active" className="gap-1.5">
-              <span className="md:hidden">Active</span>
-              <span className="max-md:hidden">Active projects</span>
+              <span className="flex items-center justify-center gap-1 md:hidden">
+                <ActiveIcon />
+                Active
+              </span>
+              <span className="flex items-center justify-center gap-1 max-md:hidden">
+                <ActiveIcon />
+                Active projects
+              </span>
               <TabCountBadge>{activeTable.getRowCount()}</TabCountBadge>
             </TabsTrigger>
             <TabsTrigger value="archived" className="gap-1.5">
-              <span className="md:hidden">Archived</span>
-              <span className="max-md:hidden">Archived projects</span>
+              <span className="flex items-center justify-center gap-1 md:hidden">
+                <ArchivedIcon />
+                Archived
+              </span>
+              <span className="flex items-center justify-center gap-1 max-md:hidden">
+                <ArchivedIcon />
+                Archived projects
+              </span>
               <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
             </TabsTrigger>
           </TabsList>
