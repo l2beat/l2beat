@@ -37,7 +37,6 @@ export const ham: Layer3 = opStackL3({
     activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1716590734),
-  usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc.ham.fun', // chainId: 5112
   useDiscoveryMetaOnly: true,
