@@ -34,7 +34,7 @@ So, for example, for the `deletion_b10t30.r1cs` file, the command to run inside 
 
 `go run main.go convert --input powersOfTau28_hez_final_19.ptau --output 19.ph1`
 
-Now we need to initialize the phase 2 of the trusted setup, which is circuit specific. To do this, move the r1cs and ph1 files to the `semaphore-mtb-setup` directory and run the following command:
+Now we need to initialize the phase 2 of the trusted setup, which is circuit specific. This is the step that takes the longest time to complete. To do this, move the r1cs and ph1 files to the `semaphore-mtb-setup` directory and run the following command:
 
 `./semaphore-mtb-setup p2n <DEPTH>.ph1 <MODE>_b<BATCH_SIZE>t30.r1cs <MODE>_b<BATCH_SIZE>t30c0.ph2`
 
@@ -62,6 +62,6 @@ which generates the `vk` and `pk` files.
 
 To generate the smart contract verifier from the verification key, run the following command inside the `gnark-contract-generator` repo with the appropriate `vk` file:
 
-`./gnark-contract-generator/gnark-contract-generator* ps-vk --vk vk --out deletion_b10t30_verifier.sol`
+`./gnark-contract-generator* ps-vk --vk vk --out deletion_b10t30_verifier.sol`
 
 The so-generated verifier must be checked against the onchain verifier listed above.

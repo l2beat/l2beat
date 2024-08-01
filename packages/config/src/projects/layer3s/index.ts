@@ -10,6 +10,7 @@ import { deri } from './deri'
 import { dodochain } from './dodochain'
 import { educhain } from './educhain'
 import { fiefdom } from './fiefdom'
+import { ham } from './ham'
 import { hook } from './hook'
 import { invm } from './invm'
 import { l3x } from './l3x'
@@ -51,6 +52,7 @@ export const layer3s: Layer3[] = [
   educhain,
   fiefdom,
   invm,
+  ham,
   hook,
   rari,
   zklinknova,

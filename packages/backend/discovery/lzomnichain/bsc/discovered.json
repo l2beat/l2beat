@@ -1,7 +1,7 @@
 {
   "name": "lzomnichain",
   "chain": "bsc",
-  "blockNumber": 40608530,
+  "blockNumber": 40976255,
   "configHash": "0xa5396a1a2e11aeb0f8e7ef582ed4a209f01b734e71667872e6bdebda305a75c3",
   "version": 10,
   "contracts": [
@@ -1496,7 +1496,7 @@
         ],
         "getThreshold": 2,
         "GnosisSafe_modules": [],
-        "nonce": 128,
+        "nonce": 131,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafeL2"
@@ -2027,5 +2027,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
