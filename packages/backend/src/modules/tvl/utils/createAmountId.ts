@@ -27,6 +27,11 @@ export function createAmountId(amountConfig: AmountConfigEntry): AmountId {
       input.push(amountConfig.address.toString())
       input.push(amountConfig.escrowAddress.toString())
       break
+    case 'preminted':
+      input.push(amountConfig.address.toString())
+      input.push(amountConfig.coingeckoId.toString())
+      input.push(...amountConfig.escrows)
+      break
     default:
       assertUnreachable(amountConfig)
   }

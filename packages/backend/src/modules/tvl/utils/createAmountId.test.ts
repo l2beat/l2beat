@@ -4,6 +4,7 @@ import {
   CoingeckoId,
   EscrowEntry,
   EthereumAddress,
+  PremintedEntry,
   ProjectId,
   TotalSupplyEntry,
   UnixTime,
@@ -157,6 +158,48 @@ describe(createAmountId.name, () => {
       })
     }
   })
+
+  describe('Preminted', () => {
+    const address = EthereumAddress.random()
+    const coingeckoId = CoingeckoId('id')
+    const escrows = [EthereumAddress.random()]
+
+    const fields = [
+      {
+        key: 'address',
+        newValue: EthereumAddress.random(),
+        shouldUpdateHash: true,
+      },
+      {
+        key: 'coingeckoId',
+        newValue: CoingeckoId('new-id'),
+        shouldUpdateHash: true,
+      },
+      {
+        key: 'escrows',
+        newValue: [EthereumAddress.random()],
+        shouldUpdateHash: true,
+      },
+    ]
+
+    // @ts-expect-error tests
+    for (const f of baseFields.concat(fields)) {
+      it(f.key, () => {
+        const pre = createAmountId(mockPreminted(address, coingeckoId, escrows))
+
+        const post = createAmountId({
+          ...mockPreminted(address, coingeckoId, escrows),
+          ...{ [f.key]: f.newValue },
+        })
+
+        if (f.shouldUpdateHash) {
+          expect(pre).not.toEqual(post)
+        } else {
+          expect(pre).toEqual(post)
+        }
+      })
+    }
+  })
 })
 
 function mockTotalSupply(address: EthereumAddress): TotalSupplyEntry {
@@ -188,6 +231,20 @@ function mockEscrow(
     type: 'escrow',
     address,
     escrowAddress,
+  }
+}
+
+function mockPreminted(
+  address: EthereumAddress,
+  coingeckoId: CoingeckoId,
+  escrows: EthereumAddress[],
+): PremintedEntry {
+  return {
+    ...mock(),
+    type: 'preminted',
+    address,
+    coingeckoId,
+    escrows,
   }
 }
 
