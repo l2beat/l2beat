@@ -180,7 +180,7 @@ describe(ManagedMultiIndexer.name, () => {
         actual('b', 100, null),
       ])
 
-      expect(db.transaction).toHaveBeenCalledTimes(2)
+      expect(db.transaction).toHaveBeenCalledTimes(1)
       expect(saveData).toHaveBeenCalledTimes(1)
       expect(
         indexerService.updateConfigurationsCurrentHeight,

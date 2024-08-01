@@ -15,12 +15,12 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private readonly indexerId: string
 
   constructor(readonly options: ManagedMultiIndexerOptions<T>) {
+    super(options.logger, options.parents, options)
+
     assert(
       options.configurations.length > 0,
       `Configurations should not be empty ${options.tag}`,
     )
-
-    super(options.logger, options.parents, options)
 
     this.indexerId = options.name
     if (options.tag) {
@@ -50,6 +50,15 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   }
 
   async updateSavedConfigurations(diff: ConfigurationsDiff<T>) {
+    if (
+      diff.toAdd.length === 0 &&
+      diff.toUpdate.length === 0 &&
+      diff.toDelete.length === 0 &&
+      diff.toRemoveData.length === 0
+    ) {
+      return
+    }
+
     return await this.options.db.transaction(async () => {
       if (diff.toAdd.length > 0) {
         await this.options.indexerService.insertConfigurations(
