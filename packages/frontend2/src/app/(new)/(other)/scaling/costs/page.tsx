@@ -15,8 +15,8 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const tvl = await getLatestTvlUsd({ type: 'layer2' })
-  const entries = await getScalingCostsEntries(tvl)
   const defaultTimeRange = '30d'
+  const entries = await getScalingCostsEntries(tvl, defaultTimeRange)
   await api.scaling.costs.prefetch({ range: defaultTimeRange })
 
   return (

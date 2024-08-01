@@ -1,16 +1,20 @@
 import {
-  type ScalingProjectCategory,
+  type Layer2,
   type Layer2Provider,
+  type ScalingProjectCategory,
   type ScalingProjectPurpose,
   type StageConfig,
   type WarningWithSentiment,
   layer2s,
-  type Layer2,
 } from '@l2beat/config'
-import { type ProjectId } from '@l2beat/shared-pure'
-import { orderByTvl } from '../tvl/order-by-tvl'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { random } from 'lodash'
+import { type SyncStatus } from '~/types/SyncStatus'
+import { getLatestCosts } from '../costs/get-latest-costs'
+import { type LatestCostsProjectResponse } from '../costs/types'
+import { type CostsTimeRange } from '../costs/utils/range'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { orderByTvl } from '../tvl/order-by-tvl'
 
 export interface ScalingCostsEntry {
   type: 'layer2'
@@ -31,63 +35,106 @@ export interface ScalingCostsEntry {
 
 export type CostsUnit = 'eth' | 'usd' | 'gas'
 
-export interface CostsData {
+interface CostsValues {
   total: number
   calldata: number
   blobs: number | undefined
   compute: number
   overhead: number
+}
+
+export type CostsData = Record<CostsUnit, CostsValues> & {
   txCount: number | undefined
-  syncStatus?: never
+  syncStatus: SyncStatus
 }
 
 const UPCOMING_PROJECTS = ['paradex']
 
 export async function getScalingCostsEntries(
   tvl: Record<ProjectId, number>,
+  timeRange: CostsTimeRange,
 ): Promise<ScalingCostsEntry[]> {
   const implementationChange = await getImplementationChangeReport()
-
-  // for now, later fetch costs from db
-  const projects = getIncluded(layer2s, {
-    ...tvl,
-  })
+  const projects = getIncluded(layer2s)
+  const latestCosts = await getLatestCosts(projects, timeRange)
   const orderedProjects = orderByTvl(projects, tvl)
 
-  return orderedProjects.map((project) => ({
-    type: project.type,
-    name: project.display.name,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    showProjectUnderReview: !!project.isUnderReview,
-    hasImplementationChanged:
-      !!implementationChange.projects[project.id.toString()],
-    warning: project.display.warning,
-    redWarning: project.display.redWarning,
-    category: project.display.category,
-    provider: project.display.provider,
-    purposes: project.display.purposes,
-    stage: project.stage,
-    data: {
-      total: random(true) * 1000000,
-      calldata: random(true) * 10000,
-      blobs: random(true) * 100000,
-      compute: random(true) * 100,
-      overhead: random(true) * 10,
-      txCount: random(true) * 1000000000,
-    },
-    costsWarning: project.display.costsWarning,
-  }))
+  return orderedProjects
+    .map((project) => {
+      const costs = latestCosts[project.id]
+
+      return {
+        type: project.type,
+        name: project.display.name,
+        shortName: project.display.shortName,
+        slug: project.display.slug,
+        showProjectUnderReview: !!project.isUnderReview,
+        hasImplementationChanged:
+          !!implementationChange.projects[project.id.toString()],
+        warning: project.display.warning,
+        redWarning: project.display.redWarning,
+        category: project.display.category,
+        provider: project.display.provider,
+        purposes: project.display.purposes,
+        stage: project.stage,
+        data: costs
+          ? {
+              ...withTotal(costs),
+              syncStatus: getSyncStatus(costs.syncedUntil),
+              txCount: random(true) * 1000000000,
+            }
+          : undefined,
+        costsWarning: project.display.costsWarning,
+      }
+    })
+    .filter(notUndefined)
 }
 
-function getIncluded(projects: Layer2[], l2Costs: Record<ProjectId, unknown>) {
+function getSyncStatus(syncedUntil: UnixTime) {
+  const isSynced = UnixTime.now()
+    .add(-1, 'days')
+    .add(-1, 'hours')
+    .lte(syncedUntil)
+
+  return { isSynced, syncedUntil: syncedUntil.toNumber() }
+}
+
+function withTotal(data: LatestCostsProjectResponse) {
+  return {
+    gas: {
+      ...data.gas,
+      total:
+        data.gas.overhead +
+        data.gas.calldata +
+        data.gas.compute +
+        (data.gas.blobs ?? 0),
+    },
+    eth: {
+      ...data.eth,
+      total:
+        data.eth.overhead +
+        data.eth.calldata +
+        data.eth.compute +
+        (data.eth.blobs ?? 0),
+    },
+    usd: {
+      ...data.usd,
+      total:
+        data.usd.overhead +
+        data.usd.calldata +
+        data.usd.compute +
+        (data.usd.blobs ?? 0),
+    },
+  }
+}
+
+function getIncluded(projects: Layer2[]) {
   return projects.filter(
     (p) =>
-      (l2Costs[p.id] !== undefined ||
-        UPCOMING_PROJECTS.includes(p.id.toString())) &&
-      !p.isArchived &&
-      !p.isUpcoming &&
-      (p.display.category === 'Optimistic Rollup' ||
-        p.display.category === 'ZK Rollup'),
+      (!p.isArchived &&
+        !p.isUpcoming &&
+        (p.display.category === 'Optimistic Rollup' ||
+          p.display.category === 'ZK Rollup')) ||
+      UPCOMING_PROJECTS.includes(p.id.toString()),
   )
 }

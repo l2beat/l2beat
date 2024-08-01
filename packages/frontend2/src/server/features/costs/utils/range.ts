@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
 
 export const CostsTimeRange = z.union([
@@ -9,7 +10,21 @@ export const CostsTimeRange = z.union([
 ])
 export type CostsTimeRange = z.infer<typeof CostsTimeRange>
 
-export function rangeToDays(value: CostsTimeRange) {
+export function getRange(range: CostsTimeRange): [UnixTime, UnixTime] {
+  const days = rangeToDays(range)
+  const resolution = rangeToResolution(range)
+
+  const nowToFullHour = UnixTime.now().toStartOf(
+    resolution === 'daily' ? 'day' : 'hour',
+  )
+
+  const start = nowToFullHour.add(-days, 'days')
+  const end = nowToFullHour
+
+  return [start, end]
+}
+
+function rangeToDays(value: CostsTimeRange) {
   return parseInt(value.slice(0, -1))
 }
 

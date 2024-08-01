@@ -8,9 +8,12 @@ import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling
 import { type ScalingFiltersState } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
+import {
+  type CostsUnit,
+  type ScalingCostsEntry,
+} from '~/server/features/scaling/get-scaling-costs-entries'
 import { CostsTypeControls } from '../costs-type-controls'
-import { scalingCostsColumns } from './columns'
+import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
 
 interface Props {
   entries: ScalingCostsEntry[]
@@ -32,10 +35,13 @@ export function ScalingCostsTable(props: Props) {
 
   const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
 
-  const entries = useMemo(() => calculateDataByType(props.entries, type), [type, props.entries])
+  const entries = useMemo(() => {
+    const tableEntries = props.entries.map((e) => mapToTableEntry(e, 'usd'))
+    return calculateDataByType(tableEntries, type)
+  }, [type, props.entries])
 
   const includeFilters = useCallback(
-    (entry: ScalingCostsEntry) => {
+    (entry: ScalingCostsTableEntry) => {
       const checks = [
         scalingFilters.rollupsOnly !== false
           ? entry.category.includes('Rollup')
@@ -102,12 +108,34 @@ export function ScalingCostsTable(props: Props) {
   )
 }
 
-function calculateDataByType(entries: ScalingCostsEntry[], type: 'total' | 'per-l2-tx') {
+function mapToTableEntry(
+  entry: ScalingCostsEntry,
+  unit: CostsUnit,
+): ScalingCostsTableEntry {
+  return {
+    ...entry,
+    data: entry.data
+      ? {
+          ...entry.data,
+          total: entry.data[unit].total,
+          calldata: entry.data[unit].calldata,
+          blobs: entry.data[unit].blobs,
+          compute: entry.data[unit].compute,
+          overhead: entry.data[unit].overhead,
+        }
+      : undefined,
+  }
+}
+
+function calculateDataByType(
+  entries: ScalingCostsTableEntry[],
+  type: 'total' | 'per-l2-tx',
+): ScalingCostsTableEntry[] {
   if (type === 'total') {
     return entries
   }
 
-  return entries.map(e => {
+  return entries.map((e) => {
     if (!e.data?.txCount) return e
     return {
       ...e,
@@ -118,7 +146,7 @@ function calculateDataByType(entries: ScalingCostsEntry[], type: 'total' | 'per-
         compute: e.data.compute / e.data.txCount,
         calldata: e.data.calldata / e.data.txCount,
         overhead: e.data.overhead / e.data.txCount,
-      }
+      },
     }
   })
 }

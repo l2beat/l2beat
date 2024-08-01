@@ -1,16 +1,32 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
+import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
+import { EM_DASH } from '~/app/_components/nav/consts'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
-import { CostsTotalCell } from '../costs-total-cell'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
-import { EM_DASH } from '~/app/_components/nav/consts'
+import { type SyncStatus } from '~/types/SyncStatus'
 import { formatNumber } from '~/utils/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
+import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
+import { CostsTotalCell } from '../costs-total-cell'
 
-const columnHelper = createColumnHelper<ScalingCostsEntry>()
+export interface ScalingCostsTableEntry
+  extends Omit<ScalingCostsEntry, 'data'> {
+  data:
+    | {
+        total: number
+        calldata: number
+        blobs: number | undefined
+        compute: number
+        overhead: number
+        txCount: number | undefined
+        syncStatus: SyncStatus
+      }
+    | undefined
+}
+
+const columnHelper = createColumnHelper<ScalingCostsTableEntry>()
 const unit = 'usd'
 
 export const scalingCostsColumns = [

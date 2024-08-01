@@ -1,6 +1,6 @@
 import { expect } from 'earl'
 
-import { getFirstTwoNonZeroPrecision } from './getFirstTwoNonZeroPrecision'
+import { getFirstTwoNonZeroPrecision } from './get-first-two-non-zero-precision'
 
 describe(getFirstTwoNonZeroPrecision.name, () => {
   const testCases = [

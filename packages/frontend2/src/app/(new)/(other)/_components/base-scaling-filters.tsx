@@ -4,20 +4,20 @@ import React from 'react'
 import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
-import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import {
   type ScalingDataAvailabilityEntry,
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
 } from '~/server/features/scaling/types'
+import { type ScalingCostsTableEntry } from '../scaling/costs/_components/table/columns'
 
 export type BaseScalingFiltersEntry =
   | ScalingSummaryLayer2sEntry
   | ScalingSummaryLayer3sEntry
   | ScalingRiskEntry
   | ScalingDataAvailabilityEntry
-  | ScalingCostsEntry
+  | ScalingCostsTableEntry
 
 export interface BaseScalingFiltersState {
   rollupsOnly: boolean | undefined

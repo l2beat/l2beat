@@ -1,23 +1,20 @@
 import { type WarningWithSentiment } from '@l2beat/config'
-import React from 'react'
 
-import {
-  type CostsUnit,
-  type CostsData,
-} from '~/server/features/scaling/get-scaling-costs-entries'
+import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
+import { Callout } from '~/app/_components/callout'
 import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { Callout } from '~/app/_components/callout'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
+import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
 import { formatCostValue } from '../_utils/format-cost-value'
+import { type ScalingCostsTableEntry } from './table/columns'
 
 interface CellProps {
-  data: CostsData
+  data: NonNullable<ScalingCostsTableEntry['data']>
   unit: CostsUnit
   warning: WarningWithSentiment | undefined
 }

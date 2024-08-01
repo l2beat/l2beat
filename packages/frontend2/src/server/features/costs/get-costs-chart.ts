@@ -1,47 +1,11 @@
 import { layer2s } from '@l2beat/config'
 import { type AggregatedL2CostRecord } from '@l2beat/database'
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
 
-import {
-  type CostsTimeRange,
-  rangeToDays,
-  rangeToResolution,
-} from './utils/range'
-import { toTrackedTxConfig } from './utils/to-tracked-tx-config'
-
-export interface CostsChartResponse {
-  types: [
-    'timestamp',
-    'overheadGas',
-    'overheadEth',
-    'overheadUsd',
-    'calldataGas',
-    'calldataEth',
-    'calldataUsd',
-    'computeGas',
-    'computeEth',
-    'computeUsd',
-    'blobsGas',
-    'blobsEth',
-    'blobsUsd',
-  ]
-  data: [
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number,
-    number | null,
-    number | null,
-    number | null,
-  ][]
-}
+import { type CostsChartResponse } from './types'
+import { addIfNotNull } from './utils/add-if-not-null'
+import { type CostsTimeRange, getRange, rangeToResolution } from './utils/range'
 
 export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
   '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
@@ -52,51 +16,21 @@ export async function getCostsChart(
   timeRange: CostsTimeRange,
 ): Promise<CostsChartResponse> {
   const resolution = rangeToResolution(timeRange)
-  const configurations = await db.indexerConfiguration.getByIndexerId(
-    'tracked_txs_indexer',
-  )
   const activeProjects = layer2s.filter((p) => !p.isArchived)
   const data: AggregatedL2CostRecord[] = []
+
   for (const project of activeProjects) {
-    const trackedTxConfig = toTrackedTxConfig(
-      project.id,
-      project.config.trackedTxs,
-    )
-    if (trackedTxConfig === undefined) continue
-
-    const projectRuntimeConfigIds = trackedTxConfig
-      .filter((c) => c.type === 'l2costs')
-      .map((c) => c.id)
-
-    const projectConfigs = configurations.filter((c) =>
-      projectRuntimeConfigIds.includes(c.id),
-    )
-
-    if (projectConfigs.length === 0) continue
-
-    // TODO: Add later
-    // const syncedUntil = getSyncedUntil(projectConfigs)
-    // if (!syncedUntil) {
-    //   continue
-    // }
-    const days = rangeToDays(timeRange)
-
-    const nowToFullHour = UnixTime.now().toStartOf(
-      resolution === 'daily' ? 'day' : 'hour',
-    )
-
-    const start = nowToFullHour.add(-days, 'days')
-    const end = nowToFullHour
+    const range = getRange(timeRange)
 
     const records = await db.aggregatedL2Cost.getByProjectAndTimeRange(
       project.id,
-      [start, end],
+      range,
     )
 
     data.push(...records)
   }
-  const summed = sumByTimestamp(data, resolution)
 
+  const summed = sumByTimestamp(data, resolution)
   return withTypes(summed)
 }
 
@@ -127,10 +61,20 @@ function sumByTimestamp(
 ): CostsChartResponse['data'] {
   const result = new Map<
     number,
-    Omit<
-      AggregatedL2CostRecord,
-      'projectId' | 'timestamp' | 'totalGas' | 'totalGasEth' | 'totalGasUsd'
-    >
+    {
+      blobsGas: number | undefined
+      blobsGasEth: number | undefined
+      blobsGasUsd: number | undefined
+      calldataGas: number
+      calldataGasEth: number
+      calldataGasUsd: number
+      computeGas: number
+      computeGasEth: number
+      computeGasUsd: number
+      overheadGas: number
+      overheadGasEth: number
+      overheadGasUsd: number
+    }
   >()
 
   for (const record of records) {
@@ -149,18 +93,9 @@ function sumByTimestamp(
         computeGas: existing.computeGas + record.computeGas,
         computeGasEth: existing.computeGasEth + record.computeGasEth,
         computeGasUsd: existing.computeGasUsd + record.computeGasUsd,
-        blobsGas:
-          existing.blobsGas && record.blobsGas
-            ? existing.blobsGas + record.blobsGas
-            : existing.blobsGas,
-        blobsGasEth:
-          existing.blobsGasEth && record.blobsGasEth
-            ? existing.blobsGasEth + record.blobsGasEth
-            : existing.blobsGasEth,
-        blobsGasUsd:
-          existing.blobsGasUsd && record.blobsGasUsd
-            ? existing.blobsGasUsd + record.blobsGasUsd
-            : existing.blobsGasUsd,
+        blobsGas: addIfNotNull(existing.blobsGas, record.blobsGas),
+        blobsGasEth: addIfNotNull(existing.blobsGasEth, record.blobsGasEth),
+        blobsGasUsd: addIfNotNull(existing.blobsGasUsd, record.blobsGasUsd),
       })
       continue
     }
@@ -176,9 +111,9 @@ function sumByTimestamp(
       computeGas: record.computeGas,
       computeGasEth: record.computeGasEth,
       computeGasUsd: record.computeGasUsd,
-      blobsGas: record.blobsGas,
-      blobsGasEth: record.blobsGasEth,
-      blobsGasUsd: record.blobsGasUsd,
+      blobsGas: record.blobsGas ?? undefined,
+      blobsGasEth: record.blobsGasEth ?? undefined,
+      blobsGasUsd: record.blobsGasUsd ?? undefined,
     })
   }
 
