@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 123451175,
-  "configHash": "0x05a1900991df3df10a37ebd71e873555e21afbe60a2f0e26ecc4b3aef5f8863a",
+  "blockNumber": 123452401,
+  "configHash": "0x866d8e56e1c1a51595f23609a298d78ec9d2c8898a4e9b2e24bb1ffff1356b15",
   "version": 10,
   "contracts": [
     {
@@ -142,22 +142,10 @@
     {
       "name": "WLDGrant",
       "address": "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674",
+      "ignoreInWatchMode": ["getCurrentId"],
       "sinceTimestamp": 1722153659,
-      "values": {
-        "$immutable": true,
-        "calculateId": [],
-        "getAmount": [
-          "3000000000000000000",
-          "3000000000000000000",
-          "3000000000000000000",
-          "3000000000000000000",
-          "3000000000000000000"
-        ],
-        "getCurrentId": 39
-      },
-      "errors": {
-        "getAmount": "Too many values. Update configuration to explore fully"
-      }
+      "values": { "$immutable": true, "calculateId": [], "getCurrentId": 39 },
+      "derivedName": "WLDGrant"
     },
     {
       "name": "RecurringGrantDrop",

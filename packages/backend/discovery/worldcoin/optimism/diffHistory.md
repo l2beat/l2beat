@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xac4307112794656ad46bf33a357e8b0e2abecfa0
+Generated with discovered.json: 0xab74a60c2a90b97f55801f1f1c008f600f6a4d3c
 
-# Diff at Thu, 01 Aug 2024 08:32:20 GMT:
+# Diff at Thu, 01 Aug 2024 09:13:14 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 123030782
-- current block number: 123451175
+- current block number: 123452401
 
 ## Description
 
@@ -49,6 +49,22 @@ The identityOperator changed to a new EOA. This role can register and delete ide
 ```diff
 .../worldcoin/optimism/{.flat@123030782 => .flat}/WLDGrant.sol   | 9 +++------
  1 file changed, 3 insertions(+), 6 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 123030782 (main branch discovery), not current.
+
+```diff
+    contract WLDGrant (0xe11CEfF5034278dC62318e74aF6efBA57D54f3be) {
+    +++ description: None
+      values.getAmount:
++        ["3000000000000000000","3000000000000000000","3000000000000000000","3000000000000000000","3000000000000000000"]
+      errors:
++        {"getAmount":"Too many values. Update configuration to explore fully"}
+    }
 ```
 
 Generated with discovered.json: 0x3d437366d5911d73f4d97188b142bf232a156492
