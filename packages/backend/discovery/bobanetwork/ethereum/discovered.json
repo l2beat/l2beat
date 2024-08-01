@@ -319,7 +319,6 @@
   "eoas": [
     { "address": "0x000000000000000000000000000000000000dEaD" },
     { "address": "0x33A0B6C2Bd60A592C5e91dCCd5E5f403693F0AC1" },
-    { "address": "0x4200000000000000000000000000000000000014" },
     { "address": "0x4Ac69842680847e1135f514eE3d75172B685ECBf" },
     { "address": "0x6976498e37E4941E167161fC3BC5191EEDc302ab" },
     { "address": "0x796dF5BaB196b84FFf10F65ac0f914E4b10DEaCd" },
@@ -696,7 +695,7 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
     "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/L1ERC721Bridge": "0xa4ae7e768b1b7b82f1f094037136f28410f672050a4d57802af1b825f84ce765",
+    "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
@@ -704,5 +703,5 @@
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
