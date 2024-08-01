@@ -24,8 +24,8 @@ export const bridgesRisksColumns = [
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
       headClassName: 'w-0',
+      cellClassName: 'flex items-center',
     },
-    size: 44.55,
   }),
   columnHelper.display({
     id: 'logo',
@@ -41,7 +41,7 @@ export const bridgesRisksColumns = [
     size: 26,
     meta: {
       headClassName: 'w-0',
-      cellClassName: 'lg:!pr-0',
+      cellClassName: 'lg:!pr-0 pl-2',
     },
   }),
   columnHelper.accessor('name', {
