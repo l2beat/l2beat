@@ -33,14 +33,15 @@ export const swan: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1718640220),
-  finality: {
-    type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1718640220),
-    minTimestamp: new UnixTime(1718683727), // first blob
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
+  // failing, needs different analyzer?
+  // finality: {
+  //   type: 'OPStack-blob',
+  //   genesisTimestamp: new UnixTime(1718640220),
+  //   minTimestamp: new UnixTime(1718683727), // first blob
+  //   l2BlockTimeSeconds: 2,
+  //   lag: 0,
+  //   stateUpdate: 'disabled',
+  // },
   usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://mainnet-rpc01.swanchain.io',
