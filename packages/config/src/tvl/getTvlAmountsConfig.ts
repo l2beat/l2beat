@@ -21,7 +21,10 @@ export function getTvlAmountsConfig(
   const entries: AmountConfigEntry[] = []
 
   for (const token of tokenList) {
-    if (token.chainId !== ChainId.ETHEREUM) {
+    if (
+      token.supply === 'circulatingSupply' ||
+      token.supply === 'totalSupply'
+    ) {
       const projectId = chainToProject.get(chainConverter.toName(token.chainId))
       assert(projectId, 'Project is required for token')
 
@@ -79,8 +82,6 @@ export function getTvlAmountsConfig(
             category: token.category,
           })
           break
-        case 'zero':
-          break // we do not count supply for zero formula
       }
     }
   }

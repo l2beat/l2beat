@@ -171,12 +171,7 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
   return {
     address: escrow.address,
     sinceTimestamp: escrow.sinceTimestamp,
-    tokens:
-      escrow.tokens === '*'
-        ? tokensOnChain.filter(
-            (t) => !escrow.excludedTokens?.includes(t.symbol),
-          )
-        : mapTokens(escrow, tokensOnChain),
+    tokens: mapTokens(escrow, tokensOnChain),
     chain: escrow.chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,
@@ -184,19 +179,26 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
   }
 }
 
-function mapTokens(
+export function mapTokens(
   escrow: ScalingProjectEscrow,
   tokensOnChain: Token[],
 ): Token[] {
-  assert(escrow.tokens !== '*')
-  return escrow.tokens.map((tokenSymbol) => {
-    const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
-    assert(
-      token,
-      `Token with symbol ${tokenSymbol} not found on ${
-        escrow.chain
-      } @ ${escrow.address.toString()}`,
+  return tokensOnChain
+    .filter(
+      (token) => escrow.tokens === '*' || escrow.tokens.includes(token.symbol),
     )
-    return token
-  })
+    .filter((token) => {
+      const isTokenIncluded = !escrow.excludedTokens?.includes(token.symbol)
+
+      if (token.supply !== 'preminted') {
+        return isTokenIncluded
+      }
+
+      assert(
+        token.escrows,
+        `Escrows should be defined for preminted ${token.symbol}`,
+      )
+
+      return !token.escrows.includes(escrow.address) && isTokenIncluded
+    })
 }
