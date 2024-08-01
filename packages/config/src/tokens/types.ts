@@ -25,7 +25,7 @@ export const GeneratedToken = z.object({
   iconUrl: z.optional(z.string()),
   chainId: numberAs(ChainId),
   source: z.enum(['canonical', 'external', 'native']),
-  supply: z.enum(['totalSupply', 'circulatingSupply', 'zero']),
+  supply: z.enum(['totalSupply', 'circulatingSupply', 'zero', 'preminted']),
   bridgedUsing: z.optional(
     z.object({
       bridge: z.string(),
@@ -33,6 +33,7 @@ export const GeneratedToken = z.object({
       warning: z.string().optional(),
     }),
   ),
+  escrows: z.array(stringAs((s) => EthereumAddress(s))).optional(),
 })
 
 export type SourceEntry = z.infer<typeof SourceEntry>

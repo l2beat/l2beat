@@ -17,7 +17,8 @@ export interface Token {
   iconUrl?: string
   chainId: ChainId
   source: 'canonical' | 'external' | 'native'
-  supply: 'totalSupply' | 'circulatingSupply' | 'zero'
+  supply: 'totalSupply' | 'circulatingSupply' | 'preminted' | 'zero'
+  escrows?: EthereumAddress[]
   bridgedUsing?: {
     bridge: string
     slug?: string
