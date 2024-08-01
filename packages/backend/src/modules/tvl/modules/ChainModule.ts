@@ -152,6 +152,10 @@ function createChainModule(
       maxHeight: a.untilTimestamp?.toNumber() ?? null,
     }))
 
+  if (configurations.length === 0) {
+    return undefined
+  }
+
   const chainAmountIndexer = new ChainAmountIndexer({
     logger,
     tag: chain,

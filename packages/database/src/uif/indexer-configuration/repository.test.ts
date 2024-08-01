@@ -54,6 +54,18 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
     })
   })
 
+  describe(IndexerConfigurationRepository.prototype.insertMany.name, () => {
+    it('adds new records', async () => {
+      const newRecords = [CONFIGURATIONS[0]!, CONFIGURATIONS[1]!]
+
+      await repository.upsertMany(newRecords)
+
+      const result = await repository.getAll()
+
+      expect(result).toEqualUnsorted(newRecords)
+    })
+  })
+
   describe(
     IndexerConfigurationRepository.prototype.getByConfigurationIds.name,
     () => {
@@ -78,6 +90,29 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
     expect(result).toEqualUnsorted(records.slice(0, 2))
   })
+
+  it(
+    IndexerConfigurationRepository.prototype.getConfigurationsWithoutIndexerId
+      .name,
+    async () => {
+      const records = CONFIGURATIONS
+
+      await repository.upsertMany(records)
+
+      const result =
+        await repository.getConfigurationsWithoutIndexerId('indexer-1')
+
+      expect(result).toEqualUnsorted(
+        records.slice(0, 2).map((c) => ({
+          currentHeight: c.currentHeight,
+          maxHeight: c.maxHeight,
+          minHeight: c.minHeight,
+          id: c.id,
+          properties: c.properties,
+        })),
+      )
+    },
+  )
 
   it(
     IndexerConfigurationRepository.prototype.getIdsByIndexer.name,

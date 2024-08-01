@@ -2,12 +2,10 @@ import { Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
-import {
-  ManagedMultiIndexer,
-  ManagedMultiIndexerOptions,
-} from '../../tools/uif/multi/ManagedMultiIndexer'
+import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
+  ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../tools/uif/multi/types'
 import { TrackedTxsClient } from './TrackedTxsClient'
