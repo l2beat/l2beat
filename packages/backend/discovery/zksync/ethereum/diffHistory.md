@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x15f340b2cc0a059f9f67831d0afded872a601330
+Generated with discovered.json: 0xd77e52b3779922b882adfb798adfe542410d7091
+
+# Diff at Thu, 01 Aug 2024 09:15:06 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 19532310
+- current block number: 20432735
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+      values.getOwners.5:
++        "0xf6dcD4d7141E06B916987C3C46220f6241278a30"
+      values.getOwners.4:
+-        "0xf6dcD4d7141E06B916987C3C46220f6241278a30"
++        "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
+      values.getOwners.3:
+-        "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
++        "0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
+      values.getOwners.2:
+-        "0xCE990b1f86e954746AD3a57F5Aa6CFa9CC0c3348"
++        "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
+      values.getOwners.1:
+-        "0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
++        "0xD804aB3355a634aEBd45e1252d6208807defD554"
+      values.getOwners.0:
+-        "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
++        "0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da"
+    }
+```
+
+Generated with discovered.json: 0xbd4699a8b52a6b73b41273be603f65b645c4926e
 
 # Diff at Thu, 28 Mar 2024 11:28:26 GMT:
 
