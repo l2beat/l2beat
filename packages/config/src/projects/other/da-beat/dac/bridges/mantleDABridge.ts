@@ -28,7 +28,7 @@ export const mantleDABridge = {
   display: {
     name: 'Mantle DAC',
     slug: 'dac',
-    description: 'MantleDA bridge on Ethereum.',
+    description: 'There is a Mantle DA bridge on Ethereum storing data availability commitments.',
     links: {
       websites: ['https://mantle.xyz'],
       documentation: [
