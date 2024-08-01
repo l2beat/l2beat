@@ -4,6 +4,7 @@ import { anomaly } from './anomaly'
 import { apechain } from './apechain'
 import { aviveworld } from './aviveworld'
 import { bugless } from './bugless'
+import { cheese } from './cheese'
 import { dcamonster } from './dcamonster'
 import { degen } from './degen'
 import { deri } from './deri'
@@ -45,6 +46,7 @@ export const layer3s: Layer3[] = [
   apechain,
   aviveworld,
   bugless,
+  cheese,
   degen,
   dcamonster,
   deri,
