@@ -23,7 +23,7 @@ export function DaProjectStats({ project }: Props) {
     ? round(project.header.durationStorage / UnixTime.DAY, 2)
     : undefined
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 md:grid-cols-3 md:px-6 md:py-5 dark:bg-zinc-900">
+    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
       <ProjectStat title="Type" value={project.type} />
       <ProjectStat
         title="Total value secured"
@@ -98,7 +98,7 @@ function ProjectStat(props: ProjectStat) {
         {props.tooltip && (
           <Tooltip>
             <TooltipTrigger className="-translate-y-px md:translate-y-0">
-              <InfoIcon className="mt-0.5 fill-gray-500 md:size-3.5 dark:fill-gray-600" />
+              <InfoIcon className="mt-0.5 fill-gray-500 dark:fill-gray-600 md:size-3.5" />
             </TooltipTrigger>
             <TooltipContent>{props.tooltip}</TooltipContent>
           </Tooltip>

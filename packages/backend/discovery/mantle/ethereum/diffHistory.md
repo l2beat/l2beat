@@ -1,10 +1,10 @@
-Generated with discovered.json: 0xdd0fe74393972614d7152d2ba69494151202f6a2
+Generated with discovered.json: 0x02d23213707ee16220d6600f5da4f937f9437118
 
-# Diff at Wed, 31 Jul 2024 19:19:52 GMT:
+# Diff at Thu, 01 Aug 2024 10:08:41 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
-- comparing to: main@d56d4dbb204689f1599b0e3bb6de495651bd8c62 block: 19531981
-- current block number: 20428577
+- comparing to: main@fc014ae53020c3858a11a12edaf24fcdfc3c9261 block: 19531981
+- current block number: 20433002
 
 ## Description
 
@@ -24,7 +24,37 @@ discovery. Values are for block 19531981 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x19b8ac3c39eec33112adfb83fbe5bce7d728e73a
+```diff
+    contract MantleEngineeringMultisig (0x2F44BD2a54aC3fB20cd7783cF94334069641daC9) {
+    +++ description: None
+      name:
+-        "Owner2Multisig"
++        "MantleEngineeringMultisig"
+    }
+```
+
+```diff
+    contract MantleSecurityMultisig (0x4e59e778a0fb77fBb305637435C62FaeD9aED40f) {
+    +++ description: It can act on behalf of 0xca35F8338054739D138884685e08b39EE2217794, inheriting its permissions.
+      name:
+-        "OwnerMultisig"
++        "MantleSecurityMultisig"
+    }
+```
+
+```diff
+    contract RegistryPermission (0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01) {
+    +++ description: None
+      values.dataStorePermission:
++        ["0x2f40D796917ffB642bD2e2bdD2C762A5e40fd749","0x50Fa427235C7C8cAA4A0C21b5009f5a0d015B23A"]
+      values.deregisterOperatorPermission:
++        []
+      values.registerOperatorPermission:
++        ["0x1888e4aC2Ab37A73B33448B87bABdD1ce1dcBAbe","0x717c3DC6Df69c316d6Ac593077BC84Cc86f214A4","0x8BEF0466b7C2CbFD753eF340e062dF06E93ADA7f","0xc1dEd495E1dDf089B2b41d6397C0aBa04BDA1A21","0x6cc5A6F5a9E4757790e4068Aa9757226Cb854B64","0x550b3CB2D5fB5E4F0A08322CaC7b04291558CDa8","0x8A3D6c77E5BAcE8cb0822B28E4Fc56FC06fB5645","0xB61298691FE0df10634A67dd83b2253E74cbF7fb","0xcEb157a9bB9c80a845d5924e8CEAA591Caf705a5","0x0B6F2C77C3740A5e6f88A4eCdd02C10BE8a2e323"]
+    }
+```
+
+Generated with discovered.json: 0x565461d71ce076e91d1237caa87e8dd7846f5c5e
 
 # Diff at Thu, 18 Jul 2024 10:31:51 GMT:
 

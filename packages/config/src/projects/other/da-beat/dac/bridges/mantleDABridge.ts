@@ -7,8 +7,8 @@ import {
   DaExitWindowRisk,
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
-import { toUsedInProject } from '../../utils/to-used-in-project'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
+import { toUsedInProject } from '../../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -26,13 +26,12 @@ const threshold =
 const dataStorePermissionList = discovery.getContractValue<string[]>(
   'RegistryPermission',
   'dataStorePermission',
-);
+)
 
 const registerOperatorPermissionList = discovery.getContractValue<string[]>(
   'RegistryPermission',
   'registerOperatorPermission',
-);
-
+)
 
 export const mantleDABridge = {
   id: 'mantleDABridge',
@@ -40,7 +39,8 @@ export const mantleDABridge = {
   display: {
     name: 'Mantle DAC',
     slug: 'dac',
-    description: 'There is a Mantle DA bridge on Ethereum storing data availability commitments.',
+    description:
+      'There is a Mantle DA bridge on Ethereum storing data availability commitments.',
     links: {
       websites: ['https://mantle.xyz'],
       documentation: [
