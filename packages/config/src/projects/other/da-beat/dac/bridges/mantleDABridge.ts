@@ -17,6 +17,11 @@ const committeeMembers = discovery.getContractValue<number>(
   'numOperators',
 )
 
+const operatorsList = discovery.getContractValue<string[]>(
+  'BLSRegistry',
+  'operatorList',
+)
+
 const threshold =
   discovery.getContractValue<number>(
     'DataLayrServiceManager',
@@ -87,6 +92,14 @@ export const mantleDABridge = {
       'MantleEngineeringMultisig',
       'The owner of the DA bridge. This entity is responsible for managing the bridge, it can pause the bridge and change various parameters such as the quorum threshold and service fee for node operators.',
     ),
+    {
+      name: 'Permissioned Operators',
+      description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+      accounts: operatorsList.map((operator) => ({
+        address: EthereumAddress(operator),
+        type: 'EOA',
+      })),
+    },
     {
       name: 'Permission Data Store',
       description: `List of addresses authorized to post data commitments to the DA bridge.`,
