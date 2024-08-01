@@ -19,7 +19,7 @@ const totalStakeArray = discovery.getContractValue<number[]>(
 const totalStake = BigNumber.from(totalStakeArray[0])
 const requiredStake = totalStake.div(committeeMembers)
 
-const requiredStakeFormatted = utils.formatEther(requiredStake)
+const requiredStakeFormatted = parseFloat(utils.formatEther(requiredStake)).toLocaleString();
 
 export const mantleDA: DaLayer = {
   id: 'dac',
@@ -50,12 +50,12 @@ export const mantleDA: DaLayer = {
     The permissioned set of nodes is tasked with providing data availability to the Mantle network. 
     They receive Mantle network transaction data, sign it using a BLS signature scheme, and send back signatures to the sequencer to post commitments to the DataLayrServiceManager (DA Bridge) contract on Ethereum.
     The DA DataLayrServiceManager acts as a verifier smart contract,  verifying that the signatures provided by the sequencer are indeed from node operators who have agreed to be in the quorum.
-    To become members of the DA network, node operators are required to stake ${requiredStakeFormatted} MANTLE tokens, and can only be registered by an authorized entity. There is no slashing mechanism in place for misbehaving nodes.
+    To become members of the DA network, node operators are required to stake ${requiredStakeFormatted} MNT tokens, and can only be registered by an authorized entity. There is no slashing mechanism in place for misbehaving nodes.
     `,
   bridges: [mantleDABridge],
   usedIn: [...mantleDABridge.usedIn],
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MANTLE'),
+    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MNT'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }
