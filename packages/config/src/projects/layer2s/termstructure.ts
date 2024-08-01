@@ -298,7 +298,7 @@ export const termstructure: Layer2 = {
         risks: [
           {
             category: 'Funds can be lost if',
-            text: 'The flashloan mechanism is implemented incorrectly.',
+            text: 'the flashloan mechanism is implemented incorrectly.',
           },
         ],
         isIncomplete: true,
