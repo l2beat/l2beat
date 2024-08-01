@@ -28,14 +28,15 @@ export const optopia: Layer2 = opStackL2({
     activityDataSource: 'Blockchain RPC',
   },
   genesisTimestamp: new UnixTime(1715333977),
-  finality: {
-    type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1715333977),
-    minTimestamp: new UnixTime(1715336651), // first blob
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
+  // failing, needs different analyzer?
+  // finality: {
+  //   type: 'OPStack-blob',
+  //   genesisTimestamp: new UnixTime(1715333977),
+  //   minTimestamp: new UnixTime(1715336651), // first blob
+  //   l2BlockTimeSeconds: 2,
+  //   lag: 0,
+  //   stateUpdate: 'disabled',
+  // },
   usesBlobs: true,
   isNodeAvailable: true,
   rpcUrl: 'https://rpc-mainnet-2.optopia.ai', // chainId: 62050
