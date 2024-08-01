@@ -4,12 +4,28 @@
   "name": "cronoszkevm",
   "initialAddresses": ["0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"],
   "names": {
-    "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm"
+    "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm",
+    "0x66eF951aEC26987915582340bCAA569E5Be67cDC": "CronosZkEVMAdmin"
   },
   "sharedModules": {
     "PolygonRollupManager": "shared-zk-stack"
   },
   "overrides": {
+    "CronosZkEVMAdmin": {
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0xdf8b4c520ffe197c5343c6f5aec59570151ef9a492f2c624fd45ddde6135ec42": "ADMIN",
+              "0x352d05fe3946dbe49277552ba941e744d5a96d9c60bc1ba0ea5f1d3ae000f7c8": "ORACLE",
+              "0xa615a8afb6fffcb8c6809ac0997b5c9c12b8cc97651150f14c8f6203168cff4c": "UPGRADER",
+              "0xa1496c3abf9cd93b84db10ae569b57fafa04deeeb7ece4167616ad50e35bc56e": "FEE_ADMIN"
+            }
+          }
+        }
+      }
+    },
     "CronosZkEvm": {
       "ignoreRelatives": ["getBaseToken"],
       // below is copypaste from zksyncera, pls modify when diamond is verified
