@@ -131,6 +131,7 @@
   "myria": true,
   "myshell": true,
   "near": true,
+  "near-no-bridge": true,
   "network3": true,
   "nomad": true,
   "nova": true,

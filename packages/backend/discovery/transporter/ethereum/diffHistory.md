@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xddaf5ba394a864bbb9350766a2e948b26307fdbe
+
+# Diff at Thu, 01 Aug 2024 08:38:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 20420384
+- current block number: 20432548
+
+## Description
+
+New onramp added to an existing lane. The chainSelector's associated chain in CommitStore15 is still unclear.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.onRamps.1562403441176082196:
++        "0xD54C93A99CBCb8D865E13DA321B540171795A89f"
+    }
+```
+
+```diff
+    contract CommitStore15 (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20393769
++        20421003
+      values.latestConfigDetails.configDigest:
+-        "0x0001b4de454b34a4d0d5be00f3b0c21a51b346f9bcb88bab16ebee72c8d210ba"
++        "0x0001442c239e69bf2461192e40906b14d1d34fc9d2f193127ac07fae2dbb51c7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xD54C93A99CBCb8D865E13DA321B540171795A89f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xD54C93A99CBCb8D865E13DA321B540171795A89f.sol | 2732 ++++++++++++++++++++
+ 1 file changed, 2732 insertions(+)
+```
+
 Generated with discovered.json: 0xf80e881e9014089fce84efda49a1192f8e1bd8ce
 
 # Diff at Tue, 30 Jul 2024 15:53:20 GMT:

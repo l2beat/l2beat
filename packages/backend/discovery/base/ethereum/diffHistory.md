@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xebdc444c5d7de73b961bedf1c76433c6f5b4fb9c
+
+# Diff at Thu, 01 Aug 2024 09:03:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 20389614
+- current block number: 20432677
+
+## Description
+
+Gas limit raised.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        112500000
++        120000000
+    }
+```
+
 Generated with discovered.json: 0x4490b2aef6ef07052b52e81d0edadcea693677cd
 
 # Diff at Tue, 30 Jul 2024 11:11:03 GMT:
