@@ -1,9 +1,9 @@
 import { uniq } from 'lodash'
 import React from 'react'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 import { BaseScalingFilters } from '../../../_components/base-scaling-filters'
 import { useScalingFilterValues } from '../../../_components/scaling-filter-context'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 interface Props {
   items: ScalingDataAvailabilityEntry[]
 }

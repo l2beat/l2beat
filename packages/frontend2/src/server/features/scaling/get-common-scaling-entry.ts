@@ -1,8 +1,8 @@
 import {
-  type Layer2Provider,
-  type Layer3Provider,
   type Layer2,
+  type Layer2Provider,
   type Layer3,
+  type Layer3Provider,
   type StageConfig,
 } from '@l2beat/config'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'

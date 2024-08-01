@@ -2,12 +2,12 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 import { ScalingDaFilters } from '../scaling-da-filters'
 import { columns } from './columns'
-import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 
 export interface Props {
   items: ScalingDataAvailabilityEntry[]

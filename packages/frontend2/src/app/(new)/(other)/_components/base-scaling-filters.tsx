@@ -4,8 +4,8 @@ import React from 'react'
 import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
-import { useScalingFilterValues } from './scaling-filter-context'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { useScalingFilterValues } from './scaling-filter-context'
 
 interface Props {
   items: CommonScalingEntry[]

@@ -3,8 +3,8 @@ import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/get-scaling-risk-entries'
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
-import { ScalingRiskTables } from './_components/scaling-risk-tables'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
+import { ScalingRiskTables } from './_components/scaling-risk-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

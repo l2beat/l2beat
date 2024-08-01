@@ -2,8 +2,8 @@ import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getScalingDaEntries } from '~/server/features/scaling/get-scaling-da-entries'
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { ScalingDataAvailabilityTable } from './_components/table/scaling-da-table'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
+import { ScalingDataAvailabilityTable } from './_components/table/scaling-da-table'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

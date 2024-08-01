@@ -1,8 +1,8 @@
 'use client'
 
 import {
-  type Layer3Provider,
   type Layer2Provider,
+  type Layer3Provider,
   type ScalingProjectCategory,
   type ScalingProjectPurpose,
   type StageConfig,

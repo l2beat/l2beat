@@ -15,9 +15,9 @@ import { useTable } from '~/hooks/use-table'
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './table/columns'
-import { useScalingFilter } from '../../../_components/scaling-filter-context'
 
 export function ScalingRiskTables({
   projects,
