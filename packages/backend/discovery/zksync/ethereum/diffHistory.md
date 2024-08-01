@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xd77e52b3779922b882adfb798adfe542410d7091
+Generated with discovered.json: 0x4524c5382beccbdb67e192c7549ab6b839e87af6
 
-# Diff at Thu, 01 Aug 2024 09:15:06 GMT:
+# Diff at Thu, 01 Aug 2024 08:26:56 GMT:
 
-- author: Luca Donno (<donnoh99@gmail.com>)
-- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 19532310
-- current block number: 20432735
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 19532310
+- current block number: 20432496
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+ZKsync lite add one signer (`0xD804aB3355a634aEBd45e1252d6208807defD554`) to their MS2, who is itself just one signer of the SC.
 
 ## Watched changes
 
