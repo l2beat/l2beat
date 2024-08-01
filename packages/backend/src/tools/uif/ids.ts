@@ -1,14 +1,14 @@
 const INDEXER_IDS = new Set<string>()
 const CONFIG_IDS = new Set<string>()
 
-export function assetUniqueIndexerId(id: string) {
+export function assertUniqueIndexerId(id: string) {
   if (INDEXER_IDS.has(id)) {
     throw new Error(`Indexer id ${id} is duplicated!`)
   }
   INDEXER_IDS.add(id)
 }
 
-export function assetUniqueConfigId(id: string) {
+export function assertUniqueConfigId(id: string) {
   if (CONFIG_IDS.has(id)) {
     throw new Error(`Configuration id ${id} is duplicated!`)
   }

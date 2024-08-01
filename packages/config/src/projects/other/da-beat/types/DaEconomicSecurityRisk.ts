@@ -9,7 +9,8 @@ const OnChainQuantifiable = {
   type: 'OnChainQuantifiable',
   value: 'Staked assets',
   sentiment: 'good',
-  description: 'TODO',
+  description:
+    'There are staked assets on the DA layer that can be slashed in case of a data withholding attack.',
 } as const
 
 const OffChainVerifiable = {

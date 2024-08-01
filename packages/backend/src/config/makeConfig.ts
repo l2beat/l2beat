@@ -243,6 +243,10 @@ export function makeConfig(
         ],
         600,
       ),
+      nearRpcUrl: env.string(
+        ['NEAR_RPC_URL_FOR_DA_BEAT', 'NEAR_RPC_URL'],
+        'https://rpc.mainnet.near.org/',
+      ),
     },
 
     // Must be last

@@ -1,5 +1,3 @@
-import React from 'react'
-
 import {
   Tooltip,
   TooltipContent,
@@ -36,7 +34,7 @@ export function ProjectNameCell({
   className,
 }: ProjectCellProps) {
   return (
-    <div className={cn('pl-2 2xl:pl-3', className)}>
+    <div className={cn('flex items-center pl-2 2xl:pl-3', className)}>
       <span className="text-base font-bold md:text-lg">
         {project.shortName ?? project.name}
       </span>
@@ -96,10 +94,9 @@ export function ProjectNameCell({
         </span>
       )}
       {project.data?.syncStatus?.isSynced === false && (
-        <NotSyncedBadge
-          className="relative top-[-3px] ml-2"
-          syncedUntil={project.data?.syncStatus.syncedUntil}
-        />
+        <div className="mb-1.5 flex items-center justify-center pl-1.5">
+          <NotSyncedBadge syncedUntil={project.data?.syncStatus.syncedUntil} />
+        </div>
       )}
     </div>
   )

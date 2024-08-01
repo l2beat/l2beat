@@ -37,6 +37,7 @@ describe(shouldSkip.name, () => {
         ],
         eoas: [],
         abis: {},
+        fieldMeta: {},
         configHash: Hash256.random(),
         version: 123,
         usedTemplates: {},

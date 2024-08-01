@@ -1,3 +1,95 @@
+Generated with discovered.json: 0xd0c7f2c911c60be8d297499da7cd55c0e393e1bf
+
+# Diff at Thu, 01 Aug 2024 08:54:19 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 20032836
+- current block number: 20432632
+
+## Description
+
+Two signers are added to frxETHMultisig. 
+One minter is removed from frxETH, leaving frxETHMinter as the only minter. A new owner is nominated for frxETH (would transfer the ownership from frxETHMultisig to a timelock)
+
+## Watched changes
+
+```diff
+    contract frxETH (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: None
+      values.minters_array.1:
+-        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
++        "0x0000000000000000000000000000000000000000"
+      values.nominatedOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA"
+    }
+```
+
+```diff
+    contract frxETHMultisig (0x8306300ffd616049FD7e4b0354a64Da835c1A81C) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
++        "4 of 7 (57%)"
+      values.getOwners.6:
++        "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
+      values.getOwners.5:
++        "0x8da4E997e051605878c9C0B793c496556EACC2C0"
+      values.getOwners.4:
+-        "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
++        "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2"
+      values.getOwners.3:
+-        "0x8da4E997e051605878c9C0B793c496556EACC2C0"
++        "0xc28339c70054bC22255A74E927a0B9e9A475F224"
+      values.getOwners.2:
+-        "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2"
++        "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
+      values.getOwners.1:
+-        "0xc28339c70054bC22255A74E927a0B9e9A475F224"
++        "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228"
+      values.getOwners.0:
+-        "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
++        "0x381e2495e683868F693AA5B1414F712f21d34b40"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x14e4842c3a4c9f8badeee84a257038d6be144f50
+
+# Diff at Tue, 30 Jul 2024 11:11:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20032836
+- current block number: 20032836
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032836 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x34a9f273cbD847d49c3De015FC26c3E66825f8b2) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract FraxtalMultisig (0xe0d7755252873c4eF5788f7f45764E0e17610508) {
+    +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      fieldMeta:
++        {"getOwners":{"severity":"LOW","description":"Signers of the multisig, high severity if threshold changes"},"getThreshold":{"severity":"HIGH","description":"Multisig threshold"}}
+    }
+```
+
 Generated with discovered.json: 0x6002e87a118db1246bf48b3a23039cc57a2034cb
 
 # Diff at Thu, 18 Jul 2024 10:30:54 GMT:

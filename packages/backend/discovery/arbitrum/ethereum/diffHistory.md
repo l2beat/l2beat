@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xbc6a09bfd69840e959912e3a5722812f214d1290
+
+# Diff at Tue, 30 Jul 2024 11:10:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20406543
+- current block number: 20406543
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406543 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5eF0D09d1E6204141B4d37530808eD19f60FBa35) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      fieldMeta:
++        {"confirmPeriodBlocks":{"description":"Challenge period. (Number of blocks until a node is confirmed)."},"wasmModuleRoot":{"description":"Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."}}
+    }
+```
+
+Generated with discovered.json: 0xaed1b82772109b0ea6ba804d217c116d46f7af09
+
+# Diff at Sun, 28 Jul 2024 17:29:12 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 20389094
+- current block number: 20406543
+
+## Description
+
+1) SecurityCouncil signer rotation completed
+2) Changed timelock name in conf to be consistent with the new diagram
+
+## Watched changes
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.getOwners.3:
+-        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.getOwners.2:
+-        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.getOwners.1:
+-        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
+      values.getOwners.0:
+-        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389094 (main branch discovery), not current.
+
+```diff
+    contract L1ArbitrumTimelock (0xE6841D92B0C345144506576eC13ECf5103aC7f49) {
+    +++ description: None
+      name:
+-        "L1ArbitrumTimelock"
++        "L1Timelock"
+    }
+```
+
 Generated with discovered.json: 0x37615e14764a11f47d4ee5e6dbf8137e9b5501a0
 
 # Diff at Fri, 26 Jul 2024 07:02:36 GMT:

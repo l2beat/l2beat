@@ -36,6 +36,7 @@ describe(CirculatingSupplyIndexer.name, () => {
         type: 'circulatingSupply',
         address: EthereumAddress.random(),
         coingeckoId: CoingeckoId('id'),
+        category: 'other',
       })
 
       const circulatingSupplyService = mockObject<CirculatingSupplyService>({
@@ -95,6 +96,7 @@ describe(CirculatingSupplyIndexer.name, () => {
         type: 'circulatingSupply',
         address: EthereumAddress.random(),
         coingeckoId: CoingeckoId('id'),
+        category: 'other',
       })
 
       const amountRepository = mockObject<Database['amount']>({

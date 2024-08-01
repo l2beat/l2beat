@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7ce7d8aba310ba771f7246400b1c50e747a7395e
+
+# Diff at Tue, 30 Jul 2024 11:12:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20389671
+- current block number: 20389671
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389671 (main branch discovery), not current.
+
+```diff
+    contract zkEVM (0xd19d4B5d358258f05D7B411E21A1460D11B0876F) {
+    +++ description: None
+      fieldMeta:
++        {"verifiers":{"description":"Mapping of proof type to ZK Plonk Verifier contract"}}
+    }
+```
+
 Generated with discovered.json: 0x51489b22b6b962ccd94c990e8c37495160e47993
 
 # Diff at Fri, 26 Jul 2024 08:56:51 GMT:

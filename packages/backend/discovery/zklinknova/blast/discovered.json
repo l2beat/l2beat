@@ -3,7 +3,7 @@
   "chain": "blast",
   "blockNumber": 5983401,
   "configHash": "0x32517fe35fe5f51b8d393c0d11eb086f45be0b1c8322d9652a82517aa24e8294",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "zkLink",
@@ -359,5 +359,5 @@
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

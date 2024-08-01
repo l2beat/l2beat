@@ -156,14 +156,13 @@ describe(IndexerService.name, () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
-      getByIndexerId: async () => [
+      getConfigurationsWithoutIndexerId: async () => [
         {
           id: 'a',
           currentHeight: null,
           minHeight: 0,
           maxHeight: null,
           properties: JSON.stringify({ a: 1 }),
-          indexerId: 'indexer',
         },
         {
           id: 'b',
@@ -171,7 +170,6 @@ describe(IndexerService.name, () => {
           minHeight: 0,
           maxHeight: null,
           properties: JSON.stringify({ b: 1 }),
-          indexerId: 'indexer',
         },
       ],
     })
@@ -191,12 +189,14 @@ describe(IndexerService.name, () => {
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
+        properties: JSON.stringify({ a: 1 }),
       },
       {
         id: 'b',
         currentHeight: null,
         minHeight: 0,
         maxHeight: null,
+        properties: JSON.stringify({ b: 1 }),
       },
     ])
   })
@@ -225,7 +225,7 @@ describe(IndexerService.name, () => {
     },
   )
 
-  it(IndexerService.prototype.persistOnlyUsedConfigurations.name, async () => {
+  it(IndexerService.prototype.deleteConfigurations.name, async () => {
     const indexerConfigurationsRepository = mockObject<
       Database['indexerConfiguration']
     >({
@@ -240,15 +240,11 @@ describe(IndexerService.name, () => {
       }),
     )
 
-    await indexerService.persistOnlyUsedConfigurations('indexer', ['a', 'b'])
+    await indexerService.deleteConfigurations('indexer', ['a', 'b'])
 
     expect(
       indexerConfigurationsRepository.deleteConfigurations,
-    ).toHaveBeenOnlyCalledWith('indexer', ['c'])
-
-    expect(
-      indexerConfigurationsRepository.getIdsByIndexer,
-    ).toHaveBeenOnlyCalledWith('indexer')
+    ).toHaveBeenOnlyCalledWith('indexer', ['a', 'b'])
   })
 
   it(IndexerService.prototype.getAmountsStatus.name, async () => {

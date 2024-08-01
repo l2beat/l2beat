@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x1da008086226212b4461f46ca255667ebc909b04
+
+# Diff at Tue, 30 Jul 2024 11:17:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 237006565
+- current block number: 237006565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 237006565 (main branch discovery), not current.
+
+```diff
+    contract SecurityCouncilManager (0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC) {
+    +++ description: None
+      fieldMeta:
++        {"getBothCohorts":{"severity":"MEDIUM","description":"All 12 addresses of the 2 cohorts of the SecurityCouncil (2x6)"}}
+    }
+```
+
+Generated with discovered.json: 0xc72cf5f2281dbc063920bfc56809ba4a2c51b665
+
+# Diff at Sun, 28 Jul 2024 17:31:45 GMT:
+
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 235552250
+- current block number: 237006565
+
+## Description
+
+1) SecurityCouncil signer rotation completed
+2) Changed timelock name in conf to be consistent with the new diagram
+
+## Watched changes
+
+```diff
+    contract L2SecurityCouncilEmergency (0x423552c0F05baCCac5Bfa91C6dCF1dc53a0A1641) {
+    +++ description: None
+      values.getOwners.3:
+-        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.getOwners.2:
+-        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.getOwners.1:
+-        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
+      values.getOwners.0:
+-        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+    }
+```
+
+```diff
+    contract L2SecurityCouncilPropose (0xADd68bCb0f66878aB9D37a447C7b9067C5dfa941) {
+    +++ description: None
+      values.getOwners.3:
+-        "0xe40D80Bd58CEE55DCC2598724d7F1e03E206581D"
++        "0x5DD2205C3aac13E592F0a3D85188c948D1781df1"
+      values.getOwners.2:
+-        "0xB3b60932E598fe946169EC209A197184Bad760B7"
++        "0x5a09A94eE8198D3c474d723337aa58023810022C"
+      values.getOwners.1:
+-        "0xee7Fb91D5b776C326a728dc70e917F82d6809E3C"
++        "0xA821c8c245d1F3A257e3B0DEC99268cA05144422"
+      values.getOwners.0:
+-        "0xa0683d725420e2F75415806352Cd9c3fE10Fa960"
++        "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 235552250 (main branch discovery), not current.
+
+```diff
+    contract L2CoreTimelock (0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0) {
+    +++ description: None
+      name:
+-        "L2CoreTimelock"
++        "L2Timelock"
+    }
+```
+
+```diff
+    contract L2TreasuryTimelock (0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58) {
+    +++ description: None
+      name:
+-        "L2TreasuryTimelock"
++        "TreasuryTimelock"
+    }
+```
+
 Generated with discovered.json: 0xefe337070da8927bb9e6b78750ba44724e7ebcf8
 
 # Diff at Wed, 24 Jul 2024 12:09:21 GMT:

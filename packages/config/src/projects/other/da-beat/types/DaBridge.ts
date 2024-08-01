@@ -7,6 +7,7 @@ import { DaAccessibilityRisk } from './DaAccessibilityRisk'
 import { DaAttestationSecurityRisk } from './DaAttestationSecurityRisk'
 import { DaExitWindowRisk } from './DaExitWindowRisk'
 import { DaLinks } from './DaLinks'
+import { DacTransactionDataType } from './DacTransactionDataType'
 import { UsedInProject } from './UsedInProject'
 
 export type DaBridge =
@@ -45,6 +46,15 @@ export type DacBridge = CommonDaBridge & {
   totalMembers: number
   /** Minimum number of members required to sign and attest the data. */
   requiredMembers: number
+  /** The type of data. */
+  transactionDataType: DacTransactionDataType
+  /** Data about the DAC members. */
+  members:
+    | {
+        type: 'public'
+        list: { name: string; href: string }[]
+      }
+    | { type: 'unknown' }
   /** Data about related permissions - preferably from discovery. */
   permissions: ScalingProjectPermission[]
   /** Data about the contracts used in the bridge - preferably from discovery. */

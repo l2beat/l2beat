@@ -1,3 +1,713 @@
+Generated with discovered.json: 0xddaf5ba394a864bbb9350766a2e948b26307fdbe
+
+# Diff at Thu, 01 Aug 2024 08:38:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 20420384
+- current block number: 20432548
+
+## Description
+
+New onramp added to an existing lane. The chainSelector's associated chain in CommitStore15 is still unclear.
+
+## Watched changes
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.onRamps.1562403441176082196:
++        "0xD54C93A99CBCb8D865E13DA321B540171795A89f"
+    }
+```
+
+```diff
+    contract CommitStore15 (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20393769
++        20421003
+      values.latestConfigDetails.configDigest:
+-        "0x0001b4de454b34a4d0d5be00f3b0c21a51b346f9bcb88bab16ebee72c8d210ba"
++        "0x0001442c239e69bf2461192e40906b14d1d34fc9d2f193127ac07fae2dbb51c7"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract EVM2EVMOnRamp (0xD54C93A99CBCb8D865E13DA321B540171795A89f)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0xD54C93A99CBCb8D865E13DA321B540171795A89f.sol | 2732 ++++++++++++++++++++
+ 1 file changed, 2732 insertions(+)
+```
+
+Generated with discovered.json: 0xf80e881e9014089fce84efda49a1192f8e1bd8ce
+
+# Diff at Tue, 30 Jul 2024 15:53:20 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20389460
+- current block number: 20420384
+
+## Description
+
+A new lane is prepared, which includes support of a new source/destination for transporter. The `sourceChainSelector: 1562403441176082196` is not used nor documented yet.
+
+## Watched changes
+
+```diff
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        2
++        3
+      values.latestConfigDetails.blockNumber:
+-        20129939
++        20398840
+      values.latestConfigDetails.configDigest:
+-        "0x00018acc33a2a17b22ad88b60ae9798249a28a5b048e601b91dff87a257a9d2f"
++        "0x00011b0feeb79956de5da44165457ab771a1a71a233c41b945038500a5c4356f"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        3
++        4
+      values.latestConfigDetails.blockNumber:
+-        20285533
++        20398823
+      values.latestConfigDetails.configDigest:
+-        "0x0001ba387d4c1908a481c1fb34852617db49202b17af2ac2b6f31d7b4a14b97d"
++        "0x00015794577c5ec58b806ca7715e3310c6ffb423253062cd303e02dd3feb8e9b"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.12:
++        {"sourceChainSelector":"1562403441176082196","offRamp":"0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf"}
+    }
+```
+
+```diff
+    contract PriceRegistry (0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad) {
+    +++ description: None
+      values.getPriceUpdaters.12:
++        "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract CommitStore15 (0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract OffRamp15 (0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../transporter/ethereum/.flat/CommitStore15.sol   | 1089 ++++++++
+ .../transporter/ethereum/.flat/OffRamp15.sol       | 2894 ++++++++++++++++++++
+ 2 files changed, 3983 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389460 (main branch discovery), not current.
+
+```diff
+    contract OffRamp7 (0x0af338F0E314c7551bcE0EF516d46d855b0Ee395) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp11 (0x0f27c8532457b66D6037141DEB0ed479Dad04B3c) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore2 (0x118a9389960F86390A4F14ce4C95D6ff076C6bFC) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599) {
+    +++ description: None
+      values.getStaticConfig.sourceChainSelector:
+-        "4411394078118774322"
++        "blast"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp10 (0x1C207dabc46902dF9028b27D6d301c3849b2D12c) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore11 (0x20718EfbC25Dba60FD51c2c81362b83f7C411A6D) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore5 (0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore14 (0x2D1708ff2a15adbE313eA8C6035aA24d0FBA1c77) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore1 (0x31f6ab382DDeb9A316Ab61C3945a5292a50a89AB) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp12 (0x333f976915195ba9044fD0cd603cEcE936f6264e) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp2 (0x35F0ca9Be776E4B38659944c257bDd0ba75F1B8B) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp1 (0x3a129e6C18b23d18BA9E6Aa14Dc2e79d1f91c6c5) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore (0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53) {
+    +++ description: None
+      values.getStaticConfig.sourceChainSelector:
+-        "4411394078118774322"
++        "blast"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore12 (0x3d3467e1036Ee25F6F4aa15e3Abf77443A23144C) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore (0x3d8a95adA63D406ee8232562AbD83CEdb0B90466) {
+    +++ description: None
+      values.getStaticConfig.sourceChainSelector:
+-        "8805746078405598895"
++        "metis"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp4 (0x3df8dAe2d123081c4D5E946E655F7c109B9Dd630) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore10 (0x40c558575093eC1099CC21B020d9b8D13c74417F) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp9 (0x41627a90f2c6238f2BADAB72D5aB050B857fdAb5) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x4545F9a17DA50110632C14704a15d893BF9CBD27) {
+    +++ description: None
+      values.staticConfigChains.1:
+-        "4411394078118774322"
++        "blast"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0x466a078d17e3706a9414ACc48029EE9Bae4C9b65) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore4 (0x4af4B497c998007eF83ad130318eB2b925a79dc8) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp5 (0x569940e02D4425eac61A7601632eC00d69f75c17) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp12 (0x61135E701a2214C170c5F596D0067798FEfbaaE4) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore13 (0x7986C9892389854cAAbAC785ff18123B0070a5Fd) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp3 (0x7Afe7088aff57173565F4b034167643AA8b9171c) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract Router (0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D) {
+    +++ description: None
+      values.offRamps.11.sourceChainSelector:
+-        "8805746078405598895"
++        "metis"
+      values.offRamps.10.sourceChainSelector:
+-        "4411394078118774322"
++        "blast"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore (0x831097033C88c82a7F1897b168Aa88cC44540C8f) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp1 (0x86B47d8411006874eEf8E4584BdFD7be8e5549d1) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore3 (0x87c55D48DF6EF7B08153Ab079e76bFEcbb793D75) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore9 (0x8bEFCa744c6f2b567b1863dcF055C593afdC11A0) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore6 (0x8DC27D621c41a32140e22E2a4dAf1259639BAe04) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp5 (0x91D25A56Db77aD5147437d8B83Eb563D46eBFa69) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp3 (0x925228D7B82d883Dde340A55Fe8e6dA56244A22C) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore8 (0x9B2EEd6A1e16cB50Ed4c876D2dD69468B21b7749) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC) {
+    +++ description: None
+      values.staticConfigChains.1:
+-        "8805746078405598895"
++        "metis"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp4 (0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp11 (0xBDd822f3bC2EAB6818CfA3053107831D4E93fE72) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp13 (0xC7176620daf49A39a17FF9A6C2DE1eAA6033EE94) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp7 (0xCbE7e5DA76dC99Ac317adF6d99137005FDA4E2C4) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp9 (0xCC19bC4D43d17eB6859F0d22BA300967C97780b0) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xCe6364dBe64D2789D916180131fAda2ABFF702E8) {
+    +++ description: None
+      values.getStaticConfig.sourceChainSelector:
+-        "8805746078405598895"
++        "metis"
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp10 (0xd0B5Fc9790a6085b048b8Aa1ED26ca2b3b282CF2) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract CommitStore7 (0xD37a60E8C36E802D2E1a6321832Ee85556Beeb76) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xd5083684eE92dDeA117636ae5E2F1cb7fE4dfd46) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp13 (0xdF1d7FD22aC3aB5171E275796f123224039f3b24) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp6 (0xdf85c8381954694E74abD07488f452b4c2Cddfb3) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp6 (0xe2c2AB221AA0b957805f229d2AA57fBE2f4dADf7) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp14 (0xe2Eb229e88F56691e96bb98256707Bc62160FE73) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOffRamp (0xE8af3b68eDfFf65Ce48648009982380701f09B92) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp2 (0xE93ec2A57e38C8541c893348cCafEAB01F7D47d4) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract EVM2EVMOnRamp (0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp8 (0xeFC4a18af59398FF23bfe7325F2401aD44286F4d) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OnRamp8 (0xF538dA6c673A30338269655f4e019B71ba58CFd4) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
+```diff
+    contract OffRamp14 (0xfF51C00546AA3d9051a4B96Ae81346E14709CD24) {
+    +++ description: None
+      usedTypes.0.arg.4411394078118774322:
++        "blast"
+      usedTypes.0.arg.8805746078405598895:
++        "metis"
+    }
+```
+
 Generated with discovered.json: 0x6e3fa3bf60c3ff9402bafe069336978276249e74
 
 # Diff at Fri, 26 Jul 2024 08:15:12 GMT:

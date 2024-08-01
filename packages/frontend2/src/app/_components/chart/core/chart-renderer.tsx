@@ -5,9 +5,13 @@ import { getLineDashSegments } from '../utils/get-line-dash-segments'
 import { getRenderPaths } from '../utils/get-render-paths'
 import { getFillStyle, getStrokeStyle } from '../utils/get-style'
 import { useChartContext } from './chart-context'
+import { useChartSetLoading } from './chart-loading-context'
+import { useChartRect } from './chart-rect-context'
 
 export function ChartRenderer() {
   const ref = useRef<HTMLCanvasElement>(null)
+  const setLoading = useChartSetLoading()
+  const { setRect } = useChartRect()
   const context = useChartContext()
   const { theme: rawTheme } = useTheme()
   const theme = rawTheme === 'dark' ? 'dark' : 'light'
@@ -21,15 +25,16 @@ export function ChartRenderer() {
       if (rect) {
         chart.width = rect.width * window.devicePixelRatio
         chart.height = rect.height * window.devicePixelRatio
-        context.setRect(rect)
+        setRect(rect)
       }
     })
-  }, [ref, context])
+  }, [setRect])
 
   const render = useCallback(() => {
     const chart = ref.current
     const ctx = chart?.getContext('2d')
-    if (!chart || !ctx) return
+    setLoading(true)
+    if (!chart || !ctx || context.columns.length < 1) return
 
     requestAnimationFrame(() => {
       ctx.clearRect(0, 0, chart.width, chart.height)
@@ -64,9 +69,9 @@ export function ChartRenderer() {
           }
         }
       }
-      context.setLoading(false)
+      setLoading(false)
     })
-  }, [context, theme])
+  }, [context, theme, setLoading])
 
   useEffect(() => {
     setupCanvas()

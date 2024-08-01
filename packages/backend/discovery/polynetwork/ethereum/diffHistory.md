@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x180e7ef09cdd94cc6707b1e32f29924fa4aa1bb9
+
+# Diff at Tue, 30 Jul 2024 11:13:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 19940448
+- current block number: 19940448
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19940448 (main branch discovery), not current.
+
+```diff
+    contract PolyWrapper (0x81910675DbaF69deE0fD77570BFD07f8E436386A) {
+    +++ description: None
+      fieldMeta:
++        {"lockProxyIndexMap":{"severity":"MEDIUM","description":"These addresses can escrow funds for the bridge."},"maxLockProxyIndex":{"severity":"LOW","description":"This is the number of lockProxy escrows registered in the bridge."}}
+    }
+```
+
 Generated with discovered.json: 0x7a229cb612879eb7a330917e436b17362aaf241f
 
 # Diff at Fri, 24 May 2024 14:51:03 GMT:
