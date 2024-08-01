@@ -1,5 +1,5 @@
 import { type ValueRecord } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { type Dictionary, groupBy } from 'lodash'
 import { range as lodashRange } from 'lodash'
 import { db } from '~/server/database'
@@ -50,10 +50,10 @@ export async function getTvlValuesForProjects(
     const timestamps = lodashRange(
       (target.toNumber() - minTimestamp.toNumber()) /
         (resolution === 'hourly'
-          ? 3600
+          ? UnixTime.HOUR
           : resolution === 'sixHourly'
-            ? 21600
-            : 86400) +
+            ? UnixTime.SIX_HOURS
+            : UnixTime.DAY) +
         1,
     ).map((i) => {
       return minTimestamp.add(

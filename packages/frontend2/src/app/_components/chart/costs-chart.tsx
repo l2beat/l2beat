@@ -1,7 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/shared-pure'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
@@ -10,13 +10,16 @@ import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
+import { type CostsChartResponse } from '~/server/features/costs/get-costs-chart'
+import { type CostsTimeRange } from '~/server/features/costs/range'
 import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
+import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { HorizontalSeparator } from '../horizontal-separator'
 import { Square } from '../square'
-import { getCostsChart } from '~/server/features/costs/get-costs-chart'
+import { mapMilestones } from './utils/map-milestones'
 
 interface CostsChartPointData {
   timestamp: number
@@ -25,87 +28,86 @@ interface CostsChartPointData {
   blobs: number | undefined
   compute: number
   overhead: number
-  unit: CostsUnit
 }
 interface Props {
   milestones: Milestone[]
+  defaultTimeRange: CostsTimeRange
   tag?: string
 }
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
-export function CostsChart({ milestones, tag = 'costs' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
+export function CostsChart({
+  milestones,
+  defaultTimeRange,
+  tag = 'costs',
+}: Props) {
+  const [timeRange, setTimeRange] = useLocalStorage<CostsTimeRange>(
+    `${tag}-time-range`,
+    defaultTimeRange,
+  )
   const [unit, setUnit] = useLocalStorage<CostsUnit>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
-  const costs = getCostsChart(timeRange, unit)
-  const mappedMilestones = getMilestones(milestones)
+
+  const { data: chart } = api.scaling.costs.useQuery({
+    range: timeRange,
+  })
+  if (!chart) return <div>Loading...</div>
+
+  const mappedMilestones = mapMilestones(milestones)
 
   const formatYAxisLabel = (value: number) =>
     unit === 'gas'
       ? formatNumber(value)
       : formatCurrency(value, unit, { showLessThanMinimum: false })
 
-  const rangeStart = costs.data[0]?.[0]
-  const rangeEnd = costs.data[costs.data.length - 1]?.[0]
+  // Add useMemo
+  const columns = chart.data.map((dataPoint) => {
+    const [timestamp] = dataPoint
+
+    return {
+      values: getValues(dataPoint, unit),
+      data: getData(dataPoint, unit),
+      milestone: mappedMilestones[timestamp],
+    }
+  })
+
+  const rangeStart = chart.data[0]?.[0]
+  const rangeEnd = chart.data[chart.data.length - 1]?.[0]
   assert(
     rangeStart !== undefined && rangeEnd !== undefined,
     'Programmer error: rangeStart and rangeEnd are undefined',
   )
 
-  const columns = costs.data.map((dataPoint) => {
-    const [timestamp, total, overhead, calldata, compute, blobs = 0] = dataPoint
-
-    const isPostDencun = timestamp >= DENCUN_UPGRADE_TIMESTAMP
-    return {
-      values: [
-        { value: overhead + compute + blobs + calldata },
-        { value: overhead + compute + blobs },
-        { value: overhead + compute },
-        { value: overhead },
-      ],
-      data: {
-        timestamp,
-        total,
-        calldata,
-        blobs: isPostDencun && blobs > 0 ? blobs : undefined,
-        compute,
-        overhead,
-        unit,
-      },
-      milestone: mappedMilestones[timestamp],
-    }
-  })
-
   return (
-    <ChartProvider
-      columns={columns}
-      valuesStyle={[
-        {
-          line: 'blue',
-          fill: 'blue',
-          point: 'circle',
-        },
-        {
-          line: 'light-yellow',
-          fill: 'light-yellow',
-        },
-        {
-          line: 'pink',
-          fill: 'pink',
-        },
-        {
-          line: 'purple',
-          fill: 'purple',
-        },
-      ]}
-      formatYAxisLabel={formatYAxisLabel}
-      range={[rangeStart, rangeEnd]}
-      useLogScale={scale === 'log'}
-      renderHoverContents={(data) => <ChartHover data={data} />}
-    >
-      <section className="flex flex-col gap-4">
-        <Header />
+    <section className="flex flex-col gap-4">
+      <Header />
+      <ChartProvider
+        columns={columns}
+        valuesStyle={[
+          {
+            line: 'blue',
+            fill: 'blue',
+            point: 'circle',
+          },
+          {
+            line: 'light-yellow',
+            fill: 'light-yellow',
+          },
+          {
+            line: 'pink',
+            fill: 'pink',
+          },
+          {
+            line: 'purple',
+            fill: 'purple',
+          },
+        ]}
+        formatYAxisLabel={formatYAxisLabel}
+        range={[rangeStart, rangeEnd]}
+        useLogScale={scale === 'log'}
+        renderHoverContents={(data) => <ChartHover data={data} unit={unit} />}
+      >
         <ChartTimeRangeControls
           value={timeRange}
           setValue={setTimeRange}
@@ -125,12 +127,15 @@ export function CostsChart({ milestones, tag = 'costs' }: Props) {
           setUnit={setUnit}
           setScale={setScale}
         />
-      </section>
-    </ChartProvider>
+      </ChartProvider>
+    </section>
   )
 }
 
-function ChartHover({ data }: { data: CostsChartPointData }) {
+function ChartHover({
+  data,
+  unit,
+}: { data: CostsChartPointData; unit: CostsUnit }) {
   return (
     <div>
       <div className="mb-1 whitespace-nowrap">
@@ -140,7 +145,9 @@ function ChartHover({ data }: { data: CostsChartPointData }) {
       </div>
       <div className="flex w-full items-center justify-between gap-2">
         <span className="text-sm text-gray-700 dark:text-gray-50">Total</span>
-        {formatCostValue(data.total, data.unit)}
+        <span className="whitespace-nowrap font-bold tabular-nums">
+          {formatCostValue(data.total, unit)}
+        </span>
       </div>
       <HorizontalSeparator className="my-1" />
       <div className="flex w-full items-center justify-between gap-2">
@@ -150,7 +157,9 @@ function ChartHover({ data }: { data: CostsChartPointData }) {
             Calldata
           </span>
         </div>
-        {formatCostValue(data.calldata, data.unit)}
+        <span className="whitespace-nowrap font-bold tabular-nums">
+          {formatCostValue(data.calldata, unit)}
+        </span>
       </div>
       {data.blobs ? (
         <div className="flex w-full items-center justify-between gap-2">
@@ -160,7 +169,9 @@ function ChartHover({ data }: { data: CostsChartPointData }) {
               Blobs
             </span>
           </div>
-          {formatCostValue(data.blobs, data.unit)}
+          <span className="whitespace-nowrap font-bold tabular-nums">
+            {formatCostValue(data.blobs, unit)}
+          </span>
         </div>
       ) : null}
       <div className="flex w-full items-center justify-between gap-2">
@@ -170,7 +181,9 @@ function ChartHover({ data }: { data: CostsChartPointData }) {
             Compute
           </span>
         </div>
-        {formatCostValue(data.compute, data.unit)}
+        <span className="whitespace-nowrap font-bold tabular-nums">
+          {formatCostValue(data.compute, unit)}
+        </span>
       </div>
       <div className="flex w-full items-center justify-between gap-2">
         <div className="flex items-center gap-1">
@@ -179,7 +192,9 @@ function ChartHover({ data }: { data: CostsChartPointData }) {
             Overhead
           </span>
         </div>
-        {formatCostValue(data.overhead, data.unit)}
+        <span className="whitespace-nowrap font-bold tabular-nums">
+          {formatCostValue(data.overhead, unit)}
+        </span>
       </div>
     </div>
   )
@@ -187,7 +202,7 @@ function ChartHover({ data }: { data: CostsChartPointData }) {
 
 function Header() {
   return (
-    <header className="mb-4">
+    <header>
       <h1 className="mb-1 text-3xl font-bold">Onchain costs</h1>
       <p className="hidden text-base text-gray-500 dark:text-gray-600 md:block">
         The page shows the costs that L2s pay to Ethereum for security. By
@@ -234,11 +249,101 @@ function UnitAndScaleControls({
   )
 }
 
-function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
-  for (const milestone of milestones) {
-    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
-    result[timestamp] = milestone
+function getValues(
+  dataPoint: CostsChartResponse['data'][number],
+  unit: CostsUnit,
+) {
+  const [
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    _,
+    overheadGas,
+    overheadEth,
+    overheadUsd,
+    calldataGas,
+    calldataEth,
+    calldataUsd,
+    computeGas,
+    computeEth,
+    computeUsd,
+    blobsGas,
+    blobsEth,
+    blobsUsd,
+  ] = dataPoint
+  switch (unit) {
+    case 'usd':
+      return [
+        { value: overheadUsd + computeUsd + (blobsUsd ?? 0) + calldataUsd },
+        { value: overheadUsd + computeUsd + (blobsUsd ?? 0) },
+        { value: overheadUsd + computeUsd },
+        { value: overheadUsd },
+      ]
+    case 'eth':
+      return [
+        { value: overheadEth + computeEth + (blobsEth ?? 0) + calldataEth },
+        { value: overheadEth + computeEth + (blobsEth ?? 0) },
+        { value: overheadEth + computeEth },
+        { value: overheadEth },
+      ]
+    case 'gas':
+      return [
+        { value: overheadGas + computeGas + (blobsGas ?? 0) + calldataGas },
+        { value: overheadGas + computeGas + (blobsGas ?? 0) },
+        { value: overheadGas + computeGas },
+        { value: overheadGas },
+      ]
+    default:
+      assertUnreachable(unit)
   }
-  return result
+}
+
+function getData(
+  dataPoint: CostsChartResponse['data'][number],
+  unit: CostsUnit,
+): CostsChartPointData {
+  const [
+    timestamp,
+    overheadGas,
+    overheadEth,
+    overheadUsd,
+    calldataGas,
+    calldataEth,
+    calldataUsd,
+    computeGas,
+    computeEth,
+    computeUsd,
+    blobsGas,
+    blobsEth,
+    blobsUsd,
+  ] = dataPoint
+
+  const isPostDencun = timestamp >= DENCUN_UPGRADE_TIMESTAMP
+  switch (unit) {
+    case 'usd':
+      return {
+        timestamp,
+        total: calldataUsd + computeUsd + (blobsUsd ?? 0) + overheadUsd,
+        calldata: calldataUsd,
+        blobs: isPostDencun && blobsUsd && blobsUsd > 0 ? blobsUsd : undefined,
+        compute: computeUsd,
+        overhead: overheadUsd,
+      }
+    case 'eth':
+      return {
+        timestamp,
+        total: calldataEth + computeEth + (blobsEth ?? 0) + overheadEth,
+        calldata: calldataEth,
+        blobs: isPostDencun && blobsEth && blobsEth > 0 ? blobsEth : undefined,
+        compute: computeEth,
+        overhead: overheadEth,
+      }
+    case 'gas':
+      return {
+        timestamp,
+        total: calldataGas + computeGas + (blobsGas ?? 0) + overheadGas,
+        calldata: calldataGas,
+        blobs: isPostDencun && blobsGas && blobsGas > 0 ? blobsGas : undefined,
+        compute: computeGas,
+        overhead: overheadGas,
+      }
+  }
 }

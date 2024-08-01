@@ -1,22 +1,21 @@
-import React from 'react'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Skeleton } from '../../skeleton'
 import { useChartContext } from '../core/chart-context'
 
-interface Props {
-  value: string
-  setValue: (range: string) => void
+interface Props<T extends string> {
+  value: T | undefined
+  setValue: (range: T) => void
   range: readonly [number, number]
-  options: { value: string; label: string }[]
+  options: { value: T; label: string }[]
 }
 
-export function ChartTimeRangeControls({
+export function ChartTimeRangeControls<T extends string>({
   value,
   setValue,
   range,
   options,
-}: Props) {
+}: Props<T>) {
   const { loading } = useChartContext()
 
   if (loading) {
