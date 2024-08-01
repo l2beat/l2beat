@@ -1,16 +1,18 @@
-import {
-  FinalityDataPoint,
-  WarningValueWithSentiment,
-} from '@l2beat/shared-pure'
-import React from 'react'
+import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 
-import { SyncStatus } from '../../pages/types'
-import { HorizontalSeparator } from '../HorizontalSeparator'
-import { WarningBar } from '../WarningBar'
-import { RoundedWarningIcon } from '../icons'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../tooltip/Tooltip'
-import { DurationCell } from './DurationCell'
-import { GrayedOut } from './GrayedOut'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
+import { WarningBar } from '~/app/_components/warning-bar'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
+import { type SyncStatus } from '~/types/SyncStatus'
+import { formatTimestamp } from '~/utils/dates'
+import { DurationCell } from './duration-cell'
+import { GrayedOut } from './grayed-out'
 
 type BaseProps = {
   syncStatus: SyncStatus
@@ -34,11 +36,16 @@ export function FinalityDurationCell(props: Props & BaseProps) {
       : 'state update delay'
 
   return (
-    <Tooltip data-testid="finality-duration-cell">
+    <Tooltip>
       <TooltipTrigger className="flex items-center gap-1">
-        <GrayedOut grayOut={!props.syncStatus.isSynced}>
+        {props.syncStatus.isSynced ? (
           <DurationCell durationInSeconds={props.timings.averageInSeconds} />
-        </GrayedOut>
+        ) : (
+          <GrayedOut>
+            <DurationCell durationInSeconds={props.timings.averageInSeconds} />
+          </GrayedOut>
+        )}
+
         {props.warning && (
           <RoundedWarningIcon
             className="size-5"
@@ -51,7 +58,9 @@ export function FinalityDurationCell(props: Props & BaseProps) {
           {!props.syncStatus.isSynced && (
             <>
               <span className="whitespace-pre text-balance">
-                {`Values have not been synced since\n${props.syncStatus.displaySyncedUntil}.`}
+                {`Values have not been synced since\n${format(
+                  props.syncStatus,
+                )}.`}
               </span>
               <HorizontalSeparator className="my-2 dark:border-slate-600" />
             </>
@@ -110,4 +119,11 @@ export function FinalityDurationCell(props: Props & BaseProps) {
       </TooltipContent>
     </Tooltip>
   )
+}
+
+function format({ syncedUntil }: SyncStatus) {
+  return formatTimestamp(syncedUntil, {
+    mode: 'datetime',
+    longMonthName: true,
+  })
 }
