@@ -1,20 +1,20 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Layer2 } from './types'
 import {
   CONTRACTS,
   addSentimentToDataAvailability,
   makeBridgeCompatible,
 } from '../../common'
-import { Badge } from '../badges'
-import { RISK_VIEW } from '../../common/riskView'
-import { getStage } from './common/stages/getStage'
-import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
-import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
-import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
-import { OPERATOR } from '../../common/operator'
-import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
 import { EXITS } from '../../common/exits'
+import { FORCE_TRANSACTIONS } from '../../common/forceTransactions'
+import { NEW_CRYPTOGRAPHY } from '../../common/newCryptography'
+import { OPERATOR } from '../../common/operator'
+import { RISK_VIEW } from '../../common/riskView'
+import { STATE_CORRECTNESS } from '../../common/stateCorrectness'
+import { TECHNOLOGY_DATA_AVAILABILITY } from '../../common/technologyDataAvailability'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
+import { getStage } from './common/stages/getStage'
+import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('termstructure')
 
