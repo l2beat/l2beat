@@ -1,4 +1,7 @@
-export type TvlChartRange = '7d' | '30d' | '90d' | '180d' | '1y' | 'max'
+import { z } from 'zod'
+
+export const TvlChartRange = z.enum(['7d', '30d', '90d', '180d', '1y', 'max'])
+export type TvlChartRange = z.infer<typeof TvlChartRange>
 
 export function rangeToDays(range: TvlChartRange) {
   if (range === 'max') return null
