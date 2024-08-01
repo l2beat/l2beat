@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xcfca53a0e5fe651e4403c0a0dc803d79c8e0c524
+
+# Diff at Tue, 30 Jul 2024 11:14:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20367941
+- current block number: 20367941
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20367941 (main branch discovery), not current.
+
+```diff
+    contract PolygonL1Switchboard (0x053407DFA30267f6332f3c94a9e9F704A55e62CD) {
+    +++ description: None
+      fieldMeta:
++        {"switchboardFees":{"severity":"LOW","description":"Fee charged by the switchboard for processing a transaction"},"verificationOverheadFees":{"severity":"LOW","description":"Fee charged for verifying transaction"}}
+    }
+```
+
+```diff
+    contract OptimismSwitchboard2 (0x0E674e057EC0FF97eeA57B6A350DBAAD22FE41BA) {
+    +++ description: None
+      fieldMeta:
++        {"switchboardFees":{"severity":"LOW","description":"Fee charged by the switchboard for processing a transaction"},"verificationOverheadFees":{"severity":"LOW","description":"Fee charged for verifying transaction"}}
+    }
+```
+
+```diff
+    contract OptimismSwitchboard (0x139f39DC7dC05F7aC2DB3DB6af4f2e1a9De7c287) {
+    +++ description: None
+      fieldMeta:
++        {"switchboardFees":{"severity":"LOW","description":"Fee charged by the switchboard for processing a transaction"},"verificationOverheadFees":{"severity":"LOW","description":"Fee charged for verifying transaction"}}
+    }
+```
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
+      fieldMeta:
++        {"executionManager__":{"description":"Manages crosschain execution and -fees."},"plugs":{"severity":"LOW","description":"ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain."}}
+    }
+```
+
+```diff
+    contract ArbitrumL1Switchboard (0xdf5f7dfDFc26ee5F629949e330bEf56906319CAe) {
+    +++ description: None
+      fieldMeta:
++        {"switchboardFees":{"severity":"LOW","description":"Fee charged by the switchboard for processing a transaction"},"verificationOverheadFees":{"severity":"LOW","description":"Fee charged for verifying transaction"}}
+    }
+```
+
 Generated with discovered.json: 0x204b6b2c286321984245ecd7b47aa438ff7a60e3
 
 # Diff at Tue, 23 Jul 2024 08:10:01 GMT:

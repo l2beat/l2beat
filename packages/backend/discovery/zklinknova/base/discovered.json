@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 17596075,
   "configHash": "0x49f7bf7640f2f567471dbb7179bf811af73dcafa29f1fb7e91dce5adda9dc2db",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "BaseL2Gateway",

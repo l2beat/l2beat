@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240876,
   "configHash": "0x9d96b20a841797ca5d2e377b9c244b1781d5c5b56faf0686676a0c3d77c5503a",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "FPValidator",

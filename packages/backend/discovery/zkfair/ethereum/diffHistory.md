@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9ff6f745245b4f0bb8873619fbe11715b39d083c
+
+# Diff at Tue, 30 Jul 2024 11:16:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 19726116
+- current block number: 19726116
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19726116 (main branch discovery), not current.
+
+```diff
+    contract DataAvailabilityCommittee (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      fieldMeta:
++        {"members":{"description":"URL and address of the DAC member"}}
+    }
+```
+
 Generated with discovered.json: 0x4d0c74d7a0df038803ca04650c436dd850144828
 
 # Diff at Wed, 24 Apr 2024 15:27:14 GMT:

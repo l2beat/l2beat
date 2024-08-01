@@ -1,9 +1,9 @@
 {
   "name": "pNetwork",
   "chain": "ethereum",
-  "blockNumber": 19926484,
-  "configHash": "0xa0ac3a5ffd7b460eb42b5cc31d11ea09532fb9ae142ca25fa017970859818606",
-  "version": 9,
+  "blockNumber": 20420398,
+  "configHash": "0xacfacf9c84c23dfb644b1f84136823f08cbe72513fc45dcf9218995c9c893637",
+  "version": 10,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
@@ -104,7 +104,7 @@
         "proxyType": 2,
         "supportRequiredPct": "510000000000000000",
         "token": "0xe824F81cD136BB7a28480baF8d7E5f0E8E4B693E",
-        "votesLength": 39
+        "votesLength": 43
       },
       "derivedName": "DandelionVoting"
     },
@@ -155,37 +155,6 @@
         "REGISTRY_MANAGER_ROLE": "0xf7a450ef335e1892cb42c8ca72e7242359d7711924b75db5717410da3f614aa3"
       },
       "derivedName": "EVMScriptRegistry"
-    },
-    {
-      "name": "PNT",
-      "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD",
-      "sinceTimestamp": 1592411070,
-      "values": {
-        "$immutable": true,
-        "adminOperator": "0x0000000000000000000000000000000000000000",
-        "decimals": 18,
-        "defaultOperators": [],
-        "getHubAddr": "0xD216153c06E857cD7f72665E0aF1d7D82172F494",
-        "getInflation": "28350000000000000000000000",
-        "granularity": 1,
-        "gsnExtraGas": 40000,
-        "gsnFeeTarget": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2",
-        "gsnTrustedSigner": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2",
-        "inflationAmounts": [
-          "18900000000000000000000000",
-          "9450000000000000000000000"
-        ],
-        "inflationOwner": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97",
-        "inflationStartTime": 1592411070,
-        "inflationTimeSpans": [31536000, 31536000],
-        "inflationWithdrawnAmount": "28350000000000000000000000",
-        "name": "pNetwork Token",
-        "owner": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2",
-        "paused": false,
-        "relayHubVersion": "1.0.0",
-        "symbol": "PNT",
-        "totalSupply": "87973007722997040030171772"
-      }
     },
     {
       "name": "UOS Vault",
@@ -240,12 +209,6 @@
         "$immutable": true,
         "owner": "0x364B37Bbd812c76f3E8b0C1F62a2E33A21cFD496"
       }
-    },
-    {
-      "name": "RelayHub",
-      "address": "0xD216153c06E857cD7f72665E0aF1d7D82172F494",
-      "sinceTimestamp": 1565610264,
-      "values": { "$immutable": true, "version": "1.0.0" }
     },
     {
       "name": "TokenManager",
@@ -318,7 +281,7 @@
         "parentToken": "0x0000000000000000000000000000000000000000",
         "symbol": "daoPNT",
         "tokenFactory": "0xA29EF584c389c67178aE9152aC9C543f9156E2B3",
-        "totalSupply": "8997474003833274459090308",
+        "totalSupply": "8926751749751332015693664",
         "transfersEnabled": false,
         "version": "MMT_0.1"
       },
@@ -340,17 +303,17 @@
       "values": {
         "$admin": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
         "$implementation": "0xd88a13c72443D069Fc0d44A4989AC8dd132Ac38b",
-        "currentMonthNumber": 4,
-        "currentMonthWithdrawnAmount": "1000000000000000000000000",
+        "currentMonthNumber": 6,
+        "currentMonthWithdrawnAmount": "700000000000000000000000",
         "currentYearNumber": 0,
-        "currentYearWithdrawnAmount": "4960000000000000000000000",
+        "currentYearWithdrawnAmount": "6160000000000000000000000",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0xdb94fb7fdbffd548b5e058fcd76cc73c6bfae4843b728c540043b00b4ff00049",
         "inflationOwner": "0x2211bFD97b1c02aE8Ac305d206e9780ba7D8BfF4",
         "isWhitelistingEnabled": true,
         "maxWithdrawableAmounts": [
-          "935504574192816912588654",
-          "14395045741928169125886545"
+          "1235504574192816912588654",
+          "13195045741928169125886545"
         ],
         "monthlyRateCap": 200,
         "monthlyWithdrawableLimit": "1935504574192816912588654",
@@ -358,7 +321,7 @@
         "PNT_INIT_TOTAL_SUPPLY": "96775228709640845629432729",
         "RATE_DIVISOR": 10000,
         "symbol": "ethPNT",
-        "totalSupply": "13760000000000000000000000",
+        "totalSupply": "14960000000000000000000000",
         "yearlyRateCap": 2000,
         "yearlyWithdrawableLimit": "19355045741928169125886545"
       },
@@ -399,10 +362,8 @@
     { "address": "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262" },
     { "address": "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f" },
     { "address": "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45" },
-    { "address": "0x56db816b3456EDfa6edbC65F00ba45296fE136F2" },
     { "address": "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20" },
     { "address": "0xDffE7AC6B538B4A7Fd81c98C5fba0415d63fB132" },
-    { "address": "0xEC1b464f29845ab180887a00B6b0C8c19Cb13d97" },
     { "address": "0xFFfFfFffFFfffFFfFFfFFFFFffFFFffffFfFFFfF" }
   ],
   "abis": {
@@ -618,69 +579,6 @@
       "event ChangePermissionManager(address indexed app, bytes32 indexed role, address indexed manager)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)"
     ],
-    "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD": [
-      "constructor(uint256 initialSupply, address _gsnTrustedSigner, address _gsnFeeTarget, uint256[] _inflationTimeSpans, uint256[] _inflationsAmounts, address _adminOperator)",
-      "event AdminOperatorChange(address oldOperator, address newOperator)",
-      "event AdminTransferInvoked(address operator)",
-      "event Approval(address indexed owner, address indexed spender, uint256 value)",
-      "event AuthorizedOperator(address indexed operator, address indexed tokenHolder)",
-      "event Burned(address indexed operator, address indexed from, uint256 amount, bytes data, bytes operatorData)",
-      "event InflationMint(uint256 currentAccruedInflation, uint256 withdrawn, address target)",
-      "event Minted(address indexed operator, address indexed to, uint256 amount, bytes data, bytes operatorData)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event RelayHubChanged(address indexed oldRelayHub, address indexed newRelayHub)",
-      "event RevokedOperator(address indexed operator, address indexed tokenHolder)",
-      "event Sent(address indexed operator, address indexed from, address indexed to, uint256 amount, bytes data, bytes operatorData)",
-      "event Transfer(address indexed from, address indexed to, uint256 value)",
-      "event Unpaused(address account)",
-      "function acceptRelayedCall(address relay, address from, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes approvalData, uint256) view returns (uint256, bytes)",
-      "function adminOperator() view returns (address)",
-      "function adminTransfer(address sender, address recipient, uint256 amount, bytes data, bytes operatorData)",
-      "function allowance(address holder, address spender) view returns (uint256)",
-      "function approve(address spender, uint256 value) returns (bool)",
-      "function authorizeOperator(address operator)",
-      "function balanceOf(address tokenHolder) view returns (uint256)",
-      "function burn(uint256 amount, bytes data)",
-      "function decimals() pure returns (uint8)",
-      "function defaultOperators() view returns (address[])",
-      "function getHubAddr() view returns (address)",
-      "function getInflation() view returns (uint256 inflation)",
-      "function granularity() view returns (uint256)",
-      "function gsnExtraGas() view returns (uint256)",
-      "function gsnFeeTarget() view returns (address)",
-      "function gsnTrustedSigner() view returns (address)",
-      "function inflationAmounts(uint256) view returns (uint256)",
-      "function inflationOwner() view returns (address)",
-      "function inflationStartTime() view returns (uint256)",
-      "function inflationTimeSpans(uint256) view returns (uint256)",
-      "function inflationWithdrawnAmount() view returns (uint256)",
-      "function isOperatorFor(address operator, address tokenHolder) view returns (bool)",
-      "function name() view returns (string)",
-      "function operatorBurn(address account, uint256 amount, bytes data, bytes operatorData)",
-      "function operatorSend(address sender, address recipient, uint256 amount, bytes data, bytes operatorData)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function postRelayedCall(bytes context, bool success, uint256 actualCharge, bytes32 preRetVal)",
-      "function preRelayedCall(bytes context) returns (bytes32)",
-      "function relayHubVersion() view returns (string)",
-      "function renounceOwnership()",
-      "function revokeOperator(address operator)",
-      "function send(address recipient, uint256 amount, bytes data)",
-      "function setAdminOperator(address adminOperator_)",
-      "function setFeeTarget(address _gsnFeeTarget)",
-      "function setGSNExtraGas(uint256 _gsnExtraGas)",
-      "function setInflationOwner(address newOwner)",
-      "function setTrustedSigner(address _gsnTrustedSigner)",
-      "function symbol() view returns (string)",
-      "function totalSupply() view returns (uint256)",
-      "function transfer(address recipient, uint256 amount) returns (bool)",
-      "function transferFrom(address holder, address recipient, uint256 amount) returns (bool)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function withdrawInflation()"
-    ],
     "0x9f8622b11984AfC8f0a42A394928702017c5968D": [
       "constructor(address _weth, address[] _tokensToSupport)",
       "event LogWithdrawToken(address indexed _from, address indexed _token, uint256 amount)",
@@ -746,35 +644,6 @@
       "event DisableExecutor(uint256 indexed executorId, address indexed executorAddress)",
       "event ScriptResult(address indexed executor, bytes script, bytes input, bytes returnData)",
       "event RecoverToVault(address indexed vault, address indexed token, uint256 amount)"
-    ],
-    "0xD216153c06E857cD7f72665E0aF1d7D82172F494": [
-      "function withdraw(uint256 amount, address dest)",
-      "function registerRelay(uint256 transactionFee, string url)",
-      "function canRelay(address relay, address from, address to, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData) view returns (uint256 status, bytes recipientContext)",
-      "function recipientCallsAtomic(address recipient, bytes encodedFunctionWithFrom, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 preChecksGas, bytes recipientContext) returns (uint8)",
-      "function getNonce(address from) view returns (uint256)",
-      "function penalizeIllegalTransaction(bytes unsignedTx, bytes signature)",
-      "function relayCall(address from, address recipient, bytes encodedFunction, uint256 transactionFee, uint256 gasPrice, uint256 gasLimit, uint256 nonce, bytes signature, bytes approvalData)",
-      "function version() view returns (string)",
-      "function requiredGas(uint256 relayedCallStipend) view returns (uint256)",
-      "function balanceOf(address target) view returns (uint256)",
-      "function canUnstake(address relay) view returns (bool)",
-      "function getRelay(address relay) view returns (uint256 totalStake, uint256 unstakeDelay, uint256 unstakeTime, address owner, uint8 state)",
-      "function maxPossibleCharge(uint256 relayedCallStipend, uint256 gasPrice, uint256 transactionFee) view returns (uint256)",
-      "function penalizeRepeatedNonce(bytes unsignedTx1, bytes signature1, bytes unsignedTx2, bytes signature2)",
-      "function depositFor(address target) payable",
-      "function stake(address relay, uint256 unstakeDelay) payable",
-      "function removeRelayByOwner(address relay)",
-      "function unstake(address relay)",
-      "event Staked(address indexed relay, uint256 stake, uint256 unstakeDelay)",
-      "event RelayAdded(address indexed relay, address indexed owner, uint256 transactionFee, uint256 stake, uint256 unstakeDelay, string url)",
-      "event RelayRemoved(address indexed relay, uint256 unstakeTime)",
-      "event Unstaked(address indexed relay, uint256 stake)",
-      "event Deposited(address indexed recipient, address indexed from, uint256 amount)",
-      "event Withdrawn(address indexed account, address indexed dest, uint256 amount)",
-      "event CanRelayFailed(address indexed relay, address indexed from, address indexed to, bytes4 selector, uint256 reason)",
-      "event TransactionRelayed(address indexed relay, address indexed from, address indexed to, bytes4 selector, uint8 status, uint256 charge)",
-      "event Penalized(address indexed relay, address sender, uint256 amount)"
     ],
     "0xD7E8E79d318eCE001B39D83Ea891ebD5fC22d254": [
       "function proxyType() pure returns (uint256 proxyTypeId)",

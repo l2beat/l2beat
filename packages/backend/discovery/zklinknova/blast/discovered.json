@@ -3,7 +3,7 @@
   "chain": "blast",
   "blockNumber": 5983401,
   "configHash": "0x32517fe35fe5f51b8d393c0d11eb086f45be0b1c8322d9652a82517aa24e8294",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "zkLink",

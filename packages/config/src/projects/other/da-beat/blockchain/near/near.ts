@@ -50,8 +50,7 @@ export const near: DaLayer = {
     economicSecurity: DaEconomicSecurityRisk.OnChainQuantifiable,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
-  // Blocked by: NEAR economic security type support
-  // economicSecurity: {
-  //   type: 'NEAR',  // 2/3 of NEAR validators stake
-  // },
+  economicSecurity: {
+    type: 'Near',
+  },
 }

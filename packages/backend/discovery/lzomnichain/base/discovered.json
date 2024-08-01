@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 16700316,
   "configHash": "0x489ee895d4bd7a38439afd393b89ea7e8a7d6a413f919925b9c3a2cf0a79bfcc",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "LayerZero Multisig",

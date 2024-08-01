@@ -1,11 +1,19 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { bridges, getChainNames, layer2s, layer3s } from '../../src/'
+import {
+  bridges,
+  daLayers,
+  getChainNames,
+  getChainNamesForDA,
+  layer2s,
+  layer3s,
+} from '../../src/'
 import { bridge1WithDups } from '../../src/test/stubs/bridge1WithDups'
 import { bridge2WithDups } from '../../src/test/stubs/bridge2WithDups'
 import { layer2aWithDups } from '../../src/test/stubs/layer2aWithDups'
 import {
+  getUniqueAddressesForDaBridge,
   getUniqueContractsForAllProjects,
   getUniqueContractsForProject,
 } from './addresses'
@@ -15,28 +23,55 @@ import {
 } from './output'
 
 describe('checkVerifiedContracts:addresses', () => {
-  const projects = [...bridges, ...layer2s, ...layer3s]
-  const chains = getChainNames(...projects)
-  describe('all current contracts are included in verified.json', () => {
+  function verifyContracts(
+    contracts: EthereumAddress[],
+    verified: Record<string, boolean>,
+    chain: string,
+  ) {
+    for (const contract of contracts) {
+      if (verified[contract.toString()] === undefined) {
+        throw new Error(
+          `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${chain}`,
+        )
+      }
+    }
+  }
+  describe('all current L2BEAT contracts are included in verified.json', () => {
+    const projects = [...bridges, ...layer2s, ...layer3s]
+    const chains = getChainNames(...projects)
     for (const chain of chains) {
-      it(`for ${chain}`, async () => {
+      it(`for L2BEAT:${chain}`, async () => {
         const filePath = getVerificationFilePath(chain)
         const verifiedJson = await loadVerifiedJson(filePath)
         const allContracts = getUniqueContractsForAllProjects(projects, chain)
 
-        for (const contract of allContracts) {
-          if (verifiedJson[contract.toString()] === undefined) {
-            throw new Error(
-              `Not all contracts have been checked for verification.\nGo to packages/config and run yarn check-verified-contracts\n The missing contract's address is ${contract.toString()} on ${chain}`,
-            )
+        verifyContracts(allContracts, verifiedJson, chain)
+      })
+    }
+  })
+
+  describe('all current DABEAT contracts are included in verified.json', () => {
+    const chains = getChainNamesForDA(...daLayers)
+    for (const chain of chains) {
+      it(`for DABEAT:${chain}`, async () => {
+        const addresses = []
+        const filePath = getVerificationFilePath(chain)
+        const verifiedJson = await loadVerifiedJson(filePath)
+        for (const daLayer of daLayers) {
+          for (const bridge of daLayer.bridges) {
+            addresses.push(...getUniqueAddressesForDaBridge(bridge, chain))
           }
         }
+
+        verifyContracts(addresses, verifiedJson, chain)
       })
     }
   })
 
   describe('getUniqueContractsForAllProjects()', () => {
     describe('can parse all current layer2s and bridges', () => {
+      const projects = [...bridges, ...layer2s, ...layer3s]
+      const chains = getChainNames(...projects)
       for (const chain of chains) {
         it(`for ${chain}`, async () => {
           expect(() =>

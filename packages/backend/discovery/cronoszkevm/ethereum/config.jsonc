@@ -1,0 +1,70 @@
+{
+  "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "chain": "ethereum",
+  "name": "cronoszkevm",
+  "initialAddresses": ["0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"],
+  "names": {
+    "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm"
+  },
+  "sharedModules": {
+    "PolygonRollupManager": "shared-zk-stack"
+  },
+  "overrides": {
+    "CronosZkEvm": {
+      "ignoreRelatives": ["getBaseToken"],
+      // below is copypaste from zksyncera, pls modify when diamond is verified
+      "ignoreMethods": [
+        "l2LogsRootHash",
+        "storedBlockHash",
+        "storedBatchHash",
+        "getName"
+      ],
+      "ignoreInWatchMode": [
+        "getPriorityQueueSize",
+        "getTotalBlocksCommitted",
+        "getTotalBlocksExecuted",
+        "getTotalBlocksVerified",
+        "getTotalBatchesExecuted",
+        "getTotalBatchesVerified",
+        "getTotalBatchesCommitted",
+        "getTotalPriorityTxs",
+        "priorityQueueFrontOperation",
+        "getFirstUnprocessedPriorityTx"
+      ],
+      "fields": {
+        "txFilterer": {
+          "description": "Optional: This contract must expose the ITransactionFilterer interface (see Mailbox facet) and is used for censoring transactions pushed from L1 to L2.",
+          "severity": "HIGH",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "NewTransactionFilterer",
+            "returnParams": ["oldTransactionFilterer", "newTransactionFilterer"]
+          }
+        },
+        "validators": {
+          // this does not catch validators changed through an upgrade of the diamond, but current constructor does not have a validator field
+          // (this is about the validator role in the executor (usually held by the validatorTimelock), not the validators of the ValidatorTimelock)
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ValidatorStatusUpdate",
+            "valueKey": "validatorAddress",
+            "flagKey": "isActive"
+          }
+        },
+        "getProtocolVersion": {
+          "description": "Protocol version, increments with each protocol change",
+          "severity": "MEDIUM"
+        },
+        "getVerifierParams": {
+          "description": "Verifier parameters used for proving batches",
+          "severity": "LOW"
+        },
+        "facets": {
+          "handler": {
+            "type": "eip2535Facets"
+          }
+        }
+      }
+    }
+  }
+}

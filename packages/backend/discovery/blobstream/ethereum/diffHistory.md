@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x7de8b02a6d2c3c4385cb25bf6b34f965a3477097
+
+# Diff at Tue, 30 Jul 2024 11:11:10 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20218838
+- current block number: 20218838
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20218838 (main branch discovery), not current.
+
+```diff
+    contract SuccinctGateway (0x6c7a05e0AE641c6559fD76ac56641778B6eCd776) {
+    +++ description: None
+      fieldMeta:
++        {"headerRangeProvers":{"severity":"LOW","description":"List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the headerRange function ID of BlobstreamX."},"nextHeaderProvers":{"severity":"LOW","description":"List of prover (relayer) addresses that are allowed to `fulfillCallback()`/`fulfillCall()` in the Succinctgateway for the nextHeader function ID of BlobstreamX."}}
+    }
+```
+
 Generated with discovered.json: 0x48c882d83a8c23c8b1c61b255f6b2f15dda4addc
 
 # Diff at Thu, 13 Jun 2024 21:20:54 GMT:

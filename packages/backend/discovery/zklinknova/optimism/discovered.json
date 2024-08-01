@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122588960,
   "configHash": "0xce10e15afb33d1b6e6810a19bcb0420abc52bc5646c858e42dda06270610dec1",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "OptimismOwner",

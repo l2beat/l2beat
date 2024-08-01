@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xf76ed1eb994d8eeffd14040acc16f1711483315d
+
+# Diff at Tue, 30 Jul 2024 11:11:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20331848
+- current block number: 20331848
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331848 (main branch discovery), not current.
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
+      fieldMeta:
++        {"numRelaxedGuards":{"description":"Number of relaxed guards in the Sentinel."},"relaxThreshold":{"severity":"MEDIUM","description":"Threshold of relaxed Guards needed to relax the Sentinel"},"relaxed":{"severity":"MEDIUM","description":"An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)"}}
+    }
+```
+
 Generated with discovered.json: 0xfcb5ef95e521bb6ee3d77e539bb99b752c1789ac
 
 # Diff at Thu, 18 Jul 2024 07:14:59 GMT:
