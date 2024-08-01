@@ -16,7 +16,7 @@ export default async function Page() {
   const tvl = await getTvl()
   const entries = await getBridgesSummaryEntries(tvl)
   return (
-    <div className="mb-20">
+    <div className="mb-8">
       <BridgesMvpWarning />
       <TvlChart data={tvl.bridges} milestones={[]} headerContent="bridges" />
       <HorizontalSeparator className="my-4 md:my-6" />
