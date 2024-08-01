@@ -17,7 +17,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   constructor(readonly options: ManagedMultiIndexerOptions<T>) {
     assert(
       options.configurations.length > 0,
-      'Configurations should not be empty',
+      `Configurations should not be empty ${options.tag}`,
     )
 
     super(options.logger, options.parents, options)
