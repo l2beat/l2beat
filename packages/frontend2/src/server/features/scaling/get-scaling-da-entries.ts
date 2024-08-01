@@ -35,6 +35,7 @@ function getScalingDataAvailabilityEntry(
   if (!project.dataAvailability) return
 
   return {
+    entryType: 'data-availability',
     ...getCommonScalingEntry({ project, isVerified, hasImplementationChanged }),
     dataAvailability: {
       layer: project.dataAvailability.layer,

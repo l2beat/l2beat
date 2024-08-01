@@ -1,4 +1,4 @@
-import { FinalityDataPoint } from '@l2beat/shared-pure'
+import { type FinalityDataPoint } from './schema'
 
 export function divideAndAddLag(
   details: FinalityDataPoint | undefined,
