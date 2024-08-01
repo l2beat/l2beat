@@ -4,6 +4,7 @@ import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getScalingRiskEntries } from '~/server/features/scaling/get-scaling-risk-entries'
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
 import { ScalingRiskTables } from './_components/scaling-risk-tables'
+import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -16,11 +17,11 @@ export default async function Page() {
   const projects = await getScalingRiskEntries(tvl)
 
   return (
-    <>
+    <ScalingFilterContextProvider>
       <div className="mb-8">
         <SimplePageHeader>Risk Analysis</SimplePageHeader>
       </div>
       <ScalingRiskTables projects={projects} />
-    </>
+    </ScalingFilterContextProvider>
   )
 }
