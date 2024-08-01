@@ -2,12 +2,12 @@ import { type Layer2 } from '@l2beat/config'
 import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../../tvl/order-by-tvl'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import {
   type ScalingFinalityEntry,
   type ScalingFinalityEntryData,
 } from './types'
-import { getCommonScalingEntry } from '../get-common-scaling-entry'
 
 export async function getScalingFinalityEntries(
   projects: Layer2[],

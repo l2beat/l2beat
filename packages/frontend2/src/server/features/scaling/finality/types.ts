@@ -1,8 +1,8 @@
+import { type DataAvailabilityMode } from '@l2beat/config'
 import { type WarningValueWithSentiment } from '@l2beat/shared-pure'
 import { type SyncStatus } from '~/types/SyncStatus'
-import { type FinalityDataPoint } from './schema'
 import { type CommonScalingEntry } from '../get-common-scaling-entry'
-import { type DataAvailabilityMode } from '@l2beat/config'
+import { type FinalityDataPoint } from './schema'
 
 export type ScalingFinalityEntry = CommonScalingEntry & {
   dataAvailabilityMode?: DataAvailabilityMode

@@ -1,7 +1,7 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
+
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import React, { useCallback, useMemo, useState } from 'react'
+import React, { useMemo } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { BasicTable } from '~/app/_components/table/basic-table'

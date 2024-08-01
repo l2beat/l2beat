@@ -7,11 +7,11 @@ import { getFinality } from '~/server/features/scaling/finality/get-finality'
 import { getFinalityConfigurations } from '~/server/features/scaling/finality/get-finality-configurations'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
+import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { FinalityDiagramsSection } from './_components/diagram-section'
 import { ScalingFinalityTable } from './_components/table/scaling-finality-table'
 import { FinalityWarning } from './_components/warning'
 import { finalityDiagrams } from './_utils/finality-diagrams'
-import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

@@ -3,11 +3,11 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { scalingFinalityColumns } from './columns'
-import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 
 export function ScalingFinalityTable({
   projects,
