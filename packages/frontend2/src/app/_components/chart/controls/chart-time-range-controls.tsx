@@ -1,16 +1,15 @@
 import React from 'react'
 import { useIsClient } from '~/hooks/use-is-client'
-import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Skeleton } from '../../skeleton'
 import { useChartLoading } from '../core/chart-loading-context'
 
 interface Props {
-  value: TvlChartRange
-  setValue: (range: TvlChartRange) => void
+  value: string
+  setValue: (range: string) => void
   range: readonly [number, number]
-  options: { value: TvlChartRange; label: string }[]
+  options: { value: string; label: string }[]
 }
 
 export function ChartTimeRangeControls({
