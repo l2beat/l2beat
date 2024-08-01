@@ -5,34 +5,21 @@ import { Checkbox } from '~/app/_components/checkbox'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
-import {
-  type ScalingDataAvailabilityEntry,
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
 import { useScalingFilterValues } from './scaling-filter-context'
-
-export type BaseScalingFiltersEntry =
-  | ScalingSummaryLayer2sEntry
-  | ScalingSummaryLayer3sEntry
-  | ScalingRiskEntry
-  | ScalingDataAvailabilityEntry
-
-export interface BaseScalingFiltersState {
-  rollupsOnly: boolean | undefined
-  category: string | undefined
-  stack: string | undefined
-  stage: string | undefined
-  purpose: string | undefined
-}
 
 interface Props {
   items: CommonScalingEntry[]
-  additionalFilters?: React.ReactNode
+  showRollupsOnly?: boolean
+  additionalFiltersLeft?: React.ReactNode
+  additionalFiltersRight?: React.ReactNode
 }
 
-export function BaseScalingFilters({ items, additionalFilters }: Props) {
+export function BaseScalingFilters({
+  items,
+  showRollupsOnly,
+  additionalFiltersLeft,
+  additionalFiltersRight,
+}: Props) {
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
     .sort()
@@ -76,14 +63,17 @@ export function BaseScalingFilters({ items, additionalFilters }: Props) {
     <OverflowWrapper>
       <div className="flex flex-row justify-between space-x-2">
         <div className="flex space-x-2">
-          <Checkbox
-            onCheckedChange={(checked) =>
-              filter.set({ rollupsOnly: !!checked })
-            }
-            disabled={!isRollupInItems}
-          >
-            Rollups only
-          </Checkbox>
+          {showRollupsOnly && (
+            <Checkbox
+              id="rollups-only"
+              onCheckedChange={(checked) =>
+                filter.set({ rollupsOnly: !!checked })
+              }
+              disabled={!isRollupInItems}
+            >
+              Rollups only
+            </Checkbox>
+          )}
           <TableFilter
             title="Type"
             options={typeOptions}
@@ -108,16 +98,9 @@ export function BaseScalingFilters({ items, additionalFilters }: Props) {
             value={filter.purpose}
             onValueChange={(value) => filter.set({ purpose: value })}
           />
-          {additionalFilters}
+          {additionalFiltersLeft}
         </div>
-
-        <Checkbox
-          onCheckedChange={(checked) => filter.set({ rollupsOnly: !!checked })}
-          disabled={!isRollupInItems}
-          id={'exclude-associated-tokens'}
-        >
-          Exclude associated tokens
-        </Checkbox>
+        {additionalFiltersRight}
       </div>
     </OverflowWrapper>
   )

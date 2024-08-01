@@ -2,9 +2,10 @@
 
 import {
   type Layer2Provider,
+  type Layer3Provider,
   type ScalingProjectCategory,
   type ScalingProjectPurpose,
-  type Stage,
+  type StageConfig,
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import {
@@ -20,8 +21,8 @@ export type ScalingFilterContextValue = {
   rollupsOnly: boolean
   excludeAssociatedTokens: boolean
   category?: ScalingProjectCategory
-  stack?: Layer2Provider
-  stage?: Stage
+  stack?: Layer2Provider | Layer3Provider
+  stage?: StageConfig['stage']
   purpose?: ScalingProjectPurpose
   hostChain?: string
   daLayer?: string

@@ -1,5 +1,5 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
+
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import React, { useCallback, useMemo } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'

@@ -7,7 +7,7 @@ import {
 } from '@l2beat/uif'
 
 import { IndexerService } from './IndexerService'
-import { assetUniqueIndexerId } from './ids'
+import { assertUniqueIndexerId } from './ids'
 
 export interface ManagedChildIndexerOptions extends IndexerOptions {
   parents: Indexer[]
@@ -29,7 +29,7 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
     if (options.tag) {
       this.indexerId += `::${options.tag}`
     }
-    assetUniqueIndexerId(this.indexerId)
+    assertUniqueIndexerId(this.indexerId)
   }
 
   async initialize(): Promise<{ safeHeight: number; configHash?: string }> {

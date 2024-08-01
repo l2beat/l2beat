@@ -92,7 +92,7 @@ export class Env {
 
 function throwMissingEnvVar(keys: string | string[]): never {
   if (Array.isArray(keys)) {
-    throw new Error(`Missing environment variables: ${keys.join(', ')}!`)
+    throw new Error(`Missing environment variables: ${keys.join(', ')}`)
   } else {
     throw new Error(`Missing environment variable: ${keys}!`)
   }

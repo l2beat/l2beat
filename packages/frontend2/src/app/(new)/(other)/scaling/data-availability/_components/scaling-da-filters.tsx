@@ -1,24 +1,15 @@
 import { uniq } from 'lodash'
 import React from 'react'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/types'
-import {
-  BaseScalingFilters,
-  type BaseScalingFiltersState,
-} from '../../../_components/base-scaling-filters'
-import { useScalingFilter } from '../../../_components/scaling-filter-context'
-
-type ScalingFiltersEntry = ScalingDataAvailabilityEntry
-export type ScalingDaFiltersState = {
-  daLayer: string | undefined
-} & BaseScalingFiltersState
-
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
+import { BaseScalingFilters } from '../../../_components/base-scaling-filters'
+import { useScalingFilterValues } from '../../../_components/scaling-filter-context'
 interface Props {
-  items: ScalingFiltersEntry[]
+  items: ScalingDataAvailabilityEntry[]
 }
 
 export function ScalingDaFilters({ items }: Props) {
-  const filter = useScalingFilter()
+  const state = useScalingFilterValues()
   const daLayerOptions = uniq(
     items.flatMap((item) => item.dataAvailability.layer.value),
   )
@@ -32,10 +23,12 @@ export function ScalingDaFilters({ items }: Props) {
     <TableFilter
       title="DA Layer"
       options={daLayerOptions}
-      value={filter.daLayer}
-      onValueChange={(value) => filter.set({ daLayer: value })}
+      value={state.daLayer}
+      onValueChange={(value) => state.set({ daLayer: value })}
     />
   )
 
-  return <BaseScalingFilters items={items} additionalFilters={daLayerFilter} />
+  return (
+    <BaseScalingFilters items={items} additionalFiltersLeft={daLayerFilter} />
+  )
 }

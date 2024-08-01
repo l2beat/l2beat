@@ -1,31 +1,6 @@
-import { Config } from '../../../../build/config'
-import { Wrapped } from '../../../Page'
-import { getDefaultPageMetadata } from '../../../metadata'
-import { getDiagramImageOrThrow } from '../../../project/common/getDiagramImage'
-import { FinalityPagesData } from '../types'
-import { ScalingFinalityPageProps } from '../view/ScalingFinalityPage'
-import { getScalingFinalityView } from './getScalingFinalityView'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 
-export function getProps(
-  config: Config,
-  pagesData: FinalityPagesData,
-): Wrapped<ScalingFinalityPageProps> {
-  return {
-    props: {
-      finalityView: getScalingFinalityView(config.layer2s, pagesData),
-      diagrams,
-    },
-    wrapper: {
-      metadata: getDefaultPageMetadata({
-        image: 'https://l2beat.com/meta-images/pages/og-scaling-finality.png',
-        url: 'https://l2beat.com/scaling/finality',
-      }),
-      banner: config.features.banner,
-    },
-  }
-}
-
-const diagrams = [
+export const finalityDiagrams = [
   {
     name: 'State diff\nZK rollups',
     src: {
@@ -68,5 +43,11 @@ const diagrams = [
 ]
 
 function getDiagram(diagramName: string) {
-  return getDiagramImageOrThrow('finality', diagramName)
+  const diagram = getDiagramParams('finality', diagramName)
+
+  if (!diagram) {
+    throw new Error(`Diagram not found: ${diagramName}`)
+  }
+
+  return diagram.src
 }

@@ -1,14 +1,12 @@
 import { type Layer2, type Layer3, type StageConfig } from '@l2beat/config'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
-export function getCommonScalingEntry<
-  T extends Layer2 | Layer3 = Layer2 | Layer3,
->({
+export function getCommonScalingEntry({
   project,
   isVerified,
   hasImplementationChanged,
 }: {
-  project: T
+  project: Layer2 | Layer3
   isVerified: boolean
   hasImplementationChanged: boolean
 }) {
@@ -33,7 +31,7 @@ export function getCommonScalingEntry<
   if (project.type === 'layer2') {
     return {
       ...common,
-      type: project.type,
+      type: 'layer2' as const,
       provider: project.display.provider,
       stage: project.stage,
       hostChain: undefined,
@@ -42,12 +40,11 @@ export function getCommonScalingEntry<
 
   return {
     ...common,
-    type: project.type,
+    type: 'layer3' as const,
     provider: project.display.provider,
     hostChain: project.hostChain,
     stage: { stage: 'NotApplicable' } satisfies StageConfig,
   }
 }
 
-export type CommonScalingEntry<T extends Layer2 | Layer3 = Layer2 | Layer3> =
-  ReturnType<typeof getCommonScalingEntry<T>>
+export type CommonScalingEntry = ReturnType<typeof getCommonScalingEntry>

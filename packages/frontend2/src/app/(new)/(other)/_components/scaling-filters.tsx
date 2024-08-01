@@ -2,15 +2,8 @@ import { uniq } from 'lodash'
 import React from 'react'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
-import {
-  BaseScalingFilters,
-  type BaseScalingFiltersState,
-} from './base-scaling-filters'
+import { BaseScalingFilters } from './base-scaling-filters'
 import { useScalingFilterValues } from './scaling-filter-context'
-
-export type ScalingFiltersState = {
-  hostChain: string | undefined
-} & BaseScalingFiltersState
 
 interface Props {
   items: CommonScalingEntry[]
@@ -19,11 +12,7 @@ interface Props {
 export function ScalingFilters({ items }: Props) {
   const state = useScalingFilterValues()
   const hostChainOptions = uniq(
-    items.map((item) =>
-      item.type === 'layer3' && !('dataAvailability' in item)
-        ? item.hostChain
-        : 'Ethereum',
-    ),
+    items.map((item) => item.hostChain ?? 'Ethereum'),
   )
     .sort()
     .map((value) => ({
@@ -41,6 +30,6 @@ export function ScalingFilters({ items }: Props) {
   )
 
   return (
-    <BaseScalingFilters items={items} additionalFilters={hostChainFilter} />
+    <BaseScalingFilters items={items} additionalFiltersLeft={hostChainFilter} />
   )
 }

@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { AmountRecord, Database } from '@l2beat/database'
-import { UnixTime } from '@l2beat/shared-pure'
+import { TotalSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
@@ -42,6 +42,8 @@ describe(ChainAmountIndexer.name, () => {
         findBlockNumberByChainAndTimestamp: async () => blockNumber,
       })
 
+      const configurations = [actual('a', 100, null), actual('b', 100, null)]
+
       const indexer = new ChainAmountIndexer({
         amountService,
         syncOptimizer,
@@ -50,16 +52,14 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        configurations: [],
+        configurations,
         db: mockDatabase({
           amount: amountRepository,
           blockTimestamp: blockTimestampRepository,
         }),
       })
 
-      const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
-
-      const saveData = await indexer.multiUpdate(from, to, toUpdate)
+      const saveData = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await saveData()
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
@@ -67,7 +67,7 @@ describe(ChainAmountIndexer.name, () => {
       expect(amountService.fetchAmounts).toHaveBeenOnlyCalledWith(
         timestampToSync,
         blockNumber,
-        toUpdate,
+        configurations,
       )
 
       expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([
@@ -86,6 +86,8 @@ describe(ChainAmountIndexer.name, () => {
         getTimestampToSync: () => timestampToSync,
       })
 
+      const configurations = [actual('a', 100, null)]
+
       const indexer = new ChainAmountIndexer({
         amountService: mockObject<AmountService>({}),
         syncOptimizer,
@@ -94,16 +96,14 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        configurations: [],
+        configurations,
         db: mockDatabase({
           amount: mockObject(),
           blockTimestamp: mockObject(),
         }),
       })
 
-      const toUpdate = [actual('a', 100, null)]
-
-      const saveData = await indexer.multiUpdate(from, to, toUpdate)
+      const saveData = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await saveData()
 
       expect(syncOptimizer.getTimestampToSync).toHaveBeenOnlyCalledWith(from)
@@ -113,6 +113,8 @@ describe(ChainAmountIndexer.name, () => {
     it('returns if optimized timestamp later than to', async () => {
       const from = 100
       const to = 1000
+
+      const configurations = [actual('a', 100, null), actual('b', 100, null)]
 
       const indexer = new ChainAmountIndexer({
         amountService: mockObject<AmountService>({}),
@@ -124,16 +126,14 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        configurations: [],
+        configurations,
         db: mockDatabase({
           amount: mockObject(),
           blockTimestamp: mockObject(),
         }),
       })
 
-      const toUpdate = [actual('a', 100, null), actual('b', 100, null)]
-
-      const saveData = await indexer.multiUpdate(from, to, toUpdate)
+      const saveData = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await saveData()
 
       expect(safeHeight).toEqual(to)
@@ -154,7 +154,9 @@ describe(ChainAmountIndexer.name, () => {
         indexerService: mockObject<IndexerService>({}),
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
-        configurations: [],
+        configurations: [
+          mockObject<Configuration<TotalSupplyEntry>>({ id: 'a' }),
+        ],
         db: mockDatabase({
           amount: amountRepository,
           blockTimestamp: mockObject(),

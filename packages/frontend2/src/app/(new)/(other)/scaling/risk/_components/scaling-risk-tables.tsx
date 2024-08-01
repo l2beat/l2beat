@@ -1,7 +1,7 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
+
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import React, { useCallback, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { BasicTable } from '~/app/_components/table/basic-table'
@@ -22,34 +22,7 @@ import { scalingRiskColumns } from './table/columns'
 export function ScalingRiskTables({
   projects,
 }: { projects: ScalingRiskEntry[] }) {
-  const scalingFilters = useScalingFilter()
-
-  const includeFilters = useCallback(
-    (entry: ScalingRiskEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === scalingFilters.stage
-            : false
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
+  const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
     () => projects.filter((item) => includeFilters(item)),

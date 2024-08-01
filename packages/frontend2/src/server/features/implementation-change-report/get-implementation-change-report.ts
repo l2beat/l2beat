@@ -22,6 +22,10 @@ export function getImplementationChangeReport() {
   return getCachedImplementationChangeReport()
 }
 
+export type ImplementationChangeReport = Awaited<
+  ReturnType<typeof getCachedImplementationChangeReport>
+>
+
 const getCachedImplementationChangeReport = cache(
   async () => {
     const configReader = new ConfigReader(

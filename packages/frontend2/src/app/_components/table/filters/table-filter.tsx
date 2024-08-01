@@ -21,19 +21,19 @@ import {
 
 const UNDEFINED_VALUE = 'undefined-value'
 
-interface Option {
+interface Option<T extends string> {
   label: string
-  value: string | undefined
+  value: T | undefined
 }
 
-interface Props<T> {
+interface Props<T extends string> {
   title: string
-  options: Option[]
+  options: Option<T>[]
   value: T | undefined
   onValueChange: (option: T | undefined) => void
 }
 
-export function TableFilter<T extends string | undefined>(props: Props<T>) {
+export function TableFilter<T extends string>(props: Props<T>) {
   const [open, setOpen] = useState(false)
   const breakpoint = useBreakpoint()
   const showDrawer = breakpoint === 'tablet' || breakpoint === 'mobile'
@@ -49,8 +49,11 @@ export function TableFilter<T extends string | undefined>(props: Props<T>) {
   return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-function SelectedValue({ options, value, onValueChange }: Props<any>) {
+function SelectedValue<T extends string>({
+  options,
+  value,
+  onValueChange,
+}: Props<T>) {
   const option = options.find((option) => option.value === value)
   assert(option, 'Option not found')
   return (
@@ -68,15 +71,14 @@ function SelectedValue({ options, value, onValueChange }: Props<any>) {
   )
 }
 
-function TableFilterSelect({
+function TableFilterSelect<T extends string>({
   open,
   setOpen,
   title,
   options,
   value,
   onValueChange,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: Props<any> & {
+}: Props<T> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
@@ -92,7 +94,9 @@ function TableFilterSelect({
       value={value ?? ''}
       onOpenChange={setOpen}
       onValueChange={(v) => {
-        const mappedValue = v === UNDEFINED_VALUE ? undefined : v
+        const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
+          | T
+          | undefined
         onValueChange(mappedValue)
       }}
     >
@@ -110,14 +114,13 @@ function TableFilterSelect({
   )
 }
 
-function TableFilterDrawer({
+function TableFilterDrawer<T extends string>({
   open,
   setOpen,
   title,
   options,
   onValueChange,
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-}: Props<any> & {
+}: Props<T> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
@@ -156,13 +159,15 @@ function TableFilterDrawer({
   )
 }
 
-function replaceUndefined(options: Option[]): {
+function replaceUndefined<T extends string>(
+  options: Option<T>[],
+): {
   label: string
-  value: string
+  value: T
 }[] {
   return options.map((option) => {
     if (option.value === undefined) {
-      return { label: option.label, value: UNDEFINED_VALUE }
+      return { label: option.label, value: UNDEFINED_VALUE as T }
     }
 
     return {
