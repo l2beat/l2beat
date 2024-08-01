@@ -15,7 +15,7 @@ export default async function Page() {
   const tvl = await getLatestTvlUsd({ type: 'bridge' })
   const entries = await getBridgeRiskEntries(tvl)
   return (
-    <div className="mb-20">
+    <div className="mb-8">
       <SimplePageHeader>Risk Analysis</SimplePageHeader>
       <BridgesMvpWarning />
       <BridgesRiskTables items={entries} />
