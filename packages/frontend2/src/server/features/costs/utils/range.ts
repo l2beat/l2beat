@@ -1,5 +1,5 @@
-import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
+import { rangeToDays } from '~/utils/range/range-to-days'
 
 export const CostsTimeRange = z.union([
   z.literal('1d'),
@@ -9,24 +9,6 @@ export const CostsTimeRange = z.union([
   z.literal('180d'),
 ])
 export type CostsTimeRange = z.infer<typeof CostsTimeRange>
-
-export function getRange(range: CostsTimeRange): [UnixTime, UnixTime] {
-  const days = rangeToDays(range)
-  const resolution = rangeToResolution(range)
-
-  const nowToFullHour = UnixTime.now().toStartOf(
-    resolution === 'daily' ? 'day' : 'hour',
-  )
-
-  const start = nowToFullHour.add(-days, 'days')
-  const end = nowToFullHour
-
-  return [start, end]
-}
-
-function rangeToDays(value: CostsTimeRange) {
-  return parseInt(value.slice(0, -1))
-}
 
 export function rangeToResolution(value: CostsTimeRange) {
   const days = rangeToDays(value)

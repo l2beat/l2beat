@@ -20,6 +20,26 @@ export class ActivityViewRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getDailyCountsForProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ) {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('activity.daily_count_view')
+      .select(['project_id', 'count', 'unix_timestamp'])
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('unix_timestamp', '>', from.toDate())
+      .where('unix_timestamp', '<=', to.toDate())
+      .orderBy('unix_timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getDailyCountsPerProject(
     projectId: ProjectId,
   ): Promise<DailyTransactionCountRecord[]> {

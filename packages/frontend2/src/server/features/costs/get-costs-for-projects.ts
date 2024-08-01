@@ -1,19 +1,21 @@
 import { type Layer2 } from '@l2beat/config/src'
 import { type AggregatedL2CostRecord } from '@l2beat/database'
 import { db } from '~/server/database'
+import { getRange } from '~/utils/range/range'
 import {
   type LatestCostsProjectResponse,
   type LatestCostsResponse,
 } from './types'
 import { addIfNotNull } from './utils/add-if-not-null'
 import { getSyncedUntil } from './utils/get-synced-until'
-import { type CostsTimeRange, getRange } from './utils/range'
+import { type CostsTimeRange, rangeToResolution } from './utils/range'
 import { toTrackedTxConfig } from './utils/to-tracked-tx-config'
 
-export async function getLatestCosts(
+export async function getCostsForProjects(
   projects: Layer2[],
   timeRange: CostsTimeRange,
 ) {
+  const resolution = rangeToResolution(timeRange)
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',
   )
@@ -40,7 +42,7 @@ export async function getLatestCosts(
       continue
     }
 
-    const range = getRange(timeRange)
+    const range = getRange(timeRange, resolution)
     const records = await db.aggregatedL2Cost.getByProjectAndTimeRange(
       project.id,
       range,

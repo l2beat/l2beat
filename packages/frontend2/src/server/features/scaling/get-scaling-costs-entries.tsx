@@ -8,9 +8,9 @@ import {
   layer2s,
 } from '@l2beat/config'
 import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { random } from 'lodash'
 import { type SyncStatus } from '~/types/SyncStatus'
-import { getLatestCosts } from '../costs/get-latest-costs'
+import { getActivityForProjects } from '../activity/get-activity-for-projects'
+import { getCostsForProjects } from '../costs/get-costs-for-projects'
 import { type LatestCostsProjectResponse } from '../costs/types'
 import { type CostsTimeRange } from '../costs/utils/range'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
@@ -56,12 +56,13 @@ export async function getScalingCostsEntries(
 ): Promise<ScalingCostsEntry[]> {
   const implementationChange = await getImplementationChangeReport()
   const projects = getIncluded(layer2s)
-  const latestCosts = await getLatestCosts(projects, timeRange)
+  const projectsCosts = await getCostsForProjects(projects, timeRange)
+  const projectsActivity = await getActivityForProjects(projects)
   const orderedProjects = orderByTvl(projects, tvl)
 
   return orderedProjects
     .map((project) => {
-      const costs = latestCosts[project.id]
+      const costs = projectsCosts[project.id]
 
       return {
         type: project.type,
@@ -81,7 +82,7 @@ export async function getScalingCostsEntries(
           ? {
               ...withTotal(costs),
               syncStatus: getSyncStatus(costs.syncedUntil),
-              txCount: random(true) * 1000000000,
+              txCount: projectsActivity[project.id],
             }
           : undefined,
         costsWarning: project.display.costsWarning,
