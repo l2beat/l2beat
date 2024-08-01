@@ -11,36 +11,36 @@ export const cheese: Layer3 = underReviewL3({
     Badge.DA.Celestia,
     Badge.Stack.Orbit,
     Badge.VM.EVM,
+    Badge.RaaS.Caldera,
   ],
   display: {
     category: 'Optimium',
     provider: 'Arbitrum',
-    name: 'PMON Chain',
+    name: 'CheeseChain',
     slug: 'cheese',
-    description:
-      'Polychain Monsters built an Orbit stack Optimium, housing the Onchain Monsters game.',
-    purposes: ['Gaming', 'NFT'],
+    description: 'CheeseChain is an Orbit stack Optimium using $CHEESE.',
+    purposes: ['Universal'],
     links: {
-      websites: ['https://protocolmonsterlabs.com/'],
+      websites: ['https://docs.cheesechain.lol/'],
       apps: [
-        'https://battle.polychainmonsters.com/',
-        'https://bridge.arbitrum.io/?destinationChain=pmon-chain&sourceChain=arbitrum-one',
+        'https://cheesechain.bridge.caldera.xyz/',
+        'https://bridge.cheesechain.lol/',
       ],
-      documentation: ['https://battle-docs.polychainmonsters.com/'],
-      explorers: [],
+      documentation: ['https://docs.cheesechain.lol/'],
+      explorers: ['https://fetascan.io/'],
       repositories: [],
       socialMedia: [
-        'https://x.com/protocolmon',
-        'https://discord.gg/protocolmon',
+        'https://x.com/layerofcheese',
+        'https://t.me/cheesegateway',
       ],
     },
   },
-  associatedTokens: ['PMON'],
+  associatedTokens: ['CHEESE'],
   escrows: [
     {
       chain: 'arbitrum',
-      address: EthereumAddress('0x10B25719f4c0fA1BFF22431438E6b6315059548A'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1707462976),
+      address: EthereumAddress('0xA337997ab18164Dfe1e8A94E8D912e8d4e2ce173'), // ERC20Bridge
+      sinceTimestamp: new UnixTime(1717552278),
       tokens: '*',
     },
   ],
