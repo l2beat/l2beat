@@ -885,6 +885,10 @@
       "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430"
     },
     {
+      "symbol": "PMON",
+      "address": "0x1796ae0b0fa4862485106a0de9b654efe301d0b2"
+    },
+    {
       "symbol": "PNT",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
     },
@@ -1393,6 +1397,13 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PMON",
+      "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+      "source": "canonical",
+      "coingeckoId": "polychain-monsters",
+      "supply": "zero"
+    },
     {
       "symbol": "wOETH",
       "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",

@@ -3256,6 +3256,21 @@
       "supply": "zero"
     },
     {
+      "id": "pmon-polkamon",
+      "name": "Polkamon",
+      "coingeckoId": "polychain-monsters",
+      "address": "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2",
+      "symbol": "PMON",
+      "decimals": 18,
+      "deploymentTimestamp": 1616790642,
+      "coingeckoListingTimestamp": 1617235200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "ethereum:pol-polygon-ecosystem-token",
       "name": "Polygon Ecosystem Token",
       "coingeckoId": "polygon-ecosystem-token",
@@ -7449,6 +7464,21 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:pmon-polkamon",
+      "name": "Polkamon",
+      "coingeckoId": "polychain-monsters",
+      "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+      "symbol": "PMON",
+      "decimals": 18,
+      "deploymentTimestamp": 1687789925,
+      "coingeckoListingTimestamp": 1617235200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
     },
     {
       "id": "arbitrum:rdnt-radiant",
