@@ -19,7 +19,9 @@ const totalStakeArray = discovery.getContractValue<number[]>(
 const totalStake = BigNumber.from(totalStakeArray[0])
 const requiredStake = totalStake.div(committeeMembers)
 
-const requiredStakeFormatted = parseFloat(utils.formatEther(requiredStake)).toLocaleString();
+const requiredStakeFormatted = parseFloat(
+  utils.formatEther(requiredStake),
+).toLocaleString()
 
 export const mantleDA: DaLayer = {
   id: 'dac',

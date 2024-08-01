@@ -292,7 +292,7 @@
     "DataLayrChallengeUtils": {
       "ignoreMethods": ["nextPowerOf2"]
     },
-    "Owner2Multisig": {
+    "MantleEngineeringMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "L1CrossDomainMessenger": {

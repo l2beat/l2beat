@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x81cb56576fdb51a4638aafb71d3c3624b84f8807
+Generated with discovered.json: 0x47f246c1b4fd1e4a70f61cb95293dbfa09886564
 
-# Diff at Thu, 01 Aug 2024 10:56:13 GMT:
+# Diff at Thu, 01 Aug 2024 11:03:10 GMT:
 
 - author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
 - comparing to: main@03fdf86a062c9d83062b678171d068bd5c4a79aa block: 19531981
-- current block number: 20433237
+- current block number: 20433272
 
 ## Description
 
