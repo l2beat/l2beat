@@ -3,8 +3,12 @@ import { type AggregatedL2CostRecord } from '@l2beat/database'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
 
-import { type CostsTimeRange, rangeToDays, rangeToResolution } from './range'
-import { toTrackedTxConfig } from './to-tracked-tx-config'
+import {
+  type CostsTimeRange,
+  rangeToDays,
+  rangeToResolution,
+} from './utils/range'
+import { toTrackedTxConfig } from './utils/to-tracked-tx-config'
 
 export interface CostsChartResponse {
   types: [

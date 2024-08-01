@@ -4,7 +4,7 @@ import { type ProjectId } from '@l2beat/shared-pure'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
-} from './get-costs-chart'
+} from '../get-costs-chart'
 
 export function toTrackedTxConfig(
   projectId: ProjectId,
