@@ -192,7 +192,7 @@
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"]
     },
-    "OwnerMultisig": {
+    "MantleSecurityMultisig": {
       "ignoreInWatchMode": ["nonce"]
     },
     "EigenDataLayerChain": {

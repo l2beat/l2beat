@@ -1,8 +1,8 @@
 {
   "name": "mantle",
   "chain": "ethereum",
-  "blockNumber": 20433002,
-  "configHash": "0x4fb57d68081696a80d74cccd94b436518ea7d7bba0c327757a79c8e6af3d1fa4",
+  "blockNumber": 20433237,
+  "configHash": "0x6f2da8412fd23e22e629a55400348ede7b974edd8eb1bf182f028160b4c020e6",
   "version": 10,
   "contracts": [
     {
@@ -183,10 +183,10 @@
         "deletedOutputs": [],
         "FINALIZATION_PERIOD_SECONDS": 604800,
         "L2_BLOCK_TIME": 2,
-        "latestBlockNumber": 67185746,
-        "latestOutputIndex": 3340,
-        "nextBlockNumber": 67187546,
-        "nextOutputIndex": 3341,
+        "latestBlockNumber": 67187546,
+        "latestOutputIndex": 3341,
+        "nextBlockNumber": 67189346,
+        "nextOutputIndex": 3342,
         "PROPOSER": "0x6667961f5e9C98A76a48767522150889703Ed77D",
         "startingBlockNumber": 61171946,
         "startingTimestamp": 1710474204,
@@ -373,15 +373,15 @@
         "dataLayrChallenge": "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
         "dataPermissionManager": "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
         "dataStoresForDuration": {
-          "one_duration": 34578,
+          "one_duration": 34581,
           "two_duration": 0,
           "three_duration": 0,
           "four_duration": 0,
           "five_duration": 0,
           "six_duration": 0,
           "seven_duration": 0,
-          "dataStoreId": 34579,
-          "latestTime": 1722509543
+          "dataStoreId": 34582,
+          "latestTime": 1722512447
         },
         "DURATION_SCALE": 3600,
         "eigenLayrDelegation": "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
@@ -428,7 +428,7 @@
         "HASH_MESSAGE_GAS_PER_BYTE": 2,
         "L1_MNT_ADDRESS": "0x3c3a81e81dc49A522A592e7622A7E711c06bf354",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630514",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292630521",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -611,8 +611,8 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 593078,
-          "prevBlockNum": 20432900
+          "prevBoughtGas": 591926,
+          "prevBlockNum": 20433235
         },
         "paused": false,
         "SYSTEM_CONFIG": "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
