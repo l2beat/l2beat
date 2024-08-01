@@ -1,4 +1,5 @@
 import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { mantle } from '../../../../layer2s/mantle'
 import {
   DaAccessibilityRisk,
@@ -7,7 +8,6 @@ import {
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
 import { toUsedInProject } from '../../utils/to-used-in-project'
-import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 
 const discovery = new ProjectDiscovery('mantle')
 
@@ -22,7 +22,6 @@ const threshold =
     'quorumThresholdBasisPoints',
   ) / 1000 // Quorum threshold is in basis points, but stake is equal for all members (100k MNT)
 
-
 export const mantleDABridge = {
   id: 'mantleDABridge',
   type: 'DAC',
@@ -31,17 +30,18 @@ export const mantleDABridge = {
     slug: 'mantle-da-bridge',
     description: 'MantleDA bridge on Ethereum.',
     links: {
-        websites: ['https://mantle.xyz'],
-        documentation: [
-          'https://docs.mantle.xyz/network/introduction/concepts/data-availability'
-        ],
-        repositories: [
-          'https://github.com/mantlenetworkio'
-        ],
-        apps: [],
-        explorers: ['https://explorer.mantle.xyz/mantle-da'],
-        socialMedia: ['https://twitter.com/0xMantle', 'https://t.me/mantlenetwork'],
-      },
+      websites: ['https://mantle.xyz'],
+      documentation: [
+        'https://docs.mantle.xyz/network/introduction/concepts/data-availability',
+      ],
+      repositories: ['https://github.com/mantlenetworkio'],
+      apps: [],
+      explorers: ['https://explorer.mantle.xyz/mantle-da'],
+      socialMedia: [
+        'https://twitter.com/0xMantle',
+        'https://t.me/mantlenetwork',
+      ],
+    },
   },
   contracts: {
     addresses: [
@@ -49,11 +49,12 @@ export const mantleDABridge = {
         description:
           'This contract is the entry point for data availability commitments. It is responsible for storing transaction data headers and confirming the data store by verifying operators signatures.',
       }),
+      discovery.getContractDetails('RegistryPermission'),
+      discovery.getContractDetails('PauserRegistry'),
     ],
     risks: [],
   },
-  technology:
-    ` The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
+  technology: ` The DA bridge contract is used for storing transaction data headers and confirming the data store by verifying operators signatures.
       The Mantle sequencer posts the data hash as a commitment to the DataLayrServiceManager contract on Ethereum thorugh an InitDataStore() transaction.
       Once the commitment is posted, the sequencer sends the data to the permissioned set of nodes, who sign the data and send back the signatures to the sequencer.
       The sequencer then posts the signatures to the DataLayrServiceManager contract on Ethereum through a confirmDataStore() transaction.

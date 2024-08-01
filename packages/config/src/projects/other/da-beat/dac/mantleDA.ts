@@ -1,4 +1,4 @@
-import { utils, BigNumber } from 'ethers/lib/ethers'
+import { BigNumber, utils } from 'ethers/lib/ethers'
 import { ProjectDiscovery } from '../../../../discovery/ProjectDiscovery'
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
@@ -16,10 +16,10 @@ const totalStakeArray = discovery.getContractValue<number[]>(
   'totalStake',
 )
 
-const totalStake = BigNumber.from(totalStakeArray[0]);
-const requiredStake = totalStake.div(committeeMembers);
+const totalStake = BigNumber.from(totalStakeArray[0])
+const requiredStake = totalStake.div(committeeMembers)
 
-const requiredStakeFormatted = utils.formatEther(requiredStake);
+const requiredStakeFormatted = utils.formatEther(requiredStake)
 
 export const mantleDA: DaLayer = {
   id: 'dac',
@@ -32,19 +32,17 @@ export const mantleDA: DaLayer = {
       'MantleDA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
     links: {
       websites: ['https://mantle.xyz'],
-      documentation: [
-        'https://docs-v2.mantle.xyz/intro/risk-management/da'
-      ],
-      repositories: [
-        'https://github.com/mantlenetworkio'
-      ],
+      documentation: ['https://docs-v2.mantle.xyz/intro/risk-management/da'],
+      repositories: ['https://github.com/mantlenetworkio'],
       apps: [],
       explorers: ['https://explorer.mantle.xyz/mantle-da'],
-      socialMedia: ['https://twitter.com/0xMantle', 'https://t.me/mantlenetwork'],
+      socialMedia: [
+        'https://twitter.com/0xMantle',
+        'https://t.me/mantlenetwork',
+      ],
     },
   },
-  technology:
-    `
+  technology: `
     ## Architecture
 
     MantleDA is an independent DA module that is built on top of an early version of EigenDA smart contracts.
