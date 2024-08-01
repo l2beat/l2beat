@@ -10,6 +10,9 @@ import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
+import { getLatestTvl } from '~/server/features/tvl/get-latest-tvl'
+import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
+import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -21,7 +24,18 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const projects = await getScalingSummaryEntries()
+  const implementationChangeReport = await getImplementationChangeReport()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
+  const tvl = await getLatestTvl({
+    type: 'all',
+  })
+
+  // This gets all the data for the table, but NOT the % change (which comes from the API)
+  const projects = await getScalingSummaryEntries({
+    tvl,
+    implementationChangeReport,
+    projectsVerificationStatuses,
+  })
 
   await api.scaling.summary.prefetch({
     type: 'layer2',

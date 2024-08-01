@@ -64,7 +64,7 @@ export const getCachedScalingSummaryData = cache(
       ] as const
     })
 
-    const projects = Object.fromEntries(
+    const projectChange = Object.fromEntries(
       Object.entries(values).map(([projectId, values]) => {
         const timestamps = Object.keys(values)
         const oldestTimestamp = timestamps.reduce(
@@ -87,32 +87,16 @@ export const getCachedScalingSummaryData = cache(
           forTotal: false,
           excludeAssociatedTokens: true,
         })
-        const breakdown = getBreakdown(values[newestTimestamp])
         return [
           projectId,
-          {
-            timestamp: newestTimestamp,
-            latest: {
-              native: Number(latest.native),
-              canonical: Number(latest.canonical),
-              external: Number(latest.external),
-            },
-            change:
-              Number(latest.canonical + latest.external + latest.native) /
-                Number(oldest.canonical + oldest.external + oldest.native) -
-              1,
-            breakdown: {
-              total: Number(breakdown.total),
-              associated: Number(breakdown.associated),
-              ether: Number(breakdown.ether),
-              stablecoin: Number(breakdown.stablecoin),
-            },
-          },
+          Number(latest.canonical + latest.external + latest.native) /
+            Number(oldest.canonical + oldest.external + oldest.native) -
+            1,
         ]
       }),
     )
 
-    return { chart, projects }
+    return { chart, projectChange }
   },
   ['getScalingSummaryData'],
   { revalidate: 60 * 10 },
@@ -121,24 +105,3 @@ export const getCachedScalingSummaryData = cache(
 export type ScalingSummaryData = Awaited<
   ReturnType<typeof getCachedScalingSummaryData>
 >
-
-function getBreakdown(values: ValueRecord[]) {
-  return values.reduce(
-    (acc, curr) => {
-      acc.total += curr.native + curr.canonical + curr.external
-      acc.ether += curr.ether
-      acc.stablecoin += curr.stablecoin
-      acc.associated +=
-        curr.nativeAssociated +
-        curr.canonicalAssociated +
-        curr.externalAssociated
-      return acc
-    },
-    {
-      total: 0n,
-      associated: 0n,
-      ether: 0n,
-      stablecoin: 0n,
-    },
-  )
-}
