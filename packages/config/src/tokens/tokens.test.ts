@@ -1,5 +1,11 @@
 import { CoingeckoClient, HttpClient } from '@l2beat/shared'
-import { AssetId, CoingeckoId, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  Token,
+} from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Contract, providers, utils } from 'ethers'
 
@@ -7,7 +13,7 @@ import { assert } from '@l2beat/backend-tools'
 import { chains } from '../chains'
 import { bridges } from '../projects'
 import { config } from '../test/config'
-import { canonicalTokenList, tokenList } from './tokens'
+import { tokenList } from './tokens'
 
 describe('tokens', () => {
   it('every token has a unique address and chainId', () => {
@@ -39,6 +45,10 @@ describe('tokens', () => {
   })
 
   describe('canonical', () => {
+    const canonicalTokenList: Token[] = tokenList.filter(
+      (t) => t.source === 'canonical' && t.chainId === ChainId.ETHEREUM,
+    )
+
     describe('metadata is correct', function () {
       this.timeout(10_000)
       const MULTICALL_ADDRESS = '0xeefBa1e63905eF1D7ACbA5a8513c70307C1cE441'
