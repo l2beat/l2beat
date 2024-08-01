@@ -10,7 +10,7 @@ export const pmon: Layer3 = underReviewL3({
   display: {
     category: 'Optimium',
     provider: 'Arbitrum',
-    name: 'PMON chain',
+    name: 'PMON Chain',
     slug: 'pmon',
     description:
       'Polychain Monsters built an Orbit stack Optimium, housing the Onchain Monsters game.',
