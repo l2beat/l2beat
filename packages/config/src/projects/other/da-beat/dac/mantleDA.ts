@@ -55,12 +55,7 @@ export const mantleDA: DaLayer = {
   bridges: [mantleDABridge],
   usedIn: [...mantleDABridge.usedIn],
   risks: {
-    economicSecurity: {
-      type: 'Unknown',
-      value: 'None',
-      sentiment: 'bad',
-      description: 'Although node operators are required to stake MANTLE tokens to become members of the DA network, there is no slashing mechanism in place for misbehaving nodes.',
-    },
+    economicSecurity: DaEconomicSecurityRisk.OnChainNotSlashable('MANTLE'),
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }
