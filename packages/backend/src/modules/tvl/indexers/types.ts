@@ -72,6 +72,5 @@ export interface ValueIndexerDeps
   syncOptimizer: SyncOptimizer
   maxTimestampsToProcessAtOnce: number
   minHeight: number
-  // TODO: change type
-  maxHeight: number
+  maxHeight: number | undefined
 }

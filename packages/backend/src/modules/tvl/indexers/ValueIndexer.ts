@@ -36,7 +36,7 @@ export class ValueIndexer extends ManagedChildIndexer {
       return to
     }
 
-    if (this.$.maxHeight < from) {
+    if (this.$.maxHeight && this.$.maxHeight < from) {
       this.logger.info('Skipping update due to maxHeight', {
         from,
         to,
@@ -77,7 +77,7 @@ export class ValueIndexer extends ManagedChildIndexer {
 
   private getTimestampsToSync(from: number, to: number) {
     const start = Math.max(from, this.$.minHeight)
-    const end = Math.min(to, this.$.maxHeight)
+    const end = this.$.maxHeight ? Math.min(to, this.$.maxHeight) : to
 
     return this.$.syncOptimizer.getTimestampsToSync(
       start,

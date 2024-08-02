@@ -254,7 +254,7 @@ function createChainModule(
       indexerService,
       logger,
       minHeight: preminted.sinceTimestamp.toNumber(),
-      maxHeight: preminted.untilTimestamp?.toNumber() ?? Infinity,
+      maxHeight: preminted.untilTimestamp?.toNumber(),
       maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
     })
 
