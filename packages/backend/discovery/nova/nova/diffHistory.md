@@ -7,7 +7,7 @@ Generated with discovered.json: 0x6ff5a0a43ed688626e4aaceadf8b5a8ce79c14d0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Initial discovery: Normal Nitro L2 with external governance (aliased L1 Timelock on ethereum) and EmergencySecurityCouncil on Nova L2.
 
 ## Initial discovery
 
