@@ -18,6 +18,14 @@ A related commit to the cairo repo [can be found here](https://github.com/starkw
 
 The discovery config now uses templates and recursively discovers old verifiers and their relatives.
 
+### Applicative bootloader upgrade
+Check out the excalidraw: https://app.excalidraw.com/s/1Pobo8fNXle/4L6PujZS81l
+Copypaste summary from Bartek's research:
+- Bootloader that they are using rn allows for running a list of Tasks. Each Task produces an output and these outputs are streamed to DA layer. It's very simple.
+- Now they have introduced a new bootloader (CAIRO program) called applicative bootloader. Think about it as a program that runs a sequence of Base Tasks programs (e.g. StarkNet os), then runs an Aggregator Task program which takes output from Base programs, merges that output and produces "aggregated" output.
+- If you tried to run the same sequence (couple of Base Tasks + Aggregator) you would produce output from both Base Tasks AND the Aggretor which kind of defeats the purpose of the Aggregator. With applicative bootloader you only have output from the Aggregator (+ hash of Base Task so that you know what was actually aggregated).
+- my understanding is that Sharp is now "ready" but since they haven't upgraded the StarkNet core contract, they are not using this feature yet
+
 ## Watched changes
 
 ```diff
