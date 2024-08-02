@@ -94,17 +94,4 @@ export class AggregatedL2CostRepository extends BaseRepository {
       .execute()
     return rows.map(toRecord)
   }
-
-  async getLatestByProjectId(
-    projectId: ProjectId,
-  ): Promise<AggregatedL2CostRecord | undefined> {
-    const row = await this.db
-      .selectFrom('public.aggregated_l2_costs')
-      .select(selectAggregatedL2Costs)
-      .where('project_id', '=', projectId.toString())
-      .orderBy('timestamp', 'desc')
-      .limit(1)
-      .executeTakeFirst()
-    return row && toRecord(row)
-  }
 }

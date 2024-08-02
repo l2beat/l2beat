@@ -42,6 +42,6 @@
     "**/*.mjs",
     "**/*.js",
     ".next/types/**/*.ts"
-  ],
+, "src/server/features/costs/utils/add-if-definedts"  ],
   "exclude": ["node_modules"]
 }

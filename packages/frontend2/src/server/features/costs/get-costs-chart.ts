@@ -4,7 +4,7 @@ import { db } from '~/server/database'
 
 import { getRange } from '~/utils/range/range'
 import { type CostsChartResponse } from './types'
-import { addIfNotNull } from './utils/add-if-not-null'
+import { addIfDefined } from './utils/add-if-defined'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
 
@@ -90,14 +90,13 @@ function sumByTimestamp(
         computeGas: existing.computeGas + record.computeGas,
         computeGasEth: existing.computeGasEth + record.computeGasEth,
         computeGasUsd: existing.computeGasUsd + record.computeGasUsd,
-        blobsGas: addIfNotNull(existing.blobsGas, record.blobsGas),
-        blobsGasEth: addIfNotNull(existing.blobsGasEth, record.blobsGasEth),
-        blobsGasUsd: addIfNotNull(existing.blobsGasUsd, record.blobsGasUsd),
+        blobsGas: addIfDefined(existing.blobsGas, record.blobsGas),
+        blobsGasEth: addIfDefined(existing.blobsGasEth, record.blobsGasEth),
+        blobsGasUsd: addIfDefined(existing.blobsGasUsd, record.blobsGasUsd),
       })
       continue
     }
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     result.set(timestamp, {
       overheadGas: record.overheadGas,
       overheadGasEth: record.overheadGasEth,

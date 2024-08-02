@@ -25,7 +25,7 @@ export default async function Page() {
   return (
     <ScalingFilterContextProvider>
       <CostsTimeRangeContextProvider>
-        <CostsUnitContextProvider tag="costs">
+        <CostsUnitContextProvider>
           <CostsChart milestones={HOMEPAGE_MILESTONES} />
           <HorizontalSeparator className="my-4 md:my-6" />
           <ScalingCostsTable entries={entries} />

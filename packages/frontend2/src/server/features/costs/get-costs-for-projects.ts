@@ -11,7 +11,7 @@ import {
   type LatestCostsProjectResponse,
   type LatestCostsResponse,
 } from './types'
-import { addIfNotNull } from './utils/add-if-not-null'
+import { addIfDefined } from './utils/add-if-defined'
 import { getSyncedUntil } from './utils/get-synced-until'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
 import { toTrackedTxConfig } from './utils/to-tracked-tx-config'
@@ -20,18 +20,19 @@ export async function getCostsForProjects(
   projects: Layer2[],
   timeRange: CostsTimeRange,
 ) {
+  const response: LatestCostsResponse = {}
+
   const resolution = rangeToResolution(timeRange)
+  const range = getRange(timeRange, resolution)
+
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',
   )
-  const response: LatestCostsResponse = {}
 
-  const range = getRange(timeRange, resolution)
-
-  const projectsWithSyncedUntil = withSyncedUntil(
+  const projectsWithSyncedUntil = filteredWithSyncedUntil(
     projects,
     configurations,
-  ).filter(notUndefined)
+  )
 
   const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projectsWithSyncedUntil.map((p) => p.id),
@@ -51,35 +52,37 @@ export async function getCostsForProjects(
   return response
 }
 
-function withSyncedUntil(
+function filteredWithSyncedUntil(
   projects: Layer2[],
   configurations: IndexerConfigurationRecord[],
 ) {
-  return projects.map((project) => {
-    const trackedTxConfig = toTrackedTxConfig(
-      project.id,
-      project.config.trackedTxs,
-    )
-    if (trackedTxConfig === undefined) return
+  return projects
+    .map((project) => {
+      const trackedTxConfig = toTrackedTxConfig(
+        project.id,
+        project.config.trackedTxs,
+      )
+      if (trackedTxConfig === undefined) return
 
-    const projectRuntimeConfigIds = trackedTxConfig
-      .filter((c) => c.type === 'l2costs')
-      .map((c) => c.id)
+      const projectRuntimeConfigIds = trackedTxConfig
+        .filter((c) => c.type === 'l2costs')
+        .map((c) => c.id)
 
-    const projectConfigs = configurations.filter((c) =>
-      projectRuntimeConfigIds.includes(c.id),
-    )
+      const projectConfigs = configurations.filter((c) =>
+        projectRuntimeConfigIds.includes(c.id),
+      )
 
-    if (projectConfigs.length === 0) return
+      if (projectConfigs.length === 0) return
 
-    const syncedUntil = getSyncedUntil(projectConfigs)
-    if (!syncedUntil) return
+      const syncedUntil = getSyncedUntil(projectConfigs)
+      if (!syncedUntil) return
 
-    return {
-      ...project,
-      syncedUntil,
-    }
-  })
+      return {
+        ...project,
+        syncedUntil,
+      }
+    })
+    .filter(notUndefined)
 }
 
 function sumValues(
@@ -92,19 +95,19 @@ function sumValues(
           overhead: acc.gas.overhead + record.overheadGas,
           calldata: acc.gas.calldata + record.calldataGas,
           compute: acc.gas.compute + record.computeGas,
-          blobs: addIfNotNull(acc.gas.blobs, record.blobsGas),
+          blobs: addIfDefined(acc.gas.blobs, record.blobsGas),
         },
         eth: {
           overhead: acc.eth.overhead + record.overheadGasEth,
           calldata: acc.eth.calldata + record.calldataGasEth,
           compute: acc.eth.compute + record.computeGasEth,
-          blobs: addIfNotNull(acc.eth.blobs, record.blobsGasEth),
+          blobs: addIfDefined(acc.eth.blobs, record.blobsGasEth),
         },
         usd: {
           overhead: acc.usd.overhead + record.overheadGasUsd,
           calldata: acc.usd.calldata + record.calldataGasUsd,
           compute: acc.usd.compute + record.computeGasUsd,
-          blobs: addIfNotNull(acc.usd.blobs, record.blobsGasUsd),
+          blobs: addIfDefined(acc.usd.blobs, record.blobsGasUsd),
         },
       }
     },

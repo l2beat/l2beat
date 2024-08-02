@@ -1,4 +1,4 @@
-export function addIfNotNull(
+export function addIfDefined(
   a: number | undefined | null,
   b: number | undefined | null,
 ): number | undefined {

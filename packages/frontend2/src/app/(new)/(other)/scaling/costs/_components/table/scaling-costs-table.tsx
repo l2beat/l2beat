@@ -1,5 +1,3 @@
-/** eslint-disable @typescript-eslint/no-unsafe-assignment */
-/** eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo, useState } from 'react'

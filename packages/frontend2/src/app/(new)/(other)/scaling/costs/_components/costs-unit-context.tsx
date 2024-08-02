@@ -13,11 +13,10 @@ const CostsUnitContext = createContext<CostsUnitContextValue | null>(null)
 
 interface Props {
   children: React.ReactNode
-  tag: string
 }
 
-export function CostsUnitContextProvider({ children, tag }: Props) {
-  const [unit, setUnit] = useLocalStorage<CostsUnit>(`${tag}-unit`, 'usd')
+export function CostsUnitContextProvider({ children }: Props) {
+  const [unit, setUnit] = useLocalStorage<CostsUnit>(`costs-unit`, 'usd')
   return (
     <CostsUnitContext.Provider
       value={{
