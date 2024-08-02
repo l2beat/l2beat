@@ -1,9 +1,8 @@
 import { Logger } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
-
-import { TvlCleanerRepository } from '../../../peripherals/database/TvlCleanerRepository'
 import { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 import { TvlCleaner } from './TvlCleaner'
@@ -18,12 +17,12 @@ describe(TvlCleaner.name, () => {
         hourlyCutOffWithGracePeriod: UnixTime.ZERO,
         sixHourlyCutOffWithGracePeriod: UnixTime.ZERO,
       })
-      const mockRepository = mockObject<TvlCleanerRepository>()
+      const mockRepository = mockObject<Database['tvlCleaner']>()
       const tvlCleaner = new TvlCleaner(
         clock,
         Logger.SILENT,
         mockSyncOptimizer,
-        mockRepository,
+        mockObject<Database>({ tvlCleaner: mockRepository }),
         [],
       )
 
@@ -76,8 +75,8 @@ describe(TvlCleaner.name, () => {
       const firstTableSixHourlyCleanedUntil = UnixTime.fromDate(
         new Date('2024-01-03T06:00:00Z'),
       )
-      const repository = mockObject<TvlCleanerRepository>({
-        find: mockFn()
+      const repository = mockObject<Database['tvlCleaner']>({
+        findByRepositoryName: mockFn()
           .given(firstTable.constructor.name)
           .resolvesToOnce({
             repositoryName: firstTable.constructor.name,
@@ -86,20 +85,20 @@ describe(TvlCleaner.name, () => {
           })
           .given(secondTable.constructor.name)
           .resolvesToOnce(undefined),
-        addOrUpdate: mockFn().resolvesTo(1),
+        upsert: mockFn().resolvesTo(1),
       })
 
       const tvlCleaner = new TvlCleaner(
         clock,
         Logger.SILENT,
         mockSyncOptimizer,
-        repository,
+        mockObject<Database>({ tvlCleaner: repository }),
         [firstTable, secondTable],
       )
 
       await tvlCleaner.clean()
 
-      expect(repository.find).toHaveBeenNthCalledWith(
+      expect(repository.findByRepositoryName).toHaveBeenNthCalledWith(
         1,
         firstTable.constructor.name,
       )
@@ -111,12 +110,12 @@ describe(TvlCleaner.name, () => {
         from: firstTableSixHourlyCleanedUntil,
         to: sixHourlyDeletionBoundary,
       })
-      expect(repository.addOrUpdate).toHaveBeenNthCalledWith(1, {
+      expect(repository.upsert).toHaveBeenNthCalledWith(1, {
         repositoryName: firstTable.constructor.name,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
       })
-      expect(repository.find).toHaveBeenNthCalledWith(
+      expect(repository.findByRepositoryName).toHaveBeenNthCalledWith(
         2,
         secondTable.constructor.name,
       )
@@ -128,7 +127,7 @@ describe(TvlCleaner.name, () => {
         from: undefined,
         to: sixHourlyDeletionBoundary,
       })
-      expect(repository.addOrUpdate).toHaveBeenNthCalledWith(2, {
+      expect(repository.upsert).toHaveBeenNthCalledWith(2, {
         repositoryName: secondTable.constructor.name,
         hourlyCleanedUntil: hourlyDeletionBoundary,
         sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
@@ -152,32 +151,32 @@ describe(TvlCleaner.name, () => {
         deleteSixHourlyUntil: mockFn(),
       })
 
-      const repository = mockObject<TvlCleanerRepository>({
-        find: mockFn().resolvesTo({
+      const repository = mockObject<Database['tvlCleaner']>({
+        findByRepositoryName: mockFn().resolvesTo({
           repositoryName: firstTable.constructor.name,
           hourlyCleanedUntil: hourlyDeletionBoundary,
           sixHourlyCleanedUntil: sixHourlyDeletionBoundary,
         }),
-        addOrUpdate: mockFn().resolvesTo(1),
+        upsert: mockFn().resolvesTo(1),
       })
 
       const tvlCleaner = new TvlCleaner(
         clock,
         Logger.SILENT,
         mockSyncOptimizer,
-        repository,
+        mockObject<Database>({ tvlCleaner: repository }),
         [firstTable],
       )
 
       await tvlCleaner.clean()
 
-      expect(repository.find).toHaveBeenNthCalledWith(
+      expect(repository.findByRepositoryName).toHaveBeenNthCalledWith(
         1,
         firstTable.constructor.name,
       )
       expect(firstTable.deleteHourlyUntil).not.toHaveBeenCalled()
       expect(firstTable.deleteSixHourlyUntil).not.toHaveBeenCalled()
-      expect(repository.addOrUpdate).not.toHaveBeenCalled()
+      expect(repository.upsert).not.toHaveBeenCalled()
     })
   })
 })

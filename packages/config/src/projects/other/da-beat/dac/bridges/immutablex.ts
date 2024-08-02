@@ -8,6 +8,7 @@ import {
   DaExitWindowRisk,
 } from '../../types'
 import { DaBridge } from '../../types/DaBridge'
+import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
 const discovery = new ProjectDiscovery('immutablex')
@@ -40,6 +41,11 @@ export const immutableXDac = {
   chain: ChainId.ETHEREUM,
   requiredMembers: committee.minSigners,
   totalMembers: committee.accounts.length,
+  // FIXME
+  transactionDataType: DacTransactionDataType.StateDiffs,
+  members: {
+    type: 'unknown',
+  },
   usedIn: toUsedInProject([immutablex]),
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,

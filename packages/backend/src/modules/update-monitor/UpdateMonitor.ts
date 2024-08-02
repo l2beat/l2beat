@@ -215,7 +215,7 @@ export class UpdateMonitor {
       runner.chain,
     )
 
-    await this.db.updateMonitor.addOrUpdate({
+    await this.db.updateMonitor.upsert({
       projectName: projectConfig.name,
       chainId: this.chainConverter.toChainId(runner.chain),
       timestamp,
@@ -307,7 +307,6 @@ export class UpdateMonitor {
       await this.updateNotifier.handleUpdate(
         projectConfig.name,
         diff,
-        this.configReader.readConfig(projectConfig.name, chain),
         blockNumber,
         this.chainConverter.toChainId(chain),
         dependents,

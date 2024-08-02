@@ -2,8 +2,8 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 20032860,
-  "configHash": "0xfcdd1d44a109cc54bb52f2b9dafbedf5355303521be7cd729b22f44c417ac8a7",
-  "version": 9,
+  "configHash": "0x09a4708eb8b8c8c6b6b608a1c1634007a2eed734508da2aa7e6e1f56f4018d5e",
+  "version": 10,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -179,6 +179,12 @@
         "version": "1.3.1",
         "VERSION": 0
       },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
+      },
       "derivedName": "SystemConfig"
     },
     {
@@ -227,7 +233,6 @@
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA" },
     { "address": "0x41c4FAE5E80B9a622d8968bcd3EBbcf1F93b30Db" },
-    { "address": "0x4200000000000000000000000000000000000007" },
     { "address": "0x4200000000000000000000000000000000000010" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     { "address": "0x4e31448a098393727b786e25B54E59DcA1b77FE1" },
@@ -502,11 +507,11 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
     "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/L1CrossDomainMessenger": "0x41bd900739c252a9cbc05cef0fa2a1a2e0075816453fae09031f4b4055ce1b90",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
     "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
     "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

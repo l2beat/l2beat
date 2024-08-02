@@ -4,13 +4,15 @@ import { cn } from '~/utils/cn'
 import { ChartMilestoneHover } from '../hovers/chart-milestone-hover'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
+import { useChartRect } from './chart-rect-context'
 import { POINT_CLASS_NAMES } from './styles'
 
 const HOVER_CANVAS_PADDING = 16
 
 export function ChartHover() {
   const contentRef = useRef<HTMLDivElement>(null)
-  const { rect, valuesStyle } = useChartContext()
+  const { valuesStyle } = useChartContext()
+  const { rect } = useChartRect()
   const { position, milestone, content } = useChartHoverContext()
 
   const lineStyle = useMemo(() => {
@@ -67,7 +69,7 @@ export function ChartHover() {
             <div
               key={index}
               className={cn(
-                'absolute z-40 -left-[3px]',
+                'absolute left-[-3px] z-40',
                 milestone && POINT_CLASS_NAMES.milestone.className,
                 !milestone && POINT_CLASS_NAMES[style].className,
               )}
@@ -83,7 +85,7 @@ export function ChartHover() {
           'bg-white dark:bg-neutral-700',
           'pointer-events-none select-none',
           'shadow-md animate-in fade-in-0 zoom-in-95 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2',
-          'transition-[bottom] transition-duration-50',
+          'transition-duration-50 transition-[bottom]',
         )}
       >
         {milestone ? <ChartMilestoneHover milestone={milestone} /> : content}

@@ -26,6 +26,14 @@ export function DaSummaryTable({ items }: Props) {
     getFilteredRowModel: getFilteredRowModel(),
     getFacetedRowModel: getFacetedRowModel(),
     getFacetedUniqueValues: getFacetedUniqueValues(),
+    initialState: {
+      sorting: [
+        {
+          id: 'tvs',
+          desc: true,
+        },
+      ],
+    },
   })
 
   return (
@@ -37,10 +45,7 @@ export function DaSummaryTable({ items }: Props) {
           column={table.getColumn('layerType')}
         />
       </FilterWrapper>
-      <BasicTable
-        table={table}
-        onResetFilters={() => table.resetColumnFilters()}
-      />
+      <BasicTable table={table} />
     </>
   )
 }

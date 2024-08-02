@@ -14,31 +14,19 @@ import { UserHandlerDefinition } from '../handlers/user'
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
   handler: z.optional(UserHandlerDefinition),
-  description: z.string().nullable().optional(),
-  severity: z.optional(ContractFieldSeverity).nullable(),
-  returnType: z.string().nullable().optional(),
+  description: z.string().optional(),
+  severity: z.optional(ContractFieldSeverity),
+  returnType: z.string().optional(),
   target: z
     .object({
-      description: z.string().nullable().optional(),
-      template: z.string().nullable().optional(),
-      role: z
-        .union([StackRole, z.array(StackRole)])
-        .nullable()
-        .optional(),
-      category: z
-        .union([StackCategory, z.array(StackCategory)])
-        .nullable()
-        .optional(),
-      permission: z
-        .union([Permission, z.array(Permission)])
-        .nullable()
-        .optional(),
+      description: z.string().optional(),
+      template: z.string().optional(),
+      role: z.union([StackRole, z.array(StackRole)]).optional(),
+      category: z.union([StackCategory, z.array(StackCategory)]).optional(),
+      permission: z.union([Permission, z.array(Permission)]).optional(),
     })
     .optional(),
-  type: z
-    .union([ContractValueType, z.array(ContractValueType)])
-    .nullable()
-    .optional(),
+  type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),
 })
 
 export type DiscoveryCustomType = z.infer<typeof DiscoveryCustomType>
@@ -46,8 +34,8 @@ export const DiscoveryCustomType = z
   .object({
     typeCaster: z.optional(z.string()),
     arg: z.optional(z.record(z.string(), z.union([z.string(), z.number()]))),
-    description: z.optional(z.string()).nullable(),
-    severity: z.optional(ContractFieldSeverity).nullable(),
+    description: z.optional(z.string()),
+    severity: z.optional(ContractFieldSeverity),
   })
   .refine((d) => !(d.arg !== undefined && d.typeCaster === undefined), {
     message: 'typeCaster must be defined if arg is defined',
@@ -59,7 +47,7 @@ export const DiscoveryContract = z.object({
   extends: z.optional(z.string()),
   ignoreDiscovery: z.optional(z.boolean()),
   proxyType: z.optional(ManualProxyType),
-  displayName: z.string().nullable().optional(),
+  displayName: z.string().optional(),
   ignoreInWatchMode: z.optional(z.array(z.string())),
   ignoreMethods: z.optional(z.array(z.string())),
   ignoreRelatives: z.optional(z.array(z.string())),

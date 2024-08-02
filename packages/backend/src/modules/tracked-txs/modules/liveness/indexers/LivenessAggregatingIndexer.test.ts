@@ -91,7 +91,7 @@ describe(LivenessAggregatingIndexer.name, () => {
     it('should adjust target height and generate liveness data', async () => {
       const mockLivenessRepository = mockObject<Database['aggregatedLiveness']>(
         {
-          addOrUpdateMany: mockFn().resolvesTo(1),
+          upsertMany: mockFn().resolvesTo(1),
         },
       )
 
@@ -107,7 +107,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           min: 10,
           avg: 20,
           max: 30,
-          timestamp: NOW,
+          updatedAt: NOW,
         },
       ]
 
@@ -126,7 +126,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW.toStartOf('day').add(-1, 'seconds'),
       )
 
-      expect(mockLivenessRepository.addOrUpdateMany).toHaveBeenCalledWith(
+      expect(mockLivenessRepository.upsertMany).toHaveBeenCalledWith(
         mockLiveness,
       )
 
@@ -185,7 +185,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '30D',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
         {
           avg: 10800,
@@ -194,7 +194,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '90D',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
         {
           avg: 10800,
@@ -203,7 +203,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: 'MAX',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
       ])
     })
@@ -233,7 +233,7 @@ describe(LivenessAggregatingIndexer.name, () => {
           projectId: 'mocked-project',
           range: '30D',
           subtype: 'batchSubmissions',
-          timestamp: NOW,
+          updatedAt: NOW,
         },
       ])
     })
@@ -258,7 +258,7 @@ function createIndexer(options: {
       aggregatedLiveness:
         options.aggregatedLivenessRepository ??
         mockObject<Database['aggregatedLiveness']>({
-          addOrUpdateMany: mockFn().resolvesTo(1),
+          upsertMany: mockFn().resolvesTo(1),
         }),
     }),
     projects: MOCK_PROJECTS,

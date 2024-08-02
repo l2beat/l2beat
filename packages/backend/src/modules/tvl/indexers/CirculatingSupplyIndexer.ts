@@ -1,11 +1,11 @@
 import { CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 
+import { Database } from '@l2beat/database'
 import {
   ManagedChildIndexer,
   ManagedChildIndexerOptions,
 } from '../../../tools/uif/ManagedChildIndexer'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
-import { AmountRepository } from '../repositories/AmountRepository'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
@@ -13,7 +13,7 @@ import { createAmountId } from '../utils/createAmountId'
 export interface ChainAmountIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
   circulatingSupplyService: CirculatingSupplyService
-  amountRepository: AmountRepository
+  db: Database
   syncOptimizer: SyncOptimizer
   configuration: CirculatingSupplyEntry
 }
@@ -55,7 +55,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
     )
     const nonZeroAmounts = optimizedAmounts.filter((a) => a.amount > 0n)
 
-    await this.$.amountRepository.addMany(nonZeroAmounts)
+    await this.$.db.amount.insertMany(nonZeroAmounts)
 
     this.logger.info('Saved amounts into DB', {
       from,
@@ -67,7 +67,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    const deletedRecords = await this.$.amountRepository.deleteByConfigAfter(
+    const deletedRecords = await this.$.db.amount.deleteByConfigAfter(
       this.configurationId,
       new UnixTime(targetHeight),
     )

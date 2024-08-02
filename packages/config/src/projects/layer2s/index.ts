@@ -23,7 +23,7 @@ import { canvasconnect } from './canvasconnect'
 import { capx } from './capx'
 import { celo } from './celo'
 import { coti } from './coti'
-import { cronos } from './cronos'
+import { cronoszkevm } from './cronoszkevm'
 import { cyber } from './cyber'
 import { debank } from './debank'
 import { degate } from './degate'
@@ -46,12 +46,14 @@ import { galxegravity } from './galxegravity'
 import { gluon } from './gluon'
 import { gpt } from './gpt'
 import { grvt } from './grvt'
+import { gwyneth } from './gwyneth'
 import { hermez } from './hermez'
 import { honeypot } from './honeypot'
 import { hybrid } from './hybrid'
 import { hychain } from './hychain'
 import { hypr } from './hypr'
 import { immutablex } from './immutablex'
+import { intmax } from './intmax'
 import { kakarotzkevm } from './kakarotzkevm'
 import { karak } from './karak'
 import { kinto } from './kinto'
@@ -76,16 +78,19 @@ import { morph } from './morph'
 import { move } from './move'
 import { myria } from './myria'
 import { myshell } from './myshell'
+import { network3 } from './network3'
 import { nil } from './nil'
 import { nova } from './nova'
 import { oev } from './oev'
 import { ola } from './ola'
 import { omgnetwork } from './omgnetwork'
 import { optimism } from './optimism'
+import { optopia } from './optopia'
 import { orderly } from './orderly'
 import { palm } from './palm'
 import { paradex } from './paradex'
 import { parallel } from './parallel'
+import { patex } from './patex'
 import { payy } from './payy'
 import { playchain } from './playchain'
 import { plumenetwork } from './plumenetwork'
@@ -109,7 +114,9 @@ import { specular } from './specular'
 import { starknet } from './starknet'
 import { stealthchain } from './stealthchain'
 import { superseed } from './superseed'
+import { swan } from './swan'
 import { swell } from './swell'
+import { sxnetwork } from './sxnetwork'
 import { sxt } from './sxt'
 import { taiko } from './taiko'
 import { tanx } from './tanx'
@@ -167,7 +174,7 @@ export const layer2s: Layer2[] = [
   cyber,
   canvasconnect,
   coti,
-  cronos,
+  cronoszkevm,
   debank,
   honeypot,
   degate,
@@ -190,11 +197,13 @@ export const layer2s: Layer2[] = [
   gpt,
   galxegravity,
   grvt,
+  gwyneth,
   hermez,
   hybrid,
   hychain,
   hypr,
   immutablex,
+  intmax,
   kakarotzkevm,
   karak,
   kinto,
@@ -220,15 +229,18 @@ export const layer2s: Layer2[] = [
   myria,
   myshell,
   nil,
+  network3,
   nova,
   oev,
   ola,
   omgnetwork,
   optimism,
+  optopia,
   orderly,
   palm,
   paradex,
   parallel,
+  patex,
   payy,
   playchain,
   plumenetwork,
@@ -252,8 +264,10 @@ export const layer2s: Layer2[] = [
   starknet,
   stealthchain,
   superseed,
+  swan,
   swell,
   sxt,
+  sxnetwork,
   taiko,
   tanx,
   telos,

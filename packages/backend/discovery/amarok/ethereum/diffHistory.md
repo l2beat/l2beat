@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x0c8c2fb63020264289bcd2c2930dce88b0953261
+
+# Diff at Tue, 30 Jul 2024 11:10:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20317972
+- current block number: 20317972
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20317972 (main branch discovery), not current.
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      fieldMeta:
++        {"connectorsHash":{"severity":"LOW","description":"Hash of all connectors' addresses. Changes when a connector is added or removed."},"watcherManager":{"severity":"MEDIUM","description":"Contract maintaining a list of Watchers able to stop the bridge if fraud is detected."}}
+    }
+```
+
+```diff
+    contract WatcherManager (0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d) {
+    +++ description: None
+      fieldMeta:
++        {"WATCHERS":{"severity":"LOW","description":"Permissioned set of actors who can pause certain bridge components and remove connectors."}}
+    }
+```
+
+```diff
+    contract ConnextBridge (0x8898B472C54c31894e3B9bb83cEA802a5d0e63C6) {
+    +++ description: None
+      fieldMeta:
++        {"ROUTERS":{"description":"Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination."},"relayerFeeVault":{"severity":"LOW","description":"This address receives the bridge fees"}}
+    }
+```
+
 Generated with discovered.json: 0xa4d9b32a352fab45729f1039d1720c106e0f9af8
 
 # Diff at Tue, 16 Jul 2024 08:47:32 GMT:

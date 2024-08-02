@@ -79,13 +79,13 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
         <div
           onClick={() => onArrowClick('left')}
           className={cn(
-            'pointer-events-none duration-300 absolute inset-y-0 -left-px z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity fade-out-mask',
+            'pointer-events-none absolute inset-y-0 -left-px z-10 w-6 bg-gradient-to-r opacity-0 transition-opacity duration-300',
             (visibleArrows === 'left' || visibleArrows === 'both') &&
               'pointer-events-auto opacity-100',
           )}
         >
           <div className="flex h-full items-center justify-center">
-            <ChevronIcon className="scale-75 rotate-90 dark:fill-white" />
+            <ChevronIcon className="rotate-90 scale-75 dark:fill-white" />
           </div>
         </div>
         <div
@@ -103,13 +103,13 @@ export const OverflowWrapper = forwardRef<HTMLDivElement, OverflowWrapperProps>(
         <div
           onClick={() => onArrowClick('right')}
           className={cn(
-            'pointer-events-none duration-200 absolute inset-y-0 -right-px z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity',
+            'pointer-events-none absolute inset-y-0 -right-px z-10 w-6 bg-gradient-to-l opacity-0 transition-opacity duration-200',
             (visibleArrows === 'right' || visibleArrows === 'both') &&
               'pointer-events-auto opacity-100',
           )}
         >
           <div className="flex h-full items-center justify-center">
-            <ChevronIcon className="scale-75 -rotate-90 dark:fill-white" />
+            <ChevronIcon className="-rotate-90 scale-75 dark:fill-white" />
           </div>
         </div>
       </div>

@@ -3,24 +3,20 @@ import { expect } from 'earl'
 import { map } from 'lodash'
 
 import { AnalyzedContract } from '../analysis/AddressAnalyzer'
+import { EMPTY_ANALYZED_CONTRACT } from '../utils/testUtils'
 import { getSourceOutputPath } from './saveDiscoveryResult'
 
 describe(getSourceOutputPath.name, () => {
   const genAnalyzedContract = (name: string): AnalyzedContract => ({
+    ...EMPTY_ANALYZED_CONTRACT,
     type: 'Contract' as const,
     name,
     address: EthereumAddress.random(),
     derivedName: undefined,
-    errors: {},
-    values: {},
     isVerified: true,
     deploymentTimestamp: new UnixTime(1234),
     deploymentBlockNumber: 9876,
     proxyType: 'immutable',
-    implementations: [],
-    abis: {},
-    sourceBundles: [],
-    relatives: {},
   })
 
   const contractA = genAnalyzedContract('A')

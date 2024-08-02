@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20340229,
   "configHash": "0xcfafca102a8fef0c60f0d35d20956b99c39d79582a1d98d1f869dddfa3a2538e",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Treasurer",
@@ -59,6 +59,12 @@
         "nativeToken": "0x0000000000000000000000000000000000000000",
         "NIL_PAYLOAD_HASH": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+      },
+      "fieldMeta": {
+        "getRegisteredLibraries": {
+          "severity": "HIGH",
+          "description": "MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack."
+        }
       },
       "derivedName": "EndpointV2"
     },
@@ -197,6 +203,11 @@
           "0x268Ca24DAefF1FaC2ed883c598200CcbB79E931D"
         ],
         "preCrime": "0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        }
       },
       "derivedName": "CreditMessaging"
     },
@@ -359,6 +370,11 @@
         "treasury": "0x5ebB3f2feaA15271101a927869B3A56837e73056",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
       },
+      "fieldMeta": {
+        "getExecutorConfig": {
+          "description": "The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])"
+        }
+      },
       "derivedName": "SendUln302"
     },
     {
@@ -425,6 +441,11 @@
         "messageLibType": 1,
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92",
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
+      },
+      "fieldMeta": {
+        "getUlnConfig": {
+          "description": "The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
+        }
       },
       "derivedName": "ReceiveUln302"
     },
@@ -1527,5 +1548,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -1,9 +1,9 @@
 {
   "name": "eigenda",
   "chain": "ethereum",
-  "blockNumber": 20239375,
+  "blockNumber": 20382262,
   "configHash": "0x42228c2828298f02436f5667f44151d72647810ec8c962bdf5e229f847ad6516",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -41,9 +41,10 @@
       "sinceTimestamp": 1712353787,
       "values": {
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
-        "$implementation": "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF",
+        "$implementation": "0xdcabf0bE991d4609096CCe316df08d091356E03F",
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "churnApprover": "0xe0550117Cb066D3b330eBd764B0d75D3BA378734",
+        "ejectionCooldown": 604800,
         "ejector": "0x130d8EA0052B45554e4C99079B84df292149Bd5E",
         "indexRegistry": "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030",
         "numRegistries": 3,
@@ -127,7 +128,6 @@
           "0x8758fc175c5617a10d5c8c432d3c61dea5aef3a949d3ffcf259a35daa4921871",
           "0xd1f3ce9de7fe79a39702057094755e521491df04907ff89277e8d31a5b166121",
           "0x00b7919764bf48e08ca902af2f33af75ffe4fbb53deba1917a02301d8939cfa3",
-          "0xd22fce558d2330f8020d4e9e79e044af282d72062247d7e7a8461a9ca942ded1",
           "0xd5606d3d6ab8f66f5e03ce91f661497136715da9de0592c73101542b761c9f05",
           "0x77d378ff087228faca307142fb29c9c6b488e21749e3439e7fb2b8d7b712df7f",
           "0x464b61c015e525b442183ad5937f63d3757ec4503323f50f4df568dcb30abbb7",
@@ -152,7 +152,6 @@
           "0x23300304fd0646813aa0be7ccc7118087f34331f5892b9dd8ae54b6f0c669224",
           "0x2ff81250b5063eefd6fbea4c530683546a9bf1607d7c34838de72d1cabc3e151",
           "0x2d92999b9b651916f60c7d28934b9b91d9c43c7a4474861340ccc09cadc29750",
-          "0xb2a1eea9734c6913d8bb849051d4cc19b8310a134a49054395129b1a20f299db",
           "0xddc70367e7acf0865b3da4c7bd35bd822f00abe639de80a507536684027f8cab",
           "0x3ceb264831fd0409c2be704857d44726a904ffb020c199cc0e965c076104d170",
           "0x495069623e95f02bcc9e1d2b3648723d7f41ea7d675d7627e1bf5a61016f4836",
@@ -174,11 +173,8 @@
           "0x3de65d5688bab111480ec6fbc980b0de1bdda1c812df51db1e3c677f085553a7",
           "0xeb1e8a9a0cc314d9ebb782fd565febeff180eae541796ce5222209ed97b3c9b2",
           "0xe00658029de46cca6f8cc46d3cfcbb24e633b6014a642907fe2e484148224e42",
-          "0x5e1f6fb18ef39250afd78ef1dc8d780820da7c099b9eb6a160b2535ae6c23696",
           "0x063976e3c9b04bc0ce5f37f349dcb4047e7990bd5049baa1c4669364f54fa534",
-          "0xc8f05ec28adc7cd55bd3c726201ea02563ed75e09dcf5d070c46a253d3b6a1ca",
           "0x50f667f292988a9fd6f90aac6ed6a122542ad5144816a786d8799458525ccebd",
-          "0x97c79feb0cf23dd998bf5042cc3853716ae770e25bbc94d52ecb86c5ae97e0e8",
           "0x7a56a2226e44d5e4a2194d23f492a418bee9a3088e7809a239838b81c8a1a8d7",
           "0x23f6630e854df99c2176aac4809a29e5a4565bd6721f404604209937c6960a8f",
           "0xf16a4cf52b0540cc3c979650ec99156b21f1bef1d17fd5d372470d81a03a7bf2",
@@ -204,36 +200,21 @@
           "0xb2b2fd3feebc12a678f120f4b24c0c67b14185d26424598123e256be0ac40c23",
           "0xd5d5d417ae12d402526167deb97cd834a1a7d6fe6f389d181d0d4f0bc520073a",
           "0x47c79721f29f6e14e5151f984c4ad05f63674b077738d62ae0b70682a8610383",
-          "0x315779182e633dc2d9c76290909a1f309d44a8c927c5c22d812313d518d8afe8",
-          "0x8c6b89178dffd1777ca0aca6f910dee98a2976a5cb784d54868010ec425d8b67",
           "0x460d0bfd622fb41d5fdd278ecea6195623d846ff998a9492ce1008f3300e8085",
-          "0x8ee2734d3c2e0d75fd06df2cdb304ca0c89d923e0d23e2e18585bba916d84bc2",
-          "0x3d2c3751ba87886439998ab07a736a7ce53d21c0130f4275f8103e078335cb10",
-          "0xeac906eb842c1affdd3232f01566f82fb1f55e1d5bfbece19c605254f7d7a915",
           "0xd5ec5bce645192b643a89b424b873e83d630129dbc72765dc00b8fc2438e63ab",
           "0xcec04ccf3125a342d86ac648d347d18ebbb688f44fbe4a98d33163285b24627a",
           "0xc9b5d442ddc595b864aa084df07b9916eb8f0cdd5db35b3bb31ee0d92f3f87a7",
           "0xfc21b74985e0e61048bc1b2ac0ae1ed161df79c844f622d1d196bc0e9c4b1ae6",
           "0x5daadb1375f140b8fc46467900d9fdf9bc1102865f14cd03b97828dca7370f5d",
           "0x1d440e1f3778d49fac0276a77e4e4890973ca6e30188d774819654d6857528b1",
-          "0x6b77484d65460f97291ad655303a79ecdff2dee6e1aac985c3fc10313c6e5a00",
-          "0x8475aee355fec117d5e943f99f7161d441c74717f06054e13167d2458e12231a",
           "0x8475480cffbf8c38c58037737ccbc9db788254258875aafd685668a16eb03bef",
-          "0xc7d55763eb0d37913fb462b8433e9390029f5d877f64bd0c37dcc34b00fe1152",
           "0x00765cafcf79e82b695e009cc284828ee8e4645a0073566fed18d8d7aadbac68",
           "0x8d7e4d2085ff4c0bc4df5c1059c79954a4ac0a483d776f6e26d3d27537fb691f",
           "0x5398ce180c2487f7f26122bff5cd1f47b30b85ce65e28fd0e3b02d2cc9f73444",
-          "0xe6ef266cdefedf28932d601cd36a7dfe73baf23c1c7c9637de0ea419bae0d32e",
-          "0x3beb2c6bc52944f9a25b7a3b4cc89a9ed33d03c3c29eda0254789ab9852445d0",
-          "0xdd7b511f0f2ad2bbc60c2170e52e7f8095a01399f30dc7513143b5335f41b7c6",
           "0x043b00fe2b0b7af45acf2778eaf4fcd396c8549cb0876cc257f6c11e54ec6635",
           "0x5d1b4cf5cb2b91e53f4f9bcf8caec3555d2470c1d525423cafe86f5e66f56c24",
-          "0x7589e32e34b503623a02b00149346424838461e88188478f3129c3c020224fd3",
           "0x1b73d155033b05e547058feec5392b5149df5e0486939fbddcd8370f29996ff5",
           "0xe5cd2e818d6329b8798fd0458768ff2556e64399843ee9e1a4745594c845f29f",
-          "0x35b94d52c5b72de2c1d797d05572a126a05683bc0445ef0c24bda5174d720e12",
-          "0xbd31eb9e5e590883aefb109367e9c32539426827966793ba458bcdeb7f15bf90",
-          "0xf254b62f9dce21cad74791e26c2dc04d7ec06786af3eed6ce6e1687c9bc5726e",
           "0x96a8253ec47844b652a612aa4150bb92275490d6263c2175a585de95d6eaecbd",
           "0xe5e6aa853d0b9b10d07b80958d6c93f2f7429166af6e74f89c8042291e8e6a4a",
           "0xc874352154fa814216a222259318885099c0257508132771ecb0a2c72015b334",
@@ -256,44 +237,25 @@
           "0x5afa813d654699eb460f9830ec9ccc27d530a2847ab438efa2067cc04fce73f2",
           "0x3d27c4a144b4627134658fedd9753faeedd9e738276360a2d1566587f165a5bc",
           "0xe02eb821060cd7b07b2f998d5409117190a38200eff09700ffaa322c5819008d",
-          "0x87c98cb89d172aa99e69c58f34ed44dd9877015d4934da7d26350d69dc13620b",
-          "0x785ede49c30151dcd312a8c7152c0537c8f689d0b8a7df675a0ccb55e449aee0",
-          "0xf81023c334db0d971d430fad75f5f34b51ce55730594b0a9620bdf52dfaf5fbb",
           "0xffc5d9a66c2f8567e2754c8b4f4f284077deb335662dfda92cec44fea09efe7e",
           "0x90602bdb9617a0d2f08f30c8a03bf3e37052f0e0c24965ee3406a42f55c449dc",
-          "0x319301c8620dce5d9c74b1817e7a8e099fb2704133e219f3e195f54c73cd2aa3",
           "0x3e4fe9a23c9b88d0a0418182cfcbf1252c9410842604342296e6d3a1ee94fd7f",
-          "0x3d75f69fb5d3b48b3b7bec9a8ac7277f75da1084a9813143b6275b9d2c2f4b21",
-          "0x96b21ad6ce5e4d6bd5416b6cd5e78c5437d9e309432fd06fd66ac54f8d74f39b",
           "0xd5ac66f0f85bdc83babf9dd7c1d9bf27f25013ab59744e9ecf679f7269fcb319",
           "0xb559334f7a014a93c4cce1bb02e57d5752b23a00cae3e1e14880df5337b51856",
           "0x91efb08821ee260242a35fc27988e9d9f829c34d87f2d568e8f4ce52ad320534",
-          "0x52a41075e5c0a4d0cfb2be0b720a082312e45194de9b244892dd4945446d65e0",
-          "0xe9439012808e29713e86ad012b76eb2353aa971e76d5bfb9ce05b507f1a1d783",
           "0x81eab2df34764a3124ba5b3e5a8e017418fbd5b7db42fc92b24333f79a010801",
           "0xf3879d1954d75c69f17b02216d7495d82be50c7ab0be425c2a6dc94a74a7cf06",
           "0x2e2ee953aa3c2a499640270eaaf2ba1973265f7e0d0b1e0ebef6ead13fcce307",
           "0x1c9b842872d119a38569314f96152c019f31f97f4f11b9b8f20331c7ff693e40",
           "0x9f38709f446fcd85a0a1909aa45a6ef8efcdbf85df20073e598db86e566ea2ea",
           "0x0955e7dff023cbc1818fb1439e69caf4647d504851f58ed09552eae3393e58a1",
-          "0xd559eca380ba112c64adf968ea4c41b077853785a81b236e79dc4bdd2036417a",
-          "0xca204b4d1aacfc1af0745e7a63c1b76b2b87591a6256d5758d945325ed6f705d",
-          "0x678f4ef0dbca4cea53102cf2b9032b97fc946ddeed29bc7a6fc39b590d925709",
           "0x839f4b2b3fcfabfcf03a1fda25214870c95e3c905a0f8c0a885ee53177df960c",
           "0xbbe6a66b2e57ebbda829352bf9de15f0a170aa2e2d59dbf2e2fe98ebb78a041b",
-          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
           "0x4972c84a293f2c176aa572c82f362a61a91879de4b8a71eaf9b2af149e48a715",
-          "0x5b2274de8738752b57013b4b6bc7da9d3b1d231d9f09e9cec3387c806f84f2a0",
           "0x852f5c1ecf96472bb48fc8e9373b40c74ac3e2cdf32aeec8b4c9c25fe63c3135",
-          "0x9be0b102d1a581ea295dfd9ac321c7abee0b1264eb441be3cfb7b56b9dcd334b",
           "0xf8b0b901ae17361800f2d618d7d9cd26a65278223e626ca3283b4615206f3062",
           "0xd6a01045d12f35e29dc9a268e710e31c568025475b84bf9d2b80701fb8f2e00f",
-          "0x073b798a0632579421aeb869836e7499cdcdbe8f534eca89d95d1230ea2b5898",
           "0x2023a021dc96aa0b419cb0b038f65204c8cc6c228d319c6a25e90bc4f43143dd",
-          "0xa15d71dc75db66ab05c8222e8ae74f122a764a2543f128b213351e84a66e0523",
-          "0xc5dead214752a2bc3fda2c5fa6cd3df8a665ba705c698ec1322031852b58a7d8",
-          "0x285b609d5cb85b8e7481eaf9f3160ad192530b64343999d14bfe0ada87c18971",
-          "0x0850a8338ffde492071db4b22c606bfe409441f0c516494aa6152c72e0d59221",
           "0xc01b5eac209a3057e02aef77493099478119a92a94398a8b1a39a7118284f446",
           "0xc0cfa2a72cc4eb8e33a6a76fb2a5e4c89b5dc28151a0e072cdbb509abdfb7d82",
           "0x912f5f9ecfbef0df84758e45ed050f07786e75b03d703d92b6e814df41698458",
@@ -320,7 +282,45 @@
           "0x8f6ea0107f79f10ea0198872746c612f0878d26bc8f285199130d2d00a10e092",
           "0xcfe18e83b8c4629f6c0c2efcec8055d49ae8f4385263fa3c8e6e10e71f76a301",
           "0xffbdd96954fc230fdf9a79ec001bf22b5b8146b1006e22bf7e69e7b415488f95",
-          "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2"
+          "0xaa2854f59d446537e7b349ca80646985c4bc296ee0a6ef4ae2e7ce2cfc6476e2",
+          "0xfaadebdb6cb8d82a27c41dccb96d35b6a42c45132cb777a1b3ba70c3fb6b2370",
+          "0x5b2274de8738752b57013b4b6bc7da9d3b1d231d9f09e9cec3387c806f84f2a0",
+          "0xd91c7c8888da9062e48e92d20813dfa8ce7f581d327b36237040354c5159db0e",
+          "0xe6c9058d9ec054c0f6263b1d328fba52a915f61034b8d4389a650c42d72c4a98",
+          "0xb2a1eea9734c6913d8bb849051d4cc19b8310a134a49054395129b1a20f299db",
+          "0x18cd576c31d67990442c532b4fedfd10505b7866768ab3ddaea5e8224a1bf75d",
+          "0xbfa7b15ee3e230688bae0116125206f07046efaefc4983df233efc4f635b0c83",
+          "0x9a9465fec50da13302323f66f8fa753de709d3faa299f66f9a955e676563da45",
+          "0x9e68c19bafe97cab0a076c9960b697b3be0fcd4d99474ab5c6f50ded2f6feabf",
+          "0xb7c6d23c14482f3f1c57237b92ae3be97b917abbb3af8461783755b237093174",
+          "0x11db753a592e85dc99476f62da0de84075a21825f75579d432a7641f631daea6",
+          "0x141b46d1cbeb298a61efe80d439557c72f7e613666aa90bd0e52e67305b56dd7",
+          "0x1861c2cf819ad84c9e6de80ba0f5314734d8ade8892321e381baec534c3c3fc2",
+          "0xde53519c0b50ce1cd275100ee06201a3b7226f63a30b86dd2cb316111738eaf5",
+          "0x591d58007165adc1a7b15c9d2a049f91675c4f7c0176b004fbe79a2529078303",
+          "0x39495b08d4d21acf806b4c32512ac907e1dcd2a3217d5d5b9fd20f25714c8a36",
+          "0xc6d0a9402a1e2a6aa3fe93fe7d9eeba9cc051d0af4610291f6da2377b930ecbb",
+          "0x7589e32e34b503623a02b00149346424838461e88188478f3129c3c020224fd3",
+          "0x6c1d43ae1a74bfbb3194940cac14182a6d75bd447e79f5dd5d8c4e1f5a19bc12",
+          "0xc69ab28996c80f2e5cb7016ab8f3f8bf029d8135646b645813020da86f432bcf",
+          "0x866c3fdff1b88bb54fb06b8eb5d6222fa0389cd008471a141334aed0eb171878",
+          "0xc7800d34420e0bfdb5db29ea545899f1ec5e9a03aab96506aaf6d8724ba8c915",
+          "0x97e5453b335ac7e22b7677a6454aa4dd73569aee46cf9ac40e8c7b8bcc5ff8c3",
+          "0xd5973068293ec16908c99ee7a2a16853c5ba31a50568c32127777265047f1b9e",
+          "0xf84c9f0d23474947e24701dbc71c1247d7c90b146219cfef6231402cf454c14c",
+          "0x80dd3e365a5a50175acbb28eb1f931b1369d50e76560adb038baff9d30bf334a",
+          "0x14757e958213cdbf483e550491aa16c7446eaf64ac2894e33c823a60e9045f0a",
+          "0x11120449cb50d85ed6e420a0a94dc8eecfc3da3ce9de99ef46dc0ee0e9f0669a",
+          "0xf759883629f64d2295fb0bf465b1802e2a2591d0c4732b531fed8f3b4ca82cc4",
+          "0x5d5c24b449c0af8d92ab76aaafb8cdcb93504937e3e2ec1e8dda51923a5a5228",
+          "0xb7faf64c15b8e86773a461c953ec375a4342c241068badadef97388a46f996b9",
+          "0x502ee60e3541b54e56a63cba14bea43f38baa463cfc1532ac1a16f25afc6e61c",
+          "0xf268558d3d410d7bf0a8a8b4ea3a2de630052c456b37401be326595297808e65",
+          "0xdb64276469b2d2d8766d84be86d12d76d6fcf04156138fd3caadb6a01df76919",
+          "0xc37a4874b9db6009cea29476ed24be1d883aa7458df5409ee81da243f42f9f3a",
+          "0xe7befa2ffdd138e0abeeba9651b2a4c471a2a5e659182cc2be75823ce946db14",
+          "0xd22fce558d2330f8020d4e9e79e044af282d72062247d7e7a8461a9ca942ded1",
+          "0x1e2fe79dbc3840f0c8f6d3032c494eabad871247258cc2d45c26767df74f44f5"
         ],
         "registries": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
@@ -329,6 +329,21 @@
         ],
         "serviceManager": "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0",
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      },
+      "fieldMeta": {
+        "operatorSetParamsQuorum1": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake"
+        },
+        "operatorSetParamsQuorum2": {
+          "description": "0_maxOperatorCount, 1_kickBIPsOfOperatorStake, 2_kickBIPsOfTotalStake"
+        },
+        "quorumCount": {
+          "severity": "HIGH",
+          "description": "if quorum count changes, makes sure the new quorum parameters are tracked in the config"
+        },
+        "registeredOperators": {
+          "description": "List of all registered operators ids"
+        }
       },
       "derivedName": "RegistryCoordinator"
     },
@@ -350,6 +365,14 @@
         "owner": "0xBE1685C81aA44FF9FB319dD389addd9374383e90",
         "registryCoordinator": "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+      },
+      "fieldMeta": {
+        "ejectionRateLimitWindow": {
+          "description": "Time delta to track ejection over. Cannot eject more than ejectableStakePercent of total stake in this time delta."
+        },
+        "ejectableStakePercent": {
+          "description": "Max stake to be ejectable per time delta."
+        }
       },
       "derivedName": "EjectionManager"
     },
@@ -383,7 +406,7 @@
         "$admin": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
         "$implementation": "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1",
         "avsDirectory": "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
-        "batchId": 16185,
+        "batchId": 19056,
         "BLOCK_STALE_MEASURE": 300,
         "blsApkRegistry": "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
         "delegation": "0x39053D51B77DC0d36036Fc1fCc8Cb819df8Ef37A",
@@ -413,8 +436,22 @@
         "stakeRegistry": "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
         "staleStakesForbidden": false,
         "STORE_DURATION_BLOCKS": 100800,
-        "taskNumber": 16185,
+        "taskNumber": 19056,
         "THRESHOLD_DENOMINATOR": 100
+      },
+      "fieldMeta": {
+        "BLOCK_STALE_MEASURE": {
+          "severity": "MEDIUM",
+          "description": "This is the maximum amount of blocks in the past that the service will consider stake amounts to still be 'valid'. If a batch is signed by a certain amount of stake, it then needs to be submitted within the next BLOCK_STALE_MEASURE blocks, or the confirmBatch function will revert."
+        },
+        "quorumAdversaryThresholdPercentages": {
+          "severity": "MEDIUM",
+          "description": "The maximum percentage of the stake which can be held by adversarial nodes before the availability of a blob is affected. First bytes is hex value for the first quorum, second byte is for the second quorum."
+        },
+        "quorumConfirmationThresholdPercentages": {
+          "severity": "MEDIUM",
+          "description": "The minimum percentage of stake that must attest in order to consider the blob dispersal successful. First bytes is hex value for the first quorum, second byte is for the second quorum."
+        }
       },
       "derivedName": "EigenDAServiceManager"
     },
@@ -666,7 +703,7 @@
       "function unpause(uint256 newPausedStatus)",
       "function updateAVSMetadataURI(string _metadataURI)"
     ],
-    "0xd3e09a0c2A9A6FDf5E92aE65D3CC090A4dF8EECF": [
+    "0xdcabf0bE991d4609096CCe316df08d091356E03F": [
       "constructor(address _serviceManager, address _stakeRegistry, address _blsApkRegistry, address _indexRegistry)",
       "event ChurnApproverUpdated(address prevChurnApprover, address newChurnApprover)",
       "event EjectorUpdated(address prevEjector, address newEjector)",
@@ -688,6 +725,7 @@
       "function createQuorum(tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams, uint96 minimumStake, tuple(address strategy, uint96 multiplier)[] strategyParams)",
       "function deregisterOperator(bytes quorumNumbers)",
       "function ejectOperator(address operator, bytes quorumNumbers)",
+      "function ejectionCooldown() view returns (uint256)",
       "function ejector() view returns (address)",
       "function getCurrentQuorumBitmap(bytes32 operatorId) view returns (uint192)",
       "function getOperator(address operator) view returns (tuple(bytes32 operatorId, uint8 status))",
@@ -702,6 +740,7 @@
       "function indexRegistry() view returns (address)",
       "function initialize(address _initialOwner, address _churnApprover, address _ejector, address _pauserRegistry, uint256 _initialPausedStatus, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake)[] _operatorSetParams, uint96[] _minimumStakes, tuple(address strategy, uint96 multiplier)[][] _strategyParams)",
       "function isChurnApproverSaltUsed(bytes32) view returns (bool)",
+      "function lastEjectionTimestamp(address) view returns (uint256)",
       "function numRegistries() view returns (uint256)",
       "function owner() view returns (address)",
       "function pause(uint256 newPausedStatus)",
@@ -718,6 +757,7 @@
       "function renounceOwnership()",
       "function serviceManager() view returns (address)",
       "function setChurnApprover(address _churnApprover)",
+      "function setEjectionCooldown(uint256 _ejectionCooldown)",
       "function setEjector(address _ejector)",
       "function setOperatorSetParams(uint8 quorumNumber, tuple(uint32 maxOperatorCount, uint16 kickBIPsOfOperatorStake, uint16 kickBIPsOfTotalStake) operatorSetParams)",
       "function setPauserRegistry(address newPauserRegistry)",
@@ -732,5 +772,5 @@
   "usedTemplates": {
     "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x5ec6b33639bd2d38bc1978f0c2fdd216d6e0c209
+
+# Diff at Tue, 30 Jul 2024 11:12:14 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20232340
+- current block number: 20232340
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20232340 (main branch discovery), not current.
+
+```diff
+    contract L2OutputOracle (0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6) {
+    +++ description: None
+      fieldMeta:
++        {"COLOSSEUM":{"severity":"HIGH","description":"Contract used to challenge state roots and prove fraud."}}
+    }
+```
+
+```diff
+    contract SystemConfig (0x3971EB866AA9b2b8aFEa8a7C816F3b7e8b195a35) {
+    +++ description: None
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x3de211088dF516da72efe68D386b561BEE256Ec4) {
+    +++ description: None
+      fieldMeta:
++        {"COLOSSEUM":{"severity":"HIGH","description":"Contract used to challenge state roots and prove fraud."},"transactionCount":{"severity":"HIGH","description":"Increases with each Security Council action."}}
+    }
+```
+
+```diff
+    contract Colosseum (0x713C2BEd44eB45D490afB8D4d1aA6F12290B829a) {
+    +++ description: None
+      fieldMeta:
++        {"challengedRoots":{"severity":"MEDIUM","description":"State roots that have been challenged by the validators. Challenges are created when, according to the validators, the roots commit to an incorrect L2 state."}}
+    }
+```
+
 Generated with discovered.json: 0x836966473c2ac7afb47c8f897669515a539cdea8
 
 # Diff at Thu, 04 Jul 2024 09:46:10 GMT:

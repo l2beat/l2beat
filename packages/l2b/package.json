@@ -15,16 +15,23 @@
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --apply .",
-    "lint": "biome check --formatter-enabled=false ."
+    "lint": "biome check --formatter-enabled=false .",
+    "test": "mocha"
   },
   "dependencies": {
     "@l2beat/backend-tools": "*",
+    "@l2beat/config": "*",
     "@l2beat/discovery-types": "*",
     "@l2beat/shared": "*",
-    "@l2beat/config": "*",
     "@l2beat/shared-pure": "*",
+    "@mradomski/fast-solidity-parser": "0.1.1",
+    "chalk": "^4.1.2",
     "cmd-ts": "^0.13.0",
     "ethers": "^5.7.2",
-    "chalk": "^4.1.2"
+    "viem": "^2.18.6"
+  },
+  "devDependencies": {
+    "@types/mock-fs": "^4.13.4",
+    "mock-fs": "^5.2.0"
   }
 }

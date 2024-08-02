@@ -3,10 +3,10 @@
   "chain": "ethereum",
   "name": "nova",
   "initialAddresses": [
-    "0xFb209827c58283535b744575e11953DCC4bEAD88",
-    "0xc840838bc438d73c16c2f8b22d2ce3669963cd48",
-    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f",
-    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786"
+    "0xFb209827c58283535b744575e11953DCC4bEAD88", // RollupProxy
+    "0xc840838bc438d73c16c2f8b22d2ce3669963cd48", // L1GatewayRouter
+    "0x23122da8C581AA7E0d07A36Ff1f16F799650232f", // L1CustomGateway
+    "0x97f63339374fCe157Aa8Ee27830172d2AF76A786" // L1DaiGateway
   ],
   "names": {
     "0x2B081fbaB646D9013f2699BebEf62B7e7d7F0976": "ValidatorUtils",
@@ -18,7 +18,8 @@
     "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b": "SequencerInbox",
     "0xC234E41AE2cb00311956Aa7109fC801ae8c80941": "ValidatorOwnerMultisig",
     "0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B": "BatchPosterManagerMultisig",
-    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil"
+    "0xF06E95eF589D9c38af242a8AAee8375f14023F85": "SecurityCouncil",
+    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": "L1Timelock"
   },
   "overrides": {
     "ValidatorUtils": {
@@ -93,8 +94,7 @@
         }
       }
     },
-    // L1ArbitrumTimelock
-    "0xE6841D92B0C345144506576eC13ECf5103aC7f49": {
+    "L1Timelock": {
       "ignoreRelatives": ["governanceChainInbox", "l2Timelock"],
       "fields": {
         "accessControl": {

@@ -4,8 +4,9 @@ import { install } from '@sinonjs/fake-timers'
 import { expect, mockObject } from 'earl'
 import waitForExpect from 'wait-for-expect'
 
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { StarkexClient } from '../../../peripherals/starkex/StarkexClient'
+import { mockDatabase } from '../../../test/database'
 import { Clock } from '../../../tools/Clock'
 import { StarkexCounter } from './StarkexCounter'
 
@@ -19,14 +20,13 @@ describe(StarkexCounter.name, () => {
     const starkExTransactionCount = mockObject<
       Database['starkExTransactionCount']
     >({
-      addOrUpdateMany: async () => -1,
+      upsertMany: async () => -1,
     })
-    const db = mockObject<Database>({
-      transaction: (cb) => cb(undefined as unknown as Transaction),
+    const db = mockDatabase({
       starkExTransactionCount,
       sequenceProcessor: mockObject<Database['sequenceProcessor']>({
-        findById: async () => null,
-        addOrUpdate: async () => '',
+        findById: async () => undefined,
+        upsert: async () => undefined,
       }),
     })
 
@@ -67,18 +67,14 @@ describe(StarkexCounter.name, () => {
         DAY.toDays(),
         product[1],
       )
-      expect(starkExTransactionCount.addOrUpdateMany).toHaveBeenCalledTimes(1)
-      expect(starkExTransactionCount.addOrUpdateMany).toHaveBeenNthCalledWith(
-        1,
-        [
-          {
-            count: txCount * 2,
-            timestamp: DAY,
-            projectId: project,
-          },
-        ],
-        undefined,
-      )
+      expect(starkExTransactionCount.upsertMany).toHaveBeenCalledTimes(1)
+      expect(starkExTransactionCount.upsertMany).toHaveBeenNthCalledWith(1, [
+        {
+          count: txCount * 2,
+          timestamp: DAY,
+          projectId: project,
+        },
+      ])
     })
   })
 })

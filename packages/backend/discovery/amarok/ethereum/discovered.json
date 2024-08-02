@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20317972,
   "configHash": "0xaa328cedd9e0d00f8d214afb2e2bf613a95eb2e67ceddbc36b509610aced44c1",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "MainnetSpokeConnector",
@@ -269,6 +269,16 @@
         "renounced": false,
         "watcherManager": "0x79e6E0242405A66B2dd8B96DEd3b2F0216Fd417d"
       },
+      "fieldMeta": {
+        "connectorsHash": {
+          "severity": "LOW",
+          "description": "Hash of all connectors' addresses. Changes when a connector is added or removed."
+        },
+        "watcherManager": {
+          "severity": "MEDIUM",
+          "description": "Contract maintaining a list of Watchers able to stop the bridge if fraud is detected."
+        }
+      },
       "derivedName": "RootManager"
     },
     {
@@ -351,6 +361,12 @@
           "0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d",
           "0x151Ea574C62b505aEe2F89f33D8c152E28A956b0"
         ]
+      },
+      "fieldMeta": {
+        "WATCHERS": {
+          "severity": "LOW",
+          "description": "Permissioned set of actors who can pause certain bridge components and remove connectors."
+        }
       },
       "derivedName": "WatcherManager"
     },
@@ -793,6 +809,15 @@
         ],
         "SEQUENCERS": ["0x4fFA5968857a6C8242E4A6Ded2418155D33e82E7"],
         "xAppConnectionManager": "0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc"
+      },
+      "fieldMeta": {
+        "ROUTERS": {
+          "description": "Routers can accelerate the bridging for users by fronting liquidity (for token transfers) or a bond (for crosschain contract calls) at the destination."
+        },
+        "relayerFeeVault": {
+          "severity": "LOW",
+          "description": "This address receives the bridge fees"
+        }
       },
       "derivedName": "ConnextDiamond"
     },
@@ -2611,5 +2636,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

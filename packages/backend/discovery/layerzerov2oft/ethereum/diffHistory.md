@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xb8797220a861e54807289ca788935a15074c037c
+
+# Diff at Tue, 30 Jul 2024 11:12:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20240831
+- current block number: 20240831
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240831 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: None
+      fieldMeta:
++        {"getRegisteredLibraries":{"severity":"HIGH","description":"All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps."},"defaultSendLib_ENA":{"severity":"HIGH","description":"The default send lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed."},"defaultReceiveLib_rsETH":{"severity":"HIGH","description":"The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed."}}
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: None
+      fieldMeta:
++        {"defaultExecutor_ENA":{"severity":"HIGH","description":"The default executor can be different for every OApp. In practice it is the same for most OApps. (LayerZero Executor) Should be reviewed if changed."},"ulnConfig_ENA":{"description":"The verification config of the ENAOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"},"ulnConfig_sfrxETH":{"description":"The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"},"ulnConfig_CYBER":{"description":"The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"}}
+    }
+```
+
 Generated with discovered.json: 0xa5327b8353d3fca800f79d5f9c169092055531e1
 
 # Diff at Fri, 05 Jul 2024 14:14:36 GMT:

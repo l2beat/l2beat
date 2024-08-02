@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
+import { AggregatedL2CostRecord, Database } from '@l2beat/database'
 import {
   L2CostsApiChart,
   L2CostsApiChartPoint,
@@ -10,10 +10,6 @@ import {
 } from '@l2beat/shared-pure'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { getSyncedUntil } from '../../utils/getSyncedUntil'
-import {
-  AggregatedL2CostsRecord,
-  AggregatedL2CostsRepository,
-} from '../repositories/AggregatedL2CostsRepository'
 
 const MAX_DAYS = 180
 
@@ -38,7 +34,7 @@ export const CHART_TYPES: L2CostsApiChart['types'] = [
 
 export interface L2CostsControllerDeps {
   indexerService: IndexerService
-  aggregatedL2CostsRepository: AggregatedL2CostsRepository
+  db: Database
   projects: BackendProject[]
   logger?: Logger
 }
@@ -56,10 +52,9 @@ export class L2CostsController {
     const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
     const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
 
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     const activeProjects = this.$.projects.filter((p) => !p.isArchived)
     for (const project of activeProjects) {
@@ -90,11 +85,10 @@ export class L2CostsController {
         nowToFullHour,
       ]
 
-      const records =
-        await this.$.aggregatedL2CostsRepository.getByProjectAndTimeRange(
-          project.projectId,
-          timeRange,
-        )
+      const records = await this.$.db.aggregatedL2Cost.getByProjectAndTimeRange(
+        project.projectId,
+        timeRange,
+      )
 
       const { hourly, daily } = this.aggregateL2Costs(
         records,
@@ -124,7 +118,7 @@ export class L2CostsController {
   }
 
   aggregateL2Costs(
-    records: AggregatedL2CostsRecord[],
+    records: AggregatedL2CostRecord[],
     combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
     combinedDailyMap: Map<number, L2CostsApiChartPoint>,
     nowToFullHour: UnixTime,
@@ -179,7 +173,7 @@ export class L2CostsController {
   private addToMap(
     map: Map<number, L2CostsApiChartPoint>,
     toStartOf: 'hour' | 'day',
-    record: AggregatedL2CostsRecord,
+    record: AggregatedL2CostRecord,
   ) {
     const key = record.timestamp.toStartOf(toStartOf).toNumber()
     const currentRecord = map.get(key)

@@ -49,6 +49,11 @@ describe(createAmountId.name, () => {
       newValue: 666,
       shouldUpdateHash: false,
     },
+    {
+      key: 'category',
+      newValue: 'ether',
+      shouldUpdateHash: false,
+    },
   ]
 
   describe('Total supply', () => {
@@ -197,5 +202,6 @@ function mock(): AmountConfigBase {
     decimals: 18,
     symbol: 'SYMBOL',
     isAssociated: false,
+    category: 'other',
   }
 }

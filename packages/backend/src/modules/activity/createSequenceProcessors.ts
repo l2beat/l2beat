@@ -10,7 +10,7 @@ import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
 import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
-import { ZksyncClient } from '../../peripherals/zksync/ZksyncClient'
+import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { Clock } from '../../tools/Clock'
 import { SequenceProcessor } from './SequenceProcessor'
 import { AztecCounter } from './counters/AztecCounter'
@@ -98,7 +98,7 @@ export function createSequenceProcessors(
         }
 
         case 'zksync': {
-          const zksyncClient = peripherals.getClient(ZksyncClient, {
+          const zksyncClient = peripherals.getClient(ZksyncLiteClient, {
             url: config.url,
             callsPerMinute: config.callsPerMinute,
           })

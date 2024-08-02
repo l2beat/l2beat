@@ -214,4 +214,4 @@ export const chains: ChainConfig[] = [
       url: 'https://api.blastscan.io/api',
     },
   },
-]
+] as const satisfies ChainConfig[]

@@ -1,5 +1,4 @@
 import { type Layer2Provider, type Layer3Provider } from '@l2beat/config'
-import React from 'react'
 
 import { ArbitrumIcon } from '~/icons/providers/arbitrum-icon'
 import { LoopringIcon } from '~/icons/providers/loopring-icon'
@@ -107,7 +106,7 @@ function TypeTooltip({ Icon, text }: TypeTooltipProps) {
     <Tooltip>
       <TooltipTrigger>
         <div className="relative ml-1 inline-block size-4">
-          <Icon className="-top-0.5 absolute left-0 size-4" />
+          <Icon className="absolute -top-0.5 left-0 size-4" />
         </div>
       </TooltipTrigger>
       <TooltipContent>{text}</TooltipContent>

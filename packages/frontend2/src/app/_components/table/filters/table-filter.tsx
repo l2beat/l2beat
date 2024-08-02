@@ -21,19 +21,19 @@ import {
 
 const UNDEFINED_VALUE = 'undefined-value'
 
-interface Option {
+interface Option<T extends string> {
   label: string
-  value: string | undefined
+  value: T | undefined
 }
 
-interface Props {
+interface Props<T extends string> {
   title: string
-  options: Option[]
-  value: string | undefined
-  onValueChange: (option: string | undefined) => void
+  options: Option<T>[]
+  value: T | undefined
+  onValueChange: (option: T | undefined) => void
 }
 
-export function TableFilter(props: Props) {
+export function TableFilter<T extends string>(props: Props<T>) {
   const [open, setOpen] = useState(false)
   const breakpoint = useBreakpoint()
   const showDrawer = breakpoint === 'tablet' || breakpoint === 'mobile'
@@ -49,15 +49,19 @@ export function TableFilter(props: Props) {
   return <TableFilterSelect {...props} open={open} setOpen={setOpen} />
 }
 
-function SelectedValue({ options, value, onValueChange }: Props) {
+function SelectedValue<T extends string>({
+  options,
+  value,
+  onValueChange,
+}: Props<T>) {
   const option = options.find((option) => option.value === value)
   assert(option, 'Option not found')
   return (
     <button
       onClick={() => onValueChange(undefined)}
-      className="cursor-pointer outline-none select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:hover:bg-slate-600 hover:bg-gray-400"
+      className="cursor-pointer select-none rounded-lg bg-gray-200 p-1 text-base font-semibold outline-none transition-colors hover:bg-gray-400 dark:bg-zinc-700 dark:hover:bg-slate-600"
     >
-      <div className="w-max items-center gap-1.5 rounded-md bg-white px-2 inline-flex dark:bg-black dark:group-hover:bg-gray-950">
+      <div className="inline-flex w-max items-center gap-1.5 rounded-md bg-white px-2 dark:bg-black dark:group-hover:bg-gray-950">
         <span>{option.label}</span>
         <div className="flex size-3 items-center justify-center rounded-sm bg-black dark:bg-white">
           <CloseIcon className="size-2.5 fill-white dark:fill-black dark:group-hover:fill-gray-950" />
@@ -67,14 +71,14 @@ function SelectedValue({ options, value, onValueChange }: Props) {
   )
 }
 
-function TableFilterSelect({
+function TableFilterSelect<T extends string>({
   open,
   setOpen,
   title,
   options,
   value,
   onValueChange,
-}: Props & {
+}: Props<T> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
@@ -89,7 +93,9 @@ function TableFilterSelect({
       value={value ?? ''}
       onOpenChange={setOpen}
       onValueChange={(v) => {
-        const mappedValue = v === UNDEFINED_VALUE ? undefined : v
+        const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
+          | T
+          | undefined
         onValueChange(mappedValue)
       }}
     >
@@ -107,20 +113,20 @@ function TableFilterSelect({
   )
 }
 
-function TableFilterDrawer({
+function TableFilterDrawer<T extends string>({
   open,
   setOpen,
   title,
   options,
   onValueChange,
-}: Props & {
+}: Props<T> & {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }) {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <button className="inline-flex w-max items-center gap-1.5 whitespace-pre py-1 px-3 cursor-pointer select-none rounded-lg bg-gray-200 p-1 font-semibold text-base transition-colors dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600 data-[state=selected]:hover:bg-gray-400">
+        <button className="inline-flex w-max cursor-pointer select-none items-center gap-1.5 whitespace-pre rounded-lg bg-gray-200 p-1 px-3 text-base font-semibold transition-colors data-[state=selected]:hover:bg-gray-400 dark:bg-zinc-700 dark:data-[state=selected]:hover:bg-slate-600">
           {title}
           <ExpandIcon
             width={12}
@@ -133,11 +139,11 @@ function TableFilterDrawer({
         <DrawerHeader>
           <DrawerTitle>{title}</DrawerTitle>
         </DrawerHeader>
-        <div className="max-h-[60vh] [@supports(height:100dvh)]:max-h-[60dvh] overflow-y-scroll">
+        <div className="max-h-[60vh] overflow-y-scroll [@supports(height:100dvh)]:max-h-[60dvh]">
           {options.map((option) => (
             <button
               key={option.label}
-              className="w-full outline-none text-left font-semibold text-base gap-1.5 rounded-lg py-2 px-2.5 transition-colors dark:hover:bg-zinc-800 hover:bg-gray-400"
+              className="w-full gap-1.5 rounded-lg px-2.5 py-2 text-left text-base font-semibold outline-none transition-colors hover:bg-gray-400 dark:hover:bg-zinc-800"
               onClick={() => {
                 onValueChange(option.value)
                 setOpen(false)
@@ -152,13 +158,15 @@ function TableFilterDrawer({
   )
 }
 
-function replaceUndefined(options: Option[]): {
+function replaceUndefined<T extends string>(
+  options: Option<T>[],
+): {
   label: string
-  value: string
+  value: T
 }[] {
   return options.map((option) => {
     if (option.value === undefined) {
-      return { label: option.label, value: UNDEFINED_VALUE }
+      return { label: option.label, value: UNDEFINED_VALUE as T }
     }
 
     return {

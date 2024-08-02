@@ -1,6 +1,9 @@
 {
   "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
   "ignoreRelatives": [
+    "L1_GATEWAY_ROUTER",
+    "L1_SCROLL_MESSENGER",
+    "L2_GAS_PRICE_ORACLE",
     "L1_BLAST_BRIDGE",
     "L1_STANDARD_BRIDGE",
     "L1_WETH",
@@ -31,5 +34,9 @@
     "l1StandardBridge",
     "messenger"
   ],
-  "ignoreMethods": ["getL1CallValue"]
+  "ignoreMethods": ["getL1CallValue"],
+  "ignoreInWatchMode": [
+    "L2_MESSAGE_RELAY_GAS_LIMIT",
+    "L2_TOKEN_RELAY_GAS_LIMIT"
+  ]
 }

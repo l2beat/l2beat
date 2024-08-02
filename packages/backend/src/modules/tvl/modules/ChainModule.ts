@@ -19,10 +19,6 @@ import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { AmountRepository } from '../repositories/AmountRepository'
-import { BlockTimestampRepository } from '../repositories/BlockTimestampRepository'
-import { PriceRepository } from '../repositories/PriceRepository'
-import { ValueRepository } from '../repositories/ValueRepository'
 import { AmountService, ChainAmountConfig } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { ValueService } from '../services/ValueService'
@@ -112,7 +108,7 @@ function createChainModule(
 
   const blockTimestampProvider = new BlockTimestampProvider({
     blockExplorerClient,
-    rpcClient,
+    client: rpcClient,
     logger,
   })
 
@@ -124,9 +120,7 @@ function createChainModule(
     indexerService,
     chain,
     blockTimestampProvider,
-    blockTimestampRepository: peripherals.getRepository(
-      BlockTimestampRepository,
-    ),
+    db: peripherals.database,
     syncOptimizer,
   })
 
@@ -158,6 +152,10 @@ function createChainModule(
       maxHeight: a.untilTimestamp?.toNumber() ?? null,
     }))
 
+  if (configurations.length === 0) {
+    return undefined
+  }
+
   const chainAmountIndexer = new ChainAmountIndexer({
     logger,
     tag: chain,
@@ -166,13 +164,9 @@ function createChainModule(
     configurations,
     chain,
     amountService,
-    amountRepository: peripherals.getRepository(AmountRepository),
-    blockTimestampRepository: peripherals.getRepository(
-      BlockTimestampRepository,
-    ),
     serializeConfiguration,
     syncOptimizer,
-    db: peripherals.legacyDatabase,
+    db: peripherals.database,
   })
 
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')
@@ -184,10 +178,7 @@ function createChainModule(
       amountConfigs.map((c) => configMapping.getPriceConfigFromAmountConfig(c)),
     )
 
-    const valueService = new ValueService({
-      amountRepository: peripherals.getRepository(AmountRepository),
-      priceRepository: peripherals.getRepository(PriceRepository),
-    })
+    const valueService = new ValueService(peripherals.database)
 
     const minHeight = Math.min(
       ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
@@ -198,7 +189,7 @@ function createChainModule(
 
     const indexer = new ValueIndexer({
       valueService,
-      valueRepository: peripherals.getRepository(ValueRepository),
+      db: peripherals.database,
       priceConfigs: [...priceConfigs],
       amountConfigs,
       project: ProjectId(project),

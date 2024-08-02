@@ -27,10 +27,10 @@ export function linkGlossaryTerms(
     for (const term of glossaryTerms) {
       const pattern = new RegExp(`(?<!\\w)(${escapeRegExp(term)})(?!\\w)`, 'gi')
 
-      const linkOffsets = getAllLinksOffsets(text)
+      const ignoredOffsets = getIgnoredAndLinkOffsets(text)
 
-      const isWithinExistingLink = (position: number) => {
-        return linkOffsets.some(
+      const isWithinIgnoredOffset = (position: number) => {
+        return ignoredOffsets.some(
           (link) => position >= link.start && position <= link.end,
         )
       }
@@ -49,7 +49,7 @@ export function linkGlossaryTerms(
         const offset = maybeOffset.at(-2)
 
         // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-        if (isWithinExistingLink(offset) || isIgnored(offset)) {
+        if (isWithinIgnoredOffset(offset) || isIgnored(offset)) {
           return matchedTerm // Don't replace if within an existing link
         }
 
@@ -96,12 +96,21 @@ function escapeRegExp(string: string) {
   return string.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') // $& means the whole matched string
 }
 
-function getAllLinksOffsets(text: string) {
-  const p = /\[([^\]]+)\]\(([^)]+)\)/g
-  return [...text.matchAll(p)].map((match) => ({
+function getIgnoredAndLinkOffsets(text: string) {
+  const linkPattern = /\[([^\]]+)\]\(([^)]+)\)/g
+  const backtickPattern = /`([^`]*)`/g
+
+  const linkOffsets = [...text.matchAll(linkPattern)].map((match) => ({
     start: match.index,
     end: match.index + match[0].length,
   }))
+
+  const backtickOffsets = [...text.matchAll(backtickPattern)].map((match) => ({
+    start: match.index,
+    end: match.index + match[0].length,
+  }))
+
+  return linkOffsets.concat(backtickOffsets)
 }
 
 function isGlossaryLink(href: string | null) {

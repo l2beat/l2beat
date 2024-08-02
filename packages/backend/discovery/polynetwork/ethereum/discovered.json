@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19940448,
   "configHash": "0x557042a89ff459f09daf8e1652bea33d5fefcdb080824682bfd2c5e4d3c5ab04",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "EthCrossChainManager",
@@ -130,6 +130,16 @@
         "maxLockProxyIndex": 8,
         "owner": "0x0E860F44d73F9FDbaF5E9B19aFC554Bf3C8E8A57",
         "paused": false
+      },
+      "fieldMeta": {
+        "lockProxyIndexMap": {
+          "severity": "MEDIUM",
+          "description": "These addresses can escrow funds for the bridge."
+        },
+        "maxLockProxyIndex": {
+          "severity": "LOW",
+          "description": "This is the number of lockProxy escrows registered in the bridge."
+        }
       },
       "derivedName": "PolyWrapper"
     },
@@ -437,5 +447,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

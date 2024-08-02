@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { useChartContext } from './chart-context'
+import { useChartLoading } from './chart-loading-context'
 
 export const FIRST_LABEL_HEIGHT_PX = 20
 
@@ -13,7 +14,7 @@ export function ChartLabels({
   return (
     <div
       className={cn(
-        'pointer-events-none relative z-25 flex h-full justify-between flex-col-reverse pt-5',
+        'pointer-events-none relative z-25 flex h-full flex-col-reverse justify-between pt-5',
         className,
       )}
     >
@@ -25,11 +26,11 @@ export function ChartLabels({
 }
 
 function ChartLabel({ children }: { children?: ReactNode }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
   return (
     <div className="relative">
       {!loading ? (
-        <span className="absolute bottom-0 left-0 pb-0.5 text-gray-500 text-sm text-opacity-50 dark:text-white dark:text-opacity-50">
+        <span className="absolute bottom-0 left-0 pb-0.5 text-sm text-gray-500 text-opacity-50 dark:text-white dark:text-opacity-50">
           {children}
         </span>
       ) : null}

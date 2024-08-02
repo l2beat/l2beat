@@ -1,3 +1,4 @@
+import { Database } from '@l2beat/database'
 import {
   AmountConfigEntry,
   EthereumAddress,
@@ -5,21 +6,18 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import { AmountRepository } from '../repositories/AmountRepository'
-import { PriceRepository } from '../repositories/PriceRepository'
 import { AmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId } from '../utils/createPriceId'
-import { ValueService } from './ValueService'
-
 import { MOCKS_FOR_TVL } from '../utils/test/mocks'
+import { ValueService } from './ValueService'
 
 const { amountRecord, priceRecord, valueRecord, DECIMALS, USD_DECIMALS } =
   MOCKS_FOR_TVL
 
 describe(ValueService.name, () => {
   it(ValueService.prototype.calculateTvlForTimestamps.name, async () => {
-    const amountRepository = mockObject<AmountRepository>({
+    const amountRepository = mockObject<Database['amount']>({
       getByConfigIdsInRange: async () => [
         amountRecord('a', 200),
         amountRecord('a', 300),
@@ -27,7 +25,7 @@ describe(ValueService.name, () => {
         amountRecord('b', 300),
       ],
     })
-    const priceRepository = mockObject<PriceRepository>({
+    const priceRepository = mockObject<Database['price']>({
       getByConfigIdsInRange: async () => [
         priceRecord('a', 200),
         priceRecord('a', 300),
@@ -45,6 +43,8 @@ describe(ValueService.name, () => {
       includeInTotal: true,
       decimals: DECIMALS,
       source: 'canonical',
+      isAssociated: false,
+      category: 'ether',
     })
     const CONFIG_B = mockObject<AmountConfigEntry>({
       sinceTimestamp: new UnixTime(300),
@@ -53,6 +53,8 @@ describe(ValueService.name, () => {
       includeInTotal: false,
       decimals: DECIMALS,
       source: 'external',
+      isAssociated: false,
+      category: 'stablecoin',
     })
     const amountConfigs: Map<AmountId, AmountConfigEntry> = new Map([
       ['a', CONFIG_A],
@@ -68,10 +70,12 @@ describe(ValueService.name, () => {
       new UnixTime(300),
     ]
 
-    const service = new ValueService({
-      priceRepository,
-      amountRepository,
-    })
+    const service = new ValueService(
+      mockObject<Database>({
+        price: priceRepository,
+        amount: amountRepository,
+      }),
+    )
 
     const result = await service.calculateTvlForTimestamps(
       project,
@@ -87,12 +91,15 @@ describe(ValueService.name, () => {
         timestamp: new UnixTime(200),
         canonical: 200n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 200n * 10n ** BigInt(USD_DECIMALS),
+        ether: 200n * 10n ** BigInt(USD_DECIMALS),
       }),
       valueRecord({
         timestamp: new UnixTime(300),
         canonical: 300n * 10n ** BigInt(USD_DECIMALS),
         canonicalForTotal: 300n * 10n ** BigInt(USD_DECIMALS),
         external: 300n * 10n ** BigInt(USD_DECIMALS),
+        ether: 300n * 10n ** BigInt(USD_DECIMALS),
+        stablecoin: 300n * 10n ** BigInt(USD_DECIMALS),
       }),
     ])
 

@@ -4,11 +4,13 @@ import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { getHoveredColumn } from '../utils/get-hovered-column'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
+import { useChartRect } from './chart-rect-context'
 
 export function ChartInteractionZone() {
   const ref = useRef<HTMLDivElement>(null)
   const breakpoint = useBreakpoint()
   const chartContext = useChartContext()
+  const { rect } = useChartRect()
   const chartHoverContext = useChartHoverContext()
 
   const isMobile = breakpoint === 'mobile'
@@ -33,7 +35,7 @@ export function ChartInteractionZone() {
 
   const onCanvasMoveEvent = useCallback(
     (event: MouseEvent | Touch) => {
-      const { rect, columns, valuesStyle, getY } = chartContext
+      const { columns, valuesStyle, getY } = chartContext
       if (!rect || !columns || !valuesStyle || !getY) return
       const hoveredColumn = getHoveredColumn({
         event,
@@ -52,7 +54,7 @@ export function ChartInteractionZone() {
       })
       chartHoverContext.setMilestone(hoveredColumn.column?.milestone)
     },
-    [chartContext, chartHoverContext, isMobile],
+    [chartContext, chartHoverContext, isMobile, rect],
   )
 
   useEventListener('mousemove', onWindowMoveEvent)
@@ -73,5 +75,5 @@ export function ChartInteractionZone() {
     ref,
   )
 
-  return <div ref={ref} className="-inset-x-4 -bottom-4 absolute top-0 z-40" />
+  return <div ref={ref} className="absolute -inset-x-4 -bottom-4 top-0 z-40" />
 }

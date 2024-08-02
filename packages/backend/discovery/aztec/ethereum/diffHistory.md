@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xa284c75555316d712b5034cee198158e871e0ef6
+
+# Diff at Tue, 30 Jul 2024 11:10:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20361394
+- current block number: 20361394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20361394 (main branch discovery), not current.
+
+```diff
+    contract AztecFeeDistributor (0x41A57F5581aDf11b25F3eDb7C1DB19f18bb76734) {
+    +++ description: None
+      fieldMeta:
++        {"reimburseConstant":{"severity":"LOW","description":"Tip that gets added to a gas reimbursement for processing the rollup."}}
+    }
+```
+
+```diff
+    contract RollupProcessor (0x737901bea3eeb88459df9ef1BE8fF3Ae1B42A2ba) {
+    +++ description: None
+      fieldMeta:
++        {"rollupProviders":{"severity":"LOW","description":"Can call the ProcessRollup function"},"verifier":{"severity":"LOW","description":"Address of the ZK verifier."}}
+    }
+```
+
 Generated with discovered.json: 0x543d288e15332f4aea3249d780750ca7d63d4735
 
 # Diff at Mon, 06 May 2024 14:22:13 GMT:

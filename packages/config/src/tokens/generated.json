@@ -152,6 +152,21 @@
       "supply": "zero"
     },
     {
+      "id": "alt-altlayer-token",
+      "name": "AltLayer Token",
+      "coingeckoId": "altlayer",
+      "address": "0x8457CA5040ad67fdebbCC8EdCE889A335Bc0fbFB",
+      "symbol": "ALT",
+      "decimals": 18,
+      "deploymentTimestamp": 1704446615,
+      "coingeckoListingTimestamp": 1706227200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34608/large/Logomark_200x200.png?1715107868",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "amo-amino",
       "name": "Amino",
       "coingeckoId": "amino",
@@ -312,6 +327,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/681/large/Avatar_Circle_x6.png?1696501871",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "arb-arbitrum",
+      "name": "Arbitrum",
+      "coingeckoId": "arbitrum",
+      "address": "0xB50721BCf8d664c30412Cfbc6cf7a15145234ad1",
+      "symbol": "ARB",
+      "decimals": 18,
+      "deploymentTimestamp": 1678968467,
+      "coingeckoListingTimestamp": 1679529600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -942,6 +972,21 @@
       "coingeckoListingTimestamp": 1621814400,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/15586/large/convex-crv.png?1696515222",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "cvxfxs-convex-fxs",
+      "name": "Convex FXS",
+      "coingeckoId": "convex-fxs",
+      "address": "0xFEEf77d3f69374f66429C91d732A244f074bdf74",
+      "symbol": "cvxFXS",
+      "decimals": 18,
+      "deploymentTimestamp": 1640164144,
+      "coingeckoListingTimestamp": 1676160000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29001/large/cvxfxs.png?1696527973",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -2116,21 +2161,6 @@
       "supply": "zero"
     },
     {
-      "id": "hypr-hypr",
-      "name": "HYPR",
-      "coingeckoId": "hypr-network",
-      "address": "0x31aDdA225642a8f4D7e90d4152BE6661ab22a5a2",
-      "symbol": "HYPR",
-      "decimals": 18,
-      "deploymentTimestamp": 1700052659,
-      "coingeckoListingTimestamp": 1700524800,
-      "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/33071/large/655412078d33fa9fee8e3a1b_hypr_logo_200.png?1700598490",
-      "chainId": 1,
-      "source": "canonical",
-      "supply": "zero"
-    },
-    {
       "id": "ilv-illuvium",
       "name": "Illuvium",
       "coingeckoId": "illuvium",
@@ -3226,6 +3256,21 @@
       "supply": "zero"
     },
     {
+      "id": "pmon-polkamon",
+      "name": "Polkamon",
+      "coingeckoId": "polychain-monsters",
+      "address": "0x1796ae0b0fa4862485106a0de9b654eFE301D0b2",
+      "symbol": "PMON",
+      "decimals": 18,
+      "deploymentTimestamp": 1616790642,
+      "coingeckoListingTimestamp": 1617235200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "ethereum:pol-polygon-ecosystem-token",
       "name": "Polygon Ecosystem Token",
       "coingeckoId": "polygon-ecosystem-token",
@@ -4076,6 +4121,21 @@
       "coingeckoListingTimestamp": 1573689600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/2117/large/YJUrRy7r_400x400.png?1696503083",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "sx-sx-network",
+      "name": "SX Network",
+      "coingeckoId": "sx-network-2",
+      "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624",
+      "symbol": "SX",
+      "decimals": 18,
+      "deploymentTimestamp": 1706125739,
+      "coingeckoListingTimestamp": 1706659200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34934/large/sx-ntework.jpeg?1706699134",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6429,6 +6489,25 @@
       "supply": "zero"
     },
     {
+      "id": "cyber:cyber-cyberconnect",
+      "name": "CyberConnect",
+      "coingeckoId": "cyberconnect",
+      "address": "0x14778860E937f509e651192a90589dE711Fb88a9",
+      "symbol": "CYBER",
+      "decimals": 18,
+      "deploymentTimestamp": 1715900791,
+      "coingeckoListingTimestamp": 1692057600,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/31274/large/token.png?1715826754",
+      "chainId": 7560,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "layerzerov2oft"
+      }
+    },
+    {
       "id": "kinto:usd+-usd+",
       "name": "USD+",
       "coingeckoId": "dinari-usd",
@@ -6880,7 +6959,7 @@
       }
     },
     {
-      "id": "arb-arbitrum",
+      "id": "arbitrum:arb-arbitrum",
       "name": "Arbitrum",
       "coingeckoId": "arbitrum",
       "address": "0x912CE59144191C1204E64559FE8253a0e49E6548",
@@ -6889,7 +6968,7 @@
       "deploymentTimestamp": 1678968508,
       "coingeckoListingTimestamp": 1679529600,
       "category": "other",
-      "iconUrl": "https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/16547/large/arb.jpg?1721358242",
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
@@ -6961,6 +7040,25 @@
       "chainId": 42161,
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "id": "arbitrum:cheese-cheese",
+      "name": "CHEESE",
+      "coingeckoId": "cheese-2",
+      "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+      "symbol": "CHEESE",
+      "decimals": 18,
+      "deploymentTimestamp": 1717472231,
+      "coingeckoListingTimestamp": 1713484800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37156/large/cheese_icon_500x500.png?1713499473",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
     },
     {
       "id": "arbitrum:dai-dai-stablecoin",
@@ -7387,6 +7485,21 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "arbitrum:pmon-polkamon",
+      "name": "Polkamon",
+      "coingeckoId": "polychain-monsters",
+      "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+      "symbol": "PMON",
+      "decimals": 18,
+      "deploymentTimestamp": 1687789925,
+      "coingeckoListingTimestamp": 1617235200,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/14604/large/polkamon.png?1696514282",
+      "chainId": 42161,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "arbitrum:rdnt-radiant",
       "name": "Radiant",
       "coingeckoId": "radiant-capital",
@@ -7456,7 +7569,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
       "chainId": 42161,
       "source": "native",
-      "supply": "totalSupply"
+      "supply": "zero"
     },
     {
       "id": "arbitrum:sparta-sparta",
@@ -7751,6 +7864,25 @@
       "chainId": 42161,
       "source": "native",
       "supply": "zero"
+    },
+    {
+      "id": "arbitrum:woeth-wrapped-oeth",
+      "name": "Wrapped OETH",
+      "coingeckoId": "wrapped-oeth",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "symbol": "wOETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1707392291,
+      "coingeckoListingTimestamp": 1699920000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/29734/large/woeth-200x200.png?1714796686",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Transporter",
+        "slug": "transporter"
+      }
     },
     {
       "id": "arbitrum:xai-xai",
@@ -8371,6 +8503,24 @@
       "supply": "zero"
     },
     {
+      "id": "scroll:solvbtc-free-bridged-solvbtc.b",
+      "name": "Free Bridged SolvBTC.b",
+      "coingeckoId": "solv-btc",
+      "address": "0x3Ba89d490AB1C0c9CC2313385b30710e838370a4",
+      "symbol": "SolvBTC",
+      "decimals": 18,
+      "deploymentTimestamp": 1716874538,
+      "coingeckoListingTimestamp": 1712448000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/36800/large/solvBTC.png?1719810684",
+      "chainId": 534352,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Free Bridge"
+      }
+    },
+    {
       "id": "scroll:rseth-kelpdao-restaked-eth",
       "name": "KelpDao Restaked ETH",
       "coingeckoId": "kelp-dao-restaked-eth",
@@ -8468,6 +8618,25 @@
       "coingeckoListingTimestamp": 1702512000,
       "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/33613/large/USDE.png?1716355685",
+      "chainId": 534352,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "stargate"
+      }
+    },
+    {
+      "id": "scroll:weeth-wrapped-eeth",
+      "name": "Wrapped eETH",
+      "coingeckoId": "wrapped-eeth",
+      "address": "0x01f0a31698C4d065659b9bdC21B3610292a1c506",
+      "symbol": "weETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1718321733,
+      "coingeckoListingTimestamp": 1701648000,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
       "chainId": 534352,
       "source": "external",
       "supply": "totalSupply",

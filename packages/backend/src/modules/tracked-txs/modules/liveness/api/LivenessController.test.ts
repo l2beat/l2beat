@@ -52,7 +52,7 @@ const MOCK_AGGREGATED_LIVENESS = [
     avg: 20,
     min: 10,
     max: 30,
-    timestamp: NOW.add(-1, 'hours'),
+    updatedAt: NOW.add(-1, 'hours'),
   },
   {
     projectId: MOCK_PROJECT_ID,
@@ -61,7 +61,7 @@ const MOCK_AGGREGATED_LIVENESS = [
     avg: 60,
     min: 10,
     max: 50,
-    timestamp: NOW.add(-1, 'hours'),
+    updatedAt: NOW.add(-1, 'hours'),
   },
   {
     projectId: MOCK_PROJECT_ID,
@@ -70,7 +70,7 @@ const MOCK_AGGREGATED_LIVENESS = [
     avg: 10,
     min: 40,
     max: 70,
-    timestamp: NOW.add(-1, 'hours'),
+    updatedAt: NOW.add(-1, 'hours'),
   },
 ] as AggregatedLivenessRecord[]
 
@@ -130,11 +130,11 @@ describe(LivenessController.name, () => {
       const mockAggregatedLivenessRepository = mockObject<
         Database['aggregatedLiveness']
       >({
-        getByProject: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
+        getByProjectId: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
       })
 
       const mockAnomaliesRepository = mockObject<Database['anomalies']>({
-        getByProjectFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
+        getByProjectIdFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
       })
 
       const controller = createLivenessController({
@@ -159,10 +159,10 @@ describe(LivenessController.name, () => {
       )
 
       expect(
-        mockAggregatedLivenessRepository.getByProject,
+        mockAggregatedLivenessRepository.getByProjectId,
       ).toHaveBeenCalledWith(MOCK_PROJECT_ID)
 
-      expect(mockAnomaliesRepository.getByProjectFrom).toHaveBeenCalledWith(
+      expect(mockAnomaliesRepository.getByProjectIdFrom).toHaveBeenCalledWith(
         MOCK_PROJECT_ID,
         UnixTime.now().add(-30, 'days').toStartOf('day'),
       )
@@ -222,10 +222,10 @@ describe(LivenessController.name, () => {
         }),
         db: mockObject<Database>({
           aggregatedLiveness: mockObject<Database['aggregatedLiveness']>({
-            getByProject: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
+            getByProjectId: mockFn().resolvesTo(MOCK_AGGREGATED_LIVENESS),
           }),
           anomalies: mockObject<Database['anomalies']>({
-            getByProjectFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
+            getByProjectIdFrom: mockFn().resolvesTo(MOCK_ANOMALIES),
           }),
         }),
       })

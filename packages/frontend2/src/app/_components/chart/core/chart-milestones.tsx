@@ -5,17 +5,21 @@ import { useBreakpoint } from '~/hooks/use-is-mobile'
 import { getHoveredColumn } from '../utils/get-hovered-column'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
+import { useChartLoading } from './chart-loading-context'
+import { useChartRect } from './chart-rect-context'
 
 export function ChartMilestones() {
   const ref = useRef<HTMLDivElement>(null)
+  const loading = useChartLoading()
   const chartContext = useChartContext()
   const chartHoverContext = useChartHoverContext()
   const breakpoint = useBreakpoint()
+  const { rect } = useChartRect()
   const isMobile = breakpoint === 'mobile'
 
   const onCanvasMoveEvent = useCallback(
     (event: MouseEvent | Touch) => {
-      const { rect, columns, valuesStyle, getY } = chartContext
+      const { columns, valuesStyle, getY } = chartContext
       if (!rect || !columns || !valuesStyle || !getY) return
       const hoveredColumn = getHoveredColumn({
         event,
@@ -34,7 +38,7 @@ export function ChartMilestones() {
       })
       chartHoverContext.setMilestone(hoveredColumn.column?.milestone)
     },
-    [chartContext, chartHoverContext, isMobile],
+    [chartContext, chartHoverContext, isMobile, rect],
   )
 
   useEventListener('mousemove', onCanvasMoveEvent, ref)
@@ -50,7 +54,7 @@ export function ChartMilestones() {
 
   return (
     <div ref={ref} className="absolute bottom-0 z-40 w-full">
-      {!chartContext.loading
+      {!loading
         ? chartContext.columns.map(
             (c, i) =>
               c.milestone && (
@@ -74,7 +78,7 @@ interface Props {
 
 function ChartMilestone({ x, milestone }: Props) {
   const ref = useRef<HTMLDivElement>(null)
-  const { rect } = useChartContext()
+  const { rect } = useChartRect()
   const style = useMemo(
     () =>
       rect
@@ -89,7 +93,7 @@ function ChartMilestone({ x, milestone }: Props) {
   return (
     <div
       ref={ref}
-      className="absolute select-none scale-75 md:scale-100"
+      className="absolute scale-75 select-none md:scale-100"
       style={style}
     >
       <a

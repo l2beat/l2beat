@@ -6,7 +6,7 @@ import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchFeaturesApi } from './api/fetchFeaturesApi'
-import { fetchFinalityApi } from './api/fetchFinalityApi'
+
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
@@ -55,7 +55,6 @@ async function main() {
       activityApiResponse,
       tvlBreakdownApiResponse,
       livenessApiResponse,
-      finalityApiResponse,
       implementationChange,
       l2CostsApiResponse,
     ] = await Promise.all([
@@ -73,9 +72,6 @@ async function main() {
       config.features.liveness
         ? fetchLivenessApi(config.backend, http)
         : undefined,
-      config.features.finality
-        ? fetchFinalityApi(config.backend, http)
-        : undefined,
       config.features.implementationChange
         ? fetchImplementationChangeReport(config.backend, http)
         : undefined,
@@ -83,11 +79,11 @@ async function main() {
         ? fetchL2CostsApi(config.backend, http)
         : undefined,
     ])
-    const supportedChains = getChainNames([
+    const supportedChains = getChainNames(
       ...config.layer2s,
       ...config.layer3s,
       ...config.bridges,
-    ])
+    )
     const verificationStatus = getVerificationStatus(supportedChains)
     const manuallyVerifiedContracts =
       getManuallyVerifiedContracts(supportedChains)
@@ -114,7 +110,7 @@ async function main() {
       manuallyVerifiedContracts,
       tvlBreakdownApiResponse,
       livenessApiResponse,
-      finalityApiResponse,
+
       l2CostsApiResponse,
       implementationChange,
     }

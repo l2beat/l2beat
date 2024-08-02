@@ -3,7 +3,7 @@ import { Card } from '../../_components/card'
 export function Disclaimer() {
   return (
     <Card className="flex flex-col gap-4">
-      <h2 className="font-bold text-xl">
+      <h2 className="text-xl font-bold">
         How the Assets&apos; Risks Monitor work?
       </h2>
       <p className="text-sm font-medium text-zinc-500 dark:text-gray-50">

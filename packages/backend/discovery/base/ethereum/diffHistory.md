@@ -1,3 +1,77 @@
+Generated with discovered.json: 0xebdc444c5d7de73b961bedf1c76433c6f5b4fb9c
+
+# Diff at Thu, 01 Aug 2024 09:03:28 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 20389614
+- current block number: 20432677
+
+## Description
+
+Gas limit raised.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
++++ description: Gas limit for blocks on L2.
++++ severity: LOW
+      values.gasLimit:
+-        112500000
++        120000000
+    }
+```
+
+Generated with discovered.json: 0x4490b2aef6ef07052b52e81d0edadcea693677cd
+
+# Diff at Tue, 30 Jul 2024 11:11:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20389614
+- current block number: 20389614
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389614 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
+Generated with discovered.json: 0xb20be9340830e0b18dd8a54c754f5707e636bb19
+
+# Diff at Fri, 26 Jul 2024 08:45:40 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20331930
+- current block number: 20389614
+
+## Description
+
+(Tentative) gas limit raise (+ ~10%).
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x73a79Fab69143498Ed3712e519A88a918e1f4072) {
+    +++ description: None
+      values.gasLimit:
+-        105000000
++        112500000
+    }
+```
+
 Generated with discovered.json: 0xfab30ad5b7946a5d5787743d2e3ae493a491cfa6
 
 # Diff at Thu, 18 Jul 2024 10:30:00 GMT:

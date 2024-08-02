@@ -4,7 +4,6 @@ import { type Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
-import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
@@ -15,6 +14,7 @@ import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { useChartLoading } from './core/chart-loading-context'
 
 interface TvlChartPointData {
   timestamp: number
@@ -79,7 +79,7 @@ export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
       useLogScale={scale === 'log'}
       renderHoverContents={(data) => <ChartHover data={data} />}
     >
-      <section className="flex gap-4 flex-col">
+      <section className="flex flex-col gap-4">
         <Header unit={unit} value={tvl} weeklyChange={tvlWeeklyChange} />
         <ChartTimeRangeControls
           value={timeRange}
@@ -116,12 +116,12 @@ function ChartHover({ data }: { data: TvlChartPointData }) {
           mode: 'datetime',
         })}
       </div>
-      <div className="flex w-full justify-between items-center gap-2">
-        <span className="dark:text-gray-50 text-gray-700 text-sm">USD</span>
+      <div className="flex w-full items-center justify-between gap-2">
+        <span className="text-sm text-gray-700 dark:text-gray-50">USD</span>
         {formattedUsd}
       </div>
-      <div className="flex w-full justify-between items-center gap-2">
-        <span className="dark:text-gray-50 text-gray-700 text-sm">ETH</span>
+      <div className="flex w-full items-center justify-between gap-2">
+        <span className="text-sm text-gray-700 dark:text-gray-50">ETH</span>
         {formattedEth}
       </div>
     </div>
@@ -137,13 +137,13 @@ function Header({
   value: number
   weeklyChange: string
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
       <div>
-        <h1 className="mb-1 font-bold text-3xl">Value Locked</h1>
-        <p className="hidden text-gray-500 md:block dark:text-gray-600">
+        <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
+        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
           Sum of all canonically bridged, externally bridged, and natively
           minted tokens, converted to {unit.toUpperCase()}
         </p>
@@ -151,23 +151,23 @@ function Header({
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
         {loading ? (
           <>
-            <Skeleton className="w-[124px] h-9" />
-            <Skeleton className="w-[119px] h-6" />
+            <Skeleton className="h-9 w-[124px]" />
+            <Skeleton className="h-6 w-[119px]" />
           </>
         ) : (
           <>
-            <p className="whitespace-nowrap text-right font-bold text-lg md:text-3xl">
+            <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
               {formatCurrency(value, unit, {
                 showLessThanMinimum: false,
               })}
             </p>
-            <p className="whitespace-nowrap text-right font-bold text-xs md:text-base">
+            <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
               <PercentChange value={weeklyChange} /> / 7 days
             </p>
           </>
         )}
       </div>
-      <hr className="w-full border-gray-200 dark:border-zinc-700 md:border-t mt-2 md:hidden" />
+      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
   )
 }
@@ -183,11 +183,11 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (
-      <div className="flex justify-between gap-2 items-center">
+      <div className="flex items-center justify-between gap-2">
         <Skeleton className="h-8 w-[104.82px]" />
         <Skeleton className="h-8 w-[98.63px]" />
       </div>
@@ -195,7 +195,7 @@ function UnitAndScaleControls({
   }
 
   return (
-    <div className="flex justify-between gap-2 items-center">
+    <div className="flex items-center justify-between gap-2">
       <RadioGroup value={unit} onValueChange={setUnit}>
         <RadioGroupItem value="usd">USD</RadioGroupItem>
         <RadioGroupItem value="eth">ETH</RadioGroupItem>

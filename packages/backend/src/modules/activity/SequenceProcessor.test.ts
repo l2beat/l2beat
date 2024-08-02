@@ -11,11 +11,11 @@ import { MockFunction, expect, mockFn } from 'earl'
 import { describeDatabase } from '../../test/database'
 import { ALL_PROCESSED_EVENT, SequenceProcessor } from './SequenceProcessor'
 
-describeDatabase(SequenceProcessor.name, (_, db) => {
+describeDatabase(SequenceProcessor.name, (db) => {
   const PROCESSOR_ID = 'test'
   let sequenceProcessor: SequenceProcessor
 
-  type ProcessRange = (from: number, to: number, trx: any) => Promise<void>
+  type ProcessRange = (from: number, to: number) => Promise<void>
 
   function createSequenceProcessor({
     getLatest,
@@ -75,9 +75,8 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
       protected override async processRange(
         from: number,
         to: number,
-        trx: any,
       ): Promise<void> {
-        return processRange(from, to, trx)
+        return processRange(from, to)
       }
     })()
   }
@@ -236,7 +235,7 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
     })
 
     it('re-processes data when from > getLatest', async () => {
-      const time = install()
+      const time = install({ shouldClearNativeTimers: true })
 
       const reportError = mockFn().returns(undefined)
       sequenceProcessor = createSequenceProcessor({
@@ -264,7 +263,7 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
     })
 
     it('works when processRange throws', async () => {
-      const time = install()
+      const time = install({ shouldClearNativeTimers: true })
 
       const errorMessage = 'Force-failing during tests!'
       const reportError = mockFn().returns(undefined)
@@ -299,7 +298,7 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
         latest,
         syncedOnce: true,
       }
-      await db.sequenceProcessor.addOrUpdate(initialState)
+      await db.sequenceProcessor.upsert(initialState)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 1,
         batchSize: 2,
@@ -460,7 +459,7 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
 
     it('loads existing state on start', async () => {
       const latest = 3
-      await db.sequenceProcessor.addOrUpdate({
+      await db.sequenceProcessor.upsert({
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest: latest,
@@ -482,7 +481,7 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
   describe('syncedOnce flag', () => {
     it('sets syncedOnce to true after first full sync', async () => {
       const latest = 5
-      await db.sequenceProcessor.addOrUpdate({
+      await db.sequenceProcessor.upsert({
         id: PROCESSOR_ID,
         lastProcessed: 1,
         latest: latest,
@@ -510,17 +509,12 @@ describeDatabase(SequenceProcessor.name, (_, db) => {
 })
 
 function checkRanges(
-  processRangeMock: MockFunction<[number, number, any], Promise<void>>,
+  processRangeMock: MockFunction<[number, number], Promise<void>>,
   ranges: [number, number][],
 ) {
   expect(processRangeMock).toHaveBeenCalledTimes(ranges.length)
   for (const [i, [start, end]] of ranges.entries()) {
-    expect(processRangeMock).toHaveBeenNthCalledWith(
-      i + 1,
-      start,
-      end,
-      expect.anything(),
-    )
+    expect(processRangeMock).toHaveBeenNthCalledWith(i + 1, start, end)
   }
 }
 

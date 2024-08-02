@@ -11,7 +11,6 @@ import { getL3sProjectPages } from './project/layer3'
 import { getActivityPage } from './scaling/activity'
 import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
 import { getCostsPage } from './scaling/costs'
-import { getFinalityPage } from './scaling/finality'
 import { getLivenessPage } from './scaling/liveness'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getSummaryPage } from './scaling/summary'
@@ -26,7 +25,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     verificationStatus,
     tvlBreakdownApiResponse,
     livenessApiResponse,
-    finalityApiResponse,
     l2CostsApiResponse,
     implementationChange,
   } = pagesData
@@ -69,16 +67,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     pages.push(
       getLivenessPage(config, {
         livenessApiResponse,
-        tvlApiResponse,
-        implementationChange,
-      }),
-    )
-  }
-
-  if (config.features.finality && finalityApiResponse) {
-    pages.push(
-      getFinalityPage(config, {
-        finalityApiResponse,
         tvlApiResponse,
         implementationChange,
       }),

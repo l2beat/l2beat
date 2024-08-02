@@ -8,7 +8,7 @@ import {
   TypeColumnTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/types'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 
 const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()
 
@@ -26,7 +26,7 @@ export const columns = [
     id: 'logo',
     cell: (ctx) => (
       <Image
-        className="min-w-[18px] min-h-[18px]"
+        className="min-h-[18px] min-w-[18px]"
         src={`/icons/${ctx.row.original.slug}.png`}
         width={18}
         height={18}

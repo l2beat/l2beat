@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x21d17cece14cfa4ac60bf5716ed635ed9071d73c
+
+# Diff at Tue, 30 Jul 2024 11:12:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20383066
+- current block number: 20383066
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20383066 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      fieldMeta:
++        {"confirmPeriodBlocks":{"description":"Challenge period. (Number of blocks until a node is confirmed)."},"wasmModuleRoot":{"description":"Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."}}
+    }
+```
+
+Generated with discovered.json: 0xa42788482c8e1ace73e574337062d675b58d5479
+
+# Diff at Thu, 25 Jul 2024 10:48:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@42efd1ab55ccb369bfc0edad188854abb104aaef block: 20367973
+- current block number: 20383066
+
+## Description
+
+Kinto sends blobs, tracked txs added.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a) {
+    +++ description: None
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0x9590eb8caf62006f1a01c0e27a62734ce8c11f6c
 
 # Diff at Tue, 23 Jul 2024 08:16:34 GMT:

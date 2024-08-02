@@ -29,8 +29,8 @@ export async function runInversion(
   useMermaidMarkup: boolean,
   chain: string,
 ): Promise<void> {
-  const discovery = await configReader.readDiscovery(project, chain)
-  const config = await configReader.readConfig(project, chain)
+  const discovery = configReader.readDiscovery(project, chain)
+  const config = configReader.readConfig(project, chain)
   const addresses = calculateInversion(discovery, config)
 
   if (useMermaidMarkup) {

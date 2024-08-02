@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 
-import { Database, Transaction } from '@l2beat/database'
+import { Database } from '@l2beat/database'
 import { StarknetClient } from '../../../peripherals/starknet/StarknetClient'
 import { Clock } from '../../../tools/Clock'
 import { promiseAllPlus } from '../../../tools/queue/promiseAllPlus'
@@ -29,11 +29,7 @@ export class StarknetCounter extends SequenceProcessor {
     return blockNumber
   }
 
-  protected override async processRange(
-    from: number,
-    to: number,
-    trx: Transaction,
-  ) {
+  protected override async processRange(from: number, to: number) {
     const queries = range(from, to + 1).map((blockNumber) => async () => {
       const block = await this.starknetClient.getBlock(blockNumber)
 
@@ -48,6 +44,6 @@ export class StarknetCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'StarknetBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks, trx)
+    await this.db.blockTransactionCount.upsertMany(blocks)
   }
 }
