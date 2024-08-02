@@ -30,10 +30,9 @@ export interface TotalCellProps {
 
 export function TotalCell(data: TotalCellProps) {
   const values = useScalingFilterValues()
-  //const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
 
   const tvlWarnings = data.tvlWarnings ?? []
-  const anyBadWarnings = false
+  const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
 
   const totalTvl =
     (values.excludeAssociatedTokens
