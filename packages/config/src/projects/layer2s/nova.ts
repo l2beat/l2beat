@@ -5,11 +5,15 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import {
   DEFAULT_OTHER_CONSIDERATIONS,
+  getNitroGovernance,
   orbitStackL2,
 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('nova')
+const l2Discovery = new ProjectDiscovery('nova', 'nova')
+const discovery_arbitrum = new ProjectDiscovery('arbitrum', 'arbitrum') // needed for governance section
+
 const assumedBlockTime = 12 // seconds, different from RollupUserLogic.sol#L35 which assumes 13.2 seconds
 const validatorAfkBlocks = discovery.getContractValue<number>(
   'RollupProxy',
@@ -36,6 +40,41 @@ const upgradeExecutorUpgradeability = {
   upgradeConsiderations:
     'An upgrade initiated by the DAO can be vetoed by the Security Council.',
 }
+const l2Upgradability = {
+  // same as on L1, but messages from L1 must be sent to L2
+  upgradableBy: ['SecurityCouncilEmergency', 'L1Timelock'],
+  upgradeDelay: `${formatSeconds(
+    totalDelay,
+  )} or 0 if overridden by the Security Council`,
+  upgradeConsiderations:
+    'An upgrade initiated by the DAO can be vetoed by the Security Council.',
+}
+
+const treasuryTimelockDelay = discovery_arbitrum.getContractValue<number>(
+  'TreasuryTimelock',
+  'getMinDelay',
+)
+
+const l2CoreQuorumPercent =
+  (discovery_arbitrum.getContractValue<number>(
+    'CoreGovernor',
+    'quorumNumerator',
+  ) /
+    discovery_arbitrum.getContractValue<number>(
+      'CoreGovernor',
+      'quorumDenominator',
+    )) *
+  100
+const l2TreasuryQuorumPercent =
+  (discovery_arbitrum.getContractValue<number>(
+    'TreasuryGovernor',
+    'quorumNumerator',
+  ) /
+    discovery_arbitrum.getContractValue<number>(
+      'TreasuryGovernor',
+      'quorumDenominator',
+    )) *
+  100
 
 const maxTimeVariation = discovery.getContractValue<number[]>(
   'SequencerInbox',
@@ -112,6 +151,14 @@ export const nova: Layer2 = orbitStackL2({
     coingeckoPlatform: 'arbitrum-nova',
   },
   rpcUrl: 'https://nova.arbitrum.io/rpc',
+  upgradesAndGovernance: getNitroGovernance(
+    l2CoreQuorumPercent,
+    l2TimelockDelay,
+    challengeWindowSeconds,
+    l1TimelockDelay,
+    treasuryTimelockDelay,
+    l2TreasuryQuorumPercent,
+  ),
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'SecurityCouncil',
@@ -132,6 +179,14 @@ export const nova: Layer2 = orbitStackL2({
       'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
     ),
   ],
+  nativePermissions: {
+    nova: [
+      ...l2Discovery.getMultisigPermission(
+        'L2SecurityCouncilEmergency',
+        'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
+      ),
+    ],
+  },
   nonTemplateContracts: [
     discovery.getContractDetails('RollupProxy', {
       description:
@@ -178,6 +233,55 @@ export const nova: Layer2 = orbitStackL2({
       ...upgradeExecutorUpgradeability,
     }),
   ],
+  nativeAddresses: {
+    nova: [
+      l2Discovery.getContractDetails('L2UpgradeExecutor', {
+        description:
+          "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2ProxyAdmin', {
+        description:
+          "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 system contracts through this contract.",
+      }),
+      l2Discovery.getContractDetails('L2GatewaysProxyAdmin', {
+        description:
+          "The owner (UpgradeExecutor) can upgrade proxies' implementations of all L2 bridging gateway contracts through this contract.",
+      }),
+      l2Discovery.getContractDetails('L2BaseFee', {
+        description:
+          'This contract receives all BaseFees: The transaction fee component that covers the minimum cost of Arbitrum transaction execution. They are withdrawable to a configurable set of recipients.',
+      }),
+      l2Discovery.getContractDetails('L2SurplusFee', {
+        description:
+          'This contract receives all SurplusFees: Transaction fee component that covers the cost beyond that covered by the L2 Base Fee during chain congestion. They are withdrawable to a configurable set of recipients.',
+      }),
+      l2Discovery.getContractDetails('L2ArbitrumToken', {
+        description:
+          'The ARB token contract. Supply can be increased by the owner once per year by a maximum of 2%.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2GatewayRouter', {
+        description: 'Router managing token <--> gateway mapping on L2.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2ERC20Gateway', {
+        description:
+          'Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2WethGateway', {
+        description:
+          'Counterpart to the Bridge on L1. Mints and burns WETH on L2.',
+        ...l2Upgradability,
+      }),
+      l2Discovery.getContractDetails('L2ARBGateway', {
+        description:
+          'ARB sent from L2 to L1 is escrowed in this contract and minted on L1.',
+        ...l2Upgradability,
+      }),
+    ],
+  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0xA2e996f0cb33575FA0E36e8f62fCd4a9b897aAd3'),
