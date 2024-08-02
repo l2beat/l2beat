@@ -1,11 +1,10 @@
 /** eslint-disable @typescript-eslint/no-unsafe-assignment */
 /** eslint-disable @typescript-eslint/no-unused-vars */
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useCallback, useMemo, useState } from 'react'
-import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
-import { type ScalingFiltersState } from '~/app/(new)/(other)/_components/scaling-filters'
+import { useMemo, useState } from 'react'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
+import { ScalingFilters } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type CostsTableData } from '~/server/features/costs/get-costs-table-data'
@@ -19,15 +18,6 @@ import { CostsTypeControls } from '../costs-type-controls'
 import { useCostsUnitContext } from '../costs-unit-context'
 import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
 
-const DEFAULT_SCALING_FILTERS = {
-  rollupsOnly: false,
-  category: undefined,
-  stack: undefined,
-  stage: undefined,
-  purpose: undefined,
-  hostChain: undefined,
-}
-
 interface Props {
   entries: ScalingCostsEntry[]
 }
@@ -36,51 +26,24 @@ export function ScalingCostsTable(props: Props) {
   const { range, setRange, setDisabledOptions } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
   const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
-  const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
-    DEFAULT_SCALING_FILTERS,
-  )
+  const includeFilters = useScalingFilter()
 
   const { data } = api.scaling.costs.tableData.useQuery({ range })
 
-  const entries = useMemo(() => {
+  const filteredEntries = useMemo(
+    () => props.entries.filter((item) => includeFilters(item)),
+    [props.entries, includeFilters],
+  )
+
+  const tableEntries = useMemo(() => {
     const tableEntries = props.entries.map((e) =>
       mapToTableEntry(e, data, unit),
     )
     return tableEntries ? calculateDataByType(tableEntries, type) : []
   }, [data, props.entries, type, unit])
 
-  const includeFilters = useCallback(
-    (entry: ScalingCostsTableEntry) => {
-      const checks = [
-        scalingFilters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        scalingFilters.category !== undefined
-          ? entry.category === scalingFilters.category
-          : undefined,
-        scalingFilters.stack !== undefined
-          ? entry.provider === scalingFilters.stack
-          : undefined,
-        scalingFilters.stage !== undefined
-          ? entry.stage?.stage === scalingFilters.stage
-          : undefined,
-        scalingFilters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === scalingFilters.purpose)
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [scalingFilters],
-  )
-
-  const filteredEntries = useMemo(
-    () => entries.filter((item) => includeFilters(item)),
-    [entries, includeFilters],
-  )
-
   const table = useTable({
-    data: filteredEntries,
+    data: tableEntries,
     columns: scalingCostsColumns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -113,18 +76,10 @@ export function ScalingCostsTable(props: Props) {
   return (
     <div className="space-y-2">
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
-        <BaseScalingFilters
-          items={filteredEntries}
-          state={scalingFilters}
-          setState={setScalingFilters}
-          showRollupsOnly={false}
-        />
+        <ScalingFilters items={filteredEntries} />
         <CostsTypeControls value={type} onValueChange={onTypeChange} />
       </div>
-      <BasicTable
-        table={table}
-        onResetFilters={() => setScalingFilters(DEFAULT_SCALING_FILTERS)}
-      />
+      <BasicTable table={table} />
     </div>
   )
 }

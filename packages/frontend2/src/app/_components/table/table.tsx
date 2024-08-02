@@ -112,9 +112,11 @@ const TableCell = React.forwardRef<
     ref={ref}
     className={cn(
       'group h-9 whitespace-pre align-middle md:h-14',
-      !href && 'pr-3 first:pl-2 last:pr-2',
-      !href && className,
-      align === 'right' && 'text-right',
+      !href && [
+        'pr-3 first:pl-2 last:pr-2',
+        align === 'right' && 'text-right',
+        className,
+      ],
     )}
     {...props}
   >
@@ -123,6 +125,7 @@ const TableCell = React.forwardRef<
         href={href}
         className={cn(
           'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+          align === 'right' && 'justify-end',
           className,
         )}
       >
@@ -136,7 +139,11 @@ const TableCell = React.forwardRef<
 TableCell.displayName = 'TableCell'
 
 export {
-  Table, TableBody, TableCell, TableHead, TableHeader,
-  TableHeaderRow, TableRow
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableHeaderRow,
+  TableRow,
 }
-

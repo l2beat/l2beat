@@ -5,6 +5,7 @@ import { getScalingCostsEntries } from '~/server/features/scaling/get-scaling-co
 import { api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTable } from './_components/table/scaling-costs-table'
@@ -22,7 +23,7 @@ export default async function Page() {
   await api.scaling.costs.tableData.prefetch({ range })
 
   return (
-    <div>
+    <ScalingFilterContextProvider>
       <CostsTimeRangeContextProvider>
         <CostsUnitContextProvider tag="costs">
           <CostsChart milestones={HOMEPAGE_MILESTONES} />
@@ -30,6 +31,6 @@ export default async function Page() {
           <ScalingCostsTable entries={entries} />
         </CostsUnitContextProvider>
       </CostsTimeRangeContextProvider>
-    </div>
+    </ScalingFilterContextProvider>
   )
 }

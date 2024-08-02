@@ -16,7 +16,7 @@ import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underl
 import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
 import { CostsTotalCell } from '../costs-total-cell'
 
-export interface ScalingCostsTableEntry extends ScalingCostsEntry {
+export type ScalingCostsTableEntry = ScalingCostsEntry & {
   data: CostsAvailableData | CostsNotAvailableData
 }
 
@@ -44,6 +44,7 @@ export const scalingCostsColumns = [
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
+      hash: 'costs',
       headClassName: 'w-0',
     },
     size: 44.55,
@@ -61,6 +62,7 @@ export const scalingCostsColumns = [
     ),
     size: 26,
     meta: {
+      hash: 'costs',
       headClassName: 'w-0',
       cellClassName: 'lg:!pr-0',
     },
@@ -89,6 +91,9 @@ export const scalingCostsColumns = [
           assertUnreachable(data.reason)
       }
     },
+    meta: {
+      hash: 'costs',
+    },
   }),
   columnHelper.accessor('data.calldata', {
     header: 'Calldata',
@@ -111,6 +116,7 @@ export const scalingCostsColumns = [
       }
     },
     meta: {
+      hash: 'costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -140,6 +146,7 @@ export const scalingCostsColumns = [
       }
     },
     meta: {
+      hash: 'costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -169,6 +176,7 @@ export const scalingCostsColumns = [
       }
     },
     meta: {
+      hash: 'costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -199,6 +207,7 @@ export const scalingCostsColumns = [
       }
     },
     meta: {
+      hash: 'costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -229,6 +238,7 @@ export const scalingCostsColumns = [
       }
     },
     meta: {
+      hash: 'costs',
       align: 'right',
       tooltip: 'Total number of L2 transactions over the selected time period.',
     },
