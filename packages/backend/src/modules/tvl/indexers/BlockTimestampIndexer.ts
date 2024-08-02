@@ -1,24 +1,11 @@
 import {} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-
-import { Database } from '@l2beat/database'
-import {
-  ManagedChildIndexer,
-  ManagedChildIndexerOptions,
-} from '../../../tools/uif/ManagedChildIndexer'
+import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
-import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
-
-interface Dependencies extends Omit<ManagedChildIndexerOptions, 'name'> {
-  blockTimestampProvider: BlockTimestampProvider
-  db: Database
-  chain: string
-  syncOptimizer: SyncOptimizer
-}
+import { BlockTimestampIndexerDeps } from './types'
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
-  constructor(private readonly $: Dependencies) {
+  constructor(private readonly $: BlockTimestampIndexerDeps) {
     const logger = $.logger.tag($.tag)
     const name = 'block_timestamp_indexer'
     super({

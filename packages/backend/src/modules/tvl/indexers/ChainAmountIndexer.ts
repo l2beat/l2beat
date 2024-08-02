@@ -1,23 +1,13 @@
 import { assert } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
-  ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { AmountService, ChainAmountConfig } from '../services/AmountService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
-
-export interface ChainAmountIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
-  amountService: AmountService
-  db: Database
-  syncOptimizer: SyncOptimizer
-  chain: string
-}
+import { ChainAmountConfig } from '../services/AmountService'
+import { ChainAmountIndexerDeps } from './types'
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {

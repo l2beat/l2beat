@@ -1,27 +1,13 @@
-import { CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
-
-import { Database } from '@l2beat/database'
-import {
-  ManagedChildIndexer,
-  ManagedChildIndexerOptions,
-} from '../../../tools/uif/ManagedChildIndexer'
+import { UnixTime } from '@l2beat/shared-pure'
+import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
-import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
-
-export interface ChainAmountIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
-  circulatingSupplyService: CirculatingSupplyService
-  db: Database
-  syncOptimizer: SyncOptimizer
-  configuration: CirculatingSupplyEntry
-}
+import { CirculatingSupplyIndexerDeps } from './types'
 
 export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private readonly configurationId: string
 
-  constructor(private readonly $: ChainAmountIndexerDeps) {
+  constructor(private readonly $: CirculatingSupplyIndexerDeps) {
     const logger = $.logger.tag($.configuration.coingeckoId.toString())
     const name = 'circulating_supply_indexer'
     super({

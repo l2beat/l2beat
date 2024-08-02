@@ -1,38 +1,16 @@
 import {
   AmountConfigEntry,
   PriceConfigEntry,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { Database } from '@l2beat/database'
-import {
-  ManagedChildIndexer,
-  ManagedChildIndexerOptions,
-} from '../../../tools/uif/ManagedChildIndexer'
-import { ValueService } from '../services/ValueService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
+import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { AmountId, createAmountId } from '../utils/createAmountId'
 import { AssetId, createAssetId } from '../utils/createAssetId'
 import { PriceId, createPriceId } from '../utils/createPriceId'
 import { getValuesConfigHash } from '../utils/getValuesConfigHash'
-
-export interface ValueIndexerDeps
-  extends Omit<ManagedChildIndexerOptions, 'name'> {
-  valueService: ValueService
-  db: Database
-  priceConfigs: PriceConfigEntry[]
-  amountConfigs: AmountConfigEntry[]
-  project: ProjectId
-  dataSource: string
-  syncOptimizer: SyncOptimizer
-  maxTimestampsToProcessAtOnce: number
-  minHeight: number
-  maxHeight: number
-}
+import { ValueIndexerDeps } from './types'
 
 export class ValueIndexer extends ManagedChildIndexer {
-  // Maps used for performance optimization
   private readonly amountConfigs: Map<AmountId, AmountConfigEntry>
   private readonly priceConfigIds: Map<AssetId, PriceId>
 
@@ -108,7 +86,6 @@ export class ValueIndexer extends ManagedChildIndexer {
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
-    // Do not delete data
     return await Promise.resolve(targetHeight)
   }
 }
