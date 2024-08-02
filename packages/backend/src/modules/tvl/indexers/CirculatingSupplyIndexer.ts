@@ -25,7 +25,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       await this.$.circulatingSupplyService.fetchCirculatingSupplies(
         new UnixTime(from),
         adjustedTo,
-        this.$.configuration,
+        { ...this.$.configuration, id: this.configurationId },
       )
 
     this.logger.info('Fetched amounts in range', {

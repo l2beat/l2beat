@@ -3,6 +3,7 @@ import {
   AmountConfigEntry,
   ChainConverter,
   ChainId,
+  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { chainToProject } from '../backend'
@@ -21,18 +22,19 @@ export function getTvlAmountsConfig(
   const entries: AmountConfigEntry[] = []
 
   for (const token of tokenList) {
-    if (
-      token.supply === 'circulatingSupply' ||
-      token.supply === 'totalSupply'
-    ) {
-      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
-      assert(projectId, 'Project is required for token')
+    if (token.supply !== 'zero') {
+      // TODO: fix that
+      const projectId =
+        token.symbol === 'LSK'
+          ? ProjectId('lisk')
+          : chainToProject.get(chainConverter.toName(token.chainId))
+      assert(projectId, `Project is required for token ${token.symbol}`)
 
       const project = projects.find((x) => x.projectId === projectId)
-      assert(project, 'Project not found')
+      assert(project, `Project not found for token ${token.symbol}`)
 
       const chain = chains.find((x) => x.chainId === +token.chainId)
-      assert(chain, `Chain not found for token ${token.id}`)
+      assert(chain, `Chain not found for token ${token.symbol}`)
 
       assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
       const chainMinTimestamp = UnixTime.max(
@@ -75,6 +77,28 @@ export function getTvlAmountsConfig(
             coingeckoId: token.coingeckoId,
             project: projectId,
             source: token.source,
+            includeInTotal: true,
+            decimals: token.decimals,
+            symbol: token.symbol,
+            isAssociated,
+            category: token.category,
+          })
+          break
+        case 'preminted':
+          assert(token.address, 'Token address is required for preminted')
+          assert(token.escrows, 'Escrows are required for preminted')
+
+          entries.push({
+            type: 'preminted',
+            address: token.address,
+            escrows: token.escrows,
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp,
+            untilTimestamp: token.untilTimestamp,
+            coingeckoId: token.coingeckoId,
+            project: projectId,
+            source: token.source,
+            // TODO
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,

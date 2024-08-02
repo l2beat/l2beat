@@ -4,7 +4,6 @@ import { AmountRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { CirculatingSupplyEntry, UnixTime } from '@l2beat/shared-pure'
 import { isInteger } from 'lodash'
-import { createAmountId } from '../utils/createAmountId'
 
 export interface CirculatingSupplyServiceDependencies {
   readonly coingeckoQueryService: CoingeckoQueryService
@@ -16,7 +15,7 @@ export class CirculatingSupplyService {
   async fetchCirculatingSupplies(
     from: UnixTime,
     to: UnixTime,
-    configuration: CirculatingSupplyEntry,
+    configuration: CirculatingSupplyEntry & { id: string },
   ): Promise<AmountRecord[]> {
     const circulatingSupplies =
       await this.$.coingeckoQueryService.getCirculatingSupplies(
@@ -28,7 +27,7 @@ export class CirculatingSupplyService {
     return circulatingSupplies.map((circulatingSupply) => {
       assert(isInteger(circulatingSupply.value), 'Should be an integer')
       return {
-        configId: createAmountId(configuration),
+        configId: configuration.id,
         timestamp: circulatingSupply.timestamp,
         amount:
           BigInt(circulatingSupply.value) *

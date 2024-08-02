@@ -13,7 +13,7 @@ export class PremintedIndexer extends ManagedChildIndexer {
     super({
       ...$,
       name: 'preminted_indexer',
-      tag: $.configuration.address.toString(),
+      tag: `${$.configuration.chain}_${$.configuration.address}`,
       updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
       configHash: $.minHeight.toString(),
     })
@@ -26,7 +26,16 @@ export class PremintedIndexer extends ManagedChildIndexer {
       this.logger.info('Skipping update due to sync optimization', {
         from,
         to,
-        optimizedTimestamp: timestamp.toNumber(),
+        timestamp: timestamp.toNumber(),
+      })
+      return to
+    }
+
+    if (this.$.minHeight > to) {
+      this.logger.info('Skipping update due to minHeight', {
+        from,
+        to,
+        timestamp: timestamp.toNumber(),
       })
       return to
     }

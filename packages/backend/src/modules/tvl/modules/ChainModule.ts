@@ -1,8 +1,13 @@
 import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import {
+  BlockExplorerClient,
+  CoingeckoClient,
+  CoingeckoQueryService,
+} from '@l2beat/shared'
 import {
   AmountConfigEntry,
   EscrowEntry,
+  PremintedEntry,
   ProjectId,
   TotalSupplyEntry,
   capitalizeFirstLetter,
@@ -18,10 +23,12 @@ import { Configuration } from '../../../tools/uif/multi/types'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
+import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
 import { ChainAmountConfig } from '../indexers/types'
 import { AmountService } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
+import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
@@ -168,6 +175,8 @@ function createChainModule(
     db: peripherals.database,
   })
 
+  const valueService = new ValueService(peripherals.database)
+
   const perProject = groupBy(escrowsAndTotalSupplies, 'project')
 
   const valueIndexers: ValueIndexer[] = []
@@ -176,8 +185,6 @@ function createChainModule(
     const priceConfigs = new Set(
       amountConfigs.map((c) => configMapping.getPriceConfigFromAmountConfig(c)),
     )
-
-    const valueService = new ValueService(peripherals.database)
 
     const minHeight = Math.min(
       ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
@@ -205,10 +212,63 @@ function createChainModule(
     valueIndexers.push(indexer)
   }
 
+  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
+    apiKey: config.coingeckoApiKey,
+  })
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
+
+  const circulatingSupplyService = new CirculatingSupplyService({
+    coingeckoQueryService,
+  })
+
+  const premintedTokens = amounts
+    .filter((a) => a.chain === chain)
+    .filter((a): a is PremintedEntry => a.type === 'preminted')
+
+  const premintedIndexers: PremintedIndexer[] = []
+
+  for (const preminted of premintedTokens) {
+    const indexer = new PremintedIndexer({
+      logger,
+      parents: [blockTimestampIndexer],
+      indexerService,
+      configuration: preminted,
+      minHeight: preminted.sinceTimestamp.toNumber(),
+      amountService,
+      circulatingSupplyService,
+      syncOptimizer,
+      db: peripherals.database,
+    })
+
+    premintedIndexers.push(indexer)
+
+    const valueIndexer = new ValueIndexer({
+      valueService,
+      db: peripherals.database,
+      priceConfigs: [configMapping.getPriceConfigFromAmountConfig(preminted)],
+      amountConfigs: [preminted],
+      project: ProjectId(preminted.project),
+      dataSource: `${chain}_preminted_${preminted.address}`,
+      syncOptimizer,
+      parents: [priceModule.descendant, indexer],
+      indexerService,
+      logger,
+      minHeight: preminted.sinceTimestamp.toNumber(),
+      maxHeight: preminted.untilTimestamp?.toNumber() ?? Infinity,
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
+    })
+
+    valueIndexers.push(valueIndexer)
+  }
+
   return {
     start: async () => {
       await blockTimestampIndexer.start()
       await chainAmountIndexer.start()
+
+      for (const indexer of premintedIndexers) {
+        await indexer.start()
+      }
 
       for (const indexer of valueIndexers) {
         await indexer.start()
