@@ -180,7 +180,7 @@ export const nova: Layer2 = orbitStackL2({
     ),
   ],
   nativePermissions: {
-    arbitrum: [
+    nova: [
       ...l2Discovery.getMultisigPermission(
         'L2SecurityCouncilEmergency',
         'The elected signers for the Arbitrum SecurityCouncil can act through this multisig on Layer2, permissioned to upgrade all system contracts without delay.',
@@ -234,7 +234,7 @@ export const nova: Layer2 = orbitStackL2({
     }),
   ],
   nativeAddresses: {
-    arbitrum: [
+    nova: [
       l2Discovery.getContractDetails('L2UpgradeExecutor', {
         description:
           "This contract can upgrade the L2 system's contracts through the L2ProxyAdmin. The upgrades can be done either by the Security Council or by the L1Timelock (via its alias on L2).",
