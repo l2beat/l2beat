@@ -7042,6 +7042,25 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "arbitrum:cheese-cheese",
+      "name": "CHEESE",
+      "coingeckoId": "cheese-2",
+      "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+      "symbol": "CHEESE",
+      "decimals": 18,
+      "deploymentTimestamp": 1717472231,
+      "coingeckoListingTimestamp": 1713484800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/37156/large/cheese_icon_500x500.png?1713499473",
+      "chainId": 42161,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
+    },
+    {
       "id": "arbitrum:dai-dai-stablecoin",
       "name": "Dai Stablecoin",
       "coingeckoId": "dai",

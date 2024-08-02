@@ -15,6 +15,7 @@ import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { useChartLoading } from './core/chart-loading-context'
 
 interface TvlChartPointData {
   timestamp: number
@@ -137,7 +138,7 @@ function Header({
   value: number
   weeklyChange: string
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
@@ -183,7 +184,7 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (

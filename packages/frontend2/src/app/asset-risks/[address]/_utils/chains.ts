@@ -1,6 +1,6 @@
-import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import 'server-only'
 
+import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import { type Hex } from 'viem'
 import {
   type Chain,

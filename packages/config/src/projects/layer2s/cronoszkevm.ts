@@ -4,6 +4,11 @@ import { Layer2 } from './types'
 export const cronoszkevm: Layer2 = underReviewL2({
   id: 'cronoszkevm',
   display: {
+    tvlWarning: {
+      content:
+        'The TVL is currently shared among all projects using the shared ZK stack contracts. See ZKsync Era TVL.',
+      sentiment: 'warning',
+    },
     name: 'Cronos zkEVM',
     slug: 'cronoszkevm',
     description:

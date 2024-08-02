@@ -24,7 +24,7 @@ export function ScalingFilters<T extends ScalingFiltersState>({
 }: Props<T>) {
   const hostChainOptions = uniq(
     items.map((item) =>
-      item.type === 'layer3' && !('dataAvailability' in item)
+      item.type === 'layer3' && item.entryType === 'summary'
         ? item.hostChainName
         : 'Ethereum',
     ),

@@ -1,9 +1,8 @@
 import { ProjectId } from '@l2beat/shared-pure'
-
-import { underReviewL3 } from '../layer2s/templates/underReview'
+import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
-export const orb3: Layer3 = underReviewL3({
+export const orb3: Layer3 = upcomingL3({
   id: 'orb3',
   hostChain: ProjectId('arbitrum'),
   display: {
@@ -32,5 +31,4 @@ export const orb3: Layer3 = underReviewL3({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  rpcUrl: 'https://rpc.orb3.tech',
 })

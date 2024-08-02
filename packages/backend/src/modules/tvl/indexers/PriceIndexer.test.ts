@@ -52,25 +52,26 @@ describe(PriceIndexer.name, () => {
         shouldTimestampBeSynced: (t: UnixTime) => !(t.toNumber() % 100),
       })
 
+      const parameters = {
+        coingeckoId: CoingeckoId('id'),
+      }
+
+      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
+        actual<CoingeckoPriceConfigEntry>('a', 100, null, parameters),
+        actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
+      ]
+
       const indexer = new PriceIndexer({
         parents: [],
         priceService,
         syncOptimizer,
         coingeckoId: CoingeckoId('id'),
         indexerService: mockObject<IndexerService>({}),
-        configurations: [],
+        configurations,
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         db: mockDatabase({ price: priceRepository }),
       })
-
-      const parameters = {
-        coingeckoId: CoingeckoId('id'),
-      }
-      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
-        actual<CoingeckoPriceConfigEntry>('a', 100, null, parameters),
-        actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
-      ]
 
       const saveData = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await saveData()
@@ -118,7 +119,9 @@ describe(PriceIndexer.name, () => {
         syncOptimizer: mockObject<SyncOptimizer>({}),
         coingeckoId: CoingeckoId('id'),
         indexerService: mockObject<IndexerService>({}),
-        configurations: [],
+        configurations: [
+          mockObject<Configuration<CoingeckoPriceConfigEntry>>({ id: 'a' }),
+        ],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         db: mockDatabase({ price: priceRepository }),

@@ -4,7 +4,6 @@ import { getImplementationChangeReport } from '../implementation-change-report/g
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export async function getScalingRiskEntries(tvl: Record<ProjectId, number>) {
   const orderedProjects = orderByTvl(layer2s, tvl)
@@ -18,6 +17,7 @@ export async function getScalingRiskEntries(tvl: Record<ProjectId, number>) {
       !!implementationChangeReport.projects[project.id.toString()]
 
     return {
+      entryType: 'risk',
       ...getCommonScalingEntry({
         project,
         isVerified,
