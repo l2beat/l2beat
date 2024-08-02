@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x201de26b846b70c4a01b3f38758c3beb268ad7f0
+Generated with discovered.json: 0xc4095b9fe151aa9ae9134c09679c785f7ae93b43
 
-# Diff at Mon, 29 Jul 2024 11:02:14 GMT:
+# Diff at Fri, 02 Aug 2024 12:00:46 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@04dc4c7d175d5f4d1388774094bdb962fe7b7423 block: 19531641
-- current block number: 20411788
+- author: sekuba (<sekuba@users.noreply.github.com>)
+- comparing to: main@6303daac6763b37e188cf2b2de396f3d25372c89 block: 19531641
+- current block number: 20440714
 
 ## Description
 
@@ -355,7 +355,7 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 19531641 (main branch discovery), not current.
 
 ```diff
-    contract CpuConstraintPoly (0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB) {
+    contract Level2CpuConstraintPoly0 (0x04bE0E2D5EcCC744BE21BFb28d91d4a3CBefA8EB) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -366,7 +366,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri6_PoseidonPoseidonPartialRoundKey0Column (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975) {
+    contract Level2PoseidonPoseidonPartialRoundKey0Column0 (0x1Db84E79E8daEC762d6aDaa5bf358A4Ba001E975) {
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonPartialRoundKey0Column"
@@ -377,7 +377,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri1_PoseidonPoseidonFullRoundKey1Column (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94) {
+    contract Level2PoseidonPoseidonFullRoundKey1Column0 (0x1E8E41141347E01f33d84718b7f4cEFB433D5a94) {
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonFullRoundKey1Column"
@@ -388,7 +388,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676) {
+    contract Level2CpuConstraintPoly1 (0x1F038cdFeEE2Afa44a4213b12A6F0a5A7E6DE676) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -399,7 +399,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri1_PoseidonPoseidonPartialRoundKey1Column (0x20F10963eBCA608f8B24a5AEE275861B20ec868E) {
+    contract Level2PoseidonPoseidonPartialRoundKey1Column0 (0x20F10963eBCA608f8B24a5AEE275861B20ec868E) {
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonPartialRoundKey1Column"
@@ -410,7 +410,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier1 (0x28E3aD4201ba416B23d9950503dB28a9232BE32a) {
+    contract Level2CpuFrilessVerifier0 (0x28E3aD4201ba416B23d9950503dB28a9232BE32a) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier1"
@@ -421,7 +421,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri1_PoseidonPoseidonFullRoundKey2Column (0x2b159027d7F0E23D5C15b0517e33DdA838C46045) {
+    contract Level2PoseidonPoseidonFullRoundKey2Column0 (0x2b159027d7F0E23D5C15b0517e33DdA838C46045) {
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonFullRoundKey2Column"
@@ -432,7 +432,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0x307982EB84858A04d32b5e0b72D152be5A3eEcEA) {
+    contract Level2CpuConstraintPoly2 (0x307982EB84858A04d32b5e0b72D152be5A3eEcEA) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -443,7 +443,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6) {
+    contract Level2CpuOods0 (0x367B337Aa4A056CB78Fd74F94E283A73B27DfBB6) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -454,7 +454,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract PedersenHashPointsXColumn (0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB) {
+    contract Level2PedersenHashPointsXColumn (0x3d571a45D2B14FF423D2DC4A0e7a46e07D9682bB) {
     +++ description: None
       name:
 -        "PedersenHashPointsXColumn"
@@ -465,7 +465,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA) {
+    contract Level2MemoryPageFactRegistry (0x40864568f679c10aC9e72211500096a5130770fA) {
     +++ description: None
       name:
 -        "MemoryPageFactRegistry"
@@ -476,7 +476,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0x450909cC615036Ca4772dDDd8a69988B031811c9) {
+    contract Level2CpuConstraintPoly3 (0x450909cC615036Ca4772dDDd8a69988B031811c9) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -487,7 +487,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0x473E7B002f9A3109fd0FcdA4597935E4E610f367) {
+    contract Level2CpuOods1 (0x473E7B002f9A3109fd0FcdA4597935E4E610f367) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -498,7 +498,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB) {
+    contract Level2CpuOods2 (0x4D654CEd9cE0781986A4612C76e3e18D6D3B2fFB) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -509,7 +509,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier2 (0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) {
+    contract Level2CpuFrilessVerifier1 (0x5f1AbAA5d375Edb7bEd213855D44268B844CD65d) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier2"
@@ -520,7 +520,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier3 (0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) {
+    contract Level2CpuFrilessVerifier2 (0x6097FC32a720D0DE369A67FecdBC91fE3C6Cc460) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier3"
@@ -531,7 +531,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri6_PoseidonPoseidonPartialRoundKey1Column (0x62960C874379653D7BBe3644Ac653736Da2eda12) {
+    contract Level2PoseidonPoseidonPartialRoundKey1Column1 (0x62960C874379653D7BBe3644Ac653736Da2eda12) {
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonPartialRoundKey1Column"
@@ -542,7 +542,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract MerkleStatementContract (0x634DCf4f1421Fc4D95A968A559a450ad0245804c) {
+    contract Level2MerkleStatementContract (0x634DCf4f1421Fc4D95A968A559a450ad0245804c) {
     +++ description: None
       name:
 -        "MerkleStatementContract"
@@ -553,7 +553,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier4 (0x66F2345D003511a1A60D87E3984Bb8d12C21A970) {
+    contract Level2CpuFrilessVerifier3 (0x66F2345D003511a1A60D87E3984Bb8d12C21A970) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier4"
@@ -564,7 +564,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a) {
+    contract Level2CpuOods3 (0x697Ce81ea1732c74850Eef111EbC47c0FBd14a0a) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -583,7 +583,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0x704DFf65eD9b3d121d469b7A790A9927C853607F) {
+    contract Level2CpuOods4 (0x704DFf65eD9b3d121d469b7A790A9927C853607F) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -594,7 +594,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri1_PoseidonPoseidonPartialRoundKey0Column (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a) {
+    contract Level2PoseidonPoseidonPartialRoundKey0Column1 (0x75D887d2437eF87EA17B93143716BECD7BBbCa0a) {
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonPartialRoundKey0Column"
@@ -605,7 +605,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri1_PoseidonPoseidonFullRoundKey0Column (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6) {
+    contract Level2PoseidonPoseidonFullRoundKey0Column0 (0x8004e851fa3F3C66A3c80e4F7E96559f4C3E16a6) {
     +++ description: None
       name:
 -        "Fri1_PoseidonPoseidonFullRoundKey0Column"
@@ -616,7 +616,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier5 (0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) {
+    contract Level2CpuFrilessVerifier4 (0x8055948c530dbBc19cc350d53473EEe3a1e3d22B) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier5"
@@ -627,7 +627,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1) {
+    contract Level2CpuOods5 (0x88bA01753F2e96C3a00c6aaf76EaEB36Ccf715C1) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -638,7 +638,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract EcdsaPointsYColumn (0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1) {
+    contract Level2EcdsaPointsYColumn (0x9e4FdD8ff1b11e8f788Af77caA4b0037c137EcC1) {
     +++ description: None
       name:
 -        "EcdsaPointsYColumn"
@@ -649,7 +649,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier6 (0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) {
+    contract Level2CpuFrilessVerifier5 (0xaA2c9CDD4ceAebe9A35873B77F57FB47c3Ef11b9) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier6"
@@ -660,7 +660,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40) {
+    contract Level2CairoBootloaderProgram (0xb4c61d092eCf1b69F1965F9D8DE639148ea26a40) {
     +++ description: None
       name:
 -        "CairoBootloaderProgram"
@@ -669,7 +669,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri6_PoseidonPoseidonFullRoundKey2Column (0xB5A5759Dd063899F213eB9699906B445f855660D) {
+    contract Level2PoseidonPoseidonFullRoundKey2Column1 (0xB5A5759Dd063899F213eB9699906B445f855660D) {
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonFullRoundKey2Column"
@@ -680,7 +680,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0xB62Dc40175812208f509B69506315A48C92fb15A) {
+    contract Level2CpuConstraintPoly4 (0xB62Dc40175812208f509B69506315A48C92fb15A) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -691,7 +691,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0xB640935b164024EF1BC0b9e176432c440a5cd4dc) {
+    contract Level2CpuOods6 (0xB640935b164024EF1BC0b9e176432c440a5cd4dc) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -702,7 +702,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier7 (0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) {
+    contract Level2CpuFrilessVerifier6 (0xbF8D127efc09ed49C65f00355A0C5a5FF57D26cc) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier7"
@@ -713,7 +713,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri6_PoseidonPoseidonFullRoundKey1Column (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f) {
+    contract Level2PoseidonPoseidonFullRoundKey1Column1 (0xC2969a099F22430e20bcE237F469ac6F3101Ac5f) {
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonFullRoundKey1Column"
@@ -724,7 +724,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract EcdsaPointsXColumn (0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B) {
+    contract Level2EcdsaPointsXColumn (0xcB799CbBd4f5F0a3b6bbd9b55F59E8b301A0286B) {
     +++ description: None
       name:
 -        "EcdsaPointsXColumn"
@@ -735,7 +735,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuOods (0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4) {
+    contract Level2CpuOods7 (0xCC80e9E852cAE30E2d30d98ab2868648E84BF2A4) {
     +++ description: None
       name:
 -        "CpuOods"
@@ -746,7 +746,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02) {
+    contract Level2CpuConstraintPoly5 (0xcd96f43343Aa06d6ED0D412969c6D462fd17cF02) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -757,7 +757,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuFrilessVerifier8 (0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) {
+    contract Level2CpuFrilessVerifier7 (0xD0fC19710c389ef4a7244656cB08db08eA9D88b4) {
     +++ description: None
       name:
 -        "CpuFrilessVerifier8"
@@ -768,7 +768,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract SHARPVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
+    contract Level2SHARPVerifier (0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF) {
     +++ description: None
       name:
 -        "SHARPVerifier"
@@ -779,7 +779,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253) {
+    contract Level2CpuConstraintPoly6 (0xDd4cBe8CC7f420A9576F93E1D1CcC501495B5253) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -790,7 +790,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract FriStatementContract (0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb) {
+    contract Level2FriStatementContract (0xDEf8A3b280A54eE7Ed4f72E1c7d6098ad8df44fb) {
     +++ description: None
       name:
 -        "FriStatementContract"
@@ -801,7 +801,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract CpuConstraintPoly (0xE5313feE344376D22A42C9F0919e7F0d43920CAc) {
+    contract Level2CpuConstraintPoly7 (0xE5313feE344376D22A42C9F0919e7F0d43920CAc) {
     +++ description: None
       name:
 -        "CpuConstraintPoly"
@@ -812,7 +812,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract Fri6_PoseidonPoseidonFullRoundKey0Column (0xe7B835eA7e348B25aF2480272C4cA28429573293) {
+    contract Level2PoseidonPoseidonFullRoundKey0Column1 (0xe7B835eA7e348B25aF2480272C4cA28429573293) {
     +++ description: None
       name:
 -        "Fri6_PoseidonPoseidonFullRoundKey0Column"
@@ -823,7 +823,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
 ```
 
 ```diff
-    contract PedersenHashPointsYColumn (0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd) {
+    contract Level2PedersenHashPointsYColumn (0xFD12A123ecf4326E70A4D8b2bC260ec730BBE7Fd) {
     +++ description: None
       name:
 -        "PedersenHashPointsYColumn"
@@ -833,7 +833,7 @@ discovery. Values are for block 19531641 (main branch discovery), not current.
     }
 ```
 
-Generated with discovered.json: 0x98333a8861a2aa83fb491c4d94cadf90944c4f51
+Generated with discovered.json: 0x42ce99e80cd13ef6a6889fb328565d57beecd590
 
 # Diff at Thu, 18 Jul 2024 10:33:19 GMT:
 
