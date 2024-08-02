@@ -7,6 +7,7 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { getTvl } from '~/server/features/scaling/get-tvl'
+import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 
 export const metadata = getDefaultMetadata({
@@ -23,12 +24,14 @@ export default async function Page() {
   const { layer2s, layer3s } = await getScalingSummaryEntries(tvl)
 
   return (
-    <div className="mb-20">
-      <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
-      <HorizontalSeparator className="my-4 md:my-6" />
-      <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
-      <OtherSites />
-      <About />
-    </div>
+    <ScalingFilterContextProvider>
+      <div className="mb-20">
+        <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
+        <HorizontalSeparator className="my-4 md:my-6" />
+        <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
+        <OtherSites />
+        <About />
+      </div>
+    </ScalingFilterContextProvider>
   )
 }
