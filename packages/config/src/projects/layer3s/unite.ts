@@ -13,11 +13,9 @@ export const unite: Layer3 = upcomingL3({
     category: 'Optimistic Rollup',
     provider: 'OP Stack',
     links: {
-      documentation: [
-        'https://unite-1.gitbook.io/unite-docs',
-      ],
+      documentation: ['https://unite-1.gitbook.io/unite-docs'],
       repositories: [],
-      socialMedia: ['https://x.com/uniteio','https://discord.gg/vk7g2eQvru'],
+      socialMedia: ['https://x.com/uniteio', 'https://discord.gg/vk7g2eQvru'],
       websites: ['https://www.unite.io/'],
       apps: [],
       explorers: [],
