@@ -94,7 +94,12 @@ export const scalingLayer2sColumns = [
     },
   }),
   columnHelper.accessor(
-    (e) => ({ breakdown: e.latestTvl, change: e.tvlChange }),
+    (e) => ({
+      breakdown: e.latestTvl,
+      change: e.tvlChange,
+      associatedTokens: e.associatedTokens,
+      tvlWarnings: e.tvlWarnings,
+    }),
     {
       id: 'total',
       header: 'Total',
@@ -106,6 +111,8 @@ export const scalingLayer2sColumns = [
 
         return (
           <TotalCell
+            associatedTokenSymbols={value.associatedTokens}
+            tvlWarnings={value.tvlWarnings}
             breakdown={value.breakdown}
             change={value.change ?? undefined}
           />

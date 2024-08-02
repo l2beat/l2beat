@@ -1,6 +1,11 @@
+import { type WarningWithSentiment } from '@l2beat/config'
 import { type Sentiment } from '@l2beat/shared-pure'
 import React from 'react'
-import { TokenBreakdown } from '~/app/_components/breakdown/token-breakdown'
+import { useScalingFilterValues } from '~/app/(new)/(other)/_components/scaling-filter-context'
+import {
+  TokenBreakdown,
+  TokenBreakdownTooltipContent,
+} from '~/app/_components/breakdown/token-breakdown'
 import { PercentChange } from '~/app/_components/percent-change'
 import {
   Tooltip,
@@ -18,18 +23,22 @@ export interface TotalCellProps {
     stablecoin: number
     associated: number
   }
+  associatedTokenSymbols: string[]
   change?: number
+  tvlWarnings?: WarningWithSentiment[]
 }
 
 export function TotalCell(data: TotalCellProps) {
+  const values = useScalingFilterValues()
   //const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
 
-  // TODO:
-  const tvlWarnings: { content: string; sentiment: Sentiment }[] = []
+  const tvlWarnings = data.tvlWarnings ?? []
   const anyBadWarnings = false
-  const tvlBreakdownLabel = ''
 
-  const totalTvl = data.breakdown.total / 100
+  const totalTvl =
+    (values.excludeAssociatedTokens
+      ? data.breakdown.total
+      : data.breakdown.total - data.breakdown.associated) / 100
 
   return (
     <Tooltip>
@@ -53,10 +62,9 @@ export function TotalCell(data: TotalCellProps) {
             )}
           </div>
           <TokenBreakdown
-            label={tvlBreakdownLabel} // TODO
             associated={data.breakdown.associated}
             ether={data.breakdown.ether}
-            stable={data.breakdown.stablecoin}
+            stablecoin={data.breakdown.stablecoin}
             other={
               data.breakdown.total -
               data.breakdown.associated -
@@ -68,21 +76,18 @@ export function TotalCell(data: TotalCellProps) {
         </div>
       </TooltipTrigger>
       <TooltipContent>
-        <div className="space-y-2">
-          {tvlBreakdownLabel}
-          {tvlWarnings.map((warning, i) => (
-            <WarningBar
-              key={`tvl-warning-${i}`}
-              icon={RoundedWarningIcon}
-              text={warning.content}
-              color={warning.sentiment === 'warning' ? 'yellow' : 'red'}
-              // Cell itself is a href.
-              // Markdown might contain links - nesting them in a tooltip
-              // breaks semantics apart causing significant layout shifts.
-              ignoreMarkdown
-            />
-          ))}
-        </div>
+        <TokenBreakdownTooltipContent
+          associated={data.breakdown.associated}
+          ether={data.breakdown.ether}
+          stablecoin={data.breakdown.stablecoin}
+          other={
+            data.breakdown.total -
+            data.breakdown.associated -
+            data.breakdown.ether -
+            data.breakdown.stablecoin
+          }
+          tvlWarnings={tvlWarnings}
+        />
       </TooltipContent>
     </Tooltip>
   )

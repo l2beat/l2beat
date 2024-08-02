@@ -5,6 +5,7 @@ import { type ImplementationChangeReport } from '../implementation-change-report
 import { type LatestTvl } from '../tvl/get-latest-tvl'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
+import { formatPercent } from '~/utils/get-percentage-change'
 
 export async function getScalingSummaryEntries({
   tvl,
@@ -31,6 +32,17 @@ export async function getScalingSummaryEntries({
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[project.id.toString()]
+    const latestTvl = tvl[project.id.toString()]
+
+    const tvlBreakdownWarning = latestTvl
+      ? [
+          getTvlWarning(
+            latestTvl.associated / latestTvl.total,
+            project.display.name,
+            project.config.associatedTokens ?? [],
+          ),
+        ]
+      : []
 
     return {
       ...getCommonScalingEntry({
@@ -38,7 +50,9 @@ export async function getScalingSummaryEntries({
         isVerified,
         hasImplementationChanged,
       }),
-      latestTvl: tvl[project.id.toString()],
+      associatedTokens: project.config.associatedTokens ?? [],
+      latestTvl,
+      tvlWarnings: [project.display.tvlWarning, ...tvlBreakdownWarning],
       marketShare:
         (tvl[project.id.toString()]?.total ?? 0) / sum.total || undefined,
       risks: getL2Risks(project.riskView),
@@ -49,6 +63,28 @@ export async function getScalingSummaryEntries({
     entries,
     Object.fromEntries(Object.entries(tvl).map(([k, v]) => [k, v.total])),
   )
+}
+
+export function getTvlWarning(
+  associatedRatio: number,
+  name: string,
+  associatedTokens: string[],
+) {
+  let warning: string | undefined
+  if (associatedRatio > 0.1) {
+    const percent = formatPercent(associatedRatio)
+    if (associatedTokens.length === 1) {
+      const what = `The ${associatedTokens[0]} token associated with ${name}`
+      warning = `${what} accounts for ${percent} of the TVL!`
+    } else {
+      const joined = associatedTokens.join(' and ')
+      const what = `The ${joined} tokens associated with ${name}`
+      warning = `${what} account for ${percent} of the TVL!`
+    }
+  }
+  const warningSeverity: 'bad' | 'warning' =
+    associatedRatio > 0.8 ? 'bad' : 'warning'
+  return { warning, warningSeverity }
 }
 
 export type ScalingSummaryEntry = Awaited<
