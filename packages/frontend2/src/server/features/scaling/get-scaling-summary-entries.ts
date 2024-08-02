@@ -16,18 +16,17 @@ export async function getScalingSummaryEntries({
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }) {
   const projects = [...layer2s, ...layer3s]
-  const sum = Object.entries(tvl)
-    .filter(([k, v]) => projects.some((p) => p.id.toString() === k))
-    .reduce(
-      (acc, [k, v]) => {
-        acc.total += v.total
-        acc.ether += v.ether
-        acc.stablecoin += v.stablecoin
-        acc.associated += v.associated
-        return acc
-      },
-      { total: 0, ether: 0, stablecoin: 0, associated: 0 },
-    )
+  const sum = Object.entries(tvl).reduce(
+    (acc, [k, v]) => {
+      if (!projects.some((p) => p.id.toString() === k)) return acc
+      acc.total += v.total
+      acc.ether += v.ether
+      acc.stablecoin += v.stablecoin
+      acc.associated += v.associated
+      return acc
+    },
+    { total: 0, ether: 0, stablecoin: 0, associated: 0 },
+  )
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =

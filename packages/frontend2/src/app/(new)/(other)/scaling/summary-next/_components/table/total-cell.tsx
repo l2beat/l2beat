@@ -10,7 +10,6 @@ import {
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatNumber } from '~/utils/format-number'
-import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 export interface TotalCellProps {
   breakdown: {
