@@ -7,13 +7,14 @@ import {
   type WarningWithSentiment,
   layer2s,
 } from '@l2beat/config'
-import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { type SyncStatus } from '~/types/SyncStatus'
 import { getActivityForProjects } from '../activity/get-activity-for-projects'
 import { getCostsForProjects } from '../costs/get-costs-for-projects'
 import { type LatestCostsProjectResponse } from '../costs/types'
 import { type CostsTimeRange } from '../costs/utils/range'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/order-by-tvl'
 
 export interface ScalingCostsEntry {
@@ -51,13 +52,13 @@ export type CostsData = Record<CostsUnit, CostsValues> & {
 const UPCOMING_PROJECTS = ['paradex']
 
 export async function getScalingCostsEntries(
-  tvl: Record<ProjectId, number>,
   timeRange: CostsTimeRange,
 ): Promise<ScalingCostsEntry[]> {
+  const tvl = await getLatestTvlUsd({ type: 'layer2' })
   const implementationChange = await getImplementationChangeReport()
   const projects = getIncluded(layer2s)
   const projectsCosts = await getCostsForProjects(projects, timeRange)
-  const projectsActivity = await getActivityForProjects(projects)
+  const projectsActivity = await getActivityForProjects(projects, timeRange)
   const orderedProjects = orderByTvl(projects, tvl)
 
   return orderedProjects

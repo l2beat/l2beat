@@ -1,13 +1,16 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { groupBy } from 'lodash'
 import { db } from '~/server/database'
-import { getRange } from '~/utils/range/range'
+import { TimeRange, getRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
 
-export async function getActivityForProjects(projects: (Layer2 | Layer3)[]) {
+export async function getActivityForProjects(
+  projects: (Layer2 | Layer3)[],
+  timeRange: TimeRange,
+) {
   const result: Record<string, number | undefined> = {}
-  const resolution = rangeToResolution('30d')
-  const range = getRange('30d', resolution)
+  const resolution = rangeToResolution(timeRange)
+  const range = getRange(timeRange, resolution)
 
   const dailyCount =
     await db.activityView.getDailyCountsForProjectsAndTimeRange(
@@ -24,7 +27,7 @@ export async function getActivityForProjects(projects: (Layer2 | Layer3)[]) {
   return result
 }
 
-export function rangeToResolution(value: '30d') {
+export function rangeToResolution(value: TimeRange) {
   const days = rangeToDays(value)
   if (days < 30) {
     return 'hourly'

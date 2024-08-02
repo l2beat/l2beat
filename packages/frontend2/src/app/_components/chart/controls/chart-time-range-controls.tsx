@@ -16,7 +16,7 @@ export function ChartTimeRangeControls<T extends string>({
   setValue,
   range,
   options,
-}: Props) {
+}: Props<T>) {
   const loading = useChartLoading()
   const isClient = useIsClient()
 

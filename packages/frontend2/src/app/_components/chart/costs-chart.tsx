@@ -1,17 +1,16 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
-import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type CostsChartResponse } from '~/server/features/costs/types'
-import { type CostsTimeRange } from '~/server/features/costs/utils/range'
 import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
@@ -19,6 +18,7 @@ import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { HorizontalSeparator } from '../horizontal-separator'
 import { Square } from '../square'
+import { useChartLoading } from './core/chart-loading-context'
 import { mapMilestones } from './utils/map-milestones'
 
 interface CostsChartPointData {
@@ -31,28 +31,20 @@ interface CostsChartPointData {
 }
 interface Props {
   milestones: Milestone[]
-  defaultTimeRange: CostsTimeRange
   tag?: string
 }
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
-export function CostsChart({
-  milestones,
-  defaultTimeRange,
-  tag = 'costs',
-}: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage<CostsTimeRange>(
-    `${tag}-time-range`,
-    defaultTimeRange,
-  )
+export function CostsChart({ milestones, tag = 'costs' }: Props) {
+  const { range, setRange } = useCostsTimeRangeContext()
+
   const [unit, setUnit] = useLocalStorage<CostsUnit>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const { data: chart } = api.scaling.costs.useQuery({
-    range: timeRange,
+  const { data: chart } = api.scaling.costs.chart.useQuery({
+    range,
   })
-  if (!chart) return <div>Loading...</div>
 
   const mappedMilestones = mapMilestones(milestones)
 
@@ -62,22 +54,19 @@ export function CostsChart({
       : formatCurrency(value, unit, { showLessThanMinimum: false })
 
   // Add useMemo
-  const columns = chart.data.map((dataPoint) => {
-    const [timestamp] = dataPoint
+  const columns =
+    chart?.data.map((dataPoint) => {
+      const [timestamp] = dataPoint
 
-    return {
-      values: getValues(dataPoint, unit),
-      data: getData(dataPoint, unit),
-      milestone: mappedMilestones[timestamp],
-    }
-  })
+      return {
+        values: getValues(dataPoint, unit),
+        data: getData(dataPoint, unit),
+        milestone: mappedMilestones[timestamp],
+      }
+    }) ?? []
 
-  const rangeStart = chart.data[0]?.[0]
-  const rangeEnd = chart.data[chart.data.length - 1]?.[0]
-  assert(
-    rangeStart !== undefined && rangeEnd !== undefined,
-    'Programmer error: rangeStart and rangeEnd are undefined',
-  )
+  const rangeStart = chart?.data[0]?.[0] ?? 0
+  const rangeEnd = chart?.data[chart.data.length - 1]?.[0] ?? 1
 
   return (
     <section className="flex flex-col gap-4">
@@ -109,8 +98,8 @@ export function CostsChart({
         renderHoverContents={(data) => <ChartHover data={data} unit={unit} />}
       >
         <ChartTimeRangeControls
-          value={timeRange}
-          setValue={setTimeRange}
+          value={range}
+          setValue={setRange}
           options={[
             { value: '1d', label: '1D' },
             { value: '7d', label: '7D' },
@@ -223,7 +212,7 @@ function UnitAndScaleControls({
   setUnit: (value: CostsUnit) => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (

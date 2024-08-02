@@ -12,12 +12,10 @@ import {
   type CostsUnit,
   type ScalingCostsEntry,
 } from '~/server/features/scaling/get-scaling-costs-entries'
+import { api } from '~/trpc/react'
+import { useCostsTimeRangeContext } from '../costs-time-range-context'
 import { CostsTypeControls } from '../costs-type-controls'
 import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
-
-interface Props {
-  entries: ScalingCostsEntry[]
-}
 
 const DEFAULT_SCALING_FILTERS = {
   rollupsOnly: false,
@@ -28,7 +26,10 @@ const DEFAULT_SCALING_FILTERS = {
   hostChain: undefined,
 }
 
-export function ScalingCostsTable(props: Props) {
+export function ScalingCostsTable() {
+  const { range } = useCostsTimeRangeContext()
+  const { data } = api.scaling.costs.entries.useQuery({ range })
+
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
     DEFAULT_SCALING_FILTERS,
   )
@@ -36,9 +37,9 @@ export function ScalingCostsTable(props: Props) {
   const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
 
   const entries = useMemo(() => {
-    const tableEntries = props.entries.map((e) => mapToTableEntry(e, 'usd'))
-    return calculateDataByType(tableEntries, type)
-  }, [type, props.entries])
+    const tableEntries = data?.map((e) => mapToTableEntry(e, 'usd'))
+    return tableEntries ? calculateDataByType(tableEntries, type) : []
+  }, [type, data])
 
   const includeFilters = useCallback(
     (entry: ScalingCostsTableEntry) => {
