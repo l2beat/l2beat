@@ -2382,6 +2382,7 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
       "chainId": 1,
+      "project": "lisk",
       "source": "canonical",
       "supply": "preminted",
       "escrows": ["0x2658723Bf70c7667De6B25F99fcce13A16D25d08"]

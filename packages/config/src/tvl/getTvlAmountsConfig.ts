@@ -3,7 +3,6 @@ import {
   AmountConfigEntry,
   ChainConverter,
   ChainId,
-  ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { chainToProject } from '../backend'
@@ -23,11 +22,9 @@ export function getTvlAmountsConfig(
 
   for (const token of tokenList) {
     if (token.supply !== 'zero') {
-      // TODO: fix that
       const projectId =
-        token.symbol === 'LSK'
-          ? ProjectId('lisk')
-          : chainToProject.get(chainConverter.toName(token.chainId))
+        token.project ??
+        chainToProject.get(chainConverter.toName(token.chainId))
       assert(projectId, `Project is required for token ${token.symbol}`)
 
       const project = projects.find((x) => x.projectId === projectId)

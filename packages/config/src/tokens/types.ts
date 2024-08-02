@@ -3,6 +3,7 @@ import {
   ChainId,
   CoingeckoId,
   EthereumAddress,
+  ProjectId,
   UnixTime,
   numberAs,
   stringAs,
@@ -24,6 +25,7 @@ export const GeneratedToken = z.object({
   category: z.enum(['ether', 'stablecoin', 'other']),
   iconUrl: z.optional(z.string()),
   chainId: numberAs(ChainId),
+  project: stringAs(ProjectId).optional(),
   source: z.enum(['canonical', 'external', 'native']),
   supply: z.enum(['totalSupply', 'circulatingSupply', 'zero', 'preminted']),
   bridgedUsing: z.optional(
