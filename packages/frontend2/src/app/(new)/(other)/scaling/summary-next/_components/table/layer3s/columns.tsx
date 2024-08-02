@@ -4,10 +4,10 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/types'
 import { TotalCell } from '../total-cell'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer3sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const summaryLayer3sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -81,23 +81,31 @@ export const summaryLayer3sColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
-    id: 'total',
-    header: 'Total',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value) {
-        return <UpcomingBadge />
-      }
+  columnHelper.accessor(
+    (e) => ({ breakdown: e.latestTvl, change: e.tvlChange }),
+    {
+      id: 'total',
+      header: 'Total',
+      cell: (ctx) => {
+        const value = ctx.getValue()
+        if (!value.breakdown) {
+          return <UpcomingBadge />
+        }
 
-      return <TotalCell data={value} />
+        return (
+          <TotalCell
+            breakdown={value.breakdown}
+            change={value.change ?? undefined}
+          />
+        )
+      },
+      sortUndefined: 'last',
+      meta: {
+        headClassName: 'justify-end',
+        cellClassName: 'justify-end',
+        tooltip:
+          'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+      },
     },
-    sortUndefined: 'last',
-    meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
-      tooltip:
-        'Total value locked in escrow contracts on the base chain displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-    },
-  }),
+  ),
 ]

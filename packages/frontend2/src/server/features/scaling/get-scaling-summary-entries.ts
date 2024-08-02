@@ -15,7 +15,20 @@ export async function getScalingSummaryEntries({
   implementationChangeReport: ImplementationChangeReport
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }) {
-  const entries = [...layer2s, ...layer3s].map((project) => {
+  const projects = [...layer2s, ...layer3s]
+  const sum = Object.entries(tvl)
+    .filter(([k, v]) => projects.some((p) => p.id.toString() === k))
+    .reduce(
+      (acc, [k, v]) => {
+        acc.total += v.total
+        acc.ether += v.ether
+        acc.stablecoin += v.stablecoin
+        acc.associated += v.associated
+        return acc
+      },
+      { total: 0, ether: 0, stablecoin: 0, associated: 0 },
+    )
+  const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[project.id.toString()]
@@ -27,6 +40,8 @@ export async function getScalingSummaryEntries({
         hasImplementationChanged,
       }),
       latestTvl: tvl[project.id.toString()],
+      marketShare:
+        (tvl[project.id.toString()]?.total ?? 0) / sum.total || undefined,
       risks: getL2Risks(project.riskView),
     }
   })

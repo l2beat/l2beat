@@ -15,11 +15,17 @@ import { useCookieState } from '~/hooks/use-cookie-state'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import { api } from '~/trpc/react'
-import { useScalingFilter } from '../../../_components/scaling-filter-context'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '../../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../../_components/scaling-filters'
 import { toTableRows } from '../_utils/to-table-rows'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
+import { summaryLayer3sColumns } from './table/layer3s/columns'
+import { scalingArchivedColumns } from './table/archived/columns'
+import { scalingUpcomingColumns } from './table/upcoming/columns'
 
 interface Props {
   projects: ScalingSummaryEntry[]
@@ -27,10 +33,16 @@ interface Props {
 
 export function ScalingSummaryTables({ projects }: Props) {
   const [timeRange] = useCookieState('chartRange')
+  const values = useScalingFilterValues()
   const includeFilters = useScalingFilter()
   const { data } = api.scaling.summary.useQuery({
     range: timeRange,
-    type: 'layer2',
+    ...(values.empty
+      ? { type: 'layer2' }
+      : {
+          type: 'projects',
+          projectIds: projects.filter(includeFilters).map((item) => item.id),
+        }),
   })
 
   const layer2sProjects = useMemo(
@@ -49,8 +61,8 @@ export function ScalingSummaryTables({ projects }: Props) {
         : [],
     [projects, includeFilters, data],
   )
-  {
-    /*const layer3sProjects = useMemo(
+
+  const layer3sProjects = useMemo(
     () =>
       data
         ? toTableRows({
@@ -78,6 +90,7 @@ export function ScalingSummaryTables({ projects }: Props) {
         : [],
     [projects, includeFilters, data],
   )
+
   const archivedProjects = useMemo(
     () =>
       data
@@ -89,8 +102,7 @@ export function ScalingSummaryTables({ projects }: Props) {
           })
         : [],
     [projects, includeFilters, data],
-  )*/
-  }
+  )
 
   const layer2sTable = useTable({
     data: layer2sProjects,
@@ -108,7 +120,7 @@ export function ScalingSummaryTables({ projects }: Props) {
     },
   })
 
-  /*const layer3sTable = useTable({
+  const layer3sTable = useTable({
     data: layer3sProjects,
     columns: summaryLayer3sColumns,
     getCoreRowModel: getCoreRowModel(),
@@ -154,7 +166,7 @@ export function ScalingSummaryTables({ projects }: Props) {
         },
       ],
     },
-  })*/
+  })
 
   if (!data) return null
 
@@ -163,9 +175,9 @@ export function ScalingSummaryTables({ projects }: Props) {
       <ScalingFilters
         items={[
           ...layer2sProjects,
-          //...layer3sProjects,
-          //...archivedProjects,
-          //...upcomingProjects,
+          ...layer3sProjects,
+          ...archivedProjects,
+          ...upcomingProjects,
         ]}
       />
       <Tabs defaultValue="layer2s" className="w-full">
@@ -176,7 +188,7 @@ export function ScalingSummaryTables({ projects }: Props) {
               <span className="max-md:hidden">Layer 2 projects</span>
               <TabCountBadge>{layer2sTable.getRowCount()}</TabCountBadge>
             </TabsTrigger>
-            {/*<TabsTrigger value="layer3s" className="gap-1.5">
+            <TabsTrigger value="layer3s" className="gap-1.5">
               <span className="md:hidden">Layer 3s</span>
               <span className="max-md:hidden">Layer 3 projects</span>
               <TabCountBadge>{layer3sTable.getRowCount()}</TabCountBadge>
@@ -190,14 +202,14 @@ export function ScalingSummaryTables({ projects }: Props) {
               <span className="md:hidden">Archived</span>
               <span className="max-md:hidden">Archived projects</span>
               <TabCountBadge>{archivedTable.getRowCount()}</TabCountBadge>
-            </TabsTrigger>*/}
+            </TabsTrigger>
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="layer2s">
           <BasicTable table={layer2sTable} />
           <ScalingLegend />
         </TabsContent>
-        {/*<TabsContent value="layer3s">
+        <TabsContent value="layer3s">
           <BasicTable table={layer3sTable} />
         </TabsContent>
         <TabsContent value="upcoming">
@@ -205,7 +217,7 @@ export function ScalingSummaryTables({ projects }: Props) {
         </TabsContent>
         <TabsContent value="archived">
           <BasicTable table={archivedTable} />
-        </TabsContent>*/}
+        </TabsContent>
       </Tabs>
     </div>
   )

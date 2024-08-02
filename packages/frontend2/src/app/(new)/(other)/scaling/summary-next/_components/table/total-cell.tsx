@@ -13,11 +13,16 @@ import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryTableRow } from '../../_utils/to-table-rows'
 
 export interface TotalCellProps {
-  data: NonNullable<ScalingSummaryTableRow['tvl']>
-  className?: string
+  breakdown: {
+    total: number
+    ether: number
+    stablecoin: number
+    associated: number
+  }
+  change?: number
 }
 
-export function TotalCell({ data }: TotalCellProps) {
+export function TotalCell(data: TotalCellProps) {
   //const anyBadWarnings = data.tvlWarnings.some((w) => w?.sentiment === 'bad')
 
   // TODO:
@@ -41,10 +46,12 @@ export function TotalCell({ data }: TotalCellProps) {
             <span className="text-base font-bold md:text-lg">
               ${formatNumber(totalTvl)}
             </span>
-            <PercentChange
-              value={data.change}
-              className="ml-1 !text-base font-medium"
-            />
+            {data.change !== undefined && (
+              <PercentChange
+                value={data.change}
+                className="ml-1 !text-base font-medium"
+              />
+            )}
           </div>
           <TokenBreakdown
             label={tvlBreakdownLabel} // TODO
