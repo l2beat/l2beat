@@ -82,7 +82,6 @@ function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
       !!implementationChangeReport.projects[layer2.id.toString()]
 
     const entry: ScalingSummaryLayer2sEntry = {
-      entryType: 'summary',
       ...getCommonScalingEntry({
         project: layer2,
         isVerified,
@@ -124,7 +123,7 @@ function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
 
     const hostChainName =
       layer3.hostChain === 'Multiple'
-        ? 'Multiple'
+        ? ('Multiple' as const)
         : LAYER_2S.find((l) => l.id === layer3.hostChain)?.display.name
     assert(
       hostChainName !== undefined,
@@ -136,12 +135,12 @@ function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
       !!implementationChangeReport.projects[layer3.id.toString()]
 
     const entry: ScalingSummaryLayer3sEntry = {
-      entryType: 'summary',
       ...getCommonScalingEntry({
         project: layer3,
         isVerified,
         hasImplementationChanged,
       }),
+      risks: undefined,
       tvlData:
         stats && projectTvl && escrowsConfigured(layer3)
           ? {
@@ -152,7 +151,7 @@ function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
               excludedTokens: undefined,
             }
           : undefined,
-      hostChainName,
+      hostChainName: hostChainName,
     }
 
     return entry
