@@ -81,6 +81,14 @@ export const badges = {
     },
     type: BadgeType.RaaS,
   },
+  Quicknode: {
+    display: {
+      name: 'Quicknode',
+      description:
+        'This project was deployed via the rollup-as-a-service provider Quicknode',
+    },
+    type: BadgeType.RaaS,
+  },
   // DA
   Avail: {
     display: {
