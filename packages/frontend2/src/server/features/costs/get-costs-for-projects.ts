@@ -1,5 +1,10 @@
 import { type Layer2 } from '@l2beat/config/src'
-import { type AggregatedL2CostRecord } from '@l2beat/database'
+import {
+  type AggregatedL2CostRecord,
+  type IndexerConfigurationRecord,
+} from '@l2beat/database'
+import { notUndefined } from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
 import { db } from '~/server/database'
 import { getRange } from '~/utils/range/range'
 import {
@@ -20,12 +25,42 @@ export async function getCostsForProjects(
     'tracked_txs_indexer',
   )
   const response: LatestCostsResponse = {}
-  for (const project of projects) {
+
+  const range = getRange(timeRange, resolution)
+
+  const projectsWithSyncedUntil = withSyncedUntil(
+    projects,
+    configurations,
+  ).filter(notUndefined)
+
+  const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
+    projectsWithSyncedUntil.map((p) => p.id),
+    range,
+  )
+  const groupedRecords = groupBy(records, 'projectId')
+
+  for (const project of projectsWithSyncedUntil) {
+    const records = groupedRecords[project.id]
+    if (records === undefined) continue
+    response[project.id] = {
+      ...sumValues(records),
+      syncedUntil: project.syncedUntil,
+    }
+  }
+
+  return response
+}
+
+function withSyncedUntil(
+  projects: Layer2[],
+  configurations: IndexerConfigurationRecord[],
+) {
+  return projects.map((project) => {
     const trackedTxConfig = toTrackedTxConfig(
       project.id,
       project.config.trackedTxs,
     )
-    if (trackedTxConfig === undefined) continue
+    if (trackedTxConfig === undefined) return
 
     const projectRuntimeConfigIds = trackedTxConfig
       .filter((c) => c.type === 'l2costs')
@@ -35,26 +70,16 @@ export async function getCostsForProjects(
       projectRuntimeConfigIds.includes(c.id),
     )
 
-    if (projectConfigs.length === 0) continue
+    if (projectConfigs.length === 0) return
 
     const syncedUntil = getSyncedUntil(projectConfigs)
-    if (!syncedUntil) {
-      continue
-    }
+    if (!syncedUntil) return
 
-    const range = getRange(timeRange, resolution)
-    const records = await db.aggregatedL2Cost.getByProjectAndTimeRange(
-      project.id,
-      range,
-    )
-
-    response[project.id] = {
-      ...sumValues(records),
+    return {
+      ...project,
       syncedUntil,
     }
-  }
-
-  return response
+  })
 }
 
 function sumValues(

@@ -1,10 +1,12 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { CostsChart } from '~/app/_components/chart/costs-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { getScalingCostsEntries } from '~/server/features/scaling/get-scaling-costs-entries'
 import { api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
+import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTable } from './_components/table/scaling-costs-table'
 
 export const metadata = getDefaultMetadata({
@@ -14,16 +16,19 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
+  const entries = await getScalingCostsEntries()
   const range = getCookie('costsChartRange')
   await api.scaling.costs.chart.prefetch({ range })
-  await api.scaling.costs.entries.prefetch({ range })
+  await api.scaling.costs.tableData.prefetch({ range })
 
   return (
     <div>
       <CostsTimeRangeContextProvider>
-        <CostsChart milestones={HOMEPAGE_MILESTONES} />
-        <HorizontalSeparator className="my-4 md:my-6" />
-        <ScalingCostsTable />
+        <CostsUnitContextProvider tag="costs">
+          <CostsChart milestones={HOMEPAGE_MILESTONES} />
+          <HorizontalSeparator className="my-4 md:my-6" />
+          <ScalingCostsTable entries={entries} />
+        </CostsUnitContextProvider>
       </CostsTimeRangeContextProvider>
     </div>
   )

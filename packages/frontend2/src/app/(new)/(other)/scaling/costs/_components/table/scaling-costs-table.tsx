@@ -8,6 +8,7 @@ import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling
 import { type ScalingFiltersState } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
+import { type CostsTableData } from '~/server/features/costs/get-costs-table-data'
 import {
   type CostsUnit,
   type ScalingCostsEntry,
@@ -15,6 +16,7 @@ import {
 import { api } from '~/trpc/react'
 import { useCostsTimeRangeContext } from '../costs-time-range-context'
 import { CostsTypeControls } from '../costs-type-controls'
+import { useCostsUnitContext } from '../costs-unit-context'
 import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
 
 const DEFAULT_SCALING_FILTERS = {
@@ -26,20 +28,26 @@ const DEFAULT_SCALING_FILTERS = {
   hostChain: undefined,
 }
 
-export function ScalingCostsTable() {
-  const { range } = useCostsTimeRangeContext()
-  const { data } = api.scaling.costs.entries.useQuery({ range })
+interface Props {
+  entries: ScalingCostsEntry[]
+}
 
+export function ScalingCostsTable(props: Props) {
+  const { range, setRange, setDisabledOptions } = useCostsTimeRangeContext()
+  const { unit } = useCostsUnitContext()
+  const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
   const [scalingFilters, setScalingFilters] = useState<ScalingFiltersState>(
     DEFAULT_SCALING_FILTERS,
   )
 
-  const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
+  const { data } = api.scaling.costs.tableData.useQuery({ range })
 
   const entries = useMemo(() => {
-    const tableEntries = data?.map((e) => mapToTableEntry(e, 'usd'))
+    const tableEntries = props.entries.map((e) =>
+      mapToTableEntry(e, data, unit),
+    )
     return tableEntries ? calculateDataByType(tableEntries, type) : []
-  }, [type, data])
+  }, [data, props.entries, type, unit])
 
   const includeFilters = useCallback(
     (entry: ScalingCostsTableEntry) => {
@@ -90,6 +98,18 @@ export function ScalingCostsTable() {
     },
   })
 
+  const onTypeChange = (type: 'total' | 'per-l2-tx') => {
+    setType(type)
+    if (type === 'per-l2-tx') {
+      if (range === '1d' || range === '7d') {
+        setRange('30d')
+      }
+      setDisabledOptions(['1d', '7d'])
+      return
+    }
+    setDisabledOptions(undefined)
+  }
+
   return (
     <div className="space-y-2">
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
@@ -99,7 +119,7 @@ export function ScalingCostsTable() {
           setState={setScalingFilters}
           showRollupsOnly={false}
         />
-        <CostsTypeControls value={type} onValueChange={setType} />
+        <CostsTypeControls value={type} onValueChange={onTypeChange} />
       </div>
       <BasicTable
         table={table}
@@ -111,20 +131,41 @@ export function ScalingCostsTable() {
 
 function mapToTableEntry(
   entry: ScalingCostsEntry,
+  data: Record<string, CostsTableData> | undefined,
   unit: CostsUnit,
 ): ScalingCostsTableEntry {
+  if (!data)
+    return {
+      ...entry,
+      data: {
+        type: 'not-available',
+        reason: 'loading',
+      },
+    }
+
+  const projectData = data[entry.id.toString()]
+  if (!projectData) {
+    return {
+      ...entry,
+      data: {
+        type: 'not-available',
+        reason: 'coming-soon',
+      },
+    }
+  }
+
   return {
     ...entry,
-    data: entry.data
-      ? {
-          ...entry.data,
-          total: entry.data[unit].total,
-          calldata: entry.data[unit].calldata,
-          blobs: entry.data[unit].blobs,
-          compute: entry.data[unit].compute,
-          overhead: entry.data[unit].overhead,
-        }
-      : undefined,
+    data: {
+      ...projectData,
+      type: 'available',
+      total: projectData[unit].total,
+      calldata: projectData[unit].calldata,
+      blobs: projectData[unit].blobs,
+      compute: projectData[unit].compute,
+      overhead: projectData[unit].overhead,
+      unit,
+    },
   }
 }
 
@@ -137,7 +178,15 @@ function calculateDataByType(
   }
 
   return entries.map((e) => {
-    if (!e.data?.txCount) return e
+    if (e.data?.type === 'not-available') return e
+    if (!e.data?.txCount)
+      return {
+        ...e,
+        data: {
+          type: 'not-available',
+          reason: 'no-tx-count',
+        },
+      }
     return {
       ...e,
       data: {

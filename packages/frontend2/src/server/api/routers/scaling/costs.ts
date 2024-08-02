@@ -1,7 +1,7 @@
 import { z } from 'zod'
 import { getCostsChart } from '~/server/features/costs/get-costs-chart'
+import { getCostsTableData } from '~/server/features/costs/get-costs-table-data'
 import { CostsTimeRange } from '~/server/features/costs/utils/range'
-import { getScalingCostsEntries } from '~/server/features/scaling/get-scaling-costs-entries'
 import { procedure, router } from '../../trpc'
 
 export const costsRouter = router({
@@ -14,13 +14,13 @@ export const costsRouter = router({
     .query(async ({ input }) => {
       return getCostsChart(input.range)
     }),
-  entries: procedure
+  tableData: procedure
     .input(
       z.object({
         range: CostsTimeRange,
       }),
     )
     .query(async ({ input }) => {
-      return getScalingCostsEntries(input.range)
+      return getCostsTableData(input.range)
     }),
 })

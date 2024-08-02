@@ -136,11 +136,7 @@ const TableCell = React.forwardRef<
 TableCell.displayName = 'TableCell'
 
 export {
-  Table,
-  TableHeader,
-  TableHeaderRow,
-  TableBody,
-  TableHead,
-  TableRow,
-  TableCell,
+  Table, TableBody, TableCell, TableHead, TableHeader,
+  TableHeaderRow, TableRow
 }
+

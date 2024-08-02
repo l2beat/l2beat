@@ -9,18 +9,16 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
 import { formatCostValue } from '../_utils/format-cost-value'
-import { type ScalingCostsTableEntry } from './table/columns'
+import { type CostsAvailableData } from './table/columns'
 
 interface CellProps {
-  data: NonNullable<ScalingCostsTableEntry['data']>
-  unit: CostsUnit
+  data: CostsAvailableData
   warning: WarningWithSentiment | undefined
 }
 
-export function CostsTotalCell({ data, unit, warning }: CellProps) {
-  const formatted = formatCostValue(data.total, unit)
+export function CostsTotalCell({ data, warning }: CellProps) {
+  const formatted = formatCostValue(data.total, data.unit)
 
   return (
     <div>

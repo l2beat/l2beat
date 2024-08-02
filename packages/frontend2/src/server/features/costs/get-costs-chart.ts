@@ -1,4 +1,3 @@
-import { layer2s } from '@l2beat/config/build/src/projects/layer2s'
 import { type AggregatedL2CostRecord } from '@l2beat/database'
 import { EthereumAddress } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
@@ -6,6 +5,7 @@ import { db } from '~/server/database'
 import { getRange } from '~/utils/range/range'
 import { type CostsChartResponse } from './types'
 import { addIfNotNull } from './utils/add-if-not-null'
+import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
 
 export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
@@ -16,14 +16,14 @@ export const SHARP_SUBMISSION_SELECTOR = '0x9b3b76cc'
 export async function getCostsChart(
   timeRange: CostsTimeRange,
 ): Promise<CostsChartResponse> {
+  const projects = getCostsProjects()
   const resolution = rangeToResolution(timeRange)
-  const activeProjects = layer2s.filter((p) => !p.isArchived)
 
   const range = getRange(timeRange, resolution)
 
   const data: AggregatedL2CostRecord[] =
     await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-      activeProjects.map((p) => p.id),
+      projects.map((p) => p.id),
       range,
     )
 

@@ -2,7 +2,9 @@
 
 import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
+import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
@@ -37,9 +39,8 @@ interface Props {
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
 export function CostsChart({ milestones, tag = 'costs' }: Props) {
-  const { range, setRange } = useCostsTimeRangeContext()
-
-  const [unit, setUnit] = useLocalStorage<CostsUnit>(`${tag}-unit`, 'usd')
+  const { range, setRange, disabledOptions } = useCostsTimeRangeContext()
+  const { unit, setUnit } = useCostsUnitContext()
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
   const { data: chart } = api.scaling.costs.chart.useQuery({
@@ -53,17 +54,19 @@ export function CostsChart({ milestones, tag = 'costs' }: Props) {
       ? formatNumber(value)
       : formatCurrency(value, unit, { showLessThanMinimum: false })
 
-  // Add useMemo
-  const columns =
-    chart?.data.map((dataPoint) => {
-      const [timestamp] = dataPoint
+  const columns = useMemo(
+    () =>
+      chart?.data.map((dataPoint) => {
+        const [timestamp] = dataPoint
 
-      return {
-        values: getValues(dataPoint, unit),
-        data: getData(dataPoint, unit),
-        milestone: mappedMilestones[timestamp],
-      }
-    }) ?? []
+        return {
+          values: getValues(dataPoint, unit),
+          data: getData(dataPoint, unit),
+          milestone: mappedMilestones[timestamp],
+        }
+      }) ?? [],
+    [chart?.data, mappedMilestones, unit],
+  )
 
   const rangeStart = chart?.data[0]?.[0] ?? 0
   const rangeEnd = chart?.data[chart.data.length - 1]?.[0] ?? 1
@@ -107,6 +110,7 @@ export function CostsChart({ milestones, tag = 'costs' }: Props) {
             { value: '90d', label: '90D' },
             { value: '180d', label: '180D' },
           ]}
+          disabled={disabledOptions}
           range={[rangeStart, rangeEnd]}
         />
         <Chart />

@@ -1,24 +1,19 @@
 import {
-  type Layer2,
   type Layer2Provider,
   type ScalingProjectCategory,
   type ScalingProjectPurpose,
   type StageConfig,
   type WarningWithSentiment,
-  layer2s,
 } from '@l2beat/config'
-import { UnixTime, notUndefined } from '@l2beat/shared-pure'
-import { type SyncStatus } from '~/types/SyncStatus'
-import { getActivityForProjects } from '../activity/get-activity-for-projects'
-import { getCostsForProjects } from '../costs/get-costs-for-projects'
-import { type LatestCostsProjectResponse } from '../costs/types'
-import { type CostsTimeRange } from '../costs/utils/range'
+import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
+import { getCostsProjects } from '../costs/utils/get-costs-projects'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/order-by-tvl'
 
 export interface ScalingCostsEntry {
   type: 'layer2'
+  id: ProjectId
   name: string
   shortName: string | undefined
   slug: string
@@ -30,43 +25,22 @@ export interface ScalingCostsEntry {
   provider: Layer2Provider | undefined
   purposes: ScalingProjectPurpose[]
   stage: StageConfig
-  data: CostsData | undefined
   costsWarning: WarningWithSentiment | undefined
 }
 
 export type CostsUnit = 'eth' | 'usd' | 'gas'
 
-interface CostsValues {
-  total: number
-  calldata: number
-  blobs: number | undefined
-  compute: number
-  overhead: number
-}
-
-export type CostsData = Record<CostsUnit, CostsValues> & {
-  txCount: number | undefined
-  syncStatus: SyncStatus
-}
-
-const UPCOMING_PROJECTS = ['paradex']
-
-export async function getScalingCostsEntries(
-  timeRange: CostsTimeRange,
-): Promise<ScalingCostsEntry[]> {
+export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
   const tvl = await getLatestTvlUsd({ type: 'layer2' })
   const implementationChange = await getImplementationChangeReport()
-  const projects = getIncluded(layer2s)
-  const projectsCosts = await getCostsForProjects(projects, timeRange)
-  const projectsActivity = await getActivityForProjects(projects, timeRange)
+  const projects = getCostsProjects()
   const orderedProjects = orderByTvl(projects, tvl)
 
   return orderedProjects
     .map((project) => {
-      const costs = projectsCosts[project.id]
-
       return {
         type: project.type,
+        id: project.id,
         name: project.display.name,
         shortName: project.display.shortName,
         slug: project.display.slug,
@@ -79,64 +53,8 @@ export async function getScalingCostsEntries(
         provider: project.display.provider,
         purposes: project.display.purposes,
         stage: project.stage,
-        data: costs
-          ? {
-              ...withTotal(costs),
-              syncStatus: getSyncStatus(costs.syncedUntil),
-              txCount: projectsActivity[project.id],
-            }
-          : undefined,
         costsWarning: project.display.costsWarning,
       }
     })
     .filter(notUndefined)
-}
-
-function getSyncStatus(syncedUntil: UnixTime) {
-  const isSynced = UnixTime.now()
-    .add(-1, 'days')
-    .add(-1, 'hours')
-    .lte(syncedUntil)
-
-  return { isSynced, syncedUntil: syncedUntil.toNumber() }
-}
-
-function withTotal(data: LatestCostsProjectResponse) {
-  return {
-    gas: {
-      ...data.gas,
-      total:
-        data.gas.overhead +
-        data.gas.calldata +
-        data.gas.compute +
-        (data.gas.blobs ?? 0),
-    },
-    eth: {
-      ...data.eth,
-      total:
-        data.eth.overhead +
-        data.eth.calldata +
-        data.eth.compute +
-        (data.eth.blobs ?? 0),
-    },
-    usd: {
-      ...data.usd,
-      total:
-        data.usd.overhead +
-        data.usd.calldata +
-        data.usd.compute +
-        (data.usd.blobs ?? 0),
-    },
-  }
-}
-
-function getIncluded(projects: Layer2[]) {
-  return projects.filter(
-    (p) =>
-      (!p.isArchived &&
-        !p.isUpcoming &&
-        (p.display.category === 'Optimistic Rollup' ||
-          p.display.category === 'ZK Rollup')) ||
-      UPCOMING_PROJECTS.includes(p.id.toString()),
-  )
 }

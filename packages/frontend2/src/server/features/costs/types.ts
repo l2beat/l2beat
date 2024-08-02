@@ -1,4 +1,4 @@
-import { type ProjectId, type UnixTime } from '@l2beat/shared-pure'
+import { type UnixTime } from '@l2beat/shared-pure'
 
 // COSTS CHART
 
@@ -36,7 +36,7 @@ export interface CostsChartResponse {
 }
 
 // LATEST COSTS
-export type LatestCostsResponse = Record<ProjectId, LatestCostsProjectResponse>
+export type LatestCostsResponse = Record<string, LatestCostsProjectResponse>
 
 export interface LatestCostsProjectResponse {
   gas: LatestCostsValues
