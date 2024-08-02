@@ -1,86 +1,21 @@
-import {
-  type Layer2Provider,
-  type Layer3Provider,
-  type ScalingProjectCategory,
-  type ScalingProjectPurpose,
-  type StageConfig,
-  type WarningWithSentiment,
-} from '@l2beat/config'
-import { type ValueWithSentiment } from '@l2beat/shared-pure'
+import { type WarningWithSentiment } from '@l2beat/config'
 import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 import { type RosetteValue } from '~/app/_components/rosette/types'
+import { type CommonScalingEntry } from './get-common-scaling-entry'
 
-export interface ScalingSummaryLayer2sEntry {
-  entryType: 'summary'
-  type: 'layer2'
-  name: string
-  shortName: string | undefined
-  slug: string
-  href: string
-  category: ScalingProjectCategory
-  provider: Layer2Provider | undefined
-  warning: string | undefined
-  redWarning: string | undefined
-  isVerified: boolean
-  showProjectUnderReview: boolean
-  hasImplementationChanged: boolean
-  isUpcoming: boolean
-  isArchived: boolean
-  isUnderReview: boolean
-  purposes: ScalingProjectPurpose[]
+export type ScalingSummaryLayer2sEntry = CommonScalingEntry & {
   risks: RosetteValue[]
   tvlData: L2TvlData | undefined
-  stage: StageConfig
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never
 }
 
-export interface ScalingSummaryLayer3sEntry {
-  entryType: 'summary'
-  type: 'layer3'
-  name: string
-  shortName: string | undefined
-  slug: string
-  href: string
-  category: ScalingProjectCategory
-  provider: Layer3Provider | undefined
-  hostChainName: string
-  warning: string | undefined
-  redWarning: string | undefined
-  isVerified: boolean
-  showProjectUnderReview: boolean
-  hasImplementationChanged: boolean
-  isUpcoming: boolean
-  isArchived: boolean
-  purposes: ScalingProjectPurpose[]
+export type ScalingSummaryLayer3sEntry = CommonScalingEntry & {
+  risks: undefined
   tvlData: L3TvlData | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
   syncStatus?: never
-}
-
-export interface ScalingDataAvailabilityEntry {
-  entryType: 'data-availability'
-  slug: string
-  name: string
-  href: string
-  shortName: string | undefined
-  type: 'layer2' | 'layer3'
-  category: ScalingProjectCategory
-  provider: Layer2Provider | Layer3Provider | undefined
-  warning: string | undefined
-  isVerified: boolean
-  purposes: ScalingProjectPurpose[]
-  stage: StageConfig | undefined
-  dataAvailability: DataAvailability
-  redWarning: string | undefined
-  showProjectUnderReview: boolean
-  hasImplementationChanged: boolean
-}
-
-type DataAvailability = {
-  layer: ValueWithSentiment<string>
-  bridge: ValueWithSentiment<string>
-  mode: string
+  hostChainName: string
 }
 
 interface L2TvlData {
