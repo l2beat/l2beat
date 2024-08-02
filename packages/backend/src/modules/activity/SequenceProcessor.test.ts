@@ -235,7 +235,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
     })
 
     it('re-processes data when from > getLatest', async () => {
-      const time = install()
+      const time = install({ shouldClearNativeTimers: true })
 
       const reportError = mockFn().returns(undefined)
       sequenceProcessor = createSequenceProcessor({
@@ -263,7 +263,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
     })
 
     it('works when processRange throws', async () => {
-      const time = install()
+      const time = install({ shouldClearNativeTimers: true })
 
       const errorMessage = 'Force-failing during tests!'
       const reportError = mockFn().returns(undefined)
