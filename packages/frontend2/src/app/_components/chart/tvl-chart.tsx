@@ -15,6 +15,7 @@ import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { useChartLoading } from './core/chart-loading-context'
+import { type LatestTvl } from '~/server/features/tvl/get-latest-tvl'
 
 interface TvlChartPointData {
   timestamp: number
@@ -25,9 +26,10 @@ interface TvlChartPointData {
 interface Props {
   milestones: Milestone[]
   tag?: string
+  latestTvl: LatestTvl
 }
 
-export function TvlChart({ milestones, tag = 'summary' }: Props) {
+export function TvlChart({ milestones, tag = 'summary', latestTvl }: Props) {
   const [timeRange, setTimeRange] = useCookieState('chartRange')
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
@@ -62,12 +64,6 @@ export function TvlChart({ milestones, tag = 'summary' }: Props) {
       }
     }) ?? []
 
-  const firstTvlRecord = columns.at(0)?.data ?? { usdValue: 0, ethValue: 0 }
-  const latestTvlRecord = columns.at(-1)?.data ?? { usdValue: 0, ethValue: 0 }
-  const tvl = latestTvlRecord[unit === 'usd' ? 'usdValue' : 'ethValue']
-  const pastTvl = firstTvlRecord[unit === 'usd' ? 'usdValue' : 'ethValue']
-  const tvlChange = Number((tvl - pastTvl) / pastTvl)
-
   return (
     <ChartProvider
       columns={columns}
@@ -86,7 +82,12 @@ export function TvlChart({ milestones, tag = 'summary' }: Props) {
       renderHoverContents={(data) => <ChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
-        <Header unit={unit} value={tvl} change={tvlChange} range={timeRange} />
+        <Header
+          unit={unit}
+          value={latestTvl.total}
+          change={latestTvl.change}
+          range={timeRange}
+        />
         <ChartTimeRangeControls
           value={timeRange}
           setValue={setTimeRange}
@@ -157,23 +158,14 @@ function Header({
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
-        {loading ? (
-          <>
-            <Skeleton className="h-9 w-[124px]" />
-            <Skeleton className="h-6 w-[119px]" />
-          </>
-        ) : (
-          <>
-            <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
-              {formatCurrency(value, unit, {
-                showLessThanMinimum: false,
-              })}
-            </p>
-            <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
-              <PercentChange value={change} /> / {tvlRangeToReadable(range)}
-            </p>
-          </>
-        )}
+        <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
+          {formatCurrency(value, unit, {
+            showLessThanMinimum: false,
+          })}
+        </p>
+        <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
+          <PercentChange value={change} /> / 7 days
+        </p>
       </div>
       <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>

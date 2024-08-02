@@ -24,22 +24,51 @@ export const getCachedLatestTvl = cache(
       getTvlProjects().filter(filter),
       '7d',
     )
-    return Object.fromEntries(
+    const projects = Object.fromEntries(
       Object.entries(tvlValues).map(([projectId, values]) => {
         const latestTimestamp = Math.max(...Object.keys(values).map(Number))
+        const oldestTimestamp = Math.min(...Object.keys(values).map(Number))
         const latestValues = values[latestTimestamp] ?? []
+        const oldestValues = values[oldestTimestamp] ?? []
         const breakdown = getTvlBreakdown(latestValues)
+        const oldBreakdown = getTvlBreakdown(oldestValues)
         return [
           projectId,
           {
-            total: Number(breakdown.total) / 100,
-            ether: Number(breakdown.ether) / 100,
-            stablecoin: Number(breakdown.stablecoin) / 100,
-            associated: Number(breakdown.associated) / 100,
+            breakdown: {
+              total: Number(breakdown.total) / 100,
+              ether: Number(breakdown.ether) / 100,
+              stablecoin: Number(breakdown.stablecoin) / 100,
+              associated: Number(breakdown.associated) / 100,
+            },
+            oldBreakdown: {
+              total: Number(oldBreakdown.total) / 100,
+              ether: Number(oldBreakdown.ether) / 100,
+              stablecoin: Number(oldBreakdown.stablecoin) / 100,
+              associated: Number(oldBreakdown.associated) / 100,
+            },
+            change:
+              (Number(breakdown.total) - Number(oldBreakdown.total)) /
+              Number(breakdown.total),
           },
         ]
       }),
     )
+
+    const total = Object.values(projects).reduce(
+      (acc, { breakdown }) => acc + breakdown.total,
+      0,
+    )
+
+    return {
+      total,
+      change:
+        Object.values(projects).reduce(
+          (acc, { oldBreakdown }) => acc + oldBreakdown.total,
+          0,
+        ) / total,
+      projects,
+    }
   },
   ['latestTvl'],
   {

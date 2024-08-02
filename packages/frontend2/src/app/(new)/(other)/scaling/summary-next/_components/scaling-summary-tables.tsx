@@ -11,10 +11,8 @@ import {
   TabsList,
   TabsTrigger,
 } from '~/app/_components/tabs'
-import { useCookieState } from '~/hooks/use-cookie-state'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
-import { api } from '~/trpc/react'
 import {
   useScalingFilter,
   useScalingFilterValues,
@@ -32,80 +30,58 @@ interface Props {
 }
 
 export function ScalingSummaryTables({ projects }: Props) {
-  const [timeRange] = useCookieState('chartRange')
   const values = useScalingFilterValues()
   const includeFilters = useScalingFilter()
-  const { data } = api.scaling.summary.useQuery({
-    range: timeRange,
-    ...(values.empty
-      ? { type: 'layer2' }
-      : {
-          type: 'projects',
-          projectIds: projects.filter(includeFilters).map((item) => item.id),
-        }),
-  })
 
   const layer2sProjects = useMemo(
     () =>
-      data
-        ? toTableRows({
-            projects: projects.filter(
-              (item) =>
-                item.type === 'layer2' &&
-                !item.isArchived &&
-                !item.isUpcoming &&
-                includeFilters(item),
-            ),
-            summaryData: data,
-            excludeAssociatedTokens: values.excludeAssociatedTokens,
-          })
-        : [],
-    [data, projects, values.excludeAssociatedTokens, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) =>
+            item.type === 'layer2' &&
+            !item.isArchived &&
+            !item.isUpcoming &&
+            includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const layer3sProjects = useMemo(
     () =>
-      data
-        ? toTableRows({
-            projects: projects.filter(
-              (item) =>
-                item.type === 'layer3' &&
-                !item.isArchived &&
-                !item.isUpcoming &&
-                includeFilters(item),
-            ),
-            summaryData: data,
-            excludeAssociatedTokens: values.excludeAssociatedTokens,
-          })
-        : [],
-    [data, projects, values.excludeAssociatedTokens, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) =>
+            item.type === 'layer3' &&
+            !item.isArchived &&
+            !item.isUpcoming &&
+            includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
   const upcomingProjects = useMemo(
     () =>
-      data
-        ? toTableRows({
-            projects: projects.filter(
-              (item) => item.isUpcoming && includeFilters(item),
-            ),
-            summaryData: data,
-            excludeAssociatedTokens: values.excludeAssociatedTokens,
-          })
-        : [],
-    [data, projects, values.excludeAssociatedTokens, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) => item.isUpcoming && includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const archivedProjects = useMemo(
     () =>
-      data
-        ? toTableRows({
-            projects: projects.filter(
-              (item) => item.isArchived && includeFilters(item),
-            ),
-            summaryData: data,
-            excludeAssociatedTokens: values.excludeAssociatedTokens,
-          })
-        : [],
-    [data, projects, values.excludeAssociatedTokens, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) => item.isArchived && includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const layer2sTable = useTable({
@@ -171,8 +147,6 @@ export function ScalingSummaryTables({ projects }: Props) {
       ],
     },
   })
-
-  if (!data) return null
 
   return (
     <div className="space-y-2">

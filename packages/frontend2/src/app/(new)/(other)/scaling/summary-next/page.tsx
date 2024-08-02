@@ -26,13 +26,13 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const tvl = await getLatestTvl({
-    type: 'all',
+  const latestTvl = await getLatestTvl({
+    type: 'layer2',
   })
 
   // This gets all the data for the table, but NOT the % change (which comes from the API)
   const projects = await getScalingSummaryEntries({
-    tvl,
+    tvl: latestTvl,
     implementationChangeReport,
     projectsVerificationStatuses,
   })
@@ -46,7 +46,7 @@ export default async function Page() {
     <HydrateClient>
       <div className="mb-20">
         <ScalingFilterContextProvider>
-          <TvlChart milestones={HOMEPAGE_MILESTONES} />
+          <TvlChart latestTvl={latestTvl} milestones={HOMEPAGE_MILESTONES} />
           <HorizontalSeparator className="my-4 md:my-6" />
           <ScalingSummaryTables {...{ projects }} />
         </ScalingFilterContextProvider>

@@ -19,22 +19,11 @@ export async function getScalingSummaryEntries({
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }) {
   const projects = [...layer2s, ...layer3s]
-  const sum = Object.entries(tvl).reduce(
-    (acc, [k, v]) => {
-      if (!projects.some((p) => p.id.toString() === k)) return acc
-      acc.total += v.total
-      acc.ether += v.ether
-      acc.stablecoin += v.stablecoin
-      acc.associated += v.associated
-      return acc
-    },
-    { total: 0, ether: 0, stablecoin: 0, associated: 0 },
-  )
   const entries = projects.map((project) => {
     const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[project.id.toString()]
-    const latestTvl = tvl[project.id.toString()]
+    const latestTvl = tvl.projects[project.id.toString()]
 
     return {
       ...getCommonScalingEntry({
@@ -43,19 +32,20 @@ export async function getScalingSummaryEntries({
         hasImplementationChanged,
       }),
       tvl: {
-        breakdown: latestTvl,
+        ...latestTvl,
         associatedTokens: project.config.associatedTokens ?? [],
         warnings: [project.display.tvlWarning].filter(notUndefined),
       },
-      marketShare:
-        (tvl[project.id.toString()]?.total ?? 0) / sum.total || undefined,
+      marketShare: latestTvl && (latestTvl.breakdown.total / tvl.total) * 100,
       risks: getL2Risks(project.riskView),
     }
   })
 
   return orderByTvl(
     entries,
-    Object.fromEntries(Object.entries(tvl).map(([k, v]) => [k, v.total])),
+    Object.fromEntries(
+      Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
+    ),
   )
 }
 

@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import { type KnownCookieName, type KnownCookieValue } from '~/consts/cookies'
 import { getCookie, setCookie } from '~/utils/cookies/client'
 
-type CookieEventDetails = {
+type CookieEvent = {
   name: KnownCookieName
   value: KnownCookieValue<KnownCookieName>
 }
@@ -22,33 +22,33 @@ export function useCookieState<Name extends KnownCookieName>(
   )
 
   useEffect(() => {
-    setCookie(name, state)
-  }, [name, state])
+    const listener = (event: Event) => {
+      console.log('event', event)
+      if (!(event instanceof CustomEvent)) return
 
-  useEffect(() => {
-    function handleCookieChange(event: Event) {
-      if (event instanceof CustomEvent) {
-        const cookieEvent = event as CustomEvent<CookieEventDetails>
-        const { name: changedName, value } = cookieEvent.detail
-        if (changedName === name) {
-          setState(value)
-        }
+      const cookieEvent = event as CustomEvent<CookieEvent>
+
+      if (cookieEvent.detail.name === name) {
+        setState(cookieEvent.detail.value)
       }
     }
 
-    window.addEventListener('cookieChange', handleCookieChange)
+    document.addEventListener('cookie', listener, true)
 
     return () => {
-      window.removeEventListener('cookieChange', handleCookieChange)
+      document.removeEventListener('cookie', listener)
     }
   }, [name])
 
   return [
     state,
-    (value) => {
-      window.dispatchEvent(
-        new CustomEvent<CookieEventDetails>('cookieChange', {
-          detail: { name, value },
+    (state) => {
+      document.dispatchEvent(
+        new CustomEvent('cookie', {
+          detail: {
+            name,
+            value: state,
+          },
         }),
       )
     },
