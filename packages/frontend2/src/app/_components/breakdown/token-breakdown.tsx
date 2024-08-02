@@ -1,9 +1,9 @@
-import React from 'react'
-import { cn } from '~/utils/cn'
-import { Breakdown } from './breakdown'
 import { type WarningWithSentiment } from '@l2beat/config'
-import { WarningBar } from '../warning-bar'
+import React from 'react'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { cn } from '~/utils/cn'
+import { WarningBar } from '../warning-bar'
+import { Breakdown } from './breakdown'
 
 export interface TokenBreakdownProps {
   associated: number

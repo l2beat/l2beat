@@ -20,11 +20,8 @@ export function getLatestTvlUsd(
 
 export const getCachedLatestTvlUsd = cache(
   async ({
-    excludeAssociatedTokens,
     ...filterParams
-  }: TvlProjectFilter & { excludeAssociatedTokens: boolean }): Promise<
-    Record<ProjectId, number>
-  > => {
+  }: TvlProjectFilter): Promise<Record<ProjectId, number>> => {
     const filter = createTvlProjectsFilter(filterParams)
     const tvlValues = await getTvlValuesForProjects(
       getTvlProjects().filter(filter),
@@ -35,7 +32,7 @@ export const getCachedLatestTvlUsd = cache(
         const latestTimestamp = Math.max(...Object.keys(values).map(Number))
         const latestValues = sumValuesPerSource(values[latestTimestamp] ?? [], {
           forTotal: true,
-          excludeAssociatedTokens,
+          excludeAssociatedTokens: false,
         })
         const sum =
           latestValues.native + latestValues.canonical + latestValues.external

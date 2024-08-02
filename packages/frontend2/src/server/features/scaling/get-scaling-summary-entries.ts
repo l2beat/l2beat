@@ -1,14 +1,13 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import {
-  notUndefined,
   type ProjectsVerificationStatuses,
+  notUndefined,
 } from '@l2beat/shared-pure'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { type ImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { type LatestTvl } from '../tvl/get-latest-tvl'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { formatPercent } from '~/utils/get-percentage-change'
 
 export async function getScalingSummaryEntries({
   tvl,

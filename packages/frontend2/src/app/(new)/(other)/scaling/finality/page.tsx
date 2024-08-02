@@ -24,7 +24,7 @@ export default async function Page() {
 
   const [finality, tvlForOrdering, icReport] = await Promise.all([
     getFinality(configurations),
-    getLatestTvlUsd({ type: 'layer2', excludeAssociatedTokens: false }),
+    getLatestTvlUsd({ type: 'layer2' }),
     getImplementationChangeReport(),
   ])
 

@@ -12,10 +12,7 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const tvl = await getLatestTvlUsd({
-    type: 'all',
-    excludeAssociatedTokens: false,
-  })
+  const tvl = await getLatestTvlUsd({ type: 'all' })
   const items = await getScalingDaEntries(tvl)
 
   return (
