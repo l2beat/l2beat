@@ -1,10 +1,5 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import {
-  EscrowEntry,
-  TotalSupplyEntry,
-  UnixTime,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { EscrowEntry, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
 import { AmountRecord } from '@l2beat/database'
@@ -18,9 +13,9 @@ import {
   MulticallResponse,
 } from '../../../peripherals/multicall/types'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { Configuration } from '../../../tools/uif/multi/types'
+import { ChainAmountConfig } from '../indexers/types'
 
-export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
+type Config = ChainAmountConfig & { id: string }
 
 export interface AmountServiceDependencies {
   readonly rpcClient: RpcClient
@@ -36,11 +31,11 @@ export class AmountService {
   public async fetchAmounts(
     timestamp: UnixTime,
     blockNumber: number,
-    configurations: Configuration<ChainAmountConfig>[],
+    configurations: Config[],
   ): Promise<(AmountRecord & { type: 'escrow' | 'totalSupply' })[]> {
     const [forRpc, forMulticall] = partition(
       configurations,
-      (c): c is Configuration<EscrowEntry> =>
+      (c): c is EscrowEntry & { id: string } =>
         isNotSupportedByMulticall(c, this.$.multicallClient, blockNumber),
     )
 
@@ -58,19 +53,19 @@ export class AmountService {
   }
 
   private async fetchWithRpc(
-    configurations: Configuration<EscrowEntry>[],
+    configurations: (EscrowEntry & { id: string })[],
     blockNumber: number,
   ) {
     return await Promise.all(
       configurations.map(async (configuration) => {
         const amount = await this.$.rpcClient.getBalance(
-          configuration.properties.escrowAddress,
+          configuration.escrowAddress,
           blockNumber,
         )
 
         return {
           configId: configuration.id,
-          type: configuration.properties.type,
+          type: configuration.type,
           amount: amount.toBigInt(),
         }
       }),
@@ -78,7 +73,7 @@ export class AmountService {
   }
 
   private async fetchWithMulticall(
-    configurations: Configuration<ChainAmountConfig>[],
+    configurations: Config[],
     blockNumber: number,
   ) {
     if (configurations.length === 0) {
@@ -104,28 +99,28 @@ export class AmountService {
         )
         return {
           configId: configurations[i].id,
-          type: configurations[i].properties.type,
+          type: configurations[i].type,
           amount: 0n,
         }
       }
 
       return {
         configId: configurations[i].id,
-        type: configurations[i].properties.type,
+        type: configurations[i].type,
         amount,
       }
     })
   }
 
   encodeForMulticall(
-    { properties }: Configuration<ChainAmountConfig>,
+    configuration: Config,
     blockNumber: number,
   ): MulticallRequest {
-    switch (properties.type) {
+    switch (configuration.type) {
       case 'totalSupply':
-        return erc20Codec.totalSupply.encode(properties.address)
+        return erc20Codec.totalSupply.encode(configuration.address)
       case 'escrow':
-        if (properties.address === 'native') {
+        if (configuration.address === 'native') {
           // choose multicall address based on block number
           const multicallAddress =
             this.$.multicallClient.getMulticallAddressAt(blockNumber)
@@ -134,47 +129,44 @@ export class AmountService {
 
           return nativeAssetCodec.balance.encode(
             multicallAddress,
-            properties.escrowAddress,
+            configuration.escrowAddress,
           )
         }
         return erc20Codec.balance.encode(
-          properties.escrowAddress,
-          properties.address,
+          configuration.escrowAddress,
+          configuration.address,
         )
       default:
-        assertUnreachable(properties)
+        assertUnreachable(configuration)
     }
   }
 
-  decodeForMulticall(
-    { properties }: Configuration<ChainAmountConfig>,
-    response: MulticallResponse,
-  ) {
+  decodeForMulticall(configuration: Config, response: MulticallResponse) {
     if (!response.success) {
       return
     }
-    switch (properties.type) {
+    switch (configuration.type) {
       case 'totalSupply':
         return erc20Codec.totalSupply.decode(response.data)
       case 'escrow':
-        if (properties.address === 'native') {
+        if (configuration.address === 'native') {
           return nativeAssetCodec.balance.decode(response.data)
         }
         return erc20Codec.balance.decode(response.data)
       default:
-        assertUnreachable(properties)
+        assertUnreachable(configuration)
     }
   }
 }
 
 function isNotSupportedByMulticall(
-  configuration: Configuration<ChainAmountConfig>,
+  configuration: Config,
   multicallClient: MulticallClient,
   blockNumber: number,
-): configuration is Configuration<EscrowEntry> {
+): configuration is EscrowEntry & { id: string } {
   return (
-    configuration.properties.type === 'escrow' &&
-    configuration.properties.address === 'native' &&
+    configuration.type === 'escrow' &&
+    configuration.address === 'native' &&
     !multicallClient.isNativeBalanceSupported(blockNumber)
   )
 }

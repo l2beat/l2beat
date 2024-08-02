@@ -4,12 +4,15 @@ import {
   CirculatingSupplyEntry,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
+  EscrowEntry,
+  PremintedEntry,
   PriceConfigEntry,
   ProjectId,
+  TotalSupplyEntry,
 } from '@l2beat/shared-pure'
 import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
 import { ManagedMultiIndexerOptions } from '../../../tools/uif/multi/types'
-import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { AmountService } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
 import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { PriceService } from '../services/PriceService'
@@ -23,6 +26,8 @@ export interface BlockTimestampIndexerDeps
   chain: string
   syncOptimizer: SyncOptimizer
 }
+
+export type ChainAmountConfig = EscrowEntry | TotalSupplyEntry
 
 export interface ChainAmountIndexerDeps
   extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
@@ -45,6 +50,15 @@ export interface CirculatingSupplyIndexerDeps
   db: Database
   syncOptimizer: SyncOptimizer
   configuration: CirculatingSupplyEntry
+}
+
+export interface PremintedIndexerDeps
+  extends Omit<ManagedChildIndexerOptions, 'name'> {
+  circulatingSupplyService: CirculatingSupplyService
+  amountService: AmountService
+  db: Database
+  syncOptimizer: SyncOptimizer
+  configuration: PremintedEntry
 }
 
 export interface ValueIndexerDeps

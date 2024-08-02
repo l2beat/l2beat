@@ -6,8 +6,7 @@ import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { ChainAmountConfig } from '../services/AmountService'
-import { ChainAmountIndexerDeps } from './types'
+import { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
@@ -36,7 +35,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     const amounts = await this.$.amountService.fetchAmounts(
       timestamp,
       blockNumber,
-      configurations,
+      configurations.map((c) => ({ id: c.id, ...c.properties })),
     )
 
     this.logger.info('Fetched amounts for timestamp', {
