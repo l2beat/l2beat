@@ -37,7 +37,8 @@ export const worldcoinsmtb: ZkCatalogProject = {
           '0xFC1c26E964F791f81a33F49D91f79456891AA1c1',
         ),
         chainId: ChainId.ETHEREUM,
-        verified: 'no',
+        verified: 'yes',
+        performedBy: PERFORMED_BY.l2beat,
         subVerifiers: [
           {
             name: 'RegisterCircuitSize600',
