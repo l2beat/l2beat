@@ -29,15 +29,10 @@ export interface TotalCellProps {
 }
 
 export function TotalCell(data: TotalCellProps) {
-  const values = useScalingFilterValues()
-
   const tvlWarnings = data.tvlWarnings ?? []
   const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
 
-  const totalTvl =
-    (values.excludeAssociatedTokens
-      ? data.breakdown.total
-      : data.breakdown.total - data.breakdown.associated) / 100
+  const totalTvl = data.breakdown.total / 100
 
   return (
     <Tooltip>

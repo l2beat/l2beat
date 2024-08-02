@@ -57,9 +57,10 @@ export function ScalingSummaryTables({ projects }: Props) {
                 includeFilters(item),
             ),
             summaryData: data,
+            excludeAssociatedTokens: values.excludeAssociatedTokens,
           })
         : [],
-    [projects, includeFilters, data],
+    [data, projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const layer3sProjects = useMemo(
@@ -74,9 +75,10 @@ export function ScalingSummaryTables({ projects }: Props) {
                 includeFilters(item),
             ),
             summaryData: data,
+            excludeAssociatedTokens: values.excludeAssociatedTokens,
           })
         : [],
-    [projects, includeFilters, data],
+    [data, projects, values.excludeAssociatedTokens, includeFilters],
   )
   const upcomingProjects = useMemo(
     () =>
@@ -86,9 +88,10 @@ export function ScalingSummaryTables({ projects }: Props) {
               (item) => item.isUpcoming && includeFilters(item),
             ),
             summaryData: data,
+            excludeAssociatedTokens: values.excludeAssociatedTokens,
           })
         : [],
-    [projects, includeFilters, data],
+    [data, projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const archivedProjects = useMemo(
@@ -99,9 +102,10 @@ export function ScalingSummaryTables({ projects }: Props) {
               (item) => item.isArchived && includeFilters(item),
             ),
             summaryData: data,
+            excludeAssociatedTokens: values.excludeAssociatedTokens,
           })
         : [],
-    [projects, includeFilters, data],
+    [data, projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const layer2sTable = useTable({

@@ -1,8 +1,13 @@
 'use client'
 
-import { type Dispatch, type SetStateAction, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { type KnownCookieName, type KnownCookieValue } from '~/consts/cookies'
 import { getCookie, setCookie } from '~/utils/cookies/client'
+
+type CookieEventDetails = {
+  name: KnownCookieName
+  value: KnownCookieValue<KnownCookieName>
+}
 
 /**
  * Use state that is persisted in a cookie.
@@ -11,7 +16,7 @@ import { getCookie, setCookie } from '~/utils/cookies/client'
  */
 export function useCookieState<Name extends KnownCookieName>(
   name: Name,
-): [KnownCookieValue<Name>, Dispatch<SetStateAction<KnownCookieValue<Name>>>] {
+): [KnownCookieValue<Name>, (value: KnownCookieValue<Name>) => void] {
   const [state, setState] = useState<KnownCookieValue<Name>>(
     getCookie<Name>(name),
   )
@@ -20,5 +25,32 @@ export function useCookieState<Name extends KnownCookieName>(
     setCookie(name, state)
   }, [name, state])
 
-  return [state, setState]
+  useEffect(() => {
+    function handleCookieChange(event: Event) {
+      if (event instanceof CustomEvent) {
+        const cookieEvent = event as CustomEvent<CookieEventDetails>
+        const { name: changedName, value } = cookieEvent.detail
+        if (changedName === name) {
+          setState(value)
+        }
+      }
+    }
+
+    window.addEventListener('cookieChange', handleCookieChange)
+
+    return () => {
+      window.removeEventListener('cookieChange', handleCookieChange)
+    }
+  }, [name])
+
+  return [
+    state,
+    (value) => {
+      window.dispatchEvent(
+        new CustomEvent<CookieEventDetails>('cookieChange', {
+          detail: { name, value },
+        }),
+      )
+    },
+  ]
 }

@@ -81,31 +81,30 @@ export const scalingArchivedColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor(
-    (e) => ({ breakdown: e.latestTvl, change: e.tvlChange }),
-    {
-      id: 'total',
-      header: 'Total',
-      cell: (ctx) => {
-        const value = ctx.getValue()
-        if (!value.breakdown) {
-          return <UpcomingBadge />
-        }
+  columnHelper.accessor('tvl', {
+    id: 'total',
+    header: 'Total',
+    cell: (ctx) => {
+      const value = ctx.getValue()
+      if (!value.breakdown) {
+        return <UpcomingBadge />
+      }
 
-        return (
-          <TotalCell
-            breakdown={value.breakdown}
-            change={value.change ?? undefined}
-          />
-        )
-      },
-      meta: {
-        headClassName: 'justify-end',
-        cellClassName: 'justify-end',
-        tooltip:
-          'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
-      },
+      return (
+        <TotalCell
+          associatedTokenSymbols={value.associatedTokens}
+          tvlWarnings={value.warnings}
+          breakdown={value.breakdown}
+          change={value.change ?? undefined}
+        />
+      )
     },
-  ),
+    meta: {
+      headClassName: 'justify-end',
+      cellClassName: 'justify-end',
+      tooltip:
+        'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
+    },
+  }),
   columnHelper.accessor('provider', {}),
 ]

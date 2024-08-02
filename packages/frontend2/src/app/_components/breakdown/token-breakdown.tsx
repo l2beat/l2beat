@@ -62,7 +62,7 @@ export function TokenBreakdownTooltipContent({
       value: stablecoin,
       className: 'dark:bg-teal-400 bg-teal-500',
     },
-    { title: 'Other', value: other, className: 'bg-sky-600' },
+    { title: 'Other', value: other, className: 'bg-sky-600 dark:bg-sky-600' },
   ]
   const total = associated + ether + stablecoin + other
   return (
@@ -79,12 +79,15 @@ export function TokenBreakdownTooltipContent({
                   <div
                     role="img"
                     aria-label="Square icon"
-                    className="size-3 rounded bg-rose-500 dark:bg-rose-700"
+                    className={cn(
+                      'size-3 rounded bg-rose-500 dark:bg-rose-700',
+                      v.className,
+                    )}
                   ></div>
                   <span>{v.title}</span>
                 </span>
                 <span className="font-semibold">
-                  {(v.value / total).toFixed(2)}%
+                  {((v.value / total) * 100).toFixed(2)}%
                 </span>
               </div>
             ),
