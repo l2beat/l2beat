@@ -233,6 +233,13 @@ export const badges = {
     },
     type: BadgeType.Infra,
   },
+  ElasticChain: {
+    display: {
+      name: 'Part of the Elastic Chain',
+      description: 'The project is part of the Elastic Chain',
+    },
+    type: BadgeType.Infra,
+  },
   // Stack/forks
   OPStack: {
     display: {
