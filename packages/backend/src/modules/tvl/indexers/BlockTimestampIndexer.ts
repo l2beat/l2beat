@@ -6,12 +6,10 @@ import { BlockTimestampIndexerDeps } from './types'
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
   constructor(private readonly $: BlockTimestampIndexerDeps) {
-    const logger = $.logger.tag($.tag)
-    const name = 'block_timestamp_indexer'
     super({
       ...$,
-      name,
-      logger,
+      name: 'block_timestamp_indexer',
+      tag: $.chain,
       updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
       configHash: $.minHeight.toString(),
     })

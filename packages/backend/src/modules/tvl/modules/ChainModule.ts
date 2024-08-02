@@ -115,7 +115,6 @@ function createChainModule(
 
   const blockTimestampIndexer = new BlockTimestampIndexer({
     logger,
-    tag: chain,
     parents: [hourlyIndexer],
     minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
     indexerService,
@@ -159,7 +158,6 @@ function createChainModule(
 
   const chainAmountIndexer = new ChainAmountIndexer({
     logger,
-    tag: chain,
     parents: [blockTimestampIndexer],
     indexerService,
     configurations,
@@ -197,7 +195,6 @@ function createChainModule(
       dataSource: chain,
       syncOptimizer,
       parents,
-      tag: `${project}_${chain}`,
       indexerService,
       logger,
       minHeight,

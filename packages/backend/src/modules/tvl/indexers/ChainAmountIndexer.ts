@@ -10,9 +10,12 @@ import { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
-    const logger = $.logger.tag($.chain)
-    const name = 'chain_amount_indexer'
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({
+      ...$,
+      name: 'chain_amount_indexer',
+      tag: $.chain,
+      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+    })
   }
 
   override async multiUpdate(

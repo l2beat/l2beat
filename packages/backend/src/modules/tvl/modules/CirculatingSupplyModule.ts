@@ -48,7 +48,6 @@ export function createCirculatingSupplyModule(
   const indexers = circulatingSupplies.map((circulatingSupply) => {
     const indexer = new CirculatingSupplyIndexer({
       logger,
-      tag: circulatingSupply.coingeckoId.toString(),
       parents: [hourlyIndexer],
       minHeight: circulatingSupply.sinceTimestamp.toNumber(),
       indexerService,
@@ -96,7 +95,6 @@ export function createCirculatingSupplyModule(
       dataSource: 'coingecko',
       syncOptimizer,
       parents,
-      tag: `${project}_coingecko`,
       indexerService,
       logger,
       minHeight,

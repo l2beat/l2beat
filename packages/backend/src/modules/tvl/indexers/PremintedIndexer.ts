@@ -10,12 +10,10 @@ export class PremintedIndexer extends ManagedChildIndexer {
   private readonly configurationId: string
 
   constructor(private readonly $: PremintedIndexerDeps) {
-    const logger = $.logger.tag($.configuration.address.toString())
-    const name = 'preminted_indexer'
     super({
       ...$,
-      name,
-      logger,
+      name: 'preminted_indexer',
+      tag: $.configuration.address.toString(),
       updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
       configHash: $.minHeight.toString(),
     })

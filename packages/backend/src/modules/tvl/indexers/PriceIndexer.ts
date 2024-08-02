@@ -9,9 +9,12 @@ import { PriceIndexerDeps } from './types'
 
 export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry> {
   constructor(private readonly $: PriceIndexerDeps) {
-    const logger = $.logger.tag($.coingeckoId.toString())
-    const name = 'price_indexer'
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({
+      ...$,
+      name: 'price_indexer',
+      tag: $.coingeckoId.toString(),
+      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+    })
   }
 
   override async multiUpdate(

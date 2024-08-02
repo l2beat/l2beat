@@ -15,11 +15,12 @@ export class ValueIndexer extends ManagedChildIndexer {
   private readonly priceConfigIds: Map<AssetId, PriceId>
 
   constructor(private readonly $: ValueIndexerDeps) {
-    const logger = $.logger.tag($.tag)
-    const name = 'value_indexer'
-    const configHash = getValuesConfigHash($.amountConfigs, $.priceConfigs)
-
-    super({ ...$, name, logger, configHash })
+    super({
+      ...$,
+      name: 'value_indexer',
+      tag: `${$.project}_${$.dataSource}`,
+      configHash: getValuesConfigHash($.amountConfigs, $.priceConfigs),
+    })
 
     this.amountConfigs = getAmountConfigs($.amountConfigs)
     this.priceConfigIds = getPriceConfigIds($.priceConfigs)

@@ -8,12 +8,10 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
   private readonly configurationId: string
 
   constructor(private readonly $: CirculatingSupplyIndexerDeps) {
-    const logger = $.logger.tag($.configuration.coingeckoId.toString())
-    const name = 'circulating_supply_indexer'
     super({
       ...$,
-      name,
-      logger,
+      name: 'circulating_supply_indexer',
+      tag: $.configuration.coingeckoId.toString(),
       updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
       configHash: $.minHeight.toString(),
     })
