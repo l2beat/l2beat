@@ -1,8 +1,8 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
-import { getTvlBreakdown } from './get-tvl-breakdown'
 import { type ValueRecord } from '@l2beat/database'
+import { getTvlBreakdown } from './get-tvl-breakdown'
 
 describe(getTvlBreakdown.name, () => {
   it('correctly calculates the breakdown from ValueRecords', () => {

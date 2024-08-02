@@ -2,13 +2,13 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { getTvlBreakdown } from './get-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import {
   type TvlProjectFilter,
   createTvlProjectsFilter,
 } from './project-filter-utils'
-import { getTvlBreakdown } from './get-tvl-breakdown'
 
 export function getLatestTvl(
   ...parameters: Parameters<typeof getCachedLatestTvl>
