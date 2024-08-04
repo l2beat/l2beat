@@ -2339,6 +2339,16 @@
   ],
   "mantapacific": [
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",
