@@ -1,3 +1,106 @@
+Generated with discovered.json: 0x98bca27d8f15e7eb491b21bbda22a60aa8152474
+
+# Diff at Sun, 04 Aug 2024 10:19:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20432548
+- current block number: 20454546
+
+## Description
+
+All signers of the ManyChainMultiSig are moved from group 0 threshold 4 to group 1 with treshold 4. Group 1 has group 0 (threshold 1) as a parent so currently there is no change to the net threshold / permissions. See this explanation of the group structure below:
+copied from the contract source:
+```
+    // Signing groups are arranged in a tree. Each group is an interior node and has its own quorum.
+    // Signers are the leaves of the tree. A signer/leaf node is successful iff it furnishes a valid
+    // signature. A group/interior node is successful iff a quorum of its children are successful.
+    // setRoot succeeds only if the root group is successful.
+    // Here is an example:
+    //
+    //                    ┌──────┐
+    //                 ┌─►│2-of-3│◄───────┐
+    //                 │  └──────┘        │
+    //                 │        ▲         │
+    //                 │        │         │
+    //              ┌──┴───┐ ┌──┴───┐ ┌───┴────┐
+    //          ┌──►│1-of-2│ │2-of-2│ │signer A│
+    //          │   └──────┘ └──────┘ └────────┘
+    //          │       ▲      ▲  ▲
+    //          │       │      │  │     ┌──────┐
+    //          │       │      │  └─────┤1-of-2│◄─┐
+    //          │       │      │        └──────┘  │
+    //  ┌───────┴┐ ┌────┴───┐ ┌┴───────┐ ▲        │
+    //  │signer B│ │signer C│ │signer D│ │        │
+    //  └────────┘ └────────┘ └────────┘ │        │
+    //                                   │        │
+    //                            ┌──────┴─┐ ┌────┴───┐
+    //                            │signer E│ │signer F│
+    //                            └────────┘ └────────┘
+    //
+    // - If signers [A, B] sign, they can set a root.
+    // - If signers [B, D, E] sign, they can set a root.
+    // - If signers [B, D, E, F] sign, they can set a root. (Either E's or F's signature was
+    //   superfluous.)
+    // - If signers [B, C, D] sign, they cannot set a root, because the 2-of-2 group on the second
+    //   level isn't successful and therefore the root group isn't successful either.
+    //
+    // To map this tree to a Config, we:
+    // - create an entry in signers for each signer (sorted by address in ascending order)
+    // - assign the root group to index 0 and have it be its own parent
+    // - assign an index to each non-root group, such that each group's parent has a lower index
+    //   than the group itself
+    // For example, we could transform the above tree structure into:
+    // groupQuorums = [2, 1, 2, 1] + [0, 0, ...] (rightpad with 0s to NUM_GROUPS)
+    // groupParents = [0, 0, 0, 2] + [0, 0, ...] (rightpad with 0s to NUM_GROUPS)
+    // and assuming that address(A) < address(C) < address(E) < address(F) < address(D) < address(B)
+    // signers = [
+    //    {addr: address(A), index: 0, group: 0}, {addr: address(C), index: 1, group: 1},
+    //    {addr: address(E), index: 2, group: 3}, {addr: address(F), index: 3, group: 3},
+    //    {addr: address(D), index: 4, group: 2}, {addr: address(B), index: 5, group: 1},
+    //  ]
+```
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) {
+    +++ description: None
+      values.getConfig.signers.8.group:
+-        0
++        1
+      values.getConfig.signers.7.group:
+-        0
++        1
+      values.getConfig.signers.6.group:
+-        0
++        1
+      values.getConfig.signers.5.group:
+-        0
++        1
+      values.getConfig.signers.4.group:
+-        0
++        1
+      values.getConfig.signers.3.group:
+-        0
++        1
+      values.getConfig.signers.2.group:
+-        0
++        1
+      values.getConfig.signers.1.group:
+-        0
++        1
+      values.getConfig.signers.0.group:
+-        0
++        1
+      values.getConfig.groupQuorums.1:
+-        0
++        4
+      values.getConfig.groupQuorums.0:
+-        4
++        1
+    }
+```
+
 Generated with discovered.json: 0xddaf5ba394a864bbb9350766a2e948b26307fdbe
 
 # Diff at Thu, 01 Aug 2024 08:38:09 GMT:
