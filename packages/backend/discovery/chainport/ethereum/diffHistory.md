@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xfc2819bb1373d8011d711450653b32f5bd973760
+
+# Diff at Sun, 04 Aug 2024 09:59:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20420404
+- current block number: 20454449
+
+## Description
+
+The bridge was frozen by EOA (maintainer role) and unfrozen through a proposal.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        57
++        59
+    }
+```
+
 Generated with discovered.json: 0x3c024b87baed4c457cb832b6529c8aeaaab5fc41
 
 # Diff at Tue, 30 Jul 2024 15:56:41 GMT:
