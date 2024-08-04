@@ -41,10 +41,43 @@ export const immutableXDac = {
   chain: ChainId.ETHEREUM,
   requiredMembers: committee.minSigners,
   totalMembers: committee.accounts.length,
-  // FIXME
   transactionDataType: DacTransactionDataType.StateDiffs,
   members: {
-    type: 'unknown',
+    type: 'public',
+    list: [
+      {
+        name: "Immutable",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "StarkWare",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "Deversifi",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "Consensys",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "Nethermind",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "Iqlusion",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "Infura",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: "Cephalopod",
+        href:'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      }
+    ],
   },
   usedIn: toUsedInProject([immutablex]),
   risks: {
