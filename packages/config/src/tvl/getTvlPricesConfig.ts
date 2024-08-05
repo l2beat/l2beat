@@ -29,6 +29,7 @@ export function getTvlPricesConfig(
       chain: chain.name,
       sinceTimestamp,
       coingeckoId: token.coingeckoId,
+      untilTimestamp: token.untilTimestamp,
     })
   }
 

@@ -61,6 +61,7 @@ import { kroma } from './kroma'
 import { lambda } from './lambda'
 import { layer2finance } from './layer2finance'
 import { layer2financezk } from './layer2financezk'
+import { layerai } from './layerai'
 import { lens } from './lens'
 import { linea } from './linea'
 import { lisk } from './lisk'
@@ -209,6 +210,7 @@ export const layer2s: Layer2[] = [
   kinto,
   kroma,
   lambda,
+  layerai,
   layer2finance,
   layer2financezk,
   lens,

@@ -134,7 +134,7 @@ export const nova: Layer2 = orbitStackL2({
   chainConfig: {
     name: 'nova',
     chainId: 42170,
-    explorerUrl: 'https://nova.arbiscan.io/',
+    explorerUrl: 'https://nova.arbiscan.io',
     explorerApi: {
       url: 'https://api-nova.arbiscan.io/api',
       type: 'etherscan',

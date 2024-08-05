@@ -14,7 +14,8 @@
   },
   "overrides": {
     "WorldIDIdentityManagerV2": {
-      "ignoreMethods": ["proxiableUUID", "queryRoot"]
+      "ignoreMethods": ["proxiableUUID", "queryRoot"],
+      "ignoreInWatchMode": ["latestRoot"]
     },
     "WLD token": {
       "ignoreInWatchMode": ["totalSupply"]

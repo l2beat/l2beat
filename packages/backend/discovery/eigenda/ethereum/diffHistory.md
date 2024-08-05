@@ -1,3 +1,46 @@
+Generated with discovered.json: 0x012e5a445d7bc77ae4e992083f1a0ef924afe1ff
+
+# Diff at Sun, 04 Aug 2024 10:05:09 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20382262
+- current block number: 20454476
+
+## Description
+
+This eigenDAServiceManager implementation upgrade prepared for the ability of AVSs to reward stakers and operators. Apart from that, only formatting and abstraction changes:
+- New `ServiceManagerBaseStorage` abstract contract (moved out from `ServiceManagerBase`)
+- New `createAVSRewardsSubmission` function and `onlyRewardsInitiator` modifier to call it: This allows AVSs to reward stakers and operators (https://www.blog.eigenlayer.xyz/coming-soon-avs-rewards-and-eigen-programmatic-incentives/)
+- `IServiceManagerUI` abstracted out of `IServiceManager`
+
+## Watched changes
+
+```diff
+    contract eigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      values.$implementation:
+-        "0xCDFFF07d5b8AcdAd13607615118a2e65030f5be1"
++        "0x0D2C5FD4Bb956cDD48A23fC3Ef77a768a5cDbAf7"
+      values.rewardsInitiator:
++        "0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/GnosisSafe/GnosisSafe.sol       | 952 +++++++++++++++++++++
+ .../.flat/GnosisSafe/GnosisSafeProxy.p.sol         |  34 +
+ .../EigenDAServiceManager.sol                      | 362 ++++++--
+ 3 files changed, 1257 insertions(+), 91 deletions(-)
+```
+
 Generated with discovered.json: 0x63bf2f7363f3c48e38662a16ef1b0850ee65cfe0
 
 # Diff at Tue, 30 Jul 2024 11:11:45 GMT:
