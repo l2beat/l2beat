@@ -14,12 +14,13 @@
     "0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B": "StakingInfo",
     "0x401F6c983eA34274ec46f84D70b31C151321188b": "DepositManager",
     "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287": "RootChain",
+    "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": "RootChainInitialImplementation",
     "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
     "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl",
     "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
     "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
-    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Predicate",
+    "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf": "ERC20Bridge",
     "0x9923263fA127b3d1484cFD649df8f1831c2A74e4": "MintableERC20Predicate",
     "0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4": "ERC20EscrowPredicate",
     "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5": "ERC20MintBurnPredicate",
@@ -40,7 +41,8 @@
     "0x10ebE6EC94922F1c213E4C363C3BB66D4A9E9d35": "CustomPredicate",
     "0x1906fd9c4AC440561F7197Da0A4BD2E88DF5fA70": "Aavegotchi",
     "0x09305998a531fAde369EBE30aDF868c96A34e813": "DecentralandCollection",
-    "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7": "RootSyncer"
+    "0x6566115bC9Aa71f8DbC2004A656B5956C55726a7": "RootSyncer",
+    "0xDF74156420Bd57ab387B195ed81EcA36F9fABAca": "ExitNFT"
   },
   "overrides": {
     "InstaAaveV2": {
@@ -122,6 +124,14 @@
       "ignoreMethods": ["tokenByIndex"]
     },
     "RootChain": {
+      "fields": {
+        "constructorArgs": {
+          "handler": {
+            "type": "constructorArgs",
+            "nameArgs": true
+          }
+        }
+      },
       "ignoreMethods": ["headerBlocks"],
       "ignoreInWatchMode": [
         "_nextHeaderBlock",
@@ -131,6 +141,47 @@
     },
     "PolygonMultisig": {
       "ignoreInWatchMode": ["nonce"]
+    },
+    "RootChainInitialImplementation": {
+      "ignoreDiscovery": true
+    },
+    "StakeManager": {
+      "ignoreMethods": ["getValidatorContract", "delegatedAmount", "isValidator", "latestSignerUpdateEpoch", "signers",
+      "validatorAuction", "validators", "validatorStake", "validatorStateChanges", "accountStateRoot"],
+      "ignoreInWatchMode": [
+        "currentEpoch", 
+        "currentValidatorSetTotalStake",
+        "epoch",
+        "rewardPerStake",
+        "totalRewardsLiquidated",
+        "totalStaked",
+        "validatorState"
+        ],
+    },
+    "StakingInfo": {
+      "ignoreMethods": [
+        "getValidatorContractAddress",
+        "totalValidatorStake",
+        "validatorNonce"
+      ]
+    },
+    "StakeManagerExtension": {
+      "ignoreMethods": [
+        "latestSignerUpdateEpoch",
+        "validatorAuction",
+        "validators",
+        "validatorStateChanges"
+      ]
+    },
+    "ExitNFT": {
+      "ignoreMethods": [
+        "exists"
+      ]
+    },
+    "ValidatorShareImpl":  {
+      "ignoreMethods": [
+        "getRewardPerShare"
+      ]
     }
   }
 }
