@@ -1,6 +1,6 @@
 # @l2beat/frontend2
 
-The dynamic Next.js frontend that will be the new face of L2BEAT.
+The dynamic Next.js frontend will be the new face of L2BEAT.
 
 ## Setup
 

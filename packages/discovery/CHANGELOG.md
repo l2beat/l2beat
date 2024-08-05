@@ -439,7 +439,7 @@
 
 ### Patch Changes
 
-- Export discover method to allow running `discovery discover` command directy from the package
+- Export discover method to allow running `discovery discover` command directly from the package
 
 ## 0.21.3
 
