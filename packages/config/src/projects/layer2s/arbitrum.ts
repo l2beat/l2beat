@@ -104,7 +104,10 @@ export const arbitrum: Layer2 = orbitStackL2({
     links: {
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: ['https://bridge.arbitrum.io'],
-      documentation: ['https://developer.arbitrum.io/'],
+      documentation: [
+        'https://docs.arbitrum.io',
+        'https://docs.arbitrum.foundation/',
+      ],
       explorers: [
         'https://arbiscan.io',
         'https://explorer.arbitrum.io/',
@@ -121,6 +124,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         'https://twitter.com/arbitrum',
         'https://arbitrumfoundation.medium.com/',
         'https://discord.gg/Arbitrum',
+        'https://youtube.com/@Arbitrum',
       ],
       rollupCodes: 'https://rollup.codes/arbitrum-one',
     },
