@@ -20,7 +20,7 @@ export const zircuit: Layer2 = underReviewL2({
       socialMedia: [
         'https://x.com/ZircuitL2',
         'https://discord.com/invite/zircuit',
-        'https://zircuit.com/blog'
+        'https://zircuit.com/blog',
       ],
     },
     activityDataSource: 'Blockchain RPC',
@@ -39,6 +39,6 @@ export const zircuit: Layer2 = underReviewL2({
       tokens: '*', // will escrow ZRC (no priceData on CG yet)
     },
   ],
-  rpcUrl: 'https://zircuit1-mainnet.p2pify.com/' // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
+  rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/
   // Chain ID: 48900
 })
