@@ -45,7 +45,7 @@ export async function countUserOperations(calldata: string) {
     const signature = await fourByteClient.getSignature(selector)
     if (signature) {
       const name = signature.split('(')[0]
-      signatures[selector] = name
+      signatures[selector] = `${name} - ${selector}`
     }
   }
 

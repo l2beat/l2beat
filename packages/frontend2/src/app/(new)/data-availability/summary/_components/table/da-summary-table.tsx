@@ -45,10 +45,7 @@ export function DaSummaryTable({ items }: Props) {
           column={table.getColumn('layerType')}
         />
       </FilterWrapper>
-      <BasicTable
-        table={table}
-        onResetFilters={() => table.resetColumnFilters()}
-      />
+      <BasicTable table={table} />
     </>
   )
 }

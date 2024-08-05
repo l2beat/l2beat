@@ -885,6 +885,10 @@
       "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430"
     },
     {
+      "symbol": "PMON",
+      "address": "0x1796ae0b0fa4862485106a0de9b654efe301d0b2"
+    },
+    {
       "symbol": "PNT",
       "address": "0x89Ab32156e46F46D02ade3FEcbe5Fc4243B9AAeD"
     },
@@ -1393,6 +1397,13 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PMON",
+      "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+      "source": "canonical",
+      "coingeckoId": "polychain-monsters",
+      "supply": "zero"
+    },
     {
       "symbol": "wOETH",
       "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
@@ -2328,6 +2339,16 @@
   ],
   "mantapacific": [
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",
@@ -2358,28 +2379,6 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "symbol": "mETH",
-      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
-      "category": "ether",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
-      "symbol": "mUSD",
-      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
     },
     {
       "symbol": "STONE",
@@ -2720,6 +2719,12 @@
     }
   ],
   "blast": [
+    {
+      "symbol": "ANDY",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "bWOOL",
       "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",

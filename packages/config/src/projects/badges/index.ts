@@ -81,6 +81,14 @@ export const badges = {
     },
     type: BadgeType.RaaS,
   },
+  Quicknode: {
+    display: {
+      name: 'Quicknode',
+      description:
+        'This project was deployed via the rollup-as-a-service provider Quicknode',
+    },
+    type: BadgeType.RaaS,
+  },
   // DA
   Avail: {
     display: {
@@ -230,6 +238,13 @@ export const badges = {
     display: {
       name: 'Part of the AggLayer',
       description: 'The project is part of the AggLayer',
+    },
+    type: BadgeType.Infra,
+  },
+  ElasticChain: {
+    display: {
+      name: 'Part of the Elastic Chain',
+      description: 'The project is part of the Elastic Chain',
     },
     type: BadgeType.Infra,
   },

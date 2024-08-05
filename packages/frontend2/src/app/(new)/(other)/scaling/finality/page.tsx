@@ -7,6 +7,8 @@ import { getFinality } from '~/server/features/scaling/finality/get-finality'
 import { getFinalityConfigurations } from '~/server/features/scaling/finality/get-finality-configurations'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
+import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
+import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { FinalityDiagramsSection } from './_components/diagram-section'
 import { ScalingFinalityTable } from './_components/table/scaling-finality-table'
 import { FinalityWarning } from './_components/warning'
@@ -21,25 +23,28 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const configurations = getFinalityConfigurations()
 
-  const [finality, tvlForOrdering, icReport] = await Promise.all([
-    getFinality(configurations),
-    getLatestTvlUsd({ type: 'layer2' }),
-    getImplementationChangeReport(),
-  ])
+  const [finality, tvlForOrdering, icReport, projectVerification] =
+    await Promise.all([
+      getFinality(configurations),
+      getLatestTvlUsd({ type: 'layer2' }),
+      getImplementationChangeReport(),
+      getProjectsVerificationStatuses(),
+    ])
 
   const projects = await getScalingFinalityEntries(
     layer2s,
     tvlForOrdering,
     finality,
     icReport,
+    projectVerification,
   )
 
   return (
-    <>
+    <ScalingFilterContextProvider>
       <SimplePageHeader>Finality</SimplePageHeader>
       <FinalityWarning />
       <ScalingFinalityTable projects={projects} />
       <FinalityDiagramsSection className="mt-20" diagrams={finalityDiagrams} />
-    </>
+    </ScalingFilterContextProvider>
   )
 }

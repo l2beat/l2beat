@@ -1,7 +1,13 @@
 import { type Layer2 } from '@l2beat/config'
-import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import {
+  type ProjectId,
+  type ProjectsVerificationStatuses,
+  UnixTime,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../../tvl/order-by-tvl'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import {
   type ScalingFinalityEntry,
@@ -13,6 +19,7 @@ export async function getScalingFinalityEntries(
   tvl: Record<ProjectId, number>,
   finality: FinalityData,
   implementationChangeReport: ImplementationChangeReport,
+  projectsVerificationStatuses: ProjectsVerificationStatuses,
 ) {
   const includedProjects = getIncludedProjects(projects, finality)
   const orderedProjects = orderByTvl(includedProjects, tvl)
@@ -20,11 +27,13 @@ export async function getScalingFinalityEntries(
   return orderedProjects
     .map((project) => {
       const hasImplementationChanged =
-        !!implementationChangeReport?.projects[project.id.toString()]
+        !!implementationChangeReport.projects[project.id.toString()]
+      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 
       return getScalingFinalityEntry(
         project,
         finality[project.id.toString()],
+        isVerified,
         hasImplementationChanged,
       )
     })
@@ -79,23 +88,16 @@ function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
 function getScalingFinalityEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
+  isVerified: boolean,
   hasImplementationChanged?: boolean,
 ): ScalingFinalityEntry {
   return {
-    entryType: 'finality',
-    type: project.type,
-    name: project.display.name,
-    href: `/scaling/projects/${project.display.slug}`,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    category: project.display.category,
+    ...getCommonScalingEntry({
+      project,
+      isVerified,
+      hasImplementationChanged: hasImplementationChanged ?? false,
+    }),
     dataAvailabilityMode: project.dataAvailability?.mode,
-    provider: project.display.provider,
-    warning: project.display.warning,
-    redWarning: project.display.redWarning,
-    hasImplementationChanged,
-    purposes: project.display.purposes,
-    stage: project.stage,
     data: getFinalityData(finalityProjectData, project),
     finalizationPeriod: project.display.finality?.finalizationPeriod,
   }
