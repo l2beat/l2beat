@@ -1,4 +1,4 @@
-import { TimeRange } from './range'
+import { type TimeRange } from './range'
 
 export function rangeToDays(range: TimeRange) {
   if (range === 'max') return Infinity

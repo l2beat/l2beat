@@ -6,7 +6,10 @@ interface Props<T extends string> {
   onValueChange: (value: T) => void
 }
 
-export function CostsTypeControls<T extends string>({ value, onValueChange }: Props<T>) {
+export function CostsTypeControls<T extends string>({
+  value,
+  onValueChange,
+}: Props<T>) {
   return (
     <RadioGroup value={value} onValueChange={onValueChange}>
       <RadioGroupItem value="total" variant="highlighted">

@@ -1,7 +1,7 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
 import { groupBy } from 'lodash'
 import { db } from '~/server/database'
-import { TimeRange, getRange } from '~/utils/range/range'
+import { type TimeRange, getRange } from '~/utils/range/range'
 import { rangeToDays } from '~/utils/range/range-to-days'
 
 export async function getActivityForProjects(

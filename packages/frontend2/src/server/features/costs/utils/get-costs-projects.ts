@@ -7,7 +7,8 @@ export function getCostsProjects(): Layer2[] {
     (p) =>
       (p.config.trackedTxs !== undefined ||
         UPCOMING_PROJECTS.includes(p.id.toString())) &&
-      !p.isArchived && !p.isUpcoming &&
+      !p.isArchived &&
+      !p.isUpcoming &&
       (p.display.category === 'Optimistic Rollup' ||
         p.display.category === 'ZK Rollup'),
   )
