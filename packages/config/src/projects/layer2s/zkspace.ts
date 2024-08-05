@@ -46,7 +46,6 @@ export const zkspace: Layer2 = {
     purposes: ['NFT', 'AMM', 'Payments'],
     provider: 'ZKsync Lite',
     category: 'ZK Rollup',
-
     links: {
       websites: ['https://zks.org/'],
       apps: ['https://zks.app'],

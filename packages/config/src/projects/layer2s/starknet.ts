@@ -772,10 +772,11 @@ export const starknet: Layer2 = {
             'Starknet utilizes STARKs for their system. The protocol makes use of recursive aggregation across multiple projects that share the same onchain verifier. SHARP stands for SHARed Prover. Different programs are represented onchain with different program hashes.',
           verified: 'no',
           contractAddress: EthereumAddress(
-            '0xd51A3D50d4D2f99a345a66971E650EEA064DD8dF',
+            '0x9fb7F48dCB26b7bFA4e580b2dEFf637B13751942',
           ),
           chainId: ChainId.ETHEREUM,
           subVerifiers: [
+            // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
             {
               name: 'Final universal bootloader',
               proofSystem: 'STARK',

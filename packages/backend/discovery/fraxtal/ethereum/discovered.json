@@ -1,7 +1,7 @@
 {
   "name": "fraxtal",
   "chain": "ethereum",
-  "blockNumber": 20432632,
+  "blockNumber": 20460352,
   "configHash": "0x508e4b07a4b641a1977476d77a68c60de60147a319ca2c92dd932852df3c9481",
   "version": 10,
   "contracts": [
@@ -12,8 +12,8 @@
       "sinceTimestamp": 1602667372,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0xb1ca180000000000",
-        "get_deposit_root": "0xbca488e8462b45b03e284619e3886d6eb84acb83df6d87ef8c1fc1aa900e6710"
+        "get_deposit_count": "0x21d5180000000000",
+        "get_deposit_root": "0xb71aab8046efc244f4e6aa122cc69aebbd9f53a714470bc3631e611688d23c70"
       },
       "derivedName": "DepositContract"
     },
@@ -46,7 +46,7 @@
         "$immutable": false,
         "$implementation": "0xC6e4ECE5576dC96846bb11eD8910f3dF3CE516b8",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625557",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292625725",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -196,7 +196,7 @@
         "params": {
           "prevBaseFee": 10000000,
           "prevBoughtGas": 490798,
-          "prevBlockNum": 20432446
+          "prevBlockNum": 20460268
         },
         "paused": false,
         "superchainConfig": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
@@ -220,11 +220,11 @@
           "0x0000000000000000000000000000000000000000"
         ],
         "name": "Frax Ether",
-        "nominatedOwner": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "owner": "0x8306300ffd616049FD7e4b0354a64Da835c1A81C",
+        "nominatedOwner": "0x0000000000000000000000000000000000000000",
+        "owner": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
         "symbol": "frxETH",
         "timelock_address": "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA",
-        "totalSupply": "189378597744207953532424"
+        "totalSupply": "189645594005276764153970"
       },
       "derivedName": "frxETH"
     },
@@ -274,10 +274,10 @@
         "finalizationPeriodSeconds": 604800,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 7844400,
-        "latestOutputIndex": 4357,
-        "nextBlockNumber": 7846200,
-        "nextOutputIndex": 4358,
+        "latestBlockNumber": 8011800,
+        "latestOutputIndex": 4450,
+        "nextBlockNumber": 8013600,
+        "nextOutputIndex": 4451,
         "proposer": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "PROPOSER": "0xFb90465f3064fF63FC460F01A6307eC73d64bc50",
         "startingBlockNumber": 0,
@@ -312,7 +312,7 @@
         ],
         "getThreshold": 4,
         "GnosisSafe_modules": [],
-        "nonce": 1053,
+        "nonce": 1055,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -385,12 +385,12 @@
         "lastRewardAmount": "94221000000000000000",
         "lastSync": 1722484367,
         "name": "Staked Frax Ether",
-        "pricePerShare": "1093894600442865089",
+        "pricePerShare": "1094279299273108798",
         "rewardsCycleEnd": 1723075200,
         "rewardsCycleLength": 604800,
         "symbol": "sfrxETH",
-        "totalAssets": "152372363844163812777898",
-        "totalSupply": "139293460066879937132079"
+        "totalAssets": "148617427128469074139816",
+        "totalSupply": "135813066396477021109314"
       },
       "derivedName": "sfrxETH"
     },
@@ -416,7 +416,7 @@
         ],
         "getThreshold": 3,
         "GnosisSafe_modules": [],
-        "nonce": 5724,
+        "nonce": 5730,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -428,7 +428,7 @@
       "sinceTimestamp": 1665022895,
       "values": {
         "$immutable": true,
-        "currentWithheldETH": 3871000000000000,
+        "currentWithheldETH": "506071866734796415524",
         "DEPOSIT_SIZE": "32000000000000000000",
         "depositContract": "0x00000000219ab540356cBB839Cbe05303d7705Fa",
         "depositEtherPaused": false,

@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
+  CONTRACTS,
   DATA_ON_CHAIN,
   RISK_VIEW,
   addSentimentToDataAvailability,
@@ -374,7 +375,7 @@ export const taiko: Layer2 = {
         ...upgradesTaikoMultisig,
       }),
     ],
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(

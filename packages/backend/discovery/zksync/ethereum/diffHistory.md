@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x4524c5382beccbdb67e192c7549ab6b839e87af6
+Generated with discovered.json: 0x16fdd1682d12a2412ec3cff5e2417644d8a33d5e
 
-# Diff at Thu, 01 Aug 2024 08:26:56 GMT:
+# Diff at Thu, 01 Aug 2024 09:21:37 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 19532310
-- current block number: 20432496
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 19532310
+- current block number: 20432768
 
 ## Description
 
@@ -38,7 +38,7 @@ ZKsync lite add one signer (`0xD804aB3355a634aEBd45e1252d6208807defD554`) to the
     }
 ```
 
-Generated with discovered.json: 0xd6f15a3e39c447a4e668f1d84048cff0e2c12a30
+Generated with discovered.json: 0xbd4699a8b52a6b73b41273be603f65b645c4926e
 
 # Diff at Thu, 28 Mar 2024 11:28:26 GMT:
 
