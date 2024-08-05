@@ -8,7 +8,7 @@ Generated with discovered.json: 0xdf70fa10bc3bf5e87a51e225e83391bb434571e0
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Add historical programHashes to discovery.
 
 ## Config/verification related changes
 
