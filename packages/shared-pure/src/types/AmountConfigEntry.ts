@@ -43,6 +43,7 @@ export interface AmountConfigBase {
   chain: string
   project: ProjectId
   source: Token['source']
+  dataSource: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   includeInTotal: boolean

@@ -57,6 +57,7 @@ export function getTvlAmountsConfig(
             untilTimestamp: token.untilTimestamp,
             project: projectId,
             source: token.source,
+            dataSource: chainConverter.toName(token.chainId),
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -74,6 +75,7 @@ export function getTvlAmountsConfig(
             coingeckoId: token.coingeckoId,
             project: projectId,
             source: token.source,
+            dataSource: 'coingecko',
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -94,6 +96,9 @@ export function getTvlAmountsConfig(
             untilTimestamp: token.untilTimestamp,
             coingeckoId: token.coingeckoId,
             project: projectId,
+            dataSource: `${chainConverter.toName(token.chainId)}_preminted_${
+              token.address
+            }`,
             source: token.source,
             // TODO
             includeInTotal: true,
@@ -139,6 +144,7 @@ export function getTvlAmountsConfig(
           ),
           escrowAddress: escrow.address,
           project: project.projectId,
+          dataSource: chain.name,
           source: escrow.source ?? 'canonical',
           includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,

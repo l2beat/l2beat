@@ -163,6 +163,7 @@ function mockPreminted(): PremintedEntry {
 function mockBase(): AmountConfigBase {
   return {
     chain: 'chain',
+    dataSource: 'chain',
     project: ProjectId('project'),
     source: 'canonical' as const,
     sinceTimestamp: UnixTime.ZERO,
