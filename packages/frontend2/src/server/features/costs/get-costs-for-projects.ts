@@ -6,14 +6,13 @@ import {
 import { notUndefined } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { db } from '~/server/database'
-import { getRange } from '~/utils/range/range'
 import {
   type LatestCostsProjectResponse,
   type LatestCostsResponse,
 } from './types'
 import { addIfDefined } from './utils/add-if-defined'
 import { getSyncedUntil } from './utils/get-synced-until'
-import { type CostsTimeRange, rangeToResolution } from './utils/range'
+import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
 import { toTrackedTxConfig } from './utils/to-tracked-tx-config'
 
 export async function getCostsForProjects(
@@ -21,9 +20,7 @@ export async function getCostsForProjects(
   timeRange: CostsTimeRange,
 ) {
   const response: LatestCostsResponse = {}
-
-  const resolution = rangeToResolution(timeRange)
-  const range = getRange(timeRange, resolution)
+  const range = getFullySyncedCostsRange(timeRange)
 
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',
