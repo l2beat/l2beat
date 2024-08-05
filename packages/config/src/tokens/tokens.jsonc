@@ -2732,6 +2732,12 @@
   ],
   "blast": [
     {
+      "symbol": "ANDY",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "symbol": "bWOOL",
       "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
       "source": "external",

@@ -8207,6 +8207,21 @@
       "supply": "circulatingSupply"
     },
     {
+      "id": "blast:andy-andy",
+      "name": "Andy",
+      "coingeckoId": "andyerc",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "symbol": "ANDY",
+      "decimals": 9,
+      "deploymentTimestamp": 1709352981,
+      "coingeckoListingTimestamp": 1711324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35767/large/IMG_0310.jpeg?1711371918",
+      "chainId": 81457,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
       "id": "blast:blast-blast",
       "name": "Blast",
       "coingeckoId": "blast",
