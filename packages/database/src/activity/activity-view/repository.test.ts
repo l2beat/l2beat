@@ -123,7 +123,7 @@ describeDatabase(ActivityViewRepository.name, (db) => {
     },
   )
 
-  describe.only(
+  describe(
     ActivityViewRepository.prototype.getSummedCountForProjectsAndTimeRange.name,
     () => {
       it('should return summed count grouped by projectId for given time range', async () => {
