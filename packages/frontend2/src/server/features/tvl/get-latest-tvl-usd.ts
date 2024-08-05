@@ -18,7 +18,7 @@ export function getLatestTvlUsd(
   return getCachedLatestTvlUsd(...parameters)
 }
 
-export const getCachedLatestTvlUsd = cache(
+const getCachedLatestTvlUsd = cache(
   async (
     filterParams: TvlProjectFilter,
   ): Promise<Record<ProjectId, number>> => {

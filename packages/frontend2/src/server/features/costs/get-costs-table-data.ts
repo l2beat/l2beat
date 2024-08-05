@@ -31,7 +31,7 @@ export function getCostsTableData(
   return getCachedCostsTableData(...parameters)
 }
 
-export const getCachedCostsTableData = cache(
+const getCachedCostsTableData = cache(
   async (
     timeRange: CostsTimeRange,
   ): Promise<Record<string, CostsTableData>> => {

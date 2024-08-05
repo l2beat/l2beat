@@ -17,7 +17,7 @@ export function getCostsChart(
   return getCachedCostsChart(...parameters)
 }
 
-export const getCachedCostsChart = cache(
+const getCachedCostsChart = cache(
   async (timeRange: CostsTimeRange): Promise<CostsChartResponse> => {
     const projects = getCostsProjects()
     const resolution = rangeToResolution(timeRange)
