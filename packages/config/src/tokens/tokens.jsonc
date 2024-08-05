@@ -800,6 +800,10 @@
       "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379"
     },
     {
+      "symbol": "NSTR",
+      "address": "0x610dbd98a28ebba525e9926b6aaf88f9159edbfd"
+    },
+    {
       "symbol": "NU",
       "address": "0x4fE83213D56308330EC302a8BD641f1d0113A4Cc"
     },
@@ -1371,6 +1375,10 @@
     {
       "symbol": "YGG",
       "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73"
+    },
+    {
+      "symbol": "ZEND",
+      "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44"
     },
     {
       "symbol": "ZKS",
