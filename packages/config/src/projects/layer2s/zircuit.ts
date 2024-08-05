@@ -34,7 +34,7 @@ export const zircuit: Layer2 = underReviewL2({
     },
     {
       chain: 'ethereum',
-      address: EthereumAddress('0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1'), // OptimismPortal
+      address: EthereumAddress('0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8'), // OptimismPortal
       sinceTimestamp: new UnixTime(1719936539),
       tokens: '*', // will escrow ZRC (no priceData on CG yet)
     },
