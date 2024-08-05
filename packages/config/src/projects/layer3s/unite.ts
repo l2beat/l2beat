@@ -16,7 +16,7 @@ export const unite: Layer3 = upcomingL3({
     links: {
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
       repositories: [],
-      socialMedia: ['https://x.com/uniteio', 'https://discord.gg/vk7g2eQvru'],
+      socialMedia: ['https://x.com/uniteio'],
       websites: ['https://unite.io/'],
       apps: [],
       explorers: [],
