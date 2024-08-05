@@ -32,7 +32,7 @@ export const getCachedCostsChart = cache(
     const summed = sumByTimestamp(data, resolution)
     return withTypes(summed)
   },
-  ['costs-chart'],
+  ['costsChart'],
   { revalidate: 60 * 10 },
 )
 

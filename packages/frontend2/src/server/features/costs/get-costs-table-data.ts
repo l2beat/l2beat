@@ -1,6 +1,10 @@
 import { UnixTime } from '@l2beat/shared-pure'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { type SyncStatus } from '~/types/SyncStatus'
-import { getActivityForProjects } from '../activity/get-activity-for-projects'
+import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
 import { type CostsUnit } from '../scaling/get-scaling-costs-entries'
 import { getCostsForProjects } from './get-costs-for-projects'
 import { type LatestCostsProjectResponse } from './types'
@@ -20,26 +24,40 @@ export type CostsTableData = Record<CostsUnit, CostsValues> & {
   syncStatus: SyncStatus
 }
 
-export async function getCostsTableData(
-  timeRange: CostsTimeRange,
-): Promise<Record<string, CostsTableData>> {
-  const projects = getCostsProjects()
-  const projectsCosts = await getCostsForProjects(projects, timeRange)
-  const projectsActivity = await getActivityForProjects(projects, timeRange)
-
-  return Object.fromEntries(
-    Object.entries(projectsCosts).map(([projectId, costs]) => {
-      return [
-        projectId,
-        {
-          ...withTotal(costs),
-          syncStatus: getSyncStatus(costs.syncedUntil),
-          txCount: projectsActivity[projectId],
-        },
-      ]
-    }),
-  )
+export function getCostsTableData(
+  ...parameters: Parameters<typeof getCachedCostsTableData>
+) {
+  noStore()
+  return getCachedCostsTableData(...parameters)
 }
+
+export const getCachedCostsTableData = cache(
+  async (
+    timeRange: CostsTimeRange,
+  ): Promise<Record<string, CostsTableData>> => {
+    const projects = getCostsProjects()
+    const projectsCosts = await getCostsForProjects(projects, timeRange)
+    const projectsActivity = await getLatestActivityForProjects(
+      projects,
+      timeRange,
+    )
+
+    return Object.fromEntries(
+      Object.entries(projectsCosts).map(([projectId, costs]) => {
+        return [
+          projectId,
+          {
+            ...withTotal(costs),
+            syncStatus: getSyncStatus(costs.syncedUntil),
+            txCount: projectsActivity[projectId],
+          },
+        ]
+      }),
+    )
+  },
+  ['costsTable'],
+  { revalidate: 60 * 10 },
+)
 
 function getSyncStatus(syncedUntil: UnixTime) {
   const isSynced = UnixTime.now()
