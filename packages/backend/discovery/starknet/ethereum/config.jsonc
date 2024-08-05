@@ -89,6 +89,13 @@
     },
     "Starknet": {
       "fields": {
+        "programHashHistory": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "ProgramHashChanged",
+            "valueKey": "oldProgramHash"
+          }
+        },
         "verifier": {
           "handler": {
             "type": "starkWareNamedStorage",
