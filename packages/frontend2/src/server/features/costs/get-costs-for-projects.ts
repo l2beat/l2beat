@@ -1,4 +1,4 @@
-import { type Layer2 } from '@l2beat/config/src'
+import { type Layer2 } from '@l2beat/config'
 import {
   type AggregatedL2CostRecord,
   type IndexerConfigurationRecord,
