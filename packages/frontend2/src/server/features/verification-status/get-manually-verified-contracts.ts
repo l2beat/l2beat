@@ -1,3 +1,5 @@
+import { existsSync, readFileSync } from 'fs'
+import path from 'path'
 import {
   type Bridge,
   type DaLayer,
@@ -8,12 +10,10 @@ import {
   parseManuallyVerifiedContracts,
 } from '@l2beat/config'
 import { type ManuallyVerifiedContracts } from '@l2beat/shared-pure'
-import { existsSync, readFileSync } from 'fs'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import path from 'path'
 import { env } from '~/env'
 
 type Project = Layer2 | Layer3 | Bridge | DaLayer
