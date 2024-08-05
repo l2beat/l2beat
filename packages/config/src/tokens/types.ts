@@ -35,7 +35,7 @@ export const GeneratedToken = z.object({
       warning: z.string().optional(),
     }),
   ),
-  escrows: z.array(stringAs((s) => EthereumAddress(s))).optional(),
+  escrow: stringAs((s) => EthereumAddress(s)).optional(),
 })
 
 export type SourceEntry = z.infer<typeof SourceEntry>

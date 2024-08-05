@@ -19,7 +19,7 @@ export interface PremintedEntry extends AmountConfigBase {
   type: 'preminted'
   address: EthereumAddress
   coingeckoId: CoingeckoId
-  escrows: EthereumAddress[]
+  escrowAddress: EthereumAddress
 }
 
 export interface TotalSupplyEntry extends AmountConfigBase {

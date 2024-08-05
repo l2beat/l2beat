@@ -83,12 +83,12 @@ export function getTvlAmountsConfig(
           break
         case 'preminted':
           assert(token.address, 'Token address is required for preminted')
-          assert(token.escrows, 'Escrows are required for preminted')
+          assert(token.escrow, 'Escrows are required for preminted')
 
           entries.push({
             type: 'preminted',
             address: token.address,
-            escrows: token.escrows,
+            escrowAddress: token.escrow,
             chain: chainConverter.toName(token.chainId),
             sinceTimestamp,
             untilTimestamp: token.untilTimestamp,

@@ -2385,7 +2385,7 @@
       "project": "lisk",
       "source": "canonical",
       "supply": "preminted",
-      "escrows": ["0x2658723Bf70c7667De6B25F99fcce13A16D25d08"]
+      "escrow": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
     },
     {
       "id": "lpt-livepeer-token",

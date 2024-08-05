@@ -96,8 +96,8 @@ describe(createAmountId.name, () => {
           shouldUpdateHash: true,
         },
         {
-          key: 'escrows',
-          newValue: [EthereumAddress.random()],
+          key: 'escrowAddress',
+          newValue: EthereumAddress.random(),
           shouldUpdateHash: true,
         },
       ],
@@ -156,7 +156,7 @@ function mockPreminted(): PremintedEntry {
     type: 'preminted',
     address: EthereumAddress.random(),
     coingeckoId: CoingeckoId('id'),
-    escrows: [EthereumAddress.random()],
+    escrowAddress: EthereumAddress.random(),
   }
 }
 

@@ -20,7 +20,7 @@ export interface Token {
   project?: ProjectId
   source: 'canonical' | 'external' | 'native'
   supply: 'totalSupply' | 'circulatingSupply' | 'preminted' | 'zero'
-  escrows?: EthereumAddress[]
+  escrow?: EthereumAddress
   bridgedUsing?: {
     bridge: string
     slug?: string

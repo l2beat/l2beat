@@ -75,18 +75,17 @@ export class PremintedIndexer extends ManagedChildIndexer {
   async getEscrowAmount(timestamp: UnixTime): Promise<AmountRecord> {
     const blockNumber = await this.getBlockNumber(timestamp)
 
-    const configurations = this.$.configuration.escrows.map((escrow) => ({
+    const configuration = {
       ...this.$.configuration,
       type: 'escrow' as const,
       address: this.$.configuration.address,
-      escrowAddress: escrow,
       id: this.configurationId,
-    }))
+    }
 
     const escrowAmounts = await this.$.amountService.fetchAmounts(
       timestamp,
       blockNumber,
-      configurations,
+      [configuration],
     )
 
     this.logger.info('Fetched escrows amounts', {

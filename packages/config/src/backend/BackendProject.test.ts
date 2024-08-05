@@ -15,10 +15,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
-import {
-  ScalingProjectContractSingleAddress,
-  ScalingProjectEscrow,
-} from '../common'
+import { ScalingProjectEscrow } from '../common'
 import { layer2ToBackendProject, mapTokens } from './BackendProject'
 
 describe('BackendProject', () => {
@@ -32,17 +29,17 @@ describe('BackendProject', () => {
         getMockToken({
           symbol: 'C',
           supply: 'preminted',
-          escrows: [escrow.address], // associated escrow - exclude
+          escrow: escrow.address, // associated escrow - exclude
         }),
         getMockToken({
           symbol: 'D', // excluded token symbol - exclude
           supply: 'preminted',
-          escrows: [EthereumAddress.ZERO],
+          escrow: EthereumAddress.ZERO,
         }),
         getMockToken({
           symbol: 'E',
           supply: 'preminted',
-          escrows: [EthereumAddress.ZERO],
+          escrow: EthereumAddress.ZERO,
         }),
       ]
 
@@ -53,7 +50,7 @@ describe('BackendProject', () => {
         getMockToken({
           symbol: 'E',
           supply: 'preminted',
-          escrows: [EthereumAddress.ZERO],
+          escrow: EthereumAddress.ZERO,
         }),
       ])
     })
@@ -69,17 +66,17 @@ describe('BackendProject', () => {
         getMockToken({
           symbol: 'C',
           supply: 'preminted',
-          escrows: [escrow.address], // associated escrow - exclude
+          escrow: escrow.address, // associated escrow - exclude
         }),
         getMockToken({
           symbol: 'D', // excluded token symbol - exclude
           supply: 'preminted',
-          escrows: [EthereumAddress.ZERO],
+          escrow: EthereumAddress.ZERO,
         }),
         getMockToken({
           symbol: 'E',
           supply: 'preminted',
-          escrows: [EthereumAddress.ZERO],
+          escrow: EthereumAddress.ZERO,
         }),
         getMockToken({ symbol: 'F' }), // not in the list - exclude
       ]
@@ -91,7 +88,7 @@ describe('BackendProject', () => {
         getMockToken({
           symbol: 'E',
           supply: 'preminted',
-          escrows: [EthereumAddress.ZERO],
+          escrow: EthereumAddress.ZERO,
         }),
       ])
     })
@@ -183,15 +180,12 @@ const getMockToken = (token: Partial<Token>): Token => {
 function getMockEscrow(
   escrow: Partial<ScalingProjectEscrow>,
 ): ScalingProjectEscrow {
-  return {
+  return mockObject<ScalingProjectEscrow>({
     address: EthereumAddress.random(),
-    contract: mockObject<Omit<ScalingProjectContractSingleAddress, 'address'>>(
-      {},
-    ),
     tokens: '*',
     excludedTokens: [],
     chain: 'chain',
     sinceTimestamp: UnixTime.ZERO,
     ...escrow,
-  }
+  })
 }

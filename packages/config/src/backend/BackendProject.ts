@@ -195,10 +195,10 @@ export function mapTokens(
       }
 
       assert(
-        token.escrows,
+        token.escrow,
         `Escrows should be defined for preminted ${token.symbol}`,
       )
 
-      return !token.escrows.includes(escrow.address) && isTokenIncluded
+      return token.escrow !== escrow.address && isTokenIncluded
     })
 }
