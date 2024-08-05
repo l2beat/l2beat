@@ -14,7 +14,7 @@ export const costsRouter = router({
     .query(async ({ input }) => {
       return getCostsChart(input.range)
     }),
-  tableData: procedure
+  table: procedure
     .input(
       z.object({
         range: CostsTimeRange,

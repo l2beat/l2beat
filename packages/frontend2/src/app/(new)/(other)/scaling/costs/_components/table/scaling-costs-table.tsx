@@ -27,7 +27,7 @@ export function ScalingCostsTable(props: Props) {
   const { metric, setMetric } = useCostsMetricContext()
   const includeFilters = useScalingFilter()
 
-  const { data } = api.scaling.costs.tableData.useQuery({ range })
+  const { data } = api.scaling.costs.table.useQuery({ range })
 
   const filteredEntries = useMemo(
     () => props.entries.filter((item) => includeFilters(item)),

@@ -1,29 +1,41 @@
 import { type AggregatedL2CostRecord } from '@l2beat/database'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { db } from '~/server/database'
-
 import { getRange } from '~/utils/range/range'
 import { type CostsChartResponse } from './types'
 import { addIfDefined } from './utils/add-if-defined'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
 
-export async function getCostsChart(
-  timeRange: CostsTimeRange,
-): Promise<CostsChartResponse> {
-  const projects = getCostsProjects()
-  const resolution = rangeToResolution(timeRange)
-
-  const range = getRange(timeRange, resolution)
-
-  const data: AggregatedL2CostRecord[] =
-    await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-      projects.map((p) => p.id),
-      range,
-    )
-
-  const summed = sumByTimestamp(data, resolution)
-  return withTypes(summed)
+export function getCostsChart(
+  ...parameters: Parameters<typeof getCachedCostsChart>
+) {
+  noStore()
+  return getCachedCostsChart(...parameters)
 }
+
+export const getCachedCostsChart = cache(
+  async (timeRange: CostsTimeRange): Promise<CostsChartResponse> => {
+    const projects = getCostsProjects()
+    const resolution = rangeToResolution(timeRange)
+
+    const range = getRange(timeRange, resolution)
+
+    const data: AggregatedL2CostRecord[] =
+      await db.aggregatedL2Cost.getByProjectsAndTimeRange(
+        projects.map((p) => p.id),
+        range,
+      )
+
+    const summed = sumByTimestamp(data, resolution)
+    return withTypes(summed)
+  },
+  ['costs-chart'],
+  { revalidate: 60 * 10 },
+)
 
 function withTypes(data: CostsChartResponse['data']): CostsChartResponse {
   return {

@@ -21,7 +21,7 @@ export default async function Page() {
   const entries = await getScalingCostsEntries()
   const range = getCookie('costsChartRange')
   await api.scaling.costs.chart.prefetch({ range })
-  await api.scaling.costs.tableData.prefetch({ range })
+  await api.scaling.costs.table.prefetch({ range })
 
   return (
     <ScalingFilterContextProvider>
