@@ -1,5 +1,4 @@
 import { type AggregatedL2CostRecord } from '@l2beat/database'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
 
 import { getRange } from '~/utils/range/range'
@@ -7,11 +6,6 @@ import { type CostsChartResponse } from './types'
 import { addIfDefined } from './utils/add-if-defined'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
-
-export const SHARP_SUBMISSION_ADDRESS = EthereumAddress(
-  '0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60',
-)
-export const SHARP_SUBMISSION_SELECTOR = '0x9b3b76cc'
 
 export async function getCostsChart(
   timeRange: CostsTimeRange,
