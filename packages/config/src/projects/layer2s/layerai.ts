@@ -14,8 +14,8 @@ export const layerai: Layer2 = upcomingL2({
     links: {
       websites: ['https://layerai.org/'],
       apps: [
-        'https://www.kyotox.com/',
-        'https://www.layervpn.com/'
+        'https://kyotox.com/',
+        'https://ayervpn.com/'
       ],
       documentation: ['https://docs.layerai.org/'],
       explorers: [],
