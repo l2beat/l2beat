@@ -1,4 +1,3 @@
-import React from 'react'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 
 interface Props<T extends string> {
@@ -6,7 +5,7 @@ interface Props<T extends string> {
   onValueChange: (value: T) => void
 }
 
-export function CostsTypeControls<T extends string>({
+export function CostsMetricControls<T extends string>({
   value,
   onValueChange,
 }: Props<T>) {

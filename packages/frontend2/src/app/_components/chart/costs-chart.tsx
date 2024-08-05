@@ -3,6 +3,7 @@
 import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { useMemo } from 'react'
+import { useCostsMetricContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-metric-context'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
@@ -39,7 +40,8 @@ interface Props {
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
 export function CostsChart({ milestones, tag = 'costs' }: Props) {
-  const { range, setRange, disabledOptions } = useCostsTimeRangeContext()
+  const { range, setRange } = useCostsTimeRangeContext()
+  const { metric } = useCostsMetricContext()
   const { unit, setUnit } = useCostsUnitContext()
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
@@ -104,13 +106,29 @@ export function CostsChart({ milestones, tag = 'costs' }: Props) {
           value={range}
           setValue={setRange}
           options={[
-            { value: '1d', label: '1D' },
-            { value: '7d', label: '7D' },
-            { value: '30d', label: '30D' },
-            { value: '90d', label: '90D' },
-            { value: '180d', label: '180D' },
+            {
+              value: '1d',
+              label: '1D',
+              disabled: metric === 'per-l2-tx',
+            },
+            {
+              value: '7d',
+              label: '7D',
+              disabled: metric === 'per-l2-tx',
+            },
+            {
+              value: '30d',
+              label: '30D',
+            },
+            {
+              value: '90d',
+              label: '90D',
+            },
+            {
+              value: '180d',
+              label: '180D',
+            },
           ]}
-          disabled={disabledOptions}
           range={[rangeStart, rangeEnd]}
         />
         <Chart />

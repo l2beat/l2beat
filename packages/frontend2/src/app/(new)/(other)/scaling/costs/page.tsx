@@ -6,6 +6,7 @@ import { api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
+import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTable } from './_components/table/scaling-costs-table'
@@ -26,9 +27,11 @@ export default async function Page() {
     <ScalingFilterContextProvider>
       <CostsTimeRangeContextProvider>
         <CostsUnitContextProvider>
-          <CostsChart milestones={HOMEPAGE_MILESTONES} />
-          <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingCostsTable entries={entries} />
+          <CostsMetricContextProvider>
+            <CostsChart milestones={HOMEPAGE_MILESTONES} />
+            <HorizontalSeparator className="my-4 md:my-6" />
+            <ScalingCostsTable entries={entries} />
+          </CostsMetricContextProvider>
         </CostsUnitContextProvider>
       </CostsTimeRangeContextProvider>
     </ScalingFilterContextProvider>

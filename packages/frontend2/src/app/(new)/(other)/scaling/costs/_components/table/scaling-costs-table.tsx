@@ -1,6 +1,6 @@
 'use client'
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { ScalingFilters } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
@@ -11,8 +11,9 @@ import {
   type ScalingCostsEntry,
 } from '~/server/features/scaling/get-scaling-costs-entries'
 import { api } from '~/trpc/react'
+import { useCostsMetricContext } from '../costs-metric-context'
 import { useCostsTimeRangeContext } from '../costs-time-range-context'
-import { CostsTypeControls } from '../costs-type-controls'
+import { CostsMetricControls } from '../costs-type-controls'
 import { useCostsUnitContext } from '../costs-unit-context'
 import { type ScalingCostsTableEntry, scalingCostsColumns } from './columns'
 
@@ -21,9 +22,9 @@ interface Props {
 }
 
 export function ScalingCostsTable(props: Props) {
-  const { range, setRange, setDisabledOptions } = useCostsTimeRangeContext()
+  const { range, setRange } = useCostsTimeRangeContext()
   const { unit } = useCostsUnitContext()
-  const [type, setType] = useState<'total' | 'per-l2-tx'>('total')
+  const { metric, setMetric } = useCostsMetricContext()
   const includeFilters = useScalingFilter()
 
   const { data } = api.scaling.costs.tableData.useQuery({ range })
@@ -37,8 +38,8 @@ export function ScalingCostsTable(props: Props) {
     const tableEntries = props.entries.map((e) =>
       mapToTableEntry(e, data, unit),
     )
-    return tableEntries ? calculateDataByType(tableEntries, type) : []
-  }, [data, props.entries, type, unit])
+    return tableEntries ? calculateDataByType(tableEntries, metric) : []
+  }, [data, props.entries, metric, unit])
 
   const table = useTable({
     data: tableEntries,
@@ -59,23 +60,18 @@ export function ScalingCostsTable(props: Props) {
     },
   })
 
-  const onTypeChange = (type: 'total' | 'per-l2-tx') => {
-    setType(type)
-    if (type === 'per-l2-tx') {
-      if (range === '1d' || range === '7d') {
-        setRange('30d')
-      }
-      setDisabledOptions(['1d', '7d'])
-      return
+  const onMetricChange = (type: 'total' | 'per-l2-tx') => {
+    setMetric(type)
+    if (type === 'per-l2-tx' && (range === '1d' || range === '7d')) {
+      setRange('30d')
     }
-    setDisabledOptions(undefined)
   }
 
   return (
     <div className="space-y-2">
       <div className="flex flex-col gap-2 md:flex-row md:justify-between">
         <ScalingFilters items={filteredEntries} />
-        <CostsTypeControls value={type} onValueChange={onTypeChange} />
+        <CostsMetricControls value={metric} onValueChange={onMetricChange} />
       </div>
       <BasicTable table={table} />
     </div>

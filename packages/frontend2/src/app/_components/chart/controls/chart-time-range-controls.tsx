@@ -8,8 +8,7 @@ interface Props<T extends string> {
   value: T | undefined
   setValue: (range: T) => void
   range: readonly [number, number]
-  options: { value: T; label: string }[]
-  disabled?: T[]
+  options: { value: T; disabled?: boolean; label: string }[]
 }
 
 export function ChartTimeRangeControls<T extends string>({
@@ -17,7 +16,6 @@ export function ChartTimeRangeControls<T extends string>({
   setValue,
   range,
   options,
-  disabled,
 }: Props<T>) {
   const loading = useChartLoading()
   const isClient = useIsClient()
@@ -39,7 +37,7 @@ export function ChartTimeRangeControls<T extends string>({
             <RadioGroupItem
               key={option.value}
               value={option.value}
-              disabled={disabled?.includes(option.value)}
+              disabled={option.disabled}
             >
               {option.label}
             </RadioGroupItem>
