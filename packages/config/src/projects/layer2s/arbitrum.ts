@@ -105,7 +105,7 @@ export const arbitrum: Layer2 = orbitStackL2({
       websites: ['https://arbitrum.io/', 'https://arbitrum.foundation/'],
       apps: ['https://bridge.arbitrum.io'],
       documentation: [
-        'https://developer.arbitrum.io/',
+        'https://docs.arbitrum.io',
         'https://docs.arbitrum.foundation/',
       ],
       explorers: [
@@ -118,6 +118,7 @@ export const arbitrum: Layer2 = orbitStackL2({
         'https://github.com/ArbitrumFoundation/governance',
         'https://github.com/OffchainLabs/arbitrum',
         'https://github.com/OffchainLabs/nitro',
+        'https://github.com/OffchainLabs/arb-os',
       ],
       socialMedia: [
         'https://twitter.com/arbitrum',
