@@ -24,11 +24,10 @@ export const getCachedCostsChart = cache(
 
     const range = getRange(timeRange, resolution)
 
-    const data: AggregatedL2CostRecord[] =
-      await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-        projects.map((p) => p.id),
-        range,
-      )
+    const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
+      projects.map((p) => p.id),
+      range,
+    )
 
     const summed = sumByTimestamp(data, resolution)
     return withTypes(summed)
