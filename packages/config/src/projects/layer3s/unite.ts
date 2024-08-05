@@ -1,9 +1,10 @@
+import { ProjectId } from '@l2beat/shared-pure'
 import { upcomingL3 } from '../layer2s/templates/upcoming'
 import { Layer3 } from './types'
 
 export const unite: Layer3 = upcomingL3({
   id: 'unite',
-  hostChain: 'base',
+  hostChain: ProjectId('base'),
   display: {
     name: 'Unite',
     slug: 'unite',
@@ -16,7 +17,7 @@ export const unite: Layer3 = upcomingL3({
       documentation: ['https://unite-1.gitbook.io/unite-docs'],
       repositories: [],
       socialMedia: ['https://x.com/uniteio', 'https://discord.gg/vk7g2eQvru'],
-      websites: ['https://www.unite.io/'],
+      websites: ['https://unite.io/'],
       apps: [],
       explorers: [],
     },
