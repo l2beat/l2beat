@@ -2735,7 +2735,7 @@
       "symbol": "ANDY",
       "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
       "source": "native",
-      "supply": "circulatingSupply",
+      "supply": "circulatingSupply"
     },
     {
       "symbol": "bWOOL",
