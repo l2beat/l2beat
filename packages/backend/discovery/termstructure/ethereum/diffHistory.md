@@ -1,3 +1,132 @@
+Generated with discovered.json: 0xf5b8a14a10c9b4a2765ba07479cb34b3f65f3ecb
+
+# Diff at Mon, 05 Aug 2024 05:29:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20432442
+- current block number: 20460282
+
+## Description
+
+EOA admin role removed, owner still present, team alerted, will fix.
+
+## Watched changes
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      values.accessControl.ADMIN_ROLE.members.1:
+-        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
++        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+    }
+```
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
+```diff
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "4 of 6 (67%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        4
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
 Generated with discovered.json: 0x9768c11aeb7d653ec31756eef0d82cd70c5bae83
 
 # Diff at Thu, 01 Aug 2024 08:15:53 GMT:

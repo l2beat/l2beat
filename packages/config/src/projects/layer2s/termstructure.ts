@@ -61,8 +61,6 @@ export const termstructure: Layer2 = {
   display: {
     name: 'Term Structure',
     slug: 'termstructure',
-    redWarning:
-      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Term Structure introduces a distinct ZK Rollup solution democratizing fixed-rate and fixed-term borrowing and lending as well as fixed income trading by offering low transaction fees and enabling forced withdrawals.',
     purposes: ['DeFi', 'Lending'],
