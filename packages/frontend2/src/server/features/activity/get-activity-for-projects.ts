@@ -17,10 +17,7 @@ export async function getActivityForProjects(
     )
 
   return Object.fromEntries(
-    Object.entries(summedCounts).map(([projectId, record]) => [
-      projectId,
-      record.count,
-    ]),
+    summedCounts.map((record) => [record.projectId, record.count]),
   )
 }
 
