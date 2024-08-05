@@ -2851,6 +2851,21 @@
       "supply": "zero"
     },
     {
+      "id": "nstr-nostra",
+      "name": "Nostra",
+      "coingeckoId": "nostra",
+      "address": "0x610dBd98A28EbbA525e9926b6aaF88f9159edbfd",
+      "symbol": "NSTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1716711455,
+      "coingeckoListingTimestamp": 1718236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28282/large/Nostra_200x200b.png?1719434526",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "nu-nucypher",
       "name": "NuCypher",
       "coingeckoId": "nucypher",
@@ -4916,6 +4931,21 @@
       "coingeckoListingTimestamp": 1612396800,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13866/large/ZMT_Token.png?1696513611",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "zend-zklend-token",
+      "name": "zkLend Token",
+      "coingeckoId": "zklend-2",
+      "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44",
+      "symbol": "ZEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1699950167,
+      "coingeckoListingTimestamp": 1710460800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35979/large/zkLend_ZEND_logo_square_transparent_background_%281%29.png?1710306648",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
