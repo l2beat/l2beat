@@ -1,7 +1,7 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20460282,
+  "blockNumber": 20461012,
   "configHash": "0xbc9a459ceb78018e275b623a83c95165762b20ec7e4c2b1a295ea48585cc0e6a",
   "version": 10,
   "contracts": [
@@ -215,7 +215,7 @@
         "getFundWeight": { "treasury": 0, "insurance": 0, "vault": 10000 },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
-        "getL1RequestNum": [228, 228, 228],
+        "getL1RequestNum": [228, 228, 229],
         "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
         "getTokenNum": 76,
@@ -226,7 +226,7 @@
         "isActivatedRoller": false,
         "isEvacuMode": false,
         "nomineeOwner": "0x0000000000000000000000000000000000000000",
-        "owner": "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
+        "owner": "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
       },
       "derivedName": "ZkTrueUp"
     },
@@ -353,7 +353,7 @@
         ],
         "getThreshold": 4,
         "GnosisSafe_modules": [],
-        "nonce": 8,
+        "nonce": 9,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -395,7 +395,6 @@
     { "address": "0x83d4814307088732528A53D8DF75fd6F2f5be398" },
     { "address": "0x85e500dF81F10B539E16Dd717e24C41465D10D82" },
     { "address": "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348" },
-    { "address": "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b" },
     { "address": "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93" },
     { "address": "0xeBec1D162f8467C0070C190A347Bbc3bFf6d14F8" }
   ],

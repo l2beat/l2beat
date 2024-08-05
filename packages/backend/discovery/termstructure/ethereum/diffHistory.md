@@ -1,14 +1,14 @@
-Generated with discovered.json: 0xf5b8a14a10c9b4a2765ba07479cb34b3f65f3ecb
+Generated with discovered.json: 0x90eae46af142c228d18c52a4de197cae3ec0a9ff
 
-# Diff at Mon, 05 Aug 2024 05:29:57 GMT:
+# Diff at Mon, 05 Aug 2024 07:56:26 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
 - comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20432442
-- current block number: 20460282
+- current block number: 20461012
 
 ## Description
 
-EOA admin role removed, owner still present, team alerted, will fix.
+EOA admin role and owner changed to the Multisig.
 
 ## Watched changes
 
@@ -18,6 +18,9 @@ EOA admin role removed, owner still present, team alerted, will fix.
       values.accessControl.ADMIN_ROLE.members.1:
 -        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
       values.accessControl.ADMIN_ROLE.members.0:
+-        "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
++        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      values.owner:
 -        "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
 +        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
     }

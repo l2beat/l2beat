@@ -24,7 +24,7 @@ const expirationPeriod = discovery.getContractValue<number>(
 )
 
 const upgrades = {
-  upgradableBy: ['OwnerEOA'],
+  upgradableBy: ['TermStructureMultisig'],
   upgradeDelay: 'None',
 }
 
@@ -307,12 +307,6 @@ export const termstructure: Layer2 = {
   },
   permissions: [
     {
-      name: 'OwnerEOA',
-      accounts: [discovery.getPermissionedAccount('ZkTrueUp', 'owner')],
-      description:
-        'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
-    },
-    {
       name: 'Admins',
       accounts: discovery.getAccessControlRolePermission(
         'ZkTrueUp',
@@ -323,7 +317,7 @@ export const termstructure: Layer2 = {
     },
     ...discovery.getMultisigPermission(
       'TermStructureMultisig',
-      'Set as a ZkTrueUp admin.',
+      'Owner of the protocol, meaning it can upgrade the project implementation potentially gaining access to all funds.',
     ),
     {
       name: 'Operators',
