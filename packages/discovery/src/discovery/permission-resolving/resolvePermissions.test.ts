@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { Graph, resolvePermissions } from './resolvePermissions'
-import { EthereumAddress } from '@l2beat/shared-pure'
 
 describe(resolvePermissions.name, () => {
   it('op mainnet', () => {
