@@ -6,7 +6,6 @@ export function OVMIcon(props: SVGAttributes<SVGElement>) {
 
   return (
     <>
-      id
       <svg
         width="24"
         height="24"

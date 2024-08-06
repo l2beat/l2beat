@@ -800,6 +800,10 @@
       "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379"
     },
     {
+      "symbol": "NSTR",
+      "address": "0x610dbd98a28ebba525e9926b6aaf88f9159edbfd"
+    },
+    {
       "symbol": "NU",
       "address": "0x4fE83213D56308330EC302a8BD641f1d0113A4Cc"
     },
@@ -1371,6 +1375,10 @@
     {
       "symbol": "YGG",
       "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73"
+    },
+    {
+      "symbol": "ZEND",
+      "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44"
     },
     {
       "symbol": "ZKS",
@@ -2339,6 +2347,16 @@
   ],
   "mantapacific": [
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",
@@ -2369,28 +2387,6 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "symbol": "mETH",
-      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
-      "category": "ether",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
-      "symbol": "mUSD",
-      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
     },
     {
       "symbol": "STONE",
@@ -2731,6 +2727,12 @@
     }
   ],
   "blast": [
+    {
+      "symbol": "ANDY",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "bWOOL",
       "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",

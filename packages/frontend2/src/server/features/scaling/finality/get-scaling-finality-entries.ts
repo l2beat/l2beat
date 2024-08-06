@@ -92,6 +92,7 @@ function getScalingFinalityEntry(
   hasImplementationChanged?: boolean,
 ): ScalingFinalityEntry {
   return {
+    entryType: 'finality',
     ...getCommonScalingEntry({
       project,
       isVerified,

@@ -15,7 +15,13 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
+import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
+import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
+import {
+  type ScalingSummaryLayer2sEntry,
+  type ScalingSummaryLayer3sEntry,
+} from '~/server/features/scaling/types'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
@@ -58,11 +64,18 @@ export function useScalingFilterValues() {
   return context
 }
 
+type ScalingEntry =
+  | ScalingSummaryLayer2sEntry
+  | ScalingSummaryLayer3sEntry
+  | ScalingRiskEntry
+  | ScalingFinalityEntry
+  | ScalingDataAvailabilityEntry
+
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
 
   const filter = useCallback(
-    (entry: CommonScalingEntry) => {
+    (entry: ScalingEntry) => {
       const checks = [
         scalingFilters.rollupsOnly !== false
           ? entry.category.includes('Rollup')
@@ -86,6 +99,11 @@ export function useScalingFilter() {
             ? entry.type === 'layer2'
             : entry.type === 'layer3' &&
               entry.hostChain === scalingFilters.hostChain
+          : undefined,
+        scalingFilters.daLayer !== undefined
+          ? entry.entryType === 'data-availability'
+            ? entry.dataAvailability.layer.value === scalingFilters.daLayer
+            : undefined
           : undefined,
       ].filter(notUndefined)
       return checks.length === 0 || checks.every(Boolean)

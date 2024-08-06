@@ -58,7 +58,7 @@ export const rss3: Layer2 = opStackL2({
   associatedTokens: ['RSS3'],
   discovery,
   display: {
-    shortName: 'RSS3',
+    shortName: 'RSS3 VSL',
     name: 'RSS3 Value Sublayer',
     slug: 'rss3',
     description:

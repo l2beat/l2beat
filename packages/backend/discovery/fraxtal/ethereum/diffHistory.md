@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc3e8941178b3803db5522df6ac9a70c1c4868b70
+
+# Diff at Mon, 05 Aug 2024 05:44:10 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20432632
+- current block number: 20460352
+
+## Description
+
+frxETH owner transfered to a 2-day timelock.
+
+## Watched changes
+
+```diff
+    contract frxETH (0x5E8422345238F34275888049021821E8E08CAa1f) {
+    +++ description: None
+      values.nominatedOwner:
+-        "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA"
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
+-        "0x8306300ffd616049FD7e4b0354a64Da835c1A81C"
++        "0x8412ebf45bAC1B340BbE8F318b928C466c4E39CA"
+    }
+```
+
 Generated with discovered.json: 0xd0c7f2c911c60be8d297499da7cd55c0e393e1bf
 
 # Diff at Thu, 01 Aug 2024 08:54:19 GMT:

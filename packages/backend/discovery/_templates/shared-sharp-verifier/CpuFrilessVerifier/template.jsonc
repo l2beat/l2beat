@@ -1,0 +1,13 @@
+{
+  "$schema": "../../../../../discovery/schemas/contract.v2.schema.json",
+  "fields": {
+    "constructorArgs": {
+      "handler": {
+        "type": "constructorArgs"
+      },
+      "target": {
+        "template": "shared-sharp-verifier/ignoreCompute"
+      }
+    }
+  }
+}

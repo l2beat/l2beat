@@ -1,5 +1,6 @@
 import { type DaLayer } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import { round } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -49,7 +50,8 @@ const getCachedEconomicSecurity = cache(
       // We're intentionally trading precision for ease of use in Client Components
       economicSecurity:
         Number(
-          (stake.thresholdStake * BigInt(currentPrice.priceUsd * 100)) / 100n,
+          (stake.thresholdStake * BigInt(round(currentPrice.priceUsd * 100))) /
+            100n,
         ) /
         10 ** meta.decimals,
     }
