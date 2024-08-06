@@ -3,12 +3,12 @@ import { DaLayer } from '../types/DaLayer'
 import { immutableXDac } from './bridges/immutablex'
 
 export const immutableXLayer: DaLayer = {
-  id: 'dac',
+  id: 'immutablex-dac-layer',
   type: 'DaLayer',
   kind: 'DAC',
   display: {
     name: 'Data Availability Committee (DAC)',
-    slug: 'dac',
+    slug: 'immutablex',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',
     links: {

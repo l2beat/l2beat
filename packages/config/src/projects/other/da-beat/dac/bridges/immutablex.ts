@@ -15,11 +15,11 @@ const discovery = new ProjectDiscovery('immutablex')
 const committee = getCommittee(discovery)
 
 export const immutableXDac = {
-  id: 'immutablex-dac',
+  id: 'immutablex-dac-bridge',
   type: 'DAC',
   display: {
     name: 'ImmutableX DAC',
-    slug: 'immutablex-dac',
+    slug: 'dac',
     description: 'ImmutableX DAC on Ethereum.',
     links: {
       websites: ['https://immutablex.xyz/'],
