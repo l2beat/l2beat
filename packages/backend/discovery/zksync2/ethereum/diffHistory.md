@@ -8,7 +8,8 @@ Generated with discovered.json: 0xb8a910894e6f71498f1962ad9747ece0ba6cf7d1
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+The admin- and protocolVersion of ZKsync diamond are changed. (No code changes)
+The new ChainAdmin is used as admin (but is owned by the known Matter Labs Multisig), so there are no net changes in permissions.
 
 ## Watched changes
 

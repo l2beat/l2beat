@@ -8,7 +8,22 @@ Generated with discovered.json: 0x64d9f7494aa1ff96ca59f2168eb2214674313a25
 
 ## Description
 
-The shared ZK stack contracts BridgeHub, StateTransitionManager (used by cronos and ZKsync Era) and also the two individual diamond proxies are moved to new admin contract called 'ChainAdmin'. The STM is upgraded to a new implementation with marginal diff (one added event).
+The shared ZK stack contracts BridgeHub and StateTransitionManager (used by cronos and ZKsync Era) and also the ZKsync Era diamond proxy are moved to new admin contract called 'ChainAdmin' (owner is Matter Labs MS). The STM is upgraded to a new implementation with marginal diff (one added event).
+
+The scheduled tx is immediately executed.
+
+This upgrade does not change net permissions at the moment but will probably be used in the future once more ZK stack chains are used or something like a SecurityCouncil is added.
+
+### New ChainAdmin contract
+
+This contract is very simple with the most important functions being:
+- `multicall` (onlyOwner): Does what the name suggests
+- `setTokenMultiplier` (callable by `tokenMultiplierSetter`): Used for the custom gas tokens of ZK stack chains
+- `setUpgradeTimestamp` (onlyOwner): sets a public expected upgrade timestamp for a new protocol version (like the one used for this upgrade `103079215106`), this var is only informative and not enforced so far
+
+The contract is set as admin (NOT upgradeability admin, see upgrades&gov diagram) for the BridgeHub, the STM and the ZKsync Era diamond at the moment.
+The Governance contract still has its former upgradeabilityAdmin role.
+
 
 ## Watched changes
 
