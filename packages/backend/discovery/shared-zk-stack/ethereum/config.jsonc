@@ -11,9 +11,23 @@
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": "BridgeHub",
     "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C": "StateTransitionManager",
     "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB": "L1SharedBridge",
-    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock"
+    "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E": "ValidatorTimelock",
+    "0x2cf3bD6a9056b39999F3883955E183F655345063": "ChainAdmin"
   },
   "overrides": {
+    "ChainAdmin": {
+      "ignoreMethods": ["protocolVersionToUpgradeTimestamp"],
+      "fields": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)",
+          "handler": {
+            "type": "stateFromEvent",
+            "event": "UpdateUpgradeTimestamp",
+            "returnParams": ["_protocolVersion", "_upgradeTimestamp"]
+          }
+        }
+      }
+    },
     "BridgeHub": {
       "ignoreMethods": ["baseToken", "stateTransitionManager"],
       "ignoreRelatives": ["zksyncEraDiamond"],
