@@ -22,7 +22,7 @@ const thresholdPerc = thresholdArray.num_
 const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
 const paused =
-  discovery.getContractValue<string>('MainchainGateway', 'paused') === 'true'
+  discovery.getContractValue<boolean>('MainchainGateway', 'paused') === true
 const warningText = paused ? 'The bridge is currently paused.' : undefined
 
 const pausable = {
