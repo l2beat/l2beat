@@ -24,7 +24,7 @@ const Unknown = {
   type: 'Unknown',
   value: 'None',
   sentiment: 'bad',
-  description: 'TODO',
+  description: 'There are no onchain assets at risk of being slashed in case of a data withholding attack.',
 } as const
 
 export const DaEconomicSecurityRisk = {

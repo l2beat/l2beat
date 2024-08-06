@@ -34,7 +34,7 @@ export const immutableXDac = {
     addresses: [],
     risks: [],
   },
-  technology: `## Simple Bridge
+  technology: `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
   `,
   permissions: [],
