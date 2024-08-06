@@ -11,6 +11,7 @@ import {
 } from './get-common-scaling-entry'
 
 export type ScalingCostsEntry = CommonScalingEntry & {
+  entryType: 'costs'
   costsWarning: WarningWithSentiment | undefined
 }
 
@@ -34,6 +35,7 @@ export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
           isVerified,
           hasImplementationChanged,
         }),
+        entryType: 'costs' as const,
         costsWarning: project.display.costsWarning,
       }
     })
