@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xc63ccd570fde4fb859e9aab9569739ab0ce184e6
+
+# Diff at Tue, 06 Aug 2024 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@636940e9998601360990d4bbb59e5d257345bee1 block: 20461012
+- current block number: 20469346
+
+## Description
+
+Thresholds of the MS clones are increased to 4 of 6. 
+
+## Watched changes
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x90eae46af142c228d18c52a4de197cae3ec0a9ff
 
 # Diff at Mon, 05 Aug 2024 07:56:26 GMT:
