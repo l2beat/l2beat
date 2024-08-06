@@ -1,4 +1,4 @@
-import { ChainId } from '@l2beat/shared-pure'
+import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../../discovery/starkware'
 import { immutablex } from '../../../../layer2s/immutablex'
@@ -31,13 +31,28 @@ export const immutableXDac = {
     },
   },
   contracts: {
-    addresses: [],
+    addresses: [
+      discovery.getContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
+    ],
     risks: [],
   },
   technology: `## Simple DA Bridge
     The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
+    The bridge requires a ${committee.minSigners}/${committee.accounts.length} threshold of signatures to be met before the data commitment is accepted.
   `,
-  permissions: [],
+  permissions: [
+    {
+      name: 'Committee Members',
+      description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+      accounts: committee.accounts.map((operator) => ({
+        address: operator.address,
+        type: 'EOA',
+      })),
+    },
+  ],
   chain: ChainId.ETHEREUM,
   requiredMembers: committee.minSigners,
   totalMembers: committee.accounts.length,
