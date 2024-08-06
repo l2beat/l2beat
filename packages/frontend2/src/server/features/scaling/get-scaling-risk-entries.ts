@@ -17,7 +17,7 @@ export async function getScalingRiskEntries(tvl: Record<ProjectId, number>) {
       !!implementationChangeReport.projects[project.id.toString()]
 
     return {
-      entryType: 'risk',
+      entryType: 'risk' as const,
       ...getCommonScalingEntry({
         project,
         isVerified,
