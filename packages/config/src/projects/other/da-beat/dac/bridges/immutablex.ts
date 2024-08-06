@@ -81,8 +81,8 @@ export const immutableXDac = {
   },
   usedIn: toUsedInProject([immutablex]),
   risks: {
-    attestations: DaAttestationSecurityRisk.NotVerified,
+    attestations: DaAttestationSecurityRisk.SigVerified(true),
     accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(),
+    exitWindow: DaExitWindowRisk.Immutable,
   },
 } satisfies DaBridge

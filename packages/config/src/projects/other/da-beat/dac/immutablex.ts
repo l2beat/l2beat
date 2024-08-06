@@ -2,7 +2,7 @@ import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
 import { immutableXDac } from './bridges/immutablex'
 
-export const dac: DaLayer = {
+export const immutableXLayer: DaLayer = {
   id: 'dac',
   type: 'DaLayer',
   kind: 'DAC',
@@ -28,7 +28,7 @@ export const dac: DaLayer = {
   bridges: [immutableXDac],
   usedIn: [...immutableXDac.usedIn],
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.Unknown,
+    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

@@ -12,7 +12,7 @@ const Immutable = {
   type: 'Immutable',
   value: 'Immutable',
   sentiment: 'good',
-  description: 'TODO',
+  description: 'The bridge smart contract is immutable and cannot be updated.',
 } as const
 
 const NoBridge = {
@@ -36,7 +36,7 @@ function SecurityCouncil(delaySeconds: number) {
       ...common,
       value: formatSeconds(delaySeconds),
       sentiment: 'good',
-      description: 'TODO',
+      description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
     } as const
   }
 
@@ -45,7 +45,7 @@ function SecurityCouncil(delaySeconds: number) {
       ...common,
       value: `SC ${formatSeconds(delaySeconds)}`,
       sentiment: 'warning',
-      description: 'TODO',
+      description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
     } as const
   }
 
@@ -53,7 +53,7 @@ function SecurityCouncil(delaySeconds: number) {
     ...common,
     value: `SC ${formatSeconds(delaySeconds)}`,
     sentiment: 'bad',
-    description: 'TODO',
+    description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
   } as const
 }
 
@@ -67,7 +67,7 @@ function Eoa(delaySeconds: number) {
       ...common,
       value: formatSeconds(delaySeconds),
       sentiment: 'warning',
-      description: 'TODO',
+      description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
     } as const
   }
 
@@ -75,7 +75,7 @@ function Eoa(delaySeconds: number) {
     ...common,
     value: formatSeconds(delaySeconds),
     sentiment: 'bad',
-    description: 'TODO',
+    description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
   } as const
 }
 
@@ -89,7 +89,7 @@ function LowOrNoDelay(delaySeconds?: number) {
     type: 'LowOrNoDelay',
     value,
     sentiment: 'bad',
-    description: 'TODO',
+    description: 'There is no delay to bridge contract updates. Users have no time to exit the system before the bridge implementation update is completed.',
   } as const
 }
 

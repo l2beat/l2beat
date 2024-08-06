@@ -26,7 +26,7 @@ function SigVerified(areSignersTracked: boolean) {
     type: 'SigVerified',
     value: 'Signatures verified',
     sentiment: areSignersTracked ? 'good' : 'warning',
-    description: 'TODO',
+    description: 'Data availability attestations are posted to Ethereum together with the signatures of the committee members. The signatures are verified onchain against the set quorum of signers.',
   } as const
 }
 
@@ -35,7 +35,7 @@ function SigVerifiedZK(areSignersTracked: boolean) {
     type: 'SigVerifiedZK',
     value: 'Signatures verified (ZK-Proof)',
     sentiment: areSignersTracked ? 'good' : 'warning',
-    description: 'TODO',
+    description: 'Data availability attestations are posted to Ethereum in the form of a zero-knowledge proof. The proof includes the signatures of the committee members verification, which are verified onchain against the set quorum of signers.',
   } as const
 }
 
@@ -43,7 +43,7 @@ const NotVerified = {
   type: 'NotVerified',
   value: 'Signatures not verified',
   sentiment: 'bad',
-  description: 'TODO',
+  description: 'Data availability attestations are posted to Ethereum without the signatures of the committee members. The signatures are not verified onchain.',
 } as const
 
 export const DaAttestationSecurityRisk = {
