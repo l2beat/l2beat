@@ -35,7 +35,6 @@ export const parallel: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  usesBlobs: true,
   trackedTxs: [
     {
       uses: [
@@ -143,10 +142,6 @@ export const parallel: Layer2 = orbitStackL2({
     }),
   ],
   nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
     {
       name: 'RollupOwner',
       accounts: discovery.getAccessControlRolePermission(
