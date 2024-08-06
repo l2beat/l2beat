@@ -24,7 +24,10 @@
         "checkHighTierVoteWeightThreshold",
         "checkThreshold",
         "withdrawalHash",
-        "withdrawalLocked"
+        "withdrawalLocked",
+        "checkThreshold",
+        "globalProposalRelayed",
+        "round"
       ],
       "ignoreInWatchMode": ["depositCount"],
       "fields": {
