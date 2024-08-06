@@ -55,7 +55,15 @@ export function useScalingFilterValues() {
       'useScalingFilterContext must be used within a ScalingFilterContextProvider',
     )
   }
-  return context
+  return {
+    ...context,
+    // Check if all values are default, in which case the filter is effectively disabled
+    // This is used e.g. to determine if we should pass the project list to the backend
+    // or just use the predefined query type.
+    empty: (Object.keys(defaultValues) as (keyof typeof defaultValues)[]).every(
+      (key) => context[key] === defaultValues[key],
+    ),
+  }
 }
 
 export function useScalingFilter() {

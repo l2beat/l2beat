@@ -5,8 +5,12 @@ import { About } from '~/app/_components/about'
 import { TvlChart } from '~/app/_components/chart/tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { OtherSites } from '~/app/_components/other-sites'
+import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
-import { getTvl } from '~/server/features/scaling/get-tvl'
+import { getLatestTvl } from '~/server/features/tvl/get-latest-tvl'
+import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
+import { HydrateClient, api } from '~/trpc/server'
+import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 
@@ -20,18 +24,35 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const tvl = await getTvl()
-  const { layer2s, layer3s } = await getScalingSummaryEntries(tvl)
+  const implementationChangeReport = await getImplementationChangeReport()
+  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
+  const latestTvl = await getLatestTvl({
+    type: 'layer2',
+  })
+
+  // This gets all the data for the table, but NOT the % change (which comes from the API)
+  const projects = await getScalingSummaryEntries({
+    tvl: latestTvl,
+    implementationChangeReport,
+    projectsVerificationStatuses,
+  })
+
+  await api.scaling.summary.prefetch({
+    type: 'layer2',
+    range: getCookie('chartRange'),
+  })
 
   return (
-    <ScalingFilterContextProvider>
+    <HydrateClient>
       <div className="mb-20">
-        <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
-        <HorizontalSeparator className="my-4 md:my-6" />
-        <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
+        <ScalingFilterContextProvider>
+          <TvlChart latestTvl={latestTvl} milestones={HOMEPAGE_MILESTONES} />
+          <HorizontalSeparator className="my-4 md:my-6" />
+          <ScalingSummaryTables {...{ projects }} />
+        </ScalingFilterContextProvider>
         <OtherSites />
         <About />
       </div>
-    </ScalingFilterContextProvider>
+    </HydrateClient>
   )
 }

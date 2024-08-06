@@ -90,6 +90,7 @@ function TableFilterSelect<T extends string>({
   return (
     <Select
       open={open}
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       value={value ?? ''}
       onOpenChange={setOpen}
       onValueChange={(v) => {

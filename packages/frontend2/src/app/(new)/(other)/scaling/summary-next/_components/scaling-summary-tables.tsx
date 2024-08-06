@@ -12,12 +12,13 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
-import { useScalingFilter } from '../../../_components/scaling-filter-context'
+  useScalingFilter,
+  useScalingFilterValues,
+} from '../../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../../_components/scaling-filters'
+import { toTableRows } from '../_utils/to-table-rows'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
@@ -25,37 +26,62 @@ import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
 
 interface Props {
-  layer2s: ScalingSummaryLayer2sEntry[]
-  layer3s: ScalingSummaryLayer3sEntry[]
+  projects: ScalingSummaryEntry[]
 }
 
-export function ScalingSummaryTables({ layer2s, layer3s }: Props) {
+export function ScalingSummaryTables({ projects }: Props) {
+  const values = useScalingFilterValues()
   const includeFilters = useScalingFilter()
 
   const layer2sProjects = useMemo(
     () =>
-      layer2s.filter(
-        (item) => !item.isArchived && !item.isUpcoming && includeFilters(item),
-      ),
-    [layer2s, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) =>
+            item.type === 'layer2' &&
+            !item.isArchived &&
+            !item.isUpcoming &&
+            includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
+
   const layer3sProjects = useMemo(
     () =>
-      layer3s.filter(
-        (item) => !item.isArchived && !item.isUpcoming && includeFilters(item),
-      ),
-    [layer3s, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) =>
+            item.type === 'layer3' &&
+            !item.isArchived &&
+            !item.isUpcoming &&
+            includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
   const upcomingProjects = useMemo(
     () =>
-      [...layer2s, ...layer3s].filter(
-        (item) => item.isUpcoming && includeFilters(item),
-      ),
-    [layer2s, layer3s, includeFilters],
+      toTableRows({
+        projects: projects.filter(
+          (item) => item.isUpcoming && includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
+
   const archivedProjects = useMemo(
-    () => layer2s.filter((item) => item.isArchived && includeFilters(item)),
-    [layer2s, includeFilters],
+    () =>
+      toTableRows({
+        projects: projects.filter(
+          (item) => item.isArchived && includeFilters(item),
+        ),
+        excludeAssociatedTokens: values.excludeAssociatedTokens,
+      }),
+    [projects, values.excludeAssociatedTokens, includeFilters],
   )
 
   const layer2sTable = useTable({

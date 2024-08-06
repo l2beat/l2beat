@@ -1,4 +1,19 @@
+import { z } from 'zod'
 import { type TvlProject } from './get-tvl-projects'
+
+export const scalingCommonProjectsFilter = z.object({
+  rollupsOnly: z.boolean(),
+  category: z.string().optional(),
+  stack: z.string().optional(),
+  stage: z.string().optional(),
+  purpose: z.string().optional(),
+  hostChain: z.string().optional(),
+  daLayer: z.string().optional(),
+})
+
+export const scalingTvlFilter = scalingCommonProjectsFilter.extend({
+  excludeAssociatedTokens: z.boolean(),
+})
 
 export type TvlProjectFilter =
   | { type: 'all' | TvlProject['type'] }

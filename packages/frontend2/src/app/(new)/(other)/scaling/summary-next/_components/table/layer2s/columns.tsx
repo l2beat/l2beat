@@ -8,11 +8,11 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
 import { formatPercent } from '~/utils/get-percentage-change'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingLayer2sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -93,16 +93,23 @@ export const scalingLayer2sColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <TotalCell
+          associatedTokenSymbols={value.associatedTokens}
+          tvlWarnings={value.warnings}
+          breakdown={value.breakdown}
+          change={value.change ?? undefined}
+        />
+      )
     },
     sortUndefined: 'last',
     meta: {
@@ -112,7 +119,7 @@ export const scalingLayer2sColumns = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor((e) => e.tvlData?.marketShare, {
+  columnHelper.accessor((e) => e.marketShare, {
     header: 'Market share',
     cell: (ctx) => {
       const value = ctx.getValue()

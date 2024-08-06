@@ -5,10 +5,10 @@ import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingArchivedColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -81,16 +81,23 @@ export const scalingArchivedColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <TotalCell
+          associatedTokenSymbols={value.associatedTokens}
+          tvlWarnings={value.warnings}
+          breakdown={value.breakdown}
+          change={value.change ?? undefined}
+        />
+      )
     },
     meta: {
       headClassName: 'justify-end',
