@@ -1,7 +1,7 @@
 {
   "name": "termstructure",
   "chain": "ethereum",
-  "blockNumber": 20461012,
+  "blockNumber": 20469346,
   "configHash": "0xbc9a459ceb78018e275b623a83c95165762b20ec7e4c2b1a295ea48585cc0e6a",
   "version": 10,
   "contracts": [
@@ -207,7 +207,7 @@
         },
         "getAaveV3Pool": "0x87870Bca3F3fD6335C3F4ce8392D69350B4fA4E2",
         "getAccountNum": 53,
-        "getBlockNum": [183, 183, 183],
+        "getBlockNum": [194, 194, 194],
         "getBorrowFeeRate": 10000000,
         "getEvacuVerifier": "0x9c7Df3981A89eD04588907843fe2a6c1BcCc4467",
         "getFallbackAddress": "0x0000000000000000000000000000000000000000",
@@ -215,10 +215,10 @@
         "getFundWeight": { "treasury": 0, "insurance": 0, "vault": 10000 },
         "getHalfLiquidationThreshold": 10000,
         "getInsuranceAddr": "0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165",
-        "getL1RequestNum": [228, 228, 229],
+        "getL1RequestNum": [233, 233, 233],
         "getPoseidonUnit2": "0x3B1D7E06a1bFfD89ECd8026CF287C11F6Ec34f0D",
         "getRollOverFee": "10000000000000000",
-        "getTokenNum": 76,
+        "getTokenNum": 78,
         "getTreasuryAddr": "0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca",
         "getVaultAddr": "0x23bCad9BFB1378cd45b32525B835F037b673f529",
         "getVerifier": "0x23369A60E5A8f422E38d799eD55e7AD8Ed4A86cE",
@@ -246,7 +246,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
+        "$multisigThreshold": "4 of 6 (67%)",
         "domainSeparator": "0xcbdbe6506e1cb79232f4c965204bb95931a2e6dbfe5aaf5dd3b10f93d06d404a",
         "getChainId": 1,
         "getOwners": [
@@ -257,9 +257,9 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 3,
+        "getThreshold": 4,
         "GnosisSafe_modules": [],
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -274,7 +274,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
+        "$multisigThreshold": "4 of 6 (67%)",
         "domainSeparator": "0xa8d496ef58694c5b643be9bfdef2a52066c56fe63e93ee7b0d35bfd3c7385cd5",
         "getChainId": 1,
         "getOwners": [
@@ -285,9 +285,9 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 3,
+        "getThreshold": 4,
         "GnosisSafe_modules": [],
-        "nonce": 3,
+        "nonce": 4,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -368,7 +368,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
+        "$multisigThreshold": "4 of 6 (67%)",
         "domainSeparator": "0x06a4de0d5b7b1171090ba38e2dc6ef3c5e2c8219915ef5a272fad0d29f2a9c06",
         "getChainId": 1,
         "getOwners": [
@@ -379,9 +379,9 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 3,
+        "getThreshold": 4,
         "GnosisSafe_modules": [],
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
