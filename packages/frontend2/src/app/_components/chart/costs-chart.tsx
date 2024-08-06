@@ -2,12 +2,10 @@
 
 import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
-import { useMemo } from 'react'
-import { useCostsMetricContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-metric-context'
+import { useCallback, useMemo } from 'react'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
-import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
@@ -23,6 +21,7 @@ import { HorizontalSeparator } from '../horizontal-separator'
 import { Square } from '../square'
 import { useChartLoading } from './core/chart-loading-context'
 import { mapMilestones } from './utils/map-milestones'
+import { CostsChartTimeRangeControls } from './controls/costs-chart-time-range-controls'
 
 interface CostsChartPointData {
   timestamp: number
@@ -40,21 +39,25 @@ interface Props {
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
 export function CostsChart({ milestones, tag = 'costs' }: Props) {
-  const { range, setRange } = useCostsTimeRangeContext()
-  const { metric } = useCostsMetricContext()
-  const { unit, setUnit } = useCostsUnitContext()
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
-
+  const { range, setRange } = useCostsTimeRangeContext()
+  const { unit, setUnit } = useCostsUnitContext()
   const { data: chart } = api.scaling.costs.chart.useQuery({
     range,
   })
 
-  const mappedMilestones = mapMilestones(milestones)
+  const mappedMilestones = useMemo(
+    () => mapMilestones(milestones),
+    [milestones],
+  )
 
-  const formatYAxisLabel = (value: number) =>
-    unit === 'gas'
-      ? formatNumber(value)
-      : formatCurrency(value, unit, { showLessThanMinimum: false })
+  const formatYAxisLabel = useCallback(
+    (value: number) =>
+      unit === 'gas'
+        ? formatNumber(value)
+        : formatCurrency(value, unit, { showLessThanMinimum: false }),
+    [unit],
+  )
 
   const columns = useMemo(
     () =>
@@ -102,33 +105,9 @@ export function CostsChart({ milestones, tag = 'costs' }: Props) {
         useLogScale={scale === 'log'}
         renderHoverContents={(data) => <ChartHover data={data} unit={unit} />}
       >
-        <ChartTimeRangeControls
-          value={range}
-          setValue={setRange}
-          options={[
-            {
-              value: '1d',
-              label: '1D',
-              disabled: metric === 'per-l2-tx',
-            },
-            {
-              value: '7d',
-              label: '7D',
-              disabled: metric === 'per-l2-tx',
-            },
-            {
-              value: '30d',
-              label: '30D',
-            },
-            {
-              value: '90d',
-              label: '90D',
-            },
-            {
-              value: '180d',
-              label: '180D',
-            },
-          ]}
+        <CostsChartTimeRangeControls
+          timeRange={range}
+          setTimeRange={setRange}
           range={[rangeStart, rangeEnd]}
         />
         <Chart />
@@ -236,26 +215,26 @@ function UnitAndScaleControls({
 }) {
   const loading = useChartLoading()
 
-  if (loading) {
-    return (
-      <div className="flex items-center justify-between gap-2">
-        <Skeleton className="h-8 w-[104.82px]" />
-        <Skeleton className="h-8 w-[98.63px]" />
-      </div>
-    )
-  }
-
   return (
     <div className="flex items-center justify-between gap-2">
-      <RadioGroup value={unit} onValueChange={setUnit}>
-        <RadioGroupItem value="usd">USD</RadioGroupItem>
-        <RadioGroupItem value="eth">ETH</RadioGroupItem>
-        <RadioGroupItem value="gas">GAS</RadioGroupItem>
-      </RadioGroup>
-      <RadioGroup value={scale} onValueChange={setScale}>
-        <RadioGroupItem value="log">LOG</RadioGroupItem>
-        <RadioGroupItem value="lin">LIN</RadioGroupItem>
-      </RadioGroup>
+      {loading ? (
+        <>
+          <Skeleton className="h-8 w-[104.82px]" />
+          <Skeleton className="h-8 w-[98.63px]" />
+        </>
+      ) : (
+        <>
+          <RadioGroup value={unit} onValueChange={setUnit}>
+            <RadioGroupItem value="usd">USD</RadioGroupItem>
+            <RadioGroupItem value="eth">ETH</RadioGroupItem>
+            <RadioGroupItem value="gas">GAS</RadioGroupItem>
+          </RadioGroup>
+          <RadioGroup value={scale} onValueChange={setScale}>
+            <RadioGroupItem value="log">LOG</RadioGroupItem>
+            <RadioGroupItem value="lin">LIN</RadioGroupItem>
+          </RadioGroup>
+        </>
+      )}
     </div>
   )
 }
