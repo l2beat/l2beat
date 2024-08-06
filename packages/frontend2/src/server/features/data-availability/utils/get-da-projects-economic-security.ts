@@ -1,6 +1,6 @@
 import { daLayers } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
-import { compact, keyBy } from 'lodash'
+import { compact, keyBy, round } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -48,13 +48,12 @@ const getCachedEconomicSecurity = cache(
       if (!currentPrice) {
         return { id, status: 'CurrentPriceNotSynced' as const }
       }
-
       return {
         id,
         status: 'Synced' as const,
         // We're intentionally trading precision for ease of use in Client Components
         economicSecurity:
-          Number((thresholdStake * BigInt(currentPrice * 100)) / 100n) /
+          Number((thresholdStake * BigInt(round(currentPrice * 100))) / 100n) /
           10 ** meta.decimals,
       }
     })

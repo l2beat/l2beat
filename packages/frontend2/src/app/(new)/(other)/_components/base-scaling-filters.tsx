@@ -11,6 +11,7 @@ interface Props {
   items: CommonScalingEntry[]
   showRollupsOnly?: boolean
   additionalFiltersLeft?: React.ReactNode
+  // NOTE (torztomasz): I don't want to remove this as it will break other PR that @imxeno made. But I think it is not needed here and the behavior is wrong.
   additionalFiltersRight?: React.ReactNode
 }
 
