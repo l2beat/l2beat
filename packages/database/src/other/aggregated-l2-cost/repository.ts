@@ -59,22 +59,6 @@ export class AggregatedL2CostRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  async getByProjectAndTimeRange(
-    projectId: ProjectId,
-    timeRange: [UnixTime, UnixTime],
-  ): Promise<AggregatedL2CostRecord[]> {
-    const [from, to] = timeRange
-    const rows = await this.db
-      .selectFrom('public.aggregated_l2_costs')
-      .select(selectAggregatedL2Costs)
-      .where('project_id', '=', projectId.toString())
-      .where('timestamp', '>=', from.toDate())
-      .where('timestamp', '<', to.toDate())
-      .orderBy('timestamp', 'asc')
-      .execute()
-    return rows.map(toRecord)
-  }
-
   async getByProjectsAndTimeRange(
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
