@@ -7,7 +7,7 @@ declare module '@tanstack/react-table' {
     hash?: string
     cellClassName?: string
     headClassName?: string
-    align?: 'right'
+    align?: 'right' | 'center'
     tooltip?: ReactNode
   }
 }

@@ -77,7 +77,7 @@ const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement> & {
     tooltip?: React.ReactNode
-    align?: 'right'
+    align?: 'right' | 'center'
   }
 >(({ className, children, tooltip, align, ...props }, ref) => (
   <th
@@ -91,6 +91,7 @@ const TableHead = React.forwardRef<
     <div
       className={cn(
         'flex items-end gap-1.5 leading-none',
+        align === 'center' && 'justify-center',
         align === 'right' && 'justify-end',
       )}
     >
@@ -105,7 +106,7 @@ const TableCell = React.forwardRef<
   HTMLTableCellElement,
   React.TdHTMLAttributes<HTMLTableCellElement> & {
     href?: string
-    align?: 'right'
+    align?: 'right' | 'center'
   }
 >(({ className, children, href, align, ...props }, ref) => (
   <td
@@ -114,6 +115,7 @@ const TableCell = React.forwardRef<
       'group h-9 whitespace-pre align-middle md:h-14',
       !href && [
         'pr-3 first:pl-2 last:pr-2',
+        align === 'center' && 'text-center',
         align === 'right' && 'text-right',
         className,
       ],
@@ -125,6 +127,7 @@ const TableCell = React.forwardRef<
         href={href}
         className={cn(
           'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+          align === 'center' && 'justify-center',
           align === 'right' && 'justify-end',
           className,
         )}

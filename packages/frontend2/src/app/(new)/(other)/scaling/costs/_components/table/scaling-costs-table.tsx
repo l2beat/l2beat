@@ -35,11 +35,11 @@ export function ScalingCostsTable(props: Props) {
   )
 
   const tableEntries = useMemo(() => {
-    const tableEntries = props.entries.map((e) =>
+    const tableEntries = filteredEntries.map((e) =>
       mapToTableEntry(e, data, unit),
     )
     return tableEntries ? calculateDataByType(tableEntries, metric) : []
-  }, [data, props.entries, metric, unit])
+  }, [data, filteredEntries, metric, unit])
 
   const table = useTable({
     data: tableEntries,
@@ -73,7 +73,7 @@ export function ScalingCostsTable(props: Props) {
         <ScalingFilters items={filteredEntries} />
         <CostsMetricControls value={metric} onValueChange={onMetricChange} />
       </div>
-      <BasicTable table={table} />
+      <BasicTable table={table} className="mt-3 md:mt-6" />
     </div>
   )
 }

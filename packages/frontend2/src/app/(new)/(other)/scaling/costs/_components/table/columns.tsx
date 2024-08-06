@@ -70,31 +70,47 @@ export const scalingCostsColumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} />,
   }),
-  columnHelper.accessor('data.total', {
-    header: 'Total cost',
-    cell: (ctx) => {
-      const data = ctx.row.original.data
-      if (data.type === 'available') {
-        return (
-          <CostsTotalCell data={data} warning={ctx.row.original.costsWarning} />
-        )
-      }
+  columnHelper.group({
+    id: 'total-cost',
+    header: undefined,
+    columns: [
+      columnHelper.accessor('data.total', {
+        header: 'Total cost',
+        cell: (ctx) => {
+          const data = ctx.row.original.data
+          if (data.type === 'available') {
+            return (
+              <CostsTotalCell
+                data={data}
+                warning={ctx.row.original.costsWarning}
+              />
+            )
+          }
 
-      switch (data.reason) {
-        case 'loading':
-          return <Skeleton className="h-8 w-full" />
-        case 'coming-soon':
-          return <UpcomingBadge />
-        case 'no-tx-count':
-          return EM_DASH
-        default:
-          assertUnreachable(data.reason)
-      }
-    },
-    meta: {
-      hash: 'costs',
-    },
+          switch (data.reason) {
+            case 'loading':
+              return <Skeleton className="h-8 w-full" />
+            case 'coming-soon':
+              return <UpcomingBadge />
+            case 'no-tx-count':
+              return EM_DASH
+            default:
+              assertUnreachable(data.reason)
+          }
+        },
+        sortUndefined: 'last',
+        meta: {
+          hash: 'costs',
+          align: 'center',
+          tooltip:
+            'The total cost that is a sum of the costs for calldata, computation, blobs, and overhead.',
+          cellClassName: '!px-2',
+          headClassName: '!px-2',
+        },
+      }),
+    ],
   }),
+
   columnHelper.accessor('data.calldata', {
     header: 'Calldata',
     cell: (ctx) => {
@@ -115,6 +131,7 @@ export const scalingCostsColumns = [
           assertUnreachable(data.reason)
       }
     },
+    sortUndefined: 'last',
     meta: {
       hash: 'costs',
       align: 'right',
@@ -145,6 +162,7 @@ export const scalingCostsColumns = [
           assertUnreachable(data.reason)
       }
     },
+    sortUndefined: 'last',
     meta: {
       hash: 'costs',
       align: 'right',
@@ -175,6 +193,7 @@ export const scalingCostsColumns = [
           assertUnreachable(data.reason)
       }
     },
+    sortUndefined: 'last',
     meta: {
       hash: 'costs',
       align: 'right',
@@ -206,6 +225,7 @@ export const scalingCostsColumns = [
           assertUnreachable(data.reason)
       }
     },
+    sortUndefined: 'last',
     meta: {
       hash: 'costs',
       align: 'right',
@@ -217,6 +237,7 @@ export const scalingCostsColumns = [
         'The cost of the fixed 21,000 GAS overhead per L1 transaction for the selected time period. Shows a sum or an average per L2 transaction, depending on the selected option.',
     },
   }),
+
   columnHelper.accessor('data.txCount', {
     header: 'L2 Tx count',
     cell: (ctx) => {
@@ -237,6 +258,7 @@ export const scalingCostsColumns = [
           assertUnreachable(data.reason)
       }
     },
+    sortUndefined: 'last',
     meta: {
       hash: 'costs',
       align: 'right',
