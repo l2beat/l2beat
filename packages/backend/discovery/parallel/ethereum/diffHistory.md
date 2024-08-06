@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x92bed3f93bb7b3a89690079407db0bd44b17e955
+
+# Diff at Tue, 06 Aug 2024 11:35:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@636940e9998601360990d4bbb59e5d257345bee1 block: 20454427
+- current block number: 20469265
+
+## Description
+
+Conduit multisig is removed from permissions and replaced by an EOA. The single validator is replaced.
+There is one batch posted with calldata and the Sequencer only window is increased and then reset again to the old value. (`maxTimeVariation.delaySeconds`)
+The wasmModuleRoot is changed to the ArbOS 31 root. ([compare Nitro GH repo](https://github.com/OffchainLabs/nitro/blob/7defbd2f59ffc53229eddaa5d6588e1a81ed90ff/Dockerfile#L220))
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.lastStakeBlock:
+-        18914041
++        20468408
+      values.setValidatorCount:
+-        1
++        2
+      values.stakerCount:
+-        1
++        2
+      values.validators.0:
+-        "0x56D33424edb428744597Ec02571f14B50a33b7de"
++        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.batchPosters.0:
+-        "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"
++        "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4"
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        true
++        false
+      values.postsBlobs:
+-        true
++        false
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.2:
+-        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
++        "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ConduitMultisig/GnosisSafe.sol => /dev/null    | 952 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  34 -
+ 2 files changed, 986 deletions(-)
+```
+
 Generated with discovered.json: 0x81a29071fa30ab118e27cf7bf790151320c2728c
 
 # Diff at Sun, 04 Aug 2024 09:55:30 GMT:
