@@ -19,9 +19,9 @@ import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { HorizontalSeparator } from '../horizontal-separator'
 import { Square } from '../square'
+import { CostsChartTimeRangeControls } from './controls/costs-chart-time-range-controls'
 import { useChartLoading } from './core/chart-loading-context'
 import { mapMilestones } from './utils/map-milestones'
-import { CostsChartTimeRangeControls } from './controls/costs-chart-time-range-controls'
 
 interface CostsChartPointData {
   timestamp: number
