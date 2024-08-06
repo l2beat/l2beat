@@ -133,7 +133,7 @@ function calculateDataByType(
         ...e,
         data: {
           type: 'not-available',
-          reason: 'no-tx-count',
+          reason: 'no-per-tx-metric',
         },
       }
     return {

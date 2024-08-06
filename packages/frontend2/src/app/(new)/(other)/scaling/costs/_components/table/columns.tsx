@@ -1,7 +1,6 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { Skeleton } from '~/app/_components/skeleton'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
@@ -17,10 +16,12 @@ import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
 import { CostsTotalCell } from '../costs-total-cell'
 
 export type ScalingCostsTableEntry = ScalingCostsEntry & {
-  data: CostsAvailableData | CostsNotAvailableData
+  data: CostsData
 }
 
-export type CostsAvailableData = {
+export type CostsData = CostsAvailableData | CostsNotAvailableData
+
+type CostsAvailableData = {
   type: 'available'
   total: number
   calldata: number
@@ -33,7 +34,7 @@ export type CostsAvailableData = {
 }
 type CostsNotAvailableData = {
   type: 'not-available'
-  reason: 'loading' | 'coming-soon' | 'no-tx-count'
+  reason: 'loading' | 'coming-soon' | 'no-per-tx-metric'
   syncStatus?: never
 }
 
@@ -76,28 +77,12 @@ export const scalingCostsColumns = [
     columns: [
       columnHelper.accessor('data.total', {
         header: 'Total cost',
-        cell: (ctx) => {
-          const data = ctx.row.original.data
-          if (data.type === 'available') {
-            return (
-              <CostsTotalCell
-                data={data}
-                warning={ctx.row.original.costsWarning}
-              />
-            )
-          }
-
-          switch (data.reason) {
-            case 'loading':
-              return <Skeleton className="h-8 w-full" />
-            case 'coming-soon':
-              return <UpcomingBadge />
-            case 'no-tx-count':
-              return EM_DASH
-            default:
-              assertUnreachable(data.reason)
-          }
-        },
+        cell: (ctx) => (
+          <CostsTotalCell
+            data={ctx.row.original.data}
+            warning={ctx.row.original.costsWarning}
+          />
+        ),
         sortUndefined: 'last',
         meta: {
           hash: 'costs',
@@ -110,27 +95,11 @@ export const scalingCostsColumns = [
       }),
     ],
   }),
-
   columnHelper.accessor('data.calldata', {
     header: 'Calldata',
-    cell: (ctx) => {
-      const data = ctx.row.original.data
-      if (data.type === 'available') {
-        return (
-          <CostsBreakdownValueCell value={data.calldata} unit={data.unit} />
-        )
-      }
-
-      switch (data.reason) {
-        case 'loading':
-          return <Skeleton className="ml-auto h-6 w-20" />
-        case 'coming-soon':
-        case 'no-tx-count':
-          return EM_DASH
-        default:
-          assertUnreachable(data.reason)
-      }
-    },
+    cell: (ctx) => (
+      <CostsBreakdownValueCell data={ctx.row.original.data} type="calldata" />
+    ),
     sortUndefined: 'last',
     meta: {
       hash: 'costs',
@@ -146,22 +115,9 @@ export const scalingCostsColumns = [
   }),
   columnHelper.accessor('data.blobs', {
     header: 'Blobs',
-    cell: (ctx) => {
-      const data = ctx.row.original.data
-      if (data.type === 'available') {
-        return <CostsBreakdownValueCell value={data.blobs} unit={data.unit} />
-      }
-
-      switch (data.reason) {
-        case 'loading':
-          return <Skeleton className="ml-auto h-6 w-20" />
-        case 'coming-soon':
-        case 'no-tx-count':
-          return EM_DASH
-        default:
-          assertUnreachable(data.reason)
-      }
-    },
+    cell: (ctx) => (
+      <CostsBreakdownValueCell data={ctx.row.original.data} type="blobs" />
+    ),
     sortUndefined: 'last',
     meta: {
       hash: 'costs',
@@ -177,22 +133,9 @@ export const scalingCostsColumns = [
   }),
   columnHelper.accessor('data.compute', {
     header: 'Compute',
-    cell: (ctx) => {
-      const data = ctx.row.original.data
-      if (data.type === 'available') {
-        return <CostsBreakdownValueCell value={data.compute} unit={data.unit} />
-      }
-
-      switch (data.reason) {
-        case 'loading':
-          return <Skeleton className="ml-auto h-6 w-20" />
-        case 'coming-soon':
-        case 'no-tx-count':
-          return EM_DASH
-        default:
-          assertUnreachable(data.reason)
-      }
-    },
+    cell: (ctx) => (
+      <CostsBreakdownValueCell data={ctx.row.original.data} type="compute" />
+    ),
     sortUndefined: 'last',
     meta: {
       hash: 'costs',
@@ -207,24 +150,9 @@ export const scalingCostsColumns = [
   }),
   columnHelper.accessor('data.overhead', {
     header: 'Overhead',
-    cell: (ctx) => {
-      const data = ctx.row.original.data
-      if (data.type === 'available') {
-        return (
-          <CostsBreakdownValueCell value={data.overhead} unit={data.unit} />
-        )
-      }
-
-      switch (data.reason) {
-        case 'loading':
-          return <Skeleton className="ml-auto h-6 w-20" />
-        case 'coming-soon':
-        case 'no-tx-count':
-          return EM_DASH
-        default:
-          assertUnreachable(data.reason)
-      }
-    },
+    cell: (ctx) => (
+      <CostsBreakdownValueCell data={ctx.row.original.data} type="overhead" />
+    ),
     sortUndefined: 'last',
     meta: {
       hash: 'costs',
@@ -252,7 +180,7 @@ export const scalingCostsColumns = [
         case 'loading':
           return <Skeleton className="ml-auto h-6 w-24" />
         case 'coming-soon':
-        case 'no-tx-count':
+        case 'no-per-tx-metric':
           return EM_DASH
         default:
           assertUnreachable(data.reason)

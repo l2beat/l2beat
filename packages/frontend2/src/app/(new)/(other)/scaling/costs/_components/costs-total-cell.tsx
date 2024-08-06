@@ -10,14 +10,31 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
-import { type CostsAvailableData } from './table/columns'
+import { type CostsData } from './table/columns'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { EM_DASH } from '~/app/_components/nav/consts'
+import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
+import { Skeleton } from '~/app/_components/skeleton'
 
 interface CellProps {
-  data: CostsAvailableData
+  data: CostsData
   warning: WarningWithSentiment | undefined
 }
 
 export function CostsTotalCell({ data, warning }: CellProps) {
+  if (data.type === 'not-available') {
+    switch (data.reason) {
+      case 'loading':
+        return <Skeleton className="h-8 w-full" />
+      case 'coming-soon':
+        return <UpcomingBadge />
+      case 'no-per-tx-metric':
+        return EM_DASH
+      default:
+        assertUnreachable(data.reason)
+    }
+  }
+
   const formatted = formatCostValue(data.total, data.unit)
 
   return (
