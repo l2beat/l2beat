@@ -1,10 +1,13 @@
+import { assert } from '@l2beat/shared-pure'
 import {
   type Column,
   type Header,
   type Table as TanstackTable,
   flexRender,
 } from '@tanstack/react-table'
+import { range } from 'lodash'
 import { type CSSProperties } from 'react'
+import React from 'react'
 import { cn } from '~/utils/cn'
 import { SortingArrows } from './sorting/sorting-arrows'
 import {
@@ -17,9 +20,6 @@ import {
   TableRow,
 } from './table'
 import { TableEmptyState } from './table-empty-state'
-import { assert } from '@l2beat/shared-pure'
-import { range } from 'lodash'
-import React from 'react'
 
 interface BasicEntry {
   slug: string
