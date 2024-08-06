@@ -1,3 +1,40 @@
+Generated with discovered.json: 0x81a29071fa30ab118e27cf7bf790151320c2728c
+
+# Diff at Sun, 04 Aug 2024 09:55:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20324735
+- current block number: 20454427
+
+## Description
+
+A second Multisig is added as UpgradeExecutor.
+Furthermore, the UpgradeExecutor was EOA-governed since Jan 2024 by `0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C`.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/ParallelMultisig/GnosisSafe.sol | 952 +++++++++++++++++++++
+ .../.flat/ParallelMultisig/GnosisSafeProxy.p.sol   |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
 Generated with discovered.json: 0xa983c9d48afcdea5e41c24942fc90aaf13668f51
 
 # Diff at Tue, 30 Jul 2024 11:13:33 GMT:

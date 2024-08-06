@@ -1,3 +1,85 @@
+Generated with discovered.json: 0x8f5d8415ab31f273cd4bff9f106712375d2d7645
+
+# Diff at Sun, 04 Aug 2024 09:42:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20367941
+- current block number: 20454363
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.72:
++        "0xcb473D87A56b4609A695753711F727E5c4335cCf"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.71:
++        "0x91CE463148bD7695d4db41f4aA36088E502428F7"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20367941 (main branch discovery), not current.
+
+```diff
+    contract ExecutionManager (0x98CAd9A205f1F7A7150241Ef2d565d1702BCe57C) {
+    +++ description: None
+      unverified:
+-        true
+      values.chainSlug:
++        1
+      values.nominee:
++        "0x0000000000000000000000000000000000000000"
+      values.owner:
++        "0xB0BBff6311B7F245761A7846d3Ce7B1b100C1836"
+      values.signatureVerifier__:
++        "0xf1ABF110d1B6ff0E2e8C05dd64FBF9eBA4d8af98"
+      values.socket__:
++        "0x943AC2775928318653e91d350574436A1b9b16f9"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract PAXG Vault Kinto (0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract KINTO Vault Kinto (0x2f87464d5F5356dB350dcb302FE28040986783a7)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sDAI Vault Polynomial (0x615172e47c0C5A6dA8ea959632Ac0166f7a59eDc)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract sUSDe Vault Polynomial (0xC6cfb996A7CFEB89813A68CD13942CD75553032b)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract USDC Vault Polynomial (0xDE1617Ddb7C8A250A409D986930001985cfad76F)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x5a0294e708ba021053396e9744016dc2fb847ec7
 
 # Diff at Tue, 30 Jul 2024 11:14:38 GMT:

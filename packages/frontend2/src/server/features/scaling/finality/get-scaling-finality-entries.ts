@@ -1,5 +1,10 @@
 import { type Layer2 } from '@l2beat/config'
-import { type ProjectId, UnixTime, notUndefined } from '@l2beat/shared-pure'
+import {
+  type ProjectId,
+  type ProjectsVerificationStatuses,
+  UnixTime,
+  notUndefined,
+} from '@l2beat/shared-pure'
 import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../../tvl/order-by-tvl'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
@@ -14,6 +19,7 @@ export async function getScalingFinalityEntries(
   tvl: Record<ProjectId, number>,
   finality: FinalityData,
   implementationChangeReport: ImplementationChangeReport,
+  projectsVerificationStatuses: ProjectsVerificationStatuses,
 ) {
   const includedProjects = getIncludedProjects(projects, finality)
   const orderedProjects = orderByTvl(includedProjects, tvl)
@@ -22,10 +28,12 @@ export async function getScalingFinalityEntries(
     .map((project) => {
       const hasImplementationChanged =
         !!implementationChangeReport.projects[project.id.toString()]
+      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
 
       return getScalingFinalityEntry(
         project,
         finality[project.id.toString()],
+        isVerified,
         hasImplementationChanged,
       )
     })
@@ -80,12 +88,14 @@ function getIncludedProjects(projects: Layer2[], finality: FinalityData) {
 function getScalingFinalityEntry(
   project: Layer2,
   finalityProjectData: FinalityProjectData | undefined,
+  isVerified: boolean,
   hasImplementationChanged?: boolean,
 ): ScalingFinalityEntry {
   return {
+    entryType: 'finality',
     ...getCommonScalingEntry({
       project,
-      isVerified: false,
+      isVerified,
       hasImplementationChanged: hasImplementationChanged ?? false,
     }),
     dataAvailabilityMode: project.dataAvailability?.mode,

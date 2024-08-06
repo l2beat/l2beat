@@ -1,8 +1,8 @@
 {
   "name": "worldcoin",
   "chain": "optimism",
-  "blockNumber": 123452401,
-  "configHash": "0x866d8e56e1c1a51595f23609a298d78ec9d2c8898a4e9b2e24bb1ffff1356b15",
+  "blockNumber": 123584561,
+  "configHash": "0xacfdf8cae6b79206af8daa019648487244a36aebfae0394e9a29e7ea1544a351",
   "version": 10,
   "contracts": [
     {
@@ -191,6 +191,7 @@
       "name": "WorldIDIdentityManagerV2",
       "address": "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a",
       "proxyType": "EIP1967 proxy",
+      "ignoreInWatchMode": ["latestRoot"],
       "sinceTimestamp": 1721036137,
       "values": {
         "$admin": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
@@ -201,7 +202,7 @@
         "getSemaphoreVerifierAddress": "0x31b0e17db1D02B079177698dF2eD7037Fc1d0B2c",
         "getTreeDepth": 30,
         "identityOperator": "0x997c96386A7D0A491170742346570eb8E8A4E96E",
-        "latestRoot": "4114686047564160449611603615418567457008101555090703535405891656262658644463",
+        "latestRoot": "14704416756932451497324454646328411445076347139566027368256712337201170915024",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -306,7 +307,7 @@
         "REMOTE_TOKEN": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "remoteToken": "0x163f8C2467924be0ae7B5347228CABF260318753",
         "symbol": "WLD",
-        "totalSupply": "264129637238211477380481770",
+        "totalSupply": "264136550414669009132423397",
         "version": "1.0.0"
       },
       "derivedName": "OptimismMintableERC20"

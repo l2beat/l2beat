@@ -39,7 +39,7 @@ TINIFY_API_KEY=
 
 ## Storybook
 
-Production build requires (for some unknown reason) rebuilding dependencies in with ESM. Use `yarn storybook:build` to do exactly that.
+Production build requires (for some unknown reason) rebuilding dependencies with ESM. Use `yarn storybook:build` to do exactly that.
 
 ##### Known issues
 

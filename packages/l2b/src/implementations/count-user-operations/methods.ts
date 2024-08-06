@@ -39,6 +39,12 @@ export const methods: Method[] = [
       }))
     },
   ),
+  defineMethod(
+    parseAbiItem('function execute(address,uint256,bytes)'),
+    ([, , calldata]) => {
+      return [{ type: 'recursive', calldata }]
+    },
+  ),
 ]
 
 function defineMethod<T extends AbiFunction>(

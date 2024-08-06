@@ -34,6 +34,7 @@ import { syndicateframe } from './syndicateframe'
 import { syndr } from './syndr'
 import { teva } from './teva'
 import { Layer3 } from './types'
+import { unite } from './unite'
 import { winr } from './winr'
 import { xai } from './xai'
 import { zklinknova } from './zklinknova'
@@ -72,6 +73,7 @@ export const layer3s: Layer3[] = [
   muster,
   mvchain,
   mxc,
+  unite,
   l3x,
   oursong,
   playblock,
