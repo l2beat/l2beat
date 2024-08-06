@@ -21,12 +21,22 @@ const thresholdPerc = thresholdArray.num_
 
 const operatorsString = `${thresholdPerc}% out of ${operatorsCount}`
 
+const paused =
+  discovery.getContractValue<string>('MainchainGateway', 'paused') === 'true'
+const warningText = paused ? 'The bridge is currently paused.' : undefined
+
+const pausable = {
+  paused,
+  pausableBy: ['MainchainGatewayV3 Sentry Account'],
+}
+
 export const ronin: Bridge = {
   type: 'bridge',
   id: ProjectId('ronin'),
   display: {
     name: 'Ronin V3',
     slug: 'ronin',
+    warning: warningText,
     links: {
       websites: ['https://bridge.roninchain.com/'],
       apps: ['https://bridge.roninchain.com/'],
@@ -148,6 +158,7 @@ export const ronin: Bridge = {
         ),
         upgradableBy: ['MainchainBridgeManager Governors'],
         upgradeDelay: 'No delay',
+        pausable,
       },
       discovery.getContractDetails(
         'MainchainBridgeManager',
