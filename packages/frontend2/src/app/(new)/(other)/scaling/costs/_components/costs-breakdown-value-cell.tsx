@@ -1,10 +1,10 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { Badge } from '~/app/_components/badge/badge'
 import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
-import { formatCostValue } from '../_utils/format-cost-value'
-import { type CostsData } from './table/columns'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { Skeleton } from '~/app/_components/skeleton'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { formatCostValue } from '../_utils/format-cost-value'
+import { type CostsData } from './table/columns'
 
 interface Props {
   data: CostsData

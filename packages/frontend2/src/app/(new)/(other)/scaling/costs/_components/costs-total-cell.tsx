@@ -1,8 +1,12 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
 import { Callout } from '~/app/_components/callout'
 import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
+import { EM_DASH } from '~/app/_components/nav/consts'
+import { Skeleton } from '~/app/_components/skeleton'
 import {
   Tooltip,
   TooltipContent,
@@ -11,10 +15,6 @@ import {
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { type CostsData } from './table/columns'
-import { assertUnreachable } from '@l2beat/shared-pure'
-import { EM_DASH } from '~/app/_components/nav/consts'
-import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { Skeleton } from '~/app/_components/skeleton'
 
 interface CellProps {
   data: CostsData
