@@ -22,9 +22,9 @@ export const reyaDac = {
   id: 'reya-dac-bridge',
   type: 'DAC',
   display: {
-    name: 'Re.al DAC',
+    name: 'Reya DAC',
     slug: 'dac',
-    description: 'Re.al DAC on Ethereum.',
+    description: 'Reya DAC on Ethereum.',
     links: {
       websites: ['https://reya.network/'],
       apps: [
