@@ -12,6 +12,9 @@ import { xlayerLayer } from './dac/xlayer'
 import { zkfairLayer } from './dac/zkfair'
 import { DaLayer } from './types/DaLayer'
 import { sorareLayer } from './dac/sorare'
+import { tanxLayer } from './dac/tanx'
+import { hychainLayer } from './dac/hychain'
+import { sankoLayer } from './dac/sanko'
 
 export * from './types'
 
@@ -29,4 +32,7 @@ export const daLayers: DaLayer[] = [
   realLayer,
   reyaLayer,
     sorareLayer,
+    tanxLayer,
+    hychainLayer,
+    sankoLayer
 ]
