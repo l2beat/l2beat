@@ -1,25 +1,17 @@
 'use client'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { BasicTable } from '~/app/_components/table/basic-table'
-import { useTable } from '~/hooks/use-table'
-
-import { notUndefined } from '@l2beat/shared-pure'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
 import { TabCountBadge } from '~/app/_components/badge/tab-count-badge'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
+import { BasicTable } from '~/app/_components/table/basic-table'
 import {
   Tabs,
   TabsContent,
   TabsList,
   TabsTrigger,
 } from '~/app/_components/tabs'
-import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
-import {
-  BridgesFilters,
-  type BridgesFiltersState,
-  DEFAULT_BRIDGES_FILTERS_STATE,
-} from '../../../_components/bridges-filters'
+import { useTable } from '~/hooks/use-table'
 import {
   bridgesSummaryActiveColumns,
   bridgesSummaryArchivedColumns,
@@ -27,31 +19,16 @@ import {
 
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
+import { type BridgesSummaryEntry } from '~/server/features/bridges/types'
+import { useBridgesFilter } from '../../../_components/bridges-filter-context'
+import { BridgesFilters } from '../../../_components/bridges-filters'
 
 export interface Props {
-  items: BridgesSummaryEntry[]
+  entries: BridgesSummaryEntry[]
 }
 
-export function BridgesSummaryTables({ items }: Props) {
-  const [filters, setFilters] = useState<BridgesFiltersState>(
-    DEFAULT_BRIDGES_FILTERS_STATE,
-  )
-
-  const includeFilters = useCallback(
-    (entry: BridgesSummaryEntry) => {
-      const checks = [
-        filters.category !== undefined
-          ? entry.category === filters.category
-          : undefined,
-        filters.validatedBy !== undefined
-          ? entry.validatedBy?.value === filters.validatedBy
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [filters],
-  )
+export function BridgesSummaryTables({ entries }: Props) {
+  const includeFilters = useBridgesFilter()
 
   const commonTableSettings = useMemo(
     () => ({
@@ -69,13 +46,20 @@ export function BridgesSummaryTables({ items }: Props) {
     }),
     [],
   )
-  const activeProjects = useMemo(
-    () => items.filter(includeFilters).filter((item) => !item.isArchived),
-    [items, includeFilters],
+
+  const filteredEntries = useMemo(
+    () => entries.filter(includeFilters),
+    [entries, includeFilters],
   )
+
+  const activeProjects = useMemo(
+    () => filteredEntries.filter((item) => !item.isArchived),
+    [filteredEntries],
+  )
+
   const archivedProjects = useMemo(
-    () => items.filter(includeFilters).filter((item) => item.isArchived),
-    [items, includeFilters],
+    () => filteredEntries.filter((item) => item.isArchived),
+    [filteredEntries],
   )
 
   const activeTable = useTable({
@@ -92,7 +76,7 @@ export function BridgesSummaryTables({ items }: Props) {
 
   return (
     <div className="space-y-2">
-      <BridgesFilters items={items} state={filters} setState={setFilters} />
+      <BridgesFilters entries={filteredEntries} />
       <Tabs defaultValue="active" className="w-full">
         <OverflowWrapper>
           <TabsList>
@@ -121,10 +105,10 @@ export function BridgesSummaryTables({ items }: Props) {
           </TabsList>
         </OverflowWrapper>
         <TabsContent value="active">
-          <BasicTable table={activeTable} onResetFilters={() => null} />
+          <BasicTable table={activeTable} />
         </TabsContent>
         <TabsContent value="archived">
-          <BasicTable table={archivedTable} onResetFilters={() => null} />
+          <BasicTable table={archivedTable} />
         </TabsContent>
       </Tabs>
     </div>

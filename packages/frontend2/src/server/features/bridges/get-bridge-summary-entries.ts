@@ -1,14 +1,9 @@
-import {
-  type Bridge,
-  type ScalingProjectRiskViewEntry,
-  bridges,
-} from '@l2beat/config'
+import { type Bridge, bridges } from '@l2beat/config'
 import {
   type ImplementationChangeReportApiResponse,
   type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
-import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 import { formatNumber } from '~/utils/format-number'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { type TvlResponse } from '../scaling/get-tvl'
@@ -18,11 +13,12 @@ import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-r
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getDestination } from './get-destination'
+import { type BridgesSummaryEntry } from './types'
 
 export async function getBridgesSummaryEntries(
   tvl: TvlResponse,
 ): Promise<BridgesSummaryEntry[]> {
-  // NOTE: This is a temporary solution to keep the current behavior & will be removed in L2B-6115.
+  // NOTEtype : This is a temporary solution to keep the current behavior & will be removed in L2B-6115.
   const preprocessedTvl = Object.fromEntries(
     Object.entries(tvl.bridges).map(([projectId, data]) => [
       projectId,
@@ -72,6 +68,7 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
       !!implementationChangeReport.projects[bridge.id.toString()]
 
     const entry: BridgesSummaryEntry = {
+      href: `/bridges/${bridge.display.slug}`,
       type: bridge.type,
       shortName: bridge.display.shortName,
       name: bridge.display.name,
@@ -103,31 +100,6 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
   })
 
   return compact(entries)
-}
-
-export interface BridgesSummaryEntry {
-  type: 'bridge' | 'layer2'
-  shortName: string | undefined
-  name: string
-  slug: string
-  warning?: string
-  isArchived?: boolean
-  isUpcoming?: boolean
-  isVerified?: boolean
-  destination?: ScalingProjectRiskViewEntry
-  hasImplementationChanged?: boolean
-  showProjectUnderReview?: boolean
-  tvl?: ValueWithDisplayValue
-  tvlBreakdown?: TokenBreakdownProps
-  sevenDayChange?: string
-  bridgesMarketShare?: number
-  validatedBy?: ScalingProjectRiskViewEntry
-  category: string
-}
-
-export interface ValueWithDisplayValue {
-  value: number
-  displayValue: string
 }
 
 export function formatUSD(value: number) {

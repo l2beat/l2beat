@@ -7,8 +7,8 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
+import { type BridgesSummaryEntry } from '~/server/features/bridges/types'
 import { formatPercent } from '~/utils/get-percentage-change'
-import { type BridgesSummaryEntry } from '../../../../../../../server/features/bridges/get-bridge-summary-entries'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
 
