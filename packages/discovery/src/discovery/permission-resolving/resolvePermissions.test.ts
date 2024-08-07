@@ -46,40 +46,40 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: contract1,
         path: [
+          { address: contract1, delay: 0 },
           { address: guardian, delay: 7 },
           { address: securityCounil, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: contract1,
         path: [
+          { address: contract1, delay: 0 },
           { address: guardian, delay: 7 },
           { address: foundationMsig, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
-        contract: contract1,
         path: [
+          { address: contract1, delay: 0 },
           { address: l1Proxy, delay: 0 },
           { address: admins, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
-        contract: contract2,
         path: [
+          { address: contract2, delay: 0 },
           { address: l1Proxy, delay: 0 },
           { address: admins, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
-        contract: l2Contract1,
         path: [
+          { address: l2Contract1, delay: 0 },
           { address: l2Proxy, delay: 0 },
           { address: l1Proxy, delay: 0 },
           { address: admins, delay: 0 },
@@ -87,8 +87,8 @@ describe(resolvePermissions.name, () => {
       },
       {
         type: 'upgrade',
-        contract: l2Contract2,
         path: [
+          { address: l2Contract2, delay: 0 },
           { address: l2Proxy, delay: 0 },
           { address: l1Proxy, delay: 0 },
           { address: admins, delay: 0 },
@@ -126,32 +126,34 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
-        contract: verifier,
         path: [
+          { address: verifier, delay: 0 },
           { address: upgradeGatekeeper, delay: 0 },
           { address: zkSyncMsig, delay: 21 },
         ],
       },
       {
         type: 'upgrade',
-        contract: governance,
         path: [
+          { address: governance, delay: 0 },
           { address: upgradeGatekeeper, delay: 0 },
           { address: zkSyncMsig, delay: 21 },
         ],
       },
       {
         type: 'upgrade',
-        contract: zkSync,
         path: [
+          { address: zkSync, delay: 0 },
           { address: upgradeGatekeeper, delay: 0 },
           { address: zkSyncMsig, delay: 21 },
         ],
       },
       {
         type: 'configure',
-        contract: zkSync,
-        path: [{ address: securityCouncil, delay: 0 }],
+        path: [
+          { address: zkSync, delay: 0 },
+          { address: securityCouncil, delay: 0 },
+        ],
       },
     ])
   })
@@ -183,8 +185,8 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: timelockB, delay: 0 },
           { address: actor, delay: 100 },
@@ -220,16 +222,16 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: timelockA, delay: 0 },
           { address: actor, delay: 10 },
         ],
       },
       {
         type: 'upgrade',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: timelockB, delay: 0 },
           { address: actor, delay: 100 },
@@ -263,16 +265,16 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: msigM, delay: 0 },
           { address: msigB, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: msigM, delay: 0 },
           { address: msigA, delay: 0 },
           { address: actorA, delay: 0 },
@@ -280,8 +282,8 @@ describe(resolvePermissions.name, () => {
       },
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: msigM, delay: 0 },
           { address: msigA, delay: 0 },
           { address: actorB, delay: 0 },
@@ -311,8 +313,10 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: msig, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: msig, delay: 0 },
+        ],
       },
     ])
   })
@@ -338,24 +342,24 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: msig, delay: 0 },
           { address: actorA, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: msig, delay: 0 },
           { address: actorB, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: msig, delay: 0 },
           { address: actorC, delay: 0 },
         ],
@@ -389,24 +393,24 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: actorA, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: actorB, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: actorC, delay: 0 },
         ],
@@ -437,18 +441,24 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: actorA, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actorA, delay: 0 },
+        ],
       },
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: actorB, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actorB, delay: 0 },
+        ],
       },
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: actorC, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actorC, delay: 0 },
+        ],
       },
     ])
   })
@@ -476,16 +486,18 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
-        contract: vaultA,
         path: [
+          { address: vaultA, delay: 0 },
+
           { address: proxy, delay: 0 },
           { address: actor, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
-        contract: vaultB,
         path: [
+          { address: vaultB, delay: 0 },
+
           { address: proxy, delay: 0 },
           { address: actor, delay: 0 },
         ],
@@ -519,16 +531,16 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
-        contract: vaultA,
         path: [
+          { address: vaultA, delay: 0 },
           { address: proxyA, delay: 0 },
           { address: actor, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
-        contract: vaultB,
         path: [
+          { address: vaultB, delay: 0 },
           { address: proxyB, delay: 0 },
           { address: actor, delay: 0 },
         ],
@@ -562,8 +574,8 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'upgrade',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: timelockB, delay: 0 },
           { address: timelockA, delay: 69 },
@@ -593,13 +605,17 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'upgrade',
-        contract: vault,
-        path: [{ address: ownerActor, delay: 69 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: ownerActor, delay: 69 },
+        ],
       },
       {
         type: 'upgrade',
-        contract: vault,
-        path: [{ address: adminActor, delay: 420 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: adminActor, delay: 420 },
+        ],
       },
     ])
   })
@@ -632,16 +648,18 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'configure',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: timelock, delay: 0 },
           { address: actorA, delay: 42069 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: actorB, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actorB, delay: 0 },
+        ],
       },
     ])
   })
@@ -669,8 +687,8 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'upgrade',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: timelock, delay: 0 },
           { address: actor, delay: 42069 },
@@ -702,16 +720,18 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'upgrade',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: actorB, delay: 0 },
         ],
       },
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: actorA, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actorA, delay: 0 },
+        ],
       },
     ])
   })
@@ -736,8 +756,8 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'upgrade',
-        contract: vault,
         path: [
+          { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
           { address: actor, delay: 0 },
         ],
@@ -760,8 +780,10 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'upgrade',
-        contract: vault,
-        path: [{ address: actor, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actor, delay: 0 },
+        ],
       },
     ])
   })
@@ -781,8 +803,10 @@ describe(resolvePermissions.name, () => {
     expect(resolvePermissions(graph)).toEqual([
       {
         type: 'configure',
-        contract: vault,
-        path: [{ address: actor, delay: 0 }],
+        path: [
+          { address: vault, delay: 0 },
+          { address: actor, delay: 0 },
+        ],
       },
     ])
   })

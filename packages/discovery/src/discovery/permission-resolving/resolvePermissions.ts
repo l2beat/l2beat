@@ -28,7 +28,6 @@ export interface PathElement {
 
 export interface GrantedPermission {
   type: Permission
-  contract: EthereumAddress
   path: PathElement[]
 }
 
@@ -48,8 +47,10 @@ export function resolvePermissions(graph: Graph): GrantedPermission[] {
       assert(address !== undefined)
       const newWork: GrantedPermission = {
         type: edge.type,
-        contract: node.address,
-        path: [{ address, delay: edge.delay }],
+        path: [
+          { address: node.address, delay: 0 },
+          { address, delay: edge.delay },
+        ],
       }
 
       const visitedNodes: NodeId[] = []
@@ -128,7 +129,7 @@ function collapseUpgrades(input: GrantedPermission[]): GrantedPermission[] {
   for (const upgrade of upgrades) {
     const matchingConfigure = configures.find(
       (configure) =>
-        configure.contract === upgrade.contract &&
+        configure.path[0]?.address === upgrade.path[0]?.address &&
         configure?.path[configure.path.length - 1]?.address ===
           upgrade.path[upgrade.path.length - 1]?.address &&
         sumDelays(configure.path) === sumDelays(upgrade.path),
