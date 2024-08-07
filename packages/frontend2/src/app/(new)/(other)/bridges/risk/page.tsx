@@ -4,7 +4,7 @@ import { getImplementationChangeReport } from '~/server/features/implementation-
 import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
-import { BridgesFilterContextProvider } from './_components/filters/bridges-filter-context'
+import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
 import { BridgesRiskTables } from './_components/table/bridges-risks-tables'
 
 export const metadata = getDefaultMetadata({

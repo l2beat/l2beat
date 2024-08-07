@@ -17,8 +17,8 @@ import { bridgesRisksColumns } from './columns'
 
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
-import { useBridgesFilter } from '../filters/bridges-filter-context'
-import { BridgesFilters } from '../filters/bridges-filters'
+import { useBridgesFilter } from '../../../_components/bridges-filter-context'
+import { BridgesFilters } from '../../../_components/bridges-filters'
 
 export interface Props {
   entries: BridgesRiskEntry[]
