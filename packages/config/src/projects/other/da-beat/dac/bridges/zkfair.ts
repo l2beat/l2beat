@@ -1,6 +1,6 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { xlayer } from '../../../../layer2s/xlayer'
+import { zkfair } from '../../../../layer2s/zkfair'
 import {
   DaAccessibilityRisk,
   DaAttestationSecurityRisk,
@@ -10,50 +10,50 @@ import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
-const discovery = new ProjectDiscovery('xlayer')
+const discovery = new ProjectDiscovery('zkfair')
 
 const upgradeability = {
-  upgradableBy: ['DACProxyAdminOwner'],
-  upgradeDelay: 'No delay',
+  upgradableBy: ['ZKFairAdmin'],
+  upgradeDelay: 'None',
 }
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'XLayerValidiumDAC',
+  'ZKFairValidiumDAC',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'XLayerValidiumDAC',
+  'ZKFairValidiumDAC',
   'requiredAmountOfSignatures',
 )
 
 const members = discovery.getContractValue<string[]>(
-  'XLayerValidiumDAC',
+  'ZKFairValidiumDAC',
   'members',
 )
 
-export const xlayerDac = {
-  id: 'xlayer-dac-bridge',
+export const zkfairDac = {
+  id: 'zkfair-dac-bridge',
   type: 'DAC',
   display: {
-    name: 'X Layer DAC',
+    name: 'ZKFair DAC',
     slug: 'dac',
-    description: 'X Layer DAC on Ethereum.',
+    description: 'zkfair DAC on Ethereum.',
     links: {
-      websites: ['https://okx.com/x1'],
-      apps: [],
-      documentation: ['https://okx.com/xlayer/docs'],
-      explorers: ['https://okx.com/explorer/xlayer'],
-      repositories: [],
-      socialMedia: ['https://twitter.com/XLayerOfficial'],
+      websites: ['https://zkfair.io/'],
+      apps: ['https://wallet.zkfair.io/'],
+      documentation: ['https://docs.zkfair.io/'],
+      explorers: ['https://scan.zkfair.io/'],
+      repositories: ['https://github.com/ZKFair'],
+      socialMedia: ['https://twitter.com/ZKFCommunity'],
     },
   },
   contracts: {
     addresses: [
-      discovery.getContractDetails('XLayerValidium', {
-        description: `The main contract of the XLayerValidium. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
+      discovery.getContractDetails('ZKFairValidium', {
+        description: `The main contract of ZKFair. Contains sequenced transaction batch hashes and signature verification logic for the signed data hash commitment.`,
       }),
-      discovery.getContractDetails('XLayerValidiumDAC', {
+      discovery.getContractDetails('ZKFairValidiumDAC', {
         description:
           'Validium committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
         ...upgradeability,
@@ -74,35 +74,19 @@ export const xlayerDac = {
         type: 'EOA',
       })),
     },
-    {
-      name: 'LocalAdmin',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('XLayerValidium', 'admin'),
-        ),
-      ],
-      description:
-        'Admin of the XLayerValidium contract, can set core system parameters like timeouts, sequencer, activate forced transactions and update the DA mode.',
-    },
-    {
-      name: 'DACProxyAdminOwner',
-      accounts: [
-        discovery.formatPermissionedAccount(
-          discovery.getContractValue('ProxyAdmin', 'owner'),
-        ),
-      ],
-      description:
-        "Owner of the XLayerValidiumDAC's ProxyAdmin. Can upgrade the contract.",
-    },
+    ...discovery.getMultisigPermission(
+      'ZKFairAdmin',
+      'Admin of the ZKFairValidiumDAC contract, can set core system parameters like timeouts, sequencer, activate forced transactions, update the DA mode and upgrade the ZKFairValidiumDAC contract',
+    ),
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: requiredSignaturesDAC,
   totalMembers: membersCountDAC,
-  transactionDataType: DacTransactionDataType.TransactionData,
+  transactionDataType: DacTransactionDataType.StateDiffs,
   members: {
     type: 'unknown',
   },
-  usedIn: toUsedInProject([xlayer]),
+  usedIn: toUsedInProject([zkfair]),
   risks: {
     attestations: DaAttestationSecurityRisk.SigVerified(true),
     accessibility: DaAccessibilityRisk.NotEnshrined,

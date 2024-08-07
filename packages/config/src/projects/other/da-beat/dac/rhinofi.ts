@@ -1,14 +1,14 @@
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
-import { arbitrumnovaDac } from './bridges/arbitrumnova'
+import { rhinofiDac } from './bridges/rhinofi'
 
-export const arbitrumnovaLayer: DaLayer = {
-  id: 'arbitrumnova-dac-layer',
+export const rhinofiLayer: DaLayer = {
+  id: 'rhinofi-dac-layer',
   type: 'DaLayer',
   kind: 'DAC',
   display: {
     name: 'Data Availability Committee (DAC)',
-    slug: 'nova',
+    slug: 'rhinofi',
     description:
       'Set of parties responsible for signing and attesting to the availability of data.',
     links: {
@@ -25,10 +25,10 @@ export const arbitrumnovaLayer: DaLayer = {
   The security guarantees of DACs depend on the specific setup and can vary significantly based on the criteria for selecting committee members, 
   their operational transparency, and the mechanisms in place to handle disputes and failures.
   `,
-  bridges: [arbitrumnovaDac],
-  usedIn: [...arbitrumnovaDac.usedIn],
+  bridges: [rhinofiDac],
+  usedIn: [...rhinofiDac.usedIn],
   risks: {
-    economicSecurity: DaEconomicSecurityRisk.OffChainVerifiable,
+    economicSecurity: DaEconomicSecurityRisk.Unknown,
     fraudDetection: DaFraudDetectionRisk.NoFraudDetection,
   },
 }

@@ -36,7 +36,9 @@ function SecurityCouncil(delaySeconds: number) {
       ...common,
       value: formatSeconds(delaySeconds),
       sentiment: 'good',
-      description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
+      description: `User have more than ${formatSeconds(
+        delaySeconds,
+      )} days to exit the system before the bridge implementation update is completed.`,
     } as const
   }
 
@@ -45,7 +47,9 @@ function SecurityCouncil(delaySeconds: number) {
       ...common,
       value: `SC ${formatSeconds(delaySeconds)}`,
       sentiment: 'warning',
-      description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
+      description: `User have more than ${formatSeconds(
+        delaySeconds,
+      )} days to exit the system before the bridge implementation update is completed.`,
     } as const
   }
 
@@ -53,7 +57,9 @@ function SecurityCouncil(delaySeconds: number) {
     ...common,
     value: `SC ${formatSeconds(delaySeconds)}`,
     sentiment: 'bad',
-    description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
+    description: `User have more than ${formatSeconds(
+      delaySeconds,
+    )} days to exit the system before the bridge implementation update is completed.`,
   } as const
 }
 
@@ -67,7 +73,9 @@ function Eoa(delaySeconds: number) {
       ...common,
       value: formatSeconds(delaySeconds),
       sentiment: 'warning',
-      description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
+      description: `User have more than ${formatSeconds(
+        delaySeconds,
+      )} days to exit the system before the bridge implementation update is completed.`,
     } as const
   }
 
@@ -75,7 +83,9 @@ function Eoa(delaySeconds: number) {
     ...common,
     value: formatSeconds(delaySeconds),
     sentiment: 'bad',
-    description: `User have more than ${formatSeconds(delaySeconds)} days to exit the system before the bridge implementation update is completed.`,
+    description: `User have more than ${formatSeconds(
+      delaySeconds,
+    )} days to exit the system before the bridge implementation update is completed.`,
   } as const
 }
 
@@ -89,7 +99,8 @@ function LowOrNoDelay(delaySeconds?: number) {
     type: 'LowOrNoDelay',
     value,
     sentiment: 'bad',
-    description: 'There is no delay in the upgradeability of the bridge. Users have no time to exit the system before the bridge implementation update is completed.',
+    description:
+      'There is no delay in the upgradeability of the bridge. Users have no time to exit the system before the bridge implementation update is completed.',
   } as const
 }
 

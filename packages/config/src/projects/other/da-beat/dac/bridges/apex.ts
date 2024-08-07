@@ -1,4 +1,4 @@
-import { ChainId, } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { getCommittee } from '../../../../../discovery/starkware'
 import { apex } from '../../../../layer2s/apex'
@@ -39,7 +39,6 @@ const dacConfig =
         requiredSignatures: usdtCommittee.minSigners,
         membersCount: usdtCommittee.accounts.length,
       }
-
 
 export const apexDac = {
   id: 'apex-dac-bridge',

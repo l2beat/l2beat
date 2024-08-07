@@ -1,4 +1,4 @@
-import { ChainId, } from '@l2beat/shared-pure'
+import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
 import { reya } from '../../../../layer2s/reya'
 import {

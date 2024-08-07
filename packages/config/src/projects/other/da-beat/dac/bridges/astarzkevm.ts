@@ -29,7 +29,7 @@ const requiredSignaturesDAC = discovery.getContractValue<number>(
 
 const members = discovery.getContractValue<string[]>(
   'AstarValidiumDAC',
-  'members'
+  'members',
 )
 
 export const astarzkEVMDac = {
@@ -74,8 +74,7 @@ export const astarzkEVMDac = {
     {
       name: 'Committee Members',
       description: `List of addresses authorized to sign data commitments for the DA bridge.`,
-      accounts: members.map((operator) => (
-        {
+      accounts: members.map((operator) => ({
         address: EthereumAddress(operator[1]),
         type: 'EOA',
       })),
