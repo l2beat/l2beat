@@ -21,15 +21,17 @@ export function getTvlAmountsConfig(
   const entries: AmountConfigEntry[] = []
 
   for (const token of tokenList) {
-    if (token.chainId !== ChainId.ETHEREUM) {
-      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
-      assert(projectId, 'Project is required for token')
+    if (token.supply !== 'zero') {
+      const projectId =
+        token.project ??
+        chainToProject.get(chainConverter.toName(token.chainId))
+      assert(projectId, `Project is required for token ${token.symbol}`)
 
       const project = projects.find((x) => x.projectId === projectId)
-      assert(project, 'Project not found')
+      assert(project, `Project not found for token ${token.symbol}`)
 
       const chain = chains.find((x) => x.chainId === +token.chainId)
-      assert(chain, `Chain not found for token ${token.id}`)
+      assert(chain, `Chain not found for token ${token.symbol}`)
 
       assert(chain.minTimestampForTvl, 'Chain should have minTimestampForTvl')
       const chainMinTimestamp = UnixTime.max(
@@ -55,6 +57,7 @@ export function getTvlAmountsConfig(
             untilTimestamp: token.untilTimestamp,
             project: projectId,
             source: token.source,
+            dataSource: chainConverter.toName(token.chainId),
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -72,6 +75,7 @@ export function getTvlAmountsConfig(
             coingeckoId: token.coingeckoId,
             project: projectId,
             source: token.source,
+            dataSource: 'coingecko',
             includeInTotal: true,
             decimals: token.decimals,
             symbol: token.symbol,
@@ -79,8 +83,30 @@ export function getTvlAmountsConfig(
             category: token.category,
           })
           break
-        case 'zero':
-          break // we do not count supply for zero formula
+        case 'preminted':
+          assert(token.address, 'Token address is required for preminted')
+          assert(token.escrow, 'Escrows are required for preminted')
+
+          entries.push({
+            type: 'preminted',
+            address: token.address,
+            escrowAddress: token.escrow,
+            chain: chainConverter.toName(token.chainId),
+            sinceTimestamp,
+            untilTimestamp: token.untilTimestamp,
+            coingeckoId: token.coingeckoId,
+            project: projectId,
+            dataSource: `${chainConverter.toName(token.chainId)}_preminted_${
+              token.address
+            }`,
+            source: token.source,
+            includeInTotal: token.chainId === ChainId.ETHEREUM,
+            decimals: token.decimals,
+            symbol: token.symbol,
+            isAssociated,
+            category: token.category,
+          })
+          break
       }
     }
   }
@@ -117,6 +143,7 @@ export function getTvlAmountsConfig(
           ),
           escrowAddress: escrow.address,
           project: project.projectId,
+          dataSource: chain.name,
           source: escrow.source ?? 'canonical',
           includeInTotal: escrow.includeInTotal ?? true,
           decimals: token.decimals,

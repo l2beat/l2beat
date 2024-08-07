@@ -72,11 +72,10 @@ describe(CirculatingSupplyIndexer.name, () => {
 
       expect(
         circulatingSupplyService.fetchCirculatingSupplies,
-      ).toHaveBeenOnlyCalledWith(
-        new UnixTime(from),
-        new UnixTime(adjustedTo),
-        configuration,
-      )
+      ).toHaveBeenOnlyCalledWith(new UnixTime(from), new UnixTime(adjustedTo), {
+        ...configuration,
+        id: createAmountId(configuration),
+      })
 
       expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([
         amount(configuration, 200),
