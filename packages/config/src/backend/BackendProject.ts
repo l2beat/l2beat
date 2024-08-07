@@ -183,22 +183,32 @@ export function mapTokens(
   escrow: ScalingProjectEscrow,
   tokensOnChain: Token[],
 ): Token[] {
-  return tokensOnChain
-    .filter(
-      (token) => escrow.tokens === '*' || escrow.tokens.includes(token.symbol),
-    )
-    .filter((token) => {
-      const isTokenIncluded = !escrow.excludedTokens?.includes(token.symbol)
+  return tokensOnChain.filter(
+    (token) =>
+      isTokenIncluded(token, escrow) &&
+      !isExcludedPremintedToken(token, escrow),
+  )
+}
 
-      if (token.supply !== 'preminted') {
-        return isTokenIncluded
-      }
+function isTokenIncluded(token: Token, escrow: ScalingProjectEscrow): boolean {
+  return (
+    (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
+    !escrow.excludedTokens?.includes(token.symbol)
+  )
+}
 
-      assert(
-        token.escrow,
-        `Escrows should be defined for preminted ${token.symbol}`,
-      )
+function isExcludedPremintedToken(
+  token: Token,
+  escrow: ScalingProjectEscrow,
+): boolean {
+  if (token.supply !== 'preminted') {
+    return false
+  }
 
-      return token.escrow !== escrow.address && isTokenIncluded
-    })
+  assert(
+    token.escrow,
+    `Escrows should be defined for preminted ${token.symbol}`,
+  )
+
+  return token.escrow === escrow.address
 }
