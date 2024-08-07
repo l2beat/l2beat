@@ -1,6 +1,7 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 
 import { assertUnreachable } from '@l2beat/shared-pure'
+import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
 import { Callout } from '~/app/_components/callout'
@@ -15,7 +16,6 @@ import {
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { type CostsData } from './table/columns'
-import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
 
 interface CellProps {
   data: CostsData
