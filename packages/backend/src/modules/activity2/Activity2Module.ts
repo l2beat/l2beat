@@ -22,6 +22,7 @@ import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
 import { ActivityIndexer } from './indexers/types'
+import { BaseTxsCountProvider } from './services/BaseTxsCountProvider'
 import { DegateTxsCountProvider } from './services/providers/DegateTxsCountProvider'
 import { LoopringTxsCountProvider } from './services/providers/LoopringTxsCountProvider'
 import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
@@ -97,24 +98,16 @@ function createActivityIndexers(
           rpcClient,
           project.config,
         )
-        const blockTargetIndexer = createBlockTargetIndexer(
+
+        const [blockTargetIndexer, activityIndexer] = createIndexers(
           clock,
           logger,
           rpcClient,
-          project,
-        )
-
-        const activityIndexer = new BlockActivityIndexer({
-          logger,
-          projectId: project.id,
-          // TODO: add batchSize to config
-          batchSize: 100,
-          minHeight: project.config.startBlock ?? 1,
-          parents: [blockTargetIndexer],
           txsCountProvider,
+          project,
           indexerService,
           db,
-        })
+        )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
@@ -130,24 +123,16 @@ function createActivityIndexers(
           zksyncClient,
           project.config,
         )
-        const blockTargetIndexer = createBlockTargetIndexer(
+
+        const [blockTargetIndexer, activityIndexer] = createIndexers(
           clock,
           logger,
           zksyncClient,
-          project,
-        )
-
-        const activityIndexer = new BlockActivityIndexer({
-          logger,
-          projectId: project.id,
-          // TODO: add batchSize to config
-          batchSize: 100,
-          minHeight: 1,
-          parents: [blockTargetIndexer],
           txsCountProvider,
+          project,
           indexerService,
           db,
-        })
+        )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
@@ -163,24 +148,16 @@ function createActivityIndexers(
           starknetClient,
           project.config,
         )
-        const blockTargetIndexer = createBlockTargetIndexer(
+
+        const [blockTargetIndexer, activityIndexer] = createIndexers(
           clock,
           logger,
           starknetClient,
-          project,
-        )
-
-        const activityIndexer = new BlockActivityIndexer({
-          logger,
-          projectId: project.id,
-          // TODO: add batchSize to config
-          batchSize: 100,
-          minHeight: 1,
-          parents: [blockTargetIndexer],
           txsCountProvider,
+          project,
           indexerService,
           db,
-        })
+        )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
@@ -196,24 +173,16 @@ function createActivityIndexers(
           loopringClient,
           project.config,
         )
-        const blockTargetIndexer = createBlockTargetIndexer(
+
+        const [blockTargetIndexer, activityIndexer] = createIndexers(
           clock,
           logger,
           loopringClient,
-          project,
-        )
-
-        const activityIndexer = new BlockActivityIndexer({
-          logger,
-          projectId: project.id,
-          // TODO: add batchSize to config
-          batchSize: 100,
-          minHeight: 1,
-          parents: [blockTargetIndexer],
           txsCountProvider,
+          project,
           indexerService,
           db,
-        })
+        )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
@@ -229,24 +198,16 @@ function createActivityIndexers(
           degateClient,
           project.config,
         )
-        const blockTargetIndexer = createBlockTargetIndexer(
+
+        const [blockTargetIndexer, activityIndexer] = createIndexers(
           clock,
           logger,
           degateClient,
-          project,
-        )
-
-        const activityIndexer = new BlockActivityIndexer({
-          logger,
-          projectId: project.id,
-          // TODO: add batchSize to config
-          batchSize: 100,
-          minHeight: 1,
-          parents: [blockTargetIndexer],
           txsCountProvider,
+          project,
           indexerService,
           db,
-        })
+        )
 
         indexers.push(blockTargetIndexer, activityIndexer)
         break
@@ -284,15 +245,15 @@ function createActivityIndexers(
   return indexers
 }
 
-function createBlockTargetIndexer(
+function createIndexers(
   clock: Clock,
   logger: Logger,
   client: BaseClient,
-  project: {
-    id: ProjectId
-    config: ActivityTransactionConfig
-  },
-): BlockTargetIndexer {
+  txsCountProvider: BaseTxsCountProvider,
+  project: { id: ProjectId; config: ActivityTransactionConfig },
+  indexerService: IndexerService,
+  db: Database,
+): [BlockTargetIndexer, BlockActivityIndexer] {
   assert(
     project.config.type === 'rpc' ||
       project.config.type === 'zksync' ||
@@ -304,10 +265,23 @@ function createBlockTargetIndexer(
     client,
     logger,
   })
-  return new BlockTargetIndexer(
+  const blockTargetIndexer = new BlockTargetIndexer(
     logger,
     clock,
     blockTimestampProvider,
     project.id,
   )
+
+  const activityIndexer = new BlockActivityIndexer({
+    logger,
+    projectId: project.id,
+    // TODO: add batchSize to config
+    batchSize: 100,
+    minHeight: 1,
+    parents: [blockTargetIndexer],
+    txsCountProvider,
+    indexerService,
+    db,
+  })
+  return [blockTargetIndexer, activityIndexer]
 }
