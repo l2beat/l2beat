@@ -164,7 +164,16 @@ export const polygonpos: Bridge = {
           It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
         ...upgrades,
       }),
-
+      discovery.getContractDetails('StakeManager', {
+        description:
+          'Main configuration contract to manage stakers and their voting power.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Registry', {
+        description:
+          'A registry of different system components.',
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'Timelock',
         `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,

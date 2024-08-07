@@ -17,6 +17,7 @@
     "0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84": "RootChainInitialImplementation",
     "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908": "StakeManager",
     "0xef49Ea6996073752b6840CDA34773FFA78F78166": "StakeManagerExtension",
+    "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71": "Registry",
     "0xf98864DA30a5bd657B13e70A57f5718aBf7BAB31": "ValidatorShareImpl",
     "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77": "RootChainManager",
     "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf": "Timelock",
