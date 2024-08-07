@@ -122,9 +122,8 @@ export function BasicTable<T extends BasicEntry>({
                       !groupParams.headerTitle &&
                         groupParams.isLastInGroup &&
                         'rounded-tr-lg',
-
-                      header.column.columnDef.meta?.headClassName,
                     ],
+                    header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
                   tooltip={header.column.columnDef.meta?.tooltip}
@@ -148,9 +147,7 @@ export function BasicTable<T extends BasicEntry>({
                     )
                   )}
                 </TableHead>
-                {groupParams?.isLastInGroup && (
-                  <ColumnFiller as="td" href={undefined} />
-                )}
+                {groupParams?.isLastInGroup && <ColumnFiller as="th" />}
               </React.Fragment>
             )
           })}
