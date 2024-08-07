@@ -5,32 +5,28 @@ import {
 } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { formatNumber } from '~/utils/format-number'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { type ImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { type TvlResponse } from '../scaling/get-tvl'
 import { getTvlStats } from '../scaling/utils/get-tvl-stats'
 import { getTvlWithChange } from '../scaling/utils/get-tvl-with-change'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { orderByTvl } from '../tvl/order-by-tvl'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getDestination } from './get-destination'
 import { type BridgesSummaryEntry } from './types'
 
 export async function getBridgesSummaryEntries(
   tvl: TvlResponse,
+  implementationChangeReport: ImplementationChangeReport,
+  projectsVerificationStatuses: ProjectsVerificationStatuses,
 ): Promise<BridgesSummaryEntry[]> {
-  // NOTEtype : This is a temporary solution to keep the current behavior & will be removed in L2B-6115.
   const preprocessedTvl = Object.fromEntries(
     Object.entries(tvl.bridges).map(([projectId, data]) => [
       projectId,
-      // ??? is this correct?
       data.data.at(-1)?.[1] ?? 0,
     ]),
   )
 
   const orderedBridges = orderByTvl(bridges, preprocessedTvl)
-
-  const implementationChangeReport = await getImplementationChangeReport()
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
 
   return getBridges({
     projects: orderedBridges,
