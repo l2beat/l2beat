@@ -31,12 +31,22 @@ export async function getCostsForProjects(
     configurations,
   )
 
+  console.time(
+    '[getCostsForProjects] db.aggregatedL2Cost.getByProjectsAndTimeRange',
+  )
   const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
     projectsWithSyncedUntil.map((p) => p.id),
     range,
   )
-  const groupedRecords = groupBy(records, 'projectId')
+  console.timeEnd(
+    '[getCostsForProjects] db.aggregatedL2Cost.getByProjectsAndTimeRange',
+  )
 
+  console.time('[getCostsForProjects] groupBy')
+  const groupedRecords = groupBy(records, 'projectId')
+  console.timeEnd('[getCostsForProjects] groupBy')
+
+  console.time('[getCostsForProjects] forEach')
   for (const project of projectsWithSyncedUntil) {
     const records = groupedRecords[project.id]
     if (records === undefined) continue
@@ -45,7 +55,7 @@ export async function getCostsForProjects(
       syncedUntil: project.syncedUntil,
     }
   }
-
+  console.timeEnd('[getCostsForProjects] forEach')
   return response
 }
 

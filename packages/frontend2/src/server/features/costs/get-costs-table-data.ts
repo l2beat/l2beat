@@ -36,12 +36,16 @@ const getCachedCostsTableData = cache(
     timeRange: CostsTimeRange,
   ): Promise<Record<string, CostsTableData>> => {
     const projects = getCostsProjects()
+    console.time('[getCostsTableData] getCostsForProjects')
     const projectsCosts = await getCostsForProjects(projects, timeRange)
+    console.timeEnd('[getCostsTableData] getCostsForProjects')
+
+    console.time('[getCostsTableData] getLatestActivityForProjects')
     const projectsActivity = await getLatestActivityForProjects(
       projects,
       timeRange,
     )
-
+    console.timeEnd('[getCostsTableData] getLatestActivityForProjects')
     return Object.fromEntries(
       Object.entries(projectsCosts).map(([projectId, costs]) => {
         return [
