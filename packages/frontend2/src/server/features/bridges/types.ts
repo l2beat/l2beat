@@ -1,7 +1,7 @@
 import { type ScalingProjectRiskViewEntry } from '@l2beat/config'
 import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 
-type CommonBridgeEntry = {
+export type CommonBridgeEntry = {
   href: string
   name: string
   shortName: string | undefined
@@ -14,11 +14,11 @@ type CommonBridgeEntry = {
   showProjectUnderReview?: boolean
   type: 'layer2' | 'bridge'
   category: string
+  validatedBy?: ScalingProjectRiskViewEntry
 }
 
 export type BridgesRiskEntry = {
   destination: ScalingProjectRiskViewEntry
-  validatedBy?: ScalingProjectRiskViewEntry
   sourceUpgradeability?: ScalingProjectRiskViewEntry
   destinationToken?: ScalingProjectRiskViewEntry
 } & CommonBridgeEntry
@@ -29,7 +29,6 @@ export type BridgesSummaryEntry = {
   tvlBreakdown?: TokenBreakdownProps
   sevenDayChange?: string
   bridgesMarketShare?: number
-  validatedBy?: ScalingProjectRiskViewEntry
 } & CommonBridgeEntry
 export interface ValueWithDisplayValue {
   value: number
