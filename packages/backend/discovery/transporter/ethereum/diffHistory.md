@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe7f888d9bf1744fcb3fcf778046bd265349b09c3
+
+# Diff at Wed, 07 Aug 2024 07:23:21 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20454546
+- current block number: 20475166
+
+## Description
+
+The bridge limit is increased for one of the escrows.
+
+## Watched changes
+
+```diff
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C) {
+    +++ description: None
+      values.getBridgeLimit:
+-        "2500000000000000000000000"
++        "20000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x98bca27d8f15e7eb491b21bbda22a60aa8152474
 
 # Diff at Sun, 04 Aug 2024 10:19:37 GMT:

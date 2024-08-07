@@ -1,7 +1,7 @@
 {
   "name": "ronin",
   "chain": "ethereum",
-  "blockNumber": 20469499,
+  "blockNumber": 20475186,
   "configHash": "0x24d40701ac57a1ca7d34bbfc1580f7dd67c0366e4e570f9fa3f302e7ad9b48be",
   "version": 10,
   "contracts": [
@@ -195,7 +195,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2829914809388270693464351"
+        "totalSupply": "2845505817517930275470599"
       },
       "derivedName": "WETH9"
     },
@@ -210,10 +210,7 @@
             "adminRole": "DEFAULT_ADMIN_ROLE",
             "members": ["0x2DA02aC5f19Ae362a4121718d990e655eB628D96"]
           },
-          "SENTRY_ROLE": {
-            "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": ["0x8B35C5E273525a4Ca61025812f29C17727948f57"]
-          }
+          "SENTRY_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] }
         },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergency": true,
@@ -252,7 +249,6 @@
     { "address": "0x73f5B22312B7B2B3B1Cd179fC62269aB369c8206" },
     { "address": "0x772112C7e5dD4ed663e844e79d77c1569a2E88ce" },
     { "address": "0x77Ab649Caa7B4b673C9f2cF069900DF48114d79D" },
-    { "address": "0x8B35C5E273525a4Ca61025812f29C17727948f57" },
     { "address": "0x8c4AD2DC12AdB9aD115e37EE9aD2e00E343EDf85" },
     { "address": "0x8d4f4e4ba313c4332e720445d8268E087D5C19b8" },
     { "address": "0x9B0612E43855ef9a7c329ee89653bA45273B550e" },
