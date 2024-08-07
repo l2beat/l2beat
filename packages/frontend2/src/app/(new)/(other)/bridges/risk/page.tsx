@@ -14,9 +14,9 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const tvl = await getLatestTvlUsd({ type: 'bridge' })
-  const [projectsVerificationStatuses, implementationChangeReport] =
+  const [tvl, projectsVerificationStatuses, implementationChangeReport] =
     await Promise.all([
+      getLatestTvlUsd({ type: 'bridge' }),
       getProjectsVerificationStatuses(),
       getImplementationChangeReport(),
     ])
