@@ -81,7 +81,7 @@ export class BreakdownService {
           // The canonical logic is the most complex one
           assert(
             config.type === 'escrow' || config.type === 'preminted',
-            'Only escrow or preminted can be canonical',
+            'Only escrow or preminted tokens can be canonical',
           )
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
