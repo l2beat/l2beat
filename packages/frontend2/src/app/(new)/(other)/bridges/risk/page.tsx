@@ -1,4 +1,3 @@
-import { BridgesMvpWarning } from '~/app/_components/bridges-mvp-warning'
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridge-risk-entries'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
@@ -32,7 +31,6 @@ export default async function Page() {
     <BridgesFilterContextProvider>
       <div className="mb-8">
         <SimplePageHeader>Risk Analysis</SimplePageHeader>
-        <BridgesMvpWarning />
         <BridgesRiskTables entries={entries} />
       </div>
     </BridgesFilterContextProvider>

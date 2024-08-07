@@ -7,7 +7,10 @@ import {
   useMemo,
   useState,
 } from 'react'
-import { type BridgesRiskEntry } from '~/server/features/bridges/types'
+import {
+  type BridgesRiskEntry,
+  type BridgesSummaryEntry,
+} from '~/server/features/bridges/types'
 
 export type BridgesFilterContextValue = {
   validatedBy?: string
@@ -38,7 +41,7 @@ export function useBridgesFilterValues() {
   return context
 }
 
-type BridgesFilterEntry = BridgesRiskEntry
+type BridgesFilterEntry = BridgesRiskEntry | BridgesSummaryEntry
 
 export function useBridgesFilter() {
   const bridgesFilters = useBridgesFilterValues()
