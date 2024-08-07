@@ -18,9 +18,12 @@ export type ScalingCostsEntry = CommonScalingEntry & {
 export type CostsUnit = 'eth' | 'usd' | 'gas'
 
 export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
-  const tvl = await getLatestTvlUsd({ type: 'layer2' })
-  const implementationChange = await getImplementationChangeReport()
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
+  const [tvl, implementationChange, projectsVerificationStatuses] =
+    await Promise.all([
+      getLatestTvlUsd({ type: 'layer2' }),
+      getImplementationChangeReport(),
+      getProjectsVerificationStatuses(),
+    ])
   const projects = getCostsProjects()
   const orderedProjects = orderByTvl(projects, tvl)
 
