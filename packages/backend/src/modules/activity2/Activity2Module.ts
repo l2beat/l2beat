@@ -2,10 +2,11 @@ import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
-import { ClientClass, Peripherals } from '../../peripherals/Peripherals'
+import { Peripherals } from '../../peripherals/Peripherals'
 import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
+import { StarkexClient } from '../../peripherals/starkex/StarkexClient'
 import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { Clock } from '../../tools/Clock'
@@ -21,7 +22,12 @@ import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
 import { ActivityIndexer } from './indexers/types'
-import { TxsCountProvider } from './services/TxsCountProvider'
+import { DegateTxsCountProvider } from './services/providers/DegateTxsCountProvider'
+import { LoopringTxsCountProvider } from './services/providers/LoopringTxsCountProvider'
+import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
+import { StarkexTxsCountProvider } from './services/providers/StarkexTxsCountProvider'
+import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountProvider'
+import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
 
 export function createActivity2Module(
   config: Config,
@@ -79,26 +85,22 @@ function createActivityIndexers(
   indexers.push(dayTargetIndexer)
 
   activityConfig.projects.forEach((project) => {
-    const txsCountProvider = new TxsCountProvider({
-      logger,
-      peripherals,
-      projectId: project.id,
-      projectConfig: project.config,
-      activityConfig,
-    })
-
     switch (project.config.type) {
-      case 'rpc':
-      case 'zksync':
-      case 'starknet':
-      case 'loopring':
-      case 'degate': {
-        const client = getProjectClient(project.config.type)
+      case 'rpc': {
+        const rpcClient = peripherals.getClient(RpcClient, {
+          url: project.config.url,
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        const txsCountProvider = new RpcTxsCountProvider(
+          logger,
+          project.id,
+          rpcClient,
+          project.config,
+        )
         const blockTargetIndexer = createBlockTargetIndexer(
           clock,
-          peripherals,
           logger,
-          client,
+          rpcClient,
           project,
         )
 
@@ -107,8 +109,139 @@ function createActivityIndexers(
           projectId: project.id,
           // TODO: add batchSize to config
           batchSize: 100,
-          minHeight:
-            project.config.type === 'rpc' ? project.config.startBlock ?? 1 : 1,
+          minHeight: project.config.startBlock ?? 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          db,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+      case 'zksync': {
+        const zksyncClient = peripherals.getClient(ZksyncLiteClient, {
+          url: project.config.url,
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        const txsCountProvider = new ZKsyncLiteTxsCountProvider(
+          logger,
+          project.id,
+          zksyncClient,
+          project.config,
+        )
+        const blockTargetIndexer = createBlockTargetIndexer(
+          clock,
+          logger,
+          zksyncClient,
+          project,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          db,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+      case 'starknet': {
+        const starknetClient = peripherals.getClient(StarknetClient, {
+          url: project.config.url,
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        const txsCountProvider = new StarknetTxsCountProvider(
+          logger,
+          project.id,
+          starknetClient,
+          project.config,
+        )
+        const blockTargetIndexer = createBlockTargetIndexer(
+          clock,
+          logger,
+          starknetClient,
+          project,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          db,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+      case 'loopring': {
+        const loopringClient = peripherals.getClient(LoopringClient, {
+          url: project.config.url,
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        const txsCountProvider = new LoopringTxsCountProvider(
+          logger,
+          project.id,
+          loopringClient,
+          project.config,
+        )
+        const blockTargetIndexer = createBlockTargetIndexer(
+          clock,
+          logger,
+          loopringClient,
+          project,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
+          parents: [blockTargetIndexer],
+          txsCountProvider,
+          indexerService,
+          db,
+        })
+
+        indexers.push(blockTargetIndexer, activityIndexer)
+        break
+      }
+      case 'degate': {
+        const degateClient = peripherals.getClient(DegateClient, {
+          url: project.config.url,
+          callsPerMinute: project.config.callsPerMinute,
+        })
+        const txsCountProvider = new DegateTxsCountProvider(
+          logger,
+          project.id,
+          degateClient,
+          project.config,
+        )
+        const blockTargetIndexer = createBlockTargetIndexer(
+          clock,
+          logger,
+          degateClient,
+          project,
+        )
+
+        const activityIndexer = new BlockActivityIndexer({
+          logger,
+          projectId: project.id,
+          // TODO: add batchSize to config
+          batchSize: 100,
+          minHeight: 1,
           parents: [blockTargetIndexer],
           txsCountProvider,
           indexerService,
@@ -119,6 +252,17 @@ function createActivityIndexers(
         break
       }
       case 'starkex': {
+        const starkexClient = peripherals.getClient(StarkexClient, {
+          apiKey: activityConfig.starkexApiKey,
+          callsPerMinute: activityConfig.starkexCallsPerMinute,
+          timeout: undefined,
+        })
+        const txsCountProvider = new StarkexTxsCountProvider(
+          logger,
+          project.id,
+          starkexClient,
+          project.config,
+        )
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
@@ -140,32 +284,10 @@ function createActivityIndexers(
   return indexers
 }
 
-function getProjectClient(
-  type: ActivityTransactionConfig['type'],
-): ClientClass<BaseClient, { url: string; callsPerMinute: number }> {
-  switch (type) {
-    case 'rpc':
-      return RpcClient
-    case 'zksync':
-      return ZksyncLiteClient
-    case 'starknet':
-      return StarknetClient
-    case 'loopring':
-      return LoopringClient
-    case 'degate':
-      return DegateClient
-    default:
-      throw new Error(`${type} type not supported`)
-  }
-}
-
-function createBlockTargetIndexer<
-  T extends ClientClass<BaseClient, { url: string; callsPerMinute: number }>,
->(
+function createBlockTargetIndexer(
   clock: Clock,
-  peripherals: Peripherals,
   logger: Logger,
-  client: T,
+  client: BaseClient,
   project: {
     id: ProjectId
     config: ActivityTransactionConfig
@@ -179,10 +301,7 @@ function createBlockTargetIndexer<
       project.config.type === 'degate',
   )
   const blockTimestampProvider = new BlockTimestampProvider({
-    client: peripherals.getClient(client, {
-      url: project.config.url,
-      callsPerMinute: project.config.callsPerMinute,
-    }),
+    client,
     logger,
   })
   return new BlockTargetIndexer(
