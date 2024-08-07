@@ -32,28 +32,6 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     expect(resultArb).toEqual(expectedArb)
   })
 
-  it(
-    UpdateMonitorRepository.prototype.getLatestByProjectNamesAndChain.name,
-    async () => {
-      const expectedEth: UpdateMonitorRecord = record()
-      const expectedEth2: UpdateMonitorRecord = record({
-        projectName: 'project2',
-      })
-      const expectedArb: UpdateMonitorRecord = record({
-        chainId: ChainId.ARBITRUM,
-      })
-      await repository.upsert(expectedEth)
-      await repository.upsert(expectedEth2)
-      await repository.upsert(expectedArb)
-
-      const result = await repository.getLatestByProjectNamesAndChain(
-        ['project'],
-        ChainId.ETHEREUM,
-      )
-      expect(result).toEqual([expectedEth])
-    },
-  )
-
   it(UpdateMonitorRepository.prototype.upsert.name, async () => {
     const projectName = 'project'
 

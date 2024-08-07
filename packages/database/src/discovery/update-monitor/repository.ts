@@ -19,20 +19,6 @@ export class UpdateMonitorRepository extends BaseRepository {
     return row ? toRecord(row) : undefined
   }
 
-  async getLatestByProjectNamesAndChain(
-    projectNames: string[],
-    chainId: ChainId,
-  ): Promise<UpdateMonitorRecord[]> {
-    const rows = await this.db
-      .selectFrom('public.update_monitor')
-      .select(selectUpdateMonitor)
-      .where('project_name', 'in', projectNames)
-      .where('chain_id', '=', +chainId)
-      .execute()
-
-    return rows.map(toRecord)
-  }
-
   async upsert(record: UpdateMonitorRecord): Promise<void> {
     await this.upsertMany([record])
   }
