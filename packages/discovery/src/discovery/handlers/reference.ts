@@ -49,7 +49,9 @@ export function resolveReferenceFromValues(
     return value
   }
   if (dependency.startsWith(SCOPE_VARIABLE_PREFIX)) {
-    throw new Error("Variables scoped with '#' prefix are unsupported for this field")
+    throw new Error(
+      "Variables scoped with '#' prefix are unsupported for this field",
+    )
   }
   const result = previousResults[dependency]
   if (!result) {

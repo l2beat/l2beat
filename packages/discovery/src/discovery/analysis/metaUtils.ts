@@ -14,12 +14,9 @@ import {
   PermissionConfiguration,
   RawPermissionConfiguration,
 } from '../config/RawDiscoveryConfig'
-import { AnalyzedContract } from './AddressAnalyzer'
-import {
-  resolveReference,
-  resolveReferenceFromValues,
-} from '../handlers/reference'
+import { resolveReferenceFromValues } from '../handlers/reference'
 import { valueToNumber } from '../handlers/utils/valueToNumber'
+import { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
 

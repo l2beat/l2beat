@@ -31,7 +31,7 @@ async function getOwners(
     'function getOwners() view returns (address[])',
     [],
   )
-  assert(owners !== undefined, "Cannot retrieve owners")
+  assert(owners !== undefined, 'Cannot retrieve owners')
   return owners
 }
 
