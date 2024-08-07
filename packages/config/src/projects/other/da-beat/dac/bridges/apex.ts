@@ -1,5 +1,6 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { ChainId, } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../../discovery/starkware'
 import { apex } from '../../../../layer2s/apex'
 import {
   DaAccessibilityRisk,
@@ -9,7 +10,6 @@ import {
 import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
-import { getCommittee } from '../../../../../discovery/starkware'
 
 const discovery = new ProjectDiscovery('apex')
 
