@@ -40,9 +40,9 @@ export class PremintedIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const escrowAmount = await this.getEscrowAmount(timestamp)
-
     const circulatingSupply = await this.getCirculatingSupply(timestamp)
+
+    const escrowAmount = await this.getEscrowAmount(timestamp)
 
     if (escrowAmount.amount < circulatingSupply.amount) {
       await this.$.db.amount.insertMany([escrowAmount])
@@ -59,20 +59,37 @@ export class PremintedIndexer extends ManagedChildIndexer {
     return timestamp.toNumber()
   }
 
-  private async getBlockNumber(timestamp: UnixTime) {
-    const blockNumber =
-      await this.$.db.blockTimestamp.findBlockNumberByChainAndTimestamp(
-        this.$.configuration.chain,
+  private async getCirculatingSupply(
+    timestamp: UnixTime,
+  ): Promise<AmountRecord> {
+    const configuration = {
+      ...this.$.configuration,
+      type: 'circulatingSupply' as const,
+      address: this.$.configuration.address,
+      coingeckoId: this.$.configuration.coingeckoId,
+      id: this.configurationId,
+    }
+
+    const circulatingSupplyAmounts =
+      await this.$.circulatingSupplyService.fetchCirculatingSupplies(
         timestamp,
+        timestamp,
+        configuration,
       )
+
     assert(
-      blockNumber,
-      `Block number not found for timestamp: ${timestamp.toNumber()}`,
+      circulatingSupplyAmounts.length === 1,
+      `One amount should be fetched ${this.$.configuration.coingeckoId}`,
     )
-    return blockNumber
+
+    this.logger.info('Fetched circulating supply', {
+      timestamp: timestamp.toNumber(),
+    })
+
+    return circulatingSupplyAmounts[0]
   }
 
-  async getEscrowAmount(timestamp: UnixTime): Promise<AmountRecord> {
+  private async getEscrowAmount(timestamp: UnixTime): Promise<AmountRecord> {
     const blockNumber = await this.getBlockNumber(timestamp)
 
     const configuration = {
@@ -88,45 +105,30 @@ export class PremintedIndexer extends ManagedChildIndexer {
       [configuration],
     )
 
-    this.logger.info('Fetched escrows amounts', {
-      timestamp: timestamp.toNumber(),
-      blockNumber,
-      amounts: escrowAmounts.length,
-    })
-
-    return {
-      timestamp,
-      amount: escrowAmounts.reduce((agg, curr) => agg + curr.amount, 0n),
-      configId: this.configurationId,
-    }
-  }
-
-  async getCirculatingSupply(timestamp: UnixTime): Promise<AmountRecord> {
-    const configuration = {
-      ...this.$.configuration,
-      type: 'circulatingSupply' as const,
-      address: this.$.configuration.address,
-      coingeckoId: this.$.configuration.coingeckoId,
-      id: this.configurationId,
-    }
-
-    const amounts =
-      await this.$.circulatingSupplyService.fetchCirculatingSupplies(
-        timestamp,
-        timestamp,
-        configuration,
-      )
-
     assert(
-      amounts.length === 1,
-      `One amount should be fetched ${this.$.configuration.coingeckoId}`,
+      escrowAmounts.length === 1,
+      `One amount should be fetched ${this.$.configuration.address}`,
     )
 
-    this.logger.info('Fetched circulating supply', {
+    this.logger.info('Fetched escrow amount', {
       timestamp: timestamp.toNumber(),
+      blockNumber,
     })
 
-    return amounts[0]
+    return escrowAmounts[0]
+  }
+
+  private async getBlockNumber(timestamp: UnixTime) {
+    const blockNumber =
+      await this.$.db.blockTimestamp.findBlockNumberByChainAndTimestamp(
+        this.$.configuration.chain,
+        timestamp,
+      )
+    assert(
+      blockNumber,
+      `Block number not found for timestamp: ${timestamp.toNumber()}`,
+    )
+    return blockNumber
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
