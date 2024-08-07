@@ -1,17 +1,20 @@
 import { type Bridge, type Layer2, bridges } from '@l2beat/config'
-import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import {
+  type ProjectId,
+  type ProjectsVerificationStatuses,
+  notUndefined,
+} from '@l2beat/shared-pure'
+import { type ImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { orderByTvl } from '../tvl/order-by-tvl'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getDestination } from './get-destination'
 import { type BridgesRiskEntry } from './types'
 
 export async function getBridgeRiskEntries(
   tvl: Record<ProjectId, number>,
+  implementationChangeReport: ImplementationChangeReport,
+  projectsVerificationStatuses: ProjectsVerificationStatuses,
 ): Promise<BridgesRiskEntry[]> {
-  const projectsVerificationStatuses = await getProjectsVerificationStatuses()
-  const implementationChangeReport = await getImplementationChangeReport()
   const included = bridges.filter((project) => !project.isUpcoming)
   const orderedByTvl = orderByTvl(included, tvl)
 
