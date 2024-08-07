@@ -1,3 +1,25 @@
+Generated with discovered.json: 0x29bf015e5a7b96ffdbaacb860fcedf061c601394
+
+# Diff at Wed, 07 Aug 2024 07:25:35 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20469499
+- current block number: 20475186
+
+## Description
+
+The Pauser role was renounced, there are no pausers right now. The bridge remains paused. Context: https://x.com/Ronin_Network/status/1820804772917588339
+
+## Watched changes
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.accessControl.SENTRY_ROLE.members.0:
+-        "0x8B35C5E273525a4Ca61025812f29C17727948f57"
+    }
+```
+
 Generated with discovered.json: 0x2eb6d1be309f0402d17aff1b623019fc86ba6029
 
 # Diff at Tue, 06 Aug 2024 12:22:12 GMT:
