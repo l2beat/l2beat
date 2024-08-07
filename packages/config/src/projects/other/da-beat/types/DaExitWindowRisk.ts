@@ -89,7 +89,7 @@ function LowOrNoDelay(delaySeconds?: number) {
     type: 'LowOrNoDelay',
     value,
     sentiment: 'bad',
-    description: 'TODO',
+    description: 'There is no delay in the upgradeability of the bridge.',
   } as const
 }
 
