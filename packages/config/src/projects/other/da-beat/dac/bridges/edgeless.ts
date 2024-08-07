@@ -1,6 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { hychain } from '../../../../layer2s/hychain'
+import { edgeless } from '../../../../layer2s/edgeless'
 import {
   DaAccessibilityRisk,
   DaAttestationSecurityRisk,
@@ -10,7 +10,7 @@ import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
-const discovery = new ProjectDiscovery('hychain')
+const discovery = new ProjectDiscovery('edgeless')
 
 const DAC = discovery.getContractValue<{
   membersCount: number
@@ -18,23 +18,24 @@ const DAC = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = DAC
 
-export const hychainDac = {
-  id: 'hychain-dac-bridge',
+export const edgelessDac = {
+  id: 'edgeless-dac-bridge',
   type: 'DAC',
   display: {
-    name: 'Hychain DAC',
+    name: 'Edgeless DAC',
     slug: 'dac',
-    description: 'Hychain DAC on Ethereum.',
+    description: 'Edgeless DAC on Ethereum.',
     links: {
-      websites: ['https://hychain.com'],
-      apps: ['https://bridge.hychain.com'],
-      documentation: ['https://docs.hychain.com'],
-      explorers: ['https://explorer.hychain.com'],
-      repositories: ['https://github.com/kintoxyz'],
+      websites: ['https://edgeless.network/'],
+      apps: ['https://bridge.edgeless.network/'],
+      documentation: ['https://docs.edgeless.network/'],
+      explorers: ['https://explorer.edgeless.network/'],
+      repositories: ['https://github.com/edgelessNetwork'],
       socialMedia: [
-        'https://x.com/HYCHAIN_GAMES',
-        'https://discord.gg/hytopiagg',
-        'https://hychain.substack.com/',
+        'https://twitter.com/EdgelessNetwork',
+        'https://discord.gg/edgeless',
+        'https://paragraph.xyz/@edgeless',
+        'https://t.me/+f8yhoOg-4cNhYWEx',
       ],
     },
   },
@@ -61,7 +62,7 @@ export const hychainDac = {
   members: {
     type: 'unknown',
   },
-  usedIn: toUsedInProject([hychain]),
+  usedIn: toUsedInProject([edgeless]),
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,
     accessibility: DaAccessibilityRisk.NotEnshrined,
