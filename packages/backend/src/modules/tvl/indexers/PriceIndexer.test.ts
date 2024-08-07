@@ -45,12 +45,21 @@ describe(PriceIndexer.name, () => {
       })
 
       const priceRepository = mockObject<Database['price']>({
-        addMany: async () => 1,
+        insertMany: async () => 1,
       })
 
       const syncOptimizer = mockObject<SyncOptimizer>({
         shouldTimestampBeSynced: (t: UnixTime) => !(t.toNumber() % 100),
       })
+
+      const parameters = {
+        coingeckoId: CoingeckoId('id'),
+      }
+
+      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
+        actual<CoingeckoPriceConfigEntry>('a', 100, null, parameters),
+        actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
+      ]
 
       const indexer = new PriceIndexer({
         parents: [],
@@ -58,19 +67,11 @@ describe(PriceIndexer.name, () => {
         syncOptimizer,
         coingeckoId: CoingeckoId('id'),
         indexerService: mockObject<IndexerService>({}),
-        configurations: [],
+        configurations,
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         db: mockDatabase({ price: priceRepository }),
       })
-
-      const parameters = {
-        coingeckoId: CoingeckoId('id'),
-      }
-      const configurations: Configuration<CoingeckoPriceConfigEntry>[] = [
-        actual<CoingeckoPriceConfigEntry>('a', 100, null, parameters),
-        actual<CoingeckoPriceConfigEntry>('b', 100, null, parameters),
-      ]
 
       const saveData = await indexer.multiUpdate(from, to, configurations)
       const safeHeight = await saveData()
@@ -95,7 +96,7 @@ describe(PriceIndexer.name, () => {
         new UnixTime(200),
       ])
 
-      expect(priceRepository.addMany).toHaveBeenOnlyCalledWith([
+      expect(priceRepository.insertMany).toHaveBeenOnlyCalledWith([
         price('a', 100),
         price('a', 200),
         price('b', 100),
@@ -118,7 +119,9 @@ describe(PriceIndexer.name, () => {
         syncOptimizer: mockObject<SyncOptimizer>({}),
         coingeckoId: CoingeckoId('id'),
         indexerService: mockObject<IndexerService>({}),
-        configurations: [],
+        configurations: [
+          mockObject<Configuration<CoingeckoPriceConfigEntry>>({ id: 'a' }),
+        ],
         logger: Logger.SILENT,
         serializeConfiguration: () => '',
         db: mockDatabase({ price: priceRepository }),

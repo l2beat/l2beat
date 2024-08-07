@@ -45,10 +45,10 @@ describeDatabase(LivenessRepository.name, (db) => {
     this.timeout(10000)
 
     await repository.deleteAll()
-    await repository.addMany(DATA)
+    await repository.insertMany(DATA)
   })
 
-  describe(LivenessRepository.prototype.addMany.name, () => {
+  describe(LivenessRepository.prototype.insertMany.name, () => {
     it('only new rows', async () => {
       const newRows = [
         {
@@ -64,7 +64,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           configurationId: txIdA,
         },
       ]
-      await repository.addMany(newRows)
+      await repository.insertMany(newRows)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([
@@ -76,7 +76,7 @@ describeDatabase(LivenessRepository.name, (db) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).not.toBeRejected()
     })
 
     it('big query', async () => {
@@ -89,7 +89,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           configurationId: txIdA,
         })
       }
-      await expect(repository.addMany(records)).not.toBeRejected()
+      await expect(repository.insertMany(records)).not.toBeRejected()
     })
   })
 
@@ -182,7 +182,7 @@ describeDatabase(LivenessRepository.name, (db) => {
           configurationId: txIdB,
         },
       ]
-      await repository.addMany(records)
+      await repository.insertMany(records)
 
       await repository.deleteFromById(txIdA, START.add(1, 'hours'))
 

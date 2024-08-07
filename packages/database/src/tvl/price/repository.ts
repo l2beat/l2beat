@@ -13,10 +13,9 @@ export class PriceRepository extends BaseRepository {
     configIds: string[],
     fromInclusive: UnixTime,
     toInclusive: UnixTime,
-  ) {
-    if (configIds.length === 0) {
-      return []
-    }
+  ): Promise<PriceRecord[]> {
+    if (configIds.length === 0) return []
+
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
@@ -25,43 +24,40 @@ export class PriceRepository extends BaseRepository {
       .where('timestamp', '<=', toInclusive.toDate())
       .orderBy('timestamp')
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async getByTimestamp(timestamp: UnixTime) {
+  async getByTimestamp(timestamp: UnixTime): Promise<PriceRecord[]> {
     const rows = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('timestamp', '=', timestamp.toDate())
       .orderBy('timestamp')
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async findByConfigAndTimestamp(configId: string, timestamp: UnixTime) {
+  async findByConfigAndTimestamp(
+    configId: string,
+    timestamp: UnixTime,
+  ): Promise<PriceRecord | undefined> {
     const row = await this.db
       .selectFrom('public.prices')
       .select(selectPrice)
       .where('configuration_id', '=', configId)
       .where('timestamp', '=', timestamp.toDate())
+      .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row) : null
+    return row && toRecord(row)
   }
 
-  async addMany(records: PriceRecord[]) {
-    if (records.length === 0) {
-      return 0
-    }
+  async insertMany(records: PriceRecord[]) {
+    if (records.length === 0) return 0
 
     const rows = records.map(toRow)
-
     await this.batch(rows, 10_000, async (batch) => {
       await this.db.insertInto('public.prices').values(batch).execute()
     })
-
     return rows.length
   }
 
@@ -79,15 +75,15 @@ export class PriceRepository extends BaseRepository {
     return Number(result.numDeletedRows)
   }
 
-  deleteHourlyUntil(dateRange: CleanDateRange) {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteHourlyUntil(this.db, 'public.prices', dateRange)
   }
 
-  deleteSixHourlyUntil(dateRange: CleanDateRange) {
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteSixHourlyUntil(this.db, 'public.prices', dateRange)
   }
 
-  async getAll() {
+  async getAll(): Promise<PriceRecord[]> {
     const rows = await this.db.selectFrom('public.prices').selectAll().execute()
     return rows.map(toRecord)
   }

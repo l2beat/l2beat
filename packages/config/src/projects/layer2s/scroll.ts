@@ -270,7 +270,7 @@ export const scroll: Layer2 = {
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (blobs or calldata)'],
     bridge: { type: 'Enshrined' },
-    mode: 'Transaction data',
+    mode: 'Transaction data (compressed)',
   }),
   riskView: makeBridgeCompatible({
     stateValidation: {
@@ -393,7 +393,8 @@ export const scroll: Layer2 = {
   stateDerivation: {
     nodeSoftware:
       'The node software to reconstruct the state is available [here](https://github.com/scroll-tech/go-ethereum). Note that it uses the L2 p2p network to fetch blocks, and not the L1 network. The consistency with L1 data can be checked by running the [scroll-geth node](https://github.com/scroll-tech/go-ethereum) with the `--rollup.verify` flag.',
-    compressionScheme: 'The rollup does not use compression.',
+    compressionScheme:
+      'Data batches are compressed using the [zlib](https://github.com/madler/zlib) algorithm with best compression level.',
     genesisState:
       'The genesis file can be found [here](https://scrollzkp.notion.site/genesis-json-f89ca24b123f462f98c8844d17bdbb74), which contains two prefunded addresses and five predeployed contracts.',
     dataFormat:

@@ -7,7 +7,7 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { SavedConfiguration } from './multi/types'
+import { Configuration, SavedConfiguration } from './multi/types'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 
@@ -17,19 +17,19 @@ export class IndexerService {
   // #region ManagedChildIndexer & ManagedMultiIndexer
 
   async getSafeHeight(indexerId: string): Promise<number | undefined> {
-    const record = await this.db.indexerState.findIndexerState(indexerId)
+    const record = await this.db.indexerState.findByIndexerId(indexerId)
     return record?.safeHeight
   }
 
   async getIndexerState(
     indexerId: string,
   ): Promise<IndexerStateRecord | undefined> {
-    const record = await this.db.indexerState.findIndexerState(indexerId)
+    const record = await this.db.indexerState.findByIndexerId(indexerId)
     return record
   }
 
   async setSafeHeight(indexerId: string, safeHeight: number) {
-    await this.db.indexerState.setSafeHeight(indexerId, safeHeight)
+    await this.db.indexerState.updateSafeHeight(indexerId, safeHeight)
   }
 
   async setInitialState(
@@ -37,7 +37,7 @@ export class IndexerService {
     safeHeight: number,
     configHash?: string,
   ) {
-    await this.db.indexerState.addOrUpdate({
+    await this.db.indexerState.upsert({
       indexerId,
       safeHeight,
       configHash,
@@ -46,6 +46,20 @@ export class IndexerService {
 
   // #endregion
   // #region ManagedMultiIndexer
+
+  async insertConfigurations<T>(
+    indexerId: string,
+    configurations: Configuration<T>[],
+    encode: (value: T) => string,
+  ): Promise<void> {
+    const encoded = configurations.map((config) => ({
+      ...config,
+      properties: encode(config.properties),
+    }))
+    await this.db.indexerConfiguration.insertMany(
+      encoded.map((e) => ({ ...e, indexerId, currentHeight: null })),
+    )
+  }
 
   async upsertConfigurations<T>(
     indexerId: string,
@@ -57,27 +71,17 @@ export class IndexerService {
       properties: encode(config.properties),
     }))
 
-    await this.db.indexerConfiguration.addOrUpdateMany(
+    await this.db.indexerConfiguration.upsertMany(
       encoded.map((e) => ({ ...e, indexerId })),
     )
   }
 
-  async getSavedConfigurations<T>(
+  async getSavedConfigurations(
     indexerId: string,
-  ): Promise<Omit<SavedConfiguration<T>, 'properties'>[]> {
-    const configurations: (Omit<SavedConfiguration<T>, 'properties'> & {
-      indexerId?: string
-      properties?: string
-    })[] = await this.db.indexerConfiguration.getSavedConfigurations(indexerId)
-
-    for (const config of configurations) {
-      // biome-ignore lint/performance/noDelete: not a performance problem
-      delete config.indexerId
-      // biome-ignore lint/performance/noDelete: not a performance problem
-      delete config.properties
-    }
-
-    return configurations
+  ): Promise<SavedConfiguration<string>[]> {
+    return await this.db.indexerConfiguration.getConfigurationsWithoutIndexerId(
+      indexerId,
+    )
   }
 
   async updateConfigurationsCurrentHeight(
@@ -90,20 +94,14 @@ export class IndexerService {
     )
   }
 
-  async persistOnlyUsedConfigurations(
+  async deleteConfigurations(
     indexerId: string,
     configurationIds: string[],
   ): Promise<void> {
-    const savedConfigurations =
-      await this.db.indexerConfiguration.getIdsByIndexer(indexerId)
-
-    const runtimeConfigurations = new Set(configurationIds)
-
-    const unused = savedConfigurations.filter(
-      (c) => !runtimeConfigurations.has(c),
+    await this.db.indexerConfiguration.deleteConfigurations(
+      indexerId,
+      configurationIds,
     )
-
-    await this.db.indexerConfiguration.deleteConfigurations(indexerId, unused)
   }
 
   // #endregion
@@ -181,7 +179,7 @@ export class IndexerService {
     const lagging = []
 
     const configurationsState =
-      await this.db.indexerConfiguration.getSavedConfigurationsByIds(
+      await this.db.indexerConfiguration.getByConfigurationIds(
         configurations.map((c) => c.configId),
       )
 

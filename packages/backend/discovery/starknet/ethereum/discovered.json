@@ -1,9 +1,9 @@
 {
   "name": "starknet",
   "chain": "ethereum",
-  "blockNumber": 20362649,
-  "configHash": "0x4a6dee94c48f0cf4ea217c31df605cd6023014e20cb1ee8319789662abbce8fd",
-  "version": 9,
+  "blockNumber": 20461688,
+  "configHash": "0x9d1beed8f80f0e5c226a167bc517f6809ef5cdccdfe3fe32a3a141fcfa133a87",
+  "version": 10,
   "contracts": [
     {
       "name": "BridgeMultisig",
@@ -538,21 +538,36 @@
         "isFinalized": false,
         "isFrozen": false,
         "isNotFinalized": true,
-        "l1ToL2MessageNonce": 1657788,
+        "l1ToL2MessageNonce": 1658748,
         "messageCancellationDelay": 432100,
         "operators": [
           "0xFf6B2185E357b6e9136A1b2ca5d7C45765D5c591",
           "0x2C169DFe5fBbA12957Bdd0Ba47d9CEDbFE260CA7"
         ],
         "programHash": "3383082961563516565935611087683915026448707331436034043529592588079494402084",
+        "programHashHistory": [
+          "1921772108187713503530008849184725638117898887391063185252422808224349294626",
+          "3258367057337572248818716706664617507069572185152472699066582725377748079373",
+          "407700941260678649793204927710478760533239334662847444187959202896452163393",
+          "1865367024509426979036104162713508294334262484507712987283009063059134893433",
+          "54878256403880350656938046611252303365750679698042371543935159963667935317",
+          "2479841346739966073527450029179698923866252973805981504232089731754042431018",
+          "109586309220455887239200613090920758778188956576212125550190099009305121410"
+        ],
         "PROXY_GOVERNANCE_TAG": "StarkEx.Proxy.2019.GovernorsInformation",
         "PROXY_VERSION": "3.0.0",
         "StarkWareProxy_upgradeDelay": 0,
-        "stateBlockHash": "1613200401092076787070681810088773606083904755777988852545039152422313799991",
-        "stateBlockNumber": 660651,
-        "stateRoot": "1981163098886121801762536895055907481299073032269674384841658605834362485766",
+        "stateBlockHash": "221056878479892130311865352160867787805003552473814239733345038653598101699",
+        "stateBlockNumber": 665429,
+        "stateRoot": "3090481565651080693481431733528057073620157493846881511521423684325937473388",
         "UPGRADE_DELAY_SLOT": "0xc21dbb3089fcb2c4f4c6a67854ab4db2b0f233ea4b21b21f912d52d18fc5db1f",
         "verifier": "0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
+      },
+      "fieldMeta": {
+        "programHash": {
+          "severity": "HIGH",
+          "description": "The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."
+        }
       },
       "derivedName": "Starknet"
     },
@@ -2043,5 +2058,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

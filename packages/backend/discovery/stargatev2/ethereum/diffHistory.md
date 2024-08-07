@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x810d943354834eb2842ada20a89e7c45888f96d4
+
+# Diff at Tue, 30 Jul 2024 11:14:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20340229
+- current block number: 20340229
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20340229 (main branch discovery), not current.
+
+```diff
+    contract EndpointV2 (0x1a44076050125825900e736c501f859c50fE728c) {
+    +++ description: Its configuration and MessageLib to use is set for each OApp and destination by the OApp owner.
+      fieldMeta:
++        {"getRegisteredLibraries":{"severity":"HIGH","description":"MessageLibs registered for this Endpoint, enforcing the OApp owner's custom security stack."}}
+    }
+```
+
+```diff
+    contract CreditMessaging (0x6b8aD17795d89B283e6D0362A87A403f3544bb9d) {
+    +++ description: None
+      fieldMeta:
++        {"maxAssetId":{"description":"The highest currently registered assetID"}}
+    }
+```
+
+```diff
+    contract SendUln302 (0xbB2Ea70C9E858123480642Cf96acbcCE1372dCe1) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      fieldMeta:
++        {"getExecutorConfig":{"description":"The executor config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [maxMessageSize, Executor])"}}
+    }
+```
+
+```diff
+    contract ReceiveUln302 (0xc02Ab410f0734EFa3F14628780e6e695156024C2) {
+    +++ description: Each MessageLib is an immutable verification library that OApp owners can point their OApp's Endpoint to.
+      fieldMeta:
++        {"getUlnConfig":{"description":"The verification config of the Stargate Bridge OApp (TokenMessaging) for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"}}
+    }
+```
+
 Generated with discovered.json: 0x458094cf56fc38fb2390760322c8ca83de43a199
 
 # Diff at Fri, 19 Jul 2024 11:18:40 GMT:

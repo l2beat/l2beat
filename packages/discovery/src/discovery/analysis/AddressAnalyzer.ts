@@ -1,12 +1,19 @@
 import { assert } from '@l2beat/backend-tools'
-import { ContractParameters, ContractValue } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  ContractValue,
+  FieldMeta,
+} from '@l2beat/discovery-types'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { isEqual } from 'lodash'
 
 import { get$Implementations } from '@l2beat/discovery-types'
 import { DiscoveryLogger } from '../DiscoveryLogger'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
-import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
+import {
+  DiscoveryContractField,
+  DiscoveryCustomType,
+} from '../config/RawDiscoveryConfig'
 import { HandlerResult } from '../handlers/Handler'
 import { HandlerExecutor } from '../handlers/HandlerExecutor'
 import { IProvider } from '../provider/IProvider'
@@ -32,6 +39,7 @@ export interface AnalyzedContract {
   proxyType?: string
   implementations: EthereumAddress[]
   values: Record<string, ContractValue | undefined>
+  fieldsMeta: Record<string, FieldMeta>
   errors: Record<string, string>
   abis: Record<string, string[]>
   sourceBundles: PerContractSource[]
@@ -129,13 +137,14 @@ export class AddressAnalyzer {
     )
     logger.logName(sources.name)
 
+    const name = overrides?.name ?? sources.name
     // Match templates by shape only if there are no explicitly set
     if (
       overrides?.extends === undefined &&
       (suggestedTemplates === undefined || suggestedTemplates.size === 0)
     ) {
       const matchingTemplatesByShape =
-        this.templateService.findMatchingTemplates(sources)
+        this.templateService.findMatchingTemplates(name, sources)
       const matchingTemplates = Object.keys(matchingTemplatesByShape)
       const template = matchingTemplates[0]
       if (template !== undefined) {
@@ -195,7 +204,7 @@ export class AddressAnalyzer {
       'selfMeta' | 'targetsMeta'
     > = {
       type: 'Contract',
-      name: overrides?.name ?? sources.name,
+      name,
       derivedName: overrides?.name !== undefined ? sources.name : undefined,
       isVerified: sources.isVerified,
       address,
@@ -204,6 +213,7 @@ export class AddressAnalyzer {
       implementations: implementations,
       proxyType: proxy?.type,
       values: mergedValues,
+      fieldsMeta: this.getFieldsMeta(extendedTemplate, overrides),
       errors: { ...templateErrors, ...(errors ?? {}) },
       abis: sources.abis,
       sourceBundles: sources.sources,
@@ -293,6 +303,35 @@ export class AddressAnalyzer {
     }
 
     return false
+  }
+
+  getFieldsMeta(
+    template: ExtendedTemplate | undefined,
+    overrides: ContractOverrides | undefined,
+  ): Record<string, FieldMeta> {
+    const result: Record<string, FieldMeta> = {}
+    const fieldOverrides: Record<string, DiscoveryContractField>[] = [
+      overrides?.fields ?? {},
+      template !== undefined
+        ? this.templateService.loadContractTemplate(template.template).fields ??
+          {}
+        : {},
+    ]
+
+    for (const override of fieldOverrides) {
+      for (const [key, value] of Object.entries(override)) {
+        if (value.severity === undefined && value.description === undefined) {
+          continue
+        }
+
+        result[key] = {
+          severity: value.severity,
+          description: value.description,
+        }
+      }
+    }
+
+    return result
   }
 }
 

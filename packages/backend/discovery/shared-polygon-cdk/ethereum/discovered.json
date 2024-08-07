@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20324826,
   "configHash": "0x8030550dbc89f807813311b14765b05cad184c040087b7442a7bf31243db9d3c",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Permit2",
@@ -312,6 +312,18 @@
         "totalVerifiedBatches": 236217,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
+      },
+      "fieldMeta": {
+        "rollupsData": {
+          "severity": "MEDIUM",
+          "description": "Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]"
+        },
+        "rollupTypes": {
+          "description": "struct consensusImplementation, verifier, forkID, rollupCompatibilityID, bool obsolete, genesisBlock"
+        },
+        "isVerifyingBatches": {
+          "description": "Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1."
+        }
       },
       "derivedName": "PolygonRollupManager",
       "usedTypes": [{ "typeCaster": "GreaterThan", "arg": { "value": 1 } }]
@@ -981,5 +993,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

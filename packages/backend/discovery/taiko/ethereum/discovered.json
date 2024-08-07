@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20367491,
   "configHash": "0xe4e0c6fd03b9c9ec903e56fbea2b9b1029b8ba7e8af2de80d87a9adf173f478c",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "PEMCertChainLib",
@@ -214,6 +214,23 @@
           "cooldownWindow": 1440,
           "provingWindow": 240,
           "maxBlocksToVerifyPerProof": 0
+        }
+      },
+      "fieldMeta": {
+        "TIER_SGX": {
+          "description": "verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_GUARDIAN_MINORITY": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_GUARDIAN": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_OPTIMISTIC": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
+        },
+        "TIER_SGX_ZKVM": {
+          "description": "tuple args: verifierName, validityBond, contestBond, cooldownWindow, provingWindow, maxBlocksToVerifyPerProof"
         }
       },
       "derivedName": "TierProviderV2"
@@ -1536,5 +1553,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

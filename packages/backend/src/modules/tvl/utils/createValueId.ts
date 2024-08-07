@@ -17,6 +17,7 @@ export function createValueId(
   input.push(amountConfig.includeInTotal)
   input.push(amountConfig.decimals)
   input.push(amountConfig.isAssociated)
+  input.push(amountConfig.category)
 
   const hash = createHash('sha1').update(input.join('')).digest('hex')
   return hash.slice(0, 12)

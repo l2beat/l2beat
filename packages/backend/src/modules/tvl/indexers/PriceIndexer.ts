@@ -4,12 +4,10 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
-import {
-  ManagedMultiIndexer,
-  ManagedMultiIndexerOptions,
-} from '../../../tools/uif/multi/ManagedMultiIndexer'
+import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
+  ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
 import { PriceService } from '../services/PriceService'
@@ -55,7 +53,7 @@ export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry>
     )
 
     return async () => {
-      await this.$.db.price.addMany(optimizedPrices)
+      await this.$.db.price.insertMany(optimizedPrices)
       this.logger.info('Saved prices into DB', {
         from,
         to: adjustedTo.toNumber(),

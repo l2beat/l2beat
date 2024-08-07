@@ -153,12 +153,6 @@ export const kinto: Layer2 = orbitStackL2({
       },
     },
   ],
-  finality: {
-    type: 'Arbitrum',
-    minTimestamp: new UnixTime(1721705699),
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
   nonTemplateEscrows: [
     discovery.getEscrowDetails({
       address: EthereumAddress('0x0f1b7bd7762662b23486320aa91f30312184f70c'),

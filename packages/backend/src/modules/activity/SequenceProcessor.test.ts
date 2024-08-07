@@ -235,7 +235,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
     })
 
     it('re-processes data when from > getLatest', async () => {
-      const time = install()
+      const time = install({ shouldClearNativeTimers: true })
 
       const reportError = mockFn().returns(undefined)
       sequenceProcessor = createSequenceProcessor({
@@ -263,7 +263,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
     })
 
     it('works when processRange throws', async () => {
-      const time = install()
+      const time = install({ shouldClearNativeTimers: true })
 
       const errorMessage = 'Force-failing during tests!'
       const reportError = mockFn().returns(undefined)
@@ -298,7 +298,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
         latest,
         syncedOnce: true,
       }
-      await db.sequenceProcessor.addOrUpdate(initialState)
+      await db.sequenceProcessor.upsert(initialState)
       sequenceProcessor = createSequenceProcessor({
         startFrom: 1,
         batchSize: 2,
@@ -459,7 +459,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
 
     it('loads existing state on start', async () => {
       const latest = 3
-      await db.sequenceProcessor.addOrUpdate({
+      await db.sequenceProcessor.upsert({
         id: PROCESSOR_ID,
         lastProcessed: latest,
         latest: latest,
@@ -481,7 +481,7 @@ describeDatabase(SequenceProcessor.name, (db) => {
   describe('syncedOnce flag', () => {
     it('sets syncedOnce to true after first full sync', async () => {
       const latest = 5
-      await db.sequenceProcessor.addOrUpdate({
+      await db.sequenceProcessor.upsert({
         id: PROCESSOR_ID,
         lastProcessed: 1,
         latest: latest,

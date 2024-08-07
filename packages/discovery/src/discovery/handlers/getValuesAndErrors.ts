@@ -23,7 +23,7 @@ export function getValuesAndErrors(
   for (const result of results) {
     if (result.value !== undefined) {
       const returnType = (fieldOverrides ?? {})[result.field]?.returnType
-      if (returnType !== undefined && returnType !== null) {
+      if (returnType !== undefined) {
         values[result.field] = typeApplier.applyReturnType(
           result.value,
           returnType,

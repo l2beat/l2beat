@@ -1,7 +1,5 @@
 export * from './ActivityApi'
-export * from './DiffHistoryApi'
 export * from './FeaturesApi'
-export * from './FinalityApi'
 export * from './ImplementationChangeReportApi'
 export * from './L2CostsApi'
 export * from './LivenessApi'

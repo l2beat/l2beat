@@ -1,22 +1,30 @@
 import { type SetRequired } from 'type-fest'
 import { BaseRepository } from '../../BaseRepository'
-import { toRecord as toNetworkExplorerRecord } from '../network-explorer/entity'
+import {
+  NetworkExplorerRecord,
+  toRecord as toNetworkExplorerRecord,
+} from '../network-explorer/entity'
 import { selectNetworkExplorer } from '../network-explorer/select'
+import { NetworkRpcRecord } from '../network-rpc/entity'
 import { selectNetworkRpc } from '../network-rpc/select'
 import { NetworkRecord, toRecord, toRow } from './entity'
 import { selectNetwork } from './select'
 
 export class NetworkRepository extends BaseRepository {
-  async findMany() {
+  async getAll(): Promise<NetworkRecord[]> {
     const rows = await this.db
       .selectFrom('public.Network')
       .select(selectNetwork)
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async findManyWithConfigs() {
+  async getAllWithConfigs(): Promise<
+    (NetworkRecord & {
+      explorers: NetworkExplorerRecord[]
+      rpc?: NetworkRpcRecord
+    })[]
+  > {
     const allNetworks = await this.db
       .selectFrom('public.Network')
       .select([...selectNetwork])
@@ -46,38 +54,45 @@ export class NetworkRepository extends BaseRepository {
     }))
   }
 
-  async findWithCoingecko() {
+  async getAllWithCoingeckoId(): Promise<
+    SetRequired<NetworkRecord, 'coingeckoId'>[]
+  > {
     const rows = await this.db
       .selectFrom('public.Network')
       .where('public.Network.coingeckoId', 'is not', null)
       .select(selectNetwork)
       .$narrowType<{ coingeckoId: string }>()
       .execute()
-
     return rows.map(toRecord) as SetRequired<NetworkRecord, 'coingeckoId'>[]
   }
 
-  upsertMany(networks: NetworkRecord[]) {
-    const row = networks.map(toRow)
+  async upsertMany(networks: NetworkRecord[]): Promise<number> {
+    if (networks.length === 0) return 0
 
-    return this.db
-      .insertInto('public.Network')
-      .values(row)
-      .onConflict((conflict) =>
-        conflict.column('coingeckoId').doUpdateSet({
-          coingeckoId: (excluded) => excluded.ref('excluded.coingeckoId'),
-        }),
-      )
-      .execute()
+    const rows = networks.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.Network')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.column('coingeckoId').doUpdateSet((eb) => ({
+            coingeckoId: eb.ref('excluded.coingeckoId'),
+          })),
+        )
+        .execute()
+    })
+    return networks.length
   }
 
-  updateWhereCoinGeckoId(coingeckoId: string, Network: NetworkRecord) {
-    const row = toRow(Network)
-
-    return this.db
+  async updateByCoingeckoId(
+    coingeckoId: string,
+    record: NetworkRecord,
+  ): Promise<void> {
+    const row = toRow(record)
+    await this.db
       .updateTable('public.Network')
       .set(row)
-      .where('public.Network.coingeckoId', '=', coingeckoId)
+      .where('coingeckoId', '=', coingeckoId)
       .execute()
   }
 }

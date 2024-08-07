@@ -1,3 +1,148 @@
+Generated with discovered.json: 0x92bed3f93bb7b3a89690079407db0bd44b17e955
+
+# Diff at Tue, 06 Aug 2024 11:35:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@636940e9998601360990d4bbb59e5d257345bee1 block: 20454427
+- current block number: 20469265
+
+## Description
+
+Conduit multisig is removed from permissions and replaced by an EOA. The single validator is replaced.
+There is one batch posted with calldata and the Sequencer only window is increased and then reset again to the old value. (`maxTimeVariation.delaySeconds`)
+The wasmModuleRoot is changed to the ArbOS 31 root. ([compare Nitro GH repo](https://github.com/OffchainLabs/nitro/blob/7defbd2f59ffc53229eddaa5d6588e1a81ed90ff/Dockerfile#L220))
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.lastStakeBlock:
+-        18914041
++        20468408
+      values.setValidatorCount:
+-        1
++        2
+      values.stakerCount:
+-        1
++        2
+      values.validators.0:
+-        "0x56D33424edb428744597Ec02571f14B50a33b7de"
++        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.batchPosters.0:
+-        "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"
++        "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4"
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        true
++        false
+      values.postsBlobs:
+-        true
++        false
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.2:
+-        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
++        "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ConduitMultisig/GnosisSafe.sol => /dev/null    | 952 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  34 -
+ 2 files changed, 986 deletions(-)
+```
+
+Generated with discovered.json: 0x81a29071fa30ab118e27cf7bf790151320c2728c
+
+# Diff at Sun, 04 Aug 2024 09:55:30 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20324735
+- current block number: 20454427
+
+## Description
+
+A second Multisig is added as UpgradeExecutor.
+Furthermore, the UpgradeExecutor was EOA-governed since Jan 2024 by `0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C`.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.2:
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/ParallelMultisig/GnosisSafe.sol | 952 +++++++++++++++++++++
+ .../.flat/ParallelMultisig/GnosisSafeProxy.p.sol   |  34 +
+ 2 files changed, 986 insertions(+)
+```
+
+Generated with discovered.json: 0xa983c9d48afcdea5e41c24942fc90aaf13668f51
+
+# Diff at Tue, 30 Jul 2024 11:13:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20324735
+- current block number: 20324735
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20324735 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      fieldMeta:
++        {"confirmPeriodBlocks":{"description":"Challenge period. (Number of blocks until a node is confirmed)."},"wasmModuleRoot":{"description":"Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."}}
+    }
+```
+
 Generated with discovered.json: 0x4d5085741f2009ce78422ded5a756a7c74b2e406
 
 # Diff at Wed, 17 Jul 2024 07:24:48 GMT:

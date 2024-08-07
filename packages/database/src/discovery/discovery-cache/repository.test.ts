@@ -12,7 +12,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
 
   it('adds single record and queries it', async () => {
     const record = mockRecord()
-    await repository.addOrUpdate(record)
+    await repository.upsert(record)
     const actual = await repository.getAll()
     expect(actual).toEqual([record])
   })
@@ -29,8 +29,8 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
       blockNumber: 2_000_000,
     })
 
-    await repository.addOrUpdate(record1)
-    await repository.addOrUpdate(record2)
+    await repository.upsert(record1)
+    await repository.upsert(record2)
     const actual = await repository.getAll()
     expect(actual).toEqual([record2])
   })
@@ -43,7 +43,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
       }),
     )
     for (const record of records) {
-      await repository.addOrUpdate(record)
+      await repository.upsert(record)
     }
     const actual = await repository.findByKey('key1')
     expect(actual).toEqual({
@@ -59,7 +59,7 @@ describeDatabase(DiscoveryCacheRepository.name, (db) => {
       value: 'a'.repeat(300),
     })
 
-    await repository.addOrUpdate(record1)
+    await repository.upsert(record1)
   })
 })
 

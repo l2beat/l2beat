@@ -8,7 +8,7 @@ export function OtherSites() {
     <div
       className={cn(
         'flex flex-col items-center justify-between gap-4 md:flex-row',
-        '-mx-4 my-10 px-4 py-6 md:my-20 md:px-10',
+        '-mx-4 my-4 px-4 py-6 md:my-10 md:px-10',
         'md:rounded-xl',
         'bg-gradient-to-r from-purple-100/40 via-pink-100/40 to-red-200/40',
       )}

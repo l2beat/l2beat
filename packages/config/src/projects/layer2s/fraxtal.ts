@@ -90,7 +90,7 @@ export const fraxtal: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'frxETHMultisig',
-      'This address is the owner of the gas token contract frxETH, and the frxETHMinter contract. It can pause and unpause ETH deposits, and change how much ETH is withheld from each submit() transaction.',
+      'This address is the owner of the frxETHMinter contract. It can pause and unpause ETH deposits, change how much ETH is withheld from each submit() transaction and withdraw arbitrary amounts of assets from the minter contract.',
     ),
     ...discovery.getMultisigPermission(
       'TimelockMultisig',

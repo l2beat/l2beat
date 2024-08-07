@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20290315,
   "configHash": "0x6d624e575825d58201c252f4bcd284e5ba9093b6a4678ccccabefaf3b2e95e83",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "LivenessModule",
@@ -138,6 +138,12 @@
         "unsafeBlockSigner": "0xAAAA45d9549EDA09E70937013520214382Ffc4A2",
         "version": "2.2.0",
         "VERSION": 0
+      },
+      "fieldMeta": {
+        "gasLimit": {
+          "severity": "LOW",
+          "description": "Gas limit for blocks on L2."
+        }
       },
       "derivedName": "SystemConfig"
     },
@@ -619,6 +625,12 @@
         "systemConfig": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "3.10.0"
       },
+      "fieldMeta": {
+        "paused": {
+          "severity": "HIGH",
+          "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
+        }
+      },
       "derivedName": "OptimismPortal2"
     },
     {
@@ -896,9 +908,6 @@
     { "address": "0x2d8cF727d37e7277D5eeDbAb853a3e8320f767Cd" },
     { "address": "0x3041BA32f451F5850c147805F5521AC206421623" },
     { "address": "0x347c3190bD015FBD0e47fb90AA4917138A8A32FE" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
-    { "address": "0x4200000000000000000000000000000000000014" },
     { "address": "0x4665374939642965EfD8357D4568D2A77f677429" },
     { "address": "0x473300df21D047806A082244b417f96b32f13A33" },
     { "address": "0x4A7322258c9E690e4CB8Cea6e5251443E956e61E" },
@@ -1924,12 +1933,12 @@
     "gnosisSafeModules/DeputyGuardianModule": "0xaf5b0d62e72a14151b44a22d48bafb364c7a48b955581e4d6170558da9355712",
     "gnosisSafeModules/LivenessModule": "0xd75d1e4e8d40e200f67ee9e7ad3d207c223529d0012960d395b78e88adeef410",
     "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/L1CrossDomainMessenger": "0x41bd900739c252a9cbc05cef0fa2a1a2e0075816453fae09031f4b4055ce1b90",
-    "opstack/L1ERC721Bridge": "0xa4ae7e768b1b7b82f1f094037136f28410f672050a4d57802af1b825f84ce765",
-    "opstack/L1StandardBridge": "0xd4d733d2913ff75bb8fdc4a8625b6d7081442eb45e1282c9b3ad3fa8e4910c09",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
+    "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
+    "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -59,8 +59,8 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
       version: 0,
     }
 
-    await repository.addOrUpdate(expectedEth)
-    await repository.addOrUpdate(expectedArb)
+    await repository.upsert(expectedEth)
+    await repository.upsert(expectedArb)
 
     const resultEth = await repository.findLatest(projectName, ChainId.ETHEREUM)
     const resultArb = await repository.findLatest(projectName, ChainId.ARBITRUM)
@@ -69,7 +69,7 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     expect(resultArb).toEqual(expectedArb)
   })
 
-  it(UpdateMonitorRepository.prototype.addOrUpdate.name, async () => {
+  it(UpdateMonitorRepository.prototype.upsert.name, async () => {
     const projectName = 'project'
 
     const discovery: UpdateMonitorRecord = {
@@ -92,10 +92,10 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
       configHash: CONFIG_HASH,
       version: 0,
     }
-    await repository.addOrUpdate(discovery)
+    await repository.upsert(discovery)
 
     const updated: UpdateMonitorRecord = { ...discovery, blockNumber: 1 }
-    await repository.addOrUpdate(updated)
+    await repository.upsert(updated)
     const latest = await repository.findLatest(projectName, ChainId.ETHEREUM)
 
     expect(latest).toEqual(updated)

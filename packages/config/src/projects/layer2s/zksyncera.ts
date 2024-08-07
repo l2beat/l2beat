@@ -59,11 +59,11 @@ const isSCset =
 const validators = () => {
   const validatorsAdded = discovery.getContractValue<string[]>(
     'ValidatorTimelock',
-    'validatorsAdded',
+    'zksyncValidatorsAdded',
   )
   const validatorsRemoved = discovery.getContractValue<string[]>(
     'ValidatorTimelock',
-    'validatorsRemoved',
+    'zksyncValidatorsRemoved',
   )
 
   // Create a map to track the net state of each validator (added or removed)
@@ -544,10 +544,10 @@ export const zksyncera: Layer2 = {
     const description = `
     The Matter Labs multisig (${discovery.getMultisigStats(
       'Matter Labs Multisig',
-    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`ZKsync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the *Owner* of the \`StateTransitionManager\` (\`STM\`). A security council is currently not used.
+    )}) is able to instantly upgrade all contracts and manage all parameters and roles. This includes upgrading the shared contracts, the \`ZKsync Era diamond\` and its facets and censoring transactions or stealing locked funds. Most permissions are inherited by it being the indirect *Owner* of the \`StateTransitionManager\` (\`STM\`). A security council is currently not used.
     
-    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by an *Admin* role. 
-    This role can manage fees, apply predefined upgrades, censor bridge transactions and revert batches. It cannot make arbitrary updates or access funds in the escrows. 
+    The current deployment allows for a subset of the permissions currently held by the *Matter Labs Multisig* to be held by an *Admin* role.
+    This role can manage fees, apply predefined upgrades, censor bridge transactions and revert batches. It cannot make arbitrary updates or access funds in the escrows. This *Admin* role is set to a \`ChainAdmin\` contract which is itself owned by the *Matter Labs Multisig* (Thus not affecting their full permissions).
     
     Other roles include:
     
@@ -586,6 +586,10 @@ export const zksyncera: Layer2 = {
         )}
         ${isSCset ? '.' : ' and the *SecurityCouncil* role is not used.'}`,
         ...upgrades,
+      }),
+      discovery.getContractDetails('ChainAdmin', {
+        description:
+          'Intermediary governance contract that has the *Admin* (not upgradeability admin) role for the shared contracts and for ZKsync Era.',
       }),
       discovery.getContractDetails(
         'ValidatorTimelock',
@@ -703,6 +707,12 @@ export const zksyncera: Layer2 = {
       'Matter Labs Multisig',
       'This MultiSig is the current central Admin for upgradeability and configuration of the rollup system and can potentially steal all funds.',
     ),
+    {
+      name: 'ChainAdmin Owner',
+      accounts: [discovery.getPermissionedAccount('ChainAdmin', 'owner')],
+      description:
+        'Can manage fees, apply predefined upgrades, censor bridge transactions and revert batches (*Admin* role).',
+    },
     {
       name: 'Validators',
       accounts: validators().map((v) => discovery.formatPermissionedAccount(v)),

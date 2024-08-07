@@ -13,29 +13,34 @@ export class UpdateMonitorRepository extends BaseRepository {
       .select(selectUpdateMonitor)
       .where('project_name', '=', name)
       .where('chain_id', '=', +chainId)
+      .limit(1)
       .executeTakeFirst()
 
     return row ? toRecord(row) : undefined
   }
 
-  async addOrUpdate(record: UpdateMonitorRecord): Promise<string> {
-    const row = toRow(record)
+  async upsert(record: UpdateMonitorRecord): Promise<void> {
+    await this.upsertMany([record])
+  }
 
-    await this.db
-      .insertInto('public.update_monitor')
-      .values(row)
-      .onConflict((cb) =>
-        cb.columns(['project_name', 'chain_id']).doUpdateSet((eb) => ({
-          block_number: eb.ref('excluded.block_number'),
-          unix_timestamp: eb.ref('excluded.unix_timestamp'),
-          discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
-          config_hash: eb.ref('excluded.config_hash'),
-          version: eb.ref('excluded.version'),
-        })),
-      )
-      .execute()
-
-    return `${record.projectName} | block_number: ${record.blockNumber}`
+  async upsertMany(records: UpdateMonitorRecord[]): Promise<number> {
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.update_monitor')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.columns(['project_name', 'chain_id']).doUpdateSet((eb) => ({
+            block_number: eb.ref('excluded.block_number'),
+            unix_timestamp: eb.ref('excluded.unix_timestamp'),
+            discovery_json_blob: eb.ref('excluded.discovery_json_blob'),
+            config_hash: eb.ref('excluded.config_hash'),
+            version: eb.ref('excluded.version'),
+          })),
+        )
+        .execute()
+    })
+    return records.length
   }
 
   async getAll(): Promise<UpdateMonitorRecord[]> {

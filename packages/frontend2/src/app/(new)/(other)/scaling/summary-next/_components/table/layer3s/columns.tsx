@@ -67,7 +67,7 @@ export const summaryLayer3sColumns = [
       tooltip: 'The technology stack used.',
     },
   }),
-  columnHelper.accessor('hostChainName', {
+  columnHelper.accessor('hostChain', {
     header: 'Host chain',
     meta: {
       tooltip: 'The technology stack used.',

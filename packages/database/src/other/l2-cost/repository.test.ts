@@ -59,7 +59,7 @@ describeDatabase(L2CostRepository.name, (db) => {
   beforeEach(async function () {
     this.timeout(10000)
     await configRepository.deleteAll()
-    await configRepository.addOrUpdateMany(
+    await configRepository.upsertMany(
       DATA.map((d, i) => ({
         indexerId: 'indexer',
         id: d.configurationId,
@@ -70,7 +70,7 @@ describeDatabase(L2CostRepository.name, (db) => {
       })),
     )
     await repository.deleteAll()
-    await repository.addMany(DATA)
+    await repository.insertMany(DATA)
   })
 
   afterEach(async () => {
@@ -78,7 +78,7 @@ describeDatabase(L2CostRepository.name, (db) => {
     await configRepository.deleteAll()
   })
 
-  describe(L2CostRepository.prototype.addMany.name, () => {
+  describe(L2CostRepository.prototype.insertMany.name, () => {
     it('should return only new row', async () => {
       const newRow: L2CostRecord[] = [
         {
@@ -93,14 +93,14 @@ describeDatabase(L2CostRepository.name, (db) => {
           blobGasUsed: null,
         },
       ]
-      await repository.addMany(newRow)
+      await repository.insertMany(newRow)
 
       const results = await repository.getAll()
       expect(results).toEqualUnsorted([...DATA, ...newRow])
     })
 
     it('empty array not to be rejected', async () => {
-      await expect(repository.addMany([])).not.toBeRejected()
+      await expect(repository.insertMany([])).not.toBeRejected()
     })
   })
 
@@ -182,7 +182,7 @@ describeDatabase(L2CostRepository.name, (db) => {
         },
       ]
 
-      await configRepository.addOrUpdateMany([
+      await configRepository.upsertMany([
         {
           id: txIdD,
           indexerId: 'indexer',
@@ -192,7 +192,7 @@ describeDatabase(L2CostRepository.name, (db) => {
           maxHeight: null,
         },
       ])
-      await repository.addMany(records)
+      await repository.insertMany(records)
 
       await repository.deleteFromById(txIdD, START)
 

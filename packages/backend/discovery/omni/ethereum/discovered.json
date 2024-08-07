@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19532020,
   "configHash": "0x8dca5a8454f5155b660803896348b9646389cfe9609c50a969defa9dbc4817e5",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "BridgeGovernance",
@@ -209,6 +209,12 @@
           "0x105CD22eD3D089Bf5589C59b452f9dE0796Ca52d"
         ],
         "version": 1
+      },
+      "fieldMeta": {
+        "validatorList": {
+          "severity": "MEDIUM",
+          "description": "Array of the signers in the validator multisig"
+        }
       },
       "derivedName": "BridgeValidators"
     }
@@ -562,5 +568,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 15999031,
   "configHash": "0xc0a7d7c47e2dbe233b490f384061748fd864b11466ecb85dfa1b0c26f30b66d7",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "StargatePoolUSDC",
@@ -78,6 +78,11 @@
         ],
         "preCrime": "0x0000000000000000000000000000000000000000",
         "queueCapacity": 512
+      },
+      "fieldMeta": {
+        "maxAssetId": {
+          "description": "The highest currently registered assetID"
+        }
       },
       "derivedName": "TokenMessaging"
     },
@@ -393,5 +398,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

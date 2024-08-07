@@ -57,7 +57,7 @@ export class VerifiersStatusRefresher {
 
         const lastUsed = transactions[0].timestamp
 
-        await this.$.db.verifierStatus.addOrUpdate({
+        await this.$.db.verifierStatus.upsert({
           address: verifier.contractAddress.toString(),
           chainId: verifier.chainId,
           lastUsed,

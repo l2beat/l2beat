@@ -37,6 +37,6 @@ export class LoopringCounter extends SequenceProcessor {
     const blocks = await promiseAllPlus(queries, this.logger, {
       metricsId: 'LoopringBlockCounter',
     })
-    await this.db.blockTransactionCount.addOrUpdateMany(blocks)
+    await this.db.blockTransactionCount.upsertMany(blocks)
   }
 }

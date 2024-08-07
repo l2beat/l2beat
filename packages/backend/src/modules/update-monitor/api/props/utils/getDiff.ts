@@ -7,7 +7,7 @@ export async function getDiff(
   db: Database,
   discovery: DiscoveryOutput,
   chainId: ChainId,
-) {
+): Promise<DiscoveryDiff[]> {
   const latest = await db.updateMonitor.findLatest(discovery.name, chainId)
 
   let diff: DiscoveryDiff[] = []

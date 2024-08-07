@@ -35,7 +35,7 @@ const NoFraudDetection = {
   type: 'NoFraudDetection',
   value: 'No fraud detection',
   sentiment: 'bad',
-  description: 'TODO',
+  description: 'There is no fraud detection mechanism in place.',
 } as const
 
 export const DaFraudDetectionRisk = {

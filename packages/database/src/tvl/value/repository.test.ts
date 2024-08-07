@@ -16,7 +16,7 @@ describeDatabase(ValueRepository.name, (database) => {
     ValueRepository.prototype.getLatestValuesForProjects.name,
     async () => {
       it('returns latest value for projectId x data source combination', async () => {
-        await repository.addOrUpdateMany([
+        await repository.upsertMany([
           saved('Project-A', UnixTime.ZERO, 'sourceA', 1, 2, 3),
           saved('Project-A', UnixTime.ZERO, 'sourceB', 1, 2, 3),
           saved('Project-A', UnixTime.ZERO.add(1, 'days'), 'sourceC', 1, 2, 3),
@@ -42,9 +42,9 @@ describeDatabase(ValueRepository.name, (database) => {
     },
   )
 
-  describe(ValueRepository.prototype.addOrUpdateMany.name, () => {
+  describe(ValueRepository.prototype.upsertMany.name, () => {
     it('adds new rows', async () => {
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
         saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
       ])
@@ -57,12 +57,12 @@ describeDatabase(ValueRepository.name, (database) => {
     })
 
     it('upserts rows', async () => {
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
         saved('b', UnixTime.ZERO, 'data_src', 2, 3, 4),
       ])
 
-      await repository.addOrUpdateMany([
+      await repository.upsertMany([
         saved('a', UnixTime.ZERO, 'data_src', 11, 22, 33),
         saved('b', UnixTime.ZERO, 'data_src', 22, 33, 44),
       ])
@@ -75,7 +75,7 @@ describeDatabase(ValueRepository.name, (database) => {
     })
 
     it('empty array', async () => {
-      await expect(repository.addOrUpdateMany([])).not.toBeRejected()
+      await expect(repository.upsertMany([])).not.toBeRejected()
     })
 
     it('performs batch insert with many records', async () => {
@@ -83,12 +83,12 @@ describeDatabase(ValueRepository.name, (database) => {
       for (let i = 5; i < 5_000; i++) {
         records.push(saved('a', new UnixTime(i), 'data_src', i, i * 2, i + 1))
       }
-      await expect(repository.addOrUpdateMany(records)).not.toBeRejected()
+      await expect(repository.upsertMany(records)).not.toBeRejected()
     })
   })
 
   it(ValueRepository.prototype.deleteAll.name, async () => {
-    await repository.addOrUpdateMany([
+    await repository.upsertMany([
       saved('a', UnixTime.ZERO, 'data_src', 1, 2, 3),
     ])
 
@@ -129,5 +129,7 @@ function saved(
     nativeAssociated: BigInt(native),
     nativeForTotal: BigInt(native),
     nativeAssociatedForTotal: BigInt(native),
+    ether: BigInt(0),
+    stablecoin: BigInt(0),
   }
 }

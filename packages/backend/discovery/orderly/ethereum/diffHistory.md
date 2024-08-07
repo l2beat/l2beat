@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xc065214323221c00d532c88f2554ff27ad4bceac
+
+# Diff at Tue, 30 Jul 2024 11:13:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20389626
+- current block number: 20389626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389626 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      fieldMeta:
++        {"scalar":{"severity":"LOW","description":"A system configuration parameter used as dynamic L2 gas overhead in the L2 fee calculation."}}
+    }
+```
+
+Generated with discovered.json: 0x19f4d93eec683b08cf420083a293d12ebb2fd2f9
+
+# Diff at Fri, 26 Jul 2024 08:48:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20110288
+- current block number: 20389626
+
+## Description
+
+Gas limit raise to 180M, the highest current limit on OP stack chains. With a block time of 2s and elasticity of 10x, this currently puts Orderly at 9 GGas/s on average. This is ~ 7x Ethereum Mainnet's 1,25 GGas/s and has a much higher surge scaling buffer. (elasticity)
+
+Note: While orderly has ~ 80% higher Gas/s than base, base more regularly hits its target Gas/s, producing more high-usage data.
+
+## Watched changes
+
+```diff
+    contract SystemConfig (0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664) {
+    +++ description: None
+      values.gasLimit:
+-        100000000
++        180000000
+    }
+```
+
 Generated with discovered.json: 0x88f0e627756850be622db543fb18dbd56fb4d43e
 
 # Diff at Thu, 18 Jul 2024 10:32:27 GMT:

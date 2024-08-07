@@ -21,9 +21,7 @@ export function createStatusRouter(config: Config, db: Database) {
       }),
       async (ctx) => {
         const configurations = ctx.query.indexer
-          ? await db.indexerConfiguration.getSavedConfigurations(
-              ctx.query.indexer,
-            )
+          ? await db.indexerConfiguration.getByIndexerId(ctx.query.indexer)
           : await db.indexerConfiguration.getAll()
 
         ctx.body = {

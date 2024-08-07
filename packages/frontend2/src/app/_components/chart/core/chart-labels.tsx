@@ -1,6 +1,7 @@
 import { type ReactNode } from 'react'
 import { cn } from '~/utils/cn'
 import { useChartContext } from './chart-context'
+import { useChartLoading } from './chart-loading-context'
 
 export const FIRST_LABEL_HEIGHT_PX = 20
 
@@ -25,7 +26,7 @@ export function ChartLabels({
 }
 
 function ChartLabel({ children }: { children?: ReactNode }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
   return (
     <div className="relative">
       {!loading ? (

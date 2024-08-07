@@ -1,5 +1,4 @@
 import React from 'react'
-import { ScalingLegend } from '../../../../components/ScalingLegend'
 import { Tabs } from '../../../../components/Tabs'
 import { Layer3sIcon } from '../../../../components/icons'
 import { ActiveIcon } from '../../../../components/icons/symbols/ActiveIcon'
@@ -67,7 +66,6 @@ export function ScalingSummaryView({
                   rows={rows}
                   columnsConfig={getLayer2sScalingSummaryColumnsConfig()}
                 />
-                <ScalingLegend />
               </>
             ),
             itemsCount: layer2sProjects.length,
@@ -100,7 +98,6 @@ export function ScalingSummaryView({
                   rows={rows}
                   columnsConfig={getUpcomingScalingSummaryColumnsConfig()}
                 />
-                <ScalingLegend />
               </>
             ),
             itemsCount: upcomingProjects.length,
@@ -117,7 +114,6 @@ export function ScalingSummaryView({
                   rows={rows}
                   columnsConfig={getArchivedScalingSummaryColumnsConfig()}
                 />
-                <ScalingLegend />
               </>
             ),
             itemsCount: archivedProjects.length,

@@ -23,9 +23,7 @@ export function getViewABI(
     .map((address) => {
       const abi = discoveryABIs[address.toString()]
       if (abi === undefined) {
-        throw new Error(
-          `Programmer Error: ABI for ${address.toString()} not found`,
-        )
+        return []
       }
       return abi.filter((fn) => fn.includes(' view '))
     })

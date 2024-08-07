@@ -26,7 +26,7 @@ export abstract class BaseAnalyzer {
     from: UnixTime,
     to: UnixTime,
   ): Promise<number[] | undefined> {
-    const configs = await this.db.indexerConfiguration.getSavedConfigurations(
+    const configs = await this.db.indexerConfiguration.getByIndexerId(
       'tracked_txs_indexer',
     )
 

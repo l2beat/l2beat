@@ -1,5 +1,10 @@
-import { ConfigReader, DiscoveryConfig } from '@l2beat/discovery'
-import { ChainConverter, DiscoveryDiff } from '@l2beat/shared-pure'
+import {
+  ConfigReader,
+  DiscoveryChainConfig,
+  DiscoveryConfig,
+  DiscoveryDiff,
+} from '@l2beat/discovery'
+import { ChainConverter } from '@l2beat/shared-pure'
 
 import { BackendProject } from '@l2beat/config'
 import { Database } from '@l2beat/database'
@@ -13,33 +18,35 @@ import { renderDashboardPage } from './view/DashboardPage'
 import { renderDashboardProjectPage } from './view/DashboardProjectPage'
 
 export class UpdateMonitorController {
-  private readonly onDiskChains: string[] = []
   private readonly onDiskConfigs: Record<string, DiscoveryConfig[]> = {}
 
   constructor(
     private readonly db: Database,
     private readonly projects: BackendProject[],
+    private readonly chains: DiscoveryChainConfig[],
     private readonly configReader: ConfigReader,
     private readonly chainConverter: ChainConverter,
   ) {
-    this.onDiskChains = this.configReader.readAllChains()
-    for (const chain of this.onDiskChains) {
-      this.onDiskConfigs[chain] =
-        this.configReader.readAllConfigsForChain(chain)
+    for (const chain of chains) {
+      this.onDiskConfigs[chain.name] = this.configReader.readAllConfigsForChain(
+        chain.name,
+      )
     }
   }
 
   async getDiscoveryDashboard(): Promise<string> {
+    console.log(this.chains.map((c) => c.name))
+
     const projects: Record<string, DashboardProject[]> = {}
-    for (const chain of this.onDiskChains) {
-      const projectsToFill = chain === 'ethereum' ? this.projects : []
-      projects[chain] = await getDashboardProjects(
+    for (const chain of this.chains) {
+      const projectsToFill = chain.name === 'ethereum' ? this.projects : []
+      projects[chain.name] = await getDashboardProjects(
         projectsToFill,
-        this.onDiskConfigs[chain],
+        this.onDiskConfigs[chain.name],
         this.configReader,
         this.db,
-        chain,
-        this.chainConverter.toChainId(chain),
+        chain.name,
+        this.chainConverter.toChainId(chain.name),
       )
     }
 
