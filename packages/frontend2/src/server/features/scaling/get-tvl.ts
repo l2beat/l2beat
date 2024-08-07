@@ -1,4 +1,4 @@
-import { layer2s } from '@l2beat/config'
+import { bridges, layer2s } from '@l2beat/config'
 import { AssetId, ChainId, UnixTime, branded } from '@l2beat/shared-pure'
 import { unstable_cache as cache } from 'next/cache'
 import { z } from 'zod'
@@ -17,6 +17,41 @@ const getCachedMockTvlApiResponse = cache(async () => {
   }
   for (const project of layer2s) {
     result.projects[project.id.toString()] = {
+      charts: getMockTvlApiCharts(),
+      tokens: {
+        canonical: [
+          {
+            assetId: AssetId.ETH,
+            chain: 'ethereum',
+            chainId: ChainId.ETHEREUM,
+            source: 'canonical',
+            usdValue: 100,
+          },
+        ],
+        external: [
+          {
+            assetId: AssetId.ETH,
+            chain: 'ethereum',
+            chainId: ChainId.ETHEREUM,
+            source: 'external',
+            usdValue: 100,
+          },
+        ],
+        native: [
+          {
+            assetId: AssetId.ETH,
+            chain: 'ethereum',
+            chainId: ChainId.ETHEREUM,
+            source: 'native',
+            usdValue: 100,
+          },
+        ],
+      },
+    }
+  }
+
+  for (const bridge of bridges) {
+    result.projects[bridge.id.toString()] = {
       charts: getMockTvlApiCharts(),
       tokens: {
         canonical: [

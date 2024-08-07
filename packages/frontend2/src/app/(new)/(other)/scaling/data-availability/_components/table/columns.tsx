@@ -13,7 +13,6 @@ import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get
 const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()
 
 export const columns = [
-  // TODO: Make sure this is centered
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
