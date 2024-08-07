@@ -15,6 +15,7 @@ import {
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { type CostsData } from './table/columns'
+import { NoDataBadge } from '~/app/_components/badge/no-data-badge'
 
 interface CellProps {
   data: CostsData
@@ -28,6 +29,8 @@ export function CostsTotalCell({ data, warning }: CellProps) {
         return <Skeleton className="h-8 w-full" />
       case 'coming-soon':
         return <UpcomingBadge />
+      case 'no-data':
+        return <NoDataBadge />
       case 'no-per-tx-metric':
         return EM_DASH
       default:

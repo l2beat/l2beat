@@ -18,6 +18,7 @@ export function CostsBreakdownValueCell({ data, type }: Props) {
         return <Skeleton className="ml-auto h-6 w-20" />
       case 'coming-soon':
       case 'no-per-tx-metric':
+      case 'no-data':
         return EM_DASH
       default:
         assertUnreachable(data.reason)

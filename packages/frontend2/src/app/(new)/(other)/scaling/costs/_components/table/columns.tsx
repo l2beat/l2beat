@@ -34,7 +34,7 @@ type CostsAvailableData = {
 }
 type CostsNotAvailableData = {
   type: 'not-available'
-  reason: 'loading' | 'coming-soon' | 'no-per-tx-metric'
+  reason: 'loading' | 'coming-soon' | 'no-per-tx-metric' | 'no-data'
   syncStatus?: never
 }
 
@@ -180,6 +180,7 @@ export const scalingCostsColumns = [
         case 'loading':
           return <Skeleton className="ml-auto h-6 w-24" />
         case 'coming-soon':
+        case 'no-data':
         case 'no-per-tx-metric':
           return EM_DASH
         default:
