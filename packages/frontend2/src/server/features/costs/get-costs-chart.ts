@@ -21,19 +21,14 @@ const getCachedCostsChart = cache(
   async (timeRange: CostsTimeRange): Promise<CostsChartResponse> => {
     const projects = getCostsProjects()
     const resolution = rangeToResolution(timeRange)
-
     const range = getRange(timeRange, resolution)
 
-    console.time('[getCostsChart] getByProjectsAndTimeRange')
     const data = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
       projects.map((p) => p.id),
       range,
     )
-    console.timeEnd('[getCostsChart] getByProjectsAndTimeRange')
 
-    console.time('[getCostsChart] sumByTimestamp')
     const summed = sumByTimestamp(data, resolution)
-    console.timeEnd('[getCostsChart] sumByTimestamp')
 
     return withTypes(summed)
   },
