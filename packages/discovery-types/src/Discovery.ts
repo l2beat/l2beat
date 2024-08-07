@@ -30,8 +30,6 @@ export const ContractValueType = z.enum([
 export type ContractFieldSeverity = z.infer<typeof ContractFieldSeverity>
 export const ContractFieldSeverity = z.enum(['HIGH', 'MEDIUM', 'LOW'])
 
-export type Permission = z.infer<typeof Permission>
-export const Permission = z.enum(['admin', 'owner'])
 export interface DiscoveryOutput {
   name: string
   chain: string

@@ -2,7 +2,6 @@ import {
   ContractFieldSeverity,
   ContractValueType,
   ManualProxyType,
-  Permission,
   StackCategory,
   StackRole,
 } from '@l2beat/discovery-types'
@@ -10,6 +9,19 @@ import { EthereumAddress, stringAs } from '@l2beat/shared-pure'
 import * as z from 'zod'
 
 import { UserHandlerDefinition } from '../handlers/user'
+
+export type RawPermissionConfiguration = z.infer<
+  typeof RawPermissionConfiguration
+>
+export const RawPermissionConfiguration = z.object({
+  type: z.enum(['owner', 'admin', 'act']),
+  delay: z.union([z.number(), z.string()]).default(0),
+})
+
+export type PermissionConfiguration = RawPermissionConfiguration & {
+  target: EthereumAddress
+  delay: number
+}
 
 export type DiscoveryContractField = z.infer<typeof DiscoveryContractField>
 export const DiscoveryContractField = z.object({
@@ -23,7 +35,7 @@ export const DiscoveryContractField = z.object({
       template: z.string().optional(),
       role: z.union([StackRole, z.array(StackRole)]).optional(),
       category: z.union([StackCategory, z.array(StackCategory)]).optional(),
-      permission: z.union([Permission, z.array(Permission)]).optional(),
+      permission: z.array(RawPermissionConfiguration).optional(),
     })
     .optional(),
   type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),

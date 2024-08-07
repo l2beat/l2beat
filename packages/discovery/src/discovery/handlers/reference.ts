@@ -40,6 +40,24 @@ export function resolveReference<T>(
   return result.value
 }
 
+export function resolveReferenceFromValues(
+  value: string,
+  previousResults: Record<string, ContractValue | undefined>,
+): ContractValue {
+  const dependency = getReferencedName(value)
+  if (!dependency) {
+    return value
+  }
+  if (dependency.startsWith(SCOPE_VARIABLE_PREFIX)) {
+    throw new Error("Variables scoped with '#' prefix are unsupported for this field")
+  }
+  const result = previousResults[dependency]
+  if (!result) {
+    throw new Error(`Missing dependency: ${dependency}`)
+  }
+  return result
+}
+
 function decodeScopedVariable(key: string, map: ScopeVariables): ContractValue {
   const result = map[key.slice(1) as keyof ScopeVariables]
   if (result === undefined) {
