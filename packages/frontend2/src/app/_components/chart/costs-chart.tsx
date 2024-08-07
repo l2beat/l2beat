@@ -3,6 +3,7 @@
 import { type Milestone } from '@l2beat/config'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { useCallback, useMemo } from 'react'
+import React from 'react'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
@@ -219,7 +220,7 @@ function UnitAndScaleControls({
     <div className="flex items-center justify-between gap-2">
       {loading ? (
         <>
-          <Skeleton className="h-8 w-[104.82px]" />
+          <Skeleton className="h-8 w-[156px]" />
           <Skeleton className="h-8 w-[98.63px]" />
         </>
       ) : (
@@ -238,7 +239,6 @@ function UnitAndScaleControls({
     </div>
   )
 }
-
 function getValues(
   dataPoint: CostsChartResponse['data'][number],
   unit: CostsUnit,

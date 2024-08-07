@@ -33,7 +33,9 @@ export function ChartRenderer() {
   const render = useCallback(() => {
     const chart = ref.current
     const ctx = chart?.getContext('2d')
-    setLoading(true)
+    const loadingTimeout = setTimeout(() => {
+      setLoading(true)
+    }, 250)
     if (!chart || !ctx || context.columns.length < 1) return
 
     requestAnimationFrame(() => {
@@ -69,6 +71,7 @@ export function ChartRenderer() {
           }
         }
       }
+      clearTimeout(loadingTimeout)
       setLoading(false)
     })
   }, [context, theme, setLoading])
