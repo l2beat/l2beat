@@ -89,7 +89,7 @@ function LowOrNoDelay(delaySeconds?: number) {
     type: 'LowOrNoDelay',
     value,
     sentiment: 'bad',
-    description: 'There is no delay to bridge contract updates. Users have no time to exit the system before the bridge implementation update is completed.',
+    description: 'There is no delay in the upgradeability of the bridge. Users have no time to exit the system before the bridge implementation update is completed.',
   } as const
 }
 

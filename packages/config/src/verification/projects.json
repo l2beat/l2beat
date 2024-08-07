@@ -50,6 +50,8 @@
   "coti": true,
   "cronoszkevm": true,
   "cyber": true,
+  "dac-immutablex-dac": true,
+  "dac-mantleDABridge": true,
   "davos": true,
   "dcamonster": true,
   "debank": true,

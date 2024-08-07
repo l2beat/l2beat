@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xfd62887005a3835fad303d8d0fc8ae3fc92ff078
+
+# Diff at Wed, 07 Aug 2024 07:16:47 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20469265
+- current block number: 20475140
+
+## Description
+
+New batch poster address is added.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.batchPosters.1:
++        "0x7a6BD06483710252d807bE205255E69490efca3A"
+      values.setIsBatchPosterCount:
+-        3
++        4
+    }
+```
+
 Generated with discovered.json: 0x92bed3f93bb7b3a89690079407db0bd44b17e955
 
 # Diff at Tue, 06 Aug 2024 11:35:38 GMT:

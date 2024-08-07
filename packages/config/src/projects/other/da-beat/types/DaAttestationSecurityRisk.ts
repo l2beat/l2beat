@@ -26,7 +26,7 @@ function SigVerified(areSignersTracked: boolean) {
     type: 'SigVerified',
     value: 'Signatures verified',
     sentiment: areSignersTracked ? 'good' : 'warning',
-    description: 'Data availability attestations are posted to Ethereum together with the signatures of the committee members. The signatures are verified onchain against the set quorum of signers.',
+    description: 'Data availability attestations are posted to Ethereum with the signatures of the DA layer operators. The signatures are verified onchain against the set quorum of signers.',
   } as const
 }
 
