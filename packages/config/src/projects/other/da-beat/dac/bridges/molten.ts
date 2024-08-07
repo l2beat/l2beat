@@ -56,23 +56,23 @@ export const moltenDac = {
     The bridge requires a ${requiredSignatures}/${membersCount} threshold of signatures to be met before the data commitment is accepted.
   `,
   permissions: [
-       // Members: DAC uses BLS sigs, not EOAs
-       {
-        name: 'Sequencers',
-        accounts: discovery.getPermissionsByRole('Sequencer'),
-        description:
-          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-        chain: discovery.chain,
-      },
-      {
-        name: 'RollupOwner',
-        accounts: discovery.getAccessControlRolePermission(
-          'UpgradeExecutor',
-          'EXECUTOR_ROLE',
-        ),
-        description:
-          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-      },
+    // Members: DAC uses BLS sigs, not EOAs
+    {
+      name: 'Sequencers',
+      accounts: discovery.getPermissionsByRole('Sequencer'),
+      description:
+        'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+      chain: discovery.chain,
+    },
+    {
+      name: 'RollupOwner',
+      accounts: discovery.getAccessControlRolePermission(
+        'UpgradeExecutor',
+        'EXECUTOR_ROLE',
+      ),
+      description:
+        'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+    },
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: requiredSignatures,

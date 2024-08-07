@@ -18,8 +18,6 @@ const DAC = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = DAC
 
-
-
 export const degenDac = {
   id: 'degen-dac-bridge',
   type: 'DAC',

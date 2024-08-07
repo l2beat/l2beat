@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x45c9c8932760e73943fff3ca4b2a67a696155f9e
+
+# Diff at Wed, 07 Aug 2024 16:25:34 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@048e7401850349ca7b1651665424131166f9ceb2 block: 19726116
+- current block number: 20477874
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19726116 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      name:
+-        "CDKValidium"
++        "ZKFairValidium"
+    }
+```
+
+```diff
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      name:
+-        "ZkFairOwner"
++        "ZKFairOwner"
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      name:
+-        "DataAvailabilityCommittee"
++        "ZKFairValidiumDAC"
+    }
+```
+
+```diff
+    contract ZKFairAdmin (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
+    +++ description: None
+      name:
+-        "ZkFairAdmin"
++        "ZKFairAdmin"
+    }
+```
+
 Generated with discovered.json: 0x51b2157fcccfb97900a682a1d4e14cefcb32243e
 
 # Diff at Tue, 30 Jul 2024 11:16:35 GMT:
