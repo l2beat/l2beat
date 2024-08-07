@@ -1,6 +1,6 @@
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { invertGrantedPermissions } from './invertPermissions'
-import { EthereumAddress } from '@l2beat/shared-pure'
 import { GrantedPermission } from './resolvePermissions'
 
 describe(invertGrantedPermissions.name, () => {
@@ -622,7 +622,7 @@ describe(invertGrantedPermissions.name, () => {
     ]
 
     expect(invertGrantedPermissions(input)).toEqualUnsorted([
-             {
+      {
         type: 'upgrade',
         path: [
           { address: actor, delay: 0 },
@@ -638,7 +638,6 @@ describe(invertGrantedPermissions.name, () => {
           { address: vaultB, delay: 0 },
         ],
       },
-
     ])
   })
 

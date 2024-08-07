@@ -8,7 +8,7 @@ export function invertGrantedPermissions(
   return input.map((entry) => {
     return {
       type: entry.type,
-      path: entry.path.reverse()
+      path: entry.path.reverse(),
     }
   })
 }
