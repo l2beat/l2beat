@@ -37,7 +37,11 @@ export function TokenAmountCell(props: TokenAmountCellProps) {
             </div>
           ))}
       </TooltipTrigger>
-      <TooltipContent>Tokens locked in the escrow</TooltipContent>
+      <TooltipContent>
+        {token.supply === 'preminted'
+          ? 'Tokens amount = min(lockedInEscrow, circulatingSupply)'
+          : 'Tokens locked in the escrow'}
+      </TooltipContent>
     </Tooltip>
   ) : (
     <Tooltip>
