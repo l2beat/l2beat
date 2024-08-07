@@ -13,6 +13,14 @@ export type AmountConfigEntry =
   | TotalSupplyEntry
   | CirculatingSupplyEntry
   | EscrowEntry
+  | PremintedEntry
+
+export interface PremintedEntry extends AmountConfigBase {
+  type: 'preminted'
+  address: EthereumAddress
+  coingeckoId: CoingeckoId
+  escrowAddress: EthereumAddress
+}
 
 export interface TotalSupplyEntry extends AmountConfigBase {
   type: 'totalSupply'
@@ -35,6 +43,7 @@ export interface AmountConfigBase {
   chain: string
   project: ProjectId
   source: Token['source']
+  dataSource: string
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
   includeInTotal: boolean

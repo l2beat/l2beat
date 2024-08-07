@@ -36,19 +36,19 @@ export function createCirculatingSupplyModule(
     apiKey: config.coingeckoApiKey,
   })
   const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
-  const circulatingSupplies = config.amounts.filter(
-    (a): a is CirculatingSupplyEntry => a.type === 'circulatingSupply',
-  )
-  const indexersMap = new Map<string, CirculatingSupplyIndexer>()
 
   const circulatingSupplyService = new CirculatingSupplyService({
     coingeckoQueryService,
   })
 
+  const circulatingSupplies = config.amounts.filter(
+    (a): a is CirculatingSupplyEntry => a.type === 'circulatingSupply',
+  )
+
+  const indexersMap = new Map<string, CirculatingSupplyIndexer>()
   const indexers = circulatingSupplies.map((circulatingSupply) => {
     const indexer = new CirculatingSupplyIndexer({
       logger,
-      tag: circulatingSupply.coingeckoId.toString(),
       parents: [hourlyIndexer],
       minHeight: circulatingSupply.sinceTimestamp.toNumber(),
       indexerService,
@@ -96,7 +96,6 @@ export function createCirculatingSupplyModule(
       dataSource: 'coingecko',
       syncOptimizer,
       parents,
-      tag: `${project}_coingecko`,
       indexerService,
       logger,
       minHeight,
