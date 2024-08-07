@@ -103,6 +103,7 @@ export class ProjectDiscovery {
     sinceTimestamp,
     tokens,
     excludedTokens,
+    premintedTokens,
     upgradableBy,
     upgradeDelay,
     isUpcoming,
@@ -118,6 +119,7 @@ export class ProjectDiscovery {
     sinceTimestamp?: UnixTime
     tokens: string[] | '*'
     excludedTokens?: string[]
+    premintedTokens?: string[]
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
@@ -153,6 +155,7 @@ export class ProjectDiscovery {
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
       excludedTokens,
+      premintedTokens,
       contract,
       isUpcoming,
       chain: this.chain,

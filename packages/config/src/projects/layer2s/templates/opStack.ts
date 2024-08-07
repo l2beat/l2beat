@@ -78,6 +78,7 @@ export interface OpStackConfigCommon {
   }
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
+  l1StandardBridgePremintedTokens?: string[]
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   genesisTimestamp: UnixTime
@@ -469,6 +470,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         templateVars.discovery.getEscrowDetails({
           address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
+          premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...upgradeability,
