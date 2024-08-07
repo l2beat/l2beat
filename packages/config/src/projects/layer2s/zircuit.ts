@@ -11,7 +11,7 @@ export const zircuit: Layer2 = opStackL2({
     name: 'Zircuit',
     slug: 'zircuit',
     description:
-      'Zircuit is a universal ZK Rollup based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
+      'Zircuit is a universal Rollup that aims to use zk proofs in the future. It is based on the Optimism Bedrock architecture, employing AI to identify and stop malicious transactions at the sequencer level.',
     purposes: ['Universal'],
     links: {
       websites: ['https://zircuit.com/'],
@@ -33,10 +33,11 @@ export const zircuit: Layer2 = opStackL2({
   usesBlobs: true,
   isNodeAvailable: 'UnderReview',
   useDiscoveryMetaOnly: true,
+  // proof system currently with temporary backdoor
   milestones: [
     {
       name: 'Zircuit Mainnet Launch',
-      link: 'https://www.zircuit.com/blog/zircuit-raises-mainnet-funding-round', // WRONG LINK
+      link: 'https://www.zircuit.com/blog/mainnet-phase-1-is-live', 
       date: '2024-08-05T00:00:00.00Z',
       description: 'Zircuit is live on mainnet.',
     },
