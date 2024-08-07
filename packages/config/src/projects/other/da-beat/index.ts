@@ -22,6 +22,10 @@ import { witnessLayer } from './dac/witness'
 import { degenLayer } from './dac/degen'
 import { rariLayer } from './dac/rari'
 import { xaiLayer } from './dac/xai'
+import { popapexLayer } from './dac/popapex'
+import { moltenLayer } from './dac/molten'
+import { l3xLayer } from './dac/l3x'
+import { playblockLayer } from './dac/playblock'
 
 export * from './types'
 
@@ -48,5 +52,9 @@ export const daLayers: DaLayer[] = [
   witnessLayer,
   degenLayer,
   rariLayer,
-  xaiLayer
+  xaiLayer,
+  popapexLayer,
+  moltenLayer,
+  l3xLayer,
+  playblockLayer
 ]
