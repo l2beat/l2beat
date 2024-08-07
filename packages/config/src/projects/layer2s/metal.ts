@@ -61,6 +61,10 @@ export const metal: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   usesBlobs: true,
   nonTemplatePermissions: [
+    ...discovery.getMultisigPermission(
+      'ConduitMultisig',
+      'Designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
+    ),
     discovery.contractAsPermissioned(
       discovery.getContract('SuperchainProxyAdmin'),
       'Admin of the shared SuperchainConfig contract.',

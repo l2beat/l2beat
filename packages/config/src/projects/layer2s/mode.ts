@@ -85,6 +85,10 @@ export const mode: Layer2 = opStackL2({
   },
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
+      'ConduitMultisig',
+      'Designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
+    ),
+    ...discovery.getMultisigPermission(
       'ChallengerMultisig',
       'This address is the permissioned challenger of the system. It can delete non finalized roots without going through the fault proof process.',
     ),
