@@ -19,6 +19,9 @@ import { zkfairLayer } from './dac/zkfair'
 import { DaLayer } from './types/DaLayer'
 import { redsonicLayer } from './dac/redsonic'
 import { witnessLayer } from './dac/witness'
+import { degenLayer } from './dac/degen'
+import { rariLayer } from './dac/rari'
+import { xaiLayer } from './dac/xai'
 
 export * from './types'
 
@@ -42,5 +45,8 @@ export const daLayers: DaLayer[] = [
   myriaLayer,
   edgelessLayer,
   redsonicLayer,
-  witnessLayer
+  witnessLayer,
+  degenLayer,
+  rariLayer,
+  xaiLayer
 ]

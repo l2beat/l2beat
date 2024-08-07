@@ -1,6 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { hychain } from '../../../../layer2s/hychain'
+import { degen } from '../../../../layer3s/degen'
 import {
   DaAccessibilityRisk,
   DaAttestationSecurityRisk,
@@ -10,7 +10,7 @@ import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
-const discovery = new ProjectDiscovery('hychain')
+const discovery = new ProjectDiscovery('degen', 'base')
 
 const DAC = discovery.getContractValue<{
   membersCount: number
@@ -18,23 +18,24 @@ const DAC = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = DAC
 
-export const hychainDac = {
-  id: 'hychain-dac-bridge',
+
+
+export const degenDac = {
+  id: 'degen-dac-bridge',
   type: 'DAC',
   display: {
-    name: 'Hychain DAC',
+    name: 'Degen DAC',
     slug: 'dac',
-    description: 'Hychain DAC on Ethereum.',
+    description: 'Degen DAC on Ethereum.',
     links: {
-      websites: ['https://hychain.com'],
-      apps: ['https://bridge.hychain.com'],
-      documentation: ['https://docs.hychain.com'],
-      explorers: ['https://explorer.hychain.com'],
-      repositories: ['https://github.com/kintoxyz'],
+      websites: ['https://syndicate.io/blog/degen-chain'],
+      apps: ['https://bridge.degen.tips/', 'https://degen.tips/'],
+      documentation: ['https://docs.syndicate.io/get-started/introduction'],
+      explorers: ['https://explorer.degen.tips/'],
+      repositories: [],
       socialMedia: [
-        'https://x.com/HYCHAIN_GAMES',
-        'https://discord.gg/hytopiagg',
-        'https://hychain.substack.com/',
+        'https://twitter.com/degentokenbase',
+        'https://warpcast.com/~/channel/degen',
       ],
     },
   },
@@ -60,15 +61,10 @@ export const hychainDac = {
         'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
       chain: discovery.chain,
     },
-    {
-      name: 'RollupOwner',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-    },
+    ...discovery.getMultisigPermission(
+      'RollupOwnerMultisig',
+      'It can update whether an address is authorized to be a batch poster at the sequencer inbox. The UpgradeExecutor retains the ability to update the batch poster manager (along with any batch posters).',
+    ),
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: requiredSignatures,
@@ -77,7 +73,7 @@ export const hychainDac = {
   members: {
     type: 'unknown',
   },
-  usedIn: toUsedInProject([hychain]),
+  usedIn: toUsedInProject([degen]),
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,
     accessibility: DaAccessibilityRisk.NotEnshrined,

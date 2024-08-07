@@ -1,6 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
 import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
-import { hychain } from '../../../../layer2s/hychain'
+import { rari } from '../../../../layer3s/rari'
 import {
   DaAccessibilityRisk,
   DaAttestationSecurityRisk,
@@ -10,7 +10,7 @@ import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
-const discovery = new ProjectDiscovery('hychain')
+const discovery = new ProjectDiscovery('rari', 'arbitrum')
 
 const DAC = discovery.getContractValue<{
   membersCount: number
@@ -18,24 +18,22 @@ const DAC = discovery.getContractValue<{
 }>('SequencerInbox', 'dacKeyset')
 const { membersCount, requiredSignatures } = DAC
 
-export const hychainDac = {
-  id: 'hychain-dac-bridge',
+export const rariDac = {
+  id: 'rari-dac-bridge',
   type: 'DAC',
   display: {
-    name: 'Hychain DAC',
+    name: 'Rari DAC',
     slug: 'dac',
-    description: 'Hychain DAC on Ethereum.',
+    description: 'Rari DAC on Ethereum.',
     links: {
-      websites: ['https://hychain.com'],
-      apps: ['https://bridge.hychain.com'],
-      documentation: ['https://docs.hychain.com'],
-      explorers: ['https://explorer.hychain.com'],
-      repositories: ['https://github.com/kintoxyz'],
-      socialMedia: [
-        'https://x.com/HYCHAIN_GAMES',
-        'https://discord.gg/hytopiagg',
-        'https://hychain.substack.com/',
+      websites: ['https://rarichain.org/'],
+      apps: [
+        'https://bridge.arbitrum.io/?destinationChain=rari-mainnet&sourceChain=arbitrum-one',
       ],
+      documentation: ['https://rari.docs.caldera.dev/'],
+      explorers: ['https://mainnet.explorer.rarichain.org/'],
+      repositories: ['https://github.com/OffchainLabs/nitro'],
+      socialMedia: ['https://twitter.com/RariChain'],
     },
   },
   contracts: {
@@ -52,23 +50,23 @@ export const hychainDac = {
     The bridge requires a ${requiredSignatures}/${membersCount} threshold of signatures to be met before the data commitment is accepted.
   `,
   permissions: [
-    // Members: DAC uses BLS sigs, not EOAs
-    {
-      name: 'Sequencers',
-      accounts: discovery.getPermissionsByRole('Sequencer'),
-      description:
-        'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
-      chain: discovery.chain,
-    },
-    {
-      name: 'RollupOwner',
-      accounts: discovery.getAccessControlRolePermission(
-        'UpgradeExecutor',
-        'EXECUTOR_ROLE',
-      ),
-      description:
-        'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
-    },
+       // Members: DAC uses BLS sigs, not EOAs
+       {
+        name: 'Sequencers',
+        accounts: discovery.getPermissionsByRole('Sequencer'),
+        description:
+          'Central actors allowed to submit transaction batches to the Sequencer Inbox.',
+        chain: discovery.chain,
+      },
+      {
+        name: 'RollupOwner',
+        accounts: discovery.getAccessControlRolePermission(
+          'UpgradeExecutor',
+          'EXECUTOR_ROLE',
+        ),
+        description:
+          'Multisig that can upgrade authorized batch posters via the UpgradeExecutor contract.',
+      },
   ],
   chain: ChainId.ETHEREUM,
   requiredMembers: requiredSignatures,
@@ -77,7 +75,7 @@ export const hychainDac = {
   members: {
     type: 'unknown',
   },
-  usedIn: toUsedInProject([hychain]),
+  usedIn: toUsedInProject([rari]),
   risks: {
     attestations: DaAttestationSecurityRisk.NotVerified,
     accessibility: DaAccessibilityRisk.NotEnshrined,
