@@ -22,9 +22,7 @@ export function getTvlAmountsConfig(
 
   for (const token of tokenList) {
     if (token.supply !== 'zero') {
-      const projectId =
-        token.project ??
-        chainToProject.get(chainConverter.toName(token.chainId))
+      const projectId = chainToProject.get(chainConverter.toName(token.chainId))
       assert(projectId, `Project is required for token ${token.symbol}`)
 
       const project = projects.find((x) => x.projectId === projectId)
@@ -83,30 +81,6 @@ export function getTvlAmountsConfig(
             category: token.category,
           })
           break
-        case 'preminted':
-          assert(token.address, 'Token address is required for preminted')
-          assert(token.escrow, 'Escrows are required for preminted')
-
-          entries.push({
-            type: 'preminted',
-            address: token.address,
-            escrowAddress: token.escrow,
-            chain: chainConverter.toName(token.chainId),
-            sinceTimestamp,
-            untilTimestamp: token.untilTimestamp,
-            coingeckoId: token.coingeckoId,
-            project: projectId,
-            dataSource: `${chainConverter.toName(token.chainId)}_preminted_${
-              token.address
-            }`,
-            source: token.source,
-            includeInTotal: token.chainId === ChainId.ETHEREUM,
-            decimals: token.decimals,
-            symbol: token.symbol,
-            isAssociated,
-            category: token.category,
-          })
-          break
       }
     }
   }
@@ -129,29 +103,56 @@ export function getTvlAmountsConfig(
         )
         const isAssociated = !!project.associatedTokens?.includes(token.symbol)
 
-        entries.push({
-          type: 'escrow',
-          address: token.address ?? 'native',
-          chain: chain.name,
-          sinceTimestamp: UnixTime.max(
-            tokenSinceTimestamp,
-            escrow.sinceTimestamp,
-          ),
-          untilTimestamp: getUntilTimestamp(
-            token.untilTimestamp,
-            escrow.untilTimestamp,
-          ),
-          escrowAddress: escrow.address,
-          project: project.projectId,
-          dataSource: chain.name,
-          source: escrow.source ?? 'canonical',
-          includeInTotal: escrow.includeInTotal ?? true,
-          decimals: token.decimals,
-          symbol: token.symbol,
-          isAssociated,
-          bridge: escrow.bridge,
-          category: token.category,
-        })
+        if (token.isPreminted) {
+          entries.push({
+            type: 'preminted',
+            address: token.address ?? 'native',
+            escrowAddress: escrow.address,
+            chain: chain.name,
+            sinceTimestamp: UnixTime.max(
+              tokenSinceTimestamp,
+              escrow.sinceTimestamp,
+            ),
+            untilTimestamp: getUntilTimestamp(
+              token.untilTimestamp,
+              escrow.untilTimestamp,
+            ),
+            coingeckoId: token.coingeckoId,
+            dataSource: `${chain.name}_preminted_${token.address}`,
+            project: project.projectId,
+            source: escrow.source ?? 'canonical',
+            includeInTotal: escrow.includeInTotal ?? true,
+            decimals: token.decimals,
+            symbol: token.symbol,
+            isAssociated,
+            bridge: escrow.bridge,
+            category: token.category,
+          })
+        } else {
+          entries.push({
+            type: 'escrow',
+            address: token.address ?? 'native',
+            chain: chain.name,
+            sinceTimestamp: UnixTime.max(
+              tokenSinceTimestamp,
+              escrow.sinceTimestamp,
+            ),
+            untilTimestamp: getUntilTimestamp(
+              token.untilTimestamp,
+              escrow.untilTimestamp,
+            ),
+            escrowAddress: escrow.address,
+            project: project.projectId,
+            dataSource: chain.name,
+            source: escrow.source ?? 'canonical',
+            includeInTotal: escrow.includeInTotal ?? true,
+            decimals: token.decimals,
+            symbol: token.symbol,
+            isAssociated,
+            bridge: escrow.bridge,
+            category: token.category,
+          })
+        }
       }
     }
   }
