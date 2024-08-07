@@ -36,9 +36,9 @@ export const xlayerDac = {
   id: 'xlayer-dac-bridge',
   type: 'DAC',
   display: {
-    name: 'xlayer DAC',
+    name: 'X Layer DAC',
     slug: 'dac',
-    description: 'xlayer DAC on Ethereum.',
+    description: 'X Layer DAC on Ethereum.',
     links: {
       websites: ['https://okx.com/x1'],
       apps: [],
