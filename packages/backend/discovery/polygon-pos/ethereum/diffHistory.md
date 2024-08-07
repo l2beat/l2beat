@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x1fec3e96f6febb70ad121187e0411098892a21c6
+Generated with discovered.json: 0x84907ddae0075c8662a5e520974c96a028ba743b
 
-# Diff at Thu, 01 Aug 2024 15:39:44 GMT:
+# Diff at Wed, 07 Aug 2024 08:47:00 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - comparing to: main@048ee50ddf07f7a442b6e0eff57ad2af666cf872 block: 20175273
-- current block number: 20434244
+- current block number: 20475590
 
 ## Description
 
@@ -34,6 +34,22 @@ Provide description of changes. This section will be preserved.
 ```
 
 ```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.1:
+-        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.DEFAULT_ADMIN_ROLE.members.0:
+-        "0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"
++        "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"
+      values.accessControl.MANAGER_ROLE.members.1:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      values.accessControl.MANAGER_ROLE.members.0:
+-        "0x63ec5767F54F6943750A70eB6117EA2D9Ca77313"
++        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+    }
+```
+
+```diff
     contract StakingInfo (0xa59C847Bd5aC0172Ff4FE912C5d29E5A71A7512B) {
     +++ description: None
       values.owner:
@@ -49,13 +65,27 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 20175273 (main branch discovery), not current.
 
 ```diff
-    contract ERC20Predicate (0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf) {
+    contract ERC20EscrowPredicate (0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":[]}}
+    }
+```
+
+```diff
+    contract PolygonERC20MintBurnPredicate (0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5) {
     +++ description: None
       name:
--        "ERC20Predicate"
-+        "ERC20Bridge"
+-        "ERC20MintBurnPredicate"
++        "PolygonERC20MintBurnPredicate"
+    }
+```
+
+```diff
+    contract EtherPredicate (0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30) {
+    +++ description: None
       values.accessControl:
--        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
     }
 ```
 
@@ -64,6 +94,23 @@ discovery. Values are for block 20175273 (main branch discovery), not current.
     +++ description: None
       values.constructorArgs:
 +        {"_proxyTo":"0x5A09cD4601b66bc107D377AB81E0dbb5dFABaA84","_registry":"0x33a02E6cC863D393d6Bf231B697b82F6e499cA71","_heimdallId":"heimdall-137"}
+    }
+```
+
+```diff
+    contract MintableERC721Predicate (0x932532aA4c0174b8453839A6E44eE09Cc615F2b7) {
+    +++ description: None
+      name:
+-        "UnstoppableDomainsPredicate"
++        "MintableERC721Predicate"
+    }
+```
+
+```diff
+    contract MintableERC20Predicate (0x9923263fA127b3d1484cFD649df8f1831c2A74e4) {
+    +++ description: None
+      values.accessControl:
++        {"DEFAULT_ADMIN_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313","0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]},"MANAGER_ROLE":{"adminRole":"DEFAULT_ADMIN_ROLE","members":["0x63ec5767F54F6943750A70eB6117EA2D9Ca77313","0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]}}
     }
 ```
 

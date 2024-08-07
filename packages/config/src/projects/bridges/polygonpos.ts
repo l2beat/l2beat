@@ -58,7 +58,7 @@ export const polygonpos: Bridge = {
       discovery.getEscrowDetails({
         // MintableERC20Predicate
         address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
-        sinceTimestamp: new UnixTime(1598436664),
+        sinceTimestamp: new UnixTime(1613100720),
         tokens: '*',
         ...upgrades,
       }),

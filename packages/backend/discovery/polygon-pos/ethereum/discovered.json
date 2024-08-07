@@ -1,9 +1,9 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20434244,
-  "configHash": "0x4d215b77c908e2ee1562d0135fe8887aaaa069b9373775043ac9709cc2d85d9e",
-  "version": 9,
+  "blockNumber": 20475590,
+  "configHash": "0x4c8a222de023daa8252c9f74b5a84bc0832f55df1f5ea675a0c60912b8d25329",
+  "version": 10,
   "contracts": [
     {
       "name": "SlashingManager",
@@ -29,8 +29,7 @@
         "TOKEN_TYPE": "0x973bb64086f173ec8099b7ed3d43da984f4a332e4417a08bc6a286e6402b0586",
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
-      },
-      "derivedName": "ERC1155Predicate"
+      }
     },
     {
       "name": "CustomPredicate",
@@ -56,6 +55,12 @@
       "sinceTimestamp": 1627373890,
       "values": {
         "$immutable": true,
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": []
+          }
+        },
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
       },
@@ -68,7 +73,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2941805,
+        "counter": 2944856,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -120,8 +125,7 @@
         "TOKEN_TYPE": "0xb62883a28321b19a93c6657bfb8ea4cec51ed05c3ab26ecec680fa0c7efb31b9",
         "TRANSFER_BATCH_EVENT_SIG": "0x4a39dc06d4c0dbc64b70af90fd698a233a518aa5d07e595d983b8c0526c8f7fb",
         "TRANSFER_SINGLE_EVENT_SIG": "0xc3d58168c5ae7397731d063d5bbf3d657854427343f4c083240f7aacaa2d0f62"
-      },
-      "derivedName": "MintableERC1155Predicate"
+      }
     },
     {
       "name": "Registry",
@@ -145,13 +149,23 @@
       }
     },
     {
-      "name": "ERC20Bridge",
+      "name": "ERC20Predicate",
       "address": "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf",
       "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598436664,
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x608669d4914Eec1E20408Bc4c9eFFf27BB8cBdE5",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -163,15 +177,14 @@
       "derivedName": "ERC20Predicate"
     },
     {
-      "name": "ERC20MintBurnPredicate",
+      "name": "PolygonERC20MintBurnPredicate",
       "address": "0x436f5Ba0DCf22f991475fC7A6DE75DAAE2f40cB5",
       "sinceTimestamp": 1657162305,
       "values": {
         "$immutable": true,
         "rootChainManager": "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77",
         "WITHDRAWN_EVENT_SIG": "0x7084f5476618d8e60b11ef0d7d3f06914655adb8793e28ff7f018d4c76d505d5"
-      },
-      "derivedName": "PolygonERC20MintBurnPredicate"
+      }
     },
     {
       "name": "StakingNFT",
@@ -227,13 +240,13 @@
         "CHECKPOINT_REWARD": "71795000000000000000000",
         "checkPointBlockInterval": 5120,
         "checkpointRewardDelta": 10,
-        "currentEpoch": 66369,
+        "currentEpoch": 66663,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3610159162012231769574130332",
+        "currentValidatorSetTotalStake": "3527655933771492714250643422",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
-        "epoch": 66369,
+        "epoch": 66663,
         "eventsHub": "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b",
         "extensionCode": "0xef49Ea6996073752b6840CDA34773FFA78F78166",
         "getRegistry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
@@ -260,18 +273,18 @@
         "registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
         "replacementCoolDown": 2018083,
         "rewardDecreasePerCheckpoint": 30,
-        "rewardPerStake": "2813140214720983594217242",
+        "rewardPerStake": "2821050324247328319322861",
         "rootChain": "0x86E4Dc95c7FBdBf52e33D563BbDB00823894C287",
         "signerUpdateLimit": 100,
         "token": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
         "totalHeimdallFee": "10132939209428901681108",
         "totalRewards": "201179489204211582010647007",
-        "totalRewardsLiquidated": "109349064930481385514512514",
+        "totalRewardsLiquidated": "109585641652609208745722617",
         "totalStaked": "10847736755805912873761268",
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3610159162012231769574130332",
+          "amount": "3527655933771492714250643422",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
@@ -329,6 +342,16 @@
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x54006763154c764da4AF42a8c3cfc25Ea29765D5",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -350,7 +373,7 @@
       ],
       "sinceTimestamp": 1590849960,
       "values": {
-        "_nextHeaderBlock": 663690000,
+        "_nextHeaderBlock": 666630000,
         "$immutable": false,
         "$implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "CHAINID": 137,
@@ -359,8 +382,8 @@
           "_registry": "0x33a02E6cC863D393d6Bf231B697b82F6e499cA71",
           "_heimdallId": "heimdall-137"
         },
-        "currentHeaderBlock": 663680000,
-        "getLastChildBlock": 60068261,
+        "currentHeaderBlock": 666620000,
+        "getLastChildBlock": 60292261,
         "heimdallId": "0x7e10229e6df5851dc336f813dde0cf6559cd517f9ff1980e2e57e192ba3a2329",
         "implementation": "0x536c55cFe4892E581806e10b38dFE8083551bd03",
         "isOwner": false,
@@ -372,7 +395,7 @@
       "derivedName": "RootChain"
     },
     {
-      "name": "UnstoppableDomainsPredicate",
+      "name": "MintableERC721Predicate",
       "address": "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7",
       "proxyType": "Polygon proxy",
       "sinceTimestamp": 1598436896,
@@ -387,8 +410,7 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0xd4392723c111fcb98b073fe55873efb447bcd23cd3e49ec9ea2581930cd01ddc",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-      },
-      "derivedName": "MintableERC721Predicate"
+      }
     },
     {
       "name": "MintableERC20Predicate",
@@ -398,6 +420,16 @@
       "values": {
         "$admin": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "$implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xFa7D2a996aC6350f4b56C043112Da0366a59b74c"]
+          },
+          "MANAGER_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "implementation": "0x0f92D459B20D21F6bf9E02056EA9165d3f78bA62",
         "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
@@ -557,8 +589,7 @@
         "proxyOwner": "0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf",
         "proxyType": 2,
         "TOKEN_TYPE": "0x316d3b16328ca1dbcc5aeb9caf982584129f3ad000dc7219dd7dd6727f72fe93"
-      },
-      "derivedName": "ChainExitERC1155Predicate"
+      }
     },
     {
       "name": "ExitNFT",
@@ -583,8 +614,7 @@
         "proxyType": 2,
         "TOKEN_TYPE": "0x73ad2146b3d3a286642c794379d750360a2d53a3459a11b3e5d6cc900f55f44a",
         "TRANSFER_EVENT_SIG": "0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef"
-      },
-      "derivedName": "ERC721Predicate"
+      }
     },
     {
       "name": "StakeManagerExtension",
