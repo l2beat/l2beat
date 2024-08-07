@@ -100,8 +100,7 @@ export function getTvlAmountsConfig(
               token.address
             }`,
             source: token.source,
-            // TODO
-            includeInTotal: true,
+            includeInTotal: token.chainId === ChainId.ETHEREUM,
             decimals: token.decimals,
             symbol: token.symbol,
             isAssociated,
