@@ -195,6 +195,178 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('one actor, four contracts, configure shorter delay than upgrade', () => {
+    const actor = EthereumAddress.random()
+    const timelockA = EthereumAddress.random()
+    const timelockB = EthereumAddress.random()
+    const proxy = EthereumAddress.random()
+    const vault = EthereumAddress.random()
+
+    const graph: Graph = {
+      nodes: [
+        { address: actor, members: [], threshold: 1 },
+        { address: timelockA, members: [], threshold: 1 },
+        { address: timelockB, members: [], threshold: 1 },
+        { address: proxy, members: [], threshold: 1 },
+        { address: vault, members: [], threshold: 1 },
+      ],
+      edges: [
+        { type: 'configure', fromNode: 4, toNode: 1, delay: 0 },
+        { type: 'act', fromNode: 1, toNode: 0, delay: 90 },
+        { type: 'upgrade', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'act', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'act', fromNode: 2, toNode: 0, delay: 100 },
+      ],
+    }
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'upgrade',
+        path: [
+          { address: vault, delay: 0 },
+          { address: proxy, delay: 0 },
+          { address: timelockB, delay: 100 },
+          { address: actor, delay: 0 },
+        ],
+      },
+      {
+        type: 'configure',
+        path: [
+          { address: vault, delay: 0 },
+          { address: timelockA, delay: 90 },
+          { address: actor, delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('one actor, four contracts, configure longer delay than upgrade', () => {
+    const actor = EthereumAddress.random()
+    const timelockA = EthereumAddress.random()
+    const timelockB = EthereumAddress.random()
+    const proxy = EthereumAddress.random()
+    const vault = EthereumAddress.random()
+
+    const graph: Graph = {
+      nodes: [
+        { address: actor, members: [], threshold: 1 },
+        { address: timelockA, members: [], threshold: 1 },
+        { address: timelockB, members: [], threshold: 1 },
+        { address: proxy, members: [], threshold: 1 },
+        { address: vault, members: [], threshold: 1 },
+      ],
+      edges: [
+        { type: 'configure', fromNode: 4, toNode: 1, delay: 0 },
+        { type: 'act', fromNode: 1, toNode: 0, delay: 110 },
+        { type: 'upgrade', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'act', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'act', fromNode: 2, toNode: 0, delay: 100 },
+      ],
+    }
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'upgrade',
+        path: [
+          { address: vault, delay: 0 },
+          { address: proxy, delay: 0 },
+          { address: timelockB, delay: 100 },
+          { address: actor, delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('one actor, four contracts, two upgrades with same delay on different path', () => {
+    const actor = EthereumAddress.random()
+    const timelockA = EthereumAddress.random()
+    const timelockB = EthereumAddress.random()
+    const proxy = EthereumAddress.random()
+    const vault = EthereumAddress.random()
+
+    const graph: Graph = {
+      nodes: [
+        { address: actor, members: [], threshold: 1 },
+        { address: timelockA, members: [], threshold: 1 },
+        { address: timelockB, members: [], threshold: 1 },
+        { address: proxy, members: [], threshold: 1 },
+        { address: vault, members: [], threshold: 1 },
+      ],
+      edges: [
+        { type: 'upgrade', fromNode: 4, toNode: 1, delay: 0 },
+        { type: 'act', fromNode: 1, toNode: 0, delay: 100 },
+        { type: 'upgrade', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'act', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'act', fromNode: 2, toNode: 0, delay: 100 },
+      ],
+    }
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'upgrade',
+        path: [
+          { address: vault, delay: 0 },
+          { address: proxy, delay: 0 },
+          { address: timelockB, delay: 100 },
+          { address: actor, delay: 0 },
+        ],
+      },
+      {
+        type: 'upgrade',
+        path: [
+          { address: vault, delay: 0 },
+          { address: timelockA, delay: 100 },
+          { address: actor, delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('one actor, four contracts, two upgrades with different delay on different path', () => {
+    const actor = EthereumAddress.random()
+    const timelockA = EthereumAddress.random()
+    const timelockB = EthereumAddress.random()
+    const proxy = EthereumAddress.random()
+    const vault = EthereumAddress.random()
+
+    const graph: Graph = {
+      nodes: [
+        { address: actor, members: [], threshold: 1 },
+        { address: timelockA, members: [], threshold: 1 },
+        { address: timelockB, members: [], threshold: 1 },
+        { address: proxy, members: [], threshold: 1 },
+        { address: vault, members: [], threshold: 1 },
+      ],
+      edges: [
+        { type: 'upgrade', fromNode: 4, toNode: 1, delay: 0 },
+        { type: 'act', fromNode: 1, toNode: 0, delay: 110 },
+        { type: 'upgrade', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'act', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'act', fromNode: 2, toNode: 0, delay: 100 },
+      ],
+    }
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'upgrade',
+        path: [
+          { address: vault, delay: 0 },
+          { address: proxy, delay: 0 },
+          { address: timelockB, delay: 100 },
+          { address: actor, delay: 0 },
+        ],
+      },
+      {
+        type: 'upgrade',
+        path: [
+          { address: vault, delay: 0 },
+          { address: timelockA, delay: 110 },
+          { address: actor, delay: 0 },
+        ],
+      },
+    ])
+  })
+
   it('one actor, four contracts, two timelocks with different delays', () => {
     const actor = EthereumAddress.random()
     const timelockA = EthereumAddress.random()

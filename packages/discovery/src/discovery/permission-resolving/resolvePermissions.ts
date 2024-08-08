@@ -136,7 +136,7 @@ function collapseUpgrades(input: GrantedPermission[]): GrantedPermission[] {
         configure.path[0]?.address === upgrade.path[0]?.address &&
         configure?.path[configure.path.length - 1]?.address ===
           upgrade.path[upgrade.path.length - 1]?.address &&
-        sumDelays(configure.path) === sumDelays(upgrade.path),
+        sumDelays(configure.path) >= sumDelays(upgrade.path),
     )
 
     if (matchingConfigure) {
