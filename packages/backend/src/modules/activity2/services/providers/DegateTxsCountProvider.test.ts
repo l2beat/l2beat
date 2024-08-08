@@ -1,7 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { DegateClient } from '../../../../peripherals/degate'
-import { activityRecord } from '../TxsCountProvider.test'
+import { activityRecord } from '../../utils/aggregatePerDay.test'
 import { DegateTxsCountProvider } from './DegateTxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))

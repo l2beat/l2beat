@@ -2,15 +2,13 @@ import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
-import { TxsCountProvider } from '../TxsCountProvider'
+import { aggregatePerDay } from '../../utils/aggregatePerDay'
 
-export class StarknetTxsCountProvider extends TxsCountProvider {
+export class StarknetTxsCountProvider {
   constructor(
     private readonly starknetClient: StarknetClient,
-    projectId: ProjectId,
-  ) {
-    super(projectId)
-  }
+    private readonly projectId: ProjectId,
+  ) {}
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
@@ -25,6 +23,6 @@ export class StarknetTxsCountProvider extends TxsCountProvider {
 
     const blocks = await Promise.all(queries)
 
-    return this.aggregatePerDay(blocks)
+    return aggregatePerDay(this.projectId, blocks)
   }
 }

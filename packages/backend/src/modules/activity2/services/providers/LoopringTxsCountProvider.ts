@@ -2,15 +2,13 @@ import { ActivityRecord } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { LoopringClient } from '../../../../peripherals/loopring/LoopringClient'
-import { TxsCountProvider } from '../TxsCountProvider'
+import { aggregatePerDay } from '../../utils/aggregatePerDay'
 
-export class LoopringTxsCountProvider extends TxsCountProvider {
+export class LoopringTxsCountProvider {
   constructor(
     private readonly loopringClient: LoopringClient,
-    projectId: ProjectId,
-  ) {
-    super(projectId)
-  }
+    private readonly projectId: ProjectId,
+  ) {}
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
     const queries = range(from, to + 1).map(async (blockNumber) => {
@@ -24,6 +22,6 @@ export class LoopringTxsCountProvider extends TxsCountProvider {
 
     const blocks = await Promise.all(queries)
 
-    return this.aggregatePerDay(blocks)
+    return aggregatePerDay(this.projectId, blocks)
   }
 }
