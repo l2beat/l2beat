@@ -139,6 +139,7 @@ export const zklinknova: Layer3 = {
       defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
+    associatedTokens: ['ZKL'],
     escrows: [
       {
         chain: 'optimism',
