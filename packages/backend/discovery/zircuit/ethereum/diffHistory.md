@@ -1,9 +1,9 @@
-Generated with discovered.json: 0xad7f7a11166a03857fe358eecef726ff5e88cd6b
+Generated with discovered.json: 0xfdd0964cb56730d579ca87e64dce01d50397bac5
 
-# Diff at Thu, 08 Aug 2024 13:34:52 GMT:
+# Diff at Thu, 08 Aug 2024 14:16:34 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 20463002
+- current block number: 20484403
 
 ## Description
 
@@ -56,7 +56,7 @@ Initial discovery: Fork from the latest pre-FP OP stack contracts with added ZK 
 ```diff
 +   Status: CREATED
     contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0)
-    +++ description: None
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
 ```
 
 ```diff

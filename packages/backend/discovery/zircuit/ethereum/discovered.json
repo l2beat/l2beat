@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20463002,
-  "configHash": "0xeb1ac5c4706bbcf3b8f9837dc4718a1cc4e8cd19d312ac0ce3afa60ad79dd678",
+  "blockNumber": 20484403,
+  "configHash": "0x20cdcb9f8b5b83bd3a59c3442bf40cf5d59c8176ba04949089123da236012f94",
   "version": 10,
   "contracts": [
     {
@@ -36,7 +36,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20462934,
+          "prevBlockNum": 20484366,
           "prevTxCount": 1
         },
         "paused": false,
@@ -61,7 +61,7 @@
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292619892",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620715",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -233,7 +233,12 @@
     {
       "name": "ZircuitSuperchainConfig",
       "address": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
+      "template": "opstack/SuperchainConfig",
       "proxyType": "EIP1967 proxy",
+      "displayName": "SuperchainConfig",
+      "descriptions": [
+        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
+      ],
       "categories": ["Upgrades&Governance"],
       "sinceTimestamp": 1719936443,
       "values": {
@@ -283,10 +288,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1465268,
-        "latestOutputIndex": 3587,
-        "nextBlockNumber": 1465269,
-        "nextOutputIndex": 3588,
+        "latestBlockNumber": 1593726,
+        "latestOutputIndex": 3910,
+        "nextBlockNumber": 1593727,
+        "nextOutputIndex": 3911,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -839,6 +844,7 @@
     "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
+    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

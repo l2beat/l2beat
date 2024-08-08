@@ -29,7 +29,7 @@
       // larger diff due to verifier logic, but template fits
       "extends": "opstack/L2OutputOracle"
     },
-    "SuperchainConfig": {
+    "ZircuitSuperchainConfig": {
       "extends": "opstack/SuperchainConfig"
     },
     "L1ERC721Bridge": {
