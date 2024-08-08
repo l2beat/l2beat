@@ -240,7 +240,7 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
-  it('three actors, four contracts, three multisig with members, mixed threshold', () => {
+  it('three actors, four contracts, three multisigs with members, mixed threshold', () => {
     const actorA = EthereumAddress.random()
     const actorB = EthereumAddress.random()
     const actorC = EthereumAddress.random()
