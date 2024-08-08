@@ -195,6 +195,7 @@ export const zklinknova: Layer3 = {
         bridge: {
           name: 'zkLink Nova Bridge from Ethereum',
         },
+        premintedTokens: ['ZKL'],
       },
       {
         chain: 'mantapacific',
