@@ -1,8 +1,5 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
-type NodeId = number
-export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
-
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"
 // that contracts can perform on each other. Types of actions that can be
@@ -26,17 +23,19 @@ export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
 
+export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
+
 export interface Node<T = EthereumAddress> {
   address: T
   threshold: number
   delay: number
-  edges: Edge[]
+  edges: Edge<T>[]
 }
 
-export interface Edge {
-  type: Permission
+export interface Edge<T = EthereumAddress> {
+  permission: Permission
   delay: number
-  toNode: NodeId
+  toNode: T
 }
 
 export interface PathElement<T = EthereumAddress> {
@@ -45,7 +44,7 @@ export interface PathElement<T = EthereumAddress> {
 }
 
 export interface GrantedPermission<T = EthereumAddress> {
-  type: Permission
+  permission: Permission
   path: PathElement<T>[]
 }
 
@@ -57,13 +56,13 @@ export function resolvePermissions<T>(
   for (const node of graph) {
     const edges = node.edges
     const workCreatingEdges = edges.filter(
-      (e) => e.type === 'configure' || e.type === 'upgrade',
+      (e) => e.permission === 'configure' || e.permission === 'upgrade',
     )
     for (const edge of workCreatingEdges) {
-      const toNode = graph[edge.toNode]
-      assert(toNode !== undefined)
+      const toNode = graph.find((n) => n.address === edge.toNode)
+      assert(toNode !== undefined, `Cannot find node ${edge.toNode}`)
       const newWork: GrantedPermission<T> = {
-        type: edge.type,
+        permission: edge.permission,
         path: [
           { address: node.address, delay: edge.delay + node.delay },
           { address: toNode.address, delay: toNode.delay },
@@ -78,33 +77,36 @@ export function resolvePermissions<T>(
 }
 
 function floodFill<T>(
-  nodeId: NodeId,
+  address: T,
   graph: Node<T>[],
-  visited: NodeId[],
+  visited: T[],
   workingOn: GrantedPermission<T>,
 ): GrantedPermission<T>[] {
-  if (visited.includes(nodeId)) {
+  if (visited.includes(address)) {
     // TODO: (sz-piotr) empty array?
     return [workingOn]
   }
 
-  const node = graph[nodeId]
-  assert(node !== undefined)
+  const node = graph.find((n) => n.address === address)
+  assert(node !== undefined, `Cannot find node ${address}`)
 
   const result: GrantedPermission<T>[] = []
   const edges = node.edges
   const expandsMembers =
-    node.threshold === 1 && edges.some((e) => e.type === 'member')
-  const hasActEdges = edges.some((e) => e.type === 'act')
+    node.threshold === 1 && edges.some((e) => e.permission === 'member')
+  const hasActEdges = edges.some((e) => e.permission === 'act')
   for (const edge of edges) {
-    if (edge.type === 'act' || (expandsMembers && edge.type === 'member')) {
+    if (
+      edge.permission === 'act' ||
+      (expandsMembers && edge.permission === 'member')
+    ) {
       const { toNode, delay } = edge
       result.push(
         ...copyWorkAndFlood(
           graph,
           toNode,
           delay,
-          [...visited, nodeId],
+          [...visited, address],
           workingOn,
         ),
       )
@@ -120,29 +122,29 @@ function floodFill<T>(
 
 function copyWorkAndFlood<T>(
   graph: Node<T>[],
-  toNode: NodeId,
+  address: T,
   delay: number,
-  visitedNodes: NodeId[],
+  visitedNodes: T[],
   workingOn: GrantedPermission<T>,
 ) {
   const workCopy = structuredClone(workingOn)
-  const node = graph[toNode]
-  assert(node !== undefined)
+  const node = graph.find((n) => n.address === address)
+  assert(node !== undefined, `Cannot find node ${address}`)
   const lastElement = workCopy.path[workCopy.path.length - 1]
   if (lastElement !== undefined) {
     lastElement.delay += delay
   }
   workCopy.path.push({ address: node.address, delay: node.delay })
-  return floodFill(toNode, graph, visitedNodes, workCopy)
+  return floodFill(address, graph, visitedNodes, workCopy)
 }
 
 function collapseUpgrades<T>(
   input: GrantedPermission<T>[],
 ): GrantedPermission<T>[] {
-  const upgrades = input.filter((p) => p.type === 'upgrade')
-  const configures = input.filter((p) => p.type === 'configure')
+  const upgrades = input.filter((p) => p.permission === 'upgrade')
+  const configures = input.filter((p) => p.permission === 'configure')
   const others = input.filter(
-    (p) => p.type !== 'upgrade' && p.type !== 'configure',
+    (p) => p.permission !== 'upgrade' && p.permission !== 'configure',
   )
 
   const collapsed: GrantedPermission<T>[] = []
