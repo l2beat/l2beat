@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -10,10 +9,7 @@ const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 describe(TxsCountProvider.name, () => {
   describe(TxsCountProvider.prototype.aggregatePerDay.name, () => {
     it('should aggregate per day', () => {
-      const testTxsCountProvider = new TestTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
-      )
+      const testTxsCountProvider = new TestTxsCountProvider(ProjectId('a'))
 
       const result = testTxsCountProvider.aggregatePerDay([
         block(START, 1, 1),
@@ -32,19 +28,15 @@ describe(TxsCountProvider.name, () => {
 })
 
 class TestTxsCountProvider extends TxsCountProvider {
-  constructor(logger: Logger, projectId: ProjectId) {
-    super({ logger, projectId })
-  }
-
   override getTxsCount(): Promise<ActivityRecord[]> {
     return Promise.resolve([])
   }
 }
 
-function block(timestamp: UnixTime, count: number, number: number) {
+function block(timestamp: UnixTime, txsCount: number, number: number) {
   return {
     timestamp,
-    count,
+    txsCount,
     number,
   }
 }

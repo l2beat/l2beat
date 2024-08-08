@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { LoopringClient } from '../../../../peripherals/loopring/LoopringClient'
@@ -17,14 +16,8 @@ describe(LoopringTxsCountProvider.name, () => {
       ])
 
       const txsCountProvider = new LoopringTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
         client,
-        {
-          type: 'loopring',
-          url: 'url',
-          callsPerMinute: 1,
-        },
+        ProjectId('a'),
       )
       const result = await txsCountProvider.getTxsCount(1, 3)
 

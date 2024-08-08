@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
@@ -16,16 +15,7 @@ describe(RpcTxsCountProvider.name, () => {
         { timestamp: START.add(2, 'days'), count: 5, number: 3 },
       ])
 
-      const txsCountProvider = new RpcTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
-        client,
-        {
-          type: 'rpc',
-          url: 'url',
-          callsPerMinute: 1,
-        },
-      )
+      const txsCountProvider = new RpcTxsCountProvider(client, ProjectId('a'))
       const result = await txsCountProvider.getTxsCount(1, 3)
 
       expect(result).toEqual([
@@ -43,15 +33,9 @@ describe(RpcTxsCountProvider.name, () => {
 
       const assessCount = mockFn((count) => count - 1)
       const txsCountProvider = new RpcTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
         client,
-        {
-          type: 'rpc',
-          url: 'url',
-          callsPerMinute: 1,
-          assessCount,
-        },
+        ProjectId('a'),
+        assessCount,
       )
 
       const result = await txsCountProvider.getTxsCount(1, 2)

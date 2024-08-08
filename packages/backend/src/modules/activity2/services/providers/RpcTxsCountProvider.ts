@@ -1,42 +1,35 @@
-import { Logger } from '@l2beat/backend-tools'
+import { AssessCount } from '@l2beat/config'
 import { ActivityRecord } from '@l2beat/database'
-import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { ActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
 import { TxsCountProvider } from '../TxsCountProvider'
 
 export class RpcTxsCountProvider extends TxsCountProvider {
   constructor(
-    logger: Logger,
-    projectId: ProjectId,
     private readonly rpcClient: RpcClient,
-    private readonly projectConfig: ActivityTransactionConfig,
+    projectId: ProjectId,
+    private readonly assessCount?: AssessCount,
   ) {
-    super({ logger, projectId })
+    super(projectId)
   }
 
   async getTxsCount(from: number, to: number): Promise<ActivityRecord[]> {
-    assert(
-      this.projectConfig.type === 'rpc',
-      'Method not supported for projects other than rpc',
-    )
-    const projectConfig = this.projectConfig
-
     const queries = range(from, to + 1).map(async (blockNumber) => {
       const block = await this.rpcClient.getBlock(blockNumber)
       const timestamp = new UnixTime(block.timestamp)
 
       return {
-        timestamp,
-        count:
-          projectConfig.assessCount?.(block.transactions.length, blockNumber) ??
+        txsCount:
+          this.assessCount?.(block.transactions.length, blockNumber) ??
           block.transactions.length,
+        timestamp,
         number: block.number,
       }
     })
 
     const blocks = await Promise.all(queries)
+
     return this.aggregatePerDay(blocks)
   }
 }

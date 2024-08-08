@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { DegateClient } from '../../../../peripherals/degate'
@@ -17,14 +16,8 @@ describe(DegateTxsCountProvider.name, () => {
       ])
 
       const txsCountProvider = new DegateTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
         client,
-        {
-          type: 'degate',
-          url: 'url',
-          callsPerMinute: 1,
-        },
+        ProjectId('a'),
       )
       const result = await txsCountProvider.getTxsCount(1, 3)
 

@@ -1,8 +1,6 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
-import { StarkexActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
 import { activityRecord } from '../TxsCountProvider.test'
 import { StarkexTxsCountProvider } from './StarkexTxsCountProvider'
 
@@ -11,13 +9,9 @@ describe(StarkexTxsCountProvider.prototype.getTxsCount.name, () => {
     const client = mockStarkexClient([2, 3, 4, 5])
 
     const txsCountProvider = new StarkexTxsCountProvider(
-      Logger.SILENT,
-      ProjectId('a'),
       client,
-      mockObject<StarkexActivityTransactionConfig>({
-        type: 'starkex',
-        product: ['a', 'b'],
-      }),
+      ProjectId('a'),
+      ['a', 'b'],
     )
 
     const start = UnixTime.fromDays(5)

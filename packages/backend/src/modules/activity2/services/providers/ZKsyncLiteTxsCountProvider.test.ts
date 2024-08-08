@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { range } from 'lodash'
@@ -18,14 +17,8 @@ describe(ZKsyncLiteTxsCountProvider.name, () => {
       ])
 
       const txsCountProvider = new ZKsyncLiteTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
         client,
-        {
-          type: 'zksync',
-          url: 'url',
-          callsPerMinute: 1,
-        },
+        ProjectId('a'),
       )
       const result = await txsCountProvider.getTxsCount(1, 3)
 

@@ -1,4 +1,3 @@
-import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
@@ -17,14 +16,8 @@ describe(StarknetTxsCountProvider.name, () => {
       ])
 
       const txsCountProvider = new StarknetTxsCountProvider(
-        Logger.SILENT,
-        ProjectId('a'),
         client,
-        {
-          type: 'starknet',
-          url: 'url',
-          callsPerMinute: 1,
-        },
+        ProjectId('a'),
       )
       const result = await txsCountProvider.getTxsCount(1, 3)
 

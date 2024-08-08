@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
@@ -87,10 +87,9 @@ function createActivityIndexers(
           callsPerMinute: project.config.callsPerMinute,
         })
         const txsCountProvider = new RpcTxsCountProvider(
-          logger,
-          project.id,
           rpcClient,
-          project.config,
+          project.id,
+          project.config.assessCount,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
@@ -112,10 +111,8 @@ function createActivityIndexers(
           callsPerMinute: project.config.callsPerMinute,
         })
         const txsCountProvider = new ZKsyncLiteTxsCountProvider(
-          logger,
-          project.id,
           zksyncClient,
-          project.config,
+          project.id,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
@@ -137,10 +134,8 @@ function createActivityIndexers(
           callsPerMinute: project.config.callsPerMinute,
         })
         const txsCountProvider = new StarknetTxsCountProvider(
-          logger,
-          project.id,
           starknetClient,
-          project.config,
+          project.id,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
@@ -162,10 +157,8 @@ function createActivityIndexers(
           callsPerMinute: project.config.callsPerMinute,
         })
         const txsCountProvider = new LoopringTxsCountProvider(
-          logger,
-          project.id,
           loopringClient,
-          project.config,
+          project.id,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
@@ -187,10 +180,8 @@ function createActivityIndexers(
           callsPerMinute: project.config.callsPerMinute,
         })
         const txsCountProvider = new DegateTxsCountProvider(
-          logger,
-          project.id,
           degateClient,
-          project.config,
+          project.id,
         )
 
         const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
@@ -213,10 +204,9 @@ function createActivityIndexers(
           timeout: undefined,
         })
         const txsCountProvider = new StarkexTxsCountProvider(
-          logger,
-          project.id,
           starkexClient,
-          project.config,
+          project.id,
+          project.config.product,
         )
         const activityIndexer = new DayActivityIndexer({
           logger,
