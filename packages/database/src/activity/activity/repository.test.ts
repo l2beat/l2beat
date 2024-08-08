@@ -97,7 +97,7 @@ describeDatabase(ActivityRepository.name, (db) => {
     ActivityRepository.prototype.getByProjectIncludingDataPoint.name,
     () => {
       it('should return all rows including data point', async () => {
-        await repository.addOrUpdateMany([
+        await repository.upsertMany([
           record('a', START, 1, 0, 10),
           record('a', START.add(1, 'days'), 1, 11, 20),
           record('a', START.add(2, 'days'), 1, 21, 30),
