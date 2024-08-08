@@ -3,6 +3,8 @@ import {
   AmountConfigEntry,
   ChainConverter,
   ChainId,
+  ProjectId,
+  Token,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { chainToProject } from '../backend'
@@ -14,17 +16,12 @@ export function getTvlAmountsConfig(
   projects: BackendProject[],
   minTimestampOverride?: UnixTime,
 ): AmountConfigEntry[] {
-  const chainConverter = new ChainConverter(
-    chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
-  )
-
   const entries: AmountConfigEntry[] = []
 
   for (const token of tokenList) {
     if (token.supply !== 'zero') {
       const projectId = chainToProject.get(chainConverter.toName(token.chainId))
       assert(projectId, `Project is required for token ${token.symbol}`)
-
       const project = projects.find((x) => x.projectId === projectId)
       assert(project, `Project not found for token ${token.symbol}`)
 
@@ -50,35 +47,27 @@ export function getTvlAmountsConfig(
           entries.push({
             type: 'totalSupply',
             address: token.address,
-            chain: chainConverter.toName(token.chainId),
             sinceTimestamp,
             untilTimestamp: token.untilTimestamp,
-            project: projectId,
-            source: token.source,
-            dataSource: chainConverter.toName(token.chainId),
             includeInTotal: true,
-            decimals: token.decimals,
-            symbol: token.symbol,
             isAssociated,
-            category: token.category,
+            source: token.source,
+            dataSource: chain.name,
+            ...getBaseTokenInfo(token, project.projectId),
           })
           break
         case 'circulatingSupply':
           entries.push({
             type: 'circulatingSupply',
             address: token.address ?? 'native',
-            chain: chainConverter.toName(token.chainId),
+            coingeckoId: token.coingeckoId,
             sinceTimestamp,
             untilTimestamp: token.untilTimestamp,
-            coingeckoId: token.coingeckoId,
-            project: projectId,
+            includeInTotal: true,
+            isAssociated,
             source: token.source,
             dataSource: 'coingecko',
-            includeInTotal: true,
-            decimals: token.decimals,
-            symbol: token.symbol,
-            isAssociated,
-            category: token.category,
+            ...getBaseTokenInfo(token, project.projectId),
           })
           break
       }
@@ -101,56 +90,46 @@ export function getTvlAmountsConfig(
           chainMinTimestamp,
           token.sinceTimestamp,
         )
+
+        const untilTimestamp = getUntilTimestamp(
+          token.untilTimestamp,
+          escrow.untilTimestamp,
+        )
+        const sinceTimestamp = UnixTime.max(
+          tokenSinceTimestamp,
+          escrow.sinceTimestamp,
+        )
         const isAssociated = !!project.associatedTokens?.includes(token.symbol)
+        const includeInTotal = escrow.includeInTotal ?? true
 
         if (token.isPreminted) {
           entries.push({
             type: 'preminted',
             address: token.address ?? 'native',
             escrowAddress: escrow.address,
-            chain: chain.name,
-            sinceTimestamp: UnixTime.max(
-              tokenSinceTimestamp,
-              escrow.sinceTimestamp,
-            ),
-            untilTimestamp: getUntilTimestamp(
-              token.untilTimestamp,
-              escrow.untilTimestamp,
-            ),
             coingeckoId: token.coingeckoId,
             dataSource: `${chain.name}_preminted_${token.address}`,
-            project: project.projectId,
-            source: escrow.source ?? 'canonical',
-            includeInTotal: escrow.includeInTotal ?? true,
-            decimals: token.decimals,
-            symbol: token.symbol,
+            sinceTimestamp,
+            untilTimestamp,
+            includeInTotal,
             isAssociated,
             bridge: escrow.bridge,
-            category: token.category,
+            source: escrow.source ?? 'canonical',
+            ...getBaseTokenInfo(token, project.projectId),
           })
         } else {
           entries.push({
             type: 'escrow',
             address: token.address ?? 'native',
-            chain: chain.name,
-            sinceTimestamp: UnixTime.max(
-              tokenSinceTimestamp,
-              escrow.sinceTimestamp,
-            ),
-            untilTimestamp: getUntilTimestamp(
-              token.untilTimestamp,
-              escrow.untilTimestamp,
-            ),
             escrowAddress: escrow.address,
-            project: project.projectId,
             dataSource: chain.name,
-            source: escrow.source ?? 'canonical',
-            includeInTotal: escrow.includeInTotal ?? true,
-            decimals: token.decimals,
-            symbol: token.symbol,
+            sinceTimestamp,
+            untilTimestamp,
+            includeInTotal,
             isAssociated,
             bridge: escrow.bridge,
-            category: token.category,
+            source: escrow.source ?? 'canonical',
+            ...getBaseTokenInfo(token, project.projectId),
           })
         }
       }
@@ -158,6 +137,20 @@ export function getTvlAmountsConfig(
   }
 
   return entries
+}
+
+const chainConverter = new ChainConverter(
+  chains.map((x) => ({ name: x.name, chainId: ChainId(x.chainId) })),
+)
+
+function getBaseTokenInfo(token: Token, project: ProjectId) {
+  return {
+    chain: chainConverter.toName(token.chainId),
+    project,
+    decimals: token.decimals,
+    symbol: token.symbol,
+    category: token.category,
+  }
 }
 
 function getUntilTimestamp(
