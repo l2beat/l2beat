@@ -1,7 +1,6 @@
 import { expect } from 'earl'
 import {
   Edge,
-  Graph,
   Node,
   Permission,
   resolvePermissions,
@@ -9,33 +8,21 @@ import {
 
 describe(resolvePermissions.name, () => {
   it('op mainnet', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('contract1'),
-        node('contract2'),
-        node('l1Proxy'),
-        node('l2Proxy'),
-        node('l2Contract1'),
-        node('l2Contract2'),
-        node('guardian'),
-        node('admins', { threshold: 2 }),
-        node('foundationMsig'),
-        node('securityCounil'),
-      ],
-      edges: [
-        edge('configure', 0, 6, { delay: 7 }),
-        edge('upgrade', 0, 2),
-        edge('upgrade', 1, 2),
-        edge('act', 2, 7),
-        edge('act', 6, 8),
-        edge('act', 6, 9),
-        edge('upgrade', 4, 3),
-        edge('upgrade', 5, 3),
-        edge('act', 3, 2),
-        edge('member', 7, 8),
-        edge('member', 7, 9),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('contract1', [
+        edge('configure', 6, { delay: 7 }),
+        edge('upgrade', 2),
+      ]),
+      node('contract2', [edge('upgrade', 2)]),
+      node('l1Proxy', [edge('act', 7)]),
+      node('l2Proxy', [edge('act', 2)]),
+      node('l2Contract1', [edge('upgrade', 3)]),
+      node('l2Contract2', [edge('upgrade', 3)]),
+      node('guardian', [edge('act', 8), edge('act', 9)]),
+      node('admins', [edge('member', 8), edge('member', 9)], { threshold: 2 }),
+      node('foundationMsig'),
+      node('securityCounil'),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -92,26 +79,24 @@ describe(resolvePermissions.name, () => {
   })
 
   it('zksync lite', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('verifier'),
-        node('governance'),
-        node('zkSync', { threshold: 2 }),
-        node('upgradeGatekeeper'),
-        node('zkSyncMsig'),
-        node('actorA'),
-        node('actorB'),
-      ],
-      edges: [
-        edge('upgrade', 0, 3),
-        edge('upgrade', 1, 3),
-        edge('upgrade', 2, 3),
-        edge('act', 3, 4, { delay: 21 }),
-        edge('configure', 2, 2),
-        edge('member', 2, 5),
-        edge('member', 2, 6),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('verifier', [edge('upgrade', 3)]),
+      node('governance', [edge('upgrade', 3)]),
+      node(
+        'zkSync',
+        [
+          edge('upgrade', 3),
+          edge('configure', 2),
+          edge('member', 5),
+          edge('member', 6),
+        ],
+        { threshold: 2 },
+      ),
+      node('upgradeGatekeeper', [edge('act', 4, { delay: 21 })]),
+      node('zkSyncMsig'),
+      node('actorA'),
+      node('actorB'),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -149,22 +134,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, two timelocks with same delays', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 1),
-        edge('act', 1, 0, { delay: 100 }),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 0, { delay: 100 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 100 })]),
+      node('timelockB', [edge('act', 0, { delay: 100 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('configure', 1), edge('upgrade', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -180,22 +156,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, configure shorter delay than upgrade', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 1),
-        edge('act', 1, 0, { delay: 90 }),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 0, { delay: 100 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 90 })]),
+      node('timelockB', [edge('act', 0, { delay: 100 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('configure', 1), edge('upgrade', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -219,22 +186,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, configure longer delay than upgrade', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 1),
-        edge('act', 1, 0, { delay: 110 }),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 0, { delay: 100 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 110 })]),
+      node('timelockB', [edge('act', 0, { delay: 100 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('configure', 1), edge('upgrade', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -250,22 +208,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, two upgrades with same delay on different path', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('upgrade', 4, 1),
-        edge('act', 1, 0, { delay: 100 }),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 0, { delay: 100 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 100 })]),
+      node('timelockB', [edge('act', 0, { delay: 100 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('upgrade', 1), edge('upgrade', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -289,22 +238,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, two upgrades with different delay on different path', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('upgrade', 4, 1),
-        edge('act', 1, 0, { delay: 110 }),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 0, { delay: 100 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 110 })]),
+      node('timelockB', [edge('act', 0, { delay: 100 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('upgrade', 3), edge('upgrade', 1)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -328,22 +268,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, two timelocks with different delays', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 1),
-        edge('act', 1, 0, { delay: 10 }),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 0, { delay: 100 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 10 })]),
+      node('timelockB', [edge('act', 0, { delay: 100 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('configure', 1), edge('upgrade', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -367,27 +298,17 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, four contracts, three multisigs with members, mixed threshold', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actorA'),
-        node('actorB'),
-        node('actorC'),
-        node('msigM'),
-        node('msigA'),
-        node('msigB', { threshold: 2 }),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 6, 3),
-        edge('member', 3, 4),
-        edge('member', 3, 5),
-        edge('member', 4, 0),
-        edge('member', 4, 1),
-        edge('member', 5, 0),
-        edge('member', 5, 1),
-        edge('member', 5, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('msigM', [edge('member', 4), edge('member', 5)]),
+      node('msigA', [edge('member', 0), edge('member', 1)]),
+      node('msigB', [edge('member', 0), edge('member', 1), edge('member', 2)], {
+        threshold: 2,
+      }),
+      node('vault', [edge('configure', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -420,21 +341,16 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, two contracts, one multisig with members, threshold greater than one with delay', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actorA'),
-        node('actorB'),
-        node('actorC'),
-        node('msig', { threshold: 2, delay: 10 }),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 3),
-        edge('member', 3, 0),
-        edge('member', 3, 1),
-        edge('member', 3, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('msig', [edge('member', 0), edge('member', 1), edge('member', 2)], {
+        threshold: 2,
+        delay: 10,
+      }),
+      node('vault', [edge('configure', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -448,21 +364,15 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, two contracts, one multisig with members, threshold greater than one', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actorA'),
-        node('actorB'),
-        node('actorC'),
-        node('msig', { threshold: 2 }),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 3),
-        edge('member', 3, 0),
-        edge('member', 3, 1),
-        edge('member', 3, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('msig', [edge('member', 0), edge('member', 1), edge('member', 2)], {
+        threshold: 2,
+      }),
+      node('vault', [edge('configure', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -476,21 +386,16 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, two contracts, one multisig with members, threshold one and delay', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actorA'),
-        node('actorB'),
-        node('actorC'),
-        node('msig', { threshold: 1, delay: 10 }),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 3),
-        edge('member', 3, 0),
-        edge('member', 3, 1),
-        edge('member', 3, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('msig', [edge('member', 0), edge('member', 1), edge('member', 2)], {
+        threshold: 1,
+        delay: 10,
+      }),
+      node('vault', [edge('configure', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -521,21 +426,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, two contracts, one multisig with members, threshold one', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actorA'),
-        node('actorB'),
-        node('actorC'),
-        node('msig'),
-        node('vault'),
-      ],
-      edges: [
-        edge('configure', 4, 3),
-        edge('member', 3, 0),
-        edge('member', 3, 1),
-        edge('member', 3, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('msig', [edge('member', 0), edge('member', 1), edge('member', 2)]),
+      node('vault', [edge('configure', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -566,21 +463,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, one contract, shared ownership of a single contract with proxy', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actorA'),
-        node('actorB'),
-        node('actorC'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('act', 3, 0),
-        edge('act', 3, 1),
-        edge('act', 3, 2),
-        edge('configure', 4, 3),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('proxy', [edge('act', 0), edge('act', 1), edge('act', 2)]),
+      node('vault', [edge('configure', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -611,14 +500,16 @@ describe(resolvePermissions.name, () => {
   })
 
   it('three actors, one contract, shared ownership of a single contract', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actorA'), node('actorB'), node('actorC'), node('vault')],
-      edges: [
-        edge('configure', 3, 0),
-        edge('configure', 3, 1),
-        edge('configure', 3, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('actorC'),
+      node('vault', [
+        edge('configure', 0),
+        edge('configure', 1),
+        edge('configure', 2),
+      ]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -646,10 +537,12 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, three contracts, shared ownership through proxy', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actor'), node('proxy'), node('vaultA'), node('vaultB')],
-      edges: [edge('upgrade', 2, 1), edge('upgrade', 3, 1), edge('act', 1, 0)],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('proxy', [edge('act', 0)]),
+      node('vaultA', [edge('upgrade', 1)]),
+      node('vaultB', [edge('upgrade', 1)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -672,21 +565,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, shared ownership', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('proxyA'),
-        node('vaultA'),
-        node('proxyB'),
-        node('vaultB'),
-      ],
-      edges: [
-        edge('upgrade', 2, 1),
-        edge('act', 1, 0),
-        edge('upgrade', 4, 3),
-        edge('act', 3, 0),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('proxyA', [edge('act', 0)]),
+      node('vaultA', [edge('upgrade', 1)]),
+      node('proxyB', [edge('act', 0)]),
+      node('vaultB', [edge('upgrade', 3)]),
+    ]
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
       {
@@ -709,23 +594,15 @@ describe(resolvePermissions.name, () => {
   })
 
   it('one actor, four contracts, stacking delays', () => {
-    const graph: Graph<string> = {
-      nodes: [
-        node('actor'),
-        node('timelockA'),
-        node('timelockB'),
-        node('proxy'),
-        node('vault'),
-      ],
-      edges: [
-        edge('upgrade', 4, 3),
-        edge('act', 3, 2),
-        edge('act', 2, 1, { delay: 69 }),
-        edge('act', 1, 0, { delay: 420 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelockA', [edge('act', 0, { delay: 420 })]),
+      node('timelockB', [edge('act', 1, { delay: 69 })]),
+      node('proxy', [edge('act', 2)]),
+      node('vault', [edge('upgrade', 3)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
         path: [
@@ -740,15 +617,16 @@ describe(resolvePermissions.name, () => {
   })
 
   it('two actors, one contract, two different delays', () => {
-    const graph: Graph<string> = {
-      nodes: [node('ownerActor'), node('adminActor'), node('vault')],
-      edges: [
-        edge('upgrade', 2, 0, { delay: 69 }),
-        edge('upgrade', 2, 1, { delay: 420 }),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('ownerActor'),
+      node('adminActor'),
+      node('vault', [
+        edge('upgrade', 0, { delay: 69 }),
+        edge('upgrade', 1, { delay: 420 }),
+      ]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
         path: [
@@ -767,21 +645,14 @@ describe(resolvePermissions.name, () => {
   })
 
   it('single actor, three contracts, proxy with act and timelock with delay', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actorA'), node('actorB'), node('timelock'), node('vault')],
-      edges: [
-        edge('act', 2, 0, { delay: 42069 }),
-        edge('configure', 3, 2),
-        {
-          type: 'configure',
-          fromNode: 3,
-          toNode: 1,
-          delay: 0,
-        },
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('timelock', [edge('act', 0, { delay: 42069 })]),
+      node('vault', [edge('configure', 1), edge('configure', 2)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
         path: [
@@ -801,16 +672,14 @@ describe(resolvePermissions.name, () => {
   })
 
   it('single actor, three contracts, proxy with act and timelock with delay', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actor'), node('timelock'), node('proxy'), node('vault')],
-      edges: [
-        edge('act', 1, 0, { delay: 42069 }),
-        edge('act', 2, 1),
-        edge('upgrade', 3, 2),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('timelock', [edge('act', 0, { delay: 42069 })]),
+      node('proxy', [edge('act', 1)]),
+      node('vault', [edge('upgrade', 2)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
         path: [
@@ -824,16 +693,14 @@ describe(resolvePermissions.name, () => {
   })
 
   it('two actors, two contracts, proxy with act and single configure', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actorA'), node('actorB'), node('proxy'), node('vault')],
-      edges: [
-        edge('act', 2, 1),
-        edge('upgrade', 3, 2),
-        edge('configure', 3, 0),
-      ],
-    }
+    const graph: Node<string>[] = [
+      node('actorA'),
+      node('actorB'),
+      node('proxy', [edge('act', 1)]),
+      node('vault', [edge('upgrade', 2), edge('configure', 0)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
         path: [
@@ -853,12 +720,13 @@ describe(resolvePermissions.name, () => {
   })
 
   it('single actor, two contracts, proxy and act', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actor'), node('proxy'), node('vault')],
-      edges: [edge('act', 1, 0), edge('upgrade', 2, 1)],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('proxy', [edge('act', 0)]),
+      node('vault', [edge('upgrade', 1)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
         path: [
@@ -871,12 +739,12 @@ describe(resolvePermissions.name, () => {
   })
 
   it('single actor, single contract, proxy', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actor'), node('vault')],
-      edges: [{ type: 'upgrade', fromNode: 1, toNode: 0, delay: 0 }],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('vault', [edge('upgrade', 0)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'upgrade',
         path: [
@@ -888,12 +756,12 @@ describe(resolvePermissions.name, () => {
   })
 
   it('single actor, single contract, no proxy', () => {
-    const graph: Graph<string> = {
-      nodes: [node('actor'), node('vault')],
-      edges: [{ type: 'configure', fromNode: 1, toNode: 0, delay: 0 }],
-    }
+    const graph: Node<string>[] = [
+      node('actor'),
+      node('vault', [edge('configure', 0)]),
+    ]
 
-    expect(resolvePermissions(graph)).toEqual([
+    expect(resolvePermissions(graph)).toEqualUnsorted([
       {
         type: 'configure',
         path: [
@@ -905,20 +773,25 @@ describe(resolvePermissions.name, () => {
   })
 
   it('empty graph returns an empty result', () => {
-    const graph: Graph<string> = { nodes: [], edges: [] }
-    expect(resolvePermissions(graph)).toEqual([])
+    const graph: Node<string>[] = []
+    expect(resolvePermissions(graph)).toEqualUnsorted([])
   })
 })
 
-function node(address: string, options?: Partial<Node<string>>): Node<string> {
-  return { address, delay: 0, threshold: 1, ...options }
+function node(
+  address: string,
+  edges?: Edge[],
+  options?: Partial<Node<string>>,
+): Node<string> {
+  return {
+    address,
+    delay: 0,
+    threshold: 1,
+    edges: edges ?? [],
+    ...options,
+  }
 }
 
-function edge(
-  type: Permission,
-  fromNode: number,
-  toNode: number,
-  options?: Partial<Edge>,
-): Edge {
-  return { type, fromNode, toNode, delay: 0, ...options }
+function edge(type: Permission, toNode: number, options?: Partial<Edge>): Edge {
+  return { type, toNode, delay: 0, ...options }
 }

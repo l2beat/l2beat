@@ -30,18 +30,13 @@ export interface Node<T = EthereumAddress> {
   address: T
   threshold: number
   delay: number
+  edges: Edge[]
 }
 
 export interface Edge {
   type: Permission
   delay: number
-  fromNode: NodeId
   toNode: NodeId
-}
-
-export interface Graph<T = EthereumAddress> {
-  nodes: Node<T>[]
-  edges: Edge[]
 }
 
 export interface PathElement<T = EthereumAddress> {
@@ -54,19 +49,18 @@ export interface GrantedPermission<T = EthereumAddress> {
   path: PathElement<T>[]
 }
 
-export function resolvePermissions<T>(graph: Graph<T>): GrantedPermission<T>[] {
+export function resolvePermissions<T>(
+  graph: Node<T>[],
+): GrantedPermission<T>[] {
   const result: GrantedPermission<T>[] = []
 
-  for (let nodeId = 0; nodeId < graph.nodes.length; nodeId += 1) {
-    const node = graph.nodes[nodeId]
-    assert(node !== undefined)
-
-    const edges = graph.edges.filter((e) => e.fromNode === nodeId)
+  for (const node of graph) {
+    const edges = node.edges
     const workCreatingEdges = edges.filter(
       (e) => e.type === 'configure' || e.type === 'upgrade',
     )
     for (const edge of workCreatingEdges) {
-      const toNode = graph.nodes[edge.toNode]
+      const toNode = graph[edge.toNode]
       assert(toNode !== undefined)
       const newWork: GrantedPermission<T> = {
         type: edge.type,
@@ -86,7 +80,7 @@ export function resolvePermissions<T>(graph: Graph<T>): GrantedPermission<T>[] {
 
 function floodFill<T>(
   nodeId: NodeId,
-  graph: Graph<T>,
+  graph: Node<T>[],
   visitedNodes: NodeId[],
   workingOn: GrantedPermission<T>,
 ): GrantedPermission<T>[] {
@@ -95,11 +89,11 @@ function floodFill<T>(
   }
   visitedNodes.push(nodeId)
 
-  const node = graph.nodes[nodeId]
+  const node = graph[nodeId]
   assert(node !== undefined)
 
   const result: GrantedPermission<T>[] = []
-  const edges = graph.edges.filter((e) => e.fromNode === nodeId)
+  const edges = node.edges
   const expandsMembers =
     node.threshold === 1 && edges.some((e) => e.type === 'member')
   const hasActEdges = edges.some((e) => e.type === 'act')
@@ -120,14 +114,14 @@ function floodFill<T>(
 }
 
 function copyWorkAndFlood<T>(
-  graph: Graph<T>,
+  graph: Node<T>[],
   toNode: NodeId,
   delay: number,
   visitedNodes: NodeId[],
   workingOn: GrantedPermission<T>,
 ) {
   const workCopy = structuredClone(workingOn)
-  const node = graph.nodes[toNode]
+  const node = graph[toNode]
   assert(node !== undefined)
   const lastElement = workCopy.path[workCopy.path.length - 1]
   if (lastElement !== undefined) {
