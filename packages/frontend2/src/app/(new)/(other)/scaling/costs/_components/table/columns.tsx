@@ -9,11 +9,12 @@ import {
   type CostsUnit,
   type ScalingCostsEntry,
 } from '~/server/features/scaling/get-scaling-costs-entries'
-import { type SyncStatus } from '~/types/SyncStatus'
+import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
 import { CostsTotalCell } from '../costs-total-cell'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 
 export type ScalingCostsTableEntry = ScalingCostsEntry & {
   data: CostsData
@@ -78,10 +79,12 @@ export const scalingCostsColumns = [
       columnHelper.accessor('data.total', {
         header: 'Total cost',
         cell: (ctx) => (
-          <CostsTotalCell
-            data={ctx.row.original.data}
-            warning={ctx.row.original.costsWarning}
-          />
+          <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+            <CostsTotalCell
+              data={ctx.row.original.data}
+              warning={ctx.row.original.costsWarning}
+            />
+          </SyncStatusWrapper>
         ),
         sortUndefined: 'last',
         meta: {
@@ -98,7 +101,9 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.calldata', {
     header: 'Calldata',
     cell: (ctx) => (
-      <CostsBreakdownValueCell data={ctx.row.original.data} type="calldata" />
+      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+        <CostsBreakdownValueCell data={ctx.row.original.data} type="calldata" />
+      </SyncStatusWrapper>
     ),
     sortUndefined: 'last',
     meta: {
@@ -116,7 +121,9 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.blobs', {
     header: 'Blobs',
     cell: (ctx) => (
-      <CostsBreakdownValueCell data={ctx.row.original.data} type="blobs" />
+      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+        <CostsBreakdownValueCell data={ctx.row.original.data} type="blobs" />
+      </SyncStatusWrapper>
     ),
     sortUndefined: 'last',
     meta: {
@@ -134,7 +141,9 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.compute', {
     header: 'Compute',
     cell: (ctx) => (
-      <CostsBreakdownValueCell data={ctx.row.original.data} type="compute" />
+      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+        <CostsBreakdownValueCell data={ctx.row.original.data} type="compute" />
+      </SyncStatusWrapper>
     ),
     sortUndefined: 'last',
     meta: {
@@ -151,7 +160,9 @@ export const scalingCostsColumns = [
   columnHelper.accessor('data.overhead', {
     header: 'Overhead',
     cell: (ctx) => (
-      <CostsBreakdownValueCell data={ctx.row.original.data} type="overhead" />
+      <SyncStatusWrapper syncStatus={ctx.row.original.data.syncStatus}>
+        <CostsBreakdownValueCell data={ctx.row.original.data} type="overhead" />
+      </SyncStatusWrapper>
     ),
     sortUndefined: 'last',
     meta: {
