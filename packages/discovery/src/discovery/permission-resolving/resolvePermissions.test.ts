@@ -17,29 +17,29 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: contract1, members: [], threshold: 1 },
-        { address: contract2, members: [], threshold: 1 },
-        { address: l1Proxy, members: [], threshold: 1 },
-        { address: l2Proxy, members: [], threshold: 1 },
-        { address: l2Contract1, members: [], threshold: 1 },
-        { address: l2Contract2, members: [], threshold: 1 },
-        { address: guardian, members: [], threshold: 1 },
-        { address: admins, members: [8, 9], threshold: 2 },
-        { address: foundationMsig, members: [], threshold: 1 },
-        { address: securityCounil, members: [], threshold: 1 },
+        { address: contract1, threshold: 1 },
+        { address: contract2, threshold: 1 },
+        { address: l1Proxy, threshold: 1 },
+        { address: l2Proxy, threshold: 1 },
+        { address: l2Contract1, threshold: 1 },
+        { address: l2Contract2, threshold: 1 },
+        { address: guardian, threshold: 1 },
+        { address: admins, threshold: 2 },
+        { address: foundationMsig, threshold: 1 },
+        { address: securityCounil, threshold: 1 },
       ],
       edges: [
         { type: 'configure', fromNode: 0, toNode: 6, delay: 7 },
         { type: 'upgrade', fromNode: 0, toNode: 2, delay: 0 },
         { type: 'upgrade', fromNode: 1, toNode: 2, delay: 0 },
         { type: 'act', fromNode: 2, toNode: 7, delay: 0 },
-
         { type: 'act', fromNode: 6, toNode: 8, delay: 0 },
         { type: 'act', fromNode: 6, toNode: 9, delay: 0 },
-
         { type: 'upgrade', fromNode: 4, toNode: 3, delay: 0 },
         { type: 'upgrade', fromNode: 5, toNode: 3, delay: 0 },
         { type: 'act', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'member', fromNode: 7, toNode: 8, delay: 0 },
+        { type: 'member', fromNode: 7, toNode: 9, delay: 0 },
       ],
     }
 
@@ -108,13 +108,13 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: verifier, members: [], threshold: 1 },
-        { address: governance, members: [], threshold: 1 },
-        { address: zkSync, members: [5, 6], threshold: 2 },
-        { address: upgradeGatekeeper, members: [], threshold: 1 },
-        { address: zkSyncMsig, members: [], threshold: 1 },
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
+        { address: verifier, threshold: 1 },
+        { address: governance, threshold: 1 },
+        { address: zkSync, threshold: 2 },
+        { address: upgradeGatekeeper, threshold: 1 },
+        { address: zkSyncMsig, threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 0, toNode: 3, delay: 0 },
@@ -122,6 +122,8 @@ describe(resolvePermissions.name, () => {
         { type: 'upgrade', fromNode: 2, toNode: 3, delay: 0 },
         { type: 'act', fromNode: 3, toNode: 4, delay: 21 },
         { type: 'configure', fromNode: 2, toNode: 2, delay: 0 },
+        { type: 'member', fromNode: 2, toNode: 5, delay: 0 },
+        { type: 'member', fromNode: 2, toNode: 6, delay: 0 },
       ],
     }
 
@@ -169,11 +171,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'configure', fromNode: 4, toNode: 1, delay: 0 },
@@ -206,11 +208,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'configure', fromNode: 4, toNode: 1, delay: 0 },
@@ -251,11 +253,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'configure', fromNode: 4, toNode: 1, delay: 0 },
@@ -288,11 +290,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 4, toNode: 1, delay: 0 },
@@ -333,11 +335,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 4, toNode: 1, delay: 0 },
@@ -378,11 +380,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'configure', fromNode: 4, toNode: 1, delay: 0 },
@@ -425,15 +427,24 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: msigM, members: [4, 5], threshold: 1 },
-        { address: msigA, members: [0, 1], threshold: 1 },
-        { address: msigB, members: [0, 1, 2], threshold: 2 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: msigM, threshold: 1 },
+        { address: msigA, threshold: 1 },
+        { address: msigB, threshold: 2 },
+        { address: vault, threshold: 1 },
       ],
-      edges: [{ type: 'configure', fromNode: 6, toNode: 3, delay: 0 }],
+      edges: [
+          { type: 'configure', fromNode: 6, toNode: 3, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 4, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 5, delay: 0 },
+          { type: 'member', fromNode: 4, toNode: 0, delay: 0 },
+          { type: 'member', fromNode: 4, toNode: 1, delay: 0 },
+          { type: 'member', fromNode: 5, toNode: 0, delay: 0 },
+          { type: 'member', fromNode: 5, toNode: 1, delay: 0 },
+          { type: 'member', fromNode: 5, toNode: 2, delay: 0 },
+      ],
     }
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -475,13 +486,18 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: msig, members: [0, 1, 2], threshold: 2, delay: 10 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: msig, threshold: 2, delay: 10 },
+        { address: vault, threshold: 1 },
       ],
-      edges: [{ type: 'configure', fromNode: 4, toNode: 3, delay: 0 }],
+      edges: [
+          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
+      ],
     }
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -504,13 +520,18 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: msig, members: [0, 1, 2], threshold: 2 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: msig, threshold: 2 },
+        { address: vault, threshold: 1 },
       ],
-      edges: [{ type: 'configure', fromNode: 4, toNode: 3, delay: 0 }],
+      edges: [
+          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
+      ],
     }
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -533,13 +554,18 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: msig, members: [0, 1, 2], threshold: 1, delay: 10 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: msig, threshold: 1, delay: 10 },
+        { address: vault, threshold: 1 },
       ],
-      edges: [{ type: 'configure', fromNode: 4, toNode: 3, delay: 0 }],
+      edges: [
+          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 2, delay: 0 }
+      ],
     }
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -579,13 +605,18 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: msig, members: [0, 1, 2], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: msig, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
-      edges: [{ type: 'configure', fromNode: 4, toNode: 3, delay: 0 }],
+      edges: [
+          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+          { type: 'member', fromNode: 3, toNode: 2, delay: 0 }
+      ],
     }
 
     expect(resolvePermissions(graph)).toEqualUnsorted([
@@ -625,11 +656,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'act', fromNode: 3, toNode: 0, delay: 0 },
@@ -675,10 +706,10 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: actorC, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: actorC, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'configure', fromNode: 3, toNode: 0, delay: 0 },
@@ -720,10 +751,10 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vaultA, members: [], threshold: 1 },
-        { address: vaultB, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vaultA, threshold: 1 },
+        { address: vaultB, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 2, toNode: 1, delay: 0 },
@@ -761,11 +792,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: proxyA, members: [], threshold: 1 },
-        { address: vaultA, members: [], threshold: 1 },
-        { address: proxyB, members: [], threshold: 1 },
-        { address: vaultB, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: proxyA, threshold: 1 },
+        { address: vaultA, threshold: 1 },
+        { address: proxyB, threshold: 1 },
+        { address: vaultB, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 2, toNode: 1, delay: 0 },
@@ -804,11 +835,11 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelockA, members: [], threshold: 1 },
-        { address: timelockB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelockA, threshold: 1 },
+        { address: timelockB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 4, toNode: 3, delay: 0 },
@@ -839,9 +870,9 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: ownerActor, members: [], threshold: 1 },
-        { address: adminActor, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: ownerActor, threshold: 1 },
+        { address: adminActor, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 2, toNode: 0, delay: 69 },
@@ -875,10 +906,10 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: timelock, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: timelock, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'act', fromNode: 2, toNode: 0, delay: 42069 },
@@ -919,10 +950,10 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: timelock, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: timelock, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'act', fromNode: 1, toNode: 0, delay: 42069 },
@@ -952,10 +983,10 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actorA, members: [], threshold: 1 },
-        { address: actorB, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actorA, threshold: 1 },
+        { address: actorB, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'act', fromNode: 2, toNode: 1, delay: 0 },
@@ -990,9 +1021,9 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: proxy, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: proxy, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [
         { type: 'act', fromNode: 1, toNode: 0, delay: 0 },
@@ -1018,8 +1049,8 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [{ type: 'upgrade', fromNode: 1, toNode: 0, delay: 0 }],
     }
@@ -1041,8 +1072,8 @@ describe(resolvePermissions.name, () => {
 
     const graph: Graph = {
       nodes: [
-        { address: actor, members: [], threshold: 1 },
-        { address: vault, members: [], threshold: 1 },
+        { address: actor, threshold: 1 },
+        { address: vault, threshold: 1 },
       ],
       edges: [{ type: 'configure', fromNode: 1, toNode: 0, delay: 0 }],
     }

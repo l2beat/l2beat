@@ -1,12 +1,34 @@
 import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 type NodeId = number
-export type Permission = 'act' | 'configure' | 'upgrade'
+export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
+
+// NOTE(radomski): The entire permission network is modeled as a graph. The
+// graph contains nodes and edges. Nodes are contracts and edges are "actions"
+// that contracts can perform on each other. Types of actions that can be
+// performed are defined by the type Permission.
+//
+// Each node contains threshold which is redundant for contracts that are not
+// multisigs, but it makes the processing easier to set it to one for
+// non-multisig contracts. It also contains a delay field which allows to model
+// things like multisigs with delays or contracts which always execute an
+// operation with some additional baseline delay.
+//
+// Edges link two nodes together and define the action that can take place on
+// that link. Each action can have a execution delay which is additive to the
+// node on which that action can take place.
+//
+// Multisigs are modeled as a link between the multisig and the owner with the
+// permission type set to 'member'. This is really powerful but as always with
+// great power comes great responsibility and setting the delays on the edge
+// level for multisig members can introduce a lot of potential confusion when
+// these delays will start to drift apart. Current implementation does not say
+// what to do in a scenario when one members has a smaller delay than others
+// and such a case should be discussed.
 
 export interface Node {
   address: EthereumAddress
   threshold: number
-  members: NodeId[]
   delay?: number
 }
 
@@ -77,19 +99,11 @@ function floodFill(
   assert(node !== undefined)
 
   const result: GrantedPermission[] = []
-  const expandsMembers = node.threshold === 1 && node.members.length > 0
-  if (expandsMembers) {
-    for (const member of node.members) {
-      result.push(
-        ...copyWorkAndFlood(graph, member, 0, visitedNodes, workingOn),
-      )
-    }
-  }
-
   const edges = graph.edges.filter((e) => e.fromNode === nodeId)
+  const expandsMembers = node.threshold === 1 && edges.some((e) => e.type === 'member')
   const hasActEdges = edges.some((e) => e.type === 'act')
   for (const edge of edges) {
-    if (edge.type === 'act') {
+    if (edge.type === 'act' || (expandsMembers && edge.type === 'member')) {
       const { toNode, delay } = edge
       result.push(
         ...copyWorkAndFlood(graph, toNode, delay, visitedNodes, workingOn),
