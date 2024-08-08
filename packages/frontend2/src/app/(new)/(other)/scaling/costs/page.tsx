@@ -2,7 +2,7 @@ import { HOMEPAGE_MILESTONES } from '@l2beat/config'
 import { CostsChart } from '~/app/_components/chart/costs-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getScalingCostsEntries } from '~/server/features/scaling/get-scaling-costs-entries'
-import { api } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
@@ -24,16 +24,18 @@ export default async function Page() {
   await api.scaling.costs.table.prefetch({ range })
 
   return (
-    <ScalingFilterContextProvider>
-      <CostsTimeRangeContextProvider>
-        <CostsUnitContextProvider>
-          <CostsMetricContextProvider>
-            <CostsChart milestones={HOMEPAGE_MILESTONES} />
-            <HorizontalSeparator className="my-4 md:my-6" />
-            <ScalingCostsTable entries={entries} />
-          </CostsMetricContextProvider>
-        </CostsUnitContextProvider>
-      </CostsTimeRangeContextProvider>
-    </ScalingFilterContextProvider>
+    <HydrateClient>
+      <ScalingFilterContextProvider>
+        <CostsTimeRangeContextProvider>
+          <CostsUnitContextProvider>
+            <CostsMetricContextProvider>
+              <CostsChart milestones={HOMEPAGE_MILESTONES} />
+              <HorizontalSeparator className="my-4 md:my-6" />
+              <ScalingCostsTable entries={entries} />
+            </CostsMetricContextProvider>
+          </CostsUnitContextProvider>
+        </CostsTimeRangeContextProvider>
+      </ScalingFilterContextProvider>
+    </HydrateClient>
   )
 }
