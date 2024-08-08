@@ -47,16 +47,16 @@ describe(resolvePermissions.name, () => {
       {
         type: 'configure',
         path: [
-          { address: contract1, delay: 0 },
-          { address: guardian, delay: 7 },
+          { address: contract1, delay: 7 },
+          { address: guardian, delay: 0 },
           { address: securityCounil, delay: 0 },
         ],
       },
       {
         type: 'configure',
         path: [
-          { address: contract1, delay: 0 },
-          { address: guardian, delay: 7 },
+          { address: contract1, delay: 7 },
+          { address: guardian, delay: 0 },
           { address: foundationMsig, delay: 0 },
         ],
       },
@@ -128,24 +128,24 @@ describe(resolvePermissions.name, () => {
         type: 'upgrade',
         path: [
           { address: verifier, delay: 0 },
-          { address: upgradeGatekeeper, delay: 0 },
-          { address: zkSyncMsig, delay: 21 },
+          { address: upgradeGatekeeper, delay: 21 },
+          { address: zkSyncMsig, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
         path: [
           { address: governance, delay: 0 },
-          { address: upgradeGatekeeper, delay: 0 },
-          { address: zkSyncMsig, delay: 21 },
+          { address: upgradeGatekeeper, delay: 21 },
+          { address: zkSyncMsig, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
         path: [
           { address: zkSync, delay: 0 },
-          { address: upgradeGatekeeper, delay: 0 },
-          { address: zkSyncMsig, delay: 21 },
+          { address: upgradeGatekeeper, delay: 21 },
+          { address: zkSyncMsig, delay: 0 },
         ],
       },
       {
@@ -188,8 +188,8 @@ describe(resolvePermissions.name, () => {
         path: [
           { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
-          { address: timelockB, delay: 0 },
-          { address: actor, delay: 100 },
+          { address: timelockB, delay: 100 },
+          { address: actor, delay: 0 },
         ],
       },
     ])
@@ -224,8 +224,8 @@ describe(resolvePermissions.name, () => {
         type: 'configure',
         path: [
           { address: vault, delay: 0 },
-          { address: timelockA, delay: 0 },
-          { address: actor, delay: 10 },
+          { address: timelockA, delay: 10 },
+          { address: actor, delay: 0 },
         ],
       },
       {
@@ -233,8 +233,8 @@ describe(resolvePermissions.name, () => {
         path: [
           { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
-          { address: timelockB, delay: 0 },
-          { address: actor, delay: 100 },
+          { address: timelockB, delay: 100 },
+          { address: actor, delay: 0 },
         ],
       },
     ])
@@ -575,9 +575,9 @@ describe(resolvePermissions.name, () => {
         path: [
           { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
-          { address: timelockB, delay: 0 },
-          { address: timelockA, delay: 69 },
-          { address: actor, delay: 420 },
+          { address: timelockB, delay: 69 },
+          { address: timelockA, delay: 420 },
+          { address: actor, delay: 0 },
         ],
       },
     ])
@@ -604,15 +604,15 @@ describe(resolvePermissions.name, () => {
       {
         type: 'upgrade',
         path: [
-          { address: vault, delay: 0 },
-          { address: ownerActor, delay: 69 },
+          { address: vault, delay: 69 },
+          { address: ownerActor, delay: 0 },
         ],
       },
       {
         type: 'upgrade',
         path: [
-          { address: vault, delay: 0 },
-          { address: adminActor, delay: 420 },
+          { address: vault, delay: 420 },
+          { address: adminActor, delay: 0 },
         ],
       },
     ])
@@ -648,8 +648,8 @@ describe(resolvePermissions.name, () => {
         type: 'configure',
         path: [
           { address: vault, delay: 0 },
-          { address: timelock, delay: 0 },
-          { address: actorA, delay: 42069 },
+          { address: timelock, delay: 42069 },
+          { address: actorA, delay: 0 },
         ],
       },
       {
@@ -688,8 +688,8 @@ describe(resolvePermissions.name, () => {
         path: [
           { address: vault, delay: 0 },
           { address: proxy, delay: 0 },
-          { address: timelock, delay: 0 },
-          { address: actor, delay: 42069 },
+          { address: timelock, delay: 42069 },
+          { address: actor, delay: 0 },
         ],
       },
     ])

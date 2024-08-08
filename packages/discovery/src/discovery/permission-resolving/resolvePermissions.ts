@@ -48,8 +48,8 @@ export function resolvePermissions(graph: Graph): GrantedPermission[] {
       const newWork: GrantedPermission = {
         type: edge.type,
         path: [
-          { address: node.address, delay: 0 },
-          { address, delay: edge.delay },
+          { address: node.address, delay: edge.delay },
+          { address, delay: 0 },
         ],
       }
 
@@ -113,7 +113,11 @@ function copyWorkAndFlood(
   const workCopy = structuredClone(workingOn)
   const address = graph.nodes[toNode]?.address
   assert(address !== undefined)
-  workCopy.path.push({ address, delay })
+  const lastElement = workCopy.path[workCopy.path.length - 1]
+  if (lastElement !== undefined) {
+    lastElement.delay = delay
+  }
+  workCopy.path.push({ address, delay: 0 })
   return floodFill(toNode, graph, visitedNodes, workCopy)
 }
 
