@@ -71,16 +71,13 @@ function createActivityIndexers(
   clock: Clock,
   db: Database,
 ): ActivityIndexer[] {
-  if (!activityConfig) {
-    return []
-  }
-
-  const indexers: ActivityIndexer[] = []
+  assert(activityConfig, 'Config should be defined there')
 
   const indexerService = new IndexerService(db)
 
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
-  indexers.push(dayTargetIndexer)
+
+  const indexers: ActivityIndexer[] = [dayTargetIndexer]
 
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
