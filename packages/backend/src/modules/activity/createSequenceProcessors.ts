@@ -4,7 +4,6 @@ import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
-import { AztecClient } from '../../peripherals/aztec/AztecClient'
 import { DegateClient } from '../../peripherals/degate/DegateClient'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
 import { RpcClient } from '../../peripherals/rpcclient/RpcClient'
@@ -13,7 +12,6 @@ import { StarknetClient } from '../../peripherals/starknet/StarknetClient'
 import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { Clock } from '../../tools/Clock'
 import { SequenceProcessor } from './SequenceProcessor'
-import { AztecCounter } from './counters/AztecCounter'
 import { DegateCounter } from './counters/DegateCounter'
 import { LoopringCounter } from './counters/LoopringCounter'
 import { RpcCounter } from './counters/RpcCounter'
@@ -65,20 +63,6 @@ export function createSequenceProcessors(
             getBatchSizeFromCallsPerMinute(singleStarkexCPM),
             config.sinceTimestamp,
             config.resyncLastDays,
-          )
-        }
-
-        case 'aztec': {
-          const aztecClient = peripherals.getClient(AztecClient, {
-            url: config.url,
-            callsPerMinute: config.callsPerMinute,
-          })
-          return new AztecCounter(
-            id,
-            peripherals.database,
-            aztecClient,
-            taggedLogger,
-            getBatchSizeFromCallsPerMinute(config.callsPerMinute),
           )
         }
 
