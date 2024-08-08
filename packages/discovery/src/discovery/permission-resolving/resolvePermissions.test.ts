@@ -466,6 +466,35 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('three actors, two contracts, one multisig with members, threshold greater than one with delay', () => {
+    const actorA = EthereumAddress.random()
+    const actorB = EthereumAddress.random()
+    const actorC = EthereumAddress.random()
+    const msig = EthereumAddress.random()
+    const vault = EthereumAddress.random()
+
+    const graph: Graph = {
+      nodes: [
+        { address: actorA, members: [], threshold: 1 },
+        { address: actorB, members: [], threshold: 1 },
+        { address: actorC, members: [], threshold: 1 },
+        { address: msig, members: [0, 1, 2], threshold: 2, delay: 10 },
+        { address: vault, members: [], threshold: 1 },
+      ],
+      edges: [{ type: 'configure', fromNode: 4, toNode: 3, delay: 0 }],
+    }
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'configure',
+        path: [
+          { address: vault, delay: 0 },
+          { address: msig, delay: 10 },
+        ],
+      },
+    ])
+  })
+
   it('three actors, two contracts, one multisig with members, threshold greater than one', () => {
     const actorA = EthereumAddress.random()
     const actorB = EthereumAddress.random()
@@ -490,6 +519,52 @@ describe(resolvePermissions.name, () => {
         path: [
           { address: vault, delay: 0 },
           { address: msig, delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('three actors, two contracts, one multisig with members, threshold one and delay', () => {
+    const actorA = EthereumAddress.random()
+    const actorB = EthereumAddress.random()
+    const actorC = EthereumAddress.random()
+    const msig = EthereumAddress.random()
+    const vault = EthereumAddress.random()
+
+    const graph: Graph = {
+      nodes: [
+        { address: actorA, members: [], threshold: 1 },
+        { address: actorB, members: [], threshold: 1 },
+        { address: actorC, members: [], threshold: 1 },
+        { address: msig, members: [0, 1, 2], threshold: 1, delay: 10 },
+        { address: vault, members: [], threshold: 1 },
+      ],
+      edges: [{ type: 'configure', fromNode: 4, toNode: 3, delay: 0 }],
+    }
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'configure',
+        path: [
+          { address: vault, delay: 0 },
+          { address: msig, delay: 10 },
+          { address: actorA, delay: 0 },
+        ],
+      },
+      {
+        type: 'configure',
+        path: [
+          { address: vault, delay: 0 },
+          { address: msig, delay: 10 },
+          { address: actorB, delay: 0 },
+        ],
+      },
+      {
+        type: 'configure',
+        path: [
+          { address: vault, delay: 0 },
+          { address: msig, delay: 10 },
+          { address: actorC, delay: 0 },
         ],
       },
     ])
