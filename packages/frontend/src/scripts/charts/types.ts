@@ -237,9 +237,6 @@ export const ChartType = z.discriminatedUnion('type', [
     type: z.literal('scaling-activity'),
     filteredSlugs: z.array(z.string()).optional(),
   }),
-  z.object({
-    type: z.literal('scaling-costs'),
-  }),
   z.object({ type: z.literal('bridges-tvl') }),
   z.object({ type: z.literal('project-tvl'), slug: z.string() }),
   z.object({

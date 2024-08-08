@@ -12,7 +12,6 @@ export const storybookBuildContext: PageBuildContext = {
       gitcoinOption: true,
       hiringBadge: false,
       buildAllProjectPages: true,
-      costsPage: true,
       tvl: true,
       badges: true,
       layer3sTvl: true,
