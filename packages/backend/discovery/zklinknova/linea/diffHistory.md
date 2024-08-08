@@ -1,4 +1,62 @@
-Generated with discovered.json: 0xd3c7d1d2424df8100dce091378eb1f0b90e8f2ce
+Generated with discovered.json: 0x00aa46468de35ce7b94c77f6909a9f0e2568a09a
+
+# Diff at Sun, 04 Aug 2024 10:28:44 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 6349728
+- current block number: 7681920
+
+## Description
+
+One signer in the Owner MS is replaced and one validator removed.
+
+## Watched changes
+
+```diff
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      values.getOwners.5:
+-        "0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db"
++        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
+      values.getOwners.4:
+-        "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9"
++        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
+      values.getOwners.3:
+-        "0xC75EFCffEE930706daec5CaCA012551f6a1845D7"
++        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
+      values.getOwners.2:
+-        "0xF801886AE2e127A269B0F11892edb54F692d02dF"
++        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
+      values.getOwners.1:
+-        "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5"
++        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
+      values.getOwners.0:
+-        "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10"
++        "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract  (0x217C85a8B14466963905C22E817Dd1553fa62DFC)
+    +++ description: None
+```
+
+```diff
+    contract zkLink (0x5Cb18b6e4e6F3b46Ce646b0f4704D53724C5Df05) {
+    +++ description: None
+      values.validators.2:
+-        "0x509ff56c152315EdeE91A2e0f059195519507e01"
+      values.validators.1:
+-        "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb"
++        "0x509ff56c152315EdeE91A2e0f059195519507e01"
+      values.validators.0:
+-        "0x217C85a8B14466963905C22E817Dd1553fa62DFC"
++        "0x54B39C0e4089f0789b9f8EdE20D725e1AFF805Cb"
+    }
+```
+
+Generated with discovered.json: 0xca456511d105080dbc231beb25223ed9fdb9bf4c
 
 # Diff at Thu, 04 Jul 2024 14:15:56 GMT:
 

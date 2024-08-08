@@ -21,8 +21,6 @@ import { ArbitrumFinalityAnalyzer } from './analyzers/arbitrum/ArbitrumFinalityA
 import { OpStackFinalityAnalyzer } from './analyzers/opStack/OpStackFinalityAnalyzer'
 import { PolygonZkEvmFinalityAnalyzer } from './analyzers/polygon-zkevm/PolygonZkevmFinalityAnalyzer'
 import { zkSyncEraFinalityAnalyzer } from './analyzers/zkSyncEraFinalityAnalyzer'
-import { FinalityController } from './api/FinalityController'
-import { createFinalityRouter } from './api/FinalityRouter'
 import { FinalityConfig } from './types/FinalityConfig'
 
 export function createFinalityModule(
@@ -40,12 +38,6 @@ export function createFinalityModule(
     logger.error('To run finality you have to run tracked transactions module')
     return
   }
-
-  const finalityController = new FinalityController({
-    db: peripherals.database,
-    projects: config.finality.configurations,
-  })
-  const finalityRouter = createFinalityRouter(finalityController)
 
   const ethereumClient = peripherals.getClient(RpcClient, {
     url: config.finality.ethereumProviderUrl,
@@ -88,7 +80,6 @@ export function createFinalityModule(
 
   return {
     start,
-    routers: [finalityRouter],
   }
 }
 

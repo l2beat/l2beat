@@ -3,30 +3,41 @@ import { TvlCleanerRecord, toRecord, toRow } from './entity'
 import { selectTvlCleaner } from './select'
 
 export class TvlCleanerRepository extends BaseRepository {
-  async addOrUpdate(record: TvlCleanerRecord) {
-    const row = toRow(record)
-    await this.db
-      .insertInto('public.tvl_cleaner')
-      .values(row)
-      .onConflict((cb) =>
-        cb.column('repository_name').doUpdateSet({
-          hourly_cleaned_until: row.hourly_cleaned_until,
-          six_hourly_cleaned_until: row.six_hourly_cleaned_until,
-        }),
-      )
-      .execute()
-
-    return record.repositoryName
+  async upsert(record: TvlCleanerRecord): Promise<void> {
+    await this.upsertMany([record])
   }
 
-  async find(repositoryName: string) {
+  async upsertMany(records: TvlCleanerRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.tvl_cleaner')
+        .values(batch)
+        .onConflict((cb) =>
+          cb.column('repository_name').doUpdateSet((eb) => ({
+            hourly_cleaned_until: eb.ref('excluded.hourly_cleaned_until'),
+            six_hourly_cleaned_until: eb.ref(
+              'excluded.six_hourly_cleaned_until',
+            ),
+          })),
+        )
+        .execute()
+    })
+    return records.length
+  }
+
+  async findByRepositoryName(
+    repositoryName: string,
+  ): Promise<TvlCleanerRecord | undefined> {
     const row = await this.db
       .selectFrom('public.tvl_cleaner')
       .select(selectTvlCleaner)
       .where('repository_name', '=', repositoryName)
+      .limit(1)
       .executeTakeFirst()
-
-    return row ? toRecord(row) : undefined
+    return row && toRecord(row)
   }
 
   async deleteAll(): Promise<number> {

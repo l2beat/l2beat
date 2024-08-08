@@ -14,7 +14,8 @@ export const parallel: Layer2 = orbitStackL2({
   display: {
     name: 'Parallel',
     slug: 'parallel',
-    headerWarning: '',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       'Parallel is an Ethereum L2 solution utilizing Arbitrum Nitro technology.',
     purposes: ['Universal', 'DeFi'],
@@ -34,7 +35,6 @@ export const parallel: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  usesBlobs: true,
   trackedTxs: [
     {
       uses: [
@@ -142,10 +142,6 @@ export const parallel: Layer2 = orbitStackL2({
     }),
   ],
   nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
     {
       name: 'RollupOwner',
       accounts: discovery.getAccessControlRolePermission(
@@ -154,6 +150,10 @@ export const parallel: Layer2 = orbitStackL2({
       ),
       description: 'EOA that can execute upgrades via the UpgradeExecutor.',
     },
+    ...discovery.getMultisigPermission(
+      'ParallelMultisig',
+      'Multisig that can execute upgrades via the UpgradeExecutor.',
+    ),
   ],
   milestones: [
     {

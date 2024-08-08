@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x19d674117e91560c9f20fdaf4005960604374454
+
+# Diff at Tue, 30 Jul 2024 15:53:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20110229
+- current block number: 20420390
+
+## Description
+
+Accesscontrol roles of APP_GOVERNOR and APP_ROLE_ADMIN are given to the EOA that already has the upgrade admin and GOVERNANCE_ADMIN roles, not adding any new net permissions. `maxTotalBalance' raised from 20M to 30M USDC.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.accessControl.APP_GOVERNOR.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++++ description: Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)
++++ severity: MEDIUM
+      values.maxTotalBalance:
+-        20000000000000
++        30000000000000
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20110229 (main branch discovery), not current.
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      fieldMeta:
++        {"maxTotalBalance":{"severity":"MEDIUM","description":"Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)"}}
+    }
+```
+
+```diff
+    contract Paradex (0xF338cad020D506e8e3d9B4854986E0EcE6C23640) {
+    +++ description: None
+      fieldMeta:
++        {"programHash":{"severity":"HIGH","description":"The L2 programHash which is a hash of the L2 state machine logic. Liveness config MUST be changed in the .ts as soon as this is updated."}}
+    }
+```
+
 Generated with discovered.json: 0xba9734e5204d6418a6b64ea98fb1b0a818f3c2a6
 
 # Diff at Thu, 18 Jul 2024 10:32:31 GMT:

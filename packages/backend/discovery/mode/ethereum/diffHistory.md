@@ -1,3 +1,84 @@
+Generated with discovered.json: 0xd220121ce90c4ff9be1a2a9416be1d074c02f1ec
+
+# Diff at Wed, 07 Aug 2024 07:35:36 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20211472
+- current block number: 20475234
+
+## Description
+
+The ProxyAdmin owner is changed to SuperchainProxyAdminOwner and Conduit Multisig is removed.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x470d87b1dae09a454A43D1fD772A561a03276aB7) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      descriptions.1:
+-        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      descriptions.0:
+-        "It can act on behalf of 0x470d87b1dae09a454A43D1fD772A561a03276aB7, inheriting its permissions."
++        "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
+      assignedPermissions.owner.1:
+-        "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221"
+      assignedPermissions.owner.0:
+-        "0x470d87b1dae09a454A43D1fD772A561a03276aB7"
++        "0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221"
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: It can act on behalf of 0x470d87b1dae09a454A43D1fD772A561a03276aB7, inheriting its permissions. It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions.
+      descriptions.1:
++        "It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."
+      descriptions.0:
+-        "It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."
++        "It can act on behalf of 0x470d87b1dae09a454A43D1fD772A561a03276aB7, inheriting its permissions."
+      assignedPermissions.owner.1:
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      assignedPermissions.owner.0:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x470d87b1dae09a454A43D1fD772A561a03276aB7"
+    }
+```
+
+Generated with discovered.json: 0x28abf5e906cdaadf3ba88273bce0525f6320b16a
+
+# Diff at Tue, 30 Jul 2024 11:12:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20211472
+- current block number: 20211472
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211472 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x5e6432F18Bc5d497B1Ab2288a025Fbf9D69E2221) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
 Generated with discovered.json: 0x8b699b8c889c7f74f8931bd192aa598bd1a0f2c6
 
 # Diff at Thu, 18 Jul 2024 10:32:01 GMT:

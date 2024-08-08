@@ -1,4 +1,44 @@
-Generated with discovered.json: 0x91c6ed901187674030091340b87d6e488afac703
+Generated with discovered.json: 0x16fdd1682d12a2412ec3cff5e2417644d8a33d5e
+
+# Diff at Thu, 01 Aug 2024 09:21:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 19532310
+- current block number: 20432768
+
+## Description
+
+ZKsync lite add one signer (`0xD804aB3355a634aEBd45e1252d6208807defD554`) to their MS2, who is itself just one signer of the SC.
+
+## Watched changes
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 5 (40%)"
++        "2 of 6 (33%)"
+      values.getOwners.5:
++        "0xf6dcD4d7141E06B916987C3C46220f6241278a30"
+      values.getOwners.4:
+-        "0xf6dcD4d7141E06B916987C3C46220f6241278a30"
++        "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
+      values.getOwners.3:
+-        "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe"
++        "0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
+      values.getOwners.2:
+-        "0xCE990b1f86e954746AD3a57F5Aa6CFa9CC0c3348"
++        "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
+      values.getOwners.1:
+-        "0x106fc088aBA908130fBC343F2F6d212Ff36150D1"
++        "0xD804aB3355a634aEBd45e1252d6208807defD554"
+      values.getOwners.0:
+-        "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193"
++        "0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da"
+    }
+```
+
+Generated with discovered.json: 0xbd4699a8b52a6b73b41273be603f65b645c4926e
 
 # Diff at Thu, 28 Mar 2024 11:28:26 GMT:
 

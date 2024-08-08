@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
@@ -42,7 +41,7 @@ export interface BackendProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
-  tokens: Token[]
+  tokens: (Token & { isPreminted: boolean })[]
   chain: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
@@ -171,12 +170,7 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
   return {
     address: escrow.address,
     sinceTimestamp: escrow.sinceTimestamp,
-    tokens:
-      escrow.tokens === '*'
-        ? tokensOnChain.filter(
-            (t) => !escrow.excludedTokens?.includes(t.symbol),
-          )
-        : mapTokens(escrow, tokensOnChain),
+    tokens: mapTokens(escrow, tokensOnChain),
     chain: escrow.chain,
     includeInTotal: escrow.includeInTotal,
     source: escrow.source,
@@ -184,19 +178,26 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
   }
 }
 
-function mapTokens(
+export function mapTokens(
   escrow: ScalingProjectEscrow,
   tokensOnChain: Token[],
-): Token[] {
-  assert(escrow.tokens !== '*')
-  return escrow.tokens.map((tokenSymbol) => {
-    const token = tokensOnChain.find((t) => t.symbol === tokenSymbol)
-    assert(
-      token,
-      `Token with symbol ${tokenSymbol} not found on ${
-        escrow.chain
-      } @ ${escrow.address.toString()}`,
-    )
-    return token
-  })
+): (Token & { isPreminted: boolean })[] {
+  return tokensOnChain
+    .filter((token) => isTokenIncluded(token, escrow))
+    .map((token) => ({ ...token, isPreminted: isPreminted(token, escrow) }))
+}
+
+function isTokenIncluded(token: Token, escrow: ScalingProjectEscrow): boolean {
+  return (
+    (escrow.tokens === '*' || escrow.tokens.includes(token.symbol)) &&
+    !escrow.excludedTokens?.includes(token.symbol)
+  )
+}
+
+function isPreminted(token: Token, escrow: ScalingProjectEscrow): boolean {
+  if (escrow.premintedTokens === undefined) {
+    return false
+  }
+
+  return escrow.premintedTokens.includes(token.symbol)
 }

@@ -110,17 +110,127 @@ describe(diffDiscovery.name, () => {
       {
         name: 'A',
         address: ADDRESS_A,
-        diff: [{ key: 'values.A', before: 'true', after: 'false' }],
+        description: undefined,
+        diff: [
+          {
+            key: 'values.A',
+            before: 'true',
+            after: 'false',
+            description: undefined,
+            severity: undefined,
+          },
+        ],
       },
       {
         name: 'B',
         address: ADDRESS_B,
+        description: undefined,
         type: 'deleted',
       },
       {
         name: 'C',
         address: ADDRESS_C,
+        description: undefined,
         type: 'created',
+      },
+    ])
+  })
+
+  it('uses previous contract for description when deleted', () => {
+    const committed: ContractParameters[] = [
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        proxyType: 'EIP1967 proxy',
+        ignoreInWatchMode: ['B'],
+        descriptions: ['hello', 'world'],
+        values: {},
+      },
+    ]
+    const discovered: ContractParameters[] = []
+
+    const result = diffDiscovery(committed, discovered)
+
+    expect(result).toEqual([
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        description: 'hello world',
+        type: 'deleted',
+      },
+    ])
+  })
+
+  it('uses current contract for description when created', () => {
+    const committed: ContractParameters[] = []
+    const discovered: ContractParameters[] = [
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        proxyType: 'EIP1967 proxy',
+        ignoreInWatchMode: ['B'],
+        descriptions: ['hello', 'world'],
+        values: {},
+      },
+    ]
+
+    const result = diffDiscovery(committed, discovered)
+
+    expect(result).toEqual([
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        description: 'hello world',
+        type: 'created',
+      },
+    ])
+  })
+
+  it('uses current contract for description when modified', () => {
+    const committed: ContractParameters[] = [
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        proxyType: 'EIP1967 proxy',
+        ignoreInWatchMode: ['B'],
+        descriptions: ['hello', 'world'],
+        values: { v: 1 },
+      },
+    ]
+    const discovered: ContractParameters[] = [
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        proxyType: 'EIP1967 proxy',
+        ignoreInWatchMode: ['B'],
+        descriptions: ['hello', 'sailor'],
+        values: { v: 2 },
+      },
+    ]
+
+    const result = diffDiscovery(committed, discovered)
+
+    expect(result).toEqual([
+      {
+        name: 'A',
+        address: ADDRESS_A,
+        diff: [
+          {
+            after: '"sailor"',
+            before: '"world"',
+            description: undefined,
+            key: 'descriptions.1',
+            severity: undefined,
+          },
+          {
+            after: '2',
+            before: '1',
+            description: undefined,
+            key: 'values.v',
+            severity: undefined,
+          },
+        ],
+        description: 'hello sailor',
       },
     ])
   })

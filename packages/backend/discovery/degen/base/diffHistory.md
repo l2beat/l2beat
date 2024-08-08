@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x8cc1d487e65c0f4c0d373d60068076cd3c22e2a4
+
+# Diff at Tue, 30 Jul 2024 11:17:37 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 16561766
+- current block number: 16561766
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16561766 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x6216dD1EE27C5aCEC7427052d3eCDc98E2bc2221) {
+    +++ description: State batches / commitments get posted here.
+      fieldMeta:
++        {"maxTimeVariation":{"description":"onlyRollupOwner settable. Transactions can only be force-included after `delayBlocks` window (Sequencer-only) has passed."}}
+    }
+```
+
+```diff
+    contract RollupProxy (0xD34F3a11F10DB069173b32d84F02eDA578709143) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      fieldMeta:
++        {"confirmPeriodBlocks":{"description":"Challenge period. (Number of blocks until a node is confirmed)."},"wasmModuleRoot":{"description":"Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."}}
+    }
+```
+
 Generated with discovered.json: 0x80ba39fc47a3d18884f115b7ce7c8571d3d07e0e
 
 # Diff at Tue, 02 Jul 2024 09:34:53 GMT:

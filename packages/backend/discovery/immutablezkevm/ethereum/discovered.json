@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017490,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -95,6 +95,16 @@
         "WITHDRAW_SIG": "0x7a8dc26796a1e50e6e190b70259f58f6a4edd5b22280ceecc82b687b8e982869",
         "withdrawalDelay": 86400,
         "withdrawalQueueActivated": false
+      },
+      "fieldMeta": {
+        "withdrawalDelay": {
+          "severity": "MEDIUM",
+          "description": "Delay in seconds of any withdrawals submitted after the withdrawal queue is activated."
+        },
+        "withdrawalQueueActivated": {
+          "severity": "LOW",
+          "description": "If true, the withdrawal queue is activated and any withdrawals are delayed for a duration defined by withdrawalDelay. It can be manually activated or automatically triggered by the FlowRate mechanism."
+        }
       },
       "derivedName": "RootERC20BridgeFlowRate"
     },
@@ -438,5 +448,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

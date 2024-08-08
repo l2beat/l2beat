@@ -3,12 +3,9 @@ import { type ProjectId, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { type ScalingDataAvailabilityEntry } from './types'
-import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
+import { getCommonScalingEntry } from './get-common-scaling-entry'
 
-export async function getScalingDaEntries(
-  tvl: Record<ProjectId, number>,
-): Promise<ScalingDataAvailabilityEntry[]> {
+export async function getScalingDaEntries(tvl: Record<ProjectId, number>) {
   const activeProjects = [...layer2s, ...layer3s].filter(
     (p) => !p.isUpcoming && !(p.type === 'layer2' && p.isArchived),
   )
@@ -34,24 +31,12 @@ function getScalingDataAvailabilityEntry(
   project: Layer2 | Layer3,
   hasImplementationChanged: boolean,
   isVerified: boolean,
-): ScalingDataAvailabilityEntry | undefined {
+) {
   if (!project.dataAvailability) return
 
   return {
-    name: project.display.name,
-    href: `/scaling/projects/${project.display.slug}`,
-    shortName: project.display.shortName,
-    slug: project.display.slug,
-    category: project.display.category,
-    type: project.type,
-    provider: project.display.provider,
-    warning: project.display.warning,
-    isVerified,
-    hasImplementationChanged,
-    showProjectUnderReview: isAnySectionUnderReview(project),
-    redWarning: project.display.redWarning,
-    purposes: project.display.purposes,
-    stage: project.type === 'layer2' ? project.stage : undefined,
+    entryType: 'data-availability' as const,
+    ...getCommonScalingEntry({ project, isVerified, hasImplementationChanged }),
     dataAvailability: {
       layer: project.dataAvailability.layer,
       bridge: project.dataAvailability.bridge,
@@ -59,3 +44,8 @@ function getScalingDataAvailabilityEntry(
     },
   }
 }
+
+export type ScalingDataAvailabilityEntry = Exclude<
+  ReturnType<typeof getScalingDataAvailabilityEntry>,
+  undefined
+>

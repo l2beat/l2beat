@@ -1,4 +1,73 @@
-Generated with discovered.json: 0x3472af4426f87029fd6eda4633eb11b0babd99b6
+Generated with discovered.json: 0x45f5ef5b283f8f30512f211e544ab0f6e8c83fb2
+
+# Diff at Thu, 01 Aug 2024 09:13:14 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 123030782
+- current block number: 123452401
+
+## Description
+
+WLDGrant contract is upgraded with small changes: 'Only grant reservations with grantIds in the range [21;38] can be redeemed.' 
+The identityOperator changed to a new EOA. This role can register and delete identities in the WorldIDIdentityManagerV2.
+
+
+## Watched changes
+
+```diff
+    contract RecurringGrantDrop (0x7B46fFbC976db2F94C3B3CDD9EbBe4ab50E3d77d) {
+    +++ description: None
+      values.grant:
+-        "0xe11CEfF5034278dC62318e74aF6efBA57D54f3be"
++        "0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674"
+    }
+```
+
+```diff
+    contract WorldIDIdentityManagerV2 (0x86D26Ed31556EA7694BD0cC4e674D7526f70511a) {
+    +++ description: None
+      values.identityOperator:
+-        "0x96d55BD9c8C4706FED243c1e15825FF7854920fA"
++        "0x997c96386A7D0A491170742346570eb8E8A4E96E"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract WLDGrant (0xe11CEfF5034278dC62318e74aF6efBA57D54f3be)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract WLDGrant (0x6d8C0fc9C86a0506E9FC8B4D104A8F0a7EeC0674)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../worldcoin/optimism/{.flat@123030782 => .flat}/WLDGrant.sol   | 9 +++------
+ 1 file changed, 3 insertions(+), 6 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 123030782 (main branch discovery), not current.
+
+```diff
+    contract WLDGrant (0xe11CEfF5034278dC62318e74aF6efBA57D54f3be) {
+    +++ description: None
+      values.getAmount:
++        ["3000000000000000000","3000000000000000000","3000000000000000000","3000000000000000000","3000000000000000000"]
+      errors:
++        {"getAmount":"Too many values. Update configuration to explore fully"}
+    }
+```
+
+Generated with discovered.json: 0x3d437366d5911d73f4d97188b142bf232a156492
 
 # Diff at Mon, 22 Jul 2024 14:59:13 GMT:
 

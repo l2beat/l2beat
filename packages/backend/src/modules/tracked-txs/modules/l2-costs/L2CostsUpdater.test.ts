@@ -19,7 +19,7 @@ describe(L2CostsUpdater.name, () => {
 
       await updater.update([])
 
-      expect(repository.addMany).not.toHaveBeenCalled()
+      expect(repository.insertMany).not.toHaveBeenCalled()
     })
 
     it('transforms and saves to db ', async () => {
@@ -40,7 +40,7 @@ describe(L2CostsUpdater.name, () => {
 
       await updater.update(transactions)
 
-      expect(repository.addMany).toHaveBeenNthCalledWith(1, mockRecord)
+      expect(repository.insertMany).toHaveBeenNthCalledWith(1, mockRecord)
     })
   })
 
@@ -110,7 +110,7 @@ describe(L2CostsUpdater.name, () => {
 function getMockL2CostsRepository() {
   return mockObject<Database['l2Cost']>({
     deleteFromById: async () => 0,
-    addMany: async () => 0,
+    insertMany: async () => 0,
   })
 }
 

@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x875c4da9f3fbdd0fee44fd890a860a348e3914cc
+
+# Diff at Tue, 30 Jul 2024 11:12:48 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      fieldMeta:
++        {"getOwners":{"severity":"LOW"},"getThreshold":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Lib_AddressManager (0x918778e825747a892b17C66fe7D24C618262867d) {
+    +++ description: None
+      fieldMeta:
++        {"StateCommitmentChain":{"severity":"HIGH","description":"Manages the L2 state on Ethereum. L2 state batches can be appended here by proposers."}}
+    }
+```
+
 Generated with discovered.json: 0xc2b133e2d28061b2f2999510d44b3619992bd7a1
 
 # Diff at Mon, 01 Jul 2024 11:22:03 GMT:

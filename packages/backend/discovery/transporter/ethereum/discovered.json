@@ -1,9 +1,9 @@
 {
   "name": "transporter",
   "chain": "ethereum",
-  "blockNumber": 20362731,
-  "configHash": "0xd153a30272464b9dbbbb1496ccfdd79275ee8db31642739ebbe961844167b148",
-  "version": 9,
+  "blockNumber": 20475166,
+  "configHash": "0xf391f2cbf95d4fb92da983d6f036a5b740c4de59baec4f13d9f56f06a92b5685",
+  "version": 10,
   "contracts": [
     {
       "name": "PriceRegistry",
@@ -174,7 +174,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -290,7 +292,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -591,7 +595,7 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 4249090,
+        "getLatestPriceEpochAndRound": 5545473,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "gnosis",
@@ -631,7 +635,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -704,7 +710,7 @@
         "getStaticConfig": {
           "commitStore": "0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53",
           "chainSelector": "ethereum",
-          "sourceChainSelector": "4411394078118774322",
+          "sourceChainSelector": "blast",
           "onRamp": "0xBD9bf9AA79adF083BB7100848Eb15F4e8282E27e",
           "prevOffRamp": "0x0000000000000000000000000000000000000000",
           "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
@@ -738,7 +744,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -796,7 +804,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -882,7 +892,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -939,8 +951,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2517,
-        "getLatestPriceEpochAndRound": 4239875,
+        "getExpectedNextSequenceNumber": 2603,
+        "getLatestPriceEpochAndRound": 5525251,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "avalanche",
@@ -980,7 +992,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1040,7 +1054,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1085,51 +1101,51 @@
             {
               "addr": "0x162A8E51E69D72a4bA462220aE9A2E94e44d753F",
               "index": 0,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0x1c6460cfe32916196f6977b5442b0F98A826D880",
               "index": 1,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0x31e16F375531F8d77E027ff935e1114eD62D797b",
               "index": 2,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0x41eAdbc688797a02bfaBE48472995833489ce69D",
               "index": 3,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0x5A5A8C7E8448484Cf3458d7f426876E79c529f41",
               "index": 4,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0x7052cB84079905400ea52B635cAb6a275fDA8823",
               "index": 5,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514",
               "index": 6,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0xAe735fd5e74887064DFf99C637f291caE5485A75",
               "index": 7,
-              "group": 0
+              "group": 1
             },
             {
               "addr": "0xE062e7D123AC8dF480C56147f911144F55C10f88",
               "index": 8,
-              "group": 0
+              "group": 1
             }
           ],
           "groupQuorums": [
-            4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+            1, 4, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ],
           "groupParents": [
@@ -1137,17 +1153,17 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 130,
+        "getOpCount": 142,
         "getRoot": {
-          "root": "0xfa44cf017af3509c64d0ef7a9a023975593757d265d4860f8be56f98a2a299eb",
-          "validUntil": 1721053357
+          "root": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "validUntil": 0
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-          "preOpCount": 120,
-          "postOpCount": 130,
-          "overridePreviousRoot": false
+          "preOpCount": 142,
+          "postOpCount": 142,
+          "overridePreviousRoot": true
         },
         "MAX_NUM_SIGNERS": 200,
         "NUM_GROUPS": 32,
@@ -1169,8 +1185,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1215,
-        "getLatestPriceEpochAndRound": 4241153,
+        "getExpectedNextSequenceNumber": 1217,
+        "getLatestPriceEpochAndRound": 5531139,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "wemix",
@@ -1210,7 +1226,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1293,7 +1311,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1324,10 +1344,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2375,
-        "getNopFeesJuels": "6545782302922611305",
+        "getExpectedNextSequenceNumber": 2448,
+        "getNopFeesJuels": "2708296259774302016",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "2084877595232703790",
+        "linkAvailableForPayment": "9172769676833423386",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1377,7 +1397,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1436,7 +1458,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1456,19 +1480,19 @@
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
         "getExpectedNextSequenceNumber": 25,
-        "getLatestPriceEpochAndRound": 2665730,
+        "getLatestPriceEpochAndRound": 869890,
         "getStaticConfig": {
           "chainSelector": "ethereum",
-          "sourceChainSelector": "4411394078118774322",
+          "sourceChainSelector": "blast",
           "onRamp": "0xBD9bf9AA79adF083BB7100848Eb15F4e8282E27e",
           "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
         },
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 2,
-          "blockNumber": 20129939,
-          "configDigest": "0x00018acc33a2a17b22ad88b60ae9798249a28a5b048e601b91dff87a257a9d2f"
+          "configCount": 3,
+          "blockNumber": 20398840,
+          "configDigest": "0x00011b0feeb79956de5da44165457ab771a1a71a233c41b945038500a5c4356f"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -1495,7 +1519,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1555,7 +1581,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1574,20 +1602,20 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 14,
-        "getLatestPriceEpochAndRound": 883713,
+        "getExpectedNextSequenceNumber": 17,
+        "getLatestPriceEpochAndRound": 868867,
         "getStaticConfig": {
           "chainSelector": "ethereum",
-          "sourceChainSelector": "8805746078405598895",
+          "sourceChainSelector": "metis",
           "onRamp": "0xE43f9eD3146d76E627C2504E5140005027992De6",
           "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
         },
         "isARMHealthy": true,
         "isUnpausedAndARMHealthy": true,
         "latestConfigDetails": {
-          "configCount": 3,
-          "blockNumber": 20285533,
-          "configDigest": "0x0001ba387d4c1908a481c1fb34852617db49202b17af2ac2b6f31d7b4a14b97d"
+          "configCount": 4,
+          "blockNumber": 20398823,
+          "configDigest": "0x00015794577c5ec58b806ca7715e3310c6ffb423253062cd303e02dd3feb8e9b"
         },
         "latestConfigDigestAndEpoch": {
           "scanLogs": true,
@@ -1614,7 +1642,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1645,10 +1675,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1943,
-        "getNopFeesJuels": "9174200242771615447",
+        "getExpectedNextSequenceNumber": 1977,
+        "getNopFeesJuels": "2922542541152147518",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "2918531276729820576",
+        "linkAvailableForPayment": "9041976075155448188",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -1688,7 +1718,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1748,7 +1780,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1817,7 +1851,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1919,17 +1955,17 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 29,
-        "getNopFeesJuels": "79005621317670381",
+        "getExpectedNextSequenceNumber": 30,
+        "getNopFeesJuels": "40478323032310864",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4720240516071632527",
+        "linkAvailableForPayment": "4679762193039321667",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
           "0x0000000000000000000000000000000000000000",
           "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
         ],
-        "staticConfigChains": ["ethereum", "4411394078118774322"],
+        "staticConfigChains": ["ethereum", "blast"],
         "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
@@ -1949,7 +1985,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -1980,10 +2018,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 62,
-        "getNopFeesJuels": 0,
+        "getExpectedNextSequenceNumber": 69,
+        "getNopFeesJuels": "275957351818859817",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "1662451282375035481",
+        "linkAvailableForPayment": "1386493930556175664",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -2010,7 +2048,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2029,8 +2069,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 1822,
-        "getLatestPriceEpochAndRound": 4233218,
+        "getExpectedNextSequenceNumber": 1834,
+        "getLatestPriceEpochAndRound": 5519873,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "optimism",
@@ -2070,7 +2110,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2221,7 +2263,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2240,9 +2284,9 @@
         "getAllowList": [],
         "getAllowListEnabled": false,
         "getArmProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81",
-        "getBridgeLimit": "1000000000000000000000000",
+        "getBridgeLimit": "20000000000000000000000000",
         "getBridgeLimitAdmin": "0x0000000000000000000000000000000000000000",
-        "getCurrentBridgedAmount": "1000000000000000000000000",
+        "getCurrentBridgedAmount": "2272870648783369611052395",
         "getLockReleaseInterfaceId": "0x98a47177",
         "getRateLimitAdmin": "0x0000000000000000000000000000000000000000",
         "getRebalancer": "0x0000000000000000000000000000000000000000",
@@ -2333,7 +2377,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2545,8 +2591,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 5,
-        "getLatestPriceEpochAndRound": 4106754,
+        "getExpectedNextSequenceNumber": 6,
+        "getLatestPriceEpochAndRound": 5393153,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "mode",
@@ -2585,7 +2631,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2663,7 +2711,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2722,7 +2772,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2779,12 +2831,16 @@
             "offRamp": "0xE8af3b68eDfFf65Ce48648009982380701f09B92"
           },
           {
-            "sourceChainSelector": "4411394078118774322",
+            "sourceChainSelector": "blast",
             "offRamp": "0x1a904DbbaDdE629a1460e2F6E2E485Ce06Ed7599"
           },
           {
-            "sourceChainSelector": "8805746078405598895",
+            "sourceChainSelector": "metis",
             "offRamp": "0xCe6364dBe64D2789D916180131fAda2ABFF702E8"
+          },
+          {
+            "sourceChainSelector": "1562403441176082196",
+            "offRamp": "0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf"
           }
         ],
         "onRamps": {
@@ -2799,7 +2855,8 @@
           "1346049177634351622": "0xEd5bE9508ae56531cc0EDe6A3bD588Eb9E2e3cfa",
           "7264351850409363825": "0x466a078d17e3706a9414ACc48029EE9Bae4C9b65",
           "4411394078118774322": "0x4545F9a17DA50110632C14704a15d893BF9CBD27",
-          "8805746078405598895": "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC"
+          "8805746078405598895": "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC",
+          "1562403441176082196": "0xD54C93A99CBCb8D865E13DA321B540171795A89f"
         },
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "typeAndVersion": "Router 1.2.0"
@@ -2820,7 +2877,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -2929,8 +2988,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 7,
-        "getLatestPriceEpochAndRound": 4241153,
+        "getExpectedNextSequenceNumber": 8,
+        "getLatestPriceEpochAndRound": 5530114,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "celo",
@@ -2969,7 +3028,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3000,10 +3061,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1304,
-        "getNopFeesJuels": "10848394121312005877",
+        "getExpectedNextSequenceNumber": 1343,
+        "getNopFeesJuels": "2616645199178143108",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "3952565526169825300",
+        "linkAvailableForPayment": "1371092107495680184",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3055,7 +3116,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3074,8 +3137,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2193,
-        "getLatestPriceEpochAndRound": 4243459,
+        "getExpectedNextSequenceNumber": 2204,
+        "getLatestPriceEpochAndRound": 5532418,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "bnb",
@@ -3115,7 +3178,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3218,7 +3283,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3246,7 +3313,8 @@
           "0x831097033C88c82a7F1897b168Aa88cC44540C8f",
           "0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e",
           "0x3CB2A81bb8a188C5353CdFa9994ed8666556FC53",
-          "0x3d8a95adA63D406ee8232562AbD83CEdb0B90466"
+          "0x3d8a95adA63D406ee8232562AbD83CEdb0B90466",
+          "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194"
         ],
         "getStalenessThreshold": 90000,
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
@@ -3267,8 +3335,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 3060,
-        "getLatestPriceEpochAndRound": 4235523,
+        "getExpectedNextSequenceNumber": 3165,
+        "getLatestPriceEpochAndRound": 5521411,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "base",
@@ -3308,7 +3376,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3339,10 +3409,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 2263,
-        "getNopFeesJuels": "10258029684989936620",
+        "getExpectedNextSequenceNumber": 2379,
+        "getNopFeesJuels": "7172696706959403785",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7728077377011091826",
+        "linkAvailableForPayment": "4181728522839188844",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3392,7 +3462,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3423,10 +3495,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 3721,
-        "getNopFeesJuels": "22201748050962433105",
+        "getExpectedNextSequenceNumber": 4061,
+        "getNopFeesJuels": "18668482822473776131",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "9266073161991278241",
+        "linkAvailableForPayment": "7183051269216273066",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -3534,7 +3606,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3579,8 +3653,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 2560,
-        "getLatestPriceEpochAndRound": 4237825,
+        "getExpectedNextSequenceNumber": 2667,
+        "getLatestPriceEpochAndRound": 5523457,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "arbitrum",
@@ -3620,7 +3694,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -3686,6 +3762,68 @@
       }
     },
     {
+      "name": "CommitStore15",
+      "address": "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194",
+      "template": "transporter/CommitStore",
+      "ignoreInWatchMode": [
+        "getExpectedNextSequenceNumber",
+        "getLatestPriceEpochAndRound"
+      ],
+      "sinceTimestamp": 1721311463,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
+        },
+        "getExpectedNextSequenceNumber": 4,
+        "getLatestPriceEpochAndRound": 620289,
+        "getStaticConfig": {
+          "chainSelector": "ethereum",
+          "sourceChainSelector": "1562403441176082196",
+          "onRamp": "0x3B80Fe300c9A611abA0496e2543B66Ff7bD4B9e9",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "isARMHealthy": true,
+        "isUnpausedAndARMHealthy": true,
+        "latestConfigDetails": {
+          "configCount": 4,
+          "blockNumber": 20421003,
+          "configDigest": "0x0001442c239e69bf2461192e40906b14d1d34fc9d2f193127ac07fae2dbb51c7"
+        },
+        "latestConfigDigestAndEpoch": {
+          "scanLogs": true,
+          "configDigest": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "epoch": 0
+        },
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "paused": false,
+        "priceRegistry": ["0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"],
+        "typeAndVersion": "CommitStore 1.2.0"
+      },
+      "derivedName": "CommitStore",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "465200170687744372": "gnosis",
+            "5009297550715157269": "ethereum",
+            "3734403246176062136": "optimism",
+            "4949039107694359620": "arbitrum",
+            "4051577828743386545": "polygon",
+            "6433500567565415381": "avalanche",
+            "5142893604156789321": "wemix",
+            "3719320017875267166": "kroma",
+            "1346049177634351622": "celo",
+            "7264351850409363825": "mode",
+            "11344663589394136015": "bnb",
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
+          }
+        }
+      ]
+    },
+    {
       "name": "EVM2EVMOnRamp",
       "address": "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC",
       "template": "transporter/OnRamp",
@@ -3711,17 +3849,17 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 19,
-        "getNopFeesJuels": "871602704845037656",
+        "getExpectedNextSequenceNumber": 23,
+        "getNopFeesJuels": "98475235587014061",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "8704170868636253232",
+        "linkAvailableForPayment": "8530868662171624204",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
           "0x0000000000000000000000000000000000000000",
           "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
         ],
-        "staticConfigChains": ["ethereum", "8805746078405598895"],
+        "staticConfigChains": ["ethereum", "metis"],
         "tokenAddresses": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "tokenPools": ["0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4"],
         "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
@@ -3741,7 +3879,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4124,7 +4264,70 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
+          }
+        }
+      ]
+    },
+    {
+      "name": "OffRamp15",
+      "address": "0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf",
+      "template": "transporter/OffRamp",
+      "sinceTimestamp": 1721311487,
+      "values": {
+        "$immutable": true,
+        "commitStore": ["0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194"],
+        "getDynamicConfig": {
+          "permissionLessExecutionThresholdSeconds": 28800,
+          "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+          "maxNumberOfTokensPerMsg": 1,
+          "maxDataBytes": 30000,
+          "maxPoolReleaseOrMintGas": 200000
+        },
+        "getStaticConfig": {
+          "commitStore": "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194",
+          "chainSelector": "ethereum",
+          "sourceChainSelector": "1562403441176082196",
+          "onRamp": "0x3B80Fe300c9A611abA0496e2543B66Ff7bD4B9e9",
+          "prevOffRamp": "0x0000000000000000000000000000000000000000",
+          "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        },
+        "getTokenLimitAdmin": "0x0000000000000000000000000000000000000000",
+        "latestConfigDetails": {
+          "configCount": 3,
+          "blockNumber": 20393768,
+          "configDigest": "0x000182242b10ef1f775476ef241435c45ad30669be481e39882194b7b2e07f25"
+        },
+        "latestConfigDigestAndEpoch": {
+          "scanLogs": true,
+          "configDigest": "0x0000000000000000000000000000000000000000000000000000000000000000",
+          "epoch": 0
+        },
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "typeAndVersion": "EVM2EVMOffRamp 1.2.0"
+      },
+      "derivedName": "EVM2EVMOffRamp",
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "465200170687744372": "gnosis",
+            "5009297550715157269": "ethereum",
+            "3734403246176062136": "optimism",
+            "4949039107694359620": "arbitrum",
+            "4051577828743386545": "polygon",
+            "6433500567565415381": "avalanche",
+            "5142893604156789321": "wemix",
+            "3719320017875267166": "kroma",
+            "1346049177634351622": "celo",
+            "7264351850409363825": "mode",
+            "11344663589394136015": "bnb",
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4204,7 +4407,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4392,7 +4597,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4423,10 +4630,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 1657,
-        "getNopFeesJuels": "4578917514879592746",
+        "getExpectedNextSequenceNumber": 1658,
+        "getNopFeesJuels": 12,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "4112952813526201327",
+        "linkAvailableForPayment": "4069973047810615644",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -4462,7 +4669,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4521,7 +4730,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4594,7 +4805,7 @@
         "getStaticConfig": {
           "commitStore": "0x3d8a95adA63D406ee8232562AbD83CEdb0B90466",
           "chainSelector": "ethereum",
-          "sourceChainSelector": "8805746078405598895",
+          "sourceChainSelector": "metis",
           "onRamp": "0xE43f9eD3146d76E627C2504E5140005027992De6",
           "prevOffRamp": "0x0000000000000000000000000000000000000000",
           "armProxy": "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
@@ -4628,7 +4839,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4687,7 +4900,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4728,8 +4943,8 @@
         "getDynamicConfig": {
           "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad"
         },
-        "getExpectedNextSequenceNumber": 972,
-        "getLatestPriceEpochAndRound": 4236290,
+        "getExpectedNextSequenceNumber": 998,
+        "getLatestPriceEpochAndRound": 5521923,
         "getStaticConfig": {
           "chainSelector": "ethereum",
           "sourceChainSelector": "polygon",
@@ -4769,7 +4984,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4827,7 +5044,72 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
+          }
+        }
+      ]
+    },
+    {
+      "name": "EVM2EVMOnRamp",
+      "address": "0xD54C93A99CBCb8D865E13DA321B540171795A89f",
+      "template": "transporter/OnRamp",
+      "ignoreInWatchMode": [
+        "getExpectedNextSequenceNumber",
+        "getNopFeesJuels",
+        "linkAvailableForPayment",
+        "tokenAddresses",
+        "tokenPools"
+      ],
+      "sinceTimestamp": 1721330867,
+      "values": {
+        "$immutable": true,
+        "getDynamicConfig": {
+          "router": "0x80226fc0Ee2b096224EeAc085Bb9a8cba1146f7D",
+          "maxNumberOfTokensPerMsg": 1,
+          "destGasOverhead": 350000,
+          "destGasPerPayloadByte": 16,
+          "destDataAvailabilityOverheadGas": 975,
+          "destGasPerDataAvailabilityByte": 0,
+          "destDataAvailabilityMultiplierBps": 10000,
+          "priceRegistry": "0x8c9b2Efb7c64C394119270bfecE7f54763b958Ad",
+          "maxDataBytes": 30000,
+          "maxPerMsgGasLimit": 3000000
+        },
+        "getExpectedNextSequenceNumber": 10,
+        "getNopFeesJuels": "427219924062076761",
+        "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
+        "linkAvailableForPayment": "8952968687381545495",
+        "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
+        "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
+        "staticConfigAddresses": [
+          "0x0000000000000000000000000000000000000000",
+          "0x411dE17f12D1A34ecC7F45f49844626267c75e81"
+        ],
+        "staticConfigChains": ["ethereum", "1562403441176082196"],
+        "tokenAddresses": [],
+        "tokenPools": [],
+        "typeAndVersion": "EVM2EVMOnRamp 1.2.0"
+      },
+      "usedTypes": [
+        {
+          "typeCaster": "Mapping",
+          "arg": {
+            "465200170687744372": "gnosis",
+            "5009297550715157269": "ethereum",
+            "3734403246176062136": "optimism",
+            "4949039107694359620": "arbitrum",
+            "4051577828743386545": "polygon",
+            "6433500567565415381": "avalanche",
+            "5142893604156789321": "wemix",
+            "3719320017875267166": "kroma",
+            "1346049177634351622": "celo",
+            "7264351850409363825": "mode",
+            "11344663589394136015": "bnb",
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -4945,7 +5227,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5004,7 +5288,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5035,10 +5321,10 @@
           "maxDataBytes": 30000,
           "maxPerMsgGasLimit": 3000000
         },
-        "getExpectedNextSequenceNumber": 5552,
-        "getNopFeesJuels": "15992041803434126397",
+        "getExpectedNextSequenceNumber": 5920,
+        "getNopFeesJuels": "13685517182561375203",
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
-        "linkAvailableForPayment": "7262270319502672336",
+        "linkAvailableForPayment": "3415624221273807509",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
         "owner": "0x44835bBBA9D40DEDa9b64858095EcFB2693c9449",
         "staticConfigAddresses": [
@@ -5118,7 +5404,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5195,7 +5483,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5317,16 +5607,16 @@
             0, 0, 0, 0, 0, 0, 0, 0, 0
           ]
         },
-        "getOpCount": 866,
+        "getOpCount": 927,
         "getRoot": {
-          "root": "0x5374c5ce7943e6491b10e9e1a66f35e93b99dad297b92d7d2606ec35a64052c1",
-          "validUntil": 1721586678
+          "root": "0xe9a02636e0e288a253bca8ad604bf717e782bf3ffd6b305878346d054ae26ea9",
+          "validUntil": 1723226484
         },
         "getRootMetadata": {
           "chainId": 1,
           "multiSig": "0xE53289F32c8E690b7173aA33affE9B6B0CB0012F",
-          "preOpCount": 860,
-          "postOpCount": 866,
+          "preOpCount": 921,
+          "postOpCount": 927,
           "overridePreviousRoot": false
         },
         "MAX_NUM_SIGNERS": 200,
@@ -5412,7 +5702,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5471,7 +5763,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5527,7 +5821,7 @@
           "maxPerMsgGasLimit": 3000000
         },
         "getExpectedNextSequenceNumber": 23,
-        "getNopFeesJuels": "114652834790367258",
+        "getNopFeesJuels": 2,
         "getTokenLimitAdmin": "0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B",
         "linkAvailableForPayment": "9401391179359642052",
         "linkToken": ["0x514910771AF9Ca656af840dff83E8264EcF986CA"],
@@ -5556,7 +5850,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5615,7 +5911,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5734,7 +6032,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5818,7 +6118,9 @@
             "1346049177634351622": "celo",
             "7264351850409363825": "mode",
             "11344663589394136015": "bnb",
-            "15971525489660198786": "base"
+            "15971525489660198786": "base",
+            "4411394078118774322": "blast",
+            "8805746078405598895": "metis"
           }
         }
       ]
@@ -5847,6 +6149,7 @@
     { "address": "0x2E3f1E5A392366975A99744f95d06C28225b1e32" },
     { "address": "0x31e16F375531F8d77E027ff935e1114eD62D797b" },
     { "address": "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89" },
+    { "address": "0x3B80Fe300c9A611abA0496e2543B66Ff7bD4B9e9" },
     { "address": "0x3C6cE61b611e3b41289c2FAFA5BC4e150dD88dE3" },
     { "address": "0x3D3817270db2b89e9F68bA27297fb4672082f942" },
     { "address": "0x41eAdbc688797a02bfaBE48472995833489ce69D" },
@@ -10725,6 +11028,61 @@
       "function typeAndVersion() view returns (string)",
       "function withdrawLiquidity(uint256 amount)"
     ],
+    "0xa4d264470a67D9f6682EE12Bdc9c35Df44e3F194": [
+      "constructor(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address armProxy) staticConfig)",
+      "error BadARMSignal()",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InvalidCommitStoreConfig()",
+      "error InvalidConfig(string message)",
+      "error InvalidInterval(tuple(uint64 min, uint64 max) interval)",
+      "error InvalidProof()",
+      "error InvalidRoot()",
+      "error LeavesCannotBeEmpty()",
+      "error NonUniqueSignatures()",
+      "error OracleCannotBeZeroAddress()",
+      "error PausedError()",
+      "error RootAlreadyCommitted()",
+      "error SignaturesOutOfRegistration()",
+      "error StaleReport()",
+      "error UnauthorizedSigner()",
+      "error UnauthorizedTransmitter()",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error WrongNumberOfSignatures()",
+      "event ConfigSet(tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address armProxy) staticConfig, tuple(address priceRegistry) dynamicConfig)",
+      "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event Paused(address account)",
+      "event ReportAccepted(tuple(tuple(tuple(address sourceToken, uint224 usdPerToken)[] tokenPriceUpdates, tuple(uint64 destChainSelector, uint224 usdPerUnitGas)[] gasPriceUpdates) priceUpdates, tuple(uint64 min, uint64 max) interval, bytes32 merkleRoot) report)",
+      "event RootRemoved(bytes32 root)",
+      "event Transmitted(bytes32 configDigest, uint32 epoch)",
+      "event Unpaused(address account)",
+      "function acceptOwnership()",
+      "function getDynamicConfig() view returns (tuple(address priceRegistry))",
+      "function getExpectedNextSequenceNumber() view returns (uint64)",
+      "function getLatestPriceEpochAndRound() view returns (uint64)",
+      "function getMerkleRoot(bytes32 root) view returns (uint256)",
+      "function getStaticConfig() view returns (tuple(uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address armProxy))",
+      "function getTransmitters() view returns (address[])",
+      "function isARMHealthy() view returns (bool)",
+      "function isBlessed(bytes32 root) view returns (bool)",
+      "function isUnpausedAndARMHealthy() view returns (bool)",
+      "function latestConfigDetails() view returns (uint32 configCount, uint32 blockNumber, bytes32 configDigest)",
+      "function latestConfigDigestAndEpoch() view returns (bool scanLogs, bytes32 configDigest, uint32 epoch)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function resetUnblessedRoots(bytes32[] rootToReset)",
+      "function setLatestPriceEpochAndRound(uint40 latestPriceEpochAndRound)",
+      "function setMinSeqNr(uint64 minSeqNr)",
+      "function setOCR2Config(address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)",
+      "function transferOwnership(address to)",
+      "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32 rawVs)",
+      "function typeAndVersion() view returns (string)",
+      "function unpause()",
+      "function verify(bytes32[] hashedLeaves, bytes32[] proofs, uint256 proofFlagBits) view returns (uint256 timestamp)"
+    ],
     "0xa5ef33B57dD8B653F9A9EA7114f46376d18264aC": [
       "constructor(tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy) staticConfig, tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig, tuple(address token, address pool)[] tokensAndPools, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig, tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeTokenConfigs, tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] tokenTransferFeeConfigArgs, tuple(address nop, uint16 weight)[] nopsAndWeights)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
@@ -11085,6 +11443,85 @@
       "function transferOwnership(address newOwner)"
     ],
     "0xB095900fB91db00E6abD247A5A5AD1cee3F20BF7": [
+      "constructor(tuple(address commitStore, uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address prevOffRamp, address armProxy) staticConfig, address[] sourceTokens, address[] pools, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
+      "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
+      "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
+      "error AlreadyAttempted(uint64 sequenceNumber)",
+      "error AlreadyExecuted(uint64 sequenceNumber)",
+      "error BadARMSignal()",
+      "error BucketOverfilled()",
+      "error CanOnlySelfCall()",
+      "error CommitStoreAlreadyInUse()",
+      "error ConfigDigestMismatch(bytes32 expected, bytes32 actual)",
+      "error EmptyReport()",
+      "error ExecutionError(bytes error)",
+      "error ForkedChain(uint256 expected, uint256 actual)",
+      "error InvalidConfig(string message)",
+      "error InvalidManualExecutionGasLimit(uint256 index, uint256 newLimit)",
+      "error InvalidMessageId()",
+      "error InvalidNewState(uint64 sequenceNumber, uint8 newState)",
+      "error InvalidSourceChain(uint64 sourceChainSelector)",
+      "error InvalidTokenPoolConfig()",
+      "error ManualExecutionGasLimitMismatch()",
+      "error ManualExecutionNotYetEnabled()",
+      "error MessageTooLarge(uint256 maxSize, uint256 actualSize)",
+      "error OnlyCallableByAdminOrOwner()",
+      "error OracleCannotBeZeroAddress()",
+      "error PoolAlreadyAdded()",
+      "error PoolDoesNotExist()",
+      "error PriceNotFoundForToken(address token)",
+      "error ReceiverError(bytes error)",
+      "error RootNotCommitted()",
+      "error TokenDataMismatch(uint64 sequenceNumber)",
+      "error TokenHandlingError(bytes error)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenPoolMismatch()",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error UnauthorizedTransmitter()",
+      "error UnexpectedTokenData()",
+      "error UnsupportedNumberOfTokens(uint64 sequenceNumber)",
+      "error UnsupportedToken(address token)",
+      "error WrongMessageLength(uint256 expected, uint256 actual)",
+      "error ZeroAddressNotAllowed()",
+      "event AdminSet(address newAdmin)",
+      "event ConfigSet(tuple(address commitStore, uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address prevOffRamp, address armProxy) staticConfig, tuple(uint32 permissionLessExecutionThresholdSeconds, address router, address priceRegistry, uint16 maxNumberOfTokensPerMsg, uint32 maxDataBytes, uint32 maxPoolReleaseOrMintGas) dynamicConfig)",
+      "event ConfigSet(uint32 previousConfigBlockNumber, bytes32 configDigest, uint64 configCount, address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)",
+      "event ExecutionStateChanged(uint64 indexed sequenceNumber, bytes32 indexed messageId, uint8 state, bytes returnData)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event PoolAdded(address token, address pool)",
+      "event PoolRemoved(address token, address pool)",
+      "event SkippedIncorrectNonce(uint64 indexed nonce, address indexed sender)",
+      "event SkippedSenderWithPreviousRampMessageInflight(uint64 indexed nonce, address indexed sender)",
+      "event Transmitted(bytes32 configDigest, uint32 epoch)",
+      "function acceptOwnership()",
+      "function applyPoolUpdates(tuple(address token, address pool)[] removes, tuple(address token, address pool)[] adds)",
+      "function ccipReceive(tuple(bytes32 messageId, uint64 sourceChainSelector, bytes sender, bytes data, tuple(address token, uint256 amount)[] destTokenAmounts)) pure",
+      "function currentRateLimiterState() view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function executeSingleMessage(tuple(uint64 sourceChainSelector, address sender, address receiver, uint64 sequenceNumber, uint256 gasLimit, bool strict, uint64 nonce, address feeToken, uint256 feeTokenAmount, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, bytes[] sourceTokenData, bytes32 messageId) message, bytes[] offchainTokenData)",
+      "function getDestinationToken(address sourceToken) view returns (address)",
+      "function getDestinationTokens() view returns (address[] destTokens)",
+      "function getDynamicConfig() view returns (tuple(uint32 permissionLessExecutionThresholdSeconds, address router, address priceRegistry, uint16 maxNumberOfTokensPerMsg, uint32 maxDataBytes, uint32 maxPoolReleaseOrMintGas))",
+      "function getExecutionState(uint64 sequenceNumber) view returns (uint8)",
+      "function getPoolByDestToken(address destToken) view returns (address)",
+      "function getPoolBySourceToken(address sourceToken) view returns (address)",
+      "function getSenderNonce(address sender) view returns (uint64 nonce)",
+      "function getStaticConfig() view returns (tuple(address commitStore, uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address prevOffRamp, address armProxy))",
+      "function getSupportedTokens() view returns (address[] sourceTokens)",
+      "function getTokenLimitAdmin() view returns (address)",
+      "function getTransmitters() view returns (address[])",
+      "function latestConfigDetails() view returns (uint32 configCount, uint32 blockNumber, bytes32 configDigest)",
+      "function latestConfigDigestAndEpoch() view returns (bool scanLogs, bytes32 configDigest, uint32 epoch)",
+      "function manuallyExecute(tuple(tuple(uint64 sourceChainSelector, address sender, address receiver, uint64 sequenceNumber, uint256 gasLimit, bool strict, uint64 nonce, address feeToken, uint256 feeTokenAmount, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, bytes[] sourceTokenData, bytes32 messageId)[] messages, bytes[][] offchainTokenData, bytes32[] proofs, uint256 proofFlagBits) report, uint256[] gasLimitOverrides)",
+      "function owner() view returns (address)",
+      "function setAdmin(address newAdmin)",
+      "function setOCR2Config(address[] signers, address[] transmitters, uint8 f, bytes onchainConfig, uint64 offchainConfigVersion, bytes offchainConfig)",
+      "function setRateLimiterConfig(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "function transferOwnership(address to)",
+      "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32)",
+      "function typeAndVersion() view returns (string)"
+    ],
+    "0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf": [
       "constructor(tuple(address commitStore, uint64 chainSelector, uint64 sourceChainSelector, address onRamp, address prevOffRamp, address armProxy) staticConfig, address[] sourceTokens, address[] pools, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig)",
       "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
       "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
@@ -12238,6 +12675,83 @@
       "function transferOwnership(address to)",
       "function transmit(bytes32[3] reportContext, bytes report, bytes32[] rs, bytes32[] ss, bytes32)",
       "function typeAndVersion() view returns (string)"
+    ],
+    "0xD54C93A99CBCb8D865E13DA321B540171795A89f": [
+      "constructor(tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy) staticConfig, tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig, tuple(address token, address pool)[] tokensAndPools, tuple(bool isEnabled, uint128 capacity, uint128 rate) rateLimiterConfig, tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeTokenConfigs, tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] tokenTransferFeeConfigArgs, tuple(address nop, uint16 weight)[] nopsAndWeights)",
+      "error AggregateValueMaxCapacityExceeded(uint256 capacity, uint256 requested)",
+      "error AggregateValueRateLimitReached(uint256 minWaitInSeconds, uint256 available)",
+      "error BadARMSignal()",
+      "error BucketOverfilled()",
+      "error CannotSendZeroTokens()",
+      "error InsufficientBalance()",
+      "error InvalidAddress(bytes encodedAddress)",
+      "error InvalidChainSelector(uint64 chainSelector)",
+      "error InvalidConfig()",
+      "error InvalidExtraArgsTag()",
+      "error InvalidNopAddress(address nop)",
+      "error InvalidTokenPoolConfig()",
+      "error InvalidWithdrawParams()",
+      "error LinkBalanceNotSettled()",
+      "error MaxFeeBalanceReached()",
+      "error MessageGasLimitTooHigh()",
+      "error MessageTooLarge(uint256 maxSize, uint256 actualSize)",
+      "error MustBeCalledByRouter()",
+      "error NoFeesToPay()",
+      "error NoNopsToPay()",
+      "error NotAFeeToken(address token)",
+      "error OnlyCallableByAdminOrOwner()",
+      "error OnlyCallableByOwnerOrAdmin()",
+      "error OnlyCallableByOwnerOrAdminOrNop()",
+      "error PoolAlreadyAdded()",
+      "error PoolDoesNotExist(address token)",
+      "error PriceNotFoundForToken(address token)",
+      "error RouterMustSetOriginalSender()",
+      "error SourceTokenDataTooLarge(address token)",
+      "error TokenMaxCapacityExceeded(uint256 capacity, uint256 requested, address tokenAddress)",
+      "error TokenPoolMismatch()",
+      "error TokenRateLimitReached(uint256 minWaitInSeconds, uint256 available, address tokenAddress)",
+      "error TooManyNops()",
+      "error UnsupportedNumberOfTokens()",
+      "error UnsupportedToken(address token)",
+      "event AdminSet(address newAdmin)",
+      "event CCIPSendRequested(tuple(uint64 sourceChainSelector, address sender, address receiver, uint64 sequenceNumber, uint256 gasLimit, bool strict, uint64 nonce, address feeToken, uint256 feeTokenAmount, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, bytes[] sourceTokenData, bytes32 messageId) message)",
+      "event ConfigSet(tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy) staticConfig, tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig)",
+      "event FeeConfigSet(tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeConfig)",
+      "event NopPaid(address indexed nop, uint256 amount)",
+      "event NopsSet(uint256 nopWeightsTotal, tuple(address nop, uint16 weight)[] nopsAndWeights)",
+      "event OwnershipTransferRequested(address indexed from, address indexed to)",
+      "event OwnershipTransferred(address indexed from, address indexed to)",
+      "event PoolAdded(address token, address pool)",
+      "event PoolRemoved(address token, address pool)",
+      "event TokenTransferFeeConfigSet(tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] transferFeeConfig)",
+      "function acceptOwnership()",
+      "function applyPoolUpdates(tuple(address token, address pool)[] removes, tuple(address token, address pool)[] adds)",
+      "function currentRateLimiterState() view returns (tuple(uint128 tokens, uint32 lastUpdated, bool isEnabled, uint128 capacity, uint128 rate))",
+      "function forwardFromRouter(uint64 destChainSelector, tuple(bytes receiver, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, address feeToken, bytes extraArgs) message, uint256 feeTokenAmount, address originalSender) returns (bytes32)",
+      "function getDynamicConfig() view returns (tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig)",
+      "function getExpectedNextSequenceNumber() view returns (uint64)",
+      "function getFee(uint64 destChainSelector, tuple(bytes receiver, bytes data, tuple(address token, uint256 amount)[] tokenAmounts, address feeToken, bytes extraArgs) message) view returns (uint256 feeTokenAmount)",
+      "function getFeeTokenConfig(address token) view returns (tuple(uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled) feeTokenConfig)",
+      "function getNopFeesJuels() view returns (uint96)",
+      "function getNops() view returns (tuple(address nop, uint16 weight)[] nopsAndWeights, uint256 weightsTotal)",
+      "function getPoolBySourceToken(uint64, address sourceToken) view returns (address)",
+      "function getSenderNonce(address sender) view returns (uint64)",
+      "function getStaticConfig() view returns (tuple(address linkToken, uint64 chainSelector, uint64 destChainSelector, uint64 defaultTxGasLimit, uint96 maxNopFeesJuels, address prevOnRamp, address armProxy))",
+      "function getSupportedTokens(uint64) view returns (address[])",
+      "function getTokenLimitAdmin() view returns (address)",
+      "function getTokenTransferFeeConfig(address token) view returns (tuple(uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead) tokenTransferFeeConfig)",
+      "function linkAvailableForPayment() view returns (int256)",
+      "function owner() view returns (address)",
+      "function payNops()",
+      "function setAdmin(address newAdmin)",
+      "function setDynamicConfig(tuple(address router, uint16 maxNumberOfTokensPerMsg, uint32 destGasOverhead, uint16 destGasPerPayloadByte, uint32 destDataAvailabilityOverheadGas, uint16 destGasPerDataAvailabilityByte, uint16 destDataAvailabilityMultiplierBps, address priceRegistry, uint32 maxDataBytes, uint32 maxPerMsgGasLimit) dynamicConfig)",
+      "function setFeeTokenConfig(tuple(address token, uint32 networkFeeUSDCents, uint64 gasMultiplierWeiPerEth, uint64 premiumMultiplierWeiPerEth, bool enabled)[] feeTokenConfigArgs)",
+      "function setNops(tuple(address nop, uint16 weight)[] nopsAndWeights)",
+      "function setRateLimiterConfig(tuple(bool isEnabled, uint128 capacity, uint128 rate) config)",
+      "function setTokenTransferFeeConfig(tuple(address token, uint32 minFeeUSDCents, uint32 maxFeeUSDCents, uint16 deciBps, uint32 destGasOverhead, uint32 destBytesOverhead)[] tokenTransferFeeConfigArgs)",
+      "function transferOwnership(address to)",
+      "function typeAndVersion() view returns (string)",
+      "function withdrawNonLinkFees(address feeToken, address to)"
     ],
     "0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf": [
       "constructor(address _singleton)"
@@ -13511,5 +14025,5 @@
     "transporter/RouterV2": "0xee15dacd73fd23851cb4d8631874857a1d737e026d068f579f57f95a53c6df64",
     "transporter/TokenPool": "0x2e81a3f9299ca0620790b11a5985d7d9152d63f0e8b609092c48cd1774d159b3"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

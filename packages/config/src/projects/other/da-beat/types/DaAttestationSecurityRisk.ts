@@ -18,7 +18,7 @@ const NoBridge = {
   type: 'NoBridge',
   value: 'No bridge',
   sentiment: 'bad',
-  description: 'TODO',
+  description: 'No data availability attestations are posted to Ethereum.',
 } as const
 
 function SigVerified(areSignersTracked: boolean) {
@@ -26,7 +26,7 @@ function SigVerified(areSignersTracked: boolean) {
     type: 'SigVerified',
     value: 'Signatures verified',
     sentiment: areSignersTracked ? 'good' : 'warning',
-    description: 'TODO',
+    description: `Operators' signatures from the DA layer are verified on Ethereum.`,
   } as const
 }
 

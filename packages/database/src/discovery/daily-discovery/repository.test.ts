@@ -85,9 +85,9 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
       version: 0,
     }
 
-    await repository.addOrUpdate(expectedEth)
-    await repository.addOrUpdate(secondEth)
-    await repository.addOrUpdate(expectedArb)
+    await repository.upsert(expectedEth)
+    await repository.upsert(secondEth)
+    await repository.upsert(expectedArb)
 
     const resultEth = await repository.findLatest(projectName, ChainId.ETHEREUM)
     const resultArb = await repository.findLatest(projectName, ChainId.ARBITRUM)
@@ -123,8 +123,8 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
       ...discovery,
       timestamp: new UnixTime(2),
     }
-    await repository.addOrUpdate(discovery)
-    await repository.addOrUpdate(discovery2)
+    await repository.upsert(discovery)
+    await repository.upsert(discovery2)
     const timestamps = await repository.getTimestamps(
       projectName,
       ChainId.ETHEREUM,
@@ -133,7 +133,7 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
     expect(timestamps).toEqual([discovery.timestamp, discovery2.timestamp])
   })
 
-  describe(DailyDiscoveryRepository.prototype.getProject.name, () => {
+  describe(DailyDiscoveryRepository.prototype.getByProjectAndChain.name, () => {
     it('sanitizes errors', async () => {
       const projectName = 'project'
 
@@ -175,9 +175,12 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
         version: 0,
       }
 
-      await repository.addOrUpdate(discovery)
+      await repository.upsert(discovery)
 
-      const result = await repository.getProject(projectName, ChainId.ETHEREUM)
+      const result = await repository.getByProjectAndChain(
+        projectName,
+        ChainId.ETHEREUM,
+      )
       expect(result.length).toEqual(1)
       expect(result[0]!.discovery.contracts).toEqual([
         mockContractWithoutError,
@@ -226,8 +229,11 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
           version: 0,
         }
 
-        await repository.addOrUpdate(discovery)
-        const stale = await repository.getProject(projectName, ChainId.ETHEREUM)
+        await repository.upsert(discovery)
+        const stale = await repository.getByProjectAndChain(
+          projectName,
+          ChainId.ETHEREUM,
+        )
         expect(stale).toEqual([discovery])
 
         await repository.deleteStaleProjectDiscoveries(
@@ -235,7 +241,10 @@ describeDatabase(DailyDiscoveryRepository.name, (db) => {
           ChainId.ETHEREUM,
           hash,
         )
-        const fresh = await repository.getProject(projectName, ChainId.ETHEREUM)
+        const fresh = await repository.getByProjectAndChain(
+          projectName,
+          ChainId.ETHEREUM,
+        )
         expect(fresh).toEqual([])
       })
     },

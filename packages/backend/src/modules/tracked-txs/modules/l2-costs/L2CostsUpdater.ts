@@ -22,7 +22,7 @@ export class L2CostsUpdater implements TxUpdaterInterface {
     }
 
     const transformed = await this.transform(transactions)
-    await this.db.l2Cost.addMany(transformed)
+    await this.db.l2Cost.insertMany(transformed)
     this.logger.info('Updated L2 costs', { count: transactions.length })
   }
 

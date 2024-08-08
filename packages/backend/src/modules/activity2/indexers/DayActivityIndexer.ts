@@ -3,8 +3,7 @@ import { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DayActivityIndexerDeps) {
-    const logger = $.logger.tag($.projectId)
-    super({ ...$, logger, name: `activity_indexer_${$.projectId}` })
+    super({ ...$, name: `activity_indexer`, tag: $.projectId })
   }
 
   override async update(from: number, to: number): Promise<number> {
@@ -24,7 +23,7 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       adjustedTo,
     )
 
-    await this.$.db.activity.addOrUpdateMany(counts)
+    await this.$.db.activity.upsertMany(counts)
 
     return adjustedTo
   }

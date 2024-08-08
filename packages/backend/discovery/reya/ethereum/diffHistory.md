@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd206dd3f29a9b75aa36f6be5a5e3aa295ba9c145
+
+# Diff at Tue, 30 Jul 2024 11:14:00 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20177364
+- current block number: 20177364
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20177364 (main branch discovery), not current.
+
+```diff
+    contract RollupProxy (0x448Bbd134dE1B23976073aB4F2915849b2dcD73A) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      fieldMeta:
++        {"confirmPeriodBlocks":{"description":"Challenge period. (Number of blocks until a node is confirmed)."},"wasmModuleRoot":{"description":"Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."}}
+    }
+```
+
 Generated with discovered.json: 0xc4f473c42277bdd183e49089b1b3413cc298b04b
 
 # Diff at Wed, 05 Jun 2024 08:43:07 GMT:

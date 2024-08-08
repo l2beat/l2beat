@@ -10,7 +10,7 @@ visible benefits.
 You can check the detailed steps on how to add new tokens in the tvl.md file in the repository.
 */
 
-import { AssetId, ChainId, Token, UnixTime } from '@l2beat/shared-pure'
+import { AssetId, Token, UnixTime } from '@l2beat/shared-pure'
 
 import { assert } from '@l2beat/backend-tools'
 import { chains } from '../chains'
@@ -20,10 +20,6 @@ import { GeneratedToken } from './types'
 export const tokenList: Token[] = generated.tokens
   .map((t) => GeneratedToken.parse(t))
   .map(toToken)
-
-export const canonicalTokenList: Token[] = tokenList.filter(
-  (t) => t.source === 'canonical' && t.chainId === ChainId.ETHEREUM,
-)
 
 const tokenMapByAssetId = new Map(tokenList.map((t) => [t.id, t] as const))
 

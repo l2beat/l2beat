@@ -28,7 +28,6 @@ interface BasicEntry {
 
 interface Props<T extends BasicEntry> {
   table: TanstackTable<T>
-  onResetFilters: () => void
 }
 
 function getCommonPinningStyles<T>(
@@ -56,12 +55,9 @@ function getCommonPinningStyles<T>(
   }
 }
 
-export function BasicTable<T extends BasicEntry>({
-  table,
-  onResetFilters,
-}: Props<T>) {
+export function BasicTable<T extends BasicEntry>({ table }: Props<T>) {
   if (table.getRowCount() === 0) {
-    return <TableEmptyState onResetFilters={onResetFilters} />
+    return <TableEmptyState />
   }
 
   return (

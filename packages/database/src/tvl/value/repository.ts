@@ -10,9 +10,7 @@ import { selectValue } from './select'
 
 export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
-    if (projectIds.length === 0) {
-      return []
-    }
+    if (projectIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.values')
@@ -24,7 +22,6 @@ export class ValueRepository extends BaseRepository {
       )
       .orderBy('timestamp', 'asc')
       .execute()
-
     return rows.map(toRecord)
   }
 
@@ -32,9 +29,7 @@ export class ValueRepository extends BaseRepository {
     projectIds: ProjectId[],
     { from, to = UnixTime.now() }: { from: UnixTime; to?: UnixTime },
   ): Promise<ValueRecord[]> {
-    if (projectIds.length === 0) {
-      return []
-    }
+    if (projectIds.length === 0) return []
 
     const rows = await this.db
       .selectFrom('public.values')
@@ -48,13 +43,13 @@ export class ValueRepository extends BaseRepository {
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
-
     return rows.map(toRecord)
   }
 
-  async addOrUpdateMany(records: ValueRecord[]): Promise<number> {
-    const rows = records.map(toRow)
+  async upsertMany(records: ValueRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
+    const rows = records.map(toRow)
     await this.batch(rows, 2_000, async (batch) => {
       await this.db
         .insertInto('public.values')
@@ -81,21 +76,32 @@ export class ValueRepository extends BaseRepository {
               native_associated_for_total: eb.ref(
                 'excluded.native_associated_for_total',
               ),
+              ether: eb.ref('excluded.ether'),
+              stablecoin: eb.ref('excluded.stablecoin'),
             })),
         )
         .execute()
     })
+    return records.length
+  }
 
+  async insertMany(records: ValueRecord[]): Promise<number> {
+    if (records.length === 0) return 0
+
+    const rows = records.map(toRow)
+    await this.batch(rows, 2_000, async (batch) => {
+      await this.db.insertInto('public.values').values(batch).execute()
+    })
     return records.length
   }
 
   // #region methods used only in TvlCleaner
 
-  deleteHourlyUntil(dateRange: CleanDateRange) {
+  deleteHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteHourlyUntil(this.db, 'public.values', dateRange)
   }
 
-  deleteSixHourlyUntil(dateRange: CleanDateRange) {
+  deleteSixHourlyUntil(dateRange: CleanDateRange): Promise<number> {
     return deleteSixHourlyUntil(this.db, 'public.values', dateRange)
   }
 
@@ -108,42 +114,7 @@ export class ValueRepository extends BaseRepository {
       .selectFrom('public.values')
       .select(selectValue)
       .execute()
-
     return rows.map(toRecord)
-  }
-
-  async addMany(records: ValueRecord[]): Promise<number> {
-    const rows = records.map(toRow)
-    await this.db
-      .insertInto('public.values')
-      .values(rows)
-      .onConflict((cb) =>
-        cb
-          .columns(['project_id', 'timestamp', 'data_source'])
-          .doUpdateSet((eb) => ({
-            external: eb.ref('excluded.external'),
-            external_associated: eb.ref('excluded.external_associated'),
-            external_for_total: eb.ref('excluded.external_for_total'),
-            external_associated_for_total: eb.ref(
-              'excluded.external_associated_for_total',
-            ),
-            canonical: eb.ref('excluded.canonical'),
-            canonical_associated: eb.ref('excluded.canonical_associated'),
-            canonical_for_total: eb.ref('excluded.canonical_for_total'),
-            canonical_associated_for_total: eb.ref(
-              'excluded.canonical_associated_for_total',
-            ),
-            native: eb.ref('excluded.native'),
-            native_associated: eb.ref('excluded.native_associated'),
-            native_for_total: eb.ref('excluded.native_for_total'),
-            native_associated_for_total: eb.ref(
-              'excluded.native_associated_for_total',
-            ),
-          })),
-      )
-      .execute()
-
-    return rows.length
   }
 
   async deleteAll(): Promise<number> {
@@ -161,9 +132,7 @@ export class ValueRepository extends BaseRepository {
   async getLatestValuesForProjects(
     projectIds: ProjectId[],
   ): Promise<ValueRecord[]> {
-    if (projectIds.length === 0) {
-      return []
-    }
+    if (projectIds.length === 0) return []
 
     const rows = await this.db
       .with('latest_values', (cb) =>
@@ -190,7 +159,6 @@ export class ValueRepository extends BaseRepository {
       .select(selectValue)
       .where('combination_number', '=', 1)
       .execute()
-
     return rows.map(toRecord)
   }
 }

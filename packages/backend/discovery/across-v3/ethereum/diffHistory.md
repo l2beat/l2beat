@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x694b66df3231b8a4fe6cb923963e8254b05ba3e1
+
+# Diff at Thu, 08 Aug 2024 07:11:14 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5a17db968badca34a66703637dabf76a313bb43e block: 20389580
+- current block number: 20482283
+
+## Description
+
+A new Adapter and L2 crosschain target for Redstone are added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.690:
++        "0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
+      values.CrossChainContracts.690:
++        "0x28077B47Cd03326De7838926A63699849DD4fa87"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Redstone_Adapter.sol  | 590 +++++++++++++++++++++
+ 1 file changed, 590 insertions(+)
+```
+
+Generated with discovered.json: 0xdbd5447e307a5f0e39981d7b5ea954532dc92555
+
+# Diff at Fri, 26 Jul 2024 08:38:43 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@f98f9bf0ba32e20ec33942af664ae6ed27e8172d block: 20289714
+- current block number: 20389580
+
+## Description
+
+A new Adapter and L2 crosschain target for Scroll is registered.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.534352:
++        "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F"
+      values.CrossChainContracts.534352:
++        "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Scroll_Adapter (0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Scroll_Adapter.sol    | 531 +++++++++++++++++++++
+ 1 file changed, 531 insertions(+)
+```
+
 Generated with discovered.json: 0x5bed7c1b5746cf1f6518eef6a73859844d4d86c8
 
 # Diff at Fri, 12 Jul 2024 10:06:36 GMT:

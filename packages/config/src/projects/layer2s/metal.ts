@@ -48,20 +48,22 @@ export const metal: Layer2 = opStackL2({
   },
   rpcUrl: 'https://rpc.metall2.com',
   genesisTimestamp: new UnixTime(1711567115),
-  finality: {
-    type: 'OPStack-blob',
-    genesisTimestamp: new UnixTime(1711567115),
-    minTimestamp: new UnixTime(1711565399), //first blob: https://etherscan.io/tx/0x24a3a82c9030b664159be27407ba980c663ccb9bc12b1e448b97b1741d8cefc0
-    l2BlockTimeSeconds: 2,
-    lag: 0,
-    stateUpdate: 'disabled',
-  },
+  // finality: {
+  //   type: 'OPStack-blob',
+  //   genesisTimestamp: new UnixTime(1711567115),
+  //   minTimestamp: new UnixTime(1711565399), //first blob: https://etherscan.io/tx/0x24a3a82c9030b664159be27407ba980c663ccb9bc12b1e448b97b1741d8cefc0
+  //   l2BlockTimeSeconds: 2,
+  //   lag: 0,
+  //   stateUpdate: 'disabled',
+  // },
+  // Set explicitly since finality calculation returns weird results
+  finality: undefined,
   isNodeAvailable: 'UnderReview',
   usesBlobs: true,
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ConduitMultisig',
-      'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
+      'Designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('SuperchainProxyAdmin'),
@@ -69,7 +71,7 @@ export const metal: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'SuperchainProxyAdminOwner',
-      'Owner of the SuperchainProxyAdmin.',
+      'Owner of the ProxyAdmin and SuperchainProxyAdmin.',
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',

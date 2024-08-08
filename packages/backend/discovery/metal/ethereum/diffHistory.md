@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x870d6c7a754a5bcbffe4b621d30a51aae4a943c0
+
+# Diff at Wed, 07 Aug 2024 07:37:59 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20211468
+- current block number: 20475247
+
+## Description
+
+The ProxyAdmin owner is changed to SuperchainProxyAdminOwner and Conduit Multisig is removed.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      values.owner:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: None
+      descriptions:
+-        ["It can act on behalf of 0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99, inheriting its permissions."]
+      assignedPermissions:
+-        {"owner":["0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"]}
+    }
+```
+
+```diff
+    contract SuperchainProxyAdminOwner (0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) {
+    +++ description: It can act on behalf of 0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99, inheriting its permissions. It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions.
+      descriptions.1:
++        "It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."
+      descriptions.0:
+-        "It can act on behalf of 0x543bA4AADBAb8f9025686Bd03993043599c6fB04, inheriting its permissions."
++        "It can act on behalf of 0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99, inheriting its permissions."
+      assignedPermissions.owner.1:
++        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
+      assignedPermissions.owner.0:
+-        "0x543bA4AADBAb8f9025686Bd03993043599c6fB04"
++        "0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"
+    }
+```
+
+Generated with discovered.json: 0x199be30271bcf1d7a24543f3499a53336e5857d9
+
+# Diff at Tue, 30 Jul 2024 11:12:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20211468
+- current block number: 20211468
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211468 (main branch discovery), not current.
+
+```diff
+    contract SystemConfig (0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      fieldMeta:
++        {"gasLimit":{"severity":"LOW","description":"Gas limit for blocks on L2."}}
+    }
+```
+
 Generated with discovered.json: 0xc077a0f745782d216f312414167ad14d22631217
 
 # Diff at Thu, 18 Jul 2024 10:31:54 GMT:

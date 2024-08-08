@@ -5,6 +5,7 @@ import {
   DaLayer,
   daLayers,
 } from '@l2beat/config'
+import { HttpClient } from '@l2beat/shared'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import { DABeatConfig } from '../../config/Config'
@@ -16,6 +17,7 @@ import { TaskQueue } from '../../tools/queue/TaskQueue'
 import { AbstractStakeAnalyzer } from './stake-analyzers/AbstractStakeAnalyzer'
 import { CelestiaStakeAnalyzer } from './stake-analyzers/CelestiaStakeAnalyzer'
 import { EthereumStakeAnalyzer } from './stake-analyzers/EthereumStakeAnalyzer'
+import { NearStakeAnalyzer } from './stake-analyzers/NearStakeAnalyzer'
 
 export class DaBeatStakeRefresher {
   private readonly refreshQueue: TaskQueue<void>
@@ -29,6 +31,7 @@ export class DaBeatStakeRefresher {
     private readonly clock: Clock,
     private readonly logger: Logger,
   ) {
+    const httpClient = new HttpClient()
     this.logger = logger.for('DaBeatStakeRefresher')
     this.refresh = this.refresh.bind(this)
     this.analyzers = Object.fromEntries(
@@ -61,6 +64,11 @@ export class DaBeatStakeRefresher {
                   callsPerMinute: this.config.celestiaCallsPerMinute,
                 }),
               ),
+            ]
+          case 'Near':
+            return [
+              type,
+              new NearStakeAnalyzer(this.config.nearRpcUrl, httpClient),
             ]
           default:
             assertUnreachable(type)

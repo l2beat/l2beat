@@ -1,13 +1,5 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-
 import { MulticallConfig } from '../discovery/provider/multicall/types'
 import { ExplorerConfig } from '../utils/IEtherscanClient'
-
-export interface DiscoveryCliConfig {
-  discovery: DiscoveryModuleConfig | false
-  singleDiscovery: SingleDiscoveryModuleConfig | false
-  invert: InversionConfig | false
-}
 
 export interface DiscoveryModuleConfig {
   readonly project: string
@@ -20,11 +12,8 @@ export interface DiscoveryModuleConfig {
   readonly sourcesFolder?: string
   readonly flatSourcesFolder?: string
   readonly discoveryFilename?: string
-}
-
-export interface SingleDiscoveryModuleConfig {
-  readonly address: EthereumAddress
-  readonly chain: DiscoveryChainConfig
+  readonly printTemplateSimilarity?: boolean
+  readonly templateSimilarityCutoff?: number
 }
 
 export interface DiscoveryChainConfig {
@@ -36,15 +25,4 @@ export interface DiscoveryChainConfig {
   beaconApiUrl?: string
   multicall: MulticallConfig
   explorer: ExplorerConfig
-}
-
-export interface InversionConfig {
-  readonly project: string
-  readonly useMermaidMarkup: boolean
-  readonly chain: DiscoveryChainConfig
-}
-
-export interface FlattenConfig {
-  readonly path: string
-  readonly rootContractName: string
 }

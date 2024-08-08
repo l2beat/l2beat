@@ -1,5 +1,6 @@
 import { type DaLayer } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import { round } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -30,7 +31,7 @@ const getCachedEconomicSecurity = cache(
 
     const type = daLayer.economicSecurity.type
 
-    const stake = await db.stake.findOneById(type)
+    const stake = await db.stake.findById(type)
     if (!stake) {
       return { id: daLayer.id, status: 'StakeNotSynced' as const }
     }
@@ -38,8 +39,8 @@ const getCachedEconomicSecurity = cache(
     const meta = daEconomicSecurityMeta[type]
     const coingeckoId = meta?.coingeckoId
     const currentPrice = coingeckoId
-      ? await db.currentPrice.findOneByAssetId(coingeckoId)
-      : null
+      ? await db.currentPrice.findByCoingeckoId(coingeckoId)
+      : undefined
     if (!currentPrice) {
       return { id: daLayer.id, status: 'CurrentPriceNotSynced' as const }
     }
@@ -49,7 +50,8 @@ const getCachedEconomicSecurity = cache(
       // We're intentionally trading precision for ease of use in Client Components
       economicSecurity:
         Number(
-          (stake.thresholdStake * BigInt(currentPrice.priceUsd * 100)) / 100n,
+          (stake.thresholdStake * BigInt(round(currentPrice.priceUsd * 100))) /
+            100n,
         ) /
         10 ** meta.decimals,
     }

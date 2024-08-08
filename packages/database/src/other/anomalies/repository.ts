@@ -4,28 +4,28 @@ import { AnomalyRecord, toRecord, toRow } from './entity'
 import { selectAnomaly } from './select'
 
 export class AnomaliesRepository extends BaseRepository {
-  async addOrUpdateMany(records: AnomalyRecord[]): Promise<number> {
-    for (const record of records) {
-      await this.addOrUpdate(record)
-    }
-    return records.length
+  async upsert(record: AnomalyRecord): Promise<void> {
+    await this.upsertMany([record])
   }
 
-  async addOrUpdate(record: AnomalyRecord): Promise<string> {
-    const row = toRow(record)
-    await this.db
-      .insertInto('public.anomalies')
-      .values(row)
-      .onConflict((cb) =>
-        cb
-          .columns(['timestamp', 'project_id', 'subtype'])
-          .doUpdateSet((eb) => ({
-            duration: eb.ref('excluded.duration'),
-          })),
-      )
-      .execute()
+  async upsertMany(records: AnomalyRecord[]): Promise<number> {
+    if (records.length === 0) return 0
 
-    return `[${record.timestamp}, ${record.projectId}, ${record.subtype}]: ${record.duration}`
+    const rows = records.map(toRow)
+    await this.batch(rows, 1_000, async (batch) => {
+      await this.db
+        .insertInto('public.anomalies')
+        .values(batch)
+        .onConflict((cb) =>
+          cb
+            .columns(['timestamp', 'project_id', 'subtype'])
+            .doUpdateSet((eb) => ({
+              duration: eb.ref('excluded.duration'),
+            })),
+        )
+        .execute()
+    })
+    return records.length
   }
 
   async deleteAll(): Promise<number> {
@@ -44,7 +44,7 @@ export class AnomaliesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectFrom(
+  async getByProjectIdFrom(
     projectId: ProjectId,
     from: UnixTime,
   ): Promise<AnomalyRecord[]> {
@@ -54,7 +54,6 @@ export class AnomaliesRepository extends BaseRepository {
       .where('project_id', '=', projectId)
       .where('timestamp', '>=', from.toDate())
       .execute()
-
     return rows.map(toRecord)
   }
 }

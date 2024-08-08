@@ -46,6 +46,7 @@ const chainSlugToName: Record<string, string> = {
   5000: 'Mantle',
   7887: 'Kinto',
   8453: 'Base',
+  8008: 'Polynomial', // polynomial.fi
   34443: 'Mode',
   42161: 'Arbitrum',
   80001: 'Polygon Mumbai testnet',
@@ -68,6 +69,7 @@ const ownerAddressToName: Record<string, string> = {
   '0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF': 'HookOwnerEOA',
   '0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34': 'socketadmin.eth EOA',
   '0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13': 'LooksRareMultisig',
+  '0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332': 'PolynomialEOA',
   // Add more owner addresses and their corresponding names here to get them integrated in the output
 }
 

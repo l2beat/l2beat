@@ -35,7 +35,7 @@ export function getTvlConfig(
   )
 
   return {
-    amounts: getTvlAmountsConfig(projects, minTimestampOverride),
+    amounts: getTvlAmountsConfig(projects),
     prices: getTvlPricesConfig(minTimestampOverride),
     chains: chainConfigs,
     coingeckoApiKey: env.optionalString(['COINGECKO_API_KEY']),

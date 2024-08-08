@@ -34,7 +34,7 @@ So, for example, for the `deletion_b10t30.r1cs` file, the command to run inside 
 
 `go run main.go convert --input powersOfTau28_hez_final_19.ptau --output 19.ph1`
 
-Now we need to initialize the phase 2 of the trusted setup, which is circuit specific. To do this, move the r1cs and ph1 files to the `semaphore-mtb-setup` directory and run the following command:
+Now we need to initialize the phase 2 of the trusted setup, which is circuit specific. This is the step that takes the longest time to complete. To do this, move the r1cs and ph1 files to the `semaphore-mtb-setup` directory and run the following command:
 
 `./semaphore-mtb-setup p2n <DEPTH>.ph1 <MODE>_b<BATCH_SIZE>t30.r1cs <MODE>_b<BATCH_SIZE>t30c0.ph2`
 
@@ -48,6 +48,8 @@ curl --output insertion_b100t30c16.ph2 https://semaphore-mtb-trusted-setup-cerem
 curl --output insertion_b600t30c16.ph2 https://semaphore-mtb-trusted-setup-ceremony.s3.amazonaws.com/insertion_b600/insertion_b600t30c16.ph2
 curl --output insertion_b1200t30c16.ph2_parts_aa https://semaphore-mtb-trusted-setup-ceremony.s3.amazonaws.com/insertion_b1200/insertion_b1200t30c16.ph2_parts_aa
 curl --output insertion_b1200t30c16.ph2_parts_ab https://semaphore-mtb-trusted-setup-ceremony.s3.amazonaws.com/insertion_b1200/insertion_b1200t30c16.ph2_parts_ab
+cat insertion_b1200t30c16.ph2_parts_aa insertion_b1200t30c16.ph2_parts_ab > insertion_b1200t30c16.ph2
+rm insertion_b1200t30c16.ph2_parts_aa insertion_b1200t30c16.ph2_parts_ab
 ```
 
 Finally, we can check the last contribution against the zeroeth contribution by running the following command inside the `semaphore-mtb-setup` directory:
@@ -62,6 +64,6 @@ which generates the `vk` and `pk` files.
 
 To generate the smart contract verifier from the verification key, run the following command inside the `gnark-contract-generator` repo with the appropriate `vk` file:
 
-`./gnark-contract-generator/gnark-contract-generator* ps-vk --vk vk --out deletion_b10t30_verifier.sol`
+`./gnark-contract-generator ps-vk --vk vk --out deletion_b10t30_verifier.sol`
 
 The so-generated verifier must be checked against the onchain verifier listed above.

@@ -1,31 +1,21 @@
 import { assert } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
-import {
-  ManagedMultiIndexer,
-  ManagedMultiIndexerOptions,
-} from '../../../tools/uif/multi/ManagedMultiIndexer'
+import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { AmountService, ChainAmountConfig } from '../services/AmountService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
-
-export interface ChainAmountIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<ChainAmountConfig>, 'name'> {
-  amountService: AmountService
-  db: Database
-  syncOptimizer: SyncOptimizer
-  chain: string
-}
+import { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
 
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
-    const logger = $.logger.tag($.chain)
-    const name = 'chain_amount_indexer'
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({
+      ...$,
+      name: 'chain_amount_indexer',
+      tag: $.chain,
+      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+    })
   }
 
   override async multiUpdate(
@@ -48,7 +38,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     const amounts = await this.$.amountService.fetchAmounts(
       timestamp,
       blockNumber,
-      configurations,
+      configurations.map((c) => ({ id: c.id, ...c.properties })),
     )
 
     this.logger.info('Fetched amounts for timestamp', {
@@ -61,7 +51,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
     const nonZeroAmounts = amounts.filter((a) => a.amount > 0)
 
     return async () => {
-      await this.$.db.amount.addMany(nonZeroAmounts)
+      await this.$.db.amount.insertMany(nonZeroAmounts)
       this.logger.info('Saved amounts for timestamp into DB', {
         timestamp: timestamp.toNumber(),
         escrows: nonZeroAmounts.filter((a) => a.type === 'escrow').length,
@@ -74,10 +64,11 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   }
 
   private async getBlockNumber(timestamp: UnixTime) {
-    const blockNumber = await this.$.db.blockTimestamp.findByChainAndTimestamp(
-      this.$.chain,
-      timestamp,
-    )
+    const blockNumber =
+      await this.$.db.blockTimestamp.findBlockNumberByChainAndTimestamp(
+        this.$.chain,
+        timestamp,
+      )
     assert(
       blockNumber,
       `Block number not found for timestamp: ${timestamp.toNumber()}`,

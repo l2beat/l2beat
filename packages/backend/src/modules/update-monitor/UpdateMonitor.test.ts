@@ -148,7 +148,7 @@ describe(UpdateMonitor.name, () => {
 
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
       const timestamp = new UnixTime(0)
 
@@ -223,7 +223,7 @@ describe(UpdateMonitor.name, () => {
 
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -263,14 +263,13 @@ describe(UpdateMonitor.name, () => {
       // and + 2 for finding unverifiedContracts
       expect(configReader.readDiscovery).toHaveBeenCalledTimes(3 * 2)
       // saves discovery result
-      expect(repository.addOrUpdate).toHaveBeenCalledTimes(2)
+      expect(repository.upsert).toHaveBeenCalledTimes(2)
       //sends notification
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(2)
       expect(updateNotifier.handleUpdate).toHaveBeenNthCalledWith(
         1,
         PROJECT_A,
         mockDiff,
-        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -280,7 +279,6 @@ describe(UpdateMonitor.name, () => {
         2,
         PROJECT_B,
         mockDiff,
-        config,
         BLOCK_NUMBER,
         ChainId.ETHEREUM,
         [],
@@ -300,7 +298,7 @@ describe(UpdateMonitor.name, () => {
           discovery: DISCOVERY_RESULT,
           configHash: mockConfig(PROJECT_A).hash,
         }),
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -344,7 +342,7 @@ describe(UpdateMonitor.name, () => {
           discovery: DISCOVERY_RESULT,
           configHash: mockConfig(PROJECT_A).hash,
         }),
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -392,7 +390,7 @@ describe(UpdateMonitor.name, () => {
           configHash: config.hash,
           blockNumber: BLOCK_NUMBER - 1,
         }),
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
 
       const discoveryRunner = mockObject<DiscoveryRunner>({
@@ -441,7 +439,7 @@ describe(UpdateMonitor.name, () => {
         OPTIONS,
       )
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(1)
-      expect(repository.addOrUpdate).toHaveBeenCalledTimes(1)
+      expect(repository.upsert).toHaveBeenCalledTimes(1)
     })
 
     it('handles error', async () => {
@@ -460,7 +458,7 @@ describe(UpdateMonitor.name, () => {
 
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
 
       const updateMonitor = new UpdateMonitor(
@@ -484,7 +482,7 @@ describe(UpdateMonitor.name, () => {
       // gets latest from database (with the same config hash)
       expect(repository.findLatest).toHaveBeenCalledTimes(1)
       // does not save changes to database
-      expect(repository.addOrUpdate).toHaveBeenCalledTimes(0)
+      expect(repository.upsert).toHaveBeenCalledTimes(0)
       // does not send a notification
       expect(updateNotifier.handleUpdate).toHaveBeenCalledTimes(0)
     })
@@ -673,7 +671,7 @@ describe(UpdateMonitor.name, () => {
       const timestamp = new UnixTime(0)
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
       const configReader = mockObject<ConfigReader>({
         readDiscovery: (name: string, chain: string) => {
@@ -758,7 +756,7 @@ describe(UpdateMonitor.name, () => {
       const timestamp = new UnixTime(0)
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
       const configReader = mockObject<ConfigReader>({
         readDiscovery: () => ({
@@ -805,7 +803,7 @@ describe(UpdateMonitor.name, () => {
       const timestamp = new UnixTime(0)
       const repository = mockObject<Database['updateMonitor']>({
         findLatest: async () => undefined,
-        addOrUpdate: async () => '',
+        upsert: async () => undefined,
       })
       const configReader = mockObject<ConfigReader>({
         readDiscovery: () => ({
@@ -891,22 +889,28 @@ const mockDiff: DiscoveryDiff[] = [
   {
     address: ADDRESS_A,
     name: NAME_A,
+    description: undefined,
     diff: [
       {
         key: 'values.a',
         before: 'true',
         after: 'false',
+        description: undefined,
+        severity: undefined,
       },
     ],
   },
   {
     address: ADDRESS_B,
     name: NAME_B,
+    description: undefined,
     diff: [
       {
         before:
           '{"nonce":"Processing error occurred.","totalLiquidity":"Processing error occurred."}',
         key: 'errors',
+        description: undefined,
+        severity: undefined,
       },
     ],
   },

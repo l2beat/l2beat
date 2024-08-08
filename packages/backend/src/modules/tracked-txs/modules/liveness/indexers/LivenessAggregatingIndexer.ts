@@ -4,7 +4,6 @@ import {
   AggregatedLivenessRecord,
   Database,
 } from '@l2beat/database'
-import { TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   ProjectId,
   TrackedTxsConfigSubtype,
@@ -69,7 +68,7 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
 
     const updatedLivenessRecords = await this.generateLiveness(targetHeight)
 
-    await this.$.db.aggregatedLiveness.addOrUpdateMany(updatedLivenessRecords)
+    await this.$.db.aggregatedLiveness.upsertMany(updatedLivenessRecords)
 
     return parentSafeHeight
   }
@@ -85,10 +84,9 @@ export class LivenessAggregatingIndexer extends ManagedChildIndexer {
   ): Promise<AggregatedLivenessRecord[]> {
     const aggregatedRecords: AggregatedLivenessRecord[] = []
 
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     for (const project of this.$.projects) {
       const activeConfigs = getActiveConfigurations(project, configurations)

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20240831,
   "configHash": "0x7fda11b24b5eed1d80b7cd4d4072385ee8cff7a3cc6537727d204842c13b9d88",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "WTIA_OFTAdapter",
@@ -103,6 +103,20 @@
         "nativeToken": "0x0000000000000000000000000000000000000000",
         "NIL_PAYLOAD_HASH": "0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
         "owner": "0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92"
+      },
+      "fieldMeta": {
+        "getRegisteredLibraries": {
+          "severity": "HIGH",
+          "description": "All registered libraries in the Ethereum LZ Endpoint. Index 0 is the blockedLibrary, 1 and 2 are send and receive. Send- and ReceiveLibraries define the messaging framework (that can be further configured by the OApp owner). A new MessageLibrary should be thoroughly reviewed, especially if it is set as the default Library in new OApps."
+        },
+        "defaultSendLib_ENA": {
+          "severity": "HIGH",
+          "description": "The default send lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed."
+        },
+        "defaultReceiveLib_rsETH": {
+          "severity": "HIGH",
+          "description": "The default receive lib can be different for every OApp. In practice it is the same for most OApps. Should be reviewed if changed."
+        }
       },
       "derivedName": "EndpointV2"
     },
@@ -534,6 +548,21 @@
           []
         ],
         "version": { "major": 3, "minor": 0, "endpointVersion": 2 }
+      },
+      "fieldMeta": {
+        "defaultExecutor_ENA": {
+          "severity": "HIGH",
+          "description": "The default executor can be different for every OApp. In practice it is the same for most OApps. (LayerZero Executor) Should be reviewed if changed."
+        },
+        "ulnConfig_ENA": {
+          "description": "The verification config of the ENAOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
+        },
+        "ulnConfig_sfrxETH": {
+          "description": "The verification config of the sfrxETHOFTAdapter for all messages coming from Arbitrum. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
+        },
+        "ulnConfig_CYBER": {
+          "description": "The verification config of the CYBEROFTAdapter for all messages coming from BSC. (returns: [confirmations, requiredDVNCount, optionalDVNCount, optionalDVNThreshold, requiredDVNs, optionalDVNs])"
+        }
       },
       "derivedName": "SendUln302"
     },
@@ -2574,5 +2603,5 @@
   "usedTemplates": {
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

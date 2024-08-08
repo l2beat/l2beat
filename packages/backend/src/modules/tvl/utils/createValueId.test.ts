@@ -33,6 +33,11 @@ describe(createValueId.name, () => {
       newValue: EthereumAddress.random(),
       shouldUpdateHash: true,
     },
+    {
+      key: 'category',
+      newValue: 'ether',
+      shouldUpdateHash: true,
+    },
   ]
 
   const priceFields = [
@@ -90,6 +95,7 @@ describe(createValueId.name, () => {
 function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
   return {
     chain: 'chain',
+    dataSource: 'chain',
     project: ProjectId('project'),
     source: 'canonical' as const,
     sinceTimestamp: UnixTime.ZERO,
@@ -100,6 +106,7 @@ function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
     type: 'totalSupply',
     address: EthereumAddress.ZERO,
     isAssociated: false,
+    category: 'other',
     ...v,
   }
 }

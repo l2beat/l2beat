@@ -6,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import {
+  CONTRACTS,
   DATA_ON_CHAIN,
   RISK_VIEW,
   addSentimentToDataAvailability,
@@ -96,7 +97,7 @@ export const taiko: Layer2 = {
     bridge: { type: 'Enshrined' },
     mode: 'Transaction data',
   }),
-  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs],
+  badges: [Badge.VM.EVM, Badge.DA.EthereumBlobs, Badge.Other.BasedSequencing],
   display: {
     name: 'Taiko',
     slug: 'taiko',
@@ -374,7 +375,7 @@ export const taiko: Layer2 = {
         ...upgradesTaikoMultisig,
       }),
     ],
-    risks: [],
+    risks: [CONTRACTS.UPGRADE_NO_DELAY_RISK],
   },
   permissions: [
     ...discovery.getMultisigPermission(

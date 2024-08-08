@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20383066,
   "configHash": "0xc6e931ebe2b0656694e14efbd7b737c8f70f57ae24efd8921b1c8e429c7bafc8",
-  "version": 9,
+  "version": 10,
   "contracts": [
     {
       "name": "Bridger",
@@ -137,6 +137,14 @@
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
+      },
+      "fieldMeta": {
+        "confirmPeriodBlocks": {
+          "description": "Challenge period. (Number of blocks until a node is confirmed)."
+        },
+        "wasmModuleRoot": {
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
+        }
       },
       "derivedName": "RollupProxy"
     },
@@ -1219,5 +1227,5 @@
     "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -4,7 +4,6 @@ import { type Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
-import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
@@ -15,6 +14,7 @@ import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { useChartLoading } from './core/chart-loading-context'
 
 interface TvlChartPointData {
   timestamp: number
@@ -137,7 +137,7 @@ function Header({
   value: number
   weeklyChange: string
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
@@ -183,7 +183,7 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (

@@ -170,7 +170,9 @@ function getMockTrackedTxsIndexer(params: {
   } = params
 
   return new TrackedTxsIndexer({
-    configurations: configurations ?? [],
+    configurations: configurations ?? [
+      mockObject<Configuration<TrackedTxConfigEntry>>({ id: 'a' }),
+    ],
     db: mockDatabase({
       l2Cost: l2CostRepository ?? mockObject<Database['l2Cost']>(),
       liveness: livenessRepository ?? mockObject<Database['liveness']>(),

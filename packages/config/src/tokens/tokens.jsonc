@@ -327,6 +327,10 @@
       "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B"
     },
     {
+      "symbol": "cvxFXS",
+      "address": "0xFEEf77d3f69374f66429C91d732A244f074bdf74"
+    },
+    {
       "symbol": "cvxCRV",
       "address": "0x62B9c7356A2Dc64a1969e19C23e4f579F9810Aa7"
     },
@@ -607,10 +611,6 @@
       "category": "stablecoin"
     },
     {
-      "symbol": "HYPR",
-      "address": "0x31adda225642a8f4d7e90d4152be6661ab22a5a2"
-    },
-    {
       "symbol": "ILV",
       "address": "0x767FE9EDC9E0dF98E07454847909b5E959D7ca0E"
     },
@@ -800,6 +800,10 @@
       "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379"
     },
     {
+      "symbol": "NSTR",
+      "address": "0x610dbd98a28ebba525e9926b6aaf88f9159edbfd"
+    },
+    {
       "symbol": "NU",
       "address": "0x4fE83213D56308330EC302a8BD641f1d0113A4Cc"
     },
@@ -883,6 +887,10 @@
     {
       "symbol": "PLA",
       "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430"
+    },
+    {
+      "symbol": "PMON",
+      "address": "0x1796ae0b0fa4862485106a0de9b654efe301d0b2"
     },
     {
       "symbol": "PNT",
@@ -1139,6 +1147,10 @@
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
     },
     {
+      "symbol": "SX",
+      "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624"
+    },
+    {
       "symbol": "SXP",
       "address": "0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9"
     },
@@ -1365,6 +1377,10 @@
       "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73"
     },
     {
+      "symbol": "ZEND",
+      "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44"
+    },
+    {
       "symbol": "ZKS",
       "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
       "coingeckoId": "zkspace"
@@ -1389,6 +1405,24 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PMON",
+      "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+      "source": "canonical",
+      "coingeckoId": "polychain-monsters",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wOETH",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Transporter",
+        "slug": "transporter"
+      }
+    },
     {
       "symbol": "SolvBTC",
       "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
@@ -1830,6 +1864,17 @@
       "source": "canonical",
       "supply": "zero",
       "category": "ether"
+    },
+    {
+      "symbol": "CHEESE",
+      "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+      "source": "external",
+      "coingeckoId": "cheese-2",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
     }
   ],
   "nova": [
@@ -2302,6 +2347,16 @@
   ],
   "mantapacific": [
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",
@@ -2332,28 +2387,6 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "symbol": "mETH",
-      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
-      "category": "ether",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
-      "symbol": "mUSD",
-      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
     },
     {
       "symbol": "STONE",
@@ -2694,6 +2727,12 @@
     }
   ],
   "blast": [
+    {
+      "symbol": "ANDY",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "bWOOL",
       "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",
