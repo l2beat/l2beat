@@ -103,23 +103,25 @@ describe(resolvePermissions.name, () => {
     const zkSync = EthereumAddress.random()
     const upgradeGatekeeper = EthereumAddress.random()
     const zkSyncMsig = EthereumAddress.random()
-    const securityCouncil = EthereumAddress.random()
+    const actorA = EthereumAddress.random()
+    const actorB = EthereumAddress.random()
 
     const graph: Graph = {
       nodes: [
         { address: verifier, members: [], threshold: 1 },
         { address: governance, members: [], threshold: 1 },
-        { address: zkSync, members: [], threshold: 1 },
+        { address: zkSync, members: [5, 6], threshold: 2 },
         { address: upgradeGatekeeper, members: [], threshold: 1 },
         { address: zkSyncMsig, members: [], threshold: 1 },
-        { address: securityCouncil, members: [], threshold: 1 },
+        { address: actorA, members: [], threshold: 1 },
+        { address: actorB, members: [], threshold: 1 },
       ],
       edges: [
         { type: 'upgrade', fromNode: 0, toNode: 3, delay: 0 },
         { type: 'upgrade', fromNode: 1, toNode: 3, delay: 0 },
         { type: 'upgrade', fromNode: 2, toNode: 3, delay: 0 },
         { type: 'act', fromNode: 3, toNode: 4, delay: 21 },
-        { type: 'configure', fromNode: 2, toNode: 5, delay: 0 },
+        { type: 'configure', fromNode: 2, toNode: 2, delay: 0 },
       ],
     }
 
@@ -151,8 +153,8 @@ describe(resolvePermissions.name, () => {
       {
         type: 'configure',
         path: [
-          { address: zkSync, delay: 0 },
-          { address: securityCouncil, delay: 0 },
+          { address: zkSync, delay: 0 }, // contract
+          { address: zkSync, delay: 0 }, // embedded security council
         ],
       },
     ])
