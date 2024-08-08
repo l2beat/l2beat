@@ -1,6 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DegateClient } from '../../peripherals/degate'
@@ -96,7 +96,7 @@ function createActivityIndexers(
           project.config,
         )
 
-        const [blockTargetIndexer, activityIndexer] = createIndexers(
+        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
           logger,
           rpcClient,
@@ -121,7 +121,7 @@ function createActivityIndexers(
           project.config,
         )
 
-        const [blockTargetIndexer, activityIndexer] = createIndexers(
+        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
           logger,
           zksyncClient,
@@ -146,7 +146,7 @@ function createActivityIndexers(
           project.config,
         )
 
-        const [blockTargetIndexer, activityIndexer] = createIndexers(
+        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
           logger,
           starknetClient,
@@ -171,7 +171,7 @@ function createActivityIndexers(
           project.config,
         )
 
-        const [blockTargetIndexer, activityIndexer] = createIndexers(
+        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
           logger,
           loopringClient,
@@ -196,7 +196,7 @@ function createActivityIndexers(
           project.config,
         )
 
-        const [blockTargetIndexer, activityIndexer] = createIndexers(
+        const [blockTargetIndexer, activityIndexer] = createBlockBasedIndexers(
           clock,
           logger,
           degateClient,
@@ -242,7 +242,7 @@ function createActivityIndexers(
   return indexers
 }
 
-function createIndexers(
+function createBlockBasedIndexers(
   clock: Clock,
   logger: Logger,
   client: BaseClient,
@@ -251,13 +251,6 @@ function createIndexers(
   indexerService: IndexerService,
   db: Database,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
-  assert(
-    project.config.type === 'rpc' ||
-      project.config.type === 'zksync' ||
-      project.config.type === 'starknet' ||
-      project.config.type === 'loopring' ||
-      project.config.type === 'degate',
-  )
   const blockTimestampProvider = new BlockTimestampProvider({
     client,
     logger,
