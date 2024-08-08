@@ -7,6 +7,8 @@ import {
 } from '../../utils/deleteArchivedRecords'
 import { ValueRecord, toRecord, toRow } from './entity'
 import { selectValue } from './select'
+import { DB } from '../../kysely'
+import { QueryCreator } from 'kysely'
 
 export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
@@ -42,6 +44,40 @@ export class ValueRepository extends BaseRepository {
       .where('timestamp', '>', from.toDate())
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getLatestValues(projectIds?: ProjectId[]) {
+    if (projectIds?.length === 0) return []
+    const latestValuesQuery = (cb: QueryCreator<DB>) => {
+      let query = cb.selectFrom('public.values').select([
+        ...selectValue,
+        this.db.fn
+          .agg('ROW_NUMBER')
+          .over((over) =>
+            over
+              .partitionBy(['project_id', 'data_source'])
+              .orderBy('timestamp', 'desc'),
+          )
+          .as('combination_number'),
+      ])
+      if (projectIds) {
+        query = query.where(
+          'project_id',
+          'in',
+          projectIds.map((id) => id.toString()),
+        )
+      }
+
+      return query
+    }
+
+    const rows = await this.db
+      .with('latest_values', latestValuesQuery)
+      .selectFrom('latest_values')
+      .select(selectValue)
+      .where('combination_number', '=', 1)
       .execute()
     return rows.map(toRecord)
   }
