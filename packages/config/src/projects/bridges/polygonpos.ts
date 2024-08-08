@@ -111,7 +111,7 @@ export const polygonpos: Bridge = {
     validation: {
       name: 'Outbound transfers are externally verified, inbound require merkle proof',
       description:
-        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Around every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
+        'Validators on the Polygon network watch for events on Ethereum, and when they see that tokens have been locked they mint new tokens on Polygon. Around every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens, users need to present a merkle proof of a burn event that is verified against the checkpoints.',
       references: [],
       risks: [
         {
