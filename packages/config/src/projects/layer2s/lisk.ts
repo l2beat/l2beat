@@ -41,6 +41,7 @@ export const lisk: Layer2 = opStackL2({
       sentiment: 'warning',
     },
   },
+  l1StandardBridgePremintedTokens: ['LSK'],
   finality: {
     type: 'OPStack-blob',
     genesisTimestamp: new UnixTime(1714728793),

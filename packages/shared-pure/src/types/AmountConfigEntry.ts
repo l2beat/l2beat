@@ -17,7 +17,7 @@ export type AmountConfigEntry =
 
 export interface PremintedEntry extends AmountConfigBase {
   type: 'preminted'
-  address: EthereumAddress
+  address: EthereumAddress | 'native'
   coingeckoId: CoingeckoId
   escrowAddress: EthereumAddress
 }
