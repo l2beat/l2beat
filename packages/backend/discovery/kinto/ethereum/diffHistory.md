@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x5358410234a44c12d83a38d894732c1ce46d329c
+
+# Diff at Thu, 08 Aug 2024 13:39:47 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 20383066
+- current block number: 20484220
+
+## Description
+
+Users can deposit stUSD from Arbitrum on Kinto, they've added new logic to swap this to USDC or USDA before bridging.
+Now using 0x AllowanceHolder contract to set allowances for token swap.
+
+## Watched changes
+
+```diff
+    contract Bridger (0x0f1b7bd7762662B23486320AA91F30312184f70C) {
+    +++ description: None
+      values.$implementation:
+-        "0x23559eB4Ad22c31940a929958B104821126F35b7"
++        "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03"
+      values.swapRouter:
+-        "0xDef1C0ded9bec7F1a1670819833240f027b25EfF"
++        "0x0000000000001fF3684f28c67538d4D072C22734"
+      values.angleSwapper:
++        "0xD253b62108d1831aEd298Fc2434A5A8e4E418053"
+      values.stUSD:
++        "0x0022228a2cc5E7eF0274A7Baa600d44da5aB5776"
+      values.USDA:
++        "0x0000206329b97DB379d5E1Bf586BbDB969C63274"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20383066 => .flat}/Bridger/Bridger.sol  | 31 ++++++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+```
+
 Generated with discovered.json: 0x21d17cece14cfa4ac60bf5716ed635ed9071d73c
 
 # Diff at Tue, 30 Jul 2024 11:12:11 GMT:
