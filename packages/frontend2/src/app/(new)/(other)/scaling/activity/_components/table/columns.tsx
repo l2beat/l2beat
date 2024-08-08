@@ -1,14 +1,35 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
+import { NumberCell } from '~/app/_components/table/cells/number-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { type ScalingActivityEntry } from '~/server/features/scaling/get-scaling-activity-entries'
+import { formatNumber } from '~/utils/format-number'
+import { Skeleton } from '~/app/_components/skeleton'
+import { EM_DASH } from '~/app/_components/nav/consts'
+import { formatTps } from '~/utils/format-tps'
+import { type SyncStatus } from '~/types/SyncStatus'
 
-type ScalingActivityTableEntry = ScalingActivityEntry & {
+export type ScalingActivityTableEntry = ScalingActivityEntry & {
   data: ActivityData
 }
 
-type ActivityData = {
+export type ActivityData = AvailableActivityData | NotAvailableActivityData
+
+type AvailableActivityData = {
+  type: 'available'
+  change: number
+  summedCount: number
+  pastDayTps: number
+  maxTps: {
+    value: number
+    timestamp: number
+  }
+  syncStatus: SyncStatus
+}
+type NotAvailableActivityData = {
+  type: 'not-available'
+  reason: 'missing-data' | 'loading'
   syncStatus?: never
 }
 
@@ -47,5 +68,66 @@ export const scalingActivityColumns = [
         type={ctx.row.original.type}
       />
     ),
+  }),
+  columnHelper.accessor('data.pastDayTps', {
+    header: 'Past day TPS',
+    cell: (ctx) => {
+      const data = ctx.row.original.data
+      if (data.type === 'not-available') {
+        switch (data.reason) {
+          case 'missing-data':
+            return EM_DASH
+          case 'loading':
+            return <Skeleton className="h-4 w-10" />
+        }
+      }
+      return formatTps(data.pastDayTps)
+    },
+    sortUndefined: 'last',
+    meta: {
+      tooltip: 'Transactions per second averaged over the past day.',
+    },
+  }),
+  columnHelper.accessor('data.maxTps.value', {
+    header: 'Max TPS',
+    sortUndefined: 'last',
+    cell: (ctx) => {
+      const data = ctx.row.original.data
+      if (data.type === 'not-available') {
+        switch (data.reason) {
+          case 'missing-data':
+            return EM_DASH
+          case 'loading':
+            return <Skeleton className="h-4 w-10" />
+        }
+      }
+      return formatTps(data.maxTps.value)
+    },
+  }),
+  columnHelper.accessor('data.summedCount', {
+    header: 'Count',
+    cell: (ctx) => {
+      if (ctx.row.original.data.type === 'not-available') {
+        switch (ctx.row.original.data.reason) {
+          case 'missing-data':
+            return EM_DASH
+          case 'loading':
+            return <Skeleton className="h-4 w-10" />
+        }
+      }
+      return (
+        <div className="flex items-center">
+          <NumberCell className="font-bold">
+            {formatNumber(ctx.row.original.data.summedCount)}
+          </NumberCell>
+          <NumberCell signed className="ml-1 !text-base font-medium">
+            {ctx.row.original.data.change}
+          </NumberCell>
+        </div>
+      )
+    },
+  }),
+  columnHelper.accessor('dataSource', {
+    header: 'Data source',
   }),
 ]

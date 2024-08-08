@@ -1,4 +1,5 @@
 import { type ZodTypeAny, type z } from 'zod'
+import { ActivityTimeRange } from '~/server/features/activity/utils/range'
 import { TvlChartRange } from '~/server/features/tvl/range-utils'
 
 /**
@@ -7,6 +8,11 @@ import { TvlChartRange } from '~/server/features/tvl/range-utils'
 export const knownCookies = {
   // Chart range used for preloads.
   chartRange: knownCookie('l2beat-chart-range', TvlChartRange, '1y'),
+  activityTimeRange: knownCookie(
+    'activity-time-range',
+    ActivityTimeRange,
+    '30d',
+  ),
 } satisfies Record<string, KnownCookie>
 
 /**

@@ -20,6 +20,26 @@ export class ActivityViewRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getDailyCountsForProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<DailyTransactionCountRecord[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('activity.daily_count_view')
+      .select(['project_id', 'count', 'unix_timestamp'])
+      .where('unix_timestamp', '>=', from.toDate())
+      .where('unix_timestamp', '<', to.toDate())
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((id) => id.toString()),
+      )
+      .orderBy('unix_timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getDailyCountsPerProject(
     projectId: ProjectId,
   ): Promise<DailyTransactionCountRecord[]> {
@@ -54,5 +74,33 @@ export class ActivityViewRepository extends BaseRepository {
       count: Number(row.count),
       timestamp: UnixTime.fromDate(row.unix_timestamp),
     }))
+  }
+
+  async getMaxCountForProjects() {
+    const subquery = this.db
+      .selectFrom('activity.daily_count_view')
+      .select(['project_id', (eb) => eb.fn.max('count').as('max_count')])
+      .groupBy('project_id')
+      .as('t2')
+
+    const rows = await this.db
+      .selectFrom('activity.daily_count_view as t1')
+      .innerJoin(subquery, (join) =>
+        join
+          .onRef('t1.project_id', '=', 't2.project_id')
+          .onRef('t1.count', '=', 't2.max_count'),
+      )
+      .select(['t1.project_id', 't1.count as max_count', 't1.unix_timestamp'])
+      .execute()
+
+    return Object.fromEntries(
+      rows.map((row) => [
+        row.project_id,
+        {
+          count: Number(row.max_count),
+          timestamp: UnixTime.fromDate(row.unix_timestamp),
+        },
+      ]),
+    )
   }
 }

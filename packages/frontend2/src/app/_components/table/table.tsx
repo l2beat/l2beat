@@ -103,7 +103,7 @@ const TableCell = React.forwardRef<
     ref={ref}
     className={cn(
       'group h-9 whitespace-pre align-middle md:h-14',
-      !href && 'pr-3 first:pl-2 last:pr-2',
+      !href && 'pr-3 first:pl-2 last:pr-2 md:pr-4',
       !href && className,
     )}
     {...props}
