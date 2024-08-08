@@ -11,10 +11,7 @@ import fsx from 'fs-extra'
 
 import { Config } from '../config'
 
-type Charts =
-  | TvlApiCharts
-  | ActivityApiCharts
-  | L2CostsProjectApiCharts
+type Charts = TvlApiCharts | ActivityApiCharts | L2CostsProjectApiCharts
 
 export function createApi(
   config: Config,
