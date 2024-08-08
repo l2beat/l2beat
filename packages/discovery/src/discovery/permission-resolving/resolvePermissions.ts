@@ -70,8 +70,7 @@ export function resolvePermissions<T>(
         ],
       }
 
-      const visitedNodes: NodeId[] = []
-      result.push(...floodFill(edge.toNode, graph, visitedNodes, newWork))
+      result.push(...floodFill(edge.toNode, graph, [], newWork))
     }
   }
 
@@ -81,13 +80,13 @@ export function resolvePermissions<T>(
 function floodFill<T>(
   nodeId: NodeId,
   graph: Node<T>[],
-  visitedNodes: NodeId[],
+  visited: NodeId[],
   workingOn: GrantedPermission<T>,
 ): GrantedPermission<T>[] {
-  if (visitedNodes.includes(nodeId)) {
+  if (visited.includes(nodeId)) {
+    // TODO: (sz-piotr) empty array?
     return [workingOn]
   }
-  visitedNodes.push(nodeId)
 
   const node = graph[nodeId]
   assert(node !== undefined)
@@ -101,7 +100,13 @@ function floodFill<T>(
     if (edge.type === 'act' || (expandsMembers && edge.type === 'member')) {
       const { toNode, delay } = edge
       result.push(
-        ...copyWorkAndFlood(graph, toNode, delay, visitedNodes, workingOn),
+        ...copyWorkAndFlood(
+          graph,
+          toNode,
+          delay,
+          [...visited, nodeId],
+          workingOn,
+        ),
       )
     }
   }

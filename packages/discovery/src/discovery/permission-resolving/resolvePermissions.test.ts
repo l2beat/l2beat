@@ -207,6 +207,40 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('two diverging and converging paths', () => {
+    const graph: Node<string>[] = [
+      node('vault', [edge('upgrade', 1)]),
+      node('proxy', [edge('act', 2), edge('act', 3)]),
+      node('timelockA', [edge('act', 4, { delay: 50 })]),
+      node('timelockB', [edge('act', 4, { delay: 100 })]),
+      node('multisig', [edge('member', 5)]),
+      node('actor'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        type: 'upgrade',
+        path: [
+          { address: 'vault', delay: 0 },
+          { address: 'proxy', delay: 0 },
+          { address: 'timelockA', delay: 50 },
+          { address: 'multisig', delay: 0 },
+          { address: 'actor', delay: 0 },
+        ],
+      },
+      {
+        type: 'upgrade',
+        path: [
+          { address: 'vault', delay: 0 },
+          { address: 'proxy', delay: 0 },
+          { address: 'timelockB', delay: 100 },
+          { address: 'multisig', delay: 0 },
+          { address: 'actor', delay: 0 },
+        ],
+      },
+    ])
+  })
+
   it('one actor, four contracts, two upgrades with same delay on different path', () => {
     const graph: Node<string>[] = [
       node('actor'),
