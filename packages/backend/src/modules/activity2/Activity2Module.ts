@@ -51,14 +51,11 @@ export function createActivity2Module(
   )
 
   const start = async () => {
-    logger = logger.for('Activity2Module')
-    logger.info('Starting')
     await Promise.all(
       indexers.map(async (indexer) => {
         await indexer.start()
       }),
     )
-    logger.info('Started')
   }
 
   return {
