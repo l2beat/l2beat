@@ -436,14 +436,14 @@ describe(resolvePermissions.name, () => {
         { address: vault, threshold: 1 },
       ],
       edges: [
-          { type: 'configure', fromNode: 6, toNode: 3, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 4, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 5, delay: 0 },
-          { type: 'member', fromNode: 4, toNode: 0, delay: 0 },
-          { type: 'member', fromNode: 4, toNode: 1, delay: 0 },
-          { type: 'member', fromNode: 5, toNode: 0, delay: 0 },
-          { type: 'member', fromNode: 5, toNode: 1, delay: 0 },
-          { type: 'member', fromNode: 5, toNode: 2, delay: 0 },
+        { type: 'configure', fromNode: 6, toNode: 3, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 4, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 5, delay: 0 },
+        { type: 'member', fromNode: 4, toNode: 0, delay: 0 },
+        { type: 'member', fromNode: 4, toNode: 1, delay: 0 },
+        { type: 'member', fromNode: 5, toNode: 0, delay: 0 },
+        { type: 'member', fromNode: 5, toNode: 1, delay: 0 },
+        { type: 'member', fromNode: 5, toNode: 2, delay: 0 },
       ],
     }
 
@@ -493,10 +493,10 @@ describe(resolvePermissions.name, () => {
         { address: vault, threshold: 1 },
       ],
       edges: [
-          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
       ],
     }
 
@@ -527,10 +527,10 @@ describe(resolvePermissions.name, () => {
         { address: vault, threshold: 1 },
       ],
       edges: [
-          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
+        { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
       ],
     }
 
@@ -561,10 +561,10 @@ describe(resolvePermissions.name, () => {
         { address: vault, threshold: 1 },
       ],
       edges: [
-          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 2, delay: 0 }
+        { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
       ],
     }
 
@@ -612,10 +612,10 @@ describe(resolvePermissions.name, () => {
         { address: vault, threshold: 1 },
       ],
       edges: [
-          { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
-          { type: 'member', fromNode: 3, toNode: 2, delay: 0 }
+        { type: 'configure', fromNode: 4, toNode: 3, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 0, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 1, delay: 0 },
+        { type: 'member', fromNode: 3, toNode: 2, delay: 0 },
       ],
     }
 

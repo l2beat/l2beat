@@ -100,7 +100,8 @@ function floodFill(
 
   const result: GrantedPermission[] = []
   const edges = graph.edges.filter((e) => e.fromNode === nodeId)
-  const expandsMembers = node.threshold === 1 && edges.some((e) => e.type === 'member')
+  const expandsMembers =
+    node.threshold === 1 && edges.some((e) => e.type === 'member')
   const hasActEdges = edges.some((e) => e.type === 'act')
   for (const edge of edges) {
     if (edge.type === 'act' || (expandsMembers && edge.type === 'member')) {
