@@ -4,9 +4,9 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { LoopringClient } from '../../../../peripherals/loopring/LoopringClient'
 import { ActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
-import { BaseTxsCountProvider } from '../BaseTxsCountProvider'
+import { TxsCountProvider } from '../TxsCountProvider'
 
-export class LoopringTxsCountProvider extends BaseTxsCountProvider {
+export class LoopringTxsCountProvider extends TxsCountProvider {
   constructor(
     logger: Logger,
     projectId: ProjectId,

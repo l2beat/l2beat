@@ -7,7 +7,7 @@ interface BaseTxsCountProviderDeps {
   projectId: ProjectId
 }
 
-export abstract class BaseTxsCountProvider {
+export abstract class TxsCountProvider {
   constructor(private readonly $: BaseTxsCountProviderDeps) {
     this.$.logger = $.logger.for(this).tag($.projectId.toString())
   }

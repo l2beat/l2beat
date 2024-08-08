@@ -3,7 +3,7 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
 import { StarkexActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
-import { activityRecord } from '../BaseTxsCountProvider.test'
+import { activityRecord } from '../TxsCountProvider.test'
 import { StarkexTxsCountProvider } from './StarkexTxsCountProvider'
 
 describe(StarkexTxsCountProvider.prototype.getTxsCount.name, () => {

@@ -22,7 +22,7 @@ import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
 import { DayTargetIndexer } from './indexers/DayTargetIndexer'
 import { ActivityIndexer } from './indexers/types'
-import { BaseTxsCountProvider } from './services/BaseTxsCountProvider'
+import { TxsCountProvider } from './services/TxsCountProvider'
 import { DegateTxsCountProvider } from './services/providers/DegateTxsCountProvider'
 import { LoopringTxsCountProvider } from './services/providers/LoopringTxsCountProvider'
 import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
@@ -246,7 +246,7 @@ function createIndexers(
   clock: Clock,
   logger: Logger,
   client: BaseClient,
-  txsCountProvider: BaseTxsCountProvider,
+  txsCountProvider: TxsCountProvider,
   project: { id: ProjectId; config: ActivityTransactionConfig },
   indexerService: IndexerService,
   db: Database,

@@ -4,9 +4,9 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { ActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
-import { BaseTxsCountProvider } from '../BaseTxsCountProvider'
+import { TxsCountProvider } from '../TxsCountProvider'
 
-export class RpcTxsCountProvider extends BaseTxsCountProvider {
+export class RpcTxsCountProvider extends TxsCountProvider {
   constructor(
     logger: Logger,
     projectId: ProjectId,

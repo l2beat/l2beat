@@ -4,9 +4,9 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { ZksyncLiteClient } from '../../../../peripherals/zksynclite/ZksyncLiteClient'
 import { ActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
-import { BaseTxsCountProvider } from '../BaseTxsCountProvider'
+import { TxsCountProvider } from '../TxsCountProvider'
 
-export class ZKsyncLiteTxsCountProvider extends BaseTxsCountProvider {
+export class ZKsyncLiteTxsCountProvider extends TxsCountProvider {
   constructor(
     logger: Logger,
     projectId: ProjectId,

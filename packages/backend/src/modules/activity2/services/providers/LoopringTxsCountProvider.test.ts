@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { LoopringClient } from '../../../../peripherals/loopring/LoopringClient'
-import { activityRecord } from '../BaseTxsCountProvider.test'
+import { activityRecord } from '../TxsCountProvider.test'
 import { LoopringTxsCountProvider } from './LoopringTxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))

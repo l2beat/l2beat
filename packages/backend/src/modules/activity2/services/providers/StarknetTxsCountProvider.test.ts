@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { StarknetClient } from '../../../../peripherals/starknet/StarknetClient'
-import { activityRecord, transactions } from '../BaseTxsCountProvider.test'
+import { activityRecord, transactions } from '../TxsCountProvider.test'
 import { StarknetTxsCountProvider } from './StarknetTxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))

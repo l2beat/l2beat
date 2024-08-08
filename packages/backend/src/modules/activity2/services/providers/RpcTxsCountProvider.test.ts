@@ -2,7 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect, mockFn, mockObject } from 'earl'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
-import { activityRecord, transactions } from '../BaseTxsCountProvider.test'
+import { activityRecord, transactions } from '../TxsCountProvider.test'
 import { RpcTxsCountProvider } from './RpcTxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))

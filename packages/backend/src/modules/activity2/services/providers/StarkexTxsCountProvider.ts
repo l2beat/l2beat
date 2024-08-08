@@ -4,9 +4,9 @@ import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { StarkexClient } from '../../../../peripherals/starkex/StarkexClient'
 import { ActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
-import { BaseTxsCountProvider } from '../BaseTxsCountProvider'
+import { TxsCountProvider } from '../TxsCountProvider'
 
-export class StarkexTxsCountProvider extends BaseTxsCountProvider {
+export class StarkexTxsCountProvider extends TxsCountProvider {
   private readonly projectIdCopy: ProjectId
   constructor(
     logger: Logger,

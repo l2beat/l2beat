@@ -4,9 +4,9 @@ import { assert, ProjectId } from '@l2beat/shared-pure'
 import { range } from 'lodash'
 import { DegateClient } from '../../../../peripherals/degate'
 import { ActivityTransactionConfig } from '../../../activity/ActivityTransactionConfig'
-import { BaseTxsCountProvider } from '../BaseTxsCountProvider'
+import { TxsCountProvider } from '../TxsCountProvider'
 
-export class DegateTxsCountProvider extends BaseTxsCountProvider {
+export class DegateTxsCountProvider extends TxsCountProvider {
   constructor(
     logger: Logger,
     projectId: ProjectId,

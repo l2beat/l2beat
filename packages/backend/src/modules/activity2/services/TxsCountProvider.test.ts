@@ -3,12 +3,12 @@ import { ActivityRecord } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { range } from 'lodash'
-import { BaseTxsCountProvider } from './BaseTxsCountProvider'
+import { TxsCountProvider } from './TxsCountProvider'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
-describe(BaseTxsCountProvider.name, () => {
-  describe(BaseTxsCountProvider.prototype.aggregatePerDay.name, () => {
+describe(TxsCountProvider.name, () => {
+  describe(TxsCountProvider.prototype.aggregatePerDay.name, () => {
     it('should aggregate per day', () => {
       const testTxsCountProvider = new TestTxsCountProvider(
         Logger.SILENT,
@@ -31,7 +31,7 @@ describe(BaseTxsCountProvider.name, () => {
   })
 })
 
-class TestTxsCountProvider extends BaseTxsCountProvider {
+class TestTxsCountProvider extends TxsCountProvider {
   constructor(logger: Logger, projectId: ProjectId) {
     super({ logger, projectId })
   }
