@@ -13,78 +13,78 @@ If you find that something was incorrectly set up in the `up` function you
 should create a new migration file that fixes the issue.
 
 */
-const projects: { name: string; type: 'block' | 'day' }[] = [
-  { name: 'aevo', type: 'block' },
-  { name: 'alienx', type: 'block' },
-  { name: 'ancient', type: 'block' },
-  { name: 'apex', type: 'day' },
-  { name: 'arbitrum', type: 'block' },
-  { name: 'astarzkevm', type: 'block' },
-  { name: 'base', type: 'block' },
-  { name: 'blast', type: 'block' },
-  { name: 'bob', type: 'block' },
-  { name: 'bobanetwork', type: 'block' },
-  { name: 'brine', type: 'day' }, //tanx
-  { name: 'cyber', type: 'block' },
-  { name: 'degate3', type: 'block' },
-  { name: 'degen', type: 'block' },
-  { name: 'deversifi', type: 'block' }, //rhinofi
-  { name: 'dydx', type: 'day' },
-  { name: 'ethereum', type: 'block' },
-  { name: 'fraxtal', type: 'block' },
-  { name: 'gpt', type: 'block' },
-  { name: 'ham', type: 'block' },
-  { name: 'hook', type: 'block' },
-  { name: 'hychain', type: 'block' },
-  { name: 'immutablex', type: 'day' },
-  { name: 'karak', type: 'block' },
-  { name: 'kinto', type: 'block' },
-  { name: 'kroma', type: 'block' },
-  { name: 'l3x', type: 'block' },
-  { name: 'lambda', type: 'block' },
-  { name: 'linea', type: 'block' },
-  { name: 'lisk', type: 'block' },
-  { name: 'loopring', type: 'block' },
-  { name: 'lyra', type: 'block' },
-  { name: 'mantapacific', type: 'block' },
-  { name: 'mantle', type: 'block' },
-  { name: 'metal', type: 'block' },
-  { name: 'metis', type: 'block' },
-  { name: 'mint', type: 'block' },
-  { name: 'mode', type: 'block' },
-  { name: 'molten', type: 'block' },
-  { name: 'myria', type: 'day' },
-  { name: 'nova', type: 'block' },
-  { name: 'optimism', type: 'block' },
-  { name: 'optopia', type: 'block' },
-  { name: 'orderly', type: 'block' },
-  { name: 'parallel', type: 'block' },
-  { name: 'patex', type: 'block' },
-  { name: 'polygonzkevm', type: 'block' },
-  { name: 'popapex', type: 'block' },
-  { name: 'publicgoodsnetwork', type: 'block' },
-  { name: 'rari', type: 'block' },
-  { name: 'real', type: 'block' },
-  { name: 'redstone', type: 'block' },
-  { name: 'rss3', type: 'block' },
-  { name: 'sanko', type: 'block' },
-  { name: 'scroll', type: 'block' },
-  { name: 'sorare', type: 'day' },
-  { name: 'stack', type: 'block' },
-  { name: 'starknet', type: 'block' },
-  { name: 'swan', type: 'block' },
-  { name: 'sxnetwork', type: 'block' },
-  { name: 'syndicateframe', type: 'block' },
-  { name: 'taiko', type: 'block' },
-  { name: 'witness', type: 'block' },
-  { name: 'xai', type: 'block' },
-  { name: 'xlayer', type: 'block' },
-  { name: 'xterio', type: 'block' },
-  { name: 'zircuit', type: 'block' },
-  { name: 'zklinknova', type: 'block' },
-  { name: 'zksync', type: 'block' },
-  { name: 'zksync2', type: 'block' },
-  { name: 'zora', type: 'block' },
+const projects: { name: string; indexerType: 'block' | 'day' }[] = [
+  { name: 'aevo', indexerType: 'block' },
+  { name: 'alienx', indexerType: 'block' },
+  { name: 'ancient', indexerType: 'block' },
+  { name: 'apex', indexerType: 'day' },
+  { name: 'arbitrum', indexerType: 'block' },
+  { name: 'astarzkevm', indexerType: 'block' },
+  { name: 'base', indexerType: 'block' },
+  { name: 'blast', indexerType: 'block' },
+  { name: 'bob', indexerType: 'block' },
+  { name: 'bobanetwork', indexerType: 'block' },
+  { name: 'brine', indexerType: 'day' }, //tanx
+  { name: 'cyber', indexerType: 'block' },
+  { name: 'degate3', indexerType: 'block' },
+  { name: 'degen', indexerType: 'block' },
+  { name: 'deversifi', indexerType: 'block' }, //rhinofi
+  { name: 'dydx', indexerType: 'day' },
+  { name: 'ethereum', indexerType: 'block' },
+  { name: 'fraxtal', indexerType: 'block' },
+  { name: 'gpt', indexerType: 'block' },
+  { name: 'ham', indexerType: 'block' },
+  { name: 'hook', indexerType: 'block' },
+  { name: 'hychain', indexerType: 'block' },
+  { name: 'immutablex', indexerType: 'day' },
+  { name: 'karak', indexerType: 'block' },
+  { name: 'kinto', indexerType: 'block' },
+  { name: 'kroma', indexerType: 'block' },
+  { name: 'l3x', indexerType: 'block' },
+  { name: 'lambda', indexerType: 'block' },
+  { name: 'linea', indexerType: 'block' },
+  { name: 'lisk', indexerType: 'block' },
+  { name: 'loopring', indexerType: 'block' },
+  { name: 'lyra', indexerType: 'block' },
+  { name: 'mantapacific', indexerType: 'block' },
+  { name: 'mantle', indexerType: 'block' },
+  { name: 'metal', indexerType: 'block' },
+  { name: 'metis', indexerType: 'block' },
+  { name: 'mint', indexerType: 'block' },
+  { name: 'mode', indexerType: 'block' },
+  { name: 'molten', indexerType: 'block' },
+  { name: 'myria', indexerType: 'day' },
+  { name: 'nova', indexerType: 'block' },
+  { name: 'optimism', indexerType: 'block' },
+  { name: 'optopia', indexerType: 'block' },
+  { name: 'orderly', indexerType: 'block' },
+  { name: 'parallel', indexerType: 'block' },
+  { name: 'patex', indexerType: 'block' },
+  { name: 'polygonzkevm', indexerType: 'block' },
+  { name: 'popapex', indexerType: 'block' },
+  { name: 'publicgoodsnetwork', indexerType: 'block' },
+  { name: 'rari', indexerType: 'block' },
+  { name: 'real', indexerType: 'block' },
+  { name: 'redstone', indexerType: 'block' },
+  { name: 'rss3', indexerType: 'block' },
+  { name: 'sanko', indexerType: 'block' },
+  { name: 'scroll', indexerType: 'block' },
+  { name: 'sorare', indexerType: 'day' },
+  { name: 'stack', indexerType: 'block' },
+  { name: 'starknet', indexerType: 'block' },
+  { name: 'swan', indexerType: 'block' },
+  { name: 'sxnetwork', indexerType: 'block' },
+  { name: 'syndicateframe', indexerType: 'block' },
+  { name: 'taiko', indexerType: 'block' },
+  { name: 'witness', indexerType: 'block' },
+  { name: 'xai', indexerType: 'block' },
+  { name: 'xlayer', indexerType: 'block' },
+  { name: 'xterio', indexerType: 'block' },
+  { name: 'zircuit', indexerType: 'block' },
+  { name: 'zklinknova', indexerType: 'block' },
+  { name: 'zksync', indexerType: 'block' },
+  { name: 'zksync2', indexerType: 'block' },
+  { name: 'zora', indexerType: 'block' },
 ]
 
 const timestamp = UnixTime.fromDate(new Date('2024-08-08T00:00:00Z'))
@@ -93,11 +93,73 @@ export async function up(knex: Knex) {
   await knex('indexer_state').insert(
     projects.map((p) => ({
       indexer_id:
-        p.type === 'block'
+        p.indexerType === 'block'
           ? `activity_block_indexer::${p.name}`
           : `activity_day_indexer::${p.name}`,
       safe_height: timestamp.toNumber(),
     })),
+  )
+
+  // migrate zksync activity
+  await knex('public.activity').insert(
+    knex
+      .select(
+        knex.raw("'zksync'::character varying AS project_id"),
+        knex.raw("date_trunc('day', zksync.unix_timestamp) AS day_timestamp"),
+        knex.raw('count(*) AS count'),
+        knex.raw('min(block_number) AS start'),
+        knex.raw('max(block_number) AS end'),
+        knex
+          .whereIn(
+            'project_id',
+            projects.map((p) => p.name),
+          )
+          .andWhere('zksync.unix_timestamp', '<=', timestamp.toNumber()),
+      )
+      .from('activity.zksync')
+      .groupByRaw("date_trunc('day', zksync.unix_timestamp)"),
+  )
+
+  // migrate block activity
+  await knex('public.activity').insert(
+    knex
+      .select(
+        'block.project_id',
+        knex.raw("date_trunc('day', block.unix_timestamp) AS day_timestamp"),
+        knex.raw('sum(block.count) AS count'),
+        knex.raw('min(block.block_number) AS start'),
+        knex.raw('max(block.block_number) AS end'),
+        knex
+          .whereIn(
+            'project_id',
+            projects.map((p) => p.name),
+          )
+          .andWhere('zksync.unix_timestamp', '<=', timestamp.toNumber()),
+      )
+      .from('activity.block')
+      .groupByRaw("date_trunc('day', block.unix_timestamp), block.project_id"),
+  )
+
+  // migrate starkex activity
+  knex('public.activity').insert(
+    knex
+      .select(
+        'starkex.project_id',
+        'starkex.unix_timestamp',
+        'starkex.count',
+        knex.raw('extract(epoch from starkex.unix_timestamp) AS start'),
+        knex.raw(
+          "extract(epoch from (date_trunc('day', starkex.unix_timestamp) + interval '1 day' - interval '1 second')) AS end",
+        ),
+        knex
+          .whereIn(
+            'project_id',
+            projects.map((p) => p.name),
+          )
+          .andWhere('zksync.unix_timestamp', '<=', timestamp.toNumber()),
+      )
+      .from('activity.starkex')
+      .groupBy('starkex.unix_timestamp', 'starkex.project_id'),
   )
 }
 
