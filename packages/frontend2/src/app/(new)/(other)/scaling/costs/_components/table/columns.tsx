@@ -12,9 +12,9 @@ import {
 import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { CostsBreakdownValueCell } from '../costs-breakdown-value-cell'
 import { CostsTotalCell } from '../costs-total-cell'
-import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 
 export type ScalingCostsTableEntry = ScalingCostsEntry & {
   data: CostsData
