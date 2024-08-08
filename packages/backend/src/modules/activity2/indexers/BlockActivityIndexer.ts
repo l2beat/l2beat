@@ -73,18 +73,21 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     // we need to invalidate all data points from record
     const adjustedTargetHeight = records[0].start - 1
 
-    this.$.logger.info('Invalidating activity', {
+    const deletedRows = await this.$.db.activity.deleteByProjectIdFrom(
+      this.$.projectId,
+      records[0].timestamp,
+    )
+
+    if (deletedRows > 0) {
+      this.$.logger.info('Deleted rows', { deletedRows })
+    }
+
+    this.$.logger.info('Invalidated activity', {
       projectId: this.$.projectId,
       targetHeight,
       adjustedTargetHeight,
       timestamp: records[0].timestamp,
     })
-
-    // delete the record including data point and all after it
-    await this.$.db.activity.deleteByProjectIdFrom(
-      this.$.projectId,
-      records[0].timestamp,
-    )
 
     return Promise.resolve(adjustedTargetHeight)
   }

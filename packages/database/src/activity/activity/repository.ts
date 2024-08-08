@@ -35,14 +35,14 @@ export class ActivityRepository extends BaseRepository {
 
   async deleteByProjectIdFrom(
     projectId: ProjectId,
-    from: UnixTime,
+    fromInclusive: UnixTime,
   ): Promise<number> {
     const result = await this.db
       .deleteFrom('public.activity')
       .where((eb) =>
         eb.and([
           eb('project_id', '=', projectId.toString()),
-          eb('timestamp', '>=', from.toDate()),
+          eb('timestamp', '>=', fromInclusive.toDate()),
         ]),
       )
       .executeTakeFirst()
