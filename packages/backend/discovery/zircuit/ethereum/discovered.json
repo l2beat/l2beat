@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 20463002,
-  "configHash": "0xcd6dbd43a0ed406a4ceef3f1fed1cba17bfae478b2d7f6e88ada6e31f36bd69b",
+  "configHash": "0x359284f32b2a1a5fd4421d982e818c64a8bf31d65b0583869024f6890a2c30ee",
   "version": 10,
   "contracts": [
     {
@@ -80,7 +80,7 @@
       "derivedName": "L1CrossDomainMessenger"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ZircuitGuardianMultiSig",
       "address": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -98,7 +98,8 @@
         "GnosisSafe_modules": [],
         "nonce": 4,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "SystemConfig",
@@ -229,13 +230,9 @@
       }
     },
     {
-      "name": "SuperchainConfig",
+      "name": "ZircuitSuperchainConfig",
       "address": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-      "template": "opstack/SuperchainConfig",
       "proxyType": "EIP1967 proxy",
-      "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
       "categories": ["Upgrades&Governance"],
       "sinceTimestamp": 1719936443,
       "values": {
@@ -325,7 +322,7 @@
       "derivedName": "L1ERC721Bridge"
     },
     {
-      "name": "GnosisSafe",
+      "name": "ZircuitMutliSig",
       "address": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
@@ -353,7 +350,8 @@
         "GnosisSafe_modules": [],
         "nonce": 4,
         "VERSION": "1.3.0"
-      }
+      },
+      "derivedName": "GnosisSafe"
     },
     {
       "name": "OptimismMintableERC20Factory",
@@ -840,7 +838,6 @@
     "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x8b0d2e152c2089c579331bafb6efbb2bdf71b5bf
+Generated with discovered.json: 0x8788286d7651ff1ca8d3edb9bd1f2a5d6583e685
 
-# Diff at Mon, 05 Aug 2024 14:36:41 GMT:
+# Diff at Thu, 08 Aug 2024 09:59:44 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
 - current block number: 20463002
 
 ## Description
@@ -25,7 +25,7 @@ Initial discovery: Fork from the latest pre-FP OP stack contracts with added ZK 
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x2c0B27F7C8F083B539557a0bA787041BF22DB276)
+    contract ZircuitGuardianMultiSig (0x2c0B27F7C8F083B539557a0bA787041BF22DB276)
     +++ description: None
 ```
 
@@ -55,8 +55,8 @@ Initial discovery: Fork from the latest pre-FP OP stack contracts with added ZK 
 
 ```diff
 +   Status: CREATED
-    contract SuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0)
-    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.
+    contract ZircuitSuperchainConfig (0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0)
+    +++ description: None
 ```
 
 ```diff
@@ -73,7 +73,7 @@ Initial discovery: Fork from the latest pre-FP OP stack contracts with added ZK 
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0xC463EaC02572CC964D43D2414023E2c6B62bAF38)
+    contract ZircuitMutliSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38)
     +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
 ```
 

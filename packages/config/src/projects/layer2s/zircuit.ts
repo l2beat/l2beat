@@ -34,6 +34,13 @@ export const zircuit: Layer2 = opStackL2({
   isNodeAvailable: 'UnderReview',
   useDiscoveryMetaOnly: true,
   // proof system currently with temporary backdoor
+  
+  nonTemplateContracts: [    
+    discovery.getContractDetails('Verifier', {
+    description:
+      "This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof",
+    }), 
+  ],
   milestones: [
     {
       name: 'Zircuit Mainnet Launch',
