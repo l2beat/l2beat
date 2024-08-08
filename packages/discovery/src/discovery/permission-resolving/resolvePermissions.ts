@@ -26,10 +26,10 @@ export type Permission = 'member' | 'act' | 'configure' | 'upgrade'
 // what to do in a scenario when one members has a smaller delay than others
 // and such a case should be discussed.
 
-export interface Node {
-  address: EthereumAddress
+export interface Node<T = EthereumAddress> {
+  address: T
   threshold: number
-  delay?: number
+  delay: number
 }
 
 export interface Edge {
@@ -39,23 +39,23 @@ export interface Edge {
   toNode: NodeId
 }
 
-export interface Graph {
-  nodes: Node[]
+export interface Graph<T = EthereumAddress> {
+  nodes: Node<T>[]
   edges: Edge[]
 }
 
-export interface PathElement {
-  address: EthereumAddress
+export interface PathElement<T = EthereumAddress> {
+  address: T
   delay: number
 }
 
-export interface GrantedPermission {
+export interface GrantedPermission<T = EthereumAddress> {
   type: Permission
-  path: PathElement[]
+  path: PathElement<T>[]
 }
 
-export function resolvePermissions(graph: Graph): GrantedPermission[] {
-  const result: GrantedPermission[] = []
+export function resolvePermissions<T>(graph: Graph<T>): GrantedPermission<T>[] {
+  const result: GrantedPermission<T>[] = []
 
   for (let nodeId = 0; nodeId < graph.nodes.length; nodeId += 1) {
     const node = graph.nodes[nodeId]
@@ -68,11 +68,11 @@ export function resolvePermissions(graph: Graph): GrantedPermission[] {
     for (const edge of workCreatingEdges) {
       const toNode = graph.nodes[edge.toNode]
       assert(toNode !== undefined)
-      const newWork: GrantedPermission = {
+      const newWork: GrantedPermission<T> = {
         type: edge.type,
         path: [
-          { address: node.address, delay: edge.delay + (node.delay ?? 0) },
-          { address: toNode.address, delay: toNode.delay ?? 0 },
+          { address: node.address, delay: edge.delay + node.delay },
+          { address: toNode.address, delay: toNode.delay },
         ],
       }
 
@@ -84,12 +84,12 @@ export function resolvePermissions(graph: Graph): GrantedPermission[] {
   return collapseUpgrades(result)
 }
 
-function floodFill(
+function floodFill<T>(
   nodeId: NodeId,
-  graph: Graph,
+  graph: Graph<T>,
   visitedNodes: NodeId[],
-  workingOn: GrantedPermission,
-): GrantedPermission[] {
+  workingOn: GrantedPermission<T>,
+): GrantedPermission<T>[] {
   if (visitedNodes.includes(nodeId)) {
     return [workingOn]
   }
@@ -98,7 +98,7 @@ function floodFill(
   const node = graph.nodes[nodeId]
   assert(node !== undefined)
 
-  const result: GrantedPermission[] = []
+  const result: GrantedPermission<T>[] = []
   const edges = graph.edges.filter((e) => e.fromNode === nodeId)
   const expandsMembers =
     node.threshold === 1 && edges.some((e) => e.type === 'member')
@@ -119,12 +119,12 @@ function floodFill(
   return result
 }
 
-function copyWorkAndFlood(
-  graph: Graph,
+function copyWorkAndFlood<T>(
+  graph: Graph<T>,
   toNode: NodeId,
   delay: number,
   visitedNodes: NodeId[],
-  workingOn: GrantedPermission,
+  workingOn: GrantedPermission<T>,
 ) {
   const workCopy = structuredClone(workingOn)
   const node = graph.nodes[toNode]
@@ -133,18 +133,20 @@ function copyWorkAndFlood(
   if (lastElement !== undefined) {
     lastElement.delay += delay
   }
-  workCopy.path.push({ address: node.address, delay: node.delay ?? 0 })
+  workCopy.path.push({ address: node.address, delay: node.delay })
   return floodFill(toNode, graph, visitedNodes, workCopy)
 }
 
-function collapseUpgrades(input: GrantedPermission[]): GrantedPermission[] {
+function collapseUpgrades<T>(
+  input: GrantedPermission<T>[],
+): GrantedPermission<T>[] {
   const upgrades = input.filter((p) => p.type === 'upgrade')
   const configures = input.filter((p) => p.type === 'configure')
   const others = input.filter(
     (p) => p.type !== 'upgrade' && p.type !== 'configure',
   )
 
-  const collapsed: GrantedPermission[] = []
+  const collapsed: GrantedPermission<T>[] = []
 
   for (const upgrade of upgrades) {
     const matchingConfigure = configures.find(
@@ -166,6 +168,6 @@ function collapseUpgrades(input: GrantedPermission[]): GrantedPermission[] {
   return [...collapsed, ...configures, ...others]
 }
 
-function sumDelays(path: PathElement[]): number {
+function sumDelays<T>(path: PathElement<T>[]): number {
   return path.reduce((sum, element) => sum + element.delay, 0)
 }
