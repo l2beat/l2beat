@@ -1,3 +1,58 @@
+Generated with discovered.json: 0x49a8cada1a407810517a75db2eb53f707aead38f
+
+# Diff at Thu, 08 Aug 2024 08:26:55 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@9d9aff2cdd9ae39e04565a5c3e3ad0ee4979b988 block: 20475166
+- current block number: 20482656
+
+## Description
+
+Added new token pools to OnRamp.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x8c6028e38391cfC2A1a28f4359EA5732E9422e56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xC456EaE992e4f2925E3F75Ac4809dF387756CD29)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x8c6028e38391cfC2A1a28f4359EA5732E9422e56.sol |  998 ++++++++++++++
+ ...-0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c.sol |  998 ++++++++++++++
+ ...-0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B.sol | 1407 ++++++++++++++++++++
+ ...-0xC456EaE992e4f2925E3F75Ac4809dF387756CD29.sol | 1407 ++++++++++++++++++++
+ ...-0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000.sol | 1407 ++++++++++++++++++++
+ 5 files changed, 6217 insertions(+)
+```
+
 Generated with discovered.json: 0xe7f888d9bf1744fcb3fcf778046bd265349b09c3
 
 # Diff at Wed, 07 Aug 2024 07:23:21 GMT:

@@ -2384,7 +2384,7 @@
       "chainId": 1,
       "project": "lisk",
       "source": "canonical",
-      "supply": "preminted",
+      "supply": "zero",
       "escrow": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
     },
     {
@@ -3958,6 +3958,21 @@
       "coingeckoListingTimestamp": 1710979200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "susdz-staked-usdz",
+      "name": "Staked USDz",
+      "coingeckoId": "anzen-staked-usdz",
+      "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+      "symbol": "sUSDz",
+      "decimals": 18,
+      "deploymentTimestamp": 1715851211,
+      "coingeckoListingTimestamp": 1720656000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
