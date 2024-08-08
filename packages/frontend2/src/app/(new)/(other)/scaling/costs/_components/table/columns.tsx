@@ -45,7 +45,7 @@ export const scalingCostsColumns = [
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       headClassName: 'w-0',
     },
     size: 44.55,
@@ -63,7 +63,7 @@ export const scalingCostsColumns = [
     ),
     size: 26,
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       headClassName: 'w-0',
       cellClassName: 'lg:!pr-0',
     },
@@ -85,7 +85,7 @@ export const scalingCostsColumns = [
         ),
         sortUndefined: 'last',
         meta: {
-          hash: 'costs',
+          hash: 'onchain-costs',
           align: 'center',
           tooltip:
             'The total cost that is a sum of the costs for calldata, computation, blobs, and overhead.',
@@ -102,7 +102,7 @@ export const scalingCostsColumns = [
     ),
     sortUndefined: 'last',
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -120,7 +120,7 @@ export const scalingCostsColumns = [
     ),
     sortUndefined: 'last',
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -138,7 +138,7 @@ export const scalingCostsColumns = [
     ),
     sortUndefined: 'last',
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -155,7 +155,7 @@ export const scalingCostsColumns = [
     ),
     sortUndefined: 'last',
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       align: 'right',
       headClassName: getColumnHeaderUnderline(
         'w-[132px]',
@@ -189,7 +189,7 @@ export const scalingCostsColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      hash: 'costs',
+      hash: 'onchain-costs',
       align: 'right',
       tooltip: 'Total number of L2 transactions over the selected time period.',
     },
