@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xd3389b76e1701747e6d6d47573d1c9b808860970
+
+# Diff at Thu, 08 Aug 2024 07:56:00 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@188cb79f5563b495dd4046c3ce9c177c6e946b32 block: 20454476
+- current block number: 20482509
+
+## Description
+
+Added uint256 type safety to totalEjectable calculation.
+
+## Watched changes
+
+```diff
+    contract EjectionManager (0x130d8EA0052B45554e4C99079B84df292149Bd5E) {
+    +++ description: Contract used for ejection of operators from the RegistryCoordinator.
+      values.$implementation:
+-        "0x1A27AC48D40F70213Ae6ec64f66852e0A1a0E6fa"
++        "0x33A517608999DF5CEfFa2b2EbA88B4461c26Af6f"
+    }
+```
+
+## Source code changes
+
+```diff
+.../{.flat@20454476 => .flat}/EjectionManager/EjectionManager.sol       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+```
+
 Generated with discovered.json: 0x012e5a445d7bc77ae4e992083f1a0ef924afe1ff
 
 # Diff at Sun, 04 Aug 2024 10:05:09 GMT:
