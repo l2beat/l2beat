@@ -3,7 +3,7 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import { type SyncStatus } from '~/types/SyncStatus'
+import { type SyncStatus } from '~/types/sync-status'
 import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
 import { type CostsUnit } from '../scaling/get-scaling-costs-entries'
 import { getCostsForProjects } from './get-costs-for-projects'
