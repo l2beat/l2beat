@@ -71,7 +71,6 @@ export interface DAProvider {
 export interface OpStackConfigCommon {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
@@ -95,6 +94,7 @@ export interface OpStackConfigCommon {
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
+  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string

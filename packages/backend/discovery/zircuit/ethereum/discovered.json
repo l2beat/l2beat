@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 20463002,
-  "configHash": "0x359284f32b2a1a5fd4421d982e818c64a8bf31d65b0583869024f6890a2c30ee",
+  "configHash": "0xeb1ac5c4706bbcf3b8f9837dc4718a1cc4e8cd19d312ac0ce3afa60ad79dd678",
   "version": 10,
   "contracts": [
     {
@@ -227,7 +227,8 @@
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9",
         "version": "6ad34d4fc0cb1cbbed736b058d02532e881f9674"
-      }
+      },
+      "derivedName": "Verifier"
     },
     {
       "name": "ZircuitSuperchainConfig",
