@@ -43,132 +43,77 @@ export interface PathElement<T = EthereumAddress> {
   delay: number
 }
 
-export interface GrantedPermission<T = EthereumAddress> {
+export interface ResolvedPermission<T = EthereumAddress> {
   permission: Permission
   path: PathElement<T>[]
 }
 
 export function resolvePermissions<T>(
   graph: Node<T>[],
-): GrantedPermission<T>[] {
-  const result: GrantedPermission<T>[] = []
-
+): ResolvedPermission<T>[] {
+  const result: ResolvedPermission<T>[] = []
   for (const node of graph) {
-    const edges = node.edges
-    const workCreatingEdges = edges.filter(
+    const seedingEdges = node.edges.filter(
       (e) => e.permission === 'configure' || e.permission === 'upgrade',
     )
-    for (const edge of workCreatingEdges) {
-      const toNode = graph.find((n) => n.address === edge.toNode)
-      assert(toNode !== undefined, `Cannot find node ${edge.toNode}`)
-      const newWork: GrantedPermission<T> = {
+    for (const edge of seedingEdges) {
+      const toNode = getNode(edge.toNode, graph)
+      const resolved: ResolvedPermission<T> = {
         permission: edge.permission,
         path: [
           { address: node.address, delay: edge.delay + node.delay },
           { address: toNode.address, delay: toNode.delay },
         ],
       }
-
-      result.push(...floodFill(edge.toNode, graph, [], newWork))
+      result.push(...followThrough(edge.toNode, graph, [], resolved))
     }
   }
-
-  return collapseUpgrades(result)
+  return result
 }
 
-function floodFill<T>(
+function followThrough<T>(
   address: T,
   graph: Node<T>[],
   visited: T[],
-  workingOn: GrantedPermission<T>,
-): GrantedPermission<T>[] {
+  resolved: ResolvedPermission<T>,
+): ResolvedPermission<T>[] {
   if (visited.includes(address)) {
     // TODO: (sz-piotr) empty array?
-    return [workingOn]
+    return [resolved]
   }
 
-  const node = graph.find((n) => n.address === address)
-  assert(node !== undefined, `Cannot find node ${address}`)
+  const node = getNode(address, graph)
+  const result: ResolvedPermission<T>[] = []
 
-  const result: GrantedPermission<T>[] = []
-  const edges = node.edges
-  const expandsMembers =
-    node.threshold === 1 && edges.some((e) => e.permission === 'member')
-  const hasActEdges = edges.some((e) => e.permission === 'act')
-  for (const edge of edges) {
+  let followed = false
+  for (const edge of node.edges) {
     if (
       edge.permission === 'act' ||
-      (expandsMembers && edge.permission === 'member')
+      (node.threshold === 1 && edge.permission === 'member')
     ) {
-      const { toNode, delay } = edge
+      followed = true
+
+      const toNode = getNode(edge.toNode, graph)
+      const clone = structuredClone(resolved)
+      const last = clone.path[clone.path.length - 1]
+      if (last !== undefined) {
+        last.delay += edge.delay
+      }
+      clone.path.push({ address: toNode.address, delay: toNode.delay })
       result.push(
-        ...copyWorkAndFlood(
-          graph,
-          toNode,
-          delay,
-          [...visited, address],
-          workingOn,
-        ),
+        ...followThrough(toNode.address, graph, [...visited, address], clone),
       )
     }
   }
 
-  if (!hasActEdges && !expandsMembers) {
-    result.push(workingOn)
+  if (!followed) {
+    result.push(resolved)
   }
-
   return result
 }
 
-function copyWorkAndFlood<T>(
-  graph: Node<T>[],
-  address: T,
-  delay: number,
-  visitedNodes: T[],
-  workingOn: GrantedPermission<T>,
-) {
-  const workCopy = structuredClone(workingOn)
+function getNode<T>(address: T, graph: Node<T>[]): Node<T> {
   const node = graph.find((n) => n.address === address)
   assert(node !== undefined, `Cannot find node ${address}`)
-  const lastElement = workCopy.path[workCopy.path.length - 1]
-  if (lastElement !== undefined) {
-    lastElement.delay += delay
-  }
-  workCopy.path.push({ address: node.address, delay: node.delay })
-  return floodFill(address, graph, visitedNodes, workCopy)
-}
-
-function collapseUpgrades<T>(
-  input: GrantedPermission<T>[],
-): GrantedPermission<T>[] {
-  const upgrades = input.filter((p) => p.permission === 'upgrade')
-  const configures = input.filter((p) => p.permission === 'configure')
-  const others = input.filter(
-    (p) => p.permission !== 'upgrade' && p.permission !== 'configure',
-  )
-
-  const collapsed: GrantedPermission<T>[] = []
-
-  for (const upgrade of upgrades) {
-    const matchingConfigure = configures.find(
-      (configure) =>
-        configure.path[0]?.address === upgrade.path[0]?.address &&
-        configure?.path[configure.path.length - 1]?.address ===
-          upgrade.path[upgrade.path.length - 1]?.address &&
-        sumDelays(configure.path) >= sumDelays(upgrade.path),
-    )
-
-    if (matchingConfigure) {
-      collapsed.push(upgrade)
-      configures.splice(configures.indexOf(matchingConfigure), 1)
-    } else {
-      collapsed.push(upgrade)
-    }
-  }
-
-  return [...collapsed, ...configures, ...others]
-}
-
-function sumDelays<T>(path: PathElement<T>[]): number {
-  return path.reduce((sum, element) => sum + element.delay, 0)
+  return node
 }

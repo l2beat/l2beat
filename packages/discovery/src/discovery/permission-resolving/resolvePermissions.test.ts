@@ -159,6 +159,14 @@ describe(resolvePermissions.name, () => {
           { address: 'actor', delay: 0 },
         ],
       },
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0 },
+          { address: 'timelockA', delay: 100 },
+          { address: 'actor', delay: 0 },
+        ],
+      },
     ])
   })
 
@@ -208,6 +216,14 @@ describe(resolvePermissions.name, () => {
           { address: 'vault', delay: 0 },
           { address: 'proxy', delay: 0 },
           { address: 'timelockB', delay: 100 },
+          { address: 'actor', delay: 0 },
+        ],
+      },
+      {
+        permission: 'configure',
+        path: [
+          { address: 'vault', delay: 0 },
+          { address: 'timelockA', delay: 110 },
           { address: 'actor', delay: 0 },
         ],
       },
