@@ -488,7 +488,6 @@ describe(resolvePermissions.name, () => {
         type: 'upgrade',
         path: [
           { address: vaultA, delay: 0 },
-
           { address: proxy, delay: 0 },
           { address: actor, delay: 0 },
         ],
@@ -497,7 +496,6 @@ describe(resolvePermissions.name, () => {
         type: 'upgrade',
         path: [
           { address: vaultB, delay: 0 },
-
           { address: proxy, delay: 0 },
           { address: actor, delay: 0 },
         ],
