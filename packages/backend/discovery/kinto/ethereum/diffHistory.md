@@ -1,14 +1,15 @@
-Generated with discovered.json: 0x95a48f34e822ad6ad42d8906455ac93c579e65b2
+Generated with discovered.json: 0x5358410234a44c12d83a38d894732c1ce46d329c
 
-# Diff at Thu, 08 Aug 2024 08:46:30 GMT:
+# Diff at Thu, 08 Aug 2024 13:39:47 GMT:
 
-- author: Radina Talanova (<nt.radina@gmail.com>)
-- comparing to: main@5a17db968badca34a66703637dabf76a313bb43e block: 20383066
-- current block number: 20482760
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 20383066
+- current block number: 20484220
 
 ## Description
 
 Users can deposit stUSD from Arbitrum on Kinto, they've added new logic to swap this to USDC or USDA before bridging.
+Now using 0x AllowanceHolder contract to set allowances for token swap.
 
 ## Watched changes
 
