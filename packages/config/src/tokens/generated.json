@@ -3971,7 +3971,7 @@
       "decimals": 18,
       "deploymentTimestamp": 1715851211,
       "coingeckoListingTimestamp": 1720656000,
-      "category": "other",
+      "category": "stablecoin",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
       "chainId": 1,
       "source": "canonical",
@@ -6759,6 +6759,21 @@
         "bridge": "Wormhole",
         "slug": "portal"
       }
+    },
+    {
+      "id": "base:susdz-staked-usdz",
+      "name": "Staked USDz",
+      "coingeckoId": "anzen-staked-usdz",
+      "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
+      "symbol": "sUSDz",
+      "decimals": 18,
+      "deploymentTimestamp": 1719612631,
+      "coingeckoListingTimestamp": 1720656000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply"
     },
     {
       "id": "base:toshi-toshi",

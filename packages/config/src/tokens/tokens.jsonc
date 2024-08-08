@@ -11,7 +11,8 @@
     {
       "symbol": "sUSDz",
       "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
-      "coingeckoId": "anzen-staked-usdz"
+      "coingeckoId": "anzen-staked-usdz",
+      "category": "stablecoin"
     },
     {
       "symbol": "PARAM",
@@ -2235,6 +2236,13 @@
       "address": "0xF6e932Ca12afa26665dC4dDE7e27be02A7c02e50",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "sUSDz",
+      "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
+      "source": "external",
+      "coingeckoId":"anzen-staked-usdz",
+      "supply": "totalSupply"
     },
     {
       "symbol": "rsETH",
