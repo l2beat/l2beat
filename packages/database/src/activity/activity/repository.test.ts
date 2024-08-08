@@ -50,7 +50,7 @@ describeDatabase(ActivityRepository.name, (db) => {
     })
   })
 
-  describe(ActivityRepository.prototype.deleteAfter.name, () => {
+  describe(ActivityRepository.prototype.deleteByProjectIdFrom.name, () => {
     it('should delete all rows after a given timestamp and projectId', async () => {
       await repository.upsertMany([
         record('a', START),
