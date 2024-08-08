@@ -69,8 +69,8 @@ export function ChartRenderer() {
           }
         }
       }
+      setLoading(false)
     })
-    setLoading(false)
   }, [context, theme, setLoading])
 
   useEffect(() => {
