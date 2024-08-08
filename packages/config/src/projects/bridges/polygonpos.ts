@@ -170,8 +170,7 @@ export const polygonpos: Bridge = {
         ...upgrades,
       }),
       discovery.getContractDetails('Registry', {
-        description:
-          'A registry of different system components.',
+        description: 'A registry of different system components.',
         ...upgrades,
       }),
       discovery.getContractDetails(
