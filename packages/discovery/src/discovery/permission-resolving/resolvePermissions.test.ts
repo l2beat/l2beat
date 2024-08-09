@@ -196,7 +196,30 @@ describe(resolvePermissions.name, () => {
       node('B', [edge('act', 'A')]),
       node('C', [edge('act', 'A')]),
     ]
+
     expect(resolvePermissions(graph)).toEqualUnsorted([])
+  })
+
+  it('A->B->A->C->(A,D) (ignore loop - preserve actual path)', () => {
+    const graph: Node<string>[] = [
+      node('A', [edge('upgrade', 'B'), edge('act', 'C')]),
+      node('B', [edge('act', 'A')]),
+      node('C', [edge('act', 'A'), edge('act', 'D')]),
+      node('D'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'upgrade',
+        path: [
+          { address: 'A', delay: 0 },
+          { address: 'B', delay: 0 },
+          { address: 'A', delay: 0 },
+          { address: 'C', delay: 0 },
+          { address: 'D', delay: 0 },
+        ],
+      },
+    ])
   })
 
   it('one actor, four contracts, two timelocks with same delays', () => {
