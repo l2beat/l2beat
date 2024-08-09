@@ -2,8 +2,8 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 20490461,
-  "configHash": "0xcc86bb42f468bf5a2d11cb6363adeac4725518031678bbb03842df92ce335385",
-  "version": 10,
+  "configHash": "0xad6d5e3bcf485d6dfca75ad1d5d919010760a5a1e78e71ba496385b903defcd7",
+  "version": 11,
   "contracts": [
     {
       "name": "OptimismPortal",
@@ -90,12 +90,12 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$members": ["0x38809210f69ed6204E276d2Be6b15cd530698679"],
+        "$threshold": 1,
         "domainSeparator": "0x2f5a11412426a5c8d31f741f163ead381cc22d989644b0397df78d087004170c",
         "getChainId": 1,
-        "getOwners": ["0x38809210f69ed6204E276d2Be6b15cd530698679"],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -200,16 +200,16 @@
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
       "assignedPermissions": {
-        "admin": [
-          "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
-          "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
-          "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+        "upgrade": [
           "0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8",
-          "0x6BCe7408c0781dcE7b71494274302D4b75a1447c",
+          "0x2a721cBE81a128be0F01040e3353c3805A5EA091",
           "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
+          "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1",
           "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
+          "0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff",
+          "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932",
           "0x994eEb321F9cD79B077a5455fC248c77f30Dd244",
-          "0xc77ece87C91C44AFb5f19638f9a0F75b5d90E932"
+          "0x6BCe7408c0781dcE7b71494274302D4b75a1447c"
         ]
       },
       "sinceTimestamp": 1719936419,
@@ -342,23 +342,23 @@
       ],
       "roles": ["Challenger"],
       "assignedPermissions": {
-        "owner": ["0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"]
+        "configure": ["0x30F82a1Ca89226E8b8815d6EbB728e3b18a428ff"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1719933659,
       "values": {
         "$immutable": false,
         "$implementation": "0x69f4D1788e39c87893C980c06EdF4b7f686e2938",
-        "$multisigThreshold": "1 of 3 (33%)",
-        "domainSeparator": "0xe753a06679d8fe2168fab8f34f0dc5e26b01b6eda11e4be92246bd7687e7a436",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb",
           "0x62C688FCa995e07632D64A9586896BB7EcD68567",
           "0x38809210f69ed6204E276d2Be6b15cd530698679"
         ],
-        "getThreshold": 1,
+        "$threshold": 1,
+        "domainSeparator": "0xe753a06679d8fe2168fab8f34f0dc5e26b01b6eda11e4be92246bd7687e7a436",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -844,13 +844,13 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
+    "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

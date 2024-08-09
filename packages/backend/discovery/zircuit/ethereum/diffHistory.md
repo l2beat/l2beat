@@ -1,8 +1,8 @@
-Generated with discovered.json: 0x4eff9e165f1a664729760252a1f02b9d496a501f
+Generated with discovered.json: 0xa87cd2a83ac938e7e57e7e3f83cdfa45e40f27f9
 
-# Diff at Fri, 09 Aug 2024 10:31:27 GMT:
+# Diff at Fri, 09 Aug 2024 11:46:50 GMT:
 
-- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
 - current block number: 20490461
 
 ## Description
