@@ -260,7 +260,8 @@ export const socket: Bridge = {
       discovery.getEscrowDetails({
         address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
         name: 'XAUt Vault Kinto',
-        description: 'Socket Vault associated with Kinto and owned by Unknown Owner.',
+        description:
+          'Socket Vault associated with Kinto and owned by Unknown Owner.',
         tokens: ['XAUt'],
       }),
       // Polynomial
@@ -309,11 +310,12 @@ export const socket: Bridge = {
         tokens: ['WBTC'],
       }),
       discovery.getEscrowDetails({
-                address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
-                name: 'XAUt Vault Kinto',
-                description: 'Socket Vault associated with Kinto and owned by Unknown Owner.',
-                tokens: ['XAUt'],
-              }),
+        address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
+        name: 'XAUt Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by Unknown Owner.',
+        tokens: ['XAUt'],
+      }),
     ],
   },
   contracts: {
