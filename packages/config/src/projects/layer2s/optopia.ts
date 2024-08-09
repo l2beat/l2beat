@@ -27,6 +27,7 @@ export const optopia: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
+  associatedTokens: ['OPAI'],
   genesisTimestamp: new UnixTime(1715333977),
   // failing, needs different analyzer?
   // finality: {
