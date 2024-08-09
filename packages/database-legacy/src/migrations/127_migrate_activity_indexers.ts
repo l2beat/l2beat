@@ -109,14 +109,9 @@ export async function up(knex: Knex) {
         knex.raw('count(*) AS count'),
         knex.raw('min(block_number) AS start'),
         knex.raw('max(block_number) AS end'),
-        knex
-          .whereIn(
-            'project_id',
-            projects.map((p) => p.name),
-          )
-          .andWhere('zksync.unix_timestamp', '<=', timestamp.toNumber()),
       )
       .from('activity.zksync')
+      .where('zksync.unix_timestamp', '<=', timestamp.toDate())
       .groupByRaw("date_trunc('day', zksync.unix_timestamp)"),
   )
 
@@ -129,19 +124,18 @@ export async function up(knex: Knex) {
         knex.raw('sum(block.count) AS count'),
         knex.raw('min(block.block_number) AS start'),
         knex.raw('max(block.block_number) AS end'),
-        knex
-          .whereIn(
-            'project_id',
-            projects.map((p) => p.name),
-          )
-          .andWhere('zksync.unix_timestamp', '<=', timestamp.toNumber()),
       )
+      .whereIn(
+        'project_id',
+        projects.map((p) => p.name),
+      )
+      .andWhere('block.unix_timestamp', '<=', timestamp.toDate())
       .from('activity.block')
       .groupByRaw("date_trunc('day', block.unix_timestamp), block.project_id"),
   )
 
   // migrate starkex activity
-  knex('public.activity').insert(
+  await knex('public.activity').insert(
     knex
       .select(
         'starkex.project_id',
@@ -151,13 +145,12 @@ export async function up(knex: Knex) {
         knex.raw(
           "extract(epoch from (date_trunc('day', starkex.unix_timestamp) + interval '1 day' - interval '1 second')) AS end",
         ),
-        knex
-          .whereIn(
-            'project_id',
-            projects.map((p) => p.name),
-          )
-          .andWhere('zksync.unix_timestamp', '<=', timestamp.toNumber()),
       )
+      .whereIn(
+        'project_id',
+        projects.map((p) => p.name),
+      )
+      .andWhere('starkex.unix_timestamp', '<=', timestamp.toDate())
       .from('activity.starkex')
       .groupBy('starkex.unix_timestamp', 'starkex.project_id'),
   )
