@@ -8,7 +8,7 @@ import {
   deleteSixHourlyUntil,
 } from '../../utils/deleteArchivedRecords'
 import { ValueRecord, toRecord, toRow } from './entity'
-import { selectValue } from './select'
+import { selectValue, selectValueWithPrefix } from './select'
 
 export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
@@ -50,18 +50,15 @@ export class ValueRepository extends BaseRepository {
 
   async getLatestValues(projectIds?: ProjectId[]) {
     if (projectIds?.length === 0) return []
-    const latestValuesQuery = (cb: QueryCreator<DB>) => {
-      let query = cb.selectFrom('public.values').select([
-        ...selectValue,
-        this.db.fn
-          .agg('ROW_NUMBER')
-          .over((over) =>
-            over
-              .partitionBy(['project_id', 'data_source'])
-              .orderBy('timestamp', 'desc'),
-          )
-          .as('combination_number'),
-      ])
+    const maxTimestampsQuery = (cb: QueryCreator<DB>) => {
+      let query = cb
+        .selectFrom('public.values')
+        .select(({ fn }) => [
+          'project_id',
+          'data_source',
+          fn.max('timestamp').as('max_timestamp'),
+        ])
+        .groupBy(['project_id', 'data_source'])
       if (projectIds) {
         query = query.where(
           'project_id',
@@ -73,13 +70,23 @@ export class ValueRepository extends BaseRepository {
       return query
     }
 
-    const rows = await this.db
-      .with('latest_values', latestValuesQuery)
-      .selectFrom('latest_values')
-      .select(selectValue)
-      .where('combination_number', '=', 1)
-      .execute()
-    return rows.map(toRecord)
+    const rows = this.db
+      .with('max_timestamps', maxTimestampsQuery)
+      .selectFrom('public.values')
+      .select(selectValueWithPrefix('public.values'))
+      .innerJoin('max_timestamps', (join) =>
+        join
+          .onRef('public.values.project_id', '=', 'max_timestamps.project_id')
+          .onRef('public.values.data_source', '=', 'max_timestamps.data_source')
+          .onRef(
+            'public.values.timestamp',
+            '=',
+            'max_timestamps.max_timestamp',
+          ),
+      )
+
+    console.log(rows.compile().sql)
+    return (await rows.execute()).map(toRecord)
   }
 
   async upsertMany(records: ValueRecord[]): Promise<number> {
