@@ -1,9 +1,9 @@
 {
   "name": "zkfair",
   "chain": "ethereum",
-  "blockNumber": 20477874,
+  "blockNumber": 20491472,
   "configHash": "0xb7055c80cbad157609938410529e9cd3df380055c0f402a834c492918f2cba62",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "BridgeAdminMultiSig",

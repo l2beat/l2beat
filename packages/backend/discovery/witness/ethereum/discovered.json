@@ -1,9 +1,9 @@
 {
   "name": "witness",
   "chain": "ethereum",
-  "blockNumber": 20478313,
+  "blockNumber": 20491473,
   "configHash": "0x5a18dc94a699ce771faca7fc8fd756e0d22f96fe60d5e177d853ca3c8c90f379",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -39,7 +39,7 @@
         "INITIALIZE_TX_DATA_LEN_EMPTY_METADATA": 228,
         "INITIALIZE_TX_EFFECTIVE_PERCENTAGE": "0xff",
         "isSequenceWithDataAvailabilityAllowed": false,
-        "lastAccInputHash": "0x460380ff3ed5768603ecd362e72fa7f94f21262690b5ac0e9d37131f27725d71",
+        "lastAccInputHash": "0xadda4c12ce443ca873491337a062c932f35adfb39c5dc1040c1986ec5587dcdc",
         "lastForceBatch": 0,
         "lastForceBatchSequenced": 0,
         "networkName": "witnesschain",
