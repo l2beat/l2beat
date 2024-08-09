@@ -30,7 +30,17 @@
       "extends": "opstack/L2OutputOracle"
     },
     "ZircuitSuperchainConfig": {
-      "extends": "opstack/SuperchainConfig"
+      "fields": {
+        "accessControl": {
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x8227712ef8ad39d0f26f06731ef0df8665eb7ada7f41b1ee089adf3c238862a2": "MONITOR",
+              "0x97667070c54ef182b0f5858b034beac1b6f3089aa2d3188bb1e8929f4fa9b929": "OPERATOR"
+            }
+          }
+        }
+      }
     },
     "L1ERC721Bridge": {
       "extends": "opstack/L1ERC721Bridge"

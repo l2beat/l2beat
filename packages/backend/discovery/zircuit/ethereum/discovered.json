@@ -2,7 +2,7 @@
   "name": "zircuit",
   "chain": "ethereum",
   "blockNumber": 20484403,
-  "configHash": "0x20cdcb9f8b5b83bd3a59c3442bf40cf5d59c8176ba04949089123da236012f94",
+  "configHash": "0xc97ae30104e60dd23e4b4c8617096ab8a61815adda6aafa721a9499adb5c4b7c",
   "version": 10,
   "contracts": [
     {
@@ -233,17 +233,22 @@
     {
       "name": "ZircuitSuperchainConfig",
       "address": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
-      "template": "opstack/SuperchainConfig",
       "proxyType": "EIP1967 proxy",
-      "displayName": "SuperchainConfig",
-      "descriptions": [
-        "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
-      ],
       "categories": ["Upgrades&Governance"],
       "sinceTimestamp": 1719936443,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0xA47314C96ab9572af656788e15143B459F99AE0f",
+        "accessControl": {
+          "DEFAULT_ADMIN_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0x2c0B27F7C8F083B539557a0bA787041BF22DB276"]
+          },
+          "MONITOR_ROLE": {
+            "adminRole": "DEFAULT_ADMIN_ROLE",
+            "members": ["0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5"]
+          }
+        },
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "defaultAdmin": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "defaultAdminDelay": 86400,
@@ -389,6 +394,7 @@
       "address": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
       "roles": ["Proposer"]
     },
+    { "address": "0xf9Fda17D91383120D59a7c60eAEA8Bd7319B5AE5" },
     { "address": "0xFF00000000000000000000000000000000048900" }
   ],
   "abis": {
@@ -844,7 +850,6 @@
     "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
     "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

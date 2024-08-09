@@ -69,6 +69,7 @@ export const zircuit: Layer2 = opStackL2({
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
   },
+  nonTemplatePermissions: [],
   nonTemplateContracts: [
     discovery.getContractDetails('Verifier', {
       description:
@@ -77,7 +78,10 @@ export const zircuit: Layer2 = opStackL2({
     }),
     discovery.getContractDetails('ZircuitSuperchainConfig', {
       description:
-        'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, however this is a separate instance of the SuperChain contract. It manages the PAUSED_SLOT, a boolean value indicating whether the chain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system.',
+        'The SuperchainConfig contract is normally used to manage configuration values for multiple OP Chains, \
+        however this is a separate instance of the SuperChain contract. It manages the PAUSED_SLOT, a boolean value \
+        indicating whether the chain is paused, and GUARDIAN_SLOT, the address of the guardian which can pause and unpause the system. It also defines OPERATOR and MONITOR roles\
+        which are used to manage throttling (withdrawal limits) on OptimismPortal.',
       ...upgradeability,
     }),
   ],
