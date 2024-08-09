@@ -15,7 +15,8 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private readonly indexerId: string
 
   constructor(readonly options: ManagedMultiIndexerOptions<T>) {
-    super(options.logger, options.parents, options)
+    const logger = options.logger.tag(options.tag)
+    super(logger, options.parents, options)
 
     assert(
       options.configurations.length > 0,

@@ -4951,6 +4951,21 @@
       "supply": "zero"
     },
     {
+      "id": "zkl-zklink",
+      "name": "ZKLink",
+      "coingeckoId": "zklink",
+      "address": "0xfC385A1dF85660a7e041423DB512f779070FCede",
+      "symbol": "ZKL",
+      "decimals": 18,
+      "deploymentTimestamp": 1712927711,
+      "coingeckoListingTimestamp": 1721606400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34982/large/Logo1.png?1714980729",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "zks-zks",
       "name": "Zks",
       "coingeckoId": "zkspace",

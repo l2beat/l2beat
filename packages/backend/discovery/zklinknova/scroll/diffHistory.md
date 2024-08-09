@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x8b58f760dcebb2fbffdb7b03c378922d1f540983
+
+# Diff at Fri, 09 Aug 2024 10:15:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 7788134
+- current block number: 7788134
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7788134 (main branch discovery), not current.
+
+```diff
+    contract ScrollProxyAdmin (0xC4673dAbfAf04D2A430e244B63F040D27199102f) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"]
+      assignedPermissions.upgrade:
++        ["0x3C7c0ebFCD5786ef48df5ed127cdDEb806db976c"]
+    }
+```
+
+```diff
+    contract AdminMultisig (0xeCa8EB8B909A29C2F912d5b0cBB153a43c860c77) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x119B9459D9119D07c23aD06778AeaBec804Fd1a2","0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"]
+      assignedPermissions.upgrade:
++        ["0x119B9459D9119D07c23aD06778AeaBec804Fd1a2","0xd8428A59B60Df2d81514D429D57DF23293f1bCe7"]
+      values.$multisigThreshold:
+-        "5 of 7 (71%)"
+      values.getOwners:
+-        ["0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5","0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10","0xF801886AE2e127A269B0F11892edb54F692d02dF","0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5","0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144","0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272","0x45b62A07c525278F2ecd7915130E797B04B05C48"]
+      values.getThreshold:
+-        5
+      values.$members:
++        ["0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5","0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10","0xF801886AE2e127A269B0F11892edb54F692d02dF","0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5","0xb2c9E9a8eDEF1488E75F9E5b65Be14751733B144","0xda9f561F0d8d7061fa47e47E352eAD6844Ae3272","0x45b62A07c525278F2ecd7915130E797B04B05C48"]
+      values.$threshold:
++        5
+      values.multisigThreshold:
++        "5 of 7 (71%)"
+    }
+```
+
 Generated with discovered.json: 0xedbd057508280d9873d1196125e4fa0e7282bc84
 
 # Diff at Fri, 26 Jul 2024 07:58:46 GMT:

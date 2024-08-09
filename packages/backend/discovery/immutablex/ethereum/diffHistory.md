@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xc6b0a2b8d66394ef77e047fdc18f73f07d67997b
+
+# Diff at Fri, 09 Aug 2024 10:09:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19910271
+- current block number: 19910271
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19910271 (main branch discovery), not current.
+
+```diff
+    contract ProxyGovernanceMultisig (0x9C41deab42Bae7c0ec4DB3cECc0faD86F4D6EC91) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"]
+      assignedPermissions.upgrade:
++        ["0x5FDCCA53617f4d2b9134B29090C87D01058e27e9"]
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0x59232aC80E6d403b6381393e52f4665ECA328558","0x0405107a60391Eb51821be373ff978115Ee58488","0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x59232aC80E6d403b6381393e52f4665ECA328558","0x0405107a60391Eb51821be373ff978115Ee58488","0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xbf9e7b973e90203b4d7681284b5a42431294f2e7
 
 # Diff at Tue, 30 Jul 2024 11:12:03 GMT:

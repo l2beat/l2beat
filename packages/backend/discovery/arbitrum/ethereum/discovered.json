@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20406543,
   "configHash": "0x3be146629b3904878d29089b2b24eedb6fd28eac93893a4a02d537e595445642",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Outbox",
@@ -29,7 +29,7 @@
       "name": "ProxyAdmin",
       "address": "0x0ea6999172c1B4563695F76A52de73c848587b17",
       "assignedPermissions": {
-        "admin": ["0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"]
+        "upgrade": ["0x83215480dB2C6A7E56f9E99EF93AB9B36F8A3DD5"]
       },
       "sinceTimestamp": 1661962059,
       "values": {
@@ -149,7 +149,7 @@
       "name": "ProxyAdmin",
       "address": "0x3f92814930f43c6a1C6B133E5945E7B3338F33a6",
       "assignedPermissions": {
-        "admin": ["0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"]
+        "upgrade": ["0x7CF3d537733F6Ba4183A833c9B021265716cE9d0"]
       },
       "sinceTimestamp": 1661964258,
       "values": {
@@ -162,7 +162,7 @@
       "address": "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"]
+        "upgrade": ["0x5eF0D09d1E6204141B4d37530808eD19f60FBa35"]
       },
       "sinceTimestamp": 1678968515,
       "values": {
@@ -194,7 +194,7 @@
       "name": "ProxyAdmin",
       "address": "0x4561A4cDA2CB8a61ED023785bc1817fdf685dcb3",
       "assignedPermissions": {
-        "admin": ["0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"]
+        "upgrade": ["0x56D83349c2B8DCF74d7E92D5b6B33d0BADD52D78"]
       },
       "sinceTimestamp": 1662368855,
       "values": {
@@ -221,7 +221,7 @@
       "name": "ProxyAdmin",
       "address": "0x509E3CDc218d163DB9A03678107b72e00163b061",
       "assignedPermissions": {
-        "admin": ["0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"]
+        "upgrade": ["0xB0CB1384e3f4a9a9b2447e39b05e10631E1D34B0"]
       },
       "sinceTimestamp": 1665084515,
       "values": {
@@ -233,15 +233,15 @@
       "name": "ArbitrumProxyAdmin",
       "address": "0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x0B9857ae2D4A3DBe74ffE1d7DF045bb7F96E4840",
-          "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58",
           "0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f",
           "0x57Bd336d579A51938619271a7Cc137a46D0501B1",
-          "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
-          "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40",
           "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a",
-          "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
+          "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6",
+          "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a",
+          "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
         ]
       },
       "sinceTimestamp": 1661457944,
@@ -255,7 +255,7 @@
       "name": "UpgradeExecutorAdmin",
       "address": "0x5613AF0474EB9c528A34701A5b1662E3C8FA0678",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x3ffFbAdAF827559da092217e474760E2b2c3CeDd",
           "0xE6841D92B0C345144506576eC13ECf5103aC7f49"
         ]
@@ -533,10 +533,10 @@
       "name": "GatewaysAdmin",
       "address": "0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa",
       "assignedPermissions": {
-        "admin": [
-          "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef",
+        "upgrade": [
+          "0xcEe284F754E854890e311e3280b767F80797180d",
           "0xa3A7B6F88361F48403514059F1F16C8E78d60EeC",
-          "0xcEe284F754E854890e311e3280b767F80797180d"
+          "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
         ]
       },
       "sinceTimestamp": 1623784062,
@@ -595,7 +595,7 @@
       "name": "ProxyAdmin",
       "address": "0xAb33350E0319466A81D2AE6DC5CdF2518123f766",
       "assignedPermissions": {
-        "admin": ["0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"]
+        "upgrade": ["0x758C6bB08B3ea5889B5cddbdeF9A45b3a983c398"]
       },
       "sinceTimestamp": 1659013011,
       "values": {
@@ -638,10 +638,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
           "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
           "0x64379Dee676ab442B48925Ed603771f386510Ee7",
@@ -649,8 +646,11 @@
           "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
           "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x2e30e82c06149e106d9459cde774416c518aece8b088f2bd8986744dbe6aa51d",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 191,
         "VERSION": "1.3.0"
       },
@@ -683,7 +683,7 @@
       "name": "ProxyAdmin",
       "address": "0xCcadc6B174BEcf31a35b818373e90391971a1C0c",
       "assignedPermissions": {
-        "admin": ["0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"]
+        "upgrade": ["0xf59caf75e8A4bFBA4e6e07aD86C7E498E4d2519b"]
       },
       "sinceTimestamp": 1664352371,
       "values": {
@@ -717,10 +717,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x7526599abb31ca0be13b02df12dd63c0f981649d6b802abd3cfe196fd70dc013",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x375906ADFD34D93236084F462BB2dB0D92129Fe1",
           "0xfE2bf40f2A9183774BF8E871d634A4E50255158B",
           "0x64379Dee676ab442B48925Ed603771f386510Ee7",
@@ -728,8 +725,11 @@
           "0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C",
           "0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x7526599abb31ca0be13b02df12dd63c0f981649d6b802abd3cfe196fd70dc013",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       },
@@ -1734,10 +1734,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "9 of 12 (75%)",
-        "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
           "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
@@ -1751,8 +1748,11 @@
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
-        "getThreshold": 9,
+        "$threshold": 9,
+        "domainSeparator": "0x24555dff42c3faa8a2ff9680ac37e71d6f765373e9cf30c226d13e5c1cebe593",
+        "getChainId": 1,
         "GnosisSafe_modules": ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd"],
+        "multisigThreshold": "9 of 12 (75%)",
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -3024,7 +3024,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

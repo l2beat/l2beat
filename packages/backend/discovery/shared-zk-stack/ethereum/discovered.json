@@ -1,9 +1,9 @@
 {
   "name": "shared-zk-stack",
   "chain": "ethereum",
-  "blockNumber": 20432409,
-  "configHash": "0x3e540466c98a0c0f872158d689eceb5d9ad3aa1e74a0fcd5733f230d5284f899",
-  "version": 10,
+  "blockNumber": 20469956,
+  "configHash": "0x897fdb6fb1f6c34118d11c2f55033666c8e47e8e3754543e6a1ed8ea5e286ced",
+  "version": 11,
   "contracts": [
     {
       "name": "Governance",
@@ -7526,6 +7526,93 @@
               "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
               "salt": "0x0000000000000000000000000000000000000000000000000000000000000000"
             }
+          },
+          {
+            "delay": 0,
+            "operation": {
+              "calls": [
+                {
+                  "target": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
+                  "value": "0",
+                  "function": "upgrade",
+                  "inputs": [
+                    {
+                      "name": "proxy",
+                      "value": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
+                    },
+                    {
+                      "name": "implementation",
+                      "value": "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274"
+                    }
+                  ]
+                },
+                {
+                  "target": "0x32400084C286CF3E17e7B677ea9583e60a000324",
+                  "value": "0",
+                  "function": "setPendingAdmin",
+                  "inputs": [
+                    {
+                      "name": "_newPendingAdmin",
+                      "value": "0x2cf3bD6a9056b39999F3883955E183F655345063"
+                    }
+                  ]
+                },
+                {
+                  "target": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+                  "value": "0",
+                  "function": "setPendingAdmin",
+                  "inputs": [
+                    {
+                      "name": "_newPendingAdmin",
+                      "value": "0x2cf3bD6a9056b39999F3883955E183F655345063"
+                    }
+                  ]
+                },
+                {
+                  "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+                  "value": "0",
+                  "function": "setPendingAdmin",
+                  "inputs": [
+                    {
+                      "name": "_newPendingAdmin",
+                      "value": "0x2cf3bD6a9056b39999F3883955E183F655345063"
+                    }
+                  ]
+                }
+              ],
+              "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "salt": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            }
+          },
+          {
+            "delay": 0,
+            "operation": {
+              "calls": [
+                {
+                  "target": "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C",
+                  "value": "0",
+                  "function": "setNewVersionUpgrade",
+                  "inputs": [
+                    {
+                      "name": "_cutData",
+                      "value": [
+                        [],
+                        "0x4d376798Ba8F69cEd59642c3AE8687c7457e855d",
+                        "0x08284e5700000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000000000000000000180000000000000000000000000000000000000000000000000000000000000048000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004a000000000000000000000000000000000000000000000000000000000000004c00000000000000000000000000000000000000000000000000000000066ab923f0000000000000000000000000000000000000000000000000000001800000002000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000260000000000000000000000000000000000000000000000000000000000000028000000000000000000000000000000000000000000000000000000000000002a000000000000000000000000000000000000000000000000000000000000002c000000000000000000000000000000000000000000000000000000000000002e000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+                      ]
+                    },
+                    { "name": "_oldProtocolVersion", "value": 103079215105 },
+                    {
+                      "name": "_oldProtocolVersionDeadline",
+                      "value": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+                    },
+                    { "name": "_newProtocolVersion", "value": 103079215106 }
+                  ]
+                }
+              ],
+              "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+              "salt": "0x0000000000000000000000000000000000000000000000000000000000000000"
+            }
           }
         ],
         "securityCouncil": "0x0000000000000000000000000000000000000000"
@@ -7551,6 +7638,26 @@
       "derivedName": "Governance"
     },
     {
+      "name": "ChainAdmin",
+      "address": "0x2cf3bD6a9056b39999F3883955E183F655345063",
+      "sinceTimestamp": 1722434735,
+      "values": {
+        "$immutable": true,
+        "owner": "0x4e4943346848c4867F81dFb37c4cA9C5715A7828",
+        "pendingOwner": "0x0000000000000000000000000000000000000000",
+        "tokenMultiplierSetter": "0x0000000000000000000000000000000000000000",
+        "upgradeTimestamps": [
+          { "_protocolVersion": 103079215106, "_upgradeTimestamp": 1722521507 }
+        ]
+      },
+      "fieldMeta": {
+        "upgradeTimestamps": {
+          "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
+        }
+      },
+      "derivedName": "ChainAdmin"
+    },
+    {
       "name": "BridgeHub",
       "address": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
       "proxyType": "EIP1967 proxy",
@@ -7558,7 +7665,7 @@
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
         "$implementation": "0x12f893689f9603991a8c22C249FFd0509Be95661",
-        "admin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
+        "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "chainsCreated": [
           {
             "chainId": 324,
@@ -7607,21 +7714,21 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x3F0009D00cc78979d00Eb635490F23E8d6aCc481",
           "0xe79af29d618141Ffef951B240b250d47030D56d7",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
-          "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
+          "0xFAdb20191Ab38362C50f52909817B74214CA79AE",
           "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2",
           "0x700DA14328eC2F81053E5B6aAE4803E16BEdF1df"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xd3e32b4e9e95656dc35c609ae0fbcc0cea466ebecc8227025a2d3edc728b79fb",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
-        "nonce": 143,
+        "multisigThreshold": "4 of 7 (57%)",
+        "nonce": 146,
         "VERSION": "1.3.0"
       },
       "fieldMeta": {
@@ -7670,9 +7777,9 @@
       "name": "ProxyAdmin",
       "address": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
       "assignedPermissions": {
-        "admin": [
-          "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
+        "upgrade": [
           "0xD7f9f54194C633F36CCD5F3da84ad4a1c38cB2cB",
+          "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
           "0xc2eE6b6af7d616f6e27ce7F4A451Aedc2b0F5f5C"
         ]
       },
@@ -7689,8 +7796,8 @@
       "sinceTimestamp": 1717520663,
       "values": {
         "$admin": "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1",
-        "$implementation": "0x8279B7E48fA074f966385d87AEf29Bd031e54fD5",
-        "admin": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
+        "$implementation": "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274",
+        "admin": "0x2cf3bD6a9056b39999F3883955E183F655345063",
         "BRIDGE_HUB": "0x303a465B659cBB0ab36eE643eA362c509EEb5213",
         "genesisUpgrade": "0x3dDD7ED2AeC0758310A4C6596522FCAeD108DdA2",
         "getAllHyperchainChainIDs": [324, 388],
@@ -7699,12 +7806,12 @@
           "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"
         ],
         "getChainAdmin": [],
-        "getSemverProtocolVersion": [0, 24, 1],
+        "getSemverProtocolVersion": [0, 24, 2],
         "initialCutHash": "0x88acf7bca5d9b0309546e053ad035bd6d8da5f13f39ca1d8f8ffab1a8d4aa60f",
         "MAX_NUMBER_OF_HYPERCHAINS": 100,
         "owner": "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
-        "protocolVersion": 103079215105,
+        "protocolVersion": 103079215106,
         "storedBatchZero": "0x1574fa776dec8da2071e5f20d71840bfcbd82c2bca9ad68680edfedde1710bc4",
         "validatorTimelock": "0x5D8ba173Dc6C3c90C8f7C04C9288BeF5FDbAd06E"
       },
@@ -7740,11 +7847,11 @@
     { "address": "0x702caCafA54B88e9c54449563Fb2e496e85c78b7" },
     { "address": "0x71d84c3404a6ae258E6471d4934B96a2033F9438" },
     { "address": "0x7fEA26A181A792B5107ee0a31e434F5dBcbBe0B7" },
-    { "address": "0x9dF8bc0918F357c766A5697E031fF5237c05747A" },
     { "address": "0xACBD581D1BedB2F71d2F5F01f881586e0623d591" },
     { "address": "0xb9d48DaF26F3CBE01A959F09f98E8a2eC8204122" },
     { "address": "0xE4F4FdaD61f192EBe9a32b2d2fB47A5802891e14" },
     { "address": "0xe79af29d618141Ffef951B240b250d47030D56d7" },
+    { "address": "0xFAdb20191Ab38362C50f52909817B74214CA79AE" },
     { "address": "0xfd03dA3aeb6807a98db96C1704Ea4CFf031BaEd2" }
   ],
   "abis": {
@@ -7820,6 +7927,25 @@
       "function transferOwnership(address newOwner)",
       "function unpause()"
     ],
+    "0x2cf3bD6a9056b39999F3883955E183F655345063": [
+      "constructor(address _initialOwner, address _initialTokenMultiplierSetter)",
+      "event CallExecuted(tuple(address target, uint256 value, bytes data) _call, bool _success, bytes _returnData)",
+      "event NewTokenMultiplierSetter(address _oldTokenMultiplierSetter, address _newTokenMultiplierSetter)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event UpdateUpgradeTimestamp(uint256 indexed _protocolVersion, uint256 _upgradeTimestamp)",
+      "function acceptOwnership()",
+      "function multicall(tuple(address target, uint256 value, bytes data)[] _calls, bool _requireSuccess) payable",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolVersionToUpgradeTimestamp(uint256 protocolVersion) view returns (uint256 upgradeTimestamp)",
+      "function renounceOwnership()",
+      "function setTokenMultiplier(address _chainContract, uint128 _nominator, uint128 _denominator)",
+      "function setTokenMultiplierSetter(address _tokenMultiplierSetter)",
+      "function setUpgradeTimestamp(uint256 _protocolVersion, uint256 _upgradeTimestamp)",
+      "function tokenMultiplierSetter() view returns (address)",
+      "function transferOwnership(address newOwner)"
+    ],
     "0x303a465B659cBB0ab36eE643eA362c509EEb5213": [
       "constructor(address _logic, address admin_, bytes _data) payable",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -7873,61 +7999,6 @@
       "function stateTransitionManager() view returns (address)",
       "function transferOwnership(address newOwner)",
       "function validators(uint256 _chainId, address _validator) view returns (bool)"
-    ],
-    "0x8279B7E48fA074f966385d87AEf29Bd031e54fD5": [
-      "constructor(address _bridgehub, uint256 _maxNumberOfHyperchains)",
-      "event Initialized(uint8 version)",
-      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
-      "event NewChainCreationParams(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, bytes32 newInitialCutHash)",
-      "event NewHyperchain(uint256 indexed _chainId, address indexed _hyperchainContract)",
-      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
-      "event NewProtocolVersion(uint256 indexed oldProtocolVersion, uint256 indexed newProtocolVersion)",
-      "event NewUpgradeCutHash(uint256 indexed protocolVersion, bytes32 indexed upgradeCutHash)",
-      "event NewValidatorTimelock(address indexed oldValidatorTimelock, address indexed newValidatorTimelock)",
-      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event SetChainIdUpgrade(address indexed _hyperchain, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) _l2Transaction, uint256 indexed _protocolVersion)",
-      "function BRIDGE_HUB() view returns (address)",
-      "function MAX_NUMBER_OF_HYPERCHAINS() view returns (uint256)",
-      "function acceptAdmin()",
-      "function acceptOwnership()",
-      "function admin() view returns (address)",
-      "function changeFeeParams(uint256 _chainId, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
-      "function createNewChain(uint256 _chainId, address _baseToken, address _sharedBridge, address _admin, bytes _diamondCut)",
-      "function executeUpgrade(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "function freezeChain(uint256 _chainId)",
-      "function genesisUpgrade() view returns (address)",
-      "function getAllHyperchainChainIDs() view returns (uint256[])",
-      "function getAllHyperchains() view returns (address[] chainAddresses)",
-      "function getChainAdmin(uint256 _chainId) view returns (address)",
-      "function getHyperchain(uint256 _chainId) view returns (address chainAddress)",
-      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
-      "function initialCutHash() view returns (bytes32)",
-      "function initialize(tuple(address owner, address validatorTimelock, tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut) chainCreationParams, uint256 protocolVersion) _initializeData)",
-      "function owner() view returns (address)",
-      "function pendingOwner() view returns (address)",
-      "function protocolVersion() view returns (uint256)",
-      "function protocolVersionDeadline(uint256 _protocolVersion) view returns (uint256)",
-      "function protocolVersionIsActive(uint256 _protocolVersion) view returns (bool)",
-      "function registerAlreadyDeployedHyperchain(uint256 _chainId, address _hyperchain)",
-      "function renounceOwnership()",
-      "function revertBatches(uint256 _chainId, uint256 _newLastBatch)",
-      "function setChainCreationParams(tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut) _chainCreationParams)",
-      "function setNewVersionUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion, uint256 _oldProtocolVersionDeadline, uint256 _newProtocolVersion)",
-      "function setPendingAdmin(address _newPendingAdmin)",
-      "function setPorterAvailability(uint256 _chainId, bool _zkPorterIsAvailable)",
-      "function setPriorityTxMaxGasLimit(uint256 _chainId, uint256 _maxGasLimit)",
-      "function setProtocolVersionDeadline(uint256 _protocolVersion, uint256 _timestamp)",
-      "function setTokenMultiplier(uint256 _chainId, uint128 _nominator, uint128 _denominator)",
-      "function setUpgradeDiamondCut(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion)",
-      "function setValidator(uint256 _chainId, address _validator, bool _active)",
-      "function setValidatorTimelock(address _validatorTimelock)",
-      "function storedBatchZero() view returns (bytes32)",
-      "function transferOwnership(address newOwner)",
-      "function unfreezeChain(uint256 _chainId)",
-      "function upgradeChainFromVersion(uint256 _chainId, uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
-      "function upgradeCutHash(uint256 protocolVersion) view returns (bytes32 cutHash)",
-      "function validatorTimelock() view returns (address)"
     ],
     "0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": [
       "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
@@ -8048,10 +8119,66 @@
       "function signedMessages(bytes32) view returns (uint256)",
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
+    ],
+    "0xed1Dc7F0Be2B19cb02a2476150C8ea24A37c5274": [
+      "constructor(address _bridgehub, uint256 _maxNumberOfHyperchains)",
+      "event Initialized(uint8 version)",
+      "event NewAdmin(address indexed oldAdmin, address indexed newAdmin)",
+      "event NewChainCreationParams(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, bytes32 newInitialCutHash)",
+      "event NewHyperchain(uint256 indexed _chainId, address indexed _hyperchainContract)",
+      "event NewPendingAdmin(address indexed oldPendingAdmin, address indexed newPendingAdmin)",
+      "event NewProtocolVersion(uint256 indexed oldProtocolVersion, uint256 indexed newProtocolVersion)",
+      "event NewUpgradeCutData(uint256 indexed protocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCutData)",
+      "event NewUpgradeCutHash(uint256 indexed protocolVersion, bytes32 indexed upgradeCutHash)",
+      "event NewValidatorTimelock(address indexed oldValidatorTimelock, address indexed newValidatorTimelock)",
+      "event OwnershipTransferStarted(address indexed previousOwner, address indexed newOwner)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event SetChainIdUpgrade(address indexed _hyperchain, tuple(uint256 txType, uint256 from, uint256 to, uint256 gasLimit, uint256 gasPerPubdataByteLimit, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, uint256 paymaster, uint256 nonce, uint256 value, uint256[4] reserved, bytes data, bytes signature, uint256[] factoryDeps, bytes paymasterInput, bytes reservedDynamic) _l2Transaction, uint256 indexed _protocolVersion)",
+      "function BRIDGE_HUB() view returns (address)",
+      "function MAX_NUMBER_OF_HYPERCHAINS() view returns (uint256)",
+      "function acceptAdmin()",
+      "function acceptOwnership()",
+      "function admin() view returns (address)",
+      "function changeFeeParams(uint256 _chainId, tuple(uint8 pubdataPricingMode, uint32 batchOverheadL1Gas, uint32 maxPubdataPerBatch, uint32 maxL2GasPerBatch, uint32 priorityTxMaxPubdata, uint64 minimalL2GasPrice) _newFeeParams)",
+      "function createNewChain(uint256 _chainId, address _baseToken, address _sharedBridge, address _admin, bytes _diamondCut)",
+      "function executeUpgrade(uint256 _chainId, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function freezeChain(uint256 _chainId)",
+      "function genesisUpgrade() view returns (address)",
+      "function getAllHyperchainChainIDs() view returns (uint256[])",
+      "function getAllHyperchains() view returns (address[] chainAddresses)",
+      "function getChainAdmin(uint256 _chainId) view returns (address)",
+      "function getHyperchain(uint256 _chainId) view returns (address chainAddress)",
+      "function getSemverProtocolVersion() view returns (uint32, uint32, uint32)",
+      "function initialCutHash() view returns (bytes32)",
+      "function initialize(tuple(address owner, address validatorTimelock, tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut) chainCreationParams, uint256 protocolVersion) _initializeData)",
+      "function owner() view returns (address)",
+      "function pendingOwner() view returns (address)",
+      "function protocolVersion() view returns (uint256)",
+      "function protocolVersionDeadline(uint256 _protocolVersion) view returns (uint256)",
+      "function protocolVersionIsActive(uint256 _protocolVersion) view returns (bool)",
+      "function registerAlreadyDeployedHyperchain(uint256 _chainId, address _hyperchain)",
+      "function renounceOwnership()",
+      "function revertBatches(uint256 _chainId, uint256 _newLastBatch)",
+      "function setChainCreationParams(tuple(address genesisUpgrade, bytes32 genesisBatchHash, uint64 genesisIndexRepeatedStorageChanges, bytes32 genesisBatchCommitment, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) diamondCut) _chainCreationParams)",
+      "function setNewVersionUpgrade(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion, uint256 _oldProtocolVersionDeadline, uint256 _newProtocolVersion)",
+      "function setPendingAdmin(address _newPendingAdmin)",
+      "function setPorterAvailability(uint256 _chainId, bool _zkPorterIsAvailable)",
+      "function setPriorityTxMaxGasLimit(uint256 _chainId, uint256 _maxGasLimit)",
+      "function setProtocolVersionDeadline(uint256 _protocolVersion, uint256 _timestamp)",
+      "function setTokenMultiplier(uint256 _chainId, uint128 _nominator, uint128 _denominator)",
+      "function setUpgradeDiamondCut(tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _cutData, uint256 _oldProtocolVersion)",
+      "function setValidator(uint256 _chainId, address _validator, bool _active)",
+      "function setValidatorTimelock(address _validatorTimelock)",
+      "function storedBatchZero() view returns (bytes32)",
+      "function transferOwnership(address newOwner)",
+      "function unfreezeChain(uint256 _chainId)",
+      "function upgradeChainFromVersion(uint256 _chainId, uint256 _oldProtocolVersion, tuple(tuple(address facet, uint8 action, bool isFreezable, bytes4[] selectors)[] facetCuts, address initAddress, bytes initCalldata) _diamondCut)",
+      "function upgradeCutHash(uint256 protocolVersion) view returns (bytes32 cutHash)",
+      "function validatorTimelock() view returns (address)"
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

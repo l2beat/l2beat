@@ -1,30 +1,20 @@
-import {
-  CoingeckoId,
-  CoingeckoPriceConfigEntry,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { CoingeckoPriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
-  ManagedMultiIndexerOptions,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { PriceService } from '../services/PriceService'
-import { SyncOptimizer } from '../utils/SyncOptimizer'
-
-export interface PriceIndexerDeps
-  extends Omit<ManagedMultiIndexerOptions<CoingeckoPriceConfigEntry>, 'name'> {
-  priceService: PriceService
-  syncOptimizer: SyncOptimizer
-  coingeckoId: CoingeckoId
-}
+import { PriceIndexerDeps } from './types'
 
 export class PriceIndexer extends ManagedMultiIndexer<CoingeckoPriceConfigEntry> {
   constructor(private readonly $: PriceIndexerDeps) {
-    const logger = $.logger.tag($.coingeckoId.toString())
-    const name = 'price_indexer'
-    super({ ...$, name, logger, updateRetryStrategy: DEFAULT_RETRY_FOR_TVL })
+    super({
+      ...$,
+      name: 'price_indexer',
+      tag: $.coingeckoId.toString(),
+      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+    })
   }
 
   override async multiUpdate(

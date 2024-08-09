@@ -40,7 +40,6 @@ export function createPriceModule(
     ([coingeckoId, prices]) =>
       new PriceIndexer({
         logger,
-        tag: coingeckoId,
         parents: [hourlyIndexer],
         indexerService,
         coingeckoId: CoingeckoId(coingeckoId),

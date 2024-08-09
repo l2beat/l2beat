@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x8a16c522e63785ff3d9daf2c6fe3cfa751a29239
+
+# Diff at Fri, 09 Aug 2024 10:13:59 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 14061228
+- current block number: 14061228
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14061228 (main branch discovery), not current.
+
+```diff
+    contract BlobstreamXMultisig (0x6ABa5D2084362038C9640a8851ff3b8BCbA81Ca6) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x0449689f2ce80fE45B32092e0d878ad87F0156a9","0x793979789Ec179183E396e76c1e241bE0c9eE899","0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf","0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0","0xA3fC931613a4E2440a199d47B0076e8b85F33099","0x91D456f83f4a117B07866fdEdC29306f7E974e15"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x0449689f2ce80fE45B32092e0d878ad87F0156a9","0x793979789Ec179183E396e76c1e241bE0c9eE899","0x1358eaCFE3a7F4FEB06c0Ae722072F134bcE7caf","0x45878fdF56B372D944c6Fc1865B7a65462f6D1b0","0xA3fC931613a4E2440a199d47B0076e8b85F33099","0x91D456f83f4a117B07866fdEdC29306f7E974e15"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract SuccinctMultisig (0xdC00f2469023a7b0b1D5b6abE2F736F90955e7F3) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 4 (75%)"
+      values.getOwners:
+-        ["0x72Ff26D9517324eEFA89A48B75c5df41132c4f54","0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126","0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65","0x19abbcEC005D4D83692f7A180125bF0FBd24253D"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0x72Ff26D9517324eEFA89A48B75c5df41132c4f54","0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126","0xa4ABEE02d42451Ba8c78b66361F53cb0C3dB3B65","0x19abbcEC005D4D83692f7A180125bF0FBd24253D"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x9d5433ede5f09e4abfa6b2718f3d959c01c645fa
 
 # Diff at Tue, 30 Jul 2024 11:17:34 GMT:

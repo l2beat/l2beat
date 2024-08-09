@@ -8,9 +8,10 @@ export interface DescendantIndexerDeps
 
 export class DescendantIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DescendantIndexerDeps) {
-    const logger = $.logger.tag($.tag)
-    const name = 'descendant_indexer'
-    super({ ...$, name, logger })
+    super({
+      ...$,
+      name: 'descendant_indexer',
+    })
   }
 
   override async update(_from: number, to: number): Promise<number> {

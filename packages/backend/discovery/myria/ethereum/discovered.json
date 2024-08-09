@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825378,
   "configHash": "0x84d196c4fe19887c26a5c3ca981864854bfca64e0bb7b5f40d427063aadf9189",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Committee",
@@ -118,7 +118,7 @@
     {
       "address": "0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245",
       "assignedPermissions": {
-        "admin": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"]
+        "upgrade": ["0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7"]
       }
     },
     { "address": "0xC7544ad893710Bd0bf780bf78dE5547706da75c5" },
