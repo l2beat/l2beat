@@ -124,6 +124,36 @@ describeDatabase(ActivityViewRepository.name, (db) => {
   )
 
   describe(
+    ActivityViewRepository.prototype.getSummedCountForProjectsAndTimeRange.name,
+    () => {
+      it('should return summed count grouped by projectId for given time range', async () => {
+        await db.blockTransactionCount.upsertMany([
+          mockBlockRecord(PROJECT_A, 0, 0, 1),
+          mockBlockRecord(PROJECT_A, 0, 1, 2),
+          mockBlockRecord(PROJECT_B, 0, 0, 3),
+          mockBlockRecord(PROJECT_B, 0, 1, 4),
+          mockBlockRecord(PROJECT_B, 1, -1, 5),
+          mockBlockRecord(PROJECT_B, 1, 0, 6),
+          mockBlockRecord(PROJECT_B, 2, 1, 6),
+          mockBlockRecord(PROJECT_C, 2, 1, 6),
+        ])
+
+        await repository.refresh()
+
+        const result = await repository.getSummedCountForProjectsAndTimeRange(
+          [PROJECT_A, PROJECT_B],
+          [new UnixTime(0), new UnixTime(UnixTime.DAY)],
+        )
+
+        expect(result).toEqual([
+          { projectId: PROJECT_A, count: 3 },
+          { projectId: PROJECT_B, count: 12 },
+        ])
+      })
+    },
+  )
+
+  describe(
     ActivityViewRepository.prototype.getProjectsAggregatedDailyCount.name,
     () => {
       it('should return correct response for single project', async () => {

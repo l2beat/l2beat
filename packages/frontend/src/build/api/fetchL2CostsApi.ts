@@ -60,7 +60,6 @@ function getMockL2CostsApiResponse(): L2CostsApiResponse {
   }, {})
 
   return {
-    combined: generateMockCharts(),
     projects,
   }
 }

@@ -34,7 +34,6 @@ function getOptions(chartType: ChartType): RadioGroupOption[] {
     case 'project-activity':
     case 'storybook-fake-activity':
       return [{ value: 'USD', checked: true }, { value: 'ETH' }]
-    case 'scaling-costs':
     case 'project-costs':
     case 'storybook-fake-costs':
       return [

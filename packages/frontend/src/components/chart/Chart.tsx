@@ -7,7 +7,6 @@ import { cn } from '../../utils/cn'
 import { HorizontalSeparator } from '../HorizontalSeparator'
 import { Logo } from '../Logo'
 import { ActivityHeader } from '../header/ActivityHeader'
-import { CostsHeader } from '../header/CostsHeader'
 import { TvlHeader } from '../header/TvlHeader'
 import { ChartComingSoonState } from './ChartComingSoonState'
 import { ChartEmptyState } from './ChartEmptyState'
@@ -180,10 +179,6 @@ function ChartHeader(props: {
 
   if (props.header === 'activity') {
     return <ActivityHeader />
-  }
-
-  if (props.header === 'costs') {
-    return <CostsHeader />
   }
 
   return (

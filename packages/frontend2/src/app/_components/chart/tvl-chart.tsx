@@ -15,6 +15,7 @@ import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-c
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { useChartLoading } from './core/chart-loading-context'
+import { mapMilestones } from './utils/map-milestones'
 
 interface TvlChartPointData {
   timestamp: number
@@ -29,11 +30,11 @@ interface Props {
 }
 
 export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
+  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '30d')
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const mappedMilestones = getMilestones(milestones)
+  const mappedMilestones = mapMilestones(milestones)
   const dataInRange = getEntriesByDays(toDays(timeRange), data, {
     trimLeft: true,
   })
@@ -206,15 +207,6 @@ function UnitAndScaleControls({
       </RadioGroup>
     </div>
   )
-}
-
-function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
-  for (const milestone of milestones) {
-    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
-    result[timestamp] = milestone
-  }
-  return result
 }
 
 function toDays(value: string) {

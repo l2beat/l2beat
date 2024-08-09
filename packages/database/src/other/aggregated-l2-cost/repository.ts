@@ -74,4 +74,24 @@ export class AggregatedL2CostRepository extends BaseRepository {
       .execute()
     return rows.map(toRecord)
   }
+
+  async getByProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<AggregatedL2CostRecord[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('public.aggregated_l2_costs')
+      .select(selectAggregatedL2Costs)
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
 }

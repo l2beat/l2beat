@@ -3,7 +3,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { getEthPrices } from './get-eth-prices'
 import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import { type TvlChartRange } from './range-utils'
+import { type TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
 
 export async function getTvlChart({

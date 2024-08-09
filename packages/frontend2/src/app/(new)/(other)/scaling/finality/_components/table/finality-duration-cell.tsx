@@ -9,7 +9,7 @@ import {
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type FinalityDataPoint } from '~/server/features/scaling/finality/schema'
-import { type SyncStatus } from '~/types/SyncStatus'
+import { type SyncStatus } from '~/types/sync-status'
 import { formatTimestamp } from '~/utils/dates'
 import { DurationCell } from './duration-cell'
 import { GrayedOut } from './grayed-out'

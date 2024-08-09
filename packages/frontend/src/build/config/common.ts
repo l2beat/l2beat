@@ -26,7 +26,6 @@ export const common: Omit<Config, 'backend'> = {
     tvlBreakdown: true,
     implementationChange: true,
     buildAllProjectPages: false,
-    costsPage: true,
     tvl: true,
     layer3sTvl: true,
     badges: true,

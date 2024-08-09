@@ -82,7 +82,6 @@ function getOptions(chartType: ChartType): RadioGroupOption[] {
           value: 'MAX',
         },
       ]
-    case 'scaling-costs':
     case 'project-costs':
     case 'storybook-fake-costs':
       return [

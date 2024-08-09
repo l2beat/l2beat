@@ -20,6 +20,31 @@ export class ActivityViewRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getSummedCountForProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<Omit<DailyTransactionCountRecord, 'timestamp'>[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('activity.daily_count_view')
+      .select(['project_id'])
+      .select((eb) => eb.fn.sum('count').as('count'))
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('unix_timestamp', '>=', from.toDate())
+      .where('unix_timestamp', '<', to.toDate())
+      .groupBy('project_id')
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: ProjectId(row.project_id),
+      count: Number(row.count),
+    }))
+  }
+
   async getDailyCountsPerProject(
     projectId: ProjectId,
   ): Promise<DailyTransactionCountRecord[]> {

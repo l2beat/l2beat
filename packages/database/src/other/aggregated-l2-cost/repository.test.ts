@@ -72,6 +72,28 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
       })
     },
   )
+
+  describe(
+    AggregatedL2CostRepository.prototype.getByProjectsAndTimeRange.name,
+    () => {
+      it('should return all rows for given projects and time range', async () => {
+        const records = [
+          record({ timestamp: NOW.add(-1, 'hours') }),
+          record(),
+          record({ timestamp: NOW.add(2, 'hours') }),
+          record({ projectId: ProjectId('random2') }),
+        ]
+        await repository.upsertMany(records)
+
+        const results = await repository.getByProjectsAndTimeRange(
+          [ProjectId('random')],
+          [NOW.add(-7, 'hours'), NOW.add(2, 'hours')],
+        )
+
+        expect(results).toEqual(records.slice(0, 2))
+      })
+    },
+  )
 })
 
 function record(

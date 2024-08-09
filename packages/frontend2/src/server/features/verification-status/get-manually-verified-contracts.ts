@@ -23,7 +23,7 @@ export function getManuallyVerifiedContracts(project: Project) {
   return getCachedManuallyVerifiedContracts(project)
 }
 
-export const getCachedManuallyVerifiedContracts = cache(
+const getCachedManuallyVerifiedContracts = cache(
   async (project: Project) => {
     const chainNames =
       project.type === 'DaLayer'
