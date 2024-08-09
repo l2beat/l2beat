@@ -9,6 +9,7 @@ import { Skeleton } from '~/app/_components/skeleton'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { formatTps } from '~/utils/format-tps'
 import { type SyncStatus } from '~/types/SyncStatus'
+import { MaxTpsCell } from './max-tps-cell'
 
 export type ScalingActivityTableEntry = ScalingActivityEntry & {
   data: ActivityData
@@ -101,7 +102,12 @@ export const scalingActivityColumns = [
             return <Skeleton className="h-4 w-10" />
         }
       }
-      return formatTps(data.maxTps.value)
+      return (
+        <MaxTpsCell
+          maxTps={data.maxTps.value}
+          timestamp={data.maxTps.timestamp}
+        />
+      )
     },
   }),
   columnHelper.accessor('data.summedCount', {
