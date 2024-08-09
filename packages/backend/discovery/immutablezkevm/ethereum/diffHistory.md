@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xfa061531b9796944d6654ee3d0e526cc92a33ba5
+
+# Diff at Fri, 09 Aug 2024 11:28:16 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@1ad87b4413497d14d292060f85413a135fcedee2 block: 20017490
+- current block number: 20490742
+
+## Description
+
+Two new members added to OwnerMultisig and threshold changed to 4.
+
+## Watched changes
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.6:
++        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
+      values.$members.5:
++        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+      values.$members.4:
+-        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
++        "0xB3669C058ddF26171Fd131D80C801AaEeb1519b8"
+      values.$members.3:
+-        "0x5C40EC9b11673925405ac132d248973a2b9d5cD4"
++        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
+      values.$members.2:
+-        "0xdAeDdFC3D4f10650E22939e6992349127C3F8C36"
++        "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
+      values.$members.1:
+-        "0x869896ac62ADc693322F461ded2fe4452bA74Ac3"
++        "0x3d395f623D8954d71132F5caC10778CA275806e0"
+      values.$members.0:
+-        "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
++        "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
+      values.$threshold:
+-        2
++        4
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "4 of 7 (57%)"
+    }
+```
+
 Generated with discovered.json: 0x34fd80e8846145eb0a1e0cd40e164b2690fce890
 
 # Diff at Fri, 09 Aug 2024 10:09:52 GMT:

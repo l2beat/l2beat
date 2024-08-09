@@ -13,7 +13,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x1967F0F374Eed3c0152d9CF0541F814206964041",
@@ -28,7 +31,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "957": [
@@ -41,11 +47,13 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 19612049.211707
+          "tvl": 20064812.291269
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x22d8360eB04F46195c7B02A66658C375948d8A99",
@@ -56,11 +64,13 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 19612049.211707
+          "tvl": 20064812.291269
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xfa8c07E28461eb7c65b33De024DB97eE4C052C97",
@@ -71,7 +81,7 @@
           "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
           "tokenName": "Staked USDe",
           "tokenSymbol": "sUSDe",
-          "tvl": 11675433.514749845
+          "tvl": 11608459.586211411
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -86,22 +96,7 @@
           "token": "0xFAe103DC9cf190eD75350761e95403b7b8aFa6c0",
           "tokenName": "rswETH",
           "tokenSymbol": "rswETH",
-          "tvl": 2364.0753917814723
-        }
-      ],
-      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": []
-    },
-    {
-      "address": "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87",
-      "hubOrBridge": "0x35d4D9bc79B0a543934b1769304B90d752691caD",
-      "siblingChainSlug": 957,
-      "tokens": [
-        {
-          "token": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
-          "tokenName": "rsETH",
-          "tokenSymbol": "rsETH",
-          "tvl": 2160.9576828948516
+          "tvl": 2421.572361086609
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -116,7 +111,22 @@
           "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
           "tokenName": "Wrapped eETH",
           "tokenSymbol": "weETH",
-          "tvl": 1523.505133434891
+          "tvl": 1526.1555093744175
+        }
+      ],
+      "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
+      "tags": []
+    },
+    {
+      "address": "0x388341d9E5A7D7d5accD738B2a31b0622E0c1b87",
+      "hubOrBridge": "0x35d4D9bc79B0a543934b1769304B90d752691caD",
+      "siblingChainSlug": 957,
+      "tokens": [
+        {
+          "token": "0xA1290d69c65A6Fe4DF752f95823fae25cB99e5A7",
+          "tokenName": "rsETH",
+          "tokenSymbol": "rsETH",
+          "tvl": 301.9309626278916
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
@@ -131,11 +141,13 @@
           "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
           "tokenName": "Wrapped liquid staked Ether 2.0",
           "tokenSymbol": "wstETH",
-          "tvl": 238.19050045143146
+          "tvl": 299.1335916723706
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xdCcFb24f983586144c085426dbfa3414045E19a3",
@@ -146,11 +158,13 @@
           "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
           "tokenName": "Wrapped liquid staked Ether 2.0",
           "tokenSymbol": "wstETH",
-          "tvl": 238.19050045143146
+          "tvl": 299.1335916723706
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xCf814e58f1649F94d37E51f730D6bF72409fA09c",
@@ -161,11 +175,13 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 156.96523189643378
+          "tvl": 184.76090587340846
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xf71A92D4bEFc2e18671c3b20377d45729790e880",
@@ -176,11 +192,13 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 156.96523189643378
+          "tvl": 184.76090587340846
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x68411d61adF1341A6392C87A93941FdD3EE7DF8E",
@@ -195,7 +213,9 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x8F4e67C61232167584333e23D7d67BD73d80a4F5",
@@ -210,7 +230,9 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xA621Bc5A9d13D39eb098865B723CEee71BB5C181",
@@ -221,11 +243,13 @@
           "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
           "tokenName": "Wrapped BTC",
           "tokenSymbol": "WBTC",
-          "tvl": 13.22012778
+          "tvl": 14.05712777
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xceA535B2a0A690ebA76ac6A4AF2A1ee7B9Fed1aa",
@@ -236,11 +260,13 @@
           "token": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
           "tokenName": "Wrapped BTC",
           "tokenSymbol": "WBTC",
-          "tvl": 13.22012778
+          "tvl": 14.05712777
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x1Eb392Aba52a2D933e58f7E86Ca96b9A3e2D8166",
@@ -255,7 +281,9 @@
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x5Afa7ddBcE8EE8862FDf5fD8c546BF32615d2D9B",
@@ -270,7 +298,9 @@
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x02D53793b18d032Cd94d745F7586C6F66F83f8e3",
@@ -285,7 +315,9 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x3553c0102684c20e2f8192d6F013c7242710b4b3",
@@ -300,7 +332,9 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug"]
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0x3f66F272d33B764960779a301c4183306ae50e10",
@@ -315,7 +349,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0xb1178803A726e2077947754de9f2f0cbdA29A60F",
@@ -345,7 +382,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x12fBD04CB103c596B78110C70eEDF16821CBfcAE",
@@ -360,7 +400,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "4665": [
@@ -388,7 +431,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 42.43869471828399
+          "tvl": 43.78869471828399
         }
       ],
       "owner": "0x3B88D6a4CCBD93c22c211C7f6e3ea8b1D30f81BF",
@@ -405,7 +448,7 @@
           "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
           "tokenName": "Staked USDe",
           "tokenSymbol": "sUSDe",
-          "tvl": 1805202.7513080426
+          "tvl": 1643833.0653080426
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -450,7 +493,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 63608.95
+          "tvl": 65202.944294
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -480,7 +523,7 @@
           "token": "0x57e114B691Db790C35207b2e685D4A43181e6061",
           "tokenName": "Ethena",
           "tokenSymbol": "ENA",
-          "tvl": 27498.260690000003
+          "tvl": 18833.49219
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -495,7 +538,7 @@
           "token": "0xFe0c30065B384F05761f15d0CC899D4F9F9Cc0eB",
           "tokenName": "ether.fi governance token",
           "tokenSymbol": "ETHFI",
-          "tvl": 18077.189336173033
+          "tvl": 18041.82723617303
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -510,7 +553,7 @@
           "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
           "tokenName": "Wrapped liquid staked Ether 2.0",
           "tokenSymbol": "wstETH",
-          "tvl": 2549.6587552656033
+          "tvl": 2562.421724324788
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -525,7 +568,7 @@
           "token": "0xCd5fE23C85820F7B72D0926FC9b05b43E359b7ee",
           "tokenName": "Wrapped eETH",
           "tokenSymbol": "weETH",
-          "tvl": 1461.2492917280406
+          "tvl": 1426.662554083589
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -540,7 +583,7 @@
           "token": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
           "tokenName": "Wrapped Ether",
           "tokenSymbol": "WETH",
-          "tvl": 13.369569717451968
+          "tvl": 32.34616971745197
         }
       ],
       "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -570,7 +613,22 @@
           "token": "0x45804880De22913dAFE09f4980848ECE6EcbAf78",
           "tokenName": "Paxos Gold",
           "tokenSymbol": "PAXG",
-          "tvl": 0.059893226831469894
+          "tvl": 0.1607791866895183
+        }
+      ],
+      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
+      "tags": []
+    },
+    {
+      "address": "0x4a43eD818411585fEAaf667a2D3E2605962084e0",
+      "hubOrBridge": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
+      "siblingChainSlug": 7887,
+      "tokens": [
+        {
+          "token": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
+          "tokenName": "Tether Gold",
+          "tokenSymbol": "XAUt",
+          "tvl": 0.070614
         }
       ],
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
@@ -650,21 +708,6 @@
       ],
       "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
       "tags": []
-    },
-    {
-      "address": "0x4a43eD818411585fEAaf667a2D3E2605962084e0",
-      "hubOrBridge": "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
-      "siblingChainSlug": 7887,
-      "tokens": [
-        {
-          "token": "0x68749665FF8D2d112Fa859AA293F07A622782F38",
-          "tokenName": "Tether Gold",
-          "tokenSymbol": "XAUt",
-          "tvl": 0
-        }
-      ],
-      "owner": "0x660ad4B5A74130a4796B4d54BC6750Ae93C86e6c",
-      "tags": []
     }
   ],
   "8008": [
@@ -677,22 +720,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 100320
-        }
-      ],
-      "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
-      "tags": []
-    },
-    {
-      "address": "0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe",
-      "hubOrBridge": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
-      "siblingChainSlug": 8008,
-      "tokens": [
-        {
-          "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-          "tokenName": "Staked USDe",
-          "tokenSymbol": "sUSDe",
-          "tvl": 409.551155
+          "tvl": 820425
         }
       ],
       "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
@@ -707,7 +735,22 @@
           "token": "0x83F20F44975D03b1b09e64809B757c47f942BEeA",
           "tokenName": "Savings Dai",
           "tokenSymbol": "sDAI",
-          "tvl": 245.45678900000001
+          "tvl": 115295.45678899999
+        }
+      ],
+      "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
+      "tags": []
+    },
+    {
+      "address": "0xEd0952283fdA768aA9d69eB7e895d49afcC3c0fe",
+      "hubOrBridge": "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
+      "siblingChainSlug": 8008,
+      "tokens": [
+        {
+          "token": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
+          "tokenName": "Staked USDe",
+          "tokenSymbol": "sUSDe",
+          "tvl": 49178.551155
         }
       ],
       "owner": "0xAeBF1Bc19Ed4Fdf509c456ab6c28D25C9Ca3B332",
@@ -728,7 +771,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0xd0711b9eBE84b778483709CDe62BacFDBAE13623",
@@ -743,7 +789,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x1A9ba93F3cb22Ba7228D29607075F444e9ff515c",
@@ -758,7 +807,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "34443": [
@@ -775,7 +827,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x716c339F41eAcfE2dc4775052411394A2Ed04743",
@@ -790,7 +845,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x9D0487D8d93Fc08938A39e355c676A8b032Dc52a",
@@ -805,7 +863,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "42161": [
@@ -822,7 +883,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x519Bc0379CA9C4061a6006B4EAc419bC00017B3E",
@@ -837,7 +901,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0xAda55E4762c3663f90D55Dc6ACC073B012D1e6eA",
@@ -852,7 +919,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "81457": [
@@ -884,7 +954,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0xDBa83C0C654DB1cd914FA2710bA743e925B53086",
@@ -899,7 +972,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     },
     {
       "address": "0x3F574bc32a0bE9514010409FE8CF19e56fd7C83a",
@@ -914,7 +990,10 @@
         }
       ],
       "owner": "0x246d38588b16Dd877c558b245e6D5a711C649fCF",
-      "tags": ["multiplug", "multiproject"]
+      "tags": [
+        "multiplug",
+        "multiproject"
+      ]
     }
   ],
   "1324967486": [
@@ -927,7 +1006,7 @@
           "token": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
           "tokenName": "USDC",
           "tokenSymbol": "USDC",
-          "tvl": 17398035.535175
+          "tvl": 15438264.723384
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
@@ -1019,10 +1098,44 @@
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-      "tags": []
+      "tags": [
+        "multiplug"
+      ]
     },
     {
       "address": "0xcb473D87A56b4609A695753711F727E5c4335cCf",
+      "hubOrBridge": "0x052B82b3A096A592F3F28d4736c4796445BB98Ef",
+      "siblingChainSlug": 1324967486,
+      "tokens": [
+        {
+          "token": "0x7f39C581F595B53c5cb19bD0b3f8dA6c935E2Ca0",
+          "tvl": 0
+        }
+      ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
+      "tags": [
+        "multiplug"
+      ]
+    },
+    {
+      "address": "0x1aE19B11B71b1e232c43Fe65cB1d31E139Ac7A63",
+      "hubOrBridge": "0xaA2f2B6cD33Eaabb795c6DB60AAec599C8450F35",
+      "siblingChainSlug": 1324967486,
+      "tokens": [
+        {
+          "token": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
+          "tokenName": "USDe",
+          "tokenSymbol": "USDe",
+          "tvl": 0
+        }
+      ],
+      "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
+      "tags": [
+        "multiplug"
+      ]
+    },
+    {
+      "address": "0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738",
       "hubOrBridge": "0x052B82b3A096A592F3F28d4736c4796445BB98Ef",
       "siblingChainSlug": 1324967486,
       "tokens": [
@@ -1034,7 +1147,9 @@
         }
       ],
       "owner": "0x5fD7D0d6b91CC4787Bcb86ca47e0Bd4ea0346d34",
-      "tags": []
+      "tags": [
+        "multiplug"
+      ]
     }
   ],
   "unknown": [
