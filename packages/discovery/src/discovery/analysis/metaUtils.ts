@@ -4,13 +4,18 @@ import {
   ContractFieldSeverity,
   ContractValue,
   ContractValueType,
-  Permission,
   StackCategory,
   StackRole,
   get$Admins,
 } from '@l2beat/discovery-types'
 import { ContractOverrides } from '../config/DiscoveryOverrides'
-import { DiscoveryContractField } from '../config/RawDiscoveryConfig'
+import {
+  DiscoveryContractField,
+  PermissionConfiguration,
+  RawPermissionConfiguration,
+} from '../config/RawDiscoveryConfig'
+import { resolveReferenceFromValues } from '../handlers/reference'
+import { valueToNumber } from '../handlers/utils/valueToNumber'
 import { AnalyzedContract } from './AddressAnalyzer'
 
 type AddressToMetaMap = { [address: string]: ContractMeta }
@@ -21,7 +26,7 @@ export interface ContractMeta {
   displayName: string | undefined
   descriptions: string[] | undefined
   roles: Set<StackRole> | undefined
-  permissions: { [permission: string]: Set<EthereumAddress> } | undefined
+  permissions: PermissionConfiguration[] | undefined
   categories: Set<StackCategory> | undefined
   types: Set<ContractValueType> | undefined
   severity: ContractFieldSeverity | undefined
@@ -44,21 +49,24 @@ export function mergeContractMeta(
 }
 
 export function mergePermissions(
-  a: ContractMeta['permissions'] = {},
-  b: ContractMeta['permissions'] = {},
-): ContractMeta['permissions'] | undefined {
-  const result: ContractMeta['permissions'] = {}
-  const combinedKeys = new Set([
-    ...Object.keys(a ?? {}),
-    ...Object.keys(b ?? {}),
-  ])
-  for (const key of combinedKeys) {
-    const merged = mergeSets(a[key], b[key])
-    if (merged !== undefined) {
-      result[key] = merged
+  a: PermissionConfiguration[] = [],
+  b: PermissionConfiguration[] = [],
+): PermissionConfiguration[] | undefined {
+  const encodeKey = (v: PermissionConfiguration): string => {
+    return `${v.type}-${v.target.toString()}`
+  }
+
+  const accumulator: Map<string, PermissionConfiguration> = new Map()
+  for (const entry of a.concat(b)) {
+    const key = encodeKey(entry)
+    const comparisonEntry = accumulator.get(key) ?? entry
+    if (comparisonEntry.delay <= entry.delay) {
+      accumulator.set(key, entry)
     }
   }
-  return isEmptyObject(result) ? undefined : result
+
+  const result = [...accumulator.values()]
+  return result.length === 0 ? undefined : result
 }
 
 export function interpolateDescription(
@@ -129,7 +137,6 @@ export function getMetaFromUpgradeability(
   const result: Record<string, ContractMeta> = {}
   for (const upgradeabilityAdmin of admins) {
     if (upgradeabilityAdmin !== undefined) {
-      const permission: Permission = 'admin'
       result[upgradeabilityAdmin.toString()] = {
         displayName: undefined,
         categories: undefined,
@@ -137,9 +144,7 @@ export function getMetaFromUpgradeability(
         roles: undefined,
         severity: undefined,
         types: undefined,
-        permissions: {
-          [permission]: new Set([self]),
-        },
+        permissions: [{ type: 'upgrade', target: self, delay: 0 }],
       }
     }
   }
@@ -163,7 +168,9 @@ export function targetConfigToMeta(
     displayName: undefined,
     descriptions,
     roles: toSet(target.role),
-    permissions: getTargetPermissions(self, toSet(target.permission)),
+    permissions: target.permissions?.map((p) =>
+      linkPermission(p, self, analysis.values),
+    ),
     categories: toSet(target.category),
     types: toSet(field.type),
     severity: Array.from(toSet(field.severity) ?? [])[0],
@@ -171,14 +178,21 @@ export function targetConfigToMeta(
   return isEmptyObject(result) ? undefined : result
 }
 
-export function getTargetPermissions(
+function linkPermission(
+  rawPermission: RawPermissionConfiguration,
   self: EthereumAddress,
-  permission?: Set<Permission>,
-): ContractMeta['permissions'] | undefined {
-  if (permission === undefined) {
-    return undefined
+  values: AnalyzedContract['values'],
+): PermissionConfiguration {
+  let delay = rawPermission.delay
+  if (typeof delay === 'string') {
+    delay = valueToNumber(resolveReferenceFromValues(delay, values))
   }
-  return Object.fromEntries([...permission].map((p) => [p, new Set([self])]))
+
+  return {
+    type: rawPermission.type,
+    delay,
+    target: self,
+  }
 }
 
 export function invertMeta(

@@ -41,7 +41,10 @@ describe(CirculatingSupplyService.name, () => {
           category: 'other',
         })
 
-        const result = await service.fetchCirculatingSupplies(from, to, config)
+        const result = await service.fetchCirculatingSupplies(from, to, {
+          ...config,
+          id: createAmountId(config),
+        })
 
         expect(result).toEqual([
           amount(config, 100),

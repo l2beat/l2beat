@@ -1,3 +1,80 @@
+Generated with discovered.json: 0xc05d3d8539a27b4113230b9adbacd8e2dfece54e
+
+# Diff at Fri, 09 Aug 2024 10:12:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20475166
+- current block number: 20475166
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475166 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xc07556a0Bd177F8de4D077f449C2653A072F3798) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 7 (43%)"
+      values.getOwners:
+-        ["0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771","0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85","0x5aC189Db4351787516d2E6Fc628BF762ce684326","0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581","0x53482ACf424d4196b0F8EbdD6F8A15eb8516FB88","0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386","0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771","0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85","0x5aC189Db4351787516d2E6Fc628BF762ce684326","0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581","0x53482ACf424d4196b0F8EbdD6F8A15eb8516FB88","0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386","0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "6 of 12 (50%)"
+      values.getOwners:
+-        ["0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89","0x7052cB84079905400ea52B635cAb6a275fDA8823","0xE062e7D123AC8dF480C56147f911144F55C10f88","0x41eAdbc688797a02bfaBE48472995833489ce69D","0x1c6460cfe32916196f6977b5442b0F98A826D880","0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","0xAe735fd5e74887064DFf99C637f291caE5485A75","0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC","0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd","0x06e5891D9b2Ee77740355A309BAF49caaB672f98","0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"]
+      values.getThreshold:
+-        6
+      values.$members:
++        ["0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89","0x7052cB84079905400ea52B635cAb6a275fDA8823","0xE062e7D123AC8dF480C56147f911144F55C10f88","0x41eAdbc688797a02bfaBE48472995833489ce69D","0x1c6460cfe32916196f6977b5442b0F98A826D880","0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","0xAe735fd5e74887064DFf99C637f291caE5485A75","0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC","0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd","0x06e5891D9b2Ee77740355A309BAF49caaB672f98","0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"]
+      values.$threshold:
++        6
+      values.multisigThreshold:
++        "6 of 12 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xe7f888d9bf1744fcb3fcf778046bd265349b09c3
+
+# Diff at Wed, 07 Aug 2024 07:23:21 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20454546
+- current block number: 20475166
+
+## Description
+
+The bridge limit is increased for one of the escrows.
+
+## Watched changes
+
+```diff
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C) {
+    +++ description: None
+      values.getBridgeLimit:
+-        "2500000000000000000000000"
++        "20000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x98bca27d8f15e7eb491b21bbda22a60aa8152474
 
 # Diff at Sun, 04 Aug 2024 10:19:37 GMT:

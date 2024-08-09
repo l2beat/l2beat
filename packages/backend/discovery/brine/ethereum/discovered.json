@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825361,
   "configHash": "0xe5c5527c32f8e0ff915cc45e850bec0f059b6ae23a19a29818429a6a864dd994",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "StarkExchange",
@@ -119,7 +119,7 @@
     {
       "address": "0x303775491494a08b07365938787274F742a81F63",
       "assignedPermissions": {
-        "admin": ["0x1390f521A79BaBE99b69B37154D63D431da27A07"]
+        "upgrade": ["0x1390f521A79BaBE99b69B37154D63D431da27A07"]
       }
     },
     { "address": "0x502FffBcdcaA61f19deFBb9b60e799F74FB48Bc1" },

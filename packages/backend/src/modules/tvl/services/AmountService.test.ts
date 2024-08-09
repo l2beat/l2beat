@@ -12,8 +12,8 @@ import { BigNumber } from 'ethers'
 
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
-import { Configuration } from '../../../tools/uif/multi/types'
-import { AmountService, ChainAmountConfig } from './AmountService'
+import { ChainAmountConfig } from '../indexers/types'
+import { AmountService } from './AmountService'
 
 describe(AmountService.name, () => {
   const NATIVE_CODEC_SINCE_BLOCK = 1_111
@@ -36,9 +36,7 @@ describe(AmountService.name, () => {
     })
 
     const escrowNativeConfig = mockEscrowConfig({ address: 'native' })
-    const configurations: Configuration<ChainAmountConfig>[] = [
-      mockUifConfig(escrowNativeConfig),
-    ]
+    const configurations = [mockConfig(escrowNativeConfig)]
 
     await service.fetchAmounts(timestamp, blockNumber, configurations)
 
@@ -62,12 +60,10 @@ describe(AmountService.name, () => {
       logger: Logger.SILENT,
     })
 
-    const escrowNativeConfig = mockUifConfig(
+    const escrowNativeConfig = mockConfig(
       mockEscrowConfig({ address: 'native' }),
     )
-    const configurations: Configuration<ChainAmountConfig>[] = [
-      escrowNativeConfig,
-    ]
+    const configurations = [escrowNativeConfig]
 
     await service.fetchAmounts(timestamp, blockNumber, configurations)
 
@@ -90,9 +86,9 @@ describe(AmountService.name, () => {
 
     const erc20TotalSupplyConfig = mockTotalSupplyConfig()
     const erc20BalanceConfig = mockEscrowConfig()
-    const configurations: Configuration<ChainAmountConfig>[] = [
-      mockUifConfig(erc20TotalSupplyConfig),
-      mockUifConfig(erc20BalanceConfig),
+    const configurations = [
+      mockConfig(erc20TotalSupplyConfig),
+      mockConfig(erc20BalanceConfig),
     ]
 
     await service.fetchAmounts(timestamp, blockNumber, configurations)
@@ -101,15 +97,12 @@ describe(AmountService.name, () => {
   })
 })
 
-function mockUifConfig<T>(
-  config: T,
-  params: { id?: string; minHeight?: number; maxHeight?: number } = {},
-): Configuration<T> {
+function mockConfig(
+  config: ChainAmountConfig,
+): ChainAmountConfig & { id: string } {
   return {
-    properties: config,
-    id: params.id ?? 'id',
-    minHeight: params.minHeight ?? 1,
-    maxHeight: params.maxHeight ?? 2,
+    ...config,
+    id: 'id',
   }
 }
 
@@ -137,6 +130,7 @@ function mockTotalSupplyConfig(
 function mockBaseConfig(base: Partial<AmountConfigBase>): AmountConfigBase {
   return {
     chain: 'chain',
+    dataSource: 'chain',
     project: ProjectId('project'),
     source: 'canonical' as const,
     sinceTimestamp: new UnixTime(123),

@@ -24,7 +24,8 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
   private readonly indexerId: string
 
   constructor(public readonly options: ManagedChildIndexerOptions) {
-    super(options.logger, options.parents, options)
+    const logger = options.logger.tag(options.tag)
+    super(logger, options.parents, options)
     this.indexerId = options.name
     if (options.tag) {
       this.indexerId += `::${options.tag}`

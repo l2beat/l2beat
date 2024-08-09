@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20177361,
   "configHash": "0xbb0b8a73029a722b0bb56e9231f731131f48b31292a92e42cf304119122592b1",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "OneStepProofEntry",
@@ -275,16 +275,16 @@
       "name": "ProxyAdmin",
       "address": "0xB032ff02cd6425e4b816137207AA8560932180f1",
       "assignedPermissions": {
-        "admin": [
-          "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
+        "upgrade": [
+          "0xfC89B875970122E24C6C5ADd4Dea139443943ea7",
           "0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03",
+          "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
+          "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
           "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18",
           "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C",
           "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0",
-          "0x8592Ca44dE1D354A20F75160F5602E5933D33761",
-          "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
-          "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11",
-          "0xfC89B875970122E24C6C5ADd4Dea139443943ea7"
+          "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d",
+          "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
         ]
       },
       "sinceTimestamp": 1710580715,
@@ -303,10 +303,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "6 of 10 (60%)",
-        "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621",
           "0x28bB9385A588EF4747264D19B9A9F1603591680c",
           "0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2",
@@ -318,8 +315,11 @@
           "0xf83bC4688979b13Da02CB94c76cEB169540760b5",
           "0x547D0F472309e4239b296D01e03bEDc101241a26"
         ],
-        "getThreshold": 6,
+        "$threshold": 6,
+        "domainSeparator": "0xbe8c8ff5b263aabfa5957a21cfff3c301b7fe41d5c89b2189c54dba8c9251189",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 10 (60%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -431,18 +431,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 5 (80%)",
-        "domainSeparator": "0xffed3c27670fc30ea34917db1b8f67e220488741f28e4112029e2fff249b118d",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A",
           "0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0",
           "0x6bD40C6f7849160FE217D07a73E15f4ef8222283",
           "0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A",
           "0x7cFaD85633CD000c83Fcf99a678044dDC14125bD"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xffed3c27670fc30ea34917db1b8f67e220488741f28e4112029e2fff249b118d",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 5 (80%)",
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -453,7 +453,7 @@
       "address": "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"]
+        "upgrade": ["0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"]
       },
       "sinceTimestamp": 1710580715,
       "values": {
@@ -591,7 +591,7 @@
     {
       "address": "0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3",
       "assignedPermissions": {
-        "admin": ["0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8"]
+        "upgrade": ["0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8"]
       }
     },
     { "address": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" },
@@ -1568,7 +1568,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },

@@ -56,7 +56,9 @@
         "swapRouter",
         "SOLV_BTC",
         "SOLV_SFT_WRAP_ROUTER",
-        "WBTC"
+        "WBTC",
+        "USDA",
+        "stUSD"
       ],
       "ignoreMethods": [
         "proxiableUUID",

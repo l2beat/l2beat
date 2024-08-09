@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531595,
   "configHash": "0xb65597dc170a417db4f9924962294d8b248d20068901b7ecf5ea3307ec89d78d",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Hop Multisig",
@@ -15,16 +15,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x34CfAC646f301356fAa8B21e94227e3583Fe3F5F",
-        "$multisigThreshold": "2 of 3 (67%)",
-        "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
-        "getModules": [],
-        "getOwners": [
+        "$members": [
           "0x9f8d2dafE9978268aC7c67966B366d6d55e97f07",
           "0x404c2184a4027b0092C5877BC4599099cd63E62D",
           "0xEb34e93f90fa76c865112F4596eAb65D6F0d2F62"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x62766f0ec4bb63fc0cf61622e436018804fdac93d59b3a03e6318b6bf34dd76c",
+        "getModules": [],
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
         "NAME": "Gnosis Safe",
         "nonce": 592,
         "VERSION": "1.1.1"
@@ -891,7 +891,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

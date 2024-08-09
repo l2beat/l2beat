@@ -1,3 +1,77 @@
+Generated with discovered.json: 0x0677537fb87c8ddc24eb032687875994d450b561
+
+# Diff at Fri, 09 Aug 2024 10:11:43 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20177361
+- current block number: 20177361
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20177361 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xB032ff02cd6425e4b816137207AA8560932180f1) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d","0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03","0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18","0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C","0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0","0x8592Ca44dE1D354A20F75160F5602E5933D33761","0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a","0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11","0xfC89B875970122E24C6C5ADd4Dea139443943ea7"]
+      assignedPermissions.upgrade:
++        ["0xfC89B875970122E24C6C5ADd4Dea139443943ea7","0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03","0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11","0x8592Ca44dE1D354A20F75160F5602E5933D33761","0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18","0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C","0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0","0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d","0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"]
+    }
+```
+
+```diff
+    contract GelatoMultisig (0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "6 of 10 (60%)"
+      values.getOwners:
+-        ["0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621","0x28bB9385A588EF4747264D19B9A9F1603591680c","0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2","0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d","0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d","0xc85aC6d2fdC376F335455D4cCA30c45ED1080849","0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3","0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e","0xf83bC4688979b13Da02CB94c76cEB169540760b5","0x547D0F472309e4239b296D01e03bEDc101241a26"]
+      values.getThreshold:
+-        6
+      values.$members:
++        ["0xB0C2CBFfCd4C31AFFEe14993b6d48f99D285f621","0x28bB9385A588EF4747264D19B9A9F1603591680c","0x691C2EF68e25E620fa6cAdE2728f6aE34F37aAD2","0x5bE3E96Cdc3A97628bD7308d3588B9a474F4A54d","0xBc0ca6865d6883a83D4aDDD6b862aE042d855E0d","0xc85aC6d2fdC376F335455D4cCA30c45ED1080849","0x27b1682E9C5Cb0E58Ff474F3a13EeCC36E708ad3","0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e","0xf83bC4688979b13Da02CB94c76cEB169540760b5","0x547D0F472309e4239b296D01e03bEDc101241a26"]
+      values.$threshold:
++        6
+      values.multisigThreshold:
++        "6 of 10 (60%)"
+    }
+```
+
+```diff
+    contract EscrowMultisig (0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 5 (80%)"
+      values.getOwners:
+-        ["0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A","0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0","0x6bD40C6f7849160FE217D07a73E15f4ef8222283","0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A","0x7cFaD85633CD000c83Fcf99a678044dDC14125bD"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A","0xf16Df80dBA33bB54018F99A3679801Bc9cA14Fe0","0x6bD40C6f7849160FE217D07a73E15f4ef8222283","0xFbce8758DBF56d574A80fa3A6AB27275a8F1EF6A","0x7cFaD85633CD000c83Fcf99a678044dDC14125bD"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 5 (80%)"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"]
+      assignedPermissions.upgrade:
++        ["0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a"]
+    }
+```
+
 Generated with discovered.json: 0xcaf569c377b5fb07061abd15c9ea763eddb1f7b9
 
 # Diff at Tue, 30 Jul 2024 11:13:53 GMT:

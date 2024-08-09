@@ -26,7 +26,7 @@ function SigVerified(areSignersTracked: boolean) {
     type: 'SigVerified',
     value: 'Signatures verified',
     sentiment: areSignersTracked ? 'good' : 'warning',
-    description: 'TODO',
+    description: `Operators' signatures from the DA layer are verified on Ethereum.`,
   } as const
 }
 

@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x9a019fb9140510909dd4fb3418872c6ca17cf19c
+
+# Diff at Fri, 09 Aug 2024 10:11:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20475186
+- current block number: 20475186
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475186 (main branch discovery), not current.
+
+```diff
+    contract MainchainBridgeManager (0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"]
+      assignedPermissions.upgrade:
++        ["0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x51F6696Ae42C6C40CA9F5955EcA2aaaB1Cefb26e) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"]
+      assignedPermissions.upgrade:
++        ["0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"]
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0x4BFEc2a63B72c67e6c3f599fCc40E1d42AE519ff","0x18471CC6d2d427077CAA7896D7956cD066CAbe49","0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9","0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031","0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0x4BFEc2a63B72c67e6c3f599fCc40E1d42AE519ff","0x18471CC6d2d427077CAA7896D7956cD066CAbe49","0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9","0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031","0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x29bf015e5a7b96ffdbaacb860fcedf061c601394
+
+# Diff at Wed, 07 Aug 2024 07:25:35 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20469499
+- current block number: 20475186
+
+## Description
+
+The Pauser role was renounced, there are no pausers right now. The bridge remains paused. Context: https://x.com/Ronin_Network/status/1820804772917588339
+
+## Watched changes
+
+```diff
+    contract PauseEnforcer (0xe514d9DEB7966c8BE0ca922de8a064264eA6bcd4) {
+    +++ description: None
+      values.accessControl.SENTRY_ROLE.members.0:
+-        "0x8B35C5E273525a4Ca61025812f29C17727948f57"
+    }
+```
+
 Generated with discovered.json: 0x2eb6d1be309f0402d17aff1b623019fc86ba6029
 
 # Diff at Tue, 06 Aug 2024 12:22:12 GMT:

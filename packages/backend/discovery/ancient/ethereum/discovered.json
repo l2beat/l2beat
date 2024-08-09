@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19927693,
   "configHash": "0x40ef5e7ec6070e99fc0753c31b29859c9086903a0d48af264137629c2d536643",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -102,10 +102,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x98911f87c3c82a2197656e1df3e5214c19f185fa11e6e507a64b70d576ddcfb6",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -113,8 +110,11 @@
           "0xcdD7FE91F5e2dCf8a0B30C4127c8D54e3F2a469c",
           "0xE3a87D0eE19c66d0d22F2AEf50c78d4C4FEeA5FB"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x98911f87c3c82a2197656e1df3e5214c19f185fa11e6e507a64b70d576ddcfb6",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       },
@@ -129,17 +129,14 @@
         "It can act on behalf of 0x75a223Fb459461B9Fa61dd25109EA05522b4b492, inheriting its permissions."
       ],
       "assignedPermissions": {
-        "owner": ["0x75a223Fb459461B9Fa61dd25109EA05522b4b492"]
+        "configure": ["0x75a223Fb459461B9Fa61dd25109EA05522b4b492"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -148,8 +145,11 @@
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 35,
         "VERSION": "1.3.0"
       },
@@ -183,14 +183,14 @@
       "address": "0x75a223Fb459461B9Fa61dd25109EA05522b4b492",
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
-        "admin": [
-          "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec",
-          "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80",
+        "upgrade": [
           "0x639F2AECE398Aa76b07e59eF6abe2cFe32bacb68",
+          "0x12d4E64E1B46d27A00fe392653A894C1dd36fb80",
+          "0xd5e3eDf5b68135D559D572E26bF863FBC1950033",
           "0xB09DC08428C8b4EFB4ff9C0827386CDF34277996",
-          "0xd5e3eDf5b68135D559D572E26bF863FBC1950033"
+          "0x0b4cfc49aCc656CE6D03CB0794860Da92bE3E8ec"
         ],
-        "owner": ["0x15A52Fed1c448028A240b603dD93f2697E12Dc82"]
+        "configure": ["0x15A52Fed1c448028A240b603dD93f2697E12Dc82"]
       },
       "sinceTimestamp": 1706027447,
       "values": {
@@ -552,9 +552,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

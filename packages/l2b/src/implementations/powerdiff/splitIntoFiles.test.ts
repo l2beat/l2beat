@@ -25,6 +25,7 @@ describe('splitIntoSubfiles', () => {
     config = {
       path1: leftDir,
       path2: rightDir,
+      displayMode: 'inline',
       difftasticPath: 'difft',
     }
   })

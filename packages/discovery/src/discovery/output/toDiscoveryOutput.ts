@@ -1,7 +1,12 @@
-import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
+import {
+  ContractParameters,
+  DiscoveryOutput,
+  Meta,
+} from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
+import { PermissionConfiguration } from '../config/RawDiscoveryConfig'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 
 export function toDiscoveryOutput(
@@ -61,7 +66,7 @@ export function processAnalysis(
           categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
-          assignedPermissions: objectWithSetsToArrays(
+          assignedPermissions: toLegacyPermissionView(
             x.combinedMeta?.permissions,
           ),
           ignoreInWatchMode: x.ignoreInWatchMode,
@@ -90,7 +95,7 @@ export function processAnalysis(
         categories: setToSortedArray(x.combinedMeta?.categories),
         types: setToSortedArray(x.combinedMeta?.types),
         severity: x.combinedMeta?.severity,
-        assignedPermissions: objectWithSetsToArrays(
+        assignedPermissions: toLegacyPermissionView(
           x.combinedMeta?.permissions,
         ),
       })),
@@ -116,6 +121,26 @@ function getContracts(results: Analysis[]): {
   return { contracts, abis }
 }
 
+// TODO(radomski): This is purely a plumbing function, should be removed once
+// we get ultimate owner resolution working and we'll save grantedPermissions
+// and receivedPermissions
+function toLegacyPermissionView(
+  permissions: PermissionConfiguration[] | undefined,
+): Meta['assignedPermissions'] {
+  if (permissions === undefined) {
+    return undefined
+  }
+
+  const result: Meta['assignedPermissions'] = {}
+
+  for (const permission of permissions) {
+    result[permission.type] ??= []
+    result[permission.type]?.push(permission.target)
+  }
+
+  return result
+}
+
 function withoutUndefinedKeys<T extends object>(obj: T): T {
   return JSON.parse(JSON.stringify(obj)) as T
 }
@@ -128,18 +153,4 @@ export function sortByKeys<T extends object>(obj: T): T {
 
 function setToSortedArray<T>(value: Set<T> | undefined): T[] | undefined {
   return value && Array.from(value).sort()
-}
-
-function objectWithSetsToArrays<T>(
-  obj: Record<string, Set<T>> | undefined,
-): Record<string, T[]> | undefined {
-  if (obj === undefined) {
-    return undefined
-  }
-  const asMap: [string, T[]][] = Object.entries(obj).map(([key, value]) => [
-    key,
-    Array.from(value).sort(),
-  ])
-  asMap.sort(([keyA], [keyB]) => keyA.localeCompare(keyB))
-  return Object.fromEntries(asMap)
 }

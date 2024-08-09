@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x5a8ff11be549135c8b8b49f5bff96cb47ab97132
+
+# Diff at Thu, 08 Aug 2024 07:17:33 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5a17db968badca34a66703637dabf76a313bb43e block: 20469638
+- current block number: 20482316
+
+## Description
+
+Updated base token gas multiplier.
+
+## Watched changes
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.baseTokenGasPriceMultiplierNominator:
+-        40000
++        25000
+    }
+```
+
 Generated with discovered.json: 0x682e63ce64e58a5524b7f506518c01daf6f57142
 
 # Diff at Thu, 01 Aug 2024 08:25:00 GMT:

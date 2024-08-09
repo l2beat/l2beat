@@ -10,7 +10,8 @@ import { createAmountId } from '../utils/createAmountId'
 import { createAssetId } from '../utils/createAssetId'
 import { createPriceId } from '../utils/createPriceId'
 import { MOCKS_FOR_TVL } from '../utils/test/mocks'
-import { ValueIndexer, ValueIndexerDeps } from './ValueIndexer'
+import { ValueIndexer } from './ValueIndexer'
+import { ValueIndexerDeps } from './types'
 
 const { priceConfiguration, amountConfiguration, valueRecord } = MOCKS_FOR_TVL
 
