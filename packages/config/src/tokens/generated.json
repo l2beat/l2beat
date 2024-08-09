@@ -6773,7 +6773,11 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
       "chainId": 8453,
       "source": "external",
-      "supply": "totalSupply"
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "id": "base:toshi-toshi",

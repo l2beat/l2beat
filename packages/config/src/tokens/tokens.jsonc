@@ -2242,7 +2242,11 @@
       "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
       "source": "external",
       "coingeckoId":"anzen-staked-usdz",
-      "supply": "totalSupply"
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "symbol": "rsETH",
