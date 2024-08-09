@@ -35,7 +35,8 @@ const NoFraudDetection = {
   type: 'NoFraudDetection',
   value: 'No fraud detection',
   sentiment: 'bad',
-  description: 'There is no fraud detection mechanism in place.',
+  description:
+    'There is no fraud detection mechanism in place. A data withholding attack can only be detected by nodes downloading the full data from the DA layer.',
 } as const
 
 export const DaFraudDetectionRisk = {
