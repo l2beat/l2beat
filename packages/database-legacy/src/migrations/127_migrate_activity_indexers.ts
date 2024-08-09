@@ -1,6 +1,3 @@
-import { UnixTime } from '@l2beat/shared-pure'
-import { Knex } from 'knex'
-
 /*
                       ====== IMPORTANT NOTICE ======
 
@@ -13,6 +10,10 @@ If you find that something was incorrectly set up in the `up` function you
 should create a new migration file that fixes the issue.
 
 */
+
+import { UnixTime } from '@l2beat/shared-pure'
+import { Knex } from 'knex'
+
 const projects: { name: string; indexerType: 'block' | 'day' }[] = [
   { name: 'aevo', indexerType: 'block' },
   { name: 'alienx', indexerType: 'block' },
@@ -105,8 +106,10 @@ export async function up(knex: Knex) {
     })),
   )
 
+  await knex('activity').delete()
+
   // migrate zksync activity
-  await knex('public.activity').insert(
+  await knex('activity').insert(
     knex
       .select(
         knex.raw("'zksync'::character varying AS project_id"),
@@ -121,7 +124,7 @@ export async function up(knex: Knex) {
   )
 
   // migrate block activity
-  await knex('public.activity').insert(
+  await knex('activity').insert(
     knex
       .select(
         'block.project_id',
@@ -140,7 +143,7 @@ export async function up(knex: Knex) {
   )
 
   // migrate starkex activity
-  await knex('public.activity').insert(
+  await knex('activity').insert(
     knex
       .select(
         'starkex.project_id',
@@ -167,5 +170,5 @@ export async function down(knex: Knex) {
     .whereLike('indexer_id', 'activity_block_indexer%')
     .orWhereLike('indexer_id', 'activity_day_indexer%')
 
-  await knex('public.activity').delete()
+  await knex('activity').delete()
 }
