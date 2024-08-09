@@ -65,7 +65,6 @@ export const zircuit: Layer2 = opStackL2({
   // Chain ID: 48900
   usesBlobs: true,
   isNodeAvailable: 'UnderReview',
-  useDiscoveryMetaOnly: true,
   // proof system currently with temporary backdoor
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
