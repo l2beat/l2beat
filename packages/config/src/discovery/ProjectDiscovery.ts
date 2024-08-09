@@ -360,7 +360,7 @@ export class ProjectDiscovery {
         ],
         chain: this.chain,
         references,
-        participants: this.getPermissionedAccounts(identifier, 'getOwners'),
+        participants: this.getPermissionedAccounts(identifier, '$members'),
       },
     ]
   }
@@ -529,11 +529,11 @@ export class ProjectDiscovery {
   getMultisigStats(contractIdentifier: string) {
     const threshold = this.getContractValue<number>(
       contractIdentifier,
-      'getThreshold',
+      '$threshold',
     )
     const size = this.getContractValue<string[]>(
       contractIdentifier,
-      'getOwners',
+      '$members',
     ).length
     return `${threshold} / ${size}`
   }
@@ -667,7 +667,7 @@ export class ProjectDiscovery {
       .flatMap((discovery) => discovery.contracts)
       .filter((contract) => contract.proxyType === 'gnosis safe')
       .filter((contract) =>
-        toAddressArray(contract.values?.getOwners).includes(
+        toAddressArray(contract.values?.$members).includes(
           contractOrEoa.address,
         ),
       )
