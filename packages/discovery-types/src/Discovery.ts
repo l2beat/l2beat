@@ -53,9 +53,23 @@ export interface FieldMeta {
   severity?: ContractFieldSeverity
 }
 
+export type PermissionType = 'configure' | 'upgrade' | 'act'
+
+export interface ResolvedPermissionPath {
+    address: EthereumAddress
+    delay: number
+}
+
+export interface ResolvedPermission {
+    permission: PermissionType
+    target: EthereumAddress
+    via: ResolvedPermissionPath[]
+}
+
 export interface Meta {
   roles?: StackRole[]
-  assignedPermissions?: Record<string, EthereumAddress[]>
+  issuedPermissions?: ResolvedPermission[]
+  receivedPermissions?: ResolvedPermission[]
   categories?: StackCategory[]
   types?: ContractValueType[]
   descriptions?: string[]
