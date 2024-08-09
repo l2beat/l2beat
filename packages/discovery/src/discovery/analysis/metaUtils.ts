@@ -168,7 +168,7 @@ export function targetConfigToMeta(
     displayName: undefined,
     descriptions,
     roles: toSet(target.role),
-    permissions: target.permission?.map((p) =>
+    permissions: target.permissions?.map((p) =>
       linkPermission(p, self, analysis.values),
     ),
     categories: toSet(target.category),

@@ -130,7 +130,7 @@ describe('metaUtils', () => {
           target: {
             description: 'The overhead of the contract',
             role: 'Challenger',
-            permission: [{ type: 'owner', delay: 0 }],
+            permissions: [{ type: 'owner', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -141,7 +141,7 @@ describe('metaUtils', () => {
             description:
               'The owner of the contract (some number {{ numberField }} )',
             role: 'Challenger',
-            permission: [{ type: 'owner', delay: 0 }],
+            permissions: [{ type: 'owner', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -151,7 +151,7 @@ describe('metaUtils', () => {
           target: {
             description: 'The resource config of the contract {{ #address }}',
             role: ['Guardian', 'Challenger'],
-            permission: [
+            permissions: [
               { type: 'admin', delay: 0 },
               { type: 'owner', delay: 0 },
             ],
@@ -164,7 +164,7 @@ describe('metaUtils', () => {
           target: {
             description: 'The scalar of the contract',
             role: 'Challenger',
-            permission: [{ type: 'owner', delay: 0 }],
+            permissions: [{ type: 'owner', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',

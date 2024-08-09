@@ -33,7 +33,7 @@
     "owner": {
       "target": {
         "description": "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.",
-        "permission": [{ "type": "owner" }]
+        "permissions": [{ "type": "owner" }]
       }
     }
   },

@@ -35,7 +35,7 @@ export const DiscoveryContractField = z.object({
       template: z.string().optional(),
       role: z.union([StackRole, z.array(StackRole)]).optional(),
       category: z.union([StackCategory, z.array(StackCategory)]).optional(),
-      permission: z.array(RawPermissionConfiguration).optional(),
+      permissions: z.array(RawPermissionConfiguration).optional(),
     })
     .optional(),
   type: z.union([ContractValueType, z.array(ContractValueType)]).optional(),
