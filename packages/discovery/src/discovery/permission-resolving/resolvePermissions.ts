@@ -78,8 +78,7 @@ function followThrough<T>(
   resolved: ResolvedPermission<T>,
 ): ResolvedPermission<T>[] {
   if (visited.includes(address)) {
-    // TODO: (sz-piotr) empty array?
-    return [resolved]
+    return []
   }
 
   const node = getNode(address, graph)

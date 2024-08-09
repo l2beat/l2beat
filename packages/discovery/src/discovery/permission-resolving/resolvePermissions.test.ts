@@ -196,18 +196,7 @@ describe(resolvePermissions.name, () => {
       node('B', [edge('act', 'A')]),
       node('C', [edge('act', 'A')]),
     ]
-    expect(resolvePermissions(graph)).toEqualUnsorted([
-      {
-        permission: 'upgrade',
-        path: [
-          { address: 'A', delay: 0 },
-          { address: 'B', delay: 0 },
-          { address: 'A', delay: 0 },
-          { address: 'C', delay: 0 },
-          { address: 'A', delay: 0 },
-        ],
-      },
-    ])
+    expect(resolvePermissions(graph)).toEqualUnsorted([])
   })
 
   it('one actor, four contracts, two timelocks with same delays', () => {
