@@ -72,6 +72,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecordWithoutIndexerId)
   }
 
+  /** WARNING: Use only if you are sure there will be a reasonable amount of configurations */
   async getByConfigurationIds(configurationIds: string[]) {
     if (configurationIds.length === 0) return []
 
