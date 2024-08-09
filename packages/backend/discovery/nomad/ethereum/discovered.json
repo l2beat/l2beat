@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19531994,
   "configHash": "0xfb467e6b9ab858c1d1c3e015cef485c6f6f857e7aa631e3963d36849d272027c",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ReplicaBeaconProxy",
@@ -150,18 +150,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x4b0a5430a1110ea8471f56a66e59c488aebf0374837beab79653f791466fbcaf",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x83865712c50f702fA4650C7fadEd90A54242046e",
           "0x25270d2e6980C5b343C4866Aea904a9A9bCA733F",
           "0xab0614cE8d53ea2c67B87f8ad4d8Fac7A4a516e5",
           "0xC69b66cc2811B509829448FBFfb2553c4CBb627e",
           "0x9bdD76b2a69Db43Fa695a10f5977b8FD891225f3"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x4b0a5430a1110ea8471f56a66e59c488aebf0374837beab79653f791466fbcaf",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 7,
         "VERSION": "1.3.0"
       },
@@ -191,16 +191,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 3 (67%)",
-        "domainSeparator": "0x07b1f27ad489f4abb323a3805d73cdefbccbf32dd9ad3c5d67f402f356cef96d",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xea24Ac04DEFb338CA8595C3750E20166F3b4998A",
           "0xDE9cfb1216889Dee0cAB8afB04c63911427659E4",
           "0xCc20f031B2F06374e4986Af33A36bDda55bed21d"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x07b1f27ad489f4abb323a3805d73cdefbccbf32dd9ad3c5d67f402f356cef96d",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -210,10 +210,10 @@
       "name": "UpgradeBeaconController",
       "address": "0xdB378579c2Af11817EEA21474A39F95B5b9DfD7e",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
+          "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
           "0x049b51e531Fd8f90da6d92EA83dC4125002F20EF",
           "0x3009C99D370B780304D2098196f1EBF779a4777a",
-          "0x88A69B4E698A4B090DF6CF5Bd7B2D47325Ad30A3",
           "0x92d3404a7E6c91455BbD81475Cd9fAd96ACFF4c8"
         ]
       },
@@ -523,7 +523,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

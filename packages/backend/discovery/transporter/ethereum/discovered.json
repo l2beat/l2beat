@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20475166,
   "configHash": "0xf391f2cbf95d4fb92da983d6f036a5b740c4de59baec4f13d9f56f06a92b5685",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "PriceRegistry",
@@ -4442,10 +4442,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 7 (43%)",
-        "domainSeparator": "0xccec06d2944ed816bb6addb86977393693ae262ae101237d9a6cd8bc5d9f613a",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771",
           "0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85",
           "0x5aC189Db4351787516d2E6Fc628BF762ce684326",
@@ -4454,8 +4451,11 @@
           "0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386",
           "0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0xccec06d2944ed816bb6addb86977393693ae262ae101237d9a6cd8bc5d9f613a",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 7 (43%)",
         "nonce": 17,
         "VERSION": "1.3.0"
       }
@@ -5124,10 +5124,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x2ED1A552C03f843a2Db7DE10AD390d24bb66CEE0",
-        "$multisigThreshold": "6 of 12 (50%)",
-        "domainSeparator": "0x4b48316c8545b9cd2ebf3323a3bb90dbc01a898080a791d95fd4f02d8b0660c5",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89",
           "0x7052cB84079905400ea52B635cAb6a275fDA8823",
           "0xE062e7D123AC8dF480C56147f911144F55C10f88",
@@ -5141,8 +5138,11 @@
           "0x06e5891D9b2Ee77740355A309BAF49caaB672f98",
           "0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"
         ],
-        "getThreshold": 6,
+        "$threshold": 6,
+        "domainSeparator": "0x4b48316c8545b9cd2ebf3323a3bb90dbc01a898080a791d95fd4f02d8b0660c5",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "6 of 12 (50%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -14014,7 +14014,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "transporter/CommitStore": "0x5f3a4e0ca3cdb6df2ea9efc3df3e6bd1b257cacf0761b1ba4e2f60bc3d63bc4c",
     "transporter/ManyChainMultiSig": "0xd420005fec6c7ed116556a77ecb7d6b4eadeacd367e3bee473ca908e54a1a9b2",
     "transporter/OffRamp": "0x4aae395969df8684ccf394aa684f624dcc0fc327e43216552830fd160809ccc6",

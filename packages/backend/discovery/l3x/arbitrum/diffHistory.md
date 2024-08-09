@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x855dc40786c6a76e4d08171d3015f37d61f6d806
+
+# Diff at Fri, 09 Aug 2024 10:13:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 234834723
+- current block number: 234834723
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 234834723 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x29994207C5AeDc83F27c5dc16E468f328832d42d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5","0x211C9893653Aea2088E34765e7039617E95fD8fD","0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3","0x4fF3E70f30f0394Ad62428751Fe3858740595908","0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44","0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F","0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf","0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653","0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15"]
+      assignedPermissions.upgrade:
++        ["0x4fF3E70f30f0394Ad62428751Fe3858740595908","0x59E088d827CB7983Cd0CC64312E472D7cc8a4F44","0x817C8Da480bC6b42a5FA88A26e9eD8c0c03968Cf","0x80de5c4ccDfb7b6a250A9588C2d80F62a2B7d13F","0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5","0xc40e1DdDDc4837e63Bfb21EF34d3Ca4A6c78fD15","0xB9450b512Fd3454e9C1a2593C5DF9E71344b5653","0x211C9893653Aea2088E34765e7039617E95fD8fD","0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"]
+      assignedPermissions.upgrade:
++        ["0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"]
+    }
+```
+
 Generated with discovered.json: 0x23b1b07480aa71c423e4e6160254c8664bf0c911
 
 # Diff at Tue, 30 Jul 2024 11:17:10 GMT:

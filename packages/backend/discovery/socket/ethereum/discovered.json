@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20454363,
   "configHash": "0xc69473079f5e0220948b2080162291263515052eeed1dab6f88508f3cac97f4b",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "WETH Vault Kinto",
@@ -164,16 +164,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 3 (67%)",
-        "domainSeparator": "0xbc091031d658ae65d24494a54905f6c9faa1998e11931f3174adf784faedfe1b",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65",
           "0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52",
           "0x4cEa25e9c999E69F45765539783D149024f99F12"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0xbc091031d658ae65d24494a54905f6c9faa1998e11931f3174adf784faedfe1b",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
         "nonce": 354,
         "VERSION": "1.3.0"
       },
@@ -553,18 +553,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x294020d481fb2529cad70a3e4ea5fcf9aa3ec91ce00028602ae6bd087acb81d1",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xDA9854b190A54c6c5088AB43a274caFAFF7cF369",
           "0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58",
           "0xb69F2341F008f673F757B49104c165C8022CD0df",
           "0x5ECfd6968593159e5b4f06832857943409122849",
           "0x9eab2223d84060E212354BfA620BF687b6E9Ae20"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x294020d481fb2529cad70a3e4ea5fcf9aa3ec91ce00028602ae6bd087acb81d1",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 399,
         "VERSION": "1.3.0"
       },
@@ -738,10 +738,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
-        "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
           "0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259",
           "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
@@ -749,8 +746,11 @@
           "0x94561e98DD5E55271f91A103e4979aa6C493745E",
           "0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
         "nonce": 153,
         "VERSION": "1.3.0"
       },
@@ -2618,7 +2618,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

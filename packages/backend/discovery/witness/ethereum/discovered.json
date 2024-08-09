@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325237,
   "configHash": "0xc748524ec076fcbb2cf7c53d0d0fce30db3acf06ffe6f07b7718dbe6326c7e8e",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "FflonkVerifier",
@@ -59,7 +59,7 @@
       "name": "ProxyAdmin",
       "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
       "assignedPermissions": {
-        "admin": ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
+        "upgrade": ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
       },
       "sinceTimestamp": 1718630195,
       "values": {
