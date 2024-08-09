@@ -8,7 +8,7 @@ Generated with discovered.json: 0xf576c14ed1fb7a13f001a95c7bc07a11394f3b41
 
 ## Description
 
-Two new owners were added to the multisig and the threshold was updated to 4.
+New plugs, but vaults have 0 TVL. New vault for XAUt on Kinto was added.
 
 ## Watched changes
 
