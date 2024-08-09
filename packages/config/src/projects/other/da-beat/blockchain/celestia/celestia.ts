@@ -30,7 +30,17 @@ export const celestia: DaLayer = {
     },
   },
   technology:
-    'Some note about the technology used by the data availability layer.\n## Markdown supported',
+    `
+    ## Consensus
+    Celestia uses the CometBFT consensus algorithm, which is the canonical implementation of the Tendermint consensus algorithm.
+
+    ### Finality
+
+    ## Data Availability Sampling (DAS)
+    
+    ## L2s Data Availability
+
+    `,
   bridges: [
     NO_BRIDGE({
       layer: 'Celestia',
