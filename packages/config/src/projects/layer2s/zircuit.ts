@@ -69,7 +69,36 @@ export const zircuit: Layer2 = opStackL2({
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
   },
-  nonTemplatePermissions: [],
+  nonTemplatePermissions: [
+    {
+      name: 'Admins of SuperchainConfig',
+      accounts: (() => {
+        const admins = discovery.getAccessControlField(
+          'ZircuitSuperchainConfig',
+          'DEFAULT_ADMIN_ROLE',
+        ).members
+        const members = admins.map((member) =>
+          discovery.formatPermissionedAccount(member),
+        )
+        return members
+      })(),
+      description: 'TODO: fill out',
+    },
+    {
+      name: 'Actors allowed to monitor SuperchainConfig',
+      accounts: (() => {
+        const admins = discovery.getAccessControlField(
+          'ZircuitSuperchainConfig',
+          'MONITOR_ROLE',
+        ).members
+        const members = admins.map((member) =>
+          discovery.formatPermissionedAccount(member),
+        )
+        return members
+      })(),
+      description: 'TODO: fill out',
+    },
+  ],
   nonTemplateContracts: [
     discovery.getContractDetails('Verifier', {
       description:
