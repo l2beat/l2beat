@@ -90,4 +90,49 @@ export class ActivityRepository extends BaseRepository {
 
     return rows.map(toRecord)
   }
+
+  async getDailyCounts(): Promise<ActivityRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(selectActivity)
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getDailyCountsPerProject(
+    projectId: ProjectId,
+  ): Promise<ActivityRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(selectActivity)
+      .where('project_id', '=', projectId.toString())
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getProjectsAggregatedDailyCount(
+    projectIds: ProjectId[],
+  ): Promise<Omit<ActivityRecord, 'projectId' | 'start' | 'end'>[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((id) => id.toString()),
+      )
+      .select('timestamp')
+      .select((eb) => eb.fn.sum('count').as('count'))
+      .groupBy('timestamp')
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      count: Number(row.count),
+      timestamp: UnixTime.fromDate(row.timestamp),
+    }))
+  }
 }
