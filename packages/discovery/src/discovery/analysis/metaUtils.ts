@@ -144,7 +144,7 @@ export function getMetaFromUpgradeability(
         roles: undefined,
         severity: undefined,
         types: undefined,
-        permissions: [{ type: 'admin', target: self, delay: 0 }],
+        permissions: [{ type: 'upgrade', target: self, delay: 0 }],
       }
     }
   }

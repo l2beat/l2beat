@@ -14,7 +14,7 @@ export type RawPermissionConfiguration = z.infer<
   typeof RawPermissionConfiguration
 >
 export const RawPermissionConfiguration = z.object({
-  type: z.enum(['owner', 'admin', 'act']),
+  type: z.enum(['configure', 'upgrade', 'act']),
   delay: z.union([z.number(), z.string()]).default(0),
 })
 

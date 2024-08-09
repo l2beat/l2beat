@@ -689,15 +689,22 @@ export class ProjectDiscovery {
   describePermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string | undefined {
+    const permissionToRole = {
+      configure: 'Owner',
+      upgrade: 'Admin',
+    }
+
     const permissions = contractOrEoa.assignedPermissions
     return permissions === undefined
       ? undefined
       : Object.entries(contractOrEoa.assignedPermissions ?? {})
-          .map(([role, addresses]) => {
+          .map(([permission, addresses]) => {
             const addressesString = addresses
               .map((address) => this.getContract(address.toString()).name)
               .join(', ')
-            return `${capitalize(role)} of ${addressesString}.`
+            return `${
+              permissionToRole[permission as keyof typeof permissionToRole]
+            } of ${addressesString}.`
           })
           .join(' ')
   }
@@ -848,5 +855,3 @@ const roleDescriptions: { [key in StackRole]: string } = {
   Validator:
     'Validator is an actor that validates the correctness of state transitions.',
 }
-
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

@@ -26,8 +26,8 @@ describe('metaUtils', () => {
         descriptions: ['description 1'],
         roles: new Set(['Challenger', 'Guardian']),
         permissions: [
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0x5678') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
         ],
         categories: new Set(['Gateways&Escrows', 'Core']),
         types: new Set(['CODE_CHANGE', 'EXTERNAL']),
@@ -38,9 +38,9 @@ describe('metaUtils', () => {
         descriptions: ['description 2', 'description 3'],
         roles: new Set(['Proposer', 'Challenger']),
         permissions: [
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0xabcd') },
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-          { type: 'admin', delay: 0, target: EthereumAddress.from('0x1234') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+          { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
         categories: new Set(['Upgrades&Governance', 'Core']),
         types: new Set(['PERMISSION', 'L2', 'EXTERNAL']),
@@ -54,10 +54,10 @@ describe('metaUtils', () => {
         descriptions: ['description 1', 'description 2', 'description 3'],
         roles: new Set(['Challenger', 'Guardian', 'Proposer']),
         permissions: [
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0x5678') },
-          { type: 'owner', delay: 0, target: EthereumAddress.from('0xabcd') },
-          { type: 'admin', delay: 0, target: EthereumAddress.from('0x1234') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+          { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
+          { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
         categories: new Set([
           'Gateways&Escrows',
@@ -73,22 +73,22 @@ describe('metaUtils', () => {
   describe('mergePermissions', () => {
     it('should merge two permission objects correctly', () => {
       const a: PermissionConfiguration[] = [
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
         { type: 'act', delay: 0, target: EthereumAddress.from('0x5678') },
       ]
       const b: PermissionConfiguration[] = [
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0xabcd') },
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-        { type: 'admin', delay: 15, target: EthereumAddress.from('0x1234') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'upgrade', delay: 15, target: EthereumAddress.from('0x1234') },
       ]
 
       expect(mergePermissions(a, b)).toEqual([
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0x5678') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
         { type: 'act', delay: 0, target: EthereumAddress.from('0x5678') },
-        { type: 'owner', delay: 0, target: EthereumAddress.from('0xabcd') },
-        { type: 'admin', delay: 15, target: EthereumAddress.from('0x1234') },
+        { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
+        { type: 'upgrade', delay: 15, target: EthereumAddress.from('0x1234') },
       ])
     })
   })
@@ -130,7 +130,7 @@ describe('metaUtils', () => {
           target: {
             description: 'The overhead of the contract',
             role: 'Challenger',
-            permissions: [{ type: 'owner', delay: 0 }],
+            permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -141,7 +141,7 @@ describe('metaUtils', () => {
             description:
               'The owner of the contract (some number {{ numberField }} )',
             role: 'Challenger',
-            permissions: [{ type: 'owner', delay: 0 }],
+            permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -152,8 +152,8 @@ describe('metaUtils', () => {
             description: 'The resource config of the contract {{ #address }}',
             role: ['Guardian', 'Challenger'],
             permissions: [
-              { type: 'admin', delay: 0 },
-              { type: 'owner', delay: 0 },
+              { type: 'upgrade', delay: 0 },
+              { type: 'configure', delay: 0 },
             ],
             category: ['Gateways&Escrows', 'Core'],
           },
@@ -164,7 +164,7 @@ describe('metaUtils', () => {
           target: {
             description: 'The scalar of the contract',
             role: 'Challenger',
-            permissions: [{ type: 'owner', delay: 0 }],
+            permissions: [{ type: 'configure', delay: 0 }],
             category: 'Core',
           },
           severity: 'LOW',
@@ -192,8 +192,8 @@ describe('metaUtils', () => {
           descriptions: ['The owner of the contract (some number 1122 )'],
           roles: new Set(['Challenger']),
           permissions: [
-            { type: 'admin', delay: 0, target: selfAddress },
-            { type: 'owner', delay: 0, target: selfAddress },
+            { type: 'upgrade', delay: 0, target: selfAddress },
+            { type: 'configure', delay: 0, target: selfAddress },
           ],
           categories: new Set(['Core']),
           severity: 'LOW',
@@ -206,8 +206,8 @@ describe('metaUtils', () => {
             'The resource config of the contract 0x0000000000000000000000000000000000001234',
           ],
           permissions: [
-            { type: 'admin', delay: 0, target: selfAddress },
-            { type: 'owner', delay: 0, target: selfAddress },
+            { type: 'upgrade', delay: 0, target: selfAddress },
+            { type: 'configure', delay: 0, target: selfAddress },
           ],
           roles: new Set(['Challenger', 'Guardian']),
           severity: 'HIGH',
@@ -220,8 +220,8 @@ describe('metaUtils', () => {
             'The resource config of the contract 0x0000000000000000000000000000000000001234',
           ],
           permissions: [
-            { type: 'admin', delay: 0, target: selfAddress },
-            { type: 'owner', delay: 0, target: selfAddress },
+            { type: 'upgrade', delay: 0, target: selfAddress },
+            { type: 'configure', delay: 0, target: selfAddress },
           ],
           roles: new Set(['Challenger', 'Guardian']),
           severity: 'HIGH',
@@ -254,7 +254,7 @@ describe('metaUtils', () => {
             roles: new Set(['Challenger']),
             permissions: [
               {
-                type: 'owner',
+                type: 'configure',
                 delay: 0,
                 target: EthereumAddress.from('0x1234'),
               },
@@ -269,12 +269,12 @@ describe('metaUtils', () => {
             descriptions: ['The resource config of the contract'],
             permissions: [
               {
-                type: 'owner',
+                type: 'configure',
                 delay: 0,
                 target: EthereumAddress.from('0x1234'),
               },
               {
-                type: 'admin',
+                type: 'upgrade',
                 delay: 0,
                 target: EthereumAddress.from('0x1234'),
               },
@@ -292,7 +292,7 @@ describe('metaUtils', () => {
             roles: undefined,
             permissions: [
               {
-                type: 'owner',
+                type: 'configure',
                 delay: 0,
                 target: EthereumAddress.from('0xbeef'),
               },
@@ -307,12 +307,12 @@ describe('metaUtils', () => {
             descriptions: ['The resource config of the contract'],
             permissions: [
               {
-                type: 'owner',
+                type: 'configure',
                 delay: 0,
                 target: EthereumAddress.from('0xbeef'),
               },
               {
-                type: 'admin',
+                type: 'upgrade',
                 delay: 0,
                 target: EthereumAddress.from('0xbeef'),
               },
@@ -333,8 +333,8 @@ describe('metaUtils', () => {
           descriptions: ['Important contract', 'Very important contract'],
           roles: new Set(['Challenger']),
           permissions: [
-            { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-            { type: 'owner', delay: 0, target: EthereumAddress.from('0xbeef') },
+            { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+            { type: 'configure', delay: 0, target: EthereumAddress.from('0xbeef') },
           ],
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
@@ -345,8 +345,8 @@ describe('metaUtils', () => {
           descriptions: ['The resource config of the contract'],
           roles: new Set(['Challenger', 'Guardian']),
           permissions: [
-            { type: 'owner', delay: 0, target: EthereumAddress.from('0x1234') },
-            { type: 'admin', delay: 0, target: EthereumAddress.from('0x1234') },
+            { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+            { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
           ],
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
@@ -358,12 +358,12 @@ describe('metaUtils', () => {
           roles: new Set(['Challenger', 'Guardian']),
           permissions: [
             {
-              type: 'owner',
+              type: 'configure',
               delay: 0,
               target: EthereumAddress.from('0xbeef'),
             },
             {
-              type: 'admin',
+              type: 'upgrade',
               delay: 0,
               target: EthereumAddress.from('0xbeef'),
             },
@@ -391,7 +391,7 @@ describe('metaUtils', () => {
           roles: undefined,
           severity: undefined,
           types: undefined,
-          permissions: [{ type: 'admin', delay: 0, target: selfAddress }],
+          permissions: [{ type: 'upgrade', delay: 0, target: selfAddress }],
         },
       })
     })
