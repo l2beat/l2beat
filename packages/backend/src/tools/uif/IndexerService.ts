@@ -4,6 +4,7 @@ import {
   AmountConfigEntry,
   CirculatingSupplyEntry,
   EscrowEntry,
+  PremintedEntry,
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -112,7 +113,7 @@ export class IndexerService {
   ) {
     const chainIndexersConfigurations = configurations.filter(
       (c): c is (EscrowEntry | TotalSupplyEntry) & { configId: string } =>
-        c.type !== 'circulatingSupply',
+        c.type === 'escrow' || c.type === 'totalSupply',
     )
 
     const { lagging, excluded } = await this.getConfigurationsStatus(
@@ -158,12 +159,51 @@ export class IndexerService {
       }
     }
 
-    if (processed.size !== circulatingSupplyConfigs.length) {
-      const unprocessed = circulatingSupplyConfigs.filter(
-        (c) => !processed.has(c.configId),
+    const preminted = configurations.filter(
+      (c): c is PremintedEntry & { configId: string } => c.type === 'preminted',
+    )
+
+    const indexersState2 = await this.db.indexerState.getByIndexerIds(
+      preminted.map((c) => `preminted_indexer::${c.chain}_${c.address}`),
+    )
+
+    for (const indexer of indexersState2) {
+      const premintedConfig = preminted.find(
+        (cc) =>
+          cc.chain.toString() ===
+            indexer.indexerId.split('::')[1].split('_')[0] &&
+          cc.address.toString() ===
+            indexer.indexerId.split('::')[1].split('_')[1],
       )
-      unprocessed.forEach((u) => excluded.add(u.configId))
+      assert(
+        premintedConfig,
+        `Config should be defined for ${indexer.indexerId}`,
+      )
+      processed.add(premintedConfig.configId)
+
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      if (syncStatus.gte(targetTimestamp)) {
+        continue
+      }
+
+      // decide whether it is excluded or lagging
+      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
+        excluded.add(premintedConfig.configId)
+      } else {
+        lagging.push({
+          id: premintedConfig.configId,
+          latestTimestamp: syncStatus,
+        })
+      }
     }
+
+    circulatingSupplyConfigs
+      .filter((c) => !processed.has(c.configId))
+      .forEach((u) => excluded.add(u.configId))
+
+    preminted
+      .filter((c) => !processed.has(c.configId))
+      .forEach((u) => excluded.add(u.configId))
 
     return {
       excluded,
