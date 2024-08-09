@@ -55,7 +55,7 @@ export function decompressToByteArray(compressedData: Uint8Array) {
     default: {
       assert(
         false,
-        `Unsupported chanel version (${channelVersionByte}), probably a different compression was used`,
+        `Unsupported channel version (${channelVersionByte}), probably a different compression was used`,
       )
     }
   }
