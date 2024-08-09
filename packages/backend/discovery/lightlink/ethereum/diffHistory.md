@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xf9ba057c7ad16038bcecbd934f422fb7841592e2
+
+# Diff at Fri, 09 Aug 2024 12:00:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20117905
+- current block number: 20117905
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20117905 (main branch discovery), not current.
+
+```diff
+    contract LightLinkMultisig (0x3345702FeA1669Efa1e085610A62F89d159Bc0c8) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x624631881655a310adcF0d1336658Cc977609b72"
++        "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
+      assignedPermissions.upgrade.1:
+-        "0x63105ee97BfB22Dfe23033b3b14A4F8FED121ee9"
++        "0x624631881655a310adcF0d1336658Cc977609b72"
+    }
+```
+
 Generated with discovered.json: 0xc83644e57cef1e7beae3dfcb0e282d087d0f16b1
 
 # Diff at Fri, 09 Aug 2024 10:10:13 GMT:

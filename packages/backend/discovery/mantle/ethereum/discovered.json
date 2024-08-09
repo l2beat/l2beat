@@ -124,10 +124,10 @@
       "assignedPermissions": {
         "upgrade": [
           "0x23754725a49c0f003C349A6C7869fF8609a7CEfd",
-          "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
-          "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798",
           "0xA937660031787C4408587D2c6A67Ec4B260630F5",
-          "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+          "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01",
+          "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1",
+          "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
         ]
       },
       "sinceTimestamp": 1687930823,
@@ -258,11 +258,11 @@
       "address": "0x47D58744D8515d9aaEAf961bc03625118bd91EBb",
       "assignedPermissions": {
         "upgrade": [
-          "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
           "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67",
           "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1",
-          "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94",
-          "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
+          "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a",
+          "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D",
+          "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
         ]
       },
       "sinceTimestamp": 1687931879,
@@ -640,10 +640,10 @@
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
         "upgrade": [
-          "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
-          "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb",
           "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
-          "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+          "0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
+          "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012",
+          "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
         ]
       },
       "sinceTimestamp": 1710439895,

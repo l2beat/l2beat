@@ -140,10 +140,10 @@
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
       "assignedPermissions": {
         "upgrade": [
-          "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da",
-          "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
           "0x830433dE03ABedE062660CC629e1A2c714272474",
-          "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9"
+          "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
+          "0xd910f6F23889919fAd9C8cE3171dd557cE0308Da"
         ]
       },
       "sinceTimestamp": 1649901966,

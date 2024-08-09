@@ -40,6 +40,34 @@ Two new members added to OwnerMultisig and threshold changed to 4.
       values.multisigThreshold:
 -        "2 of 5 (40%)"
 +        "4 of 7 (57%)"
+
+Generated with discovered.json: 0x61fa1d3965c61622033965e9d5ea2d9fc491ccf2
+
+# Diff at Fri, 09 Aug 2024 11:59:45 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20017490
+- current block number: 20017490
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017490 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
++        "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
+      assignedPermissions.upgrade.0:
+-        "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
++        "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932"
     }
 ```
 

@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x09a28c6289220b6632a4be28b4f979f629f7ee52
+
+# Diff at Fri, 09 Aug 2024 12:02:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20324826
+- current block number: 20324826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20324826 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      assignedPermissions.upgrade.1:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      assignedPermissions.upgrade.0:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+    }
+```
+
 Generated with discovered.json: 0xd113d4bcf351ac5e28a0810501f10748689bd5ff
 
 # Diff at Fri, 09 Aug 2024 10:12:06 GMT:

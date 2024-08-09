@@ -39,8 +39,8 @@
         "upgrade": [
           "0x3F6cE1b36e5120BBc59D0cFe8A5aC8b6464ac1f7",
           "0x8AdeE124447435fE03e3CD24dF3f4cAE32E65a3E",
-          "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1",
-          "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393"
+          "0xACB886b75D76d1c8d9248cFdDfA09b70C71c5393",
+          "0xdDa53E23f8a32640b04D7256e651C1db98dB11C1"
         ],
         "configure": ["0xF2dc77c697e892542cC53336178a78Bb313DFDC7"]
       },

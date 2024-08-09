@@ -159,8 +159,8 @@
       "address": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
       "assignedPermissions": {
         "upgrade": [
-          "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c",
-          "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d"
+          "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
+          "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
         ]
       }
     },

@@ -1,3 +1,60 @@
+Generated with discovered.json: 0xc6bef104f5328804e8cc5e592e2e1988d0120756
+
+# Diff at Fri, 09 Aug 2024 12:01:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20476663
+- current block number: 20476663
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20476663 (main branch discovery), not current.
+
+```diff
+    contract Timelock (0xCaf0aa768A3AE1297DF20072419Db8Bb8b5C8cEf) {
+    +++ description: None
+      assignedPermissions.upgrade.10:
+-        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
++        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
+      assignedPermissions.upgrade.9:
+-        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
++        "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
+      assignedPermissions.upgrade.8:
+-        "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
++        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
+      assignedPermissions.upgrade.7:
+-        "0xE6F45376f64e1F568BD1404C155e5fFD2F80F7AD"
++        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
+      assignedPermissions.upgrade.6:
+-        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
++        "0x932532aA4c0174b8453839A6E44eE09Cc615F2b7"
+      assignedPermissions.upgrade.5:
+-        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
++        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
+      assignedPermissions.upgrade.4:
+-        "0xDB2382413bCb9c2F1B6b62B52238558266361D68"
++        "0x6dF5CB08d3f0193C768C8A01f42ac4424DC5086b"
+      assignedPermissions.upgrade.3:
+-        "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
++        "0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908"
+      assignedPermissions.upgrade.2:
+-        "0x9923263fA127b3d1484cFD649df8f1831c2A74e4"
++        "0x40ec5B33f54e0E8A33A975908C5BA1c14e5BbbDf"
+      assignedPermissions.upgrade.1:
+-        "0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30"
++        "0x2d641867411650cd05dB93B59964536b1ED5b1B7"
+      assignedPermissions.upgrade.0:
+-        "0xA0c68C638235ee32657e8f720a23ceC1bFc77C77"
++        "0x0B9020d4E32990D67559b1317c7BF0C15D6EB88f"
+    }
+```
+
 Generated with discovered.json: 0xaacfa15e83d69426247c4a4ffb59e3c243023805
 
 # Diff at Fri, 09 Aug 2024 10:11:28 GMT:

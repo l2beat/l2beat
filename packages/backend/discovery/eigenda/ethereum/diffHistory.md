@@ -1,3 +1,39 @@
+Generated with discovered.json: 0xe16e4e41647c26adabbd294f3e0f4b5361ddd3f0
+
+# Diff at Fri, 09 Aug 2024 11:59:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20482509
+- current block number: 20482509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20482509 (main branch discovery), not current.
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      assignedPermissions.upgrade.5:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
++        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      assignedPermissions.upgrade.4:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      assignedPermissions.upgrade.3:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      assignedPermissions.upgrade.0:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
++        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+    }
+```
+
 Generated with discovered.json: 0xd4ce8cc3f2bd534b61a4c64dbdb3bbfd088d16b5
 
 # Diff at Fri, 09 Aug 2024 10:09:31 GMT:

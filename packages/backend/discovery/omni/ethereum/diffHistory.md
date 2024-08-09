@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xe76748f22ba77b904cf9cdcd9d9464425b23c7b0
+
+# Diff at Fri, 09 Aug 2024 12:00:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 19532020
+- current block number: 19532020
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532020 (main branch discovery), not current.
+
+```diff
+    contract BridgeGovernance (0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
++        "0x88ad09518695c6c3712AC10a214bE5109a655671"
+      assignedPermissions.upgrade.0:
+-        "0x88ad09518695c6c3712AC10a214bE5109a655671"
++        "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e"
+    }
+```
+
 Generated with discovered.json: 0xcfbe371f193e5b314a3e419e60f80ce4fdae47ce
 
 # Diff at Fri, 09 Aug 2024 10:10:56 GMT:

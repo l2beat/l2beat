@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x746d02ca9d79f0cecb2b59531037a0e814f67c08
+
+# Diff at Fri, 09 Aug 2024 12:04:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 74799516
+- current block number: 74799516
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 74799516 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (0xada790b026097BfB36a5ed696859b97a96CEd92C) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
++        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
+      assignedPermissions.upgrade.0:
+-        "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD"
++        "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
++        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
+      assignedPermissions.upgrade.0:
+-        "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
++        "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"
+    }
+```
+
 Generated with discovered.json: 0xa253063ed3e83fcb3ea74d643fb95c0abf6d3ea0
 
 # Diff at Fri, 09 Aug 2024 10:14:49 GMT:

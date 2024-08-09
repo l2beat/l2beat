@@ -1,3 +1,54 @@
+Generated with discovered.json: 0x1318dd2a0af906c783808d5fdf134705f2461b47
+
+# Diff at Fri, 09 Aug 2024 11:58:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20317887
+- current block number: 20317887
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20317887 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x364289230b8cc7d9120eF962AF37ebCFe23cE883) {
+    +++ description: None
+      assignedPermissions.upgrade.10:
+-        "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975"
++        "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
+      assignedPermissions.upgrade.9:
+-        "0x6B916DcCa661d23794e78509723A6f4348564847"
++        "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975"
+      assignedPermissions.upgrade.8:
+-        "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9"
++        "0xa230285d5683C74935aD14c446e137c8c8828438"
+      assignedPermissions.upgrade.7:
+-        "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
++        "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6"
+      assignedPermissions.upgrade.6:
+-        "0xBbE2cd60BD30Ef2aaceFD74C3199282ee35fBBa6"
++        "0x98078db053902644191f93988341E31289E1C8FE"
+      assignedPermissions.upgrade.4:
+-        "0x98078db053902644191f93988341E31289E1C8FE"
++        "0x6B916DcCa661d23794e78509723A6f4348564847"
+      assignedPermissions.upgrade.3:
+-        "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
++        "0x697402166Fbf2F22E970df8a6486Ef171dbfc524"
+      assignedPermissions.upgrade.2:
+-        "0xa230285d5683C74935aD14c446e137c8c8828438"
++        "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9"
+      assignedPermissions.upgrade.0:
+-        "0x697402166Fbf2F22E970df8a6486Ef171dbfc524"
++        "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb"
+    }
+```
+
 Generated with discovered.json: 0xe370735166d156dbd90132dc22198e3271d71f0c
 
 # Diff at Fri, 09 Aug 2024 10:08:50 GMT:
