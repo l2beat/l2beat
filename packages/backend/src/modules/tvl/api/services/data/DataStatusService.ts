@@ -21,10 +21,10 @@ export class DataStatusService {
   constructor(private readonly db: Database) {}
 
   async getAmountsStatus(
-    configurations: (AmountConfigEntry & { configId: string })[],
+    entries: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const chainIndexersConfigurations = configurations.filter(
+    const chainIndexersConfigurations = entries.filter(
       (c): c is (EscrowEntry | TotalSupplyEntry) & { configId: string } =>
         c.type === 'escrow' || c.type === 'totalSupply',
     )
@@ -34,7 +34,7 @@ export class DataStatusService {
       targetTimestamp,
     )
 
-    const circulatingSupplyConfigs = configurations.filter(
+    const circulatingSupplyConfigs = entries.filter(
       (c): c is CirculatingSupplyEntry & { configId: string } =>
         c.type === 'circulatingSupply',
     )
@@ -72,7 +72,7 @@ export class DataStatusService {
       }
     }
 
-    const preminted = configurations.filter(
+    const preminted = entries.filter(
       (c): c is PremintedEntry & { configId: string } => c.type === 'preminted',
     )
 
@@ -125,23 +125,25 @@ export class DataStatusService {
   }
 
   async getConfigurationsStatus(
-    configurations: (MultiIndexerEntries & { configId: string })[],
+    entries: (MultiIndexerEntries & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
+    const configurations = await this.getConfigurations(entries)
+
+    const processed = new Set<string>()
     const excluded = new Set<string>()
     const lagging = []
 
-    const configurationsState = await this.getConfigurations(configurations)
+    for (const c of configurations) {
+      processed.add(c.id)
 
-    const processed = new Set<string>()
-    for (const config of configurationsState) {
-      processed.add(config.id)
-      const syncStatus = config.currentHeight
-        ? new UnixTime(config.currentHeight)
+      const syncStatus = c.currentHeight
+        ? new UnixTime(c.currentHeight)
         : undefined
+
       // newly added configuration
       if (syncStatus === undefined) {
-        excluded.add(config.id)
+        excluded.add(c.id)
         continue
       }
       // fully synced configuration
@@ -150,25 +152,23 @@ export class DataStatusService {
       }
 
       // phased out configuration - but we still want to display its data
-      if (config.maxHeight && config.maxHeight === config.currentHeight) {
+      if (c.maxHeight && c.maxHeight === c.currentHeight) {
         continue
       }
 
       // decide whether it is excluded or lagging
       if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
-        excluded.add(config.id)
+        excluded.add(c.id)
       } else {
         lagging.push({
-          id: config.id,
+          id: c.id,
           latestTimestamp: syncStatus,
         })
       }
     }
 
-    if (processed.size !== configurations.length) {
-      const unprocessed = configurations.filter(
-        (c) => !processed.has(c.configId),
-      )
+    if (processed.size !== entries.length) {
+      const unprocessed = entries.filter((c) => !processed.has(c.configId))
       unprocessed.forEach((u) => excluded.add(u.configId))
     }
 
@@ -179,22 +179,22 @@ export class DataStatusService {
   }
 
   async getConfigurations(
-    configurations: (MultiIndexerEntries & { configId: string })[],
+    entries: (MultiIndexerEntries & { configId: string })[],
   ) {
-    if (configurations.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
+    if (entries.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
       return await this.db.indexerConfiguration.getByConfigurationIds(
-        configurations.map((c) => c.configId),
+        entries.map((c) => c.configId),
       )
     }
 
-    const indexerIds = [...new Set(configurations.map(toIndexerId)).values()]
+    const indexerIds = [...new Set(entries.map(toIndexerId)).values()]
 
-    const allConfigurations =
+    const configurations =
       await this.db.indexerConfiguration.getByIndexerIds(indexerIds)
 
-    const configurationIds = new Set(configurations.map((c) => c.configId))
+    const requestedIds = new Set(entries.map((c) => c.configId))
 
-    return allConfigurations.filter((c) => configurationIds.has(c.id))
+    return configurations.filter((c) => requestedIds.has(c.id))
   }
 }
 

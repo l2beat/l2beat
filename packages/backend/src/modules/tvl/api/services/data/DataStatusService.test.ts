@@ -157,7 +157,7 @@ describe(DataStatusService.name, () => {
 
   describe(DataStatusService.prototype.getConfigurations.name, () => {
     it('Query by configuration ids if less than 100 configurations', async () => {
-      const configurations = [
+      const entries = [
         mockObject<EscrowEntry & { configId: string }>({ configId: 'a' }),
         mockObject<EscrowEntry & { configId: string }>({ configId: 'b' }),
       ]
@@ -177,7 +177,7 @@ describe(DataStatusService.name, () => {
         }),
       )
 
-      const result = await dataStatusService.getConfigurations(configurations)
+      const result = await dataStatusService.getConfigurations(entries)
 
       expect(result).toEqual([
         config('a', 0, null, null),
@@ -209,7 +209,8 @@ describe(DataStatusService.name, () => {
         type: 'coingecko',
         coingeckoId: CoingeckoId('coingecko-id'),
       })
-      const configurations = [
+
+      const entries = [
         [...Array(50)].map((_) => escrowEntry),
         [...Array(50)].map((_) => totalSupplyEntry),
         [...Array(50)].map((_) => priceEntry),
@@ -224,6 +225,7 @@ describe(DataStatusService.name, () => {
           config('c', 0, null, null),
           config('d', 0, null, null), // should be filtered out
         ],
+        getByConfigurationIds: mockFn(),
       })
 
       const dataStatusService = new DataStatusService(
@@ -232,7 +234,7 @@ describe(DataStatusService.name, () => {
         }),
       )
 
-      const result = await dataStatusService.getConfigurations(configurations)
+      const result = await dataStatusService.getConfigurations(entries)
 
       expect(result).toEqual([
         config('a', 0, null, null),
@@ -247,6 +249,10 @@ describe(DataStatusService.name, () => {
         `chain_amount_indexer::chain-b`,
         `price_indexer::coingecko-id`,
       ])
+
+      expect(
+        indexerConfigurationsRepository.getByConfigurationIds,
+      ).not.toHaveBeenCalled()
     })
   })
 })
