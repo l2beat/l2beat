@@ -1,12 +1,14 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { QueryCreator } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
+import { DB } from '../../kysely'
 import {
   CleanDateRange,
   deleteHourlyUntil,
   deleteSixHourlyUntil,
 } from '../../utils/deleteArchivedRecords'
 import { ValueRecord, toRecord, toRow } from './entity'
-import { selectValue } from './select'
+import { selectValue, selectValueWithPrefix } from './select'
 
 export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {
@@ -43,6 +45,47 @@ export class ValueRepository extends BaseRepository {
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
+    return rows.map(toRecord)
+  }
+
+  async getLatestValues(projectIds?: ProjectId[]) {
+    if (projectIds?.length === 0) return []
+    const maxTimestampsQuery = (cb: QueryCreator<DB>) => {
+      let query = cb
+        .selectFrom('public.values')
+        .select(({ fn }) => [
+          'project_id',
+          'data_source',
+          fn.max('timestamp').as('max_timestamp'),
+        ])
+        .groupBy(['project_id', 'data_source'])
+      if (projectIds) {
+        query = query.where(
+          'project_id',
+          'in',
+          projectIds.map((id) => id.toString()),
+        )
+      }
+
+      return query
+    }
+
+    const rows = await this.db
+      .with('max_timestamps', maxTimestampsQuery)
+      .selectFrom('public.values')
+      .select(selectValueWithPrefix('public.values'))
+      .innerJoin('max_timestamps', (join) =>
+        join
+          .onRef('public.values.project_id', '=', 'max_timestamps.project_id')
+          .onRef('public.values.data_source', '=', 'max_timestamps.data_source')
+          .onRef(
+            'public.values.timestamp',
+            '=',
+            'max_timestamps.max_timestamp',
+          ),
+      )
+      .execute()
+
     return rows.map(toRecord)
   }
 
@@ -123,42 +166,4 @@ export class ValueRepository extends BaseRepository {
   }
 
   // #endregion
-
-  //# region DA-BEAT
-
-  /**
-   * For each projectId x data source pick the latest value according to latest timestamp
-   */
-  async getLatestValuesForProjects(
-    projectIds: ProjectId[],
-  ): Promise<ValueRecord[]> {
-    if (projectIds.length === 0) return []
-
-    const rows = await this.db
-      .with('latest_values', (cb) =>
-        cb
-          .selectFrom('public.values')
-          .select([
-            ...selectValue,
-            this.db.fn
-              .agg('ROW_NUMBER')
-              .over((over) =>
-                over
-                  .partitionBy(['project_id', 'data_source'])
-                  .orderBy('timestamp', 'desc'),
-              )
-              .as('combination_number'),
-          ])
-          .where(
-            'project_id',
-            'in',
-            projectIds.map((id) => id.toString()),
-          ),
-      )
-      .selectFrom('latest_values')
-      .select(selectValue)
-      .where('combination_number', '=', 1)
-      .execute()
-    return rows.map(toRecord)
-  }
 }

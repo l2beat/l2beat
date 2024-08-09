@@ -10,15 +10,15 @@ import { ScalingDaFilters } from '../scaling-da-filters'
 import { columns } from './columns'
 
 export interface Props {
-  items: ScalingDataAvailabilityEntry[]
+  entries: ScalingDataAvailabilityEntry[]
 }
 
-export function ScalingDataAvailabilityTable({ items }: Props) {
+export function ScalingDataAvailabilityTable({ entries }: Props) {
   const includeFilters = useScalingFilter()
 
   const projects = useMemo(
-    () => items.filter((item) => includeFilters(item)),
-    [items, includeFilters],
+    () => entries.filter((item) => includeFilters(item)),
+    [entries, includeFilters],
   )
 
   const table = useTable({
