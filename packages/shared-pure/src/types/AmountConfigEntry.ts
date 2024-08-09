@@ -1,6 +1,7 @@
 /*
                 ====== IMPORTANT NOTICE ======
 DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE "createAmountId" FUNCTION
+DO NOT MODIFY THIS FILE WITHOUT MODIFYING THE getAmountsStatus FUNCTION
 */
 
 import { CoingeckoId } from './CoingeckoId'
