@@ -11,7 +11,7 @@ import {
 } from '@l2beat/shared-pure'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
-type MultiIndexerEntries =
+type MultiIndexerEntry =
   | TotalSupplyEntry
   | EscrowEntry
   | CoingeckoPriceConfigEntry
@@ -24,63 +24,49 @@ export class DataStatusService {
     entries: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const chainIndexersConfigurations = entries.filter(
-      (c): c is (EscrowEntry | TotalSupplyEntry) & { configId: string } =>
-        c.type === 'escrow' || c.type === 'totalSupply',
-    )
-
-    const { lagging, excluded } = await this.getConfigurationsStatus(
-      chainIndexersConfigurations,
+    const configurations = await this.getConfigurationsStatus(
+      entries,
       targetTimestamp,
     )
 
-    const circulatingSupplyConfigs = entries.filter(
-      (c): c is CirculatingSupplyEntry & { configId: string } =>
-        c.type === 'circulatingSupply',
+    const preminted = await this.getPremintedStatus(entries, targetTimestamp)
+
+    const circulating = await this.getCirculatingSupplyStatus(
+      entries,
+      targetTimestamp,
     )
 
-    const indexersState = await this.db.indexerState.getByIndexerIds(
-      circulatingSupplyConfigs.map(
-        (c) => `circulating_supply_indexer::${c.coingeckoId}`,
-      ),
-    )
-
-    const processed = new Set<string>()
-    for (const indexer of indexersState) {
-      const circulatingSupplyConfig = circulatingSupplyConfigs.find(
-        (cc) => cc.coingeckoId.toString() === indexer.indexerId.split('::')[1],
-      )
-      assert(
-        circulatingSupplyConfig,
-        `Config should be defined for ${indexer.indexerId}`,
-      )
-      processed.add(circulatingSupplyConfig.configId)
-
-      const syncStatus = new UnixTime(indexer.safeHeight)
-      if (syncStatus.gte(targetTimestamp)) {
-        continue
-      }
-
-      // decide whether it is excluded or lagging
-      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
-        excluded.add(circulatingSupplyConfig.configId)
-      } else {
-        lagging.push({
-          id: circulatingSupplyConfig.configId,
-          latestTimestamp: syncStatus,
-        })
-      }
+    return {
+      lagging: [
+        ...configurations.lagging,
+        ...preminted.lagging,
+        ...circulating.lagging,
+      ],
+      excluded: new Set([
+        ...configurations.excluded,
+        ...preminted.excluded,
+        ...circulating.excluded,
+      ]),
     }
+  }
+
+  async getPremintedStatus(
+    entries: (AmountConfigEntry & { configId: string })[],
+    targetTimestamp: UnixTime,
+  ) {
+    const processed = new Set<string>()
+    const lagging = []
+    const excluded = new Set<string>()
 
     const preminted = entries.filter(
       (c): c is PremintedEntry & { configId: string } => c.type === 'preminted',
     )
 
-    const indexersState2 = await this.db.indexerState.getByIndexerIds(
+    const indexerState = await this.db.indexerState.getByIndexerIds(
       preminted.map((c) => `preminted_indexer::${c.chain}_${c.address}`),
     )
 
-    for (const indexer of indexersState2) {
+    for (const indexer of indexerState) {
       const premintedConfig = preminted.find(
         (cc) =>
           cc.chain.toString() ===
@@ -110,29 +96,84 @@ export class DataStatusService {
       }
     }
 
-    circulatingSupplyConfigs
-      .filter((c) => !processed.has(c.configId))
-      .forEach((u) => excluded.add(u.configId))
+    const unprocessed = preminted.filter((c) => !processed.has(c.configId))
+    unprocessed.forEach((u) => excluded.add(u.configId))
 
-    preminted
-      .filter((c) => !processed.has(c.configId))
-      .forEach((u) => excluded.add(u.configId))
-
-    return {
-      excluded,
-      lagging,
-    }
+    return { excluded, lagging }
   }
 
-  async getConfigurationsStatus(
-    entries: (MultiIndexerEntries & { configId: string })[],
+  async getCirculatingSupplyStatus(
+    entries: (AmountConfigEntry & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
-    const configurations = await this.getConfigurations(entries)
+    const processed = new Set<string>()
+    const lagging = []
+    const excluded = new Set<string>()
+
+    const circulatingSupplyConfigs = entries.filter(
+      (c): c is CirculatingSupplyEntry & { configId: string } =>
+        c.type === 'circulatingSupply',
+    )
+
+    const indexersState = await this.db.indexerState.getByIndexerIds(
+      circulatingSupplyConfigs.map(
+        (c) => `circulating_supply_indexer::${c.coingeckoId}`,
+      ),
+    )
+
+    for (const indexer of indexersState) {
+      const circulatingSupplyConfig = circulatingSupplyConfigs.find(
+        (cc) => cc.coingeckoId.toString() === indexer.indexerId.split('::')[1],
+      )
+      assert(
+        circulatingSupplyConfig,
+        `Config should be defined for ${indexer.indexerId}`,
+      )
+      processed.add(circulatingSupplyConfig.configId)
+
+      const syncStatus = new UnixTime(indexer.safeHeight)
+      if (syncStatus.gte(targetTimestamp)) {
+        continue
+      }
+
+      // decide whether it is excluded or lagging
+      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
+        excluded.add(circulatingSupplyConfig.configId)
+      } else {
+        lagging.push({
+          id: circulatingSupplyConfig.configId,
+          latestTimestamp: syncStatus,
+        })
+      }
+    }
+
+    const unprocessed = circulatingSupplyConfigs.filter(
+      (c) => !processed.has(c.configId),
+    )
+    unprocessed.forEach((u) => excluded.add(u.configId))
+
+    return { excluded, lagging }
+  }
+
+  /** WARNING: It supports only TVL configurations for now */
+  async getConfigurationsStatus(
+    entries: ((AmountConfigEntry | CoingeckoPriceConfigEntry) & {
+      configId: string
+    })[],
+    targetTimestamp: UnixTime,
+  ) {
+    const multiIndexerEntries = entries.filter(
+      (c) =>
+        c.type === 'escrow' ||
+        c.type === 'totalSupply' ||
+        c.type === 'coingecko',
+    )
+
+    const configurations = await this.getConfigurations(multiIndexerEntries)
 
     const processed = new Set<string>()
-    const excluded = new Set<string>()
     const lagging = []
+    const excluded = new Set<string>()
 
     for (const c of configurations) {
       processed.add(c.id)
@@ -165,10 +206,10 @@ export class DataStatusService {
       }
     }
 
-    if (processed.size !== entries.length) {
-      const unprocessed = entries.filter((c) => !processed.has(c.configId))
-      unprocessed.forEach((u) => excluded.add(u.configId))
-    }
+    const unprocessed = multiIndexerEntries.filter(
+      (c) => !processed.has(c.configId),
+    )
+    unprocessed.forEach((u) => excluded.add(u.configId))
 
     return {
       excluded,
@@ -177,7 +218,7 @@ export class DataStatusService {
   }
 
   async getConfigurations(
-    entries: (MultiIndexerEntries & { configId: string })[],
+    entries: (MultiIndexerEntry & { configId: string })[],
   ) {
     if (entries.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
       return await this.db.indexerConfiguration.getByConfigurationIds(
@@ -196,7 +237,7 @@ export class DataStatusService {
   }
 }
 
-function toIndexerId(config: MultiIndexerEntries) {
+function toIndexerId(config: MultiIndexerEntry) {
   switch (config.type) {
     case 'coingecko':
       return `price_indexer::${config.coingeckoId.toString()}`

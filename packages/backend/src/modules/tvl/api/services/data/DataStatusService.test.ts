@@ -4,10 +4,12 @@ import {
   IndexerStateRecord,
 } from '@l2beat/database'
 import {
-  AmountConfigEntry,
+  CirculatingSupplyEntry,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
   EscrowEntry,
+  EthereumAddress,
+  PremintedEntry,
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -23,32 +25,44 @@ describe(DataStatusService.name, () => {
       Database['indexerConfiguration']
     >({
       getByConfigurationIds: async () => [
-        config('a', 0, null, null),
-        config('b', 0, null, targetTimestamp.toNumber()),
-        config('c', 0, 100, 100),
-        config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
-        config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+        configuration('a', 0, null, null),
+        configuration('b', 0, null, targetTimestamp.toNumber()),
+        configuration('c', 0, 100, 100),
+        configuration('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+        configuration('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
       ],
     })
 
     const indexerStateRepository = mockObject<Database['indexerState']>({
       getByIndexerIds: mockFn()
         .resolvesToOnce([
-          mock({
-            indexerId: 'circulating_supply_indexer::g',
+          indexerState({
+            indexerId: 'preminted_indexer::k_k',
             safeHeight: targetTimestamp.toNumber(),
           }),
-          mock({
-            indexerId: 'circulating_supply_indexer::h',
+          indexerState({
+            indexerId: 'preminted_indexer::l_l',
             safeHeight: targetTimestamp.add(-1, 'hours').toNumber(),
           }),
-          mock({
-            indexerId: 'circulating_supply_indexer::i',
+          indexerState({
+            indexerId: 'preminted_indexer::m_m',
             safeHeight: targetTimestamp.add(-10, 'days').toNumber(),
           }),
         ])
-        // TODO: test preminted
-        .resolvesToOnce([]),
+        .resolvesToOnce([
+          indexerState({
+            indexerId: 'circulating_supply_indexer::g',
+            safeHeight: targetTimestamp.toNumber(),
+          }),
+          indexerState({
+            indexerId: 'circulating_supply_indexer::h',
+            safeHeight: targetTimestamp.add(-1, 'hours').toNumber(),
+          }),
+          indexerState({
+            indexerId: 'circulating_supply_indexer::i',
+            safeHeight: targetTimestamp.add(-10, 'days').toNumber(),
+          }),
+        ]),
     })
 
     const dataStatusService = new DataStatusService(
@@ -60,50 +74,60 @@ describe(DataStatusService.name, () => {
 
     const result = await dataStatusService.getAmountsStatus(
       [
-        configuration('a', undefined, 'escrow'),
-        configuration('b', undefined, 'escrow'),
-        configuration('c', undefined, 'escrow'),
-        configuration('d', undefined, 'escrow'),
-        configuration('e', undefined, 'escrow'),
-        configuration('f', undefined, 'escrow'),
-        configuration('g', CoingeckoId('g'), 'circulatingSupply'),
-        configuration('h', CoingeckoId('h'), 'circulatingSupply'),
-        configuration('i', CoingeckoId('i'), 'circulatingSupply'),
-        configuration('j', CoingeckoId('j'), 'circulatingSupply'),
+        escrow('a', 'chain'),
+        escrow('b', 'chain'),
+        escrow('c', 'chain'),
+        escrow('d', 'chain'),
+        escrow('e', 'chain'),
+        escrow('f', 'chain'),
+        circulating('g', 'g'),
+        circulating('h', 'h'),
+        circulating('i', 'i'),
+        circulating('j', 'j'),
+        preminted('k', 'k', EthereumAddress.unsafe('k')),
+        preminted('l', 'l', EthereumAddress.unsafe('l')),
+        preminted('m', 'm', EthereumAddress.unsafe('m')),
+        preminted('n', 'n', EthereumAddress.unsafe('n')),
       ],
       targetTimestamp,
     )
 
-    expect(result).toEqual({
-      excluded: new Set(['a', 'e', 'f', 'i', 'j']),
-      lagging: [
-        {
-          id: 'd',
-          latestTimestamp: targetTimestamp.add(-1, 'hours'),
-        },
-        {
-          id: 'h',
-          latestTimestamp: targetTimestamp.add(-1, 'hours'),
-        },
-      ],
-    })
+    expect(result.excluded).toEqual(
+      new Set(['a', 'e', 'f', 'i', 'j', 'm', 'n']),
+    )
+
+    expect(result.lagging).toEqualUnsorted([
+      {
+        id: 'd',
+        latestTimestamp: targetTimestamp.add(-1, 'hours'),
+      },
+      {
+        id: 'h',
+        latestTimestamp: targetTimestamp.add(-1, 'hours'),
+      },
+      {
+        id: 'l',
+        latestTimestamp: targetTimestamp.add(-1, 'hours'),
+      },
+    ])
 
     expect(
       indexerConfigurationsRepository.getByConfigurationIds,
     ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
 
     expect(indexerStateRepository.getByIndexerIds).toHaveBeenNthCalledWith(1, [
+      'preminted_indexer::k_k',
+      'preminted_indexer::l_l',
+      'preminted_indexer::m_m',
+      'preminted_indexer::n_n',
+    ])
+
+    expect(indexerStateRepository.getByIndexerIds).toHaveBeenNthCalledWith(2, [
       'circulating_supply_indexer::g',
       'circulating_supply_indexer::h',
       'circulating_supply_indexer::i',
       'circulating_supply_indexer::j',
     ])
-
-    expect(indexerStateRepository.getByIndexerIds).toHaveBeenNthCalledWith(
-      2,
-      // TODO:test preminted
-      [],
-    )
   })
 
   it(DataStatusService.prototype.getConfigurationsStatus.name, async () => {
@@ -113,11 +137,11 @@ describe(DataStatusService.name, () => {
       Database['indexerConfiguration']
     >({
       getByConfigurationIds: async () => [
-        config('a', 0, null, null),
-        config('b', 0, null, targetTimestamp.toNumber()),
-        config('c', 0, 100, 100),
-        config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
-        config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+        configuration('a', 0, null, null),
+        configuration('b', 0, null, targetTimestamp.toNumber()),
+        configuration('c', 0, 100, 100),
+        configuration('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+        configuration('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
       ],
     })
 
@@ -163,8 +187,8 @@ describe(DataStatusService.name, () => {
         Database['indexerConfiguration']
       >({
         getByConfigurationIds: async () => [
-          config('a', 0, null, null),
-          config('b', 0, null, null),
+          configuration('a', 0, null, null),
+          configuration('b', 0, null, null),
         ],
       })
 
@@ -177,8 +201,8 @@ describe(DataStatusService.name, () => {
       const result = await dataStatusService.getConfigurations(entries)
 
       expect(result).toEqual([
-        config('a', 0, null, null),
-        config('b', 0, null, null),
+        configuration('a', 0, null, null),
+        configuration('b', 0, null, null),
       ])
 
       expect(
@@ -197,10 +221,10 @@ describe(DataStatusService.name, () => {
         Database['indexerConfiguration']
       >({
         getByIndexerIds: async () => [
-          config('a', 0, null, null),
-          config('b', 0, null, null),
-          config('c', 0, null, null),
-          config('d', 0, null, null), // should be filtered out
+          configuration('a', 0, null, null),
+          configuration('b', 0, null, null),
+          configuration('c', 0, null, null),
+          configuration('d', 0, null, null), // should be filtered out
         ],
         getByConfigurationIds: mockFn(),
       })
@@ -214,9 +238,9 @@ describe(DataStatusService.name, () => {
       const result = await dataStatusService.getConfigurations(entries)
 
       expect(result).toEqual([
-        config('a', 0, null, null),
-        config('b', 0, null, null),
-        config('c', 0, null, null),
+        configuration('a', 0, null, null),
+        configuration('b', 0, null, null),
+        configuration('c', 0, null, null),
       ])
 
       expect(
@@ -250,6 +274,23 @@ function totalSupply(configId: string, chain: string) {
   })
 }
 
+function preminted(configId: string, chain: string, address: EthereumAddress) {
+  return mockObject<PremintedEntry & { configId: string }>({
+    configId,
+    type: 'preminted',
+    chain,
+    address,
+  })
+}
+
+function circulating(configId: string, coingeckoId: string) {
+  return mockObject<CirculatingSupplyEntry & { configId: string }>({
+    configId,
+    type: 'circulatingSupply',
+    coingeckoId: CoingeckoId(coingeckoId),
+  })
+}
+
 function price(configId: string, coingeckoId: string) {
   return mockObject<CoingeckoPriceConfigEntry & { configId: string }>({
     configId,
@@ -258,7 +299,7 @@ function price(configId: string, coingeckoId: string) {
   })
 }
 
-function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
+function indexerState(v: Partial<IndexerStateRecord>): IndexerStateRecord {
   return {
     indexerId: 'indexer',
     safeHeight: 1,
@@ -268,7 +309,7 @@ function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
   }
 }
 
-function config(
+function configuration(
   id: string,
   minHeight: number,
   maxHeight: number | null,
@@ -282,16 +323,4 @@ function config(
     maxHeight,
     currentHeight,
   }
-}
-
-function configuration(
-  configId: string,
-  coingeckoId: CoingeckoId | undefined,
-  type: 'circulatingSupply' | 'escrow',
-) {
-  return mockObject<AmountConfigEntry & { configId: string }>({
-    configId,
-    coingeckoId,
-    type,
-  })
 }
