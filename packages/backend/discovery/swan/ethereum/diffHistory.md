@@ -1,3 +1,48 @@
+Generated with discovered.json: 0xe26a257bdc80ed122817ce74bd4b69db9558e47f
+
+# Diff at Fri, 09 Aug 2024 12:02:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20413034
+- current block number: 20413034
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20413034 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xCc8c55Ec2Ea3F3001C049eC934e72b55cf52fBf3) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.upgrade.6:
+-        "0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"
++        "0xed7525946A09056C6AaE29941b8323017382050e"
+      assignedPermissions.upgrade.5:
+-        "0xE9614162C6128ABD7790C65D711CfC43ea842153"
++        "0xadE916De67511E5C24af4174Be67143d0dA94959"
+      assignedPermissions.upgrade.4:
+-        "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
++        "0xE9614162C6128ABD7790C65D711CfC43ea842153"
+      assignedPermissions.upgrade.3:
+-        "0x1c22740A0B4511E11D76434A424487862b593901"
++        "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
+      assignedPermissions.upgrade.2:
+-        "0xBa50434BC5fCC07406b1baD9AC72a4CDf776db15"
++        "0x504D56cf68f791B45E3A2e895B0e1562f3431328"
+      assignedPermissions.upgrade.1:
+-        "0xadE916De67511E5C24af4174Be67143d0dA94959"
++        "0x1c22740A0B4511E11D76434A424487862b593901"
+      assignedPermissions.upgrade.0:
+-        "0xed7525946A09056C6AaE29941b8323017382050e"
++        "0x1Ccf7e62889E6A93413DEAFC4e390Bd4047bDC32"
+    }
+```
+
 Generated with discovered.json: 0x6ee73074136afb6ff4b8a13016b67ee042cddfba
 
 # Diff at Fri, 09 Aug 2024 10:12:36 GMT:

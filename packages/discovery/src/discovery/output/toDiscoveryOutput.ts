@@ -138,6 +138,14 @@ function toLegacyPermissionView(
     result[permission.type]?.push(permission.target)
   }
 
+  for(const key of Object.keys(result)) {
+      if(result[key] === undefined) {
+          continue
+      }
+
+      result[key] = result[key].sort()
+  }
+
   return result
 }
 

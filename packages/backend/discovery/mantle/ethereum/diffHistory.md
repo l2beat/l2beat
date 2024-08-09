@@ -1,3 +1,78 @@
+Generated with discovered.json: 0x1e623bbead202cc00edaf74464ffdc390a2e1e8e
+
+# Diff at Fri, 09 Aug 2024 12:00:25 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20433272
+- current block number: 20433272
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20433272 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x2Cd33d3DC4d6Ea24B6941e4741F4Bf4772929e83) {
+    +++ description: None
+      assignedPermissions.upgrade.4:
+-        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
++        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
+      assignedPermissions.upgrade.3:
+-        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
++        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
+      assignedPermissions.upgrade.2:
+-        "0xeA4F1fE4928f1f83a450899C068bcd455BaF4798"
++        "0xBcF6d8273DAF842b6Fc288b08E48C438Fa911D01"
+      assignedPermissions.upgrade.1:
+-        "0xCAD08A7B9eF6ADeFAef08d0d85a577a288F93Ee1"
++        "0xA937660031787C4408587D2c6A67Ec4B260630F5"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x47D58744D8515d9aaEAf961bc03625118bd91EBb) {
+    +++ description: None
+      assignedPermissions.upgrade.4:
+-        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
++        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
+      assignedPermissions.upgrade.3:
+-        "0xc9C24f1aaD2614E81f033746292F5Dc5d7Ccad94"
++        "0xCDC78c5eaea2dE33B00a9200Ee1700937fb0f55D"
+      assignedPermissions.upgrade.2:
+-        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
++        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
+      assignedPermissions.upgrade.1:
+-        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
++        "0x5BD63a7ECc13b955C4F57e3F12A64c10263C14c1"
+      assignedPermissions.upgrade.0:
+-        "0x92986cd63C3409b7dA2882624B6d6E7Cf660707a"
++        "0x1eD35B793d887e028493dAC4a11AA5Feb811dd67"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xca35F8338054739D138884685e08b39EE2217794) {
+    +++ description: None
+      assignedPermissions.upgrade.3:
+-        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
++        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
+      assignedPermissions.upgrade.2:
+-        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
++        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
+      assignedPermissions.upgrade.1:
+-        "0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb"
++        "0x427Ea0710FA5252057F0D88274f7aeb308386cAf"
+      assignedPermissions.upgrade.0:
+-        "0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012"
++        "0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481"
+    }
+```
+
 Generated with discovered.json: 0x12ff3e5e8ad11504598d06b204dad21c188db736
 
 # Diff at Fri, 09 Aug 2024 10:10:31 GMT:

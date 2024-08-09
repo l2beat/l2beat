@@ -38,8 +38,8 @@
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "assignedPermissions": {
         "upgrade": [
-          "0xde19274c009A22921E3966a1Ec868cEba40A5DaC",
-          "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182"
+          "0xA27A2cA24DD28Ce14Fb5f5844b59851F03DCf182",
+          "0xde19274c009A22921E3966a1Ec868cEba40A5DaC"
         ]
       },
       "sinceTimestamp": 1647317014,
@@ -1506,8 +1506,8 @@
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "assignedPermissions": {
         "upgrade": [
-          "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D",
-          "0x5a54fe5234E811466D5366846283323c954310B2"
+          "0x5a54fe5234E811466D5366846283323c954310B2",
+          "0x5e603Fe3FBDa423D4AFc82e80F59AE8a041Ac35D"
         ]
       },
       "sinceTimestamp": 1661448871,

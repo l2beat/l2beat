@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x0c198c0def2d92502a576841ad8a5c77b78a0363
+
+# Diff at Fri, 09 Aug 2024 12:03:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 225981159
+- current block number: 225981159
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981159 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x8Ab2f49A085490c1592325eE32B6e6a4DA35D238) {
+    +++ description: None
+      assignedPermissions.upgrade.8:
+-        "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
++        "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
+      assignedPermissions.upgrade.7:
+-        "0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
++        "0xE1d32C985825562edAa906fAC39295370Db72195"
+      assignedPermissions.upgrade.6:
+-        "0xb255de22d39a26D4CbcAFd6Cf660ccaCa047e95B"
++        "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
+      assignedPermissions.upgrade.4:
+-        "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
++        "0x92ff91308F5f1036435f23c2F4F136Bb7475425d"
+      assignedPermissions.upgrade.3:
+-        "0xAeAe9616A02dA527FceA2AC444EC918C7BfB9CdF"
++        "0x7BB97862CA342B5fbe2AE2cF2E954F6327f587b1"
+      assignedPermissions.upgrade.2:
+-        "0xE1d32C985825562edAa906fAC39295370Db72195"
++        "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
+      assignedPermissions.upgrade.1:
+-        "0x5a6f8ea5e1028C80CB98Fd8916afBBC4E6b23D80"
++        "0x235000876bd58336C802B3546Fc0250f285fCc79"
+      assignedPermissions.upgrade.0:
+-        "0x235000876bd58336C802B3546Fc0250f285fCc79"
++        "0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2"
+    }
+```
+
 Generated with discovered.json: 0x7f1bf0cfbd22aee2122754741c7e873764ddcca0
 
 # Diff at Fri, 09 Aug 2024 10:13:41 GMT:

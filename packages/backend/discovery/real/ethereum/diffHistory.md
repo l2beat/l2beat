@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xe7343f6f8e6e545996a3973fa66c8d60871b1fa2
+
+# Diff at Fri, 09 Aug 2024 12:01:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20177361
+- current block number: 20177361
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20177361 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xB032ff02cd6425e4b816137207AA8560932180f1) {
+    +++ description: None
+      assignedPermissions.upgrade.8:
+-        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
++        "0xfC89B875970122E24C6C5ADd4Dea139443943ea7"
+      assignedPermissions.upgrade.7:
+-        "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d"
++        "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11"
+      assignedPermissions.upgrade.6:
+-        "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0"
++        "0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a"
+      assignedPermissions.upgrade.5:
+-        "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
++        "0x8592Ca44dE1D354A20F75160F5602E5933D33761"
+      assignedPermissions.upgrade.4:
+-        "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18"
++        "0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0"
+      assignedPermissions.upgrade.3:
+-        "0x8592Ca44dE1D354A20F75160F5602E5933D33761"
++        "0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C"
+      assignedPermissions.upgrade.2:
+-        "0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11"
++        "0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18"
+      assignedPermissions.upgrade.0:
+-        "0xfC89B875970122E24C6C5ADd4Dea139443943ea7"
++        "0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d"
+    }
+```
+
 Generated with discovered.json: 0x0677537fb87c8ddc24eb032687875994d450b561
 
 # Diff at Fri, 09 Aug 2024 10:11:43 GMT:

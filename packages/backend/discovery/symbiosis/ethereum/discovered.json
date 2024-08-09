@@ -10,8 +10,8 @@
       "address": "0x1Da522B35363c1eda4833bc121c8F3c67B2caa75",
       "assignedPermissions": {
         "upgrade": [
-          "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8",
-          "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E"
+          "0x5523985926Aa12BA58DC5Ad00DDca99678D7227E",
+          "0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"
         ]
       },
       "sinceTimestamp": 1668406715,

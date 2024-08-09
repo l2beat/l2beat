@@ -1,3 +1,54 @@
+Generated with discovered.json: 0xf3d7b4fd7812de28dba3563e68320b2cb08e6b8d
+
+# Diff at Fri, 09 Aug 2024 11:58:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20406543
+- current block number: 20406543
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406543 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumProxyAdmin (0x554723262467F125Ac9e1cDFa9Ce15cc53822dbD) {
+    +++ description: None
+      assignedPermissions.upgrade.7:
+-        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
++        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
+      assignedPermissions.upgrade.6:
+-        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
++        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
+      assignedPermissions.upgrade.5:
+-        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
++        "0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40"
+      assignedPermissions.upgrade.4:
+-        "0x8315177aB297bA92A06054cE80a67Ed4DBd7ed3a"
++        "0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a"
+      assignedPermissions.upgrade.1:
+-        "0xe5896783a2F463446E1f624e64Aa6836BE4C6f58"
++        "0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6"
+    }
+```
+
+```diff
+    contract GatewaysAdmin (0x9aD46fac0Cf7f790E5be05A0F15223935A0c0aDa) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
++        "0xcEe284F754E854890e311e3280b767F80797180d"
+      assignedPermissions.upgrade.0:
+-        "0xcEe284F754E854890e311e3280b767F80797180d"
++        "0x72Ce9c846789fdB6fC1f34aC4AD25Dd9ef7031ef"
+    }
+```
+
 Generated with discovered.json: 0x71e1629b84badc6ff874a78b9a1bab8c308c13fb
 
 # Diff at Fri, 09 Aug 2024 10:08:37 GMT:

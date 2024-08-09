@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xb28d11642d4e4adcc6fa7246d54c36430e1c4126
+
+# Diff at Fri, 09 Aug 2024 11:59:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20460352
+- current block number: 20460352
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20460352 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.upgrade.6:
+-        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
++        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
+      assignedPermissions.upgrade.5:
+-        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
++        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
+      assignedPermissions.upgrade.4:
+-        "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
++        "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+      assignedPermissions.upgrade.3:
+-        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
++        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
+      assignedPermissions.upgrade.2:
+-        "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D"
++        "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"
+      assignedPermissions.upgrade.0:
+-        "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4"
++        "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc"
+    }
+```
+
 Generated with discovered.json: 0x521467e3949ad399abef5c1b0575ffbba44d721d
 
 # Diff at Fri, 09 Aug 2024 10:09:36 GMT:
