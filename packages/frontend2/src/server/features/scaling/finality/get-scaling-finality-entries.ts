@@ -1,17 +1,17 @@
-import { layer2s, type Layer2 } from '@l2beat/config'
+import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../../tvl/get-latest-tvl-usd'
 import { orderByTvl } from '../../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { getFinality } from './get-finality'
+import { getFinalityConfigurations } from './get-finality-configurations'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import {
   type ScalingFinalityEntry,
   type ScalingFinalityEntryData,
 } from './types'
-import { getFinalityConfigurations } from './get-finality-configurations'
-import { getFinality } from './get-finality'
-import { getLatestTvlUsd } from '../../tvl/get-latest-tvl-usd'
-import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 
 export async function getScalingFinalityEntries() {
   const configurations = getFinalityConfigurations()

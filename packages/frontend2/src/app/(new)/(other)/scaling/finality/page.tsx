@@ -1,6 +1,6 @@
-import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getScalingFinalityEntries } from '~/server/features/scaling/finality/get-scaling-finality-entries'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { FinalityDiagramsSection } from './_components/diagram-section'
 import { ScalingFinalityTable } from './_components/table/scaling-finality-table'

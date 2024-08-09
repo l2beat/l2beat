@@ -1,9 +1,9 @@
 import { layer2s } from '@l2beat/config'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 
 export async function getScalingRiskEntries() {
   const tvl = await getLatestTvlUsd()

@@ -1,5 +1,7 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
+import { QueryCreator } from 'kysely'
 import { BaseRepository } from '../../BaseRepository'
+import { DB } from '../../kysely'
 import {
   CleanDateRange,
   deleteHourlyUntil,
@@ -7,8 +9,6 @@ import {
 } from '../../utils/deleteArchivedRecords'
 import { ValueRecord, toRecord, toRow } from './entity'
 import { selectValue } from './select'
-import { DB } from '../../kysely'
-import { QueryCreator } from 'kysely'
 
 export class ValueRepository extends BaseRepository {
   async getForProjects(projectIds: ProjectId[]): Promise<ValueRecord[]> {

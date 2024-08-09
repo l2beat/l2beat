@@ -1,10 +1,10 @@
 import { type Layer2, type Layer3, layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 
 export async function getScalingDaEntries() {
   const activeProjects = [...layer2s, ...layer3s].filter(

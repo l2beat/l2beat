@@ -1,11 +1,11 @@
 import { type ProjectId } from '@l2beat/shared-pure'
+import { groupBy, sum } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import { sumValuesPerSource } from './sum-values-per-source'
 import { db } from '~/server/database'
-import { groupBy, sum } from 'lodash'
+import { sumValuesPerSource } from './sum-values-per-source'
 
 /*
   This function should only be used for ordering projects by TVL.
