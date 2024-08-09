@@ -111,7 +111,7 @@ export async function up(knex: Knex) {
         knex.raw('max(block_number) AS end'),
       )
       .from('activity.zksync')
-      .where('zksync.unix_timestamp', '<=', timestamp.toDate())
+      .where('zksync.unix_timestamp', '<', timestamp.toDate())
       .groupByRaw("date_trunc('day', zksync.unix_timestamp)"),
   )
 
@@ -129,7 +129,7 @@ export async function up(knex: Knex) {
         'project_id',
         projects.map((p) => p.name),
       )
-      .andWhere('block.unix_timestamp', '<=', timestamp.toDate())
+      .andWhere('block.unix_timestamp', '<', timestamp.toDate())
       .from('activity.block')
       .groupByRaw("date_trunc('day', block.unix_timestamp), block.project_id"),
   )
@@ -150,7 +150,7 @@ export async function up(knex: Knex) {
         'project_id',
         projects.map((p) => p.name),
       )
-      .andWhere('starkex.unix_timestamp', '<=', timestamp.toDate())
+      .andWhere('starkex.unix_timestamp', '<', timestamp.toDate())
       .from('activity.starkex')
       .groupBy('starkex.unix_timestamp', 'starkex.project_id'),
   )
