@@ -3,7 +3,7 @@
   "chain": "base",
   "blockNumber": 15661223,
   "configHash": "0xf98611165f5abbbf65d8da4632824d2cc0fcc293c72b7d86c7db088cb1fbd810",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "L1CrossDomainMessenger",
@@ -134,13 +134,13 @@
       "address": "0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E",
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x520D972B4A7C1CE4d5e01bCd4349a93a8AeaEAC5",
           "0x52fA397D799f1CE416a2089B964Aa293c347994F",
           "0xF7Cb313CB6D146dAbB8c5E31798BDCeFc67B831b",
           "0xc2dA6Afd69F0ce69313F01c73f77E6471f06b4E4"
         ],
-        "owner": ["0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"]
+        "configure": ["0x9Bf9cd5aD745076b5bFb7Cc2d3b871532973C2c0"]
       },
       "sinceTimestamp": 1707369295,
       "values": {
@@ -177,7 +177,7 @@
         "It can act on behalf of 0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E, inheriting its permissions."
       ],
       "assignedPermissions": {
-        "owner": ["0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"]
+        "configure": ["0xF5BD775557F3b8817C34Fc784971A0AF1a36DD8E"]
       }
     },
     { "address": "0xfa99F7392668247Ebb4F7e1Fb6d237692d64C99c" }
@@ -389,8 +389,8 @@
     ]
   },
   "usedTemplates": {
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

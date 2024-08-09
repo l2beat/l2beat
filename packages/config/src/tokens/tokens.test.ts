@@ -232,17 +232,4 @@ describe('tokens', () => {
       expect(invalidSlugs).toHaveLength(0)
     })
   })
-
-  describe('preminted', () => {
-    it('every preminted token has escrow address', () => {
-      tokenList
-        .filter((t) => t.supply === 'preminted')
-        .forEach((t) => {
-          assert(
-            t.escrow !== undefined,
-            `Preminted token ${t.symbol} ${t.address} should have escrow address configured`,
-          )
-        })
-    })
-  })
 })

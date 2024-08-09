@@ -1,7 +1,6 @@
-import { Database } from '@l2beat/database'
+import { ActivityRecord, Database } from '@l2beat/database'
 import { ProjectId } from '@l2beat/shared-pure'
 import { ManagedChildIndexerOptions } from '../../../tools/uif/ManagedChildIndexer'
-import { TxsCountProvider } from '../services/TxsCountProvider'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
 import { DayActivityIndexer } from './DayActivityIndexer'
@@ -14,6 +13,10 @@ export interface ActivityIndexerDeps
   db: Database
   /** The number of blocks/days to process at once. In case of error this is the maximum amount of blocks/days we will need to refetch */
   batchSize: number
+}
+
+export interface TxsCountProvider {
+  getTxsCount(from: number, to: number): Promise<ActivityRecord[]>
 }
 
 export interface DayActivityIndexerDeps extends ActivityIndexerDeps {

@@ -63,7 +63,7 @@ export const metal: Layer2 = opStackL2({
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ConduitMultisig',
-      'Owner of the ProxyAdmin and the rollup system. It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.',
+      'Designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
     ),
     discovery.contractAsPermissioned(
       discovery.getContract('SuperchainProxyAdmin'),
@@ -71,7 +71,7 @@ export const metal: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'SuperchainProxyAdminOwner',
-      'Owner of the SuperchainProxyAdmin.',
+      'Owner of the ProxyAdmin and SuperchainProxyAdmin.',
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',

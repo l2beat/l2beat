@@ -1,3 +1,31 @@
+Generated with discovered.json: 0x809b23b3c983d8f92860d90b98fd91ff50a86b14
+
+# Diff at Fri, 09 Aug 2024 10:12:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20325237
+- current block number: 20325237
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325237 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
+      assignedPermissions.upgrade:
++        ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
+    }
+```
+
 Generated with discovered.json: 0x5d61281c754b37323277786140fa94b84fc5efcd
 
 # Diff at Wed, 07 Aug 2024 17:53:43 GMT:
@@ -8,7 +36,7 @@ Generated with discovered.json: 0x5d61281c754b37323277786140fa94b84fc5efcd
 
 ## Description
 
-Provide description of changes. This section will be preserved.
+Changed name for consistency with other CDK chains.
 
 ## Config/verification related changes
 

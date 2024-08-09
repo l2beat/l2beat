@@ -103,6 +103,7 @@ export class ProjectDiscovery {
     sinceTimestamp,
     tokens,
     excludedTokens,
+    premintedTokens,
     upgradableBy,
     upgradeDelay,
     isUpcoming,
@@ -118,6 +119,7 @@ export class ProjectDiscovery {
     sinceTimestamp?: UnixTime
     tokens: string[] | '*'
     excludedTokens?: string[]
+    premintedTokens?: string[]
     upgradableBy?: string[]
     upgradeDelay?: string
     isUpcoming?: boolean
@@ -153,6 +155,7 @@ export class ProjectDiscovery {
       sinceTimestamp: new UnixTime(timestamp),
       tokens,
       excludedTokens,
+      premintedTokens,
       contract,
       isUpcoming,
       chain: this.chain,
@@ -357,7 +360,7 @@ export class ProjectDiscovery {
         ],
         chain: this.chain,
         references,
-        participants: this.getPermissionedAccounts(identifier, 'getOwners'),
+        participants: this.getPermissionedAccounts(identifier, '$members'),
       },
     ]
   }
@@ -526,11 +529,11 @@ export class ProjectDiscovery {
   getMultisigStats(contractIdentifier: string) {
     const threshold = this.getContractValue<number>(
       contractIdentifier,
-      'getThreshold',
+      '$threshold',
     )
     const size = this.getContractValue<string[]>(
       contractIdentifier,
-      'getOwners',
+      '$members',
     ).length
     return `${threshold} / ${size}`
   }
@@ -664,7 +667,7 @@ export class ProjectDiscovery {
       .flatMap((discovery) => discovery.contracts)
       .filter((contract) => contract.proxyType === 'gnosis safe')
       .filter((contract) =>
-        toAddressArray(contract.values?.getOwners).includes(
+        toAddressArray(contract.values?.$members).includes(
           contractOrEoa.address,
         ),
       )
@@ -686,15 +689,22 @@ export class ProjectDiscovery {
   describePermissions(
     contractOrEoa: ContractParameters | EoaParameters,
   ): string | undefined {
+    const permissionToRole = {
+      configure: 'Owner',
+      upgrade: 'Admin',
+    }
+
     const permissions = contractOrEoa.assignedPermissions
     return permissions === undefined
       ? undefined
       : Object.entries(contractOrEoa.assignedPermissions ?? {})
-          .map(([role, addresses]) => {
+          .map(([permission, addresses]) => {
             const addressesString = addresses
               .map((address) => this.getContract(address.toString()).name)
               .join(', ')
-            return `${capitalize(role)} of ${addressesString}.`
+            return `${
+              permissionToRole[permission as keyof typeof permissionToRole]
+            } of ${addressesString}.`
           })
           .join(' ')
   }
@@ -845,5 +855,3 @@ const roleDescriptions: { [key in StackRole]: string } = {
   Validator:
     'Validator is an actor that validates the correctness of state transitions.',
 }
-
-const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1)

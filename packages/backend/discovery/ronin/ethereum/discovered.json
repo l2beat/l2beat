@@ -3,14 +3,14 @@
   "chain": "ethereum",
   "blockNumber": 20475186,
   "configHash": "0x24d40701ac57a1ca7d34bbfc1580f7dd67c0366e4e570f9fa3f302e7ad9b48be",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "MainchainBridgeManager",
       "address": "0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"]
+        "upgrade": ["0x64192819Ac13Ef72bF6b5AE239AC672B43a9AF08"]
       },
       "sinceTimestamp": 1722414335,
       "values": {
@@ -112,25 +112,25 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"]
+        "upgrade": ["0x2Cf3CFb17774Ce0CFa34bB3f3761904e7fc3FaDB"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1722594755,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x260019f7a2799f89a2c91d123a9a78a94ce81ef7e965cb34ba0364d12a9526d4",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x4BFEc2a63B72c67e6c3f599fCc40E1d42AE519ff",
           "0x18471CC6d2d427077CAA7896D7956cD066CAbe49",
           "0xC93f43dbbf0a1346D9E0d623B68d78891b131Bf9",
           "0xFE1a01580d7Cd7EC333DDC087b2c4DE3226f6031",
           "0xa1aD1835f9c42842d348d9Ed1423C9075B8DA40b"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x260019f7a2799f89a2c91d123a9a78a94ce81ef7e965cb34ba0364d12a9526d4",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 2,
         "VERSION": "1.3.0"
       }
@@ -632,7 +632,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

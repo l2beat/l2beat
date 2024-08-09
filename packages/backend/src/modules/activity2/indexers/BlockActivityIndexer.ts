@@ -53,8 +53,41 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     return new Map(currentValues.map((v) => [v.timestamp.toNumber(), v]))
   }
 
-  override invalidate(targetHeight: number): Promise<number> {
-    assert(targetHeight === this.safeHeight, 'Invalidating is not allowed')
-    return Promise.resolve(targetHeight)
+  override async invalidate(targetHeight: number): Promise<number> {
+    //find record that includes targetHeight
+    const records = await this.$.db.activity.getByProjectIncludingDataPoint(
+      this.$.projectId,
+      targetHeight + 1,
+    )
+
+    if (records.length === 0) {
+      return targetHeight
+    }
+
+    assert(
+      records.length === 1,
+      `There should be exactly one record that includes data point (projectId: ${this.$.projectId}, dataPoint: ${targetHeight})`,
+    )
+
+    // we need to invalidate all data points from record
+    const adjustedTargetHeight = records[0].start - 1
+
+    const deletedRows = await this.$.db.activity.deleteByProjectIdFrom(
+      this.$.projectId,
+      records[0].timestamp,
+    )
+
+    if (deletedRows > 0) {
+      this.$.logger.info('Deleted rows', { deletedRows })
+    }
+
+    this.$.logger.info('Invalidated activity', {
+      projectId: this.$.projectId,
+      targetHeight,
+      adjustedTargetHeight,
+      timestamp: records[0].timestamp,
+    })
+
+    return Promise.resolve(adjustedTargetHeight)
   }
 }

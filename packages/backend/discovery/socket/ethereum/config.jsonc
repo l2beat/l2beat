@@ -31,6 +31,7 @@
     "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5",
     "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2",
+    "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF",
     // Polynomial
     "0xDE1617Ddb7C8A250A409D986930001985cfad76F",
     "0xC6cfb996A7CFEB89813A68CD13942CD75553032b",
@@ -84,6 +85,7 @@
     "0x00A0c9d82B95a17Cdf2D46703F2DcA13EB0E8A94": "WETH Vault Kinto",
     "0x12Cf431BdF7F143338cC09A0629EDcCEDCBCEcB5": "DAI Vault Kinto",
     "0x25f0D71Da51A77Ca231484eBbAD1f588A0230ef2": "PAXG Vault Kinto",
+    "0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF": "XAUt Vault Kinto",
     // Polynomial
     "0xDE1617Ddb7C8A250A409D986930001985cfad76F": "USDC Vault Polynomial",
     "0xC6cfb996A7CFEB89813A68CD13942CD75553032b": "sUSDe Vault Polynomial",
@@ -269,6 +271,7 @@
     "WETH Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "DAI Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     "PAXG Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
+    "XAUt Vault Kinto": { "ignoreMethods": ["token", "token__", "hook__"] },
     // Polynomial
     "USDC Vault Polynomial": {
       "ignoreMethods": ["token", "token__", "hook__"]

@@ -1,3 +1,104 @@
+Generated with discovered.json: 0x268645e90c13973d8d0e1a6b1dd839737c270f02
+
+# Diff at Fri, 09 Aug 2024 10:08:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20482283
+- current block number: 20482283
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20482283 (main branch discovery), not current.
+
+```diff
+    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract HubPool Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe","0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x868CF19464e17F76D6419ACC802B122c22D2FD34"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe","0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x868CF19464e17F76D6419ACC802B122c22D2FD34"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]
+      assignedPermissions.upgrade:
++        ["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]
+    }
+```
+
+Generated with discovered.json: 0x694b66df3231b8a4fe6cb923963e8254b05ba3e1
+
+# Diff at Thu, 08 Aug 2024 07:11:14 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5a17db968badca34a66703637dabf76a313bb43e block: 20389580
+- current block number: 20482283
+
+## Description
+
+A new Adapter and L2 crosschain target for Redstone are added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.690:
++        "0x188F8C95B7cfB7993B53a4F643efa687916f73fA"
+      values.CrossChainContracts.690:
++        "0x28077B47Cd03326De7838926A63699849DD4fa87"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Redstone_Adapter (0x188F8C95B7cfB7993B53a4F643efa687916f73fA)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Redstone_Adapter.sol  | 590 +++++++++++++++++++++
+ 1 file changed, 590 insertions(+)
+```
+
 Generated with discovered.json: 0xdbd5447e307a5f0e39981d7b5ea954532dc92555
 
 # Diff at Fri, 26 Jul 2024 08:38:43 GMT:

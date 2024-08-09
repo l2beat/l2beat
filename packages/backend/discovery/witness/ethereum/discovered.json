@@ -59,7 +59,7 @@
       "name": "ProxyAdmin",
       "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
       "assignedPermissions": {
-        "admin": ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
+        "upgrade": ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
       },
       "sinceTimestamp": 1718630195,
       "values": {

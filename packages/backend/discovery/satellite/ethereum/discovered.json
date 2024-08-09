@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017695,
   "configHash": "0x17d2f88caa79b904561d5c3444555097dbf22c906defb717b2e8eaf887ea96fd",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "AxelarGasService",
@@ -111,7 +111,7 @@
     {
       "address": "0x6f24A47Fc8AE5441Eb47EFfC3665e70e69Ac3F05",
       "assignedPermissions": {
-        "admin": ["0x2d5d7d31F671F86C782533cc367F14109a082712"]
+        "upgrade": ["0x2d5d7d31F671F86C782533cc367F14109a082712"]
       }
     },
     { "address": "0x9256Fd872118ed3a97754B0fB42c15015d17E0CC" },

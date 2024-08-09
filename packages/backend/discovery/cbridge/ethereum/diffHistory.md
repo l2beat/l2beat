@@ -1,3 +1,41 @@
+Generated with discovered.json: 0x05aa959093f9614cbf4724ee062b9db6fe434070
+
+# Diff at Fri, 09 Aug 2024 10:09:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20331848
+- current block number: 20331848
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331848 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
+      assignedPermissions.upgrade:
++        ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
+      assignedPermissions.upgrade:
++        ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
+    }
+```
+
 Generated with discovered.json: 0x01d6f87c761817ffb94b950acac1fbcaff902d90
 
 # Diff at Tue, 30 Jul 2024 11:11:20 GMT:

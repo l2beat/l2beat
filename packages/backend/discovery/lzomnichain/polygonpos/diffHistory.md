@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x1f5b4201214543c49fe7bc5ca52d46e9de73f3c2
+
+# Diff at Fri, 09 Aug 2024 10:14:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 58991670
+- current block number: 58991670
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 58991670 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x38dE71124f7a447a01D67945a51eDcE9FF491251) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
+      assignedPermissions.upgrade:
++        ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x5a54fe5234E811466D5366846283323c954310B2"]
+      assignedPermissions.upgrade:
++        ["0x5a54fe5234E811466D5366846283323c954310B2"]
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xF1a5F92F5F89e8b539136276f827BF1648375312) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 6 (33%)"
+      values.getOwners:
+-        ["0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","0xe095F2590eF1Ab39601445025847Ed8E4B40D687","0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD","0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","0xe095F2590eF1Ab39601445025847Ed8E4B40D687","0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD","0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 6 (33%)"
+    }
+```
+
 Generated with discovered.json: 0x883edd40f235c9a0018d596058e909a15049b541
 
 # Diff at Fri, 05 Jul 2024 14:35:32 GMT:
