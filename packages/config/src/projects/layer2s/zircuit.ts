@@ -65,7 +65,14 @@ export const zircuit: Layer2 = opStackL2({
   // Chain ID: 48900
   usesBlobs: true,
   isNodeAvailable: 'UnderReview',
-  // proof system currently with temporary backdoor
+  finality: {
+    type: 'OPStack-blob',
+    genesisTimestamp: new UnixTime(1719936217),
+    minTimestamp: new UnixTime(1719936217), // first blob
+    l2BlockTimeSeconds: 2,
+    lag: 0,
+    stateUpdate: 'disabled',
+  },
   nonTemplateTechnology: {
     stateCorrectness: ZIRCUIT_STATE_CORRECTNESS,
   },
@@ -82,10 +89,26 @@ export const zircuit: Layer2 = opStackL2({
         )
         return members
       })(),
-      description: 'TODO: fill out',
+      description: 'Admin of the SuperChainConfig, can configure other roles.',
     },
+    /*  This role is still not set, but it is present in the code and must be uncommented in the future
     {
-      name: 'Actors allowed to monitor SuperchainConfig',
+      name: 'Operators of SuperchainConfig',
+      accounts: (() => {
+        const admins = discovery.getAccessControlField(
+          'ZircuitSuperchainConfig',
+          'OPERATOR_ROLE',
+        ).members
+        const members = admins.map((member) =>
+          discovery.formatPermissionedAccount(member),
+        )
+        return members
+      })(),
+      description:
+        'Role set up in SuperChainConfig contract that can raise the withdrawal limit for a user.',
+    }, */
+    {
+      name: 'Monitors of SuperchainConfig',
       accounts: (() => {
         const admins = discovery.getAccessControlField(
           'ZircuitSuperchainConfig',
@@ -96,7 +119,8 @@ export const zircuit: Layer2 = opStackL2({
         )
         return members
       })(),
-      description: 'TODO: fill out',
+      description:
+        'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
     },
   ],
   nonTemplateContracts: [
