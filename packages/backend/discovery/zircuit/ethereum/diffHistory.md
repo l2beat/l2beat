@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x86aba3d36a6953abf54dd542793cd5183ce450d1
+Generated with discovered.json: 0x4eff9e165f1a664729760252a1f02b9d496a501f
 
-# Diff at Fri, 09 Aug 2024 07:40:07 GMT:
+# Diff at Fri, 09 Aug 2024 10:31:27 GMT:
 
 - author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
-- current block number: 20484403
+- current block number: 20490461
 
 ## Description
 
@@ -73,7 +73,7 @@ Initial discovery: Fork from the latest pre-FP OP stack contracts with added ZK 
 
 ```diff
 +   Status: CREATED
-    contract ZircuitMutliSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38)
+    contract ZircuitMultiSig (0xC463EaC02572CC964D43D2414023E2c6B62bAF38)
     +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
 ```
 

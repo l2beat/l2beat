@@ -1,8 +1,8 @@
+import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
+import { ScalingProjectTechnologyChoice } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'
 import { Layer2 } from './types'
-import { ScalingProjectTechnologyChoice } from '../../common'
-import { UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
 const discovery = new ProjectDiscovery('zircuit')
 
@@ -122,6 +122,18 @@ export const zircuit: Layer2 = opStackL2({
       description:
         'Role set up in SuperChainConfig contract that can lower the withdrawal limit for a user.',
     },
+    ...discovery.getMultisigPermission(
+      'ZircuitMultiSig',
+      'This address is the owner of the following contracts: ProxyAdmin, SystemConfig. \
+      It is also designated as a Challenger and SystemOwner of the L2OutputOracle, meaning it can remove L2 state roots and reconfigure \
+      L2OutputOracle, including changing the Verifier contract. \
+      It can upgrade the bridge implementation potentially gaining access to all funds, and change the sequencer, state root proposer or any other system component (unlimited upgrade power).',
+    ),
+    ...discovery.getMultisigPermission(
+      'ZircuitGuardianMultiSig',
+      'This address is the permissioned guardian of the system, meaning it can pause all withdrawals. \
+      It is also an Admin of the ZircuitSuperchainConfig meaning that it can set roles and permissions for the SuperchainConfig contract.',
+    ),
   ],
   nonTemplateContracts: [
     discovery.getContractDetails('Verifier', {

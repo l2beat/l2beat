@@ -1,8 +1,8 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20484403,
-  "configHash": "0xc97ae30104e60dd23e4b4c8617096ab8a61815adda6aafa721a9499adb5c4b7c",
+  "blockNumber": 20490461,
+  "configHash": "0xcc86bb42f468bf5a2d11cb6363adeac4725518031678bbb03842df92ce335385",
   "version": 10,
   "contracts": [
     {
@@ -36,7 +36,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20484366,
+          "prevBlockNum": 20490344,
           "prevTxCount": 1
         },
         "paused": false,
@@ -61,7 +61,7 @@
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620715",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620768",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -293,10 +293,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1593726,
-        "latestOutputIndex": 3910,
-        "nextBlockNumber": 1593727,
-        "nextOutputIndex": 3911,
+        "latestBlockNumber": 1630794,
+        "latestOutputIndex": 4004,
+        "nextBlockNumber": 1630795,
+        "nextOutputIndex": 4005,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -333,7 +333,7 @@
       "derivedName": "L1ERC721Bridge"
     },
     {
-      "name": "ZircuitMutliSig",
+      "name": "ZircuitMultiSig",
       "address": "0xC463EaC02572CC964D43D2414023E2c6B62bAF38",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
