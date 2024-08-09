@@ -137,17 +137,15 @@ export class DataStatusService {
     for (const c of configurations) {
       processed.add(c.id)
 
-      const syncStatus = c.currentHeight
-        ? new UnixTime(c.currentHeight)
-        : undefined
+      const status = c.currentHeight ? new UnixTime(c.currentHeight) : undefined
 
       // newly added configuration
-      if (syncStatus === undefined) {
+      if (status === undefined) {
         excluded.add(c.id)
         continue
       }
       // fully synced configuration
-      if (syncStatus.gte(targetTimestamp)) {
+      if (status.gte(targetTimestamp)) {
         continue
       }
 
@@ -157,12 +155,12 @@ export class DataStatusService {
       }
 
       // decide whether it is excluded or lagging
-      if (syncStatus.lt(getExclusionBoundary(targetTimestamp))) {
+      if (status.lt(getExclusionBoundary(targetTimestamp))) {
         excluded.add(c.id)
       } else {
         lagging.push({
           id: c.id,
-          latestTimestamp: syncStatus,
+          latestTimestamp: status,
         })
       }
     }

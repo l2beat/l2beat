@@ -106,61 +106,58 @@ describe(DataStatusService.name, () => {
     )
   })
 
-  // it(DataStatusService.prototype.getConfigurationsStatus.name, async () => {
-  //   const targetTimestamp = UnixTime.now()
+  it(DataStatusService.prototype.getConfigurationsStatus.name, async () => {
+    const targetTimestamp = UnixTime.now()
 
-  //   const indexerConfigurationsRepository = mockObject<
-  //     Database['indexerConfiguration']
-  //   >({
-  //     getByConfigurationIds: async () => [
-  //       config('a', 0, null, null),
-  //       config('b', 0, null, targetTimestamp.toNumber()),
-  //       config('c', 0, 100, 100),
-  //       config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
-  //       config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
-  //     ],
-  //   })
+    const indexerConfigurationsRepository = mockObject<
+      Database['indexerConfiguration']
+    >({
+      getByConfigurationIds: async () => [
+        config('a', 0, null, null),
+        config('b', 0, null, targetTimestamp.toNumber()),
+        config('c', 0, 100, 100),
+        config('d', 0, 100, targetTimestamp.add(-1, 'hours').toNumber()),
+        config('e', 0, 100, targetTimestamp.add(-10, 'days').toNumber()),
+      ],
+    })
 
-  //   const dataStatusService = new DataStatusService(
-  //     mockDatabase({
-  //       indexerState: mockObject(),
-  //       indexerConfiguration: indexerConfigurationsRepository,
-  //     }),
-  //   )
+    const dataStatusService = new DataStatusService(
+      mockDatabase({
+        indexerState: mockObject(),
+        indexerConfiguration: indexerConfigurationsRepository,
+      }),
+    )
 
-  //   const result = await dataStatusService.getConfigurationsStatus(
-  //     [
-  //       { configId: 'a' },
-  //       { configId: 'b' },
-  //       { configId: 'c' },
-  //       { configId: 'd' },
-  //       { configId: 'e' },
-  //       { configId: 'f' },
-  //     ],
-  //     targetTimestamp,
-  //   )
+    const result = await dataStatusService.getConfigurationsStatus(
+      [
+        escrow('a', 'chain'),
+        escrow('b', 'chain'),
+        escrow('c', 'chain'),
+        escrow('d', 'chain'),
+        escrow('e', 'chain'),
+        escrow('f', 'chain'),
+      ],
+      targetTimestamp,
+    )
 
-  //   expect(result).toEqual({
-  //     excluded: new Set(['a', 'e', 'f']),
-  //     lagging: [
-  //       {
-  //         id: 'd',
-  //         latestTimestamp: targetTimestamp.add(-1, 'hours'),
-  //       },
-  //     ],
-  //   })
+    expect(result).toEqual({
+      excluded: new Set(['a', 'e', 'f']),
+      lagging: [
+        {
+          id: 'd',
+          latestTimestamp: targetTimestamp.add(-1, 'hours'),
+        },
+      ],
+    })
 
-  //   expect(
-  //     indexerConfigurationsRepository.getByConfigurationIds,
-  //   ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
-  // })
+    expect(
+      indexerConfigurationsRepository.getByConfigurationIds,
+    ).toHaveBeenOnlyCalledWith(['a', 'b', 'c', 'd', 'e', 'f'])
+  })
 
   describe(DataStatusService.prototype.getConfigurations.name, () => {
     it('Query by configuration ids if less than 100 configurations', async () => {
-      const entries = [
-        mockObject<EscrowEntry & { configId: string }>({ configId: 'a' }),
-        mockObject<EscrowEntry & { configId: string }>({ configId: 'b' }),
-      ]
+      const entries = [escrow('a', 'chain'), escrow('b', 'chain')]
 
       const indexerConfigurationsRepository = mockObject<
         Database['indexerConfiguration']
@@ -190,30 +187,10 @@ describe(DataStatusService.name, () => {
     })
 
     it('Query by indexer id if more than 100 configurations', async () => {
-      const escrowEntry = mockObject<EscrowEntry & { configId: string }>({
-        configId: 'a',
-        type: 'escrow',
-        chain: 'chain-a',
-      })
-      const totalSupplyEntry = mockObject<
-        TotalSupplyEntry & { configId: string }
-      >({
-        configId: 'b',
-        type: 'totalSupply',
-        chain: 'chain-b',
-      })
-      const priceEntry = mockObject<
-        CoingeckoPriceConfigEntry & { configId: string }
-      >({
-        configId: 'c',
-        type: 'coingecko',
-        coingeckoId: CoingeckoId('coingecko-id'),
-      })
-
       const entries = [
-        [...Array(50)].map((_) => escrowEntry),
-        [...Array(50)].map((_) => totalSupplyEntry),
-        [...Array(50)].map((_) => priceEntry),
+        [...Array(50)].map((_) => escrow('a', 'chain-a')),
+        [...Array(50)].map((_) => totalSupply('b', 'chain-b')),
+        [...Array(50)].map((_) => price('c', 'coingecko-id')),
       ].flat()
 
       const indexerConfigurationsRepository = mockObject<
@@ -256,6 +233,30 @@ describe(DataStatusService.name, () => {
     })
   })
 })
+
+function escrow(configId: string, chain: string) {
+  return mockObject<EscrowEntry & { configId: string }>({
+    configId,
+    type: 'escrow',
+    chain,
+  })
+}
+
+function totalSupply(configId: string, chain: string) {
+  return mockObject<TotalSupplyEntry & { configId: string }>({
+    configId,
+    type: 'totalSupply',
+    chain,
+  })
+}
+
+function price(configId: string, coingeckoId: string) {
+  return mockObject<CoingeckoPriceConfigEntry & { configId: string }>({
+    configId,
+    type: 'coingecko',
+    coingeckoId: CoingeckoId(coingeckoId),
+  })
+}
 
 function mock(v: Partial<IndexerStateRecord>): IndexerStateRecord {
   return {
