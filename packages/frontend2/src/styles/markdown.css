@@ -63,7 +63,7 @@
 }
 
 .mdc code {
-  @apply rounded bg-gray-100 px-1 font-mono text-sm dark:bg-zinc-700;
+  @apply rounded bg-gray-100 px-1 font-mono text-sm dark:bg-zinc-700 break-words;
 }
 
 .mdc pre {
