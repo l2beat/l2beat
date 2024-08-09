@@ -11,14 +11,14 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const items = await getScalingDaEntries()
+  const entries = await getScalingDaEntries()
 
   return (
     <ScalingFilterContextProvider>
       <div className="mb-8">
         <SimplePageHeader>Data Availability</SimplePageHeader>
       </div>
-      <ScalingDataAvailabilityTable items={items} />
+      <ScalingDataAvailabilityTable entries={entries} />
     </ScalingFilterContextProvider>
   )
 }

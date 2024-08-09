@@ -19,6 +19,3 @@ export const selectValue = [
   'ether',
   'stablecoin',
 ] as const satisfies (keyof Value)[]
-
-export const selectValueWithPrefix = <T extends string>(prefix: T) =>
-  selectValue.map((s) => `${prefix}.${s}` as const)
