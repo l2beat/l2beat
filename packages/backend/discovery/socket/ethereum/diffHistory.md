@@ -1,3 +1,43 @@
+Generated with discovered.json: 0x7b3ac4805adc133f54834fe2cd8a12e053b3ad99
+
+# Diff at Fri, 09 Aug 2024 10:59:50 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@8eb1834329fc5eb1200b5d292ff461683fea8f20 block: 20454363
+- current block number: 20490599
+
+## Description
+
+New plugs, but the vaults have 0 TVL. One new vault with some TVL was added for XAUTt on Kinto.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.74:
++        "0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.73:
++        "0x1aE19B11B71b1e232c43Fe65cB1d31E139Ac7A63"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20454363 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract XAUT Vault Kinto (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF)
+    +++ description: None
+```
+
 Generated with discovered.json: 0x8f5d8415ab31f273cd4bff9f106712375d2d7645
 
 # Diff at Sun, 04 Aug 2024 09:42:44 GMT:
