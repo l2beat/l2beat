@@ -140,6 +140,76 @@ describe(resolvePermissions.name, () => {
     ])
   })
 
+  it('A->A (zksync lite simplified)', () => {
+    const graph: Node<string>[] = [node('A', [edge('configure', 'A')])]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'configure',
+        path: [
+          { address: 'A', delay: 0 },
+          { address: 'A', delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('A->A->B', () => {
+    const graph: Node<string>[] = [
+      node('A', [edge('configure', 'A'), edge('act', 'B')]),
+      node('B'),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'configure',
+        path: [
+          { address: 'A', delay: 0 },
+          { address: 'A', delay: 0 },
+          { address: 'B', delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('A->B->A', () => {
+    const graph: Node<string>[] = [
+      node('A', [edge('configure', 'B')]),
+      node('B', [edge('act', 'A')]),
+    ]
+
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'configure',
+        path: [
+          { address: 'A', delay: 0 },
+          { address: 'B', delay: 0 },
+          { address: 'A', delay: 0 },
+        ],
+      },
+    ])
+  })
+
+  it('A->B->A->C->A (ignore loop - a upgrade b, b act a, a act c, c act a)', () => {
+    const graph: Node<string>[] = [
+      node('A', [edge('upgrade', 'B'), edge('act', 'C')]),
+      node('B', [edge('act', 'A')]),
+      node('C', [edge('act', 'A')]),
+    ]
+    expect(resolvePermissions(graph)).toEqualUnsorted([
+      {
+        permission: 'upgrade',
+        path: [
+          { address: 'A', delay: 0 },
+          { address: 'B', delay: 0 },
+          { address: 'A', delay: 0 },
+          { address: 'C', delay: 0 },
+          { address: 'A', delay: 0 },
+        ],
+      },
+    ])
+  })
+
   it('one actor, four contracts, two timelocks with same delays', () => {
     const graph: Node<string>[] = [
       node('actor'),
