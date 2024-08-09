@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
@@ -164,14 +163,13 @@ describe('projects', () => {
     })
   })
 
-  it('has an activityDataSource defined if transaction data API is set', () => {
+  describe('has an activityDataSource defined if transaction data API is set', () => {
     for (const project of [...layer2s, ...layer3s]) {
-      if (project.config.transactionApi) {
-        assert(
-          project.display.activityDataSource,
-          `activityDataSource not defined for ${project.id.toString()}`,
-        )
-      }
+      it(project.display.name, () => {
+        if (project.config.transactionApi) {
+          expect(project.display.activityDataSource).toBeTruthy()
+        }
+      })
     }
   })
 })
