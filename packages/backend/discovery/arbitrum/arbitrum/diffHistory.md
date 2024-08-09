@@ -1,3 +1,66 @@
+Generated with discovered.json: 0xb7357e80451bbfab38288cf126db77fec786c401
+
+# Diff at Fri, 09 Aug 2024 12:03:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 237006565
+- current block number: 237006565
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 237006565 (main branch discovery), not current.
+
+```diff
+    contract L2GatewaysProxyAdmin (0xd570aCE65C43af47101fC6250FD6fC63D1c22a86) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
++        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
+      assignedPermissions.upgrade.1:
+-        "0x6c411aD3E74De3E7Bd422b94A27770f5B86C623B"
++        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
+      assignedPermissions.upgrade.0:
+-        "0x5288c571Fd7aD117beA99bF60FE0846C4E84F933"
++        "0x09e9222E96E7B4AE2a407B98d48e330053351EEe"
+    }
+```
+
+```diff
+    contract L2ProxyAdmin (0xdb216562328215E010F819B5aBe947bad4ca961e) {
+    +++ description: None
+      assignedPermissions.upgrade.7:
+-        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
++        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
+      assignedPermissions.upgrade.6:
+-        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
++        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
+      assignedPermissions.upgrade.5:
+-        "0xbFc1FECa8B09A5c5D3EFfE7429eBE24b9c09EF58"
++        "0xD509E5f5aEe2A205F554f36E8a7d56094494eDFC"
+      assignedPermissions.upgrade.4:
+-        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
++        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
+      assignedPermissions.upgrade.3:
+-        "0x912CE59144191C1204E64559FE8253a0e49E6548"
++        "0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827"
+      assignedPermissions.upgrade.2:
+-        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
++        "0x912CE59144191C1204E64559FE8253a0e49E6548"
+      assignedPermissions.upgrade.1:
+-        "0xf07DeD9dC292157749B6Fd268E37DF6EA38395B9"
++        "0x789fC99093B09aD01C34DC7251D0C89ce743e5a4"
+      assignedPermissions.upgrade.0:
+-        "0xCaD7828a19b363A2B44717AFB1786B5196974D8E"
++        "0x34d45e99f7D8c45ed05B5cA72D54bbD1fb3F98f0"
+    }
+```
+
 Generated with discovered.json: 0x8ecbf1b2d9964197c9a5576742acfe0ad01f8b5e
 
 # Diff at Fri, 09 Aug 2024 10:13:28 GMT:

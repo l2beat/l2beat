@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xf835b3fbe50281f5386c981c6991da4be2560615
+
+# Diff at Fri, 09 Aug 2024 12:03:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20432768
+- current block number: 20432768
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432768 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      assignedPermissions.upgrade.0:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
++        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+    }
+```
+
 Generated with discovered.json: 0xf569dd45f28789ef24a7f28c9cc03542a20f82b8
 
 # Diff at Fri, 09 Aug 2024 10:13:20 GMT:

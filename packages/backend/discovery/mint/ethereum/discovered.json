@@ -32,8 +32,8 @@
       ],
       "assignedPermissions": {
         "configure": [
-          "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
-          "0xC975862927797812371A9Fb631f83F8f5e2240D5"
+          "0xC975862927797812371A9Fb631f83F8f5e2240D5",
+          "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
         ]
       },
       "ignoreInWatchMode": ["nonce"],

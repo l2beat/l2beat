@@ -1,3 +1,33 @@
+Generated with discovered.json: 0xd0c699fa1ecd3ab39127652bf279e28e11fb35e4
+
+# Diff at Fri, 09 Aug 2024 12:03:57 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 236183206
+- current block number: 236183206
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 236183206 (main branch discovery), not current.
+
+```diff
+    contract ArbitrumOwner (0xa29fFe244898CBec19DFEaAfB5cE671389FfF60F) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
++        "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
+      assignedPermissions.upgrade.0:
+-        "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
++        "0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+    }
+```
+
 Generated with discovered.json: 0x95ee912601a055d0374480a11c0f88d66cf984e0
 
 # Diff at Fri, 09 Aug 2024 10:13:57 GMT:

@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x4967742811d227dceb18c71f7100d39e7b0ff7a6
+
+# Diff at Fri, 09 Aug 2024 12:00:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 19532023
+- current block number: 19532023
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532023 (main branch discovery), not current.
+
+```diff
+    contract UpgradeBeaconController (0xbB6d6333FAFd2cae7ef4c5EFBF8f048F2F109D1B) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x42303634F37956687fB7ff2c6146AC842481A052"
++        "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b"
+      assignedPermissions.upgrade.1:
+-        "0x7725EadaC5Ee986CAc8317a1d2fB16e59e079E8b"
++        "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47"
+      assignedPermissions.upgrade.0:
+-        "0x6a39909e805A3eaDd2b61fFf61147796ca6aBB47"
++        "0x42303634F37956687fB7ff2c6146AC842481A052"
+    }
+```
+
 Generated with discovered.json: 0x8862e37e70bdde5d3f2544b955e36289c73b5496
 
 # Diff at Fri, 09 Aug 2024 10:10:58 GMT:

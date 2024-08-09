@@ -42,8 +42,8 @@
       "proxyType": "gnosis safe",
       "assignedPermissions": {
         "upgrade": [
-          "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A",
-          "0x7bd79DEd935B542fb22c74305a4d2A293C18483a"
+          "0x7bd79DEd935B542fb22c74305a4d2A293C18483a",
+          "0xFF73a1a1d27951A005eb23276dc99CB7F8d5420A"
         ]
       },
       "ignoreInWatchMode": ["nonce"],

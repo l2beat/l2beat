@@ -1,3 +1,48 @@
+Generated with discovered.json: 0x3218d2550f936576f07090522ef35953542c856b
+
+# Diff at Fri, 09 Aug 2024 12:03:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20327427
+- current block number: 20327427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.upgrade.9:
+-        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
++        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+      assignedPermissions.upgrade.8:
+-        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
++        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+      assignedPermissions.upgrade.5:
+-        "0x0eCe16401A80551345bB672f177f51A8755FF775"
++        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
+      assignedPermissions.upgrade.4:
+-        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
++        "0x443164F044D8840479234e00E7aD5bb06b85fC78"
+      assignedPermissions.upgrade.3:
+-        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
++        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
+      assignedPermissions.upgrade.2:
+-        "0x443164F044D8840479234e00E7aD5bb06b85fC78"
++        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
+      assignedPermissions.upgrade.0:
+-        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
++        "0x0eCe16401A80551345bB672f177f51A8755FF775"
+    }
+```
+
 Generated with discovered.json: 0xca8d7289d3c816acaac059031f9de88db9e57f00
 
 # Diff at Fri, 09 Aug 2024 10:13:03 GMT:

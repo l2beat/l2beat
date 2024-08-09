@@ -1,3 +1,51 @@
+Generated with discovered.json: 0x17ac8a625d8cf7d8442095aae327f6eefb847783
+
+# Diff at Fri, 09 Aug 2024 12:03:49 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 225981699
+- current block number: 225981699
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981699 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xd18b1C6376633000c85541F7c15c591Ffe5f9556) {
+    +++ description: None
+      assignedPermissions.upgrade.8:
+-        "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"
++        "0xb4951c0C41CFceB0D195A95FE66280457A80a990"
+      assignedPermissions.upgrade.7:
+-        "0x24B68936C13A414cd91437aE7AA730321B9ff159"
++        "0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B"
+      assignedPermissions.upgrade.5:
+-        "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
++        "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD"
+      assignedPermissions.upgrade.4:
+-        "0x718E2a83775343d5c0B1eE0676703cBAF30CaFCD"
++        "0x575d32f7ff0C72921645e302cb14d2757E300786"
+      assignedPermissions.upgrade.3:
+-        "0x575d32f7ff0C72921645e302cb14d2757E300786"
++        "0x365ce7234CE515c2e0139f3578b6c5989da1a863"
+      assignedPermissions.upgrade.2:
+-        "0xb4951c0C41CFceB0D195A95FE66280457A80a990"
++        "0x2f285781B8d58678a3483de52D618198E4d27532"
+      assignedPermissions.upgrade.1:
+-        "0x2f285781B8d58678a3483de52D618198E4d27532"
++        "0x24B68936C13A414cd91437aE7AA730321B9ff159"
+      assignedPermissions.upgrade.0:
+-        "0x847186fbeEBf41eEe9c230360D0bF8585c0Db57B"
++        "0x1f269F38196484ef81e58C0144AaD2c5F6394bB4"
+    }
+```
+
 Generated with discovered.json: 0x1c5e2ffa8aba3e9f8f984b010b0cd98e616488b0
 
 # Diff at Fri, 09 Aug 2024 10:13:49 GMT:
