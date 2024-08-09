@@ -90,6 +90,11 @@ const projects: { name: string; indexerType: 'block' | 'day' }[] = [
 const timestamp = UnixTime.fromDate(new Date('2024-08-08T00:00:00Z'))
 
 export async function up(knex: Knex) {
+  await knex('indexer_state')
+    .delete()
+    .whereLike('indexer_id', 'activity_block_indexer%')
+    .orWhereLike('indexer_id', 'activity_day_indexer%')
+
   await knex('indexer_state').insert(
     projects.map((p) => ({
       indexer_id:
@@ -161,4 +166,6 @@ export async function down(knex: Knex) {
     .delete()
     .whereLike('indexer_id', 'activity_block_indexer%')
     .orWhereLike('indexer_id', 'activity_day_indexer%')
+
+  await knex('public.activity').delete()
 }
