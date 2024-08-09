@@ -26,8 +26,16 @@ describe('metaUtils', () => {
         descriptions: ['description 1'],
         roles: new Set(['Challenger', 'Guardian']),
         permissions: [
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0x1234'),
+          },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0x5678'),
+          },
         ],
         categories: new Set(['Gateways&Escrows', 'Core']),
         types: new Set(['CODE_CHANGE', 'EXTERNAL']),
@@ -38,8 +46,16 @@ describe('metaUtils', () => {
         descriptions: ['description 2', 'description 3'],
         roles: new Set(['Proposer', 'Challenger']),
         permissions: [
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0xabcd'),
+          },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0x1234'),
+          },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
         categories: new Set(['Upgrades&Governance', 'Core']),
@@ -54,9 +70,21 @@ describe('metaUtils', () => {
         descriptions: ['description 1', 'description 2', 'description 3'],
         roles: new Set(['Challenger', 'Guardian', 'Proposer']),
         permissions: [
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0x5678') },
-          { type: 'configure', delay: 0, target: EthereumAddress.from('0xabcd') },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0x1234'),
+          },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0x5678'),
+          },
+          {
+            type: 'configure',
+            delay: 0,
+            target: EthereumAddress.from('0xabcd'),
+          },
           { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
         ],
         categories: new Set([
@@ -333,8 +361,16 @@ describe('metaUtils', () => {
           descriptions: ['Important contract', 'Very important contract'],
           roles: new Set(['Challenger']),
           permissions: [
-            { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
-            { type: 'configure', delay: 0, target: EthereumAddress.from('0xbeef') },
+            {
+              type: 'configure',
+              delay: 0,
+              target: EthereumAddress.from('0x1234'),
+            },
+            {
+              type: 'configure',
+              delay: 0,
+              target: EthereumAddress.from('0xbeef'),
+            },
           ],
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['CODE_CHANGE', 'EXTERNAL', 'L2']),
@@ -345,8 +381,16 @@ describe('metaUtils', () => {
           descriptions: ['The resource config of the contract'],
           roles: new Set(['Challenger', 'Guardian']),
           permissions: [
-            { type: 'configure', delay: 0, target: EthereumAddress.from('0x1234') },
-            { type: 'upgrade', delay: 0, target: EthereumAddress.from('0x1234') },
+            {
+              type: 'configure',
+              delay: 0,
+              target: EthereumAddress.from('0x1234'),
+            },
+            {
+              type: 'upgrade',
+              delay: 0,
+              target: EthereumAddress.from('0x1234'),
+            },
           ],
           categories: new Set(['Core', 'Gateways&Escrows']),
           types: new Set(['EXTERNAL', 'L2']),
