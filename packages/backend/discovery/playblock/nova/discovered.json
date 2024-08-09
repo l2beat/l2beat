@@ -3,7 +3,7 @@
   "chain": "nova",
   "blockNumber": 74469390,
   "configHash": "0xac54e067b2d4377359db3a515fcdf12d74b9c63f94e2448c1153b0f2330c1c1d",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "RollupProxy",
@@ -77,7 +77,7 @@
       "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"]
+        "upgrade": ["0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"]
       },
       "sinceTimestamp": 1709904018,
       "values": {
@@ -126,7 +126,7 @@
       "address": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
       "unverified": true,
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
           "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
           "0x383eFE8D410285c5CbE1B4F296022640759aA834",

@@ -24,7 +24,6 @@ export interface StarkexActivityTransactionConfig {
 
 export type ActivityTransactionConfig =
   | SimpleActivityTransactionConfig<'starknet'>
-  | SimpleActivityTransactionConfig<'aztec'>
   | SimpleActivityTransactionConfig<'zksync'>
   | SimpleActivityTransactionConfig<'loopring'>
   | SimpleActivityTransactionConfig<'degate'>

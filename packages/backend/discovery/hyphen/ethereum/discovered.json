@@ -3,13 +3,13 @@
   "chain": "ethereum",
   "blockNumber": 20138492,
   "configHash": "0xa2d3b73f464bf088bb88deb4941464593bad0f0eb4cf4151a94504c3d2a3ec56",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
           "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
           "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9"

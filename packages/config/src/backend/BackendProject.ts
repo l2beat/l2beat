@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import {
   SHARP_SUBMISSION_ADDRESS,
   SHARP_SUBMISSION_SELECTOR,
@@ -42,7 +41,7 @@ export interface BackendProjectEscrow {
   address: EthereumAddress
   sinceTimestamp: UnixTime
   untilTimestamp?: UnixTime
-  tokens: Token[]
+  tokens: (Token & { isPreminted: boolean })[]
   chain: string
   includeInTotal?: boolean
   source?: ScalingProjectEscrow['source']
@@ -182,12 +181,10 @@ function toProjectEscrow(escrow: ScalingProjectEscrow): BackendProjectEscrow {
 export function mapTokens(
   escrow: ScalingProjectEscrow,
   tokensOnChain: Token[],
-): Token[] {
-  return tokensOnChain.filter(
-    (token) =>
-      isTokenIncluded(token, escrow) &&
-      !isExcludedPremintedToken(token, escrow),
-  )
+): (Token & { isPreminted: boolean })[] {
+  return tokensOnChain
+    .filter((token) => isTokenIncluded(token, escrow))
+    .map((token) => ({ ...token, isPreminted: isPreminted(token, escrow) }))
 }
 
 function isTokenIncluded(token: Token, escrow: ScalingProjectEscrow): boolean {
@@ -197,18 +194,10 @@ function isTokenIncluded(token: Token, escrow: ScalingProjectEscrow): boolean {
   )
 }
 
-function isExcludedPremintedToken(
-  token: Token,
-  escrow: ScalingProjectEscrow,
-): boolean {
-  if (token.supply !== 'preminted') {
+function isPreminted(token: Token, escrow: ScalingProjectEscrow): boolean {
+  if (escrow.premintedTokens === undefined) {
     return false
   }
 
-  assert(
-    token.escrow,
-    `Escrows should be defined for preminted ${token.symbol}`,
-  )
-
-  return token.escrow === escrow.address
+  return escrow.premintedTokens.includes(token.symbol)
 }

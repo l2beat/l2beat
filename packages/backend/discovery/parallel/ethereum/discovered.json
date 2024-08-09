@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20475140,
   "configHash": "0x8988b388db1cfe91cd0e453ba76745b6238dfee80addb15d3e2e78e1a3695b85",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Inbox",
@@ -52,18 +52,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x6e237ad581a439ffc2e231c9cd6afb96d6fb8ea94dda95bbe7e04673cf4c6597",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xb6559478b59836376dA9937c4C697dDb21779E49",
           "0x9EBe5cabad9748263DbE1304064AdAb285c0f515",
           "0x17816E9A858b161c3E37016D139cf618056CaCD4",
           "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",
           "0x909e36B512Ed45250fdff513523119d825647695"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x6e237ad581a439ffc2e231c9cd6afb96d6fb8ea94dda95bbe7e04673cf4c6597",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 212,
         "VERSION": "1.3.0"
       },
@@ -235,7 +235,7 @@
       "name": "ProxyAdmin",
       "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
           "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
           "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
@@ -391,7 +391,7 @@
       "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+        "upgrade": ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
       },
       "sinceTimestamp": 1704125939,
       "values": {
@@ -1201,7 +1201,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

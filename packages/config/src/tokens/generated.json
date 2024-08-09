@@ -2382,7 +2382,6 @@
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
       "chainId": 1,
-      "project": "lisk",
       "source": "canonical",
       "supply": "zero",
       "escrow": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
@@ -4963,6 +4962,21 @@
       "coingeckoListingTimestamp": 1710460800,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/35979/large/zkLend_ZEND_logo_square_transparent_background_%281%29.png?1710306648",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "zkl-zklink",
+      "name": "ZKLink",
+      "coingeckoId": "zklink",
+      "address": "0xfC385A1dF85660a7e041423DB512f779070FCede",
+      "symbol": "ZKL",
+      "decimals": 18,
+      "deploymentTimestamp": 1712927711,
+      "coingeckoListingTimestamp": 1721606400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34982/large/Logo1.png?1714980729",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"

@@ -10,6 +10,13 @@ import { Configuration } from './powerdiff/types'
 export const DIFFING_MODES = ['together', 'split'] as const
 export type DiffingMode = (typeof DIFFING_MODES)[number]
 
+export const DISPLAY_MODES = ['inline', 'side-by-side'] as const
+export type DisplayMode = (typeof DISPLAY_MODES)[number]
+export const displayModeMap: Record<DisplayMode, string> = {
+  inline: '--display=inline',
+  'side-by-side': '--display=side-by-side-show-both --width=200',
+}
+
 export interface LeftRightPair {
   left: string
   right: string
@@ -20,6 +27,7 @@ function diffToHtml(
   path2: string,
   difftasticPath: string,
   mode: DiffingMode,
+  displayMode: DisplayMode,
 ): string {
   const currentDirectory = process.env.INIT_CWD ?? process.cwd()
 
@@ -32,6 +40,7 @@ function diffToHtml(
   const config: Configuration = {
     path1: absPath1,
     path2: absPath2,
+    displayMode,
     difftasticPath,
   }
 
@@ -82,6 +91,7 @@ function diffPaths(
       diff = compareUsingDifftastic(
         filePaths.left,
         filePaths.right,
+        displayModeMap[config.displayMode],
         config.difftasticPath,
       )
       const difftasticStatus = diff.split('\n')[1] ?? 'Error'
@@ -128,12 +138,13 @@ function processGitDiff(gitDiff: string): LeftRightPair[] {
 function compareUsingDifftastic(
   filePath1: string,
   filePath2: string,
+  displayMode: string,
   difftasticPath: string,
 ) {
   const fileName = filePath1.split('/').slice(-1)[0]
   console.log(`Processing ${fileName}`)
   try {
-    const cmd = `${difftasticPath} --ignore-comments --display=inline --color=always ${filePath1} ${filePath2}`
+    const cmd = `${difftasticPath} --ignore-comments ${displayMode} --color=always ${filePath1} ${filePath2}`
     return osExec(cmd).toString()
   } catch (error) {
     console.log(error)
@@ -313,9 +324,16 @@ export function powerdiff(
   path2: string,
   difftasticPath: string = 'difft',
   mode: DiffingMode = 'together',
+  displayMode: DisplayMode = 'inline',
 ) {
   checkDeps()
-  const htmlContent = diffToHtml(path1, path2, difftasticPath, mode)
+  const htmlContent = diffToHtml(
+    path1,
+    path2,
+    difftasticPath,
+    mode,
+    displayMode,
+  )
 
   const server = http.createServer((_, res) => {
     res.writeHead(200, { 'Content-Type': 'text/html' })

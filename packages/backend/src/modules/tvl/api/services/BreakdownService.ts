@@ -91,6 +91,7 @@ export class BreakdownService {
               amount: amountAsNumber.toString(),
               usdValue: valueAsNumber.toString(),
               escrowAddress: config.escrowAddress,
+              ...(config.type === 'preminted' ? { isPreminted: true } : {}),
             })
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
@@ -104,6 +105,7 @@ export class BreakdownService {
                   amount: amountAsNumber.toString(),
                   usdValue: valueAsNumber.toString(),
                   escrowAddress: config.escrowAddress,
+                  ...(config.type === 'preminted' ? { isPreminted: true } : {}),
                 },
               ],
             })

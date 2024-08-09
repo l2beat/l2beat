@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20017490,
   "configHash": "0x6b6dab3cd65839582c4908c86c7f3aa050e752f18bffbf700efbcfad069ade2e",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "AxelarGatewayProxyMultisig",
@@ -118,18 +118,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 5 (40%)",
-        "domainSeparator": "0x6d4cd80fab6b5f67389fb83fe46f5b27c2fbd48c5c3b58b6979e365d12da62f8",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5",
           "0x869896ac62ADc693322F461ded2fe4452bA74Ac3",
           "0xdAeDdFC3D4f10650E22939e6992349127C3F8C36",
           "0x5C40EC9b11673925405ac132d248973a2b9d5cD4",
           "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x6d4cd80fab6b5f67389fb83fe46f5b27c2fbd48c5c3b58b6979e365d12da62f8",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
         "nonce": 20,
         "VERSION": "1.3.0"
       },
@@ -139,7 +139,7 @@
       "name": "ProxyAdmin",
       "address": "0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932",
           "0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"
         ]
@@ -446,7 +446,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

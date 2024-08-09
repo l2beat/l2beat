@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122588960,
   "configHash": "0xce10e15afb33d1b6e6810a19bcb0420abc52bc5646c858e42dda06270610dec1",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "OptimismOwner",
@@ -11,17 +11,14 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"]
+        "upgrade": ["0x46C8D02E93d5a03899dFa7Cf8A40A07589A3fA1b"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692605961,
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x18b594ec6cbe81554af90ad5b8ef66a89f70d936be932a27159a978ab571232f",
-        "getChainId": 10,
-        "getOwners": [
+        "$members": [
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0xF801886AE2e127A269B0F11892edb54F692d02dF",
           "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
@@ -30,8 +27,11 @@
           "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x18b594ec6cbe81554af90ad5b8ef66a89f70d936be932a27159a978ab571232f",
+        "getChainId": 10,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 18,
         "VERSION": "1.3.0"
       },
@@ -100,7 +100,7 @@
       "name": "OptimismProxyAdmin",
       "address": "0xA688B4E1375Ed6b9129dF4959da4a271B33e50a4",
       "assignedPermissions": {
-        "admin": ["0x5Bd51296423A9079b931414C1De65e7057326EaA"]
+        "upgrade": ["0x5Bd51296423A9079b931414C1De65e7057326EaA"]
       },
       "sinceTimestamp": 1711095511,
       "values": {
@@ -133,7 +133,7 @@
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "assignedPermissions": {
-        "admin": ["0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"]
+        "upgrade": ["0xaD5d729291C0d6A299E370814CA6Ce1c8C25b51c"]
       }
     },
     { "address": "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5" },
@@ -356,7 +356,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },

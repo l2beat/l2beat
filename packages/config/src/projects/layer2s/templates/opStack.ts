@@ -71,13 +71,13 @@ export interface DAProvider {
 export interface OpStackConfigCommon {
   daProvider?: DAProvider
   discovery: ProjectDiscovery
-  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   upgradeability?: {
     upgradableBy: string[] | undefined
     upgradeDelay: string | undefined
   }
   l1StandardBridgeEscrow?: EthereumAddress
   l1StandardBridgeTokens?: string[]
+  l1StandardBridgePremintedTokens?: string[]
   rpcUrl?: string
   transactionApi?: ScalingProjectTransactionApi
   genesisTimestamp: UnixTime
@@ -95,6 +95,7 @@ export interface OpStackConfigCommon {
   nonTemplateEscrows?: ScalingProjectEscrow[]
   nonTemplateOptimismPortalEscrowTokens?: string[]
   nonTemplateTrackedTxs?: Layer2TxConfig[]
+  nonTemplateTechnology?: Partial<ScalingProjectTechnology>
   associatedTokens?: string[]
   isNodeAvailable?: boolean | 'UnderReview'
   nodeSourceLink?: string
@@ -469,6 +470,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
         templateVars.discovery.getEscrowDetails({
           address: l1StandardBridgeEscrow,
           tokens: templateVars.l1StandardBridgeTokens ?? '*',
+          premintedTokens: templateVars.l1StandardBridgePremintedTokens,
           description:
             'Main entry point for users depositing ERC20 token that do not require custom gateway.',
           ...upgradeability,

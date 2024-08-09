@@ -21,75 +21,44 @@ import { layer2ToBackendProject, mapTokens } from './BackendProject'
 describe('BackendProject', () => {
   describe(mapTokens.name, () => {
     it('works for *', () => {
-      const escrow = getMockEscrow({ tokens: '*', excludedTokens: ['B', 'D'] })
-
-      const tokensOnChain: Token[] = [
-        getMockToken({ symbol: 'A' }),
-        getMockToken({ symbol: 'B' }),
-        getMockToken({
-          symbol: 'C',
-          supply: 'preminted',
-          escrow: escrow.address, // associated escrow - exclude
-        }),
-        getMockToken({
-          symbol: 'D', // excluded token symbol - exclude
-          supply: 'preminted',
-          escrow: EthereumAddress.ZERO,
-        }),
-        getMockToken({
-          symbol: 'E',
-          supply: 'preminted',
-          escrow: EthereumAddress.ZERO,
-        }),
-      ]
-
-      const tokens = mapTokens(escrow, tokensOnChain)
-
-      expect(tokens).toEqualUnsorted([
-        getMockToken({ symbol: 'A' }),
-        getMockToken({
-          symbol: 'E',
-          supply: 'preminted',
-          escrow: EthereumAddress.ZERO,
-        }),
-      ])
-    })
-    it('works for list of symbols', () => {
       const escrow = getMockEscrow({
-        tokens: ['A', 'B', 'C', 'D', 'E'],
-        excludedTokens: ['B', 'D'],
+        tokens: '*',
+        excludedTokens: ['B'],
+        premintedTokens: ['C'],
       })
 
       const tokensOnChain: Token[] = [
         getMockToken({ symbol: 'A' }),
         getMockToken({ symbol: 'B' }),
-        getMockToken({
-          symbol: 'C',
-          supply: 'preminted',
-          escrow: escrow.address, // associated escrow - exclude
-        }),
-        getMockToken({
-          symbol: 'D', // excluded token symbol - exclude
-          supply: 'preminted',
-          escrow: EthereumAddress.ZERO,
-        }),
-        getMockToken({
-          symbol: 'E',
-          supply: 'preminted',
-          escrow: EthereumAddress.ZERO,
-        }),
-        getMockToken({ symbol: 'F' }), // not in the list - exclude
+        getMockToken({ symbol: 'C' }),
       ]
 
       const tokens = mapTokens(escrow, tokensOnChain)
 
       expect(tokens).toEqualUnsorted([
+        { ...getMockToken({ symbol: 'A' }), isPreminted: false },
+        { ...getMockToken({ symbol: 'C' }), isPreminted: true },
+      ])
+    })
+    it('works for list of symbols', () => {
+      const escrow = getMockEscrow({
+        tokens: ['A', 'B', 'C'],
+        excludedTokens: ['B'],
+        premintedTokens: ['C'],
+      })
+
+      const tokensOnChain: Token[] = [
         getMockToken({ symbol: 'A' }),
-        getMockToken({
-          symbol: 'E',
-          supply: 'preminted',
-          escrow: EthereumAddress.ZERO,
-        }),
+        getMockToken({ symbol: 'B' }),
+        getMockToken({ symbol: 'C' }),
+        getMockToken({ symbol: 'D' }),
+      ]
+
+      const tokens = mapTokens(escrow, tokensOnChain)
+
+      expect(tokens).toEqualUnsorted([
+        { ...getMockToken({ symbol: 'A' }), isPreminted: false },
+        { ...getMockToken({ symbol: 'C' }), isPreminted: true },
       ])
     })
   })

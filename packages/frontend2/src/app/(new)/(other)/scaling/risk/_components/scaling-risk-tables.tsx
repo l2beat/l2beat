@@ -20,13 +20,13 @@ import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingRiskColumns } from './table/columns'
 
 export function ScalingRiskTables({
-  projects,
-}: { projects: ScalingRiskEntry[] }) {
+  entries,
+}: { entries: ScalingRiskEntry[] }) {
   const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
-    () => projects.filter((item) => includeFilters(item)),
-    [projects, includeFilters],
+    () => entries.filter((item) => includeFilters(item)),
+    [entries, includeFilters],
   )
 
   const activeProjects = useMemo(

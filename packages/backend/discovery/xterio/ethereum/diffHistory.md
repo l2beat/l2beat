@@ -1,3 +1,102 @@
+Generated with discovered.json: 0x3218d2550f936576f07090522ef35953542c856b
+
+# Diff at Fri, 09 Aug 2024 12:03:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20327427
+- current block number: 20327427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.upgrade.9:
+-        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
++        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
+      assignedPermissions.upgrade.8:
+-        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
++        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
+      assignedPermissions.upgrade.5:
+-        "0x0eCe16401A80551345bB672f177f51A8755FF775"
++        "0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f"
+      assignedPermissions.upgrade.4:
+-        "0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A"
++        "0x443164F044D8840479234e00E7aD5bb06b85fC78"
+      assignedPermissions.upgrade.3:
+-        "0xcbF423525a5471Fc5037a5397F99f6F09fe41379"
++        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
+      assignedPermissions.upgrade.2:
+-        "0x443164F044D8840479234e00E7aD5bb06b85fC78"
++        "0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"
+      assignedPermissions.upgrade.0:
+-        "0x2AD84AbD52050956AcC9c490D024b821A59e3FB6"
++        "0x0eCe16401A80551345bB672f177f51A8755FF775"
+    }
+```
+
+Generated with discovered.json: 0xca8d7289d3c816acaac059031f9de88db9e57f00
+
+# Diff at Fri, 09 Aug 2024 10:13:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20327427
+- current block number: 20327427
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20327427 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x9e48d6bBca781c23392Ec459BfB3657C40a794A8) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.admin:
+-        ["0x0eCe16401A80551345bB672f177f51A8755FF775","0x16193e14197c10109F3e81b938153A04A2a00190","0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b","0x2AD84AbD52050956AcC9c490D024b821A59e3FB6","0x443164F044D8840479234e00E7aD5bb06b85fC78","0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f","0x5A0492D20D984eE904E46E6Ff24572bc755abb28","0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C","0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A","0xcbF423525a5471Fc5037a5397F99f6F09fe41379"]
+      assignedPermissions.owner:
+-        ["0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"]
+      assignedPermissions.upgrade:
++        ["0x2AD84AbD52050956AcC9c490D024b821A59e3FB6","0x16193e14197c10109F3e81b938153A04A2a00190","0x443164F044D8840479234e00E7aD5bb06b85fC78","0xcbF423525a5471Fc5037a5397F99f6F09fe41379","0xBC2bEDA4ce7A1f40aa458322A33B44081b2F545A","0x0eCe16401A80551345bB672f177f51A8755FF775","0x5A0492D20D984eE904E46E6Ff24572bc755abb28","0x6E99cdE188DAAFeEcb6eD8AC28B98dE4c8eE5D6C","0x515A0c8b1d9574C65EA1924eCd767B1d9b6AC32f","0x28d56C3BBbe4807c19Cc81E6D5207Fb681C3726b"]
+      assignedPermissions.configure:
++        ["0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a"]
+    }
+```
+
+```diff
+    contract RollupOwnerMultisig (0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574) {
+    +++ description: It can act on behalf of 0x9e48d6bBca781c23392Ec459BfB3657C40a794A8, inheriting its permissions.
+      assignedPermissions.owner:
+-        ["0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"]
+      assignedPermissions.configure:
++        ["0x9e48d6bBca781c23392Ec459BfB3657C40a794A8"]
+      values.$multisigThreshold:
+-        "3 of 4 (75%)"
+      values.getOwners:
+-        ["0xaC79765A73eB9dcBd3c427181E6819902AE25b48","0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2","0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7","0x8B6341E18B2DC644cA94eD85173691873626fc7F"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xaC79765A73eB9dcBd3c427181E6819902AE25b48","0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2","0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7","0x8B6341E18B2DC644cA94eD85173691873626fc7F"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x55b4a0d47214ba9d3ed6a08b9a4a4f8ae0f5a598
 
 # Diff at Tue, 30 Jul 2024 11:16:33 GMT:
