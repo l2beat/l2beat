@@ -76,8 +76,8 @@ export async function detectGnosisSafe(
       $immutable: false,
       $implementation: masterCopy,
       // TODO: (sz-piotr) Why here, and not in the template?
-      $multisigThreshold: thresholdString,
-      $threshold: threshold * 1, // NOTE(radomski): Make sure it's a number
+      multisigThreshold: thresholdString,
+      $threshold: Number(threshold),
       $members: owners,
       GnosisSafe_modules: modules,
     },
