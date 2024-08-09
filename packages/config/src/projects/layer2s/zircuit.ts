@@ -138,7 +138,7 @@ export const zircuit: Layer2 = opStackL2({
   nonTemplateContracts: [
     discovery.getContractDetails('Verifier', {
       description:
-        'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof',
+        'This contract verifies zk proof (if provided). There is a temporary backdoor allowing to call this contract without the proof.',
       ...upgradeability,
     }),
     discovery.getContractDetails('ZircuitSuperchainConfig', {
