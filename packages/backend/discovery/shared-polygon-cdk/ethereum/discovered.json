@@ -19,9 +19,9 @@
       "address": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
       "assignedPermissions": {
         "upgrade": [
+          "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
           "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2",
-          "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
-          "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+          "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
         ]
       },
       "sinceTimestamp": 1679653103,

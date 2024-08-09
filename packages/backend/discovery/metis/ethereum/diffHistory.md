@@ -1,3 +1,51 @@
+Generated with discovered.json: 0xfd7a32c80d4acddc2de88f062b543c857fcaf921
+
+# Diff at Fri, 09 Aug 2024 12:00:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      assignedPermissions.upgrade.4:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      assignedPermissions.upgrade.3:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      assignedPermissions.upgrade.2:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      assignedPermissions.upgrade.1:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      assignedPermissions.upgrade.0:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+    }
+```
+
 Generated with discovered.json: 0xe0e1aa09f815df21c7c4ef140cde5cbfb26bbb3e
 
 # Diff at Fri, 09 Aug 2024 10:10:36 GMT:

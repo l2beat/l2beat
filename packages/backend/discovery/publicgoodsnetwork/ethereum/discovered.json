@@ -198,10 +198,10 @@
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
         "upgrade": [
-          "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
-          "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c",
+          "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9",
           "0xA38d0c4E6319F9045F20318BA5f04CDe94208608",
-          "0x7Df716EAD1d83a2BF35B416B7BC84bd0700357C9"
+          "0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b",
+          "0xb26Fd985c5959bBB382BAFdD0b879E149e48116c"
         ],
         "configure": ["0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e"]
       },

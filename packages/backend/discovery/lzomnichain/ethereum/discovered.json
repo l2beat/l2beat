@@ -1557,8 +1557,8 @@
       "address": "0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9",
       "assignedPermissions": {
         "upgrade": [
-          "0x902F09715B6303d4173037652FA7377e5b98089E",
-          "0x6BD792911F4B3714E88FbDf32B351632e7d22c70"
+          "0x6BD792911F4B3714E88FbDf32B351632e7d22c70",
+          "0x902F09715B6303d4173037652FA7377e5b98089E"
         ]
       },
       "sinceTimestamp": 1647317012,
