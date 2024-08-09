@@ -3,6 +3,7 @@ import { Database } from '@l2beat/database'
 import {
   AmountConfigEntry,
   CirculatingSupplyEntry,
+  CoingeckoPriceConfigEntry,
   EscrowEntry,
   PremintedEntry,
   TotalSupplyEntry,
@@ -10,6 +11,11 @@ import {
 } from '@l2beat/shared-pure'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
+type MultiIndexerEntries =
+  | TotalSupplyEntry
+  | EscrowEntry
+  | CoingeckoPriceConfigEntry
+const MAX_CONFIGURATIONS_LENGTH_FOR_QUERY = 100
 
 export class DataStatusService {
   constructor(private readonly db: Database) {}
@@ -119,16 +125,13 @@ export class DataStatusService {
   }
 
   async getConfigurationsStatus(
-    configurations: { configId: string }[],
+    configurations: (MultiIndexerEntries & { configId: string })[],
     targetTimestamp: UnixTime,
   ) {
     const excluded = new Set<string>()
     const lagging = []
 
-    const configurationsState =
-      await this.db.indexerConfiguration.getByConfigurationIds(
-        configurations.map((c) => c.configId),
-      )
+    const configurationsState = await this.getConfigurations(configurations)
 
     const processed = new Set<string>()
     for (const config of configurationsState) {
@@ -173,6 +176,35 @@ export class DataStatusService {
       excluded,
       lagging,
     }
+  }
+
+  async getConfigurations(
+    configurations: (MultiIndexerEntries & { configId: string })[],
+  ) {
+    if (configurations.length <= MAX_CONFIGURATIONS_LENGTH_FOR_QUERY) {
+      return await this.db.indexerConfiguration.getByConfigurationIds(
+        configurations.map((c) => c.configId),
+      )
+    }
+
+    const indexerIds = [...new Set(configurations.map(toIndexerId)).values()]
+
+    const allConfigurations =
+      await this.db.indexerConfiguration.getByIndexerIds(indexerIds)
+
+    const configurationIds = new Set(configurations.map((c) => c.configId))
+
+    return allConfigurations.filter((c) => configurationIds.has(c.id))
+  }
+}
+
+function toIndexerId(config: MultiIndexerEntries) {
+  switch (config.type) {
+    case 'coingecko':
+      return `price_indexer::${config.coingeckoId.toString()}`
+    case 'escrow':
+    case 'totalSupply':
+      return `chain_amount_indexer::${config.chain}`
   }
 }
 
