@@ -70,7 +70,7 @@ export class ValueRepository extends BaseRepository {
       return query
     }
 
-    const rows = this.db
+    const rows = await this.db
       .with('max_timestamps', maxTimestampsQuery)
       .selectFrom('public.values')
       .select(selectValueWithPrefix('public.values'))
@@ -84,9 +84,9 @@ export class ValueRepository extends BaseRepository {
             'max_timestamps.max_timestamp',
           ),
       )
+      .execute()
 
-    console.log(rows.compile().sql)
-    return (await rows.execute()).map(toRecord)
+    return rows.map(toRecord)
   }
 
   async upsertMany(records: ValueRecord[]): Promise<number> {
