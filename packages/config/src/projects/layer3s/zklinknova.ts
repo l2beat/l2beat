@@ -121,6 +121,7 @@ export const zklinknova: Layer3 = {
         'https://t.me/zkLinkorg',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'zklinknova',
