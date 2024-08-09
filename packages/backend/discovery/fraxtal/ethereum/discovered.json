@@ -2,8 +2,8 @@
   "name": "fraxtal",
   "chain": "ethereum",
   "blockNumber": 20460352,
-  "configHash": "0x508e4b07a4b641a1977476d77a68c60de60147a319ca2c92dd932852df3c9481",
-  "version": 10,
+  "configHash": "0xf2c4aa1cfc3e0f620dabd0fae68d003fff9a68fe04f9e95de984ce1c17e7fcc6",
+  "version": 11,
   "contracts": [
     {
       "name": "DepositContract",
@@ -73,16 +73,16 @@
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
       "assignedPermissions": {
-        "admin": [
-          "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
-          "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+        "configure": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"],
+        "upgrade": [
           "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
-        ],
-        "owner": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"]
+          "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4"
+        ]
       },
       "sinceTimestamp": 1706811599,
       "values": {
@@ -298,10 +298,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0xe6f953a2dfa9b1099dd9a8044ed16ff1a96e72591979e3e7fbfa1e302c81c264",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x381e2495e683868F693AA5B1414F712f21d34b40",
           "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
           "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
@@ -310,8 +307,11 @@
           "0x8da4E997e051605878c9C0B793c496556EACC2C0",
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xe6f953a2dfa9b1099dd9a8044ed16ff1a96e72591979e3e7fbfa1e302c81c264",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 1055,
         "VERSION": "1.3.0"
       },
@@ -404,18 +404,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x05773792be342e7f8a01c63a9116de35bdf60190cdf42e31c3e1c2e7760b6dca",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
           "0xcbc616D595D38483e6AdC45C7E426f44bF230928",
           "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
           "0xc8dE9f45601DA8C76158b8CAF3E56E8A037F2228",
           "0x05FB8eC3C41da95b26fCb85503DaF8B89B89A935"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x05773792be342e7f8a01c63a9116de35bdf60190cdf42e31c3e1c2e7760b6dca",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 5730,
         "VERSION": "1.3.0"
       },
@@ -454,25 +454,25 @@
       ],
       "roles": ["Guardian"],
       "assignedPermissions": {
-        "owner": ["0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"]
+        "configure": ["0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706811599,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0xb32b4955b0bef3669fe9c9e13eff4978b52166e7479663b6ddc860972f09cb5e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x8da4E997e051605878c9C0B793c496556EACC2C0",
           "0x6e74053a3798e0fC9a9775F7995316b27f21c4D2",
           "0x6933BCC3e96f1C4d2cb73Cb391d854b18Ab7A4F2",
           "0x17e06ce6914E3969f7BD37D8b2a563890cA1c96e",
           "0xcbc616D595D38483e6AdC45C7E426f44bF230928"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0xb32b4955b0bef3669fe9c9e13eff4978b52166e7479663b6ddc860972f09cb5e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 29,
         "VERSION": "1.3.0"
       },
@@ -1056,14 +1056,14 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
     "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
     "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
+    "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

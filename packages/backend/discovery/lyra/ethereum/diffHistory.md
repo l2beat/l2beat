@@ -1,3 +1,75 @@
+Generated with discovered.json: 0xf222c3f8e360f3af5a7ea224dbe7155df463f756
+
+# Diff at Fri, 09 Aug 2024 10:10:22 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20331900
+- current block number: 20331900
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331900 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x35d5D43271548c984662d4879FBc8e041Bc1Ff93) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x08Dea366F26C25a08C8D1C3568ad07d1e587136d","0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e","0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","0x61E44dC0dae6888B5a301887732217d5725B0bFf","0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22","0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8"]
+      assignedPermissions.owner:
+-        ["0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB"]
+      assignedPermissions.upgrade:
++        ["0x08Dea366F26C25a08C8D1C3568ad07d1e587136d","0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22","0x61E44dC0dae6888B5a301887732217d5725B0bFf","0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8","0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba","0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e"]
+      assignedPermissions.configure:
++        ["0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB"]
+    }
+```
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0x35d5D43271548c984662d4879FBc8e041Bc1Ff93, inheriting its permissions.
+      assignedPermissions.owner:
+-        ["0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"]
+      assignedPermissions.configure:
++        ["0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"]
+      values.$multisigThreshold:
+-        "4 of 7 (57%)"
+      values.getOwners:
+-        ["0xF3313C48BD8E17b823d5498D62F37019dFEA647D","0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0","0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4","0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f","0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038","0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C","0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0xF3313C48BD8E17b823d5498D62F37019dFEA647D","0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0","0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4","0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f","0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038","0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C","0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+    contract ChallengerMultisig (0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0xdb5CF90A8f97C372d5AEC650a5668d4E4bECFC10","0x824CACbBeA0377801f72d736CFd5C869dd89b931","0x52E84149daE06CB5C4E92029140Da4faD86CE968","0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f","0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038","0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0xdb5CF90A8f97C372d5AEC650a5668d4E4bECFC10","0x824CACbBeA0377801f72d736CFd5C869dd89b931","0x52E84149daE06CB5C4E92029140Da4faD86CE968","0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f","0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038","0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0x823df2d38ee05218e577638bf8aebb0cfc3be7c8
 
 # Diff at Thu, 18 Jul 2024 10:31:44 GMT:

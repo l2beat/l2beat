@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20482316,
   "configHash": "0xd666f92211294990465f06b5da7ff76290c2801be6a94a36153471adc2cdd7f8",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "CronosZkEVMAdmin",

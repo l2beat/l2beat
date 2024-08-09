@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x1633d2e251676018188de3c5690fc5885afc96b4
+
+# Diff at Fri, 09 Aug 2024 10:10:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20389671
+- current block number: 20389671
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20389671 (main branch discovery), not current.
+
+```diff
+    contract USDCBridgeProxyAdmin (0x41fAD3Df1B07B647D120D055259E474fE8046eb5) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x504A330327A089d8364C4ab3811Ee26976d388ce"]
+      assignedPermissions.upgrade:
++        ["0x504A330327A089d8364C4ab3811Ee26976d388ce"]
+    }
+```
+
+```diff
+    contract AdminMultisig (0x892bb7EeD71efB060ab90140e7825d8127991DD3) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 8 (50%)"
+      values.getOwners:
+-        ["0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB","0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE","0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9","0x5822D8457c00FB82203918ED92907b935B9D40AE","0x36a0b60162d7F407d74bd1def01410D20437F87B","0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4","0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1","0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x497515578b0BE54d2f0f32cF3F08B85Bf8cEB6aB","0x239d9B860399366F8d25F6e2962Fb2B9D070aEFE","0x12d674b7eCc0302977E956Cd2d5AC8D030fdbea9","0x5822D8457c00FB82203918ED92907b935B9D40AE","0x36a0b60162d7F407d74bd1def01410D20437F87B","0x4CB4da1D1C198E506031C0Aa8480BA8b57C0fAD4","0xab23f8E6c3288952fdf193A17ad49b15F5EE55A1","0xB4dAebe4D01f467701F95f0196fc29033c54dBcb"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 8 (50%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","0xd19d4B5d358258f05D7B411E21A1460D11B0876F"]
+      assignedPermissions.upgrade:
++        ["0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319","0xd19d4B5d358258f05D7B411E21A1460D11B0876F"]
+    }
+```
+
 Generated with discovered.json: 0x7ce7d8aba310ba771f7246400b1c50e747a7395e
 
 # Diff at Tue, 30 Jul 2024 11:12:28 GMT:

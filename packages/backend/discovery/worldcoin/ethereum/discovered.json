@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20432514,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -118,7 +118,7 @@
     {
       "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
       "assignedPermissions": {
-        "admin": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"]
+        "upgrade": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"]
       }
     }
   ],

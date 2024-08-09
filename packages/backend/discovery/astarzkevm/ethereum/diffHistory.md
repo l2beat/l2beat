@@ -1,3 +1,67 @@
+Generated with discovered.json: 0x665a7b1228f03991f8f70fbd27e5883123c84527
+
+# Diff at Fri, 09 Aug 2024 10:08:39 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20325048
+- current block number: 20325048
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325048 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"]
+      assignedPermissions.upgrade:
++        ["0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6c4876Ecb5de33f76700f44d547C593065806dAC) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 3 (33%)"
+      values.getOwners:
+-        ["0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917","0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8","0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917","0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8","0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 3 (33%)"
+    }
+```
+
+```diff
+    contract LocalAdmin (0xf98ee8c46baEa2B11e4f0450AD9D01861265F76E) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
+      values.getOwners:
+-        ["0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa","0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0","0x127Bae6Fc751dC92111a359500ae91EB437f3dCb","0x83cC8195856b0463dEd5f052021009b7985FDa2C","0x4324c3960c7B2567D0C13ba17493bb364c407937","0x6c4876Ecb5de33f76700f44d547C593065806dAC"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa","0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0","0x127Bae6Fc751dC92111a359500ae91EB437f3dCb","0x83cC8195856b0463dEd5f052021009b7985FDa2C","0x4324c3960c7B2567D0C13ba17493bb364c407937","0x6c4876Ecb5de33f76700f44d547C593065806dAC"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x0fdc4f296dc50c1a0add96374b39d4b1248b9f0d
 
 # Diff at Wed, 17 Jul 2024 08:27:23 GMT:

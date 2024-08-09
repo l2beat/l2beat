@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389275,
   "configHash": "0x926c1d4f92efc3c362c193fa5a34b633e505eab448e99c54080049146daa7591",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Arbitrator",
@@ -39,7 +39,7 @@
       "name": "EthereumProxyAdmin",
       "address": "0x315255c1bA35A1DdAc48CF054bc4e3a0929160b2",
       "assignedPermissions": {
-        "admin": ["0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"]
+        "upgrade": ["0xAd16eDCF7DEB7e90096A259c81269d811544B6B6"]
       },
       "sinceTimestamp": 1709295323,
       "values": {
@@ -226,17 +226,17 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": [
-          "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
-          "0x273D59aed2d793167c162E64b9162154B07583C0",
-          "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
+        "upgrade": [
           "0x5fD9F73286b7E8683Bab45019C94553b93e015Cf",
           "0x649Dfa2c4d09D877419fA1eDC4005BfbEF7CD82D",
-          "0x803460416C2682Ac54FccF03eF77b10A12f2809b",
-          "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
-          "0x986c905087a663db3C81ad319b94c1E9dd388e92",
+          "0x41FaF46Ca4Dfd912B65B66D29BdD432782BB1158",
+          "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab",
           "0xdE1Ce751405Fe6D836349226EEdCDFFE1C3BE269",
-          "0xeCD189e0f390826E137496a4e4a23ACf76c942Ab"
+          "0x273D59aed2d793167c162E64b9162154B07583C0",
+          "0x986c905087a663db3C81ad319b94c1E9dd388e92",
+          "0x83Bc7394738A7A084081aF22EEC0051908c0055c",
+          "0x1Ee09A2cAa0813A5183f90F5a6d0E4871f4C6002",
+          "0x803460416C2682Ac54FccF03eF77b10A12f2809b"
         ]
       },
       "ignoreInWatchMode": ["nonce"],
@@ -244,10 +244,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "5 of 8 (63%)",
-        "domainSeparator": "0x5ad40893b5cdef6dae5c25e809f8b9125d2b753a3087faccbd3ff9d0d8e141af",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
           "0xF801886AE2e127A269B0F11892edb54F692d02dF",
@@ -257,8 +254,11 @@
           "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "getThreshold": 5,
+        "$threshold": 5,
+        "domainSeparator": "0x5ad40893b5cdef6dae5c25e809f8b9125d2b753a3087faccbd3ff9d0d8e141af",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 8 (63%)",
         "nonce": 36,
         "VERSION": "1.3.0"
       },
@@ -303,7 +303,7 @@
     {
       "address": "0x344A908d1a7b7d06B7AD7169C1db81fc9d496dE9",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x4eEA93966AA5cd658225E0D43b665A5a491d2b7E",
           "0x668e8F67adB8219e1816C2E5bBEa055A78AF3026"
         ]
@@ -847,7 +847,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },
