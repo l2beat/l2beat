@@ -14,7 +14,7 @@ export async function getDaProjectTvl(projectIds: ProjectId[]) {
 const getCachedDaProjectTvl = cache(async (projectIds: ProjectId[]) => {
   if (projectIds.length === 0) return 0
 
-  const values = await db.value.getLatestValuesForProjects(projectIds)
+  const values = await db.value.getLatestValues(projectIds)
 
   const { canonical, external, native } = sumValuesPerSource(values)
 

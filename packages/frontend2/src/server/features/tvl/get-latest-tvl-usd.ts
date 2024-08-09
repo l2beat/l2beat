@@ -1,42 +1,32 @@
 import { type ProjectId } from '@l2beat/shared-pure'
+import { groupBy, sum } from 'lodash'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import { getTvlProjects } from './get-tvl-projects'
-import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import {
-  type TvlProjectFilter,
-  createTvlProjectsFilter,
-} from './project-filter-utils'
+import { db } from '~/server/database'
 import { sumValuesPerSource } from './sum-values-per-source'
 
-export function getLatestTvlUsd(
-  ...parameters: Parameters<typeof getCachedLatestTvlUsd>
-) {
+/*
+  This function should only be used for ordering projects by TVL.
+  We fetch all projects here to avoid cache misses. Difference between
+  this approach and fetching all l2s or l3s is negligible.
+*/
+export async function getLatestTvlUsd() {
   noStore()
-  return getCachedLatestTvlUsd(...parameters)
+  return getCachedLatestTvlUsd()
 }
 
-export const getCachedLatestTvlUsd = cache(
-  async (
-    filterParams: TvlProjectFilter,
-  ): Promise<Record<ProjectId, number>> => {
-    const filter = createTvlProjectsFilter(filterParams)
-    const tvlValues = await getTvlValuesForProjects(
-      getTvlProjects().filter(filter),
-      '7d',
-    )
+const getCachedLatestTvlUsd = cache(
+  async (): Promise<Record<ProjectId, number>> => {
+    const values = await db.value.getLatestValues()
+    const groupedByProject = groupBy(values, (e) => e.projectId)
+
     return Object.fromEntries(
-      Object.entries(tvlValues).map(([projectId, values]) => {
-        const latestTimestamp = Math.max(...Object.keys(values).map(Number))
-        const latestValues = sumValuesPerSource(
-          values[latestTimestamp] ?? [],
-          true,
-        )
-        const sum =
-          latestValues.native + latestValues.canonical + latestValues.external
-        return [projectId, Number(sum) / 100]
+      Object.entries(groupedByProject).map(([projectId, records]) => {
+        const summedPerSource = sumValuesPerSource(records, true)
+        const summed = sum(Object.values(summedPerSource))
+        return [projectId, Number(summed) / 100]
       }),
     )
   },
