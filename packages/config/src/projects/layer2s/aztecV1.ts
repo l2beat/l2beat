@@ -73,11 +73,6 @@ export const aztecV1: Layer2 = {
         tokens: ['ETH', 'DAI', 'renBTC', 'USDT'],
       },
     ],
-    transactionApi: {
-      type: 'aztec',
-      defaultUrl: 'https://api.aztec.network/falafel-mainnet',
-      defaultCallsPerMinute: 3_000,
-    },
   },
   dataAvailability: addSentimentToDataAvailability({
     layers: ['Ethereum (calldata)'],

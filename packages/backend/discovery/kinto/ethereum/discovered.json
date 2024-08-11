@@ -1,9 +1,9 @@
 {
   "name": "kinto",
   "chain": "ethereum",
-  "blockNumber": 20383066,
-  "configHash": "0xc6e931ebe2b0656694e14efbd7b737c8f70f57ae24efd8921b1c8e429c7bafc8",
-  "version": 10,
+  "blockNumber": 20484220,
+  "configHash": "0xfda975ff4d7fb1537d006da87a93d93959da79d210f4c6881c3bee7f322439bb",
+  "version": 11,
   "contracts": [
     {
       "name": "Bridger",
@@ -12,7 +12,8 @@
       "sinceTimestamp": 1710248135,
       "values": {
         "$admin": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
-        "$implementation": "0x23559eB4Ad22c31940a929958B104821126F35b7",
+        "$implementation": "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03",
+        "angleSwapper": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053",
         "DAI": "0x6B175474E89094C44Da98b954EedeAC495271d0F",
         "ETH": "0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE",
         "owner": "0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82",
@@ -22,8 +23,10 @@
         "SOLV_BTC": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
         "SOLV_BTC_POOL_ID": "0x488def4a346b409d5d57985a160cd216d29d4f555e1b716df4e04e2374d2d9f6",
         "SOLV_SFT_WRAP_ROUTER": "0x6Ea88D4D0c4bC06F6A51f427eF295c93e10D0b36",
+        "stUSD": "0x0022228a2cc5E7eF0274A7Baa600d44da5aB5776",
         "sUSDe": "0x9D39A5DE30e57443BfF2A8307A4256c8797A3497",
-        "swapRouter": "0xDef1C0ded9bec7F1a1670819833240f027b25EfF",
+        "swapRouter": "0x0000000000001fF3684f28c67538d4D072C22734",
+        "USDA": "0x0000206329b97DB379d5E1Bf586BbDB969C63274",
         "USDC": "0x0000000000000000000000000000000000000000",
         "USDe": "0x4c9EDD5852cd905f086C759E8383e09bff1E68B3",
         "USDM": "0x59D9356E565Ab3A36dD77763Fc0d87fEaf85508C",
@@ -45,18 +48,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0xfc0ed923efd6ca5c12613676f61ace65168a486c6ff550021738910aa5ea6f46",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
           "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B",
           "0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A",
           "0x356000Cec4fC967f8FC372381D983426760A0391",
           "0x94561e98DD5E55271f91A103e4979aa6C493745E"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0xfc0ed923efd6ca5c12613676f61ace65168a486c6ff550021738910aa5ea6f46",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 10,
         "VERSION": "1.3.0"
       },
@@ -110,12 +113,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 1748,
+        "firstUnresolvedNode": 1804,
         "inbox": "0xBFfaA85c1756472fFC37e6D172A7eC0538C14474",
         "isERC20Enabled": false,
         "lastStakeBlock": 18788889,
-        "latestConfirmed": 1747,
-        "latestNodeCreated": 1773,
+        "latestConfirmed": 1803,
+        "latestNodeCreated": 1829,
         "loserStakeEscrow": "0x09d34B74cd8B1c4394A3cD9630E1Ba027E6ED4F5",
         "minimumAssertionPeriod": 75,
         "outbox": "0x655761AD5FC251F414D6993A73184B0669F278c8",
@@ -165,7 +168,7 @@
       "address": "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"]
+        "upgrade": ["0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11"]
       },
       "sinceTimestamp": 1702607855,
       "values": {
@@ -237,7 +240,7 @@
       "name": "ProxyAdmin",
       "address": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F",
           "0x59B851c8b1643e0735Ec3F2f0e528f3d89c3408a",
           "0x6228e2FB8C561f1a5A963039Bc38Eb6D539A1A7F",
@@ -297,11 +300,11 @@
           "0x52EcE832AF3DF3125BbfD6423E0425dB3fA99D3F"
         ],
         "allowedOutboxList": ["0x655761AD5FC251F414D6993A73184B0669F278c8"],
-        "delayedMessageCount": 3560,
+        "delayedMessageCount": 3645,
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerInbox": "0xF4Ef823D57819AC7202a081A5B49376BD28E7b3a",
-        "sequencerMessageCount": 2889,
-        "sequencerReportedSubMessageCount": 212015
+        "sequencerMessageCount": 2973,
+        "sequencerReportedSubMessageCount": 215908
       },
       "derivedName": "Bridge"
     },
@@ -377,17 +380,14 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0x0f1b7bd7762662B23486320AA91F30312184f70C"]
+        "upgrade": ["0x0f1b7bd7762662B23486320AA91F30312184f70C"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678700303,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
-        "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x5D973Ea995d14799E528B14472346bfDE21eAe2e",
           "0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259",
           "0x08E674c4538caE03B6c05405881dDCd95DcaF5a8",
@@ -395,9 +395,12 @@
           "0x94561e98DD5E55271f91A103e4979aa6C493745E",
           "0xc31C4549356d46c37021393EeEb6f704B38061eC"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x6cb98df1bc26e62c494dcbf2f362c623e5e8cbb503b69ddf57a8e9a9a07117c7",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
-        "nonce": 153,
+        "multisigThreshold": "3 of 6 (50%)",
+        "nonce": 157,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -411,7 +414,7 @@
       "values": {
         "$admin": "0x74C717C01425eb475A5fC55d2A4a9045fC9800df",
         "$implementation": "0x57411f5BA52531e8199066bC8EC650470A744883",
-        "batchCount": 2889,
+        "batchCount": 2973,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": ["0xe27f3f6db6824def1738b2aACe2672aC59046a39"],
         "bridge": "0x859a53Fe2C8DA961387030E7CB498D6D20d0B2DB",
@@ -435,7 +438,7 @@
         "rollup": "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3559,
+        "totalDelayedMessagesRead": 3644,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -462,6 +465,7 @@
     { "address": "0xA07eeCA8dc436Be2DfBCb4F0C3aD1424c1876185" },
     { "address": "0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B" },
     { "address": "0xc31C4549356d46c37021393EeEb6f704B38061eC" },
+    { "address": "0xD253b62108d1831aEd298Fc2434A5A8e4E418053" },
     {
       "address": "0xe27f3f6db6824def1738b2aACe2672aC59046a39",
       "roles": ["Sequencer"]
@@ -641,63 +645,6 @@
       "function submitBatchSpendingReport(address sender, bytes32 messageDataHash) returns (uint256)",
       "function updateRollupAddress(address _rollup)"
     ],
-    "0x23559eB4Ad22c31940a929958B104821126F35b7": [
-      "constructor(address exchange, address usdmCurveAmm, address usdc, address weth, address dai, address usde, address sUsde, address wstEth)",
-      "error DepositBySigResult(uint256 amountOut)",
-      "error FailedToStakeEth()",
-      "error InvalidAmount(uint256 amount)",
-      "error InvalidNonce()",
-      "error InvalidSigner(address signer)",
-      "error InvalidVault(address vault)",
-      "error OnlyOwner()",
-      "error SignatureExpired()",
-      "error SlippageError(uint256 boughtAmount, uint256 minReceive)",
-      "event AdminChanged(address previousAdmin, address newAdmin)",
-      "event BeaconUpgraded(address indexed beacon)",
-      "event Deposit(address indexed from, address indexed wallet, address indexed asset, uint256 amount, address assetBought, uint256 amountBought)",
-      "event Initialized(uint8 version)",
-      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
-      "event Paused(address account)",
-      "event Unpaused(address account)",
-      "event Upgraded(address indexed implementation)",
-      "function DAI() view returns (address)",
-      "function ETH() view returns (address)",
-      "function PERMIT2() view returns (address)",
-      "function SOLV_BTC() view returns (address)",
-      "function SOLV_BTC_POOL_ID() view returns (bytes32)",
-      "function SOLV_SFT_WRAP_ROUTER() view returns (address)",
-      "function USDC() view returns (address)",
-      "function USDM() view returns (address)",
-      "function USDe() view returns (address)",
-      "function WBTC() view returns (address)",
-      "function WETH() view returns (address)",
-      "function __depositCount() view returns (uint256)",
-      "function bridgeVaults(address) view returns (bool)",
-      "function depositBySig(bytes permitSig, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function depositERC20(address inputAsset, uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function depositETH(uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function depositPermit2(tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes permit2Signature, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
-      "function domainSeparator() view returns (bytes32)",
-      "function initialize(address sender)",
-      "function nonces(address) view returns (uint256)",
-      "function owner() view returns (address)",
-      "function pause()",
-      "function paused() view returns (bool)",
-      "function proxiableUUID() view returns (bytes32)",
-      "function renounceOwnership()",
-      "function sUSDe() view returns (address)",
-      "function senderAccount() view returns (address)",
-      "function setBridgeVault(address vault, bool flag)",
-      "function setSenderAccount(address sender)",
-      "function swapRouter() view returns (address)",
-      "function transferOwnership(address newOwner)",
-      "function unpause()",
-      "function upgradeTo(address newImplementation)",
-      "function upgradeToAndCall(address newImplementation, bytes data) payable",
-      "function usdmCurvePool() view returns (address)",
-      "function wUSDM() view returns (address)",
-      "function wstETH() view returns (address)"
-    ],
     "0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC": [
       "error AlreadyInit()",
       "error AlreadySpent(uint256 index)",
@@ -747,6 +694,66 @@
       "function requireRejectable(address rollup) view",
       "function stakedNodes(address rollup, address staker) view returns (uint64[])",
       "function timedOutChallenges(address rollup, uint64 startIndex, uint64 max) view returns (uint64[], bool hasMore)"
+    ],
+    "0x47e28e296BE2EE69b4579d5eecbABA38217a2b03": [
+      "constructor(address exchange, address usdmCurveAmm, address usdc, address weth, address dai, address usde, address sUsde, address wstEth)",
+      "error DepositBySigResult(uint256 amountOut)",
+      "error FailedToStakeEth()",
+      "error InvalidAmount(uint256 amount)",
+      "error InvalidNonce()",
+      "error InvalidSigner(address signer)",
+      "error InvalidVault(address vault)",
+      "error OnlyOwner()",
+      "error SignatureExpired()",
+      "error SlippageError(uint256 boughtAmount, uint256 minReceive)",
+      "event AdminChanged(address previousAdmin, address newAdmin)",
+      "event BeaconUpgraded(address indexed beacon)",
+      "event Deposit(address indexed from, address indexed wallet, address indexed asset, uint256 amount, address assetBought, uint256 amountBought)",
+      "event Initialized(uint8 version)",
+      "event OwnershipTransferred(address indexed previousOwner, address indexed newOwner)",
+      "event Paused(address account)",
+      "event Unpaused(address account)",
+      "event Upgraded(address indexed implementation)",
+      "function DAI() view returns (address)",
+      "function ETH() view returns (address)",
+      "function PERMIT2() view returns (address)",
+      "function SOLV_BTC() view returns (address)",
+      "function SOLV_BTC_POOL_ID() view returns (bytes32)",
+      "function SOLV_SFT_WRAP_ROUTER() view returns (address)",
+      "function USDA() view returns (address)",
+      "function USDC() view returns (address)",
+      "function USDM() view returns (address)",
+      "function USDe() view returns (address)",
+      "function WBTC() view returns (address)",
+      "function WETH() view returns (address)",
+      "function __depositCount() view returns (uint256)",
+      "function angleSwapper() view returns (address)",
+      "function bridgeVaults(address) view returns (bool)",
+      "function depositBySig(bytes permitSig, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
+      "function depositERC20(address inputAsset, uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
+      "function depositETH(uint256 amount, address kintoWallet, address finalAsset, uint256 minReceive, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
+      "function depositPermit2(tuple(tuple(address token, uint160 amount, uint48 expiration, uint48 nonce) details, address spender, uint256 sigDeadline) permitSingle, bytes permit2Signature, tuple(address kintoWallet, address signer, address inputAsset, address finalAsset, uint256 amount, uint256 minReceive, uint256 nonce, uint256 expiresAt, bytes signature) depositData, bytes swapCallData, tuple(address vault, uint256 gasFee, uint256 msgGasLimit, address connector, bytes execPayload, bytes options) bridgeData) payable returns (uint256)",
+      "function domainSeparator() view returns (bytes32)",
+      "function initialize(address sender)",
+      "function nonces(address) view returns (uint256)",
+      "function owner() view returns (address)",
+      "function pause()",
+      "function paused() view returns (bool)",
+      "function proxiableUUID() view returns (bytes32)",
+      "function renounceOwnership()",
+      "function sUSDe() view returns (address)",
+      "function senderAccount() view returns (address)",
+      "function setBridgeVault(address vault, bool flag)",
+      "function setSenderAccount(address sender)",
+      "function stUSD() view returns (address)",
+      "function swapRouter() view returns (address)",
+      "function transferOwnership(address newOwner)",
+      "function unpause()",
+      "function upgradeTo(address newImplementation)",
+      "function upgradeToAndCall(address newImplementation, bytes data) payable",
+      "function usdmCurvePool() view returns (address)",
+      "function wUSDM() view returns (address)",
+      "function wstETH() view returns (address)"
     ],
     "0x5073dA9cA4810f3E0aA01c20c7d9d02C3f522e11": [
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -1224,7 +1231,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

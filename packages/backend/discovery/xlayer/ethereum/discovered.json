@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325087,
   "configHash": "0x1faa6e35d2bc7ed2a0ebe00bbb2796abcb918b5266d117b92e441acd4aded7bf",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "XLayerValidiumDAC",
@@ -42,7 +42,7 @@
       "name": "ProxyAdmin",
       "address": "0x1e37EA18e9515db29b3E94A00eD31484A3130204",
       "assignedPermissions": {
-        "admin": ["0x05652Ec92366F3C2255991a265c499E01Ba58e6a"]
+        "upgrade": ["0x05652Ec92366F3C2255991a265c499E01Ba58e6a"]
       },
       "sinceTimestamp": 1711787315,
       "values": {
@@ -124,7 +124,7 @@
     {
       "address": "0x4A164CA582D169f7caad471250991Dd861ddA981",
       "assignedPermissions": {
-        "admin": ["0x75231F58b43240C9718Dd58B4967c5114342a86c"]
+        "upgrade": ["0x75231F58b43240C9718Dd58B4967c5114342a86c"]
       }
     },
     { "address": "0x5B27e98516fD2Bd5001D4dfE3f5a2263f702f634" },

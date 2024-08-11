@@ -9,9 +9,10 @@ import {
   Configuration,
   RemovalConfiguration,
 } from '../../../tools/uif/multi/types'
-import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { AmountService } from '../services/AmountService'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { ChainAmountIndexer } from './ChainAmountIndexer'
+import { ChainAmountConfig } from './types'
 
 describe(ChainAmountIndexer.name, () => {
   beforeEach(() => {
@@ -67,7 +68,7 @@ describe(ChainAmountIndexer.name, () => {
       expect(amountService.fetchAmounts).toHaveBeenOnlyCalledWith(
         timestampToSync,
         blockNumber,
-        configurations,
+        configurations.map((c) => ({ id: c.id, ...c.properties })),
       )
 
       expect(amountRepository.insertMany).toHaveBeenOnlyCalledWith([

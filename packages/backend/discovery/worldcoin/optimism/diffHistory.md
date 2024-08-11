@@ -1,4 +1,184 @@
-Generated with discovered.json: 0xab74a60c2a90b97f55801f1f1c008f600f6a4d3c
+Generated with discovered.json: 0x6d61dd041ac7cfe1d6066bcc4aeb09af1b31ecf6
+
+# Diff at Fri, 09 Aug 2024 10:14:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 123584561
+- current block number: 123584561
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 123584561 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x0897316DFE7141DB1E182551c3e8077cf5dd9695) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
+      values.getOwners:
+-        ["0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x140C0227Cbe493A56868DDF4ea582E92ef3e9744) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
+      values.getOwners:
+-        ["0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x59a0f98345f54bAB245A043488ECE7FCecD7B596) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
+      values.getOwners:
+-        ["0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 2 (100%)"
+      values.getOwners:
+-        ["0xB6d1621B770A088C16bfec22bAd00F77D874d011","0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0xB6d1621B770A088C16bfec22bAd00F77D874d011","0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (0x7f26A7572E8B877654eeDcBc4E573657619FA3CE) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0x57c72EB3f74e3A1c95656253214A018818818ec3","0x59a0f98345f54bAB245A043488ECE7FCecD7B596","0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x57c72EB3f74e3A1c95656253214A018818818ec3","0x59a0f98345f54bAB245A043488ECE7FCecD7B596","0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xb67ac19693fB89880Ca5873f6a890E865b259c26) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 2 (100%)"
+      values.getOwners:
+-        ["0x79b998ded1f4503CE3A0A76993c72a65449f4590","0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x79b998ded1f4503CE3A0A76993c72a65449f4590","0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 2 (100%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 6 (33%)"
+      values.getOwners:
+-        ["0x0897316DFE7141DB1E182551c3e8077cf5dd9695","0xb67ac19693fB89880Ca5873f6a890E865b259c26","0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c","0x140C0227Cbe493A56868DDF4ea582E92ef3e9744","0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A","0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x0897316DFE7141DB1E182551c3e8077cf5dd9695","0xb67ac19693fB89880Ca5873f6a890E865b259c26","0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c","0x140C0227Cbe493A56868DDF4ea582E92ef3e9744","0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A","0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
+      values.getOwners:
+-        ["0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 1 (100%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
+      values.getOwners:
+-        ["0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 1 (100%)"
+    }
+```
+
+Generated with discovered.json: 0x45f5ef5b283f8f30512f211e544ab0f6e8c83fb2
 
 # Diff at Thu, 01 Aug 2024 09:13:14 GMT:
 

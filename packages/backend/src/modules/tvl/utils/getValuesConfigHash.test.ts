@@ -41,6 +41,7 @@ describe(getValuesConfigHash.name, () => {
 function mockAmount(v?: Partial<TotalSupplyEntry>): TotalSupplyEntry {
   return {
     chain: 'chain',
+    dataSource: 'chain',
     project: ProjectId('project'),
     source: 'canonical' as const,
     sinceTimestamp: UnixTime.ZERO,

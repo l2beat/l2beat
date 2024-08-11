@@ -1,10 +1,140 @@
-Generated with discovered.json: 0x4524c5382beccbdb67e192c7549ab6b839e87af6
+Generated with discovered.json: 0xf835b3fbe50281f5386c981c6991da4be2560615
 
-# Diff at Thu, 01 Aug 2024 08:26:56 GMT:
+# Diff at Fri, 09 Aug 2024 12:03:21 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@295430f331b68784c13ccda9222bc78df1e833c5 block: 19532310
-- current block number: 20432496
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20432768
+- current block number: 20432768
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432768 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
++        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
+      assignedPermissions.upgrade.0:
+-        "0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"
++        "0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"
+    }
+```
+
+Generated with discovered.json: 0xf569dd45f28789ef24a7f28c9cc03542a20f82b8
+
+# Diff at Fri, 09 Aug 2024 10:13:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20432768
+- current block number: 20432768
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20432768 (main branch discovery), not current.
+
+```diff
+    contract Multisig 1 (0x002A5dc50bbB8d5808e418Aeeb9F060a2Ca17346) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0x4326E446013908fBEEE4ce7b6935219c01854B21","0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B","0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8","0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x4326E446013908fBEEE4ce7b6935219c01854B21","0x4F0eB7DBcF5410C7bA0Ad8D131956f0194Ea803B","0x117Ab3A5D9eaF4F7105e30a757F150504733C3d8","0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract Multisig 2 (0x19eD6cc20D44e5cF4Bb4894F50162F72402d8567) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 6 (33%)"
+      values.getOwners:
+-        ["0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da","0xD804aB3355a634aEBd45e1252d6208807defD554","0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193","0x106fc088aBA908130fBC343F2F6d212Ff36150D1","0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe","0xf6dcD4d7141E06B916987C3C46220f6241278a30"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x1cAe37780Ad92801641d05BA5Bb7E978c99Fc5Da","0xD804aB3355a634aEBd45e1252d6208807defD554","0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193","0x106fc088aBA908130fBC343F2F6d212Ff36150D1","0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe","0xf6dcD4d7141E06B916987C3C46220f6241278a30"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 6 (33%)"
+    }
+```
+
+```diff
+    contract Multisig 3 (0x225d3822De44E58eE935440E0c0B829C4232086e) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0xB1A308e7F02798377b7acF685E997E3D774c5863","0x0d4E989c7620C8749c9417d2BF218896C767B606","0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0xB1A308e7F02798377b7acF685E997E3D774c5863","0x0d4E989c7620C8749c9417d2BF218896C767B606","0x18B7ff0370456dB6b7710714D9DCC25a0A3b3016"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (0x38A43F4330f24fe920F943409709fc9A6084C939) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01","0x5290E9582B4FB706EaDf87BB1c129e897e04d06D","0xaBEA9132b05A70803a4E85094fD0e1800777fBEF"]
+      assignedPermissions.upgrade:
++        ["0xaBEA9132b05A70803a4E85094fD0e1800777fBEF","0x5290E9582B4FB706EaDf87BB1c129e897e04d06D","0x34460C0EB5074C29A9F6FE13b8e7E23A0D08aF01"]
+    }
+```
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 7 (57%)"
+      values.getOwners:
+-        ["0x050b37a12451F188c7bA53D48b8A1adE6D138E71","0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF","0x733F602bB867c643542cc807a3D32AD1A86cacc1","0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f","0x702caCafA54B88e9c54449563Fb2e496e85c78b7","0x9dF8bc0918F357c766A5697E031fF5237c05747A","0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x050b37a12451F188c7bA53D48b8A1adE6D138E71","0x1567AC0764142e91aB0A9C65C568f0DbE9E168BF","0x733F602bB867c643542cc807a3D32AD1A86cacc1","0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f","0x702caCafA54B88e9c54449563Fb2e496e85c78b7","0x9dF8bc0918F357c766A5697E031fF5237c05747A","0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 7 (57%)"
+    }
+```
+
+Generated with discovered.json: 0x16fdd1682d12a2412ec3cff5e2417644d8a33d5e
+
+# Diff at Thu, 01 Aug 2024 09:21:37 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 19532310
+- current block number: 20432768
 
 ## Description
 
@@ -38,7 +168,7 @@ ZKsync lite add one signer (`0xD804aB3355a634aEBd45e1252d6208807defD554`) to the
     }
 ```
 
-Generated with discovered.json: 0xd6f15a3e39c447a4e668f1d84048cff0e2c12a30
+Generated with discovered.json: 0xbd4699a8b52a6b73b41273be603f65b645c4926e
 
 # Diff at Thu, 28 Mar 2024 11:28:26 GMT:
 

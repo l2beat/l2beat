@@ -1,3 +1,210 @@
+Generated with discovered.json: 0xbd6f53e4cb895e5ab8a37e811fc8f48cf455357c
+
+# Diff at Fri, 09 Aug 2024 12:32:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 20475166
+- current block number: 20491058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x8c6028e38391cfC2A1a28f4359EA5732E9422e56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xC456EaE992e4f2925E3F75Ac4809dF387756CD29)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x8c6028e38391cfC2A1a28f4359EA5732E9422e56.sol |  998 ++++++++++++++
+ ...-0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c.sol |  998 ++++++++++++++
+ ...-0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B.sol | 1407 ++++++++++++++++++++
+ ...-0xC456EaE992e4f2925E3F75Ac4809dF387756CD29.sol | 1407 ++++++++++++++++++++
+ ...-0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000.sol | 1407 ++++++++++++++++++++
+ 5 files changed, 6217 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475166 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xc07556a0Bd177F8de4D077f449C2653A072F3798) {
+    +++ description: None
+      values.getOwners:
+-        ["0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771","0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85","0x5aC189Db4351787516d2E6Fc628BF762ce684326","0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581","0x53482ACf424d4196b0F8EbdD6F8A15eb8516FB88","0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386","0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2"]
+      values.getThreshold:
+-        3
+    }
+```
+
+```diff
+    contract GnosisSafe (0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) {
+    +++ description: None
+      values.getOwners:
+-        ["0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89","0x7052cB84079905400ea52B635cAb6a275fDA8823","0xE062e7D123AC8dF480C56147f911144F55C10f88","0x41eAdbc688797a02bfaBE48472995833489ce69D","0x1c6460cfe32916196f6977b5442b0F98A826D880","0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","0xAe735fd5e74887064DFf99C637f291caE5485A75","0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC","0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd","0x06e5891D9b2Ee77740355A309BAF49caaB672f98","0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"]
+      values.getThreshold:
+-        6
+    }
+```
+
+Generated with discovered.json: 0xe7f888d9bf1744fcb3fcf778046bd265349b09c3
+
+# Diff at Wed, 07 Aug 2024 07:23:21 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20454546
+- current block number: 20475166
+
+## Description
+
+The bridge limit is increased for one of the escrows.
+
+## Watched changes
+
+```diff
+    contract UpgradeableLockReleaseTokenPool (0x5756880B6a1EAba0175227bf02a7E87c1e02B28C) {
+    +++ description: None
+      values.getBridgeLimit:
+-        "2500000000000000000000000"
++        "20000000000000000000000000"
+    }
+```
+
+Generated with discovered.json: 0x98bca27d8f15e7eb491b21bbda22a60aa8152474
+
+# Diff at Sun, 04 Aug 2024 10:19:37 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20432548
+- current block number: 20454546
+
+## Description
+
+All signers of the ManyChainMultiSig are moved from group 0 threshold 4 to group 1 with treshold 4. Group 1 has group 0 (threshold 1) as a parent so currently there is no change to the net threshold / permissions. See this explanation of the group structure below:
+copied from the contract source:
+```
+    // Signing groups are arranged in a tree. Each group is an interior node and has its own quorum.
+    // Signers are the leaves of the tree. A signer/leaf node is successful iff it furnishes a valid
+    // signature. A group/interior node is successful iff a quorum of its children are successful.
+    // setRoot succeeds only if the root group is successful.
+    // Here is an example:
+    //
+    //                    ┌──────┐
+    //                 ┌─►│2-of-3│◄───────┐
+    //                 │  └──────┘        │
+    //                 │        ▲         │
+    //                 │        │         │
+    //              ┌──┴───┐ ┌──┴───┐ ┌───┴────┐
+    //          ┌──►│1-of-2│ │2-of-2│ │signer A│
+    //          │   └──────┘ └──────┘ └────────┘
+    //          │       ▲      ▲  ▲
+    //          │       │      │  │     ┌──────┐
+    //          │       │      │  └─────┤1-of-2│◄─┐
+    //          │       │      │        └──────┘  │
+    //  ┌───────┴┐ ┌────┴───┐ ┌┴───────┐ ▲        │
+    //  │signer B│ │signer C│ │signer D│ │        │
+    //  └────────┘ └────────┘ └────────┘ │        │
+    //                                   │        │
+    //                            ┌──────┴─┐ ┌────┴───┐
+    //                            │signer E│ │signer F│
+    //                            └────────┘ └────────┘
+    //
+    // - If signers [A, B] sign, they can set a root.
+    // - If signers [B, D, E] sign, they can set a root.
+    // - If signers [B, D, E, F] sign, they can set a root. (Either E's or F's signature was
+    //   superfluous.)
+    // - If signers [B, C, D] sign, they cannot set a root, because the 2-of-2 group on the second
+    //   level isn't successful and therefore the root group isn't successful either.
+    //
+    // To map this tree to a Config, we:
+    // - create an entry in signers for each signer (sorted by address in ascending order)
+    // - assign the root group to index 0 and have it be its own parent
+    // - assign an index to each non-root group, such that each group's parent has a lower index
+    //   than the group itself
+    // For example, we could transform the above tree structure into:
+    // groupQuorums = [2, 1, 2, 1] + [0, 0, ...] (rightpad with 0s to NUM_GROUPS)
+    // groupParents = [0, 0, 0, 2] + [0, 0, ...] (rightpad with 0s to NUM_GROUPS)
+    // and assuming that address(A) < address(C) < address(E) < address(F) < address(D) < address(B)
+    // signers = [
+    //    {addr: address(A), index: 0, group: 0}, {addr: address(C), index: 1, group: 1},
+    //    {addr: address(E), index: 2, group: 3}, {addr: address(F), index: 3, group: 3},
+    //    {addr: address(D), index: 4, group: 2}, {addr: address(B), index: 5, group: 1},
+    //  ]
+```
+
+## Watched changes
+
+```diff
+    contract ManyChainMultiSig (0x2F2A3e36CE5Fb0924C414BEB1D98B531Cdf17e0B) {
+    +++ description: None
+      values.getConfig.signers.8.group:
+-        0
++        1
+      values.getConfig.signers.7.group:
+-        0
++        1
+      values.getConfig.signers.6.group:
+-        0
++        1
+      values.getConfig.signers.5.group:
+-        0
++        1
+      values.getConfig.signers.4.group:
+-        0
++        1
+      values.getConfig.signers.3.group:
+-        0
++        1
+      values.getConfig.signers.2.group:
+-        0
++        1
+      values.getConfig.signers.1.group:
+-        0
++        1
+      values.getConfig.signers.0.group:
+-        0
++        1
+      values.getConfig.groupQuorums.1:
+-        0
++        4
+      values.getConfig.groupQuorums.0:
+-        4
++        1
+    }
+```
+
 Generated with discovered.json: 0xddaf5ba394a864bbb9350766a2e948b26307fdbe
 
 # Diff at Thu, 01 Aug 2024 08:38:09 GMT:

@@ -5,6 +5,7 @@ import { type CommonScalingEntry } from '../get-common-scaling-entry'
 import { type FinalityDataPoint } from './schema'
 
 export type ScalingFinalityEntry = CommonScalingEntry & {
+  entryType: 'finality'
   dataAvailabilityMode?: DataAvailabilityMode
   data: ScalingFinalityEntryData | undefined
   finalizationPeriod?: number

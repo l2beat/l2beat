@@ -4,6 +4,7 @@ import { type RosetteValue } from '~/app/_components/rosette/types'
 import { type CommonScalingEntry } from './get-common-scaling-entry'
 
 export type ScalingSummaryLayer2sEntry = CommonScalingEntry & {
+  entryType: 'summary'
   risks: RosetteValue[]
   tvlData: L2TvlData | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell
@@ -11,6 +12,7 @@ export type ScalingSummaryLayer2sEntry = CommonScalingEntry & {
 }
 
 export type ScalingSummaryLayer3sEntry = CommonScalingEntry & {
+  entryType: 'summary'
   risks: undefined
   tvlData: L3TvlData | undefined
   // NOTE: It is never to satisfy the type of the data in ProjectNameCell

@@ -56,6 +56,13 @@ export const polygonpos: Bridge = {
         ...upgrades,
       }),
       discovery.getEscrowDetails({
+        // MintableERC20Predicate
+        address: EthereumAddress('0x9923263fA127b3d1484cFD649df8f1831c2A74e4'),
+        sinceTimestamp: new UnixTime(1613100720),
+        tokens: '*',
+        ...upgrades,
+      }),
+      discovery.getEscrowDetails({
         // EtherPredicate
         address: EthereumAddress('0x8484Ef722627bf18ca5Ae6BcF031c23E6e922B30'),
         sinceTimestamp: new UnixTime(1598437971),
@@ -63,7 +70,7 @@ export const polygonpos: Bridge = {
         ...upgrades,
       }),
       discovery.getEscrowDetails({
-        // ERC20EscrowPredicate
+        // ERC20EscrowPredicate for TOWER token
         address: EthereumAddress('0x21ada4D8A799c4b0ADF100eB597a6f1321bCD3E4'),
         sinceTimestamp: new UnixTime(1598437971),
         tokens: '*',
@@ -80,9 +87,8 @@ export const polygonpos: Bridge = {
       sentiment: 'warning',
     },
     sourceUpgradeability: {
-      value: '48 hours delay',
-      description:
-        'The bridge can be upgraded by 5/9 MSig after 48 hour delay.',
+      value: `${delayString}`,
+      description: `The bridge can be upgraded by 5/9 MSig after ${delayString} hour delay.`,
       sentiment: 'warning',
     },
     destinationToken: {
@@ -105,7 +111,7 @@ export const polygonpos: Bridge = {
     validation: {
       name: 'Outbound transfers are externally verified, inbound require merkle proof',
       description:
-        'Validators on the Polygon network watch for events on Ethereum and when they see that tokens have been locked they mint new tokens on Polygon. Around every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens users need to present a merkle proof of a burn event that is verified against the checkpoints.',
+        'Validators on the Polygon network watch for events on Ethereum, and when they see that tokens have been locked they mint new tokens on Polygon. Around every 30 minutes validators submit new Polygon state checkpoints to the Ethereum smart contracts. To withdraw tokens, users need to present a merkle proof of a burn event that is verified against the checkpoints.',
       references: [],
       risks: [
         {
@@ -143,66 +149,36 @@ export const polygonpos: Bridge = {
   },
   contracts: {
     addresses: [
+      discovery.getContractDetails('RootChain', {
+        description:
+          'Contract storing Polygon PoS chain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+        ...upgrades,
+      }),
       discovery.getContractDetails(
         'StateSender',
-        'Smart contract containing the logic for syncing the state of registered bridges.',
+        'Smart contract allowing whitelisted addresses to send messages to contracts on Polygon PoS chain.',
       ),
       discovery.getContractDetails('RootChainManager', {
         description:
-          'Main contract to manage bridge tokens, deposits and withdrawals.',
+          'Main configuration contract to manage tokens, token types, escrows (predicates) for given token types.\
+          It also serves as an entry point for deposits and withdrawals effectively acting as a token router.',
         ...upgrades,
       }),
-      discovery.getContractDetails('RootChain', {
+      discovery.getContractDetails('StakeManager', {
         description:
-          'Contract storing Polygon sidechain checkpoints. Note that validity of these checkpoints is not verified, it is assumed to be valid if signed by 2/3 of the Polygon Validators.',
+          'Main configuration contract to manage stakers and their voting power.',
+        ...upgrades,
+      }),
+      discovery.getContractDetails('Registry', {
+        description: 'A registry of different system components.',
         ...upgrades,
       }),
       discovery.getContractDetails(
         'Timelock',
         `Contract enforcing delay on code upgrades. The current delay is ${delayString}.`,
       ),
-      discovery.getContractDetails('EtherPredicate', {
-        description: 'Escrow contract for ETH.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('ERC20Predicate', {
-        description: 'Escrow contract for ERC20 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('MintableERC20Predicate', {
-        description: 'Escrow contract for mintable ERC20 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails(
-        'ERC20EscrowPredicate',
-        'Escrow contract for ERC20 tokens.',
-      ),
-      discovery.getContractDetails(
-        'ERC20MintBurnPredicate',
-        'Escrow contract for ERC20 tokens that can be minted and burned.',
-      ),
-      discovery.getContractDetails('ERC721Predicate', {
-        description: 'Escrow contract for ERC721 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('ERC1155Predicate', {
-        description: 'Escrow contract for ERC1155 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('MintableERC1155Predicate', {
-        description: 'Escrow contract for mintable ERC1155 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('ChainExitERC1155Predicate', {
-        description: 'Escrow contract for ERC1155 tokens.',
-        ...upgrades,
-      }),
-      discovery.getContractDetails('UnstoppableDomainsPredicate', {
-        description: 'Escrow contract for Unstoppable Domains NFTs.',
-        ...upgrades,
-      }),
     ],
-    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK('48 hours')],
+    risks: [CONTRACTS.UPGRADE_WITH_DELAY_RISK(`${delayString}`)],
   },
   permissions: [
     ...discovery.getMultisigPermission(

@@ -1,3 +1,93 @@
+Generated with discovered.json: 0xeb52acb3dbf030c27907bcb03edebb606ca2bdee
+
+# Diff at Fri, 09 Aug 2024 12:00:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 19531966
+- current block number: 19531966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531966 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      assignedPermissions.upgrade.3:
+-        "0x895E00269A05848F3c9889EfA677D02fF7351a5D"
++        "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"
+      assignedPermissions.upgrade.2:
+-        "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
++        "0x895E00269A05848F3c9889EfA677D02fF7351a5D"
+      assignedPermissions.upgrade.1:
+-        "0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"
++        "0x3B95bC951EE0f553ba487327278cAc44f29715E5"
+      assignedPermissions.upgrade.0:
+-        "0x3B95bC951EE0f553ba487327278cAc44f29715E5"
++        "0x30c789674ad3B458886BBC9abf42EEe19EA05C1D"
+    }
+```
+
+Generated with discovered.json: 0x067a99a0bd128bff0d80dda275e0022660b6453e
+
+# Diff at Fri, 09 Aug 2024 10:10:28 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19531966
+- current block number: 19531966
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531966 (main branch discovery), not current.
+
+```diff
+    contract AdminMultisig (0x3c46C05c2eba8eDd0B0f0C8B1D2fBf9fc53ea01E) {
+    +++ description: It can act on behalf of 0xa2DCa85BB892De55D8B262d1806114733106e8D1, inheriting its permissions.
+      assignedPermissions.owner:
+-        ["0xa2DCa85BB892De55D8B262d1806114733106e8D1"]
+      assignedPermissions.configure:
++        ["0xa2DCa85BB892De55D8B262d1806114733106e8D1"]
+      values.$multisigThreshold:
+-        "5 of 7 (71%)"
+      values.getOwners:
+-        ["0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A","0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5","0x356000Cec4fC967f8FC372381D983426760A0391","0xB44948Ff3E8a4d3Ac32A376B4b3209AdC7620770","0xDC80503b718Ff3B2e43db42460A718c119e75cdd","0x92124ee0e7238992E5E7F34f9FBBCD71931ABC6D","0x35Aee2b2aa6ACB13C3a38a58AEb069C163734FaD"]
+      values.getThreshold:
+-        5
+      values.$members:
++        ["0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A","0x4b1A788B20bb85eb19f8e9B69B8a584e7fA29fe5","0x356000Cec4fC967f8FC372381D983426760A0391","0xB44948Ff3E8a4d3Ac32A376B4b3209AdC7620770","0xDC80503b718Ff3B2e43db42460A718c119e75cdd","0x92124ee0e7238992E5E7F34f9FBBCD71931ABC6D","0x35Aee2b2aa6ACB13C3a38a58AEb069C163734FaD"]
+      values.$threshold:
++        5
+      values.multisigThreshold:
++        "5 of 7 (71%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xa2DCa85BB892De55D8B262d1806114733106e8D1) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x30c789674ad3B458886BBC9abf42EEe19EA05C1D","0x3B95bC951EE0f553ba487327278cAc44f29715E5","0x895E00269A05848F3c9889EfA677D02fF7351a5D","0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622"]
+      assignedPermissions.owner:
+-        ["0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05"]
+      assignedPermissions.upgrade:
++        ["0x3B95bC951EE0f553ba487327278cAc44f29715E5","0x9168765EE952de7C6f8fC6FaD5Ec209B960b7622","0x30c789674ad3B458886BBC9abf42EEe19EA05C1D","0x895E00269A05848F3c9889EfA677D02fF7351a5D"]
+      assignedPermissions.configure:
++        ["0x3Ad319BB4872F8cB75a26Ac30CC4bD2d56b67b05"]
+    }
+```
+
 Generated with discovered.json: 0xbe289f502c3021829ee2cab7c512a572d7912d24
 
 # Diff at Tue, 30 Jul 2024 11:12:40 GMT:

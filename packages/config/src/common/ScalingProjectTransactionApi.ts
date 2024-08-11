@@ -25,7 +25,6 @@ export interface StarkexTransactionApi {
 
 export type ScalingProjectTransactionApi =
   | SimpleTransactionApi<'starknet'>
-  | SimpleTransactionApi<'aztec'>
   | SimpleTransactionApi<'zksync'>
   | SimpleTransactionApi<'loopring'>
   | SimpleTransactionApi<'degate'>

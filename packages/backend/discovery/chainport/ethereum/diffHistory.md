@@ -1,3 +1,92 @@
+Generated with discovered.json: 0xf9cca159c6aa8db8ff592035d9b5a35fe7c86a10
+
+# Diff at Fri, 09 Aug 2024 10:09:05 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20454449
+- current block number: 20454449
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20454449 (main branch discovery), not current.
+
+```diff
+    contract MultisigVault2 (0x450aD18B4442ce2972Af2a7A12439984db4Afaf9) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0x894107B7b5051409f279E8300774B2f62Febe057","0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7","0xD2238E8c085E5059F8DFC52256530210bc7250F6"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x894107B7b5051409f279E8300774B2f62Febe057","0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7","0xD2238E8c085E5059F8DFC52256530210bc7250F6"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x63D572d781eD8D18d823462aa2a4D51d7Ac4F29F) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"]
+      assignedPermissions.upgrade:
++        ["0x763A0CA93AF05adE98A52dc1E5B936b89bF8b89a"]
+    }
+```
+
+```diff
+    contract MultisigVault1 (0x7B8FDfCf79E72a9a8e656958647D139C0e16EA19) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7","0x894107B7b5051409f279E8300774B2f62Febe057","0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0xbDCaAa95202A56D0c688CEE2E1260fAB2F6e4fF7","0x894107B7b5051409f279E8300774B2f62Febe057","0x00040D1445683B7Ef71bf2D94CB7Fe2224Eba8d8"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xfc2819bb1373d8011d711450653b32f5bd973760
+
+# Diff at Sun, 04 Aug 2024 09:59:42 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20420404
+- current block number: 20454449
+
+## Description
+
+The bridge was frozen by EOA (maintainer role) and unfrozen through a proposal.
+
+## Watched changes
+
+```diff
+    contract ChainportCongress (0xB6b4C7aC240b1f176c5589d064733066a83884a1) {
+    +++ description: None
++++ description: The amount of proposals ever created. Goes up by 1 for each proposal.
++++ severity: MEDIUM
+      values.proposalCount:
+-        57
++        59
+    }
+```
+
 Generated with discovered.json: 0x3c024b87baed4c457cb832b6529c8aeaaab5fc41
 
 # Diff at Tue, 30 Jul 2024 15:56:41 GMT:

@@ -106,17 +106,22 @@ export const zklinknova: Layer3 = {
     provider: 'zkLink Nexus',
     links: {
       websites: ['https://zklink.io', 'https://zk.link'],
-      apps: ['https://app.zklink.io', 'https://portal.zklink.io'],
+      apps: [
+        'https://portal.zklink.io',
+        'https://zklink.io/merge',
+        'https://app.zklink.io',
+      ],
       documentation: ['https://docs.zklink.io'],
       explorers: ['https://explorer.zklink.io'],
       repositories: ['https://github.com/zkLinkProtocol'],
       socialMedia: [
         'https://blog.zk.link',
-        'https://twitter.com/zkLink_Official',
+        'https://x.com/zkLink_Official',
         'http://discord.gg/zklink',
         'https://t.me/zkLinkorg',
       ],
     },
+    activityDataSource: 'Blockchain RPC',
   },
   chainConfig: {
     name: 'zklinknova',
@@ -135,6 +140,7 @@ export const zklinknova: Layer3 = {
       defaultCallsPerMinute: 1500,
       startBlock: 1,
     },
+    associatedTokens: ['ZKL'],
     escrows: [
       {
         chain: 'optimism',
@@ -191,6 +197,7 @@ export const zklinknova: Layer3 = {
         bridge: {
           name: 'zkLink Nova Bridge from Ethereum',
         },
+        premintedTokens: ['ZKL'],
       },
       {
         chain: 'mantapacific',

@@ -2383,7 +2383,8 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "escrow": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
     },
     {
       "id": "lpt-livepeer-token",
@@ -2846,6 +2847,21 @@
       "coingeckoListingTimestamp": 1632441600,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/18578/large/nftrade.png?1696518055",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "nstr-nostra",
+      "name": "Nostra",
+      "coingeckoId": "nostra",
+      "address": "0x610dBd98A28EbbA525e9926b6aaF88f9159edbfd",
+      "symbol": "NSTR",
+      "decimals": 18,
+      "deploymentTimestamp": 1716711455,
+      "coingeckoListingTimestamp": 1718236800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/28282/large/Nostra_200x200b.png?1719434526",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -3946,6 +3962,21 @@
       "supply": "zero"
     },
     {
+      "id": "susdz-staked-usdz",
+      "name": "Staked USDz",
+      "coingeckoId": "anzen-staked-usdz",
+      "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+      "symbol": "sUSDz",
+      "decimals": 18,
+      "deploymentTimestamp": 1715851211,
+      "coingeckoListingTimestamp": 1720656000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "stone-stakestone-ether",
       "name": "StakeStone Ether",
       "coingeckoId": "stakestone-ether",
@@ -4921,6 +4952,36 @@
       "supply": "zero"
     },
     {
+      "id": "zend-zklend-token",
+      "name": "zkLend Token",
+      "coingeckoId": "zklend-2",
+      "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44",
+      "symbol": "ZEND",
+      "decimals": 18,
+      "deploymentTimestamp": 1699950167,
+      "coingeckoListingTimestamp": 1710460800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35979/large/zkLend_ZEND_logo_square_transparent_background_%281%29.png?1710306648",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "zkl-zklink",
+      "name": "ZKLink",
+      "coingeckoId": "zklink",
+      "address": "0xfC385A1dF85660a7e041423DB512f779070FCede",
+      "symbol": "ZKL",
+      "decimals": 18,
+      "deploymentTimestamp": 1712927711,
+      "coingeckoListingTimestamp": 1721606400,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/34982/large/Logo1.png?1714980729",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "zks-zks",
       "name": "Zks",
       "coingeckoId": "zkspace",
@@ -5518,35 +5579,16 @@
       "supply": "circulatingSupply"
     },
     {
-      "id": "mantapacific:meth-meth",
-      "name": "mETH",
-      "coingeckoId": "manta-meth",
-      "address": "0xACCBC418a994a27a75644d8d591afC22FaBA594e",
-      "symbol": "mETH",
+      "id": "mantapacific:mbtc-mbtc",
+      "name": "mBTC",
+      "coingeckoId": "manta-mbtc",
+      "address": "0x1468177DbCb2a772F3d182d2F1358d442B553089",
+      "symbol": "mBTC",
       "decimals": 18,
-      "deploymentTimestamp": 1715909059,
+      "deploymentTimestamp": 1715909089,
       "coingeckoListingTimestamp": 1717113600,
-      "category": "ether",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38337/large/token_m_eth.png?1717126380",
-      "chainId": 169,
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
-      "id": "mantapacific:musd-musd",
-      "name": "mUSD",
-      "coingeckoId": "manta-musd",
-      "address": "0x649d4524897cE85A864DC2a2D5A11Adb3044f44a",
-      "symbol": "mUSD",
-      "decimals": 18,
-      "deploymentTimestamp": 1715909029,
-      "coingeckoListingTimestamp": 1717113600,
-      "category": "stablecoin",
-      "iconUrl": "https://coin-images.coingecko.com/coins/images/38336/large/token_m_usd.png?1717126272",
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
       "chainId": 169,
       "source": "external",
       "supply": "totalSupply",
@@ -6730,6 +6772,25 @@
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
+      }
+    },
+    {
+      "id": "base:susdz-staked-usdz",
+      "name": "Staked USDz",
+      "coingeckoId": "anzen-staked-usdz",
+      "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
+      "symbol": "sUSDz",
+      "decimals": 18,
+      "deploymentTimestamp": 1719612631,
+      "coingeckoListingTimestamp": 1720656000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {
@@ -8203,6 +8264,21 @@
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/37375/large/image.png?1714884543",
       "chainId": 59144,
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
+    {
+      "id": "blast:andy-andy",
+      "name": "Andy",
+      "coingeckoId": "andyerc",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "symbol": "ANDY",
+      "decimals": 9,
+      "deploymentTimestamp": 1709352981,
+      "coingeckoListingTimestamp": 1711324800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/35767/large/IMG_0310.jpeg?1711371918",
+      "chainId": 81457,
       "source": "native",
       "supply": "circulatingSupply"
     },
