@@ -26,6 +26,7 @@ export async function getScalingSummaryEntries({
     const latestTvl = tvl.projects[project.id.toString()]
 
     return {
+      entryType: 'scaling-next' as const,
       ...getCommonScalingEntry({
         project,
         isVerified,

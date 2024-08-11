@@ -18,6 +18,7 @@ import {
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
@@ -78,6 +79,7 @@ type ScalingEntry =
   | ScalingRiskEntry
   | ScalingFinalityEntry
   | ScalingDataAvailabilityEntry
+  | ScalingSummaryEntry
 
 export function useScalingFilter() {
   const scalingFilters = useScalingFilterValues()
