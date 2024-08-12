@@ -3,7 +3,7 @@
   "chain": "linea",
   "blockNumber": 7681920,
   "configHash": "0x6c55b858b842e046139e5aa87fd8f201e2b06d85311095d9aec21c8711b5ab0e",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "LineaOwner",
@@ -11,17 +11,14 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"]
+        "upgrade": ["0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1692606393,
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$multisigThreshold": "5 of 8 (63%)",
-        "domainSeparator": "0x904d639129fac6c960663a383b13890137d00cf438dde08b756e908d3ac03fe4",
-        "getChainId": 59144,
-        "getOwners": [
+        "$members": [
           "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -31,8 +28,11 @@
           "0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "getThreshold": 5,
+        "$threshold": 5,
+        "domainSeparator": "0x904d639129fac6c960663a383b13890137d00cf438dde08b756e908d3ac03fe4",
+        "getChainId": 59144,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 8 (63%)",
         "nonce": 22,
         "VERSION": "1.3.0"
       },
@@ -263,7 +263,7 @@
       "name": "Governance",
       "address": "0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec",
       "assignedPermissions": {
-        "admin": ["0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"]
+        "upgrade": ["0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"]
       },
       "sinceTimestamp": 1709218009,
       "values": {
@@ -571,7 +571,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

@@ -10,7 +10,7 @@ export const near: DaLayer = {
   kind: 'PublicBlockchain',
   display: {
     name: 'NEAR DA',
-    slug: 'near-da',
+    slug: 'near',
     description: `NEAR's Data Availability Layer (NEAR DA) leverages the sharded architecture of the NEAR Protocol to provide a modular data availability layer for layer 2 solutions.`,
     links: {
       websites: ['https://near.org/', 'https://nuff.tech/'],

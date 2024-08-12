@@ -32,13 +32,16 @@ export class ActivityRepository extends BaseRepository {
     return records.length
   }
 
-  async deleteAfter(from: UnixTime, projectId: ProjectId): Promise<number> {
+  async deleteByProjectIdFrom(
+    projectId: ProjectId,
+    fromInclusive: UnixTime,
+  ): Promise<number> {
     const result = await this.db
       .deleteFrom('public.activity')
       .where((eb) =>
         eb.and([
           eb('project_id', '=', projectId.toString()),
-          eb('timestamp', '>', from.toDate()),
+          eb('timestamp', '>=', fromInclusive.toDate()),
         ]),
       )
       .executeTakeFirst()
@@ -65,6 +68,26 @@ export class ActivityRepository extends BaseRepository {
       .where('timestamp', '<=', to.toDate())
       .orderBy('timestamp', 'asc')
       .execute()
+    return rows.map(toRecord)
+  }
+
+  /**
+   * Returns all activity records for a project including the data point
+   * @param projectId Id of a project
+   * @param dataPoint Data point identifier (block, timestamp)
+   */
+  async getByProjectIncludingDataPoint(
+    projectId: ProjectId,
+    dataPoint: number,
+  ): Promise<ActivityRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(selectActivity)
+      .where('project_id', '=', projectId.toString())
+      .where('start', '<=', dataPoint)
+      .where('end', '>=', dataPoint)
+      .execute()
+
     return rows.map(toRecord)
   }
 }

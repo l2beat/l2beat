@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20331848,
   "configHash": "0x5eadf9aa619337518b920086c1bf5de662fa19fa8d3cdd00051e2b9d178534f5",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "PeggedTokenBridge",
@@ -42,7 +42,7 @@
       "name": "ProxyAdmin",
       "address": "0x520d812604E7b2ce71819FDBFE9aC40E56327F8f",
       "assignedPermissions": {
-        "admin": ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
+        "upgrade": ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
       },
       "sinceTimestamp": 1649432377,
       "values": {
@@ -137,7 +137,7 @@
       "name": "SentinelProxyAdmin",
       "address": "0x8E339115b295DeD49880eA62C1F06d1dbec3496b",
       "assignedPermissions": {
-        "admin": ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
+        "upgrade": ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
       },
       "sinceTimestamp": 1690520231,
       "values": {

@@ -77,8 +77,9 @@ const TableHead = React.forwardRef<
   HTMLTableCellElement,
   React.ThHTMLAttributes<HTMLTableCellElement> & {
     tooltip?: React.ReactNode
+    align?: 'right' | 'center'
   }
->(({ className, children, tooltip, ...props }, ref) => (
+>(({ className, children, tooltip, align, ...props }, ref) => (
   <th
     ref={ref}
     className={cn(
@@ -87,7 +88,13 @@ const TableHead = React.forwardRef<
     )}
     {...props}
   >
-    <div className="flex items-end gap-1.5 leading-none">
+    <div
+      className={cn(
+        'flex items-end gap-1.5 leading-none',
+        align === 'center' && 'justify-center',
+        align === 'right' && 'justify-end',
+      )}
+    >
       {children}
       {tooltip ? <TableTooltip>{tooltip}</TableTooltip> : null}
     </div>
@@ -97,14 +104,21 @@ TableHead.displayName = 'TableHead'
 
 const TableCell = React.forwardRef<
   HTMLTableCellElement,
-  React.TdHTMLAttributes<HTMLTableCellElement> & { href?: string }
->(({ className, children, href, ...props }, ref) => (
+  React.TdHTMLAttributes<HTMLTableCellElement> & {
+    href?: string
+    align?: 'right' | 'center'
+  }
+>(({ className, children, href, align, ...props }, ref) => (
   <td
     ref={ref}
     className={cn(
       'group h-9 whitespace-pre align-middle md:h-14',
-      !href && 'pr-3 first:pl-2 last:pr-2 md:pr-4',
-      !href && className,
+      !href && [
+        'pr-3 first:pl-2 last:pr-2 md:pr-4',
+        align === 'center' && 'text-center',
+        align === 'right' && 'text-right',
+        className,
+      ],
     )}
     {...props}
   >
@@ -113,6 +127,8 @@ const TableCell = React.forwardRef<
         href={href}
         className={cn(
           'flex size-full items-center pr-3 group-first:pl-2 group-last:pr-2 md:pr-4',
+          align === 'center' && 'justify-center',
+          align === 'right' && 'justify-end',
           className,
         )}
       >
@@ -127,10 +143,10 @@ TableCell.displayName = 'TableCell'
 
 export {
   Table,
+  TableBody,
+  TableCell,
+  TableHead,
   TableHeader,
   TableHeaderRow,
-  TableBody,
-  TableHead,
   TableRow,
-  TableCell,
 }

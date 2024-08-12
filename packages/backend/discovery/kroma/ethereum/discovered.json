@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20232340,
   "configHash": "0x2dc78fa0c026b5bfa1b50ed5ae271d153b773a2e2f38e5ace3d7934eae709860",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "L2OutputOracle",
@@ -45,7 +45,7 @@
       "address": "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"]
+        "upgrade": ["0x7e1Bdb9ee75B6ef1BCAAE3B1De1c616C7B11ef6e"]
       },
       "sinceTimestamp": 1693880651,
       "values": {
@@ -231,7 +231,7 @@
       "name": "ProxyAdmin",
       "address": "0x665c23A5722B6A237fa6Be2B49c0A94504db1edd",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x180c77aE51a9c505a43A2C7D81f8CE70cacb93A6",
           "0x22605A12cB77Fe420B0cC1263cEb58a77352FDc1",
           "0x31F648572b67e60Ec6eb8E197E1848CC5F5558de",
@@ -415,7 +415,7 @@
       "address": "0x9841bC06C8284095824e9397AC818aD1114C444C",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5"]
+        "upgrade": ["0x7fe71D0Dde2f6Bbc8474c41dc39bDFd6bCd9Eca5"]
       },
       "sinceTimestamp": 1715582603,
       "values": {
@@ -432,7 +432,7 @@
       "address": "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474"]
+        "upgrade": ["0xf96d4B1e0a0B129e1471e88dF6f1281b933Bc474"]
       },
       "sinceTimestamp": 1715574731,
       "values": {
@@ -485,7 +485,7 @@
       "address": "0xd26F4195B147b988E7497779f7DED22ba130204d",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x88b6bBb148748C18B377A57c9d4E6c714AF28078"]
+        "upgrade": ["0x88b6bBb148748C18B377A57c9d4E6c714AF28078"]
       },
       "sinceTimestamp": 1715574791,
       "values": {
@@ -643,7 +643,7 @@
     {
       "address": "0x7D76Ae60dcc2FdB57d3924024E2Ad940B76Ef81f",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x9841bC06C8284095824e9397AC818aD1114C444C",
           "0xa50f2b3d55fb311c81f6FB75998B48A67505c6F4",
           "0xd26F4195B147b988E7497779f7DED22ba130204d"

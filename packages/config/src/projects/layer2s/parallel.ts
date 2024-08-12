@@ -2,7 +2,6 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
-import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
@@ -10,7 +9,7 @@ const discovery = new ProjectDiscovery('parallel')
 
 export const parallel: Layer2 = orbitStackL2({
   discovery,
-  badges: [Badge.RaaS.Conduit],
+  badges: [],
   display: {
     name: 'Parallel',
     slug: 'parallel',
@@ -35,7 +34,6 @@ export const parallel: Layer2 = orbitStackL2({
     },
     activityDataSource: 'Blockchain RPC',
   },
-  usesBlobs: true,
   trackedTxs: [
     {
       uses: [
@@ -143,10 +141,6 @@ export const parallel: Layer2 = orbitStackL2({
     }),
   ],
   nonTemplatePermissions: [
-    ...discovery.getMultisigPermission(
-      'ConduitMultisig',
-      'Multisig that can execute upgrades via the UpgradeExecutor.',
-    ),
     {
       name: 'RollupOwner',
       accounts: discovery.getAccessControlRolePermission(

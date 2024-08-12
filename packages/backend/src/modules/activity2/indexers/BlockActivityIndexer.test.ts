@@ -5,9 +5,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { TxsCountProvider } from '../services/TxsCountProvider'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
-import { ActivityIndexerDeps } from './types'
+import { ActivityIndexerDeps, TxsCountProvider } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 
@@ -119,21 +118,77 @@ describe(BlockActivityIndexer.name, () => {
   })
 
   describe(BlockActivityIndexer.prototype.invalidate.name, () => {
-    it('returns targetHeight', async () => {
-      const indexer = createIndexer()
+    it('returns targetHeight if no rows found', async () => {
+      const activityRepository = mockObject<Database['activity']>({
+        getByProjectIncludingDataPoint: mockFn().resolvesTo([]),
+      })
 
-      const targetHeight = 0
+      const indexer = createIndexer({
+        db: mockDatabase({ activity: activityRepository }),
+      })
+
+      const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
       expect(newSafeHeight).toEqual(targetHeight)
     })
 
-    it('throws assertion when targetHeight different than safeHeight', async () => {
-      const indexer = createIndexer()
+    it('throws assertion when more than one record found', async () => {
+      const mockProjectId = ProjectId('a')
+      const mockActivityRecords = [
+        activityRecord(mockProjectId, START.add(-1, 'days'), 2, 11, 20),
+        activityRecord(mockProjectId, START.add(-2, 'days'), 4, 11, 20),
+      ]
 
-      const targetHeight = 10
+      const activityRepository = mockObject<Database['activity']>({
+        getByProjectIncludingDataPoint:
+          mockFn().resolvesTo(mockActivityRecords),
+      })
 
-      expect(async () => await indexer.invalidate(targetHeight)).toBeRejected()
+      const indexer = createIndexer({
+        db: mockDatabase({ activity: activityRepository }),
+      })
+
+      const targetHeight = 15
+      expect(
+        async () => await indexer.invalidate(targetHeight),
+      ).toBeRejectedWith(
+        `There should be exactly one record that includes data point (projectId: ${mockProjectId}, dataPoint: ${targetHeight})`,
+      )
+    })
+
+    it('deletes records and returns adjusted targetHeight', async () => {
+      const mockProjectId = ProjectId('a')
+      const mockActivityRecords = [
+        activityRecord(mockProjectId, START.add(-1, 'days'), 2, 11, 20),
+      ]
+
+      const activityRepository = mockObject<Database['activity']>({
+        getByProjectIncludingDataPoint:
+          mockFn().resolvesTo(mockActivityRecords),
+        deleteByProjectIdFrom: mockFn().resolvesTo(undefined),
+      })
+
+      const indexer = createIndexer({
+        db: mockDatabase({ activity: activityRepository }),
+      })
+
+      const targetHeight = 15
+      const result = await indexer.invalidate(targetHeight)
+
+      expect(
+        activityRepository.getByProjectIncludingDataPoint,
+      ).toHaveBeenCalledWith(mockProjectId, targetHeight + 1)
+
+      const expectedTargetHeight = mockActivityRecords[0].start - 1
+      const expectedTimestamp = mockActivityRecords[0].timestamp
+
+      expect(activityRepository.deleteByProjectIdFrom).toHaveBeenCalledWith(
+        mockProjectId,
+        expectedTimestamp,
+      )
+
+      expect(result).toEqual(expectedTargetHeight)
     })
   })
 })

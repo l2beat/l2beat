@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x57f2c0f38f6fa42d0bfd67cdc3ae06d13b7ecefe
+
+# Diff at Tue, 06 Aug 2024 12:34:21 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@08572cac0b099c9871f6e5b417260b029c0e9393 block: 20432407
+- current block number: 20469560
+
+## Description
+
+The admin- and protocolVersion of ZKsync diamond are changed. (No code changes)
+The new ChainAdmin is used as admin (but is owned by the known Matter Labs Multisig), so there are no net changes in permissions.
+
+## Watched changes
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      values.getAdmin:
+-        "0x0b622A2061EaccAE1c664eBC3E868b8438e03F61"
++        "0x2cf3bD6a9056b39999F3883955E183F655345063"
++++ description: Protocol version, increments with each protocol change
++++ severity: MEDIUM
+      values.getProtocolVersion:
+-        103079215105
++        103079215106
+      values.getSemverProtocolVersion.2:
+-        1
++        2
+    }
+```
+
 Generated with discovered.json: 0xadd226712f2ce745b2bab01dc437bbdc95f8bccf
 
 # Diff at Wed, 31 Jul 2024 10:33:50 GMT:

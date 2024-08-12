@@ -1,9 +1,9 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 20454427,
+  "blockNumber": 20511119,
   "configHash": "0x8988b388db1cfe91cd0e453ba76745b6238dfee80addb15d3e2e78e1a3695b85",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Inbox",
@@ -52,19 +52,19 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x6e237ad581a439ffc2e231c9cd6afb96d6fb8ea94dda95bbe7e04673cf4c6597",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xb6559478b59836376dA9937c4C697dDb21779E49",
           "0x9EBe5cabad9748263DbE1304064AdAb285c0f515",
           "0x17816E9A858b161c3E37016D139cf618056CaCD4",
           "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd",
           "0x909e36B512Ed45250fdff513523119d825647695"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x6e237ad581a439ffc2e231c9cd6afb96d6fb8ea94dda95bbe7e04673cf4c6597",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
-        "nonce": 207,
+        "multisigThreshold": "3 of 5 (60%)",
+        "nonce": 212,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -111,35 +111,6 @@
       }
     },
     {
-      "name": "ConduitMultisig",
-      "address": "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-      "template": "GnosisSafe",
-      "proxyType": "gnosis safe",
-      "ignoreInWatchMode": ["nonce"],
-      "sinceTimestamp": 1680797639,
-      "values": {
-        "$immutable": false,
-        "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
-        "getChainId": 1,
-        "getOwners": [
-          "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
-          "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
-          "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
-          "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
-          "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
-          "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-          "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
-        ],
-        "getThreshold": 4,
-        "GnosisSafe_modules": [],
-        "nonce": 45,
-        "VERSION": "1.3.0"
-      },
-      "derivedName": "GnosisSafe"
-    },
-    {
       "name": "OneStepProofEntry",
       "address": "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221",
       "sinceTimestamp": 1710413183,
@@ -170,11 +141,11 @@
           "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
         ],
         "allowedOutboxList": ["0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"],
-        "delayedMessageCount": 3652,
+        "delayedMessageCount": 3685,
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-        "sequencerMessageCount": 1214,
-        "sequencerReportedSubMessageCount": 532270
+        "sequencerMessageCount": 1243,
+        "sequencerReportedSubMessageCount": 533867
       },
       "derivedName": "Bridge"
     },
@@ -222,12 +193,12 @@
         "confirmPeriodBlocks": 43200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 40320,
-        "firstUnresolvedNode": 1120,
+        "firstUnresolvedNode": 1135,
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "isERC20Enabled": false,
-        "lastStakeBlock": 18914041,
-        "latestConfirmed": 1119,
-        "latestNodeCreated": 1131,
+        "lastStakeBlock": 20468408,
+        "latestConfirmed": 1134,
+        "latestNodeCreated": 1153,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
@@ -236,16 +207,16 @@
         "rollupDeploymentBlock": 18913722,
         "rollupEventInbox": "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-        "setValidatorCount": 1,
-        "stakerCount": 1,
+        "setValidatorCount": 2,
+        "stakerCount": 2,
         "stakeToken": "0x0000000000000000000000000000000000000000",
         "totalWithdrawableFunds": 0,
         "VALIDATOR_AFK_BLOCKS": 45818,
-        "validators": ["0x56D33424edb428744597Ec02571f14B50a33b7de"],
+        "validators": ["0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"],
         "validatorUtils": "0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF",
         "validatorWalletCreator": "0x9CAd81628aB7D8e239F1A5B497313341578c5F71",
         "validatorWhitelistDisabled": false,
-        "wasmModuleRoot": "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4",
+        "wasmModuleRoot": "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69",
         "zombieAddress": [],
         "zombieCount": 0,
         "zombieLatestStakedNode": []
@@ -264,7 +235,7 @@
       "name": "ProxyAdmin",
       "address": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
           "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d",
           "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4",
@@ -362,16 +333,19 @@
       "values": {
         "$admin": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
         "$implementation": "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
-        "batchCount": 1214,
+        "batchCount": 1243,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
-        "batchPosters": ["0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"],
+        "batchPosters": [
+          "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4",
+          "0x7a6BD06483710252d807bE205255E69490efca3A"
+        ],
         "bridge": "0x5a961c7D162195a9Dc5a357Cc168b0694283382E",
         "BROTLI_MESSAGE_HEADER_FLAG": "0x00",
         "DAS_MESSAGE_HEADER_FLAG": "0x80",
         "DATA_AUTHENTICATED_FLAG": "0x40",
         "DATA_BLOB_HEADER_FLAG": "0x50",
         "HEADER_LENGTH": 40,
-        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": true,
+        "IS_HARDCODED_SEQUENCER_BATCH_POSTER": false,
         "isUsingFeeToken": false,
         "keySetUpdates": 0,
         "maxDataSize": 117964,
@@ -385,8 +359,8 @@
         "reader4844": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerVersion": "0x00",
-        "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 3651,
+        "setIsBatchPosterCount": 4,
+        "totalDelayedMessagesRead": 3684,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -417,7 +391,7 @@
       "address": "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+        "upgrade": ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
       },
       "sinceTimestamp": 1704125939,
       "values": {
@@ -436,8 +410,8 @@
             "adminRole": "ADMIN_ROLE",
             "members": [
               "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
-              "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746",
-              "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+              "0x19293FBec52F94165f903708a74513Dd6dFedd0a",
+              "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b"
             ]
           }
         },
@@ -453,30 +427,29 @@
     { "address": "0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd" },
     { "address": "0x17816E9A858b161c3E37016D139cf618056CaCD4" },
     { "address": "0x2bc118eC75c4154DC164Ee663E09F5F83232b1DC" },
-    { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
-    { "address": "0x41db2C19bCaEe5e47aF56B0994D330c8a029F2d2" },
-    { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
-    { "address": "0x533Ebf8893c5bB7DDe47938507e239789E299a5f" },
     {
-      "address": "0x56D33424edb428744597Ec02571f14B50a33b7de",
-      "roles": ["Validator"]
-    },
-    {
-      "address": "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4",
+      "address": "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4",
       "roles": ["Sequencer"]
     },
+    { "address": "0x41db2C19bCaEe5e47aF56B0994D330c8a029F2d2" },
+    { "address": "0x533Ebf8893c5bB7DDe47938507e239789E299a5f" },
     { "address": "0x70Bace2e1cc06E7A96D5d23681A66a9eA6938436" },
+    {
+      "address": "0x7a6BD06483710252d807bE205255E69490efca3A",
+      "roles": ["Sequencer"]
+    },
     { "address": "0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341" },
+    { "address": "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b" },
     { "address": "0x909e36B512Ed45250fdff513523119d825647695" },
     { "address": "0x9EBe5cabad9748263DbE1304064AdAb285c0f515" },
-    { "address": "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038" },
-    { "address": "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4" },
     { "address": "0xb0A6d4ddE9f8B8f0763b34834589BF38607c7778" },
     { "address": "0xb6559478b59836376dA9937c4C697dDb21779E49" },
+    {
+      "address": "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA",
+      "roles": ["Validator"]
+    },
     { "address": "0xe3bb30f7742eC97Be5D60789A2b1273e462C0287" },
-    { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" },
-    { "address": "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0" },
-    { "address": "0xF3313C48BD8E17b823d5498D62F37019dFEA647D" }
+    { "address": "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C" }
   ],
   "abis": {
     "0x0aE4dD666748bF0F6dB5c149Eab1D8aD27820A6A": [
@@ -785,9 +758,6 @@
       "function implementation() returns (address implementation_)",
       "function upgradeTo(address newImplementation)",
       "function upgradeToAndCall(address newImplementation, bytes data) payable"
-    ],
-    "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746": [
-      "constructor(address _singleton)"
     ],
     "0x57EA090Ac0554d174AE0e2855B460e84A1A7C221": [
       "constructor(address prover0_, address proverMem_, address proverMath_, address proverHostIo_)",
@@ -1231,7 +1201,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"

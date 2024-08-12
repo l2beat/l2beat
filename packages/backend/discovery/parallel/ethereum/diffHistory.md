@@ -1,3 +1,240 @@
+Generated with discovered.json: 0x9da8d6602f5bc8018ec9a4e1c2db4df4e1a2ec4c
+
+# Diff at Mon, 12 Aug 2024 07:44:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@78984bd9166a6a2ef87dc311b2392c9536e24795 block: 20475140
+- current block number: 20511119
+
+## Description
+
+Parallel is posting blobs again, for some reason they switched to calldata a while ago but they are back to blobs now.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xcbf2f32feebbf2f97fa124b0bc96bcd11183af12
+
+# Diff at Fri, 09 Aug 2024 12:01:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20475140
+- current block number: 20475140
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475140 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+    +++ description: None
+      assignedPermissions.upgrade.9:
+-        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
++        "0xa1c86E2362dba0525075622af6d5f739B1304D45"
+      assignedPermissions.upgrade.8:
+-        "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      assignedPermissions.upgrade.7:
+-        "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"
++        "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"
+      assignedPermissions.upgrade.6:
+-        "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"
++        "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"
+      assignedPermissions.upgrade.5:
+-        "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"
++        "0x5a961c7D162195a9Dc5a357Cc168b0694283382E"
+      assignedPermissions.upgrade.3:
+-        "0x5a961c7D162195a9Dc5a357Cc168b0694283382E"
++        "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
+      assignedPermissions.upgrade.2:
+-        "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"
++        "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"
+      assignedPermissions.upgrade.1:
+-        "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"
++        "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"
+      assignedPermissions.upgrade.0:
+-        "0xa1c86E2362dba0525075622af6d5f739B1304D45"
++        "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"
+    }
+```
+
+Generated with discovered.json: 0x56dc3e54b9d63be5f7b93cdb889a811be10e81be
+
+# Diff at Fri, 09 Aug 2024 10:11:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20475140
+- current block number: 20475140
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475140 (main branch discovery), not current.
+
+```diff
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xb6559478b59836376dA9937c4C697dDb21779E49","0x9EBe5cabad9748263DbE1304064AdAb285c0f515","0x17816E9A858b161c3E37016D139cf618056CaCD4","0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd","0x909e36B512Ed45250fdff513523119d825647695"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xb6559478b59836376dA9937c4C697dDb21779E49","0x9EBe5cabad9748263DbE1304064AdAb285c0f515","0x17816E9A858b161c3E37016D139cf618056CaCD4","0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd","0x909e36B512Ed45250fdff513523119d825647695"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x12485B9d469c1D51d05b5C39e009D50eF0170cF7","0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d","0x28c32059d7e6147cf5257DFC127f7258beA1cdf4","0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2","0x5D657b905275F36AD62C3d5C36966975613aFB96","0x5a961c7D162195a9Dc5a357Cc168b0694283382E","0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d","0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3","0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","0xa1c86E2362dba0525075622af6d5f739B1304D45","0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"]
+      assignedPermissions.upgrade:
++        ["0xa1c86E2362dba0525075622af6d5f739B1304D45","0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d","0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d","0x5a961c7D162195a9Dc5a357Cc168b0694283382E","0x5D657b905275F36AD62C3d5C36966975613aFB96","0x28c32059d7e6147cf5257DFC127f7258beA1cdf4","0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3","0x12485B9d469c1D51d05b5C39e009D50eF0170cF7","0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2","0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+      assignedPermissions.upgrade:
++        ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+    }
+```
+
+Generated with discovered.json: 0xfd62887005a3835fad303d8d0fc8ae3fc92ff078
+
+# Diff at Wed, 07 Aug 2024 07:16:47 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@47685977ba2390a8eafac8e0d4cac7c81dff5758 block: 20469265
+- current block number: 20475140
+
+## Description
+
+New batch poster address is added.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.batchPosters.1:
++        "0x7a6BD06483710252d807bE205255E69490efca3A"
+      values.setIsBatchPosterCount:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x92bed3f93bb7b3a89690079407db0bd44b17e955
+
+# Diff at Tue, 06 Aug 2024 11:35:38 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@636940e9998601360990d4bbb59e5d257345bee1 block: 20454427
+- current block number: 20469265
+
+## Description
+
+Conduit multisig is removed from permissions and replaced by an EOA. The single validator is replaced.
+There is one batch posted with calldata and the Sequencer only window is increased and then reset again to the old value. (`maxTimeVariation.delaySeconds`)
+The wasmModuleRoot is changed to the ArbOS 31 root. ([compare Nitro GH repo](https://github.com/OffchainLabs/nitro/blob/7defbd2f59ffc53229eddaa5d6588e1a81ed90ff/Dockerfile#L220))
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746)
+    +++ description: None
+```
+
+```diff
+    contract RollupProxy (0x6594085ca55a2B3a5fAD1C57A270D060eEa99877) {
+    +++ description: Manages rollup components, list of Stakers and Validators. Entry point for Validators creating new Rollup Nodes (state commits) and Challengers submitting fraud proofs.
+      values.lastStakeBlock:
+-        18914041
++        20468408
+      values.setValidatorCount:
+-        1
++        2
+      values.stakerCount:
+-        1
++        2
+      values.validators.0:
+-        "0x56D33424edb428744597Ec02571f14B50a33b7de"
++        "0xcCE420Beb5a68091572A1cd860e10aE3Ce286FeA"
++++ description: Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.
+      values.wasmModuleRoot:
+-        "0x8b104a2e80ac6165dc58b9048de12f301d70b02a0ab51396c22b4b4b802a16a4"
++        "0x260f5fa5c3176a856893642e149cf128b5a8de9f828afec8d11184415dd8dc69"
+    }
+```
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.batchPosters.0:
+-        "0x5eAD389b57d533A94a0eacd570Dc1CC59C25F2D4"
++        "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4"
+      values.IS_HARDCODED_SEQUENCER_BATCH_POSTER:
+-        true
++        false
+      values.postsBlobs:
+-        true
++        false
+      values.setIsBatchPosterCount:
+-        1
++        3
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.2:
+-        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
++        "0x7AC5Af3cb1F05aC5301E5589e8bE097247C5456b"
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
++        "0x19293FBec52F94165f903708a74513Dd6dFedd0a"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ConduitMultisig/GnosisSafe.sol => /dev/null    | 952 ---------------------
+ .../GnosisSafeProxy.p.sol => /dev/null             |  34 -
+ 2 files changed, 986 deletions(-)
+```
+
 Generated with discovered.json: 0x81a29071fa30ab118e27cf7bf790151320c2728c
 
 # Diff at Sun, 04 Aug 2024 09:55:30 GMT:

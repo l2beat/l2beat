@@ -1,5 +1,5 @@
 import { createCallerFactory, router } from '~/server/api/trpc'
-import { scalingRouter } from './scaling'
+import { scalingRouter } from './routers/scaling'
 
 /**
  * This is the primary router for your server.

@@ -79,7 +79,10 @@ export class BreakdownService {
       switch (config.source) {
         case 'canonical': {
           // The canonical logic is the most complex one
-          assert(config.type === 'escrow', 'Only escrow can be canonical')
+          assert(
+            config.type === 'escrow' || config.type === 'preminted',
+            'Only escrow or preminted tokens can be canonical',
+          )
           const asset = breakdown.canonical.get(priceConfig.assetId)
           if (asset) {
             asset.usdValue += valueAsNumber
@@ -88,6 +91,7 @@ export class BreakdownService {
               amount: amountAsNumber.toString(),
               usdValue: valueAsNumber.toString(),
               escrowAddress: config.escrowAddress,
+              ...(config.type === 'preminted' ? { isPreminted: true } : {}),
             })
           } else {
             breakdown.canonical.set(priceConfig.assetId, {
@@ -101,6 +105,7 @@ export class BreakdownService {
                   amount: amountAsNumber.toString(),
                   usdValue: valueAsNumber.toString(),
                   escrowAddress: config.escrowAddress,
+                  ...(config.type === 'preminted' ? { isPreminted: true } : {}),
                 },
               ],
             })

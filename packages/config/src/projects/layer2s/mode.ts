@@ -86,7 +86,7 @@ export const mode: Layer2 = opStackL2({
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
       'ConduitMultisig',
-      'Owner of the ProxyAdmin: it can upgrade the bridge implementation potentially gaining access to all funds, and change any system component. Also designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
+      'Designated as the owner of the SystemConfig, meaning it can update the preconfer address, the batch submitter address and the gas configuration of the system.',
     ),
     ...discovery.getMultisigPermission(
       'ChallengerMultisig',
@@ -98,7 +98,7 @@ export const mode: Layer2 = opStackL2({
     ),
     ...discovery.getMultisigPermission(
       'SuperchainProxyAdminOwner',
-      'Owner of the SuperchainProxyAdmin.',
+      'Owner of ProxyAdmin and SuperchainProxyAdmin.',
     ),
     ...discovery.getMultisigPermission(
       'GuardianMultisig',

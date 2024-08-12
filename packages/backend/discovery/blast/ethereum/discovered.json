@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20317887,
   "configHash": "0x223c7ca358ed369b6d2c0b6cca7a4dcf0b87d48d45c08a6e5760c503f1b5c50b",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "DSRYieldProvider",
@@ -52,7 +52,7 @@
       "name": "ProxyAdmin",
       "address": "0x364289230b8cc7d9120eF962AF37ebCFe23cE883",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x0Ec68c5B10F21EFFb74f2A5C61DFe6b08C0Db6Cb",
           "0x3a05E5d33d7Ab3864D53aaEc93c8301C1Fa49115",
           "0x5531DcfF39EC1ec727C4c5D2fc49835368F805a9",
@@ -65,7 +65,7 @@
           "0xa45A0c7C47DB8C6e99b2d7C4939F7f7Cf69C8975",
           "0xcFF70D7F37b1EBeE89c08E485f08ACAB5f6ff873"
         ],
-        "owner": ["0xE064B565Cf2A312a3e66Fe4118890583727380C0"]
+        "configure": ["0xE064B565Cf2A312a3e66Fe4118890583727380C0"]
       },
       "sinceTimestamp": 1708812851,
       "values": {
@@ -122,18 +122,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0xe588d5604980962ab03dbe466995c5304923b096098c653abf8a454642f1f01e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x6520ad883d3D76f0120443c72AD7463cab2439a4",
           "0x480Ea8bA8De8d05A30F4f4CBedE1e28E05aE1B2C",
           "0xf97eC9b92Efda3afe52945B4e9adE0394C9E705d",
           "0xAb5972612e8CEe66f246feaCB8D500DF3C6cfADA",
           "0x2cF48F69a61261e67e3317D28Cf0EdD1aCAfA03d"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0xe588d5604980962ab03dbe466995c5304923b096098c653abf8a454642f1f01e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 50,
         "VERSION": "1.3.0"
       },
@@ -262,25 +262,25 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d"]
+        "upgrade": ["0x5F6AE08B8AeB7078cf2F96AFb089D7c9f51DA47d"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1700012495,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x47ef22e6b97dff365f80f221989a28eb2d460c7c9933f9980ba4327ce2dad7d3",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x49d495DE356259458120bfd7bCB463CFb6D6c6BA",
           "0xb7c719eB2649c1F03bFab68b0AAa35AD538a7cC8",
           "0x1f97306039530ADB4173C3786e86fab5e6b90F41",
           "0x6a356C0EAA560f00127Adf5108FfAf503b9f1e11",
           "0x46e31F27Df5047D7Fad9b1E8DFFec635cF6efAcF"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x47ef22e6b97dff365f80f221989a28eb2d460c7c9933f9980ba4327ce2dad7d3",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 9,
         "VERSION": "1.3.0"
       },
@@ -1248,8 +1248,8 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
