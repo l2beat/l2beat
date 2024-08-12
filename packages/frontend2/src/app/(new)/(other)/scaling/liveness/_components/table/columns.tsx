@@ -7,6 +7,7 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
+import { AnomalyIndicator } from '../anomaly-indicator'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
@@ -81,6 +82,23 @@ export const columns = [
     ),
     meta: {
       tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
+    },
+  }),
+  columnHelper.accessor('anomalies', {
+    cell: (ctx) => {
+      const entry = ctx.row.original
+      const showComingSoon =
+        !entry.data?.syncStatus.isSynced ||
+        entry.slug === 'linea' ||
+        entry.slug === 'starknet' ||
+        entry.slug === 'scroll'
+
+      return (
+        <AnomalyIndicator
+          anomalyEntries={ctx.getValue()}
+          showComingSoon={showComingSoon}
+        />
+      )
     },
   }),
 ]

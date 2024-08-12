@@ -1,7 +1,7 @@
 import { pluralize, UnixTime } from '@l2beat/shared-pure'
 import React from 'react'
 
-export function DurationCell(props: { durationInSeconds: number }) {
+export function LivenessDurationCell(props: { durationInSeconds: number }) {
   const seconds = props.durationInSeconds
   const minutes = Math.floor(props.durationInSeconds / 60)
   const hours = Math.floor(minutes / 60)

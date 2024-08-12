@@ -1,9 +1,7 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import {
-  type LivenessApiProject,
   TrackedTxsConfigSubtypeValues,
   UnixTime,
-  assertUnreachable,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { orderByTvl } from '../tvl/order-by-tvl'
@@ -12,8 +10,10 @@ import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getLiveness } from '../liveness/get-liveness'
-import { type LivenessProject } from '../liveness/types'
-
+import { type LivenessDetails, type LivenessProject } from '../liveness/types'
+import { toAnomalyIndicatorEntries } from '../liveness/get-anomaly-entries'
+import { type } from 'os'
+type
 export async function getScalingLivenessEntries() {
   const [
     tvl,
@@ -49,7 +49,9 @@ export async function getScalingLivenessEntries() {
       }
       const data = getLivenessData(projectLiveness, project)
       const explanation = project.display.liveness?.explanation
-      const anomalies = getAnomalyEntries(projectLiveness.anomalies)
+      const anomalies = toAnomalyIndicatorEntries(
+        projectLiveness.anomalies ?? [],
+      )
       return {
         ...getCommonScalingEntry({
           project,
@@ -88,27 +90,17 @@ function getLivenessData(liveness: LivenessProject, project: Layer2) {
   }
 
   return {
-    stateUpdates: liveness.stateUpdates && {
-      ...liveness.stateUpdates,
-      warning: project.display.liveness?.warnings?.stateUpdates,
-      syncStatus: getSyncStatus(liveness.stateUpdates.syncedUntil, syncTarget),
-    },
-    batchSubmissions: liveness.batchSubmissions && {
-      ...liveness.batchSubmissions,
-      warning: project.display.liveness?.warnings?.batchSubmissions,
-      syncStatus: getSyncStatus(
-        liveness.batchSubmissions.syncedUntil,
-        syncTarget,
-      ),
-    },
-    proofSubmissions: liveness.proofSubmissions && {
-      ...liveness.proofSubmissions,
-      warning: project.display.liveness?.warnings?.proofSubmissions,
-      syncStatus: getSyncStatus(
-        liveness.proofSubmissions.syncedUntil,
-        syncTarget,
-      ),
-    },
+    stateUpdates: getSubTypeData(project, liveness.stateUpdates, syncTarget),
+    batchSubmissions: getSubTypeData(
+      project,
+      liveness.batchSubmissions,
+      syncTarget,
+    ),
+    proofSubmissions: getSubTypeData(
+      project,
+      liveness.proofSubmissions,
+      syncTarget,
+    ),
     syncStatus: {
       isSynced,
       syncedUntil: lowestSyncedUntil.toNumber(),
@@ -116,77 +108,27 @@ function getLivenessData(liveness: LivenessProject, project: Layer2) {
   }
 }
 
-export function getSyncStatus(syncedUntil: UnixTime, syncTarget: UnixTime) {
+function getSubTypeData(
+  project: Layer2,
+  data: LivenessDetails,
+  syncTarget: UnixTime,
+) {
+  if (!data) return undefined
+
+  return {
+    '30d': data['30d'],
+    '90d': data['90d'],
+    max: data.max,
+    syncStatus: getSyncStatus(data.syncedUntil, syncTarget),
+    warning: project.display.liveness?.warnings?.stateUpdates,
+  }
+}
+
+function getSyncStatus(syncedUntil: UnixTime, syncTarget: UnixTime) {
   const isSynced = syncedUntil?.gte(syncTarget) ?? false
 
   return {
     isSynced,
     syncedUntil: syncedUntil.toNumber(),
-  }
-}
-
-function getAnomalyEntries(anomalies: LivenessApiProject['anomalies']) {
-  if (!anomalies) {
-    return []
-  }
-
-  const now = UnixTime.now()
-  // We want to show last 30 days with today included so we start 29 days ago
-  const thirtyDaysAgo = now.add(-29, 'days')
-  let dayInLoop = thirtyDaysAgo
-  const result: (
-    | { isAnomaly: boolean }
-    | {
-        isAnomaly: true
-        anomalies: {
-          type?: string
-          timestamp: number
-          durationInSeconds: number
-        }[]
-      }
-  )[] = []
-
-  while (dayInLoop.lte(now)) {
-    const anomaliesInGivenDay = anomalies.filter((a) => {
-      return a.timestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
-    })
-
-    if (anomaliesInGivenDay.length === 0) {
-      result.push({
-        isAnomaly: false,
-      })
-    } else {
-      const anomalies = anomaliesInGivenDay.map(
-        (a) =>
-          ({
-            type: typeToDisplayType(a),
-            timestamp: a.timestamp.toNumber(),
-            durationInSeconds: a.durationInSeconds,
-          }) as const,
-      )
-      anomalies.sort((a, b) => a.timestamp - b.timestamp)
-      result.push({
-        isAnomaly: true,
-        anomalies: anomalies,
-      })
-    }
-
-    dayInLoop = dayInLoop.add(1, 'days')
-  }
-  return result
-}
-
-function typeToDisplayType(
-  anomaly: NonNullable<LivenessApiProject['anomalies']>[0],
-) {
-  switch (anomaly.type) {
-    case 'batchSubmissions':
-      return 'TX DATA SUBMISSION'
-    case 'stateUpdates':
-      return 'STATE UPDATE'
-    case 'proofSubmissions':
-      return 'PROOF SUBMISSION'
-    default:
-      assertUnreachable(anomaly.type)
   }
 }

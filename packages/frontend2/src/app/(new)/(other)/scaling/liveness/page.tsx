@@ -13,6 +13,7 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingLivenessEntries()
+
   return (
     <ScalingFilterContextProvider>
       <div>
