@@ -1,3 +1,43 @@
+Generated with discovered.json: 0xe954f2fce6af87cb2a645e83eb913f58270872ee
+
+# Diff at Mon, 12 Aug 2024 13:15:54 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@bafa261ae877bba9966845f4d250f5cbb9d4f6d2 block: 20324826
+- current block number: 20512764
+
+## Description
+
+New rollup is added, but not active yet (not verifying batches).
+
+Also a new scheduled transaction that will give the role of CREATE_ROLLUP to a new address.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.8:
++        [false]
+      values.rollupCount:
+-        8
++        9
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.8:
++        ["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.13:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"grantRole","inputs":{"role":"0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08","account":"0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
 Generated with discovered.json: 0x09a28c6289220b6632a4be28b4f979f629f7ee52
 
 # Diff at Fri, 09 Aug 2024 12:02:08 GMT:
