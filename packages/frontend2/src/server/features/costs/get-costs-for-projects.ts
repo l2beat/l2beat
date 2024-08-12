@@ -1,9 +1,5 @@
 import { type Layer2 } from '@l2beat/config'
-import {
-  type AggregatedL2CostRecord,
-  type IndexerConfigurationRecord,
-} from '@l2beat/database'
-import { notUndefined } from '@l2beat/shared-pure'
+import { type AggregatedL2CostRecord } from '@l2beat/database'
 import { groupBy } from 'lodash'
 import { db } from '~/server/database'
 import {
@@ -11,9 +7,8 @@ import {
   type LatestCostsResponse,
 } from './types'
 import { addIfDefined } from './utils/add-if-defined'
-import { getSyncedUntil } from './utils/get-synced-until'
 import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
-import { toTrackedTxConfig } from './utils/to-tracked-tx-config'
+import { filteredWithSyncedUntil } from '../utils/filtered-with-synced-until'
 
 export async function getCostsForProjects(
   projects: Layer2[],
@@ -47,39 +42,6 @@ export async function getCostsForProjects(
     }
   }
   return response
-}
-
-function filteredWithSyncedUntil(
-  projects: Layer2[],
-  configurations: IndexerConfigurationRecord[],
-) {
-  return projects
-    .map((project) => {
-      const trackedTxConfig = toTrackedTxConfig(
-        project.id,
-        project.config.trackedTxs,
-      )
-      if (trackedTxConfig === undefined) return
-
-      const projectRuntimeConfigIds = trackedTxConfig
-        .filter((c) => c.type === 'l2costs')
-        .map((c) => c.id)
-
-      const projectConfigs = configurations.filter((c) =>
-        projectRuntimeConfigIds.includes(c.id),
-      )
-
-      if (projectConfigs.length === 0) return
-
-      const syncedUntil = getSyncedUntil(projectConfigs)
-      if (!syncedUntil) return
-
-      return {
-        ...project,
-        syncedUntil,
-      }
-    })
-    .filter(notUndefined)
 }
 
 function sumValues(

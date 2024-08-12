@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { getSyncedUntil } from './get-synced-until'
+import { getSyncedUntil } from './get-configurations-synced-until'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 

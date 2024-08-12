@@ -44,14 +44,14 @@ export class AnomaliesRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  async getByProjectIdFrom(
-    projectId: ProjectId,
+  async getByProjectIdsFrom(
+    projectIds: ProjectId[],
     from: UnixTime,
   ): Promise<AnomalyRecord[]> {
     const rows = await this.db
       .selectFrom('public.anomalies')
       .select(selectAnomaly)
-      .where('project_id', '=', projectId)
+      .where('project_id', 'in', projectIds)
       .where('timestamp', '>=', from.toDate())
       .execute()
     return rows.map(toRecord)

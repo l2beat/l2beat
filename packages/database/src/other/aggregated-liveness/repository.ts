@@ -54,4 +54,15 @@ export class AggregatedLivenessRepository extends BaseRepository {
       .execute()
     return rows.map(toRecord)
   }
+
+  async getByProjectIds(
+    projectIds: ProjectId[],
+  ): Promise<AggregatedLivenessRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.aggregated_liveness')
+      .select(selectAggregatedLiveness)
+      .where('project_id', 'in', projectIds)
+      .execute()
+    return rows.map(toRecord)
+  }
 }
