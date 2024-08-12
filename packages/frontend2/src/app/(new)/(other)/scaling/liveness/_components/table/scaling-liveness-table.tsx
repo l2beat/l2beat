@@ -45,7 +45,7 @@ export function ScalingLivenessTable({ entries }: Props) {
   })
 
   return (
-    <section className="space-y-6">
+    <section className="mt-4 space-y-6 sm:mt-8">
       <div className="flex flex-col justify-between gap-4 md:flex-row">
         <BaseScalingFilters items={entries} />
         <LivenessTimeRangeControls

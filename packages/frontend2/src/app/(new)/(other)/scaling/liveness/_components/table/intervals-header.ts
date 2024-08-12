@@ -13,9 +13,9 @@ export function IntervalsHeader({ average }: Props) {
 function rangeToLabel(range: LivenessTimeRange) {
   switch (range) {
     case '30d':
-      return '30-days'
+      return '30-day'
     case '90d':
-      return '90-days'
+      return '90-day'
     case 'max':
       return 'All-time'
   }
