@@ -13,7 +13,7 @@ const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
   )
 
 const ZIRCUIT_STATE_CORRECTNESS: ScalingProjectTechnologyChoice = {
-  name: 'Validity proofs ensure state correctness, but not DA',
+  name: 'Validity proofs (when available) ensure state correctness, but not DA',
   description:
     'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently proofs are optional and state (by default) is considered optimistically to be valid. Moreover, the system doesn’t check that the transactions applied to the state are the ones published by the sequencer.',
   risks: [
