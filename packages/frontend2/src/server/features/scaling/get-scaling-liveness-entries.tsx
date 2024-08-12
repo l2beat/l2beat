@@ -1,9 +1,6 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import {
-  type EthereumAddress,
   type LivenessApiProject,
-  type LivenessApiResponse,
-  type ProjectId,
   TrackedTxsConfigSubtypeValues,
   UnixTime,
   assertUnreachable,
@@ -11,31 +8,26 @@ import {
 } from '@l2beat/shared-pure'
 import { orderByTvl } from '../tvl/order-by-tvl'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { formatTimestamp } from '~/utils/dates'
+import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getLiveness } from '../liveness/get-liveness'
+import { type LivenessProject } from '../liveness/types'
 
-export async function getScalingLivenessEntries({
-  tvl,
-  liveness,
-  implementationChangeReport,
-  projectsVerificationStatuses,
-}: {
-  liveness: LivenessApiResponse['projects']
-  tvl: Record<ProjectId, number>
-  projectsVerificationStatuses: Record<string, boolean | undefined>
-  implementationChangeReport: {
-    projects: Record<
-      string,
-      Record<
-        string,
-        {
-          containingContract: EthereumAddress
-          newImplementations: EthereumAddress[]
-        }[]
-      >
-    >
-  }
-}) {
-  const activeProjects = [...layer2s].filter(
+export async function getScalingLivenessEntries() {
+  const [
+    tvl,
+    projectsVerificationStatuses,
+    implementationChangeReport,
+    liveness,
+  ] = await Promise.all([
+    getLatestTvlUsd(),
+    getProjectsVerificationStatuses(),
+    getImplementationChangeReport(),
+    getLiveness(),
+  ])
+
+  const activeProjects = layer2s.filter(
     (p) =>
       liveness[p.id.toString()] &&
       (p.display.category === 'Optimistic Rollup' ||
@@ -43,6 +35,7 @@ export async function getScalingLivenessEntries({
       !p.isUpcoming &&
       !p.isArchived,
   )
+
   const orderedByTvl = orderByTvl(activeProjects, tvl)
 
   return orderedByTvl
@@ -50,17 +43,20 @@ export async function getScalingLivenessEntries({
       const hasImplementationChanged =
         !!implementationChangeReport.projects[project.id.toString()]
       const isVerified = !!projectsVerificationStatuses[project.id.toString()]
-      const data = getLivenessData(liveness[project.id.toString()], project)
+      const projectLiveness = liveness[project.id.toString()]
+      if (!projectLiveness) {
+        return undefined
+      }
+      const data = getLivenessData(projectLiveness, project)
       const explanation = project.display.liveness?.explanation
-      const anomalies = getAnomalyEntries(
-        liveness[project.id.toString()]?.anomalies,
-      )
+      const anomalies = getAnomalyEntries(projectLiveness.anomalies)
       return {
         ...getCommonScalingEntry({
           project,
           hasImplementationChanged,
           isVerified,
         }),
+        entryType: 'liveness' as const,
         data,
         explanation,
         anomalies,
@@ -73,10 +69,7 @@ export type ScalingLivenessEntry = Awaited<
   ReturnType<typeof getScalingLivenessEntries>
 >[number]
 
-function getLivenessData(
-  liveness: LivenessApiResponse['projects'][string],
-  project: Layer2,
-) {
+function getLivenessData(liveness: LivenessProject, project: Layer2) {
   if (!liveness) return undefined
 
   let isSynced = true
@@ -118,30 +111,17 @@ function getLivenessData(
     },
     syncStatus: {
       isSynced,
-      displaySyncedUntil: formatTimestamp(lowestSyncedUntil.toNumber(), {
-        mode: 'datetime',
-        longMonthName: true,
-      }),
+      syncedUntil: lowestSyncedUntil.toNumber(),
     },
   }
 }
 
 export function getSyncStatus(syncedUntil: UnixTime, syncTarget: UnixTime) {
   const isSynced = syncedUntil?.gte(syncTarget) ?? false
-  if (isSynced) {
-    return {
-      isSynced,
-    }
-  }
+
   return {
     isSynced,
-    displaySyncedUntil: `Values have not been synced since\n${formatTimestamp(
-      syncedUntil.toNumber(),
-      {
-        mode: 'datetime',
-        longMonthName: true,
-      },
-    )}.`,
+    syncedUntil: syncedUntil.toNumber(),
   }
 }
 

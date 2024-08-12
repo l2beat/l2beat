@@ -1,63 +1,39 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/types'
-import {
-  ScalingDaFilters,
-  type ScalingDaFiltersState,
-} from '../scaling-da-filters'
 import { columns } from './columns'
+import { type ScalingLivenessEntry } from '~/server/features/scaling/get-scaling-liveness-entries'
+import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
+import { toLivenessTableEntry } from './to-table-entry'
+import { type LivenessTimeRange } from '~/server/features/liveness/types'
+import { useLocalStorage } from '~/hooks/use-local-storage'
+import { LivenessTimeRangeControls } from '../liveness-time-range-controls'
 
 export interface Props {
-  items: ScalingDataAvailabilityEntry[]
+  entries: ScalingLivenessEntry[]
 }
 
-export function ScalingDataAvailabilityTable({ items }: Props) {
-  const [filters, setFilters] = useState<ScalingDaFiltersState>(
-    DEFAULT_DA_SCALING_FILTERS,
+export function ScalingLivenessTable({ entries }: Props) {
+  const [timeRange, setTimeRange] = useLocalStorage<LivenessTimeRange>(
+    'liveness-time-range',
+    '30d',
   )
+  const includeFilters = useScalingFilter()
 
-  const includeFilters = useCallback(
-    (entry: ScalingDataAvailabilityEntry) => {
-      const checks = [
-        filters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        filters.category !== undefined
-          ? entry.category === filters.category
-          : undefined,
-        filters.stack !== undefined
-          ? entry.provider === filters.stack
-          : undefined,
-        filters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === filters.stage
-            : false
-          : undefined,
-        filters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === filters.purpose)
-          : undefined,
-        filters.daLayer !== undefined
-          ? entry.dataAvailability.layer.value === filters.daLayer
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [filters],
-  )
-
-  const projects = useMemo(
-    () => items.filter((item) => includeFilters(item)),
-    [items, includeFilters],
+  const tableEntries = useMemo(
+    () =>
+      entries
+        .filter(includeFilters)
+        .map((item) => toLivenessTableEntry(item, timeRange)),
+    [entries, includeFilters, timeRange],
   )
 
   const table = useTable({
-    data: projects,
+    data: tableEntries,
     columns: columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -74,15 +50,14 @@ export function ScalingDataAvailabilityTable({ items }: Props) {
 
   return (
     <section className="space-y-6">
-      <ScalingDaFilters
-        items={projects}
-        state={filters}
-        setState={setFilters}
-      />
-      <BasicTable
-        table={table}
-        onResetFilters={() => setFilters(DEFAULT_DA_SCALING_FILTERS)}
-      />
+      <div className="flex flex-col justify-between gap-4 md:flex-row">
+        <BaseScalingFilters items={entries} />
+        <LivenessTimeRangeControls
+          timeRange={timeRange}
+          setTimeRange={setTimeRange}
+        />
+      </div>
+      <BasicTable table={table} />
     </section>
   )
 }

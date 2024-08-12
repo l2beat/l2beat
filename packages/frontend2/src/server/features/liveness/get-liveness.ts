@@ -2,9 +2,7 @@ import {
   assert,
   type LivenessApiProject,
   UnixTime,
-  type LivenessApiResponse,
   type TrackedTxsConfigSubtype,
-  type LivenessDetails,
   type LivenessAnomaly,
 } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
@@ -16,19 +14,17 @@ import {
 import { unstable_noStore as noStore } from 'next/cache'
 import { groupBy } from 'lodash'
 import { filteredWithSyncedUntil } from '../utils/filtered-with-synced-until'
+import { type LivenessResponse, type LivenessDetails } from './types'
 
 export async function getLiveness() {
   noStore()
-  console.time('getLiveness')
-  const liveness = await getCachedLiveness()
-  console.timeEnd('getLiveness')
-  return liveness
+  return getCachedLiveness()
 }
 
-const getCachedLiveness = async () => {
+const getCachedLiveness = async (): Promise<LivenessResponse> => {
   const backendProjects = layer2s
 
-  const projects: LivenessApiResponse['projects'] = {}
+  const projects: LivenessResponse = {}
 
   const configurations = await db.indexerConfiguration.getByIndexerId(
     'tracked_txs_indexer',
@@ -99,21 +95,21 @@ function mapAggregatedLivenessRecords(
   )
   const max = records.find((r) => r.subtype === subtype && r.range === 'MAX')
   return {
-    last30Days: last30Days
+    '30d': last30Days
       ? {
           averageInSeconds: last30Days.avg,
           minimumInSeconds: last30Days.min,
           maximumInSeconds: last30Days.max,
         }
       : undefined,
-    last90Days: last90Days
+    '90d': last90Days
       ? {
           averageInSeconds: last90Days.avg,
           minimumInSeconds: last90Days.min,
           maximumInSeconds: last90Days.max,
         }
       : undefined,
-    allTime: max
+    max: max
       ? {
           averageInSeconds: max.avg,
           minimumInSeconds: max.min,

@@ -1,16 +1,11 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
-import { SentimentText } from '~/app/_components/sentiment-text'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import {
-  TypeCell,
-  TypeColumnTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/types'
+import { type ScalingLivenessTableEntry } from './to-table-entry'
+import { TypeCell } from '~/app/_components/table/cells/type-cell'
 
-const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()
+const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
 export const columns = [
   // TODO: Make sure this is centered
@@ -26,7 +21,7 @@ export const columns = [
     id: 'logo',
     cell: (ctx) => (
       <Image
-        className="min-w-[18px] min-h-[18px]"
+        className="min-h-[18px] min-w-[18px]"
         src={`/icons/${ctx.row.original.slug}.png`}
         width={18}
         height={18}
@@ -44,6 +39,33 @@ export const columns = [
         project={ctx.row.original}
         type={ctx.row.original.type}
       />
+    ),
+  }),
+  columnHelper.group({
+    id: 'data',
+    header: 'Average intervals',
+    columns: [
+      columnHelper.accessor('data.batchSubmissions.averageInSeconds', {
+        header: 'Tx data\nsubmissions',
+        cell: (ctx) => <div>{ctx.getValue()}</div>,
+        sortUndefined: 'last',
+      }),
+      columnHelper.accessor('data.proofSubmissions.averageInSeconds', {
+        header: 'Proof\nsubmissions',
+        cell: (ctx) => <div>{ctx.getValue()}</div>,
+        sortUndefined: 'last',
+      }),
+      columnHelper.accessor('data.stateUpdates.averageInSeconds', {
+        header: 'State\nupdates',
+        cell: (ctx) => <div>{ctx.getValue()}</div>,
+        sortUndefined: 'last',
+      }),
+    ],
+  }),
+  columnHelper.accessor('category', {
+    header: 'Type',
+    cell: (ctx) => (
+      <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
   }),
 ]
