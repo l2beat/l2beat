@@ -3,7 +3,10 @@ import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { type ScalingLivenessTableEntry } from './to-table-entry'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import {
+  TypeCell,
+  TypeExplanationTooltip,
+} from '~/app/_components/table/cells/type-cell'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
@@ -49,16 +52,25 @@ export const columns = [
         header: 'Tx data\nsubmissions',
         cell: (ctx) => <div>{ctx.getValue()}</div>,
         sortUndefined: 'last',
+        meta: {
+          tooltip: 'How often transaction batches are submitted to the L1',
+        },
       }),
       columnHelper.accessor('data.proofSubmissions.averageInSeconds', {
         header: 'Proof\nsubmissions',
         cell: (ctx) => <div>{ctx.getValue()}</div>,
         sortUndefined: 'last',
+        meta: {
+          tooltip: 'How often validity proofs are submitted to the L1',
+        },
       }),
       columnHelper.accessor('data.stateUpdates.averageInSeconds', {
         header: 'State\nupdates',
         cell: (ctx) => <div>{ctx.getValue()}</div>,
         sortUndefined: 'last',
+        meta: {
+          tooltip: 'How often state roots are submitted to the L1',
+        },
       }),
     ],
   }),
@@ -67,5 +79,8 @@ export const columns = [
     cell: (ctx) => (
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
+    meta: {
+      tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
+    },
   }),
 ]

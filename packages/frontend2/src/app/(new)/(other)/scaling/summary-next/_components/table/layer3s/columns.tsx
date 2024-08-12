@@ -3,7 +3,10 @@ import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import {
+  TypeCell,
+  TypeExplanationTooltip,
+} from '~/app/_components/table/cells/type-cell'
 import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/types'
 import { TotalCell } from '../total-cell'
 
@@ -40,21 +43,7 @@ export const summaryLayer3sColumns = [
     header: 'Type',
     cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
     meta: {
-      tooltip: (
-        <div>
-          <div className="mb-1">
-            Type of this project. Determines data availability and proof system
-            used.
-          </div>
-          ZK Rollups = Validity Proofs + onchain data
-          <br />
-          Optimistic Rollups = Fraud Proofs + onchain data
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </div>
-      ),
+      tooltip: <TypeExplanationTooltip />,
     },
   }),
   columnHelper.accessor('provider', {
