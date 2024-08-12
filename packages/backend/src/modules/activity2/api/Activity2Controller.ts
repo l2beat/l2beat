@@ -12,6 +12,7 @@ import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
 import { Database } from '@l2beat/database'
 import { Clock } from '../../../tools/Clock'
 import { formatActivityChart } from './formatActivityChart'
+import { postprocessCounts } from './postprocessCounts'
 import { toCombinedActivity } from './toCombinedActivity'
 import {
   DailyTransactionCount,
@@ -208,11 +209,7 @@ export class Activity2Controller {
     for (const projectId of this.projectIds) {
       if (!this.projectIds.includes(projectId)) continue
       const projectCounts = counts.filter((c) => c.projectId === projectId)
-      const postprocessedCounts = postprocessCounts(
-        projectCounts,
-        processor.hasProcessedAll(),
-        now,
-      )
+      const postprocessedCounts = postprocessCounts(projectCounts, true, now)
 
       // This is needed because currently there is a window between the project being
       // synced_once and the data being available in the materialized view.
