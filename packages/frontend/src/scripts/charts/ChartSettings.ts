@@ -87,7 +87,6 @@ export class ChartSettingsManager {
           timeRangeInDays: 365,
           showEthereumTransactions: true,
         }
-      case 'scaling-costs':
       case 'project-costs':
       case 'storybook-fake-costs':
         return {
