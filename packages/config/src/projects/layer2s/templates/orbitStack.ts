@@ -669,9 +669,7 @@ export function orbitStackL2(templateVars: OrbitStackConfigL2): Layer2 {
     stage:
       templateVars.stage ??
       (postsToExternalDA
-        ? {
-            stage: 'NotApplicable',
-          }
+        ? 'NotApplicable'
         : getStage(
             {
               stage0: {

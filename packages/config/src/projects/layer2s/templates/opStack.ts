@@ -601,9 +601,7 @@ export function opStackL2(templateVars: OpStackConfigL2): Layer2 {
     stage:
       templateVars.stage === undefined
         ? daProvider !== undefined || templateVars.isNodeAvailable === undefined
-          ? {
-              stage: 'NotApplicable',
-            }
+          ? 'NotApplicable'
           : getStage(
               {
                 stage0: {

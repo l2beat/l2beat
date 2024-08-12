@@ -379,7 +379,7 @@ export function polygonCDKStack(templateVars: PolygonCDKStackConfig): Layer2 {
     }),
     stage:
       daProvider !== undefined
-        ? { stage: 'NotApplicable' }
+        ? 'NotApplicable'
         : getStage(
             {
               stage0: {

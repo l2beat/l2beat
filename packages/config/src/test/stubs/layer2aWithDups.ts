@@ -37,9 +37,7 @@ export const layer2aWithDups: Layer2 = {
       },
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     escrows: [
       {

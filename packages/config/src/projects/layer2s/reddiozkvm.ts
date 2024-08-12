@@ -31,9 +31,7 @@ export const reddiozkvm: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     escrows: [],
   },

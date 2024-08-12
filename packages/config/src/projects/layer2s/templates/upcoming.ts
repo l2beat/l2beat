@@ -26,9 +26,7 @@ export function upcomingL2(templateVars: UpcomingConfigL2): Layer2 {
     display: {
       ...templateVars.display,
     },
-    stage: {
-      stage: 'NotApplicable',
-    },
+    stage: 'NotApplicable',
     config: {
       escrows: [],
     },

@@ -47,7 +47,7 @@ export interface Layer2 {
   /** Risk view values for this layer2 */
   riskView: ScalingProjectRiskView
   /** Rollup stage */
-  stage: StageConfig
+  stage: StageConfig | 'NotApplicable'
   /** Deep dive into layer2 technology */
   technology: ScalingProjectTechnology
   /** Open-source node details */

@@ -140,9 +140,7 @@ export const apex: Layer2 = {
     },
     activityDataSource: 'Closed API',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     associatedTokens: ['APEX'],
     escrows: [

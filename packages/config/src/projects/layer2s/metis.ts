@@ -63,9 +63,7 @@ export const metis: Layer2 = {
     },
     activityDataSource: 'Blockchain RPC',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   chainConfig: {
     name: 'metis',
     chainId: 1088,

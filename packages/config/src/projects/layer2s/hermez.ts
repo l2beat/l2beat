@@ -48,9 +48,7 @@ export const hermez: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     escrows: [
       {

@@ -43,9 +43,7 @@ export const zkswap2: Layer2 = {
       ],
     },
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     associatedTokens: ['ZKS'],
     escrows: [

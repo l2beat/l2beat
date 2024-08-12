@@ -208,9 +208,7 @@ export const zkfair: Layer2 = {
     destinationToken: RISK_VIEW.NATIVE_AND_CANONICAL(),
     validatedBy: RISK_VIEW.VALIDATED_BY_ETHEREUM,
   }),
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   technology: {
     stateCorrectness: {
       ...STATE_CORRECTNESS.VALIDITY_PROOFS,

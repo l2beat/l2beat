@@ -91,9 +91,7 @@ export const rhinofi: Layer2 = {
     },
     activityDataSource: 'Closed API',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     associatedTokens: ['DVF'],
     escrows: [

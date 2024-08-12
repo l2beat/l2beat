@@ -84,9 +84,7 @@ export const tanx: Layer2 = {
     },
     activityDataSource: 'Closed API',
   },
-  stage: {
-    stage: 'NotApplicable',
-  },
+  stage: 'NotApplicable',
   config: {
     escrows: [
       discovery.getEscrowDetails({
