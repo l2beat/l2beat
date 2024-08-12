@@ -8,7 +8,7 @@ Generated with discovered.json: 0x494b122c9ae1fdf5d29f87d59e7d30e0e4e2c2fe
 
 ## Description
 
-Cbridge bridge contracts were paused for a couple minutes, the guards were set to a 'relaxed' state before the bridges was unpaused again.
+cBridge bridge contracts were paused for a couple minutes, the guards were set to a 'relaxed' state before the bridge was unpaused again.
 
 ## Watched changes
 
