@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x809b23b3c983d8f92860d90b98fd91ff50a86b14
+Generated with discovered.json: 0x59ef717b76a2844895f5f850987f4c52c6485b60
 
-# Diff at Fri, 09 Aug 2024 10:12:56 GMT:
+# Diff at Fri, 09 Aug 2024 13:54:41 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20325237
-- current block number: 20325237
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 20325237
+- current block number: 20491473
 
 ## Description
 
@@ -23,6 +23,15 @@ discovery. Values are for block 20325237 (main branch discovery), not current.
 -        ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
       assignedPermissions.upgrade:
 +        ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
+    }
+```
+
+```diff
+    contract WitnessValidiumDAC (0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8) {
+    +++ description: None
+      name:
+-        "PolygonDataCommittee"
++        "WitnessValidiumDAC"
     }
 ```
 

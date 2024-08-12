@@ -1,3 +1,26 @@
+Generated with discovered.json: 0x9da8d6602f5bc8018ec9a4e1c2db4df4e1a2ec4c
+
+# Diff at Mon, 12 Aug 2024 07:44:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@78984bd9166a6a2ef87dc311b2392c9536e24795 block: 20475140
+- current block number: 20511119
+
+## Description
+
+Parallel is posting blobs again, for some reason they switched to calldata a while ago but they are back to blobs now.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xcbf2f32feebbf2f97fa124b0bc96bcd11183af12
 
 # Diff at Fri, 09 Aug 2024 12:01:19 GMT:

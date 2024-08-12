@@ -1,46 +1,10 @@
-Generated with discovered.json: 0xb5b1fdedf5752620fceec734149ef0a982c30b9a
+Generated with discovered.json: 0xed332bb01b0b9c882819f7b27e047b3e67fd5261
 
-# Diff at Fri, 09 Aug 2024 12:03:07 GMT:
+# Diff at Fri, 09 Aug 2024 13:54:22 GMT:
 
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 19726116
-- current block number: 19726116
-
-## Description
-
-Discovery rerun on the same block number with only config-related changes.
-
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 19726116 (main branch discovery), not current.
-
-```diff
-    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
-    +++ description: None
-      assignedPermissions.upgrade.3:
--        "0x997CfB0838544f68E59f877EDc905001456F125b"
-+        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
-      assignedPermissions.upgrade.2:
--        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
-+        "0x997CfB0838544f68E59f877EDc905001456F125b"
-      assignedPermissions.upgrade.1:
--        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
-+        "0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b"
-      assignedPermissions.upgrade.0:
--        "0x9cb4706e20A18E59a48ffa7616d700A3891e1861"
-+        "0x1CbC08bf0D48b18F9f97796c61352b192d1850A5"
-    }
-```
-
-Generated with discovered.json: 0x3773839a91d71bc8fc85693572481a61aaaf1ed5
-
-# Diff at Fri, 09 Aug 2024 10:13:05 GMT:
-
-- author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19726116
-- current block number: 19726116
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 19726116
+- current block number: 20491472
 
 ## Description
 
@@ -71,8 +35,20 @@ discovery. Values are for block 19726116 (main branch discovery), not current.
 ```
 
 ```diff
-    contract ZkFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
     +++ description: None
+      name:
+-        "CDKValidium"
++        "ZKFairValidium"
+    }
+```
+
+```diff
+    contract ZKFairOwner (0x8933Fa0A97f39cd38f56b1887d5cc56cF04F3A88) {
+    +++ description: None
+      name:
+-        "ZkFairOwner"
++        "ZKFairOwner"
       values.$multisigThreshold:
 -        "3 of 4 (75%)"
       values.getOwners:
@@ -89,18 +65,30 @@ discovery. Values are for block 19726116 (main branch discovery), not current.
 ```
 
 ```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      name:
+-        "DataAvailabilityCommittee"
++        "ZKFairValidiumDAC"
+    }
+```
+
+```diff
     contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
     +++ description: None
       assignedPermissions.admin:
 -        ["0x1CbC08bf0D48b18F9f97796c61352b192d1850A5","0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b","0x997CfB0838544f68E59f877EDc905001456F125b","0x9cb4706e20A18E59a48ffa7616d700A3891e1861"]
       assignedPermissions.upgrade:
-+        ["0x9cb4706e20A18E59a48ffa7616d700A3891e1861","0x1CbC08bf0D48b18F9f97796c61352b192d1850A5","0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b","0x997CfB0838544f68E59f877EDc905001456F125b"]
++        ["0x1CbC08bf0D48b18F9f97796c61352b192d1850A5","0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b","0x997CfB0838544f68E59f877EDc905001456F125b","0x9cb4706e20A18E59a48ffa7616d700A3891e1861"]
     }
 ```
 
 ```diff
-    contract ZkFairAdmin (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
+    contract ZKFairAdmin (0xcd14BE1959928BB8c160D11817E2BE2129e2F25F) {
     +++ description: None
+      name:
+-        "ZkFairAdmin"
++        "ZKFairAdmin"
       values.$multisigThreshold:
 -        "3 of 4 (75%)"
       values.getOwners:
