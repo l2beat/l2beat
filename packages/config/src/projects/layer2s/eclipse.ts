@@ -43,9 +43,6 @@ export const eclipse: Layer2 = {
       discovery.getContractDetails('Contract1'),
       discovery.getContractDetails('Contract2'),
       discovery.getContractDetails('Contract3'),
-      discovery.getContractDetails('Contract4'),
-      discovery.getContractDetails('Contract5'),
-      discovery.getContractDetails('Contract6'),
     ],
     risks: [],
   },
@@ -104,4 +101,10 @@ export const eclipse: Layer2 = {
     stage: 'NotApplicable',
   },
   technology: {},
+  permissions: [
+    ...discovery.getMultisigPermission(
+      'EclipseMultisig',
+      'Can upgrade system contracts.',
+    ),
+  ],
 }

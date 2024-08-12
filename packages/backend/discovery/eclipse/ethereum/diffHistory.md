@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x6242b2d7867c3888bf7cda0e0c366e75a91b5ae3
+Generated with discovered.json: 0xf211bfdcc94c6dd53cc0a2e3c91beb23eb9c3024
 
-# Diff at Mon, 12 Aug 2024 10:37:06 GMT:
+# Diff at Mon, 12 Aug 2024 10:45:43 GMT:
 
 - author: Luca Donno (<donnoh99@gmail.com>)
-- current block number: 20511979
+- current block number: 20512023
 
 ## Description
 
@@ -13,37 +13,19 @@ Provide description of changes. This section will be preserved.
 
 ```diff
 +   Status: CREATED
-    contract Contract3 (0x338017E0f208b4EAF8Cd4BbDc8bdabEFd0e39bE9)
+    contract EclipseMultisig (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract Contract5 (0x4ceF0fA54dC06CE0eA198DAb2F57D28A9deE712B)
+    contract Contract3 (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1)
     +++ description: None
 ```
 
 ```diff
 +   Status: CREATED
-    contract GnosisSafe (0x7B2c1CbB33c53c3C6a695e36096AD2cfCE1c0efC)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Contract4 (0x83cB71D80078bf670b3EfeC6AD9E5E6407cD0fd1)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Contract1 (0xa8E15d2B1bf6B0Fd3Bc9Ead06323c0730b67f8d4)
-    +++ description: None
-```
-
-```diff
-+   Status: CREATED
-    contract Contract6 (0xb23B2492f7A9631104A5877F7FFA00633660968d)
+    contract Contract1 (0xb23B2492f7A9631104A5877F7FFA00633660968d)
     +++ description: None
 ```
 
