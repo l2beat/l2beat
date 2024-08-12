@@ -145,10 +145,7 @@ export class DataStatusService {
     targetTimestamp: UnixTime,
   ) {
     const multiIndexerEntries = entries.filter(
-      (c) =>
-        c.type === 'escrow' ||
-        c.type === 'totalSupply' ||
-        c.type === 'coingecko',
+      (c) => c.type !== 'circulatingSupply' && c.type !== 'preminted',
     )
 
     const configurations = await this.getConfigurations(multiIndexerEntries)
