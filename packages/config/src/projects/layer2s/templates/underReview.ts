@@ -40,9 +40,7 @@ export function underReviewL2(templateVars: UnderReviewConfigL2): Layer2 {
     display: {
       ...templateVars.display,
     },
-    stage: {
-      stage: 'UnderReview',
-    },
+    stage: 'UnderReview',
     config: {
       associatedTokens: templateVars.associatedTokens,
       escrows: templateVars.escrows ?? [],

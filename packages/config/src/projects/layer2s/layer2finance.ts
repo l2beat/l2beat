@@ -43,9 +43,7 @@ export const layer2finance: Layer2 = {
     ],
   },
   riskView: UNDER_REVIEW_RISK_VIEW,
-  stage: {
-    stage: 'UnderReview',
-  },
+  stage: 'UnderReview',
   technology: TECHNOLOGY.UNDER_REVIEW,
   contracts: {
     isUnderReview: true,
