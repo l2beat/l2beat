@@ -9,19 +9,15 @@ import { columns } from './columns'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/get-scaling-liveness-entries'
 import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
 import { toLivenessTableEntry } from './to-table-entry'
-import { type LivenessTimeRange } from '~/server/features/liveness/types'
-import { useLocalStorage } from '~/hooks/use-local-storage'
 import { LivenessTimeRangeControls } from '../liveness-time-range-controls'
+import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
 
 export interface Props {
   entries: ScalingLivenessEntry[]
 }
 
 export function ScalingLivenessTable({ entries }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage<LivenessTimeRange>(
-    'liveness-time-range',
-    '30d',
-  )
+  const { timeRange, setTimeRange } = useLivenessTimeRangeContext()
   const includeFilters = useScalingFilter()
 
   const tableEntries = useMemo(

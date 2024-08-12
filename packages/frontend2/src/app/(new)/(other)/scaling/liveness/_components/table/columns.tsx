@@ -15,6 +15,7 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
 import { LivenessIntervalCell } from './liveness-interval-cell'
+import { IntervalsHeader } from './intervals-header'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
@@ -54,7 +55,7 @@ export const columns = [
   }),
   columnHelper.group({
     id: 'data',
-    header: 'Average intervals',
+    header: () => <IntervalsHeader average={true} />,
     columns: [
       columnHelper.accessor('data.batchSubmissions.averageInSeconds', {
         header: 'Tx data\nsubmissions',

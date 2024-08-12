@@ -16,6 +16,7 @@ import {
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
 import { LivenessDurationCell } from '../liveness-duration-cell'
+import { IntervalsHeader } from './intervals-header'
 
 export function LivenessIntervalCell(props: {
   entry: ScalingLivenessTableEntry
@@ -88,7 +89,9 @@ function LivenessTooltip(props: {
   }
   return (
     <div className="font-medium">
-      <span>30-day intervals:</span>
+      <span>
+        <IntervalsHeader />
+      </span>
       <ul className="mt-1 list-inside list-disc">
         <li className="flex justify-between gap-4">
           Minimum:
