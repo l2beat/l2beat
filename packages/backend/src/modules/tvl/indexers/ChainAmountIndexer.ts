@@ -1,5 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
 import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
@@ -8,11 +9,12 @@ import {
 } from '../../../tools/uif/multi/types'
 import { ChainAmountConfig, ChainAmountIndexerDeps } from './types'
 
+const NAME = 'chain_amount_indexer'
 export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
   constructor(private readonly $: ChainAmountIndexerDeps) {
     super({
       ...$,
-      name: 'chain_amount_indexer',
+      name: NAME,
       tag: $.chain,
       updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
     })
@@ -93,5 +95,9 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
         })
       }
     }
+  }
+
+  static getId(chain: string) {
+    return Indexer.createId(NAME, chain)
   }
 }

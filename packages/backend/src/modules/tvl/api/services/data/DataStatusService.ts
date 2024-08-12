@@ -9,6 +9,10 @@ import {
   TotalSupplyEntry,
   UnixTime,
 } from '@l2beat/shared-pure'
+import { ChainAmountIndexer } from '../../../indexers/ChainAmountIndexer'
+import { CirculatingSupplyIndexer } from '../../../indexers/CirculatingSupplyIndexer'
+import { PremintedIndexer } from '../../../indexers/PremintedIndexer'
+import { PriceIndexer } from '../../../indexers/PriceIndexer'
 
 export const CONSIDER_EXCLUDED_AFTER_DAYS = 7
 type MultiIndexerEntry =
@@ -60,7 +64,7 @@ export class DataStatusService {
           c.type === 'preminted',
       ),
       targetTimestamp,
-      (c) => `preminted_indexer::${c.chain}_${c.address}`,
+      (c) => PremintedIndexer.getId(c.chain, c.address),
       (indexer, entries) =>
         entries.find(
           (cc) =>
@@ -82,7 +86,7 @@ export class DataStatusService {
           c.type === 'circulatingSupply',
       ),
       targetTimestamp,
-      (c) => `circulating_supply_indexer::${c.coingeckoId}`,
+      (c) => CirculatingSupplyIndexer.getId(c.coingeckoId),
       (indexer, entries) =>
         entries.find(
           (cc) =>
@@ -218,10 +222,10 @@ export class DataStatusService {
 function toIndexerId(config: MultiIndexerEntry) {
   switch (config.type) {
     case 'coingecko':
-      return `price_indexer::${config.coingeckoId.toString()}`
+      return PriceIndexer.getId(config.coingeckoId)
     case 'escrow':
     case 'totalSupply':
-      return `chain_amount_indexer::${config.chain}`
+      return ChainAmountIndexer.getId(config.chain)
   }
 }
 
