@@ -20,7 +20,7 @@ export type CostsUnit = 'eth' | 'usd' | 'gas'
 export async function getScalingCostsEntries(): Promise<ScalingCostsEntry[]> {
   const [tvl, implementationChange, projectsVerificationStatuses] =
     await Promise.all([
-      getLatestTvlUsd({ type: 'layer2' }),
+      getLatestTvlUsd(),
       getImplementationChangeReport(),
       getProjectsVerificationStatuses(),
     ])
