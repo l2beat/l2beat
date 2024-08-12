@@ -1,14 +1,71 @@
-Generated with discovered.json: 0x11dfb91b5a1bb2c3e4b7d1b6028dae43c0fadc05
+Generated with discovered.json: 0x10f525307b98b5fe66ef9ce9c3a491523cb6e8bc
 
-# Diff at Tue, 30 Jul 2024 11:13:29 GMT:
+# Diff at Fri, 09 Aug 2024 10:11:17 GMT:
 
 - author: Mateusz Radomski (<radomski.main@protonmail.com>)
-- comparing to: main@b2b6471ff62871f4956541f42ec025c356c08f7e block: 20110229
-- current block number: 20110229
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20420390
+- current block number: 20420390
 
 ## Description
 
 Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420390 (main branch discovery), not current.
+
+```diff
+    contract ParadexImplementationGovernorMultisig (0x0a64d3D7747549aF6d65C225D56ac8f71e436B93) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
+      assignedPermissions.upgrade:
++        ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
+      values.$multisigThreshold:
+-        "2 of 5 (40%)"
+      values.getOwners:
+-        ["0x64F4396bb0669C72858Cc50C779b48EB25F45770","0x2871B956bC19D25961E9a7519f32D7fDaA21B403","0x804d60CB1ade94511f7915A2062948685Ca8C81f","0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6","0x59232aC80E6d403b6381393e52f4665ECA328558"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x64F4396bb0669C72858Cc50C779b48EB25F45770","0x2871B956bC19D25961E9a7519f32D7fDaA21B403","0x804d60CB1ade94511f7915A2062948685Ca8C81f","0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6","0x59232aC80E6d403b6381393e52f4665ECA328558"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 5 (40%)"
+    }
+```
+
+Generated with discovered.json: 0x19d674117e91560c9f20fdaf4005960604374454
+
+# Diff at Tue, 30 Jul 2024 15:53:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@51c652e40232eac8e60e9b31aa56f09071495fef block: 20110229
+- current block number: 20420390
+
+## Description
+
+Accesscontrol roles of APP_GOVERNOR and APP_ROLE_ADMIN are given to the EOA that already has the upgrade admin and GOVERNANCE_ADMIN roles, not adding any new net permissions. `maxTotalBalance' raised from 20M to 30M USDC.
+
+## Watched changes
+
+```diff
+    contract USDC Bridge (0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3) {
+    +++ description: None
+      values.accessControl.APP_GOVERNOR.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
+      values.accessControl.APP_ROLE_ADMIN.members.0:
++        "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c"
++++ description: Maximum bridge balance allowed (currentBalance + depositAmount <= maxTotalBalance)
++++ severity: MEDIUM
+      values.maxTotalBalance:
+-        20000000000000
++        30000000000000
+    }
+```
 
 ## Config/verification related changes
 

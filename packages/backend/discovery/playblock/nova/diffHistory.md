@@ -1,4 +1,87 @@
-Generated with discovered.json: 0x5644ccd65a52d5d8b7e70f3a4e237b052b8fd0b0
+Generated with discovered.json: 0x981c68dc7f14a65e059024f5d4dc28acba34656a
+
+# Diff at Fri, 09 Aug 2024 12:04:53 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 74469390
+- current block number: 74469390
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 74469390 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      assignedPermissions.upgrade.6:
+-        "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
++        "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
+      assignedPermissions.upgrade.5:
+-        "0x383eFE8D410285c5CbE1B4F296022640759aA834"
++        "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad"
+      assignedPermissions.upgrade.4:
+-        "0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"
++        "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
+      assignedPermissions.upgrade.3:
+-        "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
++        "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
+      assignedPermissions.upgrade.2:
+-        "0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad"
++        "0x383eFE8D410285c5CbE1B4F296022640759aA834"
+      assignedPermissions.upgrade.1:
+-        "0xA597e0212971e65f53f288Ff1fFd26A6C8201f83"
++        "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591"
+      assignedPermissions.upgrade.0:
+-        "0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0"
++        "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"
+    }
+```
+
+Generated with discovered.json: 0xdc9c4c2c96a94f4a6f2125e019aaef2d394a928d
+
+# Diff at Fri, 09 Aug 2024 10:14:52 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 74469390
+- current block number: 74469390
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 74469390 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"]
+      assignedPermissions.upgrade:
++        ["0x04ea347cC6A258A7F65D67aFb60B1d487062A1d0"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9","0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","0x383eFE8D410285c5CbE1B4F296022640759aA834","0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77"]
+      assignedPermissions.upgrade:
++        ["0xD4FE46D2533E7d03382ac6cACF0547F336e59DC0","0xA597e0212971e65f53f288Ff1fFd26A6C8201f83","0xFF55fB76F5671dD9eB6c62EffF8D693Bb161a3ad","0x0fF7A97caAb356c5507e5355b6819CB8b93d5591","0xe347C1223381b9Dcd6c0F61cf81c90175A7Bae77","0x383eFE8D410285c5CbE1B4F296022640759aA834","0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9"]
+    }
+```
+
+Generated with discovered.json: 0x821f94cff7e5ef847e878545c232714e518f85ed
 
 # Diff at Tue, 30 Jul 2024 11:18:25 GMT:
 

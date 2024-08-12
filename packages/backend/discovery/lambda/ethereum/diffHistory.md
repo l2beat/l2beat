@@ -1,4 +1,94 @@
-Generated with discovered.json: 0xbae3361998061523f53bc8d1171dda0062f50c69
+Generated with discovered.json: 0x841bbb48ff20bea605aa98e2f2ff03c1b630db65
+
+# Diff at Fri, 09 Aug 2024 11:59:56 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20111587
+- current block number: 20111587
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20111587 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.upgrade.6:
+-        "0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
++        "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
+      assignedPermissions.upgrade.3:
+-        "0xae809d42f861A6381b0DFCf7216556e95362a7a8"
++        "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
+      assignedPermissions.upgrade.2:
+-        "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
++        "0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"
+      assignedPermissions.upgrade.0:
+-        "0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054"
++        "0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c"
+    }
+```
+
+Generated with discovered.json: 0xa80328fdf85cd3455fa14f6c53b9727a8ab8ed89
+
+# Diff at Fri, 09 Aug 2024 10:10:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20111587
+- current block number: 20111587
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20111587 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f) {
+    +++ description: It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component.
+      assignedPermissions.admin:
+-        ["0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c","0x2297eB8DC91f532C91c57b3fb33C06b782e9594A","0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4","0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054","0x8334f9A70294556101527bfB9bdEdeF7EB382D94","0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F","0xae809d42f861A6381b0DFCf7216556e95362a7a8"]
+      assignedPermissions.owner:
+-        ["0x624808dc4A34B79B90C3c085942D2100F09A0376"]
+      assignedPermissions.upgrade:
++        ["0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054","0x2297eB8DC91f532C91c57b3fb33C06b782e9594A","0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c","0xae809d42f861A6381b0DFCf7216556e95362a7a8","0x8334f9A70294556101527bfB9bdEdeF7EB382D94","0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F","0x5C3D1b1334b6939e6D042BF5E15249cF86A875A4"]
+      assignedPermissions.configure:
++        ["0x624808dc4A34B79B90C3c085942D2100F09A0376"]
+    }
+```
+
+```diff
+    contract LambdaOwnerMultisig (0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501) {
+    +++ description: It can act on behalf of 0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f, inheriting its permissions.
+      assignedPermissions.owner:
+-        ["0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"]
+      assignedPermissions.configure:
++        ["0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f"]
+      values.$multisigThreshold:
+-        "1 of 1 (100%)"
+      values.getOwners:
+-        ["0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0xD5FDcf4ab4b682ab8D4a99fBE1b6Bd08dC83Ea40"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 1 (100%)"
+    }
+```
+
+Generated with discovered.json: 0x77aae1d165f3c654cdd307d99acf8d79097c3638
 
 # Diff at Tue, 30 Jul 2024 11:12:16 GMT:
 

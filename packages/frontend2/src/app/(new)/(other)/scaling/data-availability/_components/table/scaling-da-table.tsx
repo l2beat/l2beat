@@ -1,68 +1,24 @@
 'use client'
-import { notUndefined } from '@l2beat/shared-pure'
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
-import { useCallback, useMemo, useState } from 'react'
+import { useMemo } from 'react'
+import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/types'
-import {
-  ScalingDaFilters,
-  type ScalingDaFiltersState,
-} from '../scaling-da-filters'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
+import { ScalingDaFilters } from '../scaling-da-filters'
 import { columns } from './columns'
 
 export interface Props {
-  items: ScalingDataAvailabilityEntry[]
+  entries: ScalingDataAvailabilityEntry[]
 }
 
-const DEFAULT_DA_SCALING_FILTERS = {
-  rollupsOnly: false,
-  category: undefined,
-  stack: undefined,
-  stage: undefined,
-  purpose: undefined,
-  daLayer: undefined,
-} satisfies ScalingDaFiltersState
-
-export function ScalingDataAvailabilityTable({ items }: Props) {
-  const [filters, setFilters] = useState<ScalingDaFiltersState>(
-    DEFAULT_DA_SCALING_FILTERS,
-  )
-
-  const includeFilters = useCallback(
-    (entry: ScalingDataAvailabilityEntry) => {
-      const checks = [
-        filters.rollupsOnly !== false
-          ? entry.category.includes('Rollup')
-          : undefined,
-        filters.category !== undefined
-          ? entry.category === filters.category
-          : undefined,
-        filters.stack !== undefined
-          ? entry.provider === filters.stack
-          : undefined,
-        filters.stage !== undefined
-          ? entry.type === 'layer2'
-            ? entry.stage?.stage === filters.stage
-            : false
-          : undefined,
-        filters.purpose !== undefined
-          ? entry.purposes.some((purpose) => purpose === filters.purpose)
-          : undefined,
-        filters.daLayer !== undefined
-          ? entry.dataAvailability.layer.value === filters.daLayer
-          : undefined,
-      ].filter(notUndefined)
-
-      return checks.length === 0 || checks.every(Boolean)
-    },
-    [filters],
-  )
+export function ScalingDataAvailabilityTable({ entries }: Props) {
+  const includeFilters = useScalingFilter()
 
   const projects = useMemo(
-    () => items.filter((item) => includeFilters(item)),
-    [items, includeFilters],
+    () => entries.filter((item) => includeFilters(item)),
+    [entries, includeFilters],
   )
 
   const table = useTable({
@@ -83,15 +39,8 @@ export function ScalingDataAvailabilityTable({ items }: Props) {
 
   return (
     <section className="space-y-6">
-      <ScalingDaFilters
-        items={projects}
-        state={filters}
-        setState={setFilters}
-      />
-      <BasicTable
-        table={table}
-        onResetFilters={() => setFilters(DEFAULT_DA_SCALING_FILTERS)}
-      />
+      <ScalingDaFilters items={projects} />
+      <BasicTable table={table} />
     </section>
   )
 }

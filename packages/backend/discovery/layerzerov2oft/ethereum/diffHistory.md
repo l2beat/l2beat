@@ -1,4 +1,78 @@
-Generated with discovered.json: 0x40f12d6a747f031219205351a51c8ca1c8ee09f0
+Generated with discovered.json: 0x95036ebd0dd85e7b448a1304bbd8ceaa5abe3439
+
+# Diff at Fri, 09 Aug 2024 10:10:11 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20240831
+- current block number: 20240831
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20240831 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x173272739Bd7Aa6e4e214714048a9fE699453059"]
+      assignedPermissions.upgrade:
++        ["0x173272739Bd7Aa6e4e214714048a9fE699453059"]
+    }
+```
+
+```diff
+    contract GnosisSafe (0xA926F089e07A9fd7A1A9438b1Bb801963807A6d7) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xd1846C61A063edA820305A5e568A12a570420cf6","0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C","0xF94b16157948E10597481Da0523927c8BA0bd182","0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634","0x1082E92A0b92e15212fD5879C1dd672AB548302c"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xd1846C61A063edA820305A5e568A12a570420cf6","0x1e56cAa34ae155aB8AfAB2D1e2A37580a04A494C","0xF94b16157948E10597481Da0523927c8BA0bd182","0x7Af345AD8c2E7372C5aCEaAf86Bda08676e3d634","0x1082E92A0b92e15212fD5879C1dd672AB548302c"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract LayerZero Multisig (0xCDa8e3ADD00c95E5035617F970096118Ca2F4C92) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 5 (40%)"
+      values.getOwners:
+-        ["0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","0xe095F2590eF1Ab39601445025847Ed8E4B40D687","0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","0xe095F2590eF1Ab39601445025847Ed8E4B40D687","0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract ZkBridgeAdmin (0xe16d201cA134345601631D327a971A3741646B0d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"]
+      assignedPermissions.upgrade:
++        ["0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"]
+    }
+```
+
+Generated with discovered.json: 0xb8797220a861e54807289ca788935a15074c037c
 
 # Diff at Tue, 30 Jul 2024 11:12:23 GMT:
 

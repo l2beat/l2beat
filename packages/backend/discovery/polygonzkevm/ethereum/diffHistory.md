@@ -1,4 +1,77 @@
-Generated with discovered.json: 0xf304ae755afceaeae93c7dc7c421673df4e92cfe
+Generated with discovered.json: 0x901d413d0e95ba5a32961d0cd486c42bc5283372
+
+# Diff at Fri, 09 Aug 2024 12:01:29 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 19976289
+- current block number: 19976289
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976289 (main branch discovery), not current.
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
++        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
+      assignedPermissions.upgrade.1:
+-        "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
++        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
+      assignedPermissions.upgrade.0:
+-        "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB"
++        "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"
+    }
+```
+
+Generated with discovered.json: 0x9f68fdc6fb4ac14493a880e395842dc1abdf55d3
+
+# Diff at Fri, 09 Aug 2024 10:11:30 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19976289
+- current block number: 19976289
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19976289 (main branch discovery), not current.
+
+```diff
+    contract EscrowsAdmin (0xf694C9e3a34f5Fa48b6f3a0Ff186C1c6c4FcE904) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98","0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB","0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"]
+      assignedPermissions.upgrade:
++        ["0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB","0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01","0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98"]
+      values.$multisigThreshold:
+-        "5 of 10 (50%)"
+      values.getOwners:
+-        ["0x099198353446A9E3a20672eDC1Bd461E978842c3","0xb771380f912E4b5F6beDdf81314C383c13F16ab5","0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4","0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D","0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a","0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224","0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F","0xf56AE6520776934127AB68438d1b4652BCe07F8f","0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed","0x4E83124eD15b13265240B61EC9627797CCE1032E"]
+      values.getThreshold:
+-        5
+      values.$members:
++        ["0x099198353446A9E3a20672eDC1Bd461E978842c3","0xb771380f912E4b5F6beDdf81314C383c13F16ab5","0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4","0xc4591c41e01a7a654B5427f39Bbd1dEe5bD45D1D","0xE6Ee0F8D81170160d50ed77b9C91E6219473d43a","0xd1B856ee12Bd00922cae8DD86ab068f8c0F95224","0xF53D1fB2EeD22Cf1E8f7E90Da7f1CAe88344065F","0xf56AE6520776934127AB68438d1b4652BCe07F8f","0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed","0x4E83124eD15b13265240B61EC9627797CCE1032E"]
+      values.$threshold:
++        5
+      values.multisigThreshold:
++        "5 of 10 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xdc92728d1ede1255c3c1eda9b00f3d1e5bf76f6f
 
 # Diff at Wed, 29 May 2024 15:03:42 GMT:
 

@@ -1,4 +1,46 @@
-Generated with discovered.json: 0x8bfa914d9c783bbd7dbd471df66f4d89655e0da8
+Generated with discovered.json: 0xd89818ba5dbdb17e04c4fba21cf05f3948fff9a1
+
+# Diff at Fri, 09 Aug 2024 10:10:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20059608
+- current block number: 20059608
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20059608 (main branch discovery), not current.
+
+```diff
+    contract ProxyOwner (0xDd2A08a1c1A28c1A571E098914cA10F2877D9c97) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"]
+      assignedPermissions.upgrade:
++        ["0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"]
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
++++ description: Array of addresses that are owners, allowed to chage contract values.
++++ severity: LOW
+      values.getOwners:
+-        ["0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191","0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1","0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185","0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268","0x7414eA41bd1844f61e8990b209a1Dc301489baa9","0x1F28F10176F89F4E9985873B84d14e75751BB3D1"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191","0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1","0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185","0x55d79345Afc87806B690C9f96c4D7BfE2Bca8268","0x7414eA41bd1844f61e8990b209a1Dc301489baa9","0x1F28F10176F89F4E9985873B84d14e75751BB3D1"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xabc49245ffd85c3972902ab1568f7a8c3fdde61b
 
 # Diff at Tue, 30 Jul 2024 11:12:33 GMT:
 

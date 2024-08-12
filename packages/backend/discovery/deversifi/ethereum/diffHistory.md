@@ -1,4 +1,48 @@
-Generated with discovered.json: 0xf8ac25d2179e7ee8d45d64668dacaa9836981c4a
+Generated with discovered.json: 0x178744cd356eb31e7b50a829cd9c0849148680ce
+
+# Diff at Fri, 09 Aug 2024 10:09:23 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19825372
+- current block number: 19825372
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825372 (main branch discovery), not current.
+
+```diff
+    contract GovernanceMultisig (0xCCa5De1e10c05c50C51ac551D9182cd31aca1889) {
+    +++ description: This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge.
+      assignedPermissions.admin:
+-        ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
+      assignedPermissions.upgrade:
++        ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
++++ description: Signers of the Multisig
++++ severity: LOW
+      values.getOwners:
+-        ["0x94aa58E38ac22518Cf0E267cd062Ed7E78eA958E","0x478615F37FcCB0DF69C191a8674233f6899D092e","0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59","0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35","0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3","0xe0fE5b38C52A83308bEC9242d768441025DBB4D8"]
++++ description: Threshold of the Multisig
++++ severity: HIGH
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x94aa58E38ac22518Cf0E267cd062Ed7E78eA958E","0x478615F37FcCB0DF69C191a8674233f6899D092e","0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59","0x611F96c83fE0A30B504Ee2C6a2Cae890e620bA35","0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3","0xe0fE5b38C52A83308bEC9242d768441025DBB4D8"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x83ca8c055d1a8555877725d7e9f5fec6a1553ed7
 
 # Diff at Tue, 30 Jul 2024 11:11:37 GMT:
 

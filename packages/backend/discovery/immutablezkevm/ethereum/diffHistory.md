@@ -1,4 +1,83 @@
-Generated with discovered.json: 0x4df4661c58418e3344cd64f7aad67f71ee53f099
+Generated with discovered.json: 0x651d883c58d2d23fc5a51f18ca4a42c5bc97f824
+
+# Diff at Fri, 09 Aug 2024 12:46:43 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 20017490
+- current block number: 20491123
+
+## Description
+
+Two new members added to OwnerMultisig and threshold changed to 4.
+
+## Watched changes
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$members.6:
++        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
+      values.$members.5:
++        "0x296A19A4e87F5824DBE8DEd53415A4704538bB30"
+      values.$members.4:
+-        "0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"
++        "0xB3669C058ddF26171Fd131D80C801AaEeb1519b8"
+      values.$members.3:
+-        "0x5C40EC9b11673925405ac132d248973a2b9d5cD4"
++        "0xdb6c271060571A96A62E3947E373395C89f765Ba"
+      values.$members.2:
+-        "0xdAeDdFC3D4f10650E22939e6992349127C3F8C36"
++        "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
+      values.$members.1:
+-        "0x869896ac62ADc693322F461ded2fe4452bA74Ac3"
++        "0x3d395f623D8954d71132F5caC10778CA275806e0"
+      values.$members.0:
+-        "0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5"
++        "0x37AC4a9Bf184aa1130016525631f3Daec11f7b26"
+      values.$threshold:
+-        2
++        4
+      values.multisigThreshold:
+-        "2 of 5 (40%)"
++        "4 of 7 (57%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20017490 (main branch discovery), not current.
+
+```diff
+    contract OwnerMultisig (0xD2C37fC6fD89563187f3679304975655e448D192) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 5 (40%)"
+      values.getOwners:
+-        ["0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5","0x869896ac62ADc693322F461ded2fe4452bA74Ac3","0xdAeDdFC3D4f10650E22939e6992349127C3F8C36","0x5C40EC9b11673925405ac132d248973a2b9d5cD4","0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x5F1A23A3baB949D7264AfA4E6fbfEB245685E6B5","0x869896ac62ADc693322F461ded2fe4452bA74Ac3","0xdAeDdFC3D4f10650E22939e6992349127C3F8C36","0x5C40EC9b11673925405ac132d248973a2b9d5cD4","0xbD8Dc294478ec4dAd9f1b4596bf275f4d0309817"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xdE2BCd3F0297d29c25e83228E5A33C0b43b51Ec8) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932","0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"]
+      assignedPermissions.upgrade:
++        ["0x4f49B53928A71E553bB1B0F66a5BcB54Fd4E8932","0xBa5E35E26Ae59c7aea6F029B68c6460De2d13eB6"]
+    }
+```
+
+Generated with discovered.json: 0xbe66c42100b192b9fe49446658eb9a038aec2906
 
 # Diff at Tue, 30 Jul 2024 11:12:05 GMT:
 

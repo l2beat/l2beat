@@ -1,4 +1,60 @@
-Generated with discovered.json: 0x85823047ea1caa73401628cdd2e639d4c1effd94
+Generated with discovered.json: 0x21f9acb0dcfac045f6cc451f7a7b1559cf5bb4b3
+
+# Diff at Fri, 09 Aug 2024 10:14:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 14728552
+- current block number: 14728552
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 14728552 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x3c2269811836af69497E5F486A85D7316753cf62) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"]
+      assignedPermissions.upgrade:
++        ["0xA658742d33ebd2ce2F0bdFf73515Aa797Fd161D9"]
+    }
+```
+
+```diff
+    contract LayerZeroMultisig_pzkevm (0x8df01A9F8bE5776F4280B7056e13A0Fc0E007827) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD","0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD","0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"]
+      assignedPermissions.upgrade:
++        ["0xA6Bf2bE6c60175601BF88217c75dD4b14ABB5FBb"]
+    }
+```
+
+Generated with discovered.json: 0xd91796983ecd0735f26ad2122f3a9ab94878b2ef
 
 # Diff at Mon, 27 May 2024 13:20:40 GMT:
 

@@ -3,13 +3,13 @@
   "chain": "polygonpos",
   "blockNumber": 58991670,
   "configHash": "0xce744ee7bc25cb5f9f0d45db11af4edfd1f88023463e53fc1c4ea11f4bc426b5",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "assignedPermissions": {
-        "admin": ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
+        "upgrade": ["0x75dC8e5F50C8221a82CA6aF64aF811caA983B65f"]
       },
       "sinceTimestamp": 1647316991,
       "values": {
@@ -1375,7 +1375,7 @@
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "assignedPermissions": {
-        "admin": ["0x5a54fe5234E811466D5366846283323c954310B2"]
+        "upgrade": ["0x5a54fe5234E811466D5366846283323c954310B2"]
       },
       "sinceTimestamp": 1661448610,
       "values": {
@@ -1416,10 +1416,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$multisigThreshold": "2 of 6 (33%)",
-        "domainSeparator": "0x044a8dd59b0665c360d1bb7987292aed8d68479d0d08219d5e3d215b5b1aa4ca",
-        "getChainId": 137,
-        "getOwners": [
+        "$members": [
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
           "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
           "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
@@ -1427,8 +1424,11 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x044a8dd59b0665c360d1bb7987292aed8d68479d0d08219d5e3d215b5b1aa4ca",
+        "getChainId": 137,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
         "nonce": 117,
         "VERSION": "1.3.0"
       },
@@ -1774,7 +1774,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

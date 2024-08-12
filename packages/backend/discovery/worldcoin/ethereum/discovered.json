@@ -1,9 +1,9 @@
 {
   "name": "worldcoin",
   "chain": "ethereum",
-  "blockNumber": 20362822,
+  "blockNumber": 20432514,
   "configHash": "0x49d0dd9e1f3e81d463d5c70dd88cf44ea1b64ad4bf2656a6374146f6e44bc04e",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "DeleteIdentitiesVerifierLookupTable",
@@ -93,7 +93,7 @@
         "getSemaphoreVerifierAddress": "0xcDBbcd1cb0B642F8E324aB29C73A967b0C80Bad5",
         "getTreeDepth": 30,
         "identityOperator": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
-        "latestRoot": "9835524563071529784836390964757379902387065387275403267366755794936415640680",
+        "latestRoot": "16140752359481101902482273723632367130449370977025915348670355562994378688965",
         "NO_SUCH_ROOT": {
           "root": 0,
           "supersededTimestamp": 0,
@@ -118,7 +118,7 @@
     {
       "address": "0x9ad4EFAF9E326c17c3A7be6F5D167843Af0eb30A",
       "assignedPermissions": {
-        "admin": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"]
+        "upgrade": ["0xf7134CE138832c1456F2a91D64621eE90c2bddEa"]
       }
     }
   ],
@@ -271,5 +271,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

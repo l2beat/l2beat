@@ -1,4 +1,108 @@
-Generated with discovered.json: 0xafb97bd28c2936c4ac0c68772181e5665267e6bc
+Generated with discovered.json: 0xf4c7de4e63faa0e95375faaf8fabc87536305ac6
+
+# Diff at Fri, 09 Aug 2024 12:03:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 225981507
+- current block number: 225981507
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981507 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x003e70B041abb993006C03E56c8515622a02928C) {
+    +++ description: None
+      assignedPermissions.upgrade.8:
+-        "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
++        "0xA436f1867adD490BF1530c636f2FB090758bB6B3"
+      assignedPermissions.upgrade.6:
+-        "0xA436f1867adD490BF1530c636f2FB090758bB6B3"
++        "0x8bE956aB42274056ef4471BEb211b33e258b7324"
+      assignedPermissions.upgrade.5:
+-        "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0"
++        "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6"
+      assignedPermissions.upgrade.4:
+-        "0x2623C144B4d167f70893f6A8968B98c89a6C5F97"
++        "0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6"
+      assignedPermissions.upgrade.3:
+-        "0x139C5A235632EDdad741ff380112B3161d31a21C"
++        "0x37e60F80d921dc5E7f501a7130F31f6548dBa564"
+      assignedPermissions.upgrade.2:
+-        "0x37e60F80d921dc5E7f501a7130F31f6548dBa564"
++        "0x2623C144B4d167f70893f6A8968B98c89a6C5F97"
+      assignedPermissions.upgrade.1:
+-        "0x8bE956aB42274056ef4471BEb211b33e258b7324"
++        "0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0"
+      assignedPermissions.upgrade.0:
+-        "0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6"
++        "0x139C5A235632EDdad741ff380112B3161d31a21C"
+    }
+```
+
+Generated with discovered.json: 0x4a8453a62c7fc12e782d443529e018fd6be64469
+
+# Diff at Fri, 09 Aug 2024 10:13:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 225981507
+- current block number: 225981507
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981507 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x003e70B041abb993006C03E56c8515622a02928C) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x139C5A235632EDdad741ff380112B3161d31a21C","0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0","0x2623C144B4d167f70893f6A8968B98c89a6C5F97","0x37e60F80d921dc5E7f501a7130F31f6548dBa564","0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6","0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6","0x8bE956aB42274056ef4471BEb211b33e258b7324","0x91591BB66075BCfF94AA128B003134165C3Ab83a","0xA436f1867adD490BF1530c636f2FB090758bB6B3","0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF"]
+      assignedPermissions.upgrade:
++        ["0x46406c88285AD9BE2fB23D9aD96Cb578d824cAb6","0x8bE956aB42274056ef4471BEb211b33e258b7324","0x37e60F80d921dc5E7f501a7130F31f6548dBa564","0x139C5A235632EDdad741ff380112B3161d31a21C","0x2623C144B4d167f70893f6A8968B98c89a6C5F97","0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0","0xA436f1867adD490BF1530c636f2FB090758bB6B3","0x91591BB66075BCfF94AA128B003134165C3Ab83a","0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6","0xa9064FebD91E9Ab4c49C8989926Cada18bc9C8FF"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0x139C5A235632EDdad741ff380112B3161d31a21C) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"]
+      assignedPermissions.upgrade:
++        ["0x2e988Ea0873C9d712628F0bf38DAFdE754927C89"]
+    }
+```
+
+```diff
+    contract Caldera Multisig (0x6FD149B3d41fd860B9Da1A6fE54e902eF41F68BF) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 4 (75%)"
+      values.getOwners:
+-        ["0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A","0x4919167EA334BE84B1604Cbc82A26A7746D5943e","0x356000Cec4fC967f8FC372381D983426760A0391","0xB2a5970fB30dc34AD65c914db855766ea62f1f41"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0x12ee26aD74d50a1f6BDD90811387d1e0f3e7C76A","0x4919167EA334BE84B1604Cbc82A26A7746D5943e","0x356000Cec4fC967f8FC372381D983426760A0391","0xB2a5970fB30dc34AD65c914db855766ea62f1f41"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 4 (75%)"
+    }
+```
+
+Generated with discovered.json: 0x20f3c50552659ed011da4be3c62d336825b82a6c
 
 # Diff at Tue, 30 Jul 2024 11:17:22 GMT:
 

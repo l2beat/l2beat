@@ -1,11 +1,15 @@
-import { Logger } from '@l2beat/backend-tools'
-import { BlockExplorerClient } from '@l2beat/shared'
+import { assert, Logger } from '@l2beat/backend-tools'
+import {
+  BlockExplorerClient,
+  CoingeckoClient,
+  CoingeckoQueryService,
+} from '@l2beat/shared'
 import {
   AmountConfigEntry,
   EscrowEntry,
+  PremintedEntry,
   ProjectId,
   TotalSupplyEntry,
-  capitalizeFirstLetter,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
@@ -14,22 +18,20 @@ import { Peripherals } from '../../../peripherals/Peripherals'
 import { MulticallClient } from '../../../peripherals/multicall/MulticallClient'
 import { RpcClient } from '../../../peripherals/rpcclient/RpcClient'
 import { IndexerService } from '../../../tools/uif/IndexerService'
-import { Configuration } from '../../../tools/uif/multi/types'
 import { BlockTimestampIndexer } from '../indexers/BlockTimestampIndexer'
 import { ChainAmountIndexer } from '../indexers/ChainAmountIndexer'
 import { HourlyIndexer } from '../indexers/HourlyIndexer'
+import { PremintedIndexer } from '../indexers/PremintedIndexer'
 import { ValueIndexer } from '../indexers/ValueIndexer'
-import { AmountService, ChainAmountConfig } from '../services/AmountService'
+import { ChainAmountConfig } from '../indexers/types'
+import { AmountService } from '../services/AmountService'
 import { BlockTimestampProvider } from '../services/BlockTimestampProvider'
+import { CirculatingSupplyService } from '../services/CirculatingSupplyService'
 import { ValueService } from '../services/ValueService'
 import { ConfigMapping } from '../utils/ConfigMapping'
 import { SyncOptimizer } from '../utils/SyncOptimizer'
 import { createAmountId } from '../utils/createAmountId'
 import { PriceModule } from './PriceModule'
-
-interface ChainModule {
-  start: () => Promise<void> | void
-}
 
 export function createChainModules(
   config: TvlConfig,
@@ -40,7 +42,7 @@ export function createChainModules(
   indexerService: IndexerService,
   priceModule: PriceModule,
   configMapping: ConfigMapping,
-): ChainModule[] {
+) {
   return config.chains
     .map((chain) =>
       createChainModule(
@@ -57,7 +59,6 @@ export function createChainModules(
       ),
     )
     .filter(notUndefined)
-    .flat()
 }
 
 function createChainModule(
@@ -71,15 +72,166 @@ function createChainModule(
   indexerService: IndexerService,
   priceModule: PriceModule,
   configMapping: ConfigMapping,
-): ChainModule | undefined {
+) {
   const chain = chainConfig.chain
-
-  const name = `${capitalizeFirstLetter(chain)}TvlModule`
   if (!chainConfig.config) {
-    logger.info(`${name} disabled`)
+    logger.tag(chain).info(`Chain module disabled`)
     return
   }
-  logger = logger.tag(chain)
+
+  const {
+    blockTimestampProvider,
+    amountService,
+    valueService,
+    circulatingSupplyService,
+  } = createPeripherals(peripherals, chainConfig, logger, chain, config)
+
+  const blockTimestampIndexer = new BlockTimestampIndexer({
+    logger,
+    parents: [hourlyIndexer],
+    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
+    indexerService,
+    chain,
+    blockTimestampProvider,
+    db: peripherals.database,
+    syncOptimizer,
+  })
+
+  const dataIndexers: (ChainAmountIndexer | PremintedIndexer)[] = []
+  const valueIndexers: ValueIndexer[] = []
+
+  const chainAmountEntries = amounts
+    .filter((a) => a.chain === chain)
+    .filter(
+      (a): a is ChainAmountConfig =>
+        a.type === 'escrow' || a.type === 'totalSupply',
+    )
+
+  const chainMinTimestamp = chainConfig.config.minBlockTimestamp
+  const chainAmountConfigurations = chainAmountEntries.map((a) => ({
+    id: createAmountId(a),
+    properties: a,
+    minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
+      ? chainMinTimestamp.toNumber()
+      : a.sinceTimestamp.toNumber(),
+    maxHeight: a.untilTimestamp?.toNumber() ?? null,
+  }))
+
+  if (chainAmountConfigurations.length > 0) {
+    const chainAmountIndexer = new ChainAmountIndexer({
+      logger,
+      parents: [blockTimestampIndexer],
+      indexerService,
+      configurations: chainAmountConfigurations,
+      chain,
+      amountService,
+      serializeConfiguration,
+      syncOptimizer,
+      db: peripherals.database,
+    })
+
+    dataIndexers.push(chainAmountIndexer)
+
+    const perProject = groupBy(chainAmountEntries, 'project')
+
+    const parents = [priceModule.descendant, chainAmountIndexer]
+    for (const [project, amountConfigs] of Object.entries(perProject)) {
+      const priceConfigs = new Set(
+        amountConfigs.map((c) =>
+          configMapping.getPriceConfigFromAmountConfig(c),
+        ),
+      )
+
+      const minHeight = Math.min(
+        ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
+      )
+      const maxHeight = Math.max(
+        ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
+      )
+
+      const indexer = new ValueIndexer({
+        valueService,
+        db: peripherals.database,
+        priceConfigs: [...priceConfigs],
+        amountConfigs,
+        project: ProjectId(project),
+        dataSource: chain,
+        syncOptimizer,
+        parents,
+        indexerService,
+        logger,
+        minHeight,
+        maxHeight,
+        maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
+      })
+
+      valueIndexers.push(indexer)
+    }
+  }
+
+  const premintedTokens = amounts
+    .filter((a) => a.chain === chain)
+    .filter((a): a is PremintedEntry => a.type === 'preminted')
+
+  for (const preminted of premintedTokens) {
+    const indexer = new PremintedIndexer({
+      logger,
+      parents: [blockTimestampIndexer],
+      indexerService,
+      configuration: preminted,
+      minHeight: preminted.sinceTimestamp.toNumber(),
+      amountService,
+      circulatingSupplyService,
+      syncOptimizer,
+      db: peripherals.database,
+    })
+
+    dataIndexers.push(indexer)
+
+    const valueIndexer = new ValueIndexer({
+      valueService,
+      db: peripherals.database,
+      priceConfigs: [configMapping.getPriceConfigFromAmountConfig(preminted)],
+      amountConfigs: [preminted],
+      project: ProjectId(preminted.project),
+      dataSource: `${chain}_preminted_${preminted.address}`,
+      syncOptimizer,
+      parents: [priceModule.descendant, indexer],
+      indexerService,
+      logger,
+      minHeight: preminted.sinceTimestamp.toNumber(),
+      maxHeight: preminted.untilTimestamp?.toNumber(),
+      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
+    })
+
+    valueIndexers.push(valueIndexer)
+  }
+
+  return dataIndexers.length === 0
+    ? undefined
+    : {
+        start: async () => {
+          await blockTimestampIndexer.start()
+
+          for (const dataIndexer of dataIndexers) {
+            await dataIndexer.start()
+          }
+
+          for (const valueIndexer of valueIndexers) {
+            await valueIndexer.start()
+          }
+        },
+      }
+}
+
+function createPeripherals(
+  peripherals: Peripherals,
+  chainConfig: ChainTvlConfig,
+  logger: Logger,
+  chain: string,
+  config: TvlConfig,
+) {
+  assert(chainConfig.config)
 
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,
@@ -112,18 +264,6 @@ function createChainModule(
     logger,
   })
 
-  const blockTimestampIndexer = new BlockTimestampIndexer({
-    logger,
-    tag: chain,
-    parents: [hourlyIndexer],
-    minHeight: chainConfig.config.minBlockTimestamp.toNumber(),
-    indexerService,
-    chain,
-    blockTimestampProvider,
-    db: peripherals.database,
-    syncOptimizer,
-  })
-
   const amountService = new AmountService({
     rpcClient: rpcClient,
     multicallClient: new MulticallClient(
@@ -133,85 +273,20 @@ function createChainModule(
     logger: logger.tag(chain),
   })
 
-  const escrowsAndTotalSupplies = amounts
-    .filter((a) => a.chain === chain)
-    .filter(
-      (a): a is ChainAmountConfig =>
-        a.type === 'escrow' || a.type === 'totalSupply',
-    )
-
-  const chainMinTimestamp = chainConfig.config.minBlockTimestamp
-
-  const configurations: Configuration<EscrowEntry | TotalSupplyEntry>[] =
-    escrowsAndTotalSupplies.map((a) => ({
-      id: createAmountId(a),
-      properties: a,
-      minHeight: a.sinceTimestamp.lt(chainMinTimestamp)
-        ? chainMinTimestamp.toNumber()
-        : a.sinceTimestamp.toNumber(),
-      maxHeight: a.untilTimestamp?.toNumber() ?? null,
-    }))
-
-  const chainAmountIndexer = new ChainAmountIndexer({
-    logger,
-    tag: chain,
-    parents: [blockTimestampIndexer],
-    indexerService,
-    configurations,
-    chain,
-    amountService,
-    serializeConfiguration,
-    syncOptimizer,
-    db: peripherals.database,
+  const coingeckoClient = peripherals.getClient(CoingeckoClient, {
+    apiKey: config.coingeckoApiKey,
   })
+  const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
 
-  const perProject = groupBy(escrowsAndTotalSupplies, 'project')
-
-  const valueIndexers: ValueIndexer[] = []
-  const parents = [priceModule.descendant, chainAmountIndexer]
-  for (const [project, amountConfigs] of Object.entries(perProject)) {
-    const priceConfigs = new Set(
-      amountConfigs.map((c) => configMapping.getPriceConfigFromAmountConfig(c)),
-    )
-
-    const valueService = new ValueService(peripherals.database)
-
-    const minHeight = Math.min(
-      ...amountConfigs.map((c) => c.sinceTimestamp.toNumber()),
-    )
-    const maxHeight = Math.max(
-      ...amountConfigs.map((c) => c.untilTimestamp?.toNumber() ?? Infinity),
-    )
-
-    const indexer = new ValueIndexer({
-      valueService,
-      db: peripherals.database,
-      priceConfigs: [...priceConfigs],
-      amountConfigs,
-      project: ProjectId(project),
-      dataSource: chain,
-      syncOptimizer,
-      parents,
-      tag: `${project}_${chain}`,
-      indexerService,
-      logger,
-      minHeight,
-      maxHeight,
-      maxTimestampsToProcessAtOnce: config.maxTimestampsToAggregateAtOnce,
-    })
-
-    valueIndexers.push(indexer)
-  }
-
+  const circulatingSupplyService = new CirculatingSupplyService({
+    coingeckoQueryService,
+  })
+  const valueService = new ValueService(peripherals.database)
   return {
-    start: async () => {
-      await blockTimestampIndexer.start()
-      await chainAmountIndexer.start()
-
-      for (const indexer of valueIndexers) {
-        await indexer.start()
-      }
-    },
+    blockTimestampProvider,
+    amountService,
+    valueService,
+    circulatingSupplyService,
   }
 }
 

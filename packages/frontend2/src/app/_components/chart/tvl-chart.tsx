@@ -4,7 +4,6 @@ import { type Milestone } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
-import { useChartContext } from '~/app/_components/chart/core/chart-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
 import { PercentChange } from '~/app/_components/percent-change'
@@ -15,6 +14,8 @@ import { type TvlCharts } from '~/server/features/scaling/get-tvl'
 import { getTvlWithChange } from '~/server/features/scaling/utils/get-tvl-with-change'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { useChartLoading } from './core/chart-loading-context'
+import { mapMilestones } from './utils/map-milestones'
 
 interface TvlChartPointData {
   timestamp: number
@@ -29,11 +30,11 @@ interface Props {
 }
 
 export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '1y')
+  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '30d')
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const mappedMilestones = getMilestones(milestones)
+  const mappedMilestones = mapMilestones(milestones)
   const dataInRange = getEntriesByDays(toDays(timeRange), data, {
     trimLeft: true,
   })
@@ -137,7 +138,7 @@ function Header({
   value: number
   weeklyChange: string
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
@@ -183,7 +184,7 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const { loading } = useChartContext()
+  const loading = useChartLoading()
 
   if (loading) {
     return (
@@ -206,15 +207,6 @@ function UnitAndScaleControls({
       </RadioGroup>
     </div>
   )
-}
-
-function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
-  for (const milestone of milestones) {
-    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
-    result[timestamp] = milestone
-  }
-  return result
 }
 
 function toDays(value: string) {

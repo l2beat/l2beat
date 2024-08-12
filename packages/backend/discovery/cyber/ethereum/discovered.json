@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20032828,
   "configHash": "0xebe0f0cb6387d9421fe6b57702689f36f872724a4106dd03177b3b84447f0ecb",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "DataAvailabilityChallenge",
@@ -252,7 +252,7 @@
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x10E34EfE14E4D270C0f77Bf1aF01b6C832161B49",
           "0x12a580c05466eefb2c467C6b115844cDaF55B255",
           "0x1aeC4c3BE47C30d0BEfa7514Cf9D99EaC596959D",
@@ -262,7 +262,7 @@
           "0x5D1F4bbaF6D484fA9D5D9705f92dE6063bff6055",
           "0xa669A743b065828682eE16109273F5CFeF5e676d"
         ],
-        "owner": ["0x19b5804B88F10262A55ac731f28A3BbC4209853a"]
+        "configure": ["0x19b5804B88F10262A55ac731f28A3BbC4209853a"]
       },
       "sinceTimestamp": 1713430247,
       "values": {
@@ -320,24 +320,24 @@
         "It can act on behalf of 0x7E54107731EC43e78DA678DFa5fB6222Ad036e03, inheriting its permissions."
       ],
       "assignedPermissions": {
-        "owner": ["0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"]
+        "configure": ["0x7E54107731EC43e78DA678DFa5fB6222Ad036e03"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1713430223,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 4 (75%)",
-        "domainSeparator": "0x7cd8c30797ef3a14364cd47f3fbcd50b6f8b42a7a9b4d0f1e3200ac80755e056",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xB5b01E638CEF6AE50462A487d70005D6fe85eCf2",
           "0xaC79765A73eB9dcBd3c427181E6819902AE25b48",
           "0xa8AC7D03BEb92Fa3E6030AEB21629D00Ffb66dD7",
           "0x1a76Ed328600489811F819959a74043f106CF0f9"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x7cd8c30797ef3a14364cd47f3fbcd50b6f8b42a7a9b4d0f1e3200ac80755e056",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 4 (75%)",
         "nonce": 21,
         "VERSION": "1.3.0"
       },
@@ -351,9 +351,6 @@
       "roles": ["Guardian"]
     },
     { "address": "0x1a76Ed328600489811F819959a74043f106CF0f9" },
-    { "address": "0x4200000000000000000000000000000000000007" },
-    { "address": "0x4200000000000000000000000000000000000010" },
-    { "address": "0x4200000000000000000000000000000000000014" },
     {
       "address": "0x87bD2cFf3b59d615b1Eac7A7f809B5e5f0Ee6752",
       "roles": ["Challenger"]
@@ -787,17 +784,17 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/L1CrossDomainMessenger": "0x41bd900739c252a9cbc05cef0fa2a1a2e0075816453fae09031f4b4055ce1b90",
-    "opstack/L1ERC721Bridge": "0xa4ae7e768b1b7b82f1f094037136f28410f672050a4d57802af1b825f84ce765",
-    "opstack/L1StandardBridge": "0xd4d733d2913ff75bb8fdc4a8625b6d7081442eb45e1282c9b3ad3fa8e4910c09",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
+    "opstack/L1ERC721Bridge": "0x9157c1cd7ed3201c1a946c31dcc053cf7ef28179fdf11cba202ffa8e8d1ab519",
+    "opstack/L1StandardBridge": "0xbe6430c1d141cd6be787d53b6de6e682a9a4edf082b18775a615ecf043365319",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismMintableERC20Factory": "0xcb5e318435eea9104576cca55f13180f9a41bd1900179ad8bf47d1aac60d725c",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
+    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
     "opstack/SuperchainConfig": "0x5554f836215d9db27631de76e3e45059a22e3ec869ea4d867d2c923f71bb3837",
-    "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
+    "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

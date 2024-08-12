@@ -70,7 +70,7 @@ function STARKEX_PERPETUAL_WITHDRAW(
 const CANONICAL_ORDERING: ScalingProjectTechnologyChoice = {
   name: 'Users can force any transaction',
   description:
-    'Because the state of the system is based on transactions submitted on-chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract directly.',
+    'Because the state of the system is based on transactions submitted on the underlying host chain and anyone can submit their transactions there it allows the users to circumvent censorship by interacting with the smart contract on the host chain directly.',
   risks: [],
   references: [],
 }

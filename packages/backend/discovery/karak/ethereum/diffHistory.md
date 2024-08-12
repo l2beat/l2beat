@@ -1,4 +1,97 @@
-Generated with discovered.json: 0x7e29e0074cc47619077678f8ef7efc95dd2634a2
+Generated with discovered.json: 0xa9a9ea8793479a143a3f05029945ee38b86c5122
+
+# Diff at Fri, 09 Aug 2024 11:59:47 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 19531626
+- current block number: 19531626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531626 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) {
+    +++ description: None
+      assignedPermissions.upgrade.5:
+-        "0x952851CecB07705A5bb483C1CE080F97e1E7491E"
++        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
+      assignedPermissions.upgrade.3:
+-        "0x622333688CC1878C7ff4205c89bDe051798788A7"
++        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"
+      assignedPermissions.upgrade.2:
+-        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
++        "0x952851CecB07705A5bb483C1CE080F97e1E7491E"
+      assignedPermissions.upgrade.1:
+-        "0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"
++        "0x622333688CC1878C7ff4205c89bDe051798788A7"
+      assignedPermissions.upgrade.0:
+-        "0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"
++        "0x0a23342520Aa8Ca963c4201801F4D3E95e731637"
+    }
+```
+
+Generated with discovered.json: 0x4ed5b3030d4e40b45b13146b9beff60c7d8d91d9
+
+# Diff at Fri, 09 Aug 2024 10:09:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19531626
+- current block number: 19531626
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531626 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x0a23342520Aa8Ca963c4201801F4D3E95e731637","0x622333688CC1878C7ff4205c89bDe051798788A7","0x952851CecB07705A5bb483C1CE080F97e1E7491E","0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3","0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB","0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73"]
+      assignedPermissions.owner:
+-        ["0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"]
+      assignedPermissions.upgrade:
++        ["0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3","0xeeCE9CD7Abd1CC84d9dfc7493e7e68079E47eA73","0x0a23342520Aa8Ca963c4201801F4D3E95e731637","0x622333688CC1878C7ff4205c89bDe051798788A7","0xF04a74899FF4c4410fAF3B5faa29B8Fd199C13DB","0x952851CecB07705A5bb483C1CE080F97e1E7491E"]
+      assignedPermissions.configure:
++        ["0xF2C89960B6D63eC6c61dF3EA8BaFa0a02c26e8C9"]
+    }
+```
+
+```diff
+    contract KarakMultisig (0x28A227d4faF0f4f75897438E24C43EF1CDABb920) {
+    +++ description: It can act on behalf of 0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C, inheriting its permissions.
+      assignedPermissions.owner:
+-        ["0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"]
+      assignedPermissions.configure:
++        ["0x1612F868EbA1cea65ee66bF4A7C75001b0D4065C"]
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xAb86E21e9BFA559B93ca6f783362BFf5504f2cac","0x7E973c8f8aCDb71E4e00A19631739FFBF9748Cd0","0xBcB3EaB21eCe8864aFcC07f7613bD6D8bB5C28d3","0x988378eD49F538104fDBaC1A0ac2Edf9890EA4f2","0x282DB123D1cbf5437c295EA0df0137E5FaDbD117"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xAb86E21e9BFA559B93ca6f783362BFf5504f2cac","0x7E973c8f8aCDb71E4e00A19631739FFBF9748Cd0","0xBcB3EaB21eCe8864aFcC07f7613bD6D8bB5C28d3","0x988378eD49F538104fDBaC1A0ac2Edf9890EA4f2","0x282DB123D1cbf5437c295EA0df0137E5FaDbD117"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x272136412ca595ca8694411b7aad8edf1acac660
 
 # Diff at Thu, 18 Jul 2024 10:31:13 GMT:
 

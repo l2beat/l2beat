@@ -12,6 +12,8 @@ interface OldProjectEscrow {
   tokens: string[] | '*'
   /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
   excludedTokens?: string[]
+  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
+  premintedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
   /** Temporary flag meaning that escrow config was migrated to new format */
@@ -43,6 +45,8 @@ interface NewProjectEscrow {
   tokens: string[] | '*'
   /** List of token tickers (e.g. ETH, DAI) to exclude from tracking */
   excludedTokens?: string[]
+  /** List of token tickers to track as preminted (min(circulating,lockedInEscrow)) */
+  premintedTokens?: string[]
   /** Hiding an escrow when it's not used anymore but we need to keep it to calculate past TVL correctly */
   isHistorical?: boolean
   /** Temporary flag meaning that escrow config was migrated to new format */

@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x994b7195894dbe1239dcd0ff57459be40f0fa939
+Generated with discovered.json: 0xf132c6937499679bdab268e9d0cb198e3b6955d6
+
+# Diff at Fri, 09 Aug 2024 10:12:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20016207
+- current block number: 20016207
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20016207 (main branch discovery), not current.
+
+```diff
+    contract SwellMultisig (0x20fDF47509C5eFC0e1101e3CE443691781C17F90) {
+    +++ description: Can queue transactions in the swell L2 prelaunch vault's timelock among other admin fucntions in the swell ecosystem
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0xd08b294dBD8Bc760c57AbdEC26515Da626511B40","0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238","0x284C633962F2386590E934c4fBD2D3EafA0944A3","0x042d200e5375204F022570361f3913b245488091","0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59","0x5b27b9279251904AaF2127463eeFf91E0037F725"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0xd08b294dBD8Bc760c57AbdEC26515Da626511B40","0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238","0x284C633962F2386590E934c4fBD2D3EafA0944A3","0x042d200e5375204F022570361f3913b245488091","0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59","0x5b27b9279251904AaF2127463eeFf91E0037F725"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0x8ee9736a55585664c0c57b21401881a26aacf907
 
 # Diff at Tue, 30 Jul 2024 11:16:10 GMT:
 

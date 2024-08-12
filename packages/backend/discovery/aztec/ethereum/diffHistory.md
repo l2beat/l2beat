@@ -1,4 +1,40 @@
-Generated with discovered.json: 0x80ba964fcc08250cdb4ca6c830ec17746c01ce55
+Generated with discovered.json: 0x679bb700986332cfe9b886dcc2d0535b52e1cade
+
+# Diff at Fri, 09 Aug 2024 10:08:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20361394
+- current block number: 20361394
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20361394 (main branch discovery), not current.
+
+```diff
+    contract Aztec Multisig (0xE298a76986336686CC3566469e3520d23D1a8aaD) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
+      values.getOwners:
+-        ["0x1D93fE338A035f297819EA867275661a4f5B4fdD","0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"]
+      values.getThreshold:
+-        1
+      values.$members:
++        ["0x1D93fE338A035f297819EA867275661a4f5B4fdD","0x7fb9f93Cc6614dDd76c893EC8b5310674aC3Fc5f"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 2 (50%)"
+    }
+```
+
+Generated with discovered.json: 0xa284c75555316d712b5034cee198158e871e0ef6
 
 # Diff at Tue, 30 Jul 2024 11:10:58 GMT:
 

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20389626,
   "configHash": "0x8c1fe2ea35e3e9d3ce2b472c13c894127ac3703d838d0c97bbbe56232de0804b",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ConduitMultisig",
@@ -14,17 +14,14 @@
         "It can act on behalf of 0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9, inheriting its permissions."
       ],
       "assignedPermissions": {
-        "owner": ["0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"]
+        "configure": ["0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -33,8 +30,11 @@
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 42,
         "VERSION": "1.3.0"
       },
@@ -165,14 +165,14 @@
       "address": "0xb570F4aD27e7De879A2E4F2F3DE27dBaBc20E9B9",
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x5e76821C3c1AbB9fD6E310224804556C61D860e0",
           "0x886B187C3D293B1449A3A0F23Ca9e2269E0f2664",
           "0x91493a61ab83b62943E6dCAa5475Dd330704Cc84",
           "0x934Ab59Ef14b638653b1C0FEf7aB9a72186393DC",
           "0xe07eA0436100918F157DF35D01dCE5c11b16D1F1"
         ],
-        "owner": ["0x87630a802a3789463eC4b00f89b27b1e9f6b92e9"]
+        "configure": ["0x87630a802a3789463eC4b00f89b27b1e9f6b92e9"]
       },
       "sinceTimestamp": 1696608287,
       "values": {
@@ -218,10 +218,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0xa84ed62df94972c3e043e08afbddd5cf50564f88e5ce1a98911a3dc8908c9ea6",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f",
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
@@ -229,8 +226,11 @@
           "0xC11D658978FF288da8bda4004CB93C6C99D791b1",
           "0x985Fa8958Aa3dcE89a83E519e6FAAeCAa4930b32"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xa84ed62df94972c3e043e08afbddd5cf50564f88e5ce1a98911a3dc8908c9ea6",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       },
@@ -559,9 +559,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

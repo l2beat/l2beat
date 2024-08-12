@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19976289,
   "configHash": "0x8660573ec3e06fd6350670ae40ed0bd1067e4751b1b00a633cbc91f86ec05fde",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "PolygonzkEVMVerifier",
@@ -144,7 +144,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x4A27aC91c5cD3768F140ECabDe3FC2B2d92eDb98",
           "0x70E70e58ed7B1Cec0D8ef7464072ED8A52d755eB",
           "0xf0CDE1E7F0FAD79771cd526b1Eb0A12F69582C01"
@@ -155,10 +155,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "5 of 10 (50%)",
-        "domainSeparator": "0x8a124b80a35ff530b08dee85e5c8febf58bd7c0faed74b60fa781f8695708242",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x099198353446A9E3a20672eDC1Bd461E978842c3",
           "0xb771380f912E4b5F6beDdf81314C383c13F16ab5",
           "0xD09971D8ed6C6a5e57581e90d593ee5B94e348D4",
@@ -170,8 +167,11 @@
           "0x4DE44Aa0Ef9DB64DF3eB3465d35D73d0409d44ed",
           "0x4E83124eD15b13265240B61EC9627797CCE1032E"
         ],
-        "getThreshold": 5,
+        "$threshold": 5,
+        "domainSeparator": "0x8a124b80a35ff530b08dee85e5c8febf58bd7c0faed74b60fa781f8695708242",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 10 (50%)",
         "nonce": 1,
         "VERSION": "1.3.0"
       },
@@ -535,7 +535,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

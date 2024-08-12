@@ -1,3 +1,339 @@
+Generated with discovered.json: 0x4a7ce7478670879a2ccb5864896d36cf2e004795
+
+# Diff at Fri, 09 Aug 2024 10:12:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+Generated with discovered.json: 0xc63ccd570fde4fb859e9aab9569739ab0ce184e6
+
+# Diff at Tue, 06 Aug 2024 11:51:53 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@636940e9998601360990d4bbb59e5d257345bee1 block: 20461012
+- current block number: 20469346
+
+## Description
+
+Thresholds of the MS clones are increased to 4 of 6. 
+
+## Watched changes
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
++        "4 of 6 (67%)"
+      values.getThreshold:
+-        3
++        4
+    }
+```
+
+Generated with discovered.json: 0x90eae46af142c228d18c52a4de197cae3ec0a9ff
+
+# Diff at Mon, 05 Aug 2024 07:56:26 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@14945a4ebc63b3db3867f33067f31f159fedd9a9 block: 20432442
+- current block number: 20461012
+
+## Description
+
+EOA admin role and owner changed to the Multisig.
+
+## Watched changes
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      values.accessControl.ADMIN_ROLE.members.1:
+-        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      values.accessControl.ADMIN_ROLE.members.0:
+-        "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
++        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+      values.owner:
+-        "0x944a0Af591E2C23a2E81fe4c10Bd9c47Cf866F4b"
++        "0xa00d50A40B1635D293c87BA36503bD2504b5D818"
+    }
+```
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
+```diff
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "4 of 6 (67%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        4
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 2 (50%)"
++        "3 of 6 (50%)"
+      values.getOwners.5:
++        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
+      values.getOwners.4:
++        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
+      values.getOwners.3:
++        "0x85e500dF81F10B539E16Dd717e24C41465D10D82"
+      values.getOwners.2:
++        "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d"
+      values.getOwners.1:
+-        "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
++        "0x83d4814307088732528A53D8DF75fd6F2f5be398"
+      values.getOwners.0:
+-        "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348"
++        "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44"
+      values.getThreshold:
+-        1
++        3
+    }
+```
+
+Generated with discovered.json: 0x9768c11aeb7d653ec31756eef0d82cd70c5bae83
+
+# Diff at Thu, 01 Aug 2024 08:15:53 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@621480ddcec5eb0839779913d874274122eaf08f block: 20311101
+- current block number: 20432442
+
+## Description
+
+Initial discovery.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20311101 (main branch discovery), not current.
+
+```diff
+    contract ZkTrueUp (0x09E01425780094a9754B2bd8A3298f73ce837CF9) {
+    +++ description: None
+      values.facets:
+-        [{"target":"0x09E01425780094a9754B2bd8A3298f73ce837CF9","selectors":["0x2c408059","0x91423765","0x1f931c1c","0x7a0ed627","0xadfca15e","0x52ef6b2c","0xcdffacc6","0x01ffc9a7","0x8da5cb5b","0x8ab5150a","0xf2fde38b","0x79ba5097"]},{"target":"0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A","selectors":["0xc1bc0619","0x882f3e16","0x17d0d617","0xe0b490f7","0x8e201593","0x81de1b94","0x05611f9c","0x67173e0e","0x9ed43244","0xdfd693c6","0xd9caed12","0xa7d7a8e4"]},{"target":"0x5d8A9DDA649524D1Ce31C204551a93560617D1D3","selectors":["0xd5e682e8","0x940cc664","0x063ca418","0x46657fe9","0xcae5f11e","0xd43f8aaa","0x5437988d"]},{"target":"0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c","selectors":["0x5c38449e","0x2ed22f2d","0x7f9cb3be"]},{"target":"0x84283289D7E57a2f5b80ddA065AC99450eB44cb6","selectors":["0x1887a683","0xea05d8ff","0x044d6d6f","0xb073907d","0x3c7c7403","0x70100148","0xa7e05b9c","0xe5a4afd1","0xc5aeb533"]},{"target":"0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9","selectors":["0xe45004e1","0x756d39b4","0x5597bf6f","0x7609f745","0x3c9c186f","0x797676ab","0xc60a2f3d","0x1a99389f","0x2861acd4","0xd0b27053","0xcf2db3e7","0xaf53a0ac","0x8625fb57","0x753d84e5","0x0c0b588e","0xa586e12a","0x7050a4eb","0xb9899b50","0xaa0e9f71","0xa9b1f052","0x1138757d","0xafcc5a8a","0xe49633bc","0x89ca46a5","0x620d308b","0x59df8371","0x359521cf"]},{"target":"0x955cdD2E56Ca2776a101a552A318d28fe311398D","selectors":["0x0d874ce4","0x364c8cfe","0x632a5607","0x5a6a6daa","0x7f6c6f10","0xe541f918","0x8269abd5","0xde0e52d9","0xa3125045","0xcd3e39b1","0xc2e7ee1a","0x21aad0ee","0xe565d64e","0xd4487976","0x662eb9e5","0x784cb0c0","0x70ab1eb6","0x00e898bf"]},{"target":"0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC","selectors":["0xf3ab65b4","0xa9ca69af","0xf1537686","0x8f1db2ad","0x5e76ad54","0xf3b4fd89","0x89eba0d2","0x76e11286","0x3e35af24"]},{"target":"0x10a73b16f6CD03931484b4Ae69fEDc55E868D295","selectors":["0x1ead9052","0x927da105","0xf7888aec","0xda1488ac","0x413cebd0","0x7793324b","0xe8689daa","0x1d665c16","0xda1e3fa8"]},{"target":"0x882aBFb2F6A67d36350499991638044e8Bd83a72","selectors":["0x6635408f","0xcf3d84c1","0xb0f29c4c","0x5a4c68f8","0xabf2aed3","0x2cee1e58"]}]
++        {"0x09E01425780094a9754B2bd8A3298f73ce837CF9":["getFallbackAddress()","setFallbackAddress(address)","diamondCut((address,uint8,bytes4[])[],address,bytes)","facets()","facetFunctionSelectors(address)","facetAddresses()","facetAddress(bytes4)","supportsInterface(bytes4)","owner()","nomineeOwner()","transferOwnership(address)","acceptOwnership()"],"0x8D0fc76595E42f38c771ecEE627DA5654Ca2E75A":["deposit(address,address,uint128)","forceWithdraw(address)","getAccountAddr(uint32)","getAccountId(address)","getAccountNum()","getDelegatedActions(address,address)","getIsDelegated(address,address,uint256)","getPermitNonce(address)","register(uint256,uint256,address,uint128)","setDelegatee(address,uint256)","withdraw(address,address,uint256)","withdrawWithPermit(address,address,uint256,uint256,uint8,bytes32,bytes32)"],"0x5d8A9DDA649524D1Ce31C204551a93560617D1D3":["getAaveV3Pool()","getEvacuVerifier()","getPoseidonUnit2()","getVerifier()","getWETH()","setEvacuVerifier(address)","setVerifier(address)"],"0xbb629c830a4d153CDE43Cb127b5aff60d1185B8c":["flashLoan(address,address[],uint256[],bytes)","getFlashLoanPremium()","setFlashLoanPremium(uint16)"],"0x84283289D7E57a2f5b80ddA065AC99450eB44cb6":["getFundWeight()","getInsuranceAddr()","getTreasuryAddr()","getVaultAddr()","setFundWeight((uint16,uint16,uint16))","setInsuranceAddr(address)","setTreasuryAddr(address)","setVaultAddr(address)","withdrawProtocolFee(uint8,address,uint256)"],"0xf1E357A2645dad05FbfbC34ddF6c2D24B9f332B9":["addCollateral(bytes12,uint128)","forceCancelRollBorrow(bytes12)","forceCancelRollBorrowWithPermit(bytes12,uint256,uint8,bytes32,bytes32)","getBorrowFeeRate()","getHalfLiquidationThreshold()","getHealthFactor(bytes12)","getLiquidationFactor(bool)","getLiquidationInfo(bytes12)","getLoan(bytes12)","getLoanId(uint32,uint32,uint16,uint16)","getRollOverFee()","isActivatedRoller()","liquidate(bytes12,uint128)","removeCollateral(bytes12,uint128)","removeCollateralWithPermit(bytes12,uint128,uint256,uint8,bytes32,bytes32)","repay(bytes12,uint128,uint128,bool)","repayWithPermit(bytes12,uint128,uint128,bool,uint256,uint8,bytes32,bytes32)","resolveLoanId(bytes12)","rollBorrow((bytes12,uint32,uint32,uint128,uint128,address))","rollBorrowWithPermit((bytes12,uint32,uint32,uint128,uint128,address),uint256,uint8,bytes32,bytes32)","rollToAave(bytes12,uint128,uint128)","rollToAaveWithPermit(bytes12,uint128,uint128,uint256,uint8,bytes32,bytes32)","setActivatedRoller(bool)","setBorrowFeeRate(uint32)","setHalfLiquidationThreshold(uint16)","setLiquidationFactor((uint16,uint16,uint16,uint16),bool)","setRollOverFee(uint256)"],"0x955cdD2E56Ca2776a101a552A318d28fe311398D":["commitBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])","commitEvacuBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes)[])","executeBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])","executeEvacuBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),bytes[])[])","getBlockNum()","getL1Request(uint64)","getL1RequestNum()","getPendingBalances(address,address)","getStoredBlockHash(uint32)","isDepositInL1RequestQueue((uint32,uint16,uint128),uint64)","isEvacuationInL1RequestQueue((uint32,uint16,uint128),uint64)","isForceCancelRollBorrowInL1RequestQueue((uint32,uint16,uint16,uint32),uint64)","isForceWithdrawInL1RequestQueue((uint32,uint16,uint128),uint64)","isRegisterInL1RequestQueue((uint32,bytes20),uint64)","isRollBorrowInL1RequestQueue((uint32,uint16,uint128,uint32,uint16,uint128,uint32,uint32,uint32,uint32),uint64)","revertBlocks((uint32,uint64,bytes32,bytes32,bytes32,uint256)[])","verifyBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])","verifyEvacuBlocks(((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint256[2],uint256[2][2],uint256[2],uint256[1]))[])"],"0x0d7598cE7Cd1fA07C2a26c49876F850b0AD66bbC":["addToken((bool,bool,uint8,uint128,address,address))","getAssetConfig(uint16)","getTokenId(address)","getTokenNum()","isTokenPaused(address)","setMinDepositAmt(address,uint128)","setPaused(address,bool)","setPriceFeed(address,address)","setStableCoin(address,bool)"],"0x10a73b16f6CD03931484b4Ae69fEDc55E868D295":["activeSupply(address)","allowance(address,address,address)","balanceOf(address,address)","createTsbToken(uint16,uint32,string,string)","getMaturityTime(address)","getTsbToken(uint16,uint32)","getUnderlyingAsset(address)","redeem(address,address,uint128,bool)","redeemWithPermit(address,address,uint128,bool,uint256,uint8,bytes32,bytes32)"],"0x882aBFb2F6A67d36350499991638044e8Bd83a72":["activateEvacuation()","consumeL1RequestInEvacuMode(bytes[])","evacuate((uint32,uint64,bytes32,bytes32,bytes32,uint256),(uint32,bytes32,bytes32,uint256,uint16[],bytes),(uint256[2],uint256[2][2],uint256[2],uint256[1]))","isEvacuMode()","isEvacuted(address,uint16)","refundDeregisteredAddr(address,uint256,uint32)"]}
+      values.EXPIRATION_PERIOD:
++        1209600
+    }
+```
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "VaultMultisig"
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "InsuranceMultisig"
+    }
+```
+
+```diff
+    contract RollupFacet (0x955cdD2E56Ca2776a101a552A318d28fe311398D) {
+    +++ description: None
+      values.EXPIRATION_PERIOD:
+-        1209600
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      name:
+-        "GnosisSafe"
++        "TreasuryMultisig"
+    }
+```
+
 Generated with discovered.json: 0x741d590ac7848b42bf231fff98a4c917ee772478
 
 # Diff at Mon, 15 Jul 2024 09:45:08 GMT:

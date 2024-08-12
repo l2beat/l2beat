@@ -4,13 +4,15 @@ import { cn } from '~/utils/cn'
 import { ChartMilestoneHover } from '../hovers/chart-milestone-hover'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
+import { useChartRect } from './chart-rect-context'
 import { POINT_CLASS_NAMES } from './styles'
 
 const HOVER_CANVAS_PADDING = 16
 
 export function ChartHover() {
   const contentRef = useRef<HTMLDivElement>(null)
-  const { rect, valuesStyle } = useChartContext()
+  const { valuesStyle } = useChartContext()
+  const { rect } = useChartRect()
   const { position, milestone, content } = useChartHoverContext()
 
   const lineStyle = useMemo(() => {

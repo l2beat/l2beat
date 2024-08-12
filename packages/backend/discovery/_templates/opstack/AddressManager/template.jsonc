@@ -4,7 +4,7 @@
   "fields": {
     "owner": {
       "target": {
-        "permission": "owner"
+        "permissions": [{ "type": "configure" }]
       }
     }
   }

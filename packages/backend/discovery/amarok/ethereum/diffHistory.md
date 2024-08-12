@@ -1,4 +1,72 @@
-Generated with discovered.json: 0xe5bee16658b99ce789eb33f55e9e76691c8feaa7
+Generated with discovered.json: 0x96e2d3515f785039b2980c9da704f2802cbb499e
+
+# Diff at Fri, 09 Aug 2024 10:08:27 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20317972
+- current block number: 20317972
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20317972 (main branch discovery), not current.
+
+```diff
+    contract Connext Multisig (0x4d50a469fc788a3c0CdC8Fd67868877dCb246625) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "8 of 12 (67%)"
+      values.getOwners:
+-        ["0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb","0xc840e73B856f52E5491d6016daf5C7AE5e6beECD","0x450BCD84a040E6975a8092114A09cD37fA140873","0x8D09e20b835009E5320cC11E6a6F00aF451aD669","0x43A257c61e9Ef4750e426eC0770589509469b156","0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5","0xe4d19c67ca0E9E3888158062De24321a0B272e73","0xC832bB8015762B4857459551057EB61c68B93608","0x320CBa820f33251d480Dcb79F7a9b1cc757aC12e","0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD","0xf8d8aF083aC452b05b0D2eb4499AD900324b5754","0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"]
+      values.getThreshold:
+-        8
+      values.$members:
++        ["0xdFa28361aC40679cC5D8EFa74c0421961397f2Eb","0xc840e73B856f52E5491d6016daf5C7AE5e6beECD","0x450BCD84a040E6975a8092114A09cD37fA140873","0x8D09e20b835009E5320cC11E6a6F00aF451aD669","0x43A257c61e9Ef4750e426eC0770589509469b156","0x6B44Dba00e92DD035976607CBF62bf1CC6320EC5","0xe4d19c67ca0E9E3888158062De24321a0B272e73","0xC832bB8015762B4857459551057EB61c68B93608","0x320CBa820f33251d480Dcb79F7a9b1cc757aC12e","0x1b526192C541DE6E23D73b4Afc4b6B45A75aeAdD","0xf8d8aF083aC452b05b0D2eb4499AD900324b5754","0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f"]
+      values.$threshold:
++        8
+      values.multisigThreshold:
++        "8 of 12 (67%)"
+    }
+```
+
+```diff
+    contract Connext Fee Multisig (0x7bE978Cc84612E08f7844672B0E6A6F367FE2b6A) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "1 of 5 (20%)"
+      values.$members:
++        ["0x9b903Ae440CB1f01c342466D6DB6b57A5BF98C3f","0xade09131C6f43fe22C2CbABb759636C43cFc181e","0x7fB1B8D2C4a8186426Fb12a4Ae483f0093ED2315","0xb71C02f99c42424257745827F1C2beBD7Fa1e936","0xD7a8070F0875915dB9b9E03bD47A0b973d19130b"]
+      values.$threshold:
++        1
+      values.multisigThreshold:
++        "1 of 5 (20%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+Generated with discovered.json: 0x0c8c2fb63020264289bcd2c2930dce88b0953261
 
 # Diff at Tue, 30 Jul 2024 11:10:39 GMT:
 

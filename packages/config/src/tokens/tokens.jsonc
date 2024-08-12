@@ -9,6 +9,12 @@
       "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
     },
     {
+      "symbol": "sUSDz",
+      "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+      "coingeckoId": "anzen-staked-usdz",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "PARAM",
       "address": "0x69a1e699f562d7af66fc6cc473d99f4430c3acd2"
     },
@@ -24,6 +30,11 @@
       "symbol": "pxETH",
       "category": "ether",
       "address": "0x04c154b66cb340f3ae24111cc767e0184ed00cc6"
+    },
+    {
+      "symbol": "ZKL",
+      "category": "other",
+      "address": "0xfc385a1df85660a7e041423db512f779070fcede"
     },
     {
       "symbol": "MAVIA",
@@ -325,6 +336,10 @@
     {
       "symbol": "CVX",
       "address": "0x4e3FBD56CD56c3e72c1403e103b45Db9da5B9D2B"
+    },
+    {
+      "symbol": "cvxFXS",
+      "address": "0xFEEf77d3f69374f66429C91d732A244f074bdf74"
     },
     {
       "symbol": "cvxCRV",
@@ -796,6 +811,10 @@
       "address": "0x8E0fE2947752BE0d5ACF73aaE77362Daf79cB379"
     },
     {
+      "symbol": "NSTR",
+      "address": "0x610dbd98a28ebba525e9926b6aaf88f9159edbfd"
+    },
+    {
       "symbol": "NU",
       "address": "0x4fE83213D56308330EC302a8BD641f1d0113A4Cc"
     },
@@ -879,6 +898,10 @@
     {
       "symbol": "PLA",
       "address": "0x3a4f40631a4f906c2BaD353Ed06De7A5D3fCb430"
+    },
+    {
+      "symbol": "PMON",
+      "address": "0x1796ae0b0fa4862485106a0de9b654efe301d0b2"
     },
     {
       "symbol": "PNT",
@@ -1135,6 +1158,10 @@
       "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2"
     },
     {
+      "symbol": "SX",
+      "address": "0xbe9F61555F50DD6167f2772e9CF7519790d96624"
+    },
+    {
       "symbol": "SXP",
       "address": "0x8CE9137d39326AD0cD6491fb5CC0CbA0e089b6A9"
     },
@@ -1361,6 +1388,10 @@
       "address": "0x25f8087EAD173b73D6e8B84329989A8eEA16CF73"
     },
     {
+      "symbol": "ZEND",
+      "address": "0xb2606492712D311be8f41d940AFE8CE742A52D44"
+    },
+    {
       "symbol": "ZKS",
       "address": "0xe4815AE53B124e7263F08dcDBBB757d41Ed658c6",
       "coingeckoId": "zkspace"
@@ -1385,6 +1416,24 @@
     }
   ],
   "arbitrum": [
+    {
+      "symbol": "PMON",
+      "address": "0xBC9B77acA82f6BE43927076D71cd453b625165B8",
+      "source": "canonical",
+      "coingeckoId": "polychain-monsters",
+      "supply": "zero"
+    },
+    {
+      "symbol": "wOETH",
+      "address": "0xD8724322f44E5c58D7A815F542036fb17DbbF839",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Transporter",
+        "slug": "transporter"
+      }
+    },
     {
       "symbol": "SolvBTC",
       "address": "0x3647c54c4c2C65bC7a2D63c0Da2809B399DBBDC0",
@@ -1826,6 +1875,17 @@
       "source": "canonical",
       "supply": "zero",
       "category": "ether"
+    },
+    {
+      "symbol": "CHEESE",
+      "address": "0x05AEa20947A9A376eF50218633BB0a5A05d40A0C",
+      "source": "external",
+      "coingeckoId": "cheese-2",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Wormhole",
+        "slug": "portal"
+      }
     }
   ],
   "nova": [
@@ -2183,6 +2243,17 @@
       "supply": "circulatingSupply"
     },
     {
+      "symbol": "sUSDz",
+      "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
+      "source": "external",
+      "coingeckoId": "anzen-staked-usdz",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "rsETH",
       "category": "ether",
       "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
@@ -2298,6 +2369,16 @@
   ],
   "mantapacific": [
     {
+      "symbol": "mBTC",
+      "address": "0x1468177dbcb2a772f3d182d2f1358d442b553089",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "USDC",
       "address": "0xb73603C5d87fA094B7314C74ACE2e64D165016fb",
       "source": "canonical",
@@ -2328,28 +2409,6 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "source": "native",
       "supply": "circulatingSupply"
-    },
-    {
-      "symbol": "mETH",
-      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
-      "category": "ether",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
-    },
-    {
-      "symbol": "mUSD",
-      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
-      "category": "stablecoin",
-      "source": "external",
-      "supply": "totalSupply",
-      "bridgedUsing": {
-        "bridge": "Layer Zero",
-        "slug": "omnichain"
-      }
     },
     {
       "symbol": "STONE",
@@ -2690,6 +2749,12 @@
     }
   ],
   "blast": [
+    {
+      "symbol": "ANDY",
+      "address": "0xd43D8aDAC6A4C7d9Aeece7c3151FcA8f23752cf8",
+      "source": "native",
+      "supply": "circulatingSupply"
+    },
     {
       "symbol": "bWOOL",
       "address": "0xb5A86030b64AfAa75c42c0D28f8d5ce5f9f61401",

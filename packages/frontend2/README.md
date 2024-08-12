@@ -1,6 +1,6 @@
 # @l2beat/frontend2
 
-The dynamic Next.js frontend that will be the new face of L2BEAT.
+The dynamic Next.js frontend will be the new face of L2BEAT.
 
 ## Setup
 
@@ -41,6 +41,11 @@ DATABASE_URL=
 `frontend2`, while on production, is still in the early stage of development. When running it locally and trying to navigate to a page that is not migrated yet (main page included), you'll encounter an Internal Server Error.
 
 #### Fully ported pages
+- /scaling
+  * /risks
+  * /data-availability
+  * /finality
+  * /costs
 - /donate
 - /faq
 - /glossary

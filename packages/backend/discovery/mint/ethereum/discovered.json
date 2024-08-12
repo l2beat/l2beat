@@ -2,8 +2,8 @@
   "name": "mint",
   "chain": "ethereum",
   "blockNumber": 20032860,
-  "configHash": "0xfcdd1d44a109cc54bb52f2b9dafbedf5355303521be7cd729b22f44c417ac8a7",
-  "version": 10,
+  "configHash": "0x9fae0ffe49eb46bfbb62ec000ea9e814154bce498694f0c2c22e5ec33dde4612",
+  "version": 11,
   "contracts": [
     {
       "name": "L1StandardBridge",
@@ -31,7 +31,7 @@
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
       "assignedPermissions": {
-        "owner": [
+        "configure": [
           "0xC975862927797812371A9Fb631f83F8f5e2240D5",
           "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
         ]
@@ -41,10 +41,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -53,8 +50,11 @@
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 36,
         "VERSION": "1.3.0"
       },
@@ -126,13 +126,13 @@
       "address": "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF",
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x2b3F201543adF73160bA42E1a5b7750024F30420",
           "0x59625d1FE0Eeb8114a4d13c863978F39b3471781",
           "0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED",
           "0xC975862927797812371A9Fb631f83F8f5e2240D5"
         ],
-        "owner": ["0xEa4165C5CDCA155779803A113d8391b741bA5228"]
+        "configure": ["0xEa4165C5CDCA155779803A113d8391b741bA5228"]
       },
       "sinceTimestamp": 1715609063,
       "values": {
@@ -233,7 +233,6 @@
     { "address": "0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f" },
     { "address": "0x3d53Df1e69A32F98dFCcf23CCB689763E21A78bA" },
     { "address": "0x41c4FAE5E80B9a622d8968bcd3EBbcf1F93b30Db" },
-    { "address": "0x4200000000000000000000000000000000000007" },
     { "address": "0x4200000000000000000000000000000000000010" },
     { "address": "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe" },
     { "address": "0x4e31448a098393727b786e25B54E59DcA1b77FE1" },
@@ -506,13 +505,13 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/L1CrossDomainMessenger": "0x41bd900739c252a9cbc05cef0fa2a1a2e0075816453fae09031f4b4055ce1b90",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/L1CrossDomainMessenger": "0xcf3e4600ef72e34e18a7c977b796d1f5a5d7878a503dd52cefad07854366a764",
     "opstack/L2OutputOracle": "0x1d833a9768af12de67d65ad7dd09fc4b96db543bde5f5fdc2ff0ea0c571ceadf",
     "opstack/OptimismPortal": "0xcc1b405a2bf545f58a88bb104ba298351e252fc507b40d0e1ef40bf6bbe34152",
-    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc",
-    "opstack/SystemConfig": "0x1fd433179385ab118182b51d2c504a54a52a0e7bc6a8c3417ef66638c1702a32"
+    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0",
+    "opstack/SystemConfig": "0x64961a217667137a899a8042e685df30318be47b0a07f69792414fb528d3ffc0"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

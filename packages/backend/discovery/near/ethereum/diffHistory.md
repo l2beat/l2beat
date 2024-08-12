@@ -1,4 +1,40 @@
-Generated with discovered.json: 0xaaded1a38d7e35fba6ef360c19573c91b46f8e1b
+Generated with discovered.json: 0x7939bf634b54f82bbae8227b238dcc7ca4266043
+
+# Diff at Fri, 09 Aug 2024 10:10:44 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19531990
+- current block number: 19531990
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19531990 (main branch discovery), not current.
+
+```diff
+    contract BridgeAdminMultisig (0x2468603819Bf09Ed3Fb6f3EFeff24B1955f3CDE1) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xed9cB50304991951Cbee747900484E9a041DA464","0xF58096A602C960c841Bd83A29DE21c808a9c1ac9","0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d","0x1180c536465413eE05b206b3a99d4C6a9934D2b7","0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xed9cB50304991951Cbee747900484E9a041DA464","0xF58096A602C960c841Bd83A29DE21c808a9c1ac9","0xCFB9C137E21E199757Ae3Ce705B199CB26A3b91d","0x1180c536465413eE05b206b3a99d4C6a9934D2b7","0x8F3A347Eb3eB62fEa4975d293e052cD96abd36C6"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+Generated with discovered.json: 0x33d977f13e815c884a1acc91e89d4d8c81a62faa
 
 # Diff at Thu, 28 Mar 2024 10:23:24 GMT:
 

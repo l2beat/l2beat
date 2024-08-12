@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20016207,
   "configHash": "0x52551afa863392acac030901399e7a754e6c8b61f6dbbc2db141fc89c0029e83",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "SwellMultisig",
@@ -18,10 +18,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x7ef947a4d0f9db951b663aca329bc6fdd6e078a18fd7d4bc7e89a1c40b0c5724",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xd08b294dBD8Bc760c57AbdEC26515Da626511B40",
           "0xD8DbDb15e91596c50A72E77d95dbC866ebdA8238",
           "0x284C633962F2386590E934c4fBD2D3EafA0944A3",
@@ -29,8 +26,11 @@
           "0x66Ed79Ee4865c1cb4574b42d467C7Fee28bB4D59",
           "0x5b27b9279251904AaF2127463eeFf91E0037F725"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x7ef947a4d0f9db951b663aca329bc6fdd6e078a18fd7d4bc7e89a1c40b0c5724",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 110,
         "VERSION": "1.3.0"
       },
@@ -213,7 +213,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -90,10 +90,9 @@ export class LivenessController {
   async getLiveness(): Promise<LivenessResult> {
     const projects: LivenessApiResponse['projects'] = {}
 
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     for (const project of this.$.projects) {
       const activeConfigs = getActiveConfigurations(project, configurations)
@@ -226,10 +225,9 @@ export class LivenessController {
       throw new Error(`Project with id ${projectId} not found`)
     }
 
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     const activeConfigs = getActiveConfigurations(project, configurations)
 
@@ -269,10 +267,9 @@ export class LivenessController {
       return { type: 'error', error: 'DATA_NOT_SYNCED' }
     }
 
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     const projects: Record<
       string,

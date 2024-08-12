@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 234834723,
   "configHash": "0x17b1d8b40bfe763fe331dea870945d8e5ac092e0c0c77471b10814fba181001a",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Outbox",
@@ -45,7 +45,7 @@
       "name": "ProxyAdmin",
       "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
           "0x211C9893653Aea2088E34765e7039617E95fD8fD",
           "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
@@ -79,7 +79,7 @@
       "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"]
+        "upgrade": ["0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"]
       },
       "sinceTimestamp": 1714618907,
       "values": {
@@ -1002,5 +1002,5 @@
     "orbitstack/RollupProxy": "0x6f70ed7031145be878be3ea4b0e15ea2331e322c88da65b5c341b0920b038704",
     "orbitstack/SequencerInbox": "0x096f13a8297d3243cf02cbc39d065c1c6f37b23602fce0c63f3ff74d7d65b1ee"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

@@ -6,7 +6,7 @@ import { renderPages } from '../pages/renderPages'
 import { createApi } from './api/createApi'
 import { fetchActivityApi } from './api/fetchActivityApi'
 import { fetchFeaturesApi } from './api/fetchFeaturesApi'
-import { fetchFinalityApi } from './api/fetchFinalityApi'
+
 import { fetchImplementationChangeReport } from './api/fetchImplementationChangeReport'
 import { fetchL2CostsApi } from './api/fetchL2CostsApi'
 import { fetchLivenessApi } from './api/fetchLivenessApi'
@@ -52,18 +52,18 @@ async function main() {
     const [
       tvlApiResponse,
       excludedTokensTvlApiResponse,
+      l2CostsApiResponse,
       activityApiResponse,
       tvlBreakdownApiResponse,
       livenessApiResponse,
-      finalityApiResponse,
       implementationChange,
-      l2CostsApiResponse,
     ] = await Promise.all([
       fetchTvlApi(config.backend, http, { tvl: config.features.tvl }),
       fetchTvlApi(config.backend, http, {
         tvl: config.features.tvl,
         excludeAssociatedTokens: true,
       }),
+      fetchL2CostsApi(config.backend, http),
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,
@@ -73,14 +73,8 @@ async function main() {
       config.features.liveness
         ? fetchLivenessApi(config.backend, http)
         : undefined,
-      config.features.finality
-        ? fetchFinalityApi(config.backend, http)
-        : undefined,
       config.features.implementationChange
         ? fetchImplementationChangeReport(config.backend, http)
-        : undefined,
-      config.features.costsPage
-        ? fetchL2CostsApi(config.backend, http)
         : undefined,
     ])
     const supportedChains = getChainNames(
@@ -114,7 +108,7 @@ async function main() {
       manuallyVerifiedContracts,
       tvlBreakdownApiResponse,
       livenessApiResponse,
-      finalityApiResponse,
+
       l2CostsApiResponse,
       implementationChange,
     }

@@ -8,7 +8,7 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('mantle')
 
 const regularUpgrades = {
-  upgradableBy: ['OwnerMultisig'],
+  upgradableBy: ['MantleSecurityMultisig'],
   upgradeDelay: 'No delay',
 }
 
@@ -129,7 +129,7 @@ export const mantle: Layer2 = opStackL2({
     }),
     discovery.getContractDetails('AddressManager', {
       description:
-        'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the OwnerMultisig.',
+        'This is a library that stores the mappings between names and their addresses. Changing the values effectively upgrades the system. It is controlled by the MantleSecurityMultisig.',
       ...regularUpgrades,
     }),
     discovery.getContractDetails('PubkeyCompendium'),
@@ -144,11 +144,11 @@ export const mantle: Layer2 = opStackL2({
   ],
   nonTemplatePermissions: [
     ...discovery.getMultisigPermission(
-      'OwnerMultisig',
+      'MantleSecurityMultisig',
       'This address can upgrade the following contracts: L1CrossDomainMessenger, L1StandardBridge, AddressManager, L1MantleToken, EigenDataLayerChain, SystemConfig.',
     ),
     ...discovery.getMultisigPermission(
-      'Owner2Multisig',
+      'MantleEngineeringMultisig',
       'This address is the owner of the following contracts: EigenDataLayerChain, DataLayrServiceManager, BLSRegistry, Delegation. It is also designated as a Challenger and Guardian of the OptimismPortal, meaning it can halt withdrawals and change incorrect state roots.',
     ),
   ],

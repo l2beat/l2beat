@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20362600,
   "configHash": "0x2eec4bf11f15af3314b396b1fca83a67a70e09cd7b429a0be66f522678b530db",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "",
@@ -116,7 +116,7 @@
       "address": "0xc045b35d1cf9501B2fc95e7c489FDA96345A4D70",
       "unverified": true,
       "assignedPermissions": {
-        "admin": ["0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"]
+        "upgrade": ["0x09F3320e8d2dBD8913659bAb28940bb4f041eaD8"]
       },
       "sinceTimestamp": 1708655543,
       "values": { "$immutable": true }
@@ -139,7 +139,7 @@
       "name": "ProxyAdmin",
       "address": "0xFb504CD4eD46024B83c4337044995CF112205f18",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x378F1CD69e1012cfe8FbeAfFeC02630190fda4d9",
           "0x830433dE03ABedE062660CC629e1A2c714272474",
           "0xBe03a2569d10fd10bDbfE84f5f2E22D9cec4aCd0",
@@ -339,5 +339,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

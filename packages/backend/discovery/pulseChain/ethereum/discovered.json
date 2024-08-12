@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 17968825,
   "configHash": "0xccac8f34b06e2a5664c1a8d39d3544c382c436c2d93cd6c2c70718376fae67b3",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ForeignOmnibridge",
@@ -145,7 +145,7 @@
     {
       "address": "0x13A9594a2696D3c35F9D6E4Be6b332f699C57801",
       "assignedPermissions": {
-        "admin": ["0x1715a3E4A142d8b698131108995174F37aEBA10D"]
+        "upgrade": ["0x1715a3E4A142d8b698131108995174F37aEBA10D"]
       }
     },
     { "address": "0x1daD947dD181fAa6c751ec14e2683e0A8fE2bf8c" },
@@ -158,7 +158,7 @@
     {
       "address": "0xDf5d165A7EB95D26355c56d53799B7da1240e585",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x2fa878Ab3F87CC1C9737Fc071108F904c0B0C95d",
           "0xd0764FAe29E0a6a96fF685f71CfC685456D5636c"
         ]
@@ -407,5 +407,5 @@
     ]
   },
   "usedTemplates": {},
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

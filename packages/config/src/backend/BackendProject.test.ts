@@ -6,9 +6,63 @@ import {
   TrackedTxFunctionCallConfig,
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { layer2ToBackendProject } from './BackendProject'
+import {
+  AssetId,
+  ChainId,
+  CoingeckoId,
+  EthereumAddress,
+  Token,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
+import { ScalingProjectEscrow } from '../common'
+import { layer2ToBackendProject, mapTokens } from './BackendProject'
 
 describe('BackendProject', () => {
+  describe(mapTokens.name, () => {
+    it('works for *', () => {
+      const escrow = getMockEscrow({
+        tokens: '*',
+        excludedTokens: ['B'],
+        premintedTokens: ['C'],
+      })
+
+      const tokensOnChain: Token[] = [
+        getMockToken({ symbol: 'A' }),
+        getMockToken({ symbol: 'B' }),
+        getMockToken({ symbol: 'C' }),
+      ]
+
+      const tokens = mapTokens(escrow, tokensOnChain)
+
+      expect(tokens).toEqualUnsorted([
+        { ...getMockToken({ symbol: 'A' }), isPreminted: false },
+        { ...getMockToken({ symbol: 'C' }), isPreminted: true },
+      ])
+    })
+    it('works for list of symbols', () => {
+      const escrow = getMockEscrow({
+        tokens: ['A', 'B', 'C'],
+        excludedTokens: ['B'],
+        premintedTokens: ['C'],
+      })
+
+      const tokensOnChain: Token[] = [
+        getMockToken({ symbol: 'A' }),
+        getMockToken({ symbol: 'B' }),
+        getMockToken({ symbol: 'C' }),
+        getMockToken({ symbol: 'D' }),
+      ]
+
+      const tokens = mapTokens(escrow, tokensOnChain)
+
+      expect(tokens).toEqualUnsorted([
+        { ...getMockToken({ symbol: 'A' }), isPreminted: false },
+        { ...getMockToken({ symbol: 'C' }), isPreminted: true },
+      ])
+    })
+  })
+
   describe('Tracked transactions', () => {
     const projects = layer2s.map(layer2ToBackendProject)
     it('every TrackedTxId is unique', () => {
@@ -75,3 +129,32 @@ describe('BackendProject', () => {
     })
   })
 })
+
+const getMockToken = (token: Partial<Token>): Token => {
+  return {
+    name: 'Mock',
+    id: AssetId('mock-token'),
+    coingeckoId: CoingeckoId('mock-token'),
+    symbol: 'MOCK',
+    decimals: 18,
+    address: EthereumAddress.ZERO,
+    sinceTimestamp: new UnixTime(0),
+    category: 'other',
+    chainId: ChainId.ETHEREUM,
+    source: 'canonical',
+    supply: 'zero',
+    ...token,
+  }
+}
+function getMockEscrow(
+  escrow: Partial<ScalingProjectEscrow>,
+): ScalingProjectEscrow {
+  return mockObject<ScalingProjectEscrow>({
+    address: EthereumAddress.random(),
+    tokens: '*',
+    excludedTokens: [],
+    chain: 'chain',
+    sinceTimestamp: UnixTime.ZERO,
+    ...escrow,
+  })
+}

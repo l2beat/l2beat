@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
 import { AggregatedL2CostRecord, Database } from '@l2beat/database'
-import { getSyncedUntil, TrackedTxConfigEntry } from '@l2beat/shared'
+import { getSyncedUntil } from '@l2beat/shared'
 import {
   L2CostsApiChart,
   L2CostsApiChartPoint,
@@ -49,13 +49,9 @@ export class L2CostsController {
   async getL2Costs(): Promise<L2CostsApiResponse> {
     const projects: L2CostsApiResponse['projects'] = {}
 
-    const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
-    const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
-
-    const configurations =
-      await this.$.indexerService.getSavedConfigurations<TrackedTxConfigEntry>(
-        'tracked_txs_indexer',
-      )
+    const configurations = await this.$.indexerService.getSavedConfigurations(
+      'tracked_txs_indexer',
+    )
 
     const activeProjects = this.$.projects.filter((p) => !p.isArchived)
     for (const project of activeProjects) {
@@ -91,12 +87,7 @@ export class L2CostsController {
         timeRange,
       )
 
-      const { hourly, daily } = this.aggregateL2Costs(
-        records,
-        combinedHourlyMap,
-        combinedDailyMap,
-        nowToFullHour,
-      )
+      const { hourly, daily } = this.aggregateL2Costs(records, nowToFullHour)
 
       const projectData = projects[project.projectId.toString()]
 
@@ -114,14 +105,11 @@ export class L2CostsController {
 
     return {
       projects,
-      combined: this.getCombinedL2Costs(combinedHourlyMap, combinedDailyMap),
     }
   }
 
   aggregateL2Costs(
     records: AggregatedL2CostRecord[],
-    combinedHourlyMap: Map<number, L2CostsApiChartPoint>,
-    combinedDailyMap: Map<number, L2CostsApiChartPoint>,
     nowToFullHour: UnixTime,
   ): Omit<L2CostsProjectApiCharts, 'syncedUntil'> {
     const hourlyMap = new Map<number, L2CostsApiChartPoint>()
@@ -130,11 +118,9 @@ export class L2CostsController {
     for (const rec of records) {
       if (rec.timestamp.gte(nowToFullHour.add(-7, 'days'))) {
         this.addToMap(hourlyMap, 'hour', rec)
-        this.addToMap(combinedHourlyMap, 'hour', rec)
       }
       if (rec.timestamp.lt(nowToFullHour.toStartOf('day'))) {
         this.addToMap(dailyMap, 'day', rec)
-        this.addToMap(combinedDailyMap, 'day', rec)
       }
     }
     const hourly: L2CostsProjectApiCharts['hourly'] = {

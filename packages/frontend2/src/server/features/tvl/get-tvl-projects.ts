@@ -44,12 +44,12 @@ export function getTvlProjects(): TvlProject[] {
 
     const sources = new Map<string, { name: string; minTimestamp: UnixTime }>()
     for (const amount of amounts) {
-      const name =
-        amount.type === 'circulatingSupply' ? 'coingecko' : amount.chain
-
-      const source = sources.get(name)
+      const source = sources.get(amount.dataSource)
       if (!source || source.minTimestamp.gt(amount.sinceTimestamp)) {
-        sources.set(name, { name, minTimestamp: amount.sinceTimestamp })
+        sources.set(amount.dataSource, {
+          name: amount.dataSource,
+          minTimestamp: amount.sinceTimestamp,
+        })
       }
     }
     return { id: projectId, minTimestamp, type, slug, sources }

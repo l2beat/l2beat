@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20325048,
   "configHash": "0xa75ac3d3673e70efc5004b51931bfbf779c046e09be2455ba9855c5111382b42",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "AstarVerifier",
@@ -16,7 +16,7 @@
       "name": "ProxyAdmin",
       "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
       "assignedPermissions": {
-        "admin": ["0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"]
+        "upgrade": ["0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"]
       },
       "sinceTimestamp": 1708624547,
       "values": {
@@ -78,16 +78,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 3 (33%)",
-        "domainSeparator": "0x441d2a12799495cc46b37e56d46fc0f7f724dc7414f16f665f284d32eac972e0",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xEc33045FA66cF43E9b5b9F332dc124dbc71c0917",
           "0x33f9b8ac59814E1A0a59e5d1a6125E5E7AF58BA8",
           "0x2b3Aa0Dc0622eFb9426F5A44015aE9151Bd8224C"
         ],
-        "getThreshold": 1,
+        "$threshold": 1,
+        "domainSeparator": "0x441d2a12799495cc46b37e56d46fc0f7f724dc7414f16f665f284d32eac972e0",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 3 (33%)",
         "nonce": 5,
         "VERSION": "1.3.0"
       }
@@ -140,10 +140,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
-        "domainSeparator": "0x9eb12473e8e7bb9cf5c92b4b3effda22cbfcab7b4fb961127d7b5c3c54d2c943",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xe4D4fBC6e27B3AE9D881BD9400071FB6c62E4dfa",
           "0xEc24369A1269171e3cb0A323DD920F99Cb528Fb0",
           "0x127Bae6Fc751dC92111a359500ae91EB437f3dCb",
@@ -151,8 +148,11 @@
           "0x4324c3960c7B2567D0C13ba17493bb364c407937",
           "0x6c4876Ecb5de33f76700f44d547C593065806dAC"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x9eb12473e8e7bb9cf5c92b4b3effda22cbfcab7b4fb961127d7b5c3c54d2c943",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
         "nonce": 8,
         "VERSION": "1.3.0"
       },
@@ -408,7 +408,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
-  "shapeFilesHash": "0xf4f4cd998f24184ca636e8db50690b4e0eb5d586fe86bc8d95a33d6db7e7e902"
+  "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
