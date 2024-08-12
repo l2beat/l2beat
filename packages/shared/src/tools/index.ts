@@ -1,6 +1,4 @@
 export * from './EventTracker'
-export * from './getActiveConfigurations'
-export * from './getSyncedUntil'
 export * from './createTrackedTxConfigId'
 export * from './TrackedTxsConfig'
 export * from './hashJson'

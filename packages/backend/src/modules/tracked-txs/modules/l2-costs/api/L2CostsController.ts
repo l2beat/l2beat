@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
 import { AggregatedL2CostRecord, Database } from '@l2beat/database'
-import { getSyncedUntil } from '@l2beat/shared'
 import {
   L2CostsApiChart,
   L2CostsApiChartPoint,
@@ -10,6 +9,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { getSyncedUntil } from '../../../utils/getSyncedUntil'
 
 const MAX_DAYS = 180
 

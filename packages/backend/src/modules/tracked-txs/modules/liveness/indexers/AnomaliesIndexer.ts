@@ -1,6 +1,5 @@
 import { BackendProject } from '@l2beat/config'
 import { AnomalyRecord, Database } from '@l2beat/database'
-import { getActiveConfigurations, TrackedTxConfigEntry } from '@l2beat/shared'
 import {
   assert,
   ProjectId,
@@ -20,6 +19,7 @@ import {
 import { RunningStatistics } from '../utils/RollingVariance'
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
 import { groupByType } from '../utils/groupByType'
+import { getActiveConfigurations } from '../utils/getActiveConfigurations'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {
