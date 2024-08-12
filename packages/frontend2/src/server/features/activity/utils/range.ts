@@ -1,6 +1,6 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { z } from 'zod'
-import { rangeToDays } from '../../tvl/range-utils'
+import { rangeToDays } from '~/utils/range/range-to-days'
 
 export type ActivityTimeRange = z.infer<typeof ActivityTimeRange>
 export const ActivityTimeRange = z.enum([
