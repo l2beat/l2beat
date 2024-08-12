@@ -10,7 +10,7 @@ import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getLiveness } from '../liveness/get-liveness'
-import { type LivenessDetails, type LivenessProject } from '../liveness/types'
+import { type LivenessProject } from '../liveness/types'
 import { toAnomalyIndicatorEntries } from '../liveness/get-anomaly-entries'
 import { type } from 'os'
 type
@@ -47,11 +47,7 @@ export async function getScalingLivenessEntries() {
       if (!projectLiveness) {
         return undefined
       }
-      const data = getLivenessData(projectLiveness, project)
-      const explanation = project.display.liveness?.explanation
-      const anomalies = toAnomalyIndicatorEntries(
-        projectLiveness.anomalies ?? [],
-      )
+
       return {
         ...getCommonScalingEntry({
           project,
@@ -59,9 +55,10 @@ export async function getScalingLivenessEntries() {
           isVerified,
         }),
         entryType: 'liveness' as const,
-        data,
-        explanation,
-        anomalies,
+        data: getLivenessData(projectLiveness, project),
+        explanation: project.display.liveness?.explanation,
+        anomalies: toAnomalyIndicatorEntries(projectLiveness.anomalies ?? []),
+        dataAvailabilityMode: project.dataAvailability?.mode,
       }
     })
     .filter(notUndefined)
@@ -90,15 +87,17 @@ function getLivenessData(liveness: LivenessProject, project: Layer2) {
   }
 
   return {
-    stateUpdates: getSubTypeData(project, liveness.stateUpdates, syncTarget),
+    stateUpdates: getSubTypeData(liveness, 'stateUpdates', project, syncTarget),
     batchSubmissions: getSubTypeData(
+      liveness,
+      'batchSubmissions',
       project,
-      liveness.batchSubmissions,
       syncTarget,
     ),
     proofSubmissions: getSubTypeData(
+      liveness,
+      'proofSubmissions',
       project,
-      liveness.proofSubmissions,
       syncTarget,
     ),
     syncStatus: {
@@ -109,18 +108,19 @@ function getLivenessData(liveness: LivenessProject, project: Layer2) {
 }
 
 function getSubTypeData(
+  data: LivenessProject,
+  type: Exclude<keyof LivenessProject, 'anomalies'>,
   project: Layer2,
-  data: LivenessDetails,
   syncTarget: UnixTime,
 ) {
-  if (!data) return undefined
-
+  const typeData = data[type]
+  if (!typeData) return undefined
   return {
-    '30d': data['30d'],
-    '90d': data['90d'],
-    max: data.max,
-    syncStatus: getSyncStatus(data.syncedUntil, syncTarget),
-    warning: project.display.liveness?.warnings?.stateUpdates,
+    '30d': typeData['30d'],
+    '90d': typeData['90d'],
+    max: typeData.max,
+    syncStatus: getSyncStatus(typeData.syncedUntil, syncTarget),
+    warning: project.display.liveness?.warnings?.[type],
   }
 }
 

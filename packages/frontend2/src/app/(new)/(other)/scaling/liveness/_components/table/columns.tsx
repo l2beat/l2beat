@@ -14,6 +14,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
+import { LivenessIntervalCell } from './liveness-interval-cell'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
@@ -57,7 +58,12 @@ export const columns = [
     columns: [
       columnHelper.accessor('data.batchSubmissions.averageInSeconds', {
         header: 'Tx data\nsubmissions',
-        cell: (ctx) => <div>{ctx.getValue()}</div>,
+        cell: (ctx) => (
+          <LivenessIntervalCell
+            entry={ctx.row.original}
+            dataType="batchSubmissions"
+          />
+        ),
         sortUndefined: 'last',
         meta: {
           tooltip: 'How often transaction batches are submitted to the L1',
@@ -65,7 +71,12 @@ export const columns = [
       }),
       columnHelper.accessor('data.proofSubmissions.averageInSeconds', {
         header: 'Proof\nsubmissions',
-        cell: (ctx) => <div>{ctx.getValue()}</div>,
+        cell: (ctx) => (
+          <LivenessIntervalCell
+            entry={ctx.row.original}
+            dataType="proofSubmissions"
+          />
+        ),
         sortUndefined: 'last',
         meta: {
           tooltip: 'How often validity proofs are submitted to the L1',
@@ -73,7 +84,12 @@ export const columns = [
       }),
       columnHelper.accessor('data.stateUpdates.averageInSeconds', {
         header: 'State\nupdates',
-        cell: (ctx) => <div>{ctx.getValue()}</div>,
+        cell: (ctx) => (
+          <LivenessIntervalCell
+            entry={ctx.row.original}
+            dataType="stateUpdates"
+          />
+        ),
         sortUndefined: 'last',
         meta: {
           tooltip: 'How often state roots are submitted to the L1',

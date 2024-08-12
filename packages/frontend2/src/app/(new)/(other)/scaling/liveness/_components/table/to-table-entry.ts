@@ -11,6 +11,7 @@ export type ScalingLivenessTableEntry = Omit<ScalingLivenessEntry, 'data'> & {
             averageInSeconds: number
             minimumInSeconds: number
             maximumInSeconds: number
+            warning: string | undefined
           }
         | undefined
       > & { syncStatus: SyncStatus })
@@ -21,15 +22,39 @@ export function toLivenessTableEntry(
   entry: ScalingLivenessEntry,
   range: LivenessTimeRange,
 ): ScalingLivenessTableEntry {
+  if (!entry.data) {
+    return {
+      ...entry,
+      data: undefined,
+    }
+  }
+
+  const stateUpdates = entry.data.stateUpdates?.[range]
+  const batchSubmissions = entry.data.batchSubmissions?.[range]
+  const proofSubmissions = entry.data.proofSubmissions?.[range]
+
   return {
     ...entry,
-    data: entry.data
-      ? {
-          stateUpdates: entry.data.stateUpdates?.[range],
-          batchSubmissions: entry.data.batchSubmissions?.[range],
-          proofSubmissions: entry.data.proofSubmissions?.[range],
-          syncStatus: entry.data.syncStatus,
-        }
-      : undefined,
+    data: {
+      stateUpdates: stateUpdates
+        ? {
+            ...stateUpdates,
+            warning: entry.data.stateUpdates?.warning,
+          }
+        : undefined,
+      batchSubmissions: batchSubmissions
+        ? {
+            ...batchSubmissions,
+            warning: entry.data.batchSubmissions?.warning,
+          }
+        : undefined,
+      proofSubmissions: proofSubmissions
+        ? {
+            ...proofSubmissions,
+            warning: entry.data.proofSubmissions?.warning,
+          }
+        : undefined,
+      syncStatus: entry.data.syncStatus,
+    },
   }
 }
