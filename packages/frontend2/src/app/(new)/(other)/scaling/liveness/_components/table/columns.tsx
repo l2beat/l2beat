@@ -8,6 +8,12 @@ import {
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { AnomalyIndicator } from '../anomaly-indicator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
+import InfoIcon from '~/icons/info.svg'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
@@ -85,6 +91,8 @@ export const columns = [
     },
   }),
   columnHelper.accessor('anomalies', {
+    header: '30-day\nanomalies',
+    enableSorting: false,
     cell: (ctx) => {
       const entry = ctx.row.original
       const showComingSoon =
@@ -99,6 +107,32 @@ export const columns = [
           showComingSoon={showComingSoon}
         />
       )
+    },
+    meta: {
+      align: 'center',
+      tooltip:
+        'Anomalies are based on a Z-score. It measures how far away a data point is from a 30-day rolling average. We consider as anomalies the data points with Z-score > 15.',
+    },
+  }),
+  columnHelper.display({
+    id: 'explanation',
+    cell: (ctx) => {
+      const { explanation } = ctx.row.original
+      if (!explanation) {
+        return null
+      }
+
+      return (
+        <Tooltip>
+          <TooltipTrigger>
+            <InfoIcon className="fill-blue-550" />
+          </TooltipTrigger>
+          <TooltipContent>{explanation}</TooltipContent>
+        </Tooltip>
+      )
+    },
+    meta: {
+      cellClassName: '!pr-4',
     },
   }),
 ]
