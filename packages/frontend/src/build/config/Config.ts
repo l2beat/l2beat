@@ -33,7 +33,7 @@ export interface ConfigFeatures {
   tvl: boolean
   layer3sTvl: boolean
   badges: boolean
-  l2costs:boolean
+  l2costs: boolean
 }
 
 export interface ConfigBackend {

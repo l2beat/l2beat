@@ -29,7 +29,7 @@ export const common: Omit<Config, 'backend'> = {
     tvl: true,
     layer3sTvl: true,
     badges: true,
-    l2costs: true
+    l2costs: true,
   },
   layer2s,
   layer3s,
