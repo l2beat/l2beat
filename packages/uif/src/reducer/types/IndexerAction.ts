@@ -47,7 +47,6 @@ export interface RetryInvalidateAction {
 
 export interface RequestTickAction {
   type: 'RequestTick'
-  isFirstTick?: boolean
 }
 
 export interface TickSucceededAction {

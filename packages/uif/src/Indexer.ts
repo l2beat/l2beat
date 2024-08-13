@@ -183,7 +183,7 @@ export abstract class Indexer {
     this.logger.info('Starting...')
 
     if (this.parents.length === 0) {
-      this.requestTick(true)
+      this.requestTick()
       this.scheduleTick()
     } else {
       const initializedState = await this.initialize()
@@ -380,9 +380,9 @@ export abstract class Indexer {
    * only one tick. Only when the tick is finished, the next tick will be
    * scheduled.
    */
-  protected requestTick(isFirstTick?: boolean): void {
+  protected requestTick(): void {
     this.logger.trace('Requesting tick')
-    this.dispatch({ type: 'RequestTick', isFirstTick })
+    this.dispatch({ type: 'RequestTick' })
   }
 
   // #endregion

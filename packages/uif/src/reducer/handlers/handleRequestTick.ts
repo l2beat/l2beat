@@ -14,15 +14,7 @@ export function handleRequestTick(
     return [state, []]
   }
 
-  // TODO: think about edge cases
-  if (_action.isFirstTick) {
-    return [
-      { ...state, status: 'ticking', tickScheduled: false },
-      [{ type: 'Tick' }],
-    ]
-  }
-
-  assertStatus(state.status, ['idle', 'ticking'])
+  assertStatus(state.status, ['init', 'idle', 'ticking'])
   if (state.status === 'ticking') {
     return [{ ...state, tickScheduled: true }, []]
   }
