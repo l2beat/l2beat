@@ -10,9 +10,8 @@ export class DayTargetIndexer extends RootIndexer {
     super(logger)
   }
 
-  override async initialize() {
+  override async scheduleTick() {
     this.clock.onNewHour(() => this.requestTick())
-    return { safeHeight: await this.tick() }
   }
 
   tick(): Promise<number> {

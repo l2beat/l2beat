@@ -22,4 +22,11 @@ export abstract class RootIndexer extends Indexer {
   override async setSafeHeight(): Promise<void> {
     return await Promise.resolve()
   }
+
+  override async initialize(): Promise<{
+    safeHeight: number
+    configHash?: string
+  }> {
+    return await Promise.reject(new Error('RootIndexer cannot initialize'))
+  }
 }

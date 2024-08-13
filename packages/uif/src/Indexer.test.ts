@@ -295,12 +295,8 @@ export class TestRootIndexer extends RootIndexer {
     })
   }
 
-  override async initialize() {
-    const promise = this.tick()
-    this.resolveTick(this.testSafeHeight)
-    await promise
-    return { safeHeight: this.testSafeHeight }
-  }
+  // TODO: test it
+  override async scheduleTick() {}
 }
 
 class TestChildIndexer extends ChildIndexer {

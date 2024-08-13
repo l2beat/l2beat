@@ -1,11 +1,5 @@
 export interface IndexerState {
-  readonly status:
-    | 'init'
-    | 'idle'
-    | 'updating'
-    | 'invalidating'
-    | 'ticking'
-    | 'errored'
+  status: 'init' | 'idle' | 'updating' | 'invalidating' | 'ticking' | 'errored'
   readonly height: number
   readonly invalidateToHeight: number
   readonly forceInvalidate: boolean

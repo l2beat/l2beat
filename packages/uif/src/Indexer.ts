@@ -139,6 +139,12 @@ export abstract class Indexer {
    */
   abstract tick(): Promise<number>
 
+  /**
+   * This method is responsible setting a callback for ticks.
+   * In most cases this will invoke clock.onEveryHour()
+   */
+  abstract scheduleTick(): void
+
   private state: IndexerState
   private started = false
   private readonly tickRetryStrategy: RetryStrategy
@@ -175,12 +181,18 @@ export abstract class Indexer {
     assert(!this.started, 'Indexer already started')
     this.started = true
     this.logger.info('Starting...')
-    const initializedState = await this.initialize()
-    this.dispatch({
-      type: 'Initialized',
-      ...initializedState,
-      childCount: this.children.length,
-    })
+
+    if (this.parents.length === 0) {
+      this.requestTick(true)
+      this.scheduleTick()
+    } else {
+      const initializedState = await this.initialize()
+      this.dispatch({
+        type: 'Initialized',
+        ...initializedState,
+        childCount: this.children.length,
+      })
+    }
   }
 
   subscribe(child: Indexer): void {
@@ -368,9 +380,9 @@ export abstract class Indexer {
    * only one tick. Only when the tick is finished, the next tick will be
    * scheduled.
    */
-  protected requestTick(): void {
+  protected requestTick(isFirstTick?: boolean): void {
     this.logger.trace('Requesting tick')
-    this.dispatch({ type: 'RequestTick' })
+    this.dispatch({ type: 'RequestTick', isFirstTick })
   }
 
   // #endregion
