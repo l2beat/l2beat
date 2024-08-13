@@ -38,17 +38,18 @@ export default async function Page() {
   })
 
   await api.scaling.summary.prefetch({
+    excludeAssociatedTokens: false,
+    range: getCookie('scalingSummaryChartRange'),
     type: 'layer2',
-    range: getCookie('chartRange'),
   })
 
   return (
     <HydrateClient>
       <div className="mb-20">
         <ScalingFilterContextProvider>
-          <TvlChart latestTvl={latestTvl} milestones={HOMEPAGE_MILESTONES} />
+          <TvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
           <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingSummaryTables {...{ projects }} />
+          <ScalingSummaryTables projects={projects} />
         </ScalingFilterContextProvider>
         <OtherSites />
         <About />
