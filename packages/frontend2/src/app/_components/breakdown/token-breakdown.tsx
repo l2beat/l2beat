@@ -1,5 +1,4 @@
 import { type WarningWithSentiment } from '@l2beat/config'
-import React from 'react'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { WarningBar } from '../warning-bar'
@@ -44,7 +43,6 @@ export function TokenBreakdownTooltipContent({
   other,
   associatedTokenSymbols,
   tvlWarnings,
-  className,
 }: TokenBreakdownTooltipContentProps) {
   const values = [
     {

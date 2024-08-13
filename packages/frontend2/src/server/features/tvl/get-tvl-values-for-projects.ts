@@ -15,7 +15,8 @@ export async function getTvlValuesForProjects(
   const target = getTvlTargetTimestamp().toStartOf(
     resolution === 'hourly' ? 'hour' : 'day',
   )
-  const from = days && target.add(-days, 'days')
+
+  const from = days !== Infinity && target.add(-days, 'days')
 
   // NOTE: This cannot be optimized using from because the values need to be interpolated
   const valueRecords = await db.value.getForProjects(projects.map((p) => p.id))

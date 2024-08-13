@@ -15,7 +15,7 @@ import { useCookieState } from '~/hooks/use-cookie-state'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
-import { type TvlChartRange } from '~/server/features/tvl/range-utils'
+import { type TvlChartRange } from '~/server/features/tvl/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
@@ -55,7 +55,7 @@ export function TvlChart({ milestones, entries, tag = 'summary' }: Props) {
     }
   }, [entries, filters, includeFilter])
 
-  const scalingSummaryQuery = api.scaling.summary.useQuery({
+  const scalingSummaryQuery = api.scaling.summary.chart.useQuery({
     range: timeRange,
     excludeAssociatedTokens: filters.excludeAssociatedTokens,
     ...chartDataType,

@@ -37,7 +37,7 @@ export default async function Page() {
     projectsVerificationStatuses,
   })
 
-  await api.scaling.summary.prefetch({
+  await api.scaling.summary.chart.prefetch({
     excludeAssociatedTokens: false,
     range: getCookie('scalingSummaryChartRange'),
     type: 'layer2',
