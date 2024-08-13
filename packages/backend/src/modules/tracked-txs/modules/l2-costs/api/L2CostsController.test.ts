@@ -15,11 +15,7 @@ import { AggregatedL2CostRecord, Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
 import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
-import {
-  CHART_TYPES,
-  L2CostsController,
-  L2CostsControllerDeps,
-} from './L2CostsController'
+import { L2CostsController, L2CostsControllerDeps } from './L2CostsController'
 
 describe(L2CostsController.name, () => {
   let time: InstalledClock
@@ -123,16 +119,6 @@ describe(L2CostsController.name, () => {
       const result = await controller.getL2Costs()
       expect(result).toEqual({
         projects: {},
-        combined: {
-          hourly: {
-            types: CHART_TYPES,
-            data: [],
-          },
-          daily: {
-            types: CHART_TYPES,
-            data: [],
-          },
-        },
       })
     })
   })
@@ -141,14 +127,7 @@ describe(L2CostsController.name, () => {
     it('aggregates l2 costs hourly and daily with blobs', () => {
       const controller = getMockL2CostsController({})
       const records = getMockAggregatedRecords(50)
-      const combinedHourlyMap = new Map<number, L2CostsApiChartPoint>()
-      const combinedDailyMap = new Map<number, L2CostsApiChartPoint>()
-      const result = controller.aggregateL2Costs(
-        records,
-        combinedHourlyMap,
-        combinedDailyMap,
-        START_OF_HOUR,
-      )
+      const result = controller.aggregateL2Costs(records, START_OF_HOUR)
 
       // we mock a normal transaction every 30 minutes, and once per hour with blob
       expect(result.hourly.data).toEqual([
@@ -160,18 +139,6 @@ describe(L2CostsController.name, () => {
       ])
 
       expect(result.daily.data).toEqual([
-        datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
-      ])
-
-      // adds values to combined maps
-      expect(Array.from(combinedHourlyMap.values())).toEqual([
-        datapoint(START_OF_HOUR, 1, 1),
-        ...times(24, (i) =>
-          datapoint(START_OF_HOUR.add(-(i + 1), 'hours'), 2, 1),
-        ),
-        datapoint(START_OF_HOUR.add(-25, 'hours'), 1, null),
-      ])
-      expect(Array.from(combinedDailyMap.values())).toEqual([
         datapoint(START_OF_DAY.add(-1, 'days'), 29, 14),
       ])
     })

@@ -197,6 +197,15 @@ export const chains: ChainConfig[] = [
     },
   },
   {
+    name: 'zora',
+    chainId: 7777777,
+    multicall: getMulticall3Config(5882),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://explorer.zora.energy/api',
+    },
+  },
+  {
     name: 'mantapacific',
     chainId: 169,
     multicall: getMulticall3Config(332890),

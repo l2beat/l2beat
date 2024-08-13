@@ -485,7 +485,7 @@ export const linea: Layer2 = {
       ),
       discovery.getContractDetails('VerifierProofType3', {
         description:
-          'Currently used smart contract verifying the proofs for the the Linea zkEVM.',
+          'Currently used smart contract verifying the proofs for the Linea zkEVM.',
       }),
       discovery.getContractDetails('ERC20Bridge', {
         description: 'Contract used to bridge ERC20 tokens.',

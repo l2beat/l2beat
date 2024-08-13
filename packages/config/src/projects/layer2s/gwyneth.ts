@@ -9,7 +9,7 @@ export const gwyneth: Layer2 = upcomingL2({
     description:
       'Gwyneth is a based booster rollup synchronously composable with Ethereum utilizing Taiko technology.',
     purposes: ['Universal'],
-    category: 'Optimistic Rollup',
+    category: 'ZK Rollup',
     provider: 'Taiko',
     links: {
       websites: [

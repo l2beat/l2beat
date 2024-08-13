@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20331900,
   "configHash": "0xb054397b11aa00d2891531ffcd51382503645937e8dd928600b01bd5835322b9",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "OptimismMintableERC20Factory",
@@ -87,7 +87,7 @@
       "address": "0x35d5D43271548c984662d4879FBc8e041Bc1Ff93",
       "template": "opstack/ProxyAdmin",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x08Dea366F26C25a08C8D1C3568ad07d1e587136d",
           "0x0e4C4CDd01ceCB01070E9Fdfe7600871e4ae996e",
           "0x1145E7848c8B64c6cab86Fd6D378733385c5C3Ba",
@@ -95,7 +95,7 @@
           "0x6CC3268794c5d3E3d9d52adEfC748B59d536cb22",
           "0x85eA9c11cf3D4786027F7FD08F4406b15777e5f8"
         ],
-        "owner": ["0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB"]
+        "configure": ["0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB"]
       },
       "sinceTimestamp": 1700021675,
       "values": {
@@ -114,17 +114,14 @@
         "It can act on behalf of 0x35d5D43271548c984662d4879FBc8e041Bc1Ff93, inheriting its permissions."
       ],
       "assignedPermissions": {
-        "owner": ["0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"]
+        "configure": ["0x35d5D43271548c984662d4879FBc8e041Bc1Ff93"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1680797639,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xF3313C48BD8E17b823d5498D62F37019dFEA647D",
           "0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0",
           "0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
@@ -133,8 +130,11 @@
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C",
           "0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x0f634ad56005ddbd68dc52233931a858f740b8ab706671c42b055efef561257e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 41,
         "VERSION": "1.3.0"
       },
@@ -230,10 +230,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x2fb83bd3519e566342c6f8823b90ae5abdfb5611a338c917c90ac2edc35c928e",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xdb5CF90A8f97C372d5AEC650a5668d4E4bECFC10",
           "0x824CACbBeA0377801f72d736CFd5C869dd89b931",
           "0x52E84149daE06CB5C4E92029140Da4faD86CE968",
@@ -241,8 +238,11 @@
           "0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038",
           "0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x2fb83bd3519e566342c6f8823b90ae5abdfb5611a338c917c90ac2edc35c928e",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       },
@@ -585,9 +585,9 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
-    "opstack/AddressManager": "0x689c1fad524785b872d042e3b092e9b60c8202b309e48fda030a5b0fd3afb790",
-    "opstack/ProxyAdmin": "0x505142cb539929c7e249f083054824a16e354b55878e6cdd7946572f5badbadc"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
+    "opstack/AddressManager": "0xfb6d6075e699db3b1ad9532230a19c5ef12e12cfc656e9d93f912051a30f0e7b",
+    "opstack/ProxyAdmin": "0x33b1f6469b9b5eb1761afba4083878f499aa61a2bd78de0d0c7731f5e13640e0"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

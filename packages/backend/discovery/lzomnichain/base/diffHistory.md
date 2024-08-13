@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xd0e3d34e68a76e4c1df61e4cb0465941cdd66bd6
+
+# Diff at Fri, 09 Aug 2024 10:14:07 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 16700316
+- current block number: 16700316
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 16700316 (main branch discovery), not current.
+
+```diff
+    contract LayerZero Multisig (0x28937ca4873f7289Ebea0708c4E42b24835eCfF0) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 5 (40%)"
+      values.getOwners:
+-        ["0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","0xe095F2590eF1Ab39601445025847Ed8E4B40D687","0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327","0xe095F2590eF1Ab39601445025847Ed8E4B40D687","0xBb6633cc267951E938F9B6421E4F54aa5b2c1936","0x73E9c017Ad37e2113e709D8070Cc9E1b28180e1e","0x67FC8c432448f9a8d541C17579EF7a142378d5aD"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 5 (40%)"
+    }
+```
+
+```diff
+    contract  (0xFe7C30860D01e28371D40434806F4A8fcDD3A098) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"]
+      assignedPermissions.upgrade:
++        ["0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"]
+    }
+```
+
 Generated with discovered.json: 0xf6b577478b3a8ec28dc846ed5e92d0a3c9ff5077
 
 # Diff at Fri, 05 Jul 2024 14:33:17 GMT:

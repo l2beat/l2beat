@@ -13,7 +13,7 @@ export const layerai: Layer2 = upcomingL2({
     provider: 'Polygon',
     links: {
       websites: ['https://layerai.org/'],
-      apps: ['https://kyotox.com/', 'https://ayervpn.com/'],
+      apps: ['https://kyotox.com/', 'https://layervpn.com/'],
       documentation: ['https://docs.layerai.org/'],
       explorers: [],
       repositories: [],

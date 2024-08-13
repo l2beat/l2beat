@@ -1,4 +1,32 @@
-Generated with discovered.json: 0x5b3146c6af3f3a67a4818db10e64dca8f926b2de
+Generated with discovered.json: 0xce3cf2924b53d3ff2bfa12c6d3eacfed4b824720
+
+# Diff at Mon, 12 Aug 2024 13:07:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@bafa261ae877bba9966845f4d250f5cbb9d4f6d2 block: 20482316
+- current block number: 20512726
+
+## Description
+
+A second EOA is given multiple roles, now there are two EOAs with those.
+
+## Watched changes
+
+```diff
+    contract CronosZkEVMAdmin (0x66eF951aEC26987915582340bCAA569E5Be67cDC) {
+    +++ description: None
+      values.accessControl.ADMIN.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.ORACLE.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.UPGRADER.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.FEE_ADMIN.members.1:
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+    }
+```
+
+Generated with discovered.json: 0x5a8ff11be549135c8b8b49f5bff96cb47ab97132
 
 # Diff at Thu, 08 Aug 2024 07:17:33 GMT:
 

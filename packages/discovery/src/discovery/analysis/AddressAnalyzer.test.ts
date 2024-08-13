@@ -153,9 +153,7 @@ describe(AddressAnalyzer.name, () => {
             displayName: undefined,
             categories: undefined,
             descriptions: undefined,
-            permissions: {
-              admin: new Set([address]),
-            },
+            permissions: [{ type: 'upgrade', delay: 0, target: address }],
             roles: undefined,
             severity: undefined,
             types: undefined,
@@ -277,9 +275,7 @@ describe(AddressAnalyzer.name, () => {
             displayName: undefined,
             categories: undefined,
             descriptions: undefined,
-            permissions: {
-              admin: new Set([address]),
-            },
+            permissions: [{ type: 'upgrade', delay: 0, target: address }],
             roles: undefined,
             severity: undefined,
             types: undefined,
@@ -397,9 +393,7 @@ describe(AddressAnalyzer.name, () => {
             displayName: undefined,
             categories: undefined,
             descriptions: undefined,
-            permissions: {
-              admin: new Set([address]),
-            },
+            permissions: [{ type: 'upgrade', delay: 0, target: address }],
             roles: undefined,
             severity: undefined,
             types: undefined,

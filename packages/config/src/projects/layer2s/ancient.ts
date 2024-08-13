@@ -18,7 +18,7 @@ export const ancient: Layer2 = opStackL2({
   discovery,
   display: {
     name: 'Ancient8',
-    slug: 'ancient',
+    slug: 'ancient8',
     warning:
       'Fraud proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
     description:

@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20482509,
   "configHash": "0x42228c2828298f02436f5667f44151d72647810ec8c962bdf5e229f847ad6516",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "StakeRegistry",
@@ -367,18 +367,18 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 5 (60%)",
-        "domainSeparator": "0x6b43785a4eaebc9e965616031ecf6185396cf6e42ef9b1892cca81fe3a655fc2",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xaBd099133278ACF0415186c88F34e01b05D116f6",
           "0x2bBA03bA38D90634e6afD8C23C16ca01651bc493",
           "0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4",
           "0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7",
           "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x6b43785a4eaebc9e965616031ecf6185396cf6e42ef9b1892cca81fe3a655fc2",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 5 (60%)",
         "nonce": 2,
         "VERSION": "1.3.0"
       }
@@ -387,7 +387,7 @@
       "name": "eigenDAProxyAdmin",
       "address": "0x8247EF5705d3345516286B72bFE6D690197C2E99",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x006124Ae7976137266feeBFb3F4D2BE4C073139D",
           "0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505",
           "0x0BAAc79acD45A023E19345c352d8a7a83C4e5656",
@@ -840,7 +840,7 @@
   },
   "usedTemplates": {
     "eigenlayer/EjectionManager": "0xb5c46205bf1e35452e10c8015c98bece257b7c2adb82ab4999fda33193a8a894",
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

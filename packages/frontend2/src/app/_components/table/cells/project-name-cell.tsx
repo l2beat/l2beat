@@ -7,7 +7,7 @@ import Layer3sIcon from '~/icons/layer3s.svg'
 import ShieldIcon from '~/icons/shield.svg'
 import UnderReviewIcon from '~/icons/under-review.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
-import { type SyncStatus } from '~/types/SyncStatus'
+import { type SyncStatus } from '~/types/sync-status'
 import { cn } from '~/utils/cn'
 import { NotSyncedBadge } from '../../badge/not-synced-badge'
 

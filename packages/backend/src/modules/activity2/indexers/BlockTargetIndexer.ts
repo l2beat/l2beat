@@ -21,6 +21,7 @@ export class BlockTargetIndexer extends RootIndexer {
 
   async tick(): Promise<number> {
     const timestamp = this.clock.getLastHour()
+    this.logger.info('Getting block number for timestamp', { timestamp })
     const blockNumber =
       await this.blockTimestampProvider.getBlockNumberAtOrBefore(timestamp)
 

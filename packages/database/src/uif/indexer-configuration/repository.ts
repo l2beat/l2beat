@@ -55,6 +55,17 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getByIndexerIds(indexerIds: string[]) {
+    if (indexerIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('public.indexer_configurations')
+      .select(selectIndexerConfiguration)
+      .where('indexer_id', 'in', indexerIds)
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getConfigurationsWithoutIndexerId(
     indexerId: string,
   ): Promise<Omit<IndexerConfigurationRecord, 'indexerId'>[]> {
@@ -72,6 +83,7 @@ export class IndexerConfigurationRepository extends BaseRepository {
     return rows.map(toRecordWithoutIndexerId)
   }
 
+  /** WARNING: Use only if you are sure there will be a reasonable amount of configurations */
   async getByConfigurationIds(configurationIds: string[]) {
     if (configurationIds.length === 0) return []
 
