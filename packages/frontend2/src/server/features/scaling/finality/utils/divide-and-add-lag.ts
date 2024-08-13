@@ -1,4 +1,4 @@
-import { type FinalityDataPoint } from './schema'
+import { type FinalityDataPoint } from '../schema'
 
 export function divideAndAddLag(
   details: FinalityDataPoint | undefined,

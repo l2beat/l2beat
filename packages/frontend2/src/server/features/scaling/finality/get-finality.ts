@@ -11,9 +11,9 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
-import { calcAvgsPerProject } from './calc-avgs-per-project'
-import { divideAndAddLag } from './divide-and-add-lag'
-import { getLivenessByTypeSince } from './get-liveness-by-type-since'
+import { calcAvgsPerProject } from './utils/calc-avgs-per-project'
+import { divideAndAddLag } from './utils/divide-and-add-lag'
+import { getLivenessByTypeSince } from './utils/get-liveness-by-type-since'
 import { FinalityData, type SerializableFinalityData } from './schema'
 
 export type FinalityProjectConfig = {

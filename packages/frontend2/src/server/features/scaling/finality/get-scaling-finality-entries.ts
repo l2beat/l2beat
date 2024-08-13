@@ -1,12 +1,12 @@
 import { type Layer2, layer2s } from '@l2beat/config'
 import { UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
-import { getLatestTvlUsd } from '../../tvl/get-latest-tvl-usd'
-import { orderByTvl } from '../../tvl/order-by-tvl'
+import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { getFinality } from './get-finality'
-import { getFinalityConfigurations } from './get-finality-configurations'
+import { getFinalityConfigurations } from './utils/get-finality-configurations'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import {
   type ScalingFinalityEntry,

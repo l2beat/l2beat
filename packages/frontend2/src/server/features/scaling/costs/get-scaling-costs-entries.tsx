@@ -1,14 +1,14 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getCostsProjects } from '../costs/utils/get-costs-projects'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/order-by-tvl'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import {
   type CommonScalingEntry,
   getCommonScalingEntry,
-} from './get-common-scaling-entry'
+} from '../get-common-scaling-entry'
 
 export type ScalingCostsEntry = CommonScalingEntry & {
   entryType: 'costs'
