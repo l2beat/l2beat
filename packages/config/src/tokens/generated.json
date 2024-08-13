@@ -3001,6 +3001,21 @@
       "supply": "zero"
     },
     {
+      "id": "opai-optopia-ai",
+      "name": "Optopia AI",
+      "coingeckoId": "optopia-ai",
+      "address": "0xF8e57AC2730D3088D98B79209739b0D5Ba085a03",
+      "symbol": "OPAI",
+      "decimals": 18,
+      "deploymentTimestamp": 1715594603,
+      "coingeckoListingTimestamp": 1721692800,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/39332/large/OPAI.jpg?1721777150",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
       "id": "obi-orbofi",
       "name": "ORBOFI",
       "coingeckoId": "orbofi-ai",
