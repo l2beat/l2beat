@@ -63,7 +63,9 @@ async function main() {
         tvl: config.features.tvl,
         excludeAssociatedTokens: true,
       }),
-      fetchL2CostsApi(config.backend, http),
+      config.features.l2costs
+        ? fetchL2CostsApi(config.backend, http)
+        : undefined,
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,

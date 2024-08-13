@@ -4,6 +4,7 @@ const backendFeaturesToConfigFeatures: Partial<
   Record<keyof ConfigFeatures, string>
 > = {
   liveness: 'tracked-txs.liveness',
+  l2costs: 'tracked-txs.l2costs',
   implementationChange: 'implementationChangeReporter',
   tvlBreakdown: 'tvl',
 }
