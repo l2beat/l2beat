@@ -1,7 +1,10 @@
 #!/bin/bash
 
-echo "Setting up data folder"
-rm -rf data 2>/dev/null && mkdir data &&
+source .env &&
+
+echo "Setting up data folder" &&
+rm -rf data 2>/dev/null && 
+mkdir data &&
 
 echo "Clearing local TVL tables" &&
 psql $DEV_LOCAL_DB_URL -f reset-local.sql &&
