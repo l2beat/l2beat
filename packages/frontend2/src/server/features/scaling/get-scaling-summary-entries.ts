@@ -37,7 +37,7 @@ export async function getScalingSummaryEntries({
         associatedTokens: project.config.associatedTokens ?? [],
         warnings: [project.display.tvlWarning].filter(notUndefined),
       },
-      marketShare: latestTvl && (latestTvl.breakdown.total / tvl.total) * 100,
+      marketShare: latestTvl && latestTvl.breakdown.total / tvl.total,
       risks: getL2Risks(project.riskView),
     }
   })
