@@ -8,13 +8,13 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { type LivenessDataPoint } from '~/server/features/liveness/types'
 import { formatTimestamp } from '~/utils/dates'
 import { DurationCell } from '../../../finality/_components/table/duration-cell'
 import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { LivenessDurationCell } from '../liveness-duration-cell'
 import { IntervalsHeader } from './intervals-header'
 import { type ScalingLivenessTableEntry } from './to-table-entry'
-import { LivenessDataPoint } from '~/server/features/liveness/types'
 
 export function LivenessIntervalCell(props: {
   entry: ScalingLivenessTableEntry

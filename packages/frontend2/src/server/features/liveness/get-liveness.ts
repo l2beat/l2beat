@@ -18,9 +18,9 @@ import {
 } from '../utils/get-tracked-txs-projects'
 import { getLivenessProjects } from './get-liveness-projects'
 import {
-  type LivenessProject,
   type LivenessAnomaly,
   type LivenessDetails,
+  type LivenessProject,
   type LivenessResponse,
 } from './types'
 
