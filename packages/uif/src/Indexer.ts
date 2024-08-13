@@ -37,6 +37,10 @@ export abstract class Indexer {
       maxTimeoutMs: 60 * 1000,
     })
 
+  static createId(name: string, tag: string | undefined): string {
+    return tag === undefined ? name : `${name}::${tag}`
+  }
+
   /**
    * Initializes the indexer. It should return a height that the indexer has
    * synced up to. If the indexer has not synced any data, it should return
