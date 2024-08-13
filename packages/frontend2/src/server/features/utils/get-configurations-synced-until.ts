@@ -1,12 +1,12 @@
-import { UnixTime } from '@l2beat/shared-pure'
+import { type TrackedTxConfigEntry } from '@l2beat/shared'
+import { type SavedConfiguration, UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
 export function getConfigurationsSyncedUntil(
-  configurations: {
-    minHeight: number
-    maxHeight: number | null
-    currentHeight: number | null
-  }[],
+  configurations: Omit<
+    SavedConfiguration<TrackedTxConfigEntry>,
+    'properties'
+  >[],
 ): UnixTime | undefined {
   if (configurations.length === 0) {
     return undefined
