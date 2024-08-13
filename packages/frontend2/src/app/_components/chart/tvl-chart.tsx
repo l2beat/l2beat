@@ -1,21 +1,26 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
+import { useMemo } from 'react'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
-import { Skeleton } from '~/app/_components/skeleton'
 import { useCookieState } from '~/hooks/use-cookie-state'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { Skeleton } from '../skeleton'
 import { useChartLoading } from './core/chart-loading-context'
-import { type LatestTvl } from '~/server/features/tvl/get-latest-tvl'
 
 interface TvlChartPointData {
   timestamp: number
@@ -26,17 +31,34 @@ interface TvlChartPointData {
 interface Props {
   milestones: Milestone[]
   tag?: string
-  latestTvl: LatestTvl
+  entries: ScalingSummaryEntry[]
 }
 
-export function TvlChart({ milestones, tag = 'summary', latestTvl }: Props) {
-  const [timeRange, setTimeRange] = useCookieState('chartRange')
+export function TvlChart({ milestones, entries, tag = 'summary' }: Props) {
+  const filters = useScalingFilterValues()
+  const includeFilter = useScalingFilter()
+  const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
+
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
+  const chartDataType = useMemo<
+    { type: 'layer2' } | { type: 'projects'; projectIds: string[] }
+  >(() => {
+    if (filters.isEmpty) {
+      return { type: 'layer2' }
+    }
+
+    return {
+      type: 'projects',
+      projectIds: entries.filter(includeFilter).map((project) => project.id),
+    }
+  }, [entries, filters, includeFilter])
+
   const scalingSummaryQuery = api.scaling.summary.useQuery({
     range: timeRange,
-    type: 'layer2',
+    excludeAssociatedTokens: filters.excludeAssociatedTokens,
+    ...chartDataType,
   })
 
   const data = scalingSummaryQuery.data?.chart
@@ -64,6 +86,11 @@ export function TvlChart({ milestones, tag = 'summary', latestTvl }: Props) {
       }
     }) ?? []
 
+  const firstValue = columns[0]?.values[0]?.value
+  const lastValue = columns[columns.length - 1]?.values[0]!.value ?? undefined
+  const change =
+    lastValue && firstValue ? lastValue / firstValue - 1 : undefined
+
   return (
     <ChartProvider
       columns={columns}
@@ -84,8 +111,8 @@ export function TvlChart({ milestones, tag = 'summary', latestTvl }: Props) {
       <section className="flex flex-col gap-4">
         <Header
           unit={unit}
-          value={latestTvl.total}
-          change={latestTvl.change}
+          value={lastValue}
+          change={change}
           range={timeRange}
         />
         <ChartTimeRangeControls
@@ -142,32 +169,49 @@ function Header({
   range,
 }: {
   unit: string
-  value: number
-  change: number
+  value?: number
+  change?: number
   range: TvlChartRange
 }) {
   const loading = useChartLoading()
+
+  const infinity = '∞'
+
+  const changeOverTime =
+    range === 'max' ? (
+      infinity
+    ) : change ? (
+      <PercentChange value={change} />
+    ) : null
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
       <div>
         <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
-        <p className="hidden text-gray-500 dark:text-gray-600 md:block">
+        <p className="hidden text-gray-500 md:block dark:text-gray-600">
           Sum of all canonically bridged, externally bridged, and natively
           minted tokens, converted to {unit.toUpperCase()}
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
         <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
-          {formatCurrency(value, unit, {
-            showLessThanMinimum: false,
-          })}
+          {!value || loading ? (
+            <Skeleton className="h-6 w-32" />
+          ) : (
+            formatCurrency(value, unit, {
+              showLessThanMinimum: false,
+            })
+          )}
         </p>
-        <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
-          <PercentChange value={change} /> / 7 days
-        </p>
+        {loading ? (
+          <Skeleton className="h-6 w-40" />
+        ) : (
+          <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
+            {changeOverTime} / {tvlRangeToReadable(range)}
+          </p>
+        )}
       </div>
-      <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
+      <hr className="mt-2 w-full border-gray-200 md:hidden md:border-t dark:border-zinc-700" />
     </header>
   )
 }
