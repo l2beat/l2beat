@@ -1,12 +1,11 @@
 import { type ValueRecord } from '@l2beat/database'
-import { assert } from '@l2beat/shared-pure'
-import { type Dictionary, groupBy } from 'lodash'
-import { range as lodashRange } from 'lodash'
+import { assert, UnixTime } from '@l2beat/shared-pure'
+import { type Dictionary, groupBy, range as lodashRange } from 'lodash'
 import { db } from '~/server/database'
 import { type TvlProject } from './get-tvl-projects'
 import { getTvlTargetTimestamp } from './get-tvl-target-timestamp'
 import { getValuesStatus } from './get-tvl-values-status'
-import { type TvlChartRange, getRangeConfig } from './range-utils'
+import { type TvlChartRange, getRangeConfig } from './range'
 
 export async function getTvlValuesForProjects(
   projects: TvlProject[],
@@ -52,10 +51,10 @@ export async function getTvlValuesForProjects(
     const timestamps = lodashRange(
       (target.toNumber() - minTimestamp.toNumber()) /
         (resolution === 'hourly'
-          ? 3600
+          ? UnixTime.HOUR
           : resolution === 'sixHourly'
-            ? 21600
-            : 86400) +
+            ? UnixTime.SIX_HOURS
+            : UnixTime.DAY) +
         1,
     )
       .map((i) => {

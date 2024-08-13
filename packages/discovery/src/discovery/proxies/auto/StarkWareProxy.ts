@@ -7,12 +7,12 @@ import { IProvider } from '../../provider/IProvider'
 
 import { getProxyGovernance } from './StarkWareProxyGovernance'
 
-// keccak256("StarkWare2019.implemntation-slot")
+// keccak256("StarkWare2019.implementation-slot")
 const IMPLEMENTATION_SLOT = Bytes.fromHex(
   '0x177667240aeeea7e35eabe3a35e18306f336219e1386f7710a6bf8783f761b24',
 )
 
-// keccak256("'StarkWare2020.CallProxy.Implemntation.Slot'")
+// keccak256("'StarkWare2020.CallProxy.Implementation.Slot'")
 const CALL_IMPLEMENTATION_SLOT = Bytes.fromHex(
   '0x7184681641399eb4ad2fdb92114857ee6ff239f94ad635a1779978947b8843be',
 )

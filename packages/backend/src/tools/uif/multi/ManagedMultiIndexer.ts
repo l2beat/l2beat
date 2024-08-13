@@ -1,5 +1,5 @@
 import { assert } from '@l2beat/backend-tools'
-import { ChildIndexer } from '@l2beat/uif'
+import { ChildIndexer, Indexer } from '@l2beat/uif'
 import { assertUniqueConfigId, assertUniqueIndexerId } from '../ids'
 import { ConfigurationsDiff, mergeConfigurations } from './mergeConfigurations'
 import { toRanges } from './toRanges'
@@ -23,12 +23,8 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
       `Configurations should not be empty ${options.tag}`,
     )
 
-    this.indexerId = options.name
-    if (options.tag) {
-      this.indexerId += `::${options.tag}`
-    }
+    this.indexerId = Indexer.createId(options.name, options.tag)
     assertUniqueIndexerId(this.indexerId)
-
     for (const configuration of options.configurations) {
       assertUniqueConfigId(configuration.id)
     }

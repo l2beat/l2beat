@@ -1638,12 +1638,12 @@
     {
       "id": "feg-fegtoken",
       "name": "FEGtoken",
-      "coingeckoId": "feg-token",
+      "coingeckoId": "feg-token-2",
       "address": "0x389999216860AB8E0175387A0c90E5c52522C945",
       "symbol": "FEG",
       "decimals": 9,
       "deploymentTimestamp": 1612075738,
-      "coingeckoListingTimestamp": 1612396800,
+      "coingeckoListingTimestamp": 1680300000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13878/large/F-Icon-FEG-200x200-288dpi-01_%281%29.png?1696513622",
       "chainId": 1,
@@ -2383,8 +2383,7 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero",
-      "escrow": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
+      "supply": "zero"
     },
     {
       "id": "lpt-livepeer-token",
@@ -5589,6 +5588,44 @@
       "coingeckoListingTimestamp": 1717113600,
       "category": "other",
       "iconUrl": "https://coin-images.coingecko.com/coins/images/38338/large/token_m_btc.png?1717126408",
+      "chainId": 169,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantapacific:meth-meth",
+      "name": "mETH",
+      "coingeckoId": "manta-meth",
+      "address": "0xACCBC418a994a27a75644d8d591afC22FaBA594e",
+      "symbol": "mETH",
+      "decimals": 18,
+      "deploymentTimestamp": 1715909059,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "ether",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38337/large/token_m_eth.png?1717126380",
+      "chainId": 169,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "id": "mantapacific:musd-musd",
+      "name": "mUSD",
+      "coingeckoId": "manta-musd",
+      "address": "0x649d4524897cE85A864DC2a2D5A11Adb3044f44a",
+      "symbol": "mUSD",
+      "decimals": 18,
+      "deploymentTimestamp": 1715909029,
+      "coingeckoListingTimestamp": 1717113600,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38336/large/token_m_usd.png?1717126272",
       "chainId": 169,
       "source": "external",
       "supply": "totalSupply",

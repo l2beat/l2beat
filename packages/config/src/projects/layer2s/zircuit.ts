@@ -13,9 +13,9 @@ const ZIRCUIT_FINALIZATION_PERIOD_SECONDS: number =
   )
 
 const ZIRCUIT_STATE_CORRECTNESS: ScalingProjectTechnologyChoice = {
-  name: 'Validity proofs (when available) ensure state correctness',
+  name: 'Validity proofs (when available) ensure state correctness, but not DA', // proof is the only input to the Verifier
   description:
-    'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently proofs are optional and state (by default) is considered optimistically to be valid.',
+    'Each update to the system state must be accompanied by a ZK proof that ensures that the new state was derived by correctly applying a series of valid user transactions to the previous state. These proofs are then verified on Ethereum by a smart contract. Currently proofs are optional and state (by default) is considered optimistically to be valid. Moreover, the system doesn’t check that the transactions applied to the state are the ones published by the sequencer.',
   risks: [
     {
       category: 'Funds can be stolen if',
@@ -59,6 +59,8 @@ export const zircuit: Layer2 = opStackL2({
     },
     activityDataSource: 'Blockchain RPC',
     architectureImage: 'zircuit',
+    warning:
+      'Proof system is currently under development. Users need to trust the block proposer to submit correct L1 state roots.',
   },
   genesisTimestamp: new UnixTime(1719936217),
   rpcUrl: 'https://zircuit1-mainnet.p2pify.com/', // other: https://zircuit1-mainnet.liquify.com, https://zircuit-mainnet.drpc.org/

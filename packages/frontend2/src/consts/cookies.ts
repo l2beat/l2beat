@@ -1,5 +1,6 @@
 import { type ZodTypeAny, type z } from 'zod'
-import { TvlChartRange } from '~/server/features/tvl/range-utils'
+import { CostsTimeRange } from '~/server/features/costs/utils/range'
+import { TvlChartRange } from '~/server/features/tvl/range'
 
 /**
  * Known cookie definitions.
@@ -11,6 +12,7 @@ export const knownCookies = {
     TvlChartRange,
     '1y',
   ),
+  costsChartRange: knownCookie('costs-chart-range', CostsTimeRange, '30d'),
 } satisfies Record<string, KnownCookie>
 
 /**

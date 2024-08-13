@@ -34,7 +34,6 @@ export class BlockTimestampProvider {
           'Failed to fetch block number via blockExplorerClient. Trying to fetch using RPC.',
           error,
         )
-        return await this.$.client.getBlockNumberAtOrBefore(_timestamp)
       }
     }
 

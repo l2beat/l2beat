@@ -1,23 +1,22 @@
 import { useIsClient } from '~/hooks/use-is-client'
-import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 import { formatRange } from '~/utils/dates'
 import { RadioGroup, RadioGroupItem } from '../../radio-group'
 import { Skeleton } from '../../skeleton'
 import { useChartLoading } from '../core/chart-loading-context'
 
-interface Props {
-  value: TvlChartRange
-  setValue: (range: TvlChartRange) => void
+interface Props<T extends string> {
+  value: T | undefined
+  setValue: (range: T) => void
   range: readonly [number, number]
-  options: { value: TvlChartRange; label: string }[]
+  options: { value: T; disabled?: boolean; label: string }[]
 }
 
-export function ChartTimeRangeControls({
+export function ChartTimeRangeControls<T extends string>({
   value,
   setValue,
   range,
   options,
-}: Props) {
+}: Props<T>) {
   const loading = useChartLoading()
   const isClient = useIsClient()
 
@@ -35,7 +34,11 @@ export function ChartTimeRangeControls({
       ) : (
         <RadioGroup value={value} onValueChange={setValue}>
           {options.map((option) => (
-            <RadioGroupItem key={option.value} value={option.value}>
+            <RadioGroupItem
+              key={option.value}
+              value={option.value}
+              disabled={option.disabled}
+            >
               {option.label}
             </RadioGroupItem>
           ))}
