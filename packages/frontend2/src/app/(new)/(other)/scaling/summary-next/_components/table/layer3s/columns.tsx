@@ -86,7 +86,6 @@ export const summaryLayer3sColumns = [
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      console.log(value)
       if (!value.breakdown) {
         return <UpcomingBadge />
       }
@@ -96,7 +95,7 @@ export const summaryLayer3sColumns = [
           associatedTokenSymbols={value.associatedTokens}
           tvlWarnings={value.warnings}
           breakdown={value.breakdown}
-          change={value.change ?? undefined}
+          change={value.change}
         />
       )
     },

@@ -29,4 +29,4 @@ export function toTableRows({
   })
 }
 
-export type ScalingSummaryTableRow = ReturnType<typeof toTableRows>[0]
+export type ScalingSummaryTableRow = ReturnType<typeof toTableRows>[number]

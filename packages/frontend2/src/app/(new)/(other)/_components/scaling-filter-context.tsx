@@ -20,10 +20,6 @@ import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-co
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
-import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
@@ -69,8 +65,6 @@ export function useScalingFilterValues() {
 }
 
 type ScalingEntry =
-  | ScalingSummaryLayer2sEntry
-  | ScalingSummaryLayer3sEntry
   | ScalingRiskEntry
   | ScalingFinalityEntry
   | ScalingDataAvailabilityEntry

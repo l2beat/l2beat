@@ -39,6 +39,7 @@ export function getCommonScalingEntry({
       type: 'layer2' as const,
       provider: project.display.provider,
       stage: project.stage,
+      hostChain: undefined,
     }
   }
 

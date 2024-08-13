@@ -35,8 +35,7 @@ export async function getScalingSummaryEntries() {
         warnings: [project.display.tvlWarning].filter(notUndefined),
       },
       marketShare: latestTvl && latestTvl.breakdown.total / tvl.total,
-      risks:
-        project.type === 'layer2' ? getL2Risks(project.riskView) : undefined,
+      risks: project.type === 'layer2' ? getL2Risks(project.riskView) : [],
     }
   })
 
