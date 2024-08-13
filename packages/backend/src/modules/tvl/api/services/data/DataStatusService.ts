@@ -68,10 +68,8 @@ export class DataStatusService {
       (indexer, entries) =>
         entries.find(
           (cc) =>
-            cc.chain.toString() ===
-              indexer.indexerId.split('::')[1].split('_')[0] &&
-            cc.address.toString() ===
-              indexer.indexerId.split('::')[1].split('_')[1],
+            cc.chain === indexer.indexerId.split('::')[1].split('_')[0] &&
+            cc.address === indexer.indexerId.split('::')[1].split('_')[1],
         ),
     )
   }

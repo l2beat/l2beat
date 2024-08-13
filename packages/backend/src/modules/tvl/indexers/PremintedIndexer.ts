@@ -155,5 +155,5 @@ export class PremintedIndexer extends ManagedChildIndexer {
 }
 
 function createTag(chain: string, address: EthereumAddress | 'native'): string {
-  return `${chain}_${address.toString}`
+  return `${chain}_${address}`
 }
