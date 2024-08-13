@@ -6,7 +6,6 @@ import {
   type LivenessAnomaly,
 } from '@l2beat/shared-pure'
 import { db } from '~/server/database'
-import { layer2s } from '@l2beat/config/build/src/projects'
 import {
   type AnomalyRecord,
   type AggregatedLivenessRecord,
@@ -15,6 +14,7 @@ import { unstable_noStore as noStore } from 'next/cache'
 import { groupBy } from 'lodash'
 import { filteredWithSyncedUntil } from '../utils/filtered-with-synced-until'
 import { type LivenessResponse, type LivenessDetails } from './types'
+import { getLivenessProjects } from './get-liveness-projects'
 
 export async function getLiveness() {
   noStore()
@@ -22,8 +22,6 @@ export async function getLiveness() {
 }
 
 const getCachedLiveness = async (): Promise<LivenessResponse> => {
-  const backendProjects = layer2s
-
   const projects: LivenessResponse = {}
 
   const configurations = await db.indexerConfiguration.getByIndexerId(
@@ -31,9 +29,9 @@ const getCachedLiveness = async (): Promise<LivenessResponse> => {
   )
 
   const filteredProjects = filteredWithSyncedUntil(
-    backendProjects,
+    getLivenessProjects(),
     configurations,
-'liveness',
+    'liveness',
   )
 
   const projectIds = filteredProjects.map((p) => p.id)
