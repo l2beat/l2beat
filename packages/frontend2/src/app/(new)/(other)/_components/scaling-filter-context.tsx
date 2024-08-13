@@ -8,13 +8,8 @@ import {
   type StageConfig,
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import {
-  createContext,
-  useCallback,
-  useContext,
-  useMemo,
-  useState,
-} from 'react'
+import { createContext, useCallback, useContext, useMemo } from 'react'
+import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
@@ -36,6 +31,7 @@ export type ScalingFilterContextValue = {
 }
 
 export type MutableScalingFilterContextValue = ScalingFilterContextValue & {
+  isEmpty: boolean
   set: (value: Partial<ScalingFilterContextValue>) => void
   reset: () => void
 }
@@ -62,15 +58,8 @@ export function useScalingFilterValues() {
       'useScalingFilterContext must be used within a ScalingFilterContextProvider',
     )
   }
-  return {
-    ...context,
-    // Check if all values are default, in which case the filter is effectively disabled
-    // This is used e.g. to determine if we should pass the project list to the backend
-    // or just use the predefined query type.
-    empty: (Object.keys(defaultValues) as (keyof typeof defaultValues)[]).every(
-      (key) => context[key] === defaultValues[key],
-    ),
-  }
+
+  return context
 }
 
 type ScalingEntry =
@@ -127,7 +116,10 @@ export function useScalingFilter() {
 export function ScalingFilterContextProvider({
   children,
 }: { children: React.ReactNode }) {
-  const [value, setValue] = useState<ScalingFilterContextValue>(defaultValues)
+  const [value, setValue] = useLocalStorage<ScalingFilterContextValue>(
+    'scaling-summary-filters',
+    defaultValues,
+  )
 
   const set = useCallback(
     (newValue: Partial<ScalingFilterContextValue>) => {
@@ -138,9 +130,15 @@ export function ScalingFilterContextProvider({
 
   const reset = useCallback(() => setValue(defaultValues), [setValue])
 
+  const isEmpty = useMemo(() => {
+    return (Object.keys(defaultValues) as (keyof typeof defaultValues)[]).every(
+      (key) => value[key] === defaultValues[key],
+    )
+  }, [value])
+
   const contextValue = useMemo(
-    () => ({ ...value, set, reset }),
-    [value, set, reset],
+    () => ({ ...value, set, reset, isEmpty }),
+    [value, set, reset, isEmpty],
   )
 
   return (
