@@ -19,8 +19,8 @@ import { type TvlChartRange } from '~/server/features/tvl/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
-import { Skeleton } from '../skeleton'
-import { useChartLoading } from './core/chart-loading-context'
+import { useChartLoading } from '../../../../../_components/chart/core/chart-loading-context'
+import { Skeleton } from '../../../../../_components/skeleton'
 
 interface TvlChartPointData {
   timestamp: number
@@ -34,7 +34,11 @@ interface Props {
   entries: ScalingSummaryEntry[]
 }
 
-export function TvlChart({ milestones, entries, tag = 'summary' }: Props) {
+export function SummaryTvlChart({
+  milestones,
+  entries,
+  tag = 'summary',
+}: Props) {
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
