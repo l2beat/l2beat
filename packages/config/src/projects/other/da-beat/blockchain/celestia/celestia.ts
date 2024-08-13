@@ -29,8 +29,7 @@ export const celestia: DaLayer = {
       ],
     },
   },
-  technology:
-    `
+  technology: `
     ## Consensus
     Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
     Celestia achieves finality at each block, with a minimum time between blocks of 12s.
