@@ -9,7 +9,7 @@ export const scalingRouter = router({
       z
         .object({
           range: TvlChartRange,
-          excludeAssociatedTokens: z.boolean().default(false),
+          excludeAssociatedTokens: z.boolean(),
         })
         .and(
           z.union([
