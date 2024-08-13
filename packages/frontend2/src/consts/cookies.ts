@@ -1,4 +1,4 @@
-import { type ZodTypeAny, z } from 'zod'
+import { type ZodTypeAny, type z } from 'zod'
 import { TvlChartRange } from '~/server/features/tvl/range-utils'
 
 /**
@@ -10,23 +10,6 @@ export const knownCookies = {
     'scaling-summary-chart-range',
     TvlChartRange,
     '1y',
-  ),
-  scalingSummaryChartType: knownCookie(
-    'scaling-summary-chart-type',
-    z.object({ type: z.literal('layer2') }).or(
-      z.object({
-        type: z.literal('projects'),
-        projectIds: z.array(z.string()),
-      }),
-    ),
-    {
-      type: 'layer2',
-    },
-  ),
-  scalingSummaryExcludeAssociatedTokens: knownCookie(
-    'scaling-summary-exclude-associated-tokens',
-    z.boolean(),
-    false,
   ),
 } satisfies Record<string, KnownCookie>
 
