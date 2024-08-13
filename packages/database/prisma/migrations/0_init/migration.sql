@@ -1,6 +1,9 @@
 -- CreateSchema
 CREATE SCHEMA IF NOT EXISTS "activity";
 
+-- CreateSchema
+CREATE SCHEMA IF NOT EXISTS "public";
+
 -- CreateEnum
 CREATE TYPE "public"."ExternalBridgeType" AS ENUM ('Axelar', 'LayerZeroV1', 'Orbit', 'Wormhole');
 
@@ -542,3 +545,4 @@ ALTER TABLE "public"."_BridgeEscrowToToken" ADD CONSTRAINT "_BridgeEscrowToToken
 
 -- AddForeignKey
 ALTER TABLE "public"."_BridgeEscrowToToken" ADD CONSTRAINT "_BridgeEscrowToToken_B_fkey" FOREIGN KEY ("B") REFERENCES "public"."Token"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+
