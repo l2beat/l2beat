@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
-export function getSyncedUntil(
+export function getConfigurationsSyncedUntil(
   configurations: {
     minHeight: number
     maxHeight: number | null

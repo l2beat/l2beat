@@ -9,12 +9,17 @@ import { db } from '~/server/database'
 import {
   type AnomalyRecord,
   type AggregatedLivenessRecord,
+  type IndexerConfigurationRecord,
 } from '@l2beat/database'
 import { unstable_noStore as noStore } from 'next/cache'
 import { groupBy } from 'lodash'
-import { filteredWithSyncedUntil } from '../utils/filtered-with-synced-until'
+import {
+  getTrackedTxsProjects,
+  type TrackedTxsProject,
+} from '../utils/get-tracked-txs-projects'
 import { type LivenessResponse, type LivenessDetails } from './types'
 import { getLivenessProjects } from './get-liveness-projects'
+import { getConfigurationsSyncedUntil } from '../utils/get-configurations-synced-until'
 
 export async function getLiveness() {
   noStore()
@@ -28,13 +33,13 @@ const getCachedLiveness = async (): Promise<LivenessResponse> => {
     'tracked_txs_indexer',
   )
 
-  const filteredProjects = filteredWithSyncedUntil(
+  const trackedTxsProjects = getTrackedTxsProjects(
     getLivenessProjects(),
     configurations,
     'liveness',
   )
 
-  const projectIds = filteredProjects.map((p) => p.id)
+  const projectIds = trackedTxsProjects.map((p) => p.id)
 
   const records = await db.aggregatedLiveness.getByProjectIds(projectIds)
   const recordsByProjectId = groupBy(records, (r) => r.projectId)
@@ -46,7 +51,7 @@ const getCachedLiveness = async (): Promise<LivenessResponse> => {
   )
   const anomaliesByProjectId = groupBy(anomalyRecords, (r) => r.projectId)
 
-  for (const project of filteredProjects) {
+  for (const project of trackedTxsProjects) {
     const projectRecords = recordsByProjectId[project.id]
     if (!projectRecords) {
       continue
@@ -57,14 +62,20 @@ const getCachedLiveness = async (): Promise<LivenessResponse> => {
       stateUpdates: mapAggregatedLivenessRecords(
         projectRecords,
         'stateUpdates',
+        project,
+        configurations,
       ),
       batchSubmissions: mapAggregatedLivenessRecords(
         projectRecords,
         'batchSubmissions',
+        project,
+        configurations,
       ),
       proofSubmissions: mapAggregatedLivenessRecords(
         projectRecords,
         'proofSubmissions',
+        project,
+        configurations,
       ),
       anomalies: mapAnomalyRecords(anomalies),
     }
@@ -85,7 +96,18 @@ const getCachedLiveness = async (): Promise<LivenessResponse> => {
 function mapAggregatedLivenessRecords(
   records: AggregatedLivenessRecord[],
   subtype: TrackedTxsConfigSubtype,
+  project: TrackedTxsProject,
+  configurations: IndexerConfigurationRecord[],
 ): LivenessDetails {
+  const filteredConfigurations = configurations.filter((c) => {
+    const config = project.trackedTxsConfigs?.find((pc) => pc.id === c.id)
+    return config?.subtype === subtype
+  })
+  const syncedUntil = getConfigurationsSyncedUntil(filteredConfigurations)
+  if (!syncedUntil) {
+    return undefined
+  }
+
   const last30Days = records.find(
     (r) => r.subtype === subtype && r.range === '30D',
   )
@@ -115,7 +137,7 @@ function mapAggregatedLivenessRecords(
           maximumInSeconds: max.max,
         }
       : undefined,
-    syncedUntil: UnixTime.now(),
+    syncedUntil,
   }
 }
 

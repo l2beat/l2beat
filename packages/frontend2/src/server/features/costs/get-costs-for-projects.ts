@@ -8,7 +8,7 @@ import {
 } from './types'
 import { addIfDefined } from './utils/add-if-defined'
 import { type CostsTimeRange, getFullySyncedCostsRange } from './utils/range'
-import { filteredWithSyncedUntil } from '../utils/filtered-with-synced-until'
+import { getTrackedTxsProjects } from '../utils/get-tracked-txs-projects'
 
 export async function getCostsForProjects(
   projects: Layer2[],
@@ -21,20 +21,20 @@ export async function getCostsForProjects(
     'tracked_txs_indexer',
   )
 
-  const projectsWithSyncedUntil = filteredWithSyncedUntil(
+  const trackedTxsProjects = getTrackedTxsProjects(
     projects,
     configurations,
     'costs',
   )
 
   const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(
-    projectsWithSyncedUntil.map((p) => p.id),
+    trackedTxsProjects.map((p) => p.id),
     range,
   )
 
   const groupedRecords = groupBy(records, 'projectId')
 
-  for (const project of projectsWithSyncedUntil) {
+  for (const project of trackedTxsProjects) {
     const records = groupedRecords[project.id]
     if (records === undefined) continue
     response[project.id] = {
