@@ -169,10 +169,10 @@ export interface Activity2Config {
   readonly projects: {
     id: ProjectId
     config: ActivityTransactionConfig
-    explorerApi?: {
-      url: string
-      type: 'etherscan' | 'blockscout'
-    }
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
   }[]
 }
 
