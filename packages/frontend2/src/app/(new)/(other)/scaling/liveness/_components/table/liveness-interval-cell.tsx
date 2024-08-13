@@ -79,12 +79,8 @@ export function LivenessIntervalCell(props: {
 }
 
 function LivenessTooltip(props: {
-  data: LivenessDataPoint | undefined
+  data: LivenessDataPoint
 }) {
-  // TODO: Fix this
-  if (!props.data) {
-    throw new Error('Data is undefined')
-  }
   return (
     <div className="font-medium">
       <span>

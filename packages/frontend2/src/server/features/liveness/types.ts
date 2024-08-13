@@ -4,13 +4,11 @@ import z from 'zod'
 export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])
 export type LivenessTimeRange = z.infer<typeof LivenessTimeRange>
 
-export const LivenessDataPoint = z
-  .object({
-    averageInSeconds: z.number().positive().int(),
-    minimumInSeconds: z.number().positive().int(),
-    maximumInSeconds: z.number().positive().int(),
-  })
-  .or(z.undefined())
+export const LivenessDataPoint = z.object({
+  averageInSeconds: z.number().positive().int(),
+  minimumInSeconds: z.number().positive().int(),
+  maximumInSeconds: z.number().positive().int(),
+})
 export type LivenessDataPoint = z.infer<typeof LivenessDataPoint>
 
 export const LivenessAnomaly = z.object({
@@ -20,26 +18,21 @@ export const LivenessAnomaly = z.object({
 })
 export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
 
-const LivenessDetails = z
-  .object({
-    [LivenessTimeRange.Enum['30d']]: LivenessDataPoint,
-    [LivenessTimeRange.Enum['90d']]: LivenessDataPoint,
-    [LivenessTimeRange.Enum.max]: LivenessDataPoint,
-    syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
-  })
-  .or(z.undefined())
+const LivenessDetails = z.object({
+  [LivenessTimeRange.Enum['30d']]: LivenessDataPoint.optional(),
+  [LivenessTimeRange.Enum['90d']]: LivenessDataPoint.optional(),
+  [LivenessTimeRange.Enum.max]: LivenessDataPoint.optional(),
+  syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
+})
 export type LivenessDetails = z.infer<typeof LivenessDetails>
 
 export const LivenessProject = z.object({
-  batchSubmissions: LivenessDetails,
-  stateUpdates: LivenessDetails,
-  proofSubmissions: LivenessDetails,
-  anomalies: z.array(LivenessAnomaly).or(z.undefined()),
+  batchSubmissions: LivenessDetails.optional(),
+  stateUpdates: LivenessDetails.optional(),
+  proofSubmissions: LivenessDetails.optional(),
+  anomalies: z.array(LivenessAnomaly),
 })
 export type LivenessProject = z.infer<typeof LivenessProject>
 
-export const LivenessResponse = z.record(
-  z.string(),
-  z.optional(LivenessProject),
-)
+export const LivenessResponse = z.record(z.string(), LivenessProject)
 export type LivenessResponse = z.infer<typeof LivenessResponse>

@@ -107,7 +107,7 @@ function mapAggregatedLivenessRecords(
   subtype: TrackedTxsConfigSubtype,
   project: TrackedTxsProject,
   configurations: IndexerConfigurationRecord[],
-): LivenessDetails {
+): LivenessDetails | undefined {
   const filteredConfigurations = configurations.filter((c) => {
     const config = project.trackedTxsConfigs?.find((pc) => pc.id === c.id)
     return config?.subtype === subtype
