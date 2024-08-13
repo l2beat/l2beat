@@ -38,6 +38,9 @@ export class BlockTimestampProvider {
       }
     }
 
+    this.$.logger.info(
+      'Fetching block number via RPC. This will take longer...',
+    )
     return await this.$.client.getBlockNumberAtOrBefore(_timestamp)
   }
 }

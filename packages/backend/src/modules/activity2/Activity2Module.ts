@@ -239,7 +239,7 @@ function createBlockBasedIndexers(
 ): [BlockTargetIndexer, BlockActivityIndexer] {
   const blockTimestampProvider = new BlockTimestampProvider({
     client,
-    logger,
+    logger: logger.tag(`activity_${project.id}`),
   })
   const blockTargetIndexer = new BlockTargetIndexer(
     logger,

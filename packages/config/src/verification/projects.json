@@ -65,7 +65,7 @@
   "dodochain": true,
   "dydx": true,
   "ebi": true,
-  "eclipse": true,
+  "eclipse": false,
   "edgeless": true,
   "edgeless-dac-layer-edgeless-dac-bridge": true,
   "educhain": true,
