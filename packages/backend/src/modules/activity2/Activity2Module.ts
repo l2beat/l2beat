@@ -84,6 +84,7 @@ function createActivityIndexers(
         const rpcClient = peripherals.getClient(RpcClient, {
           url: project.config.url,
           callsPerMinute: project.config.callsPerMinute,
+          chain: project.id,
         })
         const txsCountProvider = new RpcTxsCountProvider(
           rpcClient,
