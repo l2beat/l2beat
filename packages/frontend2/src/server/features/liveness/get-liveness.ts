@@ -33,6 +33,7 @@ const getCachedLiveness = async (): Promise<LivenessResponse> => {
   const filteredProjects = filteredWithSyncedUntil(
     backendProjects,
     configurations,
+'liveness',
   )
 
   const projectIds = filteredProjects.map((p) => p.id)

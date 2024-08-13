@@ -24,6 +24,7 @@ export async function getCostsForProjects(
   const projectsWithSyncedUntil = filteredWithSyncedUntil(
     projects,
     configurations,
+    'costs',
   )
 
   const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(

@@ -7,6 +7,7 @@ import { getSyncedUntil } from './get-configurations-synced-until'
 export function filteredWithSyncedUntil(
   projects: Layer2[],
   configurations: IndexerConfigurationRecord[],
+  type: 'liveness' | 'costs',
 ) {
   return projects
     .map((project) => {
@@ -17,7 +18,7 @@ export function filteredWithSyncedUntil(
       if (trackedTxConfig === undefined) return
 
       const projectRuntimeConfigIds = trackedTxConfig
-        .filter((c) => c.type === 'l2costs')
+        .filter((c) => c.type === type)
         .map((c) => c.id)
 
       const projectConfigs = configurations.filter((c) =>
