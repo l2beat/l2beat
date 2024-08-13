@@ -31,10 +31,10 @@ describe(getTvlBreakdown.name, () => {
     const breakdown = getTvlBreakdown(values)
 
     expect(breakdown).toEqual({
-      associated: 111n,
-      ether: 200n,
-      stablecoin: 300n,
-      total: 1110n,
+      associated: 111,
+      ether: 200,
+      stablecoin: 300,
+      total: 1110,
     })
   })
 })

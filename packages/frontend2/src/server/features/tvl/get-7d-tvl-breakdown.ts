@@ -34,20 +34,18 @@ export const getCached7dTvlBreakdown = cache(
           projectId,
           {
             breakdown: {
-              total: Number(breakdown.total) / 100,
-              ether: Number(breakdown.ether) / 100,
-              stablecoin: Number(breakdown.stablecoin) / 100,
-              associated: Number(breakdown.associated) / 100,
+              total: breakdown.total / 100,
+              ether: breakdown.ether / 100,
+              stablecoin: breakdown.stablecoin / 100,
+              associated: breakdown.associated / 100,
             },
             oldBreakdown: {
-              total: Number(oldBreakdown.total) / 100,
-              ether: Number(oldBreakdown.ether) / 100,
-              stablecoin: Number(oldBreakdown.stablecoin) / 100,
-              associated: Number(oldBreakdown.associated) / 100,
+              total: oldBreakdown.total / 100,
+              ether: oldBreakdown.ether / 100,
+              stablecoin: oldBreakdown.stablecoin / 100,
+              associated: oldBreakdown.associated / 100,
             },
-            change:
-              (Number(breakdown.total) - Number(oldBreakdown.total)) /
-              Number(breakdown.total),
+            change: (breakdown.total - oldBreakdown.total) / breakdown.total,
           },
         ]
       }),
