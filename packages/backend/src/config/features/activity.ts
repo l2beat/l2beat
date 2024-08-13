@@ -24,12 +24,7 @@ export function getProjectsWithActivity() {
     },
     ...projects.flatMap((x) =>
       x.config.transactionApi
-        ? [
-            {
-              id: x.id,
-              transactionApi: x.config.transactionApi,
-            },
-          ]
+        ? [{ id: x.id, transactionApi: x.config.transactionApi }]
         : [],
     ),
   ]
