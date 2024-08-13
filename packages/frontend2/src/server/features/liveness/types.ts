@@ -1,4 +1,4 @@
-import { branded, UnixTime, TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype, UnixTime, branded } from '@l2beat/shared-pure'
 import z from 'zod'
 
 export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])

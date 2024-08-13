@@ -1,18 +1,18 @@
+import { type } from 'os'
 import { type Layer2, layer2s } from '@l2beat/config'
 import {
   TrackedTxsConfigSubtypeValues,
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { orderByTvl } from '../tvl/order-by-tvl'
-import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { toAnomalyIndicatorEntries } from '../liveness/get-anomaly-entries'
 import { getLiveness } from '../liveness/get-liveness'
 import { type LivenessProject } from '../liveness/types'
-import { toAnomalyIndicatorEntries } from '../liveness/get-anomaly-entries'
-import { type } from 'os'
+import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
+import { orderByTvl } from '../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getCommonScalingEntry } from './get-common-scaling-entry'
 type
 export async function getScalingLivenessEntries() {
   const [

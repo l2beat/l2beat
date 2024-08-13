@@ -1,4 +1,4 @@
-import { pluralize, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime, pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
 export function DurationCell(props: { durationInSeconds: number }) {

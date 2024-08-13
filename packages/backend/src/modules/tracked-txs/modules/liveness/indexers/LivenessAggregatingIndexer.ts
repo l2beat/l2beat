@@ -20,8 +20,8 @@ import {
 import { calculateIntervals } from '../utils/calculateIntervals'
 import { calculateStats } from '../utils/calculateStats'
 import { filterIntervalsByRange } from '../utils/filterIntervalsByRange'
-import { groupByType } from '../utils/groupByType'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
+import { groupByType } from '../utils/groupByType'
 
 export interface LivenessAggregatingIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

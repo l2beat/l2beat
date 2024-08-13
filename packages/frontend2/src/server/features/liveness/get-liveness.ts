@@ -1,25 +1,25 @@
 import {
-  assert,
-  type LivenessApiProject,
-  UnixTime,
-  type TrackedTxsConfigSubtype,
-  type LivenessAnomaly,
-} from '@l2beat/shared-pure'
-import { db } from '~/server/database'
-import {
-  type AnomalyRecord,
   type AggregatedLivenessRecord,
+  type AnomalyRecord,
   type IndexerConfigurationRecord,
 } from '@l2beat/database'
-import { unstable_noStore as noStore } from 'next/cache'
-import { groupBy } from 'lodash'
 import {
-  getTrackedTxsProjects,
-  type TrackedTxsProject,
-} from '../utils/get-tracked-txs-projects'
-import { type LivenessResponse, type LivenessDetails } from './types'
-import { getLivenessProjects } from './get-liveness-projects'
+  assert,
+  type LivenessAnomaly,
+  type LivenessApiProject,
+  type TrackedTxsConfigSubtype,
+  UnixTime,
+} from '@l2beat/shared-pure'
+import { groupBy } from 'lodash'
+import { unstable_noStore as noStore } from 'next/cache'
+import { db } from '~/server/database'
 import { getConfigurationsSyncedUntil } from '../utils/get-configurations-synced-until'
+import {
+  type TrackedTxsProject,
+  getTrackedTxsProjects,
+} from '../utils/get-tracked-txs-projects'
+import { getLivenessProjects } from './get-liveness-projects'
+import { type LivenessDetails, type LivenessResponse } from './types'
 
 export async function getLiveness() {
   noStore()

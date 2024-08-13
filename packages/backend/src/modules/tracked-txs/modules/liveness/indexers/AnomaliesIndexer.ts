@@ -18,8 +18,8 @@ import {
 } from '../services/LivenessWithConfigService'
 import { RunningStatistics } from '../utils/RollingVariance'
 import { Interval, calculateIntervals } from '../utils/calculateIntervals'
-import { groupByType } from '../utils/groupByType'
 import { getActiveConfigurations } from '../utils/getActiveConfigurations'
+import { groupByType } from '../utils/groupByType'
 
 export interface AnomaliesIndexerIndexerDeps
   extends Omit<ManagedChildIndexerOptions, 'name'> {

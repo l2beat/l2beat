@@ -1,22 +1,22 @@
 import {
-  Tooltip,
-  TooltipTrigger,
-  TooltipContent,
-} from '~/app/_components/tooltip/tooltip'
-import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { WarningBar } from '~/app/_components/warning-bar'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { DurationCell } from '../../../finality/_components/table/duration-cell'
-import { type ScalingLivenessTableEntry } from './to-table-entry'
-import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
-import { formatTimestamp } from '~/utils/dates'
-import { Badge } from '~/app/_components/badge/badge'
-import {
   type LivenessDataPoint,
   type TrackedTxsConfigSubtype,
 } from '@l2beat/shared-pure'
+import { Badge } from '~/app/_components/badge/badge'
+import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
+import { WarningBar } from '~/app/_components/warning-bar'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { formatTimestamp } from '~/utils/dates'
+import { DurationCell } from '../../../finality/_components/table/duration-cell'
+import { SyncStatusWrapper } from '../../../finality/_components/table/sync-status-wrapper'
 import { LivenessDurationCell } from '../liveness-duration-cell'
 import { IntervalsHeader } from './intervals-header'
+import { type ScalingLivenessTableEntry } from './to-table-entry'
 
 export function LivenessIntervalCell(props: {
   entry: ScalingLivenessTableEntry

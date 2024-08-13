@@ -2,15 +2,15 @@
 
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
+import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
 import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { columns } from './columns'
 import { type ScalingLivenessEntry } from '~/server/features/scaling/get-scaling-liveness-entries'
-import { BaseScalingFilters } from '~/app/(new)/(other)/_components/base-scaling-filters'
-import { toLivenessTableEntry } from './to-table-entry'
-import { LivenessTimeRangeControls } from '../liveness-time-range-controls'
 import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
+import { LivenessTimeRangeControls } from '../liveness-time-range-controls'
+import { columns } from './columns'
+import { toLivenessTableEntry } from './to-table-entry'
 
 export interface Props {
   entries: ScalingLivenessEntry[]

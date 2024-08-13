@@ -2,20 +2,20 @@ import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { type ScalingLivenessTableEntry } from './to-table-entry'
 import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
-import { AnomalyIndicator } from '../anomaly-indicator'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
-import { LivenessIntervalCell } from './liveness-interval-cell'
+import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
+import { LivenessIntervalCell } from './liveness-interval-cell'
+import { type ScalingLivenessTableEntry } from './to-table-entry'
 
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
