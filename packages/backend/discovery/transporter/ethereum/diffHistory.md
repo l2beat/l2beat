@@ -1,3 +1,84 @@
+Generated with discovered.json: 0xbd6f53e4cb895e5ab8a37e811fc8f48cf455357c
+
+# Diff at Fri, 09 Aug 2024 12:32:13 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@55033526285d11b30f44e7cea5874c4f4d65ed80 block: 20475166
+- current block number: 20491058
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Watched changes
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0x8c6028e38391cfC2A1a28f4359EA5732E9422e56)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract LockReleaseTokenPool (0xC456EaE992e4f2925E3F75Ac4809dF387756CD29)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract BurnMintTokenPool (0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+...-0x8c6028e38391cfC2A1a28f4359EA5732E9422e56.sol |  998 ++++++++++++++
+ ...-0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c.sol |  998 ++++++++++++++
+ ...-0x82Df5c453e854CFaD64EA3f16497B5c5b9DB012B.sol | 1407 ++++++++++++++++++++
+ ...-0xC456EaE992e4f2925E3F75Ac4809dF387756CD29.sol | 1407 ++++++++++++++++++++
+ ...-0xa904B9343632A6ca4f4a1b0C9eFa011cb319d000.sol | 1407 ++++++++++++++++++++
+ 5 files changed, 6217 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475166 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xc07556a0Bd177F8de4D077f449C2653A072F3798) {
+    +++ description: None
+      values.getOwners:
+-        ["0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771","0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85","0x5aC189Db4351787516d2E6Fc628BF762ce684326","0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581","0x53482ACf424d4196b0F8EbdD6F8A15eb8516FB88","0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386","0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2"]
+      values.getThreshold:
+-        3
+    }
+```
+
+```diff
+    contract GnosisSafe (0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) {
+    +++ description: None
+      values.getOwners:
+-        ["0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89","0x7052cB84079905400ea52B635cAb6a275fDA8823","0xE062e7D123AC8dF480C56147f911144F55C10f88","0x41eAdbc688797a02bfaBE48472995833489ce69D","0x1c6460cfe32916196f6977b5442b0F98A826D880","0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","0xAe735fd5e74887064DFf99C637f291caE5485A75","0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC","0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd","0x06e5891D9b2Ee77740355A309BAF49caaB672f98","0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"]
+      values.getThreshold:
+-        6
+    }
+```
+
 Generated with discovered.json: 0xe7f888d9bf1744fcb3fcf778046bd265349b09c3
 
 # Diff at Wed, 07 Aug 2024 07:23:21 GMT:

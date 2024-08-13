@@ -1,3 +1,93 @@
+Generated with discovered.json: 0x4a7ce7478670879a2ccb5864896d36cf2e004795
+
+# Diff at Fri, 09 Aug 2024 10:12:51 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20469346
+- current block number: 20469346
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469346 (main branch discovery), not current.
+
+```diff
+    contract VaultMultisig (0x23bCad9BFB1378cd45b32525B835F037b673f529) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract InsuranceMultisig (0x2df3e912aeDe36ea5EaB06232ca3b239a40A8165) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract TermStructureMultisig (0xa00d50A40B1635D293c87BA36503bD2504b5D818) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract TreasuryMultisig (0xB7ef7117FfCa1956249B666D9fdBe182cFbbF5ca) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44","0x83d4814307088732528A53D8DF75fd6F2f5be398","0x50E6298795C412B26e54FdD87825Bc6ffa94B80d","0x85e500dF81F10B539E16Dd717e24C41465D10D82","0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348","0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
 Generated with discovered.json: 0xc63ccd570fde4fb859e9aab9569739ab0ce184e6
 
 # Diff at Tue, 06 Aug 2024 11:51:53 GMT:

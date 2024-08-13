@@ -23,14 +23,18 @@ RadioGroup.displayName = RadioGroupPrimitive.Root.displayName
 
 const RadioGroupItem = React.forwardRef<
   React.ElementRef<typeof RadioGroupPrimitive.Item>,
-  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof RadioGroupPrimitive.Item> & {
+    variant?: 'highlighted'
+  }
+>(({ className, variant, ...props }, ref) => {
   return (
     <RadioGroupPrimitive.Item
       ref={ref}
       className={cn(
         'rounded-md px-2 disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-white dark:data-[state=checked]:bg-black',
         'focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-zinc-300 dark:focus-visible:ring-zinc-800',
+        variant === 'highlighted' &&
+          'from-purple-100 to-pink-100 data-[state=checked]:bg-gradient-to-r data-[state=checked]:text-white',
         className,
       )}
       {...props}

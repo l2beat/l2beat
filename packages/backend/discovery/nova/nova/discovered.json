@@ -3,7 +3,7 @@
   "chain": "nova",
   "blockNumber": 74799516,
   "configHash": "0x0ae7a253225fd679b78cc06f5169ffccebb37cfa8c00f2d23027e6649a7e25c2",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "L2GatewayRouter",
@@ -113,7 +113,7 @@
       "name": "L2GatewaysProxyAdmin",
       "address": "0xada790b026097BfB36a5ed696859b97a96CEd92C",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x21903d3F8176b1a0c17E953Cd896610Be9fFDFa8",
           "0x7626841cB6113412F9c88D3ADC720C9FAC88D9eD",
           "0xbf544970E6BD77b21C6492C281AB60d0770451F4",
@@ -152,10 +152,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0x3E5c63644E683549055b9Be8653de26E0B4CD36E",
-        "$multisigThreshold": "9 of 12 (75%)",
-        "domainSeparator": "0x73c48ebf86be9cb95354666573e93457e75fb70b4b0da06eb0b9c9de6118b1e3",
-        "getChainId": 42170,
-        "getOwners": [
+        "$members": [
           "0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75",
           "0xA821c8c245d1F3A257e3B0DEC99268cA05144422",
           "0x5a09A94eE8198D3c474d723337aa58023810022C",
@@ -169,8 +166,11 @@
           "0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae",
           "0x475816ca2a31D601B4e336f5c2418A67978aBf09"
         ],
-        "getThreshold": 9,
+        "$threshold": 9,
+        "domainSeparator": "0x73c48ebf86be9cb95354666573e93457e75fb70b4b0da06eb0b9c9de6118b1e3",
+        "getChainId": 42170,
         "GnosisSafe_modules": ["0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482"],
+        "multisigThreshold": "9 of 12 (75%)",
         "nonce": 2,
         "VERSION": "1.3.0"
       },
@@ -217,7 +217,7 @@
       "name": "L2ProxyAdmin",
       "address": "0xf58eA15B20983116c21b05c876cc8e6CDAe5C2b9",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x86a02dD71363c440b21F4c0E5B2Ad01Ffe1A7482",
           "0xf823C3cD3CeBE0a1fA952ba88Dc9EEf8e0Bf46AD"
         ]
@@ -620,7 +620,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

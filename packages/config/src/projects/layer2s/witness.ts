@@ -7,12 +7,12 @@ import { Layer2 } from './types'
 const discovery = new ProjectDiscovery('witness')
 
 const membersCountDAC = discovery.getContractValue<number>(
-  'PolygonDataCommittee',
+  'WitnessValidiumDAC',
   'getAmountOfMembers',
 )
 
 const requiredSignaturesDAC = discovery.getContractValue<number>(
-  'PolygonDataCommittee',
+  'WitnessValidiumDAC',
   'requiredAmountOfSignatures',
 )
 
@@ -42,7 +42,7 @@ export const witness: Layer2 = polygonCDKStack({
       }),
       sources: [
         {
-          contract: 'PolygonDataCommittee',
+          contract: 'WitnessValidiumDAC',
           references: [
             'https://etherscan.io/address/0xd26b535ad58715c4c2fffac32908b13674533dae#code',
           ],
@@ -127,11 +127,11 @@ export const witness: Layer2 = polygonCDKStack({
         ),
       ],
       description:
-        "Owner of the PolygonDataCommittee's ProxyAdmin. Can upgrade the contract.",
+        "Owner of the WitnessValidiumDAC's ProxyAdmin. Can upgrade the contract.",
     },
   ],
   nonTemplateContracts: [
-    discovery.getContractDetails('PolygonDataCommittee', {
+    discovery.getContractDetails('WitnessValidiumDAC', {
       description:
         'Validium data availability committee contract that allows the admin to setup the members of the committee and stores the required amount of signatures threshold.',
       ...upgradeability,

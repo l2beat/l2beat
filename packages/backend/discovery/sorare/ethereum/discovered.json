@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825381,
   "configHash": "0x9d4f44fb464f4b174f5fc4dac5f0ace6b6fd0aeac99acb870a2ba5686cc52899",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "OrderRegistry",
@@ -54,23 +54,23 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
+        "upgrade": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1678893035,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 3 (67%)",
-        "domainSeparator": "0x64888abcdd0f52553103448c88733d35152e1c39d91e8df2cc280809053bbf5f",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x0405107a60391Eb51821be373ff978115Ee58488",
           "0xd38831Bcb40bdEE0577Ee064112Fa77a38cAd3F8",
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x64888abcdd0f52553103448c88733d35152e1c39d91e8df2cc280809053bbf5f",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
         "nonce": 5,
         "VERSION": "1.3.0"
       }
@@ -150,7 +150,7 @@
     {
       "address": "0x5918481F777dBe437De249492B90AffB4e655de4",
       "assignedPermissions": {
-        "admin": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
+        "upgrade": ["0xF5C9F957705bea56a7e806943f98F7777B995826"]
       }
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
@@ -565,7 +565,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

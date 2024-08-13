@@ -3,7 +3,7 @@
   "chain": "arbitrum",
   "blockNumber": 234834723,
   "configHash": "0x17b1d8b40bfe763fe331dea870945d8e5ac092e0c0c77471b10814fba181001a",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Outbox",
@@ -45,7 +45,7 @@
       "name": "ProxyAdmin",
       "address": "0x29994207C5AeDc83F27c5dc16E468f328832d42d",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x1526DAacDAf3EE81E5ae087E0DA8677E8c677CE5",
           "0x211C9893653Aea2088E34765e7039617E95fD8fD",
           "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
@@ -79,7 +79,7 @@
       "address": "0x4D0D8724ff2303A1679689a9Cc8e2A62f821e0E3",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"]
+        "upgrade": ["0xb75A0a5812303cBB198d4f0BcA7CA38f17b8783e"]
       },
       "sinceTimestamp": 1714618907,
       "values": {

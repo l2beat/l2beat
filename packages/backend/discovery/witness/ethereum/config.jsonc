@@ -8,13 +8,13 @@
   ],
   "names": {
     "0x42Ac57F24EC4C3AAC843f6DBAcd9282DAaeE9238": "WitnessValidium",
-    "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8": "PolygonDataCommittee"
+    "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8": "WitnessValidiumDAC"
   },
   "sharedModules": {
     "PolygonRollupManager": "shared-polygon-cdk"
   },
   "overrides": {
-    "PolygonDataCommittee": {
+    "WitnessValidiumDAC": {
       "fields": {
         "members": {
           "handler": {

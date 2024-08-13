@@ -17,47 +17,10 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
   it(UpdateMonitorRepository.prototype.findLatest.name, async () => {
     const projectName = 'project'
 
-    const expectedEth: UpdateMonitorRecord = {
-      projectName,
-      chainId: ChainId.ETHEREUM,
-      blockNumber: -1,
-      timestamp: new UnixTime(0),
-      discovery: {
-        name: projectName,
-        chain: 'ethereum',
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-        usedTemplates: {},
-        shapeFilesHash: Hash256.random(),
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
-
-    const expectedArb: UpdateMonitorRecord = {
-      projectName,
+    const expectedEth: UpdateMonitorRecord = record()
+    const expectedArb: UpdateMonitorRecord = record({
       chainId: ChainId.ARBITRUM,
-      blockNumber: -1,
-      timestamp: new UnixTime(0),
-      discovery: {
-        name: projectName,
-        chain: 'ethereum',
-        blockNumber: -1,
-        configHash: Hash256.random(),
-        contracts: [],
-        eoas: [],
-        abis: {},
-        version: 0,
-        usedTemplates: {},
-        shapeFilesHash: Hash256.random(),
-      },
-      configHash: CONFIG_HASH,
-      version: 0,
-    }
+    })
 
     await repository.upsert(expectedEth)
     await repository.upsert(expectedArb)
@@ -101,3 +64,27 @@ describeDatabase(UpdateMonitorRepository.name, (db) => {
     expect(latest).toEqual(updated)
   })
 })
+
+function record(params?: Partial<UpdateMonitorRecord>): UpdateMonitorRecord {
+  return {
+    projectName: 'project',
+    chainId: ChainId.ETHEREUM,
+    blockNumber: -1,
+    timestamp: new UnixTime(0),
+    discovery: {
+      name: 'project',
+      chain: 'ethereum',
+      blockNumber: -1,
+      configHash: Hash256.random(),
+      contracts: [],
+      eoas: [],
+      abis: {},
+      version: 0,
+      usedTemplates: {},
+      shapeFilesHash: Hash256.random(),
+    },
+    configHash: CONFIG_HASH,
+    version: 0,
+    ...params,
+  }
+}

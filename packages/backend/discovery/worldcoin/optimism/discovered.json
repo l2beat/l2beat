@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 123584561,
   "configHash": "0xacfdf8cae6b79206af8daa019648487244a36aebfae0394e9a29e7ea1544a351",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "GnosisSafe",
@@ -15,12 +15,12 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$members": ["0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"],
+        "$threshold": 1,
         "domainSeparator": "0xa2f716d7bd0b067b68661f036680f2cf608946de8de8f11a60a1b527aafd1968",
         "getChainId": 10,
-        "getOwners": ["0x541f3cc5772a64f2ba0a47e83236CcE2F089b188"],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
         "nonce": 10,
         "VERSION": "1.3.0"
       }
@@ -35,12 +35,12 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$members": ["0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"],
+        "$threshold": 1,
         "domainSeparator": "0x832c16ac4f3ee6ac309a20ab9922505a1c6d16a573c5c2dfb7606d39ed58d396",
         "getChainId": 10,
-        "getOwners": ["0x5f39524Ed45091abDF3Caff7399c426D7c5F7F04"],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -100,12 +100,12 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$members": ["0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"],
+        "$threshold": 1,
         "domainSeparator": "0x752a86786bf2c37c394030984a65a59987a9839750a6334b334fd61a528d2198",
         "getChainId": 10,
-        "getOwners": ["0xc534a745bFfaF9466Ed7B47fA23B0177b99A3e77"],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
         "nonce": 13,
         "VERSION": "1.3.0"
       }
@@ -126,15 +126,15 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 2 (100%)",
-        "domainSeparator": "0x51f23f41e88333c1acf3bac3fbc83649c7a2b0316954794dfa6b3b9d924c52a2",
-        "getChainId": 10,
-        "getOwners": [
+        "$members": [
           "0xB6d1621B770A088C16bfec22bAd00F77D874d011",
           "0x2a7A69daDe8fed5c88b5894392ADc6c42da6d5c7"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x51f23f41e88333c1acf3bac3fbc83649c7a2b0316954794dfa6b3b9d924c52a2",
+        "getChainId": 10,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
         "nonce": 26,
         "VERSION": "1.3.0"
       }
@@ -173,16 +173,16 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$multisigThreshold": "2 of 3 (67%)",
-        "domainSeparator": "0xc8d2f0297cbe70f973d18ea8052322a1da0d0f780465161481d7352693578b4d",
-        "getChainId": 10,
-        "getOwners": [
+        "$members": [
           "0x57c72EB3f74e3A1c95656253214A018818818ec3",
           "0x59a0f98345f54bAB245A043488ECE7FCecD7B596",
           "0xF85733e96Fa7791C5188C4B9740f0ff7d7bd2C09"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0xc8d2f0297cbe70f973d18ea8052322a1da0d0f780465161481d7352693578b4d",
+        "getChainId": 10,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 3 (67%)",
         "nonce": 16,
         "VERSION": "1.3.0"
       }
@@ -251,15 +251,15 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 2 (100%)",
-        "domainSeparator": "0x7d8b20e74f1da0a4e509ae4e4a0eaf8b81c5cc8c5de5da0d858acc817a873b4f",
-        "getChainId": 10,
-        "getOwners": [
+        "$members": [
           "0x79b998ded1f4503CE3A0A76993c72a65449f4590",
           "0x6EbD1dc80A9D608b7bC0F204E14909E7fFd25421"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x7d8b20e74f1da0a4e509ae4e4a0eaf8b81c5cc8c5de5da0d858acc817a873b4f",
+        "getChainId": 10,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -274,10 +274,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 6 (33%)",
-        "domainSeparator": "0x162f5f254095df21390ae4b4ee599988a85ae84da0a3868e22a38708c2b86f63",
-        "getChainId": 10,
-        "getOwners": [
+        "$members": [
           "0x0897316DFE7141DB1E182551c3e8077cf5dd9695",
           "0xb67ac19693fB89880Ca5873f6a890E865b259c26",
           "0xF0fCdb037718E1B2b52f109Ae776713F9c1f730c",
@@ -285,8 +282,11 @@
           "0xF1d0E74D4a54aBfeA3777d89cef7f7445acd992A",
           "0x6BBf4f7478824482F0cE2861d003bf0Ef61CdBD6"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x162f5f254095df21390ae4b4ee599988a85ae84da0a3868e22a38708c2b86f63",
+        "getChainId": 10,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
         "nonce": 21,
         "VERSION": "1.3.0"
       }
@@ -322,12 +322,12 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$members": ["0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"],
+        "$threshold": 1,
         "domainSeparator": "0xa86ca73771ed3e854989de28a65f8d6be3255680e0fcbd23460686347f2bca86",
         "getChainId": 10,
-        "getOwners": ["0x3b870Ea07b6511475Fa2422eA9DaA74C55Db85Be"],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -342,12 +342,12 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 1 (100%)",
+        "$members": ["0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"],
+        "$threshold": 1,
         "domainSeparator": "0x52dd96bc4ca81f75e83604e9377a4f95b772eb71a59948d7ea7b1a37a644de2f",
         "getChainId": 10,
-        "getOwners": ["0x70E755E15Ac5C6f8B2612F318a5CeDE11D77bEde"],
-        "getThreshold": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 1 (100%)",
         "nonce": 0,
         "VERSION": "1.3.0"
       }
@@ -378,7 +378,7 @@
     {
       "address": "0x96d55BD9c8C4706FED243c1e15825FF7854920fA",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x57f928158C3EE7CDad1e4D8642503c4D0201f611",
           "0x86D26Ed31556EA7694BD0cC4e674D7526f70511a"
         ]
@@ -816,7 +816,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

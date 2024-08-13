@@ -516,7 +516,7 @@ export function NavWrapper({
           title: 'Costs',
           icon: CostsIcon,
           href: '/scaling/costs',
-          enabled: config.features.costsPage,
+          enabled: true,
         },
       ],
     },

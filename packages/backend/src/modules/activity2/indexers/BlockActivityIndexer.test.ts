@@ -5,9 +5,8 @@ import { expect, mockFn, mockObject } from 'earl'
 import { mockDatabase } from '../../../test/database'
 import { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
-import { TxsCountProvider } from '../services/TxsCountProvider'
 import { BlockActivityIndexer } from './BlockActivityIndexer'
-import { ActivityIndexerDeps } from './types'
+import { ActivityIndexerDeps, TxsCountProvider } from './types'
 
 const START = UnixTime.fromDate(new Date('2021-01-01T00:00:00Z'))
 

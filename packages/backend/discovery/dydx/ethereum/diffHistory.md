@@ -1,3 +1,81 @@
+Generated with discovered.json: 0x01ddf9fb0521dd7cf449d64ab4fac456ef66eb69
+
+# Diff at Fri, 09 Aug 2024 10:09:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19825321
+- current block number: 19825321
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825321 (main branch discovery), not current.
+
+```diff
+    contract TreasuryProxyAdmin (0x40D6992cbd03E0DC1c2DE9606D29Cb245E737a5d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x639192D54431F8c816368D3FB4107Bc168d0E871"]
+      assignedPermissions.upgrade:
++        ["0x639192D54431F8c816368D3FB4107Bc168d0E871"]
+    }
+```
+
+```diff
+    contract SafetyModuleProxyAdmin (0x6aaD0BCfbD91963Cf2c8FB042091fd411FB05b3C) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"]
+      assignedPermissions.upgrade:
++        ["0x65f7BA4Ec257AF7c55fd5854E5f6356bBd0fb8EC"]
+    }
+```
+
+```diff
+    contract MerkleDistributorProxyAdmin (0x6C5cd3aD7A16Ae207D221908E6b997d9B0DcD7b0) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x01d3348601968aB85b4bb028979006eac235a588"]
+      assignedPermissions.upgrade:
++        ["0x01d3348601968aB85b4bb028979006eac235a588"]
+    }
+```
+
+```diff
+    contract PriorityExecutor (0xa306989BA6BcacdECCf3C0614FfF2B8C668e3CaE) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]
+      assignedPermissions.upgrade:
++        ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]
+    }
+```
+
+```diff
+    contract LiquidityStakingProxyAdmin (0xAc5D8bCD13da463bea96c75f9085c4e40037F790) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"]
+      assignedPermissions.upgrade:
++        ["0x5Aa653A076c1dbB47cec8C1B4d152444CAD91941"]
+    }
+```
+
+```diff
+    contract StarkExRemoverGovernorV2 (0xFCAac0F14deA11eDe11Afcb875f29130e1ad5ec0) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]
+      assignedPermissions.upgrade:
++        ["0xD54f502e184B6B739d7D27a6410a67dc462D69c8"]
+    }
+```
+
 Generated with discovered.json: 0xf46c9af487d6268172f589cc81d7da9158d29efa
 
 # Diff at Thu, 18 Jul 2024 10:30:44 GMT:

@@ -3,14 +3,14 @@
   "chain": "arbitrum",
   "blockNumber": 225980981,
   "configHash": "0x1d0e887180bdda238daaf60110f4111bd9b31c4c364ff992216c2c07985ab052",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "UpgradeExecutor",
       "address": "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
       "proxyType": "EIP1967 proxy",
       "assignedPermissions": {
-        "admin": ["0x846387C3D6001F74170455B1074D01f05eB3067a"]
+        "upgrade": ["0x846387C3D6001F74170455B1074D01f05eB3067a"]
       },
       "sinceTimestamp": 1700367819,
       "values": {
@@ -58,7 +58,7 @@
       "name": "ProxyAdmin",
       "address": "0x27C7Bfd2cC11429e9b80c443b42FDBe4754F6c91",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x0611b78A42903a537BE7a2f9a8783BE39AC63cD9",
           "0x0fF7A97caAb356c5507e5355b6819CB8b93d5591",
           "0x383eFE8D410285c5CbE1B4F296022640759aA834",

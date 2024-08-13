@@ -1,34 +1,35 @@
-import { type Layer2 } from '@l2beat/config'
-import {
-  type ProjectId,
-  type ProjectsVerificationStatuses,
-  UnixTime,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { type Layer2, layer2s } from '@l2beat/config'
+import { UnixTime, notUndefined } from '@l2beat/shared-pure'
+import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../../tvl/get-latest-tvl-usd'
 import { orderByTvl } from '../../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { getFinality } from './get-finality'
+import { getFinalityConfigurations } from './get-finality-configurations'
 import { type FinalityData, type FinalityProjectData } from './schema'
 import {
   type ScalingFinalityEntry,
   type ScalingFinalityEntryData,
 } from './types'
 
-export async function getScalingFinalityEntries(
-  projects: Layer2[],
-  tvl: Record<ProjectId, number>,
-  finality: FinalityData,
-  implementationChangeReport: ImplementationChangeReport,
-  projectsVerificationStatuses: ProjectsVerificationStatuses,
-) {
-  const includedProjects = getIncludedProjects(projects, finality)
+export async function getScalingFinalityEntries() {
+  const configurations = getFinalityConfigurations()
+  const [finality, tvl, icReport, projectVerification] = await Promise.all([
+    getFinality(configurations),
+    getLatestTvlUsd(),
+    getImplementationChangeReport(),
+    getProjectsVerificationStatuses(),
+  ])
+
+  const includedProjects = getIncludedProjects(layer2s, finality)
   const orderedProjects = orderByTvl(includedProjects, tvl)
 
   return orderedProjects
     .map((project) => {
       const hasImplementationChanged =
-        !!implementationChangeReport.projects[project.id.toString()]
-      const isVerified = !!projectsVerificationStatuses[project.id.toString()]
+        !!icReport.projects[project.id.toString()]
+      const isVerified = !!projectVerification[project.id.toString()]
 
       return getScalingFinalityEntry(
         project,
