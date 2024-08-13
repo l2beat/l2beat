@@ -1,4 +1,4 @@
-import { TrackedTxsConfigSubtype, UnixTime, branded } from '@l2beat/shared-pure'
+import { TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import z from 'zod'
 
 export const LivenessTimeRange = z.enum(['30d', '90d', 'max'])
@@ -12,7 +12,7 @@ export const LivenessDataPoint = z.object({
 export type LivenessDataPoint = z.infer<typeof LivenessDataPoint>
 
 export const LivenessAnomaly = z.object({
-  timestamp: branded(z.number(), (n) => new UnixTime(n)),
+  timestamp: z.number(),
   durationInSeconds: z.number().positive().int(),
   type: TrackedTxsConfigSubtype,
 })
@@ -22,7 +22,7 @@ const LivenessDetails = z.object({
   [LivenessTimeRange.Enum['30d']]: LivenessDataPoint.optional(),
   [LivenessTimeRange.Enum['90d']]: LivenessDataPoint.optional(),
   [LivenessTimeRange.Enum.max]: LivenessDataPoint.optional(),
-  syncedUntil: branded(z.number(), (n) => new UnixTime(n)),
+  syncedUntil: z.number(),
 })
 export type LivenessDetails = z.infer<typeof LivenessDetails>
 

@@ -24,7 +24,8 @@ export function toAnomalyIndicatorEntries(
 
   while (dayInLoop.lte(now)) {
     const anomaliesInGivenDay = anomalies.filter((a) => {
-      return a.timestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
+      const unixTimestamp = new UnixTime(a.timestamp)
+      return unixTimestamp.toYYYYMMDD() === dayInLoop.toYYYYMMDD()
     })
 
     if (anomaliesInGivenDay.length === 0) {
@@ -32,18 +33,10 @@ export function toAnomalyIndicatorEntries(
         isAnomaly: false,
       })
     } else {
-      const anomalies = anomaliesInGivenDay.map(
-        (a) =>
-          ({
-            type: a.type,
-            timestamp: a.timestamp.toNumber(),
-            durationInSeconds: a.durationInSeconds,
-          }) as const,
-      )
-      anomalies.sort((a, b) => a.timestamp - b.timestamp)
+      anomaliesInGivenDay.sort((a, b) => a.timestamp - b.timestamp)
       result.push({
         isAnomaly: true,
-        anomalies: anomalies,
+        anomalies: anomaliesInGivenDay,
       })
     }
 

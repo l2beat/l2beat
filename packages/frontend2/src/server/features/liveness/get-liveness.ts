@@ -146,14 +146,14 @@ function mapAggregatedLivenessRecords(
           maximumInSeconds: max.max,
         }
       : undefined,
-    syncedUntil,
+    syncedUntil: syncedUntil.toNumber(),
   }
 }
 
 function mapAnomalyRecords(records: AnomalyRecord[]): LivenessAnomaly[] {
   return records.map((a) => ({
     // TODO: validate if it makes sense to pass the end of anomaly rather than the start
-    timestamp: new UnixTime(a.timestamp.toNumber() + a.duration),
+    timestamp: a.timestamp.toNumber() + a.duration,
     durationInSeconds: a.duration,
     type: a.subtype,
   }))

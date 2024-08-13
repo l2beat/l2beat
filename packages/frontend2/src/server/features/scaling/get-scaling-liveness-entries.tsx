@@ -71,13 +71,16 @@ function getLivenessData(liveness: LivenessProject, project: Layer2) {
   if (!liveness) return undefined
 
   let isSynced = true
-  let lowestSyncedUntil: UnixTime = UnixTime.now()
-
+  let lowestSyncedUntil = UnixTime.now()
   const syncTarget = UnixTime.now().add(-6, 'hours').toStartOf('hour')
 
   for (const subtype of TrackedTxsConfigSubtypeValues) {
-    const syncedUntil = liveness[subtype]?.syncedUntil
-    if (syncedUntil?.lt(syncTarget)) {
+    const data = liveness[subtype]
+    if (!data) {
+      continue
+    }
+    const syncedUntil = new UnixTime(data.syncedUntil)
+    if (syncedUntil.lt(syncTarget)) {
       isSynced = false
       if (syncedUntil.lt(lowestSyncedUntil)) {
         lowestSyncedUntil = syncedUntil
@@ -123,11 +126,11 @@ function getSubTypeData(
   }
 }
 
-function getSyncStatus(syncedUntil: UnixTime, syncTarget: UnixTime) {
-  const isSynced = syncedUntil?.gte(syncTarget) ?? false
+function getSyncStatus(syncedUntil: number, syncTarget: UnixTime) {
+  const isSynced = syncedUntil >= syncTarget.toNumber()
 
   return {
     isSynced,
-    syncedUntil: syncedUntil.toNumber(),
+    syncedUntil,
   }
 }
