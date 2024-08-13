@@ -5,7 +5,7 @@ import { partition } from 'lodash'
 export function getConfigurationsSyncedUntil(
   configurations: Omit<
     SavedConfiguration<TrackedTxConfigEntry>,
-    'properties'
+    'properties' | 'id'
   >[],
 ): UnixTime | undefined {
   if (configurations.length === 0) {

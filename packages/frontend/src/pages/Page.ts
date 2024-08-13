@@ -2,7 +2,6 @@ import {
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,
   L2CostsApiResponse,
-  LivenessApiResponse,
   ManuallyVerifiedContracts,
   ProjectAssetsBreakdownApiResponse,
   TvlApiResponse,
@@ -39,7 +38,6 @@ export interface PagesData {
   verificationStatus: VerificationStatus
   manuallyVerifiedContracts: ManuallyVerifiedContracts
   tvlBreakdownApiResponse: ProjectAssetsBreakdownApiResponse | undefined
-  livenessApiResponse: LivenessApiResponse | undefined
   l2CostsApiResponse: L2CostsApiResponse | undefined
   implementationChange: ImplementationChangeReportApiResponse | undefined
 }

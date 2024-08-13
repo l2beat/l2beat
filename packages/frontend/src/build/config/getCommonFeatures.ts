@@ -3,7 +3,6 @@ import { Config, ConfigFeatures } from './Config'
 const backendFeaturesToConfigFeatures: Partial<
   Record<keyof ConfigFeatures, string>
 > = {
-  liveness: 'tracked-txs.liveness',
   implementationChange: 'implementationChangeReporter',
   tvlBreakdown: 'tvl',
 }

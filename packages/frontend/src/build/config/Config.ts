@@ -22,7 +22,6 @@ export interface ConfigLinks {
 
 export interface ConfigFeatures {
   activity: boolean
-  liveness: boolean
   finality: boolean
   banner: boolean
   tvlBreakdown: boolean

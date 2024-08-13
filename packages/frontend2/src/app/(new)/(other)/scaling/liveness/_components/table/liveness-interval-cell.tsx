@@ -1,7 +1,4 @@
-import {
-  type LivenessDataPoint,
-  type TrackedTxsConfigSubtype,
-} from '@l2beat/shared-pure'
+import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
 import { Badge } from '~/app/_components/badge/badge'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import {
@@ -17,6 +14,7 @@ import { SyncStatusWrapper } from '../../../finality/_components/table/sync-stat
 import { LivenessDurationCell } from '../liveness-duration-cell'
 import { IntervalsHeader } from './intervals-header'
 import { type ScalingLivenessTableEntry } from './to-table-entry'
+import { LivenessDataPoint } from '~/server/features/liveness/types'
 
 export function LivenessIntervalCell(props: {
   entry: ScalingLivenessTableEntry

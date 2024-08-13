@@ -5,8 +5,6 @@ import {
 } from '@l2beat/database'
 import {
   assert,
-  type LivenessAnomaly,
-  type LivenessApiProject,
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
@@ -19,7 +17,12 @@ import {
   getTrackedTxsProjects,
 } from '../utils/get-tracked-txs-projects'
 import { getLivenessProjects } from './get-liveness-projects'
-import { type LivenessDetails, type LivenessResponse } from './types'
+import {
+  type LivenessProject,
+  type LivenessAnomaly,
+  type LivenessDetails,
+  type LivenessResponse,
+} from './types'
 
 export async function getLiveness() {
   noStore()
@@ -59,7 +62,7 @@ const getCachedLiveness = unstable_cache(
       }
       const anomalies = anomaliesByProjectId[project.id] ?? []
 
-      const livenessData: LivenessApiProject = {
+      const livenessData: LivenessProject = {
         stateUpdates: mapAggregatedLivenessRecords(
           projectRecords,
           'stateUpdates',
