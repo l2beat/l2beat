@@ -113,8 +113,6 @@ export const scalingLayer2sColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
@@ -131,8 +129,7 @@ export const scalingLayer2sColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
+      cellClassName: 'justify-end !pr-5',
       tooltip: 'Share of the sum of total value locked of all projects.',
     },
   }),
