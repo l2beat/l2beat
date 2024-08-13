@@ -236,6 +236,7 @@ function createPeripherals(
   const rpcClient = peripherals.getClient(RpcClient, {
     url: chainConfig.config.providerUrl,
     callsPerMinute: chainConfig.config.providerCallsPerMinute,
+    chain: chainConfig.chain,
   })
 
   const options =
