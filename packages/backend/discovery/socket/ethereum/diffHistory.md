@@ -1,3 +1,115 @@
+Generated with discovered.json: 0xf576c14ed1fb7a13f001a95c7bc07a11394f3b41
+
+# Diff at Fri, 09 Aug 2024 11:27:23 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@1ad87b4413497d14d292060f85413a135fcedee2 block: 20454363
+- current block number: 20490738
+
+## Description
+
+New plugs, but vaults have 0 TVL. New vault for XAUt on Kinto was added.
+
+## Watched changes
+
+```diff
+    contract Socket (0x943AC2775928318653e91d350574436A1b9b16f9) {
+    +++ description: None
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.74:
++        "0x4E83292d5cacf05B85bED2c3D4a6056F42EE1738"
++++ description: ConnectorPlugs connect vaults (escrows) or controllers via the socket main contract to the switchboards. They have counterparts on the sibling chain.
++++ severity: LOW
+      values.plugs.73:
++        "0x1aE19B11B71b1e232c43Fe65cB1d31E139Ac7A63"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20454363 (main branch discovery), not current.
+
+```diff
++   Status: CREATED
+    contract XAUt Vault Kinto (0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF)
+    +++ description: None
+```
+
+Generated with discovered.json: 0x994e93822562c2da4125730819c4ef211ae3fad7
+
+# Diff at Fri, 09 Aug 2024 10:12:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20454363
+- current block number: 20454363
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20454363 (main branch discovery), not current.
+
+```diff
+    contract LyraMultisig (0x246d38588b16Dd877c558b245e6D5a711C649fCF) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65","0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52","0x4cEa25e9c999E69F45765539783D149024f99F12"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0xb88D64a7E2ec1b137c969Adf2EC65f933d631F65","0x76E6F5C2A64df0F53077602642B79a45D5Ba6D52","0x4cEa25e9c999E69F45765539783D149024f99F12"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract LooksRareMultisig (0xC8C57e4C73c71f72cA0a7e043E5D2D144F98ef13) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xDA9854b190A54c6c5088AB43a274caFAFF7cF369","0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58","0xb69F2341F008f673F757B49104c165C8022CD0df","0x5ECfd6968593159e5b4f06832857943409122849","0x9eab2223d84060E212354BfA620BF687b6E9Ae20"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xDA9854b190A54c6c5088AB43a274caFAFF7cF369","0x45d7A9bFC82Ca6AE410E4410f44c57a2b9F8Ec58","0xb69F2341F008f673F757B49104c165C8022CD0df","0x5ECfd6968593159e5b4f06832857943409122849","0x9eab2223d84060E212354BfA620BF687b6E9Ae20"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract KintoMultisig (0xf152Abda9E4ce8b134eF22Dc3C6aCe19C4895D82) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 6 (50%)"
+      values.getOwners:
+-        ["0x5D973Ea995d14799E528B14472346bfDE21eAe2e","0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x94561e98DD5E55271f91A103e4979aa6C493745E","0xc31C4549356d46c37021393EeEb6f704B38061eC"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0x5D973Ea995d14799E528B14472346bfDE21eAe2e","0x78C0Ea07874F4C1Cd97cc14aE343b1ae85982259","0x08E674c4538caE03B6c05405881dDCd95DcaF5a8","0xc1f4D15C16A1f3555E0a5F7AeFD1e17AD4aaf40B","0x94561e98DD5E55271f91A103e4979aa6C493745E","0xc31C4549356d46c37021393EeEb6f704B38061eC"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 6 (50%)"
+    }
+```
+
 Generated with discovered.json: 0x8f5d8415ab31f273cd4bff9f106712375d2d7645
 
 # Diff at Sun, 04 Aug 2024 09:42:44 GMT:

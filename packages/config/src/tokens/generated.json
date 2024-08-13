@@ -1638,12 +1638,12 @@
     {
       "id": "feg-fegtoken",
       "name": "FEGtoken",
-      "coingeckoId": "feg-token",
+      "coingeckoId": "feg-token-2",
       "address": "0x389999216860AB8E0175387A0c90E5c52522C945",
       "symbol": "FEG",
       "decimals": 9,
       "deploymentTimestamp": 1612075738,
-      "coingeckoListingTimestamp": 1612396800,
+      "coingeckoListingTimestamp": 1680300000,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/13878/large/F-Icon-FEG-200x200-288dpi-01_%281%29.png?1696513622",
       "chainId": 1,
@@ -2383,7 +2383,8 @@
       "iconUrl": "https://coin-images.coingecko.com/coins/images/385/large/Lisk_Symbol_-_Blue.png?1696501687",
       "chainId": 1,
       "source": "canonical",
-      "supply": "zero"
+      "supply": "zero",
+      "escrow": "0x2658723Bf70c7667De6B25F99fcce13A16D25d08"
     },
     {
       "id": "lpt-livepeer-token",
@@ -3956,6 +3957,21 @@
       "coingeckoListingTimestamp": 1710979200,
       "category": "other",
       "iconUrl": "https://assets.coingecko.com/coins/images/33669/large/photo_2023-12-14_17-00-20.jpg?1702696035",
+      "chainId": 1,
+      "source": "canonical",
+      "supply": "zero"
+    },
+    {
+      "id": "susdz-staked-usdz",
+      "name": "Staked USDz",
+      "coingeckoId": "anzen-staked-usdz",
+      "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+      "symbol": "sUSDz",
+      "decimals": 18,
+      "deploymentTimestamp": 1715851211,
+      "coingeckoListingTimestamp": 1720656000,
+      "category": "stablecoin",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
       "chainId": 1,
       "source": "canonical",
       "supply": "zero"
@@ -6756,6 +6772,25 @@
       "bridgedUsing": {
         "bridge": "Wormhole",
         "slug": "portal"
+      }
+    },
+    {
+      "id": "base:susdz-staked-usdz",
+      "name": "Staked USDz",
+      "coingeckoId": "anzen-staked-usdz",
+      "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
+      "symbol": "sUSDz",
+      "decimals": 18,
+      "deploymentTimestamp": 1719612631,
+      "coingeckoListingTimestamp": 1720656000,
+      "category": "other",
+      "iconUrl": "https://coin-images.coingecko.com/coins/images/38040/large/susdz-symbol-200x200.png?1716334492",
+      "chainId": 8453,
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
       }
     },
     {

@@ -1,3 +1,85 @@
+Generated with discovered.json: 0xe16e4e41647c26adabbd294f3e0f4b5361ddd3f0
+
+# Diff at Fri, 09 Aug 2024 11:59:24 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20482509
+- current block number: 20482509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20482509 (main branch discovery), not current.
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      assignedPermissions.upgrade.5:
+-        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
++        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
+      assignedPermissions.upgrade.4:
+-        "0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"
++        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
+      assignedPermissions.upgrade.3:
+-        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
++        "0x130d8EA0052B45554e4C99079B84df292149Bd5E"
+      assignedPermissions.upgrade.0:
+-        "0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0"
++        "0x006124Ae7976137266feeBFb3F4D2BE4C073139D"
+    }
+```
+
+Generated with discovered.json: 0xd4ce8cc3f2bd534b61a4c64dbdb3bbfd088d16b5
+
+# Diff at Fri, 09 Aug 2024 10:09:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20482509
+- current block number: 20482509
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20482509 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0x178eeeA9E0928dA2153A1d7951FBe30CF8371b8A) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xaBd099133278ACF0415186c88F34e01b05D116f6","0x2bBA03bA38D90634e6afD8C23C16ca01651bc493","0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4","0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7","0xe7fFd467F7526abf9c8796EDeE0AD30110419127"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xaBd099133278ACF0415186c88F34e01b05D116f6","0x2bBA03bA38D90634e6afD8C23C16ca01651bc493","0xf20eD26be203f09B8F0Cb3265E74BB6AD24408b4","0xca3E83c0e41A1f27b9f832F4fcE22e79Cffecfc7","0xe7fFd467F7526abf9c8796EDeE0AD30110419127"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract eigenDAProxyAdmin (0x8247EF5705d3345516286B72bFE6D690197C2E99) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x006124Ae7976137266feeBFb3F4D2BE4C073139D","0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","0x130d8EA0052B45554e4C99079B84df292149Bd5E","0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030"]
+      assignedPermissions.upgrade:
++        ["0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0","0x00A5Fd09F6CeE6AE9C8b0E5e33287F7c82880505","0x0BAAc79acD45A023E19345c352d8a7a83C4e5656","0x006124Ae7976137266feeBFb3F4D2BE4C073139D","0xBd35a7a1CDeF403a6a99e4E8BA0974D198455030","0x130d8EA0052B45554e4C99079B84df292149Bd5E"]
+    }
+```
+
 Generated with discovered.json: 0xd3389b76e1701747e6d6d47573d1c9b808860970
 
 # Diff at Thu, 08 Aug 2024 07:56:00 GMT:

@@ -3,7 +3,7 @@ import { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DayActivityIndexerDeps) {
-    super({ ...$, name: `activity_indexer`, tag: $.projectId })
+    super({ ...$, name: `activity_day_indexer`, tag: $.projectId })
   }
 
   override async update(from: number, to: number): Promise<number> {

@@ -40,7 +40,7 @@ export function VerifiedCell({
               able to regenerate the onchain verifier.
             </TooltipContent>
           </Tooltip>
-          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500">
+          <div className="ml-[26px] w-full flex-nowrap whitespace-nowrap text-xs font-medium text-zinc-500 max-md:hidden">
             (performed by{' '}
             {
               <OutLink className="underline" href={performedBy?.link}>

@@ -3,7 +3,7 @@
   "chain": "mantle",
   "blockNumber": 66927056,
   "configHash": "0xba99224e212c7eb632ba06c519a466724d98fb22fad4fc880458e49a59f4dbad",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "MantleOwner",
@@ -11,7 +11,7 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0xD784d7128B46B60Ca7d8BdC17dCEC94917455657",
           "0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"
         ]
@@ -21,10 +21,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$multisigThreshold": "5 of 8 (63%)",
-        "domainSeparator": "0x8ebc72747d383ee6fea9342b35202682cad3166f782cebee00f825155d20b2e4",
-        "getChainId": 5000,
-        "getOwners": [
+        "$members": [
           "0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5",
           "0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10",
           "0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5",
@@ -34,8 +31,11 @@
           "0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9",
           "0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"
         ],
-        "getThreshold": 5,
+        "$threshold": 5,
+        "domainSeparator": "0x8ebc72747d383ee6fea9342b35202682cad3166f782cebee00f825155d20b2e4",
+        "getChainId": 5000,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "5 of 8 (63%)",
         "nonce": 10,
         "VERSION": "1.3.0"
       },
@@ -121,7 +121,7 @@
       "name": "MantleProxyAdmin",
       "address": "0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82",
       "assignedPermissions": {
-        "admin": ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
+        "upgrade": ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
       },
       "sinceTimestamp": 1709296907,
       "values": {
@@ -357,7 +357,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24",
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837",
     "zklinknova/secondaryGateway": "0xb8fdb3c993db014b3b0c1cdd56f21ecb1aac5dd63185bc3f87a6c0e45e9168c6",
     "zklinknova/secondaryZkLink": "0x3038879967ecfd740f8377d1280264034b6959ad28bea99ebcedd97c6127a904"
   },

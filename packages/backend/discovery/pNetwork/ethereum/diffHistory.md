@@ -1,3 +1,59 @@
+Generated with discovered.json: 0x2a11fac8f34a9d7f6b7ca2645e2cdf3d82b25359
+
+# Diff at Fri, 09 Aug 2024 10:11:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20420398
+- current block number: 20420398
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20420398 (main branch discovery), not current.
+
+```diff
+    contract pNetwork Multisig (0xb5977b683c64fce80A1f5b587964b6f77Ee6CfDB) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45","0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262","0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20","0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45","0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262","0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20","0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xB6D14DdFBE01AC537accBe35cCd771C30D53c535) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
+      assignedPermissions.upgrade:
++        ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
+    }
+```
+
+```diff
+    contract PProxyAdmin (0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
+      assignedPermissions.upgrade:
++        ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
+    }
+```
+
 Generated with discovered.json: 0xa96fb0fad65d3105e4dfcf5152150b4bcdd0f07b
 
 # Diff at Tue, 30 Jul 2024 15:55:31 GMT:

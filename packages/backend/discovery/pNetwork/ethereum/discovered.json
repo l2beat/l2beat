@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20420398,
   "configHash": "0xacfacf9c84c23dfb644b1f84136823f08cbe72513fc45dcf9218995c9c893637",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ERC20 Vault V1",
@@ -182,17 +182,17 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 4 (50%)",
-        "domainSeparator": "0xf76d498488b878a740c7f1971da177216c0beb62c0b78ee3d1406b28757136ce",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x4b8736CCB7226F3353aC6c2f98f34bbAc2a68C45",
           "0x3aA6eB007D58dcdfbD5eAD9ef69dd23316887262",
           "0xb95932E9dBC985306699e0D2977FfdDbfaCBdB20",
           "0x3fcf46d517b00289c3620F1EEa8B57Ce3A35Bd1f"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0xf76d498488b878a740c7f1971da177216c0beb62c0b78ee3d1406b28757136ce",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 4 (50%)",
         "nonce": 8,
         "VERSION": "1.3.0"
       },
@@ -202,7 +202,7 @@
       "name": "ProxyAdmin",
       "address": "0xB6D14DdFBE01AC537accBe35cCd771C30D53c535",
       "assignedPermissions": {
-        "admin": ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
+        "upgrade": ["0xf4eA6B892853413bD9d9f1a5D3a620A0ba39c5b2"]
       },
       "sinceTimestamp": 1664208791,
       "values": {
@@ -243,7 +243,7 @@
       "name": "PProxyAdmin",
       "address": "0xDc2c547F6b6a89F1D96d66d50fDCbD69979Aee2a",
       "assignedPermissions": {
-        "admin": ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
+        "upgrade": ["0xe396757EC7E6aC7C8E5ABE7285dde47b98F22db8"]
       },
       "sinceTimestamp": 1640866403,
       "values": {
@@ -879,7 +879,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

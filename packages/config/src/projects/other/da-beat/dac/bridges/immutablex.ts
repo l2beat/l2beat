@@ -1,4 +1,6 @@
 import { ChainId } from '@l2beat/shared-pure'
+import { ProjectDiscovery } from '../../../../../discovery/ProjectDiscovery'
+import { getCommittee } from '../../../../../discovery/starkware'
 import { immutablex } from '../../../../layer2s/immutablex'
 import {
   DaAccessibilityRisk,
@@ -9,15 +11,15 @@ import { DaBridge } from '../../types/DaBridge'
 import { DacTransactionDataType } from '../../types/DacTransactionDataType'
 import { toUsedInProject } from '../../utils/to-used-in-project'
 
-/**
- * THIS IS EXAMPLE DATA FOR SKETCH PURPOSES
- */
+const discovery = new ProjectDiscovery('immutablex')
+const committee = getCommittee(discovery)
+
 export const immutableXDac = {
-  id: 'immutablex-dac',
+  id: 'immutablex-dac-bridge',
   type: 'DAC',
   display: {
     name: 'ImmutableX DAC',
-    slug: 'immutablex-dac',
+    slug: 'dac',
     description: 'ImmutableX DAC on Ethereum.',
     links: {
       websites: ['https://immutablex.xyz/'],
@@ -29,24 +31,73 @@ export const immutableXDac = {
     },
   },
   contracts: {
-    addresses: [],
+    addresses: [
+      discovery.getContractDetails(
+        'Committee',
+        'Data Availability Committee (DAC) contract verifying data availability claim from DAC Members (via multisig check).',
+      ),
+    ],
     risks: [],
   },
-  technology:
-    'Some note about the technology used by the bridge.\n## Markdown supported',
-  permissions: [],
+  technology: `## Simple DA Bridge
+    The DA bridge is a smart contract verifying a data availability claim from DAC Members via signature verification.
+    The bridge requires a ${committee.minSigners}/${committee.accounts.length} threshold of signatures to be met before the data commitment is accepted.
+  `,
+  permissions: [
+    {
+      name: 'Committee Members',
+      description: `List of addresses authorized to sign data commitments for the DA bridge.`,
+      accounts: committee.accounts.map((operator) => ({
+        address: operator.address,
+        type: 'EOA',
+      })),
+    },
+  ],
   chain: ChainId.ETHEREUM,
-  requiredMembers: 5,
-  totalMembers: 7,
-  // FIXME
+  requiredMembers: committee.minSigners,
+  totalMembers: committee.accounts.length,
   transactionDataType: DacTransactionDataType.StateDiffs,
   members: {
-    type: 'unknown',
+    type: 'public',
+    list: [
+      {
+        name: 'Immutable',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'StarkWare',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'Deversifi',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'Consensys',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'Nethermind',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'Iqlusion',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'Infura',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+      {
+        name: 'Cephalopod',
+        href: 'https://assets.website-files.com/646557ee455c3e16e4a9bcb3/6499367de527dd82ab7475a3_Immutable%20Whitepaper%20Update%202023%20(3).pdf',
+      },
+    ],
   },
   usedIn: toUsedInProject([immutablex]),
   risks: {
-    attestations: DaAttestationSecurityRisk.NotVerified,
+    attestations: DaAttestationSecurityRisk.SigVerified(true),
     accessibility: DaAccessibilityRisk.NotEnshrined,
-    exitWindow: DaExitWindowRisk.LowOrNoDelay(),
+    exitWindow: DaExitWindowRisk.Immutable,
   },
 } satisfies DaBridge

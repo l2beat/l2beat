@@ -13,7 +13,7 @@ export async function getDaProjectsTvl(projectIds: ProjectId[]) {
 
 const getCachedDaProjectsTvl = cache(
   async (projectIds: ProjectId[]) => {
-    const values = await db.value.getLatestValuesForProjects(projectIds)
+    const values = await db.value.getLatestValues(projectIds)
 
     const byProject = groupBy(values, 'projectId')
 

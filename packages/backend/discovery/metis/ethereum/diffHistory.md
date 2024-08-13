@@ -1,3 +1,121 @@
+Generated with discovered.json: 0xfd7a32c80d4acddc2de88f062b543c857fcaf921
+
+# Diff at Fri, 09 Aug 2024 12:00:31 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      assignedPermissions.upgrade.4:
+-        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
++        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
+      assignedPermissions.upgrade.3:
+-        "0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"
++        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
+      assignedPermissions.upgrade.2:
+-        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
++        "0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"
+      assignedPermissions.upgrade.1:
+-        "0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb"
++        "0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      assignedPermissions.upgrade.1:
+-        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
++        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
+      assignedPermissions.upgrade.0:
+-        "0xD54c868362C2098E0E46F12E7D924C6A332952Dd"
++        "0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"
+    }
+```
+
+Generated with discovered.json: 0xe0e1aa09f815df21c7c4ef140cde5cbfb26bbb3e
+
+# Diff at Fri, 09 Aug 2024 10:10:36 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20211335
+- current block number: 20211335
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20211335 (main branch discovery), not current.
+
+```diff
+    contract Metis Multisig (0x48fE1f85ff8Ad9D088863A42Af54d06a1328cF21) {
+    +++ description: Can pause, censor, instantly upgrade the bridge and upgrade other critical contracts in the system.
+      assignedPermissions.admin:
+-        ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a","0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6","0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb","0xf3d58D1794f2634d6649a978f2dc093898FEEBc0"]
+      assignedPermissions.upgrade:
++        ["0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b","0xe70DD4dE81D282B3fa92A6700FEE8339d2d9b5cb","0x6A1DB7d799FBA381F2a518cA859ED30cB8E1d41a","0xf3d58D1794f2634d6649a978f2dc093898FEEBc0","0xA2FaAAC9120c1Ff75814F0c6DdB119496a12eEA6"]
+      values.$multisigThreshold:
+-        "4 of 9 (44%)"
++++ severity: LOW
+      values.getOwners:
+-        ["0x1577D2b835f561BD021E3219Cd786181D0e17ff5","0x36B892a31b311E5e9960739A69D2dF0aa0F81A01","0x001088E383A00ff4ab36F37f7021Cb6d7B415751","0x217fD54d336f710F8aee19572dBfBf0B2297ed69","0xB383E1331dEE29864b68f7D84b0dC289F770d846","0x7a9059F4A6e50090e4f55994d465918200AB4454","0x02058Bb1d98D88087008F2ac1273584591380e3F","0xB961047013F974C5b6B6F8dA4402379525316550","0xa6D8941F935932a531A856C2e48046DA73a1098E"]
++++ severity: HIGH
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x1577D2b835f561BD021E3219Cd786181D0e17ff5","0x36B892a31b311E5e9960739A69D2dF0aa0F81A01","0x001088E383A00ff4ab36F37f7021Cb6d7B415751","0x217fD54d336f710F8aee19572dBfBf0B2297ed69","0xB383E1331dEE29864b68f7D84b0dC289F770d846","0x7a9059F4A6e50090e4f55994d465918200AB4454","0x02058Bb1d98D88087008F2ac1273584591380e3F","0xB961047013F974C5b6B6F8dA4402379525316550","0xa6D8941F935932a531A856C2e48046DA73a1098E"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 9 (44%)"
+    }
+```
+
+```diff
+    contract RewardEscrowerMultisig (0x62478E4eeb4070fE399866aB05e821AB97200947) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0x36B892a31b311E5e9960739A69D2dF0aa0F81A01","0x1577D2b835f561BD021E3219Cd786181D0e17ff5","0xa6D8941F935932a531A856C2e48046DA73a1098E","0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x36B892a31b311E5e9960739A69D2dF0aa0F81A01","0x1577D2b835f561BD021E3219Cd786181D0e17ff5","0xa6D8941F935932a531A856C2e48046DA73a1098E","0x26eC4FF77DF305d5a9A7660E046dd1c06ce517f6"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48","0xD54c868362C2098E0E46F12E7D924C6A332952Dd"]
+      assignedPermissions.upgrade:
++        ["0xD54c868362C2098E0E46F12E7D924C6A332952Dd","0x0fe382b74C3894B65c10E5C12ae60Bbd8FAf5b48"]
+    }
+```
+
 Generated with discovered.json: 0x875c4da9f3fbdd0fee44fd890a860a348e3914cc
 
 # Diff at Tue, 30 Jul 2024 11:12:48 GMT:

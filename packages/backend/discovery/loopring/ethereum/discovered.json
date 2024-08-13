@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20059608,
   "configHash": "0x4e88d6fb0be4958e0b30fdd0f2ec80cb14364904a842304176a12cf8fb7fbbe9",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ExchangeV3",
@@ -330,17 +330,14 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"]
+        "upgrade": ["0x0BABA1Ad5bE3a5C0a66E7ac838a129Bf948f1eA4"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1606289169,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x88f8Dbd3dC44c6E2e368258D3eee8EB9A07aF191",
           "0x3b1D1F89E0b6803174A2dE72e21A6f6f8464d5F1",
           "0x4CBbD41a2c057cAb8db00AC60f1AB52F36870185",
@@ -348,8 +345,11 @@
           "0x7414eA41bd1844f61e8990b209a1Dc301489baa9",
           "0x1F28F10176F89F4E9985873B84d14e75751BB3D1"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xf45dfd6bdfe82ca616c58cff61bef38014e7194f65f8d7ba32eb9022170c8d1d",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 193,
         "VERSION": "1.3.0"
       },
@@ -785,7 +785,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }
