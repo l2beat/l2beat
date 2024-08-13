@@ -4,7 +4,10 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import {
+  TypeCell,
+  TypeColumnTooltip,
+} from '~/app/_components/table/cells/type-cell'
 import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
@@ -56,21 +59,7 @@ export const scalingArchivedColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: (
-        <div>
-          <div className="mb-1">
-            Type of this project. Determines data availability and proof system
-            used.
-          </div>
-          ZK Rollups = Validity Proofs + onchain data
-          <br />
-          Optimistic Rollups = Fraud Proofs + onchain data
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </div>
-      ),
+      tooltip: <TypeColumnTooltip />,
     },
   }),
   columnHelper.accessor('purposes', {
