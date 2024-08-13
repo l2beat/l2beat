@@ -8,8 +8,13 @@ import {
   type StageConfig,
 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { createContext, useCallback, useContext, useMemo } from 'react'
-import { useLocalStorage } from '~/hooks/use-local-storage'
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from 'react'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
@@ -116,10 +121,7 @@ export function useScalingFilter() {
 export function ScalingFilterContextProvider({
   children,
 }: { children: React.ReactNode }) {
-  const [value, setValue] = useLocalStorage<ScalingFilterContextValue>(
-    'scaling-summary-filters',
-    defaultValues,
-  )
+  const [value, setValue] = useState<ScalingFilterContextValue>(defaultValues)
 
   const set = useCallback(
     (newValue: Partial<ScalingFilterContextValue>) => {
