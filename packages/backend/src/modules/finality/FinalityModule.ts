@@ -42,7 +42,6 @@ export function createFinalityModule(
   const ethereumClient = peripherals.getClient(RpcClient, {
     url: config.finality.ethereumProviderUrl,
     callsPerMinute: config.finality.ethereumProviderCallsPerMinute,
-    chain: 'ethereum',
   })
 
   const blobClient = peripherals.getClient(BlobClient, {

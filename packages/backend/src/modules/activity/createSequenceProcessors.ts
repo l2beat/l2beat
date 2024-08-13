@@ -127,7 +127,6 @@ export function createSequenceProcessors(
           const rpcClient = peripherals.getClient(RpcClient, {
             url: config.url,
             callsPerMinute: config.callsPerMinute,
-            chain: id,
           })
           return new RpcCounter(
             id,
