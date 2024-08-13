@@ -56,6 +56,10 @@ export function createActivity2Router(activityController: Activity2Controller) {
     ),
   )
 
+  router.get('/api/activity/status', (ctx) => {
+    ctx.body = activityController.getStatus()
+  })
+
   return router
 }
 

@@ -6,6 +6,7 @@ import {
   ProjectId,
   Result,
   UnixTime,
+  json,
 } from '@l2beat/shared-pure'
 
 import { Layer2, Layer3, layer2s, layer3s } from '@l2beat/config'
@@ -200,6 +201,26 @@ export class Activity2Controller {
       type: 'success',
       data,
     }
+  }
+
+  async getStatus() {
+    const configurations = await this.db.indexerState.getAll()
+    const activityConfigurations = configurations.filter((c) =>
+      c.indexerId.includes('activity'),
+    )
+    const projects = activityConfigurations.map((c) => {
+      const projectId = c.indexerId.split('::')[1]
+      return {
+        projectId,
+        includedInApi: this.projectIds.includes(ProjectId(projectId)),
+        currentHeight: c.safeHeight,
+      }
+    })
+
+    return projects.reduce<Record<string, json>>((result, project) => {
+      result[project.projectId] = project
+      return result
+    }, {})
   }
 
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
