@@ -1,7 +1,12 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
+import { BlockExplorerClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
+import {
+  BlockscoutChainConfig,
+  EtherscanChainConfig,
+} from '../../config/Config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
@@ -99,6 +104,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -122,6 +128,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -145,6 +152,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -168,6 +176,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -191,6 +200,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -233,13 +243,43 @@ function createBlockBasedIndexers(
   logger: Logger,
   client: BaseClient,
   txsCountProvider: TxsCountProvider,
-  project: { id: ProjectId; config: ActivityTransactionConfig },
+  project: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
+  },
   indexerService: IndexerService,
   db: Database,
+  peripherals: Peripherals,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
+  let blockExplorerClient: BlockExplorerClient | undefined
+
+  if (project.blockExplorerConfig) {
+    const options =
+      project.blockExplorerConfig === undefined
+        ? undefined
+        : project.blockExplorerConfig.type === 'etherscan'
+          ? {
+              type: 'Etherscan' as const,
+              apiKey: project.blockExplorerConfig.etherscanApiKey,
+              url: project.blockExplorerConfig.etherscanApiUrl,
+              maximumCallsForBlockTimestamp: 3,
+            }
+          : {
+              type: 'Blockscout' as const,
+              url: project.blockExplorerConfig.blockscoutApiUrl,
+              maximumCallsForBlockTimestamp: 10,
+            }
+
+    blockExplorerClient = peripherals.getClient(BlockExplorerClient, options)
+  }
   const blockTimestampProvider = new BlockTimestampProvider({
     client,
     logger: logger.tag(`activity_${project.id}`),
+    blockExplorerClient,
   })
   const blockTargetIndexer = new BlockTargetIndexer(
     logger,
