@@ -16,7 +16,6 @@ const getCachedDaProjectTvl = cache(async (projectIds: ProjectId[]) => {
 
   const values = await db.value.getLatestValues(projectIds)
 
-  // TODO: Verify if the options object here is correct
   const { canonical, external, native } = sumValuesPerSource(values, {
     forTotal: true,
     excludeAssociatedTokens: false,

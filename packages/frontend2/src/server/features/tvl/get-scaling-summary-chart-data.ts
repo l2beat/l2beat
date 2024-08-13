@@ -16,15 +16,26 @@ export async function getScalingSummaryChartData(
   return getCachedScalingChartData(...args)
 }
 
+type CommonOptions = {
+  range: TvlChartRange
+  excludeAssociatedTokens?: boolean
+}
+
+type DataType =
+  | {
+      type: 'layer2'
+    }
+  | {
+      type: 'projects'
+      projectIds: string[]
+    }
+
 export const getCachedScalingChartData = cache(
   async ({
     range,
     excludeAssociatedTokens,
     ...rest
-  }: { range: TvlChartRange; excludeAssociatedTokens?: boolean } & (
-    | { type: 'layer2' }
-    | { type: 'projects'; projectIds: string[] }
-  )) => {
+  }: CommonOptions & DataType) => {
     const projectsFilter = (() => {
       if (rest.type === 'layer2') {
         return (project: TvlProject) =>
