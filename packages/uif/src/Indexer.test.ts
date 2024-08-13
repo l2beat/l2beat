@@ -202,6 +202,7 @@ describe(Indexer.name, () => {
       expect(markAttempt).toHaveBeenCalledTimes(1)
       expect(shouldRetry).toHaveBeenCalledTimes(1)
       expect(root.getState().status).toEqual('idle')
+      expect(root.getState().tickBlocked).toEqual(true)
 
       await clock.tickAsync(1000)
 
@@ -210,6 +211,7 @@ describe(Indexer.name, () => {
       await root.finishTick(1)
       expect(clear).toHaveBeenCalledTimes(1)
       expect(root.getState().status).toEqual('idle')
+      expect(root.getState().tickBlocked).toEqual(false)
 
       clock.uninstall()
     })
