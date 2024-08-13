@@ -11,23 +11,22 @@ import {
   TabsTrigger,
 } from '~/app/_components/tabs'
 import { useTable } from '~/hooks/use-table'
+import ActiveIcon from '~/icons/active.svg'
+import ArchivedIcon from '~/icons/archived.svg'
+import Layer3sIcon from '~/icons/layer3s.svg'
+import UpcomingIcon from '~/icons/upcoming.svg'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
 import {
   useScalingFilter,
   useScalingFilterValues,
 } from '../../../_components/scaling-filter-context'
+import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
-
-import ActiveIcon from '~/icons/active.svg'
-import ArchivedIcon from '~/icons/archived.svg'
-import Layer3sIcon from '~/icons/layer3s.svg'
-import UpcomingIcon from '~/icons/upcoming.svg'
-import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 
 interface Props {
   projects: ScalingSummaryEntry[]

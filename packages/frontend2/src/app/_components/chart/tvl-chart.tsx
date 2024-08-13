@@ -61,9 +61,10 @@ export function TvlChart({ milestones, entries, tag = 'summary' }: Props) {
     ...chartDataType,
   })
 
-  const data = scalingSummaryQuery.data?.chart
+  const data = scalingSummaryQuery.data
 
   const mappedMilestones = getMilestones(milestones)
+
   const rangeStart = data?.[0]?.[0] ?? 0
   const rangeEnd = data?.[data.length - 1]?.[0] ?? 1
 

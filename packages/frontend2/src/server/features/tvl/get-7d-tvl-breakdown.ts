@@ -5,25 +5,23 @@ import {
 import { getTvlBreakdown } from './get-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import {
-  type TvlProjectFilter,
-  createTvlProjectsFilter,
-} from './project-filter-utils'
 
-export function getLatestTvl(
-  ...parameters: Parameters<typeof getCachedLatestTvl>
+export function get7dTvlBreakdown(
+  ...parameters: Parameters<typeof getCached7dTvlBreakdown>
 ) {
   noStore()
-  return getCachedLatestTvl(...parameters)
+  return getCached7dTvlBreakdown(...parameters)
 }
 
-export const getCachedLatestTvl = cache(
-  async ({ ...filterParams }: TvlProjectFilter) => {
-    const filter = createTvlProjectsFilter(filterParams)
+export const getCached7dTvlBreakdown = cache(
+  async () => {
     const tvlValues = await getTvlValuesForProjects(
-      getTvlProjects().filter(filter),
+      getTvlProjects().filter(
+        (project) => project.type === 'layer2' || project.type === 'layer3',
+      ),
       '7d',
     )
+
     const projects = Object.fromEntries(
       Object.entries(tvlValues).map(([projectId, values]) => {
         const latestTimestamp = Math.max(...Object.keys(values).map(Number))
@@ -62,18 +60,13 @@ export const getCachedLatestTvl = cache(
 
     return {
       total,
-      change:
-        Object.values(projects).reduce(
-          (acc, { oldBreakdown }) => acc + oldBreakdown.total,
-          0,
-        ) / total,
       projects,
     }
   },
-  ['latestTvl'],
+  ['get7dTvlBreakdown'],
   {
     revalidate: 60 * 10,
   },
 )
 
-export type LatestTvl = Awaited<ReturnType<typeof getCachedLatestTvl>>
+export type LatestTvl = Awaited<ReturnType<typeof getCached7dTvlBreakdown>>

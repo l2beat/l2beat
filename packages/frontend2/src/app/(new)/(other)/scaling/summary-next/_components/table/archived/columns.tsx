@@ -5,8 +5,8 @@ import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { formatNumber } from '~/utils/format-number'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
-import { TotalCell } from '../total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
@@ -91,12 +91,7 @@ export const scalingArchivedColumns = [
       }
 
       return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change ?? undefined}
-        />
+        <span className="px-5">${formatNumber(value.breakdown.total)}</span>
       )
     },
     meta: {
@@ -106,5 +101,4 @@ export const scalingArchivedColumns = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor('provider', {}),
 ]

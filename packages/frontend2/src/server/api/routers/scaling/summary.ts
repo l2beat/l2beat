@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { getScalingSummaryData } from '~/server/features/tvl/get-scaling-summary-data'
+import { getScalingSummaryChartData } from '~/server/features/tvl/get-scaling-summary-chart-data'
 import { TvlChartRange } from '~/server/features/tvl/range'
 import { procedure, router } from '../../trpc'
 
@@ -22,6 +22,6 @@ export const summaryRouter = router({
         ),
     )
     .query(async ({ input }) => {
-      return getScalingSummaryData(input)
+      return getScalingSummaryChartData(input)
     }),
 })

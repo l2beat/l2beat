@@ -28,7 +28,7 @@ export function TotalCell(data: TotalCellProps) {
   const tvlWarnings = data.tvlWarnings ?? []
   const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
 
-  const totalTvl = data.breakdown.total / 100
+  const totalTvl = data.breakdown.total
 
   return (
     <Tooltip>

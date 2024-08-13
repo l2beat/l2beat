@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import { type ValueRecord } from '@l2beat/database'
 import {
   unstable_cache as cache,
@@ -10,14 +9,14 @@ import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
 
-export async function getScalingSummaryData(
-  ...args: Parameters<typeof getCachedScalingSummaryData>
+export async function getScalingSummaryChartData(
+  ...args: Parameters<typeof getCachedScalingChartData>
 ) {
   noStore()
-  return getCachedScalingSummaryData(...args)
+  return getCachedScalingChartData(...args)
 }
 
-export const getCachedScalingSummaryData = cache(
+export const getCachedScalingChartData = cache(
   async ({
     range,
     excludeAssociatedTokens,
@@ -37,6 +36,7 @@ export const getCachedScalingSummaryData = cache(
     })()
 
     const tvlProjects = getTvlProjects().filter(projectsFilter)
+
     const ethPrices = await getEthPrices()
 
     const values = await getTvlValuesForProjects(tvlProjects, range)
@@ -64,44 +64,12 @@ export const getCachedScalingSummaryData = cache(
       ] as const
     })
 
-    const projectChange = Object.fromEntries(
-      Object.entries(values).map(([projectId, values]) => {
-        const timestamps = Object.keys(values)
-        const oldestTimestamp = timestamps.reduce(
-          (acc, curr) => (+curr < acc ? +curr : acc),
-          Infinity,
-        )
-        const newestTimestamp = timestamps.reduce(
-          (acc, curr) => (+curr > acc ? +curr : acc),
-          -Infinity,
-        )
-        assert(
-          values[oldestTimestamp] && values[newestTimestamp],
-          "Values don't exist",
-        )
-        const oldest = sumValuesPerSource(values[oldestTimestamp], {
-          forTotal: false,
-          excludeAssociatedTokens: true,
-        })
-        const latest = sumValuesPerSource(values[newestTimestamp], {
-          forTotal: false,
-          excludeAssociatedTokens: true,
-        })
-        return [
-          projectId,
-          Number(latest.canonical + latest.external + latest.native) /
-            Number(oldest.canonical + oldest.external + oldest.native) -
-            1,
-        ]
-      }),
-    )
-
-    return { chart, projectChange }
+    return chart
   },
-  ['getScalingSummaryData'],
+  ['getScalingSummaryChartData'],
   { revalidate: 60 * 10 },
 )
 
 export type ScalingSummaryData = Awaited<
-  ReturnType<typeof getCachedScalingSummaryData>
+  ReturnType<typeof getCachedScalingChartData>
 >
