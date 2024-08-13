@@ -182,6 +182,7 @@ export abstract class Indexer {
     this.started = true
     this.logger.info('Starting...')
 
+    // RootIndexer does not have parents
     if (this.parents.length === 0) {
       this.requestTick()
       this.scheduleTick()
