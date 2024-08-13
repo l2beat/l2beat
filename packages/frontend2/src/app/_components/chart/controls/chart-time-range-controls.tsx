@@ -1,4 +1,3 @@
-import React from 'react'
 import { useIsClient } from '~/hooks/use-is-client'
 import { type TvlChartRange } from '~/server/features/tvl/range-utils'
 import { formatRange } from '~/utils/dates'

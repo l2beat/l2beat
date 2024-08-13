@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 import { type KnownCookieName, type KnownCookieValue } from '~/consts/cookies'
-import { getCookie, setCookie } from '~/utils/cookies/client'
+import { getCookie } from '~/utils/cookies/client'
 
 type CookieEvent = {
   name: KnownCookieName
@@ -23,7 +23,6 @@ export function useCookieState<Name extends KnownCookieName>(
 
   useEffect(() => {
     const listener = (event: Event) => {
-      console.log('event', event)
       if (!(event instanceof CustomEvent)) return
 
       const cookieEvent = event as CustomEvent<CookieEvent>
@@ -33,7 +32,7 @@ export function useCookieState<Name extends KnownCookieName>(
       }
     }
 
-    document.addEventListener('cookie', listener, true)
+    document.addEventListener('cookie', listener)
 
     return () => {
       document.removeEventListener('cookie', listener)

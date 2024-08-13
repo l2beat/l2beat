@@ -107,7 +107,7 @@ export const scalingLayer2sColumns = [
           associatedTokenSymbols={value.associatedTokens}
           tvlWarnings={value.warnings}
           breakdown={value.breakdown}
-          change={value.change ?? undefined}
+          change={value.change}
         />
       )
     },
@@ -120,7 +120,7 @@ export const scalingLayer2sColumns = [
     },
   }),
   columnHelper.accessor((e) => e.marketShare, {
-    header: 'Market share',
+    header: 'Mkt Share',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (!value) {

@@ -1,7 +1,4 @@
 import { type WarningWithSentiment } from '@l2beat/config'
-import { type Sentiment } from '@l2beat/shared-pure'
-import React from 'react'
-import { useScalingFilterValues } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import {
   TokenBreakdown,
   TokenBreakdownTooltipContent,
@@ -12,7 +9,6 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { WarningBar } from '~/app/_components/warning-bar'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatNumber } from '~/utils/format-number'
 
