@@ -1,3 +1,49 @@
+Generated with discovered.json: 0xad9ad037209a2fe6758cdc1b619b30d3eb928b38
+
+# Diff at Fri, 09 Aug 2024 10:14:54 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 26689586
+- current block number: 26689586
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 26689586 (main branch discovery), not current.
+
+```diff
+    contract OpticsV2Governor (0x070c2843402Aa0637ae0F2E2edf601aAB5E72509) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 7 (57%)"
+      values.getOwners:
+-        ["0xFCcD3516d6BB62b009088aDae1E349430dDF6e77","0x63c079444e07D82d33399DE7D56d6E48740494c7","0xa725898D6F73C512f803B564A89DFbd96cF298EC","0xd85DC9A21378EF738A248236E970c2e0be89C9c2","0xeE2b1e23e71052860C14f69E84AAF78478606D63","0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552","0x7519Db53B63d72721470319A5F4462D587Bb3008"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0xFCcD3516d6BB62b009088aDae1E349430dDF6e77","0x63c079444e07D82d33399DE7D56d6E48740494c7","0xa725898D6F73C512f803B564A89DFbd96cF298EC","0xd85DC9A21378EF738A248236E970c2e0be89C9c2","0xeE2b1e23e71052860C14f69E84AAF78478606D63","0x7d7cd2ED526F99D05A05a93CCf42C1ADdBe78552","0x7519Db53B63d72721470319A5F4462D587Bb3008"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+    contract UpgradeBeaconController (0x5A4E9B127183130b1814858F6ca5d1B1c6d799Ee) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"]
+      assignedPermissions.upgrade:
++        ["0xd13aC1024d266B73180cA7445Ca0E78b3Acfe8CE"]
+    }
+```
+
 Generated with discovered.json: 0x7f6afaddf7e2768d1d260166b0e7f230d67a9ba1
 
 # Diff at Thu, 28 Mar 2024 11:34:42 GMT:

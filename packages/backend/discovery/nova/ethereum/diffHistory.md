@@ -1,3 +1,232 @@
+Generated with discovered.json: 0x898a4c69c2bdae7d51cc052f951c35400091df6d
+
+# Diff at Fri, 09 Aug 2024 12:00:46 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20406615
+- current block number: 20406615
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406615 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x71D78dC7cCC0e037e12de1E50f5470903ce37148) {
+    +++ description: None
+      assignedPermissions.upgrade.5:
+-        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
++        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
+      assignedPermissions.upgrade.4:
+-        "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
++        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
+      assignedPermissions.upgrade.3:
+-        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
++        "0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd"
+      assignedPermissions.upgrade.2:
+-        "0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58"
++        "0xA59075221b50C598aED0Eae0bB9869639513af0D"
+      assignedPermissions.upgrade.1:
+-        "0xc4448b71118c9071Bcb9734A0EAc55D18A153949"
++        "0x304807A7ed6c1296df2128E6ff3836e477329CD2"
+      assignedPermissions.upgrade.0:
+-        "0xA59075221b50C598aED0Eae0bB9869639513af0D"
++        "0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"
+    }
+```
+
+```diff
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
++        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
+      assignedPermissions.upgrade.1:
+-        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
++        "0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"
+      assignedPermissions.upgrade.0:
+-        "0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"
++        "0x23122da8C581AA7E0d07A36Ff1f16F799650232f"
+    }
+```
+
+Generated with discovered.json: 0xffe38757b76ac47d79d3c1f13b9a384b23ce5767
+
+# Diff at Fri, 09 Aug 2024 10:10:50 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20406615
+- current block number: 20406615
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20406615 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (0x3ffFbAdAF827559da092217e474760E2b2c3CeDd) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xFb209827c58283535b744575e11953DCC4bEAD88"]
+      assignedPermissions.upgrade:
++        ["0xFb209827c58283535b744575e11953DCC4bEAD88"]
+    }
+```
+
+```diff
+    contract ProxyAdmin 2 (0x5613AF0474EB9c528A34701A5b1662E3C8FA0678) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","0xE6841D92B0C345144506576eC13ECf5103aC7f49"]
+      assignedPermissions.upgrade:
++        ["0x3ffFbAdAF827559da092217e474760E2b2c3CeDd","0xE6841D92B0C345144506576eC13ECf5103aC7f49"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x71D78dC7cCC0e037e12de1E50f5470903ce37148) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b","0x304807A7ed6c1296df2128E6ff3836e477329CD2","0xA59075221b50C598aED0Eae0bB9869639513af0D","0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd","0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58","0xc4448b71118c9071Bcb9734A0EAc55D18A153949"]
+      assignedPermissions.upgrade:
++        ["0xA59075221b50C598aED0Eae0bB9869639513af0D","0xc4448b71118c9071Bcb9734A0EAc55D18A153949","0xD4B80C3D7240325D18E645B49e6535A3Bf95cc58","0x304807A7ed6c1296df2128E6ff3836e477329CD2","0xC1Ebd02f738644983b6C4B2d440b8e77DdE276Bd","0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x8f6b82D007C0Ff4fd85fE84a5BFa89C00A4e6d2B) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"]
+      assignedPermissions.upgrade:
++        ["0x658e8123722462F888b6fa01a7dbcEFe1D6DD709"]
+    }
+```
+
+```diff
+    contract ProxyAdmin 3 (0xa8f7DdEd54a726eB873E98bFF2C95ABF2d03e560) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x23122da8C581AA7E0d07A36Ff1f16F799650232f","0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf","0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48"]
+      assignedPermissions.upgrade:
++        ["0xC840838Bc438d73C16c2f8b22D2Ce3669963cD48","0x23122da8C581AA7E0d07A36Ff1f16F799650232f","0xB2535b988dcE19f9D71dfB22dB6da744aCac21bf"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xAd3a14Fc16751d9E7FCa2A99aF85bf4d135e878d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"]
+      assignedPermissions.upgrade:
++        ["0x1732BE6738117e9d22A84181AF68C8d09Cd4FF23"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb31407BCf91d54AbFC0B7ef61bFc71b8b71F0678) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"]
+      assignedPermissions.upgrade:
++        ["0x24Ca61c31C7f9Af3ab104dB6B9A444F28e9071e3"]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb85e18C8F552c823CdA4DCd9056213bDc970f9AE) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x3B0369CAD35d257793F51c28213a4Cf4001397AC"]
+      assignedPermissions.upgrade:
++        ["0x3B0369CAD35d257793F51c28213a4Cf4001397AC"]
+    }
+```
+
+```diff
+    contract ValidatorOwnerMultisig (0xC234E41AE2cb00311956Aa7109fC801ae8c80941) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x375906ADFD34D93236084F462BB2dB0D92129Fe1","0xfE2bf40f2A9183774BF8E871d634A4E50255158B","0x64379Dee676ab442B48925Ed603771f386510Ee7","0x290Aa3E7533c873B3326DabFe7579e86ed951428","0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C","0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x375906ADFD34D93236084F462BB2dB0D92129Fe1","0xfE2bf40f2A9183774BF8E871d634A4E50255158B","0x64379Dee676ab442B48925Ed603771f386510Ee7","0x290Aa3E7533c873B3326DabFe7579e86ed951428","0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C","0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract BatchPosterManagerMultisig (0xd0FDA6925f502a3a94986dfe7C92FE19EBbD679B) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "4 of 6 (67%)"
+      values.getOwners:
+-        ["0x375906ADFD34D93236084F462BB2dB0D92129Fe1","0xfE2bf40f2A9183774BF8E871d634A4E50255158B","0x64379Dee676ab442B48925Ed603771f386510Ee7","0x290Aa3E7533c873B3326DabFe7579e86ed951428","0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C","0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0x375906ADFD34D93236084F462BB2dB0D92129Fe1","0xfE2bf40f2A9183774BF8E871d634A4E50255158B","0x64379Dee676ab442B48925Ed603771f386510Ee7","0x290Aa3E7533c873B3326DabFe7579e86ed951428","0x4d9A23BD4DBBdC04A88B99d8d2ac450EB6b8f49C","0x79D3Bb67EA7aB77E015af3dA885E8ed9C48a9fCe"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 6 (67%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xE4d0Ba69d082Fdf6f51b8fc8F92c19bF00B1a1B4) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"]
+      assignedPermissions.upgrade:
++        ["0xE27d4Ed355e5273A3D4855c8e11BC4a8d3e39b87"]
+    }
+```
+
+```diff
+    contract SecurityCouncil (0xF06E95eF589D9c38af242a8AAee8375f14023F85) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "9 of 12 (75%)"
+      values.getOwners:
+-        ["0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75","0xA821c8c245d1F3A257e3B0DEC99268cA05144422","0x5a09A94eE8198D3c474d723337aa58023810022C","0x5DD2205C3aac13E592F0a3D85188c948D1781df1","0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3","0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed","0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF","0xb07dc9103328A51128bC6Cc1049d1137035f5E28","0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23","0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd","0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","0x475816ca2a31D601B4e336f5c2418A67978aBf09"]
+      values.getThreshold:
+-        9
+      values.$members:
++        ["0x70C006fC86A392c16D7E085cefc0Ad1FF7de6C75","0xA821c8c245d1F3A257e3B0DEC99268cA05144422","0x5a09A94eE8198D3c474d723337aa58023810022C","0x5DD2205C3aac13E592F0a3D85188c948D1781df1","0x8F10e3413586c4a8DCfcE19D009872b19e9cd8E3","0xb71ca4FFbB7b58d75Ba29891ab45e9Dc12B444Ed","0x3E286452b1C66abB08Eb5494c3894F40aB5a59AF","0xb07dc9103328A51128bC6Cc1049d1137035f5E28","0x3Bd8e2AC65ad6f0F094BA6766cBd9484AB49eF23","0xf8e1492255d9428c2Fc20A98A1DeB1215C8ffEfd","0x0275b3D54a5dDbf8205A75984796eFE8b7357Bae","0x475816ca2a31D601B4e336f5c2418A67978aBf09"]
+      values.$threshold:
++        9
+      values.multisigThreshold:
++        "9 of 12 (75%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xF32e5B5Ad94c0c0F83E0023b0AC48A93A8a2a428) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"]
+      assignedPermissions.upgrade:
++        ["0x57004b440Cc4eb2FEd8c4d1865FaC907F9150C76"]
+    }
+```
+
 Generated with discovered.json: 0x91c3df0b3713b5068c31ace1f2c7c86c9d7c612b
 
 # Diff at Tue, 30 Jul 2024 11:13:06 GMT:

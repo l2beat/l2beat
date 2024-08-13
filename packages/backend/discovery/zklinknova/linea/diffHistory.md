@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x2089e3eb3876579f2d95597b91f2ebd5d89feef2
+
+# Diff at Fri, 09 Aug 2024 10:14:26 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 7681920
+- current block number: 7681920
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 7681920 (main branch discovery), not current.
+
+```diff
+    contract LineaOwner (0x0Bff4B38792a95314b3463E1Bf9831BDa1995391) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"]
+      assignedPermissions.upgrade:
++        ["0x7b5780d6df85A7dF96a3e1A019639a1dbDe937dB"]
+      values.$multisigThreshold:
+-        "5 of 8 (63%)"
+      values.getOwners:
+-        ["0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5","0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10","0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5","0xF801886AE2e127A269B0F11892edb54F692d02dF","0xC75EFCffEE930706daec5CaCA012551f6a1845D7","0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9","0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92","0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"]
+      values.getThreshold:
+-        5
+      values.$members:
++        ["0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5","0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10","0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5","0xF801886AE2e127A269B0F11892edb54F692d02dF","0xC75EFCffEE930706daec5CaCA012551f6a1845D7","0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9","0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92","0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"]
+      values.$threshold:
++        5
+      values.multisigThreshold:
++        "5 of 8 (63%)"
+    }
+```
+
+```diff
+    contract Governance (0xeF528a8Ca4B6aFDB6716Ef9f11bCa0c5C47454ec) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"]
+      assignedPermissions.upgrade:
++        ["0x62cE247f34dc316f93D3830e4Bf10959FCe630f8"]
+    }
+```
+
 Generated with discovered.json: 0x00aa46468de35ce7b94c77f6909a9f0e2568a09a
 
 # Diff at Sun, 04 Aug 2024 10:28:44 GMT:

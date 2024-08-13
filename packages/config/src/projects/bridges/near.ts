@@ -10,12 +10,12 @@ const discovery = new ProjectDiscovery('near')
 
 const threshold = discovery.getContractValue<number>(
   'BridgeAdminMultisig',
-  'getThreshold',
+  '$threshold',
 )
 
 const owners: string[] = discovery.getContractValue<string[]>(
   'BridgeAdminMultisig',
-  'getOwners',
+  '$members',
 )
 
 const size = owners.length

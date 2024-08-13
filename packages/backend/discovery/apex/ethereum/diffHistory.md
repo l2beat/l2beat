@@ -1,3 +1,61 @@
+Generated with discovered.json: 0xb43b38464018b222160218080718d20095921320
+
+# Diff at Fri, 09 Aug 2024 10:08:32 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 19825348
+- current block number: 19825348
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825348 (main branch discovery), not current.
+
+```diff
+    contract AggregationRouterV4Owner (0x5E89f8d81C74E311458277EA1Be3d3247c7cd7D1) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0xB1A308e7F02798377b7acF685E997E3D774c5863","0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8","0x2BB718a3986C36c6E02D8d15cdA4370820D08169"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0xB1A308e7F02798377b7acF685E997E3D774c5863","0x3A6ED6885608Ead8174789a81Eb2B05600ca89F8","0x2BB718a3986C36c6E02D8d15cdA4370820D08169"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract PerpetualGovernanceMultisig (0xC532d2976209A56DdF4a99B844130f7c0daCa7B6) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
+      assignedPermissions.upgrade:
++        ["0xA1D5443F2FB80A5A55ac804C948B45ce4C52DCbb"]
+      values.$multisigThreshold:
+-        "2 of 2 (100%)"
+      values.getOwners:
+-        ["0x22c89137525b593Dd2A18434348b550ffA5984Fe","0xef75e1199B0599BA823b7770AcE8eb34864a1D55"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x22c89137525b593Dd2A18434348b550ffA5984Fe","0xef75e1199B0599BA823b7770AcE8eb34864a1D55"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 2 (100%)"
+    }
+```
+
 Generated with discovered.json: 0xd876b97495cd92f29c9969cd6abbb7e64b6e83c5
 
 # Diff at Thu, 18 Jul 2024 10:29:31 GMT:

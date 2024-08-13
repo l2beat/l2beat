@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20469346,
   "configHash": "0xbc9a459ceb78018e275b623a83c95165762b20ec7e4c2b1a295ea48585cc0e6a",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ZkTrueUp",
@@ -246,10 +246,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0xcbdbe6506e1cb79232f4c965204bb95931a2e6dbfe5aaf5dd3b10f93d06d404a",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44",
           "0x83d4814307088732528A53D8DF75fd6F2f5be398",
           "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d",
@@ -257,8 +254,11 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xcbdbe6506e1cb79232f4c965204bb95931a2e6dbfe5aaf5dd3b10f93d06d404a",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -274,10 +274,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0xa8d496ef58694c5b643be9bfdef2a52066c56fe63e93ee7b0d35bfd3c7385cd5",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44",
           "0x83d4814307088732528A53D8DF75fd6F2f5be398",
           "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d",
@@ -285,8 +282,11 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0xa8d496ef58694c5b643be9bfdef2a52066c56fe63e93ee7b0d35bfd3c7385cd5",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -340,10 +340,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x480cfb113268edb43ba8a78c53a4301e006ab4f5579da686448e4b18647cd2c6",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44",
           "0x83d4814307088732528A53D8DF75fd6F2f5be398",
           "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d",
@@ -351,8 +348,11 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x480cfb113268edb43ba8a78c53a4301e006ab4f5579da686448e4b18647cd2c6",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 9,
         "VERSION": "1.3.0"
       },
@@ -368,10 +368,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x06a4de0d5b7b1171090ba38e2dc6ef3c5e2c8219915ef5a272fad0d29f2a9c06",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x6Ed505e36B8ae1eC730d8b3F4E0125f0F1F78C44",
           "0x83d4814307088732528A53D8DF75fd6F2f5be398",
           "0x50E6298795C412B26e54FdD87825Bc6ffa94B80d",
@@ -379,8 +376,11 @@
           "0x871679A28adDdaB762a8C6Ff010d2D9Ffa38d348",
           "0xa7197E776F2abFCDe1Fa662aBa5A4B86a02f0F93"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x06a4de0d5b7b1171090ba38e2dc6ef3c5e2c8219915ef5a272fad0d29f2a9c06",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 5,
         "VERSION": "1.3.0"
       },
@@ -842,7 +842,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

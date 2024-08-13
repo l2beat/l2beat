@@ -26,10 +26,7 @@ export abstract class ManagedChildIndexer extends ChildIndexer {
   constructor(public readonly options: ManagedChildIndexerOptions) {
     const logger = options.logger.tag(options.tag)
     super(logger, options.parents, options)
-    this.indexerId = options.name
-    if (options.tag) {
-      this.indexerId += `::${options.tag}`
-    }
+    this.indexerId = Indexer.createId(options.name, options.tag)
     assertUniqueIndexerId(this.indexerId)
   }
 

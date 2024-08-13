@@ -3,7 +3,7 @@
   "chain": "optimism",
   "blockNumber": 122295641,
   "configHash": "0xef4a8d9fc64cd6cb4841c2f2a5a158c30e7d525c846e6834ae078ffc5521512d",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "FPValidator",
@@ -29,10 +29,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xfb1bffC9d739B8D520DaF37dF666da4C687191EA",
-        "$multisigThreshold": "2 of 6 (33%)",
-        "domainSeparator": "0x3f2a130cb1407023e2fca39835115b4a69b3357e73a73b29fabcb127ee007bd1",
-        "getChainId": 10,
-        "getOwners": [
+        "$members": [
           "0x9F403140Bc0574D7d36eA472b82DAa1Bbd4eF327",
           "0xe095F2590eF1Ab39601445025847Ed8E4B40D687",
           "0xBb6633cc267951E938F9B6421E4F54aa5b2c1936",
@@ -40,8 +37,11 @@
           "0x67FC8c432448f9a8d541C17579EF7a142378d5aD",
           "0xf1f5E3777a3ADBe6f3289AD6b21eae6427dfb553"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x3f2a130cb1407023e2fca39835115b4a69b3357e73a73b29fabcb127ee007bd1",
+        "getChainId": 10,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 6 (33%)",
         "nonce": 120,
         "VERSION": "1.3.0"
       },
@@ -65,7 +65,7 @@
       "name": "ProxyAdmin",
       "address": "0x38dE71124f7a447a01D67945a51eDcE9FF491251",
       "assignedPermissions": {
-        "admin": ["0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"]
+        "upgrade": ["0x81E792e5a9003CC1C8BF5569A00f34b65d75b017"]
       },
       "sinceTimestamp": 1647317044,
       "values": {
@@ -1430,7 +1430,7 @@
       "name": "ProxyAdmin",
       "address": "0x967bAf657ec4d4b1cb00b06f7Cc6E8BA604e3AC8",
       "assignedPermissions": {
-        "admin": ["0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f"]
+        "upgrade": ["0xA0Cc33Dd6f4819D473226257792AFe230EC3c67f"]
       },
       "sinceTimestamp": 1661447982,
       "values": {
@@ -1796,7 +1796,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

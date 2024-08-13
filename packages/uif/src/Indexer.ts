@@ -37,6 +37,10 @@ export abstract class Indexer {
       maxTimeoutMs: 60 * 1000,
     })
 
+  static createId(name: string, tag: string | undefined): string {
+    return tag === undefined ? name : `${name}::${tag}`
+  }
+
   /**
    * Initializes the indexer. It should return a height that the indexer has
    * synced up to. If the indexer has not synced any data, it should return
@@ -334,7 +338,7 @@ export abstract class Indexer {
   // #region Root methods
 
   private async executeTick(): Promise<void> {
-    this.logger.debug('Ticking')
+    this.logger.info('Ticking')
     try {
       const safeHeight = await this.tick()
       this.dispatch({ type: 'TickSucceeded', safeHeight })

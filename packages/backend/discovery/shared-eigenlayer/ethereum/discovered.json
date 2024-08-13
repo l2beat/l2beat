@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19925898,
   "configHash": "0xc23e741729cca75ecb7c0995d99dee62c5adaaa0f0fd1168cc77b702dbe85ae4",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "DepositContract",
@@ -290,15 +290,15 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "1 of 2 (50%)",
-        "domainSeparator": "0xbc80366740d76b8af95de2e845557588b8a3dc40db68b5b15b8f1cb36a4c7e45",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xA6Db1A8C5a981d1536266D2a393c5F8dDb210EAF",
           "0xFEA47018D632A77bA579846c840d5706705Dc598"
         ],
-        "getThreshold": 1,
+        "$threshold": 1,
+        "domainSeparator": "0xbc80366740d76b8af95de2e845557588b8a3dc40db68b5b15b8f1cb36a4c7e45",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "1 of 2 (50%)",
         "nonce": 10,
         "VERSION": "1.3.0"
       },
@@ -333,7 +333,7 @@
       "name": "ProxyAdmin",
       "address": "0x3f5Ab2D4418d38568705bFd6672630fCC3435CC9",
       "assignedPermissions": {
-        "admin": ["0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"]
+        "upgrade": ["0x83E9115d334D248Ce39a6f36144aEaB5b3456e75"]
       },
       "sinceTimestamp": 1710958955,
       "values": {
@@ -550,7 +550,7 @@
       "name": "ProxyAdmin",
       "address": "0x8b9566AdA63B64d1E1dcF1418b43fd1433b72444",
       "assignedPermissions": {
-        "admin": [
+        "upgrade": [
           "0x0Fe4F44beE93503346A3Ac9EE5A26b130a5796d6",
           "0x135DDa560e946695d6f155dACaFC6f1F25C1F5AF",
           "0x13760F50a9d7377e4F20CB8CF9e4c26586c658ff",
@@ -829,7 +829,7 @@
       "name": "ProxyAdmin",
       "address": "0xB8915E195121f2B5D989Ec5727fd47a5259F1CEC",
       "assignedPermissions": {
-        "admin": ["0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"]
+        "upgrade": ["0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83"]
       },
       "sinceTimestamp": 1697499563,
       "values": {
@@ -847,10 +847,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 7 (57%)",
-        "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x065Ed65389c6EC785cD89fcb2e6A7547761eBeA4",
           "0x7cF4888613F744aB4f3bD688eF54E6B31F92A09B",
           "0x76d3A362313BAd49B6380B75aB7fC142a3EFf835",
@@ -859,8 +856,11 @@
           "0x68a9Ed81BD90c07bA87072fd8055BC54BeAb3B36",
           "0xb82C36F6C5a3CD345C0954d90c68e26528014aDD"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x1402d1fac147648503e0981151b32afe3fec9a5207c84371b09867cbdc7a67a2",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 7 (57%)",
         "nonce": 24,
         "VERSION": "1.3.0"
       },
@@ -876,10 +876,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "3 of 6 (50%)",
-        "domainSeparator": "0x34c8be0f1205a420b291c5ce97375b669d2d120e32d7aa5ea9f2497a0fbcc3e2",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0xa2425B00F9A9457AEdd51d4C36d9917eA1Aa7a02",
           "0xb7Ae34BB33da55f12797e793E01e63a17B11d108",
           "0x27ff193A6A1574A611E21c39FDA636fA1d61ba30",
@@ -887,8 +884,11 @@
           "0xeD7Ef087d1C01ecCA9a9688a44aaeDDEf4ea560E",
           "0xe7fFd467F7526abf9c8796EDeE0AD30110419127"
         ],
-        "getThreshold": 3,
+        "$threshold": 3,
+        "domainSeparator": "0x34c8be0f1205a420b291c5ce97375b669d2d120e32d7aa5ea9f2497a0fbcc3e2",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "3 of 6 (50%)",
         "nonce": 39,
         "VERSION": "1.3.0"
       },
@@ -999,10 +999,7 @@
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "9 of 13 (69%)",
-        "domainSeparator": "0x80ea1f4244338ed9d96d172e60fd4459f4a8237651f29e743de9096eefa5c0fa",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x17919FAC7024d5b770322E5Cb81607D247654116",
           "0x34C37613e1680efD9e203C979658e1d058b4B2BC",
           "0x72Ff26D9517324eEFA89A48B75c5df41132c4f54",
@@ -1017,8 +1014,11 @@
           "0x6A662c5DdCe0b76BD081b8A4ec3A4F8a671b0b1f",
           "0x33E816008E7bc7798A73d0eaa640CC24f34d1626"
         ],
-        "getThreshold": 9,
+        "$threshold": 9,
+        "domainSeparator": "0x80ea1f4244338ed9d96d172e60fd4459f4a8237651f29e743de9096eefa5c0fa",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "9 of 13 (69%)",
         "nonce": 4,
         "VERSION": "1.3.0"
       },
@@ -2003,7 +2003,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

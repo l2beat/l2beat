@@ -30,10 +30,10 @@ export interface ConfigFeatures {
   gitcoinOption: boolean
   hiringBadge: boolean
   buildAllProjectPages: boolean
-  costsPage: boolean
   tvl: boolean
   layer3sTvl: boolean
   badges: boolean
+  l2costs: boolean
 }
 
 export interface ConfigBackend {

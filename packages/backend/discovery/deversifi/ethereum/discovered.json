@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 19825372,
   "configHash": "0xec73bf7b47e1c44e88f45136b1cdd18abc4541fb1f612fcbcab34490c60deff7",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "Committee",
@@ -131,17 +131,14 @@
         "This Multisig itself is one of the two Governors, the other being an EOA, both equally permissioned to upgrade the bridge."
       ],
       "assignedPermissions": {
-        "admin": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
+        "upgrade": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1683214307,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "4 of 6 (67%)",
-        "domainSeparator": "0x00e7276e9f285a9b73208ee52227fedeba51adac2fc7b3bb3b5c2a78ea7234df",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x94aa58E38ac22518Cf0E267cd062Ed7E78eA958E",
           "0x478615F37FcCB0DF69C191a8674233f6899D092e",
           "0x0fa6bf3377Cfa276d9d7122c09C187e5e8ef1C59",
@@ -149,8 +146,11 @@
           "0x445EEDE2681116Dd94C8D5Bfab73283B3ef1f6f3",
           "0xe0fE5b38C52A83308bEC9242d768441025DBB4D8"
         ],
-        "getThreshold": 4,
+        "$threshold": 4,
+        "domainSeparator": "0x00e7276e9f285a9b73208ee52227fedeba51adac2fc7b3bb3b5c2a78ea7234df",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "4 of 6 (67%)",
         "nonce": 23,
         "VERSION": "1.3.0"
       },
@@ -173,7 +173,7 @@
     {
       "address": "0x3a74010f2b37C02A249bd539EaE6b90Ba7CcD8aA",
       "assignedPermissions": {
-        "admin": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
+        "upgrade": ["0x5d22045DAcEAB03B158031eCB7D9d06Fad24609b"]
       }
     },
     { "address": "0x3Bf2562178eA0CeF6B3F66D971494d65561EFD36" },
@@ -599,7 +599,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

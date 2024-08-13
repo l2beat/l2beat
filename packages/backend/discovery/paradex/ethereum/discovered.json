@@ -3,7 +3,7 @@
   "chain": "ethereum",
   "blockNumber": 20420390,
   "configHash": "0x762971154db7098aa282de45a263463872ec729b207c21c5002056300a160230",
-  "version": 10,
+  "version": 11,
   "contracts": [
     {
       "name": "ParadexImplementationGovernorMultisig",
@@ -11,25 +11,25 @@
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
       "assignedPermissions": {
-        "admin": ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
+        "upgrade": ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
       },
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1704291371,
       "values": {
         "$immutable": false,
         "$implementation": "0xd9Db270c1B5E3Bd161E8c8503c55cEABeE709552",
-        "$multisigThreshold": "2 of 5 (40%)",
-        "domainSeparator": "0x9bbbe1c3f31b5879894b5efd7e825b6185426f8e8859a7ad70d4d0c32cdde81b",
-        "getChainId": 1,
-        "getOwners": [
+        "$members": [
           "0x64F4396bb0669C72858Cc50C779b48EB25F45770",
           "0x2871B956bC19D25961E9a7519f32D7fDaA21B403",
           "0x804d60CB1ade94511f7915A2062948685Ca8C81f",
           "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6",
           "0x59232aC80E6d403b6381393e52f4665ECA328558"
         ],
-        "getThreshold": 2,
+        "$threshold": 2,
+        "domainSeparator": "0x9bbbe1c3f31b5879894b5efd7e825b6185426f8e8859a7ad70d4d0c32cdde81b",
+        "getChainId": 1,
         "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 5 (40%)",
         "nonce": 10,
         "VERSION": "1.3.0"
       },
@@ -160,7 +160,7 @@
     {
       "address": "0x2E6fe05FE3f9a6622092Fd75439D53f01eb8A74f",
       "assignedPermissions": {
-        "admin": ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
+        "upgrade": ["0xF338cad020D506e8e3d9B4854986E0EcE6C23640"]
       }
     },
     { "address": "0x59232aC80E6d403b6381393e52f4665ECA328558" },
@@ -170,7 +170,7 @@
     {
       "address": "0xa1F2ecaC6E3E593ED58B9ac5fa4B97962892E77c",
       "assignedPermissions": {
-        "admin": ["0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"]
+        "upgrade": ["0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3"]
       }
     },
     { "address": "0xBF6aAc7Ae78B351180AD42b3dc5087eAd886B4A6" },
@@ -417,7 +417,7 @@
     ]
   },
   "usedTemplates": {
-    "GnosisSafe": "0x823d9bb52bd0e7a9dfeeece48e618be135caafb55759baf679e645906cd76f24"
+    "GnosisSafe": "0x55dd1039f19d840b39ef504eac8a631b912d707343588aed9ac96bd4e874f837"
   },
   "shapeFilesHash": "0xd03139725da7a90ddc934f324db29bfdcf99b30f55f1e1e28ed09af948c5cf67"
 }

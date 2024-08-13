@@ -680,6 +680,7 @@ export const zksyncera: Layer2 = {
               mainArithmetization: 'Plonk',
               mainPCS: 'KZG',
               trustedSetup: 'Aztec ceremony',
+              link: 'https://github.com/matter-labs/era-zkevm_test_harness/blob/v1.5.0/circuit_definitions/src/circuit_definitions/aux_layer/wrapper.rs',
             },
             {
               name: 'Aggregation circuit',

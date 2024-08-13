@@ -52,17 +52,20 @@ async function main() {
     const [
       tvlApiResponse,
       excludedTokensTvlApiResponse,
+      l2CostsApiResponse,
       activityApiResponse,
       tvlBreakdownApiResponse,
       livenessApiResponse,
       implementationChange,
-      l2CostsApiResponse,
     ] = await Promise.all([
       fetchTvlApi(config.backend, http, { tvl: config.features.tvl }),
       fetchTvlApi(config.backend, http, {
         tvl: config.features.tvl,
         excludeAssociatedTokens: true,
       }),
+      config.features.l2costs
+        ? fetchL2CostsApi(config.backend, http)
+        : undefined,
       config.features.activity
         ? fetchActivityApi(config.backend, http)
         : undefined,
@@ -74,9 +77,6 @@ async function main() {
         : undefined,
       config.features.implementationChange
         ? fetchImplementationChangeReport(config.backend, http)
-        : undefined,
-      config.features.costsPage
-        ? fetchL2CostsApi(config.backend, http)
         : undefined,
     ])
     const supportedChains = getChainNames(

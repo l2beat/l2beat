@@ -1,3 +1,70 @@
+Generated with discovered.json: 0x494b122c9ae1fdf5d29f87d59e7d30e0e4e2c2fe
+
+# Diff at Mon, 12 Aug 2024 13:10:57 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@bafa261ae877bba9966845f4d250f5cbb9d4f6d2 block: 20331848
+- current block number: 20512741
+
+## Description
+
+cBridge bridge contracts were paused for a couple minutes, the guards were set to a 'relaxed' state before the bridge was unpaused again.
+
+## Watched changes
+
+```diff
+    contract Sentinel (0xF140024969F6c76494a78518D9a99c8776B55f70) {
+    +++ description: The Sentinel is itself a Governor and Pauser in the bridge contracts. It allows additional Sentinel-Governors to make changes in its name that can be restricted by Guards changing the Sentinel's relaxed state.
++++ description: Number of relaxed guards in the Sentinel.
+      values.numRelaxedGuards:
+-        0
++        2
++++ description: An unrelaxed Sentinel allows only parameter changes in the Bridge that would make it more secure (decrease limits, increase delay period etc.)
++++ severity: MEDIUM
+      values.relaxed:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0x05aa959093f9614cbf4724ee062b9db6fe434070
+
+# Diff at Fri, 09 Aug 2024 10:09:03 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20331848
+- current block number: 20331848
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20331848 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x520d812604E7b2ce71819FDBFE9aC40E56327F8f) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
+      assignedPermissions.upgrade:
++        ["0x4066D196A423b2b3B8B054f4F40efB47a74E200C"]
+    }
+```
+
+```diff
+    contract SentinelProxyAdmin (0x8E339115b295DeD49880eA62C1F06d1dbec3496b) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
+      assignedPermissions.upgrade:
++        ["0xF140024969F6c76494a78518D9a99c8776B55f70"]
+    }
+```
+
 Generated with discovered.json: 0x01d6f87c761817ffb94b950acac1fbcaff902d90
 
 # Diff at Tue, 30 Jul 2024 11:11:20 GMT:
