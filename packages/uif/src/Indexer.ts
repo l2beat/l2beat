@@ -338,7 +338,7 @@ export abstract class Indexer {
   // #region Root methods
 
   private async executeTick(): Promise<void> {
-    this.logger.debug('Ticking')
+    this.logger.info('Ticking')
     try {
       const safeHeight = await this.tick()
       this.dispatch({ type: 'TickSucceeded', safeHeight })
