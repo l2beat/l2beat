@@ -28,7 +28,7 @@ export interface Config {
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
   readonly activity: ActivityConfig | false
-  readonly activity2: ActivityConfig | false
+  readonly activity2: Activity2Config | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
   readonly lzOAppsEnabled: boolean
@@ -159,6 +159,21 @@ export interface ActivityConfig {
   readonly projectsExcludedFromAPI: string[]
   readonly allowedProjectIds?: string[]
   readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
+}
+
+export interface Activity2Config {
+  readonly starkexApiKey: string
+  readonly starkexCallsPerMinute: number
+  readonly projectsExcludedFromAPI: string[]
+  readonly allowedProjectIds?: string[]
+  readonly projects: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    explorerApi?: {
+      url: string
+      type: 'etherscan' | 'blockscout'
+    }
+  }[]
 }
 
 export interface MetricsAuthConfig {

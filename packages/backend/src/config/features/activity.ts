@@ -21,10 +21,20 @@ export function getProjectsWithActivity() {
         defaultUrl: 'https://eth-mainnet.alchemyapi.io/v2/demo',
         startBlock: 8929324,
       } as ScalingProjectTransactionApi,
+      explorerApi: {
+        type: 'etherscan',
+        url: 'https://api.etherscan.io/api',
+      },
     },
     ...projects.flatMap((x) =>
       x.config.transactionApi
-        ? [{ id: x.id, transactionApi: x.config.transactionApi }]
+        ? [
+            {
+              id: x.id,
+              transactionApi: x.config.transactionApi,
+              explorerApi: x.chainConfig?.explorerApi,
+            },
+          ]
         : [],
     ),
   ]
