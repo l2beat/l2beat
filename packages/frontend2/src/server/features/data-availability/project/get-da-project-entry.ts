@@ -7,13 +7,13 @@ import { getImplementationChangeReport } from '../../implementation-change-repor
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getDaRisks } from '../utils/get-da-risks'
+import { kindToType } from '../utils/kind-to-layer-type'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
-import { getDaRisks } from '../utils/get-da-risks'
-import { kindToType } from '../utils/kind-to-layer-type'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)

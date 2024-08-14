@@ -5,10 +5,8 @@ import { EM_DASH } from '~/app/_components/nav/consts'
 import { Skeleton } from '~/app/_components/skeleton'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import {
-  type CostsUnit,
-  type ScalingCostsEntry,
-} from '~/server/features/scaling/get-scaling-costs-entries'
+import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
@@ -33,6 +31,7 @@ type CostsAvailableData = {
   unit: CostsUnit
   syncStatus: SyncStatus
 }
+
 type CostsNotAvailableData = {
   type: 'not-available'
   reason: 'loading' | 'coming-soon' | 'no-per-tx-metric' | 'no-data'

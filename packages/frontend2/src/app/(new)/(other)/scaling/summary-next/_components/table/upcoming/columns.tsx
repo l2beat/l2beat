@@ -6,7 +6,7 @@ import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
+} from '~/server/features/scaling/summary/types'
 
 const columnHelper = createColumnHelper<
   ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
