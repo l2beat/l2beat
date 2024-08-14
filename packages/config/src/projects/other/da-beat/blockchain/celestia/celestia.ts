@@ -32,14 +32,14 @@ export const celestia: DaLayer = {
   technology: `
     ## Consensus
     Celestia uses CometBTF, the canonical implementation of Tendermint consensus protocol. The consensus protocol is fork-free by construction under an honest majority of stake assumption.
-    Celestia achieves finality at each block, with a minimum time between blocks of 12s.
+    Celestia achieves finality at each block, with an average time between blocks of 12 seconds.
     ## Blobs
     In Celestia, blobs are user-submitted data which does not modify the blockchain state.  
     Each blob has two components, one is a binary object of raw data bytes, the other is the namespaceID of the specific application for which the blob data is intended for.\n
     
     ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)
 
-    All data posted in a Celesita blob is divided into chunks of fixed-size, called shares, and each blobs is arranged in a k * k matrix of shares.\n
+    All data posted in a Celestia blob is divided into chunks of fixed size, called shares, and each blob is arranged in a k * k matrix of shares.\n
 
     ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)
 
@@ -78,15 +78,17 @@ export const celestia: DaLayer = {
   }),
   /*
     Node params sources:
-    - unbondingPeriod, block times (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
+    - unbondingPeriod, finality (time_iota_ms): https://celestiaorg.github.io/celestia-app/specs/params.html
     - pruningWindow: https://github.com/celestiaorg/CIPs/blob/main/cips/cip-4.md
+    - block time: https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/consensus_consts.go
+    - max block size: (DefaultMaxBytes) https://github.com/celestiaorg/celestia-app/blob/main/pkg/appconsts/initial_consts.go
   */
   consensusAlgorithm: {
     name: 'CometBFT',
     description: `CometBFT is the canonical implementation of the Tendermint consensus algorithm.
     CometBFT allows for a state transition machine to be written in any programming language, and it allows for secure replication across many machines.
     The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
-    blockTime: 12, // seconds
+    blockTime: 15, // goal block time, seconds 
     consensusFinality: 1, // 1 second for tendermint, time_iota_ms
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
   },
