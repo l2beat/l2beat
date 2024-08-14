@@ -4,14 +4,12 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import {
-  TypeCell,
-  TypeExplanationTooltip,
-} from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/summary/types'
-import { TotalCell } from '../total-cell'
+import { TypeExplanationTooltip } from '~/app/_components/table/cells/type-cell'
+import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import { formatNumber } from '~/utils/format-number'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingArchivedColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -70,16 +68,18 @@ export const scalingArchivedColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <span className="px-5">${formatNumber(value.breakdown.total)}</span>
+      )
     },
     meta: {
       headClassName: 'justify-end',
@@ -88,5 +88,4 @@ export const scalingArchivedColumns = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor('provider', {}),
 ]

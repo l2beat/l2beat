@@ -7,7 +7,11 @@ import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
  */
 export const knownCookies = {
   // Chart range used for preloads.
-  summaryChartRange: knownCookie('summary-chart-range', TvlChartRange, '1y'),
+  scalingSummaryChartRange: knownCookie(
+    'scaling-summary-chart-range',
+    TvlChartRange,
+    '1y',
+  ),
   costsChartRange: knownCookie('costs-chart-range', CostsTimeRange, '30d'),
 } satisfies Record<string, KnownCookie>
 

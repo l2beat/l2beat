@@ -1,21 +1,29 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { useMemo } from 'react'
+import {
+  useScalingFilter,
+  useScalingFilterValues,
+} from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-time-range-controls'
 import { Chart } from '~/app/_components/chart/core/chart'
+import { useChartLoading } from '~/app/_components/chart/core/chart-loading-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
-import { getEntriesByDays } from '~/app/_components/chart/utils/get-entries-by-days'
+import { mapMilestones } from '~/app/_components/chart/utils/map-milestones'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
+import { INFINITY } from '~/consts/characters'
+import { useCookieState } from '~/hooks/use-cookie-state'
+import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { type TvlCharts } from '~/server/features/scaling/tvl/utils/get-tvl'
-import { getTvlWithChange } from '~/server/features/scaling/tvl/utils/get-tvl-with-change'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { type TvlLayer2ProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
+import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
+import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
-import { useChartLoading } from './core/chart-loading-context'
-import { mapMilestones } from './utils/map-milestones'
 
 interface TvlChartPointData {
   timestamp: number
@@ -24,44 +32,70 @@ interface TvlChartPointData {
 }
 
 interface Props {
-  data: TvlCharts
   milestones: Milestone[]
   tag?: string
+  entries: ScalingSummaryEntry[]
 }
 
-export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
-  const [timeRange, setTimeRange] = useLocalStorage(`${tag}-time-range`, '30d')
+export function SummaryTvlChart({
+  milestones,
+  entries,
+  tag = 'summary',
+}: Props) {
+  const filters = useScalingFilterValues()
+  const includeFilter = useScalingFilter()
+  const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
+
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const mappedMilestones = mapMilestones(milestones)
-  const dataInRange = getEntriesByDays(toDays(timeRange), data, {
-    trimLeft: true,
-  })
-  const rangeStart = dataInRange[0]?.[0]
-  const rangeEnd = dataInRange[dataInRange.length - 1]?.[0]
-  assert(
-    rangeStart !== undefined && rangeEnd !== undefined,
-    'Programmer error: rangeStart and rangeEnd are undefined',
-  )
-
-  const columns = dataInRange.map((d) => {
-    const timestamp = d[0]
-    const usdValue = d[1]
-    const ethValue = d[5]
+  const chartDataType = useMemo<TvlLayer2ProjectFilter>(() => {
+    if (filters.isEmpty) {
+      return { type: 'layer2' }
+    }
 
     return {
-      values: [{ value: unit === 'usd' ? usdValue : ethValue }],
-      data: {
-        timestamp,
-        usdValue,
-        ethValue,
-      },
-      milestone: mappedMilestones[timestamp],
+      type: 'projects',
+      projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
+  }, [entries, filters, includeFilter])
+
+  const scalingSummaryQuery = api.scaling.summary.chart.useQuery({
+    range: timeRange,
+    excludeAssociatedTokens: filters.excludeAssociatedTokens,
+    ...chartDataType,
   })
 
-  const { tvl, tvlWeeklyChange } = getTvlWithChange(data, unit)
+  const { data } = scalingSummaryQuery
+
+  const mappedMilestones = mapMilestones(milestones)
+
+  const rangeStart = data?.[0]?.[0] ?? 0
+  const rangeEnd = data?.[data.length - 1]?.[0] ?? 1
+
+  const columns =
+    data?.map((d) => {
+      const timestamp = d[0]
+      const usdSum = d.slice(1, 4).reduce((a, b) => a + b, 0)
+      const ethPrice = d[4]
+      const usdValue = usdSum / 100
+      const ethValue = usdSum / ethPrice
+
+      return {
+        values: [{ value: unit === 'usd' ? usdValue : ethValue }],
+        data: {
+          timestamp,
+          usdValue,
+          ethValue,
+        },
+        milestone: mappedMilestones[timestamp],
+      }
+    }) ?? []
+
+  const firstValue = columns[0]?.values[0]?.value
+  const lastValue = columns[columns.length - 1]?.values[0]!.value ?? undefined
+  const change =
+    lastValue && firstValue ? lastValue / firstValue - 1 : undefined
 
   return (
     <ChartProvider
@@ -81,7 +115,12 @@ export function TvlChart({ data, milestones, tag = 'summary' }: Props) {
       renderHoverContents={(data) => <ChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
-        <Header unit={unit} value={tvl} weeklyChange={tvlWeeklyChange} />
+        <Header
+          unit={unit}
+          value={lastValue}
+          change={change}
+          range={timeRange}
+        />
         <ChartTimeRangeControls
           value={timeRange}
           setValue={setTimeRange}
@@ -132,13 +171,22 @@ function ChartHover({ data }: { data: TvlChartPointData }) {
 function Header({
   unit,
   value,
-  weeklyChange,
+  change,
+  range,
 }: {
   unit: string
-  value: number
-  weeklyChange: string
+  value?: number
+  change?: number
+  range: TvlChartRange
 }) {
   const loading = useChartLoading()
+
+  const changeOverTime =
+    range === 'max' ? (
+      INFINITY
+    ) : change ? (
+      <PercentChange value={change} />
+    ) : null
 
   return (
     <header className="flex flex-col justify-between text-base md:flex-row">
@@ -150,22 +198,21 @@ function Header({
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
+        <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
+          {!value || loading ? (
+            <Skeleton className="h-6 w-32" />
+          ) : (
+            formatCurrency(value, unit, {
+              showLessThanMinimum: false,
+            })
+          )}
+        </p>
         {loading ? (
-          <>
-            <Skeleton className="h-9 w-[124px]" />
-            <Skeleton className="h-6 w-[119px]" />
-          </>
+          <Skeleton className="h-6 w-40" />
         ) : (
-          <>
-            <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
-              {formatCurrency(value, unit, {
-                showLessThanMinimum: false,
-              })}
-            </p>
-            <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
-              <PercentChange value={weeklyChange} /> / 7 days
-            </p>
-          </>
+          <p className="whitespace-nowrap text-right text-xs font-bold md:text-base">
+            {changeOverTime} / {tvlRangeToReadable(range)}
+          </p>
         )}
       </div>
       <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
@@ -184,9 +231,9 @@ function UnitAndScaleControls({
   setUnit: (value: 'usd' | 'eth') => void
   setScale: (value: string) => void
 }) {
-  const loading = useChartLoading()
+  const isClient = useIsClient()
 
-  if (loading) {
+  if (!isClient) {
     return (
       <div className="flex items-center justify-between gap-2">
         <Skeleton className="h-8 w-[104.82px]" />
@@ -194,7 +241,6 @@ function UnitAndScaleControls({
       </div>
     )
   }
-
   return (
     <div className="flex items-center justify-between gap-2">
       <RadioGroup value={unit} onValueChange={setUnit}>
@@ -209,12 +255,17 @@ function UnitAndScaleControls({
   )
 }
 
-function toDays(value: string) {
-  if (value.endsWith('d')) {
-    return parseInt(value.slice(0, -1))
-  } else if (value.endsWith('y')) {
-    return parseInt(value.slice(0, -1)) * 365
-  } else {
-    return Infinity
+function tvlRangeToReadable(range: TvlChartRange) {
+  if (range === 'max') {
+    return 'All time'
   }
+  const number = range.slice(0, -1)
+  const plural = number !== '1'
+  if (range.endsWith('d')) {
+    return `${number} ${plural ? 'days' : 'day'}`
+  }
+  if (range.endsWith('y')) {
+    return `${number} ${plural ? 'years' : 'year'}`
+  }
+  throw new Error('Invalid range')
 }

@@ -114,7 +114,7 @@
 }
 
 .mdc img {
-  @apply dark:invert inline max-w-full align-[unset];
+  @apply dark:invert max-w-full align-[unset] my-4;
 }
 
 .mdc.zk-description h1 {

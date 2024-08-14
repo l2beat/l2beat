@@ -7,10 +7,10 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/summary/types'
 import { TotalCell } from '../total-cell'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer3sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const summaryLayer3sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -70,16 +70,23 @@ export const summaryLayer3sColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <TotalCell
+          associatedTokenSymbols={value.associatedTokens}
+          tvlWarnings={value.warnings}
+          breakdown={value.breakdown}
+          change={value.change}
+        />
+      )
     },
     sortUndefined: 'last',
     meta: {

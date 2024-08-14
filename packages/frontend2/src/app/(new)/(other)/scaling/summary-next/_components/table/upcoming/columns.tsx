@@ -6,14 +6,9 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
-import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/summary/types'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<
-  ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
->()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingUpcomingColumns = [
   columnHelper.accessor((_, index) => index + 1, {
