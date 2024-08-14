@@ -36,29 +36,35 @@ export const scalingTvlCokumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
-  columnHelper.accessor('tvl', {
-    id: 'total',
-    header: 'Total',
-    cell: (ctx) => {
-      const value = ctx.getValue()
-      if (!value.breakdown) {
-        return <UpcomingBadge />
-      }
 
-      return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
-        />
-      )
-    },
-    sortUndefined: 'last',
-    meta: {
-      align: 'center',
-      tooltip: 'Total = Canonical + External + Native',
-    },
+  columnHelper.group({
+    id: 'data',
+    header: undefined,
+    columns: [
+      columnHelper.accessor('tvl', {
+        id: 'total',
+        header: 'Total',
+        cell: (ctx) => {
+          const value = ctx.getValue()
+          if (!value.breakdown) {
+            return <UpcomingBadge />
+          }
+          return (
+            <TotalCell
+              associatedTokenSymbols={value.associatedTokens}
+              tvlWarnings={value.warnings}
+              breakdown={value.breakdown}
+              change={value.change}
+            />
+          )
+        },
+        sortUndefined: 'last',
+        meta: {
+          align: 'center',
+          tooltip: 'Total = Canonical + External + Native',
+        },
+      }),
+    ],
   }),
   columnHelper.accessor('tvl', {
     id: 'canonical',
