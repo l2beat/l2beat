@@ -18,7 +18,7 @@ import { type ProjectDetailsSection } from '../types'
 interface Project {
   title: string
   showProjectUnderReview?: boolean
-  icon: string | undefined
+  slug: string
 }
 interface ProjectNavigationProps {
   project: Project
@@ -59,11 +59,11 @@ export function DesktopProjectNavigation({
           )}
         >
           <div className="flex flex-row items-center gap-4">
-            {project.icon && (
+            {project.slug && (
               <Image
                 width={32}
                 height={32}
-                src={project.icon}
+                src={`/icons/${project.slug}.png`}
                 alt={`${project.title} logo`}
               />
             )}

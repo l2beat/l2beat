@@ -37,7 +37,7 @@ export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
             <DesktopProjectNavigation
               project={{
                 title: daProjectEntry.name,
-                icon: daProjectEntry.iconSrc,
+                slug: daLayer.display.slug,
                 showProjectUnderReview: daProjectEntry.isUnderReview,
               }}
               sections={daProjectEntry.projectDetails}

@@ -2,7 +2,7 @@ import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
 import { getProjectDetails } from '~/app/(legacy)/data-availability/projects/[layer]/_utils/get-project-details'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/app/_components/rosette/types'
-import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
@@ -45,7 +45,6 @@ export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
     name: daLayer.display.name,
     slug: daLayer.display.slug,
     type: kindToType(daLayer.kind),
-    iconSrc: `/icons/${daLayer.display.slug}.png`,
     description: `${daLayer.display.description} ${daBridge.display.description}`,
     isUnderReview: daLayer.isUnderReview,
     isUpcoming: daLayer.isUpcoming,
@@ -87,7 +86,10 @@ function getHeader({
 }: HeaderParams) {
   return {
     rosetteValues,
-    links: getProjectLinks(daLayer.display.links, daBridge.display.links),
+    links: getDataAvailabilityProjectLinks(
+      daLayer.display.links,
+      daBridge.display.links,
+    ),
     tvs,
     economicSecurity,
     durationStorage:
