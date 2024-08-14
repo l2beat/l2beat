@@ -8,10 +8,11 @@ import { getImplementationChangeReport } from '../implementation-change-report/g
 import { toAnomalyIndicatorEntries } from '../liveness/get-anomaly-entries'
 import { getLiveness } from '../liveness/get-liveness'
 import { type LivenessProject } from '../liveness/types'
-import { getLatestTvlUsd } from '../tvl/get-latest-tvl-usd'
-import { orderByTvl } from '../tvl/order-by-tvl'
+
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from './get-common-scaling-entry'
+import { getLatestTvlUsd } from './tvl/utils/get-latest-tvl-usd'
+import { orderByTvl } from './tvl/utils/order-by-tvl'
 
 export async function getScalingLivenessEntries() {
   const [
