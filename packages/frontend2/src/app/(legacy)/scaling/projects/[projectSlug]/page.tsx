@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { ProjectHeader } from '~/app/_components/projects/project-header'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
+import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
 
 const scalingProjects = [...layer2s, ...layer3s]
 
@@ -28,16 +29,21 @@ export default function Page({ params }: Props) {
   }
 
   const projectEntry = getScalingProjectEntry(project)
-
+  const isNavigationEmpty = false
   return (
     <>
-      <header className="flex w-full flex-wrap divide-y divide-gray-200 pt-6 dark:divide-gray-850 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:pb-4 max-md:dark:bg-zinc-900 md:gap-4 md:divide-y-0">
+      {!isNavigationEmpty && (
+        <div className="sticky top-0 z-100 -mx-4 md:hidden">
+          <MobileProjectNavigation sections={projectEntry.projectDetails} />
+        </div>
+      )}
+      <header className="pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:pb-4 max-md:dark:bg-zinc-900">
         <ProjectHeader
           title={projectEntry.name}
           src={`/icons/${projectEntry.slug}.png`}
         />
-        <ScalingProjectSummary project={projectEntry} />
       </header>
+      <ScalingProjectSummary project={projectEntry} />
     </>
   )
 }

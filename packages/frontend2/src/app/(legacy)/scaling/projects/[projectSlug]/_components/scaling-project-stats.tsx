@@ -21,8 +21,12 @@ export function ScalingProjectStats({ project }: Props) {
   return (
     <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
       <ProjectStat title="Tokens" value={<></>} />
-      <ProjectStat title="Daily TPS" value={<></>} />
-      <ProjectStat title="30D tx count" value={<></>} />
+      <ProjectStat
+        title="Daily TPS"
+        tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
+        value={<></>}
+      />
+      <ProjectStat title="30D tx count" tooltip="" value={<></>} />
       <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
       <ProjectStat
         title="Stage"

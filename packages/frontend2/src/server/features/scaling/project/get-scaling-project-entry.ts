@@ -22,6 +22,7 @@ export function getScalingProjectEntry(project: ScalingProject) {
             stage: 'NotApplicable' as const,
           },
     header: getHeader(project),
+    projectDetails: [],
   }
 }
 

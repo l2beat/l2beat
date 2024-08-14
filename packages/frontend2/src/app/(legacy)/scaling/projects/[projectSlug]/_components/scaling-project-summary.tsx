@@ -17,12 +17,14 @@ export function ScalingProjectSummary({ project }: Props) {
       className="max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
       <div className="flex gap-10">
-        <div className="flex w-full flex-col gap-4">
+        <div className="w-full space-y-4">
           {project.description && (
             <div className="md:hidden">
               <AboutSection description={project.description} />
             </div>
           )}
+          <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
+
           <div className="my-2 max-md:hidden">
             <DesktopProjectLinks projectLinks={project.header.links} />
           </div>
