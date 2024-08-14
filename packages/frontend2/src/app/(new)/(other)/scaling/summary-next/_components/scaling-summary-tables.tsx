@@ -24,7 +24,6 @@ import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
-import { ScalingLegend } from './table/layer2s/legend'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
 
@@ -180,7 +179,6 @@ export function ScalingSummaryTables({ projects }: Props) {
         </OverflowWrapper>
         <TabsContent value="layer2s">
           <BasicTable table={layer2sTable} />
-          <ScalingLegend />
         </TabsContent>
         <TabsContent value="layer3s">
           <BasicTable table={layer3sTable} />

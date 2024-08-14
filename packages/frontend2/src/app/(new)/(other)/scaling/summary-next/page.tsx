@@ -32,18 +32,11 @@ export default async function Page() {
 
   return (
     <HydrateClient>
-      <div className="mb-20">
-        <ScalingFilterContextProvider>
-          <SummaryTvlChart
-            milestones={HOMEPAGE_MILESTONES}
-            entries={projects}
-          />
-          <HorizontalSeparator className="my-4 md:my-6" />
-          <ScalingSummaryTables projects={projects} />
-        </ScalingFilterContextProvider>
-        <OtherSites />
-        <About />
-      </div>
+      <ScalingFilterContextProvider>
+        <SummaryTvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
+        <HorizontalSeparator className="my-4 md:my-6" />
+        <ScalingSummaryTables projects={projects} />
+      </ScalingFilterContextProvider>
     </HydrateClient>
   )
 }
