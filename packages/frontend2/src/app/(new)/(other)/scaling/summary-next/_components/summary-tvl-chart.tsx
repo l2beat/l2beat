@@ -10,6 +10,7 @@ import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-t
 import { Chart } from '~/app/_components/chart/core/chart'
 import { useChartLoading } from '~/app/_components/chart/core/chart-loading-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
+import { mapMilestones } from '~/app/_components/chart/utils/map-milestones'
 import { INFINITY } from '~/app/_components/nav/consts'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
@@ -67,7 +68,7 @@ export function SummaryTvlChart({
 
   const { data } = scalingSummaryQuery
 
-  const mappedMilestones = getMilestones(milestones)
+  const mappedMilestones = mapMilestones(milestones)
 
   const rangeStart = data?.[0]?.[0] ?? 0
   const rangeEnd = data?.[data.length - 1]?.[0] ?? 1
@@ -252,15 +253,6 @@ function UnitAndScaleControls({
       </RadioGroup>
     </div>
   )
-}
-
-function getMilestones(milestones: Milestone[]): Record<number, Milestone> {
-  const result: Record<number, Milestone> = {}
-  for (const milestone of milestones) {
-    const timestamp = Math.floor(new Date(milestone.date).getTime() / 1000)
-    result[timestamp] = milestone
-  }
-  return result
 }
 
 function tvlRangeToReadable(range: TvlChartRange) {
