@@ -1,5 +1,5 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { getDaRiskEntries } from '~/server/features/data-availability/get-da-risk-entries'
+import { getDaRiskEntries } from '~/server/features/data-availability/risks/get-da-risk-entries'
 import { DaRiskTable } from './_components/table/da-risk-table'
 
 export default async function Page() {

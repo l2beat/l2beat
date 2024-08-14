@@ -52,7 +52,6 @@ export class RpcClient {
       start,
       end,
       this.getBlock.bind(this),
-      this.logger,
     )
   }
 

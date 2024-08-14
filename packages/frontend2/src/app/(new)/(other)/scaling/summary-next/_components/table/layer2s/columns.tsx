@@ -8,7 +8,7 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { StageCell } from '~/app/_components/table/cells/stage/stage-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/summary/types'
 import { formatPercent } from '~/utils/get-percentage-change'
 import { TotalCell } from '../total-cell'
 

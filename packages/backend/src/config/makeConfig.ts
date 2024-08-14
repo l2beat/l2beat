@@ -15,6 +15,10 @@ import {
   getChainActivityConfig,
   getProjectsWithActivity,
 } from './features/activity'
+import {
+  getChainActivityBlockExplorerConfig,
+  getProjectsWithActivity2,
+} from './features/activity2'
 import { getFinalityConfigurations } from './features/finality'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
@@ -193,9 +197,13 @@ export function makeConfig(
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
-      projects: getProjectsWithActivity()
+      projects: getProjectsWithActivity2()
         .filter((x) => flags.isEnabled('activity2', x.id.toString()))
-        .map((x) => ({ id: x.id, config: getChainActivityConfig(env, x) })),
+        .map((x) => ({
+          id: x.id,
+          config: getChainActivityConfig(env, x),
+          blockExplorerConfig: getChainActivityBlockExplorerConfig(env, x),
+        })),
     },
     verifiers: flags.isEnabled('verifiers'),
     lzOAppsEnabled: flags.isEnabled('lzOApps'),

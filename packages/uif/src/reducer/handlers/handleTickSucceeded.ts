@@ -26,6 +26,7 @@ export function handleTickSucceeded(
       safeHeight: action.safeHeight,
       height: action.safeHeight,
       invalidateToHeight: action.safeHeight,
+      tickBlocked: false,
     },
     effects,
   ]

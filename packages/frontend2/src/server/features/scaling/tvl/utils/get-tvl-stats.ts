@@ -1,7 +1,7 @@
 import { type TvlApiToken } from '@l2beat/shared-pure'
 import { type TokenBreakdownProps } from '~/app/_components/breakdown/token-breakdown'
 import { getPercentageChange } from '~/utils/get-percentage-change'
-import { type TvlProject } from '../get-tvl'
+import { type TvlProject } from './get-tvl'
 import { getTvlBreakdown } from './get-tvl-breakdown'
 
 export type TvlStats = {

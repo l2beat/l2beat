@@ -1,7 +1,7 @@
 {
   "name": "edgeless",
   "chain": "ethereum",
-  "blockNumber": 20318530,
+  "blockNumber": 20525344,
   "configHash": "0x1f243a5e1d3277e8e7739a9e1d7b4a34603291801a7775009e8b3f14dc07e7d0",
   "version": 11,
   "contracts": [
@@ -104,7 +104,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 4 (75%)",
-        "nonce": 1,
+        "nonce": 2,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -166,12 +166,12 @@
           "0xFa213CdA43f879FfaF17170B6E3b3AbE9900cAB1"
         ],
         "allowedOutboxList": ["0x5e8749760c5051fF80b73319cCf4d05ef9959563"],
-        "delayedMessageCount": 455,
+        "delayedMessageCount": 458,
         "nativeToken": "0xcD0aa40948c662dEDd9F157085fd6369A255F2f7",
         "rollup": "0x890025891508a463A636f81D2f532a97210240de",
         "sequencerInbox": "0xFfbf2b49524e09B1F1fBcA707B830e79c68c2086",
-        "sequencerMessageCount": 204,
-        "sequencerReportedSubMessageCount": 1370
+        "sequencerMessageCount": 207,
+        "sequencerReportedSubMessageCount": 1376
       },
       "derivedName": "ERC20Bridge"
     },
@@ -219,12 +219,12 @@
         "confirmPeriodBlocks": 45818,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 200,
-        "firstUnresolvedNode": 184,
+        "firstUnresolvedNode": 187,
         "inbox": "0xf51551afD112a50Fc5EDa0454111078fE6E6096E",
         "isERC20Enabled": false,
         "lastStakeBlock": 19487060,
-        "latestConfirmed": 183,
-        "latestNodeCreated": 183,
+        "latestConfirmed": 186,
+        "latestNodeCreated": 186,
         "loserStakeEscrow": "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461",
         "minimumAssertionPeriod": 75,
         "outbox": "0x5e8749760c5051fF80b73319cCf4d05ef9959563",
@@ -380,7 +380,7 @@
         "owner": "0xcB58d1142e53e37aDE44E1F125248FbfAc99352A",
         "pendingOwner": "0x0000000000000000000000000000000000000000",
         "stakingManager": "0x1e6d08769be5Dc83d38C64C5776305Ad6F01c227",
-        "underlyingAssetAmount": "20470696001041829857",
+        "underlyingAssetAmount": "20392799085513298021",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "derivedName": "EthStrategy"
@@ -407,10 +407,7 @@
           },
           "EXECUTOR_ROLE": {
             "adminRole": "ADMIN_ROLE",
-            "members": [
-              "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461",
-              "0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4"
-            ]
+            "members": ["0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4"]
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
@@ -430,7 +427,7 @@
         "minter": "0x7E0bc314535f430122caFEF18eAbd508d62934bf",
         "name": "Edgeless Wrapped Eth",
         "symbol": "ewEth",
-        "totalSupply": "20701900771985588236"
+        "totalSupply": "20582330771985588239"
       },
       "derivedName": "WrappedToken"
     },
@@ -480,7 +477,7 @@
       "values": {
         "$admin": "0x48E84C45fE99859B1D72FA56Ce5D3c76FF2F7006",
         "$implementation": "0x873484Ba63353C8b71210ce123B465512d408B27",
-        "batchCount": 204,
+        "batchCount": 207,
         "batchPosters": ["0x4e4aC6F04106964b5B69FDA5EcC207295bCae81f"],
         "bridge": "0x6B595398152999bBc759D5D8ed8169793F915488",
         "dacKeyset": { "requiredSignatures": 1, "membersCount": 1 },
@@ -497,7 +494,7 @@
         "rollup": "0x890025891508a463A636f81D2f532a97210240de",
         "sequencerVersion": "0x88",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 454
+        "totalDelayedMessagesRead": 457
       },
       "fieldMeta": {
         "maxTimeVariation": {

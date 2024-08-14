@@ -1,5 +1,6 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { PERFORMED_BY } from './common'
+import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
 
 export const worldcoinsemaphore: ZkCatalogProject = {
@@ -23,10 +24,7 @@ export const worldcoinsemaphore: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Semaphore30',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'PPOT 14 + circuit specific',
+            ...PROOFS.GROTH16('PPOT14'),
             link: 'https://github.com/semaphore-protocol/semaphore/blob/v2.0.0/circuits/semaphore.circom',
           },
         ],
@@ -44,10 +42,7 @@ export const worldcoinsemaphore: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Semaphore30',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'PPOT 14 + circuit specific',
+            ...PROOFS.GROTH16('PPOT14'),
             link: 'https://github.com/semaphore-protocol/semaphore/blob/v2.0.0/circuits/semaphore.circom',
           },
         ],

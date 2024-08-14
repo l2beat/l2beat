@@ -5,7 +5,7 @@ import {
   type DaLayer,
   type DaLayerRisks,
 } from '@l2beat/config'
-import { type EconomicSecurityData } from './get-da-project-economic-security'
+import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
 
 export function getDaRisks(
   daLayer: DaLayer,

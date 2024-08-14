@@ -1,5 +1,5 @@
 import { getPercentageChange } from '~/utils/get-percentage-change'
-import { type TvlCharts } from '../get-tvl'
+import { type TvlCharts } from './get-tvl'
 
 export function getTvlWithChange(
   charts: TvlCharts | undefined,

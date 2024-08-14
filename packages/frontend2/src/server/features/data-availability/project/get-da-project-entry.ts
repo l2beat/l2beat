@@ -2,18 +2,18 @@ import { type DaBridge, type DaLayer, getDaProjectKey } from '@l2beat/config'
 import { getProjectDetails } from '~/app/(legacy)/data-availability/projects/[layer]/_utils/get-project-details'
 import { mapRisksToRosetteValues } from '~/app/(new)/data-availability/_utils/map-risks-to-rosette-values'
 import { type RosetteValue } from '~/app/_components/rosette/types'
-import { getDataAvailabilityProjectLinks } from '~/utils/project/get-project-links'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { getContractsVerificationStatuses } from '../verification-status/get-contracts-verification-statuses'
-import { getManuallyVerifiedContracts } from '../verification-status/get-manually-verified-contracts'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
+import { getProjectLinks } from '~/utils/project/get-project-links'
+import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
+import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getDaRisks } from '../utils/get-da-risks'
+import { kindToType } from '../utils/kind-to-layer-type'
 import {
   type EconomicSecurityData,
   getDaProjectEconomicSecurity,
 } from './utils/get-da-project-economic-security'
 import { getDaProjectTvl } from './utils/get-da-project-tvl'
-import { getDaRisks } from './utils/get-da-risks'
-import { kindToType } from './utils/kind-to-layer-type'
 
 export async function getDaProjectEntry(daLayer: DaLayer, daBridge: DaBridge) {
   const economicSecurity = await getDaProjectEconomicSecurity(daLayer)
@@ -87,10 +87,7 @@ function getHeader({
 }: HeaderParams) {
   return {
     rosetteValues,
-    links: getDataAvailabilityProjectLinks(
-      daLayer.display.links,
-      daBridge.display.links,
-    ),
+    links: getProjectLinks(daLayer.display.links, daBridge.display.links),
     tvs,
     economicSecurity,
     durationStorage:

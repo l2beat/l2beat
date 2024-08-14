@@ -6,7 +6,7 @@ import { HighlightableLinkContextProvider } from '~/app/_components/link/highlig
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
 import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
 import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
-import { getDaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
+import { getDaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { DaProjectSummary } from '../_components/da-project-summary'
 
 interface Props {
