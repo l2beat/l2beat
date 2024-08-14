@@ -44,7 +44,9 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
     },
   },
   technology:
-    'Some note about the technology used by the bridge.\n## Markdown supported',
+  `
+    The BlobstreamX bridge is a data availability bridge that allows data commitments to be bridged between Celestia and Arbitrum.
+  `,
   contracts: {
     addresses: [
       discovery.getContractDetails('BlobstreamX', {
