@@ -1,5 +1,7 @@
 import React from 'react'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
+import { Skeleton } from '~/app/_components/skeleton'
+import { useIsClient } from '~/hooks/use-is-client'
 import { type LivenessTimeRange } from '~/server/features/liveness/types'
 
 interface Props {
@@ -8,6 +10,12 @@ interface Props {
 }
 
 export function LivenessTimeRangeControls({ timeRange, setTimeRange }: Props) {
+  const isClient = useIsClient()
+
+  if (!isClient) {
+    return <Skeleton className="h-8 w-[156px]" />
+  }
+
   return (
     <RadioGroup value={timeRange} onValueChange={setTimeRange}>
       <RadioGroupItem value="30d">30D</RadioGroupItem>

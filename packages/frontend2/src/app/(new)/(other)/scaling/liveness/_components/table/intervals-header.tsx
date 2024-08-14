@@ -1,13 +1,26 @@
 import { type LivenessTimeRange } from '~/server/features/liveness/types'
 import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
+import { useIsClient } from '~/hooks/use-is-client'
+import { Skeleton } from '~/app/_components/skeleton'
 
 interface Props {
   average?: boolean
 }
 
 export function IntervalsHeader({ average }: Props) {
+  const isClient = useIsClient()
   const { timeRange } = useLivenessTimeRangeContext()
-  return `${rangeToLabel(timeRange)}${average ? ' average' : ''} intervals`
+
+  if (!isClient) {
+    return <Skeleton className="mb-[5px] h-[19px] w-[225px]" />
+  }
+
+  return (
+    <span>
+      {rangeToLabel(timeRange)}
+      {average ? ' average' : ''} intervals
+    </span>
+  )
 }
 
 function rangeToLabel(range: LivenessTimeRange) {

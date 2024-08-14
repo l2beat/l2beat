@@ -15,11 +15,19 @@ import { SyncStatusWrapper } from '../../../finality/_components/table/sync-stat
 import { LivenessDurationCell } from '../liveness-duration-cell'
 import { IntervalsHeader } from './intervals-header'
 import { type ScalingLivenessTableEntry } from './to-table-entry'
+import { useIsClient } from '~/hooks/use-is-client'
+import { Skeleton } from '~/app/_components/skeleton'
 
 export function LivenessIntervalCell(props: {
   entry: ScalingLivenessTableEntry
   dataType: TrackedTxsConfigSubtype
 }) {
+  const isClient = useIsClient()
+
+  if (!isClient) {
+    return <Skeleton className="h-6 w-[100px]" />
+  }
+
   const data = props.entry.data?.[props.dataType]
   const durationInSeconds = data?.averageInSeconds
   const syncStatus = props.entry.data?.syncStatus
@@ -55,6 +63,7 @@ export function LivenessIntervalCell(props: {
         {syncStatus && !syncStatus.isSynced && (
           <>
             <span className="whitespace-pre text-balance font-medium">
+              Values have not been synced since{'\n'}
               {formatTimestamp(syncStatus.syncedUntil, {
                 mode: 'datetime',
                 longMonthName: true,
@@ -83,9 +92,7 @@ function LivenessTooltip(props: {
 }) {
   return (
     <div className="font-medium">
-      <span>
-        <IntervalsHeader />
-      </span>
+      <IntervalsHeader />
       <ul className="mt-1 list-inside list-disc">
         <li className="flex justify-between gap-4">
           Minimum:
