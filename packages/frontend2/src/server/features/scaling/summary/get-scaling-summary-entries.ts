@@ -2,10 +2,10 @@ import { layer2s, layer3s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
-import { get7dTvlBreakdown } from '../tvl/utils/get-7d-tvl-breakdown'
-import { orderByTvl } from '../tvl/utils/order-by-tvl'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { get7dTvlBreakdown } from '../tvl/utils/get-7d-tvl-breakdown'
+import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()

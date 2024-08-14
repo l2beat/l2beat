@@ -1,7 +1,7 @@
 import { z } from 'zod'
-import { procedure, router } from '../../trpc'
-import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { getScalingSummaryChartData } from '~/server/features/scaling/tvl/utils/get-scaling-summary-chart-data'
+import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
+import { procedure, router } from '../../trpc'
 
 export const summaryRouter = router({
   chart: procedure
