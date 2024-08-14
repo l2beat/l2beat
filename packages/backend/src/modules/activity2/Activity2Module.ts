@@ -84,6 +84,12 @@ function createActivityIndexers(
 
   const indexers: ActivityIndexer[] = [dayTargetIndexer]
 
+  const numberOfStarkexProjects =
+    activityConfig.projects.filter((p) => p.config.type === 'starkex').length ||
+    1
+  const singleStarkexCPM =
+    activityConfig.starkexCallsPerMinute / numberOfStarkexProjects
+
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
       case 'rpc': {
@@ -222,7 +228,7 @@ function createActivityIndexers(
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
-          batchSize: 10,
+          batchSize: getBatchSizeFromCallsPerMinute(singleStarkexCPM),
           minHeight:
             project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
           uncertaintyBuffer: project.config.resyncLastDays,
