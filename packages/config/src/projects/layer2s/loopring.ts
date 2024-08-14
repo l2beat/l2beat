@@ -19,9 +19,9 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
-import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 
 const discovery = new ProjectDiscovery('loopring')
 const forcedWithdrawalDelay = discovery.getContractValue<{

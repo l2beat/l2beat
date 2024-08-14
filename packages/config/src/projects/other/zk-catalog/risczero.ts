@@ -1,6 +1,6 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
-import { ZkCatalogProject } from './types'
 import { PROOFS } from './common/proofSystems'
+import { ZkCatalogProject } from './types'
 
 export const risczero: ZkCatalogProject = {
   display: {

@@ -1,7 +1,7 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { PERFORMED_BY } from './common'
-import { ZkCatalogProject } from './types/ZkCatalogProject'
 import { PROOFS } from './common/proofSystems'
+import { ZkCatalogProject } from './types/ZkCatalogProject'
 
 export const worldcoinsemaphore: ZkCatalogProject = {
   display: {
