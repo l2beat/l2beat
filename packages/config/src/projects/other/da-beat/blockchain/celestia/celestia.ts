@@ -39,7 +39,7 @@ export const celestia: DaLayer = {
     
     ![Blobs](/images/da-layer-technology/celestia/blobs.png#center)\n
 
-    All data posted in a Celesita blob is divided into chunks of fixed-size, called shares, and each blobs is arranged k * k matrix of shares.\n
+    All data posted in a Celesita blob is divided into chunks of fixed-size, called shares, and each blobs is arranged in a k * k matrix of shares.\n
 
     ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)\n
 
