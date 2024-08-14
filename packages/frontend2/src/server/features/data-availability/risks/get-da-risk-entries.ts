@@ -1,13 +1,13 @@
 import { daLayers, getDaProjectKey } from '@l2beat/config'
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { toDaBridge } from './utils/get-da-bridge'
-import { getUniqueProjectsInUse } from './utils/get-da-projects'
-import { getDaProjectsEconomicSecurity } from './utils/get-da-projects-economic-security'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { toDaBridge } from '../utils/get-da-bridge'
+import { getUniqueProjectsInUse } from '../utils/get-da-projects'
+import { getDaProjectsEconomicSecurity } from '../utils/get-da-projects-economic-security'
 import {
   getDaProjectsTvl,
   pickTvlForProjects,
-} from './utils/get-da-projects-tvl'
-import { getDaRisks } from './utils/get-da-risks'
+} from '../utils/get-da-projects-tvl'
+import { getDaRisks } from '../utils/get-da-risks'
 
 export async function getDaRiskEntries() {
   const economicSecurity = await getDaProjectsEconomicSecurity()

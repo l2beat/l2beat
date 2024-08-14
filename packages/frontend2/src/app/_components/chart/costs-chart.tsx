@@ -11,8 +11,10 @@ import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { type CostsChartResponse } from '~/server/features/costs/types'
-import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
+import {
+  type CostsChartResponse,
+  type CostsUnit,
+} from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/format'

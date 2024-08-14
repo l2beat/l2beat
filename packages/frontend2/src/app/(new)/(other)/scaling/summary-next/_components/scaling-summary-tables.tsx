@@ -15,7 +15,7 @@ import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
-import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import {
   useScalingFilter,
   useScalingFilterValues,

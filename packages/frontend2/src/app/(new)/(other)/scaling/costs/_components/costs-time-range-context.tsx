@@ -2,7 +2,7 @@
 
 import { createContext, useContext } from 'react'
 import { useCookieState } from '~/hooks/use-cookie-state'
-import { type CostsTimeRange } from '~/server/features/costs/utils/range'
+import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 
 type CostsTimeRangeContextValue = {
   range: CostsTimeRange

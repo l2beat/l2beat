@@ -1,5 +1,5 @@
 import { useCostsMetricContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-metric-context'
-import { type CostsTimeRange } from '~/server/features/costs/utils/range'
+import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { ChartTimeRangeControls } from './chart-time-range-controls'
 
 interface Props {

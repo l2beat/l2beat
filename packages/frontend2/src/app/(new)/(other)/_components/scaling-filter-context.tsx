@@ -15,11 +15,11 @@ import {
   useMemo,
   useState,
 } from 'react'
+import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
-import { type ScalingCostsEntry } from '~/server/features/scaling/get-scaling-costs-entries'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
-import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
-import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
+import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean

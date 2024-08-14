@@ -1,6 +1,6 @@
 import { type ZodTypeAny, type z } from 'zod'
-import { CostsTimeRange } from '~/server/features/costs/utils/range'
-import { TvlChartRange } from '~/server/features/tvl/range'
+import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
 /**
  * Known cookie definitions.
