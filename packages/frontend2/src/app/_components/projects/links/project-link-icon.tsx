@@ -17,19 +17,19 @@ export interface LinkNameIconProps {
 export function ProjectLinkIcon({ name }: LinkNameIconProps) {
   switch (name) {
     case 'Website':
-      return <GlobeIcon />
+      return <GlobeIcon className="size-4" />
     case 'App':
-      return <AppIcon />
+      return <AppIcon className="size-4" />
     case 'Docs':
-      return <DocumentIcon />
+      return <DocumentIcon className="size-4" />
     case 'Explorer':
-      return <SearchIcon />
+      return <SearchIcon className="size-4" />
     case 'Repository':
-      return <CodeIcon />
+      return <CodeIcon className="size-4" />
     case 'Social':
-      return <UserIcon />
+      return <UserIcon className="size-4" />
     case 'rollup.codes':
-      return <RollupCodesIcon />
+      return <RollupCodesIcon className="size-4" />
     default:
       assertUnreachable(name)
   }

@@ -1,61 +1,11 @@
-import { type Stage, type StageConfig } from '@l2beat/config'
-import React from 'react'
-
-import { useBreakpoint } from '~/hooks/use-is-mobile'
 import InfoIcon from '~/icons/info.svg'
 import MissingIcon from '~/icons/missing.svg'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import UnderReviewIcon from '~/icons/under-review.svg'
-import { StageBadge } from '../../badge/stage-badge'
-import { Callout } from '../../callout'
-import { Tooltip, TooltipContent, TooltipTrigger } from '../../tooltip/tooltip'
-import { WarningBar } from '../../warning-bar'
-
-export interface StageCellProps {
-  stageConfig: StageConfig
-}
-
-export function StageCell({ stageConfig }: StageCellProps) {
-  const breakpoint = useBreakpoint()
-  const isMobile = breakpoint === 'mobile'
-
-  if (stageConfig.stage === 'NotApplicable') {
-    return <StageBadge stage={stageConfig.stage} oneSize />
-  }
-
-  if (isMobile) {
-    return (
-      <StageBadge
-        stage={stageConfig.stage}
-        icon={
-          stageConfig.stage !== 'UnderReview'
-            ? stageConfig.message?.type
-            : undefined
-        }
-        oneSize
-      />
-    )
-  }
-
-  return (
-    <Tooltip>
-      <TooltipTrigger>
-        <StageBadge
-          stage={stageConfig.stage}
-          icon={
-            stageConfig.stage !== 'UnderReview'
-              ? stageConfig.message?.type
-              : undefined
-          }
-          oneSize
-        />
-      </TooltipTrigger>
-      <TooltipContent>
-        <StageTooltip stageConfig={stageConfig} />
-      </TooltipContent>
-    </Tooltip>
-  )
-}
+import { type Stage, type StageConfig } from '@l2beat/config'
+import { StageBadge } from '~/app/_components/badge/stage-badge'
+import { Callout } from '~/app/_components/callout'
+import { WarningBar } from '~/app/_components/warning-bar'
 
 export interface StageTooltipProps {
   stageConfig: StageConfig

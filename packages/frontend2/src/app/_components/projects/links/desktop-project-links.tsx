@@ -37,7 +37,7 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
           className="flex flex-row items-center gap-1.5"
         >
           <ProjectLinkIcon name={projectLink.name} />
-          {projectLink.name} <OutlinkIcon className="fill-current" />
+          {projectLink.name} <OutlinkIcon className="size-4 fill-current" />
         </PlainLink>
       </div>
     )
@@ -49,10 +49,10 @@ function ProjectLinkItem({ projectLink }: { projectLink: ProjectLink }) {
 function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
   return (
     <Popover>
-      <PopoverTrigger className="group bg-gray-100 text-xs font-medium data-[state=open]:bg-gray-200 dark:bg-zinc-900 dark:data-[state=open]:bg-zinc-700">
+      <PopoverTrigger className="group bg-gray-100 px-2 py-1.5 text-xs font-medium data-[state=open]:bg-gray-200 dark:bg-zinc-900 dark:data-[state=open]:bg-zinc-700">
         <ProjectLinkIcon name={projectLink.name} />
         {projectLink.name}{' '}
-        <ChevronIcon className="fill-current transition-transform duration-200 ease-out group-data-[state=open]:-rotate-180" />
+        <ChevronIcon className="size-3 fill-current transition-transform duration-200 ease-out group-data-[state=open]:-rotate-180" />
       </PopoverTrigger>
       <PopoverContent align="start" className="bg-gray-100 dark:bg-zinc-900">
         {projectLink.links.map((link) => {
@@ -72,7 +72,7 @@ function MultiProjectLink({ projectLink }: { projectLink: ProjectLink }) {
                 />
               )}
               {parsedSocial ? parsedSocial.text : formatLink(link)}
-              <OutlinkIcon className="fill-current" />
+              <OutlinkIcon className="size-4 fill-current" />
             </PlainLink>
           )
         })}
