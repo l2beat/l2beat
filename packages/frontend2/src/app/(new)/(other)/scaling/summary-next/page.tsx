@@ -1,9 +1,7 @@
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { About } from '~/app/_components/about'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { OtherSites } from '~/app/_components/other-sites'
 import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
