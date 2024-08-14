@@ -68,7 +68,7 @@ export class DegateClient {
 
     const start = Date.now()
     const { httpResponse, error } = await this.httpClient
-      .fetch(url, { timeout: 10_000 })
+      .fetch(url, { timeout: 30_000 })
       .then(
         (httpResponse) => ({ httpResponse, error: undefined }),
         (error: unknown) => ({ httpResponse: undefined, error }),
