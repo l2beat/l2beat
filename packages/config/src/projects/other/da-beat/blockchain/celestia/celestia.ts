@@ -43,7 +43,7 @@ export const celestia: DaLayer = {
 
     ![Blobs matrix](/images/da-layer-technology/celestia/blobs-matrix.png#center)\n
 
-    Celestia shares rows and columns are erasure coded into a 2k * 2k matrix and committed to in a Namespace Merkle Trees (NMTs), a version of a standard Merkle tree using a namespaced hash function. 
+    Celestia shares' rows and columns are erasure coded into a 2k * 2k matrix and committed to in a Namespace Merkle Trees (NMTs), a version of a standard Merkle tree using a namespaced hash function. 
     In NMTs, every node in the tree includes the range of namespaces of all its child nodes, allowing applications to request and retrieve data for a specific namespace sub-tree while maintaining all functionalities (e.g., inclusion and range proofs) of a standard Merkle tree.\n
 
     ![Matrix proofs](/images/da-layer-technology/celestia/matrix-proofs.png#center)\n
