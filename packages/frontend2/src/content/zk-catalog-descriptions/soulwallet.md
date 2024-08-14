@@ -1,0 +1,3 @@
+Soul Wallet is a smart contract wallet for Ethereum. It uses [zkemail](https://github.com/zkemail) to enable guardians that can recover the wallet using email.
+
+The Github of the project can be found [here](https://github.com/SoulWallet). In particular, the circuits code used by the email approver module can be found [here](https://github.com/SoulWallet/email-approver/tree/v1.0.0). The circuit is written in Circom and the proof system used is Groth16. The phase 1 trusted setup used is [POT22](https://pse-trusted-setup-ppot.s3.eu-central-1.amazonaws.com/pot28_0080/ppot_0080_22.ptau). The phase 2 contributions can be found in the email-approver repo.

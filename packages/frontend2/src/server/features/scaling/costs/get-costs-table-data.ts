@@ -3,11 +3,10 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
-import { type SyncStatus } from '~/types/sync-status'
+import { type SyncStatus } from '../../../../types/sync-status'
 import { getLatestActivityForProjects } from '../activity/get-activity-for-projects'
-import { type CostsUnit } from '../scaling/get-scaling-costs-entries'
 import { getCostsForProjects } from './get-costs-for-projects'
-import { type LatestCostsProjectResponse } from './types'
+import { type CostsUnit, type LatestCostsProjectResponse } from './types'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange } from './utils/range'
 

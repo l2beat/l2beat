@@ -4,7 +4,7 @@ import {
   unstable_noStore as noStore,
 } from 'next/cache'
 import { db } from '~/server/database'
-import { sumValuesPerSource } from '../../tvl/sum-values-per-source'
+import { sumValuesPerSource } from '../../../scaling/tvl/utils/sum-values-per-source'
 
 export async function getDaProjectTvl(projectIds: ProjectId[]) {
   noStore()

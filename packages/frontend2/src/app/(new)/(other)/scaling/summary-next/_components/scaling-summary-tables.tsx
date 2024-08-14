@@ -15,7 +15,7 @@ import { useTable } from '~/hooks/use-table'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
+} from '~/server/features/scaling/summary/types'
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingFilters } from '../../../_components/scaling-filters'
 import { scalingArchivedColumns } from './table/archived/columns'

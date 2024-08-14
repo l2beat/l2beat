@@ -1,7 +1,7 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 20482283,
+  "blockNumber": 20518997,
   "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
   "version": 11,
   "contracts": [
@@ -16,7 +16,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "120475768056812415353704222",
+        "totalSupply": "120549472971837176894373138",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -82,7 +82,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1723101035,
+        "getCurrentTime": 1723543595,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -140,11 +140,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1723101035,
+        "getCurrentTime": 1723543595,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1478646,
+        "numberOfDeposits": 1485201,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -162,7 +162,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1723101035,
+        "getCurrentTime": 1723543595,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -216,7 +216,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 4 (50%)",
-        "nonce": 695,
+        "nonce": 696,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -281,7 +281,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1723101035,
+        "getCurrentTime": 1723543595,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -334,7 +334,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 236,
+        "nonce": 242,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -396,7 +396,7 @@
           "137": "0x9295ee1d8C5b022Be115A2AD3c30C72E34e7F096",
           "288": "0xBbc6009fEfFc27ce705322832Cb2068F8C1e0A58",
           "324": "0xE0B015E54d54fc84a6cB9B666099c46adE9335FF",
-          "690": "0x28077B47Cd03326De7838926A63699849DD4fa87",
+          "690": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97",
           "1135": "0x9552a0a6624A23B848060AE5901659CDDa1f83f8",
           "8453": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64",
           "34443": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
@@ -415,13 +415,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xc9194e3a92d71eff5b7beb2c76feadad60b4d61982db4fe03379b3d3dcc53418",
-          "relayerRefundRoot": "0xc0bcbdfdc1712f9831c214fa0057a9080a94561f4b160d69ec5b6ea00d991194",
+          "poolRebalanceRoot": "0xe104d7bd059efac2a0c496ee143cd9c73a96e6924ae64ade01b266249390d71f",
+          "relayerRefundRoot": "0x0b440522a1722025c25d6b98bf6ede091d6ed1ed889e094328e6b18269788a03",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
           "unclaimedPoolRebalanceLeafCount": 10,
-          "challengePeriodEndTimestamp": 1723101731
+          "challengePeriodEndTimestamp": 1723546115
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -571,8 +571,8 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x09aea4b2242abC8bb4BB78D537A67a245A7bEC64" },
+    { "address": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97" },
     { "address": "0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05" },
-    { "address": "0x28077B47Cd03326De7838926A63699849DD4fa87" },
     { "address": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1" },
     { "address": "0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5" },
     { "address": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96" },

@@ -1,3 +1,36 @@
+Generated with discovered.json: 0x202698101e977c3a33e24d85257db8d4fc2d0a62
+
+# Diff at Tue, 13 Aug 2024 11:18:48 GMT:
+
+- author: Bartek Kiepuszewski (<bkiepuszewski@gmail.com>)
+- comparing to: main@925407501fd3d01acc73c6851abc4b5c56e2e056 block: 20490461
+- current block number: 20519354
+
+## Description
+
+Nothing significant has changed, likely a small upgrade to the circuit
+
+## Watched changes
+
+```diff
+    contract Verifier (0x6BCe7408c0781dcE7b71494274302D4b75a1447c) {
+    +++ description: None
+      values.$implementation:
+-        "0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9"
++        "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168"
+      values.version:
+-        "6ad34d4fc0cb1cbbed736b058d02532e881f9674"
++        "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Verifier/Verifier.sol                          | 166 ++++++++++-----------
+ 1 file changed, 83 insertions(+), 83 deletions(-)
+```
+
 Generated with discovered.json: 0x576473c0656040c6d9b2a979123507d0bb002581
 
 # Diff at Fri, 09 Aug 2024 12:10:58 GMT:

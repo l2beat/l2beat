@@ -123,6 +123,8 @@ export function BasicTable<T extends BasicEntry>({
                         groupParams.isLastInGroup &&
                         'rounded-tr-lg',
                     ],
+                    header.column.getIsPinned() &&
+                      getRowTypeClassNamesWithoutOpacity(null),
                     header.column.columnDef.meta?.headClassName,
                   )}
                   align={header.column.columnDef.meta?.align}
@@ -222,7 +224,13 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
         <td
           key={header.id}
           colSpan={header.colSpan}
-          className={cn('h-4', !header.isPlaceholder && 'rounded-b-lg')}
+          className={cn(
+            'h-4',
+            !header.isPlaceholder && 'rounded-b-lg',
+            header.column.getIsPinned() &&
+              getRowTypeClassNamesWithoutOpacity(null),
+          )}
+          style={getCommonPinningStyles(header.column)}
         />
       ))}
     </tr>
@@ -307,7 +315,7 @@ export function getRowTypeClassNames(rowType: RowType) {
       return 'dark:hover:bg-white/[0.1] hover:bg-black/[0.05] hover:shadow-sm'
   }
 }
-export function getRowTypeClassNamesWithoutOpacity(rowType: RowType) {
+export function getRowTypeClassNamesWithoutOpacity(rowType: RowType | null) {
   switch (rowType) {
     case 'ethereum':
       return 'bg-blue-400 hover:bg-blue-400 group-hover/row:bg-blue-400 border-b border-b-blue-600 dark:bg-blue-900 dark:border-b-blue-500 dark:hover:bg-blue-900 dark:group-hover/row:bg-blue-900'

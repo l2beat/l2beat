@@ -8,7 +8,7 @@ import {
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 
 const columnHelper = createColumnHelper<ScalingDataAvailabilityEntry>()
 

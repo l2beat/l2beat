@@ -12,6 +12,8 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
     const fromWithBatchSize = from + this.$.batchSize
     const adjustedTo = fromWithBatchSize < to ? fromWithBatchSize : to
 
+    this.logger.info('Fetching blocks', { from, to: adjustedTo })
+
     const counts = await this.$.txsCountProvider.getTxsCount(from, adjustedTo)
     const currentMap = await this.getDatabaseEntries(counts)
 
@@ -27,6 +29,9 @@ export class BlockActivityIndexer extends ManagedChildIndexer {
         }
       },
     )
+
+    this.logger.info('Saving records', { count: dataToSave.length })
+
     await this.$.db.activity.upsertMany(dataToSave)
 
     return adjustedTo

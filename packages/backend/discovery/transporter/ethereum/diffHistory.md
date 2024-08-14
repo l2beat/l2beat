@@ -1,3 +1,109 @@
+Generated with discovered.json: 0x9e2eba074a93d6771d86f2ac05e78ce927597cca
+
+# Diff at Tue, 13 Aug 2024 07:10:39 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@0c3cfc52a7789ce38fba0749248ace00de3fd9eb block: 20491058
+- current block number: 20518122
+
+## Description
+
+HYPE token removed from OnRamp12, its pool is not tracked anymore. Added new off ramp to LINK pool, can now receive messages from Arbitrum.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x1e28DD4b559a7fF546b1e84691129508b2C9C3D3)
+    +++ description: None
+```
+
+```diff
+    contract OnRamp12 (0x333f976915195ba9044fD0cd603cEcE936f6264e) {
+    +++ description: None
+      values.getSupportedTokens.6:
+-        "0x85225Ed797fd4128Ac45A992C46eA4681a7A15dA"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0x55562A08104837FF55E3A66c49A1419b6311c1E6)
+    +++ description: None
+```
+
+```diff
+    contract CommitStore (0x76264869a3eBF51a59FCa5ABa84ee2867c7F190e) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        2
++        3
+      values.latestConfigDetails.blockNumber:
+-        20021002
++        20493806
+      values.latestConfigDetails.configDigest:
+-        "0x000158ce8fc4a0f994dfd6e0a25592e775701df72df104097ecbf9fefb87160e"
++        "0x0001b1cfe8bb04fc64f8a2eaea578f95d8c80b17319e793a0beca378d0833dde"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LockReleaseTokenPool (0xa008534BF96b61d9D33aD64aAD463bc6D300cd91)
+    +++ description: None
+```
+
+```diff
+    contract LockReleaseTokenPool (0xC2291992A08eBFDfedfE248F2CCD34Da63570DF4) {
+    +++ description: None
+      values.getOffRamps.7:
++        "0xb368c8946D9fa5A497cDe1Dff7213f9CdfD143Bf"
+    }
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1324 --------------------
+ .../dev/null                                       | 1311 -------------------
+ .../dev/null                                       | 1324 --------------------
+ 3 files changed, 3959 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491058 (main branch discovery), not current.
+
+```diff
+    contract GnosisSafe (0xc07556a0Bd177F8de4D077f449C2653A072F3798) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 7 (43%)"
+      values.$members:
++        ["0xE0a8ABcf65e6212abFd659d5D857CFbA62a14771","0x0669d4d05Fc5bCF261DBADc3b41854a6ee7E2E85","0x5aC189Db4351787516d2E6Fc628BF762ce684326","0xBd6934b2DF4B6926FA7161f72A7DC599b9A2E581","0x53482ACf424d4196b0F8EbdD6F8A15eb8516FB88","0xcD5868dD3dEe0f0A31c38D088dd562F5d4ea2386","0xbD4dAf39E552C29648C9Ec78e2f671373b1347f2"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 7 (43%)"
+    }
+```
+
+```diff
+    contract GnosisSafe (0xD6597750bf74DCAEC57e0F9aD2ec998D837005bf) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "6 of 12 (50%)"
+      values.$members:
++        ["0x326377a6B92eC69AcbbFe2De1eB1d7c9008E4C89","0x7052cB84079905400ea52B635cAb6a275fDA8823","0xE062e7D123AC8dF480C56147f911144F55C10f88","0x41eAdbc688797a02bfaBE48472995833489ce69D","0x1c6460cfe32916196f6977b5442b0F98A826D880","0x745B9329ccF53556e3C5f1fD1E4e9D0E91Ad2514","0xAe735fd5e74887064DFf99C637f291caE5485A75","0x14a8f3B302Bbfa7F2f2AC2F4515548370bc7bAdC","0x6bfBf6BC4bc5CD20768dAA6F58f0743bAFf2e5f4","0x56B167deCD5fC4E3Bbc07B3B4e1F30e74534F9dd","0x06e5891D9b2Ee77740355A309BAF49caaB672f98","0xa42c8570771240D1e2F3211064a7C7472Cc05b7D"]
+      values.$threshold:
++        6
+      values.multisigThreshold:
++        "6 of 12 (50%)"
+    }
+```
+
 Generated with discovered.json: 0xbd6f53e4cb895e5ab8a37e811fc8f48cf455357c
 
 # Diff at Fri, 09 Aug 2024 12:32:13 GMT:

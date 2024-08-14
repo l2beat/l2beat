@@ -8,7 +8,7 @@ import {
   TypeCell,
   TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/summary/types'
 import { TotalCell } from '../total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
