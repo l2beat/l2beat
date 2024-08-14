@@ -1,4 +1,4 @@
-import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { type CostsMetric } from '../_components/costs-metric-context'

@@ -5,12 +5,10 @@ import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter
 import { ScalingFilters } from '~/app/(new)/(other)/_components/scaling-filters'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { COSTS_UPCOMING_PROJECTS } from '~/server/features/costs/consts'
-import { type CostsTableData } from '~/server/features/costs/get-costs-table-data'
-import {
-  type CostsUnit,
-  type ScalingCostsEntry,
-} from '~/server/features/scaling/get-scaling-costs-entries'
+import { COSTS_UPCOMING_PROJECTS } from '~/server/features/scaling/costs/consts'
+import { type CostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
+import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
 import {
   type CostsMetric,

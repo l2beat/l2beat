@@ -1,6 +1,6 @@
 import { layer2s } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { type FinalityProjectConfig } from './get-finality'
+import { type FinalityProjectConfig } from '../get-finality'
 
 // Backend configurations also include feature flags
 export function getFinalityConfigurations(): FinalityProjectConfig[] {
