@@ -33,6 +33,7 @@ import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
 import { StarkexTxsCountProvider } from './services/providers/StarkexTxsCountProvider'
 import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountProvider'
 import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
+import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function createActivity2Module(
   config: Config,
@@ -256,6 +257,8 @@ function createBlockBasedIndexers(
   db: Database,
   peripherals: Peripherals,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
+  assert(project.config.type !== 'starkex')
+
   let blockExplorerClient: BlockExplorerClient | undefined
 
   if (project.blockExplorerConfig) {
@@ -277,6 +280,7 @@ function createBlockBasedIndexers(
 
     blockExplorerClient = peripherals.getClient(BlockExplorerClient, options)
   }
+
   const blockTimestampProvider = new BlockTimestampProvider({
     client,
     logger: logger.tag(`activity_${project.id}`),
@@ -292,8 +296,7 @@ function createBlockBasedIndexers(
   const activityIndexer = new BlockActivityIndexer({
     logger,
     projectId: project.id,
-    // TODO: add batchSize to config
-    batchSize: 100,
+    batchSize: getBatchSizeFromCallsPerMinute(project.config.callsPerMinute),
     minHeight: 1,
     parents: [blockTargetIndexer],
     txsCountProvider,
