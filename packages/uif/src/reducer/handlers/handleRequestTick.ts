@@ -14,7 +14,7 @@ export function handleRequestTick(
     return [state, []]
   }
 
-  assertStatus(state.status, ['idle', 'ticking'])
+  assertStatus(state.status, ['init', 'idle', 'ticking'])
   if (state.status === 'ticking') {
     return [{ ...state, tickScheduled: true }, []]
   }
