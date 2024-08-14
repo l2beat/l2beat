@@ -22,6 +22,6 @@ export const muster: Layer3 = underReviewL3({
       explorers: [],
       repositories: ['https://github.com/cometh-hq'],
       socialMedia: ['https://x.com/Cometh', 'https://blog.cometh.io/'],
-    }
-  }
+    },
+  },
 })
