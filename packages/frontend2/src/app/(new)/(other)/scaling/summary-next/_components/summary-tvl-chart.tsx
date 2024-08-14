@@ -10,6 +10,7 @@ import { ChartTimeRangeControls } from '~/app/_components/chart/controls/chart-t
 import { Chart } from '~/app/_components/chart/core/chart'
 import { useChartLoading } from '~/app/_components/chart/core/chart-loading-context'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
+import { INFINITY } from '~/app/_components/nav/consts'
 import { PercentChange } from '~/app/_components/percent-change'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
@@ -17,6 +18,7 @@ import { useCookieState } from '~/hooks/use-cookie-state'
 import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { type TvlLayer2ProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
@@ -46,9 +48,7 @@ export function SummaryTvlChart({
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
 
-  const chartDataType = useMemo<
-    { type: 'layer2' } | { type: 'projects'; projectIds: string[] }
-  >(() => {
+  const chartDataType = useMemo<TvlLayer2ProjectFilter>(() => {
     if (filters.isEmpty) {
       return { type: 'layer2' }
     }
@@ -65,7 +65,7 @@ export function SummaryTvlChart({
     ...chartDataType,
   })
 
-  const data = scalingSummaryQuery.data
+  const { data } = scalingSummaryQuery
 
   const mappedMilestones = getMilestones(milestones)
 
@@ -180,11 +180,9 @@ function Header({
 }) {
   const loading = useChartLoading()
 
-  const infinity = '∞'
-
   const changeOverTime =
     range === 'max' ? (
-      infinity
+      INFINITY
     ) : change ? (
       <PercentChange value={change} />
     ) : null

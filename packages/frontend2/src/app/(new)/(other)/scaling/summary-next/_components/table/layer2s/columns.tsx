@@ -118,7 +118,7 @@ export const scalingLayer2sColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      cellClassName: 'justify-end !pr-5',
+      align: 'right',
       tooltip: 'Share of the sum of total value locked of all projects.',
     },
   }),

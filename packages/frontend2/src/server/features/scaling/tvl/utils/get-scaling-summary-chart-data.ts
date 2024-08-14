@@ -39,7 +39,7 @@ export const getCachedScalingChartData = cache(
     const projectsFilter = (() => {
       if (rest.type === 'layer2') {
         return (project: TvlProject) =>
-          ['layer2', 'layer3'].includes(project.type)
+          project.type === 'layer2' || project.type === 'layer3'
       }
 
       const projectIds = new Set(rest.projectIds)
