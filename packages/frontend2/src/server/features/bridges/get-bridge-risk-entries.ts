@@ -1,20 +1,21 @@
 import { type Bridge, type Layer2, bridges } from '@l2beat/config'
-import {
-  type ProjectId,
-  type ProjectsVerificationStatuses,
-  notUndefined,
-} from '@l2beat/shared-pure'
-import { type ImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { notUndefined } from '@l2beat/shared-pure'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
+import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
-import { orderByTvl } from '../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getDestination } from './get-destination'
 import { type BridgesRiskEntry } from './types'
 
-export async function getBridgeRiskEntries(
-  tvl: Record<ProjectId, number>,
-  implementationChangeReport: ImplementationChangeReport,
-  projectsVerificationStatuses: ProjectsVerificationStatuses,
-): Promise<BridgesRiskEntry[]> {
+export async function getBridgeRiskEntries(): Promise<BridgesRiskEntry[]> {
+  const [tvl, projectsVerificationStatuses, implementationChangeReport] =
+    await Promise.all([
+      getLatestTvlUsd(),
+      getProjectsVerificationStatuses(),
+      getImplementationChangeReport(),
+    ])
+
   const included = bridges.filter((project) => !project.isUpcoming)
   const orderedByTvl = orderByTvl(included, tvl)
 

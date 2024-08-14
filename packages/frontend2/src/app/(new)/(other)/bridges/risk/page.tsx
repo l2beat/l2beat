@@ -2,7 +2,7 @@ import { BridgesMvpWarning } from '~/app/_components/bridges-mvp-warning'
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
 import { getBridgeRiskEntries } from '~/server/features/bridges/get-bridge-risk-entries'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
-import { getLatestTvlUsd } from '~/server/features/tvl/get-latest-tvl-usd'
+import { getLatestTvlUsd } from '~/server/features/scaling/tvl/utils/get-latest-tvl-usd'
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { BridgesFilterContextProvider } from '../_components/bridges-filter-context'
@@ -17,7 +17,7 @@ export const metadata = getDefaultMetadata({
 export default async function Page() {
   const [tvl, projectsVerificationStatuses, implementationChangeReport] =
     await Promise.all([
-      getLatestTvlUsd({ type: 'bridge' }),
+      getLatestTvlUsd(),
       getProjectsVerificationStatuses(),
       getImplementationChangeReport(),
     ])
