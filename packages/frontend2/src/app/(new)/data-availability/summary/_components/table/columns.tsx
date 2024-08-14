@@ -5,7 +5,7 @@ import { PentagonRosetteCell } from '~/app/_components/rosette/pentagon/pentagon
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
-import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
+import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { formatNumber } from '~/utils/format-number'
 import { mapRisksToRosetteValues } from '../../../_utils/map-risks-to-rosette-values'
 import { DaEconomicSecurityCell } from './da-economic-security-cell'

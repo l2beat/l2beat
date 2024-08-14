@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xe9a9d7fdf87c58268c0949602f8942688583b6ab
+
+# Diff at Tue, 13 Aug 2024 10:06:57 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@8b923f6edf399d43a5cd7f331708956dce3e83d1 block: 20482283
+- current block number: 20518997
+
+## Description
+
+The Spoke pool (used for liquidity on the destination chains) was changed for the Redstone Adapter.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.CrossChainContracts.690:
+-        "0x28077B47Cd03326De7838926A63699849DD4fa87"
++        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+    }
+```
+
 Generated with discovered.json: 0x268645e90c13973d8d0e1a6b1dd839737c270f02
 
 # Diff at Fri, 09 Aug 2024 10:08:18 GMT:

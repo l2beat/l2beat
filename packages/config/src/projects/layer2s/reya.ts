@@ -1,4 +1,4 @@
-import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
@@ -44,37 +44,37 @@ export const reya: Layer2 = orbitStackL2({
     multicallContracts: [],
     minTimestampForTvl: UnixTime.fromDate(new Date('2024-04-23T00:00:00Z')),
   },
-  trackedTxs: [
-    {
-      uses: [
-        { type: 'liveness', subtype: 'batchSubmissions' },
-        { type: 'l2costs', subtype: 'batchSubmissions' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d'),
-        selector: '0x8f111f3c',
-        functionSignature:
-          'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
-        sinceTimestamp: new UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
-      },
-    },
-    // add other SC-supported function signatures here if the sequencer changes behaviour (cp. kinto)
-    {
-      uses: [
-        { type: 'liveness', subtype: 'stateUpdates' },
-        { type: 'l2costs', subtype: 'stateUpdates' },
-      ],
-      query: {
-        formula: 'functionCall',
-        address: EthereumAddress('0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9'),
-        selector: '0xa04cee60',
-        functionSignature:
-          'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
-        sinceTimestamp: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
-      },
-    },
-  ],
+  // trackedTxs: [
+  //   {
+  //     uses: [
+  //       { type: 'liveness', subtype: 'batchSubmissions' },
+  //       { type: 'l2costs', subtype: 'batchSubmissions' },
+  //     ],
+  //     query: {
+  //       formula: 'functionCall',
+  //       address: EthereumAddress('0x6CA2A628fb690Bd431F4aA608655ce37c66aff9d'),
+  //       selector: '0x8f111f3c',
+  //       functionSignature:
+  //         'function addSequencerL2BatchFromOrigin(uint256 sequenceNumber,bytes data,uint256 afterDelayedMessagesRead,address gasRefunder,uint256 prevMessageCount,uint256 newMessageCount)',
+  //       sinceTimestamp: new UnixTime(1709384519), // first tx https://etherscan.io/tx/0xd62bdb183f14756a546d9418f14a14297381ff6798252fc65129774aed9979c8
+  //     },
+  //   },
+  //   // add other SC-supported function signatures here if the sequencer changes behaviour (cp. kinto)
+  //   {
+  //     uses: [
+  //       { type: 'liveness', subtype: 'stateUpdates' },
+  //       { type: 'l2costs', subtype: 'stateUpdates' },
+  //     ],
+  //     query: {
+  //       formula: 'functionCall',
+  //       address: EthereumAddress('0x3f373b0A7DcEe7b7bCfC16DF85CfAE18388542c9'),
+  //       selector: '0xa04cee60',
+  //       functionSignature:
+  //         'function updateSendRoot(bytes32 root, bytes32 l2BlockHash) external',
+  //       sinceTimestamp: new UnixTime(1709386475), // first tx https://etherscan.io/tx/0x691c0b6d2a655764b350197d6231c4eba576140a3039e276a4884da8d7c93539
+  //     },
+  //   },
+  // ],
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
   rollupProxy: discovery.getContract('RollupProxy'),

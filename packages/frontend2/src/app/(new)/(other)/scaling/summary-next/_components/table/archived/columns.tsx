@@ -5,7 +5,7 @@ import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
+import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/summary/types'
 import { TotalCell } from '../total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()

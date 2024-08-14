@@ -1,4 +1,8 @@
-import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import {
+  ChainId,
+  EthereumAddress,
+  StringWithAutocomplete,
+} from '@l2beat/shared-pure'
 
 export interface ProofVerification {
   shortDescription?: string
@@ -36,6 +40,6 @@ export interface SubVerifier {
   proofSystem: string
   mainArithmetization: string
   mainPCS: string
-  trustedSetup?: 'None' | (string & {})
+  trustedSetup?: StringWithAutocomplete<'None'>
   link?: string
 }

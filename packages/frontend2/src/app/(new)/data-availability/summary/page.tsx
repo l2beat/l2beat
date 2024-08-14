@@ -1,5 +1,5 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { getDaSummaryEntries } from '~/server/features/data-availability/get-da-summary-entries'
+import { getDaSummaryEntries } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { DaSummaryTable } from './_components/table/da-summary-table'
 
 export default async function Page() {

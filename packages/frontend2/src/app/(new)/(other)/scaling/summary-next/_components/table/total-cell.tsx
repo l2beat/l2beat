@@ -11,7 +11,7 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import {
   type ScalingSummaryLayer2sEntry,
   type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/types'
+} from '~/server/features/scaling/summary/types'
 import { formatNumber } from '~/utils/format-number'
 
 type TotalEntry = ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry

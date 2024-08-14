@@ -10,7 +10,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
-import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
+import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
 

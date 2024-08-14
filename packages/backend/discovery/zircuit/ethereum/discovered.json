@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20490461,
+  "blockNumber": 20519354,
   "configHash": "0xad6d5e3bcf485d6dfca75ad1d5d919010760a5a1e78e71ba496385b903defcd7",
   "version": 11,
   "contracts": [
@@ -36,7 +36,7 @@
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20490344,
+          "prevBlockNum": 20519349,
           "prevTxCount": 1
         },
         "paused": false,
@@ -61,7 +61,7 @@
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292620768",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621122",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -225,8 +225,8 @@
       "sinceTimestamp": 1719936599,
       "values": {
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
-        "$implementation": "0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9",
-        "version": "6ad34d4fc0cb1cbbed736b058d02532e881f9674"
+        "$implementation": "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168",
+        "version": "0c13cfbb19b823f524a346e7ff5b352e24b8d79b"
       },
       "derivedName": "Verifier"
     },
@@ -293,10 +293,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1630794,
-        "latestOutputIndex": 4004,
-        "nextBlockNumber": 1630795,
-        "nextOutputIndex": 4005,
+        "latestBlockNumber": 1804602,
+        "latestOutputIndex": 4439,
+        "nextBlockNumber": 1804603,
+        "nextOutputIndex": 4440,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
@@ -359,7 +359,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 3 (33%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -381,10 +381,10 @@
   "eoas": [
     { "address": "0x0000000000000000000000000000000000000000" },
     { "address": "0x000000000000000000000000000000000000dEaD" },
+    { "address": "0x0C13CFBB19b823f524a346e7fF5B352e24b8d79B" },
     { "address": "0x0D5edFC67Ae336eddC91031FD6402EeAD6350CAb" },
     { "address": "0x38809210f69ed6204E276d2Be6b15cd530698679" },
     { "address": "0x62C688FCa995e07632D64A9586896BB7EcD68567" },
-    { "address": "0x6Ad34D4Fc0cB1CBbED736b058D02532E881f9674" },
     { "address": "0xAE8f771E297AAbfDE7ff35a33FB6D558f4E0a679" },
     {
       "address": "0xAF1E4f6a47af647F87C0Ec814d8032C4a4bFF145",
@@ -398,6 +398,9 @@
     { "address": "0xFF00000000000000000000000000000000048900" }
   ],
   "abis": {
+    "0x13A06FF21E46BCCd4B03E5Cb04372bB7aE7f2168": [
+      "function version() view returns (string)"
+    ],
     "0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1": [
       "constructor(address _admin)",
       "event AdminChanged(address previousAdmin, address newAdmin)",
@@ -645,9 +648,6 @@
       "function startBlock() view returns (uint256 startBlock_)",
       "function transferOwnership(address newOwner)",
       "function unsafeBlockSigner() view returns (address addr_)",
-      "function version() view returns (string)"
-    ],
-    "0xA153Ec874DaB9e6590cFcf4DC3f5bb86FfaC08B9": [
       "function version() view returns (string)"
     ],
     "0xA47314C96ab9572af656788e15143B459F99AE0f": [
