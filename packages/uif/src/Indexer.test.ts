@@ -9,6 +9,25 @@ import { RootIndexer } from './indexers/RootIndexer'
 import { IndexerAction } from './reducer/types/IndexerAction'
 
 describe(Indexer.name, () => {
+  describe('correctly initializes', () => {
+    it('dispatches Initialized if state is returned', async () => {
+      const safeHeight = 100
+      const testIndexer = new InitTestIndexer({ safeHeight })
+      await testIndexer.start()
+
+      expect(testIndexer.getState().height).toEqual(safeHeight)
+      expect(testIndexer.getState().initializedSelf).toEqual(true)
+    })
+
+    it('does not dispatch Initialized if state is undefined', async () => {
+      const testIndexer = new InitTestIndexer(undefined)
+      await testIndexer.start()
+
+      expect(testIndexer.getState().height).toEqual(0)
+      expect(testIndexer.getState().initializedSelf).toEqual(false)
+    })
+  })
+
   describe('correctly informs about updates', () => {
     it('first invalidate then parent update', async () => {
       const parent = new TestRootIndexer(0)
@@ -202,6 +221,7 @@ describe(Indexer.name, () => {
       expect(markAttempt).toHaveBeenCalledTimes(1)
       expect(shouldRetry).toHaveBeenCalledTimes(1)
       expect(root.getState().status).toEqual('idle')
+      expect(root.getState().tickBlocked).toEqual(true)
 
       await clock.tickAsync(1000)
 
@@ -210,6 +230,7 @@ describe(Indexer.name, () => {
       await root.finishTick(1)
       expect(clear).toHaveBeenCalledTimes(1)
       expect(root.getState().status).toEqual('idle')
+      expect(root.getState().tickBlocked).toEqual(false)
 
       clock.uninstall()
     })
@@ -242,6 +263,24 @@ export async function waitUntil(predicate: () => boolean): Promise<void> {
       }
     }, 0)
   })
+}
+
+export class InitTestIndexer extends RootIndexer {
+  constructor(
+    private readonly initState:
+      | { safeHeight: number; configHash?: string }
+      | undefined,
+  ) {
+    super(Logger.SILENT)
+  }
+
+  override async tick(): Promise<number> {
+    return Promise.resolve(0)
+  }
+
+  override async initialize() {
+    return Promise.resolve(this.initState)
+  }
 }
 
 export class TestRootIndexer extends RootIndexer {
