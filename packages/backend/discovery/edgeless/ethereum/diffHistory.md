@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xf68de6fda4db9aeaadbbad8a5d10b29255daddd8
+
+# Diff at Wed, 14 Aug 2024 07:23:14 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@e32dcc268a9af9f45ad205490c9d650c487e04f1 block: 20318530
+- current block number: 20525344
+
+## Description
+
+The EOA that was able to execute upgrades was removed. Now there's only the 3/4 multisig left.
+
+## Watched changes
+
+```diff
+    contract UpgradeExecutor (0xc213d433802ea473e23623476b26FB12e9B4eFe6) {
+    +++ description: None
+      values.accessControl.EXECUTOR_ROLE.members.1:
+-        "0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4"
+      values.accessControl.EXECUTOR_ROLE.members.0:
+-        "0xa43ce4721Ac0faB33E8636e0DDB55E76e3EFF461"
++        "0x4dE424B0BDe70504Ad7b3c644EaAd052F4D993b4"
+    }
+```
+
 Generated with discovered.json: 0x7458ebca3950e7d7a4d2441bdab89761c5e16de1
 
 # Diff at Fri, 09 Aug 2024 11:59:22 GMT:
