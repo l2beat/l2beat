@@ -42,25 +42,34 @@ export abstract class Indexer {
   }
 
   /**
-   * Initializes the indexer. It should return a height that the indexer has
-   * synced up to. If the indexer has not synced any data, it should return
-   * `minHeight - 1`. For root indexers it should return the initial target
-   * height for the entire system.
+   * Initializes the indexer.
    *
    * This method is expected to read the height that was saved previously with
    * `setSafeHeight`. It shouldn't call `setSafeHeight` itself.
    *
-   * For root indexers if `setSafeHeight` is implemented it should return the
-   * height that was saved previously. If not it can `return this.tick()`.
-   * This method should also schedule a process to request ticks. For example
-   * with `setInterval(() => this.requestTick(), 1000)`.
+   * For root indexers this method should  schedule a process to request ticks.
+   * For example with `setInterval(() => this.requestTick(), 1000)`.
    *
-   * @returns The height that the indexer has synced up to or the target height
-   * for the entire system if this is a root indexer. Optionally it can return
-   * a config hash that will be saved in the state. Config hash can be used e.g.
-   * to detect changes in the indexer configuration between restarts.
+   * @returns
+   *
+   *  - The height that the indexer has synced up to or the target height
+   *    for the entire system if this is a root indexer. If the indexer has not
+   *    synced any data, it should return `minHeight - 1`.
+   *
+   *    For root indexers it should return the initial target height for the entire
+   *    system. If `setSafeHeight` is implemented it should return the height that
+   *    was saved previously. If not it can `return this.tick()`.
+   *
+   *  - Optionally it can return a config hash that will be saved in the state. Config
+   *    hash can be used e.g. to detect changes in the indexer configuration between
+   *    restarts.
+   *
+   *  - `undefined` if the initialization is not needed. Be mindful that in such case
+   *    none of the init effects will be dispatched.
    */
-  abstract initialize(): Promise<{ safeHeight: number; configHash?: string }>
+  abstract initialize(): Promise<
+    { safeHeight: number; configHash?: string } | undefined
+  >
 
   /**
    * This method will be called with the results of `initialize`, only once during the
@@ -176,6 +185,11 @@ export abstract class Indexer {
     this.started = true
     this.logger.info('Starting...')
     const initializedState = await this.initialize()
+
+    if (!initializedState) {
+      return
+    }
+
     this.dispatch({
       type: 'Initialized',
       ...initializedState,
