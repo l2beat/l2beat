@@ -6,7 +6,6 @@ import { Skeleton } from '~/app/_components/skeleton'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { type ScalingCostsEntry } from '~/server/features/scaling/costs/get-scaling-costs-entries'
-import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { type SyncStatus } from '~/types/sync-status'
 import { formatNumber } from '~/utils/format-number'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
@@ -28,7 +27,6 @@ type CostsAvailableData = {
   compute: number
   overhead: number
   txCount: number | undefined
-  unit: CostsUnit
   syncStatus: SyncStatus
 }
 

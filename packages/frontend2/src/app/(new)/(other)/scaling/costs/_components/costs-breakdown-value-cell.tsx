@@ -4,6 +4,8 @@ import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
 import { EM_DASH } from '~/app/_components/nav/consts'
 import { Skeleton } from '~/app/_components/skeleton'
 import { formatCostValue } from '../_utils/format-cost-value'
+import { useCostsMetricContext } from './costs-metric-context'
+import { useCostsUnitContext } from './costs-unit-context'
 import { type CostsData } from './table/columns'
 
 interface Props {
@@ -12,6 +14,9 @@ interface Props {
 }
 
 export function CostsBreakdownValueCell({ data, type }: Props) {
+  const { metric } = useCostsMetricContext()
+  const { unit } = useCostsUnitContext()
+
   if (data.type === 'not-available') {
     switch (data.reason) {
       case 'loading':
@@ -27,7 +32,7 @@ export function CostsBreakdownValueCell({ data, type }: Props) {
   const value = data[type]
   if (!value) return <Badge type="gray">N/A</Badge>
 
-  const formatted = formatCostValue(value, data.unit)
+  const formatted = formatCostValue(value, unit, metric)
 
   return <DetailedOnHover value={value}>{formatted}</DetailedOnHover>
 }

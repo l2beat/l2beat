@@ -16,7 +16,8 @@ export class BlockTargetIndexer extends RootIndexer {
 
   override async initialize() {
     this.clock.onNewHour(() => this.requestTick())
-    return { safeHeight: await this.tick() }
+    this.requestTick()
+    return Promise.resolve(undefined)
   }
 
   async tick(): Promise<number> {

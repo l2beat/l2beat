@@ -117,7 +117,6 @@ function mapToTableEntry(
       blobs: projectData[unit].blobs,
       compute: projectData[unit].compute,
       overhead: projectData[unit].overhead,
-      unit,
     },
   }
 }
