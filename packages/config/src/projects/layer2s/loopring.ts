@@ -19,6 +19,7 @@ import {
 } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
+import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
@@ -415,10 +416,7 @@ export const loopring: Layer2 = {
           subVerifiers: [
             {
               name: 'Main circuit',
-              proofSystem: 'Groth16',
-              mainArithmetization: 'R1CS+QAP',
-              mainPCS: 'N/A',
-              trustedSetup: 'Powers of Tau 18',
+              ...PROOFS.GROTH16('POT18'),
               link: 'https://github.com/Loopring/protocol3-circuits.git',
             },
           ],

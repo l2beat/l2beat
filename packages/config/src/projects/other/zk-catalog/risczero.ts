@@ -1,4 +1,5 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
+import { PROOFS } from './common/proofSystems'
 import { ZkCatalogProject } from './types'
 
 export const risczero: ZkCatalogProject = {
@@ -20,10 +21,7 @@ export const risczero: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'POT23 + circuit specific',
+            ...PROOFS.GROTH16('POT23'),
             link: 'https://github.com/risc0/risc0/tree/main/groth16_proof/groth16',
           },
           {
@@ -55,10 +53,7 @@ export const risczero: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'POT23 + circuit specific',
+            ...PROOFS.GROTH16('POT23'),
             link: 'https://github.com/risc0/risc0/tree/main/groth16_proof/groth16',
           },
           {
@@ -90,10 +85,7 @@ export const risczero: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'POT23 + circuit specific',
+            ...PROOFS.GROTH16('POT23'),
             link: 'https://github.com/risc0/risc0/tree/main/groth16_proof/groth16',
           },
           {
@@ -125,10 +117,7 @@ export const risczero: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'POT23 + circuit specific',
+            ...PROOFS.GROTH16('POT23'),
             link: 'https://github.com/risc0/risc0/tree/main/groth16_proof/groth16',
           },
           {
@@ -160,10 +149,7 @@ export const risczero: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'POT23 + circuit specific',
+            ...PROOFS.GROTH16('POT23'),
             link: 'https://github.com/risc0/risc0/tree/main/groth16_proof/groth16',
           },
           {
@@ -195,10 +181,7 @@ export const risczero: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'Final wrap',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            mainPCS: 'N/A',
-            trustedSetup: 'POT23 + circuit specific',
+            ...PROOFS.GROTH16('POT23'),
             link: 'https://github.com/risc0/risc0/tree/main/groth16_proof/groth16',
           },
           {
