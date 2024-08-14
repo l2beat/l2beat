@@ -1,3 +1,79 @@
+Generated with discovered.json: 0xf60327b26a1b02b58bfd289f249ed0d4831ec61f
+
+# Diff at Wed, 14 Aug 2024 08:16:16 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@e32dcc268a9af9f45ad205490c9d650c487e04f1 block: 20512726
+- current block number: 20525613
+
+## Description
+
+All roles have been revoked from the EOA and a multisig (2/3) has been granted those roles.
+A pending owner is added to TransactionFiltererDenyList, which is just a step in their ownership transfer process, it will become the actual owner once the entire process is completed.
+
+## Watched changes
+
+```diff
+    contract CronosZkEVMAdmin (0x66eF951aEC26987915582340bCAA569E5Be67cDC) {
+    +++ description: None
+      values.accessControl.ADMIN.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.ADMIN.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.ORACLE.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.ORACLE.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.UPGRADER.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.UPGRADER.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+      values.accessControl.FEE_ADMIN.members.1:
+-        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
++        "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce"
+      values.accessControl.FEE_ADMIN.members.0:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xfD7a03Cdb68E6488F950108A4d24f15519b87339"
+    }
+```
+
+```diff
+    contract TransactionFiltererDenyList (0xA8998F231a660Eca365B382943c71ad9b7619139) {
+    +++ description: None
+      values.pendingOwner:
+-        "0x0000000000000000000000000000000000000000"
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract AdminMultisig (0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce)
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract DenyListOwnerMultisig (0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../ethereum/.flat/AdminMultisig/GnosisSafe.sol    | 952 +++++++++++++++++++++
+ .../.flat/AdminMultisig/GnosisSafeProxy.p.sol      |  34 +
+ .../.flat/DenyListOwnerMultisig/GnosisSafe.sol     | 952 +++++++++++++++++++++
+ .../DenyListOwnerMultisig/GnosisSafeProxy.p.sol    |  34 +
+ 4 files changed, 1972 insertions(+)
+```
+
 Generated with discovered.json: 0xce3cf2924b53d3ff2bfa12c6d3eacfed4b824720
 
 # Diff at Mon, 12 Aug 2024 13:07:34 GMT:
