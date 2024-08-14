@@ -4,7 +4,7 @@ import { ProjectHeader } from '~/app/_components/projects/project-header'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
-import { ProjectDetails } from '~/app/_components/projects/sections/project-details'
+import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 

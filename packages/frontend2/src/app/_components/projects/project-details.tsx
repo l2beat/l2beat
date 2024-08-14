@@ -1,18 +1,19 @@
 import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
-import { ContractsSection } from './contracts/contracts-section'
-import { MarkdownSection } from './markdown-section'
-import { PermissionsSection } from './permissions/permissions-section'
-import { RiskAnalysisSection } from './risk-analysis-section'
-import { type ProjectDetailsSection } from './types'
-import { MilestonesSection } from './milestones-section'
-import { RiskSummarySection } from './risk-summary/risk-summary-section'
-import { DetailedDescriptionSection } from './detailed-description-section'
-import { StateValidationSection } from './state-validation-section'
-import { StateDerivationSection } from './state-derivation-section'
-import { KnowledgeNuggetsSection } from './knowledge-nuggets/knowledge-nuggets-section'
-import { TechnologySection } from './technology/technology-section'
+import { ContractsSection } from './sections/contracts/contracts-section'
+import { MarkdownSection } from './sections/markdown-section'
+import { PermissionsSection } from './sections/permissions/permissions-section'
+import { RiskAnalysisSection } from './sections/risk-analysis-section'
+import { type ProjectDetailsSection } from './sections/types'
+import { MilestonesSection } from './sections/milestones-section'
+import { RiskSummarySection } from './sections/risk-summary/risk-summary-section'
+import { DetailedDescriptionSection } from './sections/detailed-description-section'
+import { StateValidationSection } from './sections/state-validation-section'
+import { StateDerivationSection } from './sections/state-derivation-section'
+import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets/knowledge-nuggets-section'
+import { TechnologySection } from './sections/technology/technology-section'
+import { StageSection } from './sections/stage-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -53,6 +54,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
           case 'RiskAnalysisSection':
             return (
               <RiskAnalysisSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
+          case 'StageSection':
+            return (
+              <StageSection
                 key={item.props.id}
                 sectionOrder={sectionOrder}
                 {...item.props}

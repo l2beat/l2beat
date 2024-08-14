@@ -7,6 +7,7 @@ import { type PermissionsSectionProps } from './permissions/permissions-section'
 import { type ExtendedProjectSectionProps } from './project-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
 import { type RiskSummarySectionProps } from './risk-summary/risk-summary-section'
+import { type StageSectionProps } from './stage-section'
 import { type StateDerivationSectionProps } from './state-derivation-section'
 import { type StateValidationSectionProps } from './state-validation-section'
 import { type TechnologySectionProps } from './technology/technology-section'
@@ -16,6 +17,7 @@ export type ProjectSectionId =
   | 'milestones'
   | 'risk-summary'
   | 'risk-analysis'
+  | 'stage'
   | 'technology'
   | 'da-layer-technology'
   | 'da-bridge-technology'
@@ -54,6 +56,11 @@ export interface ProjectDetailsRiskSummarySection {
 export interface ProjectDetailsRiskAnalysisSection {
   type: 'RiskAnalysisSection'
   props: ProjectDetailsProps<RiskAnalysisSectionProps>
+}
+
+export interface ProjectDetailsStageSection {
+  type: 'StageSection'
+  props: ProjectDetailsProps<StageSectionProps>
 }
 
 export interface ProjectDetailsTechnologySection {
@@ -98,6 +105,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsMilestonesSection
   | ProjectDetailsRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
+  | ProjectDetailsStageSection
   | ProjectDetailsTechnologySection
   | ProjectDetailsStateDerivationSection
   | ProjectDetailsStateValidationSection

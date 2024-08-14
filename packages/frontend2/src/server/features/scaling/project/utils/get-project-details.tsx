@@ -118,6 +118,20 @@ export function getProjectDetails({
       },
     })
   }
+  if (project.stage.stage !== 'NotApplicable') {
+    items.push({
+      type: 'StageSection',
+      props: {
+        stageConfig: project.stage,
+        name: project.display.name,
+        icon: `/icons/${project.display.slug}.png`,
+        type: project.display.category,
+        id: 'stage',
+        title: 'Rollup stage',
+        isUnderReview: project.isUnderReview,
+      },
+    })
+  }
 
   if (technologySection) {
     items.push({
