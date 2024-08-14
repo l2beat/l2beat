@@ -6,13 +6,13 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { CostsBreakdown } from '~/app/_components/breakdown/costs-breakdown'
 import { Callout } from '~/app/_components/callout'
 import { DetailedOnHover } from '~/app/_components/detailed-on-hover'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { Skeleton } from '~/app/_components/skeleton'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCostValue } from '../_utils/format-cost-value'
 import { useCostsMetricContext } from './costs-metric-context'

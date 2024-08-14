@@ -4,7 +4,7 @@ import { ChartTimeRangeControls } from './chart-time-range-controls'
 
 interface Props {
   timeRange: CostsTimeRange
-  setTimeRange: React.Dispatch<React.SetStateAction<CostsTimeRange>>
+  setTimeRange: (range: CostsTimeRange) => void
   range: [number, number]
 }
 

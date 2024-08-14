@@ -2,15 +2,13 @@ import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from '~/server/features/scaling/summary/types'
+  TypeCell,
+  TypeColumnTooltip,
+} from '~/app/_components/table/cells/type-cell'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<
-  ScalingSummaryLayer2sEntry | ScalingSummaryLayer3sEntry
->()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingUpcomingColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -45,21 +43,7 @@ export const scalingUpcomingColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: (
-        <div>
-          <div className="mb-1">
-            Type of this project. Determines data availability and proof system
-            used.
-          </div>
-          ZK Rollups = Validity Proofs + onchain data
-          <br />
-          Optimistic Rollups = Fraud Proofs + onchain data
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </div>
-      ),
+      tooltip: <TypeColumnTooltip />,
     },
   }),
   columnHelper.accessor('purposes', {
