@@ -1,4 +1,4 @@
-import { layer2s, layer3s } from '@l2beat/config'
+import { layer2s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { ProjectHeader } from '~/app/_components/projects/project-header'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
@@ -8,7 +8,7 @@ import { ProjectDetails } from '~/app/_components/projects/sections/project-deta
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 
-const scalingProjects = [...layer2s, ...layer3s]
+const scalingProjects = [...layer2s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((layer) => ({
@@ -22,7 +22,7 @@ interface Props {
   }
 }
 
-export default function Page({ params }: Props) {
+export default async function Page({ params }: Props) {
   const project = scalingProjects.find(
     (layer) => layer.display.slug === params.projectSlug,
   )
@@ -31,7 +31,7 @@ export default function Page({ params }: Props) {
     notFound()
   }
 
-  const projectEntry = getScalingProjectEntry(project)
+  const projectEntry = await getScalingProjectEntry(project)
   const isNavigationEmpty = projectEntry.projectDetails.length === 0
 
   return (

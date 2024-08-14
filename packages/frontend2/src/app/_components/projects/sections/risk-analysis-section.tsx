@@ -10,9 +10,11 @@ import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
+import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
-  riskValues: RosetteValue[]
+  rosetteType: 'pizza' | 'pentagon'
+  rosetteValues: RosetteValue[]
   warning: string | undefined
   isVerified: boolean | undefined
   redWarning: string | undefined
@@ -22,7 +24,7 @@ export interface RiskAnalysisSectionProps extends ProjectSectionProps {
 export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
   const isUnderReview =
     !!props.isUnderReview ||
-    Object.values(props.riskValues).some(
+    Object.values(props.rosetteValues).some(
       ({ sentiment }) => sentiment === 'UnderReview',
     )
   return (
@@ -57,11 +59,19 @@ export function RiskAnalysisSection(props: RiskAnalysisSectionProps) {
           className="mt-4"
         />
       )}
-      <BigPentagonRosette
-        values={props.riskValues}
-        className="mx-auto my-6 lg:hidden"
-      />
-      {Object.values(props.riskValues).map((value) => (
+
+      {props.rosetteType === 'pizza' ? (
+        <BigPizzaRosette
+          values={props.rosetteValues}
+          className="mx-auto my-6"
+        />
+      ) : (
+        <BigPentagonRosette
+          values={props.rosetteValues}
+          className="mx-auto my-6 lg:hidden"
+        />
+      )}
+      {Object.values(props.rosetteValues).map((value) => (
         <SingleRisk key={value.name} value={value} />
       ))}
     </ProjectSection>

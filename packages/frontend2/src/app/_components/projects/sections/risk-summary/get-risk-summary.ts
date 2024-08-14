@@ -1,0 +1,65 @@
+import {
+  CONTRACTS,
+  type Layer2,
+  type Layer3,
+  type ScalingProjectRisk,
+} from '@l2beat/config'
+import isArray from 'lodash/isArray'
+
+import { groupRisks } from './group-risks'
+import { type RiskSummarySectionProps } from './risk-summary-section'
+
+export function getRiskSummarySection(
+  project: Layer2 | Layer3,
+  isVerified: boolean,
+): Omit<RiskSummarySectionProps, 'sectionOrder'> {
+  const sections = [
+    {
+      id: 'state-correctness',
+      value: project.technology.stateCorrectness,
+    },
+    { id: 'new-cryptography', value: project.technology.newCryptography },
+    { id: 'data-availability', value: project.technology.dataAvailability },
+    { id: 'operator', value: project.technology.operator },
+    { id: 'force-transactions', value: project.technology.forceTransactions },
+    { id: 'withdrawals', value: project.technology.exitMechanisms },
+    { id: 'mass-exit', value: project.technology.massExit },
+    {
+      id: 'other-considerations',
+      value: project.technology.otherConsiderations,
+    },
+  ]
+
+  const risks: (ScalingProjectRisk & { referencedId: string })[] = []
+  for (const { id, value } of sections) {
+    if (value) {
+      if (isArray(value)) {
+        for (const val of value) {
+          if (val) {
+            risks.push(...val.risks.map((x) => ({ ...x, referencedId: id })))
+          }
+        }
+      } else {
+        risks.push(...value.risks.map((x) => ({ ...x, referencedId: id })))
+      }
+    }
+  }
+  for (const risk of project.contracts?.risks ?? []) {
+    risks.push({ ...risk, referencedId: 'contracts' })
+  }
+  // Explicit comparison to false because project might not exists in verification map at all.
+  if (!isVerified) {
+    if (!risks.find((r) => r.text === CONTRACTS.UNVERIFIED_RISK.text)) {
+      risks.push({ ...CONTRACTS.UNVERIFIED_RISK, referencedId: 'contracts' })
+    }
+  }
+
+  return {
+    id: 'risk-summary',
+    title: 'Risk summary',
+    riskGroups: groupRisks(risks),
+    warning: project.display.warning,
+    isVerified,
+    redWarning: undefined,
+  }
+}

@@ -1,26 +1,74 @@
 import { type ContractsSectionProps } from './contracts/contracts-section'
+import { type DetailedDescriptionSectionProps } from './detailed-description-section'
+import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets/knowledge-nuggets-section'
 import { type MarkdownSectionProps } from './markdown-section'
+import { type MilestonesSectionProps } from './milestones-section'
 import { type PermissionsSectionProps } from './permissions/permissions-section'
+import { type ExtendedProjectSectionProps } from './project-section'
 import { type RiskAnalysisSectionProps } from './risk-analysis-section'
+import { type RiskSummarySectionProps } from './risk-summary/risk-summary-section'
+import { type StateDerivationSectionProps } from './state-derivation-section'
+import { type StateValidationSectionProps } from './state-validation-section'
+import { type TechnologySectionProps } from './technology/technology-section'
 
 export type ProjectSectionId =
+  | 'detailed-description'
+  | 'milestones'
+  | 'risk-summary'
   | 'risk-analysis'
+  | 'technology'
   | 'da-layer-technology'
   | 'da-bridge-technology'
-  | 'da-bridge-permissions'
-  | 'da-bridge-contracts'
+  | 'operator'
+  | 'withdrawals'
+  | 'other-considerations'
+  | 'state-derivation'
+  | 'state-validation'
+  | 'upgrades-and-governance'
+  | 'permissions'
+  | 'contracts'
+  | 'knowledge-nuggets'
 
-export interface ProjectSectionProps {
-  id: ProjectSectionId
-  title: string
-  sectionOrder: number
-}
+export type ProjectSectionProps = Omit<
+  ExtendedProjectSectionProps,
+  'className' | 'children'
+>
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
+
+export interface ProjectDetailsDetailedDescriptionSection {
+  type: 'DetailedDescriptionSection'
+  props: ProjectDetailsProps<DetailedDescriptionSectionProps>
+}
+
+export interface ProjectDetailsMilestonesSection {
+  type: 'MilestonesSection'
+  props: ProjectDetailsProps<MilestonesSectionProps>
+}
+
+export interface ProjectDetailsRiskSummarySection {
+  type: 'RiskSummarySection'
+  props: ProjectDetailsProps<RiskSummarySectionProps>
+}
 
 export interface ProjectDetailsRiskAnalysisSection {
   type: 'RiskAnalysisSection'
   props: ProjectDetailsProps<RiskAnalysisSectionProps>
+}
+
+export interface ProjectDetailsTechnologySection {
+  type: 'TechnologySection'
+  props: ProjectDetailsProps<TechnologySectionProps>
+}
+
+export interface ProjectDetailsStateDerivationSection {
+  type: 'StateDerivationSection'
+  props: ProjectDetailsProps<StateDerivationSectionProps>
+}
+
+export interface ProjectDetailsStateValidationSection {
+  type: 'StateValidationSection'
+  props: ProjectDetailsProps<StateValidationSectionProps>
 }
 
 export interface ProjectDetailsMarkdownSection {
@@ -38,11 +86,23 @@ export interface ProjectDetailsContractsSection {
   props: ProjectDetailsProps<ContractsSectionProps>
 }
 
+export interface ProjectDetailsKnowledgeNuggetsSection {
+  type: 'KnowledgeNuggetsSection'
+  props: ProjectDetailsProps<KnowledgeNuggetsSectionProps>
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
 } & (
+  | ProjectDetailsDetailedDescriptionSection
+  | ProjectDetailsMilestonesSection
+  | ProjectDetailsRiskSummarySection
   | ProjectDetailsRiskAnalysisSection
+  | ProjectDetailsTechnologySection
+  | ProjectDetailsStateDerivationSection
+  | ProjectDetailsStateValidationSection
   | ProjectDetailsMarkdownSection
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
+  | ProjectDetailsKnowledgeNuggetsSection
 )
