@@ -5,7 +5,9 @@
   "initialAddresses": ["0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc"],
   "names": {
     "0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc": "CronosZkEvm",
-    "0x66eF951aEC26987915582340bCAA569E5Be67cDC": "CronosZkEVMAdmin"
+    "0x66eF951aEC26987915582340bCAA569E5Be67cDC": "CronosZkEVMAdmin",
+    "0x4c57b73435FcB2D60AAf581e44d6a8AFc57ddFce": "AdminMultisig",
+    "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b": "DenyListOwnerMultisig"
   },
   "sharedModules": {
     "PolygonRollupManager": "shared-zk-stack"
@@ -81,6 +83,12 @@
           }
         }
       }
+    },
+    "AdminMultisig": {
+      "ignoreInWatchMode": ["nonce"]
+    },
+    "DenyListOwnerMultisig": {
+      "ignoreInWatchMode": ["nonce"]
     }
   }
 }

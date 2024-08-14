@@ -5,7 +5,7 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { indexRecalculatedOnFilter } from '~/app/_components/table/filters/index-recalculated-on-filter'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type DaRiskEntry } from '~/server/features/data-availability/get-da-risk-entries'
+import { type DaRiskEntry } from '~/server/features/data-availability/risks/get-da-risk-entries'
 
 const columnHelper = createColumnHelper<DaRiskEntry>()
 

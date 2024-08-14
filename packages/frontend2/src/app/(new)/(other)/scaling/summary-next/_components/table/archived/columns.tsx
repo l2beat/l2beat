@@ -4,11 +4,14 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
-import { TotalCell } from '../total-cell'
+import {
+  TypeCell,
+  TypeColumnTooltip,
+} from '~/app/_components/table/cells/type-cell'
+import { formatNumber } from '~/utils/format-number'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingArchivedColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -56,21 +59,7 @@ export const scalingArchivedColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: (
-        <div>
-          <div className="mb-1">
-            Type of this project. Determines data availability and proof system
-            used.
-          </div>
-          ZK Rollups = Validity Proofs + onchain data
-          <br />
-          Optimistic Rollups = Fraud Proofs + onchain data
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </div>
-      ),
+      tooltip: <TypeColumnTooltip />,
     },
   }),
   columnHelper.accessor('purposes', {
@@ -81,16 +70,18 @@ export const scalingArchivedColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <span className="px-5">${formatNumber(value.breakdown.total)}</span>
+      )
     },
     meta: {
       headClassName: 'justify-end',
@@ -99,5 +90,4 @@ export const scalingArchivedColumns = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor('provider', {}),
 ]

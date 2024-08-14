@@ -3,11 +3,14 @@ import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryLayer3sEntry } from '~/server/features/scaling/types'
+import {
+  TypeCell,
+  TypeColumnTooltip,
+} from '~/app/_components/table/cells/type-cell'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer3sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const summaryLayer3sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -40,21 +43,7 @@ export const summaryLayer3sColumns = [
     header: 'Type',
     cell: (ctx) => <TypeCell>{ctx.getValue()}</TypeCell>,
     meta: {
-      tooltip: (
-        <div>
-          <div className="mb-1">
-            Type of this project. Determines data availability and proof system
-            used.
-          </div>
-          ZK Rollups = Validity Proofs + onchain data
-          <br />
-          Optimistic Rollups = Fraud Proofs + onchain data
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </div>
-      ),
+      tooltip: <TypeColumnTooltip />,
     },
   }),
   columnHelper.accessor('provider', {
@@ -81,16 +70,23 @@ export const summaryLayer3sColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <TotalCell
+          associatedTokenSymbols={value.associatedTokens}
+          tvlWarnings={value.warnings}
+          breakdown={value.breakdown}
+          change={value.change}
+        />
+      )
     },
     sortUndefined: 'last',
     meta: {

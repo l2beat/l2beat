@@ -1,11 +1,18 @@
-import { type CostsUnit } from '~/server/features/scaling/get-scaling-costs-entries'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
+import { type CostsMetric } from '../_components/costs-metric-context'
 
-export function formatCostValue(value: number, unit: CostsUnit) {
+export function formatCostValue(
+  value: number,
+  unit: CostsUnit,
+  metric: CostsMetric = 'total',
+) {
   if (unit === 'gas') {
     return formatNumber(value)
   }
 
-  return formatCurrency(value, unit)
+  const decimals = metric === 'total' ? 2 : 6
+
+  return formatCurrency(value, unit, { decimals })
 }
