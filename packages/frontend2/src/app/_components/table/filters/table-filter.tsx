@@ -90,6 +90,7 @@ function TableFilterSelect<T extends string>({
   return (
     <Select
       value={value ?? ''}
+      open={open}
       onOpenChange={setOpen}
       onValueChange={(v) => {
         const mappedValue = (v === UNDEFINED_VALUE ? undefined : v) as
