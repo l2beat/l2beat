@@ -1,5 +1,5 @@
 import { assert, type UnixTime } from '@l2beat/shared-pure'
-import { EM_DASH } from '~/app/_components/nav/consts'
+import { EM_DASH } from '~/consts/characters'
 
 const MONTHS: Record<
   string,

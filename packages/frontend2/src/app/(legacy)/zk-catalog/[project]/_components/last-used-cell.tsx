@@ -1,4 +1,4 @@
-import { EM_DASH } from '~/app/_components/nav/consts'
+import { EM_DASH } from '~/consts/characters'
 
 export function LastUsedCell({ days }: { days: number | undefined }) {
   if (days === undefined) {

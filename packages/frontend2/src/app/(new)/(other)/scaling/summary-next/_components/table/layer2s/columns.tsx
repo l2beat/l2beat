@@ -1,7 +1,6 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
@@ -11,6 +10,7 @@ import {
   TypeColumnTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
+import { EM_DASH } from '~/consts/characters'
 import { formatPercent } from '~/utils/get-percentage-change'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
