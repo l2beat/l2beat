@@ -11,6 +11,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { LIVENESS_ANOMALIES_COMING_SOON_PROJECTS } from '~/consts/projects'
 import InfoIcon from '~/icons/info.svg'
 import { AnomalyIndicator } from '../anomaly-indicator'
 import { IntervalsHeader } from './intervals-header'
@@ -20,14 +21,13 @@ import { type ScalingLivenessTableEntry } from './to-table-entry'
 const columnHelper = createColumnHelper<ScalingLivenessTableEntry>()
 
 export const columns = [
-  // TODO: Make sure this is centered
   columnHelper.accessor((_, index) => index + 1, {
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
     meta: {
       headClassName: 'w-0',
-      cellClassName: 'flex items-center',
     },
+    size: 44.55,
   }),
   columnHelper.display({
     id: 'logo',
@@ -42,8 +42,9 @@ export const columns = [
     ),
     meta: {
       headClassName: 'w-0',
-      cellClassName: '!pr-0 md:pl-1',
+      cellClassName: 'lg:!pr-0',
     },
+    size: 26,
   }),
   columnHelper.accessor('name', {
     cell: (ctx) => (
@@ -114,9 +115,7 @@ export const columns = [
       const entry = ctx.row.original
       const showComingSoon =
         !entry.data?.syncStatus.isSynced ||
-        entry.slug === 'linea' ||
-        entry.slug === 'starknet' ||
-        entry.slug === 'scroll'
+        LIVENESS_ANOMALIES_COMING_SOON_PROJECTS.includes(entry.id.toString())
 
       return (
         <AnomalyIndicator

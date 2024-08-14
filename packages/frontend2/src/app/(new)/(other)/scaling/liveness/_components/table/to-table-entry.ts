@@ -1,22 +1,23 @@
 import { type TrackedTxsConfigSubtype } from '@l2beat/shared-pure'
-import { type LivenessTimeRange } from '~/server/features/liveness/types'
-import { type ScalingLivenessEntry } from '~/server/features/scaling/get-scaling-liveness-entries'
+import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
+import {
+  type LivenessDataPoint,
+  type LivenessTimeRange,
+} from '~/server/features/scaling/liveness/types'
 import { type SyncStatus } from '~/types/sync-status'
 
 export type ScalingLivenessTableEntry = Omit<ScalingLivenessEntry, 'data'> & {
-  data:
-    | (Record<
-        TrackedTxsConfigSubtype,
-        | {
-            averageInSeconds: number
-            minimumInSeconds: number
-            maximumInSeconds: number
-            warning: string | undefined
-          }
-        | undefined
-      > & { syncStatus: SyncStatus })
-    | undefined
+  data: TableEntryData | undefined
 }
+
+type TableEntryData = Record<
+  TrackedTxsConfigSubtype,
+  TableEntryDataPoint | undefined
+> & {
+  syncStatus: SyncStatus
+}
+
+type TableEntryDataPoint = LivenessDataPoint & { warning: string | undefined }
 
 export function toLivenessTableEntry(
   entry: ScalingLivenessEntry,

@@ -7,11 +7,11 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { type LivenessAnomaly } from '~/server/features/scaling/liveness/types'
 import {
   type AnomalyEntry,
   type AnomalyIndicatorEntry,
-} from '~/server/features/liveness/get-anomaly-entries'
-import { type LivenessAnomaly } from '~/server/features/liveness/types'
+} from '~/server/features/scaling/liveness/utils/get-anomaly-entries'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { LivenessDurationCell } from './liveness-duration-cell'

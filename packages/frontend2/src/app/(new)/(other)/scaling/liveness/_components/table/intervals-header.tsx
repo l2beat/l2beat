@@ -1,7 +1,7 @@
-import { type LivenessTimeRange } from '~/server/features/liveness/types'
-import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
-import { useIsClient } from '~/hooks/use-is-client'
 import { Skeleton } from '~/app/_components/skeleton'
+import { useIsClient } from '~/hooks/use-is-client'
+import { type LivenessTimeRange } from '~/server/features/scaling/liveness/types'
+import { useLivenessTimeRangeContext } from '../liveness-time-range-context'
 
 interface Props {
   average?: boolean

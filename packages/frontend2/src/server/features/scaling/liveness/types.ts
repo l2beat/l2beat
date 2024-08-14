@@ -18,12 +18,14 @@ export const LivenessAnomaly = z.object({
 })
 export type LivenessAnomaly = z.infer<typeof LivenessAnomaly>
 
-const LivenessDetails = z.object({
-  [LivenessTimeRange.Enum['30d']]: LivenessDataPoint.optional(),
-  [LivenessTimeRange.Enum['90d']]: LivenessDataPoint.optional(),
-  [LivenessTimeRange.Enum.max]: LivenessDataPoint.optional(),
-  syncedUntil: z.number(),
-})
+const LivenessDetails = z
+  .record(LivenessTimeRange, LivenessDataPoint.optional())
+  .and(
+    z.object({
+      syncedUntil: z.number(),
+    }),
+  )
+
 export type LivenessDetails = z.infer<typeof LivenessDetails>
 
 export const LivenessProject = z.object({

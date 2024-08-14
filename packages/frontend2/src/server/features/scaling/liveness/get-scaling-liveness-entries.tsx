@@ -1,18 +1,19 @@
-import { type Layer2, layer2s } from '@l2beat/config'
+import { type Layer2 } from '@l2beat/config'
 import {
   TrackedTxsConfigSubtypeValues,
   UnixTime,
   notUndefined,
 } from '@l2beat/shared-pure'
-import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { toAnomalyIndicatorEntries } from '../liveness/get-anomaly-entries'
-import { getLiveness } from '../liveness/get-liveness'
-import { type LivenessProject } from '../liveness/types'
+import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
+import { getLiveness } from './get-liveness'
+import { type LivenessProject } from './types'
 
-import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
-import { getCommonScalingEntry } from './get-common-scaling-entry'
-import { getLatestTvlUsd } from './tvl/utils/get-latest-tvl-usd'
-import { orderByTvl } from './tvl/utils/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getCommonScalingEntry } from '../get-common-scaling-entry'
+import { getLatestTvlUsd } from '../tvl/utils/get-latest-tvl-usd'
+import { orderByTvl } from '../tvl/utils/order-by-tvl'
+import { toAnomalyIndicatorEntries } from './utils/get-anomaly-entries'
+import { getLivenessProjects } from './utils/get-liveness-projects'
 
 export async function getScalingLivenessEntries() {
   const [
@@ -27,14 +28,7 @@ export async function getScalingLivenessEntries() {
     getLiveness(),
   ])
 
-  const activeProjects = layer2s.filter(
-    (p) =>
-      liveness[p.id.toString()] &&
-      (p.display.category === 'Optimistic Rollup' ||
-        p.display.category === 'ZK Rollup') &&
-      !p.isUpcoming &&
-      !p.isArchived,
-  )
+  const activeProjects = getLivenessProjects()
 
   const orderedByTvl = orderByTvl(activeProjects, tvl)
 

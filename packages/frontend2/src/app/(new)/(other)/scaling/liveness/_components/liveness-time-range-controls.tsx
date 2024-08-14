@@ -2,7 +2,7 @@ import React from 'react'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
-import { type LivenessTimeRange } from '~/server/features/liveness/types'
+import { type LivenessTimeRange } from '~/server/features/scaling/liveness/types'
 
 interface Props {
   timeRange: LivenessTimeRange

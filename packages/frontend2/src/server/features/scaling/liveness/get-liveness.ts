@@ -9,27 +9,30 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
-import { unstable_noStore as noStore, unstable_cache } from 'next/cache'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { db } from '~/server/database'
-import { getConfigurationsSyncedUntil } from '../utils/get-configurations-synced-until'
+import { getConfigurationsSyncedUntil } from '../../utils/get-configurations-synced-until'
 import {
   type TrackedTxsProject,
   getTrackedTxsProjects,
-} from '../utils/get-tracked-txs-projects'
-import { getLivenessProjects } from './get-liveness-projects'
+} from '../../utils/get-tracked-txs-projects'
 import {
   type LivenessAnomaly,
   type LivenessDetails,
   type LivenessProject,
   type LivenessResponse,
 } from './types'
+import { getLivenessProjects } from './utils/get-liveness-projects'
 
 export async function getLiveness() {
   noStore()
   return getCachedLiveness()
 }
 
-const getCachedLiveness = unstable_cache(
+const getCachedLiveness = cache(
   async () => {
     const projects: LivenessResponse = {}
 

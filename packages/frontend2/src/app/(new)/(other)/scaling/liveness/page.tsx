@@ -1,5 +1,5 @@
 import { SimplePageHeader } from '~/app/_components/simple-page-header'
-import { getScalingLivenessEntries } from '~/server/features/scaling/get-scaling-liveness-entries'
+import { getScalingLivenessEntries } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { LivenessTimeRangeContextProvider } from './_components/liveness-time-range-context'

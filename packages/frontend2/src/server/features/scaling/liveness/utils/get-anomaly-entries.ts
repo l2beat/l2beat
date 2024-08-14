@@ -1,5 +1,5 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { type LivenessAnomaly } from './types'
+import { type LivenessAnomaly } from '../types'
 
 export type AnomalyIndicatorEntry = AnomalyEntry | NonAnomalyEntry
 export interface AnomalyEntry {
