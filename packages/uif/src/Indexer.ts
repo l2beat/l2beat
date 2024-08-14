@@ -64,7 +64,7 @@ export abstract class Indexer {
    *    hash can be used e.g. to detect changes in the indexer configuration between
    *    restarts.
    *
-   *  - undefined if the initialization is not needed. Be mindful that in such case
+   *  - `undefined` if the initialization is not needed. Be mindful that in such case
    *    none of the init effects will be dispatched.
    */
   abstract initialize(): Promise<
