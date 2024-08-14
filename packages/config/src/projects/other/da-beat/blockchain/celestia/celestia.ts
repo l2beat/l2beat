@@ -88,7 +88,7 @@ export const celestia: DaLayer = {
     description: `CometBFT is the canonical implementation of the Tendermint consensus algorithm.
     CometBFT allows for a state transition machine to be written in any programming language, and it allows for secure replication across many machines.
     The consensus protocol is fork-free by construction under an honest majority of stake assumption.`,
-    blockTime: 15, // goal block time, seconds 
+    blockTime: 15, // goal block time, seconds
     consensusFinality: 1, // 1 second for tendermint, time_iota_ms
     unbondingPeriod: UnixTime.DAY * 21, // staking.UnbondingTime
   },
