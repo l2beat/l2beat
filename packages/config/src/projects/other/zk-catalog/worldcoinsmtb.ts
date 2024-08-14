@@ -1,6 +1,7 @@
 import { ChainId, EthereumAddress } from '@l2beat/shared-pure'
 import { PERFORMED_BY } from './common'
 import { ZkCatalogProject } from './types/ZkCatalogProject'
+import { PROOFS } from './common/proofSystems'
 
 export const worldcoinsmtb: ZkCatalogProject = {
   display: {
@@ -22,10 +23,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'RegisterCircuitSize100',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            trustedSetup: 'PPOT 23 + circuit specific',
-            mainPCS: 'N/A',
+            ...PROOFS.GROTH16('PPOT23'),
             link: 'https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/insertion_circuit.go',
           },
         ],
@@ -42,10 +40,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'RegisterCircuitSize600',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            trustedSetup: 'PPOT 26 + circuit specific',
-            mainPCS: 'N/A',
+            ...PROOFS.GROTH16('PPOT26'),
             link: 'https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/insertion_circuit.go',
           },
         ],
@@ -62,10 +57,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'RegisterCircuitSize1200',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            trustedSetup: 'PPOT 27 + circuit specific',
-            mainPCS: 'N/A',
+            ...PROOFS.GROTH16('PPOT27'),
             link: 'https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/insertion_circuit.go',
           },
         ],
@@ -82,10 +74,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'DeleteCircuitSize10',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            trustedSetup: 'PPOT 19 + circuit specific',
-            mainPCS: 'N/A',
+            ...PROOFS.GROTH16('PPOT19'),
             link: 'https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/deletion_circuit.go',
           },
         ],
@@ -102,10 +91,7 @@ export const worldcoinsmtb: ZkCatalogProject = {
         subVerifiers: [
           {
             name: 'DeleteCircuitSize100',
-            proofSystem: 'Groth16',
-            mainArithmetization: 'R1CS+QAP',
-            trustedSetup: 'PPOT 22 + circuit specific',
-            mainPCS: 'N/A',
+            ...PROOFS.GROTH16('PPOT22'),
             link: 'https://github.com/worldcoin/semaphore-mtb/blob/113f8a8a4d2aecf42b9173fd0a52bef5120fcaec/prover/deletion_circuit.go',
           },
         ],

@@ -23,6 +23,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { PROOFS } from '../other/zk-catalog/common/proofSystems'
 
 const discovery = new ProjectDiscovery('degate3')
 
@@ -365,10 +366,7 @@ export const degate3: Layer2 = {
           subVerifiers: [
             {
               name: 'Main circuit',
-              proofSystem: 'Groth16',
-              mainArithmetization: 'R1CS+QAP',
-              mainPCS: 'N/A',
-              trustedSetup: '?',
+              ...PROOFS.GROTH16('?'),
               link: 'https://github.com/degatedev/protocols/tree/degate_mainnet/packages/loopring_v3/circuit',
             },
           ],
