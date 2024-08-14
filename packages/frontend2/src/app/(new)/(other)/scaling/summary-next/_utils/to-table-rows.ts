@@ -1,4 +1,4 @@
-import { type ScalingSummaryEntry } from '~/server/features/scaling/get-scaling-summary-entries'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 
 export function toTableRows({
   projects,
