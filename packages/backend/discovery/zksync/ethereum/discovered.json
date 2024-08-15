@@ -1,7 +1,7 @@
 {
   "name": "zksync",
   "chain": "ethereum",
-  "blockNumber": 20525384,
+  "blockNumber": 20532597,
   "configHash": "0x3d998b8628d34dc5825d501ad6778e24924b2742b447a4efaa1617f47e42367b",
   "version": 11,
   "contracts": [
@@ -242,9 +242,9 @@
           "0x050b37a12451F188c7bA53D48b8A1adE6D138E71",
           "0x37A71E0C1A5808343D893Db40e12A74e0A387908",
           "0x733F602bB867c643542cc807a3D32AD1A86cacc1",
-          "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f",
+          "0xfB42eb487835B01cbF266f66750a7a89a7247F06",
           "0x702caCafA54B88e9c54449563Fb2e496e85c78b7",
-          "0x9dF8bc0918F357c766A5697E031fF5237c05747A",
+          "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA",
           "0x3068415e0F857A5eEd03302A1F7E44f67468d2Bc"
         ],
         "$threshold": 4,
@@ -253,7 +253,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
         "NAME": "Gnosis Safe",
-        "nonce": 115,
+        "nonce": 117,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -279,19 +279,19 @@
     { "address": "0x71E805aB236c945165b9Cd0bf95B9f2F0A0488c3" },
     { "address": "0x733F602bB867c643542cc807a3D32AD1A86cacc1" },
     { "address": "0x76C6cE74EAb57254E785d1DcC3f812D274bCcB11" },
-    { "address": "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f" },
     { "address": "0x9D5d6D4BaCCEDf6ECE1883456AA785dc996df607" },
-    { "address": "0x9dF8bc0918F357c766A5697E031fF5237c05747A" },
     { "address": "0xA0171d83E3C5F215491FcE4C0884E91674B3C8A3" },
     { "address": "0xA093284c707e207C36E3FEf9e0B6325fd9d0e33B" },
     { "address": "0xa2602ea835E03fb39CeD30B43d6b6EAf6aDe1769" },
     { "address": "0xB0c9C5B5211dE3a75b61BB798887b76AcCD64193" },
     { "address": "0xB1A308e7F02798377b7acF685E997E3D774c5863" },
+    { "address": "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA" },
     { "address": "0xD804aB3355a634aEBd45e1252d6208807defD554" },
     { "address": "0xE7A4F2b1772603170111BC633cbCF1AcEbD60BCe" },
     { "address": "0xe7CCD4F3feA7df88Cf9B59B30f738ec1E049231f" },
     { "address": "0xee8AE1F1B4B1E1956C8Bda27eeBCE54Cf0bb5eaB" },
     { "address": "0xf6dcD4d7141E06B916987C3C46220f6241278a30" },
+    { "address": "0xfB42eb487835B01cbF266f66750a7a89a7247F06" },
     { "address": "0xFBfF3FF69D65A9103Bf4fdBf988f5271D12B3190" }
   ],
   "abis": {
