@@ -58,5 +58,5 @@ export const daLayers: DaLayer[] = [
   moltenLayer,
   l3xLayer,
   playblockLayer,
-  mantleDA
+  mantleDA,
 ]
