@@ -56,7 +56,7 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
       1) **TendermintX** circuit is used to verify tendermint consensus,
       2) **BlobstreamX** circuit is used to verify the data commitment root.
-      
+
     By default, BlobstreamX on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
 
     `,

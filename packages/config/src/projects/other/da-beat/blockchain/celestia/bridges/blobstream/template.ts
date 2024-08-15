@@ -32,7 +32,7 @@ export function CELESTIA_BLOBSTREAM(base: TemplateVars): OnChainDaBridge {
   const display = {
     name: `Blobstream on ${capitalize(chain.name)}`,
     slug: id,
-    description: `Celestia with Blobstream bridge on ${capitalize(
+    description: `The BlobstreamX bridge serves as a ZK light client, enabling the bridging of data availability commitments between Celestia and ${capitalize(
       chain.name,
     )}.`,
     links: base.display.links,

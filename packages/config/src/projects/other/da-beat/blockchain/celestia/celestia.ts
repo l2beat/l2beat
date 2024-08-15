@@ -15,7 +15,7 @@ export const celestia: DaLayer = {
   display: {
     name: 'Celestia',
     slug: 'celestia',
-    description: 'Celestia is a modular data availability network.',
+    description: 'Celestia is a modular data availability network that allows scaling solutions to post arbitrary data as blobs.',
     links: {
       websites: ['https://celestia.org/'],
       documentation: ['https://docs.celestia.org/'],
@@ -70,6 +70,8 @@ export const celestia: DaLayer = {
   bridges: [
     NO_BRIDGE({
       layer: 'Celestia',
+      description: 'The risk profile in this page refers to scaling solutions that do not integrate with a data availability bridge.',
+      technology: `No DA bridge is selected. Without a DA bridge, Ethereum has no proof of data availability for this project.\n`,
     }),
     ...blobstream,
   ],
