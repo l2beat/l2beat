@@ -1,3 +1,27 @@
+Generated with discovered.json: 0xcb4ecd76bd24c85fce589f137c6b5371214bffa7
+
+# Diff at Thu, 15 Aug 2024 07:11:51 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20512764
+- current block number: 20532454
+
+## Description
+
+The batches for an unknown project are now being verified.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.8.0:
+-        false
++        true
+    }
+```
+
 Generated with discovered.json: 0xe954f2fce6af87cb2a645e83eb913f58270872ee
 
 # Diff at Mon, 12 Aug 2024 13:15:54 GMT:

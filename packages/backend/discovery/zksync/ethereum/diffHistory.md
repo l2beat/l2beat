@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x13dea30776c0b6c15c1c470dd6f5806ecdd4005c
+
+# Diff at Thu, 15 Aug 2024 07:40:27 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20525384
+- current block number: 20532597
+
+## Description
+
+Two members of the ZkSync Multisig were replaced.
+
+## Watched changes
+
+```diff
+    contract ZkSync Multisig (0xE24f4870Ab85DE8E356C5fC56138587206c70d99) {
+    +++ description: None
+      values.$members.5:
+-        "0x9dF8bc0918F357c766A5697E031fF5237c05747A"
++        "0xD613b3a3924D0dE9B4a352ca0669e743cBC3C4AA"
+      values.$members.3:
+-        "0x84298D79ad2CD4eC0d9Ca1959F9d9f40Bc07152f"
++        "0xfB42eb487835B01cbF266f66750a7a89a7247F06"
+    }
+```
+
 Generated with discovered.json: 0x5772fd09bd8af1263c7960d0da910a71bcca5f78
 
 # Diff at Wed, 14 Aug 2024 07:30:30 GMT:

@@ -1,3 +1,57 @@
+Generated with discovered.json: 0x03acf1b829bc4f7b7baff42e9a54638b791fc854
+
+# Diff at Thu, 15 Aug 2024 07:34:38 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20432677
+- current block number: 20532565
+
+## Description
+
+The Base Multisig (that can challenge state roots and is owner of SystemConfig) has two new members.
+
+## Watched changes
+
+```diff
+    contract BaseMultisig2 (0x14536667Cd30e52C0b458BaACcB9faDA7046E056) {
+    +++ description: It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      values.$members.10:
++        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
+      values.$members.9:
++        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
+      values.$members.8:
+-        "0x49243DcE94e0f5A1B08b9556bBEc5a84363c3839"
++        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
+      values.$members.7:
+-        "0xBECAbd620cb6675f73C92bc444F7faCddf204DE2"
++        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
+      values.$members.6:
+-        "0xa7a5e47D3959bf134e3EcdEb1f62e054f0D58a18"
++        "0xa3D3c103442F162856163d564b983ae538c6202D"
+      values.$members.5:
+-        "0x969ffD102fbF304d4e401999333FE9397DaC653D"
++        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
+      values.$members.4:
+-        "0x8e5de5cA219e3FFC9cdEb2Dc7D71B8a199cd2C4F"
++        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
+      values.$members.3:
+-        "0xa3D3c103442F162856163d564b983ae538c6202D"
++        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
+      values.$members.2:
+-        "0xC29A4a69886d5ee1E08BDBbdd4e35558A668ee04"
++        "0x26c72586FB396325F58718152FEFA94E93Cf177b"
+      values.$members.1:
+-        "0x92B79E6C995Ee8B267EC1Ac2743D1c1fBFFFc447"
++        "0x5468985B560D966dEDEa2DAF493f5756101137DC"
+      values.$members.0:
+-        "0x73565876170a336Fa02fDe34EeD03E3121f70bA6"
++        "0xe32868ec7762650DdE723e945D638A05900974F4"
+      values.multisigThreshold:
+-        "3 of 9 (33%)"
++        "3 of 11 (27%)"
+    }
+```
+
 Generated with discovered.json: 0xa8fa1a17573e2bd744b5118a0a99ffdbfb6d5a0c
 
 # Diff at Fri, 09 Aug 2024 11:58:39 GMT:

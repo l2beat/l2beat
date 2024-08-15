@@ -1,3 +1,26 @@
+Generated with discovered.json: 0xb6fd9036c21db0d8c3514a1006180bc415db6a6f
+
+# Diff at Thu, 15 Aug 2024 07:15:35 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20476663
+- current block number: 20532472
+
+## Description
+
+Each validator has a balance used to pay fees on Heimdall, the total has increased because a validator has topped up their balance with 23 MATIC.
+
+## Watched changes
+
+```diff
+    contract StakeManager (0x5e3Ef299fDDf15eAa0432E6e66473ace8c13D908) {
+    +++ description: None
+      values.totalHeimdallFee:
+-        "10132939209428901681108"
++        "10155939209428901681108"
+    }
+```
+
 Generated with discovered.json: 0xc6bef104f5328804e8cc5e592e2e1988d0120756
 
 # Diff at Fri, 09 Aug 2024 12:01:26 GMT:
