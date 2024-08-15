@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xf27ee85934c0dc2fbfecd1d1d8da4503777c5497
+
+# Diff at Thu, 15 Aug 2024 07:31:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20518997
+- current block number: 20532552
+
+## Description
+
+New adapter and L2 crosschain target for Zora were added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.7777777:
++        "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+      values.CrossChainContracts.7777777:
++        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Zora_Adapter.sol      | 590 +++++++++++++++++++++
+ 1 file changed, 590 insertions(+)
+```
+
 Generated with discovered.json: 0xe9a9d7fdf87c58268c0949602f8942688583b6ab
 
 # Diff at Tue, 13 Aug 2024 10:06:57 GMT:
