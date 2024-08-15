@@ -1,8 +1,8 @@
 {
   "name": "polygon-pos",
   "chain": "ethereum",
-  "blockNumber": 20532472,
-  "configHash": "0x1d82a660b0cc1f47c76a4237d8c112cc04036f0efe79cf587ca2373e7efe4189",
+  "blockNumber": 20532676,
+  "configHash": "0x277093917a19cb593525834be9535ae172ac12062cb4362faa029339bc191408",
   "version": 11,
   "contracts": [
     {
@@ -73,7 +73,7 @@
       "sinceTimestamp": 1590850580,
       "values": {
         "$immutable": true,
-        "counter": 2947580,
+        "counter": 2947584,
         "isOwner": false,
         "owner": "0xFa7D2a996aC6350f4b56C043112Da0366a59b74c",
         "REGISTRATIONS": [
@@ -231,7 +231,8 @@
         "rewardPerStake",
         "totalRewardsLiquidated",
         "totalStaked",
-        "validatorState"
+        "validatorState",
+        "totalHeimdallFee"
       ],
       "sinceTimestamp": 1593189690,
       "values": {
@@ -243,7 +244,7 @@
         "checkpointRewardDelta": 10,
         "currentEpoch": 67057,
         "currentValidatorSetSize": 105,
-        "currentValidatorSetTotalStake": "3458143105193599466082877243",
+        "currentValidatorSetTotalStake": "3458221829731304755773803677",
         "delegationEnabled": true,
         "delegatorsReward": [0, 0, 0, 0],
         "dynasty": 80,
@@ -285,7 +286,7 @@
         "validatorReward": [0, 0, "1081182134824116177126", 0],
         "validatorShareFactory": "0xc4FA447A0e77Eff9717b09C057B40570813bb642",
         "validatorState": {
-          "amount": "3458143105193599466082877243",
+          "amount": "3458221829731304755773803677",
           "stakerCount": 105
         },
         "validatorThreshold": 105,
