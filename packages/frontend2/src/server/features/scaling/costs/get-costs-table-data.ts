@@ -54,7 +54,7 @@ const getCachedCostsTableData = cache(
       }),
     )
   },
-  ['costsTableV5'],
+  ['costsTableV2'],
   { revalidate: 60 * 10 },
 )
 
