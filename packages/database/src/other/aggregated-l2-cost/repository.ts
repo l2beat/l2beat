@@ -79,6 +79,7 @@ export class AggregatedL2CostRepository extends BaseRepository {
     projectIds: ProjectId[],
     timeRange: [UnixTime, UnixTime],
   ): Promise<AggregatedL2CostRecord[]> {
+    if (projectIds.length === 0) return []
     const [from, to] = timeRange
     const rows = await this.db
       .selectFrom('public.aggregated_l2_costs')
