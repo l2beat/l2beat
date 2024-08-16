@@ -6,7 +6,7 @@ import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range
 
 type CostsTimeRangeContextValue = {
   range: CostsTimeRange
-  setRange: React.Dispatch<React.SetStateAction<CostsTimeRange>>
+  setRange: (range: CostsTimeRange) => void
 }
 
 const CostsTimeRangeContext = createContext<CostsTimeRangeContextValue | null>(

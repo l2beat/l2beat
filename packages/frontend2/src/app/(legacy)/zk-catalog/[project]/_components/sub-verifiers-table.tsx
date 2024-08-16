@@ -1,10 +1,10 @@
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { OutLink } from '~/app/_components/out-link'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { EM_DASH } from '~/consts/characters'
 import InfoIcon from '~/icons/info.svg'
 import { cn } from '~/utils/cn'
 import { type ZkCatalogProjectDetails } from './zk-catalog-project-page'

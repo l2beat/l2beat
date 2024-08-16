@@ -1,10 +1,30 @@
 {
   "name": "across-v3",
   "chain": "ethereum",
-  "blockNumber": 20518997,
+  "blockNumber": 20532552,
   "configHash": "0xf486b63f8ed759517c43e689f34697eacc9d82deefc356f0c99a4c61f56a36bd",
   "version": 11,
   "contracts": [
+    {
+      "name": "Zora_Adapter",
+      "address": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b",
+      "template": "acrossv3/adapter",
+      "ignoreInWatchMode": [
+        "L2_MESSAGE_RELAY_GAS_LIMIT",
+        "L2_TOKEN_RELAY_GAS_LIMIT"
+      ],
+      "sinceTimestamp": 1723462727,
+      "values": {
+        "$immutable": true,
+        "cctpTokenMessenger": "0x0000000000000000000000000000000000000000",
+        "L1_STANDARD_BRIDGE": "0x3e2Ea9B92B7E48A52296fD261dc26fd995284631",
+        "L1_WETH": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
+        "L2_GAS_LIMIT": 200000,
+        "MESSENGER": "0xdC40a14d9abd6F410226f1E6de71aE03441ca506",
+        "recipientCircleDomainId": 4294967295,
+        "usdcToken": "0x0000000000000000000000000000000000000000"
+      }
+    },
     {
       "name": "VotingToken",
       "address": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828",
@@ -16,7 +36,7 @@
         "getMember": ["0x7b292034084A41B9D441B71b6E3557Edd0463fa8"],
         "name": "UMA Voting Token v1",
         "symbol": "UMA",
-        "totalSupply": "120549472971837176894373138",
+        "totalSupply": "120556985568334283849446723",
         "totalSupplyAt": [
           "100000000000000000000000000",
           "100000000000000000000000000",
@@ -82,7 +102,7 @@
         "$immutable": true,
         "bond": "5000000000000000000000",
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1723543595,
+        "getCurrentTime": 1723707071,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "token": "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828"
@@ -140,11 +160,11 @@
         "EMPTY_RELAYER": "0x0000000000000000000000000000000000000000",
         "EMPTY_REPAYMENT_CHAIN_ID": 0,
         "fillDeadlineBuffer": 21600,
-        "getCurrentTime": 1723543595,
+        "getCurrentTime": 1723707071,
         "hubPool": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "INFINITE_FILL_DEADLINE": 4294967295,
         "MAX_TRANSFER_SIZE": "1000000000000000000000000000000000000",
-        "numberOfDeposits": 1485201,
+        "numberOfDeposits": 1488561,
         "owner": "0xc186fA914353c44b2E33eBE05f21846F1048bEda",
         "pausedDeposits": false,
         "pausedFills": false,
@@ -162,7 +182,7 @@
       "values": {
         "$immutable": true,
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
-        "getCurrentTime": 1723543595,
+        "getCurrentTime": 1723707071,
         "getMember": [
           "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
           "0x50efaC9619225d7fB4703C5872da978849B6E7cC",
@@ -281,7 +301,7 @@
         "$immutable": true,
         "emergencyProposals": [],
         "executor": "0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a",
-        "getCurrentTime": 1723543595,
+        "getCurrentTime": 1723707071,
         "governor": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
         "minimumWaitTime": 864000,
         "owner": "0x7b292034084A41B9D441B71b6E3557Edd0463fa8",
@@ -334,7 +354,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": ["0x8692B776d1Ff0664177c90465038056Dc64f8991"],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 242,
+        "nonce": 245,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -386,7 +406,8 @@
           "42161": "0x5473CBD30bEd1Bf97C0c9d7c59d268CD620dA426",
           "59144": "0x7Ea0D1882D610095A45E512B0113f79cA98a8EfE",
           "81457": "0xF2bEf5E905AAE0295003ab14872F811E914EdD81",
-          "534352": "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F"
+          "534352": "0xb6129Ab69aEA75e6884c2D6ecf25293C343C519F",
+          "7777777": "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
         },
         "bondAmount": "450000000000000000",
         "bondToken": "0xee1DC6BCF1Ee967a350e9aC6CaaAA236109002ea",
@@ -403,7 +424,8 @@
           "42161": "0xe35e9842fceaCA96570B734083f4a58e8F7C5f2A",
           "59144": "0x7E63A5f1a8F0B4d0934B2f2327DAED3F6bb2ee75",
           "81457": "0x2D509190Ed0172ba588407D4c2df918F955Cc6E1",
-          "534352": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96"
+          "534352": "0x3baD7AD0728f9917d1Bf08af5782dCbD516cDd96",
+          "7777777": "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
         },
         "finder": "0x40f941E48A552bF496B154Af6bf55725f18D77c3",
         "identifier": "0x4143524f53532d56320000000000000000000000000000000000000000000000",
@@ -415,13 +437,13 @@
         "protocolFeeCaptureAddress": "0x9A8f92a830A5cB89a3816e3D267CB7791c16b04D",
         "protocolFeeCapturePct": 0,
         "rootBundleProposal": {
-          "poolRebalanceRoot": "0xe104d7bd059efac2a0c496ee143cd9c73a96e6924ae64ade01b266249390d71f",
-          "relayerRefundRoot": "0x0b440522a1722025c25d6b98bf6ede091d6ed1ed889e094328e6b18269788a03",
+          "poolRebalanceRoot": "0xdfaf5646316354e9f08ae628c13a98844b89df1f8f10580785e3efa5f03c237f",
+          "relayerRefundRoot": "0x8de9e19408b530463ec768bfe45307db3cbca30968784e72a6dba0e94ae1a01a",
           "slowRelayRoot": "0x0000000000000000000000000000000000000000000000000000000000000000",
           "claimedBitMap": 0,
           "proposer": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c",
-          "unclaimedPoolRebalanceLeafCount": 10,
-          "challengePeriodEndTimestamp": 1723546115
+          "unclaimedPoolRebalanceLeafCount": 11,
+          "challengePeriodEndTimestamp": 1723708955
         },
         "timerAddress": "0x0000000000000000000000000000000000000000",
         "weth": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2"
@@ -590,6 +612,20 @@
     { "address": "0xf7bAc63fc7CEaCf0589F25454Ecf5C2ce904997c" }
   ],
   "abis": {
+    "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b": [
+      "constructor(address _l1Weth, address _crossDomainMessenger, address _l1StandardBridge, address _l1Usdc)",
+      "event MessageRelayed(address target, bytes message)",
+      "event TokensRelayed(address l1Token, address l2Token, uint256 amount, address to)",
+      "function L1_STANDARD_BRIDGE() view returns (address)",
+      "function L1_WETH() view returns (address)",
+      "function L2_GAS_LIMIT() view returns (uint32)",
+      "function MESSENGER() view returns (address)",
+      "function cctpTokenMessenger() view returns (address)",
+      "function recipientCircleDomainId() view returns (uint32)",
+      "function relayMessage(address target, bytes message) payable",
+      "function relayTokens(address l1Token, address l2Token, uint256 amount, address to) payable",
+      "function usdcToken() view returns (address)"
+    ],
     "0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828": [
       "constructor()",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",

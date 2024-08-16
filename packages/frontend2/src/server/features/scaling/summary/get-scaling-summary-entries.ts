@@ -1,167 +1,52 @@
-import {
-  layer2s as LAYER_2S,
-  layer3s as LAYER_3S,
-  type Layer2,
-  type Layer3,
-} from '@l2beat/config'
-import {
-  assert,
-  type ImplementationChangeReportApiResponse,
-  type ProjectsVerificationStatuses,
-} from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
+import { layer2s, layer3s } from '@l2beat/config'
+import { notUndefined } from '@l2beat/shared-pure'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
-import { type TvlResponse } from '../tvl/utils/get-tvl'
-import { getTvlStats } from '../tvl/utils/get-tvl-stats'
-import { getTvlWarnings } from '../tvl/utils/get-tvl-warnings'
-import { getTvlWithChange } from '../tvl/utils/get-tvl-with-change'
+import { get7dTvlBreakdown } from '../tvl/utils/get-7d-tvl-breakdown'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
-import {
-  type ScalingSummaryLayer2sEntry,
-  type ScalingSummaryLayer3sEntry,
-} from './types'
 
-export async function getScalingSummaryEntries(tvl: TvlResponse) {
-  // NOTE: This is a temporary solution to keep the current behavior & will be removed in L2B-6115.
-  const preprocessedTvl = Object.fromEntries(
-    Object.entries(tvl.projects).map(([projectId, data]) => [
-      projectId,
-      data.charts.hourly.data.at(-1)?.[1] ?? 0,
-    ]),
-  )
-  const orderedLayer2s = orderByTvl(LAYER_2S, preprocessedTvl)
-  const orderedLayer3s = orderByTvl(LAYER_3S, preprocessedTvl)
-
+export async function getScalingSummaryEntries() {
   const implementationChangeReport = await getImplementationChangeReport()
   const projectsVerificationStatuses = await getProjectsVerificationStatuses()
+  const tvl = await get7dTvlBreakdown()
 
-  return {
-    layer2s: getLayer2s({
-      projects: orderedLayer2s,
-      tvl,
-      implementationChangeReport,
-      projectsVerificationStatuses,
-    }),
-    layer3s: getLayer3s({
-      projects: orderedLayer3s,
-      tvl,
-      implementationChangeReport,
-      projectsVerificationStatuses,
-    }),
-  }
-}
+  const projects = [...layer2s, ...layer3s]
 
-interface Params<T> {
-  projects: T[]
-  tvl: TvlResponse
-  implementationChangeReport: ImplementationChangeReportApiResponse
-  projectsVerificationStatuses: ProjectsVerificationStatuses
-}
-
-function getLayer2s(params: Params<Layer2>): ScalingSummaryLayer2sEntry[] {
-  const {
-    projects,
-    tvl,
-    implementationChangeReport,
-    projectsVerificationStatuses,
-  } = params
-  const entries = projects.map((layer2) => {
-    const projectTvl = tvl.projects[layer2.id.toString()]
-
-    const associatedTokens = layer2.config.associatedTokens ?? []
-    const stats = projectTvl
-      ? getTvlStats(projectTvl, layer2.display.name, associatedTokens)
-      : undefined
-    const { tvl: aggregateTvl } = getTvlWithChange(tvl.layers2s)
-
-    const isVerified = !!projectsVerificationStatuses[layer2.id.toString()]
+  const entries = projects.map((project) => {
+    const isVerified = !!projectsVerificationStatuses[project.id.toString()]
     const hasImplementationChanged =
-      !!implementationChangeReport.projects[layer2.id.toString()]
+      !!implementationChangeReport.projects[project.id.toString()]
 
-    const entry: ScalingSummaryLayer2sEntry = {
-      entryType: 'summary',
+    const latestTvl = tvl.projects[project.id.toString()]
+
+    return {
+      entryType: 'scaling' as const,
       ...getCommonScalingEntry({
-        project: layer2,
+        project,
         isVerified,
         hasImplementationChanged,
       }),
-      risks: getL2Risks(layer2.riskView),
-      tvlData:
-        stats && projectTvl && escrowsConfigured(layer2)
-          ? {
-              tvl: stats.latestTvl,
-              tvlBreakdown: stats.tvlBreakdown,
-              sevenDayChange: stats.sevenDayChange,
-              tvlWarnings: getTvlWarnings(projectTvl, layer2, associatedTokens),
-              excludedTokens: undefined,
-              marketShare: stats.latestTvl / aggregateTvl,
-            }
-          : undefined,
+      tvl: {
+        breakdown: latestTvl?.breakdown,
+        change: latestTvl?.change,
+        associatedTokens: project.config.associatedTokens ?? [],
+        warnings: [project.display.tvlWarning].filter(notUndefined),
+      },
+      marketShare: latestTvl && latestTvl.breakdown.total / tvl.total,
+      risks: project.type === 'layer2' ? getL2Risks(project.riskView) : [],
     }
-
-    return entry
   })
 
-  return compact(entries)
+  // Use data we already pulled instead of fetching it again
+  const remappedForOrdering = Object.fromEntries(
+    Object.entries(tvl.projects).map(([k, v]) => [k, v.breakdown.total]),
+  )
+
+  return orderByTvl(entries, remappedForOrdering)
 }
 
-function getLayer3s(params: Params<Layer3>): ScalingSummaryLayer3sEntry[] {
-  const {
-    projects,
-    tvl,
-    implementationChangeReport,
-    projectsVerificationStatuses,
-  } = params
-  const entries = projects.map((layer3) => {
-    const projectTvl = tvl.projects[layer3.id.toString()]
-    const associatedTokens = layer3.config.associatedTokens ?? []
-    const stats = projectTvl
-      ? getTvlStats(projectTvl, layer3.display.name, associatedTokens)
-      : undefined
-
-    const hostChainName =
-      layer3.hostChain === 'Multiple'
-        ? ('Multiple' as const)
-        : LAYER_2S.find((l) => l.id === layer3.hostChain)?.display.name
-    assert(
-      hostChainName !== undefined,
-      'Programmer Error: Can not find host chain',
-    )
-
-    const isVerified = !!projectsVerificationStatuses[layer3.id.toString()]
-    const hasImplementationChanged =
-      !!implementationChangeReport.projects[layer3.id.toString()]
-
-    const entry: ScalingSummaryLayer3sEntry = {
-      entryType: 'summary',
-      ...getCommonScalingEntry({
-        project: layer3,
-        isVerified,
-        hasImplementationChanged,
-      }),
-      risks: undefined,
-      tvlData:
-        stats && projectTvl && escrowsConfigured(layer3)
-          ? {
-              tvl: stats.latestTvl,
-              tvlBreakdown: stats.tvlBreakdown,
-              sevenDayChange: stats.sevenDayChange,
-              tvlWarnings: getTvlWarnings(projectTvl, layer3, associatedTokens),
-              excludedTokens: undefined,
-            }
-          : undefined,
-      hostChainName: hostChainName,
-    }
-
-    return entry
-  })
-
-  return compact(entries)
-}
-
-function escrowsConfigured(project: Layer2 | Layer3) {
-  return project.config.escrows.length > 0
-}
+export type ScalingSummaryEntry = Awaited<
+  ReturnType<typeof getScalingSummaryEntries>
+>[number]

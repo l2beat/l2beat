@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa58f80eeae7359035a0c626cbe9fb22ebc0858be
+
+# Diff at Thu, 15 Aug 2024 07:10:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20525613
+- current block number: 20532448
+
+## Description
+
+The pending owner now became an actual owner. No pending owner currently.
+
+## Watched changes
+
+```diff
+    contract TransactionFiltererDenyList (0xA8998F231a660Eca365B382943c71ad9b7619139) {
+    +++ description: None
+      values.owner:
+-        "0x143524d0ac8D7f35a2133b6B0a7567e0E3393137"
++        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
+      values.pendingOwner:
+-        "0xC774CDFc4d2AcE7aaD12D77B6A3752a393E1ab8b"
++        "0x0000000000000000000000000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0xf60327b26a1b02b58bfd289f249ed0d4831ec61f
 
 # Diff at Wed, 14 Aug 2024 08:16:16 GMT:

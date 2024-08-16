@@ -24,7 +24,10 @@ const getCachedLatestTvlUsd = cache(
 
     return Object.fromEntries(
       Object.entries(groupedByProject).map(([projectId, records]) => {
-        const summedPerSource = sumValuesPerSource(records, true)
+        const summedPerSource = sumValuesPerSource(records, {
+          forTotal: true,
+          excludeAssociatedTokens: false,
+        })
         const summed = sum(Object.values(summedPerSource))
         return [projectId, Number(summed) / 100]
       }),

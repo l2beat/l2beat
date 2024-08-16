@@ -10,7 +10,6 @@ import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
 import { getActivityPage } from './scaling/activity'
 import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
-import { getLivenessPage } from './scaling/liveness'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getSummaryPage } from './scaling/summary'
 import { getTvlPage } from './scaling/tvl'
@@ -23,7 +22,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     activityApiResponse,
     verificationStatus,
     tvlBreakdownApiResponse,
-    livenessApiResponse,
     implementationChange,
   } = pagesData
 
@@ -57,16 +55,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
       ...getProjectTvlBreakdownPages(config, {
         tvlApiResponse,
         tvlBreakdownApiResponse,
-      }),
-    )
-  }
-
-  if (config.features.liveness && livenessApiResponse) {
-    pages.push(
-      getLivenessPage(config, {
-        livenessApiResponse,
-        tvlApiResponse,
-        implementationChange,
       }),
     )
   }

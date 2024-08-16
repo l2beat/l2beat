@@ -8,6 +8,7 @@ import { formatNumber } from '~/utils/format-number'
 import { formatCurrency } from '~/utils/format'
 import { assertUnreachable } from '@l2beat/shared-pure'
 import { type SeriesStyle } from '../core/styles'
+import { useCallback, useMemo } from 'react'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
@@ -26,48 +27,64 @@ interface Params {
   chart: CostsChartResponse | undefined
 }
 
-export function getCommonCostsChartProps({ milestones, unit, chart }: Params) {
-  const mappedMilestones = mapMilestones(milestones)
+export function useCommonCostsChartProps({ milestones, unit, chart }: Params) {
+  const mappedMilestones = useMemo(
+    () => mapMilestones(milestones),
+    [milestones],
+  )
 
-  const formatYAxisLabel = (value: number) =>
-    unit === 'gas'
-      ? formatNumber(value)
-      : formatCurrency(value, unit, { showLessThanMinimum: false })
+  const formatYAxisLabel = useCallback(
+    (value: number) =>
+      unit === 'gas'
+        ? formatNumber(value)
+        : formatCurrency(value, unit, { showLessThanMinimum: false }),
+    [unit],
+  )
 
-  const columns =
-    chart?.data.map((dataPoint) => {
-      const [timestamp] = dataPoint
+  const columns = useMemo(
+    () =>
+      chart?.data.map((dataPoint) => {
+        const [timestamp] = dataPoint
 
-      return {
-        values: getValues(dataPoint, unit),
-        data: getData(dataPoint, unit),
-        milestone: mappedMilestones[timestamp],
-      }
-    }) ?? []
+        return {
+          values: getValues(dataPoint, unit),
+          data: getData(dataPoint, unit),
+          milestone: mappedMilestones[timestamp],
+        }
+      }) ?? [],
+    [chart?.data, mappedMilestones, unit],
+  )
 
-  const rangeStart = chart?.data[0]?.[0] ?? 0
-  const rangeEnd = chart?.data[chart.data.length - 1]?.[0] ?? 1
-  const chartRange: [number, number] = [rangeStart, rangeEnd]
+  const chartRange: [number, number] = useMemo(
+    () => [
+      chart?.data[0]?.[0] ?? 0,
+      chart?.data[chart.data.length - 1]?.[0] ?? 1,
+    ],
+    [chart?.data],
+  )
 
-  const valuesStyle: SeriesStyle[] = [
-    {
-      line: 'blue',
-      fill: 'blue',
-      point: 'circle',
-    },
-    {
-      line: 'light-yellow',
-      fill: 'light-yellow',
-    },
-    {
-      line: 'pink',
-      fill: 'pink',
-    },
-    {
-      line: 'purple',
-      fill: 'purple',
-    },
-  ]
+  const valuesStyle: SeriesStyle[] = useMemo(
+    () => [
+      {
+        line: 'blue',
+        fill: 'blue',
+        point: 'circle',
+      },
+      {
+        line: 'light-yellow',
+        fill: 'light-yellow',
+      },
+      {
+        line: 'pink',
+        fill: 'pink',
+      },
+      {
+        line: 'purple',
+        fill: 'purple',
+      },
+    ],
+    [],
+  )
 
   return {
     formatYAxisLabel,

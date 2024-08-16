@@ -1,7 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import React from 'react'
 import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
 import { Chart } from '~/app/_components/chart/core/chart'
@@ -16,7 +16,7 @@ import { Square } from '../../square'
 import { useChartLoading } from '../core/chart-loading-context'
 import { type CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { ChartTimeRangeControls } from '../controls/chart-time-range-controls'
-import { getCommonCostsChartProps } from './common'
+import { useCommonCostsChartProps } from './common'
 
 interface CostsChartPointData {
   timestamp: number
@@ -41,15 +41,12 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     filter: { type: 'projects', projectIds: [projectId] },
   })
 
-  const { chartRange, columns, formatYAxisLabel, valuesStyle } = useMemo(
-    () =>
-      getCommonCostsChartProps({
-        chart,
-        milestones,
-        unit,
-      }),
-    [chart, milestones, unit],
-  )
+  const { chartRange, columns, formatYAxisLabel, valuesStyle } =
+    useCommonCostsChartProps({
+      chart,
+      milestones,
+      unit,
+    })
 
   return (
     <section className="flex flex-col gap-4">

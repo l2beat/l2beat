@@ -498,7 +498,7 @@ export function NavWrapper({
           title: 'Liveness',
           icon: LivenessIcon,
           href: '/scaling/liveness',
-          enabled: config.features.liveness,
+          enabled: true,
         },
         {
           title: 'Finality',
