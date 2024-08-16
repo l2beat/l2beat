@@ -24,8 +24,8 @@ import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
-import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
 import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
+import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
 
 interface Props {
   milestones: Milestone[]

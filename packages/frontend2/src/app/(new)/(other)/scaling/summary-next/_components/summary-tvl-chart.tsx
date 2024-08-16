@@ -22,8 +22,8 @@ import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
-import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
 import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
+import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
 
 interface TvlChartPointData {
   timestamp: number

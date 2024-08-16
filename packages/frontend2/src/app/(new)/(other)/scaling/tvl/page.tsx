@@ -6,11 +6,11 @@ import { getImplementationChangeReport } from '~/server/features/implementation-
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-detailed-7d-tvl-breakdown'
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
-import { api, HydrateClient } from '~/trpc/server'
+import { HydrateClient, api } from '~/trpc/server'
+import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { SummaryTvlChart } from './_components/scaling-tvl-chart'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
-import { getCookie } from '~/utils/cookies/server'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
