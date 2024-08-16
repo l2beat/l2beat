@@ -9,17 +9,9 @@ import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { type SeriesStyle } from '../core/styles'
 import { mapMilestones } from '../utils/map-milestones'
+import { type CostsChartPointData } from './costs-chart-hover'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
-
-interface CostsChartPointData {
-  timestamp: number
-  total: number
-  calldata: number
-  blobs: number | undefined
-  compute: number
-  overhead: number
-}
 
 interface Params {
   milestones: Milestone[]

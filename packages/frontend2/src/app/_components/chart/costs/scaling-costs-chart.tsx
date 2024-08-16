@@ -4,7 +4,6 @@ import { type Milestone } from '@l2beat/config'
 import React from 'react'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
-import { formatCostValue } from '~/app/(new)/(other)/scaling/costs/_utils/format-cost-value'
 import { Chart } from '~/app/_components/chart/core/chart'
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
@@ -12,32 +11,17 @@ import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
-import { formatTimestamp } from '~/utils/dates'
-import { HorizontalSeparator } from '../../horizontal-separator'
-import { Square } from '../../square'
 import { CostsChartTimeRangeControls } from '../controls/costs-chart-time-range-controls'
 import { useChartLoading } from '../core/chart-loading-context'
 import { useCommonCostsChartProps } from './common'
+import { CostsChartHover } from './costs-chart-hover'
 
-interface CostsChartPointData {
-  timestamp: number
-  total: number
-  calldata: number
-  blobs: number | undefined
-  compute: number
-  overhead: number
-}
 interface Props {
   milestones: Milestone[]
   tag?: string
-  withoutHeader?: boolean
 }
 
-export function ScalingCostsChart({
-  milestones,
-  tag = 'costs',
-  withoutHeader,
-}: Props) {
+export function ScalingCostsChart({ milestones, tag = 'costs' }: Props) {
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
@@ -55,14 +39,16 @@ export function ScalingCostsChart({
 
   return (
     <section className="flex flex-col gap-4">
-      {!withoutHeader && <Header />}
+      <Header />
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
         formatYAxisLabel={formatYAxisLabel}
         range={chartRange}
         useLogScale={scale === 'log'}
-        renderHoverContents={(data) => <ChartHover data={data} unit={unit} />}
+        renderHoverContents={(data) => (
+          <CostsChartHover data={data} unit={unit} />
+        )}
       >
         <CostsChartTimeRangeControls
           timeRange={range}
@@ -78,74 +64,6 @@ export function ScalingCostsChart({
         />
       </ChartProvider>
     </section>
-  )
-}
-
-function ChartHover({
-  data,
-  unit,
-}: { data: CostsChartPointData; unit: CostsUnit }) {
-  return (
-    <div>
-      <div className="mb-1 whitespace-nowrap">
-        {formatTimestamp(data.timestamp, {
-          mode: 'datetime',
-        })}
-      </div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50">Total</span>
-        <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.total, unit)}
-        </span>
-      </div>
-      <HorizontalSeparator className="my-1" />
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
-          <Square variant="calldata" />
-          <span className="text-sm text-gray-700 dark:text-gray-50">
-            Calldata
-          </span>
-        </div>
-        <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.calldata, unit)}
-        </span>
-      </div>
-      {data.blobs ? (
-        <div className="flex w-full items-center justify-between gap-2">
-          <div className="flex items-center gap-1">
-            <Square variant="blobs" />
-            <span className="text-sm text-gray-700 dark:text-gray-50">
-              Blobs
-            </span>
-          </div>
-          <span className="whitespace-nowrap font-bold tabular-nums">
-            {formatCostValue(data.blobs, unit)}
-          </span>
-        </div>
-      ) : null}
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
-          <Square variant="compute" />
-          <span className="text-sm text-gray-700 dark:text-gray-50">
-            Compute
-          </span>
-        </div>
-        <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.compute, unit)}
-        </span>
-      </div>
-      <div className="flex w-full items-center justify-between gap-2">
-        <div className="flex items-center gap-1">
-          <Square variant="overhead" />
-          <span className="text-sm text-gray-700 dark:text-gray-50">
-            Overhead
-          </span>
-        </div>
-        <span className="whitespace-nowrap font-bold tabular-nums">
-          {formatCostValue(data.overhead, unit)}
-        </span>
-      </div>
-    </div>
   )
 }
 
