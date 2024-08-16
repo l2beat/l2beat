@@ -12,8 +12,8 @@ import {
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
 import { formatPercent } from '~/utils/get-percentage-change'
-import { TotalCell } from '../total-cell'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
+import { TotalCell } from '../total-cell'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 

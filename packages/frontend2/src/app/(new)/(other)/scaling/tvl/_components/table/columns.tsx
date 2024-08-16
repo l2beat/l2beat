@@ -6,8 +6,8 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { cn } from '~/utils/cn'
 import { TotalCell } from '../../../_components/total-cell'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
-import { ValueLockedCell } from './value-locked-cell'
 import { TotalValueLockedCell } from './total-value-locked-cell'
+import { ValueLockedCell } from './value-locked-cell'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
