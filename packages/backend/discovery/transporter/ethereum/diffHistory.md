@@ -8,7 +8,7 @@ Generated with discovered.json: 0x6255d653535af932c7b0ee06b19ba0cf45732392
 
 ## Description
 
-Some changes in the ManyChainMultiSig signers.
+As a summary - two signers were replaced and one new one added. The list with changes is long because signing groups are arranged in a tree. Each group is an interior node and has its own quorum. Signers are the leaves of the tree.
 
 ## Watched changes
 
