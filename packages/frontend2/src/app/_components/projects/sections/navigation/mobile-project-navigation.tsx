@@ -54,11 +54,11 @@ export function MobileProjectNavigation({ sections }: Props) {
           Summary
         </a>
         {sections.map((section) => {
-          const selected = section.props.id === currentSection?.id
-
           if (section.excludeFromNavigation) {
             return null
           }
+          const selected = section.props.id === currentSection?.id
+
           return (
             <a
               key={section.props.id}

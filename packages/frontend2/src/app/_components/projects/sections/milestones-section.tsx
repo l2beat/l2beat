@@ -21,6 +21,7 @@ export function MilestonesSection(props: MilestonesSectionProps) {
       sectionOrder={props.sectionOrder}
     >
       <div className="relative">
+        {/* TODO (scaling-project-page): Add expandable container */}
         {/* <ExpandableContainer
         className="relative"
         gradientClassName="from-white dark:from-neutral-900 md:from-gray-100 md:dark:from-zinc-900"

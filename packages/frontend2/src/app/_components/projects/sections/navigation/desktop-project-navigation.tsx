@@ -107,10 +107,10 @@ function ProjectNavigationList({
         Summary
       </a>
       {sections.map((section, i) => {
-        const selected = currentSection?.id === section.props.id
         if (section.excludeFromNavigation) {
           return null
         }
+        const selected = currentSection?.id === section.props.id
         return (
           <a
             key={section.props.id}
