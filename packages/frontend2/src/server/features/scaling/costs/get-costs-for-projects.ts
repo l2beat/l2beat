@@ -24,7 +24,7 @@ export async function getCostsForProjects(
   const trackedTxsProjects = getTrackedTxsProjects(
     projects,
     configurations,
-    'costs',
+    'l2costs',
   )
 
   const records = await db.aggregatedL2Cost.getByProjectsAndTimeRange(

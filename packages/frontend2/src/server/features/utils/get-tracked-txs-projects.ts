@@ -9,7 +9,7 @@ export type TrackedTxsProject = ReturnType<typeof getTrackedTxsProjects>[number]
 export function getTrackedTxsProjects(
   projects: Layer2[],
   configurations: IndexerConfigurationRecord[],
-  type: 'liveness' | 'costs',
+  type: 'liveness' | 'l2costs',
 ) {
   return projects
     .map((project) => {
