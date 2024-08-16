@@ -15,13 +15,21 @@ export function toTableRows({
         breakdown: project?.tvl.breakdown
           ? {
               ...project?.tvl.breakdown,
-              total: excludeAssociatedTokens
-                ? project?.tvl.breakdown.total -
-                  project?.tvl.breakdown.associated
-                : project?.tvl.breakdown.total,
+              external: excludeAssociatedTokens
+                ? project?.tvl.breakdown.external -
+                  project?.tvl.breakdown.associated.external
+                : project?.tvl.breakdown.external,
+              canonical: excludeAssociatedTokens
+                ? project?.tvl.breakdown.canonical -
+                  project?.tvl.breakdown.associated.canonical
+                : project?.tvl.breakdown.canonical,
+              native: excludeAssociatedTokens
+                ? project?.tvl.breakdown.native -
+                  project?.tvl.breakdown.associated.native
+                : project?.tvl.breakdown.native,
               associated: excludeAssociatedTokens
-                ? 0
-                : project?.tvl.breakdown.associated,
+                ? project?.tvl.breakdown.associated
+                : undefined,
             }
           : undefined,
       },

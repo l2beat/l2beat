@@ -6,8 +6,44 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { TotalCell } from '../../../_components/total-cell'
 import { cn } from '~/utils/cn'
+import { ValueLockedCell } from './value-locked-cell'
 
 const columnHelper = createColumnHelper<ScalingTvlEntry>()
+
+const totalColumn = columnHelper.accessor('tvl', {
+  id: 'total',
+  header: 'Total',
+  cell: (ctx) => {
+    const value = ctx.getValue()
+    if (!value.breakdown) {
+      return <UpcomingBadge />
+    }
+    return (
+      <TotalCell
+        associatedTokenSymbols={value.associatedTokens}
+        tvlWarnings={value.warnings}
+        breakdown={{
+          total:
+            value.breakdown.native +
+            value.breakdown.external +
+            value.breakdown.canonical,
+          ether: value.breakdown.ether,
+          stablecoin: value.breakdown.stablecoin,
+          associated:
+            value.breakdown.associated.native +
+            value.breakdown.associated.external +
+            value.breakdown.associated.canonical,
+        }}
+        change={value.totalChange}
+      />
+    )
+  },
+  sortUndefined: 'last',
+  meta: {
+    align: 'center',
+    tooltip: 'Total = Canonical + External + Native',
+  },
+})
 
 export const scalingTvlCokumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -36,35 +72,10 @@ export const scalingTvlCokumns = [
   columnHelper.accessor('name', {
     cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
   }),
-
   columnHelper.group({
     id: 'data',
     header: undefined,
-    columns: [
-      columnHelper.accessor('tvl', {
-        id: 'total',
-        header: 'Total',
-        cell: (ctx) => {
-          const value = ctx.getValue()
-          if (!value.breakdown) {
-            return <UpcomingBadge />
-          }
-          return (
-            <TotalCell
-              associatedTokenSymbols={value.associatedTokens}
-              tvlWarnings={value.warnings}
-              breakdown={value.breakdown}
-              change={value.change}
-            />
-          )
-        },
-        sortUndefined: 'last',
-        meta: {
-          align: 'center',
-          tooltip: 'Total = Canonical + External + Native',
-        },
-      }),
-    ],
+    columns: [totalColumn],
   }),
   columnHelper.accessor('tvl', {
     id: 'canonical',
@@ -76,11 +87,10 @@ export const scalingTvlCokumns = [
       }
 
       return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
+        <ValueLockedCell
+          value={value.breakdown.canonical}
+          change={value.change?.canonical}
+          tokens={[]}
         />
       )
     },
@@ -102,11 +112,10 @@ export const scalingTvlCokumns = [
       }
 
       return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
+        <ValueLockedCell
+          value={value.breakdown.external}
+          change={value.change?.external}
+          tokens={[]}
         />
       )
     },
@@ -128,11 +137,10 @@ export const scalingTvlCokumns = [
       }
 
       return (
-        <TotalCell
-          associatedTokenSymbols={value.associatedTokens}
-          tvlWarnings={value.warnings}
-          breakdown={value.breakdown}
-          change={value.change}
+        <ValueLockedCell
+          value={value.breakdown.native}
+          change={value.change?.native}
+          tokens={[]}
         />
       )
     },
