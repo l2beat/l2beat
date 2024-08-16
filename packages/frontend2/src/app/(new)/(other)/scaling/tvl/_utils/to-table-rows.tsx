@@ -16,20 +16,24 @@ export function toTableRows({
           ? {
               ...project?.tvl.breakdown,
               external: excludeAssociatedTokens
-                ? project?.tvl.breakdown.external -
-                  project?.tvl.breakdown.associated.external
-                : project?.tvl.breakdown.external,
+                ? project.tvl.breakdown.external -
+                  project.tvl.breakdown.associated.external
+                : project.tvl.breakdown.external,
               canonical: excludeAssociatedTokens
-                ? project?.tvl.breakdown.canonical -
-                  project?.tvl.breakdown.associated.canonical
-                : project?.tvl.breakdown.canonical,
+                ? project.tvl.breakdown.canonical -
+                  project.tvl.breakdown.associated.canonical
+                : project.tvl.breakdown.canonical,
               native: excludeAssociatedTokens
-                ? project?.tvl.breakdown.native -
-                  project?.tvl.breakdown.associated.native
-                : project?.tvl.breakdown.native,
-              associated: excludeAssociatedTokens
-                ? project?.tvl.breakdown.associated
-                : undefined,
+                ? project.tvl.breakdown.native -
+                  project.tvl.breakdown.associated.native
+                : project.tvl.breakdown.native,
+              associated: !excludeAssociatedTokens
+                ? project.tvl.breakdown.associated
+                : {
+                    native: 0,
+                    canonical: 0,
+                    external: 0,
+                  },
             }
           : undefined,
       },

@@ -3,12 +3,12 @@ import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { TotalCell } from '../../../_components/total-cell'
 import { cn } from '~/utils/cn'
 import { ValueLockedCell } from './value-locked-cell'
+import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 
-const columnHelper = createColumnHelper<ScalingTvlEntry>()
+const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
 const totalColumn = columnHelper.accessor('tvl', {
   id: 'total',
