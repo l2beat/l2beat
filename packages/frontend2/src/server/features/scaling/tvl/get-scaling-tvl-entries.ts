@@ -35,6 +35,7 @@ export function getScalingTvlEntries({
           isVerified,
           hasImplementationChanged,
         }),
+        href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
         entryType: 'scaling' as const,
         tvl: {
           breakdown: latestTvl?.breakdown,
