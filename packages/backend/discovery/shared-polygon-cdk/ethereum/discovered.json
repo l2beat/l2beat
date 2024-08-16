@@ -1,7 +1,7 @@
 {
   "name": "shared-polygon-cdk",
   "chain": "ethereum",
-  "blockNumber": 20512764,
+  "blockNumber": 20532454,
   "configHash": "0x8030550dbc89f807813311b14765b05cad184c040087b7442a7bf31243db9d3c",
   "version": 11,
   "contracts": [
@@ -69,7 +69,7 @@
         "gasTokenAddress": "0x0000000000000000000000000000000000000000",
         "gasTokenMetadata": "0x",
         "gasTokenNetwork": 0,
-        "getRoot": "0x618770c5ac1aa4cae5f3e75c42c3db02fe6dc9f05a3985e6f2f2a5e2a4b2260b",
+        "getRoot": "0x6d4e17863cce34d1ea7ca2675e996e719d7f223d41538bd27bd9c79942b41c66",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "networkID": 0,
@@ -220,7 +220,7 @@
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "emergencyStateCount": 1,
         "getBatchFee": "100000000000000000",
-        "getRollupExitRoot": "0x72fe8ecf32a029a7ceee7a6da8b69aef75163f4f9b34831175155048537b8870",
+        "getRollupExitRoot": "0xccc172fcd208735c2c06aec2c5d4f0bdab33f7b64f85148a156e5ee7b5fc3d27",
         "globalExitRootManager": "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb",
         "isEmergencyState": false,
         "isVerifyingBatches": [
@@ -232,9 +232,9 @@
           [true],
           [true],
           [true],
-          [false]
+          [true]
         ],
-        "lastAggregationTimestamp": 1723468151,
+        "lastAggregationTimestamp": 1723705235,
         "lastDeactivatedEmergencyStateTimestamp": 1711323791,
         "nondeterministicPendingState": [],
         "pendingStateTimeout": 432000,
@@ -315,8 +315,8 @@
             "0x0775e11309d75aA6b0967917fB0213C5673eDf81"
           ]
         ],
-        "totalSequencedBatches": 283619,
-        "totalVerifiedBatches": 283164,
+        "totalSequencedBatches": 288411,
+        "totalVerifiedBatches": 287961,
         "trustedAggregatorTimeout": 432000,
         "verifyBatchTimeTarget": 1800
       },
@@ -345,8 +345,8 @@
         "$admin": "0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A",
         "$implementation": "0x2E38cD55163137483E30580Cb468C2dFf1d85077",
         "bridgeAddress": "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe",
-        "depositCount": 41236,
-        "getRoot": "0x40efe9a38c6102acc29cf9f714066be0d8d761d43d0c3d9edf2c66e209908b55",
+        "depositCount": 41490,
+        "getRoot": "0xa1e9bb902749a2e20ee6d37c105c5e51b933a31f3afa3b6bbd982ca6b4fb6186",
         "rollupManager": "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
       },
       "derivedName": "PolygonZkEVMGlobalExitRootV2"

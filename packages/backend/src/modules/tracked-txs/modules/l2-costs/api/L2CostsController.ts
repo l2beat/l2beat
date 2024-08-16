@@ -9,7 +9,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { IndexerService } from '../../../../../tools/uif/IndexerService'
-import { getSyncedUntil } from '../../utils/getSyncedUntil'
+import { getSyncedUntil } from '../../../utils/getSyncedUntil'
 
 const MAX_DAYS = 180
 

@@ -5,7 +5,7 @@ import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import {
   TypeCell,
-  TypeColumnTooltip,
+  TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
@@ -38,7 +38,6 @@ export const columns = [
       cellClassName: '!pr-0 md:pl-1',
     },
   }),
-
   columnHelper.accessor('name', {
     cell: (ctx) => (
       <ProjectNameCell
@@ -50,7 +49,7 @@ export const columns = [
   columnHelper.accessor('category', {
     header: 'Type',
     meta: {
-      tooltip: <TypeColumnTooltip />,
+      tooltip: <TypeExplanationTooltip />,
     },
     cell: (ctx) => (
       <TypeCell provider={ctx.row.original.provider}>

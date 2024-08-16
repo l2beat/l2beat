@@ -56,4 +56,17 @@ export class AnomaliesRepository extends BaseRepository {
       .execute()
     return rows.map(toRecord)
   }
+
+  async getByProjectIdsFrom(
+    projectIds: ProjectId[],
+    from: UnixTime,
+  ): Promise<AnomalyRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.anomalies')
+      .select(selectAnomaly)
+      .where('project_id', 'in', projectIds)
+      .where('timestamp', '>=', from.toDate())
+      .execute()
+    return rows.map(toRecord)
+  }
 }

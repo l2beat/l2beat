@@ -1,12 +1,12 @@
 import { BackendProject } from '@l2beat/config'
+import { SavedConfiguration, UnixTime } from '@l2beat/shared-pure'
+import { expect, mockObject } from 'earl'
+
 import {
   TrackedTxConfigEntry,
   TrackedTxLivenessConfig,
   createTrackedTxId,
 } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
-import { expect, mockObject } from 'earl'
-import { SavedConfiguration } from '../../../../../tools/uif/multi/types'
 import { getActiveConfigurations } from './getActiveConfigurations'
 
 describe(getActiveConfigurations.name, () => {
