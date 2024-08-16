@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x9feacdb29601d60c3d8eaf1d7584ad76a11ea197
+
+# Diff at Fri, 16 Aug 2024 14:54:57 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@3c09e48bec1d2cc69117ac9d7bd975260c84ebf8 block: 20290315
+- current block number: 20541920
+
+## Description
+
+Allows permissioned games to be counted.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20290315 (main branch discovery), not current.
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.permissionedGamesTotal:
++        0
+    }
+```
+
 Generated with discovered.json: 0xd5a287f312aefcca647deda382227786f764fe49
 
 # Diff at Fri, 09 Aug 2024 12:00:59 GMT:
