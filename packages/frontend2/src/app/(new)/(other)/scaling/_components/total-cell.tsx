@@ -9,6 +9,7 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/format-number'
@@ -36,6 +37,19 @@ export function TotalCell({ layout = 'end', ...data }: TotalCellProps) {
     data.breakdown.associated -
     data.breakdown.ether -
     data.breakdown.stablecoin
+
+  if (totalTvl === 0) {
+    return (
+      <div
+        className={cn(
+          'flex flex-col',
+          layout === 'end' ? 'items-end' : 'items-center',
+        )}
+      >
+        <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
+      </div>
+    )
+  }
 
   return (
     <Tooltip>
