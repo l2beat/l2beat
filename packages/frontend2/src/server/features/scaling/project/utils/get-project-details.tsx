@@ -69,6 +69,16 @@ export function getProjectDetails({
 
   const items: ProjectDetailsSection[] = []
 
+  items.push({
+    type: 'ChartSection',
+    props: {
+      id: 'onchain-costs',
+      title: 'Onchain costs',
+      projectId: project.id,
+      milestones: project.milestones ?? [],
+    },
+  })
+
   if (
     !project.isUpcoming &&
     project.milestones &&

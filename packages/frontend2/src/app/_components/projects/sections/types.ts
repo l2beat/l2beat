@@ -1,3 +1,4 @@
+import { type ChartSectionProps } from './chart-section'
 import { type ContractsSectionProps } from './contracts/contracts-section'
 import { type DetailedDescriptionSectionProps } from './detailed-description-section'
 import { type KnowledgeNuggetsSectionProps } from './knowledge-nuggets/knowledge-nuggets-section'
@@ -13,6 +14,9 @@ import { type StateValidationSectionProps } from './state-validation-section'
 import { type TechnologySectionProps } from './technology/technology-section'
 
 export type ProjectSectionId =
+  | 'tvl'
+  | 'activity'
+  | 'onchain-costs'
   | 'detailed-description'
   | 'milestones'
   | 'risk-summary'
@@ -37,6 +41,11 @@ export type ProjectSectionProps = Omit<
 >
 
 type ProjectDetailsProps<T> = Omit<T, 'sectionOrder'>
+
+export interface ProjectDetailsChartSection {
+  type: 'ChartSection'
+  props: ProjectDetailsProps<ChartSectionProps>
+}
 
 export interface ProjectDetailsDetailedDescriptionSection {
   type: 'DetailedDescriptionSection'
@@ -106,6 +115,7 @@ export interface ProjectDetailsUpcomingDisclaimer {
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
 } & (
+  | ProjectDetailsChartSection
   | ProjectDetailsDetailedDescriptionSection
   | ProjectDetailsMilestonesSection
   | ProjectDetailsRiskSummarySection

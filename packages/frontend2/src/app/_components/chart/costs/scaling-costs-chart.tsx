@@ -1,8 +1,7 @@
 'use client'
 
 import { type Milestone } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
-import { useCallback, useMemo } from 'react'
+import { useMemo } from 'react'
 import React from 'react'
 import { useCostsTimeRangeContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-time-range-context'
 import { useCostsUnitContext } from '~/app/(new)/(other)/scaling/costs/_components/costs-unit-context'
@@ -12,19 +11,14 @@ import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import {
-  type CostsChartResponse,
-  type CostsUnit,
-} from '~/server/features/scaling/costs/types'
+import { type CostsUnit } from '~/server/features/scaling/costs/types'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/format'
-import { formatNumber } from '~/utils/format-number'
-import { HorizontalSeparator } from '../horizontal-separator'
-import { Square } from '../square'
-import { CostsChartTimeRangeControls } from './controls/costs-chart-time-range-controls'
-import { useChartLoading } from './core/chart-loading-context'
-import { mapMilestones } from './utils/map-milestones'
+import { HorizontalSeparator } from '../../horizontal-separator'
+import { Square } from '../../square'
+import { CostsChartTimeRangeControls } from '../controls/costs-chart-time-range-controls'
+import { useChartLoading } from '../core/chart-loading-context'
+import { getCommonCostsChartProps } from './common'
 
 interface CostsChartPointData {
   timestamp: number
@@ -37,81 +31,47 @@ interface CostsChartPointData {
 interface Props {
   milestones: Milestone[]
   tag?: string
+  withoutHeader?: boolean
 }
 
-const DENCUN_UPGRADE_TIMESTAMP = 1710288000
-
-export function CostsChart({ milestones, tag = 'costs' }: Props) {
+export function ScalingCostsChart({
+  milestones,
+  tag = 'costs',
+  withoutHeader,
+}: Props) {
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
   const { range, setRange } = useCostsTimeRangeContext()
   const { unit, setUnit } = useCostsUnitContext()
   const { data: chart } = api.scaling.costs.chart.useQuery({
     range,
+    filter: { type: 'all' },
   })
 
-  const mappedMilestones = useMemo(
-    () => mapMilestones(milestones),
-    [milestones],
-  )
-
-  const formatYAxisLabel = useCallback(
-    (value: number) =>
-      unit === 'gas'
-        ? formatNumber(value)
-        : formatCurrency(value, unit, { showLessThanMinimum: false }),
-    [unit],
-  )
-
-  const columns = useMemo(
+  const { chartRange, columns, formatYAxisLabel, valuesStyle } = useMemo(
     () =>
-      chart?.data.map((dataPoint) => {
-        const [timestamp] = dataPoint
-
-        return {
-          values: getValues(dataPoint, unit),
-          data: getData(dataPoint, unit),
-          milestone: mappedMilestones[timestamp],
-        }
-      }) ?? [],
-    [chart?.data, mappedMilestones, unit],
+      getCommonCostsChartProps({
+        chart,
+        milestones,
+        unit,
+      }),
+    [chart, milestones, unit],
   )
-
-  const rangeStart = chart?.data[0]?.[0] ?? 0
-  const rangeEnd = chart?.data[chart.data.length - 1]?.[0] ?? 1
 
   return (
     <section className="flex flex-col gap-4">
-      <Header />
+      {!withoutHeader && <Header />}
       <ChartProvider
         columns={columns}
-        valuesStyle={[
-          {
-            line: 'blue',
-            fill: 'blue',
-            point: 'circle',
-          },
-          {
-            line: 'light-yellow',
-            fill: 'light-yellow',
-          },
-          {
-            line: 'pink',
-            fill: 'pink',
-          },
-          {
-            line: 'purple',
-            fill: 'purple',
-          },
-        ]}
+        valuesStyle={valuesStyle}
         formatYAxisLabel={formatYAxisLabel}
-        range={[rangeStart, rangeEnd]}
+        range={chartRange}
         useLogScale={scale === 'log'}
         renderHoverContents={(data) => <ChartHover data={data} unit={unit} />}
       >
         <CostsChartTimeRangeControls
           timeRange={range}
           setTimeRange={setRange}
-          range={[rangeStart, rangeEnd]}
+          range={chartRange}
         />
         <Chart />
         <UnitAndScaleControls
@@ -240,102 +200,4 @@ function UnitAndScaleControls({
       )}
     </div>
   )
-}
-function getValues(
-  dataPoint: CostsChartResponse['data'][number],
-  unit: CostsUnit,
-) {
-  const [
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    _,
-    overheadGas,
-    overheadEth,
-    overheadUsd,
-    calldataGas,
-    calldataEth,
-    calldataUsd,
-    computeGas,
-    computeEth,
-    computeUsd,
-    blobsGas,
-    blobsEth,
-    blobsUsd,
-  ] = dataPoint
-  switch (unit) {
-    case 'usd':
-      return [
-        { value: overheadUsd + computeUsd + (blobsUsd ?? 0) + calldataUsd },
-        { value: overheadUsd + computeUsd + (blobsUsd ?? 0) },
-        { value: overheadUsd + computeUsd },
-        { value: overheadUsd },
-      ]
-    case 'eth':
-      return [
-        { value: overheadEth + computeEth + (blobsEth ?? 0) + calldataEth },
-        { value: overheadEth + computeEth + (blobsEth ?? 0) },
-        { value: overheadEth + computeEth },
-        { value: overheadEth },
-      ]
-    case 'gas':
-      return [
-        { value: overheadGas + computeGas + (blobsGas ?? 0) + calldataGas },
-        { value: overheadGas + computeGas + (blobsGas ?? 0) },
-        { value: overheadGas + computeGas },
-        { value: overheadGas },
-      ]
-    default:
-      assertUnreachable(unit)
-  }
-}
-
-function getData(
-  dataPoint: CostsChartResponse['data'][number],
-  unit: CostsUnit,
-): CostsChartPointData {
-  const [
-    timestamp,
-    overheadGas,
-    overheadEth,
-    overheadUsd,
-    calldataGas,
-    calldataEth,
-    calldataUsd,
-    computeGas,
-    computeEth,
-    computeUsd,
-    blobsGas,
-    blobsEth,
-    blobsUsd,
-  ] = dataPoint
-
-  const isPostDencun = timestamp >= DENCUN_UPGRADE_TIMESTAMP
-  switch (unit) {
-    case 'usd':
-      return {
-        timestamp,
-        total: calldataUsd + computeUsd + (blobsUsd ?? 0) + overheadUsd,
-        calldata: calldataUsd,
-        blobs: isPostDencun && blobsUsd && blobsUsd > 0 ? blobsUsd : undefined,
-        compute: computeUsd,
-        overhead: overheadUsd,
-      }
-    case 'eth':
-      return {
-        timestamp,
-        total: calldataEth + computeEth + (blobsEth ?? 0) + overheadEth,
-        calldata: calldataEth,
-        blobs: isPostDencun && blobsEth && blobsEth > 0 ? blobsEth : undefined,
-        compute: computeEth,
-        overhead: overheadEth,
-      }
-    case 'gas':
-      return {
-        timestamp,
-        total: calldataGas + computeGas + (blobsGas ?? 0) + overheadGas,
-        calldata: calldataGas,
-        blobs: isPostDencun && blobsGas && blobsGas > 0 ? blobsGas : undefined,
-        compute: computeGas,
-        overhead: overheadGas,
-      }
-  }
 }

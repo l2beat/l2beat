@@ -15,6 +15,7 @@ import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets/knowledge-
 import { TechnologySection } from './sections/technology/technology-section'
 import { StageSection } from './sections/stage-section'
 import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
+import { ChartSection } from './sections/chart-section'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -28,6 +29,14 @@ export function ProjectDetails(props: ProjectDetailsProps) {
         const sectionOrder = index + 1
 
         switch (item.type) {
+          case 'ChartSection':
+            return (
+              <ChartSection
+                key={item.props.id}
+                sectionOrder={sectionOrder}
+                {...item.props}
+              />
+            )
           case 'DetailedDescriptionSection':
             return (
               <DetailedDescriptionSection
