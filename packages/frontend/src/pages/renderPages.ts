@@ -12,7 +12,6 @@ import { getActivityPage } from './scaling/activity'
 import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getSummaryPage } from './scaling/summary'
-import { getTvlPage } from './scaling/tvl'
 
 export function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
@@ -47,8 +46,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
   } else {
     pages.push(getMaintenanceActivityPage(config))
   }
-
-  pages.push(getTvlPage(config, pagesData))
 
   if (config.features.tvlBreakdown && tvlBreakdownApiResponse) {
     pages.push(
