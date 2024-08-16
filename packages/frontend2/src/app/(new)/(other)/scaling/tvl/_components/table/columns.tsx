@@ -35,6 +35,7 @@ const totalColumn = columnHelper.accessor('tvl', {
             value.breakdown.associated.canonical,
         }}
         change={value.totalChange}
+        layout="center"
       />
     )
   },

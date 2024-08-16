@@ -10,6 +10,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/format-number'
 
 export interface TotalCellProps {
@@ -22,9 +23,10 @@ export interface TotalCellProps {
   associatedTokenSymbols: string[]
   change?: number
   tvlWarnings?: WarningWithSentiment[]
+  layout?: 'end' | 'center'
 }
 
-export function TotalCell(data: TotalCellProps) {
+export function TotalCell({ layout = 'end', ...data }: TotalCellProps) {
   const tvlWarnings = data.tvlWarnings ?? []
   const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
 
@@ -38,7 +40,12 @@ export function TotalCell(data: TotalCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div className="flex flex-col items-end">
+        <div
+          className={cn(
+            'flex flex-col',
+            layout === 'end' ? 'items-end' : 'items-center',
+          )}
+        >
           <div className="flex items-center gap-1">
             {tvlWarnings.length ? (
               <RoundedWarningIcon
