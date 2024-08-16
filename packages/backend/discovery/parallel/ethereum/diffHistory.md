@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x988841d109efe1870589b323c698b053c09d834f
+
+# Diff at Fri, 16 Aug 2024 08:25:27 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@7273b1decf2b7a03e4f10ec7b42f94fa80b3c5ba block: 20511119
+- current block number: 20539980
+
+## Description
+
+The futureBlocks value enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. They increased is to 96, or three epochs. The futureSeconds value is set to correspond to the new futureBlocks value. The delay is also changed - it's the delay time between submission and force inclusion.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        11520
+      values.maxTimeVariation.futureBlocks:
+-        48
++        96
+      values.maxTimeVariation.delaySeconds:
+-        86400
++        172800
+      values.maxTimeVariation.futureSeconds:
+-        3600
++        7200
+    }
+```
+
 Generated with discovered.json: 0x9da8d6602f5bc8018ec9a4e1c2db4df4e1a2ec4c
 
 # Diff at Mon, 12 Aug 2024 07:44:39 GMT:
