@@ -49,7 +49,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
     })
 
   return (
-    <section className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4">
       <ChartProvider
         columns={columns}
         valuesStyle={valuesStyle}
@@ -93,7 +93,7 @@ export function ProjectCostsChart({ milestones, projectId }: Props) {
           setScale={setScale}
         />
       </ChartProvider>
-    </section>
+    </div>
   )
 }
 

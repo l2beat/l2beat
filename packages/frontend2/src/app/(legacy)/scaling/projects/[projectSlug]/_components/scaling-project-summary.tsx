@@ -6,6 +6,7 @@ import { BigPizzaRosette } from '~/app/_components/rosette/pizza/big-pizza-roset
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectStats } from './scaling-project-stats'
 import { ProjectHeader } from '~/app/_components/projects/project-header'
+import { BadgesSection } from '~/app/_components/projects/sections/badges-section'
 
 interface Props {
   project: ScalingProjectEntry
@@ -20,12 +21,17 @@ export function ScalingProjectSummary({ project }: Props) {
       <div className="flex gap-10">
         <div className="w-full space-y-6">
           <ProjectHeader title={project.name} slug={project.slug} />
-          {project.description && (
-            <div className="md:hidden">
-              <AboutSection description={project.description} />
+          {project.header.description || project.header.badges ? (
+            <div className="mt-6 flex flex-col gap-4 md:hidden">
+              {project.header.badges && (
+                <BadgesSection badges={project.header.badges} />
+              )}
+              {project.header.description && (
+                <AboutSection description={project.header.description} />
+              )}
             </div>
-          )}
-          <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen md:hidden" />
+          ) : null}
+          <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
 
           <div className="max-md:hidden">
             <DesktopProjectLinks projectLinks={project.header.links} />
@@ -43,12 +49,17 @@ export function ScalingProjectSummary({ project }: Props) {
       <div className="md:hidden">
         <MobileProjectLinks projectLinks={project.header.links} />
       </div>
-      {project.description ? (
-        <div className="max-md:hidden">
-          <AboutSection description={project.description} />
-          <HorizontalSeparator className="my-6" />
+      <div className="max-md:hidden">
+        <div className="mt-6 flex flex-col gap-4 px-4 max-md:-mx-4 max-md:mt-2 max-md:px-4 md:px-0 lg:flex-row lg:gap-8">
+          {project.header.badges && (
+            <BadgesSection badges={project.header.badges} />
+          )}
+          {project.header.description && (
+            <AboutSection description={project.header.description} />
+          )}
         </div>
-      ) : null}
+        <HorizontalSeparator className="my-6" />
+      </div>
     </header>
   )
 }

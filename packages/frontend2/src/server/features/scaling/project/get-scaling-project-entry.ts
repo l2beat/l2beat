@@ -1,4 +1,4 @@
-import { type Layer2 } from '@l2beat/config'
+import { badgesCompareFn, type Layer2 } from '@l2beat/config'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
 import { getProjectDetails } from './utils/get-project-details'
@@ -35,10 +35,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
-    description: project.display.description,
     isUnderReview: project.isUnderReview,
-    category: project.display.category,
-    purposes: project.display.purposes,
     stageConfig:
       project.type === 'layer2'
         ? project.stage
@@ -61,8 +58,15 @@ async function getHeader(project: ScalingProject) {
   const projectStats = await getActivityProjectStats(project.id)
 
   return {
+    description: project.display.description,
+    category: project.display.category,
+    purposes: project.display.purposes,
     activity: projectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),
     links: getProjectLinks(project.display.links),
+    badges:
+      project.badges && project.badges.length !== 0
+        ? project.badges?.sort(badgesCompareFn)
+        : undefined,
   }
 }

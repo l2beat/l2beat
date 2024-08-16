@@ -69,11 +69,11 @@ export function ScalingProjectStats({ project }: Props) {
       />
       <ProjectStat
         title="Type"
-        value={<TypeCell>{project.category}</TypeCell>}
+        value={<TypeCell>{project.header.category}</TypeCell>}
       />
       <ProjectStat
-        title={pluralize(project.purposes.length, 'Purpose')}
-        value={project.purposes.join(', ')}
+        title={pluralize(project.header.purposes.length, 'Purpose')}
+        value={project.header.purposes.join(', ')}
       />
     </div>
   )
