@@ -6,10 +6,11 @@ import { getImplementationChangeReport } from '~/server/features/implementation-
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/get-detailed-7d-tvl-breakdown'
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
-import { HydrateClient, api } from '~/trpc/server'
+import { api, HydrateClient } from '~/trpc/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { SummaryTvlChart } from './_components/scaling-tvl-chart'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
+import { getCookie } from '~/utils/cookies/server'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -26,6 +27,11 @@ export default async function Page() {
       getImplementationChangeReport(),
       getProjectsVerificationStatuses(),
       getDetailed7dTvlBreakdown(),
+      api.scaling.summary.chart.prefetch({
+        excludeAssociatedTokens: false,
+        range: getCookie('scalingTvlChartRange'),
+        type: 'layer2',
+      }),
     ])
 
   const projects = getScalingTvlEntries({
@@ -33,8 +39,6 @@ export default async function Page() {
     projectsVerificationStatuses,
     tvl,
   })
-
-  // TODO: prefetch chart data
 
   return (
     <HydrateClient>
