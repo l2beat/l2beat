@@ -50,7 +50,7 @@ export const blobstreamArbitrum = CELESTIA_BLOBSTREAM({
       Once a proving request is received, the off-chain prover generates the proof and submits it to the Succinct Gateway contract. The Succinct Gateway contract verifies the proof with the corresponding verifier contract and, if successful, calls the blobstreamX contract to store the data commitment.
       Alternatively, it is possible to run an Blobstream X operator with local proving, allowing for self-generation of the proofs.
 
-      Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
+      Verifying a header range includes verifying Tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
       1) **TendermintX** circuit is used to verify tendermint consensus,
       2) **BlobstreamX** circuit is used to verify the data commitment root.
       
