@@ -3,7 +3,7 @@ import { PercentChange } from '../percent-change'
 
 interface StatWithChangeProps {
   stat: number
-  change: string
+  change: number
   className?: string
 }
 
