@@ -39,7 +39,7 @@ export const blobstreamBase = CELESTIA_BLOBSTREAM({
       documentation: ['https://docs.celestia.org/developers/blobstream'],
       repositories: ['https://github.com/succinctlabs/blobstreamx'],
       apps: [],
-      explorers: ['https://basescan.io/'],
+      explorers: ['https://basescan.org/'],
       socialMedia: [],
     },
   },
