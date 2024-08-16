@@ -7,6 +7,7 @@ import { cn } from '~/utils/cn'
 import { TotalCell } from '../../../_components/total-cell'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { ValueLockedCell } from './value-locked-cell'
+import { TotalValueLockedCell } from './total-value-locked-cell'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
@@ -19,23 +20,14 @@ const totalColumn = columnHelper.accessor('tvl', {
       return <UpcomingBadge />
     }
     return (
-      <TotalCell
-        associatedTokenSymbols={value.associatedTokens}
+      <TotalValueLockedCell
         tvlWarnings={value.warnings}
         breakdown={{
-          total:
-            value.breakdown.native +
-            value.breakdown.external +
-            value.breakdown.canonical,
-          ether: value.breakdown.ether,
-          stablecoin: value.breakdown.stablecoin,
-          associated:
-            value.breakdown.associated.native +
-            value.breakdown.associated.external +
-            value.breakdown.associated.canonical,
+          canonical: value.breakdown.canonical,
+          external: value.breakdown.external,
+          native: value.breakdown.native,
         }}
         change={value.totalChange}
-        layout="center"
       />
     )
   },

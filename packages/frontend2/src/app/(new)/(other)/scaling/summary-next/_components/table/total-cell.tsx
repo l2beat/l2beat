@@ -11,7 +11,6 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/format-number'
 
 export interface TotalCellProps {
@@ -24,10 +23,9 @@ export interface TotalCellProps {
   associatedTokenSymbols: string[]
   change?: number
   tvlWarnings?: WarningWithSentiment[]
-  layout?: 'end' | 'center'
 }
 
-export function TotalCell({ layout = 'end', ...data }: TotalCellProps) {
+export function TotalCell(data: TotalCellProps) {
   const tvlWarnings = data.tvlWarnings ?? []
   const anyBadWarnings = tvlWarnings.some((w) => w?.sentiment === 'bad')
 
@@ -40,12 +38,7 @@ export function TotalCell({ layout = 'end', ...data }: TotalCellProps) {
 
   if (totalTvl === 0) {
     return (
-      <div
-        className={cn(
-          'flex flex-col',
-          layout === 'end' ? 'items-end' : 'items-center',
-        )}
-      >
+      <div className="flex flex-col items-end">
         <span className="text-base font-bold md:text-lg">{EM_DASH}</span>
       </div>
     )
@@ -54,12 +47,7 @@ export function TotalCell({ layout = 'end', ...data }: TotalCellProps) {
   return (
     <Tooltip>
       <TooltipTrigger>
-        <div
-          className={cn(
-            'flex flex-col',
-            layout === 'end' ? 'items-end' : 'items-center',
-          )}
-        >
+        <div className="flex flex-col items-end">
           <div className="flex items-center gap-1">
             {tvlWarnings.length ? (
               <RoundedWarningIcon

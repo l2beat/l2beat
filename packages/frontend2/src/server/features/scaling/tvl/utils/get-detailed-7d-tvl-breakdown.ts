@@ -48,8 +48,6 @@ export const getCachedDetailed7dTvlBreakdown = cache(
                 canonical: breakdown.associated.canonical / 100,
                 external: breakdown.associated.external / 100,
               },
-              ether: breakdown.ether / 100,
-              stablecoin: breakdown.stablecoin / 100,
             },
             change: {
               native:
