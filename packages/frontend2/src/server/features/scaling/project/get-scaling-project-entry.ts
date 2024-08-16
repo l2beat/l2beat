@@ -36,6 +36,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     name: project.display.name,
     slug: project.display.slug,
     isUnderReview: project.isUnderReview,
+    isArchived: project.isArchived,
     stageConfig:
       project.type === 'layer2'
         ? project.stage

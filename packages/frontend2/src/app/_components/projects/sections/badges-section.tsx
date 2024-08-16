@@ -8,7 +8,7 @@ interface BadgesSectionProps {
 
 export function BadgesSection({ badges }: BadgesSectionProps) {
   return (
-    <div className="flex shrink-0 flex-col gap-3 lg:min-w-[288px]">
+    <div className="flex shrink-0 flex-col gap-2 lg:min-w-[288px]">
       <h2 className="text-xs font-medium uppercase text-gray-600">Badges</h2>
       <OverflowWrapper className="max-md:-mx-4">
         <div className="flex flex-row gap-1 max-md:px-4 lg:flex-wrap">

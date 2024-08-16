@@ -226,6 +226,7 @@ const config: Config = {
       addVariant('sidenav-collapsed', '.sidenav-collapsed &')
     }),
     require('tailwindcss-animate'),
+    require('@tailwindcss/container-queries'),
   ],
 }
 

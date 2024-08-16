@@ -2,6 +2,7 @@ import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
+import { TokenBreakdown } from '~/app/_components/breakdown/token-breakdown'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { StatWithChange } from '~/app/_components/projects/stat-with-change'
 import { StageTooltip } from '~/app/_components/table/cells/stage/stage-tooltip'
@@ -18,12 +19,29 @@ import { formatNumber } from '~/utils/format-number'
 
 interface Props {
   project: ScalingProjectEntry
+  className?: string
 }
 
-export function ScalingProjectStats({ project }: Props) {
+export function ScalingProjectStats({ project, className }: Props) {
   return (
-    <div className="grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5">
-      <ProjectStat title="Tokens" value={<></>} />
+    <div
+      className={cn(
+        'grid grid-cols-1 gap-3 rounded-lg bg-gray-100 dark:bg-zinc-900 md:grid-cols-3 md:px-6 md:py-5',
+        className,
+      )}
+    >
+      <ProjectStat
+        title="Tokens"
+        value={
+          // TODO (scaling-project-page): Add tooltip
+          <TokenBreakdown
+            associated={0.2}
+            ether={0.5}
+            stablecoin={0.2}
+            other={0.1}
+          />
+        }
+      />
       <ProjectStat
         title="Daily TPS"
         tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
