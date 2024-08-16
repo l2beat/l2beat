@@ -15,7 +15,7 @@ function DasWithBlobsReconstruction(erasureCoding: boolean) {
       The DA layer uses data availability sampling (DAS) to protect against data withholding attacks. 
       By relying on a minimum number of light nodes to perform DAS for each block, it ensures that the entire block can be reconstructed even if some data is withheld by an adversarial block producer. 
       The blob reconstruction protocol guarantees that with a sufficient number of honest light nodes sharing their samples, all data can be accurately reconstructed and its integrity verified.
-    `,  
+    `,
   } as const
 }
 
