@@ -20,7 +20,7 @@ export async function getDaSummaryEntries() {
   const entries = daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((daBridge) => {
       const projectEconomicSecurity = economicSecurity[daLayer.id]
-      const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
+      const tvs = getSumFor(daLayer.usedIn.map((project) => project.id))
 
       return {
         slug: daLayer.display.slug,
