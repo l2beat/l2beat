@@ -1,11 +1,11 @@
 import { layer2s, layer3s } from '@l2beat/config'
 import {
-  notUndefined,
   type ProjectsVerificationStatuses,
+  notUndefined,
 } from '@l2beat/shared-pure'
+import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
-import { type ImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { type DetailedLatestTvl } from './utils/get-detailed-7d-tvl-breakdown'
 
 export function getScalingTvlEntries({

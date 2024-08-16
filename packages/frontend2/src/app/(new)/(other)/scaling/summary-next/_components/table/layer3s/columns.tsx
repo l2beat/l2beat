@@ -7,8 +7,8 @@ import {
   TypeCell,
   TypeColumnTooltip,
 } from '~/app/_components/table/cells/type-cell'
-import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../../../../_components/total-cell'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
 const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 

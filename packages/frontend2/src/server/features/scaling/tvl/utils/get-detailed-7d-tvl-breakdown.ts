@@ -2,9 +2,9 @@ import {
   unstable_cache as cache,
   unstable_noStore as noStore,
 } from 'next/cache'
+import { getDetailedTvlBreakdown } from './get-detailed-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import { getDetailedTvlBreakdown } from './get-detailed-tvl-breakdown'
 
 export function getDetailed7dTvlBreakdown(
   ...parameters: Parameters<typeof getCachedDetailed7dTvlBreakdown>

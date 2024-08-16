@@ -2,15 +2,15 @@
 import { getCoreRowModel, getSortedRowModel } from '@tanstack/react-table'
 import { useMemo } from 'react'
 import { BasicTable } from '~/app/_components/table/basic-table'
+import { useTable } from '~/hooks/use-table'
+import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import {
   useScalingFilter,
   useScalingFilterValues,
 } from '../../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
-import { scalingTvlCokumns } from './table/columns'
-import { useTable } from '~/hooks/use-table'
-import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 import { toTableRows } from '../_utils/to-table-rows'
+import { scalingTvlCokumns } from './table/columns'
 
 interface Props {
   projects: ScalingTvlEntry[]

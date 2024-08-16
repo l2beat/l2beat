@@ -3,10 +3,10 @@ import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { TotalCell } from '../../../_components/total-cell'
 import { cn } from '~/utils/cn'
-import { ValueLockedCell } from './value-locked-cell'
+import { TotalCell } from '../../../_components/total-cell'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
+import { ValueLockedCell } from './value-locked-cell'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
