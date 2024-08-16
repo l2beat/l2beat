@@ -1,15 +1,20 @@
+import { assertUnreachable } from '@l2beat/shared-pure'
 import range from 'lodash/range'
 import React from 'react'
 
 import {
-  Anomaly,
-  AnomalyEntry,
-  AnomalyIndicatorEntry,
-} from '../pages/scaling/liveness/types'
-import { formatTimestamp } from '../utils'
-import { cn } from '../utils/cn'
-import { LivenessDurationCell } from './table/LivenessDurationCell'
-import { Tooltip, TooltipContent, TooltipTrigger } from './tooltip/Tooltip'
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '~/app/_components/tooltip/tooltip'
+import { type LivenessAnomaly } from '~/server/features/scaling/liveness/types'
+import {
+  type AnomalyEntry,
+  type AnomalyIndicatorEntry,
+} from '~/server/features/scaling/liveness/utils/get-anomaly-entries'
+import { cn } from '~/utils/cn'
+import { formatTimestamp } from '~/utils/dates'
+import { LivenessDurationCell } from './liveness-duration-cell'
 
 interface Props {
   anomalyEntries: AnomalyIndicatorEntry[]
@@ -45,27 +50,24 @@ export function AnomalyIndicator({ anomalyEntries, showComingSoon }: Props) {
     )
   }
 
-  const data = anomalyEntries.filter(
-    (anomaly) => anomaly.isAnomaly,
-  ) as AnomalyEntry[]
+  const data = anomalyEntries.filter((anomaly) => anomaly.isAnomaly)
 
   return (
-    <Tooltip big>
-      <TooltipTrigger
-        className="flex h-6 w-min gap-x-0.5"
-        data-testid="anomaly-indicator-tooltip-trigger"
-      >
-        {anomalyEntries.map((anomaly, i) => (
-          <div
-            key={i}
-            className={cn(
-              'w-0.5 rounded-full',
-              anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
-            )}
-          />
-        ))}
+    <Tooltip>
+      <TooltipTrigger asChild>
+        <div className="flex h-6 w-min gap-x-0.5">
+          {anomalyEntries.map((anomaly, i) => (
+            <div
+              key={i}
+              className={cn(
+                'w-0.5 rounded-full',
+                anomaly.isAnomaly ? 'bg-orange-400' : 'bg-blue-500',
+              )}
+            />
+          ))}
+        </div>
       </TooltipTrigger>
-      <TooltipContent>
+      <TooltipContent fitContent>
         <AnomalyTooltipContent anomalyEntries={data} />
       </TooltipContent>
     </Tooltip>
@@ -84,7 +86,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   return (
     <>
       <span>Anomalies from last 30 days:</span>
-      <ul className="mt-2.5 ml-4 list-disc space-y-4 text-gray-500 dark:text-gray-50">
+      <ul className="ml-4 mt-2.5 list-disc space-y-4 text-gray-500 dark:text-gray-50">
         {anomalies.slice(0, 4).map((anomaly) => (
           <li key={anomaly.timestamp}>
             <span>
@@ -96,7 +98,7 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
             <div className="mt-2 text-black dark:text-white">
               <AnomalyTypeBadge type={anomaly.type} />
               <span className="ml-2.5 inline-flex gap-1">
-                Duration:{' '}
+                Duration:
                 <LivenessDurationCell
                   durationInSeconds={anomaly.durationInSeconds}
                 />
@@ -112,10 +114,25 @@ function AnomalyTooltipContent(props: { anomalyEntries: AnomalyEntry[] }) {
   )
 }
 
-function AnomalyTypeBadge(props: { type: Anomaly['type'] }) {
+function AnomalyTypeBadge(props: {
+  type: LivenessAnomaly['type']
+}) {
   return (
     <span className="w-max rounded bg-orange-400 px-1.5 py-0.5 text-black">
-      {props.type}
+      {typeToLabel(props.type)}
     </span>
   )
+}
+
+function typeToLabel(type: LivenessAnomaly['type']) {
+  switch (type) {
+    case 'batchSubmissions':
+      return 'TX DATA SUBMISSIONS'
+    case 'proofSubmissions':
+      return 'PROOF SUBMISSIONS'
+    case 'stateUpdates':
+      return 'STATE UPDATES'
+    default:
+      assertUnreachable(type)
+  }
 }

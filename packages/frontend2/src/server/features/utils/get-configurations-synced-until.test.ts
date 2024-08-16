@@ -1,7 +1,7 @@
 import { UnixTime } from '@l2beat/shared-pure'
 import { expect, mockObject } from 'earl'
 
-import { getSyncedUntil } from './get-synced-until'
+import { getConfigurationsSyncedUntil } from './get-configurations-synced-until'
 
 const FROM = UnixTime.fromDate(new Date('2022-01-01T00:00:00Z'))
 
@@ -11,14 +11,14 @@ type Configuration = {
   currentHeight: number | null
 }
 
-describe(getSyncedUntil.name, () => {
+describe(getConfigurationsSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
-    const result = getSyncedUntil([])
+    const result = getConfigurationsSyncedUntil([])
     expect(result).toEqual(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
-    const result = getSyncedUntil([
+    const result = getConfigurationsSyncedUntil([
       mockObject<Configuration>({
         currentHeight: null,
         maxHeight: null,
@@ -29,7 +29,7 @@ describe(getSyncedUntil.name, () => {
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
-    const result = getSyncedUntil([
+    const result = getConfigurationsSyncedUntil([
       mockObject<Configuration>({
         currentHeight: null,
         maxHeight: null,
@@ -48,7 +48,7 @@ describe(getSyncedUntil.name, () => {
   })
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
-    const result = getSyncedUntil([
+    const result = getConfigurationsSyncedUntil([
       mockObject<Configuration>({
         currentHeight: null,
         maxHeight: null,

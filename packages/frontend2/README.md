@@ -46,6 +46,7 @@ DATABASE_URL=
   * /data-availability
   * /finality
   * /costs
+  * /liveness
 - /donate
 - /faq
 - /glossary

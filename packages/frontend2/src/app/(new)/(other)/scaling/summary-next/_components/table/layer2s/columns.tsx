@@ -7,7 +7,7 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
 import {
   TypeCell,
-  TypeColumnTooltip,
+  TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
 import { EM_DASH } from '~/consts/characters'
@@ -63,7 +63,7 @@ export const scalingLayer2sColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: <TypeColumnTooltip />,
+      tooltip: <TypeExplanationTooltip />,
     },
   }),
   columnHelper.accessor('stage', {
