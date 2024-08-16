@@ -51,7 +51,7 @@ export function getPermissionsSection(
   }
 
   const section: ProjectDetailsPermissionsSection['props'] = {
-    id: 'da-bridge-permissions',
+    id: 'permissions',
     title: 'DA Bridge permissions',
     isUnderReview: projectParams.isUnderReview,
     permissions: [],
