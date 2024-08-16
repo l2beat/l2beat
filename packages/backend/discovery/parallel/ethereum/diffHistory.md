@@ -8,7 +8,7 @@ Generated with discovered.json: 0x988841d109efe1870589b323c698b053c09d834f
 
 ## Description
 
-The futureBlocks value enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. They increased is to 96, or three epochs. The futureSeconds value is set to correspond to the new futureBlocks value. The delay is also changed - it's the delay time between submission and force inclusion.
+The futureBlocks value enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. They increased is to 96, or three epochs. The futureSeconds value is set to correspond to the new futureBlocks value. The delay is also changed - it's the delay time between tx submission and ability to do force inclusion on the L1. Compared to Arbitrum One all of the delays are higher here.
 
 ## Watched changes
 
