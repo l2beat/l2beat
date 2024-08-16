@@ -26,6 +26,7 @@ import { witnessLayer } from './dac/witness'
 import { xaiLayer } from './dac/xai'
 import { xlayerLayer } from './dac/xlayer'
 import { zkfairLayer } from './dac/zkfair'
+import { eigenDA } from './dac/eigenDA'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
@@ -59,4 +60,5 @@ export const daLayers: DaLayer[] = [
   l3xLayer,
   playblockLayer,
   mantleDA,
+  eigenDA
 ]

@@ -1,5 +1,6 @@
 import { DaEconomicSecurityRisk, DaFraudDetectionRisk } from '../types'
 import { DaLayer } from '../types/DaLayer'
+import { eigenDAbridge } from './bridges/eigenDABridge'
 
 export const eigenDA: DaLayer = {
   id: 'eigen-da',
@@ -22,7 +23,7 @@ export const eigenDA: DaLayer = {
   technology: `
     
   `,
-  bridges: [],
+  bridges: [eigenDAbridge],
   usedIn: [],
   risks: {
     economicSecurity: DaEconomicSecurityRisk.Unknown,
