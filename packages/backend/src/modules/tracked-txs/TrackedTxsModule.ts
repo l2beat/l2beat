@@ -47,12 +47,7 @@ export function createTrackedTxsModule(
     .flatMap((project) => project.trackedTxsConfig)
     .filter(notUndefined)
 
-  const livenessModule = createLivenessModule(
-    config,
-    logger,
-    peripherals,
-    clock,
-  )
+  const livenessModule = createLivenessModule(config, logger, peripherals)
   const l2costsModule = createL2CostsModule(config, logger, peripherals)
 
   const subModules: (ApplicationModule | undefined)[] = [

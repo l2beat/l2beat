@@ -107,6 +107,14 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     })
   })
 
+  describe(AggregatedLivenessRepository.prototype.getByProjectIds.name, () => {
+    it('should return all rows for projects', async () => {
+      const results = await repository.getByProjectIds([PROJECT_A])
+
+      expect(results).toEqualUnsorted([DATA[0]!])
+    })
+  })
+
   describe(AggregatedLivenessRepository.prototype.deleteAll.name, () => {
     it('should delete all rows', async () => {
       await repository.deleteAll()
