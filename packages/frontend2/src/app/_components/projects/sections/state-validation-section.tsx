@@ -1,11 +1,11 @@
 import { type ScalingProjectStateValidation } from '@l2beat/config'
 import React from 'react'
+import { type DiagramParams } from '~/utils/project/get-diagram-params'
 import { HorizontalSeparator } from '../../horizontal-separator'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { RiskList } from './risk-list'
 import { type ProjectSectionProps } from './types'
-import { type DiagramParams } from '~/utils/project/get-diagram-params'
 
 export interface StateValidationSectionProps extends ProjectSectionProps {
   diagram: DiagramParams | undefined

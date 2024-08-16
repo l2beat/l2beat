@@ -1,14 +1,14 @@
 import { type Milestone } from '@l2beat/config'
-import { mapMilestones } from '../utils/map-milestones'
+import { assertUnreachable } from '@l2beat/shared-pure'
+import { useCallback, useMemo } from 'react'
 import {
   type CostsChartResponse,
   type CostsUnit,
 } from '~/server/features/scaling/costs/types'
-import { formatNumber } from '~/utils/format-number'
 import { formatCurrency } from '~/utils/format'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { formatNumber } from '~/utils/format-number'
 import { type SeriesStyle } from '../core/styles'
-import { useCallback, useMemo } from 'react'
+import { mapMilestones } from '../utils/map-milestones'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 

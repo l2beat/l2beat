@@ -1,14 +1,14 @@
 import { type StageConfig } from '@l2beat/config'
 import React from 'react'
 
-import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { StageTooltip } from './stage-tooltip'
+import { StageBadge } from '~/app/_components/badge/stage-badge'
 import {
   Tooltip,
-  TooltipTrigger,
   TooltipContent,
+  TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
-import { StageBadge } from '~/app/_components/badge/stage-badge'
+import { useBreakpoint } from '~/hooks/use-is-mobile'
+import { StageTooltip } from './stage-tooltip'
 
 export interface StageCellProps {
   stageConfig: StageConfig

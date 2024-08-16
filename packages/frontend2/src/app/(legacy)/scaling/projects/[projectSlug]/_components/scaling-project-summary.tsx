@@ -1,12 +1,12 @@
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { DesktopProjectLinks } from '~/app/_components/projects/links/desktop-project-links'
 import { MobileProjectLinks } from '~/app/_components/projects/links/mobile-project-links'
+import { ProjectHeader } from '~/app/_components/projects/project-header'
 import { AboutSection } from '~/app/_components/projects/sections/about-section'
+import { BadgesSection } from '~/app/_components/projects/sections/badges-section'
 import { BigPizzaRosette } from '~/app/_components/rosette/pizza/big-pizza-rosette'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectStats } from './scaling-project-stats'
-import { ProjectHeader } from '~/app/_components/projects/project-header'
-import { BadgesSection } from '~/app/_components/projects/sections/badges-section'
 import { ValueLockedSummary } from './value-locked-summary'
 
 interface Props {

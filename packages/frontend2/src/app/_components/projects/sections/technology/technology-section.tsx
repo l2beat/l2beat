@@ -1,14 +1,14 @@
 import React from 'react'
+import { Markdown } from '~/app/_components/markdown/markdown'
+import { UnderReviewCallout } from '../../under-review-callout'
+import { TechnologyIncompleteNote } from '../contracts/technology-incomplete-note'
 import {
   ReferenceList,
   type TechnologyReference,
 } from '../permissions/reference-list'
-import { type TechnologyRisk, RiskList } from '../risk-list'
-import { type ProjectSectionProps } from '../types'
-import { Markdown } from '~/app/_components/markdown/markdown'
-import { UnderReviewCallout } from '../../under-review-callout'
 import { ProjectSection } from '../project-section'
-import { TechnologyIncompleteNote } from '../contracts/technology-incomplete-note'
+import { RiskList, type TechnologyRisk } from '../risk-list'
+import { type ProjectSectionProps } from '../types'
 
 export interface TechnologySectionProps extends ProjectSectionProps {
   items: TechnologyChoice[]

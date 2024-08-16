@@ -1,11 +1,11 @@
 import { layer2s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
-import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
-import { ScalingProjectSummary } from './_components/scaling-project-summary'
-import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
+import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
 import { DesktopProjectNavigation } from '~/app/_components/projects/sections/navigation/desktop-project-navigation'
-import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
+import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
+import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
+import { ScalingProjectSummary } from './_components/scaling-project-summary'
 
 const scalingProjects = [...layer2s]
 

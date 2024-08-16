@@ -1,10 +1,10 @@
 import { type ScalingProjectRiskCategory } from '@l2beat/config'
 import React from 'react'
 import { WarningBar } from '~/app/_components/warning-bar'
-import { ProjectSection } from '../project-section'
-import { type ProjectSectionId } from '../types'
 import ShieldIcon from '~/icons/shield.svg'
 import UnverifiedIcon from '~/icons/unverified.svg'
+import { ProjectSection } from '../project-section'
+import { type ProjectSectionId } from '../types'
 
 export interface RiskSummarySectionProps {
   title: string

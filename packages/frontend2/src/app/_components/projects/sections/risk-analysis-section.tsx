@@ -5,12 +5,12 @@ import UnverifiedIcon from '~/icons/unverified.svg'
 import { UnderReviewBadge } from '../../badge/under-review-badge'
 import { Markdown } from '../../markdown/markdown'
 import { BigPentagonRosette } from '../../rosette/pentagon/big-pentagon-rosette'
+import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 import { type RosetteValue } from '../../rosette/types'
 import { SentimentText } from '../../sentiment-text'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
-import { BigPizzaRosette } from '../../rosette/pizza/big-pizza-rosette'
 
 export interface RiskAnalysisSectionProps extends ProjectSectionProps {
   rosetteType: 'pizza' | 'pentagon'

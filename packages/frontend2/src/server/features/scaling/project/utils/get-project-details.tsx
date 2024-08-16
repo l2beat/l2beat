@@ -1,20 +1,20 @@
+import { type Layer2 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
   type ManuallyVerifiedContracts,
 } from '@l2beat/shared-pure'
-import { type RosetteValue } from '~/app/_components/rosette/types'
-import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
-import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
-import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
-import { type Layer2 } from '@l2beat/config'
 import { isEmpty } from 'lodash'
 import { getRiskSummarySection } from '~/app/_components/projects/sections/risk-summary/get-risk-summary'
-import { getDiagramParams } from '~/utils/project/get-diagram-params'
-import { getTechnologySection } from '~/app/_components/projects/sections/technology/get-technology-section'
 import { getOperatorSection } from '~/app/_components/projects/sections/technology/get-operator-section'
 import { getOtherConsiderationsSection } from '~/app/_components/projects/sections/technology/get-other-considerations-section'
+import { getTechnologySection } from '~/app/_components/projects/sections/technology/get-technology-section'
 import { getWithdrawalsSection } from '~/app/_components/projects/sections/technology/get-withdrawals-section'
+import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
+import { type RosetteValue } from '~/app/_components/rosette/types'
+import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
+import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
+import { getDiagramParams } from '~/utils/project/get-diagram-params'
 
 interface Params {
   project: Layer2

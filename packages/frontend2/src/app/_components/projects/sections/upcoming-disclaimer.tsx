@@ -1,7 +1,7 @@
 import React from 'react'
-import { CustomLink } from '../../link/custom-link'
-import { Callout } from '../../callout'
 import InfoIcon from '~/icons/info.svg'
+import { Callout } from '../../callout'
+import { CustomLink } from '../../link/custom-link'
 
 export function UpcomingDisclaimer() {
   return (

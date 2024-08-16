@@ -1,6 +1,6 @@
 import { type Layer2, layer2s } from '@l2beat/config'
-import { COSTS_UPCOMING_PROJECTS } from '../consts'
 import { z } from 'zod'
+import { COSTS_UPCOMING_PROJECTS } from '../consts'
 
 export const CostsChartFilter = z.discriminatedUnion('type', [
   z.object({
@@ -13,7 +13,9 @@ export const CostsChartFilter = z.discriminatedUnion('type', [
 ])
 export type CostsChartFilter = z.infer<typeof CostsChartFilter>
 
-export function getCostsProjects(filter: CostsChartFilter = { type: 'all' }): Layer2[] {
+export function getCostsProjects(
+  filter: CostsChartFilter = { type: 'all' },
+): Layer2[] {
   const condition = filterToCondition(filter)
   return layer2s.filter(
     (p) =>

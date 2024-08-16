@@ -1,25 +1,25 @@
 import { type UsableStageConfig } from '@l2beat/config'
 import React from 'react'
 
+import Image from 'next/image'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '~/app/_components/accordion'
+import InfoIcon from '~/icons/info.svg'
+import MissingIcon from '~/icons/missing.svg'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import SatisfiedIcon from '~/icons/satisfied.svg'
+import UnderReviewIcon from '~/icons/under-review.svg'
 import { StageBadge } from '../../badge/stage-badge'
+import { Callout } from '../../callout'
+import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { WarningBar } from '../../warning-bar'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionProps } from './types'
-import Image from 'next/image'
-import UnderReviewIcon from '~/icons/under-review.svg'
-import SatisfiedIcon from '~/icons/satisfied.svg'
-import MissingIcon from '~/icons/missing.svg'
-import { Callout } from '../../callout'
-import InfoIcon from '~/icons/info.svg'
-import { CustomLink } from '../../link/custom-link'
 
 export interface StageSectionProps extends ProjectSectionProps {
   icon: string

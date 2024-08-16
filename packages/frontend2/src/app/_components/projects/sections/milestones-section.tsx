@@ -1,10 +1,10 @@
 import { type Milestone } from '@l2beat/config'
 import React from 'react'
-import { type ProjectSectionId } from './types'
-import { ProjectSection } from './project-section'
-import { Markdown } from '../../markdown/markdown'
-import { CustomLink } from '../../link/custom-link'
 import { MilestoneIcon } from '~/icons/MilestoneIcon'
+import { CustomLink } from '../../link/custom-link'
+import { Markdown } from '../../markdown/markdown'
+import { ProjectSection } from './project-section'
+import { type ProjectSectionId } from './types'
 
 export interface MilestonesSectionProps {
   title: string

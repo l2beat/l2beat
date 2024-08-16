@@ -1,13 +1,13 @@
-import { UnixTime, type ProjectId } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  unstable_cache as cache,
+  unstable_noStore as noStore,
+} from 'next/cache'
 import { db } from '~/server/database'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
-import { sumActivityCount } from './utils/sum-activity-count'
-import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
 import { getLastDayTps } from './utils/get-last-day-tps'
-import {
-  unstable_noStore as noStore,
-  unstable_cache as cache,
-} from 'next/cache'
+import { getTpsWeeklyChange } from './utils/get-tps-weekly-change'
+import { sumActivityCount } from './utils/sum-activity-count'
 
 export async function getActivityProjectStats(projectId: ProjectId) {
   noStore()

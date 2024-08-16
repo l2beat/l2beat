@@ -1,9 +1,9 @@
 import { z } from 'zod'
 import { getCostsChart } from '~/server/features/scaling/costs/get-costs-chart'
 import { getCostsTableData } from '~/server/features/scaling/costs/get-costs-table-data'
+import { CostsChartFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
 import { procedure, router } from '../../trpc'
-import { CostsChartFilter } from '~/server/features/scaling/costs/utils/get-costs-projects'
 
 export const costsRouter = router({
   chart: procedure

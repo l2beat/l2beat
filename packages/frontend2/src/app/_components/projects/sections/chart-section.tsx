@@ -1,7 +1,7 @@
 import { type Milestone } from '@l2beat/config'
+import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionId, type ProjectSectionProps } from './types'
-import { ProjectCostsChart } from '../../chart/costs/project-costs-chart'
 
 type ChartSectionId = Extract<
   ProjectSectionId,

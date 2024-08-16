@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { ScalingCostsChart } from '~/app/_components/chart/costs/scaling-costs-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getScalingCostsEntries } from '~/server/features/scaling/costs/get-scaling-costs-entries'
 import { HydrateClient, api } from '~/trpc/server'
@@ -9,7 +10,6 @@ import { CostsMetricContextProvider } from './_components/costs-metric-context'
 import { CostsTimeRangeContextProvider } from './_components/costs-time-range-context'
 import { CostsUnitContextProvider } from './_components/costs-unit-context'
 import { ScalingCostsTable } from './_components/table/scaling-costs-table'
-import { ScalingCostsChart } from '~/app/_components/chart/costs/scaling-costs-chart'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

@@ -1,6 +1,6 @@
 import { type Layer2 } from '@l2beat/config'
-import { makeTechnologyChoice } from './make-technology-section'
 import { getTechnologySectionProps } from './get-technology-section-props'
+import { makeTechnologyChoice } from './make-technology-section'
 
 export function getOtherConsiderationsSection(project: Layer2) {
   const items =

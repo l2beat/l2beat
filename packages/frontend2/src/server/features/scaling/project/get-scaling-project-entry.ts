@@ -1,12 +1,12 @@
-import { badgesCompareFn, type Layer2 } from '@l2beat/config'
+import { type Layer2, badgesCompareFn } from '@l2beat/config'
 import { getProjectLinks } from '~/utils/project/get-project-links'
-import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
-import { getProjectDetails } from './utils/get-project-details'
+import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
-import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
+import { getProjectDetails } from './utils/get-project-details'
+import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
 
 export type ScalingProject = Layer2
 

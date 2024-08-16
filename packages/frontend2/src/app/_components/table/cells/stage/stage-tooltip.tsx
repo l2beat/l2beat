@@ -1,11 +1,11 @@
-import InfoIcon from '~/icons/info.svg'
-import MissingIcon from '~/icons/missing.svg'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
-import UnderReviewIcon from '~/icons/under-review.svg'
 import { type Stage, type StageConfig } from '@l2beat/config'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
 import { Callout } from '~/app/_components/callout'
 import { WarningBar } from '~/app/_components/warning-bar'
+import InfoIcon from '~/icons/info.svg'
+import MissingIcon from '~/icons/missing.svg'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import UnderReviewIcon from '~/icons/under-review.svg'
 
 export interface StageTooltipProps {
   stageConfig: StageConfig

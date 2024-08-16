@@ -1,7 +1,7 @@
 import { type Layer2 } from '@l2beat/config'
 import { notUndefined } from '@l2beat/shared-pure'
-import { makeTechnologyChoice } from './make-technology-section'
 import { getTechnologySectionProps } from './get-technology-section-props'
+import { makeTechnologyChoice } from './make-technology-section'
 
 export function getWithdrawalsSection(project: Layer2) {
   const items = [
