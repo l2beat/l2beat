@@ -14,6 +14,7 @@ import { StateDerivationSection } from './sections/state-derivation-section'
 import { KnowledgeNuggetsSection } from './sections/knowledge-nuggets/knowledge-nuggets-section'
 import { TechnologySection } from './sections/technology/technology-section'
 import { StageSection } from './sections/stage-section'
+import { UpcomingDisclaimer } from './sections/upcoming-disclaimer'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]
@@ -124,6 +125,8 @@ export function ProjectDetails(props: ProjectDetailsProps) {
                 {...item.props}
               />
             )
+          case 'UpcomingDisclaimer':
+            return <UpcomingDisclaimer />
           default:
             assertUnreachable(item)
         }

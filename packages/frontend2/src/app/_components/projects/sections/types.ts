@@ -98,6 +98,11 @@ export interface ProjectDetailsKnowledgeNuggetsSection {
   props: ProjectDetailsProps<KnowledgeNuggetsSectionProps>
 }
 
+export interface ProjectDetailsUpcomingDisclaimer {
+  type: 'UpcomingDisclaimer'
+  excludeFromNavigation: true
+}
+
 export type ProjectDetailsSection = {
   excludeFromNavigation?: boolean
 } & (
@@ -113,4 +118,5 @@ export type ProjectDetailsSection = {
   | ProjectDetailsPermissionsSection
   | ProjectDetailsContractsSection
   | ProjectDetailsKnowledgeNuggetsSection
+  | ProjectDetailsUpcomingDisclaimer
 )

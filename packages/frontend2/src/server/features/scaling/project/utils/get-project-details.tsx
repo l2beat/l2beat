@@ -103,21 +103,28 @@ export function getProjectDetails({
     })
   }
 
-  if (!project.isUpcoming) {
+  if (project.isUpcoming) {
     items.push({
-      type: 'RiskAnalysisSection',
-      props: {
-        id: 'risk-analysis',
-        title: 'Risk analysis',
-        rosetteType: 'pizza',
-        rosetteValues,
-        warning: project.display.warning,
-        redWarning: project.display.redWarning,
-        isVerified,
-        isUnderReview: project.isUnderReview,
-      },
+      type: 'UpcomingDisclaimer',
+      excludeFromNavigation: true,
     })
+    return items
   }
+
+  items.push({
+    type: 'RiskAnalysisSection',
+    props: {
+      id: 'risk-analysis',
+      title: 'Risk analysis',
+      rosetteType: 'pizza',
+      rosetteValues,
+      warning: project.display.warning,
+      redWarning: project.display.redWarning,
+      isVerified,
+      isUnderReview: project.isUnderReview,
+    },
+  })
+
   if (project.stage.stage !== 'NotApplicable') {
     items.push({
       type: 'StageSection',
