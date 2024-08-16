@@ -57,6 +57,22 @@ export class ActivityViewRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getDailyCountsPerProjectAndTimeRange(
+    projectId: ProjectId,
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<DailyTransactionCountRecord[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('activity.daily_count_view')
+      .select(['project_id', 'count', 'unix_timestamp'])
+      .where('project_id', '=', projectId.toString())
+      .where('unix_timestamp', '>=', from.toDate())
+      .where('unix_timestamp', '<', to.toDate())
+      .orderBy('unix_timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
   async getProjectsAggregatedDailyCount(
     projectIds: ProjectId[],
   ): Promise<Omit<DailyTransactionCountRecord, 'projectId'>[]> {

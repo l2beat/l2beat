@@ -1,6 +1,5 @@
 import { layer2s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
-import { ProjectHeader } from '~/app/_components/projects/project-header'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
 import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
@@ -41,9 +40,6 @@ export default async function Page({ params }: Props) {
           <MobileProjectNavigation sections={projectEntry.projectDetails} />
         </div>
       )}
-      <header className="pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:pb-4 max-md:dark:bg-zinc-900">
-        <ProjectHeader title={projectEntry.name} slug={projectEntry.slug} />
-      </header>
       <ScalingProjectSummary project={projectEntry} />
       {isNavigationEmpty ? (
         <ProjectDetails items={projectEntry.projectDetails} />

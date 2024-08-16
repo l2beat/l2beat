@@ -5,6 +5,7 @@ import { AboutSection } from '~/app/_components/projects/sections/about-section'
 import { BigPizzaRosette } from '~/app/_components/rosette/pizza/big-pizza-rosette'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectStats } from './scaling-project-stats'
+import { ProjectHeader } from '~/app/_components/projects/project-header'
 
 interface Props {
   project: ScalingProjectEntry
@@ -12,20 +13,21 @@ interface Props {
 
 export function ScalingProjectSummary({ project }: Props) {
   return (
-    <section
+    <header
       id="summary"
-      className="max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
+      className="pt-6 max-md:-mx-4 max-md:bg-gray-100 max-md:px-4 max-md:dark:bg-zinc-900"
     >
       <div className="flex gap-10">
-        <div className="w-full space-y-4">
+        <div className="w-full space-y-6">
+          <ProjectHeader title={project.name} slug={project.slug} />
           {project.description && (
             <div className="md:hidden">
               <AboutSection description={project.description} />
             </div>
           )}
-          <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen" />
+          <HorizontalSeparator className="!my-6 max-md:-mx-4 max-md:w-screen md:hidden" />
 
-          <div className="my-2 max-md:hidden">
+          <div className="max-md:hidden">
             <DesktopProjectLinks projectLinks={project.header.links} />
           </div>
           <ScalingProjectStats project={project} />
@@ -47,6 +49,6 @@ export function ScalingProjectSummary({ project }: Props) {
           <HorizontalSeparator className="my-6" />
         </div>
       ) : null}
-    </section>
+    </header>
   )
 }

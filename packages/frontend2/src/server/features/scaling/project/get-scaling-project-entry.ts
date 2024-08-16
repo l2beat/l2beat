@@ -6,6 +6,7 @@ import { getContractsVerificationStatuses } from '../../verification-status/get-
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
+import { getActivityProjectStats } from '../activity/get-activity-project-stats'
 
 export type ScalingProject = Layer2
 
@@ -19,11 +20,13 @@ export async function getScalingProjectEntry(project: ScalingProject) {
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
     implementationChangeReport,
+    header,
   ] = await Promise.all([
     getProjectsVerificationStatuses(),
     getContractsVerificationStatuses(project),
     getManuallyVerifiedContracts(project),
     getImplementationChangeReport(),
+    getHeader(project),
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
@@ -42,7 +45,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
         : {
             stage: 'NotApplicable' as const,
           },
-    header: getHeader(project),
+    header,
     projectDetails: getProjectDetails({
       project,
       isVerified,
@@ -54,8 +57,11 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   }
 }
 
-function getHeader(project: ScalingProject) {
+async function getHeader(project: ScalingProject) {
+  const projectStats = await getActivityProjectStats(project.id)
+
   return {
+    activity: projectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),
     links: getProjectLinks(project.display.links),
   }

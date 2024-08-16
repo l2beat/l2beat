@@ -1,7 +1,9 @@
 import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
+import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
+import { StatWithChange } from '~/app/_components/projects/stat-with-change'
 import { StageTooltip } from '~/app/_components/table/cells/stage/stage-tooltip'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import {
@@ -12,6 +14,7 @@ import {
 import InfoIcon from '~/icons/info.svg'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
+import { formatNumber } from '~/utils/format-number'
 
 interface Props {
   project: ScalingProjectEntry
@@ -24,10 +27,28 @@ export function ScalingProjectStats({ project }: Props) {
       <ProjectStat
         title="Daily TPS"
         tooltip="Transactions per second averaged over the past day displayed together with a percentage change compared to 7D ago."
-        value={<></>}
+        value={
+          project.header.activity ? (
+            <StatWithChange
+              stat={project.header.activity.lastDayTps}
+              change={project.header.activity.tpsWeeklyChange}
+            />
+          ) : (
+            <UpcomingBadge />
+          )
+        }
       />
-      <ProjectStat title="30D tx count" tooltip="" value={<></>} />
-      <HorizontalSeparator className="col-span-full my-5 max-md:hidden" />
+      <ProjectStat
+        title="30D tx count"
+        value={
+          project.header.activity ? (
+            formatNumber(project.header.activity.txCount)
+          ) : (
+            <UpcomingBadge />
+          )
+        }
+      />
+      <HorizontalSeparator className="col-span-full max-md:hidden" />
       <ProjectStat
         title="Stage"
         value={
