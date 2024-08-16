@@ -13,7 +13,7 @@ export const CostsChartFilter = z.discriminatedUnion('type', [
 ])
 export type CostsChartFilter = z.infer<typeof CostsChartFilter>
 
-export function getCostsProjects(filter: CostsChartFilter): Layer2[] {
+export function getCostsProjects(filter: CostsChartFilter = { type: 'all' }): Layer2[] {
   const condition = filterToCondition(filter)
   return layer2s.filter(
     (p) =>
