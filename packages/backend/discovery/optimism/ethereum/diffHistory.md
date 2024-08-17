@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xc2ec99b57ae94852d03fff550a2bfb18454509b6
+
+# Diff at Sat, 17 Aug 2024 12:04:40 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@cdcd8b00a013be2560c73c34ee9bd4de75515cb9 block: 20541920
+- current block number: 20548226
+
+## Description
+
+OP Mainnet has used the fall back to activate permissioned games.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0xbEb5Fc579115071764c7423A4f12eDde41f106Ed) {
+    +++ description: None
+      values.respectedGameType:
+-        0
++        1
+      values.respectedGameTypeUpdatedAt:
+-        1718037779
++        1723833359
+    }
+```
+
+```diff
+    contract DisputeGameFactory (0xe5965Ab5962eDc7477C8520243A95517CD252fA9) {
+    +++ description: None
+      values.permissionedGamesTotal:
+-        0
++        17
+    }
+```
+
 Generated with discovered.json: 0x9feacdb29601d60c3d8eaf1d7584ad76a11ea197
 
 # Diff at Fri, 16 Aug 2024 14:54:57 GMT:
