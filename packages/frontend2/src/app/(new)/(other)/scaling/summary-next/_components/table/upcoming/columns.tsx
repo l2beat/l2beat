@@ -4,7 +4,7 @@ import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import {
   TypeCell,
-  TypeColumnTooltip,
+  TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 
@@ -43,7 +43,7 @@ export const scalingUpcomingColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: <TypeColumnTooltip />,
+      tooltip: <TypeExplanationTooltip />,
     },
   }),
   columnHelper.accessor('purposes', {

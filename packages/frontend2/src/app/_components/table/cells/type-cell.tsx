@@ -114,7 +114,7 @@ function TypeTooltip({ Icon, text }: TypeTooltipProps) {
   )
 }
 
-export function TypeColumnTooltip({
+export function TypeExplanationTooltip({
   showOnlyRollupsDefinitions,
 }: {
   showOnlyRollupsDefinitions?: boolean

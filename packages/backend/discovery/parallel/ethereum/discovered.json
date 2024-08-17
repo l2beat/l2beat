@@ -1,7 +1,7 @@
 {
   "name": "parallel",
   "chain": "ethereum",
-  "blockNumber": 20511119,
+  "blockNumber": 20539980,
   "configHash": "0x8988b388db1cfe91cd0e453ba76745b6238dfee80addb15d3e2e78e1a3695b85",
   "version": 11,
   "contracts": [
@@ -141,11 +141,11 @@
           "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
         ],
         "allowedOutboxList": ["0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"],
-        "delayedMessageCount": 3685,
+        "delayedMessageCount": 3693,
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerInbox": "0xb4795A0edae98d7820C37F06f6b858e7acb51DF8",
-        "sequencerMessageCount": 1243,
-        "sequencerReportedSubMessageCount": 533867
+        "sequencerMessageCount": 1249,
+        "sequencerReportedSubMessageCount": 533911
       },
       "derivedName": "Bridge"
     },
@@ -193,12 +193,12 @@
         "confirmPeriodBlocks": 43200,
         "currentRequiredStake": "100000000000000000",
         "extraChallengeTimeBlocks": 40320,
-        "firstUnresolvedNode": 1135,
+        "firstUnresolvedNode": 1148,
         "inbox": "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7",
         "isERC20Enabled": false,
         "lastStakeBlock": 20468408,
-        "latestConfirmed": 1134,
-        "latestNodeCreated": 1153,
+        "latestConfirmed": 1147,
+        "latestNodeCreated": 1159,
         "loserStakeEscrow": "0x0000000000000000000000000000000000000000",
         "minimumAssertionPeriod": 75,
         "outbox": "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3",
@@ -333,7 +333,7 @@
       "values": {
         "$admin": "0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d",
         "$implementation": "0x958985cf2c54f99ba4a599221A8090C1F9Cee9A5",
-        "batchCount": 1243,
+        "batchCount": 1249,
         "batchPosterManager": "0x0000000000000000000000000000000000000000",
         "batchPosters": [
           "0x40acDc94a00b33151B40763b3Fed7C46fF639Df4",
@@ -350,17 +350,17 @@
         "keySetUpdates": 0,
         "maxDataSize": 117964,
         "maxTimeVariation": {
-          "delayBlocks": 5760,
-          "futureBlocks": 48,
-          "delaySeconds": 86400,
-          "futureSeconds": 3600
+          "delayBlocks": 11520,
+          "futureBlocks": 96,
+          "delaySeconds": 172800,
+          "futureSeconds": 7200
         },
         "postsBlobs": true,
         "reader4844": "0x7Deda2425eC2d4EA0DF689A78de2fBF002075576",
         "rollup": "0x6594085ca55a2B3a5fAD1C57A270D060eEa99877",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 4,
-        "totalDelayedMessagesRead": 3684,
+        "totalDelayedMessagesRead": 3692,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
