@@ -101,7 +101,7 @@ export const optimism: Layer2 = {
   ],
   display: {
     headerWarning:
-      'OP Mainnet has reverted to permissioned proposals as part of a bug fix procedure. THe network is expected to return to permissionless fault proofs on the week of September 9th.',
+      'OP Mainnet has reverted to permissioned proposals as part of a bug fix procedure. The network is expected to return to permissionless fault proofs on the week of September 9th.',
     name: 'OP Mainnet',
     slug: 'optimism',
     category: 'Optimistic Rollup',
