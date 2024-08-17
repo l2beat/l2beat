@@ -1,7 +1,7 @@
 {
   "name": "optimism",
   "chain": "ethereum",
-  "blockNumber": 20541920,
+  "blockNumber": 20548226,
   "configHash": "0xb64cfdda9e137ec0feb6c850d9cbe01d37502ccaabf854d16d817280dea715cc",
   "version": 11,
   "contracts": [
@@ -172,7 +172,7 @@
         "$immutable": false,
         "$implementation": "0xD3494713A5cfaD3F5359379DfA074E2Ac8C6Fd65",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292749651",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292749778",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -546,7 +546,7 @@
         "GnosisSafe_modules": [],
         "multisigThreshold": "5 of 7 (71%)",
         "NAME": "Gnosis Safe",
-        "nonce": 94,
+        "nonce": 95,
         "VERSION": "1.1.1"
       },
       "derivedName": "GnosisSafe"
@@ -614,13 +614,13 @@
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
-          "prevBoughtGas": 440516,
-          "prevBlockNum": 20541905
+          "prevBoughtGas": 489262,
+          "prevBlockNum": 20548217
         },
         "paused": false,
         "proofMaturityDelaySeconds": 604800,
-        "respectedGameType": 0,
-        "respectedGameTypeUpdatedAt": 1718037779,
+        "respectedGameType": 1,
+        "respectedGameTypeUpdatedAt": 1723833359,
         "superchainConfig": "0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "systemConfig": "0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
         "version": "3.10.0"
@@ -790,7 +790,7 @@
         "name": "Wrapped Ether",
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
         "symbol": "WETH",
-        "totalSupply": "22095188000000000000",
+        "totalSupply": "22015188000000000000",
         "version": "1.0.0"
       },
       "derivedName": "DelayedWETH"
@@ -804,7 +804,7 @@
       "values": {
         "$admin": "0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
         "$implementation": "0xc641A33cab81C559F2bd4b21EA34C290E2440C2B",
-        "gameCount": 1630,
+        "gameCount": 1650,
         "gameImpls": [
           "0xf691F8A6d908B58C534B624cF16495b491E633BA",
           "0xc307e93a7C530a184c98EaDe4545a412b857b62f",
@@ -814,7 +814,7 @@
         ],
         "initBonds": ["80000000000000000", "80000000000000000", 0, 0, 0],
         "owner": "0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A",
-        "permissionedGamesTotal": 0,
+        "permissionedGamesTotal": 17,
         "version": "1.0.0"
       },
       "derivedName": "DisputeGameFactory"

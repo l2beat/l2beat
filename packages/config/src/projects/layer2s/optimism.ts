@@ -100,6 +100,8 @@ export const optimism: Layer2 = {
     Badge.Other.Governance,
   ],
   display: {
+    headerWarning:
+      'OP Mainnet has reverted to permissioned proposals as part of a bug fix procedure. The network is expected to return to permissionless fault proofs on the week of September 9th.',
     name: 'OP Mainnet',
     slug: 'optimism',
     category: 'Optimistic Rollup',
