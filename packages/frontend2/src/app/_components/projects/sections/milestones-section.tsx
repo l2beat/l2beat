@@ -1,10 +1,20 @@
+'use client'
+
 import { type Milestone } from '@l2beat/config'
-import React from 'react'
+import React, { useState } from 'react'
 import { MilestoneIcon } from '~/icons/MilestoneIcon'
 import { CustomLink } from '../../link/custom-link'
 import { Markdown } from '../../markdown/markdown'
 import { ProjectSection } from './project-section'
 import { type ProjectSectionId } from './types'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '../../collapsible'
+import { Button } from '../../button'
+import ChevronDownIcon from '~/icons/chevron.svg'
+import { cn } from '~/utils/cn'
 
 export interface MilestonesSectionProps {
   title: string
@@ -14,52 +24,77 @@ export interface MilestonesSectionProps {
 }
 
 export function MilestonesSection(props: MilestonesSectionProps) {
+  const [isOpen, setIsOpen] = useState(false)
   return (
     <ProjectSection
       title={props.title}
       id={props.id}
       sectionOrder={props.sectionOrder}
     >
-      <div className="relative">
-        {/* TODO (scaling-project-page): Add expandable container */}
-        {/* <ExpandableContainer
-        className="relative"
-        gradientClassName="from-white dark:from-neutral-900 md:from-gray-100 md:dark:from-zinc-900"
-      > */}
-        <div className="absolute left-[15.4px] mt-2 h-full">
-          <div className="h-3/5 w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500" />
-          <div className="h-2/5 w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
-        </div>
-        <div className="ml-10">
-          {props.milestones
-            .sort(
-              (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-            )
-            .map((milestone, i) => (
-              <div key={i} className="pb-7">
-                <MilestoneIcon className="absolute left-1.5" />
-                <p className="text-lg font-bold leading-none">
-                  {milestone.name}
-                </p>
-                <p className="text-sm dark:text-gray-400">
-                  {formatDate(milestone.date)}
-                </p>
-                <div className="mt-3">
-                  {milestone.description && (
-                    <Markdown className="text-sm leading-none dark:text-gray-400">
-                      {milestone.description}
-                    </Markdown>
-                  )}
-                  <CustomLink className="text-sm" href={milestone.link}>
-                    Learn more
-                  </CustomLink>
-                </div>
-              </div>
-            ))}
-        </div>
-        {/* </ExpandableContainer> */}
-      </div>
+      {props.milestones.length < 3 ? (
+        <MilestonesBase milestones={props.milestones} />
+      ) : (
+        <Collapsible open={isOpen} onOpenChange={setIsOpen}>
+          <MilestonesBase
+            milestones={props.milestones.slice(0, 2)}
+            isOpen={isOpen}
+          />
+          <CollapsibleContent>
+            <MilestonesBase milestones={props.milestones.slice(2)} />
+          </CollapsibleContent>
+          <CollapsibleTrigger asChild>
+            <Button
+              className="group mx-auto mt-1 flex w-min justify-between gap-2.5"
+              variant="purple"
+            >
+              <span className="w-[76px] whitespace-pre text-left text-sm font-bold">
+                {isOpen ? 'Show less' : 'Show more'}
+              </span>
+              <ChevronDownIcon className="transition-transform duration-300 group-data-[state=open]:rotate-180" />
+            </Button>
+          </CollapsibleTrigger>
+        </Collapsible>
+      )}
     </ProjectSection>
+  )
+}
+
+function MilestonesBase(props: { milestones: Milestone[]; isOpen?: boolean }) {
+  return (
+    <div className="relative">
+      <div className="absolute left-[15.4px] mt-2 h-full">
+        <div
+          className={cn(
+            'h-[calc(100%_-_100px)] w-[1.7px] bg-green-400 dark:w-px dark:bg-green-500',
+            props.isOpen && 'h-full',
+          )}
+        />
+        {!props.isOpen && (
+          <div className="h-[100px] w-[1.7px] bg-gradient-to-b from-green-400 dark:w-px dark:from-green-500" />
+        )}
+      </div>
+      <div className="ml-10">
+        {props.milestones.map((milestone, i) => (
+          <div key={i} className="pb-7">
+            <MilestoneIcon className="absolute left-1.5" />
+            <p className="text-lg font-bold leading-none">{milestone.name}</p>
+            <p className="text-sm dark:text-gray-400">
+              {formatDate(milestone.date)}
+            </p>
+            <div className="mt-3">
+              {milestone.description && (
+                <Markdown className="text-sm leading-none dark:text-gray-400">
+                  {milestone.description}
+                </Markdown>
+              )}
+              <CustomLink className="text-sm" href={milestone.link}>
+                Learn more
+              </CustomLink>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   )
 }
 

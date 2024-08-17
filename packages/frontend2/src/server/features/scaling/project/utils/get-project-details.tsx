@@ -75,7 +75,10 @@ export function getProjectDetails({
       id: 'onchain-costs',
       title: 'Onchain costs',
       projectId: project.id,
-      milestones: project.milestones ?? [],
+      milestones:
+        project.milestones?.sort(
+          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+        ) ?? [],
     },
   })
 
