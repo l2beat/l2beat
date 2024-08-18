@@ -206,6 +206,15 @@ export const chains: ChainConfig[] = [
     },
   },
   {
+    name: 'jibchain',
+    chainId: 8899,
+    multicall: getMulticall3Config(2919675),
+    explorer: {
+      type: 'blockscout',
+      url: 'https://exp.jibchain.net/api',
+    },
+  },
+  {
     name: 'mantapacific',
     chainId: 169,
     multicall: getMulticall3Config(332890),
