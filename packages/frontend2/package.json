@@ -13,7 +13,9 @@
     "format": "biome check .",
     "format:fix": "biome check --apply .",
     "test": "mocha",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@l2beat/backend": "*",
@@ -57,6 +59,16 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@chromatic-com/storybook": "^1.6.1",
+    "@storybook/addon-essentials": "^8.2.9",
+    "@storybook/addon-interactions": "^8.2.9",
+    "@storybook/addon-links": "^8.2.9",
+    "@storybook/addon-onboarding": "^8.2.9",
+    "@storybook/addon-themes": "^8.2.9",
+    "@storybook/blocks": "^8.2.9",
+    "@storybook/nextjs": "^8.2.9",
+    "@storybook/react": "^8.2.9",
+    "@storybook/test": "^8.2.9",
     "@svgr/webpack": "^8.1.0",
     "@types/js-cookie": "^3.0.6",
     "@types/lodash": "^4.17.4",
@@ -67,9 +79,11 @@
     "@typescript-eslint/eslint-plugin": "^7.10.0",
     "eslint": "^8.0.0",
     "eslint-config-next": "14.2.3",
+    "eslint-plugin-storybook": "^0.8.0",
     "eslint-plugin-tailwindcss": "^3.17.4",
     "pino-pretty": "^11.1.0",
     "postcss": "^8.4.38",
+    "storybook": "^8.2.9",
     "tailwindcss": "^3.4.1",
     "tailwindcss-animate": "^1.0.7"
   }
