@@ -5,10 +5,10 @@ import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
+import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
 import { StackedTvlChart } from './_components/stacked-tvl-chart'
-import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

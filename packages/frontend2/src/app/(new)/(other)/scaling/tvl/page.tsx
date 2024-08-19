@@ -8,10 +8,10 @@ import { getDetailed7dTvlBreakdown } from '~/server/features/scaling/tvl/utils/g
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
+import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
 import { TvlChart } from './_components/tvl-chart'
-import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

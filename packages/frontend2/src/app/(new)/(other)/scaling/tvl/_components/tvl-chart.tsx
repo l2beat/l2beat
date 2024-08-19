@@ -23,9 +23,9 @@ import { api } from '~/trpc/react'
 import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/format'
+import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
 import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
-import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 
 interface Props {
   milestones: Milestone[]

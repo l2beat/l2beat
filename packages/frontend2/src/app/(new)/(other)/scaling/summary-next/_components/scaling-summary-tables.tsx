@@ -16,6 +16,7 @@ import ArchivedIcon from '~/icons/archived.svg'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
@@ -23,7 +24,6 @@ import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
-import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 
 interface Props {
   projects: ScalingSummaryEntry[]
