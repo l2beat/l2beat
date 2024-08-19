@@ -1,7 +1,6 @@
 import { PercentChange } from '~/app/_components/percent-change'
 import { EM_DASH } from '~/consts/characters'
 import { formatCurrency } from '~/utils/format'
-import { formatNumber } from '~/utils/format-number'
 
 export interface ValueLockedCellProps {
   value: number
