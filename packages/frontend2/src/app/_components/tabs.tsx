@@ -25,7 +25,7 @@ const Tabs = React.forwardRef<
     ? (value: string) => {
         const search = new URLSearchParams(searchParams)
 
-        if (value === defaultValue) {
+        if (value !== defaultValue) {
           search.set('tab', value)
         } else {
           search.delete('tab')
