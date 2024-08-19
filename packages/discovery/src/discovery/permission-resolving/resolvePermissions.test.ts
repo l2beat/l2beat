@@ -318,7 +318,7 @@ describe(resolvePermissions.name, () => {
       node('proxy', [edge('act', 'timelockA'), edge('act', 'timelockB')]),
       node('timelockA', [edge('act', 'multisig', { delay: 50 })]),
       node('timelockB', [edge('act', 'multisig', { delay: 100 })]),
-      node('multisig', [edge('member', 'actor')]),
+      node('multisig', [edge('member', 'actor')], { threshold: 1 }),
       node('actor'),
     ]
 
@@ -449,7 +449,9 @@ describe(resolvePermissions.name, () => {
         ],
         { threshold: 2 },
       ),
-      node('msigA', [edge('member', 'actorA'), edge('member', 'actorB')]),
+      node('msigA', [edge('member', 'actorA'), edge('member', 'actorB')], {
+        threshold: 1,
+      }),
       node('actorA'),
       node('actorB'),
       node('actorC'),
@@ -589,11 +591,15 @@ describe(resolvePermissions.name, () => {
   it('three actors, two contracts, one multisig with members, threshold one', () => {
     const graph: Node<string>[] = [
       node('vault', [edge('configure', 'msig')]),
-      node('msig', [
-        edge('member', 'actorA'),
-        edge('member', 'actorB'),
-        edge('member', 'actorC'),
-      ]),
+      node(
+        'msig',
+        [
+          edge('member', 'actorA'),
+          edge('member', 'actorB'),
+          edge('member', 'actorC'),
+        ],
+        { threshold: 1 },
+      ),
       node('actorA'),
       node('actorB'),
       node('actorC'),
