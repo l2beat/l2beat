@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import {
   unstable_cache as cache,
@@ -13,7 +13,7 @@ export async function getDaProjectsTvl(projectIds: ProjectId[]) {
 
 const getCachedDaProjectsTvl = cache(
   async (projectIds: ProjectId[]) => {
-    const values = await db.value.getLatestValuesForProjects(projectIds)
+    const values = await db.value.getLatestValues(projectIds)
 
     const byProject = groupBy(values, 'projectId')
 
@@ -40,7 +40,7 @@ const getCachedDaProjectsTvl = cache(
     return aggregated
   },
   ['daProjectsTvl'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 /**

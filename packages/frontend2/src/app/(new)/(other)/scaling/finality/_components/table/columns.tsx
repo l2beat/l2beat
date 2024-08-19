@@ -6,7 +6,7 @@ import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import {
   TypeCell,
-  TypeColumnTooltip,
+  TypeExplanationTooltip,
 } from '~/app/_components/table/cells/type-cell'
 import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/types'
 import { FinalityDurationCell } from './finality-duration-cell'
@@ -65,7 +65,7 @@ export const scalingFinalityColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: <TypeColumnTooltip />,
+      tooltip: <TypeExplanationTooltip showOnlyRollupsDefinitions />,
     },
   }),
   columnHelper.accessor('dataAvailabilityMode', {

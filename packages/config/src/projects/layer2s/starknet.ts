@@ -778,12 +778,28 @@ export const starknet: Layer2 = {
           subVerifiers: [
             // TODO: change links when this is released: https://github.com/starkware-libs/cairo-lang/commit/0e4dab8a6065d80d1c726394f5d9d23cb451706a
             {
-              name: 'Final universal bootloader',
+              name: 'Main bootloader',
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',
               trustedSetup: 'None',
               link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/bootloader/bootloader.cairo',
+            },
+            {
+              name: 'Simple bootloader',
+              proofSystem: 'STARK',
+              mainArithmetization: 'AIR',
+              mainPCS: 'FRI',
+              trustedSetup: 'None',
+              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.1/src/starkware/cairo/bootloaders/simple_bootloader/simple_bootloader.cairo',
+            },
+            {
+              name: 'Applicative bootloader',
+              proofSystem: 'STARK',
+              mainArithmetization: 'AIR',
+              mainPCS: 'FRI',
+              trustedSetup: 'None',
+              link: 'https://github.com/starkware-libs/cairo-lang/blob/v0.13.2a0/src/starkware/cairo/bootloaders/applicative_bootloader/applicative_bootloader.cairo',
             },
             {
               name: 'Recursive Cairo verifier',
@@ -794,7 +810,7 @@ export const starknet: Layer2 = {
               link: 'https://github.com/starkware-libs/cairo-lang/tree/v0.13.1/src/starkware/cairo/cairo_verifier/layouts/all_cairo',
             },
             {
-              name: 'Main program',
+              name: 'StarknetOS',
               proofSystem: 'STARK',
               mainArithmetization: 'AIR',
               mainPCS: 'FRI',

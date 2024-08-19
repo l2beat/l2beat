@@ -29,7 +29,7 @@ export const mantleDA: DaLayer = {
   kind: 'DAC',
   display: {
     name: 'MantleDA',
-    slug: 'mantle-da',
+    slug: 'mantle',
     description:
       'MantleDA is a data availability solution built on EigenDA contracts, which have been forked and significantly modified.',
     links: {

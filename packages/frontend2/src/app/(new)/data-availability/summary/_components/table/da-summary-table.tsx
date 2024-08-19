@@ -10,7 +10,7 @@ import { BasicTable } from '~/app/_components/table/basic-table'
 import { FilterWrapper } from '~/app/_components/table/filters/filter-wrapper'
 import { TableFacetedFilter } from '~/app/_components/table/filters/table-faceted-filter'
 import { useTable } from '~/hooks/use-table'
-import { type DaSummaryEntry } from '~/server/features/data-availability/get-da-summary-entries'
+import { type DaSummaryEntry } from '~/server/features/data-availability/summary/get-da-summary-entries'
 import { columns } from './columns'
 
 interface Props {

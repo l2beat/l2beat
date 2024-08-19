@@ -1,4 +1,4 @@
-import { pluralize } from '@l2beat/shared-pure'
+import { UnixTime, pluralize } from '@l2beat/shared-pure'
 import React from 'react'
 
 export function DurationCell(props: { durationInSeconds: number }) {
@@ -22,13 +22,13 @@ export function DurationCell(props: { durationInSeconds: number }) {
 }
 
 function getDurationColorClassName(durationInSeconds: number) {
-  if (durationInSeconds < 60) {
+  if (durationInSeconds < UnixTime.MINUTE) {
     return 'text-green-300 dark:text-green-450'
   }
-  if (durationInSeconds < 60 * 60) {
+  if (durationInSeconds < UnixTime.HOUR) {
     return ''
   }
-  if (durationInSeconds < 60 * 60 * 24) {
+  if (durationInSeconds < UnixTime.DAY) {
     return 'text-yellow-700 dark:text-yellow-100'
   }
   return 'text-orange-600 dark:text-orange-500'

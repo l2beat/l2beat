@@ -10,11 +10,8 @@ import { getProjectPages } from './project/layer2'
 import { getL3sProjectPages } from './project/layer3'
 import { getActivityPage } from './scaling/activity'
 import { getMaintenanceActivityPage } from './scaling/activity/maintenance'
-import { getCostsPage } from './scaling/costs'
-import { getLivenessPage } from './scaling/liveness'
 import { getProjectTvlBreakdownPages } from './scaling/projects-tvl-breakdown'
 import { getSummaryPage } from './scaling/summary'
-import { getTvlPage } from './scaling/tvl'
 
 export function renderPages(config: Config, pagesData: PagesData) {
   const pages: Page[] = []
@@ -24,8 +21,6 @@ export function renderPages(config: Config, pagesData: PagesData) {
     activityApiResponse,
     verificationStatus,
     tvlBreakdownApiResponse,
-    livenessApiResponse,
-    l2CostsApiResponse,
     implementationChange,
   } = pagesData
 
@@ -52,34 +47,11 @@ export function renderPages(config: Config, pagesData: PagesData) {
     pages.push(getMaintenanceActivityPage(config))
   }
 
-  pages.push(getTvlPage(config, pagesData))
-
   if (config.features.tvlBreakdown && tvlBreakdownApiResponse) {
     pages.push(
       ...getProjectTvlBreakdownPages(config, {
         tvlApiResponse,
         tvlBreakdownApiResponse,
-      }),
-    )
-  }
-
-  if (config.features.liveness && livenessApiResponse) {
-    pages.push(
-      getLivenessPage(config, {
-        livenessApiResponse,
-        tvlApiResponse,
-        implementationChange,
-      }),
-    )
-  }
-
-  if (config.features.costsPage && l2CostsApiResponse) {
-    pages.push(
-      getCostsPage(config, {
-        tvlApiResponse,
-        l2CostsApiResponse,
-        activityApiResponse,
-        implementationChange,
       }),
     )
   }

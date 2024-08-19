@@ -58,8 +58,6 @@ If you want to add a new Layer 2 project you can do that by opening a PR. To do 
      - Create a simple React component to render the technology provider Icon (SVG format required)
        inside `packages/frontend/src/components/icons/providers`.
      - Import the Icon component created in `packages/frontend/src/components/icons/index.ts`.
-     - Add an entry for the technology provider in the provider's Legend that is located at
-       `packages/frontend/src/components/ScalingLegend.tsx`.
      - To finish, add the technology provider icon in the technology column of the project's table
        that is located at `packages/frontend/src/components/table/TechnologyCell.tsx`.
 6. Make sure that things like linting, formatting and tests are all passing. To

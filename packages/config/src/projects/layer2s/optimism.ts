@@ -26,7 +26,6 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { HARDCODED } from '../../discovery/values/hardcoded'
 import { Badge } from '../badges'
 import { OPTIMISTIC_ROLLUP_STATE_UPDATES_WARNING } from './common'
-import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
 
 const discovery = new ProjectDiscovery('optimism')
@@ -88,7 +87,15 @@ const livenessInterval = discovery.getContractValue<number>(
   'livenessInterval',
 )
 
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal',
+  'respectedGameType',
+)
+
+const gameTypes = ['FaultDisputeGame', 'PermissionedDisputeGame']
+
 export const optimism: Layer2 = {
+  isUnderReview: true,
   type: 'layer2',
   id: ProjectId('optimism'),
   badges: [
@@ -100,6 +107,8 @@ export const optimism: Layer2 = {
     Badge.Other.Governance,
   ],
   display: {
+    headerWarning:
+      'OP Mainnet has reverted to permissioned proposals as part of a bug fix procedure. The network is expected to return to permissionless fault proofs on the week of September 9th.',
     name: 'OP Mainnet',
     slug: 'optimism',
     category: 'Optimistic Rollup',
@@ -427,7 +436,11 @@ export const optimism: Layer2 = {
     genesisState:
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
-  stage: getStage(
+  stage: {
+    stage: 'UnderReview',
+  },
+  /*
+  getStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -453,6 +466,7 @@ export const optimism: Layer2 = {
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
+  */
   permissions: [
     {
       name: 'Sequencer',
@@ -517,8 +531,7 @@ export const optimism: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
+        description: `The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals. The current game type is ${gameTypes[respectedGameType]}.`,
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('L1CrossDomainMessenger', {
@@ -546,10 +559,14 @@ export const optimism: Layer2 = {
           'The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.',
         ...l1Upgradeability,
       }),
-      discovery.getContractDetails('FaultDisputeGame', {
-        description:
-          'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
-      }),
+      discovery.getContractDetails(
+        'FaultDisputeGame',
+        'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
+      ),
+      discovery.getContractDetails(
+        'PermissionedDisputeGame',
+        'Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.',
+      ),
       discovery.getContractDetails('MIPS', {
         description:
           'The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.',

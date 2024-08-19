@@ -1,14 +1,13 @@
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
-import { About } from '~/app/_components/about'
-import { TvlChart } from '~/app/_components/chart/tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { OtherSites } from '~/app/_components/other-sites'
-import { getScalingSummaryEntries } from '~/server/features/scaling/get-scaling-summary-entries'
-import { getTvl } from '~/server/features/scaling/get-tvl'
+import { getScalingSummaryEntries } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { HydrateClient, api } from '~/trpc/server'
+import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
+import { StackedTvlChart } from './_components/stacked-tvl-chart'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -20,18 +19,22 @@ export const metadata = getDefaultMetadata({
 })
 
 export default async function Page() {
-  const tvl = await getTvl()
-  const { layer2s, layer3s } = await getScalingSummaryEntries(tvl)
+  // This gets all the data for the table, but NOT the % change (which comes from the API)
+  const projects = await getScalingSummaryEntries()
+
+  await api.scaling.summary.chart.prefetch({
+    excludeAssociatedTokens: false,
+    range: getCookie('scalingSummaryChartRange'),
+    type: 'layer2',
+  })
 
   return (
-    <ScalingFilterContextProvider>
-      <div className="mb-20">
-        <TvlChart data={tvl.layers2s} milestones={HOMEPAGE_MILESTONES} />
+    <HydrateClient>
+      <ScalingFilterContextProvider>
+        <StackedTvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
         <HorizontalSeparator className="my-4 md:my-6" />
-        <ScalingSummaryTables layer2s={layer2s} layer3s={layer3s} />
-        <OtherSites />
-        <About />
-      </div>
-    </ScalingFilterContextProvider>
+        <ScalingSummaryTables projects={projects} />
+      </ScalingFilterContextProvider>
+    </HydrateClient>
   )
 }

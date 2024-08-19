@@ -1,3 +1,53 @@
+Generated with discovered.json: 0xb3abeaadde332589421296e5a42eef7517e05214
+
+# Diff at Fri, 09 Aug 2024 10:14:58 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 66927056
+- current block number: 66927056
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 66927056 (main branch discovery), not current.
+
+```diff
+    contract MantleOwner (0x1aB4D3cfcCCB28DBc8993454f461f3565281BB60) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0xD784d7128B46B60Ca7d8BdC17dCEC94917455657","0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"]
+      assignedPermissions.upgrade:
++        ["0xD784d7128B46B60Ca7d8BdC17dCEC94917455657","0xe946aBB40928326ce5bFF303E7B8f0f253EA39D0"]
+      values.$multisigThreshold:
+-        "5 of 8 (63%)"
+      values.getOwners:
+-        ["0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5","0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10","0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5","0xF801886AE2e127A269B0F11892edb54F692d02dF","0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92","0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db","0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9","0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"]
+      values.getThreshold:
+-        5
+      values.$members:
++        ["0xd30898ECdc21C72250a5fd1dbD37FF7D63237Db5","0x7785bccF9110C188Dad39bE49D4Cdf6c6CC03F10","0x4D9b22B92Ff9faFAc013f82faCA88BDa8E778cb5","0xF801886AE2e127A269B0F11892edb54F692d02dF","0xd8F26118505417Ef6468Ac8A2AE1E5117245Db92","0x824C9364A6CF8f5EB542ad2ca8F5705561C8b1db","0x24a257B7D975E7ec6219C4cFCbcF6E504253c7A9","0xcC1A2bd1a459be0C7fAd3B7F9Fa9a6CBBFE9BFa5"]
+      values.$threshold:
++        5
+      values.multisigThreshold:
++        "5 of 8 (63%)"
+    }
+```
+
+```diff
+    contract MantleProxyAdmin (0xeAe8e5180EAE503E4Ffef2F5D48E20164eD41b82) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
+      assignedPermissions.upgrade:
++        ["0x62351b47e060c61868Ab7E05920Cb42bD9A5f2B2"]
+    }
+```
+
 Generated with discovered.json: 0xdb8ff93053129b28521c5831fc3d87d513d1428e
 
 # Diff at Fri, 26 Jul 2024 09:00:25 GMT:

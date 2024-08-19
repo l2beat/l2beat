@@ -9,6 +9,10 @@ const squareVariants = cva('rounded', {
   variants: {
     variant: {
       default: 'bg-black dark:bg-white',
+      calldata: 'bg-sky-550 dark:bg-sky-500',
+      blobs: 'bg-orange-400 dark:bg-yellow-100',
+      compute: 'bg-pink-100',
+      overhead: 'bg-purple-100',
       canonical: 'bg-purple-100',
       external: 'bg-yellow-200',
       native: 'bg-pink-100',

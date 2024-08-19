@@ -6,7 +6,9 @@ import {
 } from '~/consts/cookies'
 import { parseKnownCookie, serializeKnownCookie } from './common'
 
-export function getCookie<T extends KnownCookieName>(name: T) {
+export function getCookie<T extends KnownCookieName>(
+  name: T,
+): KnownCookieValue<T> {
   const meta = knownCookies[name]
   const cookie = Cookies.get(meta.key)
   if (cookie === undefined) {

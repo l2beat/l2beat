@@ -1,4 +1,9 @@
-import { type Layer2, type Layer3, type StageConfig } from '@l2beat/config'
+import {
+  type Layer2,
+  type Layer3,
+  type StageConfig,
+  layer2s,
+} from '@l2beat/config'
 import { isAnySectionUnderReview } from './utils/is-any-section-under-review'
 
 export function getCommonScalingEntry({
@@ -42,7 +47,10 @@ export function getCommonScalingEntry({
     ...common,
     type: 'layer3' as const,
     provider: project.display.provider,
-    hostChain: project.hostChain,
+    hostChain:
+      project.hostChain === 'Multiple'
+        ? 'Multiple'
+        : layer2s.find((l) => l.id === project.hostChain)?.display.name,
     stage: { stage: 'NotApplicable' } satisfies StageConfig,
   }
 }

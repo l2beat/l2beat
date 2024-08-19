@@ -1,7 +1,12 @@
 import { assert, Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
+import { BlockExplorerClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
+import {
+  BlockscoutChainConfig,
+  EtherscanChainConfig,
+} from '../../config/Config'
 import { Peripherals } from '../../peripherals/Peripherals'
 import { DegateClient } from '../../peripherals/degate'
 import { LoopringClient } from '../../peripherals/loopring/LoopringClient'
@@ -28,6 +33,7 @@ import { RpcTxsCountProvider } from './services/providers/RpcTxsCountProvider'
 import { StarkexTxsCountProvider } from './services/providers/StarkexTxsCountProvider'
 import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountProvider'
 import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
+import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
 export function createActivity2Module(
   config: Config,
@@ -78,12 +84,19 @@ function createActivityIndexers(
 
   const indexers: ActivityIndexer[] = [dayTargetIndexer]
 
+  const numberOfStarkexProjects =
+    activityConfig.projects.filter((p) => p.config.type === 'starkex').length ||
+    1
+  const singleStarkexCPM =
+    activityConfig.starkexCallsPerMinute / numberOfStarkexProjects
+
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
       case 'rpc': {
         const rpcClient = peripherals.getClient(RpcClient, {
           url: project.config.url,
           callsPerMinute: project.config.callsPerMinute,
+          chain: project.id,
         })
         const txsCountProvider = new RpcTxsCountProvider(
           rpcClient,
@@ -99,6 +112,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -122,6 +136,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -145,6 +160,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -168,6 +184,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -191,6 +208,7 @@ function createActivityIndexers(
           project,
           indexerService,
           db,
+          peripherals,
         )
 
         indexers.push(blockTargetIndexer, activityIndexer)
@@ -210,7 +228,7 @@ function createActivityIndexers(
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
-          batchSize: 10,
+          batchSize: getBatchSizeFromCallsPerMinute(singleStarkexCPM),
           minHeight:
             project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
           uncertaintyBuffer: project.config.resyncLastDays,
@@ -233,13 +251,46 @@ function createBlockBasedIndexers(
   logger: Logger,
   client: BaseClient,
   txsCountProvider: TxsCountProvider,
-  project: { id: ProjectId; config: ActivityTransactionConfig },
+  project: {
+    id: ProjectId
+    config: ActivityTransactionConfig
+    blockExplorerConfig:
+      | EtherscanChainConfig
+      | BlockscoutChainConfig
+      | undefined
+  },
   indexerService: IndexerService,
   db: Database,
+  peripherals: Peripherals,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
+  assert(project.config.type !== 'starkex')
+
+  let blockExplorerClient: BlockExplorerClient | undefined
+
+  if (project.blockExplorerConfig) {
+    const options =
+      project.blockExplorerConfig === undefined
+        ? undefined
+        : project.blockExplorerConfig.type === 'etherscan'
+          ? {
+              type: 'Etherscan' as const,
+              apiKey: project.blockExplorerConfig.etherscanApiKey,
+              url: project.blockExplorerConfig.etherscanApiUrl,
+              maximumCallsForBlockTimestamp: 3,
+            }
+          : {
+              type: 'Blockscout' as const,
+              url: project.blockExplorerConfig.blockscoutApiUrl,
+              maximumCallsForBlockTimestamp: 10,
+            }
+
+    blockExplorerClient = peripherals.getClient(BlockExplorerClient, options)
+  }
+
   const blockTimestampProvider = new BlockTimestampProvider({
     client,
-    logger,
+    logger: logger.tag(`activity_${project.id}`),
+    blockExplorerClient,
   })
   const blockTargetIndexer = new BlockTargetIndexer(
     logger,
@@ -251,8 +302,7 @@ function createBlockBasedIndexers(
   const activityIndexer = new BlockActivityIndexer({
     logger,
     projectId: project.id,
-    // TODO: add batchSize to config
-    batchSize: 100,
+    batchSize: getBatchSizeFromCallsPerMinute(project.config.callsPerMinute),
     minHeight: 1,
     parents: [blockTargetIndexer],
     txsCountProvider,

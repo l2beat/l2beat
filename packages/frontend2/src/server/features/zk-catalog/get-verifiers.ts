@@ -36,7 +36,7 @@ const getCachedVerifiersStatus = cache(
     return Promise.all(coercedQueries)
   },
   ['zkCatalogVerifiers'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 export const VerifierStatus = z.object({

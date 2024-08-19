@@ -41,6 +41,12 @@ DATABASE_URL=
 `frontend2`, while on production, is still in the early stage of development. When running it locally and trying to navigate to a page that is not migrated yet (main page included), you'll encounter an Internal Server Error.
 
 #### Fully ported pages
+- /scaling
+  * /risks
+  * /data-availability
+  * /finality
+  * /costs
+  * /liveness
 - /donate
 - /faq
 - /glossary

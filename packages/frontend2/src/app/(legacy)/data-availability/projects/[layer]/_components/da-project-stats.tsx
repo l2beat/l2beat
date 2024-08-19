@@ -3,14 +3,14 @@ import round from 'lodash/round'
 import { type ReactNode } from 'react'
 import { ProjectsUsedIn } from '~/app/(new)/data-availability/summary/_components/table/projects-used-in'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
+import { EM_DASH } from '~/consts/characters'
 import InfoIcon from '~/icons/info.svg'
-import { type DaProjectEntry } from '~/server/features/data-availability/get-da-project-entry'
+import { type DaProjectEntry } from '~/server/features/data-availability/project/get-da-project-entry'
 import { cn } from '~/utils/cn'
 import { formatCurrency } from '~/utils/format'
 

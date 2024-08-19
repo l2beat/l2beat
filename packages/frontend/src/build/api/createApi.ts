@@ -3,7 +3,6 @@ import {
   ActivityApiCharts,
   ActivityApiResponse,
   L2CostsApiResponse,
-  L2CostsCombinedApiCharts,
   L2CostsProjectApiCharts,
   TvlApiCharts,
   TvlApiResponse,
@@ -12,11 +11,7 @@ import fsx from 'fs-extra'
 
 import { Config } from '../config'
 
-type Charts =
-  | TvlApiCharts
-  | ActivityApiCharts
-  | L2CostsCombinedApiCharts
-  | L2CostsProjectApiCharts
+type Charts = TvlApiCharts | ActivityApiCharts | L2CostsProjectApiCharts
 
 export function createApi(
   config: Config,
@@ -59,7 +54,6 @@ export function createApi(
   }
 
   if (l2CostsApiResponse) {
-    urlCharts.set('costs/combined', l2CostsApiResponse.combined)
     for (const [projectId, chart] of Object.entries(
       l2CostsApiResponse.projects,
     )) {

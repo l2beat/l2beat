@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xffa2ec60da5474402f9060f965246766d95f3576
+
+# Diff at Fri, 09 Aug 2024 12:00:33 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20032860
+- current block number: 20032860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032860 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions. It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      assignedPermissions.configure.1:
+-        "0xC975862927797812371A9Fb631f83F8f5e2240D5"
++        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
+      assignedPermissions.configure.0:
+-        "0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
++        "0xC975862927797812371A9Fb631f83F8f5e2240D5"
+    }
+```
+
+Generated with discovered.json: 0xebbfc6090005d5430c4cdbea02ba0d9321224635
+
+# Diff at Fri, 09 Aug 2024 10:10:38 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20032860
+- current block number: 20032860
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20032860 (main branch discovery), not current.
+
+```diff
+    contract ConduitMultisig (0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) {
+    +++ description: It can act on behalf of 0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF, inheriting its permissions. It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system.
+      assignedPermissions.owner:
+-        ["0xC975862927797812371A9Fb631f83F8f5e2240D5","0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"]
+      assignedPermissions.configure:
++        ["0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF","0xC975862927797812371A9Fb631f83F8f5e2240D5"]
+      values.$multisigThreshold:
+-        "4 of 7 (57%)"
+      values.getOwners:
+-        ["0xF3313C48BD8E17b823d5498D62F37019dFEA647D","0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0","0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4","0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f","0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038","0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C","0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"]
+      values.getThreshold:
+-        4
+      values.$members:
++        ["0xF3313C48BD8E17b823d5498D62F37019dFEA647D","0xF0B77EaE7F2dabCC2571c7418406A0dCA3afA4f0","0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4","0x3840f487A17A41100DD1Bf0946c34f132a57Fd5f","0xa0C600a6e85bf225958FFAcC70B5FDDF9A059038","0xefCf0c8faFB425997870f845e26fC6cA6EE6dD5C","0x4D8007a0E9f293e62E2b0F43C6Cf4C4B9e135BAe"]
+      values.$threshold:
++        4
+      values.multisigThreshold:
++        "4 of 7 (57%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x2b3F201543adF73160bA42E1a5b7750024F30420","0x59625d1FE0Eeb8114a4d13c863978F39b3471781","0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","0xC975862927797812371A9Fb631f83F8f5e2240D5"]
+      assignedPermissions.owner:
+-        ["0xEa4165C5CDCA155779803A113d8391b741bA5228"]
+      assignedPermissions.upgrade:
++        ["0x2b3F201543adF73160bA42E1a5b7750024F30420","0x59625d1FE0Eeb8114a4d13c863978F39b3471781","0xB751A613f2Db932c6cdeF5048E6D2af05F9B98ED","0xC975862927797812371A9Fb631f83F8f5e2240D5"]
+      assignedPermissions.configure:
++        ["0xEa4165C5CDCA155779803A113d8391b741bA5228"]
+    }
+```
+
 Generated with discovered.json: 0xef5d9930be760333d1e12f203bc4672f43849710
 
 # Diff at Tue, 30 Jul 2024 11:12:51 GMT:

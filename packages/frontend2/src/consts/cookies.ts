@@ -1,12 +1,27 @@
 import { type ZodTypeAny, type z } from 'zod'
-import { TvlChartRange } from '~/server/features/tvl/range-utils'
+import { CostsTimeRange } from '~/server/features/scaling/costs/utils/range'
+import { TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
 /**
  * Known cookie definitions.
  */
 export const knownCookies = {
   // Chart range used for preloads.
-  chartRange: knownCookie('l2beat-chart-range', TvlChartRange, '1y'),
+  scalingSummaryChartRange: knownCookie(
+    'scaling-summary-chart-range',
+    TvlChartRange,
+    '1y',
+  ),
+  scalingTvlChartRange: knownCookie(
+    'scaling-tvl-chart-range',
+    TvlChartRange,
+    '1y',
+  ),
+  scalingCostsChartRange: knownCookie(
+    'scaling-costs-chart-range',
+    CostsTimeRange,
+    '30d',
+  ),
 } satisfies Record<string, KnownCookie>
 
 /**

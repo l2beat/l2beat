@@ -9,6 +9,12 @@
       "address": "0x6ad2d2c22bb58ea94be18cff11ef67e8bb97b652"
     },
     {
+      "symbol": "sUSDz",
+      "address": "0x547213367cfB08ab418E7b54d7883b2C2AA27Fd7",
+      "coingeckoId": "anzen-staked-usdz",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "PARAM",
       "address": "0x69a1e699f562d7af66fc6cc473d99f4430c3acd2"
     },
@@ -847,6 +853,10 @@
     {
       "symbol": "OMI",
       "address": "0xeD35af169aF46a02eE13b9d79Eb57d6D68C1749e"
+    },
+    {
+      "symbol": "OPAI",
+      "address": "0xf8e57ac2730d3088d98b79209739b0d5ba085a03"
     },
     {
       "symbol": "ORBS",
@@ -2237,6 +2247,17 @@
       "supply": "circulatingSupply"
     },
     {
+      "symbol": "sUSDz",
+      "address": "0xe31eE12bDFDD0573D634124611e85338e2cBF0cF",
+      "source": "external",
+      "coingeckoId": "anzen-staked-usdz",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
       "symbol": "rsETH",
       "category": "ether",
       "address": "0x1Bc71130A0e39942a7658878169764Bbd8A45993",
@@ -2392,6 +2413,28 @@
       "address": "0x95CeF13441Be50d20cA4558CC0a27B601aC544E5",
       "source": "native",
       "supply": "circulatingSupply"
+    },
+    {
+      "symbol": "mETH",
+      "address": "0xaccbc418a994a27a75644d8d591afc22faba594e",
+      "category": "ether",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
+    },
+    {
+      "symbol": "mUSD",
+      "address": "0x649d4524897ce85a864dc2a2d5a11adb3044f44a",
+      "category": "stablecoin",
+      "source": "external",
+      "supply": "totalSupply",
+      "bridgedUsing": {
+        "bridge": "Layer Zero",
+        "slug": "omnichain"
+      }
     },
     {
       "symbol": "STONE",

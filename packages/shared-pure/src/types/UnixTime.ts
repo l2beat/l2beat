@@ -11,13 +11,13 @@ export class UnixTime {
     }
   }
 
-  static DAY = 86_400
+  static DAY = 86_400 as const
 
-  static HOUR = 3_600
+  static HOUR = 3_600 as const
 
-  static MINUTE = 60
+  static MINUTE = 60 as const
 
-  static SIX_HOURS = 6 * this.HOUR
+  static SIX_HOURS = 21_600 as const
 
   /**
    * Static instance for test purposes, in most cases indicates that the timestamp is not important in this test case.

@@ -498,7 +498,7 @@ export function NavWrapper({
           title: 'Liveness',
           icon: LivenessIcon,
           href: '/scaling/liveness',
-          enabled: config.features.liveness,
+          enabled: true,
         },
         {
           title: 'Finality',
@@ -516,7 +516,7 @@ export function NavWrapper({
           title: 'Costs',
           icon: CostsIcon,
           href: '/scaling/costs',
-          enabled: config.features.costsPage,
+          enabled: true,
         },
       ],
     },

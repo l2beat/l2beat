@@ -5,20 +5,20 @@ import { useMemo } from 'react'
 import { useScalingFilter } from '~/app/(new)/(other)/_components/scaling-filter-context'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
-import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/get-scaling-da-entries'
+import { type ScalingDataAvailabilityEntry } from '~/server/features/scaling/data-availability/get-scaling-da-entries'
 import { ScalingDaFilters } from '../scaling-da-filters'
 import { columns } from './columns'
 
 export interface Props {
-  items: ScalingDataAvailabilityEntry[]
+  entries: ScalingDataAvailabilityEntry[]
 }
 
-export function ScalingDataAvailabilityTable({ items }: Props) {
+export function ScalingDataAvailabilityTable({ entries }: Props) {
   const includeFilters = useScalingFilter()
 
   const projects = useMemo(
-    () => items.filter((item) => includeFilters(item)),
-    [items, includeFilters],
+    () => entries.filter((item) => includeFilters(item)),
+    [entries, includeFilters],
   )
 
   const table = useTable({

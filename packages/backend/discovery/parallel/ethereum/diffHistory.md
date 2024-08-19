@@ -1,3 +1,165 @@
+Generated with discovered.json: 0x988841d109efe1870589b323c698b053c09d834f
+
+# Diff at Fri, 16 Aug 2024 08:25:27 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@7273b1decf2b7a03e4f10ec7b42f94fa80b3c5ba block: 20511119
+- current block number: 20539980
+
+## Description
+
+The futureBlocks value enforces a max block height that a batch can be posted relative to the current block (likewise with futureSeconds). A small value for future blocks means that a relatively small L1 reorg can cause an otherwise valid batch to revert. They increased is to 96, or three epochs. The futureSeconds value is set to correspond to the new futureBlocks value. The delay is also changed - it's the delay time between tx submission and ability to do force inclusion on the L1. Compared to Arbitrum One all of the delays are higher here.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.maxTimeVariation.delayBlocks:
+-        5760
++        11520
+      values.maxTimeVariation.futureBlocks:
+-        48
++        96
+      values.maxTimeVariation.delaySeconds:
+-        86400
++        172800
+      values.maxTimeVariation.futureSeconds:
+-        3600
++        7200
+    }
+```
+
+Generated with discovered.json: 0x9da8d6602f5bc8018ec9a4e1c2db4df4e1a2ec4c
+
+# Diff at Mon, 12 Aug 2024 07:44:39 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@78984bd9166a6a2ef87dc311b2392c9536e24795 block: 20475140
+- current block number: 20511119
+
+## Description
+
+Parallel is posting blobs again, for some reason they switched to calldata a while ago but they are back to blobs now.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (0xb4795A0edae98d7820C37F06f6b858e7acb51DF8) {
+    +++ description: None
+      values.postsBlobs:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xcbf2f32feebbf2f97fa124b0bc96bcd11183af12
+
+# Diff at Fri, 09 Aug 2024 12:01:19 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20475140
+- current block number: 20475140
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475140 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+    +++ description: None
+      assignedPermissions.upgrade.9:
+-        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
++        "0xa1c86E2362dba0525075622af6d5f739B1304D45"
+      assignedPermissions.upgrade.8:
+-        "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
++        "0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89"
+      assignedPermissions.upgrade.7:
+-        "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"
++        "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"
+      assignedPermissions.upgrade.6:
+-        "0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3"
++        "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"
+      assignedPermissions.upgrade.5:
+-        "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"
++        "0x5a961c7D162195a9Dc5a357Cc168b0694283382E"
+      assignedPermissions.upgrade.3:
+-        "0x5a961c7D162195a9Dc5a357Cc168b0694283382E"
++        "0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2"
+      assignedPermissions.upgrade.2:
+-        "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"
++        "0x28c32059d7e6147cf5257DFC127f7258beA1cdf4"
+      assignedPermissions.upgrade.1:
+-        "0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d"
++        "0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d"
+      assignedPermissions.upgrade.0:
+-        "0xa1c86E2362dba0525075622af6d5f739B1304D45"
++        "0x12485B9d469c1D51d05b5C39e009D50eF0170cF7"
+    }
+```
+
+Generated with discovered.json: 0x56dc3e54b9d63be5f7b93cdb889a811be10e81be
+
+# Diff at Fri, 09 Aug 2024 10:11:20 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20475140
+- current block number: 20475140
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20475140 (main branch discovery), not current.
+
+```diff
+    contract ParallelMultisig (0x19293FBec52F94165f903708a74513Dd6dFedd0a) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0xb6559478b59836376dA9937c4C697dDb21779E49","0x9EBe5cabad9748263DbE1304064AdAb285c0f515","0x17816E9A858b161c3E37016D139cf618056CaCD4","0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd","0x909e36B512Ed45250fdff513523119d825647695"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0xb6559478b59836376dA9937c4C697dDb21779E49","0x9EBe5cabad9748263DbE1304064AdAb285c0f515","0x17816E9A858b161c3E37016D139cf618056CaCD4","0x0049FAB7f5dD1F26F057BD5d972Ffc6ba3c349Dd","0x909e36B512Ed45250fdff513523119d825647695"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x6d4bE7c1a618D43bE4a1Bd7F8eC8E079Ff52Fb4d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x12485B9d469c1D51d05b5C39e009D50eF0170cF7","0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d","0x28c32059d7e6147cf5257DFC127f7258beA1cdf4","0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2","0x5D657b905275F36AD62C3d5C36966975613aFB96","0x5a961c7D162195a9Dc5a357Cc168b0694283382E","0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d","0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3","0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","0xa1c86E2362dba0525075622af6d5f739B1304D45","0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"]
+      assignedPermissions.upgrade:
++        ["0xa1c86E2362dba0525075622af6d5f739B1304D45","0x6Eb9240d4add111D5Fc81b10Ff12eECabcf9752d","0x150286BdbE7C8Cd23D41a8e1e64438e0dc04dc3d","0x5a961c7D162195a9Dc5a357Cc168b0694283382E","0x5D657b905275F36AD62C3d5C36966975613aFB96","0x28c32059d7e6147cf5257DFC127f7258beA1cdf4","0xB6e0586616ebE79b2F86dDB32048c500D23b3AC3","0x12485B9d469c1D51d05b5C39e009D50eF0170cF7","0x36E5DE57f862cf5bA28624845faB8c2fF6Aa41d2","0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89","0xb4795A0edae98d7820C37F06f6b858e7acb51DF8"]
+    }
+```
+
+```diff
+    contract UpgradeExecutor (0xD368b8dC5cB6fA26A53b7588db9A87E509A72d89) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+      assignedPermissions.upgrade:
++        ["0x6594085ca55a2B3a5fAD1C57A270D060eEa99877"]
+    }
+```
+
 Generated with discovered.json: 0xfd62887005a3835fad303d8d0fc8ae3fc92ff078
 
 # Diff at Wed, 07 Aug 2024 07:16:47 GMT:

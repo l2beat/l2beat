@@ -1,18 +1,21 @@
 import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { EM_DASH } from '~/app/_components/nav/consts'
 import { PizzaRosetteCell } from '~/app/_components/rosette/pizza/pizza-rosette-cell'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { StageCell } from '~/app/_components/table/cells/stage-cell'
-import { TypeCell } from '~/app/_components/table/cells/type-cell'
+import {
+  TypeCell,
+  TypeExplanationTooltip,
+} from '~/app/_components/table/cells/type-cell'
 import { sortStages } from '~/app/_components/table/sorting/functions/stage-sorting'
-import { type ScalingSummaryLayer2sEntry } from '~/server/features/scaling/types'
+import { EM_DASH } from '~/consts/characters'
 import { formatPercent } from '~/utils/get-percentage-change'
+import { type ScalingSummaryTableRow } from '../../../_utils/to-table-rows'
 import { TotalCell } from '../total-cell'
 
-const columnHelper = createColumnHelper<ScalingSummaryLayer2sEntry>()
+const columnHelper = createColumnHelper<ScalingSummaryTableRow>()
 
 export const scalingLayer2sColumns = [
   columnHelper.accessor((_, index) => index + 1, {
@@ -60,21 +63,7 @@ export const scalingLayer2sColumns = [
       <TypeCell provider={ctx.row.original.provider}>{ctx.getValue()}</TypeCell>
     ),
     meta: {
-      tooltip: (
-        <div>
-          <div className="mb-1">
-            Type of this project. Determines data availability and proof system
-            used.
-          </div>
-          ZK Rollups = Validity Proofs + onchain data
-          <br />
-          Optimistic Rollups = Fraud Proofs + onchain data
-          <br />
-          Validiums = Validity Proofs + offchain data
-          <br />
-          Optimiums = Fraud Proofs + offchain data
-        </div>
-      ),
+      tooltip: <TypeExplanationTooltip />,
     },
   }),
   columnHelper.accessor('stage', {
@@ -93,27 +82,32 @@ export const scalingLayer2sColumns = [
       tooltip: 'Functionality supported by this project.',
     },
   }),
-  columnHelper.accessor('tvlData', {
+  columnHelper.accessor('tvl', {
     id: 'total',
     header: 'Total',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value) {
+      if (!value.breakdown) {
         return <UpcomingBadge />
       }
 
-      return <TotalCell data={value} />
+      return (
+        <TotalCell
+          associatedTokenSymbols={value.associatedTokens}
+          tvlWarnings={value.warnings}
+          breakdown={value.breakdown}
+          change={value.change}
+        />
+      )
     },
     sortUndefined: 'last',
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
       tooltip:
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage changed compared to 7D ago. Some projects may include externally bridged and natively minted assets.',
     },
   }),
-  columnHelper.accessor((e) => e.tvlData?.marketShare, {
-    header: 'Market share',
+  columnHelper.accessor((e) => e.marketShare, {
+    header: 'Mkt Share',
     cell: (ctx) => {
       const value = ctx.getValue()
       if (!value) {
@@ -124,8 +118,7 @@ export const scalingLayer2sColumns = [
     },
     sortUndefined: 'last',
     meta: {
-      headClassName: 'justify-end',
-      cellClassName: 'justify-end',
+      align: 'right',
       tooltip: 'Share of the sum of total value locked of all projects.',
     },
   }),

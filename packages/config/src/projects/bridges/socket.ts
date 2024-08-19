@@ -257,6 +257,13 @@ export const socket: Bridge = {
           'Socket Vault associated with Kinto and owned by Unknown Owner.',
         tokens: ['PAXG'],
       }),
+      discovery.getEscrowDetails({
+        address: EthereumAddress('0xd04Bc056BE36a6127267E4F71d3b43D1BEEfE8bF'),
+        name: 'XAUt Vault Kinto',
+        description:
+          'Socket Vault associated with Kinto and owned by Unknown Owner.',
+        tokens: ['XAUt'],
+      }),
       // Polynomial
       discovery.getEscrowDetails({
         address: EthereumAddress('0xDE1617Ddb7C8A250A409D986930001985cfad76F'),

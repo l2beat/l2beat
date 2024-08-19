@@ -46,8 +46,20 @@ export const blobstreamEthereum = CELESTIA_BLOBSTREAM({
       socialMedia: [],
     },
   },
-  technology:
-    'Dolore dolore est culpa id incididunt aliquip consectetur commodo commodo. Aliquip consectetur duis in exercitation ad sint magna labore veniam consequat aliqua excepteur sit incididunt. Sint id officia non amet incididunt dolore qui ad cillum sunt ad. Tempor officia nostrud commodo exercitation commodo sit et veniam ea sit ad. Nostrud cillum nulla irure consequat irure occaecat id esse occaecat voluptate pariatur consequat nostrud. Est irure quis eiusmod ipsum ea ex deserunt incididunt dolore nisi laborum.',
+  technology: `
+     The BlobstreamX bridge is a data availability bridge that facilitates data availability commitments to be bridged between Celestia and Ethereum.
+     The BlobstreamX bridge is composed of three main components: the **BlobstreamX** contract, the **Succinct Gateway** contract and the **Verifier** contracts.
+     By default, BlobstreamX operates asynchronously, handling requests in a fulfillment-based manner. First, zero-knowledge proofs of Celestia block ranges are requested for proving. Requests can be submitted either off-chain through the Succinct API, or onchain through the requestDataHeader() method of the blobstreamX smart contract.
+     Once a proving request is received, the off-chain prover generates the proof and submits it to the Succinct Gateway contract. The Succinct Gateway contract verifies the proof with the corresponding verifier contract and, if successful, calls the blobstreamX contract to store the data commitment.
+     Alternatively, it is possible to run an Blobstream X operator with local proving, allowing for self-generating the proofs.
+
+     Verifying a header range includes verifying tendermint consensus (header signatures are 2/3 of stake) and verifying the data commitment root. This is achieved through a combined circuit. This combined circuit is made up of two parts:
+      1) **TendermintX** circuit is used to verify tendermint consensus,
+      2) **BlobstreamX** circuit is used to verify the data commitment root.
+
+    By default, BlobstreamX on Ethereum is updated by the Celestia operator at a regular cadence of 4 hours.
+
+    `,
   contracts: {
     addresses: [
       discovery.getContractDetails('BlobstreamX', {

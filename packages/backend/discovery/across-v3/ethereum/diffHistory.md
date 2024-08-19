@@ -1,3 +1,127 @@
+Generated with discovered.json: 0xf27ee85934c0dc2fbfecd1d1d8da4503777c5497
+
+# Diff at Thu, 15 Aug 2024 07:31:34 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20518997
+- current block number: 20532552
+
+## Description
+
+New adapter and L2 crosschain target for Zora were added.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.Adapters.7777777:
++        "0x024F2fC31CBDD8de17194b1892c834f98Ef5169b"
+      values.CrossChainContracts.7777777:
++        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract Zora_Adapter (0x024F2fC31CBDD8de17194b1892c834f98Ef5169b)
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../across-v3/ethereum/.flat/Zora_Adapter.sol      | 590 +++++++++++++++++++++
+ 1 file changed, 590 insertions(+)
+```
+
+Generated with discovered.json: 0xe9a9d7fdf87c58268c0949602f8942688583b6ab
+
+# Diff at Tue, 13 Aug 2024 10:06:57 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@8b923f6edf399d43a5cd7f331708956dce3e83d1 block: 20482283
+- current block number: 20518997
+
+## Description
+
+The Spoke pool (used for liquidity on the destination chains) was changed for the Redstone Adapter.
+
+## Watched changes
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      values.CrossChainContracts.690:
+-        "0x28077B47Cd03326De7838926A63699849DD4fa87"
++        "0x13fDac9F9b4777705db45291bbFF3c972c6d1d97"
+    }
+```
+
+Generated with discovered.json: 0x268645e90c13973d8d0e1a6b1dd839737c270f02
+
+# Diff at Fri, 09 Aug 2024 10:08:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20482283
+- current block number: 20482283
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20482283 (main branch discovery), not current.
+
+```diff
+    contract EmergencyProposalExecutor (0x8180D59b7175d4064bDFA8138A58e9baBFFdA44a) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 4 (50%)"
+      values.getOwners:
+-        ["0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x363605C0bdE9F1F5053aDA30618d95dbFc109Bf5","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 4 (50%)"
+    }
+```
+
+```diff
+    contract HubPool Multisig (0xB524735356985D2f267FA010D681f061DfF03715) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "3 of 5 (60%)"
+      values.getOwners:
+-        ["0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe","0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x868CF19464e17F76D6419ACC802B122c22D2FD34"]
+      values.getThreshold:
+-        3
+      values.$members:
++        ["0x1d933Fd71FF07E69f066d50B39a7C34EB3b69F05","0x837219D7a9C666F5542c4559Bf17D7B804E5c5fe","0x996267d7d1B7f5046543feDe2c2Db473Ed4f65e9","0xcc400c09ecBAC3e0033e4587BdFAABB26223e37d","0x868CF19464e17F76D6419ACC802B122c22D2FD34"]
+      values.$threshold:
++        3
+      values.multisigThreshold:
++        "3 of 5 (60%)"
+    }
+```
+
+```diff
+    contract HubPool (0xc186fA914353c44b2E33eBE05f21846F1048bEda) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]
+      assignedPermissions.upgrade:
++        ["0x5c7BCd6E7De5423a257D81B442095A1a6ced35C5"]
+    }
+```
+
 Generated with discovered.json: 0x694b66df3231b8a4fe6cb923963e8254b05ba3e1
 
 # Diff at Thu, 08 Aug 2024 07:11:14 GMT:

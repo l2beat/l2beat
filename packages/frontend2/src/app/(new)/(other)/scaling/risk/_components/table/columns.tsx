@@ -4,7 +4,7 @@ import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
-import { type ScalingRiskEntry } from '~/server/features/scaling/get-scaling-risk-entries'
+import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 
 const columnHelper = createColumnHelper<ScalingRiskEntry>()
 

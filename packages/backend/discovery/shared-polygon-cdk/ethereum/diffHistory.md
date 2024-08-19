@@ -1,3 +1,164 @@
+Generated with discovered.json: 0xcb4ecd76bd24c85fce589f137c6b5371214bffa7
+
+# Diff at Thu, 15 Aug 2024 07:11:51 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@9a07aead4b3726cc622f66fe9a15e06e63af7acd block: 20512764
+- current block number: 20532454
+
+## Description
+
+The batches for an unknown project are now being verified.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.8.0:
+-        false
++        true
+    }
+```
+
+Generated with discovered.json: 0xe954f2fce6af87cb2a645e83eb913f58270872ee
+
+# Diff at Mon, 12 Aug 2024 13:15:54 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@bafa261ae877bba9966845f4d250f5cbb9d4f6d2 block: 20324826
+- current block number: 20512764
+
+## Description
+
+New rollup is added, but not active yet (not verifying batches).
+
+Also a new scheduled transaction that will give the role of CREATE_ROLLUP to a new address.
+
+## Watched changes
+
+```diff
+    contract PolygonRollupManager (0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2) {
+    +++ description: None
++++ description: Checks if lastVerifiedBatch for a rollupID is greater than one. Works like a trigger for projects becoming active after deployment. Mind that index here is rollupID-1.
+      values.isVerifyingBatches.8:
++        [false]
+      values.rollupCount:
+-        8
++        9
++++ description: Maps rollup contracts and their verifier. Any change should be picked up also by the specific rollup config, unless it's a new rollup. [rollupContract, chainID, verifier, rollupTypeID]
++++ severity: MEDIUM
+      values.rollupsData.8:
++        ["0xA87df42CD53E998b3A610B8bCe3719871b0bb940",511252203,"0x0775e11309d75aA6b0967917fB0213C5673eDf81",4]
+    }
+```
+
+```diff
+    contract Timelock (0xEf1462451C30Ea7aD8555386226059Fe837CA4EF) {
+    +++ description: None
+      values.scheduledTransactionsDecoded.13:
++        {"target":"0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","value":"0","function":"grantRole","inputs":{"role":"0xa0fab074aba36a6fa69f1a83ee86e5abfb8433966eb57efb13dc2fc2f24ddd08","account":"0xC74eFc7fdb3BeC9c6930E91FFDF761b160dF79dB"},"predecessor":"0x0000000000000000000000000000000000000000000000000000000000000000","delay":"864000"}
+    }
+```
+
+Generated with discovered.json: 0x09a28c6289220b6632a4be28b4f979f629f7ee52
+
+# Diff at Fri, 09 Aug 2024 12:02:08 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@bf40aa32f030fd312056ca0ef198c8550467d1d7 block: 20324826
+- current block number: 20324826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20324826 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      assignedPermissions.upgrade.2:
+-        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
++        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
+      assignedPermissions.upgrade.1:
+-        "0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"
++        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
+      assignedPermissions.upgrade.0:
+-        "0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2"
++        "0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"
+    }
+```
+
+Generated with discovered.json: 0xd113d4bcf351ac5e28a0810501f10748689bd5ff
+
+# Diff at Fri, 09 Aug 2024 10:12:06 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 20324826
+- current block number: 20324826
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20324826 (main branch discovery), not current.
+
+```diff
+    contract SharedProxyAdmin (0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe","0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb"]
+      assignedPermissions.upgrade:
++        ["0x5132A183E9F3CB7C848b0AAC5Ae0c4f0491B7aB2","0x580bda1e7A0CFAe92Fa7F6c20A3794F169CE3CFb","0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe"]
+    }
+```
+
+```diff
+    contract RollupManagerAdminMultisig (0x242daE44F5d8fb54B198D03a94dA45B5a4413e21) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "2 of 3 (67%)"
+      values.getOwners:
+-        ["0x4c1665d6651ecEfa59B9B3041951608468b18891","0xA0B02B28920812324f1cC3255bd8840867d3f227","0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"]
+      values.getThreshold:
+-        2
+      values.$members:
++        ["0x4c1665d6651ecEfa59B9B3041951608468b18891","0xA0B02B28920812324f1cC3255bd8840867d3f227","0xEad77b01ea770839F7f576Cd1516Ff6A298d9dB2"]
+      values.$threshold:
++        2
+      values.multisigThreshold:
++        "2 of 3 (67%)"
+    }
+```
+
+```diff
+    contract SecurityCouncil (0x37c58Dfa7BF0A165C5AAEdDf3e2EdB475ac6Dcb6) {
+    +++ description: None
+      values.$multisigThreshold:
+-        "6 of 8 (75%)"
+      values.getOwners:
+-        ["0xFe45baf0F18c207152A807c1b05926583CFE2e4b","0xaF46a0ddf80DFFB49C87656625E65A37499B261D","0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf","0x4c1665d6651ecEfa59B9B3041951608468b18891","0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622","0x49c15936864690bCd6af0ecaca8E874adFF30E86","0x9F7dfAb2222A473284205cdDF08a677726d786A0","0x21887c89368bf918346c62460e0c339113801C28"]
+      values.getThreshold:
+-        6
+      values.$members:
++        ["0xFe45baf0F18c207152A807c1b05926583CFE2e4b","0xaF46a0ddf80DFFB49C87656625E65A37499B261D","0xBDc235cC9d6Baa641c5ae306bc83962475A5FEFf","0x4c1665d6651ecEfa59B9B3041951608468b18891","0x3ab9f4b964eE665F7CDf1d65f1cEEc6196B0D622","0x49c15936864690bCd6af0ecaca8E874adFF30E86","0x9F7dfAb2222A473284205cdDF08a677726d786A0","0x21887c89368bf918346c62460e0c339113801C28"]
+      values.$threshold:
++        6
+      values.multisigThreshold:
++        "6 of 8 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x25b3c5723fd7af1867dd9877734aee9f8b274646
 
 # Diff at Tue, 30 Jul 2024 11:14:28 GMT:

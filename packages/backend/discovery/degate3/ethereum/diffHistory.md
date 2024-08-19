@@ -1,3 +1,41 @@
+Generated with discovered.json: 0xa0bf6f1e7cabe7313c5d6074abd9e954b94bb880
+
+# Diff at Fri, 09 Aug 2024 10:09:21 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@1f0da1d0aab7bc6b3b5e54e7e93480bd98e57035 block: 18939732
+- current block number: 18939732
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 18939732 (main branch discovery), not current.
+
+```diff
+    contract TimeLock1 (0x0D2eC0a5858730E7D49f5B4aE6f2C665e46c1d9d) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x9C07A72177c5A05410cA338823e790876E79D73B"]
+      assignedPermissions.upgrade:
++        ["0x9C07A72177c5A05410cA338823e790876E79D73B"]
+    }
+```
+
+```diff
+    contract TimeLock2 (0xf2991507952d9594E71A44A54fb19f3109D213A5) {
+    +++ description: None
+      assignedPermissions.admin:
+-        ["0x54D7aE423Edb07282645e740C046B9373970a168"]
+      assignedPermissions.upgrade:
++        ["0x54D7aE423Edb07282645e740C046B9373970a168"]
+    }
+```
+
 Generated with discovered.json: 0xfc59701f91a4e00fbe20bec82c6713d916a2f155
 
 # Diff at Fri, 05 Jan 2024 07:55:50 GMT:

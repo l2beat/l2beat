@@ -4,11 +4,11 @@ import { Database } from '@l2beat/database'
 import { AmountConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { Dictionary, groupBy } from 'lodash'
 import { Clock } from '../../../../../tools/Clock'
-import { IndexerService } from '../../../../../tools/uif/IndexerService'
+import { DataStatusService } from './DataStatusService'
 
 interface Dependencies {
   readonly db: Database
-  readonly indexerService: IndexerService
+  readonly dataStatusService: DataStatusService
   readonly clock: Clock
   logger: Logger
 }
@@ -32,7 +32,7 @@ export class AmountsDataService {
       minTimestamp,
       targetTimestamp,
     )
-    const status = await this.$.indexerService.getAmountsStatus(
+    const status = await this.$.dataStatusService.getAmountsStatus(
       configurations,
       targetTimestamp,
     )
@@ -82,7 +82,7 @@ export class AmountsDataService {
       configurations.map((c) => c.configId),
       targetTimestamp,
     )
-    const status = await this.$.indexerService.getAmountsStatus(
+    const status = await this.$.dataStatusService.getAmountsStatus(
       configurations,
       targetTimestamp,
     )

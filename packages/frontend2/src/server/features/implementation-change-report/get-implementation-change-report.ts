@@ -1,14 +1,11 @@
-import path from 'path'
 import { chains } from '@l2beat/config'
-import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
-import {
-  type DiscoveryOutput,
-  get$Implementations,
-} from '@l2beat/discovery-types'
+import { diffDiscovery } from '@l2beat/discovery'
+import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
   type ImplementationChangeReportApiResponse,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -16,6 +13,7 @@ import {
 } from 'next/cache'
 import { env } from '~/env'
 import { db } from '~/server/database'
+import { getOnDiskData } from './get-on-disk-data'
 
 export function getImplementationChangeReport() {
   noStore()
@@ -28,54 +26,32 @@ export type ImplementationChangeReport = Awaited<
 
 const getCachedImplementationChangeReport = cache(
   async () => {
-    const configReader = new ConfigReader(
-      path.join(process.cwd(), '../backend'),
-    )
-    const onDiskChains = configReader.readAllChains()
-    const onDiskProjects: Record<string, string[]> = {}
-    const onDiskDiscoveries: Record<
-      string,
-      Record<string, DiscoveryOutput>
-    > = {}
-
-    for (const chain of onDiskChains) {
-      const projects = configReader.readAllProjectsForChain(chain)
-      onDiskProjects[chain] = projects
-
-      for (const project of projects) {
-        const discovery = configReader.readDiscovery(project, chain)
-
-        let onDiskDiscovery = onDiskDiscoveries[chain]
-        if (!onDiskDiscovery) {
-          onDiskDiscovery = {}
-        }
-        onDiskDiscovery[project] = discovery
-        onDiskDiscoveries[chain] = onDiskDiscovery
-      }
-    }
-
+    const onDisk = getOnDiskData()
     const result: ImplementationChangeReportApiResponse = {
       projects: {},
     }
 
-    for (const chainName of onDiskChains) {
-      const chainProjects = onDiskProjects[chainName]
+    const newDiscoveries = await db.updateMonitor.getAll()
+    for (const chain of onDisk.chains) {
+      const chainProjects = onDisk.projects[chain]
       if (!chainProjects) continue
+      const chainDiscovery = onDisk.discoveries[chain]
+      if (!chainDiscovery) continue
+
       for (const project of chainProjects) {
-        const chainDiscovery = onDiskDiscoveries[chainName]
-        if (!chainDiscovery) continue
-
         const discovery = chainDiscovery[project]
-        const chainId = chainNameToId(chainName)
-        const newDiscovery = await db.updateMonitor.findLatest(project, chainId)
+        const chainId = chainNameToId(chain)
 
+        const newDiscovery = newDiscoveries.find(
+          (d) => d.chainId === chainId && d.projectName === project,
+        )
         const latestContracts = newDiscovery?.discovery?.contracts
         const diffs =
-          latestContracts && discovery
+          discovery && latestContracts
             ? diffDiscovery(discovery.contracts, latestContracts)
             : []
         const implementationChanges = diffs.filter((diff) =>
-          diff.diff?.some((f) => f.key === 'values.$implementation'),
+          diff.diff?.some((f) => f.key && f.key === 'values.$implementation'),
         )
 
         if (implementationChanges.length === 0) {
@@ -83,11 +59,9 @@ const getCachedImplementationChangeReport = cache(
         }
 
         result.projects[project] ??= {}
-        const projectRecord = result.projects[project]
-        projectRecord[chainName] ??= []
-        const chainRecord = projectRecord[chainName]
 
         for (const diff of implementationChanges) {
+          result.projects[project][chain] ??= []
           assert(latestContracts, 'latestContracts is undefined')
           const diffedContract = latestContracts.find(
             (c) => c.address === diff.address,
@@ -95,7 +69,7 @@ const getCachedImplementationChangeReport = cache(
           assert(diffedContract, 'diffedContract is undefined')
           const newImplementations = get$Implementations(diffedContract.values)
 
-          chainRecord.push({
+          result.projects[project][chain].push({
             containingContract: diff.address,
             newImplementations,
           })
@@ -106,7 +80,7 @@ const getCachedImplementationChangeReport = cache(
     return result
   },
   ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 function chainNameToId(chainName: string): ChainId {

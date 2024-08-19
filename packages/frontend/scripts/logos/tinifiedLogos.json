@@ -66,7 +66,7 @@
   "morph.png": "0cb4a35d3e242d6356ff28cd8b6f9fcc",
   "multichain.png": "6852bc0daa6578173f06144e44047d14",
   "myria.png": "459dd156994faaba49fe29d5eb26cd83",
-  "near.png": "b98ee091069bd1f3d9812e435425ec1d",
+  "near.png": "d747c529ca4793e20bc02500e3612430",
   "nomad.png": "b2caeda05d768578e41a540bce6cf76c",
   "nova.png": "ad145a273021a70c2e70fc330a3939cc",
   "ola.png": "a1dbed26b8c1fffbfdf1aad267a73584",
@@ -155,7 +155,7 @@
   "edgeless.png": "eaf6ad8bda7346ed11e1d7e37ab38e7f",
   "zircuit.png": "1f7e960ac0cf13618f5f776d6f94bb68",
   "swell.png": "94ef311aa7ab3842f4c8af7860a5e675",
-  "kakarotzkevm.png": "04f4682ec3ac85a289c760076f595263",
+  "kakarotzkevm.png": "f7a11e8bcd3dbda8b032701951f4dd12",
   "cyber.png": "aad60ea078b119a029dd886340f19c14",
   "world.png": "d9a2a197bb68caf9a56562b43ded8590",
   "rise.png": "974df37d89dc06f48a703b0dffa13ec8",
@@ -246,6 +246,8 @@
   "cheese.png": "5801e98923e913874e5497f66204942b",
   "unite.png": "adb162a016602dd1b9c607e485aff52e",
   "pmon.png": "5518a5acc0d10bfea01541110c88a2bf",
-  "cheese.png": "5801e98923e913874e5497f66204942b",
-  "layerai.png": "5b8015ddf5963abbcf481caea61b5265"
+  "layerai.png": "5b8015ddf5963abbcf481caea61b5265",
+  "ancient8.png": "d574d06f9a4acdeded82eb50b58476eb",
+  "soulwallet.png": "d9fa6a7136a3cc1b07cb839d51f98adf",
+  "bugbuster.png": "740c8e57fc5526c7bce14823ffcde4c9"
 }
