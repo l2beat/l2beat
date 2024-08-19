@@ -14,42 +14,47 @@ const Tabs = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root> & {
     storeInSearchParams?: boolean
   }
->(({ defaultValue, storeInSearchParams = true, ...props }, ref) => {
-  const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
+>(
+  (
+    { defaultValue: passedDefaultValue, storeInSearchParams = true, ...props },
+    ref,
+  ) => {
+    const router = useRouter()
+    const pathname = usePathname()
+    const searchParams = useSearchParams()
 
-  const defaultValueFromSearchParams = searchParams.get('tab') ?? defaultValue
+    const defaultValue = searchParams.get('tab') ?? passedDefaultValue
 
-  const onValueChange = storeInSearchParams
-    ? (value: string) => {
-        const search = new URLSearchParams(searchParams)
+    const onValueChange = storeInSearchParams
+      ? (value: string) => {
+          const search = new URLSearchParams(searchParams)
 
-        if (value !== defaultValue) {
-          search.set('tab', value)
-        } else {
-          search.delete('tab')
+          if (value !== passedDefaultValue) {
+            search.set('tab', value)
+          } else {
+            search.delete('tab')
+          }
+
+          const stringified = search.toString()
+
+          if (stringified) {
+            router.replace(`${pathname}?${stringified}`)
+          } else {
+            router.replace(pathname)
+          }
         }
+      : undefined
 
-        const stringified = search.toString()
-
-        if (stringified) {
-          router.replace(`${pathname}?${stringified}`)
-        } else {
-          router.replace(pathname)
-        }
-      }
-    : undefined
-
-  return (
-    <TabsPrimitive.Root
-      ref={ref}
-      defaultValue={defaultValueFromSearchParams}
-      onValueChange={onValueChange}
-      {...props}
-    />
-  )
-})
+    return (
+      <TabsPrimitive.Root
+        ref={ref}
+        defaultValue={defaultValue}
+        onValueChange={onValueChange}
+        {...props}
+      />
+    )
+  },
+)
 Tabs.displayName = TabsPrimitive.Root.displayName
 
 const TabsList = React.forwardRef<
