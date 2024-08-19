@@ -14,7 +14,12 @@ export const bugbuster: Layer3 = {
   type: "layer3",
   id: ProjectId("bugbuster"),
   hostChain: ProjectId("optimism"),
-  badges: [Badge.Stack.Cartesi, Badge.L3ParentChain.Optimism], // TODO: Missing VM and DA badges
+  badges: [
+    Badge.Stack.Cartesi,
+    Badge.VM.AppChain,
+    Badge.DA.EthereumBlobs,
+    Badge.L3ParentChain.Optimism,
+  ],
   display: {
     name: "Bug Buster",
     slug: "bugbuster",
@@ -22,7 +27,7 @@ export const bugbuster: Layer3 = {
       "Bug Buster is a trustless, open source bug bounty platform for web3, powered by Cartesi.",
     purposes: ["Bug bounty"],
     category: "Optimistic Rollup",
-    provider: "Cartesi Rollups", // TODO: Isnt't it redundant with the badge Stack.Cartesi?
+    provider: "Cartesi Rollups",
     links: {
       documentation: [
         "https://github.com/crypto-bug-hunters/bug-buster/blob/main/README.md",
@@ -38,11 +43,10 @@ export const bugbuster: Layer3 = {
         "https://optimism.cartesiscan.io/applications/0x9cb6c6e904ce6bf3ca6d0002b9629acce74ea89b",
       ],
     },
-    activityDataSource: "Blockchain RPC", // TODO: Should this property be in Display?
+    activityDataSource: "Blockchain RPC",
   },
   config: {
     escrows: [
-      // TODO: Improve comment for this property
       discovery.getEscrowDetails({
         address: EthereumAddress("0x9cb6C6E904cE6BF3Ca6d0002b9629acce74Ea89b"),
         tokens: "*",
