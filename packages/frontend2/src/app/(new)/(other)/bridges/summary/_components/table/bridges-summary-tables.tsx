@@ -19,7 +19,7 @@ import {
 
 import ActiveIcon from '~/icons/active.svg'
 import ArchivedIcon from '~/icons/archived.svg'
-import { type BridgesSummaryEntry } from '~/server/features/bridges/types'
+import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
 import { useBridgesFilter } from '../../../_components/bridges-filter-context'
 import { BridgesFilters } from '../../../_components/bridges-filters'
 

@@ -10,7 +10,7 @@ import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
 
-export async function getScalingSummaryChartData(
+export async function getTvlChartData(
   ...args: Parameters<typeof getCachedScalingChartData>
 ) {
   noStore()
@@ -27,6 +27,9 @@ type DataType =
       type: 'layer2'
     }
   | {
+      type: 'bridges'
+    }
+  | {
       type: 'projects'
       projectIds: string[]
     }
@@ -41,6 +44,10 @@ export const getCachedScalingChartData = cache(
       if (rest.type === 'layer2') {
         return (project: TvlProject) =>
           project.type === 'layer2' || project.type === 'layer3'
+      }
+
+      if (rest.type === 'bridges') {
+        return (project: TvlProject) => project.type === 'bridge'
       }
 
       const projectIds = new Set(rest.projectIds)
@@ -78,7 +85,7 @@ export const getCachedScalingChartData = cache(
 
     return chart
   },
-  ['getScalingSummaryChartData'],
+  ['getTvlChartData'],
   { revalidate: 10 * UnixTime.MINUTE },
 )
 

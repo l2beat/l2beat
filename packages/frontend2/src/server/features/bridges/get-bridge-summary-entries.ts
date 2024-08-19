@@ -4,19 +4,14 @@ import {
   type ProjectId,
   type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
-import compact from 'lodash/compact'
-import { formatNumber } from '~/utils/format-number'
 import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
 import { getLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
 import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
 import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getDestination } from './get-destination'
-import { type BridgesSummaryEntry } from './types'
 
-export async function getBridgesSummaryEntries(): Promise<
-  BridgesSummaryEntry[]
-> {
+export async function getBridgesSummaryEntries() {
   const [
     latestTvlUsd,
     implementationChangeReport,
@@ -44,7 +39,7 @@ interface Params {
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }
 
-function getBridges(params: Params): BridgesSummaryEntry[] {
+function getBridges(params: Params) {
   const {
     projects,
     tvl,
@@ -52,15 +47,25 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
     projectsVerificationStatuses,
   } = params
   const entries = projects.map((bridge) => {
-    // Query for actual bridges
-    const totalTvl = Object.values(tvl).reduce((acc, tvl) => acc + tvl, 0)
-    const projectTvl = tvl[bridge.id]
+    // getLatestTvl is mostly likely cached at this point
+    const bridgesOnlyTotal = Object.entries(tvl).reduce(
+      (acc, [projectId, value]) => {
+        const isBridge = bridges.find((bridge) => bridge.id === projectId)
+
+        const valueToAdd = isBridge ? value : 0
+
+        return acc + valueToAdd
+      },
+      0,
+    )
+
+    const bridgeTvl = tvl[bridge.id]
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
       !!implementationChangeReport.projects[bridge.id.toString()]
 
-    const entry: BridgesSummaryEntry = {
+    return {
       href: `/bridges/${bridge.display.slug}`,
       type: bridge.type,
       shortName: bridge.display.shortName,
@@ -76,18 +81,17 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
       ),
       hasImplementationChanged,
       showProjectUnderReview: isAnySectionUnderReview(bridge),
-      tvl: projectTvl,
-      bridgesMarketShare: projectTvl ? projectTvl / totalTvl : undefined,
+      tvl: bridgeTvl,
+      bridgesMarketShare: bridgeTvl ? bridgeTvl / bridgesOnlyTotal : undefined,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,
+      warning: bridge.display.warning,
     }
-
-    return entry
   })
 
-  return compact(entries)
+  return entries
 }
 
-export function formatUSD(value: number) {
-  return `$${formatNumber(value)}`
-}
+export type BridgesSummaryEntry = Awaited<
+  ReturnType<typeof getBridgesSummaryEntries>
+>[number]

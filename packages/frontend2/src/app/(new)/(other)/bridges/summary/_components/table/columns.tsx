@@ -2,13 +2,12 @@ import { createColumnHelper } from '@tanstack/react-table'
 import Image from 'next/image'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { NoInfoCell } from '~/app/_components/table/cells/no-info-cell'
-import { NumberCell } from '~/app/_components/table/cells/number-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
 import { EM_DASH } from '~/consts/characters'
-import { type BridgesSummaryEntry } from '~/server/features/bridges/types'
+import { type BridgesSummaryEntry } from '~/server/features/bridges/get-bridge-summary-entries'
 import { formatCurrency } from '~/utils/format'
 import { formatPercent } from '~/utils/get-percentage-change'
 
@@ -52,11 +51,9 @@ const firstHalf = [
     header: 'Total',
     cell: (ctx) => {
       const entry = ctx.row.original
-      return !entry.isUpcoming && entry.tvl !== undefined ? (
-        <NumberCell>{formatCurrency(entry.tvl, 'usd')}</NumberCell>
-      ) : (
-        EM_DASH
-      )
+      return !entry.isUpcoming && entry.tvl !== undefined
+        ? formatCurrency(entry.tvl, 'usd')
+        : EM_DASH
     },
     meta: {
       tooltip:
@@ -100,9 +97,7 @@ const marketShareColumn = columnHelper.accessor('bridgesMarketShare', {
   header: 'MKT Share',
   cell: (ctx) =>
     ctx.row.original.bridgesMarketShare !== undefined ? (
-      <NumberCell>
-        <span>{formatPercent(ctx.row.original.bridgesMarketShare)}</span>
-      </NumberCell>
+      <span>{formatPercent(ctx.row.original.bridgesMarketShare)}</span>
     ) : (
       EM_DASH
     ),
