@@ -5,6 +5,7 @@ import {
 import { getDetailedTvlBreakdown } from './get-detailed-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function getDetailed7dTvlBreakdown(
   ...parameters: Parameters<typeof getCachedDetailed7dTvlBreakdown>
@@ -77,7 +78,7 @@ export const getCachedDetailed7dTvlBreakdown = cache(
   },
   ['getCachedDetailed7dTvlBreakdown'],
   {
-    revalidate: 60 * 10,
+    revalidate: 10 * UnixTime.MINUTE,
   },
 )
 

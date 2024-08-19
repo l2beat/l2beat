@@ -55,7 +55,7 @@ const getCachedCostsTableData = cache(
     )
   },
   ['costsTableV2'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 function getSyncStatus(syncedUntil: UnixTime) {

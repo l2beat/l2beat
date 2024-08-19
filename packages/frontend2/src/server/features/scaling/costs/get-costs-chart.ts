@@ -9,6 +9,7 @@ import { type CostsChartResponse } from './types'
 import { addIfDefined } from './utils/add-if-defined'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function getCostsChart(
   ...parameters: Parameters<typeof getCachedCostsChart>
@@ -33,7 +34,7 @@ const getCachedCostsChart = cache(
     return withTypes(summed)
   },
   ['costsChart'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 function withTypes(data: CostsChartResponse['data']): CostsChartResponse {

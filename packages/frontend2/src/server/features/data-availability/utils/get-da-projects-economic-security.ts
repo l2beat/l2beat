@@ -7,6 +7,7 @@ import {
 } from 'next/cache'
 import { db } from '~/server/database'
 import { type EconomicSecurityData } from '../project/utils/get-da-project-economic-security'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export async function getDaProjectsEconomicSecurity(): Promise<
   Record<string, EconomicSecurityData>
@@ -61,5 +62,5 @@ const getCachedEconomicSecurity = cache(
     return keyBy(compact(arr), 'id')
   },
   ['daEconomicSecurity'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )

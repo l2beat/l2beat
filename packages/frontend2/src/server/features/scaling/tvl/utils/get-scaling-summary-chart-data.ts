@@ -8,6 +8,7 @@ import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export async function getScalingSummaryChartData(
   ...args: Parameters<typeof getCachedScalingChartData>
@@ -78,7 +79,7 @@ export const getCachedScalingChartData = cache(
     return chart
   },
   ['getScalingSummaryChartData'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 export type ScalingSummaryData = Awaited<

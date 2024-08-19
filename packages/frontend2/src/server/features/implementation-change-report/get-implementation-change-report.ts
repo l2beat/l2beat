@@ -4,6 +4,7 @@ import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
+  UnixTime,
   type ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
 import {
@@ -79,7 +80,7 @@ const getCachedImplementationChangeReport = cache(
     return result
   },
   ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 function chainNameToId(chainName: string): ChainId {

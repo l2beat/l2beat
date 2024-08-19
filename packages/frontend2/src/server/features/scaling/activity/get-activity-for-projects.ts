@@ -6,6 +6,7 @@ import {
 import { db } from '~/server/database'
 import { type TimeRange } from '~/utils/range/range'
 import { getFullySyncedActivityRange } from './utils/get-fully-synced-activity-range'
+import { UnixTime } from '@l2beat/shared-pure'
 
 export function getLatestActivityForProjects(
   ...parameters: Parameters<typeof getCachedLatestActivityForProjects>
@@ -28,5 +29,5 @@ const getCachedLatestActivityForProjects = cache(
     )
   },
   ['latestActivity'],
-  { revalidate: 60 * 60 },
+  { revalidate: UnixTime.HOUR },
 )

@@ -28,7 +28,7 @@ export async function getFinality(projects: FinalityProjectConfig[]) {
 }
 
 const getCachedFinalityData = cache(getFinalityData, ['finality'], {
-  revalidate: 60 * 60,
+  revalidate: UnixTime.HOUR,
 })
 
 export async function getFinalityData(
