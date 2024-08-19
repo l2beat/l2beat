@@ -11,6 +11,7 @@ import {
 } from '~/app/_components/tooltip/tooltip'
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 
 export interface TotalValueLockedCellProps {
@@ -49,7 +50,7 @@ export function TotalValueLockedCell(data: TotalValueLockedCellProps) {
               />
             ) : null}
             <span className="text-base font-bold md:text-lg">
-              ${formatNumber(total)}
+              {formatCurrency(total, 'usd')}
             </span>
             {data.change !== undefined && (
               <PercentChange
