@@ -1,36 +1,37 @@
 import { type Bridge, bridges } from '@l2beat/config'
 import {
   type ImplementationChangeReportApiResponse,
+  type ProjectId,
   type ProjectsVerificationStatuses,
 } from '@l2beat/shared-pure'
 import compact from 'lodash/compact'
 import { formatNumber } from '~/utils/format-number'
-import { type ImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
-import { type TvlResponse } from '../scaling/get-tvl'
-import { getTvlStats } from '../scaling/utils/get-tvl-stats'
-import { getTvlWithChange } from '../scaling/utils/get-tvl-with-change'
+import { getImplementationChangeReport } from '../implementation-change-report/get-implementation-change-report'
+import { getLatestTvlUsd } from '../scaling/tvl/utils/get-latest-tvl-usd'
+import { orderByTvl } from '../scaling/tvl/utils/order-by-tvl'
 import { isAnySectionUnderReview } from '../scaling/utils/is-any-section-under-review'
-import { orderByTvl } from '../tvl/order-by-tvl'
+import { getProjectsVerificationStatuses } from '../verification-status/get-projects-verification-statuses'
 import { getDestination } from './get-destination'
 import { type BridgesSummaryEntry } from './types'
 
-export async function getBridgesSummaryEntries(
-  tvl: TvlResponse,
-  implementationChangeReport: ImplementationChangeReport,
-  projectsVerificationStatuses: ProjectsVerificationStatuses,
-): Promise<BridgesSummaryEntry[]> {
-  const preprocessedTvl = Object.fromEntries(
-    Object.entries(tvl.bridges).map(([projectId, data]) => [
-      projectId,
-      data.data.at(-1)?.[1] ?? 0,
-    ]),
-  )
+export async function getBridgesSummaryEntries(): Promise<
+  BridgesSummaryEntry[]
+> {
+  const [
+    latestTvlUsd,
+    implementationChangeReport,
+    projectsVerificationStatuses,
+  ] = await Promise.all([
+    getLatestTvlUsd(),
+    getImplementationChangeReport(),
+    getProjectsVerificationStatuses(),
+  ])
 
-  const orderedBridges = orderByTvl(bridges, preprocessedTvl)
+  const orderedBridges = orderByTvl(bridges, latestTvlUsd)
 
   return getBridges({
     projects: orderedBridges,
-    tvl,
+    tvl: latestTvlUsd,
     implementationChangeReport,
     projectsVerificationStatuses,
   })
@@ -38,7 +39,7 @@ export async function getBridgesSummaryEntries(
 
 interface Params {
   projects: Bridge[]
-  tvl: TvlResponse
+  tvl: Record<ProjectId, number>
   implementationChangeReport: ImplementationChangeReportApiResponse
   projectsVerificationStatuses: ProjectsVerificationStatuses
 }
@@ -51,13 +52,9 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
     projectsVerificationStatuses,
   } = params
   const entries = projects.map((bridge) => {
-    const projectTvl = tvl.projects[bridge.id.toString()]
-
-    const associatedTokens = bridge.config.associatedTokens ?? []
-    const stats = projectTvl
-      ? getTvlStats(projectTvl, bridge.display.name, associatedTokens)
-      : undefined
-    const { tvl: aggregateTvl } = getTvlWithChange(tvl.bridges)
+    // Query for actual bridges
+    const totalTvl = Object.values(tvl).reduce((acc, tvl) => acc + tvl, 0)
+    const projectTvl = tvl[bridge.id]
 
     const isVerified = !!projectsVerificationStatuses[bridge.id.toString()]
     const hasImplementationChanged =
@@ -79,15 +76,8 @@ function getBridges(params: Params): BridgesSummaryEntry[] {
       ),
       hasImplementationChanged,
       showProjectUnderReview: isAnySectionUnderReview(bridge),
-      tvl: stats
-        ? {
-            displayValue: formatUSD(stats.latestTvl),
-            value: stats.latestTvl,
-          }
-        : undefined,
-      tvlBreakdown: stats ? stats.tvlBreakdown : undefined,
-      sevenDayChange: stats ? stats.sevenDayChange : undefined,
-      bridgesMarketShare: stats ? stats.latestTvl / aggregateTvl : undefined,
+      tvl: projectTvl,
+      bridgesMarketShare: projectTvl ? projectTvl / totalTvl : undefined,
       validatedBy: bridge.riskView?.validatedBy,
       category: bridge.display.category,
     }

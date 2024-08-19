@@ -25,7 +25,7 @@ export type BridgesRiskEntry = {
 
 export type BridgesSummaryEntry = {
   destination?: ScalingProjectRiskViewEntry
-  tvl?: ValueWithDisplayValue
+  tvl?: number
   tvlBreakdown?: TokenBreakdownProps
   sevenDayChange?: string
   bridgesMarketShare?: number

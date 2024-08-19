@@ -7,7 +7,9 @@ import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell
 import { RiskCell } from '~/app/_components/table/cells/risk-cell'
 import { TypeCell } from '~/app/_components/table/cells/type-cell'
 import { sortSentiments } from '~/app/_components/table/sorting/functions/sentiment-sorting'
+import { EM_DASH } from '~/consts/characters'
 import { type BridgesSummaryEntry } from '~/server/features/bridges/types'
+import { formatCurrency } from '~/utils/format'
 import { formatPercent } from '~/utils/get-percentage-change'
 
 const columnHelper = createColumnHelper<BridgesSummaryEntry>()
@@ -50,9 +52,10 @@ const firstHalf = [
     header: 'Total',
     cell: (ctx) => {
       const entry = ctx.row.original
-      return (
-        !entry.isUpcoming &&
-        entry.tvlBreakdown && <NumberCell>{entry.tvl?.displayValue}</NumberCell>
+      return !entry.isUpcoming && entry.tvl !== undefined ? (
+        <NumberCell>{formatCurrency(entry.tvl, 'usd')}</NumberCell>
+      ) : (
+        EM_DASH
       )
     },
     meta: {
@@ -60,8 +63,7 @@ const firstHalf = [
         'Total value locked in escrow contracts on Ethereum displayed together with a percentage change compared to 7D ago.',
     },
 
-    sortingFn: (a, b) =>
-      (a.original.tvl?.value ?? 0) - (b.original.tvl?.value ?? 0),
+    sortingFn: (a, b) => (a.original.tvl ?? 0) - (b.original.tvl ?? 0),
   }),
 ]
 
@@ -97,10 +99,12 @@ const secondHalf = [
 const marketShareColumn = columnHelper.accessor('bridgesMarketShare', {
   header: 'MKT Share',
   cell: (ctx) =>
-    ctx.row.original.bridgesMarketShare && (
+    ctx.row.original.bridgesMarketShare !== undefined ? (
       <NumberCell>
         <span>{formatPercent(ctx.row.original.bridgesMarketShare)}</span>
       </NumberCell>
+    ) : (
+      EM_DASH
     ),
   meta: {
     tooltip: 'Share of the sum of total value locked of all projects.',
