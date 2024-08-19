@@ -5,7 +5,6 @@ import { formatNumber } from '~/utils/format-number'
 export interface ValueLockedCellProps {
   value: number
   change?: number
-  tokens: { symbol: string; iconUrl: string }[]
 }
 
 export function ValueLockedCell(data: ValueLockedCellProps) {

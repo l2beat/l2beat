@@ -16,27 +16,35 @@ import { Skeleton } from '~/app/_components/skeleton'
 import { INFINITY } from '~/consts/characters'
 import { useCookieState } from '~/hooks/use-cookie-state'
 import { useLocalStorage } from '~/hooks/use-local-storage'
-import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
+import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type TvlLayer2ProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
-import { cn } from '~/utils/cn'
 import { formatTimestamp } from '~/utils/dates'
-import { formatCurrency } from '~/utils/format'
-import { formatNumber } from '~/utils/format-number'
+import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
 import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
+
+interface TvlChartPointData {
+  timestamp: number
+  usdValue: number
+  ethValue: number
+}
 
 interface Props {
   milestones: Milestone[]
   tag?: string
-  entries: ScalingTvlEntry[]
+  entries: ScalingSummaryEntry[]
 }
 
-export function SummaryTvlChart({ milestones, entries, tag = 'tvl' }: Props) {
+export function StackedTvlChart({
+  milestones,
+  entries,
+  tag = 'summary',
+}: Props) {
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
-  const [timeRange, setTimeRange] = useCookieState('scalingTvlChartRange')
+  const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
 
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(`${tag}-unit`, 'usd')
   const [scale, setScale] = useLocalStorage(`${tag}-scale`, 'lin')
@@ -67,20 +75,18 @@ export function SummaryTvlChart({ milestones, entries, tag = 'tvl' }: Props) {
 
   const columns =
     data?.map((d) => {
-      const [timestamp, native, canonical, external, ethPrice] = d
+      const timestamp = d[0]
+      const usdSum = d.slice(1, 4).reduce((a, b) => a + b, 0)
+      const ethPrice = d[4]
+      const usdValue = usdSum / 100
+      const ethValue = usdSum / ethPrice
 
       return {
-        values: [native + canonical + external, external + native, native].map(
-          (value) => ({
-            value: unit === 'usd' ? value / 100 : value / ethPrice,
-          }),
-        ),
+        values: [{ value: unit === 'usd' ? usdValue : ethValue }],
         data: {
           timestamp,
-          native,
-          canonical,
-          external,
-          ethPrice,
+          usdValue,
+          ethValue,
         },
         milestone: mappedMilestones[timestamp],
       }
@@ -96,17 +102,9 @@ export function SummaryTvlChart({ milestones, entries, tag = 'tvl' }: Props) {
       columns={columns}
       valuesStyle={[
         {
-          line: 'purple',
-          fill: 'purple',
+          fill: 'signature gradient',
+          line: 'signature gradient',
           point: 'circle',
-        },
-        {
-          line: 'yellow',
-          fill: 'yellow',
-        },
-        {
-          line: 'pink',
-          fill: 'pink',
         },
       ]}
       formatYAxisLabel={(value: number) =>
@@ -114,7 +112,7 @@ export function SummaryTvlChart({ milestones, entries, tag = 'tvl' }: Props) {
       }
       range={[rangeStart, rangeEnd]}
       useLogScale={scale === 'log'}
-      renderHoverContents={(data) => <ChartHover {...data} currency={unit} />}
+      renderHoverContents={(data) => <ChartHover data={data} />}
     >
       <section className="flex flex-col gap-4">
         <Header
@@ -148,74 +146,23 @@ export function SummaryTvlChart({ milestones, entries, tag = 'tvl' }: Props) {
   )
 }
 
-function ChartHover(props: {
-  timestamp: number
-  canonical: number
-  external: number
-  native: number
-  ethPrice: number
-  currency: 'usd' | 'eth'
-}) {
-  const divideBy = props.currency === 'usd' ? 100 : props.ethPrice
-  const total = formatNumber(
-    (props.canonical + props.external + props.native) / divideBy,
-    2,
-  )
-  const values = [
-    {
-      title: 'Canonical',
-      value: props.canonical,
-      className: 'bg-purple-100 dark:bg-purple-100',
-    },
-    {
-      title: 'External',
-      value: props.external,
-      className: 'bg-yellow-200 dark:bg-yellow-200',
-    },
-    {
-      title: 'Native',
-      value: props.native,
-      className: 'bg-pink-100 dark:bg-pink-100',
-    },
-  ]
+function ChartHover({ data }: { data: TvlChartPointData }) {
+  const formattedUsd = formatCurrencyExactValue(data.usdValue, 'USD')
+  const formattedEth = formatCurrencyExactValue(data.ethValue, 'ETH')
   return (
-    <div className="flex flex-col gap-1">
-      <div className="whitespace-nowrap">
-        {formatTimestamp(props.timestamp, {
+    <div>
+      <div className="mb-1 whitespace-nowrap">
+        {formatTimestamp(data.timestamp, {
           mode: 'datetime',
         })}
       </div>
       <div className="flex w-full items-center justify-between gap-2">
-        <span className="text-sm text-gray-700 dark:text-gray-50">
-          Total TVL
-        </span>
-        {props.currency === 'usd' ? '$' : 'Ξ'}
-        {total}
+        <span className="text-sm text-gray-700 dark:text-gray-50">USD</span>
+        {formattedUsd}
       </div>
-      <hr className="w-full border-gray-200 dark:border-gray-650 md:border-t" />
-      <div>
-        {values.map(
-          (v, i) =>
-            v.value > 0 && (
-              <div
-                key={i}
-                className="flex items-center justify-between gap-x-6"
-              >
-                <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className={cn('size-3 rounded', v.className)}
-                  ></div>
-                  <span>{v.title}</span>
-                </span>
-                <span className="font-semibold">
-                  {props.currency === 'usd' ? '$' : 'Ξ'}
-                  {formatNumber(v.value / divideBy)}
-                </span>
-              </div>
-            ),
-        )}
+      <div className="flex w-full items-center justify-between gap-2">
+        <span className="text-sm text-gray-700 dark:text-gray-50">ETH</span>
+        {formattedEth}
       </div>
     </div>
   )
@@ -251,7 +198,7 @@ function Header({
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
-        <div className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
+        <p className="whitespace-nowrap text-right text-lg font-bold md:text-3xl">
           {!value || loading ? (
             <Skeleton className="h-6 w-32" />
           ) : (
@@ -259,7 +206,7 @@ function Header({
               showLessThanMinimum: false,
             })
           )}
-        </div>
+        </p>
         {loading ? (
           <Skeleton className="h-6 w-40" />
         ) : (

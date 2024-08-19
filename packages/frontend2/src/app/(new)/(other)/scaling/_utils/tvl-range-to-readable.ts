@@ -1,16 +1,16 @@
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
+import { pluralize } from '@l2beat/shared-pure'
 
 export function tvlRangeToReadable(range: TvlChartRange) {
   if (range === 'max') {
     return 'All time'
   }
-  const number = range.slice(0, -1)
-  const plural = number !== '1'
+  const number = Number(range.slice(0, -1))
   if (range.endsWith('d')) {
-    return `${number} ${plural ? 'days' : 'day'}`
+    return `${number} ${pluralize(number, 'day')}`
   }
   if (range.endsWith('y')) {
-    return `${number} ${plural ? 'years' : 'year'}`
+    return `${number} ${pluralize(number, 'year')}`
   }
   throw new Error('Invalid range')
 }

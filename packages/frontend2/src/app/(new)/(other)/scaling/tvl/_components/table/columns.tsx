@@ -7,6 +7,7 @@ import { cn } from '~/utils/cn'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { TotalValueLockedCell } from './total-value-locked-cell'
 import { ValueLockedCell } from './value-locked-cell'
+import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 
@@ -82,7 +83,6 @@ export const scalingTvlCokumns = [
         <ValueLockedCell
           value={value.breakdown.canonical}
           change={value.change?.canonical}
-          tokens={[]}
         />
       )
     },
@@ -107,7 +107,6 @@ export const scalingTvlCokumns = [
         <ValueLockedCell
           value={value.breakdown.external}
           change={value.change?.external}
-          tokens={[]}
         />
       )
     },
@@ -132,7 +131,6 @@ export const scalingTvlCokumns = [
         <ValueLockedCell
           value={value.breakdown.native}
           change={value.change?.native}
-          tokens={[]}
         />
       )
     },
@@ -145,13 +143,3 @@ export const scalingTvlCokumns = [
     },
   }),
 ]
-
-export function getColumnHeaderUnderline(...classNames: string[]) {
-  return cn(
-    'relative before:absolute',
-    'before:inset-x-3 before:h-0.5',
-    'before:bottom-px',
-    'before:rounded-t-full',
-    ...classNames,
-  )
-}
