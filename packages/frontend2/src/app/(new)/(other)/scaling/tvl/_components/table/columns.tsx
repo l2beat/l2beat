@@ -62,7 +62,13 @@ export const scalingTvlCokumns = [
     },
   }),
   columnHelper.accessor('name', {
-    cell: (ctx) => <ProjectNameCell project={ctx.row.original} type="layer2" />,
+    cell: (ctx) => (
+      <ProjectNameCell
+        project={ctx.row.original}
+        type={ctx.row.original.type}
+        showIsL3={true}
+      />
+    ),
   }),
   columnHelper.group({
     id: 'data',
