@@ -24,8 +24,20 @@ const Tabs = React.forwardRef<
   const onValueChange = storeInSearchParams
     ? (value: string) => {
         const search = new URLSearchParams(searchParams)
-        search.set('tab', value)
-        router.replace(`${pathname}?${search.toString()}`)
+
+        if (value === defaultValue) {
+          search.set('tab', value)
+        } else {
+          search.delete('tab')
+        }
+
+        const stringified = search.toString()
+
+        if (stringified) {
+          router.replace(`${pathname}?${stringified}`)
+        } else {
+          router.replace(pathname)
+        }
       }
     : undefined
 
