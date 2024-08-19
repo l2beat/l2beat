@@ -1,11 +1,11 @@
-import { type Layer2 } from '@l2beat/config'
+import { type Layer2, type Layer3 } from '@l2beat/config'
 import {
   type TechnologyChoice,
   type TechnologySectionProps,
 } from './technology-section'
 
 export function getTechnologySectionProps(
-  project: Layer2,
+  project: Layer2 | Layer3,
   items: TechnologyChoice[],
 ): Pick<TechnologySectionProps, 'isUnderReview' | 'items'> | undefined {
   if (items.length === 0) {

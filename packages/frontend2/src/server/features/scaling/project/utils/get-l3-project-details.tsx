@@ -1,4 +1,4 @@
-import { type Layer2 } from '@l2beat/config'
+import { type Layer3 } from '@l2beat/config'
 import {
   type ContractsVerificationStatuses,
   type ImplementationChangeReportApiResponse,
@@ -17,7 +17,7 @@ import { getPermissionsSection } from '~/utils/project/contracts-and-permissions
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
 
 interface Params {
-  project: Layer2
+  project: Layer3
   isVerified: boolean
   contractsVerificationStatuses: ContractsVerificationStatuses
   manuallyVerifiedContracts: ManuallyVerifiedContracts
@@ -25,7 +25,7 @@ interface Params {
   rosetteValues: RosetteValue[]
 }
 
-export function getProjectDetails({
+export function getL3ProjectDetails({
   project,
   isVerified,
   contractsVerificationStatuses,
@@ -38,9 +38,10 @@ export function getProjectDetails({
         {
           id: project.id,
           type: project.type,
+          hostChain: project.hostChain,
           isUnderReview: !!project.isUnderReview,
           permissions: project.permissions,
-          nativePermissions: undefined,
+          nativePermissions: project.nativePermissions,
         },
         contractsVerificationStatuses,
         manuallyVerifiedContracts,
@@ -51,11 +52,12 @@ export function getProjectDetails({
     {
       id: project.id,
       type: project.type,
+      hostChain: project.hostChain,
       isVerified,
       slug: project.display.slug,
       contracts: project.contracts,
       isUnderReview: project.isUnderReview,
-      escrows: undefined,
+      escrows: project.config.escrows,
     },
     contractsVerificationStatuses,
     manuallyVerifiedContracts,
@@ -68,19 +70,6 @@ export function getProjectDetails({
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
 
   const items: ProjectDetailsSection[] = []
-
-  items.push({
-    type: 'ChartSection',
-    props: {
-      id: 'onchain-costs',
-      title: 'Onchain costs',
-      projectId: project.id,
-      milestones:
-        project.milestones?.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-        ) ?? [],
-    },
-  })
 
   if (
     !project.isUpcoming &&
@@ -137,21 +126,6 @@ export function getProjectDetails({
       isUnderReview: project.isUnderReview,
     },
   })
-
-  if (project.stage.stage !== 'NotApplicable') {
-    items.push({
-      type: 'StageSection',
-      props: {
-        stageConfig: project.stage,
-        name: project.display.name,
-        icon: `/icons/${project.display.slug}.png`,
-        type: project.display.category,
-        id: 'stage',
-        title: 'Rollup stage',
-        isUnderReview: project.isUnderReview,
-      },
-    })
-  }
 
   if (technologySection) {
     items.push({
@@ -218,22 +192,6 @@ export function getProjectDetails({
         id: 'other-considerations',
         title: 'Other considerations',
         ...otherConsiderationsSection,
-      },
-    })
-  }
-  if (project.upgradesAndGovernance) {
-    items.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'upgrades-and-governance',
-        title: 'Upgrades & Governance',
-        content: project.upgradesAndGovernance,
-        diagram: {
-          type: 'upgrades-and-governance',
-          slug: project.display.slug,
-        },
-        isUnderReview: project.isUnderReview,
-        includeChildrenIfUnderReview: true,
       },
     })
   }

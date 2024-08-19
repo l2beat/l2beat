@@ -1,4 +1,4 @@
-import { layer2s } from '@l2beat/config'
+import { layer2s, layer3s } from '@l2beat/config'
 import { notFound } from 'next/navigation'
 import { HighlightableLinkContextProvider } from '~/app/_components/link/highlightable/highlightable-link-context'
 import { ProjectDetails } from '~/app/_components/projects/project-details'
@@ -9,7 +9,7 @@ import { ScalingProjectSummary } from './_components/scaling-project-summary'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { assert } from '@l2beat/shared-pure'
 
-const scalingProjects = [...layer2s]
+const scalingProjects = [...layer2s, ...layer3s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((layer) => ({
@@ -39,7 +39,7 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const project = scalingProjects.find(
-    (layer) => layer.display.slug === params.projectSlug,
+    (p) => p.display.slug === params.projectSlug,
   )
 
   if (!project) {

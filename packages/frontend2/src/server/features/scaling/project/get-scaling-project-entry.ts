@@ -1,14 +1,15 @@
-import { type Layer2, badgesCompareFn } from '@l2beat/config'
+import { type Layer2, type Layer3, badgesCompareFn } from '@l2beat/config'
 import { getProjectLinks } from '~/utils/project/get-project-links'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getContractsVerificationStatuses } from '../../verification-status/get-contracts-verification-statuses'
 import { getManuallyVerifiedContracts } from '../../verification-status/get-manually-verified-contracts'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getActivityProjectStats } from '../activity/get-activity-project-stats'
-import { getProjectDetails } from './utils/get-project-details'
+import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
+import { getL3ProjectDetails } from './utils/get-l3-project-details'
 
-export type ScalingProject = Layer2
+type ScalingProject = Layer2 | Layer3
 
 export type ScalingProjectEntry = Awaited<
   ReturnType<typeof getScalingProjectEntry>
@@ -44,14 +45,24 @@ export async function getScalingProjectEntry(project: ScalingProject) {
             stage: 'NotApplicable' as const,
           },
     header,
-    projectDetails: getProjectDetails({
-      project,
-      isVerified,
-      contractsVerificationStatuses,
-      manuallyVerifiedContracts,
-      implementationChangeReport,
-      rosetteValues: getScalingRosetteValues(project.riskView),
-    }),
+    projectDetails:
+      project.type === 'layer2'
+        ? getL2ProjectDetails({
+            project,
+            isVerified,
+            contractsVerificationStatuses,
+            manuallyVerifiedContracts,
+            implementationChangeReport,
+            rosetteValues: getScalingRosetteValues(project.riskView),
+          })
+        : getL3ProjectDetails({
+            project,
+            isVerified,
+            contractsVerificationStatuses,
+            manuallyVerifiedContracts,
+            implementationChangeReport,
+            rosetteValues: getScalingRosetteValues(project.riskView),
+          }),
   }
 }
 
