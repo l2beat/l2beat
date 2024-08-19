@@ -48,7 +48,7 @@ export function getScalingTvlEntries({
         },
       }
     })
-    .filter((entry) => entry.tvl)
+    .filter((entry) => entry.tvl.data)
 
   // Use data we already pulled instead of fetching it again
   const remappedForOrdering = Object.fromEntries(
