@@ -1,4 +1,5 @@
 import { type AggregatedL2CostRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -43,7 +44,7 @@ const getCachedCostsChart = cache(
     return withTypes(summed)
   },
   ['costsChart'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 function withTypes(data: CostsChartResponse['data']): CostsChartResponse {

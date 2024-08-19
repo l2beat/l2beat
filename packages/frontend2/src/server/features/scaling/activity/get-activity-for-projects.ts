@@ -1,4 +1,5 @@
 import { type Layer2, type Layer3 } from '@l2beat/config'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -28,5 +29,5 @@ const getCachedLatestActivityForProjects = cache(
     )
   },
   ['latestActivity'],
-  { revalidate: 60 * 60 },
+  { revalidate: UnixTime.HOUR },
 )

@@ -7,7 +7,7 @@ import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingSummaryTables } from './_components/scaling-summary-tables'
-import { SummaryTvlChart } from './_components/summary-tvl-chart'
+import { StackedTvlChart } from './_components/stacked-tvl-chart'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -31,7 +31,7 @@ export default async function Page() {
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
-        <SummaryTvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
+        <StackedTvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
         <HorizontalSeparator className="my-4 md:my-6" />
         <ScalingSummaryTables projects={projects} />
       </ScalingFilterContextProvider>

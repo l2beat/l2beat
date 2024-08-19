@@ -12,7 +12,16 @@ export const knownCookies = {
     TvlChartRange,
     '1y',
   ),
-  costsChartRange: knownCookie('costs-chart-range', CostsTimeRange, '30d'),
+  scalingTvlChartRange: knownCookie(
+    'scaling-tvl-chart-range',
+    TvlChartRange,
+    '1y',
+  ),
+  scalingCostsChartRange: knownCookie(
+    'scaling-costs-chart-range',
+    CostsTimeRange,
+    '30d',
+  ),
 } satisfies Record<string, KnownCookie>
 
 /**
