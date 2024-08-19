@@ -1,7 +1,7 @@
 import { Database } from '@l2beat/database'
 import { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
-import { DEFAULT_RETRY_FOR_TVL } from '../../tools/uif/defaultRetryForTvl'
+import { Indexer } from '@l2beat/uif'
 import { ManagedMultiIndexer } from '../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
@@ -23,7 +23,7 @@ export class TrackedTxsIndexer extends ManagedMultiIndexer<TrackedTxConfigEntry>
     super({
       ...$,
       name: 'tracked_txs_indexer',
-      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }
 

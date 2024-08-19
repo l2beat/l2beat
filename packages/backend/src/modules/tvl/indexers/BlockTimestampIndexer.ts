@@ -1,7 +1,7 @@
 import {} from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { BlockTimestampIndexerDeps } from './types'
 
 export class BlockTimestampIndexer extends ManagedChildIndexer {
@@ -10,7 +10,7 @@ export class BlockTimestampIndexer extends ManagedChildIndexer {
       ...$,
       name: 'block_timestamp_indexer',
       tag: $.chain,
-      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
     })
   }

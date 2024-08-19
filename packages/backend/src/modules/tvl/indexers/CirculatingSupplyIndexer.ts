@@ -1,7 +1,6 @@
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
-import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { createAmountId } from '../utils/createAmountId'
 import { CirculatingSupplyIndexerDeps } from './types'
 
@@ -14,7 +13,7 @@ export class CirculatingSupplyIndexer extends ManagedChildIndexer {
       ...$,
       name: NAME,
       tag: $.configuration.coingeckoId.toString(),
-      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
       configHash: $.minHeight.toString(),
     })
     this.configurationId = createAmountId($.configuration)
