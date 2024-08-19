@@ -1,7 +1,6 @@
 import { assert } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
-import { DEFAULT_RETRY_FOR_TVL } from '../../../tools/uif/defaultRetryForTvl'
 import { ManagedMultiIndexer } from '../../../tools/uif/multi/ManagedMultiIndexer'
 import {
   Configuration,
@@ -16,7 +15,7 @@ export class ChainAmountIndexer extends ManagedMultiIndexer<ChainAmountConfig> {
       ...$,
       name: NAME,
       tag: $.chain,
-      updateRetryStrategy: DEFAULT_RETRY_FOR_TVL,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
   }
 
