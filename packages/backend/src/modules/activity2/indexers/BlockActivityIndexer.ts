@@ -1,11 +1,17 @@
 import { ActivityRecord } from '@l2beat/database'
 import { assert, UnixTime } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { ActivityIndexerDeps } from './types'
 
 export class BlockActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: ActivityIndexerDeps) {
-    super({ ...$, name: `activity_block_indexer`, tag: $.projectId })
+    super({
+      ...$,
+      name: `activity_block_indexer`,
+      tag: $.projectId,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+    })
   }
 
   override async update(from: number, to: number): Promise<number> {

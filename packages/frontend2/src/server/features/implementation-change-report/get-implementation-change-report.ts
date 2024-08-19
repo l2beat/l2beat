@@ -5,6 +5,7 @@ import {
   assert,
   ChainId,
   type ImplementationChangeReportApiResponse,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
@@ -79,7 +80,7 @@ const getCachedImplementationChangeReport = cache(
     return result
   },
   ['implementationChangeReport', env.VERCEL_GIT_COMMIT_SHA],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 function chainNameToId(chainName: string): ChainId {

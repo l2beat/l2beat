@@ -18,7 +18,7 @@ interface Props {
 }
 
 export function CostsTimeRangeContextProvider({ children }: Props) {
-  const [range, setRange] = useCookieState('costsChartRange')
+  const [range, setRange] = useCookieState('scalingCostsChartRange')
   return (
     <CostsTimeRangeContext.Provider
       value={{
