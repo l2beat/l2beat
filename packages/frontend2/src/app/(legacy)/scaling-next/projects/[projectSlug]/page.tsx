@@ -6,6 +6,8 @@ import { DesktopProjectNavigation } from '~/app/_components/projects/sections/na
 import { MobileProjectNavigation } from '~/app/_components/projects/sections/navigation/mobile-project-navigation'
 import { getScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectSummary } from './_components/scaling-project-summary'
+import { getDefaultMetadata } from '~/utils/get-default-metadata'
+import { assert } from '@l2beat/shared-pure'
 
 const scalingProjects = [...layer2s]
 
@@ -13,6 +15,20 @@ export async function generateStaticParams() {
   return scalingProjects.map((layer) => ({
     projectSlug: layer.display.slug,
   }))
+}
+
+export async function generateMetadata({ params }: Props) {
+  const project = scalingProjects.find(
+    (layer) => layer.display.slug === params.projectSlug,
+  )
+  assert(project, 'Project not found')
+  return getDefaultMetadata({
+    title: `${project.display.name} - L2BEAT`,
+    description: `${project.display.name} project overview on L2BEAT. ${project.display.description}`,
+    openGraph: {
+      url: `/scaling/projects/${project.display.slug}`,
+    },
+  })
 }
 
 interface Props {
