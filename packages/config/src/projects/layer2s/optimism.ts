@@ -89,7 +89,7 @@ const livenessInterval = discovery.getContractValue<number>(
 
 const respectedGameType = discovery.getContractValue<number>(
   'OptimismPortal',
-  'gameType',
+  'respectedGameType',
 )
 
 const gameTypes = ['FaultDisputeGame', 'PermissionedDisputeGame']
