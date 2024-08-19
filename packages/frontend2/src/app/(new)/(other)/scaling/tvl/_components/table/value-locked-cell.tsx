@@ -1,5 +1,6 @@
 import { PercentChange } from '~/app/_components/percent-change'
 import { EM_DASH } from '~/consts/characters'
+import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 
 export interface ValueLockedCellProps {
@@ -13,7 +14,7 @@ export function ValueLockedCell(data: ValueLockedCellProps) {
     <div className="flex flex-col items-end">
       <div className="flex items-center gap-1">
         <span className="text-base font-bold md:text-lg">
-          {data.value === 0 ? EM_DASH : formatNumber(data.value)}
+          {data.value === 0 ? EM_DASH : formatCurrency(data.value, 'usd')}
         </span>
         {showChange && data.change !== undefined && (
           <PercentChange
