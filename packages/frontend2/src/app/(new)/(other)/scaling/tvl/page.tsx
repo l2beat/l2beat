@@ -11,6 +11,7 @@ import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
 import { TvlChart } from './_components/tvl-chart'
+import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
@@ -43,9 +44,11 @@ export default async function Page() {
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
-        <TvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
-        <HorizontalSeparator className="my-4 md:my-6" />
-        <ScalingTvlTable projects={projects} />
+        <ScalingAssociatedTokensContextProvider>
+          <TvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
+          <HorizontalSeparator className="my-4 md:my-6" />
+          <ScalingTvlTable projects={projects} />
+        </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>
   )

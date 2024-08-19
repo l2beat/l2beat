@@ -16,23 +16,21 @@ import ArchivedIcon from '~/icons/archived.svg'
 import Layer3sIcon from '~/icons/layer3s.svg'
 import UpcomingIcon from '~/icons/upcoming.svg'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '../../../_components/scaling-filter-context'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
 import { scalingArchivedColumns } from './table/archived/columns'
 import { scalingLayer2sColumns } from './table/layer2s/columns'
 import { summaryLayer3sColumns } from './table/layer3s/columns'
 import { scalingUpcomingColumns } from './table/upcoming/columns'
+import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 
 interface Props {
   projects: ScalingSummaryEntry[]
 }
 
 export function ScalingSummaryTables({ projects }: Props) {
-  const filters = useScalingFilterValues()
+  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
@@ -47,9 +45,9 @@ export function ScalingSummaryTables({ projects }: Props) {
           (item) =>
             item.type === 'layer2' && !item.isArchived && !item.isUpcoming,
         ),
-        excludeAssociatedTokens: filters.excludeAssociatedTokens,
+        excludeAssociatedTokens,
       }),
-    [allProjects, filters.excludeAssociatedTokens],
+    [allProjects, excludeAssociatedTokens],
   )
 
   const layer3sProjects = useMemo(
@@ -59,26 +57,26 @@ export function ScalingSummaryTables({ projects }: Props) {
           (item) =>
             item.type === 'layer3' && !item.isArchived && !item.isUpcoming,
         ),
-        excludeAssociatedTokens: filters.excludeAssociatedTokens,
+        excludeAssociatedTokens,
       }),
-    [allProjects, filters.excludeAssociatedTokens],
+    [allProjects, excludeAssociatedTokens],
   )
   const upcomingProjects = useMemo(
     () =>
       toTableRows({
         projects: allProjects.filter((item) => item.isUpcoming),
-        excludeAssociatedTokens: filters.excludeAssociatedTokens,
+        excludeAssociatedTokens,
       }),
-    [allProjects, filters.excludeAssociatedTokens],
+    [allProjects, excludeAssociatedTokens],
   )
 
   const archivedProjects = useMemo(
     () =>
       toTableRows({
         projects: allProjects.filter((item) => item.isArchived),
-        excludeAssociatedTokens: filters.excludeAssociatedTokens,
+        excludeAssociatedTokens,
       }),
-    [allProjects, filters.excludeAssociatedTokens],
+    [allProjects, excludeAssociatedTokens],
   )
 
   const layer2sTable = useTable({

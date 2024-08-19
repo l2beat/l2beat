@@ -24,6 +24,7 @@ import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
 import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
 import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
+import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 
 interface TvlChartPointData {
   timestamp: number
@@ -43,6 +44,7 @@ export function StackedTvlChart({
   tag = 'summary',
 }: Props) {
   const filters = useScalingFilterValues()
+  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
 
@@ -62,7 +64,7 @@ export function StackedTvlChart({
 
   const scalingSummaryQuery = api.scaling.summary.chart.useQuery({
     range: timeRange,
-    excludeAssociatedTokens: filters.excludeAssociatedTokens,
+    excludeAssociatedTokens,
     ...chartDataType,
   })
 
