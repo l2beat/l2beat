@@ -9,28 +9,31 @@ import RollupCodesIcon from '~/icons/products/rollup-codes.svg'
 import SearchIcon from '~/icons/search.svg'
 import UserIcon from '~/icons/user.svg'
 import { type LinkName } from './types'
+import { cn } from '~/utils/cn'
 
 export interface LinkNameIconProps {
   name: LinkName
+  className?: string
 }
 
-export function ProjectLinkIcon({ name }: LinkNameIconProps) {
-  switch (name) {
+export function ProjectLinkIcon(props: LinkNameIconProps) {
+  const className = cn('size-4', props.className)
+  switch (props.name) {
     case 'Website':
-      return <GlobeIcon className="size-4" />
+      return <GlobeIcon className={className} />
     case 'App':
-      return <AppIcon className="size-4" />
+      return <AppIcon className={className} />
     case 'Docs':
-      return <DocumentIcon className="size-4" />
+      return <DocumentIcon className={className} />
     case 'Explorer':
-      return <SearchIcon className="size-4" />
+      return <SearchIcon className={className} />
     case 'Repository':
-      return <CodeIcon className="size-4" />
+      return <CodeIcon className={className} />
     case 'Social':
-      return <UserIcon className="size-4" />
+      return <UserIcon className={className} />
     case 'rollup.codes':
-      return <RollupCodesIcon className="size-4" />
+      return <RollupCodesIcon className={className} />
     default:
-      assertUnreachable(name)
+      assertUnreachable(props.name)
   }
 }
