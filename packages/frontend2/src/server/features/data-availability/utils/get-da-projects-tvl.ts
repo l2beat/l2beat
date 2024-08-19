@@ -1,4 +1,4 @@
-import { ProjectId } from '@l2beat/shared-pure'
+import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import {
   unstable_cache as cache,
@@ -40,7 +40,7 @@ const getCachedDaProjectsTvl = cache(
     return aggregated
   },
   ['daProjectsTvl'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 /**

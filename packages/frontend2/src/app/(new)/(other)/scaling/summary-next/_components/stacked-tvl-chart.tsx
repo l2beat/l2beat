@@ -12,11 +12,9 @@ import { useChartLoading } from '~/app/_components/chart/core/chart-loading-cont
 import { ChartProvider } from '~/app/_components/chart/core/chart-provider'
 import { mapMilestones } from '~/app/_components/chart/utils/map-milestones'
 import { PercentChange } from '~/app/_components/percent-change'
-import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { INFINITY } from '~/consts/characters'
 import { useCookieState } from '~/hooks/use-cookie-state'
-import { useIsClient } from '~/hooks/use-is-client'
 import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
 import { type TvlLayer2ProjectFilter } from '~/server/features/scaling/tvl/utils/project-filter-utils'
@@ -24,6 +22,8 @@ import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { api } from '~/trpc/react'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency, formatCurrencyExactValue } from '~/utils/format'
+import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
+import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
 
 interface TvlChartPointData {
   timestamp: number
@@ -37,7 +37,7 @@ interface Props {
   entries: ScalingSummaryEntry[]
 }
 
-export function SummaryTvlChart({
+export function StackedTvlChart({
   milestones,
   entries,
   tag = 'summary',
@@ -218,54 +218,4 @@ function Header({
       <hr className="mt-2 w-full border-gray-200 dark:border-zinc-700 md:hidden md:border-t" />
     </header>
   )
-}
-
-function UnitAndScaleControls({
-  unit,
-  scale,
-  setUnit,
-  setScale,
-}: {
-  unit: string
-  scale: string
-  setUnit: (value: 'usd' | 'eth') => void
-  setScale: (value: string) => void
-}) {
-  const isClient = useIsClient()
-
-  if (!isClient) {
-    return (
-      <div className="flex items-center justify-between gap-2">
-        <Skeleton className="h-8 w-[104.82px]" />
-        <Skeleton className="h-8 w-[98.63px]" />
-      </div>
-    )
-  }
-  return (
-    <div className="flex items-center justify-between gap-2">
-      <RadioGroup value={unit} onValueChange={setUnit}>
-        <RadioGroupItem value="usd">USD</RadioGroupItem>
-        <RadioGroupItem value="eth">ETH</RadioGroupItem>
-      </RadioGroup>
-      <RadioGroup value={scale} onValueChange={setScale}>
-        <RadioGroupItem value="log">LOG</RadioGroupItem>
-        <RadioGroupItem value="lin">LIN</RadioGroupItem>
-      </RadioGroup>
-    </div>
-  )
-}
-
-function tvlRangeToReadable(range: TvlChartRange) {
-  if (range === 'max') {
-    return 'All time'
-  }
-  const number = range.slice(0, -1)
-  const plural = number !== '1'
-  if (range.endsWith('d')) {
-    return `${number} ${plural ? 'days' : 'day'}`
-  }
-  if (range.endsWith('y')) {
-    return `${number} ${plural ? 'years' : 'year'}`
-  }
-  throw new Error('Invalid range')
 }

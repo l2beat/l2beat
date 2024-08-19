@@ -1,5 +1,6 @@
 import { type DaLayer } from '@l2beat/config'
 import { daEconomicSecurityMeta } from '@l2beat/config/build/src/projects/other/da-beat/types/DaEconomicSecurity'
+import { UnixTime } from '@l2beat/shared-pure'
 import { round } from 'lodash'
 import {
   unstable_cache as cache,
@@ -57,5 +58,5 @@ const getCachedEconomicSecurity = cache(
     }
   },
   ['daEconomicSecurity'],
-  { revalidate: 60 * 60 },
+  { revalidate: UnixTime.HOUR },
 )

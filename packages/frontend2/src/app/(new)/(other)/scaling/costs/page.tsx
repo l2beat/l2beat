@@ -19,7 +19,7 @@ export const metadata = getDefaultMetadata({
 
 export default async function Page() {
   const entries = await getScalingCostsEntries()
-  const range = getCookie('costsChartRange')
+  const range = getCookie('scalingCostsChartRange')
   await api.scaling.costs.chart.prefetch({ range })
   await api.scaling.costs.table.prefetch({ range })
 

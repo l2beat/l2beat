@@ -1,4 +1,5 @@
 import { type ValueRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -78,7 +79,7 @@ export const getCachedScalingChartData = cache(
     return chart
   },
   ['getScalingSummaryChartData'],
-  { revalidate: 60 * 10 },
+  { revalidate: 10 * UnixTime.MINUTE },
 )
 
 export type ScalingSummaryData = Awaited<
