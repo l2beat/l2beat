@@ -1,5 +1,5 @@
 import { ImageResponse } from 'next/og'
-import { readFile } from 'fs/promises'
+import { readdir, readFile } from 'fs/promises'
 import { join } from 'path'
 import { layer2s, layer3s } from '@l2beat/config'
 
@@ -43,6 +43,12 @@ interface Props {
 export default async function Image({ params }: Props) {
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
   if (!project) throw new Error('Project not found')
+  const root = await readdir(process.cwd())
+  console.log(root)
+  const src = join(process.cwd(), `src`)
+  console.log(src)
+  const fonts = join(process.cwd(), `/src/fonts`)
+  console.log(fonts)
   const [robotoMedium, robotoBold] = await Promise.all([
     readFile(join(process.cwd(), `/src/fonts/Roboto-Medium.ttf`)),
     readFile(join(process.cwd(), `/src/fonts/Roboto-Bold.ttf`)),
