@@ -38,15 +38,17 @@ export function getScalingTvlEntries({
         href: `/scaling/projects/${project.display.slug}/tvl-breakdown`,
         entryType: 'scaling' as const,
         tvl: {
-          breakdown: latestTvl?.breakdown,
-          change: latestTvl?.change,
-          totalChange: latestTvl?.totalChange,
+          data: latestTvl && {
+            breakdown: latestTvl.breakdown,
+            change: latestTvl.change,
+            totalChange: latestTvl.totalChange,
+          },
           associatedTokens: project.config.associatedTokens ?? [],
           warnings: [project.display.tvlWarning].filter(notUndefined),
         },
       }
     })
-    .filter((entry) => entry.tvl.breakdown)
+    .filter((entry) => entry.tvl)
 
   // Use data we already pulled instead of fetching it again
   const remappedForOrdering = Object.fromEntries(

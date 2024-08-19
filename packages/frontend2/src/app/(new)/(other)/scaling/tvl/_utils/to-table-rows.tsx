@@ -12,30 +12,31 @@ export function toTableRows({
       ...project,
       tvl: {
         ...project.tvl,
-        breakdown: project?.tvl.breakdown
-          ? {
-              ...project?.tvl.breakdown,
-              external: excludeAssociatedTokens
-                ? project.tvl.breakdown.external -
-                  project.tvl.breakdown.associated.external
-                : project.tvl.breakdown.external,
-              canonical: excludeAssociatedTokens
-                ? project.tvl.breakdown.canonical -
-                  project.tvl.breakdown.associated.canonical
-                : project.tvl.breakdown.canonical,
-              native: excludeAssociatedTokens
-                ? project.tvl.breakdown.native -
-                  project.tvl.breakdown.associated.native
-                : project.tvl.breakdown.native,
-              associated: !excludeAssociatedTokens
-                ? project.tvl.breakdown.associated
-                : {
-                    native: 0,
-                    canonical: 0,
-                    external: 0,
-                  },
-            }
-          : undefined,
+        data: project.tvl.data && {
+          ...project.tvl.data,
+          breakdown: {
+            ...project?.tvl.data.breakdown,
+            external: excludeAssociatedTokens
+              ? project.tvl.data.breakdown.external -
+                project.tvl.data.breakdown.associated.external
+              : project.tvl.data.breakdown.external,
+            canonical: excludeAssociatedTokens
+              ? project.tvl.data.breakdown.canonical -
+                project.tvl.data.breakdown.associated.canonical
+              : project.tvl.data.breakdown.canonical,
+            native: excludeAssociatedTokens
+              ? project.tvl.data.breakdown.native -
+                project.tvl.data.breakdown.associated.native
+              : project.tvl.data.breakdown.native,
+            associated: !excludeAssociatedTokens
+              ? project.tvl.data.breakdown.associated
+              : {
+                  native: 0,
+                  canonical: 0,
+                  external: 0,
+                },
+          },
+        },
       },
     }
   })

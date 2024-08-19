@@ -3,7 +3,6 @@ import Image from 'next/image'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
-import { cn } from '~/utils/cn'
 import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { TotalValueLockedCell } from './total-value-locked-cell'
@@ -16,18 +15,18 @@ const totalColumn = columnHelper.accessor('tvl', {
   header: 'Total',
   cell: (ctx) => {
     const value = ctx.getValue()
-    if (!value.breakdown) {
+    if (!value.data) {
       return <UpcomingBadge />
     }
     return (
       <TotalValueLockedCell
         tvlWarnings={value.warnings}
         breakdown={{
-          canonical: value.breakdown.canonical,
-          external: value.breakdown.external,
-          native: value.breakdown.native,
+          canonical: value.data.breakdown.canonical,
+          external: value.data.breakdown.external,
+          native: value.data.breakdown.native,
         }}
-        change={value.totalChange}
+        change={value.data.totalChange}
       />
     )
   },
@@ -75,14 +74,14 @@ export const scalingTvlCokumns = [
     header: 'Canonical',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value.breakdown) {
+      if (!value.data) {
         return <UpcomingBadge />
       }
 
       return (
         <ValueLockedCell
-          value={value.breakdown.canonical}
-          change={value.change?.canonical}
+          value={value.data.breakdown.canonical}
+          change={value.data.change.canonical}
         />
       )
     },
@@ -99,14 +98,14 @@ export const scalingTvlCokumns = [
     header: 'External',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value.breakdown) {
+      if (!value.data) {
         return <UpcomingBadge />
       }
 
       return (
         <ValueLockedCell
-          value={value.breakdown.external}
-          change={value.change?.external}
+          value={value.data.breakdown.external}
+          change={value.data.change.external}
         />
       )
     },
@@ -123,14 +122,14 @@ export const scalingTvlCokumns = [
     header: 'Native',
     cell: (ctx) => {
       const value = ctx.getValue()
-      if (!value.breakdown) {
+      if (!value.data) {
         return <UpcomingBadge />
       }
 
       return (
         <ValueLockedCell
-          value={value.breakdown.native}
-          change={value.change?.native}
+          value={value.data.breakdown.native}
+          change={value.data.change.native}
         />
       )
     },

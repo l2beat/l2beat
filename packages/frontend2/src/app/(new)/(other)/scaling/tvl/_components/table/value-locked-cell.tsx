@@ -4,7 +4,7 @@ import { formatNumber } from '~/utils/format-number'
 
 export interface ValueLockedCellProps {
   value: number
-  change?: number
+  change: number
 }
 
 export function ValueLockedCell(data: ValueLockedCellProps) {

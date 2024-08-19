@@ -4,8 +4,8 @@ import { get$Implementations } from '@l2beat/discovery-types'
 import {
   assert,
   ChainId,
-  UnixTime,
   type ImplementationChangeReportApiResponse,
+  UnixTime,
 } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,

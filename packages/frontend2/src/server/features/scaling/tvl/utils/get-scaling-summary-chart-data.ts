@@ -1,4 +1,5 @@
 import { type ValueRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -8,7 +9,6 @@ import { type TvlProject, getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
 import { type TvlChartRange } from './range'
 import { sumValuesPerSource } from './sum-values-per-source'
-import { UnixTime } from '@l2beat/shared-pure'
 
 export async function getScalingSummaryChartData(
   ...args: Parameters<typeof getCachedScalingChartData>

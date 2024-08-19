@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -5,7 +6,6 @@ import {
 import { getDetailedTvlBreakdown } from './get-detailed-tvl-breakdown'
 import { getTvlProjects } from './get-tvl-projects'
 import { getTvlValuesForProjects } from './get-tvl-values-for-projects'
-import { UnixTime } from '@l2beat/shared-pure'
 
 export function getDetailed7dTvlBreakdown(
   ...parameters: Parameters<typeof getCachedDetailed7dTvlBreakdown>

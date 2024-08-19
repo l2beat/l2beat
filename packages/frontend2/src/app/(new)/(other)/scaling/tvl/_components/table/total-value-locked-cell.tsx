@@ -12,7 +12,6 @@ import {
 import { EM_DASH } from '~/consts/characters'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { formatCurrency } from '~/utils/format'
-import { formatNumber } from '~/utils/format-number'
 
 export interface TotalValueLockedCellProps {
   breakdown: {
@@ -20,7 +19,7 @@ export interface TotalValueLockedCellProps {
     canonical: number
     native: number
   }
-  change?: number
+  change: number
   tvlWarnings?: WarningWithSentiment[]
 }
 

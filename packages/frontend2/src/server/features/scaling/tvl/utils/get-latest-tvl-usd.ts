@@ -1,4 +1,4 @@
-import { UnixTime, type ProjectId } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
 import {
   unstable_cache as cache,

@@ -1,4 +1,5 @@
 import { type AggregatedL2CostRecord } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -9,7 +10,6 @@ import { type CostsChartResponse } from './types'
 import { addIfDefined } from './utils/add-if-defined'
 import { getCostsProjects } from './utils/get-costs-projects'
 import { type CostsTimeRange, rangeToResolution } from './utils/range'
-import { UnixTime } from '@l2beat/shared-pure'
 
 export function getCostsChart(
   ...parameters: Parameters<typeof getCachedCostsChart>
