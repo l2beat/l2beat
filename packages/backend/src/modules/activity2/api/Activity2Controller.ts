@@ -105,7 +105,7 @@ export class Activity2Controller {
       await this.db.activity.getProjectsAggregatedDailyCount(projects),
       await this.db.activity.getDailyCountsPerProject(ProjectId.ETHEREUM),
     ])
-    const now = this.clock.getLastHour()
+    const now = this.clock.getLastHour().toStartOf('day')
 
     const processedCounts = postprocessCounts(aggregatedDailyCounts, true, now)
     const processedEthereumCounts = postprocessCounts(ethereumCounts, true, now)
@@ -231,6 +231,9 @@ export class Activity2Controller {
     for (const projectId of this.projectIds) {
       if (!this.projectIds.includes(projectId)) continue
 
+      if (projectId === ProjectId('myria')) {
+        console.log('test')
+      }
       const projectCounts = counts.filter((c) => c.projectId === projectId)
       if (projectCounts.at(-1)?.timestamp.lt(today.add(-7, 'days'))) continue
 
