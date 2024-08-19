@@ -226,15 +226,19 @@ export class Activity2Controller {
   private async getPostprocessedDailyCounts(): Promise<DailyTransactionCountProjectsMap> {
     const counts = await this.db.activity.getDailyCounts()
     const result: DailyTransactionCountProjectsMap = new Map()
-    const now = this.clock.getLastHour()
+    const today = this.clock.getLastHour().toStartOf('day')
 
     for (const projectId of this.projectIds) {
       if (!this.projectIds.includes(projectId)) continue
 
       const projectCounts = counts.filter((c) => c.projectId === projectId)
-      if (projectCounts.at(-1)?.timestamp.lt(now.add(-7, 'days'))) continue
+      if (projectCounts.at(-1)?.timestamp.lt(today.add(-7, 'days'))) continue
 
-      const postprocessedCounts = postprocessCounts(projectCounts, true, now)
+      const postprocessedCounts = postprocessCounts(
+        projectCounts,
+        projectCounts.at(-1)?.timestamp.equals(today) ?? true,
+        today,
+      )
 
       // This is needed because currently there is a window between the project being
       // synced_once and the data being available in the materialized view.
