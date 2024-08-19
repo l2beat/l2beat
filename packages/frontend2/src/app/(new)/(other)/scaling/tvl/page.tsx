@@ -9,8 +9,8 @@ import { getProjectsVerificationStatuses } from '~/server/features/verification-
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
-import { TvlChart } from './_components/tvl-chart'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
+import { TvlChart } from './_components/tvl-chart'
 
 export const metadata = getDefaultMetadata({
   openGraph: {

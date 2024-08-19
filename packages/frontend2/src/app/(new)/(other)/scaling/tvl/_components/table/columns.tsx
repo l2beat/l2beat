@@ -4,10 +4,10 @@ import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { IndexCell } from '~/app/_components/table/cells/index-cell'
 import { ProjectNameCell } from '~/app/_components/table/cells/project-name-cell'
 import { cn } from '~/utils/cn'
+import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 import { type ScalingTvlTableRow } from '../../_utils/to-table-rows'
 import { TotalValueLockedCell } from './total-value-locked-cell'
 import { ValueLockedCell } from './value-locked-cell'
-import { getColumnHeaderUnderline } from '~/utils/table/get-column-header-underline'
 
 const columnHelper = createColumnHelper<ScalingTvlTableRow>()
 

@@ -1,5 +1,5 @@
-import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { pluralize } from '@l2beat/shared-pure'
+import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 
 export function tvlRangeToReadable(range: TvlChartRange) {
   if (range === 'max') {
