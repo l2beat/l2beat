@@ -431,9 +431,10 @@ export const optimism: Layer2 = {
       'Since OP Mainnet has migrated from the OVM to Bedrock, a node must be synced using a data directory that can be found [here](https://community.optimism.io/docs/useful-tools/networks/#links). To reproduce the migration itself, see this [guide](https://blog.oplabs.co/reproduce-bedrock-migration/).',
   },
   stage: {
-    stage: 'UnderReview'
+    stage: 'UnderReview',
   },
-  /*getStage(
+  /*
+  getStage(
     {
       stage0: {
         callsItselfRollup: true,
@@ -453,12 +454,13 @@ export const optimism: Layer2 = {
         fraudProofSystemIsPermissionless: true,
         delayWith30DExitWindow: false,
       },
-    },*/
+    },
     {
       rollupNodeLink:
         'https://github.com/ethereum-optimism/optimism/tree/develop/op-node',
     },
   ),
+  */
   permissions: [
     {
       name: 'Sequencer',
