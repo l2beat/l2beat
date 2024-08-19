@@ -1,7 +1,7 @@
 import { ImageResponse } from 'next/og'
 import { readFile } from 'fs/promises'
 import { join } from 'path'
-import { scalingProjects } from './page'
+import { layer2s, layer3s } from '@l2beat/config'
 
 const websiteURL =
   process.env.NODE_ENV === 'production'
@@ -14,6 +14,8 @@ const size = {
   width: 1200,
   height: 630,
 }
+
+const scalingProjects = [...layer2s, ...layer3s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((project) => ({

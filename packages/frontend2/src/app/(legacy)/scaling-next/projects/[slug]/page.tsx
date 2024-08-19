@@ -9,7 +9,7 @@ import { ScalingProjectSummary } from './_components/scaling-project-summary'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { assert } from '@l2beat/shared-pure'
 
-export const scalingProjects = [...layer2s, ...layer3s]
+const scalingProjects = [...layer2s, ...layer3s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((layer) => ({
