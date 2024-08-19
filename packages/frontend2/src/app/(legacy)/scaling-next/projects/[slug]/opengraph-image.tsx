@@ -8,8 +8,6 @@ const websiteURL =
     ? 'https://www.l2beat.com/'
     : 'http://localhost:3000/'
 
-export const runtime = 'nodejs'
-
 const size = {
   width: 1200,
   height: 630,
@@ -30,6 +28,7 @@ export async function generateImageMetadata({ params }: Props) {
       size,
       alt: `Project page for ${params.slug}`,
       contentType: 'image/png',
+      runtime: 'nodejs',
     },
   ]
 }
@@ -45,12 +44,6 @@ export default async function Image({ params }: Props) {
   if (!project) throw new Error('Project not found')
   const root = await readdir(process.cwd())
   console.log(root)
-  const next = await readdir(join(process.cwd(), `.next`))
-  console.log(next)
-  const src = await readdir(join(process.cwd(), `src`))
-  console.log(src)
-  const fonts = await readdir(join(process.cwd(), `/src/fonts`))
-  console.log(fonts)
   const [robotoMedium, robotoBold] = await Promise.all([
     readFile(join(process.cwd(), `/src/fonts/Roboto-Medium.ttf`)),
     readFile(join(process.cwd(), `/src/fonts/Roboto-Bold.ttf`)),
