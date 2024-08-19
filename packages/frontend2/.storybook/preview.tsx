@@ -1,12 +1,12 @@
-import React, { ReactNode } from 'react'
 import { type Preview } from '@storybook/react'
+import React, { ReactNode } from 'react'
 
 import { withThemeByClassName } from '@storybook/addon-themes'
 
 import { roboto } from '../src/fonts'
-import { viewports } from './viewports'
-import { allModes } from './modes'
 import '../src/styles/globals.css'
+import { allModes } from './modes'
+import { viewports } from './viewports'
 
 const withFonts = () => (Story: () => ReactNode) => {
   return (
