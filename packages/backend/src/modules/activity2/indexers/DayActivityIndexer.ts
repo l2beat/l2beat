@@ -1,9 +1,15 @@
+import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DayActivityIndexerDeps) {
-    super({ ...$, name: `activity_day_indexer`, tag: $.projectId })
+    super({
+      ...$,
+      name: `activity_day_indexer`,
+      tag: $.projectId,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+    })
   }
 
   override async update(from: number, to: number): Promise<number> {
