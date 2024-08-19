@@ -342,6 +342,16 @@
             "type": "array",
             "length": 5
           }
+        },
+        "permissionedGamesTotal": {
+          "handler": {
+            "type": "eventCount",
+            "topics": [
+              "0x5b565efe82411da98814f356d0e7bcb8f0219b8d970307c5afb4a6903a8b2e35", //DisputeGameCreated
+              null, // disputeProxy
+              "0x0000000000000000000000000000000000000000000000000000000000000001" // gameType
+            ]
+          }
         }
       }
     },

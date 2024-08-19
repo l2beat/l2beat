@@ -20,7 +20,9 @@ export async function getDaSummaryEntries() {
   const entries = daLayers.flatMap((daLayer) =>
     daLayer.bridges.map((daBridge) => {
       const projectEconomicSecurity = economicSecurity[daLayer.id]
-      const tvs = getSumFor(daBridge.usedIn.map((project) => project.id))
+      // TODO: Remove it to re-enable per-combination TVL
+      const tvlSource = daLayer.kind === 'DAC' ? daBridge : daLayer
+      const tvs = getSumFor(tvlSource.usedIn.map((project) => project.id))
 
       return {
         slug: daLayer.display.slug,
