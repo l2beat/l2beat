@@ -87,6 +87,13 @@ const livenessInterval = discovery.getContractValue<number>(
   'livenessInterval',
 )
 
+const respectedGameType = discovery.getContractValue<number>(
+  'OptimismPortal',
+  'gameType',
+)
+
+const gameTypes = ['FaultDisputeGame', 'PermissionedDisputeGame']
+
 export const optimism: Layer2 = {
   isUnderReview: true,
   type: 'layer2',
@@ -524,8 +531,7 @@ export const optimism: Layer2 = {
   contracts: {
     addresses: [
       discovery.getContractDetails('OptimismPortal', {
-        description:
-          'The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals.',
+        description: `The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals. The current game type is ${gameTypes[respectedGameType]}.`,
         ...l1Upgradeability,
       }),
       discovery.getContractDetails('L1CrossDomainMessenger', {
