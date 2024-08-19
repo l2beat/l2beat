@@ -9,22 +9,22 @@ import { ScalingProjectSummary } from './_components/scaling-project-summary'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { assert } from '@l2beat/shared-pure'
 
-const scalingProjects = [...layer2s, ...layer3s]
+export const scalingProjects = [...layer2s, ...layer3s]
 
 export async function generateStaticParams() {
   return scalingProjects.map((layer) => ({
-    projectSlug: layer.display.slug,
+    slug: layer.display.slug,
   }))
 }
 
 export async function generateMetadata({ params }: Props) {
   const project = scalingProjects.find(
-    (layer) => layer.display.slug === params.projectSlug,
+    (layer) => layer.display.slug === params.slug,
   )
   assert(project, 'Project not found')
   return getDefaultMetadata({
     title: `${project.display.name} - L2BEAT`,
-    description: `${project.display.name} project overview on L2BEAT. ${project.display.description}`,
+    description: project.display.description,
     openGraph: {
       url: `/scaling/projects/${project.display.slug}`,
     },
@@ -33,14 +33,12 @@ export async function generateMetadata({ params }: Props) {
 
 interface Props {
   params: {
-    projectSlug: string
+    slug: string
   }
 }
 
 export default async function Page({ params }: Props) {
-  const project = scalingProjects.find(
-    (p) => p.display.slug === params.projectSlug,
-  )
+  const project = scalingProjects.find((p) => p.display.slug === params.slug)
 
   if (!project) {
     notFound()
