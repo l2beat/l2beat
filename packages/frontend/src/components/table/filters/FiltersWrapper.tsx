@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { BridgesEntry } from '../../../pages/bridges/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 
 interface ProjectFilters {
@@ -15,7 +14,7 @@ export function FiltersWrapper({ children }: ProjectFilters) {
   )
 }
 
-export function generateSlugList<T extends ScalingEntry | BridgesEntry>(
+export function generateSlugList<T extends ScalingEntry>(
   items: T[],
   check?: (item: T) => boolean,
 ): string[] {
