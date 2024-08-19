@@ -3,6 +3,11 @@ import { readFile } from 'fs/promises'
 import { join } from 'path'
 import { scalingProjects } from './page'
 
+const websiteURL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://www.l2beat.com/'
+    : 'http://localhost:3000/'
+
 export const runtime = 'nodejs'
 
 const size = {
@@ -36,15 +41,10 @@ interface Props {
 export default async function Image({ params }: Props) {
   const project = scalingProjects.find((p) => p.display.slug === params.slug)
   if (!project) throw new Error('Project not found')
-  const [robotoMedium, robotoBold, background, logo] = await Promise.all([
+  const [robotoMedium, robotoBold] = await Promise.all([
     readFile(join(process.cwd(), `/src/fonts/Roboto-Medium.ttf`)),
     readFile(join(process.cwd(), `/src/fonts/Roboto-Bold.ttf`)),
-    readFile(join(process.cwd(), `/public/meta-images/projects/template.png`)),
-    readFile(join(process.cwd(), `/public/icons/${project.display.slug}.png`)),
   ])
-
-  const backgroundSrc = Uint8Array.from(background).buffer
-  const logoSrc = Uint8Array.from(logo).buffer
 
   return new ImageResponse(
     <div
@@ -56,7 +56,7 @@ export default async function Image({ params }: Props) {
       }}
     >
       {/* eslint-disable-next-line @next/next/no-img-element, jsx-a11y/alt-text */}
-      <img src={backgroundSrc} {...size} />
+      <img src={`${websiteURL}/meta-images/projects/template.png`} {...size} />
 
       <div
         style={{
@@ -82,7 +82,7 @@ export default async function Image({ params }: Props) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={logoSrc}
+            src={`${websiteURL}/icons/${project.display.slug}.png`}
             alt={`${project.display.name} logo`}
             width={104}
             height={104}
