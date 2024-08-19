@@ -19,6 +19,9 @@ const config = {
     getAbsolutePath('@storybook/addon-interactions'),
     getAbsolutePath('@storybook/addon-themes'),
   ],
+  /**
+   * Keep in sync with the webpack configuration in next.config.js.
+   */
   webpackFinal: async (config: {
     module: {
       rules: {
