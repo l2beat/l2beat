@@ -553,10 +553,14 @@ export const optimism: Layer2 = {
           'The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.',
         ...l1Upgradeability,
       }),
-      discovery.getContractDetails('FaultDisputeGame', {
-        description:
-          'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
-      }),
+      discovery.getContractDetails(
+        'FaultDisputeGame',
+        'Logic of the dispute game. When a state root is proposed, a dispute game contract is deployed. Challengers can use such contracts to challenge the proposed state root.',
+      ),
+      discovery.getContractDetails(
+        'PermissionedDisputeGame',
+        'Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.',
+      ),
       discovery.getContractDetails('MIPS', {
         description:
           'The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.',
