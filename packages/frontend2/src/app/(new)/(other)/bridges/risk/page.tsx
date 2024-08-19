@@ -7,7 +7,7 @@ import { BridgesRiskTables } from './_components/table/bridges-risks-tables'
 
 export const metadata = getDefaultMetadata({
   openGraph: {
-    url: '/bridges/summary',
+    url: '/bridges/risk',
   },
 })
 
