@@ -1,12 +1,7 @@
 import { createHash } from 'crypto'
+import { assert } from '@l2beat/backend-tools'
 import { BlobsInBlock } from '@l2beat/shared'
-import {
-  assert,
-  Bytes,
-  EthereumAddress,
-  Hash256,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
 import { BigNumber, providers } from 'ethers'
 import { ContractSource } from '../../utils/IEtherscanClient'
 import { isRevert } from '../utils/isRevert'

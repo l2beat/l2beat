@@ -5,9 +5,13 @@ const units = ['d', 'h', 'm', 's']
 const fullUnits = ['day', 'hour', 'minute', 'second']
 
 export function formatSeconds(
-  seconds: number,
+  seconds: number | undefined,
   opts?: { preventRoundingUp?: boolean; fullUnit?: boolean },
 ): string {
+  if (seconds === undefined) {
+    throw new Error('seconds should not be undefined')
+  }
+
   const days = Math.floor(seconds / 86400)
   const hours = Math.floor((seconds % 86400) / 3600)
   const minutes = Math.floor(((seconds % 86400) % 3600) / 60)

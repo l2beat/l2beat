@@ -1,5 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { BlobsInBlock } from '@l2beat/shared'
-import { assert, Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress, Hash256 } from '@l2beat/shared-pure'
 import { providers, utils } from 'ethers'
 import { ContractSource } from '../../utils/IEtherscanClient'
 import { bytes32ToAddress } from '../utils/address'

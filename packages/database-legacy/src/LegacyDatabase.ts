@@ -1,6 +1,5 @@
 import path from 'path'
-import { Logger } from '@l2beat/backend-tools'
-import { assert } from '@l2beat/shared-pure'
+import { assert, Logger } from '@l2beat/backend-tools'
 import KnexConstructor, { Knex } from 'knex'
 
 import { DatabaseConfig } from './DatabaseConfig'

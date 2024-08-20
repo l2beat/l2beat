@@ -1,8 +1,9 @@
 import { ProxyDetails } from '@l2beat/discovery-types'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 import { IProvider } from '../../provider/IProvider'
 import { getImplementation } from '../auto/Eip1967Proxy'
+import { assert } from '@l2beat/backend-tools'
 
 async function getRegistryAddress(
   provider: IProvider,

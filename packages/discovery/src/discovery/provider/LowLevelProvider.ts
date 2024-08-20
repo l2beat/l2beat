@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { BlobClient, BlobsInBlock } from '@l2beat/shared'
 import {
-  assert,
   Bytes,
   EthereumAddress,
   Hash256,

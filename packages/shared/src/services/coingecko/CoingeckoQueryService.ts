@@ -1,5 +1,4 @@
 import {
-  assert,
   CoingeckoId,
   EthereumAddress,
   UnixTime,
@@ -7,6 +6,7 @@ import {
 } from '@l2beat/shared-pure'
 import { zip } from 'lodash'
 
+import { assert } from '@l2beat/backend-tools'
 import { CoingeckoClient } from './CoingeckoClient'
 import { CoinMarketChartRangeData } from './model'
 

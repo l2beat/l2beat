@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
 import { DiscoveryChainConfig } from '../config/types'
 import { HttpClient } from '../utils/HttpClient'
 import { DiscoveryLogger } from './DiscoveryLogger'

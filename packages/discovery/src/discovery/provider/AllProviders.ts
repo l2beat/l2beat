@@ -1,7 +1,6 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import { HttpClient as SharedHttpClient } from '@l2beat/shared'
 import { BlobClient } from '@l2beat/shared'
-import { assert } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 import { DiscoveryChainConfig } from '../../config/types'
 import { HttpClient } from '../../utils/HttpClient'

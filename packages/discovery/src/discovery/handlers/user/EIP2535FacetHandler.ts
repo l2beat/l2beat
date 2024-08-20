@@ -1,4 +1,5 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import * as z from 'zod'
 import { DiscoveryLogger } from '../../DiscoveryLogger'
 import { IProvider } from '../../provider/IProvider'

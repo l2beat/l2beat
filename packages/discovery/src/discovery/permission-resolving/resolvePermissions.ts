@@ -1,4 +1,5 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
 // NOTE(radomski): The entire permission network is modeled as a graph. The
 // graph contains nodes and edges. Nodes are contracts and edges are "actions"
