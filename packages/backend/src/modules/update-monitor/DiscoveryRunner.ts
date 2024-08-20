@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger } from '@l2beat/backend-tools'
 import {
   AllProviders,
   ConfigReader,
@@ -12,7 +12,6 @@ import {
   AllProviderStats,
   ProviderStats,
 } from '@l2beat/discovery/dist/discovery/provider/Stats'
-import { assert } from '@l2beat/shared-pure'
 import { isError } from 'lodash'
 import { Gauge } from 'prom-client'
 

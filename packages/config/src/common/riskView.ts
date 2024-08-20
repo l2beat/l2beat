@@ -1,5 +1,4 @@
 import {
-  assert,
   ProjectId,
   Sentiment,
   WarningValueWithSentiment,
@@ -10,6 +9,7 @@ import { utils } from 'ethers'
 import { ScalingProjectRiskViewEntry } from './ScalingProjectRisk'
 import { ScalingProjectRiskView } from './ScalingProjectRiskView'
 import { DATA_AVAILABILITY } from './dataAvailability'
+import assert from 'assert'
 
 export function makeBridgeCompatible(
   entry: Omit<ScalingProjectRiskView, 'sourceUpgradeability'>,

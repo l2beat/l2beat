@@ -5,7 +5,7 @@ const units = ['d', 'h', 'm', 's']
 const fullUnits = ['day', 'hour', 'minute', 'second']
 
 export function formatSeconds(
-  seconds: number | undefined,
+  seconds: number,
   opts?: { preventRoundingUp?: boolean; fullUnit?: boolean },
 ): string {
   if (seconds === undefined) {

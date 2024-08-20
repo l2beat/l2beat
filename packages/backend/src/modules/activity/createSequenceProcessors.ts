@@ -1,5 +1,5 @@
-import { Logger } from '@l2beat/backend-tools'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, Logger } from '@l2beat/backend-tools'
+import { ProjectId } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
 import { Config } from '../../config'

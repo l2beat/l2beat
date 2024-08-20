@@ -1,12 +1,8 @@
-import {
-  assert,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { Badge } from '../badges'
 
+import { assert } from '@l2beat/backend-tools'
 import {
   EXITS,
   FORCE_TRANSACTIONS,

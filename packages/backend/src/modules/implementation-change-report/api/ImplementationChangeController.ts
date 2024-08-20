@@ -1,12 +1,11 @@
+import { assert } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import { ConfigReader, diffDiscovery } from '@l2beat/discovery'
+import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
 import {
-  assert,
   ChainConverter,
   ImplementationChangeReportApiResponse,
 } from '@l2beat/shared-pure'
-
-import { Database } from '@l2beat/database'
-import { DiscoveryOutput, get$Implementations } from '@l2beat/discovery-types'
 
 export class ImplementationChangeController {
   private readonly onDiskChains: string[] = []

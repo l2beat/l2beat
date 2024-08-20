@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { ValueRecord } from '@l2beat/database'
 import {
-  assert,
   ProjectId,
   TokenTvlApiChart,
   TokenTvlApiCharts,

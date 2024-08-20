@@ -1,10 +1,11 @@
+import { assert } from '@l2beat/backend-tools'
 import { bridges, layer2s, layer3s, onChainProjects } from '@l2beat/config'
 import {
   ConfigReader,
   DiscoveryConfig,
   TemplateService,
 } from '@l2beat/discovery'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { isEqual } from 'lodash'
 import { getDiffHistoryHash, getDiscoveryHash } from '../utils/hashing'

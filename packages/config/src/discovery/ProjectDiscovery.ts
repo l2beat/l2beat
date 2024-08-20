@@ -13,16 +13,12 @@ import {
   get$Implementations,
   toAddressArray,
 } from '@l2beat/discovery-types'
-import {
-  assert,
-  EthereumAddress,
-  UnixTime,
-  notUndefined,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, notUndefined } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 import { isArray, isString, uniq } from 'lodash'
 
 import { join } from 'path'
+import { assert } from '@l2beat/backend-tools'
 import {
   ScalingProjectContractSingleAddress,
   ScalingProjectUpgradeability,

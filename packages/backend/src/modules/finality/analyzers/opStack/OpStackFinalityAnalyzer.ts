@@ -1,13 +1,12 @@
 import { Logger } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
+import { BlobClient } from '@l2beat/shared'
 import {
-  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-
-import { Database } from '@l2beat/database'
-import { BlobClient } from '@l2beat/shared'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { BaseAnalyzer } from '../types/BaseAnalyzer'
 import { ChannelBank } from './ChannelBank'

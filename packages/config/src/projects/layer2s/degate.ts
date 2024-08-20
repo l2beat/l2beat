@@ -1,9 +1,4 @@
-import {
-  assert,
-  EthereumAddress,
-  ProjectId,
-  UnixTime,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
 import {
@@ -21,6 +16,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { getStage } from './common/stages/getStage'
 import { Layer2 } from './types'
+import { assert } from '@l2beat/backend-tools'
 
 const discovery = new ProjectDiscovery('degate')
 

@@ -1,6 +1,5 @@
 import zlib from 'zlib'
-import { assert } from '@l2beat/shared-pure'
-
+import { assert } from '@l2beat/backend-tools'
 import { Blob } from '@l2beat/shared'
 import { RlpSerializable, rlpDecode } from '../../utils/rlpDecode'
 import { byteArrFromHexStr } from '../opStack/utils'

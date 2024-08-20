@@ -1,12 +1,11 @@
+import { assert } from '@l2beat/backend-tools'
+import { Database } from '@l2beat/database'
 import {
-  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
 import { chunk } from 'lodash'
-
-import { Database } from '@l2beat/database'
 import { RpcClient } from '../../../../peripherals/rpcclient/RpcClient'
 import { LivenessWithConfigService } from '../../../tracked-txs/modules/liveness/services/LivenessWithConfigService'
 

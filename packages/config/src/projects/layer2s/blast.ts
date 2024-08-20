@@ -1,5 +1,6 @@
-import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { EXITS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { opStackL2 } from './templates/opStack'

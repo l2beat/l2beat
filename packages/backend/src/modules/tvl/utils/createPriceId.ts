@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
-import { PriceConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
+import { PriceConfigEntry } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/backend-tools'
 
 export type PriceId = string
 

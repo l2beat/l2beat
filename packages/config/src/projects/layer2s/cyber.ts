@@ -1,10 +1,6 @@
-import {
-  assert,
-  EthereumAddress,
-  UnixTime,
-  formatSeconds,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, UnixTime, formatSeconds } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { opStackL2 } from './templates/opStack'

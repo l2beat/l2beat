@@ -3,13 +3,13 @@ import {
   get$Implementations,
 } from '@l2beat/discovery-types'
 import {
-  assert,
   EthereumAddress,
   ProjectId,
   UnixTime,
   formatSeconds,
 } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import {
   CONTRACTS,
   DataAvailabilityBridge,

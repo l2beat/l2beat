@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -9,6 +8,7 @@ import {
 import { utils } from 'ethers'
 import { Badge } from '../badges'
 
+import { assert } from '@l2beat/backend-tools'
 import {
   CONTRACTS,
   EXITS,

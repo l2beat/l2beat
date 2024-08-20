@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainConverter,
   TvlApiCharts,
   TvlApiProject,
@@ -10,6 +9,7 @@ import { ConfigMapping } from '../../utils/ConfigMapping'
 import { asNumber } from '../../utils/asNumber'
 import { calculateValue } from '../../utils/calculateValue'
 
+import { assert } from '@l2beat/backend-tools'
 import { Clock } from '../../../../tools/Clock'
 import {
   ValuesForSource,

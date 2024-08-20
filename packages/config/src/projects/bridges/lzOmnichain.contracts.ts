@@ -1,9 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
-import {
-  EthereumAddress,
-  UnixTime,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { assert, assertUnreachable } from '@l2beat/backend-tools'
+import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 

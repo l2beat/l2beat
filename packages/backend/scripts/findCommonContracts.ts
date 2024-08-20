@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { bridges, layer2s } from '@l2beat/config'
 import { ConfigReader } from '@l2beat/discovery'
 import {
@@ -5,7 +6,7 @@ import {
   DiscoveryOutput,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import chalk from 'chalk'
 
 void main().catch((e) => {

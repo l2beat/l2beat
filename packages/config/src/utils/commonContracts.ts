@@ -5,12 +5,7 @@ import {
   get$Implementations,
 } from '@l2beat/discovery-types'
 import { hashJson } from '@l2beat/shared'
-import {
-  assert,
-  EthereumAddress,
-  Hash256,
-  ProjectId,
-} from '@l2beat/shared-pure'
+import { EthereumAddress, Hash256, ProjectId } from '@l2beat/shared-pure'
 import { merge } from 'lodash'
 import {
   Bridge,
@@ -24,6 +19,7 @@ import {
   layer2s,
   layer3s,
 } from '..'
+import { assert } from '@l2beat/backend-tools'
 
 type Params =
   | {

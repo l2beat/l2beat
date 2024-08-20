@@ -1,4 +1,5 @@
-import { assert, PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
+import { PriceConfigEntry, UnixTime } from '@l2beat/shared-pure'
 import { chains } from '../chains'
 import { tokenList } from '../tokens'
 

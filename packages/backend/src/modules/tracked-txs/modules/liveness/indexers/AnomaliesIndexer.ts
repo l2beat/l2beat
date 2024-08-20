@@ -1,7 +1,7 @@
+import { assert } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
 import { AnomalyRecord, Database } from '@l2beat/database'
 import {
-  assert,
   ProjectId,
   TrackedTxsConfigSubtype,
   UnixTime,

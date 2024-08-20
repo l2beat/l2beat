@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assertUnreachable, Logger } from '@l2beat/backend-tools'
 import {
   BlockchainDaLayer,
   DaEconomicSecurityType,
@@ -6,7 +6,6 @@ import {
   daLayers,
 } from '@l2beat/config'
 import { HttpClient } from '@l2beat/shared'
-import { assertUnreachable } from '@l2beat/shared-pure'
 import { compact } from 'lodash'
 import { DABeatConfig } from '../../config/Config'
 import { Peripherals } from '../../peripherals/Peripherals'

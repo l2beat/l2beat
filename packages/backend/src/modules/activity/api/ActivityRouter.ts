@@ -1,5 +1,5 @@
 import Router from '@koa/router'
-import { assertUnreachable } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/backend-tools'
 import { Context } from 'koa'
 import { z } from 'zod'
 

@@ -1,9 +1,7 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   UnixTime,
-  assertUnreachable,
   notUndefined,
 } from '@l2beat/shared-pure'
 import { expect } from 'earl'
@@ -23,6 +21,7 @@ import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { checkRisk } from '../../test/helpers'
 import { tokenList } from '../../tokens'
 import { layer2s, milestonesLayer2s } from './index'
+import { assert, assertUnreachable } from '@l2beat/backend-tools'
 
 describe('layer2s', () => {
   describe('links', () => {

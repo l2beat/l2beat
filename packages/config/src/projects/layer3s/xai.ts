@@ -1,5 +1,6 @@
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL3 } from '../layer2s/templates/orbitStack'

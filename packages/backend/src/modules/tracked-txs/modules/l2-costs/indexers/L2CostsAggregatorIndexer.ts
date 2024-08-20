@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/backend-tools'
 import { BackendProject } from '@l2beat/config'
 import {
   AggregatedL2CostRecord,
@@ -6,12 +7,7 @@ import {
   L2CostRecord,
 } from '@l2beat/database'
 import { TrackedTxCostsConfig, TrackedTxId } from '@l2beat/shared'
-import {
-  assert,
-  ProjectId,
-  UnixTime,
-  clampRangeToDay,
-} from '@l2beat/shared-pure'
+import { ProjectId, UnixTime, clampRangeToDay } from '@l2beat/shared-pure'
 import { uniq } from 'lodash'
 import {
   ManagedChildIndexer,

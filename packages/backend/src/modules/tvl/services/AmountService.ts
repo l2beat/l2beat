@@ -1,5 +1,5 @@
-import { assert, Logger } from '@l2beat/backend-tools'
-import { EscrowEntry, UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { assert, Logger, assertUnreachable } from '@l2beat/backend-tools'
+import { EscrowEntry, UnixTime } from '@l2beat/shared-pure'
 import { partition } from 'lodash'
 
 import { AmountRecord } from '@l2beat/database'

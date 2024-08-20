@@ -2,8 +2,9 @@ import {
   ContractParameters,
   get$Implementations,
 } from '@l2beat/discovery-types'
-import { assert, ProjectId, formatSeconds } from '@l2beat/shared-pure'
+import { ProjectId, formatSeconds } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { unionBy } from 'lodash'
 import {
   CONTRACTS,

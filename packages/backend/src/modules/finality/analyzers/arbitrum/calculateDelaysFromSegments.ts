@@ -1,5 +1,4 @@
-import { assert, assertUnreachable } from '@l2beat/shared-pure'
-
+import { assert, assertUnreachable } from '@l2beat/backend-tools'
 import { RlpSerializable } from '../../utils/rlpDecode'
 import { byteArrToNumber } from './utils'
 

@@ -1,5 +1,6 @@
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { ScalingProjectPermission } from '../../common'
 import { delayDescriptionFromSeconds } from '../../utils/delayDescription'
 import { ProjectDiscovery } from '../ProjectDiscovery'

@@ -1,9 +1,6 @@
-import {
-  Sentiment,
-  ValueWithSentiment,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { Sentiment, ValueWithSentiment } from '@l2beat/shared-pure'
 
+import { assertUnreachable } from '@l2beat/backend-tools'
 import {
   DataAvailabilityBridge,
   DataAvailabilityConfig,

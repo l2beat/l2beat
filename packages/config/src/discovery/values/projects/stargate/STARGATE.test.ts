@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
+import { assert } from '@l2beat/backend-tools'
 import { ProjectDiscovery } from '../../../ProjectDiscovery'
 import { HARDCODED } from '../../hardcoded'
 

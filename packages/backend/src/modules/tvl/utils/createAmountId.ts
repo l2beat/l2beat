@@ -1,5 +1,6 @@
 import { createHash } from 'crypto'
-import { AmountConfigEntry, assertUnreachable } from '@l2beat/shared-pure'
+import { AmountConfigEntry } from '@l2beat/shared-pure'
+import { assertUnreachable } from '@l2beat/backend-tools'
 
 export type AmountId = string
 

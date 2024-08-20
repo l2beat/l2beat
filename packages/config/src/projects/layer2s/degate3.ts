@@ -1,5 +1,4 @@
 import {
-  assert,
   ChainId,
   EthereumAddress,
   ProjectId,
@@ -8,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
 
+import { assert } from '@l2beat/backend-tools'
 import {
   EXITS,
   FORCE_TRANSACTIONS,

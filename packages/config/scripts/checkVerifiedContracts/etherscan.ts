@@ -1,6 +1,6 @@
-import { getEnv } from '@l2beat/backend-tools'
+import { assert, getEnv } from '@l2beat/backend-tools'
 import { BlockExplorerClient, HttpClient } from '@l2beat/shared'
-import { assert, Bytes, EthereumAddress } from '@l2beat/shared-pure'
+import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
 import { providers } from 'ethers'
 
 import { chains } from '../../src'

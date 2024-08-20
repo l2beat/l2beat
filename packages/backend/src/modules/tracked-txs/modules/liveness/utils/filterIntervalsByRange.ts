@@ -1,5 +1,6 @@
+import { assertUnreachable } from '@l2beat/backend-tools'
 import { AggregatedLivenessRange } from '@l2beat/database'
-import { UnixTime, assertUnreachable } from '@l2beat/shared-pure'
+import { UnixTime } from '@l2beat/shared-pure'
 import { Interval } from './calculateIntervals'
 
 export function filterIntervalsByRange(

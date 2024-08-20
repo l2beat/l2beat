@@ -1,9 +1,10 @@
-import { assert, EthereumAddress, ProjectId } from '@l2beat/shared-pure'
+import { EthereumAddress, ProjectId } from '@l2beat/shared-pure'
 
 import { NUGGETS } from '../../common'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { RISK_VIEW } from './common'
 import { Bridge } from './types'
+import { assert } from '@l2beat/backend-tools'
 
 const discovery = new ProjectDiscovery('stargatev2')
 const discovery_arbitrum = new ProjectDiscovery('stargatev2', 'arbitrum')

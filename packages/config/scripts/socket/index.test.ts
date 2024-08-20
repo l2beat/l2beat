@@ -1,9 +1,9 @@
-import { assert } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { readFile } from 'fs/promises'
 
 import { ProjectDiscovery } from '../../src/discovery/ProjectDiscovery'
 import { SocketVaults } from './schema'
+import { assert } from '@l2beat/backend-tools'
 
 describe('socket', () => {
   it('plugs should be up to date with the discovery output', async () => {

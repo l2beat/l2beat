@@ -1,4 +1,4 @@
-import { Logger } from '@l2beat/backend-tools'
+import { assert, Logger, assertUnreachable } from '@l2beat/backend-tools'
 import {
   ConfigReader,
   DiscoveryConfig,
@@ -7,12 +7,7 @@ import {
   normalizeDiffPath,
 } from '@l2beat/discovery'
 import type { DiscoveryOutput } from '@l2beat/discovery-types'
-import {
-  assert,
-  ChainConverter,
-  UnixTime,
-  assertUnreachable,
-} from '@l2beat/shared-pure'
+import { ChainConverter, UnixTime } from '@l2beat/shared-pure'
 import { Gauge } from 'prom-client'
 
 import { Database } from '@l2beat/database'

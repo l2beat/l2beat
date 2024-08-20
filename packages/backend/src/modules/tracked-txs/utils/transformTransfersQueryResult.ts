@@ -1,5 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
-
+import { assert } from '@l2beat/backend-tools'
 import { TrackedTxConfigEntry, TrackedTxTransferConfig } from '@l2beat/shared'
 import { Configuration } from '../../../tools/uif/multi/types'
 import { BigQueryTransferResult, TrackedTxTransferResult } from '../types/model'

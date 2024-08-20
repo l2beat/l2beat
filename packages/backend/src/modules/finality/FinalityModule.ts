@@ -1,7 +1,7 @@
 import { Logger } from '@l2beat/backend-tools'
-import { assert, assertUnreachable, notUndefined } from '@l2beat/shared-pure'
-
+import { assert, assertUnreachable } from '@l2beat/backend-tools'
 import { BlobClient } from '@l2beat/shared'
+import { notUndefined } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import { FinalityProjectConfig } from '../../config/features/finality'
 import { ClientClass, Peripherals } from '../../peripherals/Peripherals'

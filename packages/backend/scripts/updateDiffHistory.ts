@@ -15,7 +15,7 @@ import {
   getChainConfig,
 } from '@l2beat/discovery'
 import { DiscoveryOutput } from '@l2beat/discovery-types'
-import { assert } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
 import { rimraf } from 'rimraf'
 
 import { updateDiffHistoryHash } from '../src/modules/update-monitor/utils/hashing'
