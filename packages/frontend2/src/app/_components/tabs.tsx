@@ -3,6 +3,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
+import { useSearchParamState } from '~/hooks/use-search-param-state'
 import { cn } from '~/utils/cn'
 
 /**
@@ -19,37 +20,14 @@ const Tabs = React.forwardRef<
     { defaultValue: passedDefaultValue, storeInSearchParams = true, ...props },
     ref,
   ) => {
-    const router = useRouter()
-    const pathname = usePathname()
-    const searchParams = useSearchParams()
-
-    const defaultValue = searchParams.get('tab') ?? passedDefaultValue
-
-    const onValueChange = storeInSearchParams
-      ? (value: string) => {
-          const search = new URLSearchParams(searchParams)
-
-          if (value !== passedDefaultValue) {
-            search.set('tab', value)
-          } else {
-            search.delete('tab')
-          }
-
-          const stringified = search.toString()
-
-          if (stringified) {
-            router.replace(`${pathname}?${stringified}`)
-          } else {
-            router.replace(pathname)
-          }
-        }
-      : undefined
+    const state = useSearchParamState('tab', passedDefaultValue)
+    const [value, setValue] = storeInSearchParams ? state : [passedDefaultValue]
 
     return (
       <TabsPrimitive.Root
         ref={ref}
-        defaultValue={defaultValue}
-        onValueChange={onValueChange}
+        defaultValue={value}
+        onValueChange={setValue}
         {...props}
       />
     )
