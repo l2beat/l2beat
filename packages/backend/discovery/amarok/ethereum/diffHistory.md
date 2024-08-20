@@ -1,10 +1,10 @@
-Generated with discovered.json: 0x7a16be35e3c026ec69a014a4fd9c1fe2ad4ebb8a
+Generated with discovered.json: 0x556b76fb45c107b3f3c4b566732d8365272cf977
 
-# Diff at Tue, 20 Aug 2024 07:24:21 GMT:
+# Diff at Tue, 20 Aug 2024 09:57:39 GMT:
 
 - author: Radina Talanova (<nt.radina@gmail.com>)
 - comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20317972
-- current block number: 20568320
+- current block number: 20569082
 
 ## Description
 
@@ -15,6 +15,7 @@ The optimistic mode is deactivated on Ethereum by a watcher (0x56dD71fffD089EdAd
 ```diff
     contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
     +++ description: None
++++ description: When it's disabled, all roots must be passed via canonical rollup AMBs.
       values.optimisticMode:
 -        true
 +        false
@@ -24,9 +25,32 @@ The optimistic mode is deactivated on Ethereum by a watcher (0x56dD71fffD089EdAd
 ```diff
     contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
     +++ description: None
++++ description: When it's disabled, all roots must be passed via canonical rollup AMBs.
       values.optimisticMode:
 -        true
 +        false
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20317972 (main branch discovery), not current.
+
+```diff
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
+    +++ description: None
+      fieldMeta:
++        {"optimisticMode":{"description":"When it's disabled, all roots must be passed via canonical rollup AMBs."}}
+    }
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      fieldMeta.optimisticMode:
++        {"description":"When it's disabled, all roots must be passed via canonical rollup AMBs."}
     }
 ```
 
