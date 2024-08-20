@@ -1,31 +1,26 @@
 import { Checkbox } from '~/app/_components/checkbox'
 import { type CommonScalingEntry } from '~/server/features/scaling/get-common-scaling-entry'
 import { BaseScalingFilters } from './base-scaling-filters'
-import { useScalingFilterValues } from './scaling-filter-context'
+import { useScalingAssociatedTokensContext } from './scaling-associated-tokens-context'
 
 interface Props {
   items: CommonScalingEntry[]
 }
 
 export function ScalingTvlFilters({ items }: Props) {
-  const state = useScalingFilterValues()
-
-  const excludeAssociatedCheckbox = (
-    <Checkbox
-      id="exclude-associated-tokens"
-      onCheckedChange={(checked) =>
-        state.set({ excludeAssociatedTokens: !!checked })
-      }
-    >
-      Exclude associated tokens
-    </Checkbox>
-  )
+  const { excludeAssociatedTokens, setExcludeAssociatedTokens } =
+    useScalingAssociatedTokensContext()
 
   return (
-    <BaseScalingFilters
-      items={items}
-      additionalFiltersRight={excludeAssociatedCheckbox}
-      showRollupsOnly
-    />
+    <div className="flex flex-col-reverse gap-x-4 gap-y-2 lg:flex-row">
+      <BaseScalingFilters items={items} showRollupsOnly />
+      <Checkbox
+        id="exclude-associated-tokens"
+        checked={excludeAssociatedTokens}
+        onCheckedChange={(checked) => setExcludeAssociatedTokens(!!checked)}
+      >
+        Exclude associated tokens
+      </Checkbox>
+    </div>
   )
 }

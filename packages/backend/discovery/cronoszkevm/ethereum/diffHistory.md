@@ -1,3 +1,29 @@
+Generated with discovered.json: 0x0c856d0648b71a8d06b5926a3ea8934df46b90ee
+
+# Diff at Tue, 20 Aug 2024 07:33:17 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20532448
+- current block number: 20568367
+
+## Description
+
+Added discovery of DA mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20532448 (main branch discovery), not current.
+
+```diff
+    contract CronosZkEvm (0x7b2DA4e77BAE0e0d23c53C3BE6650497d0576CFc) {
+    +++ description: None
+      values.daMode:
++        1
+    }
+```
+
 Generated with discovered.json: 0xa58f80eeae7359035a0c626cbe9fb22ebc0858be
 
 # Diff at Thu, 15 Aug 2024 07:10:34 GMT:

@@ -25,7 +25,6 @@ import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
-  excludeAssociatedTokens: boolean
   category?: ScalingProjectCategory
   stack?: Layer2Provider | Layer3Provider
   stage?: StageConfig['stage']
@@ -46,7 +45,6 @@ const ScalingFilterContext = createContext<
 
 const defaultValues: ScalingFilterContextValue = {
   rollupsOnly: false,
-  excludeAssociatedTokens: false,
   category: undefined,
   stack: undefined,
   stage: undefined,

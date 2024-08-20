@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xa78edb0e13f75aefdf487a6a4a87de5623550883
+
+# Diff at Tue, 20 Aug 2024 07:32:29 GMT:
+
+- author: Luca Donno (<donnoh99@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20469560
+- current block number: 20568363
+
+## Description
+
+Added discovery for DA mode.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20469560 (main branch discovery), not current.
+
+```diff
+    contract ZKsync (0x32400084C286CF3E17e7B677ea9583e60a000324) {
+    +++ description: None
+      values.daMode:
++        0
+    }
+```
+
 Generated with discovered.json: 0x57f2c0f38f6fa42d0bfd67cdc3ae06d13b7ecefe
 
 # Diff at Tue, 06 Aug 2024 12:34:21 GMT:

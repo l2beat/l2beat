@@ -10,16 +10,13 @@ import { useScalingFilterValues } from './scaling-filter-context'
 interface Props {
   items: CommonScalingEntry[]
   showRollupsOnly?: boolean
-  additionalFiltersLeft?: React.ReactNode
-  // NOTE (torztomasz): I don't want to remove this as it will break other PR that @imxeno made. But I think it is not needed here and the behavior is wrong.
-  additionalFiltersRight?: React.ReactNode
+  additionalFilters?: React.ReactNode
 }
 
 export function BaseScalingFilters({
   items,
   showRollupsOnly,
-  additionalFiltersLeft,
-  additionalFiltersRight,
+  additionalFilters,
 }: Props) {
   const filter = useScalingFilterValues()
   const typeOptions = uniq(items.map((item) => item.category))
@@ -62,46 +59,43 @@ export function BaseScalingFilters({
 
   return (
     <OverflowWrapper>
-      <div className="flex flex-row justify-between space-x-2">
-        <div className="flex space-x-2">
-          {showRollupsOnly && (
-            <Checkbox
-              id="rollups-only"
-              onCheckedChange={(checked) =>
-                filter.set({ rollupsOnly: !!checked })
-              }
-              disabled={!isRollupInItems}
-            >
-              Rollups only
-            </Checkbox>
-          )}
-          <TableFilter
-            title="Type"
-            options={typeOptions}
-            value={filter.category}
-            onValueChange={(value) => filter.set({ category: value })}
-          />
-          <TableFilter
-            title="Stack"
-            options={stackOptions}
-            value={filter.stack}
-            onValueChange={(value) => filter.set({ stack: value })}
-          />
-          <TableFilter
-            title="Stage"
-            options={stageOptions}
-            value={filter.stage}
-            onValueChange={(value) => filter.set({ stage: value })}
-          />
-          <TableFilter
-            title="Purpose"
-            options={purposeOptions}
-            value={filter.purpose}
-            onValueChange={(value) => filter.set({ purpose: value })}
-          />
-          {additionalFiltersLeft}
-        </div>
-        {additionalFiltersRight}
+      <div className="flex flex-row space-x-2">
+        {showRollupsOnly && (
+          <Checkbox
+            id="rollups-only"
+            onCheckedChange={(checked) =>
+              filter.set({ rollupsOnly: !!checked })
+            }
+            disabled={!isRollupInItems}
+          >
+            Rollups only
+          </Checkbox>
+        )}
+        <TableFilter
+          title="Type"
+          options={typeOptions}
+          value={filter.category}
+          onValueChange={(value) => filter.set({ category: value })}
+        />
+        <TableFilter
+          title="Stack"
+          options={stackOptions}
+          value={filter.stack}
+          onValueChange={(value) => filter.set({ stack: value })}
+        />
+        <TableFilter
+          title="Stage"
+          options={stageOptions}
+          value={filter.stage}
+          onValueChange={(value) => filter.set({ stage: value })}
+        />
+        <TableFilter
+          title="Purpose"
+          options={purposeOptions}
+          value={filter.purpose}
+          onValueChange={(value) => filter.set({ purpose: value })}
+        />
+        {additionalFilters}
       </div>
     </OverflowWrapper>
   )
