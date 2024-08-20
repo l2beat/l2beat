@@ -1,3 +1,38 @@
+Generated with discovered.json: 0xb13c2f3ee9724b0313aff13467b331ac62c7769b
+
+# Diff at Mon, 19 Aug 2024 15:36:01 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20519354
+- current block number: 20563605
+
+## Description
+
+Increased their withdrawal limits for ETH (amount that can be withdrawn before getting throttled) to 500 ETH and the deposit limit to 50 ETH.
+
+## Watched changes
+
+```diff
+    contract OptimismPortal (0x17bfAfA932d2e23Bd9B909Fd5B4D2e2a27043fb1) {
+    +++ description: The main entry point to deposit funds from host chain to this chain. It also allows to prove and finalize withdrawals.
+      values.ethThrottleWithdrawals.maxAmountPerPeriod:
+-        "300000000000000000000"
++        "500000000000000000000"
+      values.getEthThrottleWithdrawalsCredits:
+-        "300000000000000000000"
++        "500000000000000000000"
+    }
+```
+
+```diff
+    contract L1StandardBridge (0x386B76D9cA5F5Fb150B6BFB35CF5379B22B26dd8) {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token.
+      values.ethThrottleDeposits.maxAmountPerPeriod:
+-        "1000000000000000000"
++        "50000000000000000000"
+    }
+```
+
 Generated with discovered.json: 0x202698101e977c3a33e24d85257db8d4fc2d0a62
 
 # Diff at Tue, 13 Aug 2024 11:18:48 GMT:
