@@ -29,10 +29,10 @@ const getCachedCostsChart = cache(
   async (
     timeRange: CostsTimeRange,
     filter: CostsChartFilter,
-  ): Promise<CostsChartResponse | undefined> => {
+  ): Promise<CostsChartResponse> => {
     const projects = getCostsProjects(filter)
     if (projects.length === 0) {
-      return undefined
+      return withTypes([])
     }
     const resolution = rangeToResolution(timeRange)
     const range = getRange(timeRange, resolution)

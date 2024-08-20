@@ -78,7 +78,7 @@ export async function getL2ProjectDetails({
   })
   const items: ProjectDetailsSection[] = []
 
-  if (costsChartData !== undefined) {
+  if (!isEmpty(costsChartData.data)) {
     items.push({
       type: 'ChartSection',
       props: {
