@@ -135,7 +135,7 @@ export function ProjectDetails(props: ProjectDetailsProps) {
               />
             )
           case 'UpcomingDisclaimer':
-            return <UpcomingDisclaimer />
+            return <UpcomingDisclaimer key={`${item.type}${index}`} />
           default:
             assertUnreachable(item)
         }
