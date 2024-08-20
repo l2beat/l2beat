@@ -81,6 +81,14 @@
           "handler": {
             "type": "eip2535Facets"
           }
+        },
+        "daMode": {
+          "handler": {
+            "type": "storage",
+            "slot": 38,
+            "offset": 0,
+            "returnType": "uint8"
+          }
         }
       }
     },

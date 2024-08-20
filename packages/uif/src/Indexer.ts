@@ -30,11 +30,18 @@ export abstract class Indexer {
    * used for all indexers that don't specify their own strategy.
    * @returns A default retry strategy that will be used for all indexers
    */
-  static GET_DEFAULT_RETRY_STRATEGY: () => RetryStrategy = () =>
+  static getDefaultRetryStrategy: () => RetryStrategy = () =>
     Retries.exponentialBackOff({
       initialTimeoutMs: 1000,
       maxAttempts: 10,
       maxTimeoutMs: 60 * 1000,
+    })
+
+  static getInfiniteRetryStrategy: () => RetryStrategy = () =>
+    Retries.exponentialBackOff({
+      initialTimeoutMs: 1000,
+      maxAttempts: Infinity,
+      maxTimeoutMs: 1 * 60 * 60_000,
     })
 
   static createId(name: string, tag: string | undefined): string {
@@ -169,11 +176,11 @@ export abstract class Indexer {
     })
 
     this.tickRetryStrategy =
-      options?.tickRetryStrategy ?? Indexer.GET_DEFAULT_RETRY_STRATEGY()
+      options?.tickRetryStrategy ?? Indexer.getDefaultRetryStrategy()
     this.updateRetryStrategy =
-      options?.updateRetryStrategy ?? Indexer.GET_DEFAULT_RETRY_STRATEGY()
+      options?.updateRetryStrategy ?? Indexer.getDefaultRetryStrategy()
     this.invalidateRetryStrategy =
-      options?.invalidateRetryStrategy ?? Indexer.GET_DEFAULT_RETRY_STRATEGY()
+      options?.invalidateRetryStrategy ?? Indexer.getDefaultRetryStrategy()
   }
 
   get safeHeight(): number {
@@ -263,10 +270,11 @@ export abstract class Indexer {
     this.logger.info('Updating', { from, to: effect.targetHeight })
     try {
       const newHeight = await this.update(from, effect.targetHeight)
-      if (newHeight > effect.targetHeight) {
+      if (newHeight < from || newHeight > effect.targetHeight) {
         this.logger.critical('Update returned invalid height', {
+          from,
+          to: effect.targetHeight,
           newHeight,
-          max: effect.targetHeight,
         })
         this.dispatch({ type: 'UpdateFailed', fatal: true })
       } else {
@@ -274,6 +282,7 @@ export abstract class Indexer {
         this.updateRetryStrategy.clear()
       }
     } catch (error) {
+      const attempt = this.updateRetryStrategy.attempts()
       this.updateRetryStrategy.markAttempt()
       const fatal = !this.updateRetryStrategy.shouldRetry()
       if (fatal) {
@@ -281,12 +290,14 @@ export abstract class Indexer {
           error,
           from,
           to: effect.targetHeight,
+          attempt,
         })
       } else {
         this.logger.error('Update failed', {
           error,
           from,
           to: effect.targetHeight,
+          attempt,
         })
       }
       this.dispatch({ type: 'UpdateFailed', fatal })
@@ -295,7 +306,8 @@ export abstract class Indexer {
 
   private executeScheduleRetryUpdate(): void {
     const timeoutMs = this.updateRetryStrategy.timeoutMs()
-    this.logger.debug('Scheduling retry update', { timeoutMs })
+    const attempt = this.updateRetryStrategy.attempts()
+    this.logger.info('Scheduling retry update', { timeoutMs, attempt })
     setTimeout(() => {
       this.dispatch({ type: 'RetryUpdate' })
     }, timeoutMs)

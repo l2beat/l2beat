@@ -25,7 +25,7 @@ export const StorageHandlerDefinition = z.strictObject({
   offset: z.optional(
     z.union([z.number().int().nonnegative(), NumberFromString, Reference]),
   ),
-  returnType: z.optional(z.enum(['address', 'bytes', 'number'])),
+  returnType: z.optional(z.enum(['address', 'bytes', 'number', 'uint8'])),
   ignoreRelative: z.optional(z.boolean()),
 })
 
@@ -90,7 +90,7 @@ function resolveDependencies(
 ): {
   slot: bigint | bigint[]
   offset: bigint
-  returnType: 'number' | 'address' | 'bytes'
+  returnType: 'number' | 'address' | 'bytes' | 'uint8'
 } {
   let offset = 0n
   if (definition.offset) {
@@ -117,7 +117,7 @@ function resolveDependencies(
     slot = valueToBigInt(resolved)
   }
 
-  const returnType: 'number' | 'address' | 'bytes' =
+  const returnType: 'number' | 'address' | 'bytes' | 'uint8' =
     definition.returnType ?? 'bytes'
 
   return {

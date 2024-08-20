@@ -1,4 +1,4 @@
-import { type ProjectId } from '@l2beat/shared-pure'
+import { type ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { groupBy, sum } from 'lodash'
 import {
   unstable_cache as cache,
@@ -35,6 +35,6 @@ const getCachedLatestTvlUsd = cache(
   },
   ['latestTvlUsd'],
   {
-    revalidate: 60 * 10,
+    revalidate: 10 * UnixTime.MINUTE,
   },
 )

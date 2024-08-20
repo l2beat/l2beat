@@ -28,7 +28,5 @@ export function ScalingDaFilters({ items }: Props) {
     />
   )
 
-  return (
-    <BaseScalingFilters items={items} additionalFiltersLeft={daLayerFilter} />
-  )
+  return <BaseScalingFilters items={items} additionalFilters={daLayerFilter} />
 }

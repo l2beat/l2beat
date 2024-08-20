@@ -1,3 +1,4 @@
+import { UnixTime } from '@l2beat/shared-pure'
 import {
   unstable_cache as cache,
   unstable_noStore as noStore,
@@ -39,12 +40,6 @@ export const getCached7dTvlBreakdown = cache(
               stablecoin: breakdown.stablecoin / 100,
               associated: breakdown.associated / 100,
             },
-            oldBreakdown: {
-              total: oldBreakdown.total / 100,
-              ether: oldBreakdown.ether / 100,
-              stablecoin: oldBreakdown.stablecoin / 100,
-              associated: oldBreakdown.associated / 100,
-            },
             change: (breakdown.total - oldBreakdown.total) / breakdown.total,
           },
         ]
@@ -63,7 +58,7 @@ export const getCached7dTvlBreakdown = cache(
   },
   ['get7dTvlBreakdown'],
   {
-    revalidate: 60 * 10,
+    revalidate: 10 * UnixTime.MINUTE,
   },
 )
 

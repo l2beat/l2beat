@@ -21,10 +21,10 @@ import { type ScalingFinalityEntry } from '~/server/features/scaling/finality/ty
 import { type ScalingLivenessEntry } from '~/server/features/scaling/liveness/get-scaling-liveness-entries'
 import { type ScalingRiskEntry } from '~/server/features/scaling/risks/get-scaling-risk-entries'
 import { type ScalingSummaryEntry } from '~/server/features/scaling/summary/get-scaling-summary-entries'
+import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
 
 export type ScalingFilterContextValue = {
   rollupsOnly: boolean
-  excludeAssociatedTokens: boolean
   category?: ScalingProjectCategory
   stack?: Layer2Provider | Layer3Provider
   stage?: StageConfig['stage']
@@ -45,7 +45,6 @@ const ScalingFilterContext = createContext<
 
 const defaultValues: ScalingFilterContextValue = {
   rollupsOnly: false,
-  excludeAssociatedTokens: false,
   category: undefined,
   stack: undefined,
   stage: undefined,
@@ -71,6 +70,7 @@ type ScalingEntry =
   | ScalingDataAvailabilityEntry
   | ScalingSummaryEntry
   | ScalingCostsEntry
+  | ScalingTvlEntry
   | ScalingLivenessEntry
 
 export function useScalingFilter() {
