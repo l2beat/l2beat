@@ -1,7 +1,7 @@
 {
   "name": "zircuit",
   "chain": "ethereum",
-  "blockNumber": 20519354,
+  "blockNumber": 20563605,
   "configHash": "0xad6d5e3bcf485d6dfca75ad1d5d919010760a5a1e78e71ba496385b903defcd7",
   "version": 11,
   "contracts": [
@@ -24,19 +24,19 @@
           "maxAmountTotal": "3000000000000000000000"
         },
         "ethThrottleWithdrawals": {
-          "maxAmountPerPeriod": "300000000000000000000",
+          "maxAmountPerPeriod": "500000000000000000000",
           "periodLength": 3600,
           "maxAmountTotal": 0
         },
         "getEthThrottleDepositsCredits": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
-        "getEthThrottleWithdrawalsCredits": "300000000000000000000",
+        "getEthThrottleWithdrawalsCredits": "500000000000000000000",
         "guardian": "0x2c0B27F7C8F083B539557a0bA787041BF22DB276",
         "l2Oracle": "0x92Ef6Af472b39F1b363da45E35530c24619245A4",
         "l2Sender": "0x000000000000000000000000000000000000dEaD",
         "params": {
           "prevBaseFee": 1000000000,
           "prevBoughtGas": 287624,
-          "prevBlockNum": 20519349,
+          "prevBlockNum": 20563424,
           "prevTxCount": 1
         },
         "paused": false,
@@ -61,7 +61,7 @@
         "$admin": "0x5B1Ef673d9c316b3eE9Ed3B4E3cC84952bfC5257",
         "$implementation": "0x6c01D349d3010Cc2953fFA0A5e8d176fc273B834",
         "MESSAGE_VERSION": 1,
-        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621122",
+        "messageNonce": "1766847064778384329583297500742918515827483896875618958121606201292621429",
         "MIN_GAS_CALLDATA_OVERHEAD": 16,
         "MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR": 63,
         "MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR": 64,
@@ -96,7 +96,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 1 (100%)",
-        "nonce": 4,
+        "nonce": 5,
         "VERSION": "1.3.0"
       },
       "derivedName": "GnosisSafe"
@@ -179,7 +179,7 @@
         "$implementation": "0xA4ba8bd753695B6121722CBB7cd81c71BCFBCA28",
         "accessController": "0x745393Cc03b5fE668ECd52c0E625f59aAD6D3Da0",
         "ethThrottleDeposits": {
-          "maxAmountPerPeriod": "1000000000000000000",
+          "maxAmountPerPeriod": "50000000000000000000",
           "periodLength": 2592000,
           "maxAmountTotal": 0
         },
@@ -293,10 +293,10 @@
         "finalizationPeriodSeconds": 18000,
         "L2_BLOCK_TIME": 2,
         "l2BlockTime": 2,
-        "latestBlockNumber": 1804602,
-        "latestOutputIndex": 4439,
-        "nextBlockNumber": 1804603,
-        "nextOutputIndex": 4440,
+        "latestBlockNumber": 2071464,
+        "latestOutputIndex": 5111,
+        "nextBlockNumber": 2071465,
+        "nextOutputIndex": 5112,
         "proposer": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "PROPOSER": "0xE8C20EA8eF100d7aa3846616E5D07A5aBb067C65",
         "startingBlockNumber": 0,
