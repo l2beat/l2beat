@@ -19,6 +19,7 @@ export function BridgesTvlChart() {
       data={data}
       timeRange={timeRange}
       setTimeRange={setTimeRange}
+      explanation="Sum of all funds locked on Ethereum converted to"
       tag="bridges-summary"
     />
   )

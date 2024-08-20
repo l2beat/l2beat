@@ -11,7 +11,6 @@ import { useLocalStorage } from '~/hooks/use-local-storage'
 import { type TvlChartRange } from '~/server/features/scaling/tvl/utils/range'
 import { formatTimestamp } from '~/utils/dates'
 import { formatCurrency } from '~/utils/format'
-import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
 import { UnitAndScaleControls } from '../../_components/unit-and-scale-controls'
 import { tvlRangeToReadable } from '../../_utils/tvl-range-to-readable'
 
@@ -21,16 +20,20 @@ interface TvlChartPointData {
   ethValue: number
 }
 
-export function TvlChart({ milestones, entries, tag = 'tvl' }: Props) {
-  const filters = useScalingFilterValues()
-  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
-  const includeFilter = useScalingFilter()
-  const [timeRange, setTimeRange] = useCookieState('scalingTvlChartRange')
+interface Props {
+  tag: string
+  explanation?: string
+  milestones: Milestone[]
+  timeRange: TvlChartRange
+  setTimeRange: (range: TvlChartRange) => void
+  data?: (readonly [number, number, number, number, number])[]
+}
 
 export function TvlChart({
   data,
   timeRange,
   milestones,
+  explanation,
   setTimeRange,
   tag = 'scaling',
 }: Props) {
@@ -107,6 +110,7 @@ export function TvlChart({
           value={lastValue}
           change={change}
           range={timeRange}
+          explanation={explanation}
         />
         <ChartTimeRangeControls
           value={timeRange}
@@ -160,12 +164,17 @@ function Header({
   value,
   change,
   range,
+  explanation,
 }: {
   unit: string
   value?: number
   change?: number
   range: TvlChartRange
+  explanation?: string
 }) {
+  const text =
+    explanation ??
+    'Sum of all canonically bridged, externally bridged, and natively minted tokens, converted to'
   const loading = useChartLoading()
 
   const changeOverTime =
@@ -180,8 +189,7 @@ function Header({
       <div>
         <h1 className="mb-1 text-3xl font-bold">Value Locked</h1>
         <p className="hidden text-gray-500 md:block dark:text-gray-600">
-          Sum of all canonically bridged, externally bridged, and natively
-          minted tokens, converted to {unit.toUpperCase()}
+          {text} {unit.toUpperCase()}
         </p>
       </div>
       <div className="flex flex-row items-baseline gap-2 md:flex-col md:items-end md:gap-1">
