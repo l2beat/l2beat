@@ -9,6 +9,7 @@ const emptyOutputMeta = {
   descriptions: undefined,
   roles: undefined,
   issuedPermissions: undefined,
+  receivedPermissions: undefined,
   categories: undefined,
   types: undefined,
   severity: undefined,
