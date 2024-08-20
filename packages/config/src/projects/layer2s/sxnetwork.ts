@@ -1,15 +1,20 @@
-import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { subtractOne } from '../../common/assessCount'
-import { underReviewL2 } from './templates/underReview'
+import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
+import { Badge } from '../badges'
+import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
+import { subtractOne } from '../../common/assessCount'
 
-export const sxnetwork: Layer2 = underReviewL2({
-  id: ProjectId('sxnetwork'),
+
+const discovery = new ProjectDiscovery('sxnetwork')
+
+export const sxnetwork: Layer2 = orbitStackL2({
+  discovery,
+  badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {
-    category: 'Optimium',
-    provider: 'Arbitrum',
     name: 'SX Network',
     slug: 'sxnetwork',
+    redWarning:
+      'Critical contracts can be upgraded by an EOA which could result in the loss of all funds.',
     description:
       "SX Network is an Orbit stack Optimium, built to scale the SX team's existing sports betting platform.",
     purposes: ['Betting'],
@@ -27,8 +32,12 @@ export const sxnetwork: Layer2 = underReviewL2({
         'https://discord.com/invite/sxnetwork',
       ],
     },
-    activityDataSource: 'Blockchain RPC',
+    activityDataSource: "Blockchain RPC"
   },
+  isNodeAvailable: 'UnderReview',
+  bridge: discovery.getContract('Bridge'),
+  rollupProxy: discovery.getContract('RollupProxy'),
+  sequencerInbox: discovery.getContract('SequencerInbox'),
   associatedTokens: ['SX'],
   rpcUrl: 'https://rpc.sx-rollup.gelato.digital', //chainid 4162
   transactionApi: {
@@ -38,12 +47,20 @@ export const sxnetwork: Layer2 = underReviewL2({
     assessCount: subtractOne,
     startBlock: 1,
   },
-  escrows: [
+  nonTemplatePermissions: [
     {
-      chain: 'ethereum',
-      address: EthereumAddress('0xa104c0426e95a5538e89131dbb4163d230c35f86'), // ERC20Bridge
-      sinceTimestamp: new UnixTime(1686211235),
-      tokens: '*',
-    },
+      name: 'SX Network Admin EOA',
+      accounts: [
+        {
+          address: discovery.getAccessControlField(
+            'UpgradeExecutor',
+            'EXECUTOR_ROLE',
+          ).members[0],
+          type: 'EOA',
+        },
+      ],
+      description:
+        "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
+    }
   ],
 })
