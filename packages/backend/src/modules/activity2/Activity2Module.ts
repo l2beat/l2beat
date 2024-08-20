@@ -18,11 +18,11 @@ import { ZksyncLiteClient } from '../../peripherals/zksynclite/ZksyncLiteClient'
 import { Clock } from '../../tools/Clock'
 import { IndexerService } from '../../tools/uif/IndexerService'
 import { ApplicationModule } from '../ApplicationModule'
-import { ActivityTransactionConfig } from '../activity/ActivityTransactionConfig'
 import {
   BaseClient,
   BlockTimestampProvider,
 } from '../tvl/services/BlockTimestampProvider'
+import { ActivityTransactionConfig } from './ActivityTransactionConfig'
 import { Activity2Controller } from './api/Activity2Controller'
 import { createActivity2Router } from './api/Activity2Router'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'

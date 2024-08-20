@@ -10,7 +10,7 @@ import {
 
 import { BackendProject } from '@l2beat/config'
 import { ChainConverter } from '@l2beat/shared-pure'
-import { ActivityTransactionConfig } from '../modules/activity/ActivityTransactionConfig'
+import { ActivityTransactionConfig } from '../modules/activity2/ActivityTransactionConfig'
 import { MulticallConfigEntry } from '../peripherals/multicall/types'
 import { ResolvedFeatureFlag } from './FeatureFlags'
 import { FinalityProjectConfig } from './features/finality'
@@ -27,7 +27,6 @@ export interface Config {
   readonly tvl: TvlConfig | false
   readonly trackedTxsConfig: TrackedTxsConfig | false
   readonly finality: FinalityConfig | false
-  readonly activity: ActivityConfig | false
   readonly activity2: Activity2Config | false
   readonly updateMonitor: UpdateMonitorConfig | false
   readonly implementationChangeReporterEnabled: boolean
@@ -152,13 +151,6 @@ export interface HealthConfig {
   readonly releasedAt?: string
   readonly startedAt: string
   readonly commitSha: string
-}
-export interface ActivityConfig {
-  readonly starkexApiKey: string
-  readonly starkexCallsPerMinute: number
-  readonly projectsExcludedFromAPI: string[]
-  readonly allowedProjectIds?: string[]
-  readonly projects: { id: ProjectId; config: ActivityTransactionConfig }[]
 }
 
 export interface Activity2Config {

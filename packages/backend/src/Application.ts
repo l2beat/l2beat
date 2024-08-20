@@ -6,7 +6,6 @@ import { LegacyDatabase } from '@l2beat/database-legacy'
 import { ApiServer } from './api/ApiServer'
 import { Config } from './config'
 import { ApplicationModule } from './modules/ApplicationModule'
-import { createActivityModule } from './modules/activity/ActivityModule'
 import { createActivity2Module } from './modules/activity2/Activity2Module'
 import { createDaBeatModule } from './modules/da-beat/DaBeatModule'
 import { createFeaturesModule } from './modules/features/FeaturesModule'
@@ -55,7 +54,6 @@ export class Application {
     const modules: (ApplicationModule | undefined)[] = [
       createHealthModule(config),
       createMetricsModule(config),
-      createActivityModule(config, logger, peripherals, clock),
       createActivity2Module(config, logger, peripherals, kyselyDatabase, clock),
       createUpdateMonitorModule(config, logger, peripherals, clock),
       createImplementationChangeModule(config, logger, peripherals),
