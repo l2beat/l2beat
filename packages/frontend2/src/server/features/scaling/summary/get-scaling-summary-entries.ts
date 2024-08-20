@@ -22,14 +22,15 @@ export async function getScalingSummaryEntries() {
 
     const latestTvl = tvl.projects[project.id.toString()]
 
-    const associatedTokenWarning = latestTvl
-      ? getAssociatedTokenWarning({
-          associatedRatio:
-            latestTvl.breakdown.associated / latestTvl.breakdown.total,
-          name: project.display.name,
-          associatedTokens: project.config.associatedTokens ?? [],
-        })
-      : undefined
+    const associatedTokenWarning =
+      latestTvl && latestTvl.breakdown.total > 0
+        ? getAssociatedTokenWarning({
+            associatedRatio:
+              latestTvl.breakdown.associated / latestTvl.breakdown.total,
+            name: project.display.name,
+            associatedTokens: project.config.associatedTokens ?? [],
+          })
+        : undefined
 
     return {
       entryType: 'scaling' as const,
