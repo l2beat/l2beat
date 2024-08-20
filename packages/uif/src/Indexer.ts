@@ -288,12 +288,14 @@ export abstract class Indexer {
           error,
           from,
           to: effect.targetHeight,
+          attempt: this.updateRetryStrategy.attempts() - 1,
         })
       } else {
         this.logger.error('Update failed', {
           error,
           from,
           to: effect.targetHeight,
+          attempt: this.updateRetryStrategy.attempts() - 1,
         })
       }
       this.dispatch({ type: 'UpdateFailed', fatal })
@@ -302,7 +304,8 @@ export abstract class Indexer {
 
   private executeScheduleRetryUpdate(): void {
     const timeoutMs = this.updateRetryStrategy.timeoutMs()
-    this.logger.debug('Scheduling retry update', { timeoutMs })
+    const attempt = this.updateRetryStrategy.attempts()
+    this.logger.info('Scheduling retry update', { timeoutMs, attempt })
     setTimeout(() => {
       this.dispatch({ type: 'RetryUpdate' })
     }, timeoutMs)
