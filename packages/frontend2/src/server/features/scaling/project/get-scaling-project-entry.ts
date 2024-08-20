@@ -37,6 +37,25 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   const isImplementationUnderReview =
     !!implementationChangeReport.projects[project.id]
 
+  const projectDetails =
+    project.type === 'layer2'
+      ? await getL2ProjectDetails({
+          project,
+          isVerified,
+          contractsVerificationStatuses,
+          manuallyVerifiedContracts,
+          implementationChangeReport,
+          rosetteValues: getScalingRosetteValues(project.riskView),
+        })
+      : getL3ProjectDetails({
+          project,
+          isVerified,
+          contractsVerificationStatuses,
+          manuallyVerifiedContracts,
+          implementationChangeReport,
+          rosetteValues: getScalingRosetteValues(project.riskView),
+        })
+
   return {
     type: project.type,
     name: project.display.name,
@@ -52,24 +71,7 @@ export async function getScalingProjectEntry(project: ScalingProject) {
             stage: 'NotApplicable' as const,
           },
     header,
-    projectDetails:
-      project.type === 'layer2'
-        ? getL2ProjectDetails({
-            project,
-            isVerified,
-            contractsVerificationStatuses,
-            manuallyVerifiedContracts,
-            implementationChangeReport,
-            rosetteValues: getScalingRosetteValues(project.riskView),
-          })
-        : getL3ProjectDetails({
-            project,
-            isVerified,
-            contractsVerificationStatuses,
-            manuallyVerifiedContracts,
-            implementationChangeReport,
-            rosetteValues: getScalingRosetteValues(project.riskView),
-          }),
+    projectDetails,
   }
 }
 

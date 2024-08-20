@@ -18,7 +18,9 @@ interface Props {
 export async function DaProjectPage({ header, daLayer, daBridge }: Props) {
   const daProjectEntry = await getDaProjectEntry(daLayer, daBridge)
 
-  const isNavigationEmpty = daProjectEntry.projectDetails.length === 0
+  const isNavigationEmpty =
+    daProjectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
+      .length === 0
 
   return (
     <>

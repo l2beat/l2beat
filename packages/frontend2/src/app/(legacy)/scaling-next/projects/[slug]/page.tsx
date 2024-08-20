@@ -45,8 +45,10 @@ export default async function Page({ params }: Props) {
   }
 
   const projectEntry = await getScalingProjectEntry(project)
-  const isNavigationEmpty = projectEntry.projectDetails.length === 0
-
+  const isNavigationEmpty =
+    projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
+      .length === 0
+  console.log(projectEntry.projectDetails)
   return (
     <>
       {!isNavigationEmpty && (

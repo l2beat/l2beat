@@ -12,6 +12,7 @@ import { getTechnologySection } from '~/app/_components/projects/sections/techno
 import { getWithdrawalsSection } from '~/app/_components/projects/sections/technology/get-withdrawals-section'
 import { type ProjectDetailsSection } from '~/app/_components/projects/sections/types'
 import { type RosetteValue } from '~/app/_components/rosette/types'
+import { api } from '~/trpc/server'
 import { getContractsSection } from '~/utils/project/contracts-and-permissions/get-contracts-section'
 import { getPermissionsSection } from '~/utils/project/contracts-and-permissions/get-permissions-section'
 import { getDiagramParams } from '~/utils/project/get-diagram-params'
@@ -25,7 +26,7 @@ interface Params {
   rosetteValues: RosetteValue[]
 }
 
-export function getL2ProjectDetails({
+export async function getL2ProjectDetails({
   project,
   isVerified,
   contractsVerificationStatuses,
@@ -66,21 +67,31 @@ export function getL2ProjectDetails({
   const operatorSection = getOperatorSection(project)
   const withdrawalsSection = getWithdrawalsSection(project)
   const otherConsiderationsSection = getOtherConsiderationsSection(project)
-
+  // Do I need to prefetch this?
+  await api.scaling.costs.chart.prefetch({
+    range: '1d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
+  const costsChartData = await api.scaling.costs.chart({
+    range: '1d',
+    filter: { type: 'projects', projectIds: [project.id] },
+  })
   const items: ProjectDetailsSection[] = []
 
-  items.push({
-    type: 'ChartSection',
-    props: {
-      id: 'onchain-costs',
-      title: 'Onchain costs',
-      projectId: project.id,
-      milestones:
-        project.milestones?.sort(
-          (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
-        ) ?? [],
-    },
-  })
+  if (costsChartData !== undefined) {
+    items.push({
+      type: 'ChartSection',
+      props: {
+        id: 'onchain-costs',
+        title: 'Onchain costs',
+        projectId: project.id,
+        milestones:
+          project.milestones?.sort(
+            (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+          ) ?? [],
+      },
+    })
+  }
 
   if (
     !project.isUpcoming &&
