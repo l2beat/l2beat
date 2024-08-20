@@ -9,7 +9,8 @@ import { getL2ProjectDetails } from './utils/get-l2-project-details'
 import { getScalingRosetteValues } from './utils/get-scaling-rosette-values'
 import { getL3ProjectDetails } from './utils/get-l3-project-details'
 import { getTvlProjectData } from '../tvl/get-tvl-project-data'
-import { formatPercent } from '~/utils/get-percentage-change'
+import { compact } from 'lodash'
+import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 
 type ScalingProject = Layer2 | Layer3
 
@@ -84,11 +85,14 @@ async function getHeader(project: ScalingProject) {
     links: getProjectLinks(project.display.links),
     tokenBreakdown: {
       ...tvlProjectData.tokenBreakdown,
-      warning: getTvlWarning(
-        associatedRatio,
-        project.display.name,
-        project.config.associatedTokens ?? [],
-      ),
+      warnings: compact([
+        project.display.tvlWarning,
+        getAssociatedTokenWarning({
+          associatedRatio,
+          name: project.display.name,
+          associatedTokens: project.config.associatedTokens ?? [],
+        }),
+      ]),
       associatedTokens: project.config.associatedTokens,
     },
     tvlBreakdown: tvlProjectData.tvlBreakdown,
@@ -96,30 +100,5 @@ async function getHeader(project: ScalingProject) {
       project.badges && project.badges.length !== 0
         ? project.badges?.sort(badgesCompareFn)
         : undefined,
-  }
-}
-
-function getTvlWarning(
-  associatedRatio: number,
-  name: string,
-  associatedTokens: string[],
-) {
-  if (associatedRatio < 0.1) return
-  const sentiment: 'bad' | 'warning' = associatedRatio > 0.8 ? 'bad' : 'warning'
-
-  const percent = formatPercent(associatedRatio)
-  if (associatedTokens.length === 1) {
-    const what = `The ${associatedTokens[0]} token associated with ${name}`
-    return {
-      content: `${what} accounts for ${percent} of the TVL!`,
-      sentiment,
-    }
-  } else {
-    const joined = associatedTokens.join(' and ')
-    const what = `The ${joined} tokens associated with ${name}`
-    return {
-      content: `${what} account for ${percent} of the TVL!`,
-      sentiment,
-    }
   }
 }

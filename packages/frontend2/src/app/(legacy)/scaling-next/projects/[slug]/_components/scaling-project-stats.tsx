@@ -27,8 +27,10 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
-  const { total, associated, ether, stablecoin, associatedTokens, warning } =
+  const { total, associated, ether, stablecoin, associatedTokens, warnings } =
     project.header.tokenBreakdown
+
+  const isAnyWarningBad = warnings.some((w) => w.sentiment === 'bad')
   const other = total - associated - ether - stablecoin
   return (
     <div
@@ -49,7 +51,11 @@ export function ScalingProjectStats({ project, className }: Props) {
                 stablecoin={stablecoin}
                 other={other}
               />
-              {warning && <RoundedWarningIcon sentiment={warning.sentiment} />}
+              {warnings.length > 0 && (
+                <RoundedWarningIcon
+                  sentiment={isAnyWarningBad ? 'bad' : 'warning'}
+                />
+              )}
             </TooltipTrigger>
             <TooltipContent>
               <TokenBreakdownTooltipContent
@@ -58,7 +64,7 @@ export function ScalingProjectStats({ project, className }: Props) {
                 stablecoin={stablecoin}
                 other={other}
                 associatedTokenSymbols={associatedTokens}
-                tvlWarnings={warning ? [warning] : undefined}
+                tvlWarnings={warnings}
               />
             </TooltipContent>
           </Tooltip>
