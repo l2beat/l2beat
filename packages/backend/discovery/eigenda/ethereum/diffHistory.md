@@ -1,3 +1,36 @@
+Generated with discovered.json: 0xc6547f0f20e9089ccc504110f626255de5a89c7e
+
+# Diff at Tue, 20 Aug 2024 17:56:09 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@db437cf269f77763075511701a7df3b61ea065d7 block: 20482509
+- current block number: 20571459
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20482509 (main branch discovery), not current.
+
+```diff
+    contract EigenDAServiceManager (0x870679E138bCdf293b7Ff14dD44b70FC97e12fc0) {
+    +++ description: None
+      name:
+-        "eigenDAServiceManager"
++        "EigenDAServiceManager"
++++ description: The list of addresses authorized to confirm the availability of blobs batches to the DA bridge.
++++ severity: MEDIUM
+      values.batchConfirmers:
++        ["0x8ED83c6Bb12E441Ca2C3a544F525d4a3Fb6484D8","0x5A49Bf6c5690E22dFff3eB37F7dd18254eC361ED","0x454Ef2f69f91527856E06659f92a66f464C1ca4e"]
+      fieldMeta.batchConfirmers:
++        {"severity":"MEDIUM","description":"The list of addresses authorized to confirm the availability of blobs batches to the DA bridge."}
+    }
+```
+
 Generated with discovered.json: 0xe16e4e41647c26adabbd294f3e0f4b5361ddd3f0
 
 # Diff at Fri, 09 Aug 2024 11:59:24 GMT:

@@ -34,7 +34,8 @@
     "0xec53bF9167f50cDEB3Ae105f56099aaaB9061F83": "EIGEN token",
     "0x2520C6b2C1FBE1813AB5c7c1018CDa39529e9FF2": "EIGEN Timelock",
     "0x83E9115d334D248Ce39a6f36144aEaB5b3456e75": "bEIGEN token",
-    "0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f": "bEIGEN Timelock"
+    "0xd6EC41E453C5E7dA5494f4d51A053Ab571712E6f": "bEIGEN Timelock",
+    "0x0c431C66F4dE941d089625E5B423D00707977060": "PauserRegistry"
   },
   "overrides": {
     "bEIGEN token": {
@@ -426,6 +427,18 @@
       },
       "ignoreRelatives": ["avs"],
       "ignoreInWatchMode": ["avs"]
+    },
+    "PauserRegistry": {
+      "fields": {
+        "pausers": {
+          "handler": {
+            "type": "arrayFromOneEvent",
+            "event": "PauserStatusChanged",
+            "valueKey": "pauser",
+            "flagKey": "canPause"
+          }
+        }
+      }
     },
     // ignore discovery, should be ignoreRelative in a strategy but it does not work
     "0xae78736Cd615f374D3085123A210448E74Fc6393": {

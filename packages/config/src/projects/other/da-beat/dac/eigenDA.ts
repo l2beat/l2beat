@@ -12,12 +12,12 @@ export const eigenDA: DaLayer = {
     description:
       'EigenDA is a data availability solution built on Eigen Layer.',
     links: {
-      websites: [],
-      documentation: [],
-      repositories: [],
+      websites: ['https://www.eigenda.xyz/'],
+      documentation: ['https://docs.eigenda.xyz/overview'],
+      repositories: ['https://github.com/Layr-Labs/eigenda'],
       apps: [],
-      explorers: [],
-      socialMedia: [],
+      explorers: ['https://blobs.eigenda.xyz/'],
+      socialMedia: ['https://x.com/eigen_da'],
     },
   },
   technology: `
@@ -39,11 +39,7 @@ export const eigenDA: DaLayer = {
     The Disperser collects the operators' signatures and submits them to the EigenDAServiceManager contract via the confirmBatch() function. This submission includes a call to the BLSRegistry contract to verify signatures and check whether the required quorum of operators' stake has been achieved.
     Threshold BLS signatures are not used. Instead, the threshold check is performed on the signers' total stake fetched by the StakeRegistry, and the stake threshold percentage to reach is provided in the batch header input data.
 
-    ![EigenDA once stored](/images/da-layer-technology/eigenda/oncestored.png#center)
-
     The EigenDARollupUtils.sol library's verifyBlob() function can then used by scaling solutions to verify that a data blob is included within a confirmed batch in the EigenDAServiceManager. 
-
-  
 
   `,
   bridges: [eigenDAbridge],

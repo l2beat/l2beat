@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xa825402aaad5d4da80aec944566c084f83e02ed8
+
+# Diff at Tue, 20 Aug 2024 17:22:11 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@db437cf269f77763075511701a7df3b61ea065d7 block: 19925898
+- current block number: 20571289
+
+## Description
+
+Provide description of changes. This section will be preserved.
+
+## Watched changes
+
+```diff
+    contract GnosisSafe (0x5050389572f2d220ad927CcbeA0D406831012390) {
+    +++ description: None
+      values.$members.13:
++        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
+      values.$members.12:
+-        "0x57af860e3a1C16641CDDDa92898266D2df7Dfa71"
++        "0xEb94033d1331931cC0539C480Ca39Bf5f6916E89"
+      values.$members.11:
+-        "0xEb94033d1331931cC0539C480Ca39Bf5f6916E89"
++        "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084"
+      values.$members.10:
+-        "0xcf09EA5E7625E6E3F3345CACa1d288CcD1F39084"
++        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
+      values.$members.9:
+-        "0x1084c2e1E33632c4cB0e7C4f15c64b19d7fB1256"
++        "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7"
+      values.$members.8:
+-        "0xcC82E76106647C921Ed3a6Af869740cce98EC0C7"
++        "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B"
+      values.$members.7:
+-        "0x726b2EF6a771f452Cb1b1ac3C3acF5A46b99c02B"
++        "0x82328b7Cd136296bac5c56079A64E58a44d790e2"
+      values.$members.6:
+-        "0x82328b7Cd136296bac5c56079A64E58a44d790e2"
++        "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
+      values.$members.5:
+-        "0x3C20b05f44ef008A5b848761e58e5Ca9594163e9"
++        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
+      values.$members.4:
+-        "0x34D64c402cA43C1c4B368e16130C64aC245718C6"
++        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
+      values.$members.3:
+-        "0xA935b0d2a529abb7F048CB56dd8B876ed5d8bD99"
++        "0x4a3CD82B73821d075799680AcDff3e884B726777"
+      values.$members.2:
+-        "0x4a3CD82B73821d075799680AcDff3e884B726777"
++        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
+      values.$members.1:
+-        "0x9C7E495F6220c2Eccf19Ce73a2d1d486D53296E4"
++        "0x2E158da11961426E2A1Cc9e79f40244486b6845C"
+      values.$members.0:
+-        "0x2E158da11961426E2A1Cc9e79f40244486b6845C"
++        "0xEFca484E497a9de170Da32abfa11650957dD2a95"
+      values.multisigThreshold:
+-        "1 of 13 (8%)"
++        "1 of 14 (7%)"
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19925898 (main branch discovery), not current.
+
+```diff
+    contract PauserRegistry (0x0c431C66F4dE941d089625E5B423D00707977060) {
+    +++ description: None
+      values.pausers:
++        ["0xBE1685C81aA44FF9FB319dD389addd9374383e90","0x5050389572f2d220ad927CcbeA0D406831012390","0x369e6F597e22EaB55fFb173C6d9cD234BD699111"]
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GnosisSafe (0x5050389572f2d220ad927CcbeA0D406831012390)
+    +++ description: None
+```
+
 Generated with discovered.json: 0xe3a717f59d55c90b543a66e5ca966f1515243cfa
 
 # Diff at Fri, 09 Aug 2024 12:02:06 GMT:

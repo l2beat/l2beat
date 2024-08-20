@@ -6,6 +6,7 @@ import { arbitrumnovaLayer } from './dac/arbitrumnova'
 import { astarzkEVMLayer } from './dac/astarzkEVM'
 import { degenLayer } from './dac/degen'
 import { edgelessLayer } from './dac/edgeless'
+import { eigenDA } from './dac/eigenDA'
 import { hychainLayer } from './dac/hychain'
 import { immutableXLayer } from './dac/immutablex'
 import { l3xLayer } from './dac/l3x'
@@ -26,7 +27,6 @@ import { witnessLayer } from './dac/witness'
 import { xaiLayer } from './dac/xai'
 import { xlayerLayer } from './dac/xlayer'
 import { zkfairLayer } from './dac/zkfair'
-import { eigenDA } from './dac/eigenDA'
 import { DaLayer } from './types/DaLayer'
 
 export * from './types'
@@ -60,5 +60,5 @@ export const daLayers: DaLayer[] = [
   l3xLayer,
   playblockLayer,
   mantleDA,
-  eigenDA
+  eigenDA,
 ]
