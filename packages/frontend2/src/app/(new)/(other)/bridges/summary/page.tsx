@@ -26,7 +26,7 @@ export default async function Page() {
     <div className="mb-8">
       <BridgesFilterContextProvider>
         <BridgesMvpWarning />
-        <BridgesTvlChart milestones={[]} />
+        <BridgesTvlChart />
         <HorizontalSeparator className="my-4 md:my-6" />
         <BridgesSummaryTables entries={entries} />
       </BridgesFilterContextProvider>
