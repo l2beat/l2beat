@@ -1,3 +1,4 @@
+import { assert } from '@l2beat/shared-pure'
 import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { DayActivityIndexerDeps } from './types'
@@ -10,6 +11,11 @@ export class DayActivityIndexer extends ManagedChildIndexer {
       tag: $.projectId,
       updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
     })
+
+    assert(
+      this.$.batchSize > this.$.uncertaintyBuffer,
+      'Batch size should be bigger than uncertainty buffer',
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
