@@ -231,15 +231,12 @@ export class Activity2Controller {
     for (const projectId of this.projectIds) {
       if (!this.projectIds.includes(projectId)) continue
 
-      if (projectId === ProjectId('myria')) {
-        console.log('test')
-      }
       const projectCounts = counts.filter((c) => c.projectId === projectId)
       if (projectCounts.at(-1)?.timestamp.lt(today.add(-7, 'days'))) continue
 
       const postprocessedCounts = postprocessCounts(
         projectCounts,
-        projectCounts.at(-1)?.timestamp.equals(today) ?? true,
+        projectCounts.at(-1)?.timestamp.equals(today) ?? false,
         today,
       )
 
