@@ -17,6 +17,7 @@ export const bugbuster: Layer3 = {
   badges: [
     Badge.Stack.Cartesi,
     Badge.VM.AppChain,
+    Badge.VM.CartesiVM,
     Badge.DA.EthereumBlobs,
     Badge.L3ParentChain.Optimism,
   ],
