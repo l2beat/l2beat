@@ -1,5 +1,4 @@
 import { assert, Logger } from '@l2beat/backend-tools'
-import { Database } from '@l2beat/database'
 import { BlockExplorerClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
@@ -42,7 +41,6 @@ export function createActivityModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
-  db: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
   if (!config.activity) {
@@ -55,7 +53,6 @@ export function createActivityModule(
     peripherals,
     logger,
     clock,
-    db,
   )
 
   const start = async () => {
@@ -113,11 +110,10 @@ function createActivityIndexers(
   peripherals: Peripherals,
   logger: Logger,
   clock: Clock,
-  db: Database,
 ): ActivityIndexer[] {
   assert(activityConfig, 'Config should be defined there')
 
-  const indexerService = new IndexerService(db)
+  const indexerService = new IndexerService(peripherals.database)
 
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
 
@@ -150,7 +146,6 @@ function createActivityIndexers(
           txsCountProvider,
           project,
           indexerService,
-          db,
           peripherals,
         )
 
@@ -174,7 +169,6 @@ function createActivityIndexers(
           txsCountProvider,
           project,
           indexerService,
-          db,
           peripherals,
         )
 
@@ -198,7 +192,6 @@ function createActivityIndexers(
           txsCountProvider,
           project,
           indexerService,
-          db,
           peripherals,
         )
 
@@ -222,7 +215,6 @@ function createActivityIndexers(
           txsCountProvider,
           project,
           indexerService,
-          db,
           peripherals,
         )
 
@@ -246,7 +238,6 @@ function createActivityIndexers(
           txsCountProvider,
           project,
           indexerService,
-          db,
           peripherals,
         )
 
@@ -274,7 +265,7 @@ function createActivityIndexers(
           parents: [dayTargetIndexer],
           txsCountProvider,
           indexerService,
-          db,
+          db: peripherals.database,
         })
 
         indexers.push(activityIndexer)
@@ -299,7 +290,6 @@ function createBlockBasedIndexers(
       | undefined
   },
   indexerService: IndexerService,
-  db: Database,
   peripherals: Peripherals,
 ): [BlockTargetIndexer, BlockActivityIndexer] {
   assert(project.config.type !== 'starkex')
@@ -346,7 +336,7 @@ function createBlockBasedIndexers(
     parents: [blockTargetIndexer],
     txsCountProvider,
     indexerService,
-    db,
+    db: peripherals.database,
   })
   return [blockTargetIndexer, activityIndexer]
 }
