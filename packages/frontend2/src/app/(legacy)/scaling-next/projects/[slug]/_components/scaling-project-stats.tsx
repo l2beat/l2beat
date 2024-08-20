@@ -2,10 +2,6 @@ import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import {
-  TokenBreakdown,
-  TokenBreakdownTooltipContent,
-} from '~/app/_components/breakdown/token-breakdown'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { StatWithChange } from '~/app/_components/projects/stat-with-change'
 import { StageTooltip } from '~/app/_components/table/cells/stage/stage-tooltip'
@@ -16,10 +12,10 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
-import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/format-number'
+import { TokenBreakdownStat } from './token-breakdown-stat'
 
 interface Props {
   project: ScalingProjectEntry
@@ -27,11 +23,6 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
-  const { total, associated, ether, stablecoin, associatedTokens, warnings } =
-    project.header.tokenBreakdown
-
-  const isAnyWarningBad = warnings.some((w) => w.sentiment === 'bad')
-  const other = total - associated - ether - stablecoin
   return (
     <div
       className={cn(
@@ -42,32 +33,7 @@ export function ScalingProjectStats({ project, className }: Props) {
       <ProjectStat
         title="Tokens"
         value={
-          // TODO (scaling-project-page): Add tooltip
-          <Tooltip>
-            <TooltipTrigger className="flex items-center gap-1">
-              <TokenBreakdown
-                associated={associated}
-                ether={ether}
-                stablecoin={stablecoin}
-                other={other}
-              />
-              {warnings.length > 0 && (
-                <RoundedWarningIcon
-                  sentiment={isAnyWarningBad ? 'bad' : 'warning'}
-                />
-              )}
-            </TooltipTrigger>
-            <TooltipContent>
-              <TokenBreakdownTooltipContent
-                associated={associated}
-                ether={ether}
-                stablecoin={stablecoin}
-                other={other}
-                associatedTokenSymbols={associatedTokens}
-                tvlWarnings={warnings}
-              />
-            </TooltipContent>
-          </Tooltip>
+          <TokenBreakdownStat breakdown={project.header.tvl?.tokenBreakdown} />
         }
       />
       <ProjectStat
@@ -95,24 +61,26 @@ export function ScalingProjectStats({ project, className }: Props) {
         }
       />
       <HorizontalSeparator className="col-span-full max-md:hidden" />
-      <ProjectStat
-        title="Stage"
-        value={
-          <span className="relative -top-0.5 flex items-center">
-            <a href="#stage">
-              <StageBadge stage={project.stageConfig.stage} big />
-            </a>
-            <Tooltip>
-              <TooltipTrigger className="inline-block px-2">
-                <InfoIcon className="size-4 fill-gray-500 dark:fill-gray-600" />
-              </TooltipTrigger>
-              <TooltipContent>
-                <StageTooltip stageConfig={project.stageConfig} />
-              </TooltipContent>
-            </Tooltip>
-          </span>
-        }
-      />
+      {project.stageConfig.stage !== 'NotApplicable' ? (
+        <ProjectStat
+          title="Stage"
+          value={
+            <span className="relative -top-0.5 flex items-center">
+              <a href="#stage">
+                <StageBadge stage={project.stageConfig.stage} big />
+              </a>
+              <Tooltip>
+                <TooltipTrigger className="inline-block px-2">
+                  <InfoIcon className="size-4 fill-gray-500 dark:fill-gray-600" />
+                </TooltipTrigger>
+                <TooltipContent>
+                  <StageTooltip stageConfig={project.stageConfig} />
+                </TooltipContent>
+              </Tooltip>
+            </span>
+          }
+        />
+      ) : null}
       <ProjectStat
         title="Type"
         value={<TypeCell>{project.header.category}</TypeCell>}

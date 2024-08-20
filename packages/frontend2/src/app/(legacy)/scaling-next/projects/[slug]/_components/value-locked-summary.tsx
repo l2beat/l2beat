@@ -1,7 +1,6 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
 import { ValueLockedBreakdown } from '~/app/_components/breakdown/value-locked-breakdown'
-import { CustomLink } from '~/app/_components/link/custom-link'
 import { PercentChange } from '~/app/_components/percent-change'
 import { Square } from '~/app/_components/square'
 import {
@@ -10,62 +9,60 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
+import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { formatCurrency } from '~/utils/format'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
 
-export interface ValueLockedStats {
+export interface ValueLockedBreakdown {
   totalChange: number
   total: number
   canonical: number
   external: number
   native: number
+  warning: WarningWithSentiment | undefined
 }
 
 export interface ValueLockedSummaryProps {
-  stats: ValueLockedStats
-  tvlBreakdownHref?: string
-  tvlWarning?: WarningWithSentiment
+  breakdown:
+    | NonNullable<ScalingProjectEntry['header']['tvl']>['tvlBreakdown']
+    | undefined
   isArchived?: boolean
 }
 
+// TODO (scaling-project-page): Add tvl breakdown link
 export function ValueLockedSummary(props: ValueLockedSummaryProps) {
-  const [canonical, external, native] = unifyPercentagesAsIntegers([
-    props.stats.total === 0
-      ? 100 / 3
-      : (props.stats.canonical / props.stats.total) * 100,
-    props.stats.total === 0
-      ? 100 / 3
-      : (props.stats.external / props.stats.total) * 100,
-    props.stats.total === 0
-      ? 100 / 3
-      : (props.stats.native / props.stats.total) * 100,
-  ] as const)
+  const params = getParams(props.breakdown)
 
-  const tvlStats = props.stats
-    ? [
-        {
-          label: 'Canonically Bridged',
-          shortLabel: 'Canonical',
-          value: formatCurrency(props.stats.canonical, 'usd'),
-          usage: canonical,
-          icon: <Square variant="canonical" size="small" />,
-        },
-        {
-          label: 'Externally Bridged',
-          shortLabel: 'External',
-          value: formatCurrency(props.stats.external, 'usd'),
-          usage: external,
-          icon: <Square variant="external" size="small" />,
-        },
-        {
-          label: 'Natively Minted',
-          shortLabel: 'Native',
-          value: formatCurrency(props.stats.native, 'usd'),
-          usage: native,
-          icon: <Square variant="native" size="small" />,
-        },
-      ]
-    : []
+  const tvlStats = [
+    {
+      label: 'Canonically Bridged',
+      shortLabel: 'Canonical',
+      value: formatCurrency(params.breakdown.canonical, 'usd', {
+        showLessThanMinimum: false,
+      }),
+      usage: params.usage.canonical,
+      icon: <Square variant="canonical" size="small" />,
+    },
+    {
+      label: 'Externally Bridged',
+      shortLabel: 'External',
+      value: formatCurrency(params.breakdown.external, 'usd', {
+        showLessThanMinimum: false,
+      }),
+      usage: params.usage.external,
+      icon: <Square variant="external" size="small" />,
+    },
+    {
+      label: 'Natively Minted',
+      shortLabel: 'Native',
+      value: formatCurrency(params.breakdown.native, 'usd', {
+        showLessThanMinimum: false,
+      }),
+      usage: params.usage.native,
+      icon: <Square variant="native" size="small" />,
+    },
+  ]
+
   return (
     <div className="bg-gray-100 dark:bg-zinc-900 md:flex md:flex-col md:gap-3 md:rounded-lg md:px-6 md:py-4">
       <div className="flex w-full flex-wrap items-baseline justify-between md:gap-2">
@@ -76,38 +73,44 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           TVL
         </span>
 
-        {props.stats && (props.stats.total > 0 || props.isArchived) ? (
-          props.tvlWarning ? (
+        {params.breakdown.total > 0 || props.isArchived ? (
+          params.breakdown.warning ? (
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
                 <p className="text-lg font-bold md:text-2xl md:leading-none">
-                  {formatCurrency(props.stats.total, 'usd')}
+                  {formatCurrency(params.breakdown.total, 'usd', {
+                    showLessThanMinimum: false,
+                  })}
                 </p>
-                {props.stats.total > 0 && (
+                {params.breakdown.total > 0 && (
                   <p className="text-xs font-bold md:text-base">
-                    <PercentChange value={props.stats.totalChange} />
+                    <PercentChange value={params.breakdown.totalChange} />
                   </p>
                 )}
-                {props.tvlWarning && (
+                {params.breakdown.warning && (
                   <RoundedWarningIcon
                     className="size-4"
-                    sentiment={props.tvlWarning.sentiment}
+                    sentiment={params.breakdown.warning.sentiment}
                   />
                 )}
               </TooltipTrigger>
-              <TooltipContent>{props.tvlWarning.content}</TooltipContent>
+              <TooltipContent>
+                {params.breakdown.warning.content}
+              </TooltipContent>
             </Tooltip>
           ) : (
             <div className="flex items-center gap-1">
               <p className="text-nowrap text-lg font-bold md:text-2xl md:leading-none">
-                {formatCurrency(props.stats.total, 'usd')}
+                {formatCurrency(params.breakdown.total, 'usd', {
+                  showLessThanMinimum: false,
+                })}
               </p>
-              {props.stats.total > 0 && (
+              {params.breakdown.total > 0 && (
                 <p className="text-xs font-bold md:text-base">
-                  <PercentChange value={props.stats.totalChange} />
+                  <PercentChange value={params.breakdown.totalChange} />
                 </p>
               )}
-              {props.tvlWarning && (
+              {params.breakdown.warning && (
                 <RoundedWarningIcon className="size-4" sentiment="warning" />
               )}
             </div>
@@ -119,9 +122,9 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
         )}
       </div>
       <ValueLockedBreakdown
-        canonical={canonical}
-        external={external}
-        native={native}
+        canonical={params.usage.canonical}
+        external={params.usage.external}
+        native={params.usage.native}
         className="my-3 h-1 w-full md:my-0"
       />
       <div className="flex h-1/2 flex-wrap gap-3 @container md:gap-0">
@@ -139,7 +142,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             </div>
             <span className="whitespace-nowrap text-base font-semibold leading-none">
               {s.value}
-              {props.stats && props.stats.total > 0 && (
+              {params.breakdown.total > 0 && (
                 <span className="hidden font-normal text-gray-500 @[200px]:inline">
                   {` (${s.usage}%)`}
                 </span>
@@ -148,13 +151,47 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           </div>
         ))}
       </div>
-      {props.tvlBreakdownHref && (
-        <div className="mt-2 flex justify-center md:mt-0">
-          <CustomLink href={props.tvlBreakdownHref} className="text-xs">
-            View TVL Breakdown
-          </CustomLink>
-        </div>
-      )}
     </div>
   )
+}
+
+function getParams(breakdown: ValueLockedSummaryProps['breakdown']) {
+  if (!breakdown) {
+    return {
+      breakdown: {
+        total: 0,
+        canonical: 0,
+        external: 0,
+        native: 0,
+        totalChange: 0,
+        warning: undefined,
+      },
+      usage: {
+        canonical: 1,
+        external: 1,
+        native: 1,
+      },
+    }
+  }
+
+  const [canonical, external, native] = unifyPercentagesAsIntegers([
+    breakdown.total === 0
+      ? 100 / 3
+      : (breakdown.canonical / breakdown.total) * 100,
+    breakdown.total === 0
+      ? 100 / 3
+      : (breakdown.external / breakdown.total) * 100,
+    breakdown.total === 0
+      ? 100 / 3
+      : (breakdown.native / breakdown.total) * 100,
+  ] as const)
+
+  return {
+    breakdown,
+    usage: {
+      canonical,
+      external,
+      native,
+    },
+  }
 }

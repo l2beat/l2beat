@@ -8,6 +8,11 @@ import { BigPizzaRosette } from '~/app/_components/rosette/pizza/big-pizza-roset
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { ScalingProjectStats } from './scaling-project-stats'
 import { ValueLockedSummary } from './value-locked-summary'
+import { WarningBar } from '~/app/_components/warning-bar'
+import { ArchivedBar } from '~/app/_components/projects/archived-bar'
+import { UpcomingBar } from '~/app/_components/projects/upcoming-bar'
+import { UnderReviewBar } from '~/app/_components/projects/under-review-bar'
+import { getUnderReviewText } from '~/utils/project/get-under-review-text'
 
 interface Props {
   project: ScalingProjectEntry
@@ -21,7 +26,35 @@ export function ScalingProjectSummary({ project }: Props) {
     >
       <div className="flex gap-10">
         <div className="w-full space-y-4 md:space-y-6">
-          <ProjectHeader title={project.name} slug={project.slug} />
+          <div className="flex flex-col gap-2">
+            <ProjectHeader title={project.name} slug={project.slug} />
+            {project.isArchived && <ArchivedBar />}
+            {project.isUpcoming && <UpcomingBar />}
+            {(project.isUnderReview || project.isImplementationUnderReview) && (
+              <UnderReviewBar
+                text={getUnderReviewText(
+                  project.isUnderReview,
+                  project.isImplementationUnderReview,
+                )}
+              />
+            )}
+            {project.header.warning && (
+              <WarningBar
+                text={
+                  typeof project.header.warning === 'string'
+                    ? project.header.warning
+                    : project.header.warning.text
+                }
+                href={
+                  typeof project.header.warning !== 'string'
+                    ? project.header.warning.href
+                    : undefined
+                }
+                color="yellow"
+                className="w-full items-center justify-center p-2.5 text-xs md:text-base"
+              />
+            )}
+          </div>
           {project.header.description || project.header.badges ? (
             <div className="mt-6 flex flex-col gap-4 md:hidden">
               {project.header.badges && (
@@ -39,7 +72,7 @@ export function ScalingProjectSummary({ project }: Props) {
           </div>
           <div className="grid w-full md:grid-cols-3 md:gap-4">
             <ValueLockedSummary
-              stats={project.header.tvlBreakdown}
+              breakdown={project.header.tvl?.tvlBreakdown}
               isArchived={project.isArchived}
             />
             <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
@@ -50,6 +83,7 @@ export function ScalingProjectSummary({ project }: Props) {
           className="mt-auto max-lg:hidden"
           values={project.header.rosetteValues}
           isUnderReview={project.isUnderReview}
+          isUpcoming={project.isUpcoming}
         />
       </div>
 

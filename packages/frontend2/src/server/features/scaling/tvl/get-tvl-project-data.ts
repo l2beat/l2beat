@@ -29,7 +29,7 @@ export async function getTvlProjectData(id: ProjectId) {
     oldTvlBreakdown.canonical +
     oldTvlBreakdown.external
 
-  const totalChange = (total - oldTotal) / oldTotal
+  const totalChange = oldTotal !== 0 ? (total - oldTotal) / oldTotal : 0
 
   return {
     tokenBreakdown: {

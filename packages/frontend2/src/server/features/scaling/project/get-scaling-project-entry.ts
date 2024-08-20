@@ -34,13 +34,17 @@ export async function getScalingProjectEntry(project: ScalingProject) {
   ])
 
   const isVerified = !!projectsVerificationStatuses[project.id]
+  const isImplementationUnderReview =
+    !!implementationChangeReport.projects[project.id]
 
   return {
     type: project.type,
     name: project.display.name,
     slug: project.display.slug,
-    isUnderReview: project.isUnderReview,
-    isArchived: project.isArchived,
+    isUnderReview: !!project.isUnderReview,
+    isArchived: !!project.isArchived,
+    isUpcoming: !!project.isUpcoming,
+    isImplementationUnderReview,
     stageConfig:
       project.type === 'layer2'
         ? project.stage
@@ -71,31 +75,38 @@ export async function getScalingProjectEntry(project: ScalingProject) {
 
 async function getHeader(project: ScalingProject) {
   const projectStats = await getActivityProjectStats(project.id)
-  const tvlProjectData = (await getTvlProjectData(project.id))!
-  const associatedRatio =
-    tvlProjectData.tokenBreakdown.associated /
-    tvlProjectData.tokenBreakdown.total
+  const tvlProjectData = await getTvlProjectData(project.id)
 
   return {
     description: project.display.description,
+    warning: project.display.headerWarning,
     category: project.display.category,
     purposes: project.display.purposes,
     activity: projectStats,
     rosetteValues: getScalingRosetteValues(project.riskView),
     links: getProjectLinks(project.display.links),
-    tokenBreakdown: {
-      ...tvlProjectData.tokenBreakdown,
-      warnings: compact([
-        project.display.tvlWarning,
-        getAssociatedTokenWarning({
-          associatedRatio,
-          name: project.display.name,
-          associatedTokens: project.config.associatedTokens ?? [],
-        }),
-      ]),
-      associatedTokens: project.config.associatedTokens,
-    },
-    tvlBreakdown: tvlProjectData.tvlBreakdown,
+    tvl: tvlProjectData
+      ? {
+          tokenBreakdown: {
+            ...tvlProjectData.tokenBreakdown,
+            warnings: compact([
+              tvlProjectData.tokenBreakdown.total > 0 &&
+                getAssociatedTokenWarning({
+                  associatedRatio:
+                    tvlProjectData.tokenBreakdown.associated /
+                    tvlProjectData.tokenBreakdown.total,
+                  name: project.display.name,
+                  associatedTokens: project.config.associatedTokens ?? [],
+                }),
+            ]),
+            associatedTokens: project.config.associatedTokens,
+          },
+          tvlBreakdown: {
+            ...tvlProjectData.tvlBreakdown,
+            warning: project.display.tvlWarning,
+          },
+        }
+      : undefined,
     badges:
       project.badges && project.badges.length !== 0
         ? project.badges?.sort(badgesCompareFn)

@@ -63,6 +63,11 @@ export function TokenBreakdownTooltipContent({
     { title: 'Other', value: other, className: 'bg-sky-600 dark:bg-sky-600' },
   ]
   const total = associated + ether + stablecoin + other
+
+  if (total === 0) {
+    return 'No tokens'
+  }
+
   return (
     <div className="space-y-2">
       <div>
