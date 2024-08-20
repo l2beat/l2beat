@@ -37,7 +37,7 @@ export function transformToReceived(
     permission: internalPermissionToExternal(r.permission),
     // biome-ignore lint/style/noNonNullAssertion: we know it's fine
     target: r.path[r.path.length - 1]!.address,
-    via: r.path.reverse().slice(1),
+    via: r.path.slice().reverse().slice(1),
   }))
 }
 

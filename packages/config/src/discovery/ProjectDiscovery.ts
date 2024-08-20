@@ -702,6 +702,7 @@ export class ProjectDiscovery {
         )
           .map(([permission, entries]) => {
             const addressesString = entries
+              .filter((entry) => !this.isEOA(entry.target))
               .map((entry) => this.getContract(entry.target.toString()).name)
               .join(', ')
             return `${
