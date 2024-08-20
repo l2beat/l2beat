@@ -2,6 +2,7 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import { useScalingAssociatedTokensContext } from '~/app/(new)/(other)/_components/scaling-associated-tokens-context'
 import {
   useScalingFilter,
   useScalingFilterValues,
@@ -25,15 +26,16 @@ interface Props {
 }
 
 export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
+  const filters = useScalingFilterValues()
+  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+  const includeFilter = useScalingFilter()
+
   const [scale, setScale] = useLocalStorage('scaling-summary-scale', 'lin')
   const [unit, setUnit] = useLocalStorage<'usd' | 'eth'>(
     `scaling-summary-unit`,
     'usd',
   )
   const [timeRange, setTimeRange] = useCookieState('scalingSummaryChartRange')
-
-  const filters = useScalingFilterValues()
-  const includeFilter = useScalingFilter()
 
   const chartDataType = useMemo<TvlLayer2ProjectFilter>(() => {
     if (filters.isEmpty) {
@@ -44,11 +46,11 @@ export function ScalingSummaryTvlChart({ entries, milestones }: Props) {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, filters, includeFilter])
+  }, [entries, excludeAssociatedTokens, includeFilter, filters])
 
   const scalingSummaryQuery = api.scaling.summary.chart.useQuery({
     range: timeRange,
-    excludeAssociatedTokens: filters.excludeAssociatedTokens,
+    excludeAssociatedTokens,
     ...chartDataType,
   })
 

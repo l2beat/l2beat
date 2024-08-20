@@ -2,6 +2,7 @@
 
 import { type Milestone } from '@l2beat/config'
 import { useMemo } from 'react'
+import { useScalingAssociatedTokensContext } from '~/app/(new)/(other)/_components/scaling-associated-tokens-context'
 import {
   useScalingFilter,
   useScalingFilterValues,
@@ -26,6 +27,8 @@ interface Props {
 }
 
 export function StackedTvlChart({ milestones, entries }: Props) {
+  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
+
   const filters = useScalingFilterValues()
   const includeFilter = useScalingFilter()
   const [timeRange, setTimeRange] = useCookieState('scalingTvlChartRange')
@@ -45,11 +48,11 @@ export function StackedTvlChart({ milestones, entries }: Props) {
       type: 'projects',
       projectIds: entries.filter(includeFilter).map((project) => project.id),
     }
-  }, [entries, filters, includeFilter])
+  }, [entries, filters, includeFilter, excludeAssociatedTokens])
 
   const scalingSummaryQuery = api.scaling.summary.chart.useQuery({
     range: timeRange,
-    excludeAssociatedTokens: filters.excludeAssociatedTokens,
+    excludeAssociatedTokens,
     ...chartDataType,
   })
 
