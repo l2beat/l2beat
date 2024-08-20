@@ -12,7 +12,7 @@ export function ScalingTvlFilters({ items }: Props) {
     useScalingAssociatedTokensContext()
 
   return (
-    <div className="flex flex-col-reverse gap-x-4 gap-y-2 lg:flex-row">
+    <div className="flex flex-col-reverse gap-x-4 gap-y-2 lg:flex-row lg:justify-between">
       <BaseScalingFilters items={items} showRollupsOnly />
       <Checkbox
         id="exclude-associated-tokens"

@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
+import { omit } from 'lodash'
 import { describeDatabase } from '../../test/database'
 import { ActivityRecord } from './entity'
 import { ActivityRepository } from './repository'
@@ -109,6 +110,101 @@ describeDatabase(ActivityRepository.name, (db) => {
         )
 
         expect(results).toEqual([record('a', START.add(1, 'days'), 1, 11, 20)])
+      })
+    },
+  )
+
+  describe(ActivityRepository.prototype.getDailyCounts.name, () => {
+    it('should return correct response for single project', async () => {
+      await repository.upsertMany([
+        record('a', START, 1),
+        record('a', START.add(1, 'days'), 1),
+        record('a', START.add(2, 'days'), 1),
+      ])
+
+      const result = await repository.getDailyCounts()
+      expect(result).toEqual([
+        record('a', START, 1),
+        record('a', START.add(1, 'days'), 1),
+        record('a', START.add(2, 'days'), 1),
+      ])
+    })
+
+    it('should return correct response for multiple projects', async () => {
+      await repository.upsertMany([
+        record('a', START, 1),
+        record('b', START, 3),
+        record('a', START.add(1, 'days'), 1),
+        record('b', START.add(1, 'days'), 2),
+      ])
+
+      const result = await repository.getDailyCounts()
+
+      expect(result).toEqual([
+        record('a', START, 1),
+        record('b', START, 3),
+        record('a', START.add(1, 'days'), 1),
+        record('b', START.add(1, 'days'), 2),
+      ])
+    })
+  })
+
+  describe(ActivityRepository.prototype.getDailyCountsPerProject.name, () => {
+    it('should filter by project', async () => {
+      await repository.upsertMany([
+        record('a', START, 1),
+        record('b', START, 3),
+        record('a', START.add(1, 'days'), 1),
+      ])
+
+      const result = await repository.getDailyCountsPerProject(ProjectId('a'))
+      expect(result).toEqual([
+        record('a', START, 1),
+        record('a', START.add(1, 'days'), 1),
+      ])
+    })
+  })
+
+  describe(
+    ActivityRepository.prototype.getProjectsAggregatedDailyCount.name,
+    () => {
+      it('should return correct response for single project', async () => {
+        await repository.upsertMany([
+          record('a', START, 1),
+          record('b', START, 3),
+          record('a', START.add(1, 'days'), 1),
+        ])
+
+        const result = await repository.getProjectsAggregatedDailyCount([
+          ProjectId('a'),
+        ])
+        expect(result).toEqual(
+          [record('a', START, 1), record('a', START.add(1, 'days'), 1)].map(
+            (i) => omit(i, ['projectId', 'start', 'end']),
+          ),
+        )
+      })
+
+      it('should return correct response for multiple projects', async () => {
+        await repository.upsertMany([
+          record('a', START, 1),
+          record('b', START, 3),
+          record('a', START.add(1, 'days'), 1),
+          record('b', START.add(1, 'days'), 3),
+          record('c', START.add(1, 'days'), 4),
+          record('c', START.add(2, 'days'), 2),
+        ])
+
+        const result = await repository.getProjectsAggregatedDailyCount([
+          ProjectId('a'),
+          ProjectId('b'),
+          ProjectId('c'),
+        ])
+        expect(result).toEqual([
+          { timestamp: START, count: 4 },
+          { timestamp: START.add(1, 'days'), count: 8 },
+          { timestamp: START.add(2, 'days'), count: 2 },
+        ])
       })
     },
   )
