@@ -1,7 +1,7 @@
 'use client'
 
 import { usePathname, useSearchParams } from 'next/navigation'
-import { useRouter } from 'next/router'
+import { useRouter } from 'next/navigation'
 
 /**
  * Use state that is persisted in a search param.

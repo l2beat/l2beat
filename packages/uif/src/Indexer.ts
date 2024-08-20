@@ -270,10 +270,11 @@ export abstract class Indexer {
     this.logger.info('Updating', { from, to: effect.targetHeight })
     try {
       const newHeight = await this.update(from, effect.targetHeight)
-      if (newHeight > effect.targetHeight) {
+      if (newHeight < from || newHeight > effect.targetHeight) {
         this.logger.critical('Update returned invalid height', {
+          from,
+          to: effect.targetHeight,
           newHeight,
-          max: effect.targetHeight,
         })
         this.dispatch({ type: 'UpdateFailed', fatal: true })
       } else {
