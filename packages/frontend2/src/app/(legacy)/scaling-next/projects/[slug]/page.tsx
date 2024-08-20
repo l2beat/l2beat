@@ -48,7 +48,6 @@ export default async function Page({ params }: Props) {
   const isNavigationEmpty =
     projectEntry.projectDetails.filter((s) => !s.excludeFromNavigation)
       .length === 0
-  console.log(projectEntry.projectDetails)
   return (
     <>
       {!isNavigationEmpty && (
