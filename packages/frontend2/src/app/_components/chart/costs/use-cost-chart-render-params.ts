@@ -8,8 +8,8 @@ import {
 import { formatCurrency } from '~/utils/format'
 import { formatNumber } from '~/utils/format-number'
 import { type SeriesStyle } from '../core/styles'
-import { mapMilestones } from '../utils/map-milestones'
 import { type CostsChartPointData } from './costs-chart-hover'
+import { mapMilestones } from '../core/utils/map-milestones'
 
 const DENCUN_UPGRADE_TIMESTAMP = 1710288000
 
@@ -19,7 +19,7 @@ interface Params {
   chart: CostsChartResponse | undefined
 }
 
-export function useCommonCostsChartProps({ milestones, unit, chart }: Params) {
+export function useCostChartRenderParams({ milestones, unit, chart }: Params) {
   const mappedMilestones = useMemo(
     () => mapMilestones(milestones),
     [milestones],

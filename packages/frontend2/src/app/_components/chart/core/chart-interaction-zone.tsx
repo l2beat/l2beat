@@ -1,7 +1,7 @@
 import { useCallback, useRef } from 'react'
 import { useEventListener } from '~/hooks/use-event-listener'
 import { useBreakpoint } from '~/hooks/use-is-mobile'
-import { getHoveredColumn } from '../utils/get-hovered-column'
+import { getHoveredColumn } from './utils/get-hovered-column'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
 import { useChartRect } from './chart-rect-context'

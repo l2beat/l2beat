@@ -1,7 +1,7 @@
 import { mean } from 'lodash'
 import { useEffect, useMemo, useRef } from 'react'
 import { cn } from '~/utils/cn'
-import { ChartMilestoneHover } from '../hovers/chart-milestone-hover'
+import { ChartMilestoneHover } from './chart-milestone-hover'
 import { useChartContext } from './chart-context'
 import { useChartHoverContext } from './chart-hover-context'
 import { useChartRect } from './chart-rect-context'
