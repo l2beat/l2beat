@@ -1,4 +1,4 @@
-Generated with discovered.json: 0x42131931c0d0c0ad4a42dce8b32030af275c9cd4
+![image](https://github.com/user-attachments/assets/47fb0522-1b7b-4652-968f-4e0b98431feb)Generated with discovered.json: 0x42131931c0d0c0ad4a42dce8b32030af275c9cd4
 
 # Diff at Mon, 19 Aug 2024 15:23:20 GMT:
 
@@ -8,7 +8,7 @@ Generated with discovered.json: 0x42131931c0d0c0ad4a42dce8b32030af275c9cd4
 
 ## Description
 
-Added support for Mode, Base and BNB Chain on the wUSDx pool. Updated the CommitStore config.
+Added support for Mode, Base and BNB Chain on the wUSDx pool. Updated the CommitStore config due OffchainConfig params changes (e.g., max query lenght, request count).
 
 ## Watched changes
 
