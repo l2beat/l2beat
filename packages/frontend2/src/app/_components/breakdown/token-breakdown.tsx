@@ -1,10 +1,10 @@
 import { type WarningWithSentiment } from '@l2beat/config'
 import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
+import { languageJoin } from '~/utils/language-join'
+import { Square } from '../square'
 import { WarningBar } from '../warning-bar'
 import { Breakdown } from './breakdown'
-import { Square } from '../square'
-import { languageJoin } from '~/utils/language-join'
 
 export interface TokenBreakdownProps {
   associated: number
