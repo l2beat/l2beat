@@ -2,7 +2,10 @@ import { pluralize } from '@l2beat/shared-pure'
 import { type ReactNode } from 'react'
 import { StageBadge } from '~/app/_components/badge/stage-badge'
 import { UpcomingBadge } from '~/app/_components/badge/upcoming-badge'
-import { TokenBreakdown } from '~/app/_components/breakdown/token-breakdown'
+import {
+  TokenBreakdown,
+  TokenBreakdownTooltipContent,
+} from '~/app/_components/breakdown/token-breakdown'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { StatWithChange } from '~/app/_components/projects/stat-with-change'
 import { StageTooltip } from '~/app/_components/table/cells/stage/stage-tooltip'
@@ -13,6 +16,7 @@ import {
   TooltipTrigger,
 } from '~/app/_components/tooltip/tooltip'
 import InfoIcon from '~/icons/info.svg'
+import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { type ScalingProjectEntry } from '~/server/features/scaling/project/get-scaling-project-entry'
 import { cn } from '~/utils/cn'
 import { formatNumber } from '~/utils/format-number'
@@ -23,6 +27,9 @@ interface Props {
 }
 
 export function ScalingProjectStats({ project, className }: Props) {
+  const { total, associated, ether, stablecoin, associatedTokens, warning } =
+    project.header.tokenBreakdown
+  const other = total - associated - ether - stablecoin
   return (
     <div
       className={cn(
@@ -34,12 +41,27 @@ export function ScalingProjectStats({ project, className }: Props) {
         title="Tokens"
         value={
           // TODO (scaling-project-page): Add tooltip
-          <TokenBreakdown
-            associated={0.2}
-            ether={0.5}
-            stablecoin={0.2}
-            other={0.1}
-          />
+          <Tooltip>
+            <TooltipTrigger className="flex items-center gap-1">
+              <TokenBreakdown
+                associated={associated}
+                ether={ether}
+                stablecoin={stablecoin}
+                other={other}
+              />
+              {warning && <RoundedWarningIcon sentiment={warning.sentiment} />}
+            </TooltipTrigger>
+            <TooltipContent>
+              <TokenBreakdownTooltipContent
+                associated={associated}
+                ether={ether}
+                stablecoin={stablecoin}
+                other={other}
+                associatedTokenSymbols={associatedTokens}
+                tvlWarnings={warning ? [warning] : undefined}
+              />
+            </TooltipContent>
+          </Tooltip>
         }
       />
       <ProjectStat

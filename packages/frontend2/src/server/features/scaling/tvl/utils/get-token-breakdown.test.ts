@@ -2,9 +2,9 @@ import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 
 import { type ValueRecord } from '@l2beat/database'
-import { getTvlBreakdown } from './get-tvl-breakdown'
+import { getTokenBreakdown } from './get-token-breakdown'
 
-describe(getTvlBreakdown.name, () => {
+describe(getTokenBreakdown.name, () => {
   it('correctly calculates the breakdown from ValueRecords', () => {
     const values: ValueRecord[] = [
       {
@@ -28,7 +28,7 @@ describe(getTvlBreakdown.name, () => {
       },
     ]
 
-    const breakdown = getTvlBreakdown(values)
+    const breakdown = getTokenBreakdown(values)
 
     expect(breakdown).toEqual({
       associated: 111,

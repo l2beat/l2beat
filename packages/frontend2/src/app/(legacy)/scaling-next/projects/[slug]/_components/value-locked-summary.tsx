@@ -14,8 +14,8 @@ import { formatCurrency } from '~/utils/format'
 import { unifyPercentagesAsIntegers } from '~/utils/math'
 
 export interface ValueLockedStats {
-  tvlChange: number
-  tvl: number
+  totalChange: number
+  total: number
   canonical: number
   external: number
   native: number
@@ -30,15 +30,15 @@ export interface ValueLockedSummaryProps {
 
 export function ValueLockedSummary(props: ValueLockedSummaryProps) {
   const [canonical, external, native] = unifyPercentagesAsIntegers([
-    props.stats.tvl === 0
+    props.stats.total === 0
       ? 100 / 3
-      : (props.stats.canonical / props.stats.tvl) * 100,
-    props.stats.tvl === 0
+      : (props.stats.canonical / props.stats.total) * 100,
+    props.stats.total === 0
       ? 100 / 3
-      : (props.stats.external / props.stats.tvl) * 100,
-    props.stats.tvl === 0
+      : (props.stats.external / props.stats.total) * 100,
+    props.stats.total === 0
       ? 100 / 3
-      : (props.stats.native / props.stats.tvl) * 100,
+      : (props.stats.native / props.stats.total) * 100,
   ] as const)
 
   const tvlStats = props.stats
@@ -48,21 +48,21 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           shortLabel: 'Canonical',
           value: formatCurrency(props.stats.canonical, 'usd'),
           usage: canonical,
-          icon: <Square variant="canonical" />,
+          icon: <Square variant="canonical" size="small" />,
         },
         {
           label: 'Externally Bridged',
           shortLabel: 'External',
           value: formatCurrency(props.stats.external, 'usd'),
           usage: external,
-          icon: <Square variant="external" />,
+          icon: <Square variant="external" size="small" />,
         },
         {
           label: 'Natively Minted',
           shortLabel: 'Native',
           value: formatCurrency(props.stats.native, 'usd'),
           usage: native,
-          icon: <Square variant="native" />,
+          icon: <Square variant="native" size="small" />,
         },
       ]
     : []
@@ -76,16 +76,16 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           TVL
         </span>
 
-        {props.stats && (props.stats.tvl > 0 || props.isArchived) ? (
+        {props.stats && (props.stats.total > 0 || props.isArchived) ? (
           props.tvlWarning ? (
             <Tooltip>
               <TooltipTrigger className="flex items-center gap-1">
                 <p className="text-lg font-bold md:text-2xl md:leading-none">
-                  {formatCurrency(props.stats.tvl, 'usd')}
+                  {formatCurrency(props.stats.total, 'usd')}
                 </p>
-                {props.stats.tvl > 0 && (
+                {props.stats.total > 0 && (
                   <p className="text-xs font-bold md:text-base">
-                    <PercentChange value={props.stats.tvlChange} />
+                    <PercentChange value={props.stats.totalChange} />
                   </p>
                 )}
                 {props.tvlWarning && (
@@ -100,11 +100,11 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
           ) : (
             <div className="flex items-center gap-1">
               <p className="text-nowrap text-lg font-bold md:text-2xl md:leading-none">
-                {formatCurrency(props.stats.tvl, 'usd')}
+                {formatCurrency(props.stats.total, 'usd')}
               </p>
-              {props.stats.tvl > 0 && (
+              {props.stats.total > 0 && (
                 <p className="text-xs font-bold md:text-base">
-                  <PercentChange value={props.stats.tvlChange} />
+                  <PercentChange value={props.stats.totalChange} />
                 </p>
               )}
               {props.tvlWarning && (
@@ -139,7 +139,7 @@ export function ValueLockedSummary(props: ValueLockedSummaryProps) {
             </div>
             <span className="whitespace-nowrap text-base font-semibold leading-none">
               {s.value}
-              {props.stats && props.stats.tvl > 0 && (
+              {props.stats && props.stats.total > 0 && (
                 <span className="hidden font-normal text-gray-500 @[200px]:inline">
                   {` (${s.usage}%)`}
                 </span>

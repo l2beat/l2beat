@@ -39,13 +39,7 @@ export function ScalingProjectSummary({ project }: Props) {
           </div>
           <div className="grid w-full md:grid-cols-3 md:gap-4">
             <ValueLockedSummary
-              stats={{
-                canonical: 12000000,
-                external: 2000000,
-                native: 1000000,
-                tvl: 15000000,
-                tvlChange: 0.1,
-              }}
+              stats={project.header.tvlBreakdown}
               isArchived={project.isArchived}
             />
             <HorizontalSeparator className="my-4 max-md:-mx-4 max-md:w-screen md:!my-6 md:hidden" />
