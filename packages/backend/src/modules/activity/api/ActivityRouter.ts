@@ -5,16 +5,16 @@ import { z } from 'zod'
 
 import { withTypedContext } from '../../../api/types'
 import {
-  Activity2Controller,
+  ActivityController,
   ActivityResult,
   AggregatedActivityResult,
   MapSlugsToProjectIdsResult,
-} from './Activity2Controller'
+} from './ActivityController'
 
-export function createActivity2Router(activityController: Activity2Controller) {
+export function createActivityRouter(activityController: ActivityController) {
   const router = new Router()
 
-  router.get('/api/activity2', async (ctx) => {
+  router.get('/api/activity', async (ctx) => {
     const result = await activityController.getActivity()
     if (result.type === 'error') {
       handleActivityError(ctx, result)

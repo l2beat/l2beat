@@ -11,11 +11,11 @@ import { ChainId, UnixTime } from '@l2beat/shared-pure'
 
 import { Config, DiscordConfig } from './Config'
 import { FeatureFlags } from './FeatureFlags'
-import { getChainActivityConfig } from './features/activity'
 import {
   getChainActivityBlockExplorerConfig,
-  getProjectsWithActivity2,
-} from './features/activity2'
+  getChainActivityConfig,
+  getProjectsWithActivity,
+} from './features/activity'
 import { getFinalityConfigurations } from './features/finality'
 import { getTvlConfig } from './features/tvl'
 import { getChainDiscoveryConfig } from './features/updateMonitor'
@@ -160,7 +160,7 @@ export function makeConfig(
       ),
       configurations: getFinalityConfigurations(flags, env),
     },
-    activity2: flags.isEnabled('activity2') && {
+    activity: flags.isEnabled('activity') && {
       starkexApiKey: env.string([
         'STARKEX_API_KEY_FOR_ACTIVITY',
         'STARKEX_API_KEY',
@@ -175,8 +175,8 @@ export function makeConfig(
       projectsExcludedFromAPI:
         env.optionalString('ACTIVITY_PROJECTS_EXCLUDED_FROM_API')?.split(' ') ??
         [],
-      projects: getProjectsWithActivity2()
-        .filter((x) => flags.isEnabled('activity2', x.id.toString()))
+      projects: getProjectsWithActivity()
+        .filter((x) => flags.isEnabled('activity', x.id.toString()))
         .map((x) => ({
           id: x.id,
           config: getChainActivityConfig(env, x),

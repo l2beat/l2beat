@@ -35,7 +35,7 @@ export type MapSlugsToProjectIdsResult = Result<
   'UNKNOWN_PROJECT' | 'NO_TRANSACTION_API' | 'EMPTY_PROJECTS'
 >
 
-export class Activity2Controller {
+export class ActivityController {
   constructor(
     private readonly projectIds: ProjectId[],
     private readonly db: Database,

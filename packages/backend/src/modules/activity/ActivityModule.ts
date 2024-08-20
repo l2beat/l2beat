@@ -4,7 +4,7 @@ import { BlockExplorerClient } from '@l2beat/shared'
 import { ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
-  Activity2Config,
+  ActivityConfig,
   BlockscoutChainConfig,
   EtherscanChainConfig,
 } from '../../config/Config'
@@ -23,8 +23,8 @@ import {
   BlockTimestampProvider,
 } from '../tvl/services/BlockTimestampProvider'
 import { ActivityTransactionConfig } from './ActivityTransactionConfig'
-import { Activity2Controller } from './api/Activity2Controller'
-import { createActivity2Router } from './api/Activity2Router'
+import { ActivityController } from './api/ActivityController'
+import { createActivityRouter } from './api/ActivityRouter'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
@@ -38,20 +38,20 @@ import { StarknetTxsCountProvider } from './services/providers/StarknetTxsCountP
 import { ZKsyncLiteTxsCountProvider } from './services/providers/ZKsyncLiteTxsCountProvider'
 import { getBatchSizeFromCallsPerMinute } from './utils/getBatchSizeFromCallsPerMinute'
 
-export function createActivity2Module(
+export function createActivityModule(
   config: Config,
   logger: Logger,
   peripherals: Peripherals,
   db: Database,
   clock: Clock,
 ): ApplicationModule | undefined {
-  if (!config.activity2) {
-    logger.info('Activity2 module disabled')
+  if (!config.activity) {
+    logger.info('Activity module disabled')
     return
   }
 
   const indexers = createActivityIndexers(
-    config.activity2,
+    config.activity,
     peripherals,
     logger,
     clock,
@@ -67,27 +67,27 @@ export function createActivity2Module(
   }
 
   const includedInApiProjectIds = getIncludedInApiProjectIds(
-    config.activity2.projects,
-    config.activity2,
+    config.activity.projects,
+    config.activity,
     logger,
   )
 
-  const activity2Controller = new Activity2Controller(
+  const activityController = new ActivityController(
     includedInApiProjectIds,
     peripherals.database,
     clock,
   )
-  const activity2Router = createActivity2Router(activity2Controller)
+  const activityRouter = createActivityRouter(activityController)
 
   return {
-    routers: [activity2Router],
+    routers: [activityRouter],
     start,
   }
 }
 
 function getIncludedInApiProjectIds(
   projects: { id: ProjectId }[],
-  activity: Activity2Config,
+  activity: ActivityConfig,
   logger: Logger,
 ): ProjectId[] {
   const projectIds: ProjectId[] = []
@@ -109,7 +109,7 @@ function getIncludedInApiProjectIds(
 }
 
 function createActivityIndexers(
-  activityConfig: Config['activity2'],
+  activityConfig: Config['activity'],
   peripherals: Peripherals,
   logger: Logger,
   clock: Clock,

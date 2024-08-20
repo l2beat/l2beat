@@ -9,7 +9,7 @@ import { expect, mockFn, mockObject } from 'earl'
 import { ActivityRecord, Database } from '@l2beat/database'
 import { range } from 'lodash'
 import { Clock } from '../../../tools/Clock'
-import { Activity2Controller } from './Activity2Controller'
+import { ActivityController } from './ActivityController'
 import { DailyTransactionCount } from './types'
 
 const PROJECT_A = ProjectId('project-a')
@@ -17,8 +17,8 @@ const PROJECT_B = ProjectId('project-b')
 const NOW = UnixTime.now()
 const TODAY = NOW.toStartOf('day')
 
-describe(Activity2Controller.name, () => {
-  describe(Activity2Controller.prototype.getActivity.name, () => {
+describe(ActivityController.name, () => {
+  describe(ActivityController.prototype.getActivity.name, () => {
     it('returns only included projects', async () => {
       const includedIds: ProjectId[] = [ProjectId.ETHEREUM, PROJECT_A]
 
@@ -206,7 +206,7 @@ describe(Activity2Controller.name, () => {
     })
   })
 
-  describe(Activity2Controller.prototype.getAggregatedActivity.name, () => {
+  describe(ActivityController.prototype.getAggregatedActivity.name, () => {
     it('returns activity data for given projects', async () => {
       const projectIds = [
         ProjectId('arbitrum'),
@@ -296,7 +296,7 @@ describe(Activity2Controller.name, () => {
     })
   })
 
-  describe(Activity2Controller.prototype.mapSlugsToProjectIds.name, () => {
+  describe(ActivityController.prototype.mapSlugsToProjectIds.name, () => {
     const activityController = createController({})
 
     it('returns project ids for given slugs', () => {
@@ -346,7 +346,7 @@ describe(Activity2Controller.name, () => {
     })
   })
 
-  describe(Activity2Controller.prototype.alignActivityData.name, () => {
+  describe(ActivityController.prototype.alignActivityData.name, () => {
     const lastDay = UnixTime.now().toStartOf('day')
     const controller = createController({})
 
@@ -491,7 +491,7 @@ describe(Activity2Controller.name, () => {
         ProjectId.ETHEREUM,
       ]
 
-      const controller = new Activity2Controller(
+      const controller = new ActivityController(
         includedIds,
         mockObject<Database>({
           activity: mockRepository([
@@ -611,7 +611,7 @@ describe(Activity2Controller.name, () => {
           .flat(),
       ].sort((a, b) => a.timestamp.toNumber() - b.timestamp.toNumber())
 
-      const controller = new Activity2Controller(
+      const controller = new ActivityController(
         includedIds,
         mockObject<Database>({ activity: mockRepository(data) }),
         mockObject<Clock>({ getLastHour: () => NOW }),
@@ -705,7 +705,7 @@ function createController({
   repository: Database['activity']
   clock: Clock
 }>) {
-  return new Activity2Controller(
+  return new ActivityController(
     includedIds ?? [],
     mockObject<Database>({ activity: repository ?? mockRepository([]) }),
     clock ?? mockObject<Clock>(),
