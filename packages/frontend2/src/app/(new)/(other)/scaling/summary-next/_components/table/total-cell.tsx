@@ -81,6 +81,7 @@ export function TotalCell(data: TotalCellProps) {
           stablecoin={data.breakdown.stablecoin}
           other={breakdownOther}
           tvlWarnings={tvlWarnings}
+          associatedTokenSymbols={data.associatedTokenSymbols}
         />
       </TooltipContent>
     </Tooltip>

@@ -3,6 +3,8 @@ import { RoundedWarningIcon } from '~/icons/rounded-warning'
 import { cn } from '~/utils/cn'
 import { WarningBar } from '../warning-bar'
 import { Breakdown } from './breakdown'
+import { Square } from '../square'
+import { languageJoin } from '~/utils/language-join'
 
 export interface TokenBreakdownProps {
   associated: number
@@ -13,8 +15,8 @@ export interface TokenBreakdownProps {
 }
 
 export interface TokenBreakdownTooltipContentProps extends TokenBreakdownProps {
-  associatedTokenSymbols?: string[]
-  tvlWarnings?: WarningWithSentiment[]
+  associatedTokenSymbols: string[]
+  tvlWarnings: WarningWithSentiment[]
 }
 
 export function TokenBreakdown(props: TokenBreakdownProps) {
@@ -46,21 +48,21 @@ export function TokenBreakdownTooltipContent({
 }: TokenBreakdownTooltipContentProps) {
   const values = [
     {
-      title: associatedTokenSymbols?.join(', ') ?? 'Associated',
+      title: languageJoin(associatedTokenSymbols) ?? 'Associated',
       value: associated,
-      className: 'dark:bg-rose-700 bg-rose-500',
+      variant: 'associated' as const,
     },
     {
       title: 'Ether',
       value: ether,
-      className: 'dark:bg-green-200 bg-green-900',
+      variant: 'ether' as const,
     },
     {
       title: 'Stablecoins',
       value: stablecoin,
-      className: 'dark:bg-teal-400 bg-teal-500',
+      variant: 'stable' as const,
     },
-    { title: 'Other', value: other, className: 'bg-sky-600 dark:bg-sky-600' },
+    { title: 'Other', value: other, variant: 'other' as const },
   ]
   const total = associated + ether + stablecoin + other
   return (
@@ -74,14 +76,7 @@ export function TokenBreakdownTooltipContent({
                 className="flex items-center justify-between gap-x-6"
               >
                 <span className="flex items-center gap-1">
-                  <div
-                    role="img"
-                    aria-label="Square icon"
-                    className={cn(
-                      'size-3 rounded bg-rose-500 dark:bg-rose-700',
-                      v.className,
-                    )}
-                  ></div>
+                  <Square variant={v.variant} size="small" />
                   <span>{v.title}</span>
                 </span>
                 <span className="font-semibold">
