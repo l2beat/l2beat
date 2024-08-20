@@ -281,6 +281,7 @@ export abstract class Indexer {
         this.updateRetryStrategy.clear()
       }
     } catch (error) {
+      const attempt = this.updateRetryStrategy.attempts()
       this.updateRetryStrategy.markAttempt()
       const fatal = !this.updateRetryStrategy.shouldRetry()
       if (fatal) {
@@ -288,14 +289,14 @@ export abstract class Indexer {
           error,
           from,
           to: effect.targetHeight,
-          attempt: this.updateRetryStrategy.attempts() - 1,
+          attempt,
         })
       } else {
         this.logger.error('Update failed', {
           error,
           from,
           to: effect.targetHeight,
-          attempt: this.updateRetryStrategy.attempts() - 1,
+          attempt,
         })
       }
       this.dispatch({ type: 'UpdateFailed', fatal })
