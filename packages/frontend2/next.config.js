@@ -190,7 +190,9 @@ const nextConfig = {
       ],
     }
   },
-  // Webpack config for svgr
+  /**
+   * Keep in sync with the webpack configuration in Storybook.
+   */
   webpack(
     /**
      * This type is *very* incomplete.
