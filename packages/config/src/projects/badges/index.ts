@@ -172,6 +172,14 @@ export const badges = {
     },
     type: BadgeType.VM,
   },
+  CartesiVM: {
+    display: {
+      name: 'CartesiVM',
+      description:
+        'This project uses the Cartesi Machine to run its smart contracts and supports any programming language that can be ported to RISC-V architecture',
+    },
+    type: BadgeType.VM,
+  },
   FuelVM: {
     display: {
       name: 'FuelVM',
