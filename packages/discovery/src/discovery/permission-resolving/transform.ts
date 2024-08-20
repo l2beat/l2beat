@@ -14,12 +14,14 @@ export function transformToIssued(
     return undefined
   }
 
-  return matching.map((r) => ({
-    permission: internalPermissionToExternal(r.permission),
-    // biome-ignore lint/style/noNonNullAssertion: we know it's fine
-    target: r.path[0]!.address,
-    via: r.path.slice(1),
-  }))
+  return sort(
+    matching.map((r) => ({
+      permission: internalPermissionToExternal(r.permission),
+      // biome-ignore lint/style/noNonNullAssertion: we know it's fine
+      target: r.path[r.path.length - 1]!.address,
+      via: r.path.slice(1, -1).reverse(),
+    })),
+  )
 }
 
 export function transformToReceived(
@@ -33,12 +35,14 @@ export function transformToReceived(
     return undefined
   }
 
-  return matching.map((r) => ({
-    permission: internalPermissionToExternal(r.permission),
-    // biome-ignore lint/style/noNonNullAssertion: we know it's fine
-    target: r.path[r.path.length - 1]!.address,
-    via: r.path.slice().reverse().slice(1),
-  }))
+  return sort(
+    matching.map((r) => ({
+      permission: internalPermissionToExternal(r.permission),
+      // biome-ignore lint/style/noNonNullAssertion: we know it's fine
+      target: r.path[0]!.address,
+      via: r.path.slice(1, -1),
+    })),
+  )
 }
 
 function internalPermissionToExternal(permission: Permission): PermissionType {
@@ -47,4 +51,10 @@ function internalPermissionToExternal(permission: Permission): PermissionType {
   }
 
   return permission
+}
+
+function sort(input: OutputResolvedPermission[]): OutputResolvedPermission[] {
+  return input.sort((a, b) => {
+    return JSON.stringify(a).localeCompare(JSON.stringify(b))
+  })
 }
