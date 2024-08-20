@@ -1,5 +1,3 @@
-import { assert } from './assert'
-
 export type ShouldRetry = (
   attempts: number,
   error?: unknown,
@@ -18,14 +16,17 @@ interface ExponentialBackOffOpts {
 
 export function exponentialBackOff(opts: ExponentialBackOffOpts): ShouldRetry {
   const maxAttempts = opts.maxAttempts
-  assert(maxAttempts > 0, 'maxAttempts needs to be a positive number')
+  if (maxAttempts <= 0) {
+    throw new Error('maxAttempts needs to be a positive number')
+  }
   const maxDistanceMs = opts.maxDistanceMs
-  assert(maxDistanceMs > 0, 'maxDistanceMs needs to be a positive number')
+  if (maxDistanceMs <= 0) {
+    throw new Error('maxDistanceMs needs to be a positive number')
+  }
   const notifyAfterAttempts = opts.notifyAfterAttempts
-  assert(
-    notifyAfterAttempts > 0,
-    'notifyAfterAttempts needs to be a positive number',
-  )
+  if (notifyAfterAttempts <= 0) {
+    throw new Error('notifyAfterAttempts needs to be a positive number')
+  }
 
   return (attempts: number) => {
     const distance = Math.pow(2, attempts) * opts.stepMs
