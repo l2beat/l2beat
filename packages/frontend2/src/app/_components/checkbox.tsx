@@ -11,7 +11,7 @@ const Checkbox = React.forwardRef<
     id: string
   }
 >(({ className, id, children, ...props }, ref) => (
-  <div className="flex w-max h-8 select-none items-center space-x-2 rounded-lg bg-gray-200 py-1 pl-2 pr-3 text-base font-semibold dark:bg-zinc-700">
+  <div className="flex h-8 w-max select-none items-center space-x-2 rounded-lg bg-gray-200 py-1 pl-2 pr-3 text-base font-semibold dark:bg-zinc-700">
     <CheckboxPrimitive.Root
       ref={ref}
       id={id}
