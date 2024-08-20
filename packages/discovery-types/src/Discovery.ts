@@ -56,14 +56,14 @@ export interface FieldMeta {
 export type PermissionType = 'configure' | 'upgrade' | 'act'
 
 export interface ResolvedPermissionPath {
-    address: EthereumAddress
-    delay: number
+  address: EthereumAddress
+  delay: number
 }
 
 export interface ResolvedPermission {
-    permission: PermissionType
-    target: EthereumAddress
-    via: ResolvedPermissionPath[]
+  permission: PermissionType
+  target: EthereumAddress
+  via: ResolvedPermissionPath[]
 }
 
 export interface Meta {

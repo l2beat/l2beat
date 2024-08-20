@@ -1,15 +1,13 @@
-import {
-  ContractParameters,
-  DiscoveryOutput,
-  Meta,
-} from '@l2beat/discovery-types'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { PermissionConfiguration } from '../config/RawDiscoveryConfig'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
 import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
-import { transformToIssued, transformToReceived } from '../permission-resolving/transform'
+import {
+  transformToIssued,
+  transformToReceived,
+} from '../permission-resolving/transform'
 
 export function toDiscoveryOutput(
   name: string,
@@ -71,7 +69,10 @@ export function processAnalysis(
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
           issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-          receivedPermissions: transformToReceived(x.address, resolvedPermissions),
+          receivedPermissions: transformToReceived(
+            x.address,
+            resolvedPermissions,
+          ),
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
           values:
@@ -99,7 +100,10 @@ export function processAnalysis(
         types: setToSortedArray(x.combinedMeta?.types),
         severity: x.combinedMeta?.severity,
         issuedPermissions: transformToIssued(x.address, resolvedPermissions),
-        receivedPermissions: transformToReceived(x.address, resolvedPermissions),
+        receivedPermissions: transformToReceived(
+          x.address,
+          resolvedPermissions,
+        ),
       })),
     abis,
   }

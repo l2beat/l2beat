@@ -697,7 +697,9 @@ export class ProjectDiscovery {
     const permissions = contractOrEoa.issuedPermissions
     return permissions === undefined
       ? undefined
-      : Object.entries(groupBy((contractOrEoa.issuedPermissions ?? []), 'permission'))
+      : Object.entries(
+          groupBy(contractOrEoa.issuedPermissions ?? [], 'permission'),
+        )
           .map(([permission, entries]) => {
             const addressesString = entries
               .map((entry) => this.getContract(entry.target.toString()).name)

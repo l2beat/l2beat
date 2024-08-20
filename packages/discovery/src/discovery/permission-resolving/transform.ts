@@ -1,9 +1,9 @@
-import { EthereumAddress } from '@l2beat/shared-pure'
-import { Permission, ResolvedPermission } from './resolvePermissions'
 import {
   ResolvedPermission as OutputResolvedPermission,
   PermissionType,
 } from '@l2beat/discovery-types'
+import { EthereumAddress } from '@l2beat/shared-pure'
+import { Permission, ResolvedPermission } from './resolvePermissions'
 
 export function transformToIssued(
   forAddress: EthereumAddress,
