@@ -1,9 +1,8 @@
+import { subtractOne } from '../../common/assessCount'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
-import { subtractOne } from '../../common/assessCount'
-
 
 const discovery = new ProjectDiscovery('sxnetwork')
 
@@ -32,7 +31,7 @@ export const sxnetwork: Layer2 = orbitStackL2({
         'https://discord.com/invite/sxnetwork',
       ],
     },
-    activityDataSource: "Blockchain RPC"
+    activityDataSource: 'Blockchain RPC',
   },
   isNodeAvailable: 'UnderReview',
   bridge: discovery.getContract('Bridge'),
@@ -61,6 +60,6 @@ export const sxnetwork: Layer2 = orbitStackL2({
       ],
       description:
         "EOA address that can upgrade the rollup's smart contract system (via UpgradeExecutor) and gain access to all funds.",
-    }
+    },
   ],
 })

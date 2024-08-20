@@ -9,7 +9,7 @@ const chainMapping: Record<string, string> = {
   xai: 'arbitrum',
   deri: 'arbitrum',
   rari: 'arbitrum',
-  sxnetwork: 'ethereum'
+  sxnetwork: 'ethereum',
 }
 
 function getArbOSVersion(wasmModuleRoot: string): string {
@@ -45,7 +45,7 @@ function getChainName(chainId: number | undefined): string {
     20231119: 'deri',
     1380012617: 'rari',
     7887: 'kinto',
-    416: 'sxnetwork'
+    416: 'sxnetwork',
   }
   if (chainId === undefined) {
     return 'Unknown chainId'
