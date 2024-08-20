@@ -1,3 +1,35 @@
+Generated with discovered.json: 0x7a16be35e3c026ec69a014a4fd9c1fe2ad4ebb8a
+
+# Diff at Tue, 20 Aug 2024 07:24:21 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20317972
+- current block number: 20568320
+
+## Description
+
+The optimistic mode is deactivated on Ethereum by a watcher (0x56dD71fffD089EdAdbA8eCdaaDb94269713f8f4d) and "slow" mode is active. All roots must now be passed via canonical rollup AMBs. On their bridge UI they have this message: "Due to adjustments with routers and liquidity pools this month, transaction processing on several paths may be slower than usual."
+
+## Watched changes
+
+```diff
+    contract MainnetSpokeConnector (0x02fdF04AF077687CDA03Bd3162388b7972A4a1Cc) {
+    +++ description: None
+      values.optimisticMode:
+-        true
++        false
+    }
+```
+
+```diff
+    contract RootManager (0x523AB7424AD126809b1d7A134eb6E0ee414C9B3A) {
+    +++ description: None
+      values.optimisticMode:
+-        true
++        false
+    }
+```
+
 Generated with discovered.json: 0x96e2d3515f785039b2980c9da704f2802cbb499e
 
 # Diff at Fri, 09 Aug 2024 10:08:27 GMT:

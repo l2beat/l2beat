@@ -1,3 +1,44 @@
+Generated with discovered.json: 0x42131931c0d0c0ad4a42dce8b32030af275c9cd4
+
+# Diff at Mon, 19 Aug 2024 15:23:20 GMT:
+
+- author: Radina Talanova (<nt.radina@gmail.com>)
+- comparing to: main@5417c4717b5cefeed17cd8419a7eb2dda22d4206 block: 20539694
+- current block number: 20563543
+
+## Description
+
+Added support for Mode, Base and BNB Chain on the wUSDx pool. Updated the CommitStore config.
+
+## Watched changes
+
+```diff
+    contract CommitStore5 (0x2aa101BF99CaeF7fc1355D4c493a1fe187A007cE) {
+    +++ description: None
+      values.latestConfigDetails.configCount:
+-        8
++        9
+      values.latestConfigDetails.blockNumber:
+-        19992818
++        20561894
+      values.latestConfigDetails.configDigest:
+-        "0x00018c33fe48784c2decbe5572c681bdeb706c4b05c3e1f367dec59d0c4e3780"
++        "0x0001b728806c50675d907f631fb922ee3658492327dfb556b5638ce5ac48a329"
+    }
+```
+
+```diff
+    contract BurnMintTokenPool (0xd72F7010f0Fa621aB0869e61e9bb4e3cC887c66c) {
+    +++ description: None
+      values.getSupportedChains.4:
++        "15971525489660198786"
+      values.getSupportedChains.3:
++        "11344663589394136015"
+      values.getSupportedChains.2:
++        "7264351850409363825"
+    }
+```
+
 Generated with discovered.json: 0x6255d653535af932c7b0ee06b19ba0cf45732392
 
 # Diff at Fri, 16 Aug 2024 07:28:16 GMT:
