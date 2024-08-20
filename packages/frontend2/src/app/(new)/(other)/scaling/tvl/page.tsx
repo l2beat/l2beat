@@ -1,4 +1,5 @@
 import { HOMEPAGE_MILESTONES } from '@l2beat/config'
+import { StackedTvlChart } from '~/app/_components/chart/tvl/stacked/stacked-tvl-chart'
 import { HorizontalSeparator } from '~/app/_components/horizontal-separator'
 import { getImplementationChangeReport } from '~/server/features/implementation-change-report/get-implementation-change-report'
 import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
@@ -9,7 +10,6 @@ import { getCookie } from '~/utils/cookies/server'
 import { getDefaultMetadata } from '~/utils/get-default-metadata'
 import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
-import { StackedTvlChart } from '../summary-next/_components/stacked-tvl-chart'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
 
 export const metadata = getDefaultMetadata({
