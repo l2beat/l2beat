@@ -8,7 +8,7 @@
 
 ## Description
 
-Added support for Mode, Base and BNB Chain on the wUSDx pool. Updated the CommitStore config due OffchainConfig params changes (e.g., max query lenght, request count).
+Added support for Mode, Base and BNB Chain on the wUSDx pool. Updated the CommitStore config due OffchainConfig params changes (e.g., MaxQueryLengthBytes, RequestCountLimit).
 
 ## Watched changes
 
