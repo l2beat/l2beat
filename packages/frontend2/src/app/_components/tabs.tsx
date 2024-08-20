@@ -1,7 +1,6 @@
 'use client'
 
 import * as TabsPrimitive from '@radix-ui/react-tabs'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import * as React from 'react'
 import { useSearchParamState } from '~/hooks/use-search-param-state'
 import { cn } from '~/utils/cn'
