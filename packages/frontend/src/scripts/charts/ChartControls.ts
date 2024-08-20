@@ -1,17 +1,17 @@
-import { Milestone } from '@l2beat/config'
+import type { Milestone } from '@l2beat/config'
 import isEmpty from 'lodash/isEmpty'
 
-import { assert } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
 import { getFilteredSlugs } from '../configureProjectFilters'
 import { getRichSelectValue } from '../configureRichSelect'
 import { getCurrentTheme } from '../configureThemeToggle'
-import { Query, makeQuery } from '../query'
-import { ChartSettings, ChartSettingsManager } from './ChartSettings'
-import { ChartDataController } from './data-controller/ChartDataController'
+import { type Query, makeQuery } from '../query'
+import type { ChartSettings, ChartSettingsManager } from './ChartSettings'
+import type { ChartDataController } from './data-controller/ChartDataController'
 import { getChartType } from './getChartType'
-import { ChartType, Milestones, TokenInfo } from './types'
-import { ChartViewController } from './view-controller/ChartViewController'
-import { ChartUnit } from './view-controller/types'
+import { type ChartType, Milestones, TokenInfo } from './types'
+import type { ChartViewController } from './view-controller/ChartViewController'
+import type { ChartUnit } from './view-controller/types'
 
 export interface ChartControlsCallbacks {
   onTimeRangeChange?: (control: HTMLInputElement) => void
@@ -286,11 +286,11 @@ export class ChartControls {
 
   private toDays(value: string) {
     if (value.endsWith('D')) {
-      return parseInt(value.slice(0, -1))
+      return Number.parseInt(value.slice(0, -1))
     } else if (value.endsWith('Y')) {
-      return parseInt(value.slice(0, -1)) * 365
+      return Number.parseInt(value.slice(0, -1)) * 365
     } else {
-      return Infinity
+      return Number.POSITIVE_INFINITY
     }
   }
 }

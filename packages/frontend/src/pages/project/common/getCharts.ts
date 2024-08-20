@@ -1,6 +1,5 @@
-import { Bridge, Layer2, Layer3, safeGetTokenByAssetId } from '@l2beat/config'
-import {
-  assert,
+import { type Bridge, type Layer2, type Layer3, safeGetTokenByAssetId } from '@l2beat/config'
+import type {
   ActivityApiResponse,
   EthereumAddress,
   L2CostsApiResponse,
@@ -8,10 +7,11 @@ import {
   TvlApiResponse,
 } from '@l2beat/shared-pure'
 
-import { Config } from '../../../build/config'
-import { ChartProps } from '../../../components'
-import { TokenControl } from '../../../components/chart/TokenControls'
-import { TokenInfo } from '../../../scripts/charts/types'
+import { assert } from '@l2beat/backend-tools'
+import type { Config } from '../../../build/config'
+import type { ChartProps } from '../../../components'
+import type { TokenControl } from '../../../components/chart/TokenControls'
+import type { TokenInfo } from '../../../scripts/charts/types'
 import { unifyTokensResponse } from '../../../utils/tvl/getTvlStats'
 
 export interface ProjectDetailsCharts {

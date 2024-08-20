@@ -1,5 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { chains } from '@l2beat/config'
-import { assert, ChainId } from '@l2beat/shared-pure'
+import type {  ChainId } from '@l2beat/shared-pure'
 
 export function getExplorerUrl(chain: string) {
   const chainConfig = chains.find((c) => c.name === chain)

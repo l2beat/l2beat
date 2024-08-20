@@ -1,8 +1,8 @@
-import { assert } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { assert } from '@l2beat/backend-tools'
 import { parseSocial } from '../../pages/project/components/LinkSectionLink'
-import { ProjectLink } from '../../pages/project/types'
+import type { ProjectLink } from '../../pages/project/types'
 import { formatLink } from '../../utils/formatLink'
 import { HoverableDropdown } from '../HoverableDropdown'
 import { Link } from '../Link'

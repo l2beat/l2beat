@@ -1,4 +1,3 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ChartSection } from './sections/ChartSection'
@@ -16,6 +15,7 @@ import { TechnologySection } from './sections/TechnologySection'
 import { UpcomingDisclaimer } from './sections/UpcomingDisclaimer'
 import { UpgradesAndGovernanceSection } from './sections/UpgradesAndGovernanceSection'
 import { ProjectDetailsSection } from './sections/types'
+import { assertUnreachable } from '@l2beat/backend-tools'
 
 export interface ProjectDetailsProps {
   items: ProjectDetailsSection[]

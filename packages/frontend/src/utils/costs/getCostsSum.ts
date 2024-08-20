@@ -1,5 +1,5 @@
-import {
-  assert,
+import { assert } from '@l2beat/backend-tools'
+import type {
   L2CostsApiChart,
   L2CostsApiChartPoint,
 } from '@l2beat/shared-pure'

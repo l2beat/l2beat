@@ -1,4 +1,5 @@
-import { assert, ActivityApiChartPoint } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
+import { ActivityApiChartPoint } from '@l2beat/shared-pure'
 
 export function getTransactionCount(
   data: ActivityApiChartPoint[],

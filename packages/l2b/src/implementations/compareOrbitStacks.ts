@@ -1,6 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { ConfigReader } from '@l2beat/discovery'
 import { ContractParameters } from '@l2beat/discovery-types'
-import { assert } from '@l2beat/shared-pure'
 
 const chainMapping: Record<string, string> = {
   arbitrum: 'ethereum',

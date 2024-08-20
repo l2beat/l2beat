@@ -1,7 +1,7 @@
 import { ScalingProjectCategory } from '@l2beat/config'
-import { assertUnreachable } from '@l2beat/shared-pure'
 
 import { getRowType, getRowTypeClassNames } from './getRowType'
+import { assertUnreachable } from '@l2beat/backend-tools'
 
 interface ScalingTableEntry {
   slug: string

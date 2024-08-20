@@ -1,6 +1,6 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
+import { assertUnreachable } from '@l2beat/backend-tools'
 import { ChartType } from '../../scripts/charts/types'
 import { RadioGroup, RadioGroupOption } from './RadioGroup'
 

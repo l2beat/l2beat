@@ -1,9 +1,9 @@
-import { assertUnreachable } from '@l2beat/shared-pure'
 import React from 'react'
 
 import { ChartType } from '../../scripts/charts/types'
 import { cn } from '../../utils/cn'
 import { RadioGroup, RadioGroupOption } from './RadioGroup'
+import { assertUnreachable } from '@l2beat/backend-tools'
 
 interface Props {
   chartType: ChartType

@@ -1,5 +1,5 @@
-import { Milestone } from '@l2beat/config'
-import { assert } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
+import type { Milestone } from '@l2beat/config'
 import mean from 'lodash/mean'
 import { formatRange } from '../../../utils'
 import { makeQuery } from '../../query'
@@ -8,9 +8,9 @@ import {
   FILL_STYLES,
   LINE_STYLES,
   POINT_CLASS_NAMES,
-  SeriesStyle,
-  SeriesStyleFill,
-  SeriesStyleLine,
+  type SeriesStyle,
+  type SeriesStyleFill,
+  type SeriesStyleLine,
 } from '../styles'
 import { renderMilestoneHover } from '../view-controller/hovers'
 import { getSeriesGroups } from './getSeriesGroups'
@@ -400,7 +400,7 @@ export class ChartRenderer {
     const mouseCanvasX = mouseX * canvasWidth
 
     if (mouseY < milestoneMouseY) {
-      let result = Infinity
+      let result = Number.POSITIVE_INFINITY
       let indexResult
       for (const [i, p] of points.entries()) {
         if (p.milestone) {

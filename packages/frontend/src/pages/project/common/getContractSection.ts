@@ -1,17 +1,16 @@
 import {
-  Bridge,
+  type Bridge,
   CONTRACTS,
-  Layer2,
-  Layer3,
-  ScalingProjectContract,
-  ScalingProjectEscrow,
+  type Layer2,
+  type Layer3,
+  type ScalingProjectContract,
+  type ScalingProjectEscrow,
   bridges,
   isSingleAddress,
   layer2s,
   layer3s,
 } from '@l2beat/config'
-import {
-  assert,
+import type {
   EthereumAddress,
   ImplementationChangeReportApiResponse,
   ImplementationChangeReportProjectData,
@@ -19,10 +18,11 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { getExplorerUrl } from '../../../utils/getExplorerUrl'
 import { getUsedInProjects } from '../common/getUsedInProjects'
-import { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
-import {
+import type { ContractsSectionProps } from '../components/sections/ContractsSection/ContractsSection'
+import type {
   TechnologyContract,
   TechnologyContractLinks,
 } from '../components/sections/common/ContractEntry'

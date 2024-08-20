@@ -1,5 +1,5 @@
-import { assert } from '@l2beat/shared-pure'
-import { Point } from './ChartRenderer'
+import { assert } from '@l2beat/backend-tools';
+import type { Point } from './ChartRenderer'
 
 export function getSeriesGroups(points: Point<unknown>[], seriesIndex: number) {
   return points.reduce<{ value: number; dashed?: boolean }[][]>(

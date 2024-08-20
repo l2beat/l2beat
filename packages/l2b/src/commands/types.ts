@@ -1,5 +1,6 @@
+import { assert } from '@l2beat/backend-tools'
 import { Layer2Provider, Layer3Provider } from '@l2beat/config'
-import { assert, EthereumAddress } from '@l2beat/shared-pure'
+import { EthereumAddress } from '@l2beat/shared-pure'
 import { Type, extendType, string } from 'cmd-ts'
 import { stat } from 'fs/promises'
 

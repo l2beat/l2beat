@@ -1,11 +1,11 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert } from '@l2beat/backend-tools'
 import { formatTimestamp } from '../../../../utils'
 import { formatTpsWithUnit } from '../../../../utils/formatTps'
-import { RenderParams } from '../../renderer/ChartRenderer'
-import { SeriesStyle } from '../../styles'
+import type { RenderParams } from '../../renderer/ChartRenderer'
+import type { SeriesStyle } from '../../styles'
 import { getEntriesByDays } from '../getEntriesByDays'
-import { ActivityData, renderActivityHover } from '../hovers'
-import { ChartControlsState } from '../types'
+import { type ActivityData, renderActivityHover } from '../hovers'
+import type { ChartControlsState } from '../types'
 
 const ESTIMATED_IMPACT_THRESHOLD = 0.1
 

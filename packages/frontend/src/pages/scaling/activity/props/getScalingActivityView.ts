@@ -1,6 +1,5 @@
-import { Layer2, Layer3 } from '@l2beat/config'
-import {
-  assert,
+import type { Layer2, Layer3 } from '@l2beat/config'
+import type {
   ActivityApiChart,
   ActivityApiResponse,
   ImplementationChangeReportApiResponse,
@@ -8,18 +7,19 @@ import {
   VerificationStatus,
 } from '@l2beat/shared-pure'
 
+import { assert } from '@l2beat/backend-tools'
 import { formatTimestamp } from '../../../../utils'
 import { getMaxTps } from '../../../../utils/activity/getMaxTps'
 import { getTpsDaily } from '../../../../utils/activity/getTpsDaily'
 import { getTpsWeeklyChange } from '../../../../utils/activity/getTpsWeeklyChange'
 import { getTransactionCount } from '../../../../utils/activity/getTransactionCount'
 import { isAnySectionUnderReview } from '../../../project/common/isAnySectionUnderReview'
-import {
+import type {
   ActivityPagesData,
   ActivityViewEntry,
   ActivityViewEntryData,
 } from '../types'
-import { ScalingActivityViewProps } from '../view/ScalingActivityView'
+import type { ScalingActivityViewProps } from '../view/ScalingActivityView'
 
 export function getScalingActivityView(
   projects: (Layer2 | Layer3)[],

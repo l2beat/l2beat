@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/shared-pure'
+import { assert } from "@l2beat/backend-tools"
 
 export function getFirstTwoNonZeroPrecision(value: number, maxPrecision = 32) {
   assert(value < 1, 'Value must be less than 1')
