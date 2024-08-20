@@ -8,8 +8,7 @@ export const galxegravity: Layer2 = underReviewL2({
     name: 'Gravity Alpha',
     slug: 'galxegravity',
     provider: 'Arbitrum',
-    description:
-      'Gravity is an Optimium built on the Orbit stack.',
+    description: 'Gravity is an Optimium built on the Orbit stack.',
     purposes: ['Social'],
     category: 'Optimium',
     links: {
