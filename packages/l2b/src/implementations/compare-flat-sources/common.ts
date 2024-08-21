@@ -1,5 +1,4 @@
 import { resolve } from 'path'
-import { assert } from '@l2beat/backend-tools'
 import {
   Layer2Provider,
   Layer3Provider,
@@ -14,6 +13,7 @@ import {
 } from '@l2beat/discovery'
 import chalk from 'chalk'
 import { readFile, readdir } from 'fs/promises'
+import { assert } from '@l2beat/shared-pure'
 
 export const ALL_CONFIGS = [...layer2s, ...layer3s]
 
