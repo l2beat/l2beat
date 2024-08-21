@@ -4,10 +4,11 @@ import { Badge } from '../badges'
 import { orbitStackL2 } from './templates/orbitStack'
 import { Layer2 } from './types'
 
-const discovery = new ProjectDiscovery('sxnetwork')
+const discovery = new ProjectDiscovery('sxnetwork', 'ethereum')
 
 export const sxnetwork: Layer2 = orbitStackL2({
   discovery,
+  nativeToken: 'SX',
   badges: [Badge.DA.DAC, Badge.RaaS.Gelato],
   display: {
     name: 'SX Network',

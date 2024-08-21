@@ -45,7 +45,7 @@ function getChainName(chainId: number | undefined): string {
     20231119: 'deri',
     1380012617: 'rari',
     7887: 'kinto',
-    416: 'sxnetwork',
+    4162: 'sxnetwork',
   }
   if (chainId === undefined) {
     return 'Unknown chainId'
