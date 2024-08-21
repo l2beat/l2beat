@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb39bef3c35391edda9446e65d14c1a5acebc4ab3
+
+# Diff at Wed, 21 Aug 2024 13:25:09 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@63cb0bd5d55a6dfae0e2e22590983dd8344be4a3 block: 225981159
+- current block number: 225981159
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 225981159 (main branch discovery), not current.
+
+```diff
+    contract SequencerInbox (0x0fFe9ACC296ddd4De5F616Aa482C99fA4b41A3E2) {
+    +++ description: None
+      values.dacKeyset.blsSignatures:
++        ["YAqQTw4ByRTsc9900Jqz1uF86NCR0qf4Qorr6m+4UMuebljjJmkm9ao1wgU9YMVsiAQiJZW5V0wv3eSEoHEOfpL4KesBDWtj3Dxlie526tY8MGcEruvE+/+yWenFV64DjgSIEgMvQWcMEnYuBeuIcPq3iFWoPlZ5xjrFq3TC3pg/4vNdHyraTaGAoSE1kpr95QJjp3pjuOh8EpCD1i4skjJP4YVjtsui7a8t3s8TTwTo3QYk/HTPLAJ8e15iBTin/xcbxa8wfNTBespH4pXgIQBYT/M2kyNWURyaJGz/Uk0ecJPEVtTwNPedztrARTHgkAiCDWd63/ekdUN0plGc8G4aWWg/MJN1X3UZwSUf5Z6PIG/9qtBgtijcxx2UvCjvyw=="]
+    }
+```
+
 Generated with discovered.json: 0x0fbfa465bbc1eba2c39fe107cabcbe8b0672d5d5
 
 # Diff at Wed, 21 Aug 2024 10:07:35 GMT:
