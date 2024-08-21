@@ -1,6 +1,5 @@
 import React from 'react'
 
-import { BridgesEntry } from '../../../pages/bridges/types'
 import { ScalingEntry } from '../../../pages/scaling/types'
 import { cn } from '../../../utils/cn'
 import { IndexCell } from '../IndexCell'
@@ -20,8 +19,8 @@ export function getProjectWithIndexColumns(opts?: {
   isSynced?: boolean
   indexAsDefaultSort: boolean
   showIsL3?: boolean
-}): ColumnConfig<ScalingEntry | BridgesEntry>[] {
-  const columns: ColumnConfig<ScalingEntry | BridgesEntry>[] = [
+}): ColumnConfig<ScalingEntry>[] {
+  const columns: ColumnConfig<ScalingEntry>[] = [
     {
       name: '#',
       align: 'center',

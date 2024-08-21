@@ -1,11 +1,13 @@
 import { uniq } from 'lodash'
 import { OverflowWrapper } from '~/app/_components/overflow-wrapper'
 import { TableFilter } from '~/app/_components/table/filters/table-filter'
-import { type CommonBridgeEntry } from '~/server/features/bridges/types'
-import { useBridgesFilterValues } from './bridges-filter-context'
+import {
+  type BridgesFilterEntry,
+  useBridgesFilterValues,
+} from './bridges-filter-context'
 
 interface Props {
-  entries: CommonBridgeEntry[]
+  entries: BridgesFilterEntry[]
 }
 
 export function BridgesFilters({ entries }: Props) {
