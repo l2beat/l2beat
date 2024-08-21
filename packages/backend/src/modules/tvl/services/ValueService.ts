@@ -1,6 +1,10 @@
-import { assert } from '@l2beat/backend-tools'
 import { Database, ValueRecord } from '@l2beat/database'
-import { AmountConfigEntry, ProjectId, UnixTime } from '@l2beat/shared-pure'
+import {
+  assert,
+  AmountConfigEntry,
+  ProjectId,
+  UnixTime,
+} from '@l2beat/shared-pure'
 import { groupBy } from 'lodash'
 import { calculateValue } from '../utils/calculateValue'
 import { AmountId } from '../utils/createAmountId'

@@ -1,6 +1,6 @@
 import { join } from 'path'
 
-import { assertUnreachable } from '../utils/assertUnreachable'
+import { assertUnreachable } from '@l2beat/shared-pure'
 import { LogFormatterJson } from './LogFormatterJson'
 import { LogFormatterPretty } from './LogFormatterPretty'
 import { LEVEL, LogLevel } from './LogLevel'

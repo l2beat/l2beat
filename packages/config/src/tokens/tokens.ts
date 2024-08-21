@@ -10,9 +10,8 @@ visible benefits.
 You can check the detailed steps on how to add new tokens in the tvl.md file in the repository.
 */
 
-import { AssetId, Token, UnixTime } from '@l2beat/shared-pure'
+import { assert, AssetId, Token, UnixTime } from '@l2beat/shared-pure'
 
-import { assert } from '@l2beat/backend-tools'
 import { chains } from '../chains'
 import generated from './generated.json'
 import { GeneratedToken } from './types'

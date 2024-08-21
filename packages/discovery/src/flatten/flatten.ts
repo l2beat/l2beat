@@ -1,6 +1,6 @@
 import { createHash } from 'crypto'
-import { assert } from '@l2beat/backend-tools'
 
+import { assert } from '@l2beat/shared-pure'
 import {
   DeclarationFilePair,
   FileContent,
