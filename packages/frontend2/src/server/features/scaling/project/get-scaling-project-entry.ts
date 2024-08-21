@@ -79,6 +79,8 @@ async function getHeader(project: ScalingProject) {
   const projectStats = await getActivityProjectStats(project.id)
   const tvlProjectData = await getTvlProjectData(project.id)
 
+  const associatedTokens = project.config.associatedTokens ?? []
+
   return {
     description: project.display.description,
     warning: project.display.headerWarning,
@@ -98,10 +100,10 @@ async function getHeader(project: ScalingProject) {
                     tvlProjectData.tokenBreakdown.associated /
                     tvlProjectData.tokenBreakdown.total,
                   name: project.display.name,
-                  associatedTokens: project.config.associatedTokens ?? [],
+                  associatedTokens,
                 }),
             ]),
-            associatedTokens: project.config.associatedTokens,
+            associatedTokens,
           },
           tvlBreakdown: {
             ...tvlProjectData.tvlBreakdown,
