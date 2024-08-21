@@ -11,7 +11,6 @@ export function orderByTvl<
 
   const getTvl = (project: T) => {
     const tvl = tvls[project.id]
-
     return tvl ?? 0
   }
 

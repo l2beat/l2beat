@@ -88,7 +88,7 @@ export function ScalingSummaryTables({ projects }: Props) {
     initialState: {
       sorting: [
         {
-          id: '#',
+          id: 'total',
           desc: false,
         },
       ],
