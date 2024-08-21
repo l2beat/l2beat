@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 
 type Bytes = Uint8Array
 export type RlpSerializable = RlpSerializable[] | Uint8Array

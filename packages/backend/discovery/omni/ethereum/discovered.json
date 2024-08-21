@@ -10,13 +10,23 @@
       "address": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
       "template": "GnosisSafe",
       "proxyType": "gnosis safe",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
-          "0x88ad09518695c6c3712AC10a214bE5109a655671",
-          "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x88ad09518695c6c3712AC10a214bE5109a655671",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1600956399,
       "values": {
@@ -79,6 +89,13 @@
       "name": "ForeignAMB",
       "address": "0x4C36d2919e407f0Cc2Ee3c993ccF8ac26d9CE64e",
       "proxyType": "Eternal Storage proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1579258532,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
@@ -159,6 +176,13 @@
       "name": "MultiTokenMediator",
       "address": "0x88ad09518695c6c3712AC10a214bE5109a655671",
       "proxyType": "Eternal Storage proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1596501090,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
@@ -181,6 +205,13 @@
       "name": "BridgeValidators",
       "address": "0xed84a648b3c51432ad0fD1C2cD2C45677E9d4064",
       "proxyType": "Eternal Storage proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1579258396,
       "values": {
         "$admin": "0x42F38ec5A75acCEc50054671233dfAC9C0E7A3F6",

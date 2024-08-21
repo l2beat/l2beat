@@ -1,4 +1,4 @@
-import assert from 'node:assert'
+import { assert } from '@l2beat/shared-pure'
 
 export interface RetryStrategy {
   /** Returns true if the operation should be retried */
@@ -9,6 +9,8 @@ export interface RetryStrategy {
   timeoutMs: () => number
   /** Resets the number of attempts */
   clear: () => void
+  /** Get amount of attempts */
+  attempts: () => number
 }
 
 interface ExponentialBackOffOpts {
@@ -43,6 +45,7 @@ function exponentialBackOff(opts: ExponentialBackOffOpts): RetryStrategy {
     clear: () => {
       attempts = 0
     },
+    attempts: () => attempts,
   }
 }
 

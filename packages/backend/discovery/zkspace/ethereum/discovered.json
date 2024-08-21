@@ -9,6 +9,13 @@
       "name": "VerifierExit",
       "address": "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -21,6 +28,13 @@
       "name": "ZkSync",
       "address": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
       "proxyType": "zkSpace proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": [
         "firstPendingWithdrawalIndex",
         "firstPriorityRequestId",
@@ -74,6 +88,13 @@
       "name": "Governance",
       "address": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -108,16 +129,38 @@
     {
       "name": "UpgradeGatekeeper",
       "address": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
-          "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
-          "0x83Cb1531Ec8447366501aE440478da245EcffB89",
-          "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
-          "0xc07f850b60E0EEd49a09E455b01a869C25963735",
-          "0xc632347cc96A4400653E3514eA148630455295b5"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1d8d584F1aef51ad5E2f436F057E43e0d788Be81",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x5CDAF83E077DBaC2692b5864CA18b61d67453Be8",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x83Cb1531Ec8447366501aE440478da245EcffB89",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xc632347cc96A4400653E3514eA148630455295b5",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "$immutable": true,
@@ -141,6 +184,13 @@
       "name": "Verifier",
       "address": "0xB7A4f3eFBe8e2B2FC973FfDb1b1D7F19F012A7af",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -153,6 +203,13 @@
       "name": "UniswapV2Factory",
       "address": "0xc07f850b60E0EEd49a09E455b01a869C25963735",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
@@ -167,6 +224,13 @@
       "name": "ZkSeaNFT",
       "address": "0xc632347cc96A4400653E3514eA148630455295b5",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1639569183,
       "values": {
         "$admin": "0xB0C7E781f70C0B8E3e62F1766a4Be6e435431390",

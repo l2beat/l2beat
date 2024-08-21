@@ -31,6 +31,13 @@
       "address": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706308043,
       "values": {
         "$admin": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
@@ -413,6 +420,13 @@
       "name": "PolyhedraDVN",
       "address": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xe16d201cA134345601631D327a971A3741646B0d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708740203,
       "values": {
         "$admin": "0xe16d201cA134345601631D327a971A3741646B0d",
@@ -439,9 +453,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0xa36797bA947b378AefE5f726Cd87766CD3c25Ee3",
-      "assignedPermissions": {
-        "upgrade": ["0x173272739Bd7Aa6e4e214714048a9fE699453059"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x173272739Bd7Aa6e4e214714048a9fE699453059",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706307875,
       "values": {
         "$immutable": true,
@@ -672,9 +690,13 @@
     {
       "name": "ZkBridgeAdmin",
       "address": "0xe16d201cA134345601631D327a971A3741646B0d",
-      "assignedPermissions": {
-        "upgrade": ["0x8ddF05F9A5c488b4973897E278B58895bF87Cb24"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8ddF05F9A5c488b4973897E278B58895bF87Cb24",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708705703,
       "values": {
         "$immutable": true,

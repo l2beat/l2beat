@@ -1,13 +1,13 @@
-import {
-  ContractParameters,
-  DiscoveryOutput,
-  Meta,
-} from '@l2beat/discovery-types'
+import { ContractParameters, DiscoveryOutput } from '@l2beat/discovery-types'
 import { Hash256 } from '@l2beat/shared-pure'
 
 import { Analysis, AnalyzedContract } from '../analysis/AddressAnalyzer'
-import { PermissionConfiguration } from '../config/RawDiscoveryConfig'
 import { DISCOVERY_LOGIC_VERSION } from '../engine/DiscoveryEngine'
+import { resolveAnalysis } from '../permission-resolving/resolveAnalysis'
+import {
+  transformToIssued,
+  transformToReceived,
+} from '../permission-resolving/transform'
 
 export function toDiscoveryOutput(
   name: string,
@@ -47,6 +47,8 @@ export function processAnalysis(
   // DO NOT CHANGE BELOW CODE UNLESS YOU KNOW WHAT YOU ARE DOING!
   // CHANGES MIGHT TRIGGER UPDATE MONITOR FALSE POSITIVES!
 
+  const resolvedPermissions = resolveAnalysis(results)
+
   const { contracts, abis } = getContracts(results)
   return {
     contracts: contracts
@@ -66,8 +68,10 @@ export function processAnalysis(
           categories: setToSortedArray(x.combinedMeta?.categories),
           types: setToSortedArray(x.combinedMeta?.types),
           severity: x.combinedMeta?.severity,
-          assignedPermissions: toLegacyPermissionView(
-            x.combinedMeta?.permissions,
+          issuedPermissions: transformToIssued(x.address, resolvedPermissions),
+          receivedPermissions: transformToReceived(
+            x.address,
+            resolvedPermissions,
           ),
           ignoreInWatchMode: x.ignoreInWatchMode,
           sinceTimestamp: x.deploymentTimestamp?.toNumber(),
@@ -95,8 +99,10 @@ export function processAnalysis(
         categories: setToSortedArray(x.combinedMeta?.categories),
         types: setToSortedArray(x.combinedMeta?.types),
         severity: x.combinedMeta?.severity,
-        assignedPermissions: toLegacyPermissionView(
-          x.combinedMeta?.permissions,
+        issuedPermissions: transformToIssued(x.address, resolvedPermissions),
+        receivedPermissions: transformToReceived(
+          x.address,
+          resolvedPermissions,
         ),
       })),
     abis,
@@ -119,34 +125,6 @@ function getContracts(results: Analysis[]): {
     Object.entries(abis).sort(([a], [b]) => a.localeCompare(b)),
   )
   return { contracts, abis }
-}
-
-// TODO(radomski): This is purely a plumbing function, should be removed once
-// we get ultimate owner resolution working and we'll save grantedPermissions
-// and receivedPermissions
-function toLegacyPermissionView(
-  permissions: PermissionConfiguration[] | undefined,
-): Meta['assignedPermissions'] {
-  if (permissions === undefined) {
-    return undefined
-  }
-
-  const result: Meta['assignedPermissions'] = {}
-
-  for (const permission of permissions) {
-    result[permission.type] ??= []
-    result[permission.type]?.push(permission.target)
-  }
-
-  for (const key of Object.keys(result)) {
-    if (result[key] === undefined) {
-      continue
-    }
-
-    result[key] = result[key].sort()
-  }
-
-  return result
 }
 
 function withoutUndefinedKeys<T extends object>(obj: T): T {

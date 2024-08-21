@@ -7,6 +7,7 @@ import { getScalingTvlEntries } from '~/server/features/scaling/tvl/get-scaling-
 import { getProjectsVerificationStatuses } from '~/server/features/verification-status/get-projects-verification-statuses'
 import { HydrateClient, api } from '~/trpc/server'
 import { getCookie } from '~/utils/cookies/server'
+import { ScalingAssociatedTokensContextProvider } from '../../_components/scaling-associated-tokens-context'
 import { ScalingFilterContextProvider } from '../../_components/scaling-filter-context'
 import { ScalingTvlTable } from './_components/scaling-tvl-table'
 import { TvlChart } from './_components/tvl-chart'
@@ -43,9 +44,11 @@ export default async function Page() {
   return (
     <HydrateClient>
       <ScalingFilterContextProvider>
-        <TvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
-        <HorizontalSeparator className="my-4 md:my-6" />
-        <ScalingTvlTable projects={projects} />
+        <ScalingAssociatedTokensContextProvider>
+          <TvlChart milestones={HOMEPAGE_MILESTONES} entries={projects} />
+          <HorizontalSeparator className="my-4 md:my-6" />
+          <ScalingTvlTable projects={projects} />
+        </ScalingAssociatedTokensContextProvider>
       </ScalingFilterContextProvider>
     </HydrateClient>
   )

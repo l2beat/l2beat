@@ -1,3 +1,63 @@
+Generated with discovered.json: 0xc6036273804f66af71e134c94937ddb7753e9a2a
+
+# Diff at Wed, 21 Aug 2024 10:06:41 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20491472
+- current block number: 20491472
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20491472 (main branch discovery), not current.
+
+```diff
+    contract ZKFairValidium (0x1CbC08bf0D48b18F9f97796c61352b192d1850A5) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","via":[]}]
+    }
+```
+
+```diff
+    contract GlobalExitRoot (0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","via":[]}]
+    }
+```
+
+```diff
+    contract ZKFairValidiumDAC (0x997CfB0838544f68E59f877EDc905001456F125b) {
+    +++ description: Committee attesting that data for a given dataRoot has been published. The DAC Owner can update the member set at any time.
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","via":[]}]
+    }
+```
+
+```diff
+    contract Bridge (0x9cb4706e20A18E59a48ffa7616d700A3891e1861) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0xb57b9101dEc7dC1635B576fFf71F2f522C970EF3) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x1CbC08bf0D48b18F9f97796c61352b192d1850A5","0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b","0x997CfB0838544f68E59f877EDc905001456F125b","0x9cb4706e20A18E59a48ffa7616d700A3891e1861"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x1CbC08bf0D48b18F9f97796c61352b192d1850A5","via":[]},{"permission":"upgrade","target":"0x72abD6416Ea2d99ad30C86B90e7409Dc2d1ba40b","via":[]},{"permission":"upgrade","target":"0x997CfB0838544f68E59f877EDc905001456F125b","via":[]},{"permission":"upgrade","target":"0x9cb4706e20A18E59a48ffa7616d700A3891e1861","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0xed332bb01b0b9c882819f7b27e047b3e67fd5261
 
 # Diff at Fri, 09 Aug 2024 13:54:22 GMT:

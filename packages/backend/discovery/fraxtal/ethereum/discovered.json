@@ -21,6 +21,13 @@
       "name": "MintableERC20FactoryProxy",
       "address": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
@@ -72,18 +79,48 @@
       "descriptions": [
         "It can upgrade the bridge implementation potentially gaining access to all funds, and change any system component."
       ],
-      "assignedPermissions": {
-        "configure": ["0x8c5D64d10394cFa070066e70Ec19E67398b4dABE"],
-        "upgrade": [
-          "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
-          "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
-          "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
-          "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
-          "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
-          "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
-          "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x11FE3be54aC01C13Dd985cE2BdD10eD77e1376cc",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x34C0bD5877A5Ee7099D0f5688D65F4bB9158BDE2",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x61ca43CB037aC9181d8Fa5CD0073dC314065Ccc4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x66CC916Ed5C6C2FA97014f7D1cD141528Ae171e4",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xa9B5Fb84B7aeAF0D51C95DB04a76B1D4738D0eC5",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$immutable": true,
@@ -100,6 +137,18 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0xe0d7755252873c4eF5788f7f45764E0e17610508",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
       ],
       "ignoreInWatchMode": ["scalar", "overhead"],
       "sinceTimestamp": 1706811599,
@@ -162,6 +211,13 @@
       "descriptions": [
         "The main entry point to deposit ERC20 tokens from host chain to this chain. This contract can store any token."
       ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
@@ -181,6 +237,13 @@
       "name": "OptimismPortal",
       "address": "0x36cb65c1967A0Fb0EEE11569C51C2f2aA1Ca6f6D",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["params"],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -237,6 +300,13 @@
         "Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages the `PAUSED_SLOT`, a boolean value indicating whether the Superchain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system."
       ],
       "categories": ["Upgrades&Governance"],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$admin": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
@@ -256,6 +326,13 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Contains a list of proposed state roots which Proposers assert to be a result of block execution. Currently only the PROPOSER address can submit new state roots."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
       ],
       "ignoreInWatchMode": [
         "nextBlockNumber",
@@ -336,6 +413,13 @@
       "name": "AddressManager",
       "address": "0x8c5D64d10394cFa070066e70Ec19E67398b4dABE",
       "template": "opstack/AddressManager",
+      "issuedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1706811599,
       "values": {
         "$immutable": true,
@@ -350,6 +434,13 @@
       "proxyType": "EIP1967 proxy",
       "descriptions": [
         "Used to bridge ERC-721 tokens from host chain to this chain."
+      ],
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13Fe62cB24aEa5afd179F20D362c056c3881ABcA",
+          "via": []
+        }
       ],
       "sinceTimestamp": 1706811599,
       "values": {
@@ -453,9 +544,13 @@
         "It can update the preconfer address, the batch submitter (Sequencer) address and the gas configuration of the system."
       ],
       "roles": ["Guardian"],
-      "assignedPermissions": {
-        "configure": ["0x34a9f273cbD847d49c3De015FC26c3E66825f8b2"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "configure",
+          "target": "0x34a9f273cbD847d49c3De015FC26c3E66825f8b2",
+          "via": []
+        }
+      ],
       "ignoreInWatchMode": ["nonce"],
       "sinceTimestamp": 1706811599,
       "values": {

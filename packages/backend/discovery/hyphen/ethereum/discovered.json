@@ -8,13 +8,23 @@
     {
       "name": "ProxyAdmin",
       "address": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
-      "assignedPermissions": {
-        "upgrade": [
-          "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
-          "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
-          "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9"
-        ]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
+          "via": []
+        },
+        {
+          "permission": "upgrade",
+          "target": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647128852,
       "values": {
         "$immutable": true,
@@ -25,6 +35,13 @@
       "name": "LiquidityPool",
       "address": "0x2A5c2568b10A0E826BfA892Cf21BA7218310180b",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647128990,
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
@@ -56,6 +73,13 @@
       "name": "TokenManager",
       "address": "0xe6dbf5861ed9828594Af4C6ea6356411c3A0B168",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1652360689,
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
@@ -68,6 +92,13 @@
       "name": "LiquidityProviders",
       "address": "0xebaB24F13de55789eC1F3fFe99A285754e15F7b9",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x13a4cC0750296bB72Eb0006febec306551A4f472",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1647128942,
       "values": {
         "$admin": "0x13a4cC0750296bB72Eb0006febec306551A4f472",

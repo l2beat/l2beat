@@ -108,6 +108,7 @@ describe(Indexer.name, () => {
           markAttempt,
           timeoutMs: () => 1000,
           clear,
+          attempts: () => 1,
         },
       })
 
@@ -156,12 +157,14 @@ describe(Indexer.name, () => {
           markAttempt: invalidateMarkAttempt,
           timeoutMs: () => 1000,
           clear: invalidateClear,
+          attempts: () => 1,
         },
         updateRetryStrategy: {
           shouldRetry: updateShouldRetry,
           markAttempt: updateMarkAttempt,
           timeoutMs: () => 1000,
           clear: updateClear,
+          attempts: () => 1,
         },
       })
 
@@ -211,6 +214,7 @@ describe(Indexer.name, () => {
           markAttempt,
           timeoutMs: () => 1000,
           clear,
+          attempts: () => 1,
         },
       })
 

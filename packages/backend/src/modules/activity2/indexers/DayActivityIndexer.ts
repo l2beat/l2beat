@@ -1,13 +1,24 @@
+import { assert } from '@l2beat/shared-pure'
+import { Indexer } from '@l2beat/uif'
 import { ManagedChildIndexer } from '../../../tools/uif/ManagedChildIndexer'
 import { DayActivityIndexerDeps } from './types'
 
 export class DayActivityIndexer extends ManagedChildIndexer {
   constructor(private readonly $: DayActivityIndexerDeps) {
-    super({ ...$, name: `activity_day_indexer`, tag: $.projectId })
+    super({
+      ...$,
+      name: `activity_day_indexer`,
+      tag: $.projectId,
+      updateRetryStrategy: Indexer.getInfiniteRetryStrategy(),
+    })
+
+    assert(
+      this.$.batchSize > this.$.uncertaintyBuffer,
+      'Batch size should be bigger than uncertainty buffer',
+    )
   }
 
   override async update(from: number, to: number): Promise<number> {
-    // TODO: confirm if this logic is still needed
     // starkex APIs are not stable and can change from the past. With this we make sure to scrape them again
     const fromWithUncertainty = from - this.$.uncertaintyBuffer
     const adjustedFrom =

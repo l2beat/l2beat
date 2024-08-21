@@ -105,6 +105,37 @@ describe(StorageHandler.name, () => {
         ignoreRelative: undefined,
       })
     })
+
+    it('can returns storage as uint8', async () => {
+      const address = EthereumAddress.random()
+      const provider = mockObject<IProvider>({
+        async getStorage() {
+          return Bytes.fromHex(
+            '0x0000000000000000000000000000000000000000000000000000000000000123',
+          )
+        },
+        blockNumber: 123,
+        chain: 'foo',
+      })
+
+      const handler = new StorageHandler(
+        'someName',
+        {
+          type: 'storage',
+          slot: 1,
+          returnType: 'uint8',
+        },
+        DiscoveryLogger.SILENT,
+      )
+      expect(handler.field).toEqual('someName')
+
+      const result = await handler.execute(provider, address, {})
+      expect(result).toEqual({
+        field: 'someName',
+        value: 0x23,
+        ignoreRelative: undefined,
+      })
+    })
   })
 
   describe('dependencies', () => {

@@ -15,9 +15,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
-      "assignedPermissions": {
-        "upgrade": ["0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708624547,
       "values": {
         "$immutable": true,
@@ -96,6 +100,13 @@
       "name": "AstarValidiumDAC",
       "address": "0x9CCD205052c732Ac1Df2cf7bf8aACC0E371eE0B0",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1708624559,
       "values": {
         "$admin": "0x1963D7b78e75A5eDfF9e5376E7A07A935Fb3d50d",

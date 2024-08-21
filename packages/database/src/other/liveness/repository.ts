@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { TrackedTxId } from '@l2beat/shared'
-import { UnixTime } from '@l2beat/shared-pure'
+import { assert, UnixTime } from '@l2beat/shared-pure'
 import { BaseRepository } from '../../BaseRepository'
 import { LivenessRecord, toRecord, toRow } from './entity'
 import { selectLiveness } from './select'

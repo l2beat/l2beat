@@ -1,3 +1,65 @@
+Generated with discovered.json: 0x3af51d8edb4635087182fcd8bccb9cd71783fdf9
+
+# Diff at Wed, 21 Aug 2024 10:06:18 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19532236
+- current block number: 19532236
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19532236 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdminBridgeV2 (0x1Da522B35363c1eda4833bc121c8F3c67B2caa75) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x5523985926Aa12BA58DC5Ad00DDca99678D7227E","0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x5523985926Aa12BA58DC5Ad00DDca99678D7227E","via":[]},{"permission":"upgrade","target":"0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdminBridge (0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0","via":[]}]
+    }
+```
+
+```diff
+    contract BridgeV2 (0x5523985926Aa12BA58DC5Ad00DDca99678D7227E) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x1Da522B35363c1eda4833bc121c8F3c67B2caa75","via":[]}]
+    }
+```
+
+```diff
+    contract Portal (0xb8f275fBf7A959F4BCE59999A2EF122A099e81A8) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x1Da522B35363c1eda4833bc121c8F3c67B2caa75","via":[]}]
+    }
+```
+
+```diff
+    contract Bridge (0xd5F0f8dB993D26F5df89E70a83d32b369DcCdaa0) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x3901611dfDA3Aed75C37Ba59f2c76E8309dc98FA","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x8e5a63378b19d07ed8ed7fd9094244cca53e6be2
 
 # Diff at Fri, 09 Aug 2024 12:02:44 GMT:

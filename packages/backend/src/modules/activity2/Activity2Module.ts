@@ -1,9 +1,10 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { BlockExplorerClient } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
+  Activity2Config,
   BlockscoutChainConfig,
   EtherscanChainConfig,
 } from '../../config/Config'
@@ -22,6 +23,8 @@ import {
   BaseClient,
   BlockTimestampProvider,
 } from '../tvl/services/BlockTimestampProvider'
+import { Activity2Controller } from './api/Activity2Controller'
+import { createActivity2Router } from './api/Activity2Router'
 import { BlockActivityIndexer } from './indexers/BlockActivityIndexer'
 import { BlockTargetIndexer } from './indexers/BlockTargetIndexer'
 import { DayActivityIndexer } from './indexers/DayActivityIndexer'
@@ -63,10 +66,46 @@ export function createActivity2Module(
     )
   }
 
+  const includedInApiProjectIds = getIncludedInApiProjectIds(
+    config.activity2.projects,
+    config.activity2,
+    logger,
+  )
+
+  const activity2Controller = new Activity2Controller(
+    includedInApiProjectIds,
+    peripherals.database,
+    clock,
+  )
+  const activity2Router = createActivity2Router(activity2Controller)
+
   return {
-    routers: [],
+    routers: [activity2Router],
     start,
   }
+}
+
+function getIncludedInApiProjectIds(
+  projects: { id: ProjectId }[],
+  activity: Activity2Config,
+  logger: Logger,
+): ProjectId[] {
+  const projectIds: ProjectId[] = []
+
+  for (const project of projects) {
+    const isExcludedInEnv = activity.projectsExcludedFromAPI.some(
+      (p) => p === project.id.toString(),
+    )
+
+    if (isExcludedInEnv) {
+      logger.info(
+        `Project ${project.id.toString()} excluded from activity v2 api via .env - will not be present in the response, but will continue syncing`,
+      )
+      continue
+    }
+    projectIds.push(project.id)
+  }
+  return projectIds
 }
 
 function createActivityIndexers(
@@ -80,15 +119,14 @@ function createActivityIndexers(
 
   const indexerService = new IndexerService(db)
 
+  const starkexClient = peripherals.getClient(StarkexClient, {
+    apiKey: activityConfig.starkexApiKey,
+    callsPerMinute: activityConfig.starkexCallsPerMinute,
+    timeout: undefined,
+  })
   const dayTargetIndexer = new DayTargetIndexer(logger, clock)
 
   const indexers: ActivityIndexer[] = [dayTargetIndexer]
-
-  const numberOfStarkexProjects =
-    activityConfig.projects.filter((p) => p.config.type === 'starkex').length ||
-    1
-  const singleStarkexCPM =
-    activityConfig.starkexCallsPerMinute / numberOfStarkexProjects
 
   activityConfig.projects.forEach((project) => {
     switch (project.config.type) {
@@ -215,11 +253,6 @@ function createActivityIndexers(
         break
       }
       case 'starkex': {
-        const starkexClient = peripherals.getClient(StarkexClient, {
-          apiKey: activityConfig.starkexApiKey,
-          callsPerMinute: activityConfig.starkexCallsPerMinute,
-          timeout: undefined,
-        })
         const txsCountProvider = new StarkexTxsCountProvider(
           starkexClient,
           project.id,
@@ -228,7 +261,7 @@ function createActivityIndexers(
         const activityIndexer = new DayActivityIndexer({
           logger,
           projectId: project.id,
-          batchSize: getBatchSizeFromCallsPerMinute(singleStarkexCPM),
+          batchSize: 10,
           minHeight:
             project.config.sinceTimestamp.toStartOf('day').toDays() ?? 0,
           uncertaintyBuffer: project.config.resyncLastDays,

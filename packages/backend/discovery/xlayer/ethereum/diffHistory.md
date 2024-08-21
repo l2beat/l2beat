@@ -1,3 +1,47 @@
+Generated with discovered.json: 0x1b167fa7de69394f47c613b41710d3732c805fe1
+
+# Diff at Wed, 21 Aug 2024 10:06:35 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 20325087
+- current block number: 20325087
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 20325087 (main branch discovery), not current.
+
+```diff
+    contract XLayerValidiumDAC (0x05652Ec92366F3C2255991a265c499E01Ba58e6a) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x1e37EA18e9515db29b3E94A00eD31484A3130204","via":[]}]
+    }
+```
+
+```diff
+    contract ProxyAdmin (0x1e37EA18e9515db29b3E94A00eD31484A3130204) {
+    +++ description: None
+      assignedPermissions:
+-        {"upgrade":["0x05652Ec92366F3C2255991a265c499E01Ba58e6a"]}
+      receivedPermissions:
++        [{"permission":"upgrade","target":"0x05652Ec92366F3C2255991a265c499E01Ba58e6a","via":[]}]
+    }
+```
+
+```diff
+    contract OKBImplementation (0x75231F58b43240C9718Dd58B4967c5114342a86c) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0x4A164CA582D169f7caad471250991Dd861ddA981","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x463ce9801dabc8dd2fb9a292a93b5c2733627b7d
 
 # Diff at Fri, 09 Aug 2024 10:13:00 GMT:

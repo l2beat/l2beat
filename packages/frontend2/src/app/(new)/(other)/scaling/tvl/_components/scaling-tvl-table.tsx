@@ -4,10 +4,8 @@ import { useMemo } from 'react'
 import { BasicTable } from '~/app/_components/table/basic-table'
 import { useTable } from '~/hooks/use-table'
 import { type ScalingTvlEntry } from '~/server/features/scaling/tvl/get-scaling-tvl-entries'
-import {
-  useScalingFilter,
-  useScalingFilterValues,
-} from '../../../_components/scaling-filter-context'
+import { useScalingAssociatedTokensContext } from '../../../_components/scaling-associated-tokens-context'
+import { useScalingFilter } from '../../../_components/scaling-filter-context'
 import { ScalingTvlFilters } from '../../../_components/scaling-tvl-filters'
 import { toTableRows } from '../_utils/to-table-rows'
 import { scalingTvlCokumns } from './table/columns'
@@ -17,7 +15,7 @@ interface Props {
 }
 
 export function ScalingTvlTable({ projects }: Props) {
-  const { excludeAssociatedTokens } = useScalingFilterValues()
+  const { excludeAssociatedTokens } = useScalingAssociatedTokensContext()
   const includeFilters = useScalingFilter()
 
   const allProjects = useMemo(
@@ -47,7 +45,7 @@ export function ScalingTvlTable({ projects }: Props) {
 
   return (
     <div className="space-y-5 md:space-y-7">
-      <ScalingTvlFilters items={projects} />
+      <ScalingTvlFilters items={allProjects} />
       <BasicTable table={table} />
     </div>
   )

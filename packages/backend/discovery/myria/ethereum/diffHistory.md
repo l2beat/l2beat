@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb04908b45a608ccbddb3b0720710abc99530490a
+
+# Diff at Wed, 21 Aug 2024 10:04:15 GMT:
+
+- author: Mateusz Radomski (<radomski.main@protonmail.com>)
+- comparing to: main@2f6dde3357bf5d79196b6e94f79d853a6c4ec72b block: 19825378
+- current block number: 19825378
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 19825378 (main branch discovery), not current.
+
+```diff
+    contract StarkExchange (0x3071BE11F9e92A9eb28F305e1Fa033cD102714e7) {
+    +++ description: None
+      issuedPermissions:
++        [{"permission":"upgrade","target":"0xc49Ec6Bb817E17a9Ca5B738ca330db403cc74245","via":[]}]
+    }
+```
+
 Generated with discovered.json: 0x2b8036c2369ffbe8483ab62cdf43daf6efee87fb
 
 # Diff at Wed, 08 May 2024 12:36:05 GMT:

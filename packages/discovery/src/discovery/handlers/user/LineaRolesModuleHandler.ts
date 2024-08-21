@@ -1,5 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 import { BigNumber, providers, utils } from 'ethers'
 import { isEmpty, zip } from 'lodash'
 import * as z from 'zod'

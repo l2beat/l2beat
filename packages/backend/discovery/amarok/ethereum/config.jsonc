@@ -78,6 +78,11 @@
       "ignoreRelatives": ["lpTokenTargetAddress", "RELAYERS"]
     },
     "MainnetSpokeConnector": {
+      "fields": {
+        "optimisticMode": {
+          "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
+        }
+      },
       "ignoreMethods": ["snapshotRoots"],
       "ignoreInWatchMode": [
         "getLastCompletedSnapshotId",
@@ -107,6 +112,9 @@
     },
     "RootManager": {
       "fields": {
+        "optimisticMode": {
+          "description": "When it's disabled, all roots must be passed via canonical rollup AMBs."
+        },
         "connectors": {
           "handler": {
             "type": "array",

@@ -1,4 +1,3 @@
-import { assert } from '@l2beat/backend-tools'
 import { layer2s } from '../projects/layer2s'
 
 import {
@@ -7,6 +6,7 @@ import {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import {
+  assert,
   AssetId,
   ChainId,
   CoingeckoId,

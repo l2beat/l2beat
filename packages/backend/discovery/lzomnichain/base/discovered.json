@@ -1090,6 +1090,13 @@
       "address": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
       "unverified": true,
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1689301749,
       "values": {
         "$admin": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
@@ -1123,9 +1130,13 @@
       "name": "",
       "address": "0xFe7C30860D01e28371D40434806F4A8fcDD3A098",
       "unverified": true,
-      "assignedPermissions": {
-        "upgrade": ["0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xcb566e3B6934Fa77258d68ea18E931fa75e1aaAa",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1689301191,
       "values": { "$immutable": true }
     }

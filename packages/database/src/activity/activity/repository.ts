@@ -71,6 +71,31 @@ export class ActivityRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
+  async getSummedCountForProjectsAndTimeRange(
+    projectIds: ProjectId[],
+    timeRange: [UnixTime, UnixTime],
+  ): Promise<Omit<ActivityRecord, 'timestamp' | 'start' | 'end'>[]> {
+    const [from, to] = timeRange
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(['project_id'])
+      .select((eb) => eb.fn.sum('count').as('count'))
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((p) => p.toString()),
+      )
+      .where('timestamp', '>=', from.toDate())
+      .where('timestamp', '<', to.toDate())
+      .groupBy('project_id')
+      .execute()
+
+    return rows.map((row) => ({
+      projectId: ProjectId(row.project_id),
+      count: Number(row.count),
+    }))
+  }
+
   /**
    * Returns all activity records for a project including the data point
    * @param projectId Id of a project
@@ -89,5 +114,50 @@ export class ActivityRepository extends BaseRepository {
       .execute()
 
     return rows.map(toRecord)
+  }
+
+  async getDailyCounts(): Promise<ActivityRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(selectActivity)
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getDailyCountsPerProject(
+    projectId: ProjectId,
+  ): Promise<ActivityRecord[]> {
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .select(selectActivity)
+      .where('project_id', '=', projectId.toString())
+      .orderBy('timestamp', 'asc')
+      .execute()
+    return rows.map(toRecord)
+  }
+
+  async getProjectsAggregatedDailyCount(
+    projectIds: ProjectId[],
+  ): Promise<Omit<ActivityRecord, 'projectId' | 'start' | 'end'>[]> {
+    if (projectIds.length === 0) return []
+
+    const rows = await this.db
+      .selectFrom('public.activity')
+      .where(
+        'project_id',
+        'in',
+        projectIds.map((id) => id.toString()),
+      )
+      .select('timestamp')
+      .select((eb) => eb.fn.sum('count').as('count'))
+      .groupBy('timestamp')
+      .orderBy('timestamp', 'asc')
+      .execute()
+
+    return rows.map((row) => ({
+      count: Number(row.count),
+      timestamp: UnixTime.fromDate(row.timestamp),
+    }))
   }
 }

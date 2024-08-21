@@ -58,9 +58,13 @@
     {
       "name": "ProxyAdmin",
       "address": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
-      "assignedPermissions": {
-        "upgrade": ["0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8"]
-      },
+      "receivedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1718630195,
       "values": {
         "$immutable": true,
@@ -71,6 +75,13 @@
       "name": "WitnessValidiumDAC",
       "address": "0xB0FD8Ba20B1C178b14Dd2a02f4e72c03fdA626f8",
       "proxyType": "EIP1967 proxy",
+      "issuedPermissions": [
+        {
+          "permission": "upgrade",
+          "target": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",
+          "via": []
+        }
+      ],
       "sinceTimestamp": 1718630207,
       "values": {
         "$admin": "0x8cC10554B5C7D322E6a7F33CBb584c7C5fdBA039",

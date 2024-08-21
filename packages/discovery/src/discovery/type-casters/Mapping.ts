@@ -1,5 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
+import { assert } from '@l2beat/shared-pure'
 import { z } from 'zod'
 import { ArgType, BaseTypeCaster } from './BaseTypeCaster'
 

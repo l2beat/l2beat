@@ -1,7 +1,7 @@
 import { ContractValue } from '@l2beat/discovery-types'
 import { utils } from 'ethers'
 
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 import { DiscoveryCustomType } from '../config/RawDiscoveryConfig'
 import { getCustomTypeCaster, isCustomTypeCaster } from '../type-casters'
 import {

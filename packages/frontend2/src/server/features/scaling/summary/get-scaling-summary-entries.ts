@@ -1,10 +1,11 @@
 import { layer2s, layer3s } from '@l2beat/config'
-import { notUndefined } from '@l2beat/shared-pure'
+import { compact } from 'lodash'
 import { getL2Risks } from '~/app/(new)/(other)/scaling/_utils/get-l2-risks'
 import { getImplementationChangeReport } from '../../implementation-change-report/get-implementation-change-report'
 import { getProjectsVerificationStatuses } from '../../verification-status/get-projects-verification-statuses'
 import { getCommonScalingEntry } from '../get-common-scaling-entry'
 import { get7dTokenBreakdown } from '../tvl/utils/get-7d-token-breakdown'
+import { getAssociatedTokenWarning } from '../tvl/utils/get-associated-token-warning'
 import { orderByTvl } from '../tvl/utils/order-by-tvl'
 
 export async function getScalingSummaryEntries() {
@@ -21,6 +22,16 @@ export async function getScalingSummaryEntries() {
 
     const latestTvl = tvl.projects[project.id.toString()]
 
+    const associatedTokenWarning =
+      latestTvl && latestTvl.breakdown.total > 0
+        ? getAssociatedTokenWarning({
+            associatedRatio:
+              latestTvl.breakdown.associated / latestTvl.breakdown.total,
+            name: project.display.name,
+            associatedTokens: project.config.associatedTokens ?? [],
+          })
+        : undefined
+
     return {
       entryType: 'scaling' as const,
       ...getCommonScalingEntry({
@@ -32,7 +43,10 @@ export async function getScalingSummaryEntries() {
         breakdown: latestTvl?.breakdown,
         change: latestTvl?.change,
         associatedTokens: project.config.associatedTokens ?? [],
-        warnings: [project.display.tvlWarning].filter(notUndefined),
+        warnings: compact([
+          project.display.tvlWarning,
+          associatedTokenWarning?.sentiment === 'bad' && associatedTokenWarning,
+        ]),
       },
       marketShare: latestTvl && latestTvl.breakdown.total / tvl.total,
       risks: project.type === 'layer2' ? getL2Risks(project.riskView) : [],
