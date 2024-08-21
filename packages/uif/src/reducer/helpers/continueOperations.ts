@@ -1,5 +1,4 @@
-import assert from 'node:assert'
-
+import { assert } from '@l2beat/shared-pure'
 import { IndexerEffect } from '../types/IndexerEffect'
 import { IndexerReducerResult } from '../types/IndexerReducerResult'
 import { IndexerState } from '../types/IndexerState'

@@ -1,4 +1,4 @@
-import { assert } from '@l2beat/backend-tools'
+import { assert } from '@l2beat/shared-pure'
 
 const PREFIXES = ['values.', 'upgradeability.']
 

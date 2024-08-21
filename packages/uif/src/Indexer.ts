@@ -1,7 +1,6 @@
-import { assert } from 'node:console'
-
 import { Logger } from '@l2beat/backend-tools'
 
+import { assert } from '@l2beat/shared-pure'
 import { Retries, RetryStrategy } from './Retries'
 import { assertUnreachable } from './assertUnreachable'
 import { getInitialState } from './reducer/getInitialState'

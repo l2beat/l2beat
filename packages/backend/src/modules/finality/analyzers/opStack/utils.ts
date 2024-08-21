@@ -1,7 +1,7 @@
 import { brotliDecompressSync } from 'node:zlib'
-import { assert } from '@l2beat/backend-tools'
 import { DecompressionStream } from 'stream/web'
 
+import { assert } from '@l2beat/shared-pure'
 import { rlpDecodePartial } from '../../utils/rlpDecode'
 
 const CHANNEL_VERSION_BROTLI = 1

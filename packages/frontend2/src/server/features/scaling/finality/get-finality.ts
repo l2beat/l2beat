@@ -1,6 +1,6 @@
-import { assert } from '@l2beat/backend-tools'
 import { type Layer2FinalityConfig } from '@l2beat/config'
 import {
+  assert,
   type ProjectId,
   type TrackedTxsConfigSubtype,
   UnixTime,

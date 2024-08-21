@@ -1,8 +1,7 @@
-import { assert } from '@l2beat/backend-tools'
-
 import { PriceRecord } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import {
+  assert,
   CoingeckoId,
   CoingeckoPriceConfigEntry,
   UnixTime,

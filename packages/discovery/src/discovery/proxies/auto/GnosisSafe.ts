@@ -1,6 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { ProxyDetails } from '@l2beat/discovery-types'
-import { EthereumAddress } from '@l2beat/shared-pure'
+import { assert, EthereumAddress } from '@l2beat/shared-pure'
 
 import { IProvider } from '../../provider/IProvider'
 import { getModules } from '../../utils/getSafeModules'

@@ -1,7 +1,7 @@
-import { assert, Logger } from '@l2beat/backend-tools'
+import { Logger } from '@l2beat/backend-tools'
 import { Database } from '@l2beat/database'
 import { BlockExplorerClient } from '@l2beat/shared'
-import { ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId } from '@l2beat/shared-pure'
 import { Config } from '../../config'
 import {
   Activity2Config,

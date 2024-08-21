@@ -1,5 +1,5 @@
-import { assert } from '@l2beat/backend-tools'
 import { ContractValue } from '@l2beat/discovery-types'
+import { assert } from '@l2beat/shared-pure'
 import { BigNumber } from 'bignumber.js'
 import { z } from 'zod'
 import { toContractValue } from '../handlers/utils/toContractValue'

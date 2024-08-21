@@ -1,4 +1,4 @@
-import assert from 'assert'
+import { assert } from '@l2beat/shared-pure'
 import { type VariantProps, cva } from 'class-variance-authority'
 import { cn } from '~/utils/cn'
 import { useRosetteTooltipContext } from '../rosette-tooltip-context'
