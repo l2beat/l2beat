@@ -11,11 +11,6 @@ Generated with discovered.json: 0xc7a70cb5fc4c5218b2b7281154dea8b7b7718c54
 Xai upgraded to [ArbOS Version 20 "Atlas"](https://forum.arbitrum.foundation/t/aip-arbos-version-20-atlas/20957).
 This upgrade comes with blobs support (but Xai is an L3 on Arbitrum) and was reviewed thoroughly in `packages/backend/discovery/arbitrum/ethereum/diffHistory.md` at "Diff at Fri, 22 Mar 2024 07:51:09 GMT:".
 
-TLDR of changes:
-- SequencerInbox changes are related to blobs support
-- Critical values like maxTimeVariation in the SequencerInbox (self sequencing delay) stay the same
-- ChallengeManager is the same except for pointing to new OneStepProof contract
-
 ## Watched changes
 
 ```diff
