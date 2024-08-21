@@ -33,6 +33,9 @@ export function DaSummaryTable({ items }: Props) {
           desc: true,
         },
       ],
+      columnPinning: {
+        left: ['#', 'logo'],
+      },
     },
   })
 

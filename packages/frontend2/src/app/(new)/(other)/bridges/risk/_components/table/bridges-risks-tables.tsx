@@ -39,6 +39,9 @@ export function BridgesRiskTables({ entries }: Props) {
             desc: false,
           },
         ],
+        columnPinning: {
+          left: ['#', 'logo'],
+        },
       },
     }),
     [],
