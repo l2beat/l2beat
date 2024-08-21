@@ -2,7 +2,7 @@ import { RadioGroup, RadioGroupItem } from '~/app/_components/radio-group'
 import { Skeleton } from '~/app/_components/skeleton'
 import { useIsClient } from '~/hooks/use-is-client'
 
-export function UnitAndScaleControls({
+export function TvlChartUnitAndScaleControls({
   unit,
   scale,
   setUnit,
