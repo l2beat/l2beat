@@ -21,6 +21,7 @@ const firstHalf = [
       headClassName: 'w-0',
       cellClassName: 'flex items-center',
     },
+    size: 44.55,
   }),
   columnHelper.display({
     id: 'logo',
